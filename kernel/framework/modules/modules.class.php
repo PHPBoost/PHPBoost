@@ -35,15 +35,15 @@ require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.ph
  *  arguments un tableau d'arguments correspondant à la liste des arguments
  *  nécessaire pour la méthode de ce module particulier.
  *
- *  Par exemple, la recherche sur le forum peut nécessiter plus d'option
+ *  Par exemple, la recherche sur le forum peut nécessiter plus d'options
  *  qu'une recherche sur le wiki.
  *
  */
 
-class Modules
+class ModulesDiscoveryService
 {
     //---------------------------------------------------------- Constructeurs
-    function Modules()
+    function ModulesDiscoveryService()
     /**
      *  Constructeur de la classe Modules
      */

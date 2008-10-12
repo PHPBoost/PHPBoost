@@ -64,7 +64,7 @@ if( !empty($change_cat) )
 	
 if( !empty($id_get) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'forum_forum'=> 'forum/forum_forum.tpl',
 		'forum_top'=> 'forum/forum_top.tpl',
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -72,7 +72,7 @@ if( !empty($id_get) )
 	
 	//Invité?	
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
-	$module_data_path = $Template->Module_data_path('forum');
+	$module_data_path = $Template->get_module_data_path('forum');
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
@@ -80,7 +80,7 @@ if( !empty($id_get) )
 	//Affichage des sous forums s'il y en a.
 	if( ($CAT_FORUM[$id_get]['id_right'] - $CAT_FORUM[$id_get]['id_left']) > 1 ) //Intervalle > 1 => sous forum présent.
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_SUB_CATS' => true
 		));
 		
@@ -167,7 +167,7 @@ if( !empty($id_get) )
 			}
 			$img_announce .= ($row['status'] == '0') ? '_lock' : '';
 			
-			$Template->Assign_block_vars('subcats', array(					
+			$Template->assign_block_vars('subcats', array(					
 				'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
 				'NAME' => $row['name'],
 				'DESC' => $row['subname'],
@@ -187,14 +187,14 @@ if( !empty($id_get) )
 	$locked_cat = ($CAT_FORUM[$id_get]['status'] == 1 || $User->check_level(ADMIN_LEVEL)) ? false : true;
 	if( !$check_group_write_auth )
 	{
-		$Template->Assign_block_vars('error_auth_write', array(
+		$Template->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
 		));
 	}
 	//Catégorie verrouillée?
 	elseif( $locked_cat )
 	{
-		$Template->Assign_block_vars('error_auth_write', array(
+		$Template->assign_block_vars('error_auth_write', array(
 			'L_ERROR_AUTH_WRITE' => $LANG['e_cat_lock_forum']
 		));
 	}
@@ -219,11 +219,11 @@ if( !empty($id_get) )
 	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
 	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,		
 		'MODULE_DATA_PATH' => $module_data_path,
-		'PAGINATION' => $Pagination->Display_pagination('forum' . transid('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
+		'PAGINATION' => $Pagination->display('forum' . transid('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
 		'C_MASS_MODO_CHECK' => false,
@@ -262,7 +262,7 @@ if( !empty($id_get) )
 	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	" . $Sql->limit($Pagination->First_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
+	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
 	while ( $row = $Sql->fetch_assoc($result) )
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
@@ -311,7 +311,7 @@ if( !empty($id_get) )
 		//Ancre ajoutée aux messages non lus.	
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . transid('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' : '';
 		
-		$Template->Assign_block_vars('topics', array(
+		$Template->assign_block_vars('topics', array(
 			'ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'POLL' => !empty($row['question']) ? '<img src="' . $module_data_path . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
@@ -321,7 +321,7 @@ if( !empty($id_get) )
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
-			'PAGINATION_TOPICS' => $Pagination->Display_pagination('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
+			'PAGINATION_TOPICS' => $Pagination->display('topic' . transid('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, NO_PREVIOUS_NEXT_LINKS, LINK_START_PAGE),
 			'MSG' => ($row['nbr_msg'] - 1),
 			'VUS' => $row['nbr_views'],
 			'L_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '', 
@@ -335,7 +335,7 @@ if( !empty($id_get) )
 	//Affichage message aucun topics.
 	if( $nbr_topics_display == 0 )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_NO_TOPICS' => true,
 			'L_NO_TOPICS' => $LANG['no_topics']
 		));
@@ -375,7 +375,7 @@ if( !empty($id_get) )
 	$Sql->query_close($result);
 
 	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
@@ -392,7 +392,7 @@ if( !empty($id_get) )
 		'L_ONLINE' => strtolower($LANG['online'])
 	));
 	
-	$Template->Pparse('forum_forum');
+	$Template->pparse('forum_forum');
 }
 else
 	redirect(HOST . DIR . '/forum/index.php' . SID2);

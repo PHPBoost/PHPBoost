@@ -139,7 +139,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->Upload_file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if( $Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
 			{					
 				$archive_path = '../' . $Upload->filename['upload_module'];
 				//Place à la décompression.
@@ -177,7 +177,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 }
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_modules_update'=> 'admin/admin_modules_update.tpl'
 	));
 
@@ -348,7 +348,7 @@ else
 					if( is_array($info_module) && $info_module['version'] != $updated_modules[$dir] )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-						$Template->Assign_block_vars('available', array(
+						$Template->assign_block_vars('available', array(
 							'ID' => $dir,
 							'NAME' => ucfirst($info_module['name']),
 							'ICON' => $dir,
@@ -372,7 +372,7 @@ else
 		closedir($dh); //On ferme le dossier
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
@@ -404,7 +404,7 @@ else
 	//Listing des modules mis à jour.
 	foreach($modules_update as $name => $version)
 	{
-		$Template->Assign_block_vars('update_modules_available', array(
+		$Template->assign_block_vars('update_modules_available', array(
 			'ID' => $name,
 			'NAME' => $modules_config[$name]['name'],
 			'VERSION' => $version
@@ -412,15 +412,15 @@ else
 	}
 
 	if( $i == 0 )
-		$Template->Assign_vars( array(
+		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
 		));
 	else
-		$Template->Assign_vars( array(
+		$Template->assign_vars( array(
 			'C_MODULES_AVAILABLE' => true,
 		));
 	
-	$Template->Pparse('admin_modules_update'); 
+	$Template->pparse('admin_modules_update'); 
 }
 
 require_once('../admin/admin_footer.php');

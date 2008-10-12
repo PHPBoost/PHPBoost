@@ -219,7 +219,7 @@ elseif( $step == 3 )
 		));
 	}
 	
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
 		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
 		'L_PHP_VERSION' => $LANG['php_version'],
@@ -480,7 +480,7 @@ elseif( $step == 5 )
 	}
 		
 	//Interface configuration du site
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'C_SITE_CONFIG' => true,
 		'SITE_URL' => $server_name,
 		'SITE_PATH' => $server_path
@@ -533,7 +533,7 @@ elseif( $step == 5 )
 }
 elseif( $step == 6 )
 {
-	$template->Assign_block_vars('admin', array());
+	$template->assign_block_vars('admin', array());
 	//Validation de l'étape
 	if( retrieve(POST, 'submit', false) )
 	{
@@ -606,7 +606,7 @@ elseif( $step == 6 )
 			$LANG['admin'] = '';
 			include_once('../kernel/framework/io/mail.class.php');
 			$Mail = new Mail();
-			$Mail->Send_mail($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
+			$Mail->send($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
 			//On connecte directement l'administrateur si il l'a demandé
 			if( $create_session )
@@ -625,12 +625,12 @@ elseif( $step == 6 )
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
-			$template->Assign_block_vars('error', array(
+			$template->assign_block_vars('error', array(
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
 	}
 	
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'C_ADMIN_ACCOUNT' => true,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=5'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=6'),
@@ -673,7 +673,7 @@ elseif( $step == 7 )
 	$Cache = new Cache;
 	$Cache->Load_file('config');
 	
-	$template->Assign_vars(array(
+	$template->assign_vars(array(
 		'C_END' => true,
 		'CONTENTS' => sprintf($LANG['end_installation']),	
 		'L_ADMIN_INDEX' => $LANG['admin_index'],
@@ -705,7 +705,7 @@ foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 	$info_lang = load_ini_file('../lang/', $folder->get_name());
 	if( !empty($info_lang['name']) )
 	{	
-		$template->Assign_block_vars('lang', array(
+		$template->assign_block_vars('lang', array(
 			'LANG' => $folder->get_name(),
 			'LANG_NAME' => $info_lang['name'],
 			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
@@ -713,14 +713,14 @@ foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 		
 		if(	$folder->get_name() == $lang )
 		{
-			$template->Assign_vars(array(
+			$template->assign_vars(array(
 				'LANG_IDENTIFIER' => $info_lang['identifier']
 			));
 		}
 	}
 }
 
-$template->Assign_vars(array(
+$template->assign_vars(array(
 	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
@@ -746,7 +746,7 @@ $template->Assign_vars(array(
 
 //Images de la barre de progression
 for($i = 1; $i <= floor($steps[$step - 1][2] * 24 / 100); $i++)
-	$template->Assign_block_vars('progress_bar', array());
+	$template->assign_block_vars('progress_bar', array());
 
 //Etapes de l'installation
 for($i = 1; $i <= STEPS_NUMBER; $i++ )
@@ -758,7 +758,7 @@ for($i = 1; $i <= STEPS_NUMBER; $i++ )
 	else
 		$row_class = 'row_next';
 	
-	$template->Assign_block_vars('link_menu', array(
+	$template->assign_block_vars('link_menu', array(
 		'CLASS' => $row_class,
 		'STEP_IMG' => $steps[$i - 1][1],
 		'STEP_NAME' => $steps[$i - 1][0]

@@ -91,7 +91,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		if( empty($topic['idcat']) ) //Topic inexistant.
 			$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'edit_msg'=> 'forum/forum_edit_msg.tpl',
 			'forum_top'=> 'forum/forum_top.tpl',
 			'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -103,13 +103,13 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$update = !empty($post_update) ? $post_update : transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'SID' => SID,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 			'KERNEL_EDITOR' => display_editor(),
 			'DESC' => $topic['subtitle'],
 			'CONTENTS' => $contents,
@@ -130,7 +130,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'L_RESET' => $LANG['reset']
 		));		
 		
-		$Template->Pparse('edit_msg');
+		$Template->pparse('edit_msg');
 	}
 	elseif( $new_get === 'topic' && empty($error_get) ) //Nouveau topic.
 	{			
@@ -206,7 +206,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
 				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'forum_post'=> 'forum/forum_post.tpl',
 				'forum_top'=> 'forum/forum_top.tpl',
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -224,7 +224,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
 			else
 			{
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => (($type == '0') ? 'checked="ckecked"' : ''),
 					'CHECKED_POSTIT' => (($type == '1') ? 'checked="ckecked"' : ''),
@@ -243,7 +243,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$answer = retrieve(POST, 'a'.$i, '');
 				if( !empty($answer) )
 				{
-					$Template->Assign_block_vars('answers_poll', array(
+					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => stripslashes($answer)
 					));
@@ -252,7 +252,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 			for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 			{	
-				$Template->Assign_block_vars('answers_poll', array(
+				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
@@ -261,12 +261,12 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			//Type de réponses du sondage.
 			$poll_type = retrieve(POST, 'poll_type', 0);
 				
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'THEME' => $CONFIG['theme'],
 				'LANG' => $CONFIG['lang'],
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,	
-				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),			
+				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),			
 				'TITLE' => $title,
 				'DESC' => $subtitle,
 				'CONTENTS' => $contents,
@@ -304,14 +304,14 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			$Template->Pparse('forum_post');
+			$Template->pparse('forum_post');
 		}
 		else
 		{
 			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
 				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'forum_post'=> 'forum/forum_post.tpl',
 				'forum_top'=> 'forum/forum_top.tpl',
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -319,7 +319,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 			if( $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
 			{
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -333,16 +333,16 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$nbr_poll_field = 0;
 			for($i = 0; $i < 5; $i++)
 			{	
-				$Template->Assign_block_vars('answers_poll', array(
+				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
 			}
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
-				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 				'TITLE' => '',
 				'DESC' => '',
 				'SELECTED_SIMPLE' => 'checked="ckecked"',
@@ -374,7 +374,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_MULTIPLE' => $LANG['multiple_answer']
 			));
 			
-			$Template->Pparse('forum_post');
+			$Template->pparse('forum_post');
 		}
 	}
 	elseif( $new_get === 'n_msg' && empty($error_get) ) //Nouveau message
@@ -507,7 +507,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 			elseif( !empty($preview_topic) )
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'forum_post'=> 'forum/forum_post.tpl',
 					'forum_top'=> 'forum/forum_top.tpl',
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -523,7 +523,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$type = ($type == 1 || $type == 0) ? $type : 0;
 				else
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($type == 0) ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($type == 1) ? 'checked="ckecked"' : ''),
@@ -542,7 +542,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$answer = retrieve(POST, 'a'.$i, '');
 					if( !empty($anwser) )
 					{
-						$Template->Assign_block_vars('answers_poll', array(
+						$Template->assign_block_vars('answers_poll', array(
 							'ID' => $i,
 							'ANSWER' => stripslashes($anwser)
 						));
@@ -551,7 +551,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				}
 				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{	
-					$Template->Assign_block_vars('answers_poll', array(
+					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => ''
 					));
@@ -560,12 +560,12 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				//Type de réponses du sondage.
 				$poll_type = retrieve(POST, 'poll_type', 0);
 						
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'THEME' => $CONFIG['theme'],
 					'LANG' => $CONFIG['lang'],
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
-					'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+					'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 					'TITLE' => $title,
 					'DESC' => $subtitle,
 					'CONTENTS' => $contents,
@@ -606,11 +606,11 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_DELETE_POLL' => $LANG['delete_poll']
 				));
 				
-				$Template->Pparse('forum_post');
+				$Template->pparse('forum_post');
 			}
 			else
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'forum_post'=> 'forum/forum_post.tpl',
 					'forum_top'=> 'forum/forum_top.tpl',
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -625,7 +625,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 				if( $is_modo )
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'C_FORUM_POST_TYPE' => true,
 						'CHECKED_NORMAL' => (($topic['type'] == '0') ? 'checked="ckecked"' : ''),
 						'CHECKED_POSTIT' => (($topic['type'] == '1') ? 'checked="ckecked"' : ''),
@@ -642,13 +642,13 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 	
-				$module_data_path = $Template->Module_data_path('forum');
+				$module_data_path = $Template->get_module_data_path('forum');
 				
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
 				if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']) )
 				{
 					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'C_DISPLAY_MSG' => true,
 						'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" />' : '',
 						'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="' . $module_data_path . '/images/' . $img_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
@@ -666,7 +666,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					if( !empty($answer) )
 					{
 						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
-						$Template->Assign_block_vars('answers_poll', array(
+						$Template->assign_block_vars('answers_poll', array(
 							'ID' => $nbr_poll_field,
 							'ANSWER' => $answer,
 							'NBR_VOTES' => $nbr_votes,
@@ -677,13 +677,13 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				}
 				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{	
-					$Template->Assign_block_vars('answers_poll', array(
+					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
 						'ANSWER' => ''
 					));
 				}					
 
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
 					'TITLE' => $topic['title'],
@@ -725,18 +725,18 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				//Type de réponses du sondage.
 				if( isset($poll['type']) && $poll['type'] == '0' )
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'SELECTED_SIMPLE' => 'checked="ckecked"'
 					));
 				}
 				elseif( isset($poll['type']) && $poll['type'] == '1' )				
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'SELECTED_MULTIPLE' => 'checked="ckecked"'
 					));
 				}	
 				
-				$Template->Pparse('forum_post');
+				$Template->pparse('forum_post');
 			}
 		}
 		//Sinon on édite simplement le message
@@ -773,7 +773,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 			else
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'edit_msg'=> 'forum/forum_edit_msg.tpl',
 					'forum_top'=> 'forum/forum_top.tpl',
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -785,11 +785,11 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				if( $get_error_e == 'incomplete' )
 					$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);
 					
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'P_UPDATE' => transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
-					'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+					'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => unparse($contents),
 					'KERNEL_EDITOR' => display_editor(),
@@ -806,7 +806,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'L_RESET' => $LANG['reset'],
 				));
 				
-				$Template->Pparse('edit_msg');
+				$Template->pparse('edit_msg');
 			}
 		}
 	}
@@ -818,7 +818,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( empty($topic['idcat']) ) //Topic inexistant.
 				$Errorh->Error_handler('e_unexist_topic_forum', E_USER_REDIRECT);
 			
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'error_post'=> 'forum/forum_edit_msg.tpl',
 				'forum_top'=> 'forum/forum_top.tpl',
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -845,11 +845,11 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, $type);
 	
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'P_UPDATE' => '',
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
-				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => display_editor(),
 				'U_ACTION' => 'post.php' . transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get),
@@ -868,7 +868,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		}
 		elseif( !empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t') )
 		{
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'error_post'=> 'forum/forum_post.tpl',
 				'forum_top'=> 'forum/forum_top.tpl',
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -876,7 +876,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		
 			if( $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
 			{
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
 					'CHECKED_NORMAL' => 'checked="ckecked"',
 					'L_TYPE' => '* ' . $LANG['type'],
@@ -915,16 +915,16 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$nbr_poll_field = 0;
 			for($i = 0; $i < 5; $i++)
 			{	
-				$Template->Assign_block_vars('answers_poll', array(
+				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
 					'ANSWER' => ''
 				));
 			}
 				
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,
-				'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 				'TITLE' => '',
 				'SELECTED_SIMPLE' => 'checked="checked"',
 				'IDTOPIC' => 0,
@@ -958,7 +958,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 			$Errorh->Error_handler('unknow_error', E_USER_REDIRECT);
 		
-		$Template->Pparse('error_post');
+		$Template->pparse('error_post');
 	}
 	else
 		$Errorh->Error_handler('unknow_error', E_USER_REDIRECT); 

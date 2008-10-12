@@ -77,7 +77,7 @@ elseif( $remove_favorite > 0 )
 }
 else
 {
-	$Template->Set_filenames(array('wiki_favorites'=> 'wiki/favorites.tpl'));
+	$Template->set_filenames(array('wiki_favorites'=> 'wiki/favorites.tpl'));
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
@@ -101,28 +101,28 @@ else
 	
 	if( $num_rows == 0 )
 	{
-		$Template->Assign_block_vars('no_favorite', array(
+		$Template->assign_block_vars('no_favorite', array(
 			'L_NO_FAVORITE' => $LANG['wiki_no_favorite']
 		));
 	}
 	
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 			'ARTICLE' => $row['title'],
 			'ID' => $row['id'],
-			'ACTIONS' => '<a href="' . transid('favorites.php?del=' . $row['id']) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');"><img src="' . $Template->Module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['wiki_unwatch_this_topic'] . '" /></a>'
+			'ACTIONS' => '<a href="' . transid('favorites.php?del=' . $row['id']) . '" title="' . $LANG['wiki_unwatch_this_topic'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['wiki_unwatch_this_topic'] . '" /></a>'
 		));
 	}
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_FAVORITES' => $LANG['wiki_favorites'],
 		'L_TITLE' => $LANG['title'],
 		'L_UNTRACK' => $LANG['wiki_unwatch']
 	));
 
-	$Template->Pparse('wiki_favorites');
+	$Template->pparse('wiki_favorites');
 }
 
 require_once('../kernel/footer.php'); 

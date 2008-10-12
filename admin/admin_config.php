@@ -79,7 +79,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 }
 elseif( $check_advanced && empty($_POST['advanced']) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_config2'=> 'admin/admin_config2.tpl'
 	));	
 	
@@ -108,7 +108,7 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 		$select_timezone .= '<option value="' . $i . '" ' . $selected . '> [GMT' . $name . ']</option>';
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SERVER_NAME' => !empty($CONFIG['server_name']) ? $CONFIG['server_name'] : $server_name,
 		'SERVER_PATH' => isset($CONFIG['server_path']) ? $CONFIG['server_path'] : $server_path,
 		'SELECT_TIMEZONE' => $select_timezone,
@@ -162,7 +162,7 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 		'L_RESET' => $LANG['reset']	
 	));
 	
-	$Template->Pparse('admin_config2');
+	$Template->pparse('admin_config2');
 }
 elseif( !empty($_POST['advanced']) )
 {
@@ -201,7 +201,7 @@ elseif( !empty($_POST['advanced']) )
 }
 else //Sinon on rempli le formulaire	 
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_config'=> 'admin/admin_config.tpl'
 	));
 	
@@ -250,7 +250,7 @@ else //Sinon on rempli le formulaire
 	if( $i == 0 )
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 
-	$Template->Assign_vars(array(		
+	$Template->assign_vars(array(		
 		'THEME' => $CONFIG['theme'],
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
@@ -351,12 +351,12 @@ else //Sinon on rempli le formulaire
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
 				}
-				$Template->Assign_block_vars('select_lang', array(
+				$Template->assign_block_vars('select_lang', array(
 					'LANG' => '<option value="' . $lang_value . '" ' . $selected . '>' . $lang_name . '</option>'
 				));
 			}
 		}
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
@@ -394,7 +394,7 @@ else //Sinon on rempli le formulaire
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
 				$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
-				$Template->Assign_block_vars('select', array(
+				$Template->assign_block_vars('select', array(
 					'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
 				));
 			}
@@ -403,7 +403,7 @@ else //Sinon on rempli le formulaire
 
 	$CONFIG['theme'] = $theme_tmp;
 	
-	$Template->Pparse('admin_config');
+	$Template->pparse('admin_config');
 }
 
 //Renvoi du code de déblocage.
@@ -421,7 +421,7 @@ if( !empty($_GET['unlock']) )
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');
 	
-	$Mail->Send_mail($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
+	$Mail->send($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
 
 	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }

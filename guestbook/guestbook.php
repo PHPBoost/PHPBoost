@@ -75,7 +75,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 }
 elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 
@@ -86,15 +86,15 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 
 	//Pseudo du membre connecté.
 	if( $user_id !== -1)
-		$Template->Assign_block_vars('hidden_guestbook', array(
+		$Template->assign_block_vars('hidden_guestbook', array(
 			'PSEUDO' => $guestbook_pseudo
 		));
 	else
-		$Template->Assign_block_vars('visible_guestbook', array(
+		$Template->assign_block_vars('visible_guestbook', array(
 			'PSEUDO' => stripslashes($guestbook_pseudo)
 		));
 
-	$Template->Assign_block_vars('guestbook', array(
+	$Template->assign_block_vars('guestbook', array(
 		'CONTENTS' => second_parse(stripslashes(strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short')
@@ -104,7 +104,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 	$update = retrieve(GET, 'update', false);
 	$update = $update && !empty($id_get) ? '?update=1&amp;id=' . $id_get : '';
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CONTENTS' => $guestbook_contents,
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
@@ -122,7 +122,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'L_ON' => $LANG['on']
 	));	
 	
-	$Template->Pparse('guestbook'); 
+	$Template->pparse('guestbook'); 
 }
 elseif( !empty($id_get) ) //Edition + suppression!
 {
@@ -146,22 +146,22 @@ elseif( !empty($id_get) ) //Edition + suppression!
 		}
 		elseif( $edit )
 		{
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'guestbook'=> 'guestbook/guestbook.tpl'
 			));
 
 			if( $row['user_id'] !== -1 )
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_HIDDEN_GUESTBOOK' => true,
 					'PSEUDO' => $row['login']
 				));
 			else
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_VISIBLE_GUESTBOOK' => true,
 					'PSEUDO' => $row['login']
 				));		
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'UPDATE' => transid('?update=1&amp;id=' . $id_get),
 				'CONTENTS' => unparse($row['contents']),
 				'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
@@ -179,7 +179,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				'L_RESET' => $LANG['reset']
 			));
 			
-			$Template->Pparse('guestbook'); 
+			$Template->pparse('guestbook'); 
 		}
 		elseif( $update )
 		{
@@ -208,18 +208,18 @@ elseif( !empty($id_get) ) //Edition + suppression!
 }
 else //Affichage.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
 		
 	//Pseudo du membre connecté.
 	if( $User->get_attribute('user_id') !== -1 )
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_HIDDEN_GUESTBOOK' => true,
 			'PSEUDO' => $User->get_attribute('login')
 		));
 	else
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_VISIBLE_GUESTBOOK' => true,
 			'PSEUDO' => $LANG['guest']
 		));
@@ -254,9 +254,9 @@ else //Affichage.
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'UPDATE' => transid(''),
-		'PAGINATION' => $Pagination->Display_pagination('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
+		'PAGINATION' => $Pagination->display('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
@@ -282,7 +282,7 @@ else //Affichage.
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = g.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY g.id
 	ORDER BY g.timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg(10, 'p'), 10), __LINE__, __FILE__);	
+	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);	
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];
@@ -385,7 +385,7 @@ else //Affichage.
 		}
 		else $user_local = '';
 		
-		$Template->Assign_block_vars('guestbook',array(
+		$Template->assign_block_vars('guestbook',array(
 			'ID' => $row['id'],
 			'CONTENTS' => ucfirst(second_parse($row['contents'])),
 			'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
@@ -416,7 +416,7 @@ else //Affichage.
 	}
 	$Sql->query_close($result);
 		
-	$Template->Pparse('guestbook'); 
+	$Template->pparse('guestbook'); 
 }
 
 require_once('../kernel/footer.php'); 

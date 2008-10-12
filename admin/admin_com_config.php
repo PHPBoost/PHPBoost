@@ -54,7 +54,7 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_com_config'=> 'admin/admin_com_config.tpl'
 	));
 	
@@ -84,7 +84,7 @@ else
 	}
 	
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_TAGS' => $j,
 		'OPTIONS_RANK' =>  $options,
 		'COM_MAX' => !empty($CONFIG_COM['com_max']) ? $CONFIG_COM['com_max'] : '10',
@@ -110,7 +110,7 @@ else
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
 	
-	$Template->Pparse('admin_com_config'); // traitement du modele	
+	$Template->pparse('admin_com_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

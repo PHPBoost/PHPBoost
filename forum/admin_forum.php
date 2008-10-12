@@ -119,7 +119,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 		{
 			if( empty($_POST['del_cat']) )
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'admin_forum_cat_del'=> 'forum/admin_forum_cat_del.tpl'
 				));
 
@@ -139,7 +139,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					}
 					$Sql->query_close($result);
 					
-					$Template->Assign_block_vars('topics', array(
+					$Template->assign_block_vars('topics', array(
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_topic'],
 						'L_MOVE_TOPICS' => $LANG['move_topics_to'],
@@ -161,7 +161,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					}
 					$Sql->query_close($result);
 					
-					$Template->Assign_block_vars('subforums', array(
+					$Template->assign_block_vars('subforums', array(
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_subforum'],
 						'L_MOVE_FORUMS' => $LANG['move_sub_forums_to'],
@@ -170,7 +170,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				}
 		
 				$forum_name = $Sql->query("SELECT name FROM ".PREFIX."forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'IDCAT' => $idcat,
 					'FORUM_NAME' => $forum_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -185,7 +185,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$Template->Pparse('admin_forum_cat_del'); //Traitement du modele	
+				$Template->pparse('admin_forum_cat_del'); //Traitement du modele	
 			}
 			else //Traitements.
 			{			
@@ -223,7 +223,7 @@ elseif( !empty($id) )
 {
 	$Cache->Load_file('forum');
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_forum_cat_edit'=> 'forum/admin_forum_cat_edit.tpl'
 	));
 			
@@ -259,9 +259,9 @@ elseif( !empty($id) )
 	elseif( $forum_info['level'] == 0 )
 		$type = 1;
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'ID' => $id,
 		'TYPE' => $type,
 		'CATEGORIES' => $forums,
@@ -308,17 +308,17 @@ elseif( !empty($id) )
 		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
-	$Template->Pparse('admin_forum_cat_edit'); // traitement du modele
+	$Template->pparse('admin_forum_cat_edit'); // traitement du modele
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 	'admin_forum_cat'=> 'forum/admin_forum_cat.tpl'
 	));
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_FORUM_MANAGEMENT' => $LANG['forum_management'],
@@ -358,7 +358,7 @@ else
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -380,13 +380,13 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)
 	));
 
-	$Template->Pparse('admin_forum_cat'); // traitement du modele	
+	$Template->pparse('admin_forum_cat'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

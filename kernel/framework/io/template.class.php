@@ -43,7 +43,7 @@ class Template
 		{
 			global $CONFIG, $User;
 
-			$this->tpl = $this->check_file($tpl);
+			$this->tpl = $this->_check_file($tpl);
 			$this->files[$this->tpl] = $this->tpl;
 			if( $auto_load_vars )
 			{
@@ -61,14 +61,14 @@ class Template
     }
 	
 	//Stock les différents tpl en cours de traitement.
-	function Set_filenames($array_tpl)
+	function set_filenames($array_tpl)
 	{
 		foreach($array_tpl as $parse_name => $filename)
-			$this->files[$parse_name] = $this->check_file($filename);
+			$this->files[$parse_name] = $this->_check_file($filename);
 	}
 	
 	//Récupération du chemin des données du module.
-	function Module_data_path($module)
+	function get_module_data_path($module)
 	{
 		if( isset($this->module_data_path[$module]) )
 			return $this->module_data_path[$module];
@@ -76,14 +76,14 @@ class Template
 	}
 	
 	//Stock les variables simple.
-	function Assign_vars($array_vars)
+	function assign_vars($array_vars)
 	{
 		foreach($array_vars as $key => $val)
 			$this->_var[$key] = $val;
 	}
 		
 	//Stock les variables des différents blocs.
-	function Assign_block_vars($block_name, $array_vars)
+	function assign_block_vars($block_name, $array_vars)
 	{
 		if( strpos($block_name, '.') !== false ) //Bloc imbriqué.
 		{
@@ -103,7 +103,7 @@ class Template
 	}
 	
 	//Supprime un bloc.
-	function Unassign_block_vars($block_name)
+	function unassign_block_vars($block_name)
 	{
 		if( isset($this->_block[$block_name]) )
 			unset($this->_block[$block_name]);
@@ -113,12 +113,12 @@ class Template
     function parse($stringMode = false)
     {
         if ( $stringMode )
-            return $this->Pparse($this->tpl, $stringMode);
-        else $this->Pparse($this->tpl, $stringMode);
+            return $this->pparse($this->tpl, $stringMode);
+        else $this->pparse($this->tpl, $stringMode);
     }
     
 	//Affichage du traitement du tpl.
-	function Pparse($parse_name, $stringMode = false)
+	function pparse($parse_name, $stringMode = false)
 	{
         $this->stringMode = $stringMode;
 		$file_cache_path = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
@@ -127,16 +127,16 @@ class Template
         $file_cache_path .= '.php';
 
 		//Vérification du statut du fichier de cache associé au template.
-		if( !$this->check_cache_file($this->files[$parse_name], $file_cache_path) )
+		if( !$this->_check_cache_file($this->files[$parse_name], $file_cache_path) )
 		{
 			//Chargement du template.
-			if( !$this->load_tpl($parse_name) )
+			if( !$this->_load($parse_name) )
 				return '';
 
 			//Parse
 			$this->_parse($parse_name, $stringMode);
-			$this->clean(); //On nettoie avant d'envoyer le flux.
-			$this->save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
+			$this->_clean(); //On nettoie avant d'envoyer le flux.
+			$this->_save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
 		}
         
 		include($file_cache_path);
@@ -146,7 +146,7 @@ class Template
 	}
 
 	// Object  cloner
-	function Copy()
+	function copy()
 	{
 		$copy = new Template();
 		
@@ -165,7 +165,7 @@ class Template
 	
 	## Private Methods ##
 	//Vérification de l'existence du tpl perso, sinon tentative de chargement du tpl de base.
-	function check_file($filename)
+	function _check_file($filename)
 	{
 		global $CONFIG;
         
@@ -218,7 +218,7 @@ class Template
 	}
 	
 	//Vérifie le statut du fichier en cache, il sera regénéré s'il n'existe pas ou si il est périmé.
-	function check_cache_file($tpl_path, $file_cache_path)
+	function _check_cache_file($tpl_path, $file_cache_path)
 	{
 		//fichier expiré
 		if( file_exists($file_cache_path) )
@@ -232,29 +232,29 @@ class Template
 	}
  
 	//Charge un tpl.
-	function load_tpl($parse_name)
+	function _load($parse_name)
 	{
 		if( !isset($this->files[$parse_name]) )
 			return false;
 			
 		$this->template = @file_get_contents_emulate($this->files[$parse_name]); //Charge le contenu du fichier tpl.
 		if( $this->template === false )
-			die('Template->load_tpl(): Le chargement du fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' a échoué');
+			die('Template->_load(): Le chargement du fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' a échoué');
 		if( empty($this->template) )
-			die('Template->load_tpl(): Le fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' est vide');
+			die('Template->_load(): Le fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' est vide');
 			
 		return true;
 	}
 	
 	//Inclusion d'un template dans un autre.
-	function tpl_include($parse_name)
+	function _include($parse_name)
 	{
  		if( isset($this->files[$parse_name]) )
         {
             if( $this->stringMode )
-                return $this->Pparse($parse_name, $this->stringMode);
+                return $this->pparse($parse_name, $this->stringMode);
             else
-                $this->Pparse($parse_name, $this->stringMode);
+                $this->pparse($parse_name, $this->stringMode);
         }
 	}
     
@@ -278,12 +278,12 @@ class Template
             $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
             //Remplacement des includes.
-            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '\';'."\n".'$tplString .= $this->tpl_include(\'$1\');'."\n".'$tplString .= \'', $this->template);
+            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '\';'."\n".'$tplString .= $this->_include(\'$1\');'."\n".'$tplString .= \'', $this->template);
         }
         else
         {
             // Protection des injections PHP et affichages des tags XML
-            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, 'protectFromInject'), $this->template);
+            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, '_protect_from_inject('), $this->template);
             
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '<?php echo (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'); ?>', $this->template);
@@ -299,18 +299,18 @@ class Template
             $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
             
             //Remplacement des includes.
-            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->tpl_include(\'$1\'); ?>', $this->template);
+            $this->template = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $this->_include(\'$1\'); ?>', $this->template);
         }
     }
     
-    function protectFromInject($mask)
+    function _protect_from_inject($mask)
     {
         return '<?php echo \'<?' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '?>\'; ?>';
     }
 
     
 	//Remplacement des variables de type bloc.
-	function parse_blocks_vars($blocks)
+	function _parse_blocks_vars($blocks)
 	{
 		if( isset($blocks[1]) )
 		{	
@@ -327,7 +327,7 @@ class Template
 	}
     
 	//Remplacement des blocs.
-	function parse_blocks($blocks)
+	function _parse_blocks($blocks)
 	{
 		if( isset($blocks[1]) )
 		{	
@@ -354,7 +354,7 @@ class Template
 	}
 	
 	//Remplacement des blocs conditionnels.
-	function parse_conditionnal_blocks($blocks)
+	function _parse_conditionnal_blocks($blocks)
 	{
 		if( isset($blocks[2]) )
 		{
@@ -382,7 +382,7 @@ class Template
 	}
 	
 	//Nettoyage des commentaires, et blocs et variables non utilisés.
-	function clean()
+	function _clean()
 	{
 		$this->template = preg_replace(
 			array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`s', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'), 
@@ -405,7 +405,7 @@ class Template
 	}
 	
 	//Enregistrement du fichier de cache, avec pose préalable d'un verrou.
-	function save($file_cache_path, $stringMode = false)
+	function _save($file_cache_path, $stringMode = false)
 	{
 		if( $file = @fopen($file_cache_path, 'wb') )
 		{

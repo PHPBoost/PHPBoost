@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true)
 	exit;
 
 ############### Header du forum ################
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
@@ -72,7 +72,7 @@ if( !$is_guest )
 //Formulaire de connexion sur le forum.
 if( $CONFIG_FORUM['display_connexion'] )
 {
-	$Template->Assign_vars(array(	
+	$Template->assign_vars(array(	
 		'C_FORUM_CONNEXION' => true,
 		'L_CONNECT' => $LANG['connect'],
 		'L_DISCONNECT' => $LANG['disconnect'],
@@ -81,7 +81,7 @@ if( $CONFIG_FORUM['display_connexion'] )
 	));
 }
 
-$Template->Assign_vars(array(	
+$Template->assign_vars(array(	
 	'C_DISPLAY_UNREAD_DETAILS' => ($User->get_attribute('user_id') !== -1) ? true : false,
 	'U_TOPIC_TRACK' => '<a class="small_link" href="../forum/track.php' .SID . '" title="' . $LANG['show_topic_track'] . '">' . $LANG['show_topic_track'] . '</a>',
 	'U_LAST_MSG_READ' => '<a class="small_link" href="../forum/lastread.php' . SID . '" title="' . $LANG['show_last_read'] . '">' . $LANG['show_last_read'] . '</a>',

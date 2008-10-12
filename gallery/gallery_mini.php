@@ -27,7 +27,7 @@
 
 if( defined('PHPBOOST') !== true ) exit;
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'gallery_mini'=> 'gallery/gallery_mini.tpl'
 ));
 
@@ -91,13 +91,13 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 		$scoll_mode = 'static_scroll';
 		break;
 		case 1:
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_VERTICAL_SCROLL' => true
 		));
 		$scoll_mode = 'dynamic_scroll_v';
 		break;
 		case 2:
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_HORIZONTAL_SCROLL' => true
 		));
 		$scoll_mode = 'dynamic_scroll_h';
@@ -123,7 +123,7 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 			
 		if( $CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2 )
 		{
-			$Template->Assign_block_vars('pics_mini', array(
+			$Template->assign_block_vars('pics_mini', array(
 				'ID' => $i,
 				'PICS' => '../gallery/pics/thumbnails/' . $row['path'],		
 				'NAME' => $row['name'],		
@@ -145,9 +145,9 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	}
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 	'ARRAY_PICS' => $array_pics_mini,
 	'HEIGHT_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 1) ? ($CONFIG_GALLERY['height'] * 2) : $CONFIG_GALLERY['height'],
 	'SUM_HEIGHT' => $sum_height + 10,

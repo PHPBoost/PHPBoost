@@ -136,7 +136,7 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_cat'=> 'web/admin_web_cat.tpl'
 	));
 	  
@@ -158,7 +158,7 @@ else
 	foreach($img_array as $key => $img_path)
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],		
@@ -222,7 +222,7 @@ else
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
 		}
 		
-		$Template->Assign_block_vars('cat', array(
+		$Template->assign_block_vars('cat', array(
 			'IDCAT' => $row['id'],
 			'CAT' => $name,
 			'CONTENTS' => $row['contents'],
@@ -257,14 +257,14 @@ else
 
 			$selected = ($row['secure'] == $i) ? 'selected="selected"' : '' ;
 
-			$Template->Assign_block_vars('cat.select_secure', array(
+			$Template->assign_block_vars('cat.select_secure', array(
 				'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 			));
 		}
 	}
 	$Sql->query_close($result);
 		
-	$Template->Pparse('admin_web_cat'); // traitement du modele	
+	$Template->pparse('admin_web_cat'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

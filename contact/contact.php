@@ -37,7 +37,7 @@ $mail_valid = retrieve(POST, 'mail_valid', '');
 ###########################Envoi##############################
 if( !empty($mail_valid) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'contact'=> 'contact/contact.tpl'
 	));	
 		
@@ -50,7 +50,7 @@ if( !empty($mail_valid) )
 		include_once('../kernel/framework/io/mail.class.php');
 		$Mail = new Mail();
 
-		if( $Mail->Send_mail($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
+		if( $Mail->send($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
 			redirect(HOST . SCRIPT . transid('?error=success', '', '&') . '#errorh');
 		else //Erreur mail
 			redirect(HOST . SCRIPT . transid('?error=error', '', '&') . '#errorh');
@@ -63,7 +63,7 @@ elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_cont
 else
 {	
 	###########################Affichage##############################
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'contact'=> 'contact/contact.tpl'
 	));
 	
@@ -84,14 +84,14 @@ else
 	if( $Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'] )
 	{
 		$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_VERIF_CODE' => true,
 			'VERIF_CODE' => $Captcha->display_form(),
 			'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
 		));		
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'MAIL' => $User->get_attribute('user_mail'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'] ,
@@ -107,7 +107,7 @@ else
 		'U_ACTION_CONTACT' => SID
 	));
 
-	$Template->Pparse('contact'); 
+	$Template->pparse('contact'); 
 }
 
 require_once('../kernel/footer.php'); 

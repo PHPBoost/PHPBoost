@@ -27,11 +27,11 @@
 
 if( !defined('PHPBOOST') ) exit;
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_download_menu'=> 'download/admin_download_menu.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
 	'L_CATS_MANAGEMENT' => $LANG['cat_management'],
 	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],

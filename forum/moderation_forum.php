@@ -61,12 +61,12 @@ if( is_array($CAT_FORUM) )
 if( !$User->check_level(MODO_LEVEL) && $check_auth_by_group !== true ) //Si il n'est pas modérateur (total ou partiel)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_moderation_panel'=> 'forum/forum_moderation_panel.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
@@ -131,8 +131,8 @@ if( $action == 'alert' ) //Gestion des alertes
 		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=alert' . $get_id, '', '&'));
 	}
 	
-	$Template->Assign_vars(array(
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],
 		'L_FORUM' => $LANG['forum'],
@@ -144,7 +144,7 @@ if( $action == 'alert' ) //Gestion des alertes
 
 	if( empty($id_get) ) //On liste les alertes
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_ALERTS' => true,
 			'L_TITLE' => $LANG['alert_title'],
 			'L_TOPIC' => $LANG['alert_concerned_topic'],
@@ -180,7 +180,7 @@ if( $action == 'alert' ) //Gestion des alertes
 			else
 				$status = $LANG['alert_solved'] . '<a href="../member/member' . transid('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
 			
-			$Template->Assign_block_vars('alert_list', array(
+			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . transid('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
 				'EDIT' => '<a href="moderation_forum' . transid('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a>',
 				'TOPIC' => '<a href="topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
@@ -196,7 +196,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_FORUM_NO_ALERT' => true,
 				'L_NO_ALERT' => $LANG['no_alert'],
 			));
@@ -229,7 +229,7 @@ if( $action == 'alert' ) //Gestion des alertes
 			else
 				$status = $LANG['alert_solved'] . '<a href="../member/member' . transid('.php?id=' . $row['idmodo'], '-' . $row['idmodo'] . '.php') . '">' . $row['login_modo'] . '</a>';
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'ID' => $id_get,
 				'TITLE' => $row['title'],
 				'TOPIC' => '<a href="topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
@@ -253,7 +253,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		}
 		else //Groupe, modérateur partiel qui n'a pas accès à cette alerte car elle ne concerne pas son forum
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_FORUM_ALERT_NOT_AUTH' => true,
 				'L_NO_ALERT' => $LANG['alert_not_auth']
 			));
@@ -294,8 +294,8 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
 	}
 	
-	$Template->Assign_vars(array(		
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	$Template->assign_vars(array(		
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -318,7 +318,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=punish', '', '&'));
 		}	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_punish_until'],
@@ -337,7 +337,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		ORDER BY user_readonly", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('user_list', array(
+			$Template->assign_block_vars('user_list', array(
 				'LOGIN' => '<a href="moderation_forum.php' . transid('?action=punish&amp;id=' . $row['user_id']) . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
@@ -350,7 +350,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars( array(
+			$Template->assign_vars( array(
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_punish'],
 			));
@@ -388,7 +388,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
@@ -468,15 +468,15 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				//Envoi du mail
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
-				$Mail->Send_mail($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 			}	
 		}
 		
 		redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
 	}
 	
-	$Template->Assign_vars(array(		
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	$Template->assign_vars(array(		
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_FORUM' => $LANG['forum'],
 		'L_LOGIN' => $LANG['pseudo'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -499,7 +499,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				redirect(HOST . DIR . '/forum/moderation_forum' . transid('.php?action=warning', '', '&'));
 		}		
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_USER_LIST' => true,
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_INFO' => $LANG['user_warning_level'],
@@ -517,7 +517,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		ORDER BY user_warning", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('user_list', array(
+			$Template->assign_block_vars('user_list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
 				'U_ACTION_USER' => '<a href="moderation_forum.php' . transid('?action=warning&amp;id=' . $row['user_id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="" /></a>',
@@ -530,7 +530,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		
 		if( $i === 0 )
 		{
-			$Template->Assign_vars( array(
+			$Template->assign_vars( array(
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $LANG['no_user_warning'],
 			));
@@ -550,7 +550,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
 			'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
@@ -580,7 +580,7 @@ else //Panneau de modération
 {
 	$get_more = retrieve(GET, 'more', 0);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_FORUM_MODO_MAIN' => true,
 		'U_ACTION_HISTORY' => transid('.php?del_h=1'),
 		'U_MORE_ACTION' => !empty($get_more) ? transid('.php?more=' . ($get_more + 100)) : transid('.php?more=100')
@@ -589,14 +589,14 @@ else //Panneau de modération
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
 	if( $User->check_level(ADMIN_LEVEL) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_ADMIN' => true
 		));	
 	}
 			
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $LANG['moderation_panel'] . ' : ' . $LANG['moderation_forum'],
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
@@ -625,7 +625,7 @@ else //Panneau de modération
 	" . $Sql->limit(0, $end), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('action_list', array(
+		$Template->assign_block_vars('action_list', array(
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
@@ -639,7 +639,7 @@ else //Panneau de modération
 	
 	if( $i == 0 )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_FORUM_NO_ACTION' => true,
 			'L_NO_ACTION' => $LANG['no_action']
 		));
@@ -680,7 +680,7 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -699,7 +699,7 @@ $Template->Assign_vars(array(
 	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'"
 ));
 	
-$Template->Pparse('forum_moderation_panel');
+$Template->pparse('forum_moderation_panel');
 
 include('../kernel/footer.php');
 

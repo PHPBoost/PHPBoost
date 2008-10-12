@@ -55,11 +55,11 @@ elseif( $id_down > 0 )
 }
 elseif( $cat_to_del > 0 )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_download_cat_remove'=> 'download/admin_download_cat_remove.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CATEGORY_TREE' => $download_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
 		'L_REMOVING_CATEGORY' => $DOWNLOAD_LANG['removing_category'],
@@ -72,7 +72,7 @@ elseif( $cat_to_del > 0 )
 	
 	include_once('admin_download_menu.php');
 		
-	$Template->Pparse('admin_download_cat_remove');
+	$Template->pparse('admin_download_cat_remove');
 }
 elseif( !empty($_POST['submit']) )
 {
@@ -137,7 +137,7 @@ elseif( !empty($_GET['recount']) )
 }
 elseif( $new_cat XOR $id_edit > 0 )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_download_cat_edition'=> 'download/admin_download_cat_edition.tpl'
 	));
 	
@@ -165,7 +165,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		@closedir($dh); //On ferme le dossier
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'IMG_LIST' => $img_str,
 		'L_CATEGORY' => $LANG['category'],
@@ -188,7 +188,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		
 	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )	
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($DOWNLOAD_CATS[$id_edit]['description']),
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
@@ -207,7 +207,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 	else
 	{
 		$id_edit = '0';
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
@@ -224,11 +224,11 @@ elseif( $new_cat XOR $id_edit > 0 )
 	
 	include_once('admin_download_menu.php');
 	
-	$Template->Pparse('admin_download_cat_edition');
+	$Template->pparse('admin_download_cat_edition');
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_download_cat'=> 'download/admin_download_cat.tpl'
 	));
 	
@@ -269,13 +269,13 @@ else
 		
 	$download_categories->Set_displaying_configuration($cat_config);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'CATEGORIES' => $download_categories->Build_categories_administration_interface(),
 		'L_RECOUNT_SUBFILES' => $DOWNLOAD_LANG['recount_subfiles'],
 		'U_RECOUNT_SUBFILES' => transid('admin_download_cat.php?recount=1')
 	));
 
-	$Template->Pparse('admin_download_cat');
+	$Template->pparse('admin_download_cat');
 }
 
 require_once('../admin/admin_footer.php');

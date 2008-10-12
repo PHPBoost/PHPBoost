@@ -56,7 +56,7 @@ if( !empty($_POST['update']) )  //Mise à jour
 
 $Cache->Load_file('wiki');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'wiki_config'=> 'wiki/admin_wiki.tpl'
 ));
 
@@ -65,7 +65,7 @@ $content_editor = new Content(BBCODE_LANGUAGE);
 $editor =& $content_editor->get_editor();
 $editor->set_identifier('contents');
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'HITS_SELECTED' => ($_WIKI_CONFIG['count_hits'] > 0) ? 'checked="checked"' : '',
 	'WIKI_NAME' => $_WIKI_CONFIG['wiki_name'],
@@ -90,7 +90,7 @@ $Template->Assign_vars(array(
 	'L_DESCRIPTION' => $LANG['wiki_desc']
 ));
 	
-$Template->Pparse('wiki_config');
+$Template->pparse('wiki_config');
 
 require_once('../admin/admin_footer.php');
 

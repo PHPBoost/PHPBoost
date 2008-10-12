@@ -84,14 +84,14 @@ class Module_map
 		//We get the stream in which we are going to write
 		$template = $export_config->Get_module_map_stream();
 		
-		$template->Assign_vars(array(
+		$template->assign_vars(array(
 			'MODULE_NAME' => htmlspecialchars($this->name, ENT_QUOTES),
 			'MODULE_DESCRIPTION' => $this->description
 			));
 		
 		foreach($this->sub_sections as $sub_section)
 		{
-			$template->Assign_block_vars('children', array(
+			$template->assign_block_vars('children', array(
 				'CHILD_CODE' => $sub_section->Export($export_config, 1)
 				));
 		}

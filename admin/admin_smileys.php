@@ -63,7 +63,7 @@ elseif( !empty($id) && $del ) //Suppression.
 }	
 elseif( !empty($id) && $edit ) //Edition.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
 	));
 
@@ -88,7 +88,7 @@ elseif( !empty($id) && $edit ) //Edition.
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'IDSMILEY' => $row['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
 		'CODE_SMILEY' => $row['code_smiley'],
@@ -106,15 +106,15 @@ elseif( !empty($id) && $edit ) //Edition.
 		'L_RESET' => $LANG['reset'],
 	));	
 	
-	$Template->Pparse('admin_smileys_management2');
+	$Template->pparse('admin_smileys_management2');
 }		
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_smileys_management'=> 'admin/admin_smileys_management.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],
@@ -130,7 +130,7 @@ else
 	FROM ".PREFIX."smileys", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'IDSMILEY' => $row['idsmiley'],
 			'URL_SMILEY' => $row['url_smiley'],
 			'CODE_SMILEY' => $row['code_smiley']
@@ -138,7 +138,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_smileys_management'); 
+	$Template->pparse('admin_smileys_management'); 
 }
 
 require_once('../admin/admin_footer.php');

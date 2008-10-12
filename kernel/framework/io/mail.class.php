@@ -34,7 +34,7 @@ class Mail
 	}
 	
 	//Envoi du mail valide.
-	function Send_mail($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header = '', $mail_sender = 'admin')
+	function send($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header = '', $mail_sender = 'admin')
 	{
 		$this->sender = $mail_sender;
 		$this->from = $mail_from;
@@ -42,9 +42,9 @@ class Mail
 		
 		if( $mail_sender == 'admin' )
 		{
-			$this->clean_mail($mail_objet, $mail_contents);
+			$this->_clean($mail_objet, $mail_contents);
 			if( empty($mail_header) )
-				$this->send_headers();
+				$this->_send_headers();
 			else
 				$this->header = $mail_header;
 				
@@ -53,11 +53,11 @@ class Mail
 		}
 		else
 		{
-			if( $this->Check_mail_validity($this->from) )
+			if( $this->check_validity($this->from) )
 			{
-				$this->clean_mail($mail_objet, $mail_contents);
+				$this->_clean($mail_objet, $mail_contents);
 				if( empty($mail_header) )
-					$this->send_headers();
+					$this->_send_headers();
 				else
 					$this->header = $mail_header;
 					
@@ -70,7 +70,7 @@ class Mail
 	}	
 	
     //Vérification de la validité du mail du posteur => Protection contre injection header.
-    function Check_mail_validity()
+    function check_validity()
     {
         global $LANG, $Errorh;
 
@@ -90,7 +90,7 @@ class Mail
 	
 	## Private Methods ##
 	//Nettoie les entrées.
-	function clean_mail($mail_objet, $mail_contents)
+	function _clean($mail_objet, $mail_contents)
 	{
 		if( get_magic_quotes_gpc() )
 		{
@@ -105,7 +105,7 @@ class Mail
 	}
 	
 	//Génération des headers du mail.
-	function send_headers()
+	function _send_headers()
 	{
 		global $LANG;
 		

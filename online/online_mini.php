@@ -33,7 +33,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	load_module_lang('online');
 	$Cache->Load_file('online');
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'online_mini'=> 'online/online_mini.tpl'
 	));
 
@@ -54,7 +54,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 			//Visiteurs non pris en compte.
 			if( $row['level'] !== '-1' )
 			{
-				$Template->Assign_block_vars('online', array(
+				$Template->assign_block_vars('online', array(
 					'MEMBER' => '<a href="' . PATH_TO_ROOT . '/member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
 				));
 				$i++;
@@ -94,7 +94,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	$l_modo = ($count_modo > 1) ? $LANG['modo_s'] : $LANG['modo'];
 	$l_admin = ($count_admin > 1) ? $LANG['admin_s'] : $LANG['admin'];
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'VISIT' => $count_visit,
 		'MEMBER' => $count_member,
 		'MODO' => $count_modo,

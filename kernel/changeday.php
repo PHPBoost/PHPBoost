@@ -77,7 +77,7 @@ if( empty($check_update) )
     
 	//Parcours des modules afin d'executer les actions journalières.
 	require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
-	$modulesLoader = new Modules();
+	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('on_changeday');
 	foreach($modules as $module)
 	{

@@ -88,7 +88,7 @@ class WikiInterface extends ModuleInterface
         if ( !isset($args['WikiWhere']) || !in_array($args['WikiWhere'], explode(',','title,contents,all')) )
             $args['WikiWhere'] = 'title';
 
-        $Tpl->Assign_vars(Array(
+        $Tpl->assign_vars(Array(
             'L_WHERE' => $LANG['wiki_search_where'],
             'IS_TITLE_SELECTED' => $args['WikiWhere'] == 'title'? ' selected="selected"': '',
             'IS_CONTENTS_SELECTED' => $args['WikiWhere'] == 'contents'? ' selected="selected"': '',

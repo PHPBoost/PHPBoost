@@ -111,11 +111,11 @@ if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 }
 elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('user_id')) && $pm_get > '0' ) //Interface pour poster la conversation.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'pm'=> 'pm.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -136,7 +136,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	
 	$login = !empty($pm_get) ? $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
 	
-	$Template->Assign_block_vars('post_convers', array(
+	$Template->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => transid('.php'),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
@@ -172,18 +172,18 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 			$Errorh->Error_handler($errstr, $type);
 	}
 	
-	$Template->Assign_block_vars('post_convers.user_id_dest', array(
+	$Template->assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	$Template->Pparse('pm');
+	$Template->pparse('pm');
 }
 elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de la conversation.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'pm'=> 'pm.tpl'
 	));
 	
-	$Template->Assign_vars(array(		
+	$Template->assign_vars(array(		
 		'LANG' => $CONFIG['lang'],
 		'THEME' => $CONFIG['theme'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -201,7 +201,7 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Assign_block_vars('post_convers', array(
+	$Template->assign_block_vars('post_convers', array(
 		'U_ACTION_CONVERS' => transid('.php'),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
@@ -210,26 +210,26 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : ''
 	));
 	
-	$Template->Assign_block_vars('post_convers.show_convers', array(
+	$Template->assign_block_vars('post_convers.show_convers', array(
 		'DATE' => gmdate_format('date_format'),
 		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents'])))
 	));
 	
-	$Template->Assign_block_vars('post_convers.user_id_dest', array(
+	$Template->assign_block_vars('post_convers.user_id_dest', array(
 	));
 	
-	$Template->Pparse('pm');
+	$Template->pparse('pm');
 }
 elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisualisation du message.
 {
 	//On récupère les info de la conversation.
 	$convers_title = $Sql->query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'pm'=> 'pm.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'LANG' => $CONFIG['lang'],
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -240,7 +240,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Assign_block_vars('show_pm', array(
+	$Template->assign_block_vars('show_pm', array(
 		'DATE' => gmdate_format('date_format'),
 		'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
@@ -248,12 +248,12 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 	));
 	
-	$Template->Assign_block_vars('post_pm', array(
+	$Template->assign_block_vars('post_pm', array(
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '',
 		'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get)
 	));
 	
-	$Template->Pparse('pm');
+	$Template->pparse('pm');
 }	
 elseif( !empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del) ) //Envoi de messages.
 {
@@ -323,7 +323,7 @@ elseif( $pm_del_convers ) //Suppression de conversation.
 		)
 	)
 	ORDER BY last_timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$del_convers = isset($_POST[$row['id']]) ? trim($_POST[$row['id']]) : '';
@@ -447,11 +447,11 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 			}
 			else //Interface d'édition
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'pm'=> 'pm.tpl'
 				));
 				
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'LANG' => $CONFIG['lang'],
 					'THEME' => $CONFIG['theme'],					
 					'KERNEL_EDITOR' => display_editor(),
@@ -468,7 +468,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
 				$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 				
-				$Template->Assign_block_vars('edit_pm', array(
+				$Template->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
 					'U_ACTION_EDIT' => transid('.php?edit=' . $pm_edit),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
@@ -477,7 +477,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				
 				if( !empty($_POST['prw_convers']) XOR !empty($_POST['prw']) )
 				{				
-					$Template->Assign_block_vars('edit_pm.show_pm', array(
+					$Template->assign_block_vars('edit_pm.show_pm', array(
 						'DATE' => gmdate_format('date_format'),
 						'CONTENTS' => second_parse(stripslashes(strparse($_POST['contents']))),
 					));				
@@ -485,21 +485,21 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 
 				if( $id_first == $pm_edit ) //Premier message de la convers => Edition de celle-ci
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'SUBMIT_NAME' => 'convers',
 						'L_TITLE' => $LANG['title'],
 					));
 					
-					$Template->Assign_block_vars('edit_pm.title', array(
+					$Template->assign_block_vars('edit_pm.title', array(
 						'TITLE' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw']) ) ? $title : $convers['title']
 					));
 				}
 				else
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'SUBMIT_NAME' => 'edit_pm',
 					));
 					
-				$Template->Pparse('pm');
+				$Template->pparse('pm');
 			}
 		}
 		else //Le membre a déjà lu le message on ne peux plus éditer.
@@ -510,7 +510,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 }
 elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'pm'=> 'pm.tpl'
 	));
 	
@@ -533,14 +533,14 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	}	
 	
 	$pagination_msg = 25;	
-	$Template->Assign_block_vars('pm', array(
-		'PAGINATION' => $Pagination->Display_pagination('pm' . transid('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
+	$Template->assign_block_vars('pm', array(
+		'PAGINATION' => $Pagination->display('pm' . transid('.php?id=' . $pm_id_get . '&amp;p=%d', '-0-' . $pm_id_get . '-%d.php'), $convers['nbr_msg'], 'p', $pagination_msg, 3),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_TITLE_CONVERS' => '<a href="pm' . transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get .'.php') . '">' . $convers['title'] . '</a>',
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'		
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -570,7 +570,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp 
-	" . $Sql->limit($Pagination->First_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];
@@ -667,7 +667,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text_strong">' . $LANG['forum_quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
 		$i++;
 		
-		$Template->Assign_block_vars('pm.msg', array(
+		$Template->assign_block_vars('pm.msg', array(
 			'ID' => $row['id'],
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
@@ -716,11 +716,11 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	
 	if( $convers['user_id'] != -1 )
 	{		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor(),
 		));
 		
-		$Template->Assign_block_vars('post_pm', array(
+		$Template->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
 			'U_PM_ACTION_POST' => transid('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
 		));
@@ -744,11 +744,11 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			$Errorh->Error_handler($errstr, $type);
 	}
 	
-	$Template->Pparse('pm');
+	$Template->pparse('pm');
 }
 else //Liste des conversation, dans la boite du membre.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'pm'=> 'pm.tpl'
 	));
 
@@ -765,10 +765,10 @@ else //Liste des conversation, dans la boite du membre.
 	$unlimited_pm = $User->check_level(MODO_LEVEL) || ($limit_group === -1);	
 	$pm_max = $unlimited_pm ? $LANG['illimited'] : $limit_group;
 	
-	$Template->Assign_block_vars('convers', array(
+	$Template->assign_block_vars('convers', array(
 		'NBR_PM' => $pagination_pm,
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
-		'PAGINATION' => $Pagination->Display_pagination('pm' . transid('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
+		'PAGINATION' => $Pagination->display('pm' . transid('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small_link">' . $LANG['mark_pm_as_read'] . '</a>',
 		'U_MEMBER_ACTION_PM' => transid('.php?del_convers=1&amp;p=' . $page),
 		'U_MEMBER_VIEW' => '<a href="' . transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',	
@@ -779,7 +779,7 @@ else //Liste des conversation, dans la boite du membre.
 	//Aucun message privé.
 	if( $nbr_pm == 0 )
 	{
-		$Template->Assign_block_vars('convers.no_pm', array(
+		$Template->assign_block_vars('convers.no_pm', array(
 			'L_NO_PM' => $LANG['no_pm']
 		));
 	}
@@ -792,7 +792,7 @@ else //Liste des conversation, dans la boite du membre.
 			$Errorh->Error_handler(sprintf($LANG['e_pm_full'], $nbr_waiting_pm), E_USER_WARNING);
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -836,7 +836,7 @@ else //Liste des conversation, dans la boite du membre.
 		)
 	)
 	ORDER BY pm.last_timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg($pagination_pm, 'p'), $pagination_pm), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On saute l'itération si la limite est dépassé, si ce n'est pas un message privé du système.
@@ -888,7 +888,7 @@ else //Liste des conversation, dans la boite du membre.
 		$last_msg = '<a href="pm' . transid('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />'; 
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="../member/member' . transid('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['last_login'] . '</a>';
 
-		$Template->Assign_block_vars('convers.list', array(
+		$Template->assign_block_vars('convers.list', array(
 			'INCR' => $i,
 			'ID' => $row['id'],	
 			'ANNOUNCE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $img_announce . '.gif" alt="" />',
@@ -903,7 +903,7 @@ else //Liste des conversation, dans la boite du membre.
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('pm');
+	$Template->pparse('pm');
 }
 
 	

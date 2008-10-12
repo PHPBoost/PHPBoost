@@ -55,7 +55,7 @@ if( !empty($_POST['msg_mbr']) ) //Message aux membres.
 }
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_members_config'=> 'admin/admin_members_config.tpl'
 	));
 	
@@ -70,13 +70,13 @@ else
 	
 	for($i = 0; $i < 5; $i++)
 	{
-		$Template->Assign_block_vars('difficulty', array(
+		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
 			'SELECTED' => ($CONFIG_MEMBER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
 		'ACTIV_REGISTER_ENABLED' => $CONFIG_MEMBER['activ_register'] == 1 ? 'selected="selected"' : '',
 		'ACTIV_REGISTER_DISABLED' => $CONFIG_MEMBER['activ_register'] == 0 ? 'selected="selected"' : '',
@@ -134,7 +134,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Pparse('admin_members_config'); 
+	$Template->pparse('admin_members_config'); 
 }
 
 require_once('../admin/admin_footer.php');

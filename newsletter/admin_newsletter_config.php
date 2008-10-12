@@ -31,7 +31,7 @@ load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 require_once('../admin/admin_header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));	
 
@@ -40,7 +40,7 @@ $Cache->Load_file('newsletter');
 $sender_mail = retrieve(POST, 'sender_mail', '', TSTRING_UNSECURE);
 $newsletter_name = retrieve(POST, 'newsletter_name', '', TSTRING_HTML);
 
-$Template->Assign_block_vars('config', array(
+$Template->assign_block_vars('config', array(
 ));
 
 //enregistrement
@@ -57,7 +57,7 @@ if( !empty($sender_mail) && !empty($newsletter_name) )
 		$Errorh->Error_handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
@@ -70,7 +70,7 @@ $Template->Assign_vars(array(
 	'L_RESET' => $LANG['reset']
 ));
 
-$Template->Pparse('admin_newsletter'); 
+$Template->pparse('admin_newsletter'); 
 
 
 require_once('../admin/admin_footer.php');

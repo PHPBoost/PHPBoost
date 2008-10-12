@@ -50,7 +50,7 @@ if( empty($alert) && empty($alert_post) || empty($topic['idcat']) )
 if( !$User->check_level(MEMBER_LEVEL) ) //Si c'est un invité
     $Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 	
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_alert'=> 'forum/forum_alert.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
@@ -63,7 +63,7 @@ if( !empty($alert) && empty($alert_post) )
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
 	if( empty($nbr_alert) ) //On affiche le formulaire
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor(),
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_ALERT_EXPLAIN' => $LANG['alert_modo_explain'],
@@ -73,7 +73,7 @@ if( !empty($alert) && empty($alert_post) )
 			'L_REQUIRE_TITLE' => $LANG['require_title']
 		));
 		
-		$Template->Assign_block_vars('alert_form', array(
+		$Template->assign_block_vars('alert_form', array(
 			'TITLE' => $topic_name,
 			'U_TOPIC' => 'topic' . transid('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php'),
 			'ID_ALERT' => $alert,
@@ -81,13 +81,13 @@ if( !empty($alert) && empty($alert_post) )
 	}
 	else //Une alerte a déjà été postée
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'L_ALERT' => $LANG['alert_topic'],
 			'L_BACK_TOPIC' => $LANG['alert_back'],
 			'URL_TOPIC' => 'topic' . transid('.php?id=' . $alert, '-' . $alert . '-' . url_encode_rewrite($topic_name) . '.php')
 		));	
 		
-		$Template->Assign_block_vars('alert_confirm', array(
+		$Template->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']
 		));
 	}
@@ -96,7 +96,7 @@ if( !empty($alert) && empty($alert_post) )
 //Si on enregistre une alerte
 if( !empty($alert_post) )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_ALERT' => $LANG['alert_topic'],
 		'L_BACK_TOPIC' => $LANG['alert_back'],
 		'URL_TOPIC' => 'topic' . transid('.php?id=' . $alert_post, '-' . $alert_post . '-' . url_encode_rewrite($topic_name) . '.php')
@@ -115,13 +115,13 @@ if( !empty($alert_post) )
 
 		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_contents);
 		
-		$Template->Assign_block_vars('alert_confirm', array(
+		$Template->assign_block_vars('alert_confirm', array(
 			'MSG' => str_replace('%title', $topic_name, $LANG['alert_success'])
 		));
 	}
 	else //Une alerte a déjà été postée
 	{
-		$Template->Assign_block_vars('alert_confirm', array(
+		$Template->assign_block_vars('alert_confirm', array(
 			'MSG' => $LANG['alert_topic_already_done']
 		));
 	}
@@ -162,10 +162,10 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'DESC' => $topic['subtitle'],
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -187,7 +187,7 @@ $Template->Assign_vars(array(
 	'L_ONLINE' => strtolower($LANG['online'])
 ));
 
-$Template->Pparse('forum_alert');	
+$Template->pparse('forum_alert');	
 
 include('../kernel/footer.php');
 

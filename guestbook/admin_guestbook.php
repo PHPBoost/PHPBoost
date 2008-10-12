@@ -48,7 +48,7 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_guestbook_config'=> 'guestbook/admin_guestbook_config.tpl'
 	));
 	
@@ -66,7 +66,7 @@ else
 		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $name . '</option>';
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TAGS' => $tags,
 		'NBR_TAGS' => $i,
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
@@ -106,12 +106,12 @@ else
 		} 
 
 		$selected = ($CONFIG_GUESTBOOK['guestbook_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_auth', array(
+		$Template->assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
 	
-	$Template->Pparse('admin_guestbook_config'); // traitement du modele	
+	$Template->pparse('admin_guestbook_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

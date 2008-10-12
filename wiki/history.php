@@ -46,9 +46,9 @@ require_once('../kernel/header.php');
 
 if( !empty($id_article) )
 {
-	$Template->Set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
+	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
-	$Template->Assign_block_vars('article', array(
+	$Template->assign_block_vars('article', array(
 		'L_TITLE' => $LANG['wiki_history'] . ': <a href="' . $article_infos['encoded_title'] . '">' . $article_infos['title'] . '</a>',
 	));
 	
@@ -71,10 +71,10 @@ if( !empty($id_article) )
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . transid('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . transid('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->Module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . transid('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
-		$Template->Assign_block_vars('article.list', array(
+		$Template->assign_block_vars('article.list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -85,14 +85,14 @@ if( !empty($id_article) )
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_VERSIONS' => $LANG['wiki_version_list'],
 		'L_DATE' => $LANG['date'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_ACTIONS' => $LANG['wiki_possible_actions'],
 		));
 	
-	$Template->Pparse('wiki_history');	
+	$Template->pparse('wiki_history');	
 }
 else //On affiche la liste des modifications 
 {
@@ -108,11 +108,11 @@ else //On affiche la liste des modifications
 	//On instancie la classe de pagination
 	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
-	$show_pagin = $Pagination->Display_pagination(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
+	$show_pagin = $Pagination->display(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
-	$Template->Set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
+	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
-	$Template->Assign_block_vars('index', array(
+	$Template->assign_block_vars('index', array(
 		'L_HISTORY' => $LANG['wiki_history'],
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
@@ -130,10 +130,10 @@ else //On affiche la liste des modifications
 		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
-		" . $Sql->limit($Pagination->First_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
-	while( $row = mysql_fetch_assoc($result) )
+		" . $Sql->limit($Pagination->get_first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
+	while( $row = myfetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('index.list', array(
+		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
@@ -141,7 +141,7 @@ else //On affiche la liste des modifications
 		));
 	}
 	
-	$Template->Pparse('wiki_history');
+	$Template->pparse('wiki_history');
 }
 
 require_once('../kernel/footer.php'); 

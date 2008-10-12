@@ -51,13 +51,13 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 	{
 		if( $_FILES['gallery']['size'] > 0 )
 		{
-			$Upload->Upload_file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
+			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
-				$error = $Upload->Validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
 				else
@@ -107,7 +107,7 @@ elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'ima
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_gallery_add'=> 'gallery/admin_gallery_add.tpl'
 	));
 	
@@ -137,7 +137,7 @@ else
 	{	
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$imageup = $Sql->query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
-		$Template->Assign_block_vars('image_up', array(
+		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
 			'L_SUCCESS_UPLOAD' => $LANG['success_upload_img'],
@@ -145,7 +145,7 @@ else
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
@@ -208,7 +208,7 @@ else
 			$nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 			$column_width_pics = floor(100/$nbr_column_pics);
 			
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'NBR_PICS' => $nbr_pics,
 				'COLUMN_WIDTH_PICS' => $column_width_pics
 			));
@@ -260,7 +260,7 @@ else
 				if( !file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics) )
 					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
 
-				$Template->Assign_block_vars('list', array(
+				$Template->assign_block_vars('list', array(
 					'ID' => $j,
 					'THUMNAILS' => '<img src="pics/thumbnails/' .  $pics . '" alt="" />',
 					'NAME' => $pics,
@@ -275,7 +275,7 @@ else
 			while( !is_int($j/$nbr_column_pics) )
 			{		
 				$j++;
-				$Template->Assign_block_vars('end_td_pics', array(
+				$Template->assign_block_vars('end_td_pics', array(
 					'TD_END' => '<td class="row1" style="width:' . $column_width_pics . '%;padding:0">&nbsp;</td>',
 					'TR_END' => (is_int($j/$nbr_column_pics)) ? '</tr>' : ''			
 				));	
@@ -285,12 +285,12 @@ else
 	
 	if( $j == 0 )
 	{
-		$Template->Assign_block_vars('no_img', array(
+		$Template->assign_block_vars('no_img', array(
 			'L_NO_IMG' => $LANG['no_pics']
 		));
 	}
 	
-	$Template->Pparse('admin_gallery_add'); 
+	$Template->pparse('admin_gallery_add'); 
 }
 
 require_once('../admin/admin_footer.php');

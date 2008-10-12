@@ -47,13 +47,13 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_calendar_config'=> 'calendar/admin_calendar_config.tpl'
 	));
 	
 	$Cache->Load_file('calendar');
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REQUIRE' => $LANG['require'],	
 		'L_CALENDAR' => $LANG['title_calendar'],
 		'L_CALENDAR_CONFIG' => $LANG['calendar_config'],
@@ -84,12 +84,12 @@ else
 		} 
 
 		$selected = ($CONFIG_CALENDAR['calendar_auth'] == $i) ? 'selected="selected"' : '' ;
-		$Template->Assign_block_vars('select_auth', array(
+		$Template->assign_block_vars('select_auth', array(
 			'RANK' => '<option value="' . $i . '" ' . $selected . '>' . $rank . '</option>'
 		));
 	}
 		
-	$Template->Pparse('admin_calendar_config');
+	$Template->pparse('admin_calendar_config');
 }
 
 require_once('../admin/admin_footer.php');

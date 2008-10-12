@@ -67,13 +67,13 @@ if( !empty($_POST['change_cat']) )
 if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'forum_topic'=> 'forum/forum_topic.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$module_data_path = $Template->Module_data_path('forum');
+$module_data_path = $Template->get_module_data_path('forum');
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
 $check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
@@ -85,7 +85,7 @@ if( $check_group_edit_auth )
 	elseif( $topic['status'] == '0' ) //Lock, affiche lien pour déverrouiler.
 		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=false') . '" onClick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'MOVE' => '<a href="move' . transid('.php?id=' . $id_get) . '" onClick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
 		'LOCK' => $lock_status,
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
@@ -134,12 +134,12 @@ foreach($Bread_crumb->array_links as $key => $array)
 	$i++;
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,		
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
-	'PAGINATION' => $Pagination->Display_pagination('topic' . transid('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
+	'PAGINATION' => $Pagination->display('topic' . transid('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
 	'USER_ID' => $topic['user_id'],
@@ -182,7 +182,7 @@ LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = '" . $id_get . "' AND tr.user
 LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 WHERE msg.idtopic = '" . $id_get . "'	
 ORDER BY msg.timestamp 
-" . $Sql->limit(($Pagination->First_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
+" . $Sql->limit(($Pagination->get_first_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
 while ( $row = $Sql->fetch_assoc($result) )
 {
 	$row['user_id'] = (int)$row['user_id'];
@@ -217,7 +217,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	//Gestion des sondages => executé une seule fois.
 	if( !empty($row['question']) && $poll_done === false )
 	{
-		$Template->Assign_vars(array(				
+		$Template->assign_vars(array(				
 			'C_POLL_EXIST' => true,
 			'QUESTION' => $row['question'],				
 			'U_POLL_RESULT' => transid('.php?id=' . $id_get . '&amp;r=1'),
@@ -239,7 +239,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$array_poll = array_combine($array_answer, $array_vote);
 			foreach($array_poll as $answer => $nbrvote)
 			{
-				$Template->Assign_block_vars('poll_result', array(
+				$Template->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
 					'NBRVOTE' => $nbrvote,
 					'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
@@ -249,7 +249,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		}
 		else //Affichage des formulaires (radio/checkbox)  pour voter.
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_POLL_QUESTION' => true
 			));
 			
@@ -259,7 +259,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			{
 				foreach($array_answer as $answer)
 				{						
-					$Template->Assign_block_vars('poll_radio', array(
+					$Template->assign_block_vars('poll_radio', array(
 						'NAME' => $z,
 						'TYPE' => 'radio',
 						'ANSWERS' => $answer
@@ -271,7 +271,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			{
 				foreach($array_answer as $answer)
 				{						
-					$Template->Assign_block_vars('poll_checkbox', array(
+					$Template->assign_block_vars('poll_checkbox', array(
 						'NAME' => $z,
 						'TYPE' => 'checkbox',
 						'ANSWERS' => $answer
@@ -361,7 +361,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . transid('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
-	$Template->Assign_block_vars('msg', array(
+	$Template->assign_block_vars('msg', array(
 		'CONTENTS' => second_parse($row['contents']),
 		'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'ID' => $row['id'],
@@ -432,7 +432,7 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -469,14 +469,14 @@ if( !empty($quote_get) )
 //Formulaire de réponse, non présent si verrouillé.
 if( $topic['status'] == '0' && !$check_group_edit_auth )
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
 elseif( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM) ) //On vérifie si l'utilisateur a les droits d'écritures.
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_cat_write']
 	));
@@ -484,7 +484,7 @@ elseif( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)
 else
 {
 	$img_favorite_display = $track ? 'unfavorite_mini.png' : 'favorite_mini.png';
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => display_editor(),
@@ -497,7 +497,7 @@ else
 	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']) )
 	{
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_MSG' => true,
 			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
 			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
@@ -510,7 +510,7 @@ else
 	}
 }
 
-$Template->Pparse('forum_topic');
+$Template->pparse('forum_topic');
 
 include('../kernel/footer.php');
 

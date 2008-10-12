@@ -42,15 +42,15 @@ $where = retrieve(POST, 'where', '');
 $colorate_result = retrieve(POST, 'colorate_result', false);
 $valid_search = retrieve(POST, 'valid_search', '');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'search'=> 'forum/forum_search.tpl',
 	'forum_top'=> 'forum/forum_top.tpl',
 	'forum_bottom'=> 'forum/forum_bottom.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
-	'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'LANG' => $CONFIG['lang'],
 	'SID' => SID,
 	'SEARCH' => $search,
@@ -96,7 +96,7 @@ if( is_array($CAT_FORUM) )
 $auth_cats_select = !empty($auth_cats) ? " AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
 $selected = ($idcat == '-1') ? ' selected="selected"' : '';
-$Template->Assign_block_vars('cat', array(
+$Template->assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
 ));	
 $result = $Sql->query_while("SELECT id, name, level
@@ -107,7 +107,7 @@ while( $row = $Sql->fetch_assoc($result) )
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
 	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-	$Template->Assign_block_vars('cat', array(
+	$Template->assign_block_vars('cat', array(
 		'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>'
 	));	
 }
@@ -198,7 +198,7 @@ if( !empty($valid_search) && !empty($search) )
 				}
 			}
 			
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => second_parse($contents),
@@ -215,7 +215,7 @@ if( !empty($valid_search) && !empty($search) )
 			$Errorh->Error_handler($LANG['no_result'], E_USER_NOTICE);
 		else
 		{
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'C_FORUM_SEARCH'  => true
 			));
 		}
@@ -260,7 +260,7 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 $total_online = $total_admin + $total_modo + $total_member + $total_visit;
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
@@ -278,7 +278,7 @@ $Template->Assign_vars(array(
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search']
 ));
 
-$Template->Pparse('search');
+$Template->pparse('search');
 
 include('../kernel/footer.php');
 

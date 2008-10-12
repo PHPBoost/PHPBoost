@@ -31,14 +31,14 @@
 
 $Sql->close(); //Fermeture de mysql.
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_footer'=> 'admin/admin_footer.tpl'
 ));
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 	
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'VERSION' => $CONFIG['version'],
@@ -56,7 +56,7 @@ $Template->Assign_vars(array(
 if( $CONFIG['bench'] )
 {
 	$Bench->stop('site'); //On arrête le bench.
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->display('site'), //Fin du benchmark
 		'REQ' => $Sql->display_request(),
@@ -67,7 +67,7 @@ if( $CONFIG['bench'] )
 	));
 }
 
-$Template->Pparse('admin_footer'); // traitement du modele
+$Template->pparse('admin_footer'); // traitement du modele
 
 ob_end_flush();
 

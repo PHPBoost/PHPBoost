@@ -92,12 +92,12 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
 
     $module = $Modules->get_module(strtolower($resultsName));
     
-    $Template->Set_filenames(array(
+    $Template->set_filenames(array(
         'search_generic_pagination_results' => 'search/search_generic_pagination_results.tpl',
         'search_generic_results' => 'search/search_generic_results.tpl'
     ));
 
-    $Template->Assign_vars(Array(
+    $Template->assign_vars(Array(
         'RESULTS_NAME' => $resultsName,
         'C_ALL_RESULTS' => ($resultsName == 'all' ? true : false)
     ));
@@ -106,7 +106,7 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
     $nbResults = count($results);
     for ( $numPage = 0; $numPage < $nbPages; $numPage++ )
     {
-        $Template->Assign_block_vars('page', array(
+        $Template->assign_block_vars('page', array(
             'NUM_PAGE' => $numPage,
             'BLOCK_DISPLAY' => ($numPage == 0 ? 'block' : 'none')
         ));
@@ -120,23 +120,23 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
             if ( ($resultsName == 'all') || (!$module->has_functionnality('parse_search_results')) )
             {
                 $module = $Modules->get_module($results[$j]['module']);
-                $Template->Assign_vars(array(
+                $Template->assign_vars(array(
                     'L_MODULE_NAME' => ucfirst($module->get_name()),
                     'TITLE' => $results[$j]['title'],
                     'U_LINK' => transid($results[$j]['link'])
                 ));
-                $tempRes = $Template->Pparse('search_generic_results', TEMPLATE_STRING_MODE);
+                $tempRes = $Template->pparse('search_generic_results', TEMPLATE_STRING_MODE);
             }
             else $tempRes = $module->functionnality('parse_search_results', array('results' => $results));
             
-            $Template->Assign_block_vars('page.results', array(
+            $Template->assign_block_vars('page.results', array(
                     'result' => $tempRes
                 ));
             
             $j++;
         }
     }
-    $htmlResults = $Template->Pparse('search_generic_pagination_results', TEMPLATE_STRING_MODE);
+    $htmlResults = $Template->pparse('search_generic_pagination_results', TEMPLATE_STRING_MODE);
 }
 
 ?>

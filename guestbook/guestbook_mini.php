@@ -34,7 +34,7 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 	$Cache->Load_file('guestbook'); //Chargement du cache
 	
 	###########################Affichage##############################
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'guestbook_mini'=> 'guestbook/guestbook_mini.tpl'
 	));
 
@@ -47,7 +47,7 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	
 	$guestbook_contents = ucfirst(wordwrap_html($guestbook_rand['contents'], 22));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 		'RAND_MSG_ID' => $guestbook_rand['id'],
 		'RAND_MSG_CONTENTS' => (strlen($guestbook_contents) > 22) ? $guestbook_contents . ' <a href="' . PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : $guestbook_contents,

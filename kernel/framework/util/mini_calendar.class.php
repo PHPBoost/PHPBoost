@@ -43,25 +43,25 @@ class Mini_calendar
 	}
 	
 	//Fonction d'assignation de la date
-	function Set_date($date)
+	function set_date($date)
 	{
 		$this->date = $date;
 	}
 	
 	//Fonction d'assignation de style css au conteneur du calendrier.
-	function Set_style($style)
+	function set_style($style)
 	{
 		$this->style = $style;
 	}
 	
 	//Fonction de renvoi de la date
-	function Get_date()
+	function get_date()
 	{
 		return $this->date;
 	}
 	
 	//Fonction d'affichage du calendrier, qui charge automatiquement le javascript
-	function Display()
+	function display()
 	{
 		global $CONFIG;
 		
@@ -71,7 +71,7 @@ class Mini_calendar
 		//On crée le code selon le template
 		$template = new Template('framework/mini_calendar.tpl');
 		
-		$template->Assign_vars(array(
+		$template->assign_vars(array(
 			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,

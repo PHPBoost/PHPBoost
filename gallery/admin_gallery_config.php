@@ -91,7 +91,7 @@ elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
 }
 else 
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_gallery_config'=> 'gallery/admin_gallery_config.tpl'
 	));
 	
@@ -129,7 +129,7 @@ else
 		$z--;
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'WIDTH' => isset($CONFIG_GALLERY['width']) ? $CONFIG_GALLERY['width'] : '150',
 		'HEIGHT' => isset($CONFIG_GALLERY['height']) ? $CONFIG_GALLERY['height'] : '150',
 		'WIDTH_MAX' => isset($CONFIG_GALLERY['width_max']) ? $CONFIG_GALLERY['width_max'] : '640',
@@ -251,7 +251,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 		
-	$Template->Pparse('admin_gallery_config'); 	
+	$Template->pparse('admin_gallery_config'); 	
 }
 
 require_once('../admin/admin_footer.php');

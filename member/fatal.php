@@ -47,13 +47,13 @@ $errinfo = $Errorh->Get_last_error_log();
 if( empty($errinfo) )
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'error'=> 'error.tpl'
 ));
 
 $class = $Errorh->Get_errno_class($errinfo['errno']);	
 	
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],		
 	'ERRORH_IMG' => 'stop',
 	'ERRORH_CLASS' => $class,
@@ -64,7 +64,7 @@ $Template->Assign_vars(array(
 	'U_BACK' => '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>' . (!empty($_SERVER['HTTP_REFERER']) ? ' &raquo; <a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : ' &raquo; <a href="javascript:history.back(1)">' . $LANG['back'] . '</a>'),
 ));
 
-$Template->Pparse('error');
+$Template->pparse('error');
 
 echo '</body></html>';
 

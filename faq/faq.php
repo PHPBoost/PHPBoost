@@ -58,21 +58,21 @@ if( !$auth_read )
 
 include_once('../kernel/header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'faq'=> 'faq/faq.tpl'
 ));
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],
-	'MODULE_DATA_PATH' => $Template->Module_data_path('faq')
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq')
 ));
 
 if( !empty($FAQ_CATS[$id_faq]['description']) )
-	$Template->Assign_block_vars('description', array(
+	$Template->assign_block_vars('description', array(
 		'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['description'])
 	));
 
 if( $auth_write )
-	$Template->Assign_block_vars('management', array());
+	$Template->assign_block_vars('management', array());
 
 //let's check if there are some subcategories
 $num_subcats = 0;
@@ -85,7 +85,7 @@ foreach( $FAQ_CATS as $id => $value )
 //listing of subcategories
 if( $num_subcats > 0 )
 {	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_FAQ_CATS' => true
 	));	
 	
@@ -96,8 +96,8 @@ if( $num_subcats > 0 )
 		if( $id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)) )
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
-				$Template->Assign_block_vars('row', array());
-			$Template->Assign_block_vars('row.list_cats', array(
+				$Template->assign_block_vars('row', array());
+			$Template->assign_block_vars('row.list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols']),
@@ -109,7 +109,7 @@ if( $num_subcats > 0 )
 			));
 			
 			if( !empty($value['image']) )
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_CAT_IMG' => true
 				));
 				
@@ -135,20 +135,20 @@ if( $num_rows > 0 )
 		$faq_display_block = false;
 	
 	//Displaying administration tools
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ADMIN_TOOLS' => $auth_write
 	));
 	
 	if( !$faq_display_block )
-		$Template->Assign_block_vars('questions', array());
+		$Template->assign_block_vars('questions', array());
 	else
-		$Template->Assign_block_vars('questions_block', array());
+		$Template->assign_block_vars('questions_block', array());
 		
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( !$faq_display_block )
 		{
-			$Template->Assign_block_vars('questions.faq', array(
+			$Template->assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'ANSWER' => second_parse($row['answer']),
@@ -162,17 +162,17 @@ if( $num_rows > 0 )
 				'C_SHOW_ANSWER' => $row['id'] == $id_question
 			));
 			if( $row['q_order'] > 1 )
-				$Template->Assign_block_vars('questions.faq.up', array());
+				$Template->assign_block_vars('questions.faq.up', array());
 			if( $row['q_order'] < $num_rows )
-				$Template->Assign_block_vars('questions.faq.down', array());
+				$Template->assign_block_vars('questions.faq.down', array());
 		}
 		else
 		{
-			$Template->Assign_block_vars('questions_block.header', array(
+			$Template->assign_block_vars('questions_block.header', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['id']
 			));
-			$Template->Assign_block_vars('questions_block.contents', array(
+			$Template->assign_block_vars('questions_block.contents', array(
 				'ANSWER' => second_parse($row['answer']),
 				'QUESTION' => $row['question'],
 				'ID' => $row['id'],
@@ -184,18 +184,18 @@ if( $num_rows > 0 )
 				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
 			if( $row['q_order'] > 1 )
-				$Template->Assign_block_vars('questions_block.contents.up', array());
+				$Template->assign_block_vars('questions_block.contents.up', array());
 			if( $row['q_order'] < $num_rows )
-				$Template->Assign_block_vars('questions_block.contents.down', array());
+				$Template->assign_block_vars('questions_block.contents.down', array());
 		}
 	}
 }
 else
 {
-	$Template->Assign_block_vars('no_question', array());
+	$Template->assign_block_vars('no_question', array());
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'L_EDIT' => $FAQ_LANG['update'],
@@ -212,7 +212,7 @@ $Template->Assign_vars(array(
 	'U_ADMIN_CAT' => $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')
 ));
 
-$Template->Pparse('faq');
+$Template->pparse('faq');
 
 include_once('../kernel/footer.php'); 
 

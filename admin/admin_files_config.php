@@ -65,7 +65,7 @@ if( !empty($_POST['valid'])  )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_files_config'=> 'admin/admin_files_config.tpl'
 	));
 	
@@ -102,7 +102,7 @@ else
 	$array_ranks = array(0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']); //Création du tableau des rangs.	 
 	$array_auth = isset($CONFIG_UPLOADS['auth_files']) ? $CONFIG_UPLOADS['auth_files'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_EXTENSIONS' => $i,
 		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $array_auth, array(2 => true)),
 		'SIZE_LIMIT' => isset($CONFIG_UPLOADS['size_limit']) ? number_round($CONFIG_UPLOADS['size_limit']/1024, 2) : '0.5',
@@ -129,7 +129,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->Pparse('admin_files_config'); // traitement du modele	
+	$Template->pparse('admin_files_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

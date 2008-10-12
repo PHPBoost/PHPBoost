@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true) exit;
 
 if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'connect_mini'=> 'connect/connect_mini.tpl'
 	));
 	
@@ -71,7 +71,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
 
 	require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_ADMIN_AUTH' => $User->check_level(ADMIN_LEVEL),
 		'C_MODERATOR_AUTH' => $User->check_level(MODERATOR_LEVEL),
 		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
@@ -94,11 +94,11 @@ if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'connect_mini'=> 'connect/connect_mini.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_MEMBER_REGISTER' => $CONFIG_MEMBER['activ_register'] ? true : false,
 		'L_CONNECT' => $LANG['connect'],
 		'L_PSEUDO' => $LANG['pseudo'],

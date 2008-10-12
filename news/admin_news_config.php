@@ -58,7 +58,7 @@ if( !empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_news_config'=> 'news/admin_news_config.tpl'
 	));
 	
@@ -77,7 +77,7 @@ else
 	$CONFIG_NEWS['display_author'] = isset($CONFIG_NEWS['display_author']) ? $CONFIG_NEWS['display_author'] : 1;
 	$CONFIG_NEWS['display_date'] = isset($CONFIG_NEWS['display_date']) ? $CONFIG_NEWS['display_date'] : 1;
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'PAGINATION' => !empty($CONFIG_NEWS['pagination_news']) ? $CONFIG_NEWS['pagination_news'] : '6',
 		'PAGINATION_ARCH' => !empty($CONFIG_NEWS['pagination_arch']) ? numeric($CONFIG_NEWS['pagination_arch']) : '15',
@@ -134,7 +134,7 @@ else
 		'L_DISPLAY_NEWS_DATE' => $LANG['display_news_date']
 	));
 	
-	$Template->Pparse('admin_news_config'); // traitement du modele	
+	$Template->pparse('admin_news_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

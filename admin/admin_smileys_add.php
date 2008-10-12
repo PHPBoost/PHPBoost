@@ -68,7 +68,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 	{
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		if( !$Upload->Upload_file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
+		if( !$Upload->file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
 			$error = $Upload->error;
 	}
 	else
@@ -79,7 +79,7 @@ elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de 
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_smileys_add'=> 'admin/admin_smileys_add.tpl'
 	));
 	
@@ -129,7 +129,7 @@ else
 		}
 	}	
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
@@ -146,7 +146,7 @@ else
 		'L_RESET' => $LANG['reset'],
 	));
 		
-	$Template->Pparse('admin_smileys_add'); 
+	$Template->pparse('admin_smileys_add'); 
 }
 
 require_once('../admin/admin_footer.php');

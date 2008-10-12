@@ -45,7 +45,7 @@ class ContributionService
 		WHERE id = '" . $id_contrib . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
-		$properties = $Sql->sql_fetch_assoc($result);
+		$properties = $Sql->fetch_assoc($result);
 		
 		if( (int)$properties['id'] > 0 )
 		{
@@ -190,7 +190,7 @@ class ContributionService
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
 		$result = $Sql->query_while("SELECT auth FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
-		while($row = $Sql->sql_fetch_assoc($result) )
+		while($row = $Sql->fetch_assoc($result) )
 		{
 			if( !($this_auth = @unserialize($row['auth'])) )
 				$this_auth = array();

@@ -87,7 +87,7 @@ class Authorizations
 		
 		$Template = new Template('framework/groups_auth.tpl');
        
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
 			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
             'THEME' => $CONFIG['theme'],
@@ -116,7 +116,7 @@ class Authorizations
                 $selected = ' selected="selected"';
             $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
             
-			$Template->Assign_block_vars('ranks_list', array(
+			$Template->assign_block_vars('ranks_list', array(
 				'ID' => $j++,
 				'IDRANK' => $idrank,
 				'RANK_NAME' => $group_name,
@@ -132,7 +132,7 @@ class Authorizations
             if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
                 $selected = ' selected="selected"';
 
-            $Template->Assign_block_vars('groups_list', array(
+            $Template->assign_block_vars('groups_list', array(
 				'IDGROUP' => $idgroup,
 				'GROUP_NAME' => $group_name,
 				'DISABLED' => $disabled,
@@ -153,7 +153,7 @@ class Authorizations
 		}
 		$advanced_auth = count($array_auth_members) > 0;
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'ADVANCED_AUTH_STYLE' => ($advanced_auth ? 'display:block;' : 'display:none;')
 		));
 		
@@ -165,7 +165,7 @@ class Authorizations
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
 			while( $row = $Sql->fetch_assoc($result) )
 			{
-				 $Template->Assign_block_vars('members_list', array(
+				 $Template->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
 					'LOGIN' => $row['login']
 				));

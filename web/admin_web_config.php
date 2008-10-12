@@ -54,11 +54,11 @@ if( !empty($_POST['valid']) )
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_config'=> 'web/admin_web_config.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_WEB_MAX' => !empty($CONFIG_WEB['nbr_web_max']) ? $CONFIG_WEB['nbr_web_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_WEB['nbr_cat_max']) ? $CONFIG_WEB['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : '2',
@@ -77,7 +77,7 @@ else
 		'L_RESET' => $LANG['reset'],
 	));
 		
-	$Template->Pparse('admin_web_config'); // traitement du modele	
+	$Template->pparse('admin_web_config'); // traitement du modele	
 }
 
 require_once('../admin/admin_footer.php');

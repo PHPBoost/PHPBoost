@@ -35,7 +35,7 @@ $edit = !empty($_GET['edit']) ? true : false;
 $idcom = retrieve(GET, 'id', 0);
 $module = retrieve(GET, 'module', '');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_com_management'=> 'admin/admin_com_management.tpl'
 ));
 
@@ -58,10 +58,10 @@ include_once('../kernel/framework/util/pagination.class.php');
 $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
-	'PAGINATION_COM' => $Pagination->Display_pagination('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 	'L_DISPLAY_RECENT' => $LANG['display_recent_com'],
 	'L_DISPLAY_TOPIC_COM' => $LANG['display_topic_com'],
 	'L_CONFIRM_DELETE' => $LANG['alert_delete_msg'],
@@ -90,7 +90,7 @@ if( is_dir($root) ) //Si le dossier existe
 				$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
 				if( isset($info_module['info']) && !empty($info_module['com']) )
 				{
-					$Template->Assign_block_vars('modules_com', array(
+					$Template->assign_block_vars('modules_com', array(
 						'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
 						'U_MODULES' => $info_module['com']
 					));
@@ -111,7 +111,7 @@ LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" 
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
-" . $Sql->limit($Pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+" . $Sql->limit($Pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
 while($row = $Sql->fetch_assoc($result) )
 {
 	$row['user_id'] = (int)$row['user_id'];
@@ -197,7 +197,7 @@ while($row = $Sql->fetch_assoc($result) )
 	
 	$row['path'] = preg_replace('`&quote=[0-9]+`', '', $row['path']);
 	
-	$Template->Assign_block_vars('com', array(
+	$Template->assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(second_parse($row['contents'])),
 		'COM_SCRIPT' => $row['script'],
@@ -224,7 +224,7 @@ while($row = $Sql->fetch_assoc($result) )
 	));
 }
 
-$Template->Pparse('admin_com_management'); // traitement du modele	
+$Template->pparse('admin_com_management'); // traitement du modele	
 
 require_once('../admin/admin_footer.php');
 

@@ -38,7 +38,7 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if( !empty($id) && !$del )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_management2'=> 'web/admin_web_management2.tpl'
 	));
 
@@ -48,7 +48,7 @@ if( !empty($id) && !$del )
 	$aprob_disabled = ($row['aprob'] == 0) ? 'checked="checked"' : '';
 	$idcat = $row['idcat'];
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'IDWEB' => $row['id'],
 		'NAME' => $row['title'],
 		'CONTENTS' => unparse($row['contents']),
@@ -86,7 +86,7 @@ if( !empty($id) && !$del )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -100,11 +100,11 @@ if( !empty($id) && !$del )
 	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
-	$Template->Pparse('admin_web_management2'); 
+	$Template->pparse('admin_web_management2'); 
 }
 elseif( !empty($_POST['previs']) && !empty($id_post) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_management'=> 'web/admin_web_management2.tpl'
 	));
 
@@ -122,7 +122,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 
 	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
-	$Template->Assign_block_vars('web', array(
+	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'URL' => $url,
@@ -130,7 +130,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'CAT' => $cat,
 		'COMPT' => $compt,
 		'DATE' => gmdate_format('date_format_short'),
-		'MODULE_DATA_PATH' => $Template->Module_data_path('web'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'L_DESC' => $LANG['description'],
 		'L_DATE' => $LANG['date'],
 		'L_COM' => $LANG['com'],
@@ -139,7 +139,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 		'L_CATEGORY' => $LANG['categorie'],
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'IDWEB' => $id_post,
@@ -182,7 +182,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
-		$Template->Assign_block_vars('select', array(
+		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '"' . $selected . '>' . $row['name'] . '</option>'
 		));
 		$i++;
@@ -192,7 +192,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	if( $i == 0 ) //Aucune catégorie => alerte.	 
 		$Errorh->Error_handler($LANG['require_cat_create'], E_USER_WARNING);
 		
-	$Template->Pparse('admin_web_management'); 
+	$Template->pparse('admin_web_management'); 
 }				
 elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 {
@@ -224,7 +224,7 @@ elseif( $del && !empty($id) ) //Suppresion du lien web.
 }		
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_web_management'=> 'web/admin_web_management.tpl'
 	));
 
@@ -234,8 +234,8 @@ else
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 
-	$Template->Assign_vars(array(	
-		'PAGINATION' => $Pagination->Display_pagination('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
+	$Template->assign_vars(array(	
+		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -259,7 +259,7 @@ else
 	FROM ".PREFIX."web d 
 	LEFT JOIN ".PREFIX."web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
-	" . $Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];
@@ -267,7 +267,7 @@ else
 		$title = $row['title'];
 		$title = strlen($title) > 45 ? substr_html($title, 0, 45) . '...' : $title;
 
-		$Template->Assign_block_vars('web', array(
+		$Template->assign_block_vars('web', array(
 			'IDWEB' => $row['id'],
 			'NAME' => $title,
 			'IDCAT' => $row['idcat'],
@@ -279,7 +279,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_web_management'); 
+	$Template->pparse('admin_web_management'); 
 }
 
 require_once('../admin/admin_footer.php');

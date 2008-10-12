@@ -30,11 +30,11 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_extend'=> 'admin/admin_extend.tpl'
 ));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'L_CONFIGURATION' => $LANG['configuration'],
@@ -75,7 +75,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	{	
 		if( $config['admin'] == 1 )
 		{
-			$Template->Assign_block_vars('modules_extend', array(
+			$Template->assign_block_vars('modules_extend', array(
 				'NAME' => $config['name'],
 				'IMG' => '../' . $row['name'] . '/' . $row['name'] . '.png',
 				'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
@@ -94,14 +94,14 @@ if( $i != 0 )
 	$i--;
 	while( ($i % 5) != 0 )
 	{
-		$Template->Assign_block_vars('modules_extend.td', array(
+		$Template->assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'
 		));	
 		$i++;
 	}
 }
 
-$Template->Pparse('admin_extend'); 
+$Template->pparse('admin_extend'); 
 
 require_once('../admin/admin_footer.php');
 

@@ -127,7 +127,7 @@ class PagesInterface extends ModuleInterface
             .$Sql->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
         $result = $Sql->query_while($request, __LINE__, __FILE__);
-        while( $row = $Sql->sql_fetch_assoc($result) )
+        while( $row = $Sql->fetch_assoc($result) )
         {
             if ( !empty($row['auth']) )
             {

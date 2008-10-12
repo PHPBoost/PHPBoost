@@ -53,13 +53,13 @@ if( !empty($_POST['update']) )  //Mise à jour
 	redirect(HOST . SCRIPT);
 }
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'pages_config'=> 'pages/admin_pages.tpl'
 ));
 
 $array_auth = isset($_PAGES_CONFIG['auth']) ? $_PAGES_CONFIG['auth'] : array();
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'HITS_CHECKED' => $_PAGES_CONFIG['count_hits'] == 1 ? 'checked="checked"' : '',
 	'COM_CHECKED' => $_PAGES_CONFIG['activ_com'] == 1 ? 'checked="checked"' : '',
 	'SELECT_READ_PAGE' => Authorizations::generate_select(READ_PAGE, $array_auth),
@@ -83,7 +83,7 @@ $Template->Assign_vars(array(
 ));
 	
 	
-$Template->Pparse('pages_config');
+$Template->pparse('pages_config');
 
 require_once('../admin/admin_footer.php');
 

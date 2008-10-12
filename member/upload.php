@@ -141,7 +141,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			$Upload->Upload_file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
+			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
 			if( !empty($Upload->error) ) //Erreur, on arrête ici
 			{
@@ -246,11 +246,11 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 }
 elseif( !empty($move_folder) || !empty($move_file) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'upload_move'=> 'upload_move.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -282,10 +282,10 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		$folder_info = $Sql->query_array("upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 		$name = $folder_info['name'];
 		$id_cat = $folder_info['id_parent'];
-		$Template->Assign_block_vars('folder', array(
+		$Template->assign_block_vars('folder', array(
 			'NAME' => $name
 		));
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
 			'TARGET' => transid('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;' . $popup)
@@ -310,30 +310,30 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $User->get_attribute('user_id'));
 		
-		$Template->Assign_block_vars('file', array(
+		$Template->assign_block_vars('file', array(
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'U_IMG_MOVE'=> 'images/upload/' . $get_img_mimetype['img']
 		));
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
 			'TARGET' => transid('upload.php?movefi=' . $move_file . '&amp;f=0&amp;' . $popup)
 		));
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'FOLDERS' => $cat_explorer,
 		'ID_FILE' => $move_file
 	));
 	
-	$Template->Pparse('upload_move');
+	$Template->pparse('upload_move');
 }
 else
 {	
 	$is_admin = $User->check_level(ADMIN_LEVEL);
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'upload'=> 'upload.tpl'
 	));
 
@@ -347,7 +347,7 @@ else
 	if( isset($LANG[$get_l_error]) )
 		$Errorh->Error_handler($LANG[$get_l_error], E_USER_WARNING);  
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'POPUP' => $popup,
 		'HEADER' => $header,
 		'FOOTER' => $footer,
@@ -394,7 +394,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$Template->Assign_block_vars('folder', array(
+		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a></span>',
@@ -449,7 +449,7 @@ else
 		}
         $link .= '" title="' . $row['name'] . '">"';
 		
-		$Template->Assign_block_vars('files', array(
+		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
 			'URL' => $link,
@@ -474,7 +474,7 @@ else
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
 	$total_size = !empty($folder) ? $Uploads->Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM ".PREFIX."upload WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'PERCENT' => !$unlimited_data ? '(' . number_round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? number_round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],
 		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
@@ -485,13 +485,13 @@ else
 
 	if( $total_directories == 0 && $total_files == 0 )
 	{	
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 	}
 	
-	$Template->Pparse('upload');	
+	$Template->pparse('upload');	
 }
 
 if( empty($popup) )

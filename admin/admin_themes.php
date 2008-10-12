@@ -76,7 +76,7 @@ elseif( $edit && !empty($id) ) //Edition
 	}
 	else
 	{
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 		));
 		
@@ -86,7 +86,7 @@ elseif( $edit && !empty($id) ) //Edition
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', $CONFIG['lang']);
 			
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
 			'THEME_NAME' => $info_theme['name'],
@@ -101,7 +101,7 @@ elseif( $edit && !empty($id) ) //Edition
 			'L_UPDATE' => $LANG['update']
 		));
 
-		$Template->Pparse('admin_themes_management'); 
+		$Template->pparse('admin_themes_management'); 
 	}
 }
 elseif( $uninstall ) //Désinstallation.
@@ -141,11 +141,11 @@ elseif( $uninstall ) //Désinstallation.
 			if( $value == $LANG['uninstall'] )
 				$idtheme = $key;
 				
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 		));
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DEL_THEME' => true,
 			'IDTHEME' => $idtheme,
 			'THEME' => $CONFIG['theme'],
@@ -159,16 +159,16 @@ elseif( $uninstall ) //Désinstallation.
 			'L_DELETE' => $LANG['delete']
 		));
 
-		$Template->Pparse('admin_themes_management'); 
+		$Template->pparse('admin_themes_management'); 
 	}
 }		
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_themes_management'=> 'admin/admin_themes_management.tpl'
 	));
 	 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_THEME_MAIN' => true,
 		'THEME' => $CONFIG['theme'],	
 		'LANG' => $CONFIG['lang'],	
@@ -243,7 +243,7 @@ else
 			}	
 			
 			$default_theme = ($theme['name'] == $CONFIG['theme']);
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'C_THEME_DEFAULT' => $default_theme ? true : false,
 				'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
 				'IDTHEME' =>  $theme['id'],		
@@ -268,15 +268,15 @@ else
 	}	
 	
 	if( $z != 0 )
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_THEME_PRESENT' => true
 		));
 	else
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
 		
-	$Template->Pparse('admin_themes_management'); 
+	$Template->pparse('admin_themes_management'); 
 }
 
 $CONFIG['theme'] = $theme_tmp;

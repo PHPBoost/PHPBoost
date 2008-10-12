@@ -141,7 +141,7 @@ $Bread_crumb->Reverse_links();
 
 require_once('../kernel/header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
@@ -198,13 +198,13 @@ if( $edit_file_id > 0 )
 	//Previewing a file
 	elseif( $preview )
 	{		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$begining_calendar->Set_date($begining_date);
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_date($end_date);		
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$begining_calendar->set_date($begining_date);
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_date($end_date);		
+		$end_calendar->set_style('margin-left:150px;');
 
-		$Template->Set_filenames(array('download' => 'download/download.tpl'));
+		$Template->set_filenames(array('download' => 'download/download.tpl'));
 		
 		if( $file_size > 1 )
 			$size_tpl = $file_size . ' ' . $LANG['unit_megabytes'];
@@ -214,19 +214,19 @@ if( $edit_file_id > 0 )
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
 		//Cr�ation des calendriers
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($file_creation_date);
-		$release_calendar = new Mini_calendar('release_date');
-		$release_calendar->Set_date($file_release_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($file_creation_date);
+		$release_calendar = new MiniCalendar('release_date');
+		$release_calendar->set_date($file_release_date);
 		
 		if( $file_visibility < 0 || $file_visibility > 2 )
 			$file_visibility = 0;
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('download'),
 			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
@@ -252,7 +252,7 @@ if( $edit_file_id > 0 )
 			'U_DOWNLOAD_FILE' => transid('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => $file_title,
 			'COUNT' => $file_hits,
 			'DESCRIPTION' => $file_contents,
@@ -266,13 +266,13 @@ if( $edit_file_id > 0 )
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 		));
 	}
 	//Default formulary, with file infos from the database
@@ -281,31 +281,31 @@ if( $edit_file_id > 0 )
 		$file_creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['timestamp']);
 		$file_release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['release_timestamp']);
 		
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($file_creation_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($file_creation_date);
 		
-		$release_calendar = new Mini_calendar('release_date');
+		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = ($file_release_date->Get_timestamp() == 0);
 		if( !$ignore_release_date )
-			$release_calendar->Set_date($file_release_date);
+			$release_calendar->set_date($file_release_date);
 		
 		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$end_calendar = new Mini_calendar('end_date');		
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar->set_style('margin-left:150px;');
 		
 		if( !empty($file_infos['start']) && !empty($file_infos['end']) )
 		{
 			$file_visibility = 2;
-			$begining_calendar->Set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['start']));
-			$end_calendar->Set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['end']));
+			$begining_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['start']));
+			$end_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $file_infos['end']));
 		}
 		elseif( !empty($file_infos['visible']) )
 			$file_visibility = 1;
 		else
 			$file_visibility = 0;
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => $file_infos['title'],
 			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,
 			'DESCRIPTION' => unparse($file_infos['contents']),
@@ -315,13 +315,13 @@ if( $edit_file_id > 0 )
 			'SIZE_FORM' => $file_infos['size'],
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
@@ -385,13 +385,13 @@ elseif( $add_file )
 	//Previewing a file
 	elseif( $preview )
 	{	
-		$begining_calendar = new Mini_calendar('begining_date');
-		$begining_calendar->Set_date($begining_date);
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_date($end_date);
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$begining_calendar->set_date($begining_date);
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_date($end_date);
+		$end_calendar->set_style('margin-left:150px;');
 		
-		$Template->Set_filenames(array('download' => 'download/download.tpl'));
+		$Template->set_filenames(array('download' => 'download/download.tpl'));
 		
 		if( $file_size > 1 )
 			$size_tpl = $file_size . ' ' . $LANG['unit_megabytes'];
@@ -401,19 +401,19 @@ elseif( $add_file )
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
 		//Cr�ation des calendriers
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($file_creation_date);
-		$release_calendar = new Mini_calendar('release_date');
-		$release_calendar->Set_date($file_release_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($file_creation_date);
+		$release_calendar = new MiniCalendar('release_date');
+		$release_calendar->set_date($file_release_date);
 		
 		if( $file_visibility < 0 || $file_visibility > 2 )
 			$file_visibility = 0;
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_DOWNLOAD' => true,
 			'C_IMG' => !empty($file_image),
 			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('download'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('download'),
 			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
@@ -439,7 +439,7 @@ elseif( $add_file )
 			'U_DOWNLOAD_FILE' => transid('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
 			'DESCRIPTION' => $file_contents,
@@ -453,13 +453,13 @@ elseif( $add_file )
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 		));
 	}
 	else
@@ -467,24 +467,24 @@ elseif( $add_file )
 		$file_creation_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$file_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($file_creation_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($file_creation_date);
 		
-		$release_calendar = new Mini_calendar('release_date');
+		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = false;
 		if( !$ignore_release_date )
-			$release_calendar->Set_date($file_release_date);
+			$release_calendar->set_date($file_release_date);
 		
 		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_style('margin-left:150px;');
 		
-		$begining_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-		$end_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+		$begining_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+		$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 		$file_visibility = 0;
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => '',
 			'COUNT' => 0,
 			'DESCRIPTION' => '',
@@ -494,13 +494,13 @@ elseif( $add_file )
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $download_categories->Build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_UNAPROVED' => '',
@@ -509,7 +509,7 @@ elseif( $add_file )
 	}
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'KERNEL_EDITOR' => display_editor(),
 	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
 	'C_PREVIEW' => $preview,
@@ -551,7 +551,7 @@ $Template->Assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title']
 ));
 	
-$Template->Pparse('file_management');
+$Template->pparse('file_management');
 require_once('../kernel/footer.php');
 
 ?>

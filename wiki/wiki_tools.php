@@ -28,14 +28,14 @@
 if( defined('PHPBOOST') !== true)	exit;
 
 //On charge le template associé
-$Template->Set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
+$Template->set_filenames(array('wiki_tools'=> 'wiki/wiki_tools.tpl'));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_CONTRIBUTION_TOOLS' => $LANG['wiki_contribution_tools'],
 	'L_OTHER_TOOLS' => $LANG['wiki_other_tools'],
-	'WIKI_PATH' => $Template->Module_data_path('wiki')
+	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
-$wiki_data_path = $Template->Module_data_path('wiki');
+$wiki_data_path = $Template->get_module_data_path('wiki');
 
 //Définition des images associés
 $action_pictures = array(
@@ -169,7 +169,7 @@ if( $User->check_level(MEMBER_LEVEL) )
 }
 //Discussion
 if( ($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)) )
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => transid('property.php?com=' . $id_article . '&amp;i=0'),
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')
@@ -189,11 +189,11 @@ if( $page_type == 'index' || $page_type == 'article' || $page_type = 'cat' )
 	$i = 1;
 	foreach( $tools as $key => $value )
 	{
-		$Template->Assign_block_vars('tool', array(
+		$Template->assign_block_vars('tool', array(
 			'U_TOOL' => $value[0],
 			'L_TOOL' => $key
 		));
-		$Template->Assign_block_vars('contribution_tools', array(
+		$Template->assign_block_vars('contribution_tools', array(
 			'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
 			'U_ACTION' => $value[0],
 			'L_ACTION' => $key,
@@ -206,14 +206,14 @@ $nbr_values = count($other_tools);
 $i = 1;
 foreach( $other_tools as $key => $value )
 {
-	$Template->Assign_block_vars('tool', array(
+	$Template->assign_block_vars('tool', array(
 		'U_TOOL' => $value[0],
 		'L_TOOL' => $key
 	));
 	if( $i < $nbr_values && !empty($key) )
-	$Template->Assign_block_vars('tool.separation', array());
+	$Template->assign_block_vars('tool.separation', array());
 
-	$Template->Assign_block_vars('other_tools', array(
+	$Template->assign_block_vars('other_tools', array(
 		'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
 		'U_ACTION' => $value[0],
 		'L_ACTION' => $key,

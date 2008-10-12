@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) )
 //Sinon on remplit le formulaire
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_download_config'=> 'download/admin_download_config.tpl'
 	));
 	
@@ -63,7 +63,7 @@ else
 	
 	$CONFIG_DOWNLOAD['global_auth'] = isset($CONFIG_DOWNLOAD['global_auth']) && is_array($CONFIG_DOWNLOAD['global_auth']) ? $CONFIG_DOWNLOAD['global_auth'] : array();
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
@@ -91,7 +91,7 @@ else
 	
 	include_once('admin_download_menu.php');
 	
-	$Template->Pparse('admin_download_config'); // traitement du modele
+	$Template->pparse('admin_download_config'); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');

@@ -230,7 +230,7 @@ class Comments
 					}
 					elseif( $editcom > 0 ) //Edition du commentaire.
 					{
-						$Template->Assign_vars(array(
+						$Template->assign_vars(array(
 							'CURRENT_PAGE_COM' => $integrated_in_environment,
 							'POPUP_PAGE_COM' => !$integrated_in_environment,
 							'AUTH_POST_COM' => true
@@ -238,17 +238,17 @@ class Comments
 						
 						//Pseudo du membre connecté.
 						if( $row['user_id'] !== -1 )
-							$Template->Assign_vars(array(
+							$Template->assign_vars(array(
 								'C_HIDDEN_COM' => true,
 								'LOGIN' => $User->get_attribute('login')
 							));
 						else
-							$Template->Assign_vars(array(
+							$Template->assign_vars(array(
 								'C_VISIBLE_COM' => true,
 								'LOGIN' => $row['login']
 							));
 						
-						$Template->Assign_vars(array(					
+						$Template->assign_vars(array(					
 							'IDPROV' => $row['idprov'],
 							'IDCOM' => $row['idcom'],
 							'SCRIPT' => $this->script,
@@ -325,7 +325,7 @@ class Comments
 				require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
 				$pagination = new Pagination();
 
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'CURRENT_PAGE_COM' => $integrated_in_environment,
 					'POPUP_PAGE_COM' => !$integrated_in_environment
 				));
@@ -333,7 +333,7 @@ class Comments
 				//Affichage du lien de verrouillage/déverrouillage.
 				if( $User->check_level(MODO_LEVEL) )
 				{
-					$Template->Assign_vars(array(
+					$Template->assign_vars(array(
 						'COM_LOCK' => true,
 						'IMG' => ($this->lock_com >= 1) ? 'unlock' : 'lock',
 						'L_LOCK' => ($this->lock_com >= 1) ? $LANG['unlock'] : $LANG['lock'],
@@ -373,7 +373,7 @@ class Comments
 				if( !$this->lock_com || $User->check_level(MODO_LEVEL) )
 				{
 					if( $User->check_level($CONFIG_COM['com_auth']) )
-						$Template->Assign_vars(array(
+						$Template->assign_vars(array(
 							'AUTH_POST_COM' => true
 						));
 					else
@@ -381,12 +381,12 @@ class Comments
 					
 					//Pseudo du membre connecté.
 					if( $User->get_attribute('user_id') !== -1 )
-						$Template->Assign_vars(array(
+						$Template->assign_vars(array(
 							'C_HIDDEN_COM' => true,
 							'LOGIN' => $User->get_attribute('login')
 						));
 					else
-						$Template->Assign_vars(array(
+						$Template->assign_vars(array(
 							'C_VISIBLE_COM' => true,
 							'LOGIN' => $LANG['guest']
 						));
@@ -401,9 +401,9 @@ class Comments
 				else
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
 				
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
-					'PAGINATION_COM' => $pagination->Display_pagination($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
+					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 					'LANG' => $CONFIG['lang'],
 					'IDCOM' => '',
 					'IDPROV' => $this->idprov,
@@ -442,7 +442,7 @@ class Comments
 				WHERE c.script = '" . $this->script . "' AND c.idprov = '" . $this->idprov . "'
 				GROUP BY c.idcom
 				ORDER BY c.timestamp DESC 
-				" . $Sql->limit($pagination->First_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
+				" . $Sql->limit($pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
 					$row['user_id'] = (int)$row['user_id'];
@@ -551,7 +551,7 @@ class Comments
 					if( !$integrated_in_environment && !empty($page_path_to_root) )
 						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
 					
-					$Template->Assign_block_vars('com_list', array(
+					$Template->assign_block_vars('com_list', array(
 						'ID' => $row['idcom'],
 						'CONTENTS' => $contents,
 						'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),

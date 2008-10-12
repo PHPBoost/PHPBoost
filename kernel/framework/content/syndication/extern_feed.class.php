@@ -83,7 +83,7 @@ class ExternFeed
         require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
         $Template = new Template($tpl);
         
-        $Template->Assign_vars(array(
+        $Template->assign_vars(array(
             'DATE' => isset($feedInformations['date']) ? $feedInformations['date'] : '',
             'TITLE' => isset($feedInformations['title']) ? $feedInformations['title'] : '',
             'U_LINK' => isset($feedInformations['link']) ? $feedInformations['link'] : '',
@@ -96,7 +96,7 @@ class ExternFeed
         {
             foreach ( $feedInformations['items'] as $item )
             {
-                $Template->Assign_block_vars('item', array(
+                $Template->assign_block_vars('item', array(
                     'DATE' => isset($item['date']) ? $item['date'] : '',
                     'U_LINK' => isset($item['link']) ? $item['link'] : '',
                     'U_GUID' => isset($item['guid']) ? $item['guid'] : '',

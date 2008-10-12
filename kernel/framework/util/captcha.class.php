@@ -134,7 +134,7 @@ class Captcha
 		
 		if( $this->gd_loaded() )
 		{		
-			$Template->Assign_vars(array(
+			$Template->assign_vars(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
 				'CAPTCHA_DIFFICULTY' => $this->difficulty,
 				'CAPTCHA_WIDTH' => $this->width,

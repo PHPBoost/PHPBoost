@@ -103,11 +103,11 @@ if( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) )
 
 if( !$User->check_level(ADMIN_LEVEL) )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_connect'=> 'admin/admin_connect.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_XML_LANGUAGE' => $LANG['xml_lang'],
 		'SITE_NAME' => $CONFIG['site_name'],
 		'TITLE' => TITLE,
@@ -124,7 +124,7 @@ if( !$User->check_level(ADMIN_LEVEL) )
 		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
 	));
 	
-	$Template->Pparse('admin_connect'); 
+	$Template->pparse('admin_connect'); 
 	exit;
 }
 elseif( isset($_GET['flood']) )
@@ -132,15 +132,15 @@ elseif( isset($_GET['flood']) )
 	$flood = numeric($_GET['flood']);
 	if( $flood == '0' )
 	{
-		$Template->Assign_block_vars('unlock', array(
+		$Template->assign_block_vars('unlock', array(
 		));
 	}
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_connect'=> 'admin/admin_connect.tpl'
 	));
 	
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 		'L_XML_LANGUAGE' => $LANG['xml_lang'],
 		'SITE_NAME' => $CONFIG['site_name'],
 		'TITLE' => TITLE,
@@ -159,7 +159,7 @@ elseif( isset($_GET['flood']) )
 		'L_AUTOCONNECT'	=> $LANG['autoconnect']	
 	));
 
-	$Template->Pparse('admin_connect'); 
+	$Template->pparse('admin_connect'); 
 	exit;
 }
 

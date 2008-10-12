@@ -73,23 +73,23 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	}
 	
 	###########################Affichage##############################
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'shoutbox_mini'=> 'shoutbox/shoutbox_mini.tpl'
 	));
 
 	//Pseudo du membre connecté.
 	if( $User->get_attribute('user_id') !== -1 )
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $LANG['guest'],
 			'C_VISIBLE_SHOUT' => true
 		));
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SID' => SID,		
 		'SHOUT_REFRESH_DELAY' => (int)max($CONFIG_SHOUTBOX['shoutbox_refresh_delay'], 0),
 		'L_ALERT_TEXT' => $LANG['require_text'],
@@ -128,7 +128,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		else
 			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
-		$Template->Assign_block_vars('shout', array(
+		$Template->assign_block_vars('shout', array(
 			'IDMSG' => $row['id'],
 			'PSEUDO' => $row['login'],
 			'CONTENTS' => ucfirst($row['contents']) //Majuscule premier caractère.

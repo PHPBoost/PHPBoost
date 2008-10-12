@@ -134,7 +134,7 @@ class Note
 				else
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span> <div style="display:' . $display . '" id="nbrnote' . $this->idprov . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
 				
-				$template->Assign_vars(array(
+				$template->assign_vars(array(
 					'C_JS_NOTE' => !defined('HANDLE_NOTE'),
 					'ID' => $this->idprov,
 					'NOTE_MAX' => $this->notation_scale,

@@ -93,7 +93,7 @@ if( $checkdate === true && empty($id) && !$add )
 			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'calendar'=> 'calendar/calendar.tpl'
 	));
 	
@@ -125,7 +125,7 @@ if( $checkdate === true && empty($id) && !$add )
 	else
 		$add_event = '';
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_CALENDAR_DISPLAY' => true,
 		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
@@ -144,14 +144,14 @@ if( $checkdate === true && empty($id) && !$add )
 	for($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('month', array(
+		$Template->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . $array_l_month[$i - 1] . '</option>'
 		));
 	}			
 	for($i = 1970; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$Template->Assign_block_vars('year', array(
+		$Template->assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
 	}			
@@ -174,7 +174,7 @@ if( $checkdate === true && empty($id) && !$add )
 	$LANG['sunday']);
 	foreach($array_l_days as $l_day)
 	{
-		$Template->Assign_block_vars('day', array(
+		$Template->assign_block_vars('day', array(
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
 		));
 	}	
@@ -201,7 +201,7 @@ if( $checkdate === true && empty($id) && !$add )
 		else
 			$contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
 
-		$Template->Assign_block_vars('calendar', array(
+		$Template->assign_block_vars('calendar', array(
 			'DAY' => $contents,
 			'TR' => (($i % 7) == 0 && $i != 42) ? '</tr><tr style="text-align:center;">' : ''
 		));
@@ -238,7 +238,7 @@ if( $checkdate === true && empty($id) && !$add )
 				$java = '';
 			}
 			
-			$Template->Assign_block_vars('action', array(
+			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
@@ -255,7 +255,7 @@ if( $checkdate === true && empty($id) && !$add )
 			
 		if( !isset($check_action) )
 		{		
-			$Template->Assign_block_vars('action', array(
+			$Template->assign_block_vars('action', array(
 				'TITLE' => '&nbsp;',
 				'LOGIN' => '',
 				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year, 0)),
@@ -263,7 +263,7 @@ if( $checkdate === true && empty($id) && !$add )
 			));	
 		}
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']
 		));	
@@ -272,12 +272,12 @@ if( $checkdate === true && empty($id) && !$add )
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
 		));
 	}	
 
-	$Template->Pparse('calendar');
+	$Template->pparse('calendar');
 }
 elseif( !empty($id) )
 {
@@ -331,14 +331,14 @@ elseif( !empty($id) )
 		}
 		else //Formulaire d'édition
 		{
-			$Template->Set_filenames(array(
+			$Template->set_filenames(array(
 				'calendar'=> 'calendar/calendar.tpl'
 			));
 			
 			//Récupération des infos
 			$row = $Sql->query_array('calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			$Template->Assign_vars(array(				
+			$Template->assign_vars(array(				
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
 				'UPDATE' => transid('?edit=1&amp;id=' . $id),
@@ -378,7 +378,7 @@ elseif( !empty($id) )
 			if( !empty($errstr) )
 				$Errorh->Error_handler($errstr, E_USER_NOTICE);
 			
-			$Template->Pparse('calendar');
+			$Template->pparse('calendar');
 		}
 	}
 	else
@@ -425,7 +425,7 @@ elseif( $add ) //Ajout d'un évenement
 	}
 	else
 	{
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'calendar'=> 'calendar/calendar.tpl'
 		));
 
@@ -439,7 +439,7 @@ elseif( $add ) //Ajout d'un évenement
 		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 		
-		$Template->Assign_vars(array(					
+		$Template->assign_vars(array(					
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
 			'UPDATE' => transid('?add=1'),			
@@ -479,7 +479,7 @@ elseif( $add ) //Ajout d'un évenement
 		if( !empty($errstr) )
 			$Errorh->Error_handler($errstr, E_USER_NOTICE);
 
-		$Template->Pparse('calendar');
+		$Template->pparse('calendar');
 	}
 }
 else

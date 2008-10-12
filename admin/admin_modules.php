@@ -132,11 +132,11 @@ elseif( $uninstall ) //Désinstallation du module
 			if( $value == $LANG['uninstall'] )
 				$idmodule = $key;
 				
-		$Template->Set_filenames(array(
+		$Template->set_filenames(array(
 			'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 		));
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_MODULES_DEL' => true,
 			'THEME' => $CONFIG['theme'],
 			'LANG' => $CONFIG['lang'],
@@ -153,16 +153,16 @@ elseif( $uninstall ) //Désinstallation du module
 			'L_SUBMIT' => $LANG['submit']
 		));
 
-		$Template->Pparse('admin_modules_management'); 
+		$Template->pparse('admin_modules_management'); 
 	}
 }	
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_MODULES_LIST' => true,
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
@@ -224,7 +224,7 @@ else
 		$array_auth = !empty($row['auth']) ? sunserialize($row['auth']) : array();
 		
 		$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-		$Template->Assign_block_vars('installed', array(
+		$Template->assign_block_vars('installed', array(
 			'ID' => $row['id'],
 			'NAME' => ucfirst($info_module['name']),
 			'ICON' => $row['name'],
@@ -247,15 +247,15 @@ else
 	}
 
 	if( $i == 0 )
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_NO_MODULE_INSTALLED' => true
 		));
 	else
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_MODULES_INSTALLED' => true
 		));
 	
-	$Template->Pparse('admin_modules_management'); 
+	$Template->pparse('admin_modules_management'); 
 }
 
 require_once('../admin/admin_footer.php');

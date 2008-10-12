@@ -33,7 +33,7 @@ if( !defined('TITLE') )
 
 $Session->check(TITLE); //Vérification de la session.
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'header'=> 'header.tpl'
 ));
 
@@ -78,7 +78,7 @@ if( $CONFIG['maintain'] > time() )
 			$array_release = array('', '', '', '', '', '');
 		}
 
-		$Template->Assign_vars(array(	
+		$Template->assign_vars(array(	
 			'C_ALERT_MAINTAIN' => true,
 			'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
 			'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
@@ -117,7 +117,7 @@ foreach($CSS as $css_mini_module)
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
 $member_connected = $User->check_level(MEMBER_LEVEL);
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],
 	'SITE_NAME' => $CONFIG['site_name'],
@@ -147,7 +147,7 @@ if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 		$Errorh->Error_handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'MODULES_MINI_HEADER_CONTENT' =>$MODULES_MINI['header'],
 	'MODULES_MINI_SUB_HEADER_CONTENT' => $MODULES_MINI['subheader']
 ));
@@ -159,7 +159,7 @@ if( $CONFIG['compteur'] == 1 )
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_COMPTEUR' => true,
 		'COMPTEUR_TOTAL' => $compteur_total,
 		'COMPTEUR_DAY' => $compteur_day
@@ -178,14 +178,14 @@ $right_column = ($THEME_CONFIG[$CONFIG['theme']]['right_column'] && !NO_RIGHT_CO
 //Début de la colonne de gauche.
 if( $left_column ) //Gestion des blocs de gauche.
 {
-	$Template->Assign_vars(array(	
+	$Template->assign_vars(array(	
 		'C_START_LEFT' => true,
 		'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left'] . (!$right_column ? $MODULES_MINI['right'] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	));
 }	
 if( $right_column )  //Gestion des blocs de droite.
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_START_RIGHT' => true,
 		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right'] . (!$right_column ? $MODULES_MINI['left'] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	));
@@ -194,10 +194,10 @@ if( $right_column )  //Gestion des blocs de droite.
 //Gestion du fil d'ariane, et des titres des pages dynamiques.
 $Bread_crumb->Display_bread_crumb();
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'MODULES_MINI_TOPCENTRAL_CONTENT' => $MODULES_MINI['topcentral']
 ));
 
-$Template->Pparse('header');
+$Template->pparse('header');
 
 ?>

@@ -40,11 +40,11 @@ $mail_object = trim(retrieve(POST, 'title', ''));
 $member_list = !empty($_GET['member_list']) ? true : false;
 $del_member = retrieve(GET, 'del_member', 0);
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_newsletter'=> 'newsletter/admin_newsletter.tpl'
 ));	
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
@@ -58,7 +58,7 @@ $newsletter_sender = new Newsletter_sender;
 //Liste des membres
 if( $member_list )
 {
-	$Template->Assign_block_vars('member_list', array());
+	$Template->assign_block_vars('member_list', array());
 	
 	if( $del_member > 0 )
 	{
@@ -73,7 +73,7 @@ if( $member_list )
 	}
 	$result = $Sql->query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
-		$Template->Assign_block_vars('member_list.line', array(
+		$Template->assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
 			'U_DELETE' => transid('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
 		));
@@ -97,8 +97,8 @@ elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	}
 	
 	//On envoie une confirmation
-	$Template->Assign_block_vars('end', array());
-	$Template->Assign_vars(array(		
+	$Template->assign_block_vars('end', array());
+	$Template->assign_vars(array(		
 		'L_ARCHIVES' => $LANG['newsletter_go_to_archives'],
 		'L_BACK' => $LANG['newsletter_back'],
 		'L_NEWSLETTER' => $LANG['newsletter'],
@@ -113,7 +113,7 @@ elseif( !empty($type) ) //Rédaction
 {
 	if( $type == 'bbcode' )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor()
 		));
 	}
@@ -124,7 +124,7 @@ elseif( !empty($type) ) //Rédaction
 	
 	$nbr = $Sql->count_table("newsletter", __LINE__, __FILE__);	
 		
-	$Template->Assign_block_vars('write', array(
+	$Template->assign_block_vars('write', array(
 		'TYPE' => $type,
 		'SUBSCRIBE_LINK' => ($type == 'html') ? $LANG['newsletter_subscribe_link'] : '',
 		'NBR_SUBSCRIBERS' => $nbr,
@@ -132,7 +132,7 @@ elseif( !empty($type) ) //Rédaction
 		'TITLE' => $mail_object,
 		'PREVIEW_BUTTON' => $type == 'bbcode' ? '<input value="' . $LANG['preview'] . '" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button">' : ''
 	));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_WRITE_TYPE' => $LANG['newsletter_write_type'],
 		'L_TITLE' => $LANG['title'],
 		'L_MESSAGE' => $LANG['message'],
@@ -142,7 +142,7 @@ elseif( !empty($type) ) //Rédaction
 	));
 	
 	if( $type == 'bbcode' )
-		$Template->Assign_block_vars('write.bbcode_explain', array(
+		$Template->assign_block_vars('write.bbcode_explain', array(
 			'L_WARNING' => $LANG['newsletter_bbcode_warning']
 		));
 	
@@ -170,7 +170,7 @@ elseif( !empty($type) ) //Rédaction
 //On fait choisir un type
 else
 {
-	$Template->Assign_block_vars('select_type', array(
+	$Template->assign_block_vars('select_type', array(
 		'L_SELECT_TYPE' => $LANG['newsletter_select_type'],
 		'L_SELECT_TYPE_TEXT' => $LANG['newsletter_select_type_text'],
 		'L_SELECT_TYPE_EXPLAIN_TEXT' => $LANG['newsletter_select_type_text_explain'],
@@ -182,7 +182,7 @@ else
 	));
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_REQUIRE_MAIL' => $LANG['require_mail'],
@@ -191,7 +191,7 @@ $Template->Assign_vars(array(
 	'L_DELETE' => $LANG['delete']
 ));
 
-$Template->Pparse('admin_newsletter'); 
+$Template->pparse('admin_newsletter'); 
 
 
 require_once('../admin/admin_footer.php');

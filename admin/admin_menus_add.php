@@ -177,11 +177,11 @@ elseif( !empty($del) && !empty($id) ) //Suppression du menu.
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_menus_add'=> 'admin/admin_menus_add.tpl'
 	));
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -238,7 +238,7 @@ else
 		//Récupération des tableaux des autorisations et des groupes.
 		$array_auth = !empty($menu['auth']) ? sunserialize($menu['auth']) : array();
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_EDIT_MENU' => true,
 			'C_MENUS_ADDED' => ($menu['added'] == 1) ? true : false,
 			'C_MENUS_NOT_ADDED' => ($menu['added'] == 1) ? false : true,
@@ -273,7 +273,7 @@ else
 		if( is_array($config) )
 			$name = !empty($config['name']) ? $config['name'] : $name;	
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_EDIT_MENU' => true,
 			'C_MENUS_ADDED' => false,
 			'C_MENUS_NOT_ADDED' => true,
@@ -288,7 +288,7 @@ else
 	}
 	elseif( $type == 2 ) //Ajout d'un menu de lien.
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_ADD_MENU' => true,
 			'C_ADD_MENU_LINKS' => true,
 			'C_MENUS_ADDED' => true,
@@ -305,7 +305,7 @@ else
 	}
 	else //Ajout d'un menu de contenu.
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_ADD_MENU' => true,
 			'C_ADD_MENU_CONTENT' => true,
 			'C_MENUS_ADDED' => true,
@@ -314,7 +314,7 @@ else
 		));		
 	}
 	
-	$Template->Pparse('admin_menus_add');
+	$Template->pparse('admin_menus_add');
 }
 
 require_once('../admin/admin_footer.php');

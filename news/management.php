@@ -133,7 +133,7 @@ $Bread_crumb->Reverse_links();
 
 require_once('../kernel/header.php');
 
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'news_management'=> 'news/news_management.tpl'
 ));
 
@@ -190,13 +190,13 @@ if( $edit_news_id > 0 )
 	//Previewing a news
 	elseif( $preview )
 	{		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$begining_calendar->Set_date($begining_date);
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_date($end_date);		
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$begining_calendar->set_date($begining_date);
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_date($end_date);		
+		$end_calendar->set_style('margin-left:150px;');
 
-		$Template->Set_filenames(array('news' => 'news/news.tpl'));
+		$Template->set_filenames(array('news' => 'news/news.tpl'));
 		
 		if( $news_size > 1 )
 			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
@@ -206,19 +206,19 @@ if( $edit_news_id > 0 )
 			$size_tpl = $NEWS_LANG['unknown_size'];
 		
 		//Cr�ation des calendriers
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($news_creation_date);
-		$release_calendar = new Mini_calendar('release_date');
-		$release_calendar->Set_date($news_release_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($news_creation_date);
+		$release_calendar = new MiniCalendar('release_date');
+		$release_calendar->set_date($news_release_date);
 		
 		if( $news_visibility < 0 || $news_visibility > 2 )
 			$news_visibility = 0;
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_NEWS' => true,
 			'C_IMG' => !empty($news_image),
 			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 			'NAME' => stripslashes($news_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
 			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
@@ -244,7 +244,7 @@ if( $edit_news_id > 0 )
 			'U_NEWS_FILE' => transid('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
 		));
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => $news_title,
 			'COUNT' => $news_hits,
 			'DESCRIPTION' => $news_contents,
@@ -258,13 +258,13 @@ if( $edit_news_id > 0 )
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 		));
 	}
 	//Default formulary, with news infos from the database
@@ -273,31 +273,31 @@ if( $edit_news_id > 0 )
 		$news_creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['timestamp']);
 		$news_release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['release_timestamp']);
 		
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($news_creation_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($news_creation_date);
 		
-		$release_calendar = new Mini_calendar('release_date');
+		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = ($news_release_date->Get_timestamp() == 0);
 		if( !$ignore_release_date )
-			$release_calendar->Set_date($news_release_date);
+			$release_calendar->set_date($news_release_date);
 		
 		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$end_calendar = new Mini_calendar('end_date');		
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar->set_style('margin-left:150px;');
 		
 		if( !empty($news_infos['start']) && !empty($news_infos['end']) )
 		{
 			$news_visibility = 2;
-			$begining_calendar->Set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['start']));
-			$end_calendar->Set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['end']));
+			$begining_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['start']));
+			$end_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['end']));
 		}
 		elseif( !empty($news_infos['visible']) )
 			$news_visibility = 1;
 		else
 			$news_visibility = 0;
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => $news_infos['title'],
 			'COUNT' => !empty($news_infos['count']) ? $news_infos['count'] : 0,
 			'DESCRIPTION' => unparse($news_infos['contents']),
@@ -307,13 +307,13 @@ if( $edit_news_id > 0 )
 			'SIZE_FORM' => $news_infos['size'],
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $news_categories->Build_select_form($news_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
@@ -377,13 +377,13 @@ elseif( $add_news )
 	//Previewing a news
 	elseif( $preview )
 	{	
-		$begining_calendar = new Mini_calendar('begining_date');
-		$begining_calendar->Set_date($begining_date);
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_date($end_date);
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$begining_calendar->set_date($begining_date);
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_date($end_date);
+		$end_calendar->set_style('margin-left:150px;');
 		
-		$Template->Set_filenames(array('news' => 'news/news.tpl'));
+		$Template->set_filenames(array('news' => 'news/news.tpl'));
 		
 		if( $news_size > 1 )
 			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
@@ -393,19 +393,19 @@ elseif( $add_news )
 			$size_tpl = $NEWS_LANG['unknown_size'];
 		
 		//Cr�ation des calendriers
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($news_creation_date);
-		$release_calendar = new Mini_calendar('release_date');
-		$release_calendar->Set_date($news_release_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($news_creation_date);
+		$release_calendar = new MiniCalendar('release_date');
+		$release_calendar->set_date($news_release_date);
 		
 		if( $news_visibility < 0 || $news_visibility > 2 )
 			$news_visibility = 0;
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'C_DISPLAY_NEWS' => true,
 			'C_IMG' => !empty($news_image),
 			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->Module_data_path('news'),
+			'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 			'NAME' => stripslashes($news_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
 			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
@@ -431,7 +431,7 @@ elseif( $add_news )
 			'U_NEWS_FILE' => transid('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
 		));
 
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => stripslashes($news_title),
 			'COUNT' => $news_hits,
 			'DESCRIPTION' => $news_contents,
@@ -445,13 +445,13 @@ elseif( $add_news )
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 		));
 	}
 	else
@@ -459,24 +459,24 @@ elseif( $add_news )
 		$news_creation_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
-		$creation_calendar = new Mini_calendar('creation');
-		$creation_calendar->Set_date($news_creation_date);
+		$creation_calendar = new MiniCalendar('creation');
+		$creation_calendar->set_date($news_creation_date);
 		
-		$release_calendar = new Mini_calendar('release_date');
+		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = false;
 		if( !$ignore_release_date )
-			$release_calendar->Set_date($news_release_date);
+			$release_calendar->set_date($news_release_date);
 		
 		
-		$begining_calendar = new Mini_calendar('begining_date');
-		$end_calendar = new Mini_calendar('end_date');
-		$end_calendar->Set_style('margin-left:150px;');
+		$begining_calendar = new MiniCalendar('begining_date');
+		$end_calendar = new MiniCalendar('end_date');
+		$end_calendar->set_style('margin-left:150px;');
 		
-		$begining_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-		$end_calendar->Set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+		$begining_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+		$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 		$news_visibility = 0;
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'TITLE' => '',
 			'COUNT' => 0,
 			'DESCRIPTION' => '',
@@ -486,13 +486,13 @@ elseif( $add_news )
 			'SIZE_FORM' => '',
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 			'CATEGORIES_TREE' => $news_categories->Build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->Display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->Display(),
+			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
+			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->Display(),
-			'END_CALENDAR' => $end_calendar->Display(),
+			'BEGINING_CALENDAR' => $begining_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_UNAPROVED' => '',
@@ -501,7 +501,7 @@ elseif( $add_news )
 	}
 }
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'KERNEL_EDITOR' => display_editor(),
 	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
 	'C_PREVIEW' => $preview,
@@ -543,7 +543,7 @@ $Template->Assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title']
 ));
 	
-$Template->Pparse('news_management');
+$Template->pparse('news_management');
 require_once('../kernel/footer.php');
 
 ?>

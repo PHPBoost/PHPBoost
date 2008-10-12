@@ -40,7 +40,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 
 	if( $CONFIG_NEWS['activ_edito'] == 1 ) //Affichage de l'édito
 	{
-		$tpl_news->Assign_vars( array(
+		$tpl_news->assign_vars( array(
 			'C_NEWS_EDITO' => true,
 			'CONTENTS' => second_parse($CONFIG_NEWS['edito']),
 			'TITLE' => $CONFIG_NEWS['edito_title'],
@@ -55,13 +55,13 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	//Pagination activée, sinon affichage lien vers les archives.
 	if( $CONFIG_NEWS['activ_pagin'] == '1' )
 	{
-		$show_pagin = $Pagination->Display_pagination('news' . transid('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
-		$first_msg = $Pagination->First_msg($CONFIG_NEWS['pagination_news'], 'p'); 
+		$show_pagin = $Pagination->display('news' . transid('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
+		$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
 	}
 	elseif( $show_archive ) //Pagination des archives.
 	{
-		$show_pagin = $Pagination->Display_pagination('news' . transid('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
-		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->First_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
+		$show_pagin = $Pagination->display('news' . transid('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
+		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
 		$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
 	}
 	else //Affichage du lien vers les archives.
@@ -70,7 +70,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		$first_msg = 0;
 	}
 		
-	$tpl_news->Assign_vars(array(
+	$tpl_news->assign_vars(array(
 	    'L_SYNDICATION' => $LANG['syndication'],
 		'PAGINATION' => $show_pagin,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
@@ -83,7 +83,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	//Si les news en block sont activées on recupère la page.
 	if( $CONFIG_NEWS['type'] == 1 && !$show_archive )
 	{		
-		$tpl_news->Assign_vars(array(
+		$tpl_news->assign_vars(array(
 			'C_NEWS_BLOCK' => true
 		));
 		
@@ -95,7 +95,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
 			
-			$tpl_news->Assign_vars(array(
+			$tpl_news->assign_vars(array(
 				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%">',
 				'END_TABLE_NEWS' => '</td></tr></table>'
 			));	
@@ -127,7 +127,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 				$i++;
 			}
 				
-			$tpl_news->Assign_block_vars('news', array(
+			$tpl_news->assign_block_vars('news', array(
 				'ID' => $row['id'],
 				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
 				'TITLE' => $row['title'],
@@ -150,7 +150,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		
 		if( $z == 0 )
 		{
-			$tpl_news->Assign_vars( array(
+			$tpl_news->assign_vars( array(
 				'C_NEWS_NO_AVAILABLE' => true,
 				'L_NO_NEWS_AVAILABLE' => $LANG['no_news_available']
 			));
@@ -166,7 +166,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
 			
-			$tpl_news->Assign_vars(array(
+			$tpl_news->assign_vars(array(
 				'C_NEWS_LINK' => true,
 				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul></td></tr></table>'
@@ -174,7 +174,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		}
 		else
 		{	
-			$tpl_news->Assign_vars(array(
+			$tpl_news->assign_vars(array(
 				'C_NEWS_LINK' => true,
 				'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
 				'END_TABLE_NEWS' => '</ul>'
@@ -197,7 +197,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 				$i++;
 			}
 			
-			$tpl_news->Assign_block_vars('list', array(
+			$tpl_news->assign_block_vars('list', array(
 				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 				'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 				'TITLE' => $row['title'],
@@ -226,7 +226,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
 	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
 
-	$tpl_news->Assign_vars(array(
+	$tpl_news->assign_vars(array(
 	    'L_SYNDICATION' => $LANG['syndication'],
 		'C_NEWS_BLOCK' => true,
 		'C_NEWS_NAVIGATION_LINKS' => true,
@@ -238,7 +238,7 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
         'THEME' => $CONFIG['theme']
 	));
 	
-	$tpl_news->Assign_block_vars('news', array(
+	$tpl_news->assign_block_vars('news', array(
 		'ID' => $news['id'],
 		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img class="valign_middle" src="' . $news['icon'] . '" alt="" /></a>' : ''),
 		'TITLE' => $news['title'],
@@ -263,7 +263,7 @@ elseif( !empty($idcat) )
 	if( empty($cat['id']) )
 		$Errorh->Error_handler('error_unexist_cat', E_USER_REDIRECT);
 	
-	$tpl_news->Assign_vars(array(
+	$tpl_news->assign_vars(array(
 		'C_NEWS_LINK' => true,
 		'CAT_NAME' => $cat['name'],
 		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" /></a>' : '',
@@ -277,7 +277,7 @@ elseif( !empty($idcat) )
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{ 
-		$tpl_news->Assign_block_vars('list', array(
+		$tpl_news->assign_block_vars('list', array(
 			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 			'TITLE' => $row['title'],
 			'COM' => $row['nbr_com'],
@@ -289,7 +289,7 @@ elseif( !empty($idcat) )
 //Affichage commentaires.
 if( isset($_GET['com']) && $idnews > 0 )
 {
-	$tpl_news->Assign_vars(array(
+	$tpl_news->assign_vars(array(
 		'COMMENTS' => display_comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
 	));
 }

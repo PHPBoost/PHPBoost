@@ -40,7 +40,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	if( empty($articles['id']) )
 		$Errorh->Error_handler('e_unexist_articles', E_USER_REDIRECT); 
 	
-	$Template->Set_filenames(array('articles'=> 'articles/articles.tpl'));		
+	$Template->set_filenames(array('articles'=> 'articles/articles.tpl'));		
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -58,7 +58,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . transid('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
 		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
 		
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'JAVA' => $java,
 			'EDIT' => $edit,
 			'DEL' => $del
@@ -100,7 +100,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	include_once('../kernel/framework/content/note.class.php'); 
 	$Note = new Note('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
@@ -110,7 +110,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
 		'PAGES_LIST' => $page_list,
-		'PAGINATION_ARTICLES' => $Pagination->Display_pagination('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
+		'PAGINATION_ARTICLES' => $Pagination->display('articles' . transid('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
 		'PAGE_NAME' => (isset($array_page[1][($page-1)]) && $array_page[1][($page-1)] != '&nbsp;') ? $array_page[1][($page-1)] : '',
 		'PAGE_PREVIOUS_ARTICLES' => ($page > 1 && $page <= $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page - 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page - 1) . '+' . url_encode_rewrite($articles['title']) . '.php') . '">&laquo; ' . $LANG['previous_page'] . '</a><br />' . $array_page[1][($page-2)] : '',
 		'PAGE_NEXT_ARTICLES' => ($page > 0 && $page < $nbr_page && $nbr_page > 1) ? '<a href="' . transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=' . ($page + 1), 'articles-' . $idartcat . '-' . $idart . '-' . ($page + 1) . '+' . url_encode_rewrite($articles['title']) . '.php') . '">' . $LANG['next_page'] . ' &raquo;</a><br />' . $array_page[1][$page] : '',
@@ -129,16 +129,16 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	//Affichage commentaires.
 	if( isset($_GET['com']) )
 	{
-		$Template->Assign_vars(array(
+		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('articles', $idart, transid('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
 		));
 	}	
 
-	$Template->Pparse('articles');	
+	$Template->pparse('articles');	
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'articles_cat'=> 'articles/articles_cat.tpl'
 	));	
 
@@ -176,7 +176,7 @@ else
 	$column_width_cats = floor(100/$nbr_column_cats);
 	
 	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
 		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_ARTICLES' => $LANG['articles'],
@@ -244,9 +244,9 @@ else
 	##### Catégories disponibles #####	
 	if( $total_cat > 0 )
 	{
-		$Template->Assign_vars(array(			
+		$Template->assign_vars(array(			
 			'C_ARTICLES_CAT' => true,
-			'PAGINATION_CAT' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
+			'PAGINATION_CAT' => $Pagination->display('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
 			'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));	
 			
@@ -255,10 +255,10 @@ else
 		FROM ".PREFIX."articles_cats ac
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
-		" . $Sql->limit($Pagination->First_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
+		" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$Template->Assign_block_vars('cat_list', array(
+			$Template->assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
@@ -274,9 +274,9 @@ else
 	##### Affichage des articles #####	
 	if( $nbr_articles > 0 )
 	{
-		$Template->Assign_vars(array(		
+		$Template->assign_vars(array(		
 			'C_ARTICLES_LINK' => true,
-			'PAGINATION' => $Pagination->Display_pagination('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
+			'PAGINATION' => $Pagination->display('articles' . transid('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
 		));
@@ -287,13 +287,13 @@ else
 		FROM ".PREFIX."articles
 		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
 		ORDER BY " . $sort . " " . $mode . 
-		$Sql->limit($Pagination->First_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+		$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			//On reccourci le lien si il est trop long.
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
-			$Template->Assign_block_vars('articles', array(			
+			$Template->assign_block_vars('articles', array(			
 				'NAME' => $fichier,
 				'ICON' => !empty($row['icon']) ? '<a href="articles' . transid('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
@@ -308,7 +308,7 @@ else
 		$Sql->query_close($result);
 	}
 	 
-	$Template->Pparse('articles_cat');
+	$Template->pparse('articles_cat');
 }
 			
 require_once('../kernel/footer.php'); 

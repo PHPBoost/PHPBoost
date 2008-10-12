@@ -34,7 +34,7 @@ $del = !empty($_GET['del']) ? true : false;
 $top = retrieve(GET, 'top', 0);
 $bottom = retrieve(GET, 'bot', 0);
 	
-$Template->Set_filenames(array(
+$Template->set_filenames(array(
 	'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 ));
 	
@@ -134,7 +134,7 @@ elseif( !empty($id) )
 		$predef_regex = true;
 	}
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
@@ -185,7 +185,7 @@ elseif( !empty($id) )
 		$option_regex .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'REGEX' => (!$predef_regex) ? $extend_field : '',
 		'OPTION_REGEX' => $option_regex,
 		'OPTION_FIELD' => $option_field,
@@ -224,11 +224,11 @@ elseif( !empty($id) )
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 	));
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_FIELD_MANAGEMENT' => true,
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
 		'L_EXTEND_FIELD_ADD' => $LANG['extend_field_add'],
@@ -255,7 +255,7 @@ else
 		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
 		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
-		$Template->Assign_block_vars('field', array(
+		$Template->assign_block_vars('field', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'TOP' => $top_link,
@@ -265,7 +265,7 @@ else
 	$Sql->query_close($result);
 }
 
-$Template->Pparse('admin_extend_field');		
+$Template->pparse('admin_extend_field');		
 	
 require_once('../admin/admin_footer.php');
 

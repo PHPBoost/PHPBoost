@@ -68,13 +68,13 @@ class Sitemap_section
 		$template = $export_config->Get_section_stream();
 		
 		if( is_string($this->section_name) )
-			$template->Assign_vars(array(
+			$template->assign_vars(array(
 				'C_SECTION_NAME_IS_STRING' => !empty($this->section_name),
 				'SECTION_NAME' => $this->section_name,
 				'DEPTH' => $depth
 			));
 		elseif( is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link' )
-			$template->Assign_vars(array(
+			$template->assign_vars(array(
 					'C_SECTION_NAME_IS_LINK' => true,
 					'LINK_CODE' => $this->section_name->Export($export_config),
 					'DEPTH' => $depth
@@ -82,7 +82,7 @@ class Sitemap_section
 		
 		foreach($this->sub_sections as $sub_section)
 		{
-			$template->Assign_block_vars('children', array(
+			$template->assign_block_vars('children', array(
 				'CHILD_CODE' => $sub_section->Export($export_config, $depth + 1)
 			));
 		}

@@ -124,9 +124,9 @@ $bread_crumb_key = 'wiki_property';
 require_once('../wiki/wiki_bread_crumb.php');
 require_once('../kernel/header.php');
 
-$Template->Set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
-$Template->Assign_vars(array(
-	'WIKI_PATH' => $Template->Module_data_path('wiki')
+$Template->set_filenames(array('wiki_properties'=> 'wiki/property.tpl'));
+$Template->assign_vars(array(
+	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
 
 if( $random )//Recherche d'une page aléatoire
@@ -141,13 +141,13 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 {
 	$array_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : $_WIKI_CONFIG['auth']; //Récupération des tableaux des autorisations et des groupes.
 	
-	$Template->Assign_block_vars('auth', array(
+	$Template->assign_block_vars('auth', array(
 		'L_TITLE' => sprintf($LANG['wiki_auth_management_article'], $article_infos['title']),
 		'ID' => $id_auth
 	));
 	
 	//On assigne les variables pour le POST en précisant l'idurl.	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
 		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
 		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
@@ -163,7 +163,7 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 }
 elseif( $wiki_status > 0 )
 {
-	$Template->Assign_block_vars('status', array(
+	$Template->assign_block_vars('status', array(
 		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], $article_infos['title']),
 		'UNDEFINED_STATUS' => ($article_infos['defined_status'] < 0 ) ? wiki_unparse($article_infos['undefined_status']) : '',
 		'ID_ARTICLE' => $wiki_status,
@@ -176,19 +176,19 @@ elseif( $wiki_status > 0 )
 	));
 	
 	//On fait une liste des statuts définis
-	$Template->Assign_block_vars('status.list', array(
+	$Template->assign_block_vars('status.list', array(
 		'L_STATUS' => $LANG['wiki_no_status'],
 		'ID_STATUS' => 0,
 		'SELECTED' => ($article_infos['defined_status'] == 0) ? 'selected = "selected"' : '',
 	));
 	foreach( $LANG['wiki_status_list'] as $key => $value )
 	{
-		$Template->Assign_block_vars('status.list', array(
+		$Template->assign_block_vars('status.list', array(
 			'L_STATUS' => $value[0],
 			'ID_STATUS' => $key + 1,
 			'SELECTED' => ($article_infos['defined_status'] == $key + 1) ? 'selected = "selected"' : '',
 		));
-		$Template->Assign_block_vars('status.status_array', array(
+		$Template->assign_block_vars('status.status_array', array(
 			'ID' => $key + 1,
 			'TEXT' => str_replace('"', '\"', $value[1]),
 		));
@@ -214,7 +214,7 @@ elseif( $move > 0 ) //On déplace l'article
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 			
-	$Template->Assign_block_vars('move', array(
+	$Template->assign_block_vars('move', array(
 		'L_TITLE' => sprintf($LANG['wiki_moving_this_article'], $article_infos['title']),
 		'ID_ARTICLE' => $move,
 		'CATS' => $cat_list,
@@ -235,7 +235,7 @@ elseif( $move > 0 ) //On déplace l'article
 }
 elseif( $rename > 0 )//On renomme un article
 {
-	$Template->Assign_block_vars('rename', array(
+	$Template->assign_block_vars('rename', array(
 		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], $article_infos['title']),
 		'L_RENAMING_ARTICLE' => $LANG['wiki_explain_renaming'],
 		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection_after_renaming'],
@@ -254,7 +254,7 @@ elseif( $rename > 0 )//On renomme un article
 }
 elseif( $redirect > 0 ) //Redirections de l'article
 {
-	$Template->Assign_block_vars('redirect', array(
+	$Template->assign_block_vars('redirect', array(
 		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
 	));
 	//Liste des redirections
@@ -265,7 +265,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '" . $redirect . "'", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$Template->Assign_block_vars('redirect.list', array(
+		$Template->assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => transid('action.php?del_redirection=' . $row['id']),
 			'REDIRECTION_NAME' => $row['title'],
 		));
@@ -273,10 +273,10 @@ elseif( $redirect > 0 ) //Redirections de l'article
 	
 	//Aucune redirection
 	if( $num_rows == 0 )
-		$Template->Assign_block_vars('redirect.no_redirection', array(
+		$Template->assign_block_vars('redirect.no_redirection', array(
 			'L_NO_REDIRECTION' => $LANG['wiki_no_redirection']
 		));
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 		'L_REDIRECTION_ACTIONS' => $LANG['wiki_possible_actions'],
 		'REDIRECTION_DELETE' => $LANG['wiki_redirection_delete'],
@@ -287,10 +287,10 @@ elseif( $redirect > 0 ) //Redirections de l'article
 }
 elseif( $create_redirection > 0 ) //Création d'une redirection
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
 	));
-	$Template->Assign_block_vars('create', array(
+	$Template->assign_block_vars('create', array(
 		'L_TITLE' => sprintf($LANG['wiki_create_redirection_to_this'], $article_infos['title']),
 		'ID_ARTICLE' => $create_redirection
 	));
@@ -306,7 +306,7 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 }
 elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
 {
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_COMMENTS' => true,
 		'COMMENTS' => display_comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
 	));
@@ -338,7 +338,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
 				
-		$Template->Assign_block_vars('remove', array(
+		$Template->assign_block_vars('remove', array(
 			'L_TITLE' => sprintf($LANG['wiki_remove_this_cat'], $article_infos['title']),
 			'L_REMOVE_ALL_CONTENTS' => $LANG['wiki_remove_all_contents'],
 			'L_MOVE_ALL_CONTENTS' => $LANG['wiki_move_all_contents'],
@@ -370,7 +370,7 @@ $content_editor = new Content(BBCODE_LANGUAGE);
 $editor =& $content_editor->get_editor();
 $editor->set_identifier('contents');
 	
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'KERNEL_EDITOR' => $editor->display(),
 	'EXPLAIN_WIKI_GROUPS' => $LANG['explain_wiki_groups'],
 	'L_SUBMIT' => $LANG['submit'],
@@ -407,7 +407,7 @@ $Template->Assign_vars(array(
 	'L_COM' => $LANG['wiki_auth_com'],
 	));
 
-$Template->Pparse('wiki_properties');
+$Template->pparse('wiki_properties');
 
 require_once('../kernel/footer.php');
 

@@ -95,7 +95,7 @@ elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd
 }
 else	
 {	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_forum_config'=> 'forum/admin_forum_config.tpl'
 	));
 
@@ -113,9 +113,9 @@ else
 	$CONFIG_FORUM['activ_display_msg'] = isset($CONFIG_FORUM['activ_display_msg']) ? $CONFIG_FORUM['activ_display_msg'] : 0;
 	$CONFIG_FORUM['icon_display_msg'] = isset($CONFIG_FORUM['icon_display_msg']) ? $CONFIG_FORUM['icon_display_msg'] : 1;
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('forum'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => !empty($CONFIG_FORUM['forum_name']) ? $CONFIG_FORUM['forum_name'] : '',
 		'PAGINATION_TOPIC' => !empty($CONFIG_FORUM['pagination_topic']) ? $CONFIG_FORUM['pagination_topic'] : '20',
 		'PAGINATION_MSG' => !empty($CONFIG_FORUM['pagination_msg']) ? $CONFIG_FORUM['pagination_msg'] : '15',
@@ -177,7 +177,7 @@ else
 		'L_UPDATE_DATA_CACHED' => $LANG['update_data_cached']
 	));
 
-	$Template->Pparse('admin_forum_config');
+	$Template->pparse('admin_forum_config');
 }
 
 require_once('../admin/admin_footer.php');

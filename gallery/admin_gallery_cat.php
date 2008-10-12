@@ -219,7 +219,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 		{
 			if( empty($_POST['del_cat']) )
 			{
-				$Template->Set_filenames(array(
+				$Template->set_filenames(array(
 					'admin_gallery_cat_del'=> 'gallery/admin_gallery_cat_del.tpl'
 				));
 
@@ -239,7 +239,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					}
 					$Sql->query_close($result);
 					
-					$Template->Assign_block_vars('pics', array(
+					$Template->assign_block_vars('pics', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_pics'],
 						'L_MOVE_PICS' => $LANG['move_pics_to'],
@@ -261,7 +261,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					}
 					$Sql->query_close($result);
 					
-					$Template->Assign_block_vars('subgalleries', array(
+					$Template->assign_block_vars('subgalleries', array(
 						'GALLERIES' => $subgallery,
 						'L_KEEP' => $LANG['keep_subgallery'],
 						'L_MOVE_GALLERIES' => $LANG['move_subgalleries_to'],
@@ -270,7 +270,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 				}
 		
 				$gallery_name = $Sql->query("SELECT name FROM ".PREFIX."gallery_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$Template->Assign_vars(array(
+				$Template->assign_vars(array(
 					'IDCAT' => $idcat,
 					'GALLERY_NAME' => $gallery_name,
 					'L_REQUIRE_SUBCAT' => $LANG['require_subcat'],
@@ -285,7 +285,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$Template->Pparse('admin_gallery_cat_del'); //Traitement du modele	
+				$Template->pparse('admin_gallery_cat_del'); //Traitement du modele	
 			}
 			else //Traitements.
 			{			
@@ -682,7 +682,7 @@ elseif( !empty($id) ) //Edition des catégories.
 {
 	$Cache->Load_file('gallery');
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_gallery_cat_edit'=> 'gallery/admin_gallery_cat_edit.tpl'
 	));
 			
@@ -712,9 +712,9 @@ elseif( !empty($id) ) //Edition des catégories.
 	if( $get_error == 'incomplete' )
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
 		'NAME' => $gallery_info['name'],
@@ -759,13 +759,13 @@ elseif( !empty($id) ) //Edition des catégories.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$Template->Pparse('admin_gallery_cat_edit'); // traitement du modele
+	$Template->pparse('admin_gallery_cat_edit'); // traitement du modele
 }
 elseif( !empty($root) ) //Edition de la racine.
 {
 	$Cache->Load_file('gallery');
 	
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_gallery_cat_edit2'=> 'gallery/admin_gallery_cat_edit2.tpl'
 	));
 			
@@ -775,9 +775,9 @@ elseif( !empty($root) ) //Edition de la racine.
 		$Errorh->Error_handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, $array_auth),
 		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, $array_auth),
@@ -803,11 +803,11 @@ elseif( !empty($root) ) //Edition de la racine.
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 	
-	$Template->Pparse('admin_gallery_cat_edit2'); // traitement du modele
+	$Template->pparse('admin_gallery_cat_edit2'); // traitement du modele
 }
 else	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_gallery_cat'=> 'gallery/admin_gallery_cat.tpl'
 	));
 		
@@ -816,9 +816,9 @@ else
 	if( $get_error == 'unexist_cat' )
 		$Errorh->Error_handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
-		'MODULE_DATA_PATH' => $Template->Module_data_path('gallery'),
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
@@ -859,7 +859,7 @@ else
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//On assigne les variables pour le POST en précisant l'idurl.
-		$Template->Assign_block_vars('list', array(
+		$Template->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -880,13 +880,13 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'LIST_CATS' => trim($list_cats_js, ', '),
 		'ARRAY_JS' => $array_js,
 		'ID_END' => ($i - 1)
 	));
 
-	$Template->Pparse('admin_gallery_cat'); // traitement du modele	
+	$Template->pparse('admin_gallery_cat'); // traitement du modele	
 }
 	
 require_once('../admin/admin_footer.php');

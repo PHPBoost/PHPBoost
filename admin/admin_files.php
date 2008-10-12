@@ -77,7 +77,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		$Upload->Upload_file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
+		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
 		if( !empty($Upload->error) ) //Erreur, on arrête ici
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
@@ -144,7 +144,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 }
 else
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_files_management'=> 'admin/admin_files_management.tpl'
 	));
 
@@ -185,7 +185,7 @@ else
 	else
 		$url = $Uploads->Get_admin_url($folder, '');
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'FOLDERM_ID' => !empty($folder_member) ? '&amp;fm=' . $folder_member : '',
 		'USER_ID' => !empty($folder_info['user_id']) ? $folder_info['user_id'] : '-1',
@@ -219,7 +219,7 @@ else
 
 	if( $folder == 0 && !$show_member && empty($folder_member) )
 	{	
-		$Template->Assign_block_vars('folder', array(
+		$Template->assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
 			'IMG_FOLDER' => 'member_max.png',
 			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
@@ -267,7 +267,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$Template->Assign_block_vars('folder', array(
+		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
 			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
@@ -319,7 +319,7 @@ else
 				$link = '<a class="com" href="../upload/' . $row['path'] . '">';
 			}
 			
-			$Template->Assign_block_vars('files', array(
+			$Template->assign_block_vars('files', array(
 				'ID' => $row['id'],
 				'IMG' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
 				'URL' => $link,
@@ -342,7 +342,7 @@ else
 	
 
 	$total_size = $Sql->query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? number_round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDERS' => $total_directories,
@@ -351,12 +351,12 @@ else
 
 
 	if( $total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)) )
-		$Template->Assign_block_vars('empty_folder', array(
+		$Template->assign_block_vars('empty_folder', array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));
 		
-	$Template->Pparse('admin_files_management');
+	$Template->pparse('admin_files_management');
 }
 	
 require_once('../admin/admin_footer.php');

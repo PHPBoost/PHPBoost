@@ -44,7 +44,7 @@ class TinyMCEEditor extends ContentEditor
 		//Chargement de la configuration.
 		$Cache->Load_file('uploads');
 		
-		$template->Assign_vars(array(
+		$template->assign_vars(array(
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
@@ -72,7 +72,7 @@ class TinyMCEEditor extends ContentEditor
 			if( !in_array($tag, $this->forbidden_tags) )
 				$theme_advanced_buttons2 .= $tinymce_tag . ',';
 		}
-		$template->Assign_vars(array( 
+		$template->assign_vars(array( 
 			'THEME_ADVANCED_BUTTONS1' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons1, ',')),
 			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ','))
 		));

@@ -44,9 +44,9 @@ $where_search = !(empty($where_search) || ($where_search == 'contents')) ? 'cont
 $page = retrieve(GET, 'page', 1);
 $page = $page <= 0 ? 1 : $page;
 
-$Template->Set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
+$Template->set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
 
-$Template->Assign_vars(array(
+$Template->assign_vars(array(
 	'L_SEARCH' => $LANG['wiki_search'],
 	'L_KEY_WORDS' => $LANG['wiki_search_key_words'],
 	'TARGET' => transid('search.php'),
@@ -85,10 +85,10 @@ if( !empty($search_string) ) //recherche
 	
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
-	$pages_links = $Pagination->Display_pagination('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
+	$pages_links = $Pagination->display('search' . transid('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
 	if( $num_rows > 0 )
-		$Template->Assign_block_vars('search_result', array(
+		$Template->assign_block_vars('search_result', array(
 			'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
 		));
 	else
@@ -98,7 +98,7 @@ if( !empty($search_string) ) //recherche
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		if( $i > ($page - 1) * 10 && $i <= $page * 10 ) //On affiche
-			$Template->Assign_block_vars('search_result.item', array(
+			$Template->assign_block_vars('search_result.item', array(
 				'TITLE' => $row['title'],
 				'U_TITLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 				'RELEVANCE' => number_round(($row['relevance'] / 5.5), 2) * 100 . ' %'
@@ -109,7 +109,7 @@ if( !empty($search_string) ) //recherche
 	}	
 }
 
-$Template->Pparse('wiki_search');
+$Template->pparse('wiki_search');
 
 
 require_once('../kernel/footer.php'); 

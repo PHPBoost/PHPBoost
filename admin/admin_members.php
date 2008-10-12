@@ -142,13 +142,13 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			{
 				if( $_FILES['avatars']['size'] > 0 )
 				{
-					$Upload->Upload_file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
-						$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
@@ -169,7 +169,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 			if( !empty($_POST['avatar']) )
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->Validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
@@ -217,7 +217,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 					$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
-					$Mail->Send_mail($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
+					$Mail->send($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
 				}
 				
 				//Champs supplémentaires.
@@ -342,7 +342,7 @@ elseif( !empty($id) && $delete ) //Suppression du membre.
 }
 elseif( $add )
 {
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
 	));
 
@@ -370,7 +370,7 @@ elseif( $add )
 	if( !empty($errstr) )
 		$Errorh->Error_handler($errstr, E_USER_NOTICE);  
 		
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_MEMBERS_ADD' => true,
 		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
 		'L_MEMBERS_ADD' => $LANG['members_add'],
@@ -388,11 +388,11 @@ elseif( $add )
 		'L_ADD' => $LANG['add']
 	));
 	
-	$Template->Pparse('admin_members_management2'); 	
+	$Template->pparse('admin_members_management2'); 	
 }
 elseif( !empty($id) )	
 {		
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_members_management2'=> 'admin/admin_members_management2.tpl'
 	));
 	
@@ -612,7 +612,7 @@ elseif( !empty($id) )
 	}
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
-	$Template->Assign_vars(array(
+	$Template->assign_vars(array(
 		'C_MEMBERS_MANAGEMENT' => true,
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
@@ -725,7 +725,7 @@ elseif( !empty($id) )
 	$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	if( $extend_field_exist > 0 )
 	{
-		$Template->Assign_vars(array(			
+		$Template->assign_vars(array(			
 			'C_MISCELLANEOUS' => true,
 			'L_MISCELLANEOUS' => $LANG['miscellaneous']
 		));
@@ -794,7 +794,7 @@ elseif( !empty($id) )
 				break;
 			}				
 			
-			$Template->Assign_block_vars('list', array(
+			$Template->assign_block_vars('list', array(
 				'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 				'ID' => $row['field_name'],
 				'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
@@ -804,11 +804,11 @@ elseif( !empty($id) )
 		$Sql->query_close($result);	
 	}
 	
-	$Template->Pparse('admin_members_management2');
+	$Template->pparse('admin_members_management2');
 }
 else
 {			
-	$Template->Set_filenames(array(
+	$Template->set_filenames(array(
 		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
@@ -827,7 +827,7 @@ else
 			{ 
 				$coma = ($i != 0) ? ', ' : '';
 				$i++;
-				$Template->Assign_block_vars('search', array(
+				$Template->assign_block_vars('search', array(
 					'RESULT' => $coma . '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>'
 				));
 			}
@@ -835,7 +835,7 @@ else
 		}
 		else
 		{
-			$Template->Assign_block_vars('search', array(
+			$Template->assign_block_vars('search', array(
 				'RESULT' => $LANG['no_result']
 			));
 		}		
@@ -870,8 +870,8 @@ else
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
 	$unget = (!empty($get_sort) && !empty($mode)) ? '&amp;sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-	$Template->Assign_vars(array(
-		'PAGINATION' => $Pagination->Display_pagination('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
+	$Template->assign_vars(array(
+		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -907,7 +907,7 @@ else
 	$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
 	FROM ".PREFIX."member 
 	ORDER BY " . $sort . " " . $mode . 
-	$Sql->limit($Pagination->First_msg(25, 'p'), 25), __LINE__, __FILE__);
+	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		switch ($row['level']) 
@@ -929,7 +929,7 @@ else
 		
 		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
-		$Template->Assign_block_vars('member', array(
+		$Template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],
 			'NAME' => $row['login'],
 			'RANK' => $rank,
@@ -941,7 +941,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->Pparse('admin_members_management'); 
+	$Template->pparse('admin_members_management'); 
 }
 require_once('../admin/admin_footer.php');
 

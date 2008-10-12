@@ -76,7 +76,7 @@ $directories_list = array('/', '/cache', '/cache/backup', '/cache/tpl', '/images
 foreach($directories_list as $dir)
 {
 	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
-	$template->Assign_block_vars('directories', array(
+	$template->assign_block_vars('directories', array(
 		'NAME' => $dir,
 		'C_AUTH_DIR' => $dir_status
 	));
