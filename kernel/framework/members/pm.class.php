@@ -122,7 +122,7 @@ class PrivateMsg
 	}
 	
 	//Suppression d'une conversation.
-	function delete_conversation(($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
+	function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
 		global $CONFIG, $Sql;	
 				
