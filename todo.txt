@@ -25,6 +25,7 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [+] Interface de contribution des articles.
 [-] Stocker la langue et le thème de l'utilisateur dans les sessions de façon à pouvoir faire des menus pour switcher
+[-] Faire la boîte PHPBoost 2.1
 
 #################################################################################
 

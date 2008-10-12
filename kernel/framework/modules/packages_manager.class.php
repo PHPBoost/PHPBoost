@@ -32,10 +32,13 @@ define('UNEXISTING_MODULE', 1);
 define('MODULE_ALREADY_INSTALLED', 2);
 define('CONFIG_CONFLICT', 3);
 
+define('GENERATE_CACHE_AFTER_THE_OPERATION', true);
+define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
+
 //Class
 class PackagesManager
 {
-	/*static*/ function install_module($module_identifier)
+	/*static*/ function install_module($module_identifier, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)
 	{
 		global $Cache, $Sql, $CONFIG;
 		
@@ -43,7 +46,7 @@ class PackagesManager
 			return UNEXISTING_MODULE;
 		
 		//Vérification de l'unicité du module
-		$ckeck_module = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_identifier) . "'", __LINE__, __FILE__);
+		$check_module = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_identifier) . "'", __LINE__, __FILE__);
 		if( $check_module > 0 )
 			return MODULE_ALREADY_INSTALLED;
 		
@@ -108,16 +111,19 @@ class PackagesManager
 		}
 
 		//Insertion du modules dans la bdd => module installé.
-		$Sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '1')", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
-		$Cache->Generate_file('modules');
-		$Cache->Generate_file('modules_mini');
-		$Cache->Generate_file('css');
+		if( $generate_cache )
+		{
+			$Cache->Generate_file('modules');
+			$Cache->Generate_file('modules_mini');
+			$Cache->Generate_file('css');
 		
-		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-		if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-			$Cache->Generate_file('htaccess'); //Régénération du htaccess.
+			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
+			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
+				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
+		}
 		
 		return MODULE_INSTALLED;
 	}
