@@ -42,7 +42,7 @@ elseif( $select_cat && empty($open_cat) && $root == 0 )
 	if( $selected_cat > 0)
 	{
 		$localisation = array();
-		$Cache->Load_file('wiki');
+		$Cache->load('wiki');
 		$id = $selected_cat; //Permier id
 		do
 		{

@@ -61,7 +61,7 @@ class ShoutboxInterface extends ModuleInterface
 	{
 		global $Sql, $Cache, $CONFIG_SHOUTBOX;
 		
-		$Cache->Load_file('shoutbox'); //$CONFIG_SHOUTBOX en global.
+		$Cache->load('shoutbox'); //$CONFIG_SHOUTBOX en global.
 
 		if( $CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1 )
 		{

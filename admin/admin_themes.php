@@ -34,7 +34,7 @@ $id = retrieve(GET, 'id', 0);
 
 $theme_tmp = $CONFIG['theme'];
 //On recupère toute les informations supplementaires.
-$Cache->Load_file('config', RELOAD_CACHE);
+$Cache->load('config', RELOAD_CACHE);
 
 if( isset($_GET['activ']) && !empty($id) ) //Aprobation du thème.
 {

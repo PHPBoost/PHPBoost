@@ -112,7 +112,7 @@ class NewsInterface extends ModuleInterface
         $data->set_lang($LANG['xml_lang']);
         
         // Load the new's config
-        $Cache->Load_file('news');
+        $Cache->load('news');
         
         // Last news
         $result = $Sql->query_while("SELECT id, title, contents, timestamp, img

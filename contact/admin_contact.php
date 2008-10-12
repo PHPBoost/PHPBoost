@@ -51,7 +51,7 @@ else
 		'admin_contact_config'=> 'contact/admin_contact_config.tpl'
 	));
 	
-	$Cache->Load_file('contact');
+	$Cache->load('contact');
 	
 	$CONFIG_CONTACT['contact_verifcode'] = isset($CONFIG_CONTACT['contact_verifcode']) ? $CONFIG_CONTACT['contact_verifcode'] : 0;
 	$CONFIG_CONTACT['contact_difficulty_verifcode'] = isset($CONFIG_CONTACT['contact_difficulty_verifcode']) ? $CONFIG_CONTACT['contact_difficulty_verifcode'] : 2;

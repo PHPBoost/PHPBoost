@@ -265,7 +265,7 @@ else
 
 
 //Contenu de la racine:
-$Cache->Load_file('pages');
+$Cache->load('pages');
 
 $Template->pparse('pages_redirections');
 

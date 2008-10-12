@@ -32,6 +32,6 @@ load_module_lang('newsletter'); //Chargement de la langue du module.
 define('TITLE', $LANG['newsletter']);
 
 //Chargement du cache
-$Cache->Load_file('newsletter');
+$Cache->load('newsletter');
 
 ?>

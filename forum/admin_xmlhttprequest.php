@@ -31,7 +31,7 @@ require_once('../kernel/header_no_display.php');
 
 if( $User->check_level(ADMIN_LEVEL) ) //Admin
 {			
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 
 	$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
 	$id = retrieve(GET, 'id', 0);

@@ -266,14 +266,14 @@ class Template
             $this->template = '<?php $tplString = \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $this->template) . '\' ?>';
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '\' . (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\') . \'', $this->template);
-            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
+            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, '_parse_blocks_vars'), $this->template);
             
             //Parse des blocs imbriqués ou non.
-            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, 'parse_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, '_parse_blocks'), $this->template);
             $this->template = preg_replace('`# END [\w\.]+ #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
             //Remplacement des blocs conditionnels.
-            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '\';'."\n".'} else {'."\n".'$tplString .= \'', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
@@ -283,18 +283,18 @@ class Template
         else
         {
             // Protection des injections PHP et affichages des tags XML
-            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, '_protect_from_inject('), $this->template);
+            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
             
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '<?php echo (isset($this->_var[\'$1\']) ? $this->_var[\'$1\'] : \'\'); ?>', $this->template);
-            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'parse_blocks_vars'), $this->template);
+            $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, '_parse_blocks_vars'), $this->template);
             
             //Parse des blocs imbriqués ou non.
-            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, 'parse_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# START ([\w\.]+) #`', array($this, '_parse_blocks'), $this->template);
             $this->template = preg_replace('`# END [\w\.]+ #`', '<?php } ?>', $this->template);
             
             //Remplacement des blocs conditionnels.
-            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, 'parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '<?php } else { ?>', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
             

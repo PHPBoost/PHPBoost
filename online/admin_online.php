@@ -51,7 +51,7 @@ else
 		'admin_online'=> 'online/admin_online.tpl'
 	));
 	
-	$Cache->Load_file('online');
+	$Cache->load('online');
 	
 	$Template->assign_vars(array(
 		'NBR_ONLINE_DISPLAYED' => !empty($CONFIG_ONLINE['online_displayed']) ? $CONFIG_ONLINE['online_displayed'] : 4,

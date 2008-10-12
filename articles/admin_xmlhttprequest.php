@@ -5,7 +5,7 @@ require_once('../kernel/begin.php');
 define('TITLE', 'Ajax articles');
 require_once('../kernel/header_no_display.php');
 
-$Cache->Load_file('articles');
+$Cache->load('articles');
 
 $move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
 $id = retrieve(GET, 'id', 0);

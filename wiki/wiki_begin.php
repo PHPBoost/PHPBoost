@@ -59,7 +59,7 @@ switch($bread_crumb_key)
 				$Bread_crumb->add($article_infos['title'], transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 		break;
 	case 'wiki_history_article':
-		$Cache->Load_file('wiki');
+		$Cache->load('wiki');
 		$Bread_crumb->add($LANG['wiki_history'], transid('history.php?id=' . $id_article));
 		$Bread_crumb->add($article_infos['title'], transid('wiki.php?title=' . url_encode_rewrite($article_infos['title'])), url_encode_rewrite($article_infos['title']));
 
@@ -82,7 +82,7 @@ switch($bread_crumb_key)
 		$Bread_crumb->add($LANG['wiki_contribuate'], '');
 		break;
 	case 'wiki_property':
-		$Cache->Load_file('wiki');
+		$Cache->load('wiki');
 		if( $id_auth > 0 )
 			$Bread_crumb->add($LANG['wiki_auth_management'], transid('property.php?auth=' . $article_infos['id']));
 		elseif( $wiki_status > 0 )

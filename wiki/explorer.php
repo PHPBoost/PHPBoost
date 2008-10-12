@@ -44,7 +44,7 @@ require_once('../kernel/header.php');
 $Template->set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
 
 //Contenu de la racine:
-$Cache->Load_file('wiki');
+$Cache->load('wiki');
 $root = '';
 foreach( $_WIKI_CATS as $key => $value )
 {

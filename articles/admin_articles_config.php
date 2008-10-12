@@ -34,7 +34,7 @@ require_once('../admin/admin_header.php');
 ##########################admin_news_config.tpl###########################
 if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$config_articles = array();
 	$config_articles['nbr_articles_max'] = retrieve(POST, 'nbr_articles_max', 10);
@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 }
 elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de chaque catégories
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$info_cat = array();
 	$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
@@ -106,7 +106,7 @@ else
 		'admin_articles_config'=> 'articles/admin_articles_config.tpl'
 	));
 	
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$Template->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',

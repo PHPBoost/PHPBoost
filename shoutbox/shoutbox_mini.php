@@ -31,7 +31,7 @@ if( defined('PHPBOOST') !== true ) exit;
 if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 {
 	load_module_lang('shoutbox');
-	$Cache->Load_file('shoutbox'); //Chargement du cache
+	$Cache->load('shoutbox'); //Chargement du cache
 	
 	###########################Insertion##############################
 	$shoutbox = retrieve(POST, 'shoutbox', false);

@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_register']);
 require_once('../kernel/header.php'); 
 
-$Cache->Load_file('member');
+$Cache->load('member');
 if( !$CONFIG_MEMBER['activ_register'] )
 	redirect(get_start_page());
 

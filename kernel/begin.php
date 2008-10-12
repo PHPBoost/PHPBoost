@@ -63,10 +63,10 @@ $Bread_crumb = new BreadCrumb; //!\\Initialisation  de la class de la speed bar/
 
 //Chargement ddes fichiers cache, indispensables au noyau.
 $CONFIG = array();
-$Cache->Load_file('config'); //Requête des configuration générales, $CONFIG variable globale.
-$Cache->Load_file('groups'); //Cache des groupes.
-$Cache->Load_file('member'); //Chargement de la configuration des membres.
-$Cache->Load_file('modules'); //Cache des autorisations des modules
+$Cache->load('config'); //Requête des configuration générales, $CONFIG variable globale.
+$Cache->load('groups'); //Cache des groupes.
+$Cache->load('member'); //Chargement de la configuration des membres.
+$Cache->load('modules'); //Cache des autorisations des modules
 $Cache->load('themes'); //Récupération de la configuration des thèmes.
 
 define('DIR', $CONFIG['server_path']);
@@ -108,7 +108,7 @@ require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Lan
 require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
 
 //Chargement du cache du jour actuel.
-$Cache->Load_file('day');
+$Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
 if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) 
 {

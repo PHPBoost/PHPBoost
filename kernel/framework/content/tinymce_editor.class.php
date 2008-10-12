@@ -42,7 +42,7 @@ class TinyMCEEditor extends ContentEditor
 		$template = $this->get_template();
 		
 		//Chargement de la configuration.
-		$Cache->Load_file('uploads');
+		$Cache->load('uploads');
 		
 		$template->assign_vars(array(
 			'C_BBCODE_NORMAL_MODE' => false,

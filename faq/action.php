@@ -149,7 +149,7 @@ elseif( !empty($entitled) && !empty($answer) )
 			$Cache->Generate_module_file('faq');
 			
 			//On recupère les informations.
-			$Cache->Load_file('faq', RELOAD_CACHE);
+			$Cache->load('faq', RELOAD_CACHE);
 	
 			redirect(HOST . DIR . '/faq/' . transid('faq.php?id=' . $new_id_cat . '&amp;question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}

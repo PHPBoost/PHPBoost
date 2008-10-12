@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true)
 	exit;
 
 load_module_lang('gallery'); //Chargement de la langue du module.
-$Cache->Load_file('gallery');
+$Cache->load('gallery');
 
 define('READ_CAT_GALLERY', 0x01);
 define('WRITE_CAT_GALLERY', 0x02);

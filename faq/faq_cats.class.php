@@ -117,7 +117,7 @@ class FaqCats extends CategoriesManagement
 				}
 				else
 				{
-					$Cache->Load_file('faq', RELOAD_FILE);
+					$Cache->load('faq', RELOAD_FILE);
 					$this->Recount_subquestions(NOT_CACHE_GENERATION);
 				}
 			}

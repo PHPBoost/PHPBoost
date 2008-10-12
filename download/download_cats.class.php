@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-$Cache->Load_file('download');
+$Cache->load('download');
 include_once('../kernel/framework/content/categories.class.php');
 
 define('NOT_GENERATE_CACHE', true);
@@ -116,7 +116,7 @@ class DownloadCats extends CategoriesManagement
 				}
 				else
 				{
-					$Cache->Load_file('download', RELOAD_FILE);
+					$Cache->load('download', RELOAD_FILE);
 					$this->Recount_sub_files(NOT_CACHE_GENERATION);
 				}
 			}

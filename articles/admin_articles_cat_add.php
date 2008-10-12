@@ -39,7 +39,7 @@ define('EDIT_CAT_ARTICLES', 0x04);
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 {
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	
 	$parent_category = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');

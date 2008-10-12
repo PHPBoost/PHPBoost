@@ -30,7 +30,7 @@ load_module_lang('download'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$Cache->Load_file('download');
+$Cache->load('download');
 
 $Template->set_filenames(array(
 	'admin_download_management'=> 'download/admin_download_management.tpl'

@@ -168,7 +168,7 @@ $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG[
 
 $track = false;
 $poll_done = false; //N'execute qu'une fois les actions propres au sondage.
-$Cache->Load_file('ranks'); //Récupère les rangs en cache.
+$Cache->load('ranks'); //Récupère les rangs en cache.
 $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	

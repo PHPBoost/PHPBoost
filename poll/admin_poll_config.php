@@ -50,7 +50,7 @@ else
 	'admin_poll_config'=> 'poll/admin_poll_config.tpl'
 	));
 
-	$Cache->Load_file('poll');
+	$Cache->load('poll');
 	
 	$i = 0;
 	//Mini poll courant	

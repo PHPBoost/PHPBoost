@@ -56,7 +56,7 @@ $Bread_crumb->add($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $i
 $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
-$Cache->Load_file('news');
+$Cache->load('news');
 //Css alternatif.
 define('ALTERNATIVE_CSS', 'news');
 define('FEED_URL', '/news/syndication.php');

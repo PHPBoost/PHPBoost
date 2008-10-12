@@ -34,7 +34,7 @@ $get_note = retrieve(GET, 'note', 0);
 $idweb = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 
-$Cache->Load_file('web'); //$CAT_WEB et $CONFIG_WEB en global.
+$Cache->load('web'); //$CAT_WEB et $CONFIG_WEB en global.
 
 $CAT_WEB[$idcat]['name'] = !empty($CAT_WEB[$idcat]['name']) ? $CAT_WEB[$idcat]['name'] : '';
 $web['title'] = '';

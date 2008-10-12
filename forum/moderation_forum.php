@@ -87,7 +87,7 @@ if( !empty($id_topic_get) )
 
 	//Informations sur la catégorie du topic, en cache $CAT_FORUM variable globale.
 	$CAT_FORUM[$topic['idcat']]['secure'] = '2';
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) : '';

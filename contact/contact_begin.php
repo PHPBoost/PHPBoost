@@ -30,6 +30,6 @@ if( defined('PHPBOOST') !== true)
 	
 load_module_lang('contact'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_contact']);
-$Cache->Load_file('contact');
+$Cache->load('contact');
 
 ?>

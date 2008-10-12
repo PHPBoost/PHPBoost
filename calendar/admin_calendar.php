@@ -51,7 +51,7 @@ else
 		'admin_calendar_config'=> 'calendar/admin_calendar_config.tpl'
 	));
 	
-	$Cache->Load_file('calendar');
+	$Cache->load('calendar');
 	
 	$Template->assign_vars(array(
 		'L_REQUIRE' => $LANG['require'],	

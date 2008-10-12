@@ -40,7 +40,7 @@ $class = retrieve(GET, 'id', 0);
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 {
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	
 	$parent_category = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');

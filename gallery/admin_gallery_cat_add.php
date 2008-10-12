@@ -40,7 +40,7 @@ define('EDIT_CAT_GALLERY', 0x04);
 //Si c'est confirmé on execute
 if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 {
-	$Cache->Load_file('gallery');
+	$Cache->load('gallery');
 	
 	$parent_category = !empty($_POST['category']) ? numeric($_POST['category']) : 0;
 	$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';

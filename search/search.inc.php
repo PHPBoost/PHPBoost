@@ -31,7 +31,7 @@ require_once ( '../kernel/framework/modules/modules.class.php' );
 require_once ( '../kernel/framework/content/search.class.php' );
 
 
-$Cache->Load_file('search');
+$Cache->load('search');
 global $SEARCH_CONFIG;
 
 define ( 'NB_RESULTS_PER_PAGE', $SEARCH_CONFIG['nb_results_per_page']);

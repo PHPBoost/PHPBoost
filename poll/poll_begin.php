@@ -32,6 +32,6 @@ load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_poll']);
 
 //Chargement du cache
-$Cache->Load_file('poll');
+$Cache->load('poll');
 
 ?>

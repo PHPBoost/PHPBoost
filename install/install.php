@@ -579,7 +579,7 @@ elseif( $step == 6 )
 			//On crée le code de déverrouillage
 			include_once('../kernel/framework/core/cache.class.php');
 			$Cache = new Cache;
-			$Cache->Load_file('config');
+			$Cache->load('config');
 			
 			//On enregistre le membre (l'entrée était au préalable créée)
 			$Sql->query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
@@ -672,7 +672,7 @@ elseif( $step == 7 )
 	
 	require_once('../kernel/framework/core/cache.class.php');
 	$Cache = new Cache;
-	$Cache->Load_file('config');
+	$Cache->load('config');
 	
 	$template->assign_vars(array(
 		'C_END' => true,

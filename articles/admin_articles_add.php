@@ -82,7 +82,7 @@ if( !empty($_POST['valid']) )
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Cache->Load_file('articles');
+		$Cache->load('articles');
 		if( empty($idcat) )//Racine.
 		{
 			$CAT_ARTICLES[0]['id_left'] = 0;

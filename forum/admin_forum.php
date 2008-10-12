@@ -40,7 +40,7 @@ $move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) && !empty($id) )
 {
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	
 	$to = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
@@ -96,7 +96,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	$confirm_delete = false;	
 	$idcat = $Sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if( !empty($idcat) && isset($CAT_FORUM[$idcat]) )
@@ -205,7 +205,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 }
 elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 {
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	
 	//Catégorie existe?
 	if( !isset($CAT_FORUM[$id]) )
@@ -221,7 +221,7 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 }
 elseif( !empty($id) )
 {
-	$Cache->Load_file('forum');
+	$Cache->load('forum');
 	
 	$Template->set_filenames(array(
 		'admin_forum_cat_edit'=> 'forum/admin_forum_cat_edit.tpl'

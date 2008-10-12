@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('download'); //Chargement de la langue du module.
-$Cache->Load_file('download');
+$Cache->load('download');
 
 require_once('download_auth.php');
 

@@ -28,7 +28,7 @@
 load_module_lang('forum'); //Chargement de la langue du module.
 require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
-$Cache->Load_file('forum');
+$Cache->load('forum');
 
 //Vérification des autorisations sur toutes les catégories.
 $AUTH_READ_FORUM = array();

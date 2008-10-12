@@ -201,7 +201,7 @@ class DownloadInterface extends ModuleInterface
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		
         load_module_lang('download');
-        $Cache->Load_file('download');
+        $Cache->load('download');
         
         $visible_cats = array();
         include_once(PATH_TO_ROOT . '/download/download_auth.php');

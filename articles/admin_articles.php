@@ -42,7 +42,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	
-	$Cache->Load_file('articles');
+	$Cache->load('articles');
 	if( empty($idcat) )//Racine.
 	{
 		$CAT_ARTICLES[0]['id_left'] = 0;

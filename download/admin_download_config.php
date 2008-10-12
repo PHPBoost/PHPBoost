@@ -59,7 +59,7 @@ else
 		'admin_download_config'=> 'download/admin_download_config.tpl'
 	));
 	
-	$Cache->Load_file('download');
+	$Cache->load('download');
 	
 	$CONFIG_DOWNLOAD['global_auth'] = isset($CONFIG_DOWNLOAD['global_auth']) && is_array($CONFIG_DOWNLOAD['global_auth']) ? $CONFIG_DOWNLOAD['global_auth'] : array();
 	

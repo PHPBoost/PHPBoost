@@ -32,7 +32,7 @@ require_once('pages_defines.php');
 //Titre de l'article à afficher en version imprimable
 $encoded_title = retrieve(GET, 'title', '', TSTRING);
 
-$Cache->Load_file('pages');
+$Cache->load('pages');
 
 if( !empty($encoded_title) ) //Si on connait son titre
 {
