@@ -273,6 +273,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
     $handle = @fopen($dir_path . $dir . '/' . $ini_name, 'r');
+   	$config = '';
     if( $handle ) 
     {
         while( !feof($handle) )
@@ -281,11 +282,12 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
             if( strpos($config, 'config="') !== false ) // here
 			{
 				@fclose($handle);
-				return $config;
+				break;
 			}
         }
         @fclose($handle);
     }
+    return $config;
 }
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.

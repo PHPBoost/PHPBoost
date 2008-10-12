@@ -6,7 +6,7 @@
 [+] Installateur
 	- Distributions (présélections de modules)
 [-] Modifier légèrement l'implémentation de la classe cache en utilisant la partie io du framework
-[-] Supporter https dans l'installation
+[-] Revoir quelques expressions régulières dans l'installation (URL du site avec https et adresse mail)
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [-] S'occuper du sort du panneau de modération.
 
