@@ -81,8 +81,8 @@ if( $CONFIG['ob_gzhandler'] == 1 )
 else
 	ob_start();
 
-$Session->session_info(); //Récupération des informations sur le membre.
-$Session->session_action_checker(); //Action de connexion/déconnexion.
+$Session->load(); //Récupération des informations sur le membre.
+$Session->action_checker(); //Action de connexion/déconnexion.
 
 $Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
 $Member = new Member($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
@@ -90,8 +90,8 @@ $Member = new Member($Session->data, $_array_groups_auth); //!\\Initialisation  
 //Définition de la constante de transmission des infos de session.
 if( $Session->session_mod )
 {
-	define('SID', '?sid=' . $Member->Get_attribute('session_id') . '&amp;suid=' . $Member->Get_attribute('user_id'));
-	define('SID2', '?sid=' . $Member->Get_attribute('session_id') . '&suid=' . $Member->Get_attribute('user_id'));
+	define('SID', '?sid=' . $Member->get_attribute('session_id') . '&amp;suid=' . $Member->get_attribute('user_id'));
+	define('SID2', '?sid=' . $Member->get_attribute('session_id') . '&suid=' . $Member->get_attribute('user_id'));
 }
 else
 {
@@ -100,10 +100,10 @@ else
 }
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$CONFIG['theme'] = find_require_dir(PATH_TO_ROOT . '/templates/', ($Member->Get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->Get_attribute('user_theme'));
+$CONFIG['theme'] = find_require_dir(PATH_TO_ROOT . '/templates/', ($Member->get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $Member->get_attribute('user_theme'));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$CONFIG['lang'] = find_require_dir(PATH_TO_ROOT . '/lang/', ($Member->Get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->Get_attribute('user_lang')));
+$CONFIG['lang'] = find_require_dir(PATH_TO_ROOT . '/lang/', ($Member->get_attribute('user_lang') == '' ? $CONFIG['lang'] : $Member->get_attribute('user_lang')));
 $LANG = array();
 require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
 require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
@@ -126,7 +126,7 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 define('MODULE_NAME', get_module_name());
 if( isset($MODULES[MODULE_NAME])  )
 {
-	if( $MODULES[MODULE_NAME]['activ'] == 0 || !$Member->Check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
+	if( $MODULES[MODULE_NAME]['activ'] == 0 || !$Member->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 }
 

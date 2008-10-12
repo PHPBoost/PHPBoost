@@ -92,7 +92,7 @@ else
 	}
 	
 	$Template->Assign_vars(array(
-		'MAIL' => $Member->Get_attribute('user_mail'),
+		'MAIL' => $Member->get_attribute('user_mail'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'] ,
 		'L_CONTACT_MAIL' => $LANG['contact_mail'],

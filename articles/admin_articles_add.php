@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) )
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->Get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $Member->get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
 		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
 		
 		//Mise à jours du nombre d'articles des parents.
@@ -164,7 +164,7 @@ elseif( !empty($_POST['previs']) )
 		$end = '';
 	}	
 	
-	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->Get_attribute('user_id'), __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $Member->get_attribute('user_id'), __LINE__, __FILE__);
 	$Template->Assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => $title,

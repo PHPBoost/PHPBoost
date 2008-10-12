@@ -48,7 +48,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	$aprob = retrieve(POST, 'aprob', 0);    
 		
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(READ_CAT_ARTICLES);
+	$array_auth_all = Authorizations::auth_array(READ_CAT_ARTICLES);
 			
 	if( !empty($name) )
 	{	
@@ -139,7 +139,7 @@ else
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('articles'),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => Authorizations::Generate_select_auth(READ_CAT_ARTICLES, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_ARTICLES, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'IMG_LIST' => $image_list,
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],

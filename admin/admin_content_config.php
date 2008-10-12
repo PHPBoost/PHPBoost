@@ -34,7 +34,7 @@ if( !empty($_POST['submit'])  )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
 	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
-	$CONFIG['html_auth'] = Authorizations::Return_array_auth(1);
+	$CONFIG['html_auth'] = Authorizations::auth_array(1);
 	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -61,7 +61,7 @@ else
 	$template->assign_vars(array(
 		'BBCODE_SELECTED' => $CONFIG['editor'] == 'bbcode' ? 'selected="selected"' : '',
 		'TINYMCE_SELECTED' => $CONFIG['editor'] == 'tinymce' ? 'selected="selected"' : '',
-		'SELECT_AUTH_USE_HTML' => Authorizations::Generate_select_auth(1, $CONFIG['html_auth']),
+		'SELECT_AUTH_USE_HTML' => Authorizations::generate_select(1, $CONFIG['html_auth']),
 		'NBR_TAGS' => $j,
 
 

@@ -54,7 +54,7 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if( ($special_auth && !$Member->Check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->Check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+	if( ($special_auth && !$Member->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$Member->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
 }
 

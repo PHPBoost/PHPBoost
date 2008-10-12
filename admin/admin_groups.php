@@ -78,7 +78,7 @@ elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 {
 	$array_members = explode('|', $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
 	foreach($array_members as $key => $user_id)
-		$Group->Del_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+		$Group->remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
 
 	$Sql->query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.	
 		
@@ -92,7 +92,7 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 	$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if( !empty($user_id) )
 	{	
-		if( $Group->Add_member($user_id, $idgroup) ) //Succès.
+		if( $Group->add_member($user_id, $idgroup) ) //Succès.
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
 		else
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
@@ -102,7 +102,7 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 }
 elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du membre du groupe.
 {
-	$Group->Del_member($user_id, $idgroup);
+	$Group->remove_member($user_id, $idgroup);
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif( !empty($idgroup) ) //Interface d'édition du groupe.

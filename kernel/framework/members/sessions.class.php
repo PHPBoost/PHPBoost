@@ -39,7 +39,7 @@ class Sessions
 	var $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
 	
 	## Public Methods ##
-	function session_action_checker()
+	function action_checker()
 	{
 		global $Session, $Sql;
 		
@@ -50,7 +50,7 @@ class Sessions
 		
 		if( retrieve(GET, 'disconnect', false) ) //Déconnexion.
 		{
-			$Session->session_end();
+			$Session->end();
 			redirect(get_start_page());
 		}
 		elseif( retrieve(POST, 'connect', false) && !empty($login) && !empty($password) ) //Création de la session.
@@ -67,16 +67,16 @@ class Sessions
 					if( $delay_connect >= 600 ) //5 nouveau essais, 10 minutes après.
 					{
 						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif( $delay_connect >= 300 ) //2 essais 5 minutes après
 					{
 						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
-						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif( $info_connect['test_connect'] < 5 ) //Succès.
 					{
-						$error_report = $Session->session_begin($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					else //plus d'essais
 						redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
@@ -116,7 +116,7 @@ class Sessions
 	}
 	
 	//Lancement de la session après récupèration des informations par le formulaire de connexion.
-	function session_begin($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
+	function start($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
         global $CONFIG, $Sql;
 		
@@ -131,7 +131,7 @@ class Sessions
 		
 		########Insertion dans le compteur si l'ip est inconnue.########
 		$check_ip = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."compteur WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
-		$_include_once = empty($check_ip) && ($this->check_robot(USER_IP) === false);
+		$_include_once = empty($check_ip) && ($this->_check_bot(USER_IP) === false);
 		if( $_include_once )
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
@@ -155,7 +155,7 @@ class Sessions
 		$this->data['session_id'] = $session_uniq_id;
 		
 		########Session existe t-elle?#########
-		$this->session_garbage_collector(); //On nettoie avant les sessions périmées.
+		$this->_garbage_collector(); //On nettoie avant les sessions périmées.
 
 		if( $user_id !== '-1' )
 		{
@@ -216,11 +216,11 @@ class Sessions
 	}
 	
 	//Récupération des informations sur le membre.
-	function session_info()
+	function load()
 	{
 		global $Sql, $CONFIG;
 		
-		$this->get_session_id(); //Récupération des identifiants de session.
+		$this->_get_id(); //Récupération des identifiants de session.
 		
 		########Valeurs à retourner########
 		$userdata = array();
@@ -260,7 +260,7 @@ class Sessions
 	}
 	
 	//Vérification de la session.
-	function session_check($session_script_title)
+	function check($session_script_title)
 	{
 		global $CONFIG, $Sql;
 
@@ -285,7 +285,7 @@ class Sessions
 			$resource = $Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."sessions SET session_ip = '" . USER_IP . "', session_time = '" . time() . "', " . $location . " session_flag = 1 - session_flag WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'", __LINE__, __FILE__);			
 			if( $Sql->affected_rows($resource, "SELECT COUNT(*) FROM ".PREFIX."sessions WHERE session_id = '" . $this->autoconnect['session_id'] . "' AND user_id = '" . $this->autoconnect['user_id'] . "'") == 0 ) //Aucune session lancée.
 			{
-				if( $this->get_session_autoconnect($session_script, $session_script_get, $session_script_title) === false ) //On essaie de lancer la session automatiquement.
+				if( $this->_autoconnect($session_script, $session_script_get, $session_script_title) === false ) //On essaie de lancer la session automatiquement.
 				{					
 					if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 						setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.						
@@ -312,17 +312,17 @@ class Sessions
 			{
 				if( isset($_COOKIE[$CONFIG['site_cookie'].'_data']) )
 					setcookie($CONFIG['site_cookie'].'_data', '', time() - 31536000, '/'); //Destruction cookie.
-				$this->session_begin('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
+				$this->start('-1', '', '-1', $session_script, $session_script_get, $session_script_title, false, ALREADY_HASHED); //Session visiteur
 			}
 		}
 	}
 	
 	//Fin de la session
-	function session_end()
+	function end()
 	{
 		global $CONFIG, $Sql;
 			
-		$this->get_session_id();
+		$this->_get_id();
 			
 		//On supprime la session de la bdd.
 		$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
@@ -333,13 +333,13 @@ class Sessions
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) )
 			setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 		
-		$this->session_garbage_collector();
+		$this->_garbage_collector();
 	}
 	
 	
 	## Private Méthods ##
 	//Récupération des l'identifiants de session.
-	function get_session_id()
+	function _get_id()
 	{
 		global $CONFIG, $Sql;
 		
@@ -381,7 +381,7 @@ class Sessions
 	}
 	
 	//Récupération de session en autoconnect.
-	function get_session_autoconnect($session_script, $session_script_get, $session_script_title)
+	function _autoconnect($session_script, $session_script_get, $session_script_title)
 	{
 		global $CONFIG, $Sql;
 		
@@ -395,7 +395,7 @@ class Sessions
 			
 			if( !empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '' )
 			{
-				$error_report = $this->session_begin($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
+				$error_report = $this->start($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
 				
 				//Gestion des erreurs pour éviter un brute force.
 				if( $error_report === 'echec' )
@@ -433,7 +433,7 @@ class Sessions
 	}
 	
 	//Suppression des sessions expirées par le garbage collector.
-	function session_garbage_collector() 
+	function _garbage_collector() 
 	{
 		global $CONFIG, $Sql;
 			
@@ -444,7 +444,7 @@ class Sessions
 	}
 	
 	//Détecte les principaux robots par plage ip, retourne leurs noms, et enregistre le nombre et l'heure de passages dans un fichier texte.
-	function check_robot($user_ip)
+	function _check_bot($user_ip)
 	{
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		

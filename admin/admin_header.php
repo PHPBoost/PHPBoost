@@ -32,7 +32,7 @@ if( defined('PHPBOOST') !== true)
 if( !defined('TITLE') )
 	define('TITLE', $LANG['unknow']);
 	
-$Session->session_check(TITLE); //Vérification de la session.
+$Session->check(TITLE); //Vérification de la session.
 
 //!\\ Connexion à l'administration //!\\
 require_once(PATH_TO_ROOT . '/admin/admin_access.php');

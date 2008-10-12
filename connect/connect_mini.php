@@ -28,7 +28,7 @@
 
 if( defined('PHPBOOST') !== true) exit;
 
-if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
+if( $Member->check_level(MEMBER_LEVEL) ) //Connecté.
 {
 	$Template->Set_filenames(array(
 		'connect_mini'=> 'connect/connect_mini.tpl'
@@ -39,9 +39,9 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 	$contribution_number = 0;
 	
 	//Panneau de contributions, y-a-t'il des contributions que le membre peut lire ?
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r2'];
-	elseif( $Member->Check_level(MODERATOR_LEVEL) )
+	elseif( $Member->check_level(MODERATOR_LEVEL) )
 		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r1'];
 	//On vérifie les groupes et les levels ou tout simplement si il y en a pour les membres
 	else
@@ -72,18 +72,18 @@ if( $Member->Check_level(MEMBER_LEVEL) ) //Connecté.
 	require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
 	
 	$Template->Assign_vars(array(
-		'C_ADMIN_AUTH' => $Member->Check_level(ADMIN_LEVEL),
-		'C_MODERATOR_AUTH' => $Member->Check_level(MODERATOR_LEVEL),
+		'C_ADMIN_AUTH' => $Member->check_level(ADMIN_LEVEL),
+		'C_MODERATOR_AUTH' => $Member->check_level(MODERATOR_LEVEL),
 		'C_UNREAD_CONTRIBUTION' => $contribution_number != 0,
 		'C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION' => $contribution_number > 0,
 		'C_UNREAD_ALERT' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
 		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
-		'IMG_PM' => $Member->Get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-		'U_MEMBER_PM' => PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $Member->Get_attribute('user_id'), '-' . $Member->Get_attribute('user_id') . '.php'),
-		'U_MEMBER_ID' => transid('.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', '-' . $Member->Get_attribute('user_id') . '.php?view=1'),
+		'IMG_PM' => $Member->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
+		'U_MEMBER_PM' => PATH_TO_ROOT . '/member/pm' . transid('.php?pm=' . $Member->get_attribute('user_id'), '-' . $Member->get_attribute('user_id') . '.php'),
+		'U_MEMBER_ID' => transid('.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', '-' . $Member->get_attribute('user_id') . '.php?view=1'),
 		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
-		'L_NBR_PM' => ($Member->Get_attribute('user_pm') > 0 ? ($Member->Get_attribute('user_pm') . ' ' . (($Member->Get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
+		'L_NBR_PM' => ($Member->get_attribute('user_pm') > 0 ? ($Member->get_attribute('user_pm') . ' ' . (($Member->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
 		'L_PROFIL' => $LANG['profil'],
 		'L_ADMIN_PANEL' => $LANG['admin_panel'],
 		'L_MODO_PANEL' => $LANG['modo_panel'],

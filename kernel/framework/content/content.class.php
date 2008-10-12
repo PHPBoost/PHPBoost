@@ -140,7 +140,7 @@ class Content
 	function get_user_editor()
 	{
 		global $Member;
-		return $Member->Get_attribute('user_editor');
+		return $Member->get_attribute('user_editor');
 	}
 	
 	//Returns the list of the available tags in the parser

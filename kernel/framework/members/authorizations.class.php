@@ -30,7 +30,7 @@ class Authorizations
 {
 	## Public methods ##
 	//Retourne le tableau avec les droits issus des tableaux passés en argument. Tableau destiné à être serialisé.
-	/*static*/ function Return_array_auth()
+	/*static*/ function auth_array()
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -48,7 +48,7 @@ class Authorizations
 		}
 		//On balaye les tableaux passés en argument.
 		for($i = 0; $i < $nbr_arg; $i++)
-			Authorizations::get_array_auth(func_get_arg($i), '', $array_auth_all, $sum_auth);
+			Authorizations::_get_auth_array(func_get_arg($i), '', $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
@@ -59,13 +59,13 @@ class Authorizations
 	}
 	
 	//Retourne le tableau avec les droits issus du tableau passé en argument. Tableau destiné à être serialisé. 
-	/*static*/ function Return_array_auth_simple($bit_value, $idselect, $admin_auth_default = true)
+	/*static*/ function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
 		
 		//Récupération du tableau des autorisation.
-		Authorizations::get_array_auth($bit_value, $idselect, $array_auth_all, $sum_auth);
+		Authorizations::_get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
@@ -76,7 +76,7 @@ class Authorizations
 	}	
 	
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
-    /*static*/ function Generate_select_auth($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+    /*static*/ function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
@@ -177,7 +177,7 @@ class Authorizations
     }
 	
 	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
-	/*static*/ function check_some_body_auth($type, $value, &$array_auth, $bit)
+	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
 	{
 		if( !is_int($value) )
 			return false;
@@ -206,7 +206,7 @@ class Authorizations
 	
 	##  Private methods ##
 	//Récupération du tableau des autorisations.
-	/*static*/ function get_array_auth($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	/*static*/ function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		
@@ -261,13 +261,13 @@ class Authorizations
 	}
 	
 	 //Ajoute un droit à l'ensemble des autorisations.
-	/*static*/ function add_auth_group($auth_group, $add_auth)
+	/*static*/ function _add_auth_group($auth_group, $add_auth)
 	{
 		return ((int)$auth_group | (int)$add_auth);
 	}
 	
 	//Retire un droit à l'ensemble des autorisations
-	/*static*/ function remove_auth_group($auth_group, $remove_auth)
+	/*static*/ function _remove_auth_group($auth_group, $remove_auth)
 	{
 		$remove_auth = ~((int)$remove_auth);
 		return ((int)$auth_group & $remove_auth);

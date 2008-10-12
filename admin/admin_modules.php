@@ -39,7 +39,7 @@ if( isset($_POST['valid']) )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$activ = retrieve(POST, 'activ' . $row['id'], 0);
-		$array_auth_all = Authorizations::Return_array_auth_simple(ACCESS_MODULE, $row['id']);
+		$array_auth_all = Authorizations::auth_array_simple(ACCESS_MODULE, $row['id']);
 		
 		$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
@@ -241,7 +241,7 @@ else
 			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
 			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
 			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : ''),
-			'AUTH_MODULES' => Authorizations::Generate_select_auth(ACCESS_MODULE, $array_auth, array(2 => true), $row['id']),
+			'AUTH_MODULES' => Authorizations::generate_select(ACCESS_MODULE, $array_auth, array(2 => true), $row['id']),
 		));
 		$i++;
 	}

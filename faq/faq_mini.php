@@ -43,7 +43,7 @@ $faq_cats = new FaqCats();
 
 $i = 0;
 
-while( !$faq_cats->Check_auth($random_question['idcat']) && $i < 5 )
+while( !$faq_cats->check_auth($random_question['idcat']) && $i < 5 )
 {
 	$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
 	$i++;

@@ -123,7 +123,7 @@ class ForumInterface extends ModuleInterface
         //Autorisation sur le module.
         if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
         {
-            if( !$Member->Check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+            if( !$Member->check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
                 $Errorh->Error_handler('e_auth', E_USER_REDIRECT);
         }
         
@@ -168,7 +168,7 @@ class ForumInterface extends ModuleInterface
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                if( $Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if( $Member->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                 {
                     $Tpl->Assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
@@ -211,7 +211,7 @@ class ForumInterface extends ModuleInterface
         {
             foreach($CAT_FORUM as $id => $key)
             {
-                if( !$Member->Check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if( !$Member->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
                     $auth_cats .= $id.',';
             }
         }

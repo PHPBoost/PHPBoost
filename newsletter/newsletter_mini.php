@@ -37,7 +37,7 @@ $Template->Set_filenames(array(
 $Template->Assign_vars(array(	
 	'SUBSCRIBE' => $LANG['subscribe'],
 	'UNSUBSCRIBE' => $LANG['unsubscribe'],
-	'USER_MAIL' => ($Member->Get_attribute('user_mail') != '') ? $Member->Get_attribute('user_mail') : '',
+	'USER_MAIL' => ($Member->get_attribute('user_mail') != '') ? $Member->get_attribute('user_mail') : '',
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_ARCHIVES' => $LANG['archives']	

@@ -110,7 +110,7 @@ class ArticlesInterface extends ModuleInterface
 		{
 			if( $CAT_ARTICLES[$idcat]['aprob'] == 1 )
 			{
-				if( !$Member->Check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
+				if( !$Member->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
 				{
 					$clause_level = !empty($g_idcat) ? ($CAT_ARTICLES[$idcat]['level'] == ($CAT_ARTICLES[$g_idcat]['level'] + 1)) : ($CAT_ARTICLES[$idcat]['level'] == 0);
 					if( $clause_level )

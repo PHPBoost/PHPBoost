@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if( !$Member->Check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if( !$Member->check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
@@ -46,7 +46,7 @@ if( $contribution_id > 0 )
 	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $Member->get_attribute('user_id')) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	
@@ -61,7 +61,7 @@ elseif( $id_update > 0 )
 	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$Member->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	$Bread_crumb->add_link($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
@@ -93,7 +93,7 @@ elseif( $id_to_update > 0 )
 		//Changement de statut ? On regarde si la contribution a été réglée
 		if( $status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED )
 		{
-			$contribution->set_fixer_id($Member->Get_attribute('user_id'));
+			$contribution->set_fixer_id($Member->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
 		}
 		
@@ -125,7 +125,7 @@ elseif( $id_to_delete > 0 )
 }
 else
 {
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->Get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->Get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $Member->get_attribute('user_id') . '&amp;view=1', 'member-' . $Member->get_attribute('user_id') . '.php?view=1'));
 	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }

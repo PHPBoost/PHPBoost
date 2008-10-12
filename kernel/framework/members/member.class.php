@@ -50,13 +50,13 @@ class Member
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 	
-	function Get_attribute($attribute)
+	function get_attribute($attribute)
 	{
 		return isset($this->member_data[$attribute]) ? $this->member_data[$attribute] : '';
 	}
 			
 	//Vérifie le niveau d'autorisation.
-	function Check_level($secure)
+	function check_level($secure)
 	{
 		if( isset($this->member_data['level']) && $this->member_data['level'] >= $secure ) 
 			return true;
@@ -64,22 +64,22 @@ class Member
 	}
 	
 	//Cherche les autorisations maximum parmis les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
-	function Check_auth($array_auth_groups, $check_auth)
+	function check_auth($array_auth_groups, $check_auth)
 	{
 		if( !is_array($array_auth_groups) )
 			return false;
 		
-		return (((int)$this->sum_auth_groups($array_auth_groups) & (int)$check_auth) !== 0);
+		return (((int)$this->_sum_auth_groups($array_auth_groups) & (int)$check_auth) !== 0);
 	}
 	
 	//Cherche les valeurs maximum parmis les différents groupes dont le membre fait partie.
-	function Check_max_value($key_auth, $max_value_compare = 0)
+	function check_max_value($key_auth, $max_value_compare = 0)
 	{
 		if( !is_array($this->groups_auth) )
 			return false;
 		
 		//Récupère les autorisations de tout les groupes dont le membre fait partie.
-		$array_user_auth_groups = $this->array_group_intersect($this->groups_auth);
+		$array_user_auth_groups = $this->_array_group_intersect($this->groups_auth);
 		$max_auth = $max_value_compare;
 		foreach($array_user_auth_groups as $idgroup => $group_auth)
 		{	
@@ -95,10 +95,10 @@ class Member
 	
 	## Private methods ##
 	//Retourne l'autorisation maximale donnée par chacun des groupes dont le membre fait partie.
-	function sum_auth_groups($array_auth_groups)
+	function _sum_auth_groups($array_auth_groups)
 	{
 		//Récupère les autorisations de tout les groupes dont le membre fait partie.
-		$array_user_auth_groups = $this->array_group_intersect($array_auth_groups);
+		$array_user_auth_groups = $this->_array_group_intersect($array_auth_groups);
 		$max_auth = 0;
 		foreach($array_user_auth_groups as $idgroup => $group_auth)
 			$max_auth |= (int)$group_auth;
@@ -107,7 +107,7 @@ class Member
 	}
 	
 	//Calcul de l'intersection des groupes du membre avec les groupes du tableau en argument.
-	function array_group_intersect($array_auth_groups)
+	function _array_group_intersect($array_auth_groups)
 	{		
 		global $Member;
 		
@@ -121,12 +121,12 @@ class Member
 			}
 			elseif( substr($idgroup, 0, 1) == 'r' ) //Rang
 			{
-				if( $Member->Get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
+				if( $Member->get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 			else //Membre
 			{
-				if( $Member->Get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
+				if( $Member->get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 		}
@@ -135,7 +135,7 @@ class Member
 	}
 	
 	//Fonction qui renvoie les groupes auxquels appartient l'utilisateur
-	function get_groups()
+	function _get_groups()
 	{
 		return $this->user_groups;
 	}

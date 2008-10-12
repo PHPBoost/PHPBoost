@@ -32,7 +32,7 @@ include_once('../articles/articles_begin.php');
 require_once('../kernel/header_no_display.php');
 
 //Notation.
-if( !empty($_GET['note']) && $Member->Check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
+if( !empty($_GET['note']) && $Member->check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);

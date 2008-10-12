@@ -49,7 +49,7 @@ if( !empty($_POST['valid'])  )
 	$CONFIG_UPLOADS['auth_extensions'] = $auth_extensions;
 
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(AUTH_FILES);
+	$array_auth_all = Authorizations::auth_array(AUTH_FILES);
 	$CONFIG_UPLOADS['auth_files'] = serialize($array_auth_all);
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
@@ -104,7 +104,7 @@ else
 	
 	$Template->Assign_vars(array(
 		'NBR_EXTENSIONS' => $i,
-		'AUTH_FILES' => Authorizations::Generate_select_auth(AUTH_FILES, $array_auth, array(2 => true)),
+		'AUTH_FILES' => Authorizations::generate_select(AUTH_FILES, $array_auth, array(2 => true)),
 		'SIZE_LIMIT' => isset($CONFIG_UPLOADS['size_limit']) ? number_round($CONFIG_UPLOADS['size_limit']/1024, 2) : '0.5',
 		'BANDWIDTH_PROTECT_ENABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 1 ? 'checked="checked"' : '',
 		'BANDWIDTH_PROTECT_DISABLED' => $CONFIG_UPLOADS['bandwidth_protect'] == 0 ? 'checked="checked"' : '',

@@ -150,10 +150,10 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Method which determines if a category is writable by the current user
-	function Check_auth($id)
+	function check_auth($id)
 	{
 		global $Member, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		$auth_write = $Member->Check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+		$auth_write = $Member->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
 		
 		$id_cat = $id;
 
@@ -161,7 +161,7 @@ class DownloadCats extends CategoriesManagement
 		while( $id_cat > 0 )
 		{
 			if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
-				$auth_write = $Member->Check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+				$auth_write = $Member->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
 			
 			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 		}

@@ -421,7 +421,7 @@ if( !empty($_GET['unlock']) )
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');
 	
-	$Mail->Send_mail($Member->Get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
+	$Mail->Send_mail($Member->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
 
 	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }

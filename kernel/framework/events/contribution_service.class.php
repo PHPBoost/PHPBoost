@@ -201,11 +201,11 @@ class ContributionService
 			$array_result['r2']++;
 			
 			//For moderators ?
-			if( Authorizations::check_some_body_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+			if( Authorizations::check_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
 				$array_result['r1']++;
 			
 			//For members ?
-			if( Authorizations::check_some_body_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+			if( Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
 				$array_result['r0']++;
 				
 			foreach($this_auth as $profile => $auth_profile)
@@ -214,14 +214,14 @@ class ContributionService
 				if( is_numeric($profile) )
 				{
 					//If this member has not already an entry and he can see that contribution
-					if( empty($array_result[$profile]) && Authorizations::check_some_body_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT) )
+					if( empty($array_result[$profile]) && Authorizations::check_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT) )
 						$array_result['g' . $profile] = 1;
 				}
 				//Members
 				elseif( substr($profile, 0, 1) == 'm' )
 				{
 					//If this member has not already an entry and he can see that contribution
-					if( empty($array_result[$profile]) && Authorizations::check_some_body_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT) )
+					if( empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT) )
 						$array_result[$profile] = 1;
 				}
 			}

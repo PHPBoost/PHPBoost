@@ -37,7 +37,7 @@ include_once('../wiki/wiki_auth.php');
 if( !empty($_POST['valid']) )
 {
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::Return_array_auth(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION);
+	$array_auth_all = Authorizations::auth_array(WIKI_CREATE_ARTICLE, WIKI_CREATE_CAT, WIKI_RESTORE_ARCHIVE, WIKI_DELETE_ARCHIVE, WIKI_EDIT, WIKI_DELETE, WIKI_RENAME, WIKI_REDIRECT, WIKI_MOVE, WIKI_STATUS, WIKI_COM, WIKI_RESTRICTION);
 		
 	$_WIKI_CONFIG['auth'] = serialize($array_auth_all);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
@@ -58,18 +58,18 @@ else
 	$Template->Assign_vars(array(
 		'THEME' => $CONFIG['theme'],
 		'MODULE_DATA_PATH' => $Template->Module_data_path('wiki'),
-		'SELECT_CREATE_ARTICLE' => Authorizations::Generate_select_auth(WIKI_CREATE_ARTICLE, $array_auth),
-		'SELECT_CREATE_CAT' => Authorizations::Generate_select_auth(WIKI_CREATE_CAT, $array_auth),
-		'SELECT_RESTORE_ARCHIVE' => Authorizations::Generate_select_auth(WIKI_RESTORE_ARCHIVE, $array_auth),
-		'SELECT_DELETE_ARCHIVE' => Authorizations::Generate_select_auth(WIKI_DELETE_ARCHIVE, $array_auth),
-		'SELECT_EDIT' => Authorizations::Generate_select_auth(WIKI_EDIT, $array_auth),
-		'SELECT_DELETE' => Authorizations::Generate_select_auth(WIKI_DELETE, $array_auth),
-		'SELECT_RENAME' => Authorizations::Generate_select_auth(WIKI_RENAME, $array_auth),
-		'SELECT_REDIRECT' => Authorizations::Generate_select_auth(WIKI_REDIRECT, $array_auth),
-		'SELECT_MOVE' => Authorizations::Generate_select_auth(WIKI_MOVE, $array_auth),
-		'SELECT_STATUS' => Authorizations::Generate_select_auth(WIKI_STATUS, $array_auth),
-		'SELECT_COM' => Authorizations::Generate_select_auth(WIKI_COM, $array_auth),
-		'SELECT_RESTRICTION' => Authorizations::Generate_select_auth(WIKI_RESTRICTION, $array_auth),
+		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $array_auth),
+		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $array_auth),
+		'SELECT_RESTORE_ARCHIVE' => Authorizations::generate_select(WIKI_RESTORE_ARCHIVE, $array_auth),
+		'SELECT_DELETE_ARCHIVE' => Authorizations::generate_select(WIKI_DELETE_ARCHIVE, $array_auth),
+		'SELECT_EDIT' => Authorizations::generate_select(WIKI_EDIT, $array_auth),
+		'SELECT_DELETE' => Authorizations::generate_select(WIKI_DELETE, $array_auth),
+		'SELECT_RENAME' => Authorizations::generate_select(WIKI_RENAME, $array_auth),
+		'SELECT_REDIRECT' => Authorizations::generate_select(WIKI_REDIRECT, $array_auth),
+		'SELECT_MOVE' => Authorizations::generate_select(WIKI_MOVE, $array_auth),
+		'SELECT_STATUS' => Authorizations::generate_select(WIKI_STATUS, $array_auth),
+		'SELECT_COM' => Authorizations::generate_select(WIKI_COM, $array_auth),
+		'SELECT_RESTRICTION' => Authorizations::generate_select(WIKI_RESTRICTION, $array_auth),
 		'L_WIKI_MANAGEMENT' => $LANG['wiki_management'],
 		'L_WIKI_GROUPS' => $LANG['wiki_groups_config'],
 		'L_CONFIG_WIKI' => $LANG['wiki_config'],

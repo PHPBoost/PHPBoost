@@ -576,7 +576,7 @@ elseif( $step == 6 )
 				//Remise à zéro du compteur d'essais.
 				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
 				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
-				$Session->session_begin(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); 
+				$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection); 
 			}
 			
 			//On redirige vers l'étape suivante

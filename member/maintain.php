@@ -75,7 +75,7 @@ $Template->Assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'THEME' => $CONFIG['theme'],
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
-	'U_INDEX' => !$Member->Check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>',	
+	'U_INDEX' => !$Member->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['index'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? $CONFIG['maintain_text'] : $LANG['maintain']),
 	'L_LOADING' => $LANG['loading'],

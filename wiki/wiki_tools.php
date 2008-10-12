@@ -82,10 +82,10 @@ if( $page_type == 'article' || $page_type == 'cat' )
 	//Consultation de l'historique
 	$tools[$LANG['wiki_history']] = array(transid('history.php?id=' . $id_article), 'history');
 	//Edition
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_EDIT)))
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_EDIT)))
 	$tools[$LANG['update']] = array(transid('post.php?id=' . $id_article), 'edit');
 	//Suppression
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_DELETE)) )
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_DELETE)) )
 	{
 		if( $page_type == 'article' )
 		{
@@ -97,36 +97,36 @@ if( $page_type == 'article' || $page_type == 'cat' )
 		$tools[$LANG['delete']] = array(transid('property.php?del=' . $id_article), 'delete');
 	}
 	//Renommer
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_RENAME)) )
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $Member->check_auth($article_auth , WIKI_RENAME)) )
 	$tools[$LANG['wiki_rename']] = array(transid('property.php?rename=' . $article_infos['id']), 'rename');
 	//Redirections
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth  || $Member->Check_auth($article_auth , WIKI_REDIRECT)) )
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth  || $Member->check_auth($article_auth , WIKI_REDIRECT)) )
 	{
 		$tools[$LANG['wiki_redirections']] = array(transid('property.php?redirect=' . $article_infos['id']), 'redirect');
 	}
 	//Déplacement
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_MOVE)) )
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_MOVE)) )
 	$tools[$LANG['wiki_move']] = array(transid('property.php?move=' . $article_infos['id']), 'move');
 	if( $page_type == 'cat' )
 	{
-		if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_CREATE_ARTICLE)) )//Création d'un article
+		if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE)) && ($general_auth || $Member->check_auth($article_auth , WIKI_CREATE_ARTICLE)) )//Création d'un article
 		$tools[$LANG['wiki_add_article']] = array(transid('post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), 'add_article');
-		if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_CREATE_CAT)) )//Création d'une catégorie
+		if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT)) && ($general_auth || $Member->check_auth($article_auth , WIKI_CREATE_CAT)) )//Création d'une catégorie
 		$tools[$page_type == 'cat' ? $LANG['wiki_add_cat'] : $LANG['wiki_create_cat']] = array(transid('post.php?type=cat&amp;id_parent=' . $id_cat), 'create_cat');
 	}
 	//Statut de l'article
-	if( (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_STATUS)) )
+	if( (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $Member->check_auth($article_auth , WIKI_STATUS)) )
 	{
 		$tools[$LANG['wiki_article_status']] = array(transid('property.php?status=' . $article_infos['id']), 'article_status');
 	}
 	//Niveau de restricton
-	if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	if( $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 	{
 		$tools[$LANG['wiki_restriction_level']] = array(transid('property.php?auth=' . $article_infos['id']), 'restriction_level');
 	}
 
 	//Niveau de restricton
-	if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	if( $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
 	{
 		$tools[$LANG['printable_version']] = array(transid('print.php?id=' . $article_infos['id']), 'print');
 	}
@@ -136,23 +136,23 @@ elseif( $page_type == 'index' )
 {
 	$tools = array();
 	$tools[$LANG['wiki_history']] = array(transid('history.php'), 'history');
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 	$tools[$LANG['wiki_update_index']] = array(transid('admin_wiki.php#index'), 'edit_index');
 }
 
 $other_tools = array();
 //Création d'un article
-if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
+if( $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
 $other_tools[ $LANG['wiki_create_article']] = array(transid('post.php'), 'create_article');
 //Création d'une catégorie
-if( $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
+if( $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
 $other_tools[$LANG['wiki_create_cat']] = array(transid('post.php?type=cat'), 'create_cat');
 //Page au hasard
 $other_tools[$LANG['wiki_random_page']] = array(transid('property.php?random=1'), 'random_page');
 //Recherche
 $other_tools[$LANG['wiki_search']] = array(transid('search.php'), 'search');
 //Sujets suivis (membres seulement)
-if( $Member->Check_level(MEMBER_LEVEL) )
+if( $Member->check_level(MEMBER_LEVEL) )
 {
 	$other_tools[$LANG['wiki_followed_articles']] = array(transid('favorites.php'), 'followed-articles');
 	//Suivre ce sujet (articles)
@@ -168,7 +168,7 @@ if( $Member->Check_level(MEMBER_LEVEL) )
 	}
 }
 //Discussion
-if( ($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $Member->Check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->Check_auth($article_auth , WIKI_COM)) )
+if( ($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $Member->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $Member->check_auth($article_auth , WIKI_COM)) )
 $Template->Assign_vars(array(
 		'C_ACTIV_COM' => true,
 		'U_COM' => transid('property.php?com=' . $id_article . '&amp;i=0'),

@@ -219,11 +219,11 @@ class FaqInterface extends ModuleInterface
 			$properties = $FAQ_CATS[$id];
 			if( $auth_mode == SITE_MAP_AUTH_GUEST )
 			{
-				$this_auth = is_array($properties['auth']) ? Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_some_body_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
 			else
 			{
-				$this_auth = is_array($properties['auth']) ? $Member->Check_auth($properties['auth'], AUTH_READ) : $Member->Check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+				$this_auth = is_array($properties['auth']) ? $Member->check_auth($properties['auth'], AUTH_READ) : $Member->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
 			if( $this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat )
 			{

@@ -45,7 +45,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
 	$auth = retrieve(POST, 'auth', 0); 
-	$array_auth = Authorizations::Return_array_auth(AUTH_MENUS);	
+	$array_auth = Authorizations::auth_array(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
@@ -72,7 +72,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get) )
 	{	
 		$activ = retrieve(POST, 'activ', 0);
-		$array_auth = Authorizations::Return_array_auth(AUTH_MENUS);
+		$array_auth = Authorizations::auth_array(AUTH_MENUS);
 		$module_name = addslashes($array_get[1]);
 		$idmodule = $array_get[2];
 		
@@ -146,7 +146,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 {		
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
-	$array_auth = Authorizations::Return_array_auth(AUTH_MENUS);	
+	$array_auth = Authorizations::auth_array(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
@@ -245,7 +245,7 @@ else
 			'ACTION' => 'edit',
 			'IDMENU' => $id,
 			'NAME' => $menu['name'],
-			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, $array_auth),
+			'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $array_auth),
 			'LOCATIONS' => $locations,
 			'ACTIV_ENABLED' => ($menu['activ'] == '1') ? 'selected="selected"' : '',
 			'ACTIV_DISABLED' => ($menu['activ'] == '0') ? 'selected="selected"' : '',
@@ -280,7 +280,7 @@ else
 			'IDMODULE' => '?idmodule=' . $module_name . '+' . $idmodule,
 			'ACTION' => 'install',
 			'NAME' => $name,
-			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+			'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 			'LOCATIONS' => $locations,
 			'ACTIV_ENABLED' => 'selected="selected"',
 			'L_ACTION' => $LANG['install']
@@ -293,7 +293,7 @@ else
 			'C_ADD_MENU_LINKS' => true,
 			'C_MENUS_ADDED' => true,
 			'ACTION' => 'add',
-			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+			'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 			'L_TYPE' => $LANG['type'],
 			'L_ACTION' => $LANG['add'],
 			'L_VERTICAL_MENU' => $LANG['vertical_menu'],
@@ -310,7 +310,7 @@ else
 			'C_ADD_MENU_CONTENT' => true,
 			'C_MENUS_ADDED' => true,
 			'ACTION' => 'add',
-			'AUTH_MENUS' => Authorizations::Generate_select_auth(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+			'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		));		
 	}
 	

@@ -38,7 +38,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	if( $shoutbox )
 	{		
 		//Membre en lecture seule?
-		if( $Member->Get_attribute('user_readonly') > time() ) 
+		if( $Member->get_attribute('user_readonly') > time() ) 
 			$Errorh->Error_handler('e_readonly', E_USER_REDIRECT); 
 			
 		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
@@ -46,11 +46,11 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 		if( !empty($shout_pseudo) && !empty($shout_contents) )
 		{		
 			//Accès pour poster.
-			if( $Member->Check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
+			if( $Member->check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-				$check_time = ($Member->Get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->Get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-				if( !empty($check_time) && !$Member->Check_max_value(AUTH_FLOOD) )
+				$check_time = ($Member->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $Member->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+				if( !empty($check_time) && !$Member->check_max_value(AUTH_FLOOD) )
 				{
 					if( $check_time >= (time() - $CONFIG['delay_flood']) )
 						redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&'));
@@ -63,7 +63,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=l_flood', '', '&'));
 					
-				$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->Get_attribute('user_id') . "', '" . $Member->Get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $Member->get_attribute('user_id') . "', '" . $Member->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 				redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
 			}
@@ -78,9 +78,9 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	));
 
 	//Pseudo du membre connecté.
-	if( $Member->Get_attribute('user_id') !== -1 )
+	if( $Member->get_attribute('user_id') !== -1 )
 		$Template->Assign_vars(array(
-			'SHOUTBOX_PSEUDO' => $Member->Get_attribute('login'),
+			'SHOUTBOX_PSEUDO' => $Member->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
 		));
 	else
@@ -116,7 +116,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $Member->Check_level(MODO_LEVEL) || ($row['user_id'] === $Member->Get_attribute('user_id') && $Member->Get_attribute('user_id') !== -1) )
+		if( $Member->check_level(MODO_LEVEL) || ($row['user_id'] === $Member->get_attribute('user_id') && $Member->get_attribute('user_id') !== -1) )
 			$del_message = '<script type="text/javascript"><!-- 
 			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a>\'); 
 			--></script><noscript><a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . transid('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/images/delete_mini.png" alt="" /></a></noscript>';

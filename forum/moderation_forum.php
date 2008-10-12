@@ -50,7 +50,7 @@ if( is_array($CAT_FORUM) )
 {
 	foreach($CAT_FORUM as $idcat => $value)
 	{
-		if( $Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
+		if( $Member->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
 		{
 			$check_auth_by_group = true;
 			break;
@@ -58,7 +58,7 @@ if( is_array($CAT_FORUM) )
 	}
 }
 
-if( !$Member->Check_level(MODO_LEVEL) && $check_auth_by_group !== true ) //Si il n'est pas modérateur (total ou partiel)
+if( !$Member->check_level(MODO_LEVEL) && $check_auth_by_group !== true ) //Si il n'est pas modérateur (total ou partiel)
 	$Errorh->Error_handler('e_auth', E_USER_REDIRECT);
 
 $Template->Set_filenames(array(
@@ -159,7 +159,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		$auth_cats = '';
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
+			if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " WHERE c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -208,7 +208,7 @@ if( $action == 'alert' ) //Gestion des alertes
 		$auth_cats = '';
 		foreach($CAT_FORUM as $idcat => $key)
 		{
-			if( !$Member->Check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
+			if( !$Member->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) )
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -270,20 +270,20 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(ADMIN_LEVEL)) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->check_level(ADMIN_LEVEL)) )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
+			if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
 			{
 				if( !empty($readonly_contents) && !empty($readonly) )
 				{					
 					include_once('../kernel/framework/members/pm.class.php');
-					$Privatemsg = new Privatemsg();
+					$Privatemsg = new PrivateMsg();
 					
 					//Envoi du message.
-					$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
+					$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['read_only_title']), str_replace('%date', gmdate_format('date_format', $readonly), $readonly_contents), '-1', SYSTEM_PM);
 				}
 			}
 			
@@ -435,22 +435,22 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		//Modérateur ne peux avertir l'admin (logique non?).
-		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->Check_level(ADMIN_LEVEL)) )
+		if( !empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $Member->check_level(ADMIN_LEVEL)) )
 		{
 			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if( $info_mbr['user_id'] != $Member->Get_attribute('user_id') )
+				if( $info_mbr['user_id'] != $Member->get_attribute('user_id') )
 				{					
 					if( !empty($warning_contents) )
 					{					
 						include_once('../kernel/framework/members/pm.class.php');
-						$Privatemsg = new Privatemsg();
+						$Privatemsg = new PrivateMsg();
 						
 						//Envoi du message.
-						$Privatemsg->Send_pm($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
+						$Privatemsg->start_conversation($info_mbr['user_id'], addslashes($LANG['warning_title']), $warning_contents, '-1', SYSTEM_PM);
 					}
 				}
 				
@@ -570,7 +570,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));			
 	}	
 }
-elseif( retrieve(GET, 'del_h', false) && $Member->Check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
+elseif( retrieve(GET, 'del_h', false) && $Member->check_level(ADMIN_LEVEL) ) //Suppression de l'historique.
 {
 	$Sql->query_inject("DELETE FROM ".PREFIX."forum_history");
 	
@@ -587,7 +587,7 @@ else //Panneau de modération
 	));
 	
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
-	if( $Member->Check_level(ADMIN_LEVEL) )
+	if( $Member->check_level(ADMIN_LEVEL) )
 	{
 		$Template->Assign_vars(array(
 			'C_FORUM_ADMIN' => true

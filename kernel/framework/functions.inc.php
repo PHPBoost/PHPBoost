@@ -518,7 +518,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
     elseif( $timezone_system == 2 ) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
         $timezone = 0;
     else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
-        $timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
+        $timezone = $Member->get_attribute('user_timezone') - $serveur_hour;
 
     if( $timezone != 0 )
         $timestamp += $timezone * 3600;
@@ -560,7 +560,7 @@ function strtotimestamp($str, $date_format)
         $timestamp = time();
 	
     $serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-    $timezone = $Member->Get_attribute('user_timezone') - $serveur_hour;
+    $timezone = $Member->get_attribute('user_timezone') - $serveur_hour;
     if( $timezone != 0 )
         $timestamp -= $timezone * 3600; 
         
