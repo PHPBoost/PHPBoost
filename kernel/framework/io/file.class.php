@@ -3,8 +3,8 @@
  *                               file.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright            : (C) 2008 Nicolas Duhamel
- *   email                : akhenathon2@gmail.com
+ *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel
+ *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com
  *
  *   
 ###################################################
@@ -73,9 +73,9 @@ class File extends FileSystemElement
 	{
 		parent::open();
 		
-		if( $this->mode & READ )
+		if( $this->mode & READ && is_file($this->path) )
 		{
-			$this->contents = file_get_contents($this->path);
+			$this->contents = file_get_contents_emulate($this->path);
 			$this->lines = explode("\n", $this->contents);
 		}
 	}
@@ -164,6 +164,32 @@ class File extends FileSystemElement
         $this->close();
 		if( !@unlink($this->path) ) // Empty the file if it couldn't delete it
             $this->write('');
+	}
+	
+	//Le fichier est-il ouvert ?
+	function is_open()
+	{
+		return $this->is_open;
+	}
+	
+	//Verrouille le fichier
+	function lock()
+	{
+		if( !$this->is_open() )
+			$this->open();
+		
+		//Verrouillage
+		@flock($this->fd, LOCK_EX);
+	}
+	
+	//Déverrouille le fichier
+	function unlock()
+	{
+		if( !$this->is_open() )
+			$this->open();
+		
+		//Verrouillage
+		@flock($this->fd, LOCK_UN);
 	}
 	
 	## Private Methods ##	

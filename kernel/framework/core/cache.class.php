@@ -131,18 +131,33 @@ class Cache
 	function _write_cache($module_name, &$cache_string)
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
-		delete_file($file_path); //Supprime le fichier
-		if( $handle = @fopen($file_path, 'wb') ) //On crée le fichier avec droit d'écriture et lecture.
-		{
-			@flock($handle, LOCK_EX);
-			@fwrite($handle, "<?php\n" . $cache_string . "\n?>");
-			@flock($handle, LOCK_UN);
-			@fclose($handle);			
-			@chmod($file_path, 0666);
-		}
-
-		//Il est l'heure de vérifier si la génération a fonctionnée.
-		if( !file_exists($file_path) && filesize($file_path) == '0' )
+		
+		require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
+		$cache_file = new File($file_path, WRITE);
+		
+		//Suppression du fichier (si il existe)
+		$cache_file->delete();
+		
+		//Ouverture du fichier
+		$cache_file->open();
+		
+		//Verrouillage du fichier (comme un mutex si une autre tâche travaille actuellement dessus)
+		$cache_file->lock();
+		
+		//Ecriture de son contenu
+		$cache_file->write("<?php\n" . $cache_string . "\n?>");
+		
+		//Déverrouillage du fichier (on relâche le mutex)
+		$cache_file->unlock();
+		
+		//Fermeture du fichier
+		$cache_file->close();
+		
+		//On lui met les autorisations nécessaires de façon à pouvoir par la suite le lire (4) et le supprimer (2), soit 4 + 2 = 6
+		$cache_file->change_chmod(0666);
+		
+		//Il est l'heure de vérifier si la génération a fonctionné.
+		if( !file_exists($file_path) && filesize($file_path) == 0 )
 			$Errorh->handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
 	}
 	
