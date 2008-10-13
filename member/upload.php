@@ -456,7 +456,7 @@ else
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
-			'BBCODE' => '<input size="25" type="text" class="text" onClick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
+			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
 			'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'DATE' => gmdate_format('date_format', $row['timestamp']),

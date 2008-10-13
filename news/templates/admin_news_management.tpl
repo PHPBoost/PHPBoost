@@ -82,7 +82,7 @@
 							<a href="admin_news.php?id={list.news.IDNEWS}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						</td>
 						<td class="row2">
-							<a href="admin_news.php?delete=true&amp;id={list.news.IDNEWS}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="admin_news.php?delete=true&amp;id={list.news.IDNEWS}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 						</td>
 					</tr>
 					# END list.news #
@@ -202,7 +202,7 @@
 									<div id="start_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 									</div>
 								</div>
-								<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={news.DAY_RELEASE_S}&amp;m={news.MONTH_RELEASE_S}&amp;y={news.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+								<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={news.DAY_RELEASE_S}&amp;m={news.MONTH_RELEASE_S}&amp;y={news.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 								{L_AT}
 								<input type="text" size="1" maxlength="2" name="start_hour" value="{news.START_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="start_min" value="{news.START_MIN}" class="text" />
 								&nbsp;{L_UNTIL}&nbsp;
@@ -211,7 +211,7 @@
 									<div id="end_date" class="calendar_block" style="width:204px;" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 									</div>
 								</div>
-								<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+								<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 								{L_AT}
 								<input type="text" size="1" maxlength="2" name="end_hour" value="{news.END_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="end_min" value="{news.END_MIN}" class="text" />
 								<br />
@@ -228,7 +228,7 @@
 									<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 									</div>
 								</div>
-								<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={news.DAY_DATE}&amp;m={news.MONTH_DATE}&amp;y={news.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent" src="../templates/{THEME}/images/calendar.png" alt="" /></a>								
+								<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={news.DAY_DATE}&amp;m={news.MONTH_DATE}&amp;y={news.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent" src="../templates/{THEME}/images/calendar.png" alt="" /></a>								
 								{L_AT}
 								<input type="text" size="1" maxlength="2" name="current_hour" value="{news.CURRENT_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="current_min" value="{news.CURRENT_MIN}" class="text" />
 							</dd>

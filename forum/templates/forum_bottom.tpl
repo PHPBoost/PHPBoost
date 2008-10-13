@@ -1,9 +1,9 @@
 		<div class="module_position" style="margin-top:15px;">
 			<div class="forum_links" style="border-bottom:none;">
-				<span style="float:left;">
+				<div style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
-				</span>
-				<span style="float:right;">
+				</div>
+				<div style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
@@ -16,7 +16,7 @@
 					
 					&bull;
 					<img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
-				</span>
+				</div>
 				<div class="spacer"></div>
 			</div>
 			

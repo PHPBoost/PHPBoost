@@ -27,7 +27,7 @@
 								<input type="radio" name="maintain_check" value="0"{MAINTAIN_CHECK_NO}> {L_NO}
 							</label>
 							<br />	
-							<label for="maintain" onClick="document.getElementById('maintain_check1').checked = 'checked';">
+							<label for="maintain" onclick="document.getElementById('maintain_check1').checked = 'checked';">
 								<input type="radio" name="maintain_check" id="maintain_check1" value="1"{MAINTAIN_CHECK_DELAY}>
 								{L_DURING}
 								<select name="maintain" id="maintain">				
@@ -43,7 +43,7 @@
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>
-								<a onClick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+								<a onclick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							</label>
 						</dd>
 					</dl>

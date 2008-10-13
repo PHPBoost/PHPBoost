@@ -109,7 +109,7 @@
 		
 				<table class="module_table">
 					<tr>			
-						<th style="width:25px;"><input type="checkbox" onClick="if(this.checked) {check_convers(true)} else {check_convers(false)};" /></th>
+						<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_convers(true)} else {check_convers(false)};" /></th>
 						<th style="width:20%;">{L_TITLE}</th>
 						<th style="width:20%;">{L_TOPIC}</th>
 						<th style="width:100px;">{L_STATUS}</th>

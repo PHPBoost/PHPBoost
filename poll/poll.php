@@ -157,7 +157,7 @@ elseif( !empty($poll['id']) && !$archives )
 		</script>";
 		
 		$edit = '<a href="../poll/admin_poll' . transid('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
 	}
 		
 	//Résultats
@@ -362,7 +362,7 @@ elseif( $archives ) //Archives.
 		$Template->assign_block_vars('list', array(
 			'QUESTION' => $row['question'],
 			'EDIT' => '<a href="../poll/admin_poll' . transid('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

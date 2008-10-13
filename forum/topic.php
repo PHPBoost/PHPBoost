@@ -81,12 +81,12 @@ if( $check_group_edit_auth )
 {
 	$lock_status = '';
 	if( $topic['status'] == '1' ) //Unlocked, affiche lien pour verrouiller.
-		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=true') . '" onClick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
 	elseif( $topic['status'] == '0' ) //Lock, affiche lien pour déverrouiler.
-		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=false') . '" onClick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
 	
 	$Template->assign_vars(array(
-		'MOVE' => '<a href="move' . transid('.php?id=' . $id_get) . '" onClick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
+		'MOVE' => '<a href="move' . transid('.php?id=' . $id_get) . '" onclick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
 		'LOCK' => $lock_status,
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
 		'L_ALERT_LOCK_TOPIC' => $LANG['alert_lock_topic'],
@@ -148,7 +148,7 @@ $Template->assign_vars(array(
 	'PAGE' => $page,
 	'TITLE_T' => ucfirst($topic['title']),
 	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
-	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_cat_title . '.php'),
 	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",		
 	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
@@ -199,14 +199,14 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$valid = ($first_message) ? 'topic' : 'msg';
 		$edit = '&nbsp;&nbsp;<a href="post' . transid('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
 		$del = (!$first_message) ? '&nbsp;&nbsp;<script type="text/javascript"><!-- 
-		document.write(\'<img style="cursor: pointer;" onClick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
-		--></script><noscript><a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onClick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
-		: '&nbsp;&nbsp;<a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onClick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
+		document.write(\'<img style="cursor: pointer;" onclick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
+		--></script><noscript><a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
+		: '&nbsp;&nbsp;<a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
 		
 		//Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		if( $check_group_edit_auth )
 		{
-			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . transid('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onClick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
+			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . transid('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
 			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
 			$readonly = !$is_guest ? '<a href="moderation_forum' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
 		}

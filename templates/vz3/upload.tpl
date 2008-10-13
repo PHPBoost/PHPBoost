@@ -135,7 +135,7 @@
 				{
 					if( xhr_object.responseText > 0 )
 					{
-						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '&amp;{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+						document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="upload.php?f=' + xhr_object.responseText + '&amp;{POPUP}">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="upload.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;{POPUP}" onclick="javascript:return Confirm_folder();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="upload.php?move=' + xhr_object.responseText + '&amp;{POPUP}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 						var total_folder = document.getElementById('total_folder').innerHTML;
 						total_folder++;						
 						document.getElementById('total_folder').innerHTML = total_folder;
@@ -339,7 +339,7 @@
 								<td style="padding-top:8px;">						
 									<span id="f{folder.ID}"><a href="upload.php?f={folder.ID}&amp;{POPUP}" class="com">{folder.NAME}</a></span>
 									<div style="padding-top:5px;">
-										{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_folder();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+										{folder.RENAME_FOLDER}	<a href="upload.php?delf={folder.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onclick="javascript:return Confirm_folder();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
 										
 										<a href="upload{folder.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 										
@@ -366,7 +366,7 @@
 									<span class="text_small">{files.FILETYPE}</span><br />
 									<span class="text_small">{files.SIZE}</span><br />
 									{files.RENAME_FILE}
-									<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onClick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
+									<a href="upload.php?del={files.ID}&amp;f={FOLDER_ID}&amp;{POPUP}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
 									
 									<a href="upload{files.U_MOVE}" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>								
 									

@@ -114,7 +114,7 @@
 									{cat.BOTTOM}
 								</td>
 								<td class="row2">
-									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 								</td>
 							</tr>
 							# END cat #							

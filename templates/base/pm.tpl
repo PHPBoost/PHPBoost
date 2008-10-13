@@ -67,7 +67,7 @@
 					<table class="module_table">	
 						<tr>
 							<th style="text-align:center;width:20px;">
-								<input type="checkbox" id="checkall" onClick="check_convers(this.checked, 'd');">
+								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
 							</th>
 							<th colspan="2" style="text-align:center;">
 								{L_TITLE}
@@ -117,7 +117,7 @@
 						# END convers.no_pm #	
 						<tr>
 							<td colspan="6" class="row3">
-								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onClick="check_convers(this.checked, 'd');"> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
+								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');"> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
 								<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
 							</td>
 						</tr>

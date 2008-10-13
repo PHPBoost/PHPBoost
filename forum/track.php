@@ -185,7 +185,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'PAGINATION' => $Pagination->display('track' . transid('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'LANG' => $CONFIG['lang'],
-		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onClick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . SID,
 		'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
 		'U_FORUM_CAT' => '<a href="../forum/track.php' . SID . '">' . $LANG['show_topic_track'] . '</a>',

@@ -85,7 +85,7 @@
 			<div class="forum_title_r"></div>
 			<div class="forum_title">
 				<div style="padding:10px;">
-					<span style="float:left;">
+					<div style="float:left;">
 						<h2>{FORUM_NAME}</h2>
 						# IF C_FORUM_CONNEXION #
 							# IF C_MEMBER_NOTCONNECTED #
@@ -95,26 +95,28 @@
 								<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a>
 							# ENDIF #						
 						# ENDIF #						
-					</span>
-					<span style="float:right;text-align:right">
+					</div>
+					<div style="float:right;text-align:right">
 						<form action="search.php{SID}" method="post">
-							<label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
-							<input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
-							<a href="search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
-							
-							<input type="hidden" name="time" value="30000" />
-							<input type="hidden" name="where" value="contents" />
-							<input type="hidden" name="colorate_result" value="1" />
+                            <div>
+                                <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
+                                <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
+                                <a href="search.php{SID}" title="{L_ADVANCED_SEARCH}" class="small_link">{L_ADVANCED_SEARCH}</a>
+                                
+                                <input type="hidden" name="time" value="30000" />
+                                <input type="hidden" name="where" value="contents" />
+                                <input type="hidden" name="colorate_result" value="1" />
+                            </div>
 						</form>
-					</span>	
+					</div>	
 					<div class="spacer"></div>		
 				</div>
 			</div>
 			<div class="forum_links" style="border-top:none;">
-				<span style="float:left;">
+				<div style="float:left;">
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
-				</span>
-				<span style="float:right;">
+				</div>
+				<div style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
@@ -127,7 +129,7 @@
 
 					&bull;					
 					<img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {U_MSG_SET_VIEW}
-				</span>
+				</div>
 				<div class="spacer"></div>
 			</div>
 		</div>

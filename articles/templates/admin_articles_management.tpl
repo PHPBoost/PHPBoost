@@ -87,7 +87,7 @@
 						<a href="admin_articles.php?id={list.articles.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_articles.php?delete=1&amp;id={list.articles.ID}&amp;idcat={list.articles.IDCAT}" onClick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_articles.php?delete=1&amp;id={list.articles.ID}&amp;idcat={list.articles.IDCAT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END list.articles #
@@ -238,7 +238,7 @@
 								<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={articles.DAY_RELEASE_S}&amp;m={articles.MONTH_RELEASE_S}&amp;y={articles.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={articles.DAY_RELEASE_S}&amp;m={articles.MONTH_RELEASE_S}&amp;y={articles.YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							
 							{L_UNTIL}&nbsp;
 							
@@ -247,7 +247,7 @@
 								<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={articles.DAY_RELEASE_E}&amp;m={articles.MONTH_RELEASE_E}&amp;y={articles.YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+							<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={articles.DAY_RELEASE_E}&amp;m={articles.MONTH_RELEASE_E}&amp;y={articles.YEAR_RELEASE_E}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							<br />
 							<label><input type="radio" id="release_date" value="1" name="visible" {articles.VISIBLE_ENABLED} /> {L_IMMEDIATE}</label>
 							<br />
@@ -262,7 +262,7 @@
 								<div id="current" class="calendar_block" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);">							
 								</div>
 							</div>
-							<a onClick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={articles.DAY_DATE}&amp;m={articles.MONTH_DATE}&amp;y={articles.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onclick="xmlhttprequest_calendar('current', '?input_field=current_date&amp;field=current&amp;d={articles.DAY_DATE}&amp;m={articles.MONTH_DATE}&amp;y={articles.YEAR_DATE}');display_calendar(3);" onmouseover="hide_calendar(3, 1);" onmouseout="hide_calendar(3, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcurrent" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							{L_AT}
 							<input type="text" size="2" maxlength="2" name="hour" value="{articles.HOUR}" class="text" /> H <input type="text" size="2" maxlength="2" name="min" value="{articles.MIN}" class="text" />
 						</label></dd>

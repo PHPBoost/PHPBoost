@@ -222,7 +222,7 @@ if( $checkdate === true && empty($id) && !$add )
 			if( $User->check_level(ADMIN_LEVEL) )
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onClick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {
