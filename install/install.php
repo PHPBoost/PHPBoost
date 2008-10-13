@@ -562,7 +562,7 @@ elseif( $step == 6 )
 				return $LANG['admin_require_mail'];
 			elseif( $password != $password_repeat )
 				return $LANG['admin_passwords_error'];
-			elseif( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $user_mail)  )
+			elseif( !preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail)  )
 				return $LANG['admin_email_error'];
 			else
 				return '';
