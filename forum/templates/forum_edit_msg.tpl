@@ -11,8 +11,8 @@
 		-->
 		</script>	
 		
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
+		<div class="module_position">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module_contents">
@@ -23,12 +23,12 @@
 					<div class="{ERRORH_CLASS}">
 						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					</div>
-					<br />		
+					<br />
 					# ENDIF #
 
-					# IF C_FORUM_PREVIEW_MSG #		
-					<div class="module_position">					
-						<div class="module_top_l"></div>		
+					# IF C_FORUM_PREVIEW_MSG #
+					<div class="module_position">
+						<div class="module_top_l"></div>
 						<div class="module_top_r"></div>
 						<div class="module_top">
 							<span style="float:left;">{L_PREVIEW}</span>
@@ -52,7 +52,7 @@
 								</div>
 							</div>
 						</div>	
-						<div class="msg_sign">		
+						<div class="msg_sign">
 							<hr />
 							<span style="float:left;">
 								<img src="../templates/{THEME}/images/{LANG}/pm.png" alt="pm" />
@@ -61,8 +61,8 @@
 							</span>&nbsp;
 						</div>	
 					</div>
-					<div class="msg_position">		
-						<div class="msg_bottom_l"></div>		
+					<div class="msg_position">
+						<div class="msg_bottom_l"></div>
 						<div class="msg_bottom_r"></div>
 						<div class="msg_bottom">&nbsp;</div>
 					</div>
@@ -85,18 +85,18 @@
 							&nbsp;&nbsp; 									
 							<input value="{L_PREVIEW}" type="submit" name="prw" id="previs_msg" class="submit" />
 							<script type="text/javascript">
-							<!--				
+							<!--
 							document.getElementById('previs_msg').style.display = 'none';
 							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
 							-->
 							</script>
 							&nbsp;&nbsp;
-							<input type="reset" value="{L_RESET}" class="reset" />				
+							<input type="reset" value="{L_RESET}" class="reset" />
 						</fieldset>
 					</div>		
 				</form>
 			</div>
-			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_l"></div>
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"><a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 		</div>

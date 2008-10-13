@@ -60,24 +60,24 @@
 		}
 		-->
 		</script>
-		<div class="module_position">					
-			<div class="module_top_l"></div>		
+		<div class="module_position">
+			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T} <span style="font-weight:normal"><em>{DESC}</em></span></div>
 			<div class="module_contents">		
-				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">		
+				<form action="{U_ACTION}" method="post" onsubmit="return check_form_post();">
 					# IF C_ERROR_HANDLER #
 					<br />	
 					<span id="errorh"></span>
 					<div class="{ERRORH_CLASS}">
 						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					</div>
-					<br />		
+					<br />
 					# ENDIF #
 
-					# IF C_FORUM_PREVIEW_MSG #		
-					<div class="module_position">					
-						<div class="module_top_l"></div>		
+					# IF C_FORUM_PREVIEW_MSG #
+					<div class="module_position">
+						<div class="module_top_l"></div>
 						<div class="module_top_r"></div>
 						<div class="module_top">
 							<span style="float:left;">{L_PREVIEW}</span>
@@ -110,13 +110,13 @@
 							</span>&nbsp;
 						</div>	
 					</div>
-					<div class="msg_position">		
-						<div class="msg_bottom_l"></div>		
+					<div class="msg_position">
+						<div class="msg_bottom_l"></div>
 						<div class="msg_bottom_r"></div>
 						<div class="msg_bottom">&nbsp;</div>
 					</div>
 					<br /><br />
-					# ENDIF #		
+					# ENDIF #
 					
 					<div class="fieldset_content">
 						<fieldset>
@@ -155,9 +155,9 @@
 									<label><input type="radio" name="type" value="1" {CHECKED_POSTIT} /> {L_POST_IT}</label>
 									<label><input type="radio" name="type" value="2" {CHECKED_ANNONCE} /> {L_ANOUNCE}</label>
 								</dd>
-							</dl>	
-							# ENDIF #	
-						</fieldset>	
+							</dl>
+							# ENDIF #
+						</fieldset>
 
 						<fieldset>	
 							<legend>{L_POLL}</legend>
@@ -182,17 +182,17 @@
 								# ENDIF #
 								<dl>
 									<dt><label>{L_ANSWERS}</label></dt>
-									<dd>								
+									<dd>
 										# START answers_poll #
 										<label><input type="text" size="25" name="a{answers_poll.ID}" value="{answers_poll.ANSWER}" class="text" /> <em>{answers_poll.NBR_VOTES} {answers_poll.L_VOTES}</em></label><br />
-										# END answers_poll #											
+										# END answers_poll #
 										<span id="add_poll_field{NBR_POLL_FIELD}"></span>	
 										
 										<p style="text-align:center;width:165px;" id="add_poll_field_link">
 											# IF C_ADD_POLL_FIELD #
 											<a href="javascript:add_poll_field({NBR_POLL_FIELD})"><img src="../templates/{THEME}/images/form/plus.png" alt="+" /></a>
 											# ENDIF #
-										</p>										
+										</p>
 									</dd>
 								</dl>
 							</div>
@@ -208,16 +208,16 @@
 						<legend>{L_SUBMIT}</legend>
 							<input type="hidden" name="idm" value="{IDM}" />
 							<input type="submit" name="post_topic" value="{L_SUBMIT}" class="submit" />
-							&nbsp;&nbsp; 									
+							&nbsp;&nbsp;
 							<input value="{L_PREVIEW}" type="submit" name="prw_t" id="previs_topic" class="submit" />
 							<script type="text/javascript">
-							<!--				
+							<!--
 							document.getElementById('previs_topic').style.display = 'none';
 							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
 							-->
 							</script>
 							&nbsp;&nbsp;
-							<input type="reset" value="{L_RESET}" class="reset" />				
+							<input type="reset" value="{L_RESET}" class="reset" />
 						
 							# IF C_DISPLAY_MSG #
 							<br /><br /><br />
@@ -225,7 +225,7 @@
 								<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
 							</span>
 							<script type="text/javascript">
-							<!--				
+							<!--
 							document.getElementById('forum_change_statut').style.display = 'none';
 							document.write('<a href="javascript:XMLHttpRequest_change_statut()">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
 							-->

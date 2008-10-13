@@ -287,7 +287,7 @@
 									</div>
 								</div>
 								<a href="javascript:{DISABLED_TABLE}bb_display_block('7', '{FIELD}');" onmouseover="{DISABLED_TABLE}bb_hide_block('7', '{FIELD}', 1);" class="bbcode_hover" title="{L_BB_TABLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/table.png" {AUTH_TABLE} alt="{L_BB_TABLE}" title="{L_BB_TABLE}" /></a>
-																		
+                                
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/flash.png" class="bbcode_hover" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=100,100]', '[/swf]', '{FIELD}');" alt="{L_BB_SWF}" title="{L_BB_SWF}" />
@@ -340,7 +340,7 @@
 								<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/code.png" {AUTH_CODE} alt="{L_BB_CODE}" /></a>
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/math.png" class="bbcode_hover" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/anchor.png" class="bbcode_hover" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />						
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/anchor.png" class="bbcode_hover" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />
 							</td>
 							<td style="width:3px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
@@ -354,7 +354,7 @@
 				<td style="vertical-align:top;padding-left:8px;padding-top:5px;">
 					{UPLOAD_MANAGEMENT}
 				</td>
-			</tr>				
+			</tr>
 		</table>
 		
 		<script type="text/javascript">
