@@ -590,7 +590,8 @@
 						<!--
 							function check_form_admin()
 							{
-								regex = new ExpReg("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "gi");
+								regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
+								
 								if( document.getElementById("login").value == "" )
 								{
 									alert("{L_REQUIRE_LOGIN}");
@@ -626,13 +627,13 @@
 									alert("{L_PASSWORDS_ERROR}");
 									return false;
 								}
-								else if( !regex.exec(document.getElementById("mail")) != null  )
+								else if( !regex.test(document.getElementById("mail").value)  )
 								{
 									alert("{L_EMAIL_ERROR}");
 									return false;
 								}
 								else
-									return true
+									return true;
 							}
 							
 							function change_img_theme(id, value)
