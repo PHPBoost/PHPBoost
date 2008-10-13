@@ -121,21 +121,21 @@
 					<table class="module_table" style="width:70%">
 						<tr>
 							<th>{L_POLL}: {QUESTION}</th>
-						</tr>							
+						</tr>
 						# START poll_radio #
 						<tr>
 							<td class="row2" style="font-size:10px;">
 								<label><input type="{poll_radio.TYPE}" name="radio" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
 							</td>
 						</tr>
-						# END poll_radio #							
+						# END poll_radio #
 						# START poll_checkbox #
 						<tr>
 							<td class="row2">
 								<label><input type="{poll_checkbox.TYPE}" name="{poll_checkbox.NAME}" value="{poll_checkbox.NAME}" /> {poll_checkbox.ANSWERS}</label>
 							</td>
 						</tr>
-						# END poll_checkbox #					
+						# END poll_checkbox #
 						# START poll_result #
 						<tr>
 							<td class="row2" style="font-size:10px;">
@@ -149,8 +149,8 @@
 								</table>
 							</td>
 						</tr>
-						# END poll_result #										
-					</table>					
+						# END poll_result #
+					</table>
 					<br />
 					
 					# IF C_POLL_QUESTION #
@@ -158,7 +158,7 @@
 						<legend>{L_VOTE}</legend>
 						<input class="submit" name="valid_forum_poll" type="submit" value="{L_VOTE}" /><br />
 						<a class="small_link" href="topic{U_POLL_RESULT}">{L_RESULT}</a>
-					</fieldset>						
+					</fieldset>
 					# ENDIF #
 				</form>
 			</div>
@@ -168,7 +168,7 @@
 		# START msg #		
 		<div class="msg_position" id="d{msg.ID}">
 			<div class="msg_container{msg.CLASS_COLOR}">
-				<span id="m{msg.ID}">
+				<span id="m{msg.ID}" />
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
 						{msg.USER_ONLINE} {msg.USER_PSEUDO}
@@ -245,33 +245,34 @@
 			document.write('<a href="javascript:XMLHttpRequest_favorite()" class="small_link">{ICON_FAVORITE2}</a> <a href="javascript:XMLHttpRequest_favorite()" class="small_link"><span id="forum_favorite_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
 			-->
 			</script>
-			<a href="alert{U_ALERT}#go_bottom"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
+			<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" />{L_ALERT}</a>
 		</div>
 		
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">		
-			<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
-			{KERNEL_EDITOR}
-			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-			<fieldset class="fieldset_submit" style="padding-top:17px;">
-				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-				&nbsp;&nbsp; 									
-				<script type="text/javascript">
-				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
-				-->
-				</script>						
-				<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>
-				&nbsp;&nbsp;
-				<input type="reset" value="{L_RESET}" class="reset" />				
-			</fieldset>			
+		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">
+			<div>
+                <div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
+                {KERNEL_EDITOR}
+                <label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+                <fieldset class="fieldset_submit" style="padding-top:17px;">
+                    <legend>{L_SUBMIT}</legend>
+                    <input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+                    &nbsp;&nbsp;
+                    <script type="text/javascript">
+                    <!--				
+                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+                    -->
+                    </script>
+                    <noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
+                    &nbsp;&nbsp;
+                    <input type="reset" value="{L_RESET}" class="reset" />
+                </fieldset>
+            </div>
 		</form>
 		# ENDIF #
 		
 		# IF C_ERROR_AUTH_WRITE #
 		<div style="font-size:10px;text-align:center;padding-bottom:2px;">{L_RESPOND}</div>	
 		<div class="forum_text_column" style="width:350px;margin:auto;height:auto;padding:2px;">
-			{L_ERROR_AUTH_WRITE}			
+			{L_ERROR_AUTH_WRITE}
 		</div>
 		# ENDIF #
-		

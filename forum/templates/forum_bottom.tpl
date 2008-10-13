@@ -38,33 +38,37 @@
 					<br />
 					{L_MEMBER} {L_ONLINE}: {USERS_ONLINE}
 				</span>
-				<span style="float:right;text-align:right">
+				<div style="float:right;text-align:right">
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
-						<select name="change_cat" onchange="document.location = {U_ONCHANGE};">
-							{SELECT_CAT}
-						</select>
-						<noscript>
-							<input type="submit" name="valid_change_cat" value="Go" class="submit" />
-						</noscript>
+                        <div>
+                            <select name="change_cat" onchange="document.location = {U_ONCHANGE};">
+                                {SELECT_CAT}
+                            </select>
+                            <noscript>
+                                <div><input type="submit" name="valid_change_cat" value="Go" class="submit" /></div>
+                            </noscript>
+                        </div>
 					</form>
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
 					<form action="action.php{SID}">
-						{L_FOR_SELECTION}: 
-						<select name="massive_action_type">
-							<option value="change">{L_CHANGE_STATUT_TO}</option>
-							<option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
-							<option value="move">{L_MOVE_TO}</option>
-							<option value="lock">{L_LOCK}</option>
-							<option value="unlock">{L_UNLOCK}</option>
-							<option value="del">{L_DELETE}</option>
-						</select>
-						<input type="submit" value="{L_GO}" name="valid" class="submit" />
+                        <div>
+                            {L_FOR_SELECTION}: 
+                            <select name="massive_action_type">
+                                <option value="change">{L_CHANGE_STATUT_TO}</option>
+                                <option value="changebis">{L_CHANGE_STATUT_TO_DEFAULT}</option>
+                                <option value="move">{L_MOVE_TO}</option>
+                                <option value="lock">{L_LOCK}</option>
+                                <option value="unlock">{L_UNLOCK}</option>
+                                <option value="del">{L_DELETE}</option>
+                            </select>
+                            <input type="submit" value="{L_GO}" name="valid" class="submit" />
+                        </div>
 					</form>
 					# ENDIF #
-				</span>
+				</div>
 				<div class="spacer"></div>
 				# ENDIF #
 			
