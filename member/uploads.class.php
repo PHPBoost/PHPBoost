@@ -244,14 +244,14 @@ class Uploads
 	}
 	
 	//Récupération du répertoire courant (administration).
-	function Get_admin_url($id_folder, $pwd, $member_link = '')
+	function get_admin_url($id_folder, $pwd, $member_link = '')
 	{		
 		global $LANG, $Sql;
 		
 		$parent_folder = $Sql->query_array("upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		if( !empty($parent_folder['id_parent']) )
 		{	
-			$pwd .= $this->Get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
+			$pwd .= $this->get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
 			return $pwd . '/<a href="admin_files.php?f=' . $id_folder . '">' . $parent_folder['name'] . '</a>';
 		}
 		else
@@ -259,14 +259,14 @@ class Uploads
 	}
 	
 	//Récupération du répertoire courant.
-	function Get_url($id_folder, $pwd, $popup)
+	function get_url($id_folder, $pwd, $popup)
 	{		
 		global $LANG, $Sql;
 		
 		$parent_folder = $Sql->query_array("upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
 		if( !empty($parent_folder['id_parent']) )
 		{	
-			$pwd .= $this->Get_url($parent_folder['id_parent'], $pwd, $popup);	
+			$pwd .= $this->get_url($parent_folder['id_parent'], $pwd, $popup);	
 			return $pwd . '/<a href="' . transid('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
 		}
 		else
@@ -282,7 +282,7 @@ class Uploads
 	}
 
 	//Conversion mimetype -> image.
-	function Get_img_mimetype($type)
+	function get_img_mimetype($type)
 	{
 		global $LANG;
 		

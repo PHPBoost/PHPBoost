@@ -43,13 +43,13 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 	$result = false;
 	
 	if( $id_up > 0 )
-		$result = $download_categories->Move_category($id_up, MOVE_CATEGORY_UP);
+		$result = $download_categories->move($id_up, MOVE_CATEGORY_UP);
 	elseif( $id_down > 0 )
-		$result = $download_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+		$result = $download_categories->move($id_down, MOVE_CATEGORY_DOWN);
 	elseif( $id_show > 0 )
-		$result = $download_categories->Change_category_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+		$result = $download_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif( $id_hide > 0 )
-		$result = $download_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
+		$result = $download_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	
 	//Operation was successfully
 	if( $result )
@@ -62,11 +62,11 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 				'rewrited' => 'category-%d+%s.php'),
 			);
 		
-		$download_categories->Set_displaying_configuration($cat_config);
+		$download_categories->set_display_config($cat_config);
 		
 		$Cache->load('download', RELOAD_CACHE);
 	
-		echo $download_categories->Build_categories_administration_interface(AJAX_MODE);
+		echo $download_categories->build_administration_interface(AJAX_MODE);
 	}
 }
 include_once('../kernel/footer_no_display.php');

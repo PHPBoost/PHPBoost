@@ -45,12 +45,12 @@ $error = retrieve(GET, 'error', '');
 
 if( $id_up > 0 )
 {
-	$download_categories->Move_category($id_up, MOVE_CATEGORY_UP);
+	$download_categories->move($id_up, MOVE_CATEGORY_UP);
 	redirect(transid('admin_download_cat.php'));
 }
 elseif( $id_down > 0 )
 {
-	$download_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	$download_categories->move($id_down, MOVE_CATEGORY_DOWN);
 	redirect(transid('admin_download_cat.php'));
 }
 elseif( $cat_to_del > 0 )
@@ -60,7 +60,7 @@ elseif( $cat_to_del > 0 )
 	));
 	
 	$Template->assign_vars(array(
-		'CATEGORY_TREE' => $download_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
+		'CATEGORY_TREE' => $download_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
 		'L_REMOVING_CATEGORY' => $DOWNLOAD_LANG['removing_category'],
 		'L_EXPLAIN_REMOVING' => $DOWNLOAD_LANG['explain_removing_category'],
@@ -122,7 +122,7 @@ elseif( !empty($_POST['submit']) )
 			if( $id_cat > 0 )
 			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
 		else
-			$error_string = $download_categories->Add_category($id_parent, $name, $description, $icon, $new_auth, $visible);
+			$error_string = $download_categories->add($id_parent, $name, $description, $icon, $new_auth, $visible);
 	}
 
 	$Cache->Generate_module_file('download');
@@ -192,7 +192,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($DOWNLOAD_CATS[$id_edit]['description']),
 			'IMAGE' => $DOWNLOAD_CATS[$id_edit]['icon'],
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($DOWNLOAD_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'VISIBLE_CHECKED' => $DOWNLOAD_CATS[$id_edit]['visible'] ? 'checked="checked"' : '',
 			'IMG_ICON' => !empty($DOWNLOAD_CATS[$id_edit]['icon']) ? '<img src="' . $DOWNLOAD_CATS[$id_edit]['icon'] . '" alt="" class="valign_middle" />' : '',
@@ -211,7 +211,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
 			'VISIBLE_CHECKED' => 'checked="checked"',
 			'JS_SPECIAL_AUTH' => 'false',
@@ -267,10 +267,10 @@ else
 			'rewrited' => 'category-%d+%s.php'),
 		);
 		
-	$download_categories->Set_displaying_configuration($cat_config);
+	$download_categories->set_display_config($cat_config);
 	
 	$Template->assign_vars(array(
-		'CATEGORIES' => $download_categories->Build_categories_administration_interface(),
+		'CATEGORIES' => $download_categories->build_administration_interface(),
 		'L_RECOUNT_SUBFILES' => $DOWNLOAD_LANG['recount_subfiles'],
 		'U_RECOUNT_SUBFILES' => transid('admin_download_cat.php?recount=1')
 	));

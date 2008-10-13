@@ -57,7 +57,7 @@ if( $file_id > 0 ) //Contenu
 		'NAME' => $download_info['title'],
 		'CONTENTS' => second_parse($download_info['contents']),
 		'CREATION_DATE' => $creation_date->format(DATE_FORMAT_SHORT),
-		'RELEASE_DATE' => $release_date->Get_timestamp() > 0 ? $release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
+		'RELEASE_DATE' => $release_date->get_timestamp() > 0 ? $release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 		'SIZE' => $size_tpl,
 		'COUNT' => $download_info['count'],
 		'THEME' => $CONFIG['theme'],

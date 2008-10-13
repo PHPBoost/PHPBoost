@@ -36,7 +36,7 @@ require_once('../kernel/header_no_display.php');
 
 if( retrieve(GET, 'feed', 'rss') == 'rss' )
 {
-    require_once('../kernel/framework/content/syndication/rss.work.class.php');
+    require_once('../kernel/framework/content/syndication/rss.class.php');
     $Feed = new RSS('news');
 }
 else

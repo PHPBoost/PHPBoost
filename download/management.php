@@ -159,10 +159,10 @@ if( $edit_file_id > 0 )
 			switch($file_visibility)
 			{
 				case 2:		
-					if( $begining_date->Get_timestamp() < $date_now->Get_timestamp() &&  $end_date->Get_timestamp() > $date_now->Get_timestamp() )
+					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
-						$start_timestamp = $begining_date->Get_timestamp();
-						$end_timestamp = $end_date->Get_timestamp();
+						$start_timestamp = $begining_date->get_timestamp();
+						$end_timestamp = $end_date->get_timestamp();
 					}
 					else
 						$visible = 0;
@@ -175,7 +175,7 @@ if( $edit_file_id > 0 )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', image = '" . $file_image . "', timestamp = '" . $file_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subfiles in each category
 			if( $file_cat_id != $file_infos['idcat'] )
@@ -230,7 +230,7 @@ if( $edit_file_id > 0 )
 			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $file_release_date->Get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
+			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $file_hits,
 			'THEME' => $CONFIG['theme'],
@@ -261,7 +261,7 @@ if( $edit_file_id > 0 )
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -285,7 +285,7 @@ if( $edit_file_id > 0 )
 		$creation_calendar->set_date($file_creation_date);
 		
 		$release_calendar = new MiniCalendar('release_date');
-		$ignore_release_date = ($file_release_date->Get_timestamp() == 0);
+		$ignore_release_date = ($file_release_date->get_timestamp() == 0);
 		if( !$ignore_release_date )
 			$release_calendar->set_date($file_release_date);
 		
@@ -314,7 +314,7 @@ if( $edit_file_id > 0 )
 			'URL' => $file_infos['url'],
 			'SIZE_FORM' => $file_infos['size'],
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -344,10 +344,10 @@ elseif( $add_file )
 			switch($file_visibility)
 			{
 				case 2:		
-					if( $begining_date->Get_timestamp() < $date_now->Get_timestamp() &&  $end_date->Get_timestamp() > $date_now->Get_timestamp() )
+					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
-						$start_timestamp = $begining_date->Get_timestamp();
-						$end_timestamp = $end_date->Get_timestamp();
+						$start_timestamp = $begining_date->get_timestamp();
+						$end_timestamp = $end_date->get_timestamp();
 					}
 					else
 						$visible = 0;
@@ -360,7 +360,7 @@ elseif( $add_file )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."download");
 			
@@ -417,7 +417,7 @@ elseif( $add_file )
 			'NAME' => stripslashes($file_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($file_contents))),
 			'CREATION_DATE' => $file_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $file_release_date->Get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
+			'RELEASE_DATE' => $file_release_date->get_timestamp() > 0 ? $file_release_date->format(DATE_FORMAT_SHORT) : $DOWNLOAD_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $file_hits,
 			'THEME' => $CONFIG['theme'],
@@ -448,7 +448,7 @@ elseif( $add_file )
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -493,7 +493,7 @@ elseif( $add_file )
 			'URL' => '',
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->Build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',

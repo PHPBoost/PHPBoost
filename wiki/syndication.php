@@ -38,7 +38,7 @@ $idcat = retrieve(GET, 'idcat', 0);
 
 if( retrieve(GET, 'feed', 'rss') == 'rss' )
 {
-    require_once('../kernel/framework/content/syndication/rss.work.class.php');
+    require_once('../kernel/framework/content/syndication/rss.class.php');
     $Feed = new RSS('wiki');
 }
 else

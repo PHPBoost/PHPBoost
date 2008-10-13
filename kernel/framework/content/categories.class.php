@@ -44,7 +44,7 @@ parent::method().
 	* key order 
 	* key visible which is a boolean 
 You can also have other fields such as auth level, description, visible, that class won't modify them.
-- To display the list of categories and actions you can do on them, you may want to customize it. For that you must build an array that you will give to Set_displaying_configuration() containing your choices :
+- To display the list of categories and actions you can do on them, you may want to customize it. For that you must build an array that you will give to set_display_config() containing your choices :
 	* Key 'xmlhttprequest_file' which corresponds to the name of the file which will treat the AJAX requests. We usually call it xmlhttprequest.php.
 	* Key 'url' which represents the url of the category (it won't display any link up to categories if you don't give this field). Its structure is the following :
 		# key 'unrewrited' => string containing unrewrited urls (let %d where you want to display the category identifier)
@@ -102,7 +102,7 @@ class CategoriesManagement
 	}
 	
 	//Method which adds a category
-	function Add_category($id_parent, $name, $visible = 1, $order = 0)
+	function add($id_parent, $name, $visible = 1, $order = 0)
 	{
 		global $Sql, $Cache;
 		$this->_clean_error();
@@ -134,7 +134,7 @@ class CategoriesManagement
 	}
 
 	//Method which moves a category
-	function Move_category($id, $way)
+	function move($id, $way)
 	{
 		global $Sql, $Cache;
 		$this->_clean_error();
@@ -201,7 +201,7 @@ class CategoriesManagement
 
 	//Method which allows to move a category from its position to another category
 	//You can choose its position in the new category, otherwise it will be placed at the end
-	function Move_category_into_another_category($id, $new_id_cat, $position = 0)
+	function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		global $Sql, $Cache;
 		$this->_clean_error();
@@ -211,7 +211,7 @@ class CategoriesManagement
 		{
 			//Checking that the new parent category is not the this category or one of its children
 			$subcats_list = array($id);
-			$this->Build_children_id_list($id, $subcats_list);
+			$this->build_children_id_list($id, $subcats_list);
 			if( !in_array($new_id_cat, $subcats_list) )
 			{
 				$max_new_cat_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);	
@@ -256,7 +256,7 @@ class CategoriesManagement
 	}
 
 	//Deleting a category
-	function Delete_category($id)
+	function delete($id)
 	{
 		global $Sql, $Cache;
 		$this->_clean_error();
@@ -283,7 +283,7 @@ class CategoriesManagement
 	}
 	
 	//Method which changes the visibility of a category
-	function Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		global $Sql, $Cache;
 		
@@ -312,16 +312,16 @@ class CategoriesManagement
 	}
 
 	//Method which sets the displaying configuration
-	function Set_displaying_configuration($config)
+	function set_display_config($config)
 	{
 		//Respect du standard à vérifier
 		$this->display_config = $config;
 		
-		return $this->Check_displaying_configuration();
+		return $this->check_display_config();
 	}
 
 	//Method which checks if display configuration is good
-	function Check_displaying_configuration($debug = PRODUCTION_MODE)
+	function check_display_config($debug = PRODUCTION_MODE)
 	{
 		if( !empty($this->display_config) )
 		{
@@ -350,7 +350,7 @@ class CategoriesManagement
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
-	function Build_categories_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
+	function build_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
 	{
 		global $CONFIG, $LANG;
 		
@@ -361,7 +361,7 @@ class CategoriesManagement
 		
 		$this->_clean_error();
 		//If displaying configuration hasn't bee already set
-		if( !$this->Check_displaying_configuration() )
+		if( !$this->check_display_config() )
 		{
 			$this->_add_error(INCORRECT_DISPLAYING_CONFIGURATION);
 			return false;
@@ -390,7 +390,7 @@ class CategoriesManagement
 	}
 	
 	//Method which builds a select form to choose a category
-	function Build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
+	function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
 		global $LANG, $User;
 		
@@ -415,7 +415,7 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which builds the list of all chlidren of one category
-	function Build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
+	function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
 		global $User;
 		//Boolean variable which is true when we can stop the loop : optimization
@@ -436,7 +436,7 @@ class CategoriesManagement
 			{
 				$list[] = $id;
 				if( $recursive_exploration && (($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)) )
-					$this->Build_children_id_list($id, $list, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth);
+					$this->build_children_id_list($id, $list, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth);
 				
 				if( !$end_of_category )
 					$end_of_category = true;
@@ -447,7 +447,7 @@ class CategoriesManagement
 	}
 	
 	//Method which builds the list of all parents of one category
-	function Build_parent_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
+	function build_parents_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
 	{
 		$list = array();
 		if( $add_this )
@@ -465,7 +465,7 @@ class CategoriesManagement
 	}
 	
 	//Method for users who want to know what was the error
-	function Check_error($error)
+	function check_error($error)
 	{
 		return (bool)($this->errors ^ $error);
 	}

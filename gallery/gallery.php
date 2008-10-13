@@ -214,7 +214,7 @@ elseif( $g_add )
 			default:
 			$l_pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
-		$nbr_upload_pics = $Gallery->Get_nbr_upload_pics($User->get_attribute('user_id'));
+		$nbr_upload_pics = $Gallery->get_nbr_upload_pics($User->get_attribute('user_id'));
 		
 		$Template->assign_block_vars('image_quota', array(
 			'L_IMAGE_QUOTA' => sprintf($LANG['image_quota'], $nbr_upload_pics, $l_pics_quota)

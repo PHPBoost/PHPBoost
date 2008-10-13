@@ -89,7 +89,7 @@ class GalleryInterface extends ModuleInterface
 				$row['auth'] = serialize($CONFIG_GALLERY['auth_root']);
 			
 			//Calcul des dimensions avec respect des proportions.
-			list($width, $height) = $Gallery->Get_resize_properties($row['width'], $row['height']);
+			list($width, $height) = $Gallery->get_resize_properties($row['width'], $row['height']);
 			
 			$_array_random_pics .= 'array(' . "\n" .
 			'\'id\' => ' . var_export($row['id'], true) . ',' . "\n" .
