@@ -46,7 +46,7 @@ class Note
 	}
 	
 	//Ajoute une note.
-	function add_note($note)
+	function add($note)
 	{
 		global $Sql, $User;
 		

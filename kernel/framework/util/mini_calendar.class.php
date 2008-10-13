@@ -75,9 +75,9 @@ class Mini_calendar
 			'DEFAULT_DATE' => $this->date->format(DATE_FORMAT_SHORT),
 			'CALENDAR_ID' => 'calendar_' . $this->num_instance,
 			'CALENDAR_NUMBER' => (string)$this->num_instance,
-			'DAY' => $this->date->Get_day(),
-			'MONTH' => $this->date->Get_month(),
-			'YEAR' => $this->date->Get_year(),
+			'DAY' => $this->date->get_day(),
+			'MONTH' => $this->date->get_month(),
+			'YEAR' => $this->date->get_year(),
 			'FORM_NAME' => $this->form_name,
 			'CALENDAR_STYLE' => $this->style,
 			'C_INCLUDE_JS' => !$js_inclusion_already_done

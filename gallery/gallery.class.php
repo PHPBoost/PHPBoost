@@ -46,7 +46,7 @@ class Gallery
 		{	
 			list($width_s, $height_s, $weight, $ext) = $this->Arg_pics($path);
 			//Calcul des dimensions avec respect des proportions.
-			list($width, $height) = $this->Get_resize_properties($width_s, $height_s, $width_max, $height_max);
+			list($width, $height) = $this->get_resize_properties($width_s, $height_s, $width_max, $height_max);
 			
 			$source = false;
 			switch($ext) //Création de l'image suivant l'extension.
@@ -432,7 +432,7 @@ class Gallery
 			$pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
 
-		if( $this->Get_nbr_upload_pics($user_id) >= $pics_quota )
+		if( $this->get_nbr_upload_pics($user_id) >= $pics_quota )
 			return false;
 			
 		return true;
@@ -465,7 +465,7 @@ class Gallery
 	}
 		
 	//Compte le nombre d'images uploadée par un membre.
-	function Get_nbr_upload_pics($user_id)
+	function get_nbr_upload_pics($user_id)
 	{
 		global $Sql;
 		
@@ -473,7 +473,7 @@ class Gallery
 	}
 	
 	//Calcul des dimensions avec respect des proportions.
-	function Get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
+	function get_resize_properties($width_s, $height_s, $width_max = 0, $height_max = 0)
 	{
 		global $CONFIG_GALLERY;
 		

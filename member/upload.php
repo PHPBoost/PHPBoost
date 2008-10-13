@@ -259,7 +259,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL'=> '' . trim($Uploads->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL'=> '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
@@ -295,7 +295,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 	else
 	{
 		$info_move = $Sql->query_array("upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
-		$get_img_mimetype = $Uploads->Get_img_mimetype($info_move['type']);
+		$get_img_mimetype = $Uploads->get_img_mimetype($info_move['type']);
 		$size_img = '';
 		switch($info_move['type'])
 		{
@@ -357,7 +357,7 @@ else
 		'USER_ID' => $User->get_attribute('user_id'),
 		'THEME' => $CONFIG['theme'],
 		'LANG' => $CONFIG['lang'],
-		'URL' => '' . trim($Uploads->Get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -417,7 +417,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
-		$get_img_mimetype = $Uploads->Get_img_mimetype($row['type']);
+		$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 		$size_img = '';
 		switch($row['type'])
 		{

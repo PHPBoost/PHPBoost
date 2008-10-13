@@ -6,7 +6,7 @@
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Module_map
+ *   ModuleMap
  *
 ###################################################
  *
@@ -33,56 +33,56 @@ include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapexportconfig.class
 define('SITE_MAP_AUTH_GUEST', false);
 define('SITE_MAP_AUTH_USER', true);
 
-class Module_map
+class ModuleMap
 {
 	##  Public methods  ##
-	function Module_map($name = '')
+	function ModuleMap($name = '')
 	{
 		$this->sub_sections = array();
 		$this->name = $name;
 	}
 	
 	//Name setter
-	function Set_name($name)
+	function set_name($name)
 	{
 		$this->name = $name;
 	}
 	
 	//Name getter
-	function Get_name()
+	function get_name()
 	{
 		return $this->name;
 	}
 	
 	//Description setter (warning it's not protected for XML displaying but usefulless in sitemap.xml)
-	function Set_description($description)
+	function set_description($description)
 	{
 		$this->description = $description;
 	}
 	
 	//Description getter
-	function Get_description()
+	function get_description()
 	{
 		return $this->description;
 	}
 	
 	//Adds an element at the end of the list
-	function Push_element($link)
+	function push_element($link)
 	{
 		$this->sub_sections[] = $link;
 	}
 	
 	//Removes the latest inserted element
-	function Pop_element()
+	function pop_element()
 	{
 		return array_pop($this->sub_section);
 	}
 	
 	//Exports the sitemap (according to a configuration of templates). It returns a string
-	function Export(&$export_config)
+	function export(&$export_config)
 	{
 		//We get the stream in which we are going to write
-		$template = $export_config->Get_module_map_stream();
+		$template = $export_config->get_module_map_stream();
 		
 		$template->assign_vars(array(
 			'MODULE_NAME' => htmlspecialchars($this->name, ENT_QUOTES),
@@ -92,7 +92,7 @@ class Module_map
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->assign_block_vars('children', array(
-				'CHILD_CODE' => $sub_section->Export($export_config, 1)
+				'CHILD_CODE' => $sub_section->export($export_config, 1)
 				));
 		}
 		return $template->parse(TEMPLATE_STRING_MODE);

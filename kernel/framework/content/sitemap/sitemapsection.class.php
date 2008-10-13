@@ -6,7 +6,7 @@
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Sitemap_section
+ *   SitemapSection
  *
 ###################################################
  *
@@ -28,44 +28,44 @@
 
 //Should implement an interface in PHP 5
 
-class Sitemap_section
+class SitemapSection
 {
 	##  Public methods  ##
-	function Sitemap_section($name = '')
+	function SitemapSection($name = '')
 	{
 		$this->section_name = $name;
 		$this->sub_sections = array();
 	}
 	
 	//Name getter
-	function Get_name($name)
+	function get_name($name)
 	{
 		return $name;
 	}
 	
 	//Name setter
-	function Set_name($name)
+	function set_name($name)
 	{
 		$this->section_name = $name;
 	}
 	
 	//Adds an element to the section (section or link => polymorphism)
-	function Push_element($element)
+	function push_element($element)
 	{
 		$this->sub_sections[] = $element;
 	}
 	
 	//Deletes an element to the section (section or link => polymorphism)
-	function Pop_element()
+	function pop_element()
 	{
 		return array_pop($this->sub_sections);
 	}
 	
 	//Method which exports the section into the stream $template
-	function Export(&$export_config, $depth = 1)
+	function export(&$export_config, $depth = 1)
 	{
 		//We get the stream in which we are going to write
-		$template = $export_config->Get_section_stream();
+		$template = $export_config->get_section_stream();
 		
 		if( is_string($this->section_name) )
 			$template->assign_vars(array(
@@ -76,14 +76,14 @@ class Sitemap_section
 		elseif( is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link' )
 			$template->assign_vars(array(
 					'C_SECTION_NAME_IS_LINK' => true,
-					'LINK_CODE' => $this->section_name->Export($export_config),
+					'LINK_CODE' => $this->section_name->export($export_config),
 					'DEPTH' => $depth
 				));
 		
 		foreach($this->sub_sections as $sub_section)
 		{
 			$template->assign_block_vars('children', array(
-				'CHILD_CODE' => $sub_section->Export($export_config, $depth + 1)
+				'CHILD_CODE' => $sub_section->export($export_config, $depth + 1)
 			));
 		}
 		return $template->parse(TEMPLATE_STRING_MODE);

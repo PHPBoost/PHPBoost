@@ -70,11 +70,11 @@ class DownloadCats extends CategoriesManagement
 			return false;
 		}
 		
-		parent::Delete_category($id_category);
+		parent::delete($id_category);
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
 			if( $id_cat != 0 && $properties['id_parent'] == $id_category )
-				parent::Move_category_into_another_category($id_cat, $new_id_cat_content);			
+				parent::move_into_another($id_cat, $new_id_cat_content);			
 		}
 		
 		$Sql->query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
@@ -85,12 +85,12 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Function which adds a category
-	function Add_category($id_parent, $name, $description, $image, $auth, $visible)
+	function add($id_parent, $name, $description, $image, $auth, $visible)
 	{
 		global $Sql;
 		if( $id_parent == 0 || array_key_exists($id_parent, $this->cache_var) )
 		{
-			$new_id_cat = parent::Add_category($id_parent, $name);
+			$new_id_cat = parent::add($id_parent, $name);
 			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
@@ -107,11 +107,11 @@ class DownloadCats extends CategoriesManagement
 		{
 			if( $id_parent != $this->cache_var[$id_cat]['id_parent'] )
 			{
-				if( !parent::Move_category_into_another_category($id_cat, $id_parent) )			
+				if( !parent::move_into_another($id_cat, $id_parent) )			
 				{
-					if( $this->Check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST) )
+					if( $this->check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST) )
 						return 'e_new_cat_does_not_exist';
-					if( $this->Check_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS) )
+					if( $this->check_error(NEW_CATEGORY_IS_IN_ITS_CHILDRENS) )
 						return 'e_infinite_loop';
 				}
 				else
@@ -130,9 +130,9 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Function which moves a category
-	function Move_category_into_another_category($id, $new_id_cat, $position = 0)
+	function move_into_another($id, $new_id_cat, $position = 0)
 	{
-		$result = parent::Move_category_into_another_category($id, $new_id_cat, $position);
+		$result = parent::move_into_another($id, $new_id_cat, $position);
 		if( $result )
 			$this->Recount_sub_files();
 		return $result;
@@ -169,9 +169,9 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Method which changes the visibility of a category
-	function Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
+	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
-		$result = parent::Change_category_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE);
+		$result = parent::change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE);
 		$this->Recount_sub_files(NOT_GENERATE_CACHE);
 		return $result;
 	}
@@ -183,7 +183,7 @@ class DownloadCats extends CategoriesManagement
 		global $Sql;
 		
 		//If the category is successfully deleted
-		if( $test = parent::Delete_category($id) )
+		if( $test = parent::delete($id) )
 		{
 			//We remove its whole content
 			$Sql->query_inject("DELETE FROM ".PREFIX."download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);

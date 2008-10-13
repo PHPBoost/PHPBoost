@@ -6,7 +6,7 @@
  *   copyright          : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   Sitemap_link
+ *   SitemapLink
  *
 ###################################################
  *
@@ -45,51 +45,51 @@ include_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 
 //Should implement an interface in PHP 5
 
-class Sitemap_link
+class SitemapLink
 {
 	##  Public methods  ##
-	function Sitemap_link($text = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = NULL)
+	function SitemapLink($text = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = NULL)
 	{
 		$this->text = $text;
 		$this->link = $link;
-		$this->Set_change_freq($change_freq);
-		$this->Set_priority($priority);
+		$this->set_change_freq($change_freq);
+		$this->set_priority($priority);
 		if( is_object($last_modification_date) )
 			$this->last_modification_date = $last_modification_date;
 	}
 	
 	//Text getter
-	function Get_text()
+	function get_text()
 	{
 		return $this->text;
 	}
 	
 	//Text setter
-	function Set_text($text)
+	function set_text($text)
 	{
 		$this->text = $text;
 	}
 	
 	//Link getter
-	function Get_link()
+	function get_link()
 	{
 		return $this->link;
 	}
 	
 	//Link setter
-	function Set_link($link)
+	function set_link($link)
 	{
 		$this->link = $link;
 	}
 	
 	//Actualization frequency getter
-	function Get_change_freq()
+	function get_change_freq()
 	{
 		return $this->change_freq;
 	}
 	
 	//Function which changes the actualization frequency
-	function Set_change_freq($change_freq)
+	function set_change_freq($change_freq)
 	{
 		if( in_array($change_freq, array(SITEMAP_FREQ_ALWAYS, SITEMAP_FREQ_HOURLY, SITEMAP_FREQ_DAILY, SITEMAP_FREQ_WEEKLY, SITEMAP_FREQ_MONTHLY, SITEMAP_FREQ_YEARLY, SITEMAP_FREQ_NEVER, SITEMAP_FREQ_DEFAULT)) )
 			$this->change_freq = $change_freq;
@@ -98,13 +98,13 @@ class Sitemap_link
 	}
 	
 	//Priority getter
-	function Get_priority()
+	function get_priority()
 	{
 		return $this->priority;
 	}
 	
 	//Priority setter
-	function Set_priority($priority)
+	function set_priority($priority)
 	{
 		if( in_array($priority, array(SITEMAP_PRIORITY_MAX, SITEMAP_PRIORITY_HIGH, SITEMAP_PRIORITY_AVERAGE, SITEMAP_PRIORITY_LOW, SITEMAP_PRIORITY_MIN)) )
 			$this->priority = $priority;
@@ -125,12 +125,12 @@ class Sitemap_link
 	}
 	
 	//Method which exports the link into the stream $template
-	function Export(&$export_config)
+	function export(&$export_config)
 	{
 		$display_date = is_object($this->last_modification_date);
 		
 		//We get the stream in which we are going to write
-		$template = $export_config->Get_link_stream();
+		$template = $export_config->get_link_stream();
 		
 		$template->assign_vars(array(
 			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),

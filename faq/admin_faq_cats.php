@@ -58,22 +58,22 @@ $Template->assign_vars(array(
 
 if( $id_up > 0 )
 {
-	$faq_categories->Move_category($id_up, MOVE_CATEGORY_UP);
+	$faq_categories->move($id_up, MOVE_CATEGORY_UP);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_down > 0 )
 {
-	$faq_categories->Move_category($id_down, MOVE_CATEGORY_DOWN);
+	$faq_categories->move($id_down, MOVE_CATEGORY_DOWN);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_show > 0 )
 {
-	$faq_categories->Change_category_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
+	$faq_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $id_hide > 0 )
 {
-	$faq_categories->Change_category_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
+	$faq_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	redirect(transid('admin_faq_cats.php'));
 }
 elseif( $cat_to_del > 0 )
@@ -86,7 +86,7 @@ elseif( $cat_to_del > 0 )
 		'L_SUBMIT' => $LANG['delete']
 	));
 	$Template->assign_block_vars('removing_interface', array(
-		'CATEGORY_TREE' => $faq_categories->Build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
+		'CATEGORY_TREE' => $faq_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
 	));
 }
@@ -122,7 +122,7 @@ elseif( !empty($_POST['submit']) )
 		if( $id_cat > 0 )
 			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
 		else
-			$error_string = $faq_categories->Add_category($id_parent, $name, $description, $image);
+			$error_string = $faq_categories->add($id_parent, $name, $description, $image);
 	}
 
 	$Cache->Generate_module_file('faq');
@@ -156,7 +156,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($FAQ_CATS[$id_edit]['description']),
 			'IMAGE' => $FAQ_CATS[$id_edit]['image'],
-			'CATEGORIES_TREE' => $faq_categories->Build_select_form($FAQ_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
+			'CATEGORIES_TREE' => $faq_categories->build_select_form($FAQ_CATS[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit
 		));
 	else
@@ -166,7 +166,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
-			'CATEGORIES_TREE' => $faq_categories->Build_select_form($id_edit, 'id_parent', 'id_parent'),
+			'CATEGORIES_TREE' => $faq_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit
 		));
 	}
@@ -206,10 +206,10 @@ else
 			'rewrited' => 'faq-%d+%s.php'),
 		);
 		
-	$faq_categories->Set_displaying_configuration($cat_config);
+	$faq_categories->set_display_config($cat_config);
 	
 	$Template->assign_block_vars('categories_management', array(
-		'CATEGORIES' => $faq_categories->Build_categories_administration_interface()
+		'CATEGORIES' => $faq_categories->build_administration_interface()
 	));
 	
 	$Template->assign_vars(array(

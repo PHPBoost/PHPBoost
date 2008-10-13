@@ -135,7 +135,7 @@ elseif( $id_move > 0 )
 	$faq_cats = new Faqcats();
 	
 	$Template->assign_block_vars('move_question', array(
-		'CATEGORIES_TREE' => $faq_cats->Build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+		'CATEGORIES_TREE' => $faq_cats->build_select_form(0, 'target', 'target', 0, AUTH_WRITE, $FAQ_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 		'ID_QUESTION' => $id_move
 	));
 	$Template->assign_vars(array(

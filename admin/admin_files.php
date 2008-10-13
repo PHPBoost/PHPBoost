@@ -177,13 +177,13 @@ else
 		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);  
 
 	if( $show_member )
-		$url = $Uploads->Get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+		$url = $Uploads->get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
 	elseif( !empty($folder_member) || !empty($folder_info['user_id']) )
-		$url = $Uploads->Get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+		$url = $Uploads->get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
 	elseif( empty($folder) )
 		$url = '/';	
 	else
-		$url = $Uploads->Get_admin_url($folder, '');
+		$url = $Uploads->get_admin_url($folder, '');
 		
 	$Template->assign_vars(array(
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
@@ -293,7 +293,7 @@ else
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
-			$get_img_mimetype = $Uploads->Get_img_mimetype($row['type']);
+			$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 			$size_img = '';
 			switch($row['type'])
 			{

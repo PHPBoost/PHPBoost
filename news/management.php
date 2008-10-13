@@ -151,10 +151,10 @@ if( $edit_news_id > 0 )
 			switch($news_visibility)
 			{
 				case 2:		
-					if( $begining_date->Get_timestamp() < $date_now->Get_timestamp() &&  $end_date->Get_timestamp() > $date_now->Get_timestamp() )
+					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
-						$start_timestamp = $begining_date->Get_timestamp();
-						$end_timestamp = $end_date->Get_timestamp();
+						$start_timestamp = $begining_date->get_timestamp();
+						$end_timestamp = $end_date->get_timestamp();
 					}
 					else
 						$visible = 0;
@@ -167,7 +167,7 @@ if( $edit_news_id > 0 )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->Get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subnewss in each category
 			if( $news_cat_id != $news_infos['idcat'] )
@@ -222,7 +222,7 @@ if( $edit_news_id > 0 )
 			'NAME' => stripslashes($news_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
 			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $news_release_date->Get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
+			'RELEASE_DATE' => $news_release_date->get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $news_hits,
 			'THEME' => $CONFIG['theme'],
@@ -253,7 +253,7 @@ if( $edit_news_id > 0 )
 			'URL' => $news_url,
 			'SIZE_FORM' => $news_size,
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->Build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $news_categories->build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($news_short_contents))),
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
@@ -277,7 +277,7 @@ if( $edit_news_id > 0 )
 		$creation_calendar->set_date($news_creation_date);
 		
 		$release_calendar = new MiniCalendar('release_date');
-		$ignore_release_date = ($news_release_date->Get_timestamp() == 0);
+		$ignore_release_date = ($news_release_date->get_timestamp() == 0);
 		if( !$ignore_release_date )
 			$release_calendar->set_date($news_release_date);
 		
@@ -306,7 +306,7 @@ if( $edit_news_id > 0 )
 			'URL' => $news_infos['url'],
 			'SIZE_FORM' => $news_infos['size'],
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->Build_select_form($news_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $news_categories->build_select_form($news_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -336,10 +336,10 @@ elseif( $add_news )
 			switch($news_visibility)
 			{
 				case 2:		
-					if( $begining_date->Get_timestamp() < $date_now->Get_timestamp() &&  $end_date->Get_timestamp() > $date_now->Get_timestamp() )
+					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
-						$start_timestamp = $begining_date->Get_timestamp();
-						$end_timestamp = $end_date->Get_timestamp();
+						$start_timestamp = $begining_date->get_timestamp();
+						$end_timestamp = $end_date->get_timestamp();
 					}
 					else
 						$visible = 0;
@@ -352,7 +352,7 @@ elseif( $add_news )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->Get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->Get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
 			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."news");
 			
@@ -409,7 +409,7 @@ elseif( $add_news )
 			'NAME' => stripslashes($news_title),
 			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
 			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $news_release_date->Get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
+			'RELEASE_DATE' => $news_release_date->get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
 			'SIZE' => $size_tpl,
 			'COUNT' => $news_hits,
 			'THEME' => $CONFIG['theme'],
@@ -440,7 +440,7 @@ elseif( $add_news )
 			'URL' => $news_url,
 			'SIZE_FORM' => $news_size,
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->Build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $news_categories->build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($news_short_contents))),
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
@@ -485,7 +485,7 @@ elseif( $add_news )
 			'URL' => '',
 			'SIZE_FORM' => '',
 			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->Build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $news_categories->build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',

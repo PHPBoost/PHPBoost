@@ -109,7 +109,7 @@ class FaqInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
         $auth_cats = array();
-        $Cats->Build_children_id_list(0, $list);
+        $Cats->build_children_id_list(0, $list);
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
@@ -188,8 +188,8 @@ class FaqInterface extends ModuleInterface
 		include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/modulemap.class.php');
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
-		$module_map = new Module_map($FAQ_LANG['faq']);
-		$module_map->Push_element($this->_create_module_map_sections(0, $auth_mode));
+		$module_map = new ModuleMap($FAQ_LANG['faq']);
+		$module_map->push_element($this->_create_module_map_sections(0, $auth_mode));
 		
 		$this->_create_module_map_sections(0, $module_map);
 		
@@ -202,11 +202,11 @@ class FaqInterface extends ModuleInterface
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
 		if( $id_cat > 0 )
-			$this_category = new Sitemap_link($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
+			$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
 		else
-			$this_category = new Sitemap_link($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
+			$this_category = new SitemapLink($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
 			
-		$category = new Sitemap_section($this_category);
+		$category = new SitemapSection($this_category);
 		
 		$i = 0;
 		
@@ -227,7 +227,7 @@ class FaqInterface extends ModuleInterface
 			}
 			if( $this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat )
 			{
-				$category->Push_element($this->_create_module_map_sections($id, $auth_mode));
+				$category->push_element($this->_create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}

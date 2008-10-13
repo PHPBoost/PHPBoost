@@ -42,7 +42,7 @@ if( !empty($_GET['note']) && $User->check_level(MEMBER_LEVEL) ) //Utilisateur co
 	$Note = new Note('web', $id, '', $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if( !empty($note) && !empty($id) )
-		echo $Note->add_note($note); //Ajout de la note.
+		echo $Note->add($note); //Ajout de la note.
 }
 
 
