@@ -4,7 +4,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Terminer l'implémentation de la classe PackagesManager
-[-] Modifier légèrement l'implémentation de la classe cache en utilisant la partie io du framework
 [-] Revoir quelques expressions régulières dans l'installation (URL du site avec https et adresse mail)
 [-] Rendre l'étape 3 de l'installation bloquante
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
