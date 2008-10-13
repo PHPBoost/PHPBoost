@@ -303,7 +303,7 @@ else //Affichage.
 		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 		{
 			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?del=1&id=' . $row['id']) . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.

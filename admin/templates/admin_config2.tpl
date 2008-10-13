@@ -144,7 +144,7 @@
 				</dl>
 				<dl>
 					<dt><label for="sign">{L_UNLOCK_ADMIN}</label><br /><span>{L_UNLOCK_ADMIN_EXPLAIN}</span></dt>
-					<dd><label><a href="admin_config.php?unlock=1" onClick="javascript:return Confirm_unlock();">{L_UNLOCK_LINK}</a></label></dd>
+					<dd><label><a href="admin_config.php?unlock=1" onclick="javascript:return Confirm_unlock();">{L_UNLOCK_LINK}</a></label></dd>
 				</dl>
 			</fieldset> 
 			

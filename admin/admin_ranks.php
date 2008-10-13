@@ -109,7 +109,7 @@ else //Sinon on rempli le formulaire
 	while( $row = $Sql->fetch_assoc($result) )
 	{				
 		if( $row['special'] == 0 )
-			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onClick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" title="" /></a>';
+			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" title="" /></a>';
 		else
 			$del = $LANG['special_rank'];
 
