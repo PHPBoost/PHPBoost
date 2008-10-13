@@ -46,9 +46,9 @@ if( $contribution_id > 0 )
 	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
-	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
+	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
 }
@@ -61,10 +61,10 @@ elseif( $id_update > 0 )
 	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
-	$Bread_crumb->add_link($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
-	$Bread_crumb->add_link($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
+	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
+	$Bread_crumb->add($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
 }
@@ -125,8 +125,8 @@ elseif( $id_to_delete > 0 )
 }
 else
 {
-	$Bread_crumb->add_link($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add_link($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
 
@@ -270,7 +270,7 @@ else
 	
 	if( $num_contributions > 1 )
 		$template->assign_vars(array(
-			'PAGINATION' => $pagination->display_pagination('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
+			'PAGINATION' => $pagination->display('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
 	else
 		$template->assign_vars(array(
