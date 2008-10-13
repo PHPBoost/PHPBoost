@@ -76,6 +76,13 @@ class FileSystemElement
 		return $parts[count($parts) - 1];
 	}
 	
+	//Change le CHMOD de l'élément du système de fichiers
+	function change_chmod($chmod)
+	{
+		if( !empty($this->path) )
+			@chmod($this->path, $chmod);
+	}
+	
 	// fonction virtuelle
 	function delete() { }
 }
