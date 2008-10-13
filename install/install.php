@@ -43,9 +43,7 @@ require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions 
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 
-define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
-set_magic_quotes_runtime(0);
 
 define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
@@ -468,6 +466,7 @@ elseif( $step == 5 )
 		$Cache = new Cache;
 		
 		//Installation des modules de la distribution
+		require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach($DISTRIBUTION_MODULES as $module_name)
 		{
 			$Cache->load('modules');
