@@ -55,7 +55,7 @@ else
     require_once('news_interface.class.php');
     $News = new NewsInterface();
     
-    $Feed->load_data($News->syndication_data());
+    $Feed->load_data($News->get_feed_data_struct());
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed

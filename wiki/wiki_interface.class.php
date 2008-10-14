@@ -150,7 +150,7 @@ class WikiInterface extends ModuleInterface
         return $req;
     }
     
-    function syndication_data($idcat = 0)
+    function get_feed_data_struct($idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;

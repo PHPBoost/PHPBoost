@@ -57,7 +57,7 @@ else
     require_once('download_interface.class.php');
     $Download = new DownloadInterface();
     
-    $Feed->load_data($Download->syndication_data($idcat));
+    $Feed->load_data($Download->get_feed_data_struct($idcat));
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed

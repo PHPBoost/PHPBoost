@@ -93,7 +93,7 @@ class NewsInterface extends ModuleInterface
         return $request;
     }
     
-    function syndication_data($idcat = 0)
+    function get_feed_data_struct($idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;

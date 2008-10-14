@@ -343,7 +343,7 @@ class ForumInterface extends ModuleInterface
         return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-    function syndication_data($idcat = 0)
+    function get_feed_data_struct($idcat = 0)
     {
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
 		

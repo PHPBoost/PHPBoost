@@ -36,13 +36,10 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[+] Système de mise à jour du noyau et des modules:
-[-] Interface de contribution des news.
-[-] Renommer les méthodes et classes (y compris CategoriesManagement)
-	(Pas important pour la béta, sera fait pendant)
+[+] Système de mise à jour du noyau et des modules (vérifications de compatibilité)
 
 ------------------------------------ MODULES -----------------------------------
-[+] Implémenter la syndication dans la FAQ et les autorisations dans Faq, Forum, Download
+[+] Implémenter les autorisations de la syndication dans Forum, Download
 
 ################################################################################
 

@@ -55,7 +55,7 @@ else
     require_once('articles_interface.class.php');
     $articles = new ArticlesInterface();
     
-    $Feed->load_data($articles->syndication_data());
+    $Feed->load_data($articles->get_feed_data_struct());
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed

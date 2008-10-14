@@ -137,7 +137,7 @@ class ArticlesInterface extends ModuleInterface
 		return $request;
 	}
 
-	function syndication_data($idcat = 0)
+	function get_feed_data_struct($idcat = 0)
 	{
 		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES;
 		$Cache->load('articles');

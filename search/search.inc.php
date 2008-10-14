@@ -27,7 +27,7 @@
 
 if( defined('PHPBOOST') !== true ) exit;
 
-require_once ( '../kernel/framework/modules/modules.class.php' );
+require_once ( '../kernel/framework/modules/modules_discovery_service.class.php' );
 require_once ( '../kernel/framework/content/search.class.php' );
 
 

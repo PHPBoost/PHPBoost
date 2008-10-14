@@ -38,7 +38,7 @@ $idSearch = retrieve(POST, 'idSearch', -1);
 
 //--------------------------------------------------------------------- Header
 //------------------------------------------------------------- Other includes
-require_once('../kernel/framework/modules/modules.class.php');
+require_once('../kernel/framework/modules/modules_discovery_service.class.php');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main

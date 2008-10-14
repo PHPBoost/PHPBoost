@@ -6,7 +6,7 @@ define('TITLE', 'titre');
 include(PATH_TO_ROOT . '/kernel/header.php');
 
 include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/modulemap.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
 
 $Modules = new ModulesDiscoveryService();
 foreach($Modules->get_availables_modules('get_module_map') as $module)
