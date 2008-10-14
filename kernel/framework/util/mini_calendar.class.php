@@ -29,11 +29,11 @@
 include_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
 include_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
 
-class Mini_calendar
+class MiniCalendar
 {
 	# Public #
 	// Constructeur d'un calendrier : il dépend du nom qu'il aura lorsqu'on le récupèrera dans le formulaire
-	function Mini_calendar($form_name)
+	function MiniCalendar($form_name)
 	{
 		// Feinte pour PHP 4, en PHP 5 on mettra un attribut static à la classe
 		static $num_instance = 0;

@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
-redirect(HOST.DIR.'/search/search.php');
+header('Location:' . HOST . DIR . '/search/search.php');
+exit;
 
 ?>

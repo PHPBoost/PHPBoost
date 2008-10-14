@@ -34,7 +34,7 @@ class Backup
 	
 	## Public Methods ##	
 	//On modifie le temps d'exécution maximal si le serveur le permet
-	function backup()
+	function Backup()
 	{
 		$this->list_table(); //Liste toutes les tables de PHPBoost.
 		@set_time_limit(600);

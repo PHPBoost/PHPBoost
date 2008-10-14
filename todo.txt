@@ -7,6 +7,7 @@
 [-] Rendre l'étape 3 de l'installation bloquante
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [-] S'occuper du sort du panneau de modération.
+[-] Installation des modules vérifiée sur les modules suivants : articles, download, faq, gallery, guestbook, newsletter, search, pages
 
 ------------------------------------ MODULES -----------------------------------
 
