@@ -39,7 +39,7 @@ $Template->set_filenames(array(
 
 //Gestion de la maintenance du site.
 if( $CONFIG['maintain'] > time() )
-{	
+{
 	if( !$User->check_level(ADMIN_LEVEL) ) //Non admin.
 	{
 		if( SCRIPT !== (DIR . '/member/maintain.php') ) //Evite de créer une boucle infine.
@@ -113,6 +113,7 @@ $Cache->load('css');
 foreach($CSS as $css_mini_module)
 	$alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_mini_module . '" type="text/css" media="screen, handheld" />' . "\n";
 
+
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
@@ -171,7 +172,7 @@ if( !defined('NO_LEFT_COLUMN') )
 	define('NO_LEFT_COLUMN', false);
 if( !defined('NO_RIGHT_COLUMN') )
 	define('NO_RIGHT_COLUMN', false);
-		
+
 $left_column = ($THEME_CONFIG[$CONFIG['theme']]['left_column'] && !NO_LEFT_COLUMN);
 $right_column = ($THEME_CONFIG[$CONFIG['theme']]['right_column'] && !NO_RIGHT_COLUMN);	
 

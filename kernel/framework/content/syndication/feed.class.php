@@ -118,7 +118,7 @@ class Feed
     var $name = '';             // Feed Name
     var $str = '';              // The feed as a string
     var $tpl = null;            // The feed Template to use
-    var $data = null;           // The feed Template to use
+    var $data = null;           // The data structure
 
     ## Statics Methods ##
 
@@ -170,7 +170,10 @@ class Feed
             Feed::update_cache($module_id, $name, $data, $idcat);
             
             if( $iteration++ > 1 )
+            {
                 user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
+                break;
+            }
         }
        
         $feed = new Feed($module_id, $name);
