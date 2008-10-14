@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                                bread_crumb.class.php
+ *                           bread_crumb.class.php
  *                            -------------------
  *   begin                : February 16, 2007
  *   copyright            : (C) 2007 Sautel Benoit

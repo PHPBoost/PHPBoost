@@ -11,7 +11,7 @@ CREATE TABLE `phpboost_faq` (
   FULLTEXT KEY `question` (`question`),
   FULLTEXT KEY `answer` (`answer`),
   FULLTEXT KEY `question_2` (`question`,`answer`)
-) ENGINE=MyISAM DEFAULT;
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_faq_cats`;
 CREATE TABLE `phpboost_faq_cats` (
@@ -26,4 +26,4 @@ CREATE TABLE `phpboost_faq_cats` (
   `image` varchar(255) NOT NULL default '',
   `num_questions` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT;
+) ENGINE=MyISAM;

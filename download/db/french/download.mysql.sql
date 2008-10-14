@@ -21,10 +21,11 @@ CREATE TABLE `phpboost_download` (
   `short_contents` text NOT NULL,
   `contents` text NOT NULL,
   `url` text NOT NULL,
-  `image` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL default '',
   `size` float NOT NULL default '0',
   `count` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
+  `release_timestamp` int(11) NOT NULL,
   `visible` tinyint(1) NOT NULL default '0',
   `start` int(11) NOT NULL default '0',
   `end` int(11) NOT NULL default '0',
@@ -35,8 +36,8 @@ CREATE TABLE `phpboost_download` (
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
+  KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),
-  FULLTEXT KEY `short_contents` (`short_contents`),
   FULLTEXT KEY `contents` (`contents`),
-  KEY `idcat` (`idcat`)
+  FULLTEXT KEY `short_contents` (`short_contents`)
 ) ENGINE=MyISAM;
