@@ -342,8 +342,8 @@ class Cache
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
 		}			
 		$Sql->query_close($result);
-
-		return $code;
+        
+		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;';
 	}
 	
 	//Day
