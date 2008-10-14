@@ -72,7 +72,7 @@ $lang_ini_file = load_ini_file('../lang/', $CONFIG['lang']);
 $template_ini_file = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
 
 $directories_summerization = '';
-$directories_list = array('/', '/cache', '/cache/backup', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
+$directories_list = array('/', '/cache', '/cache/backup', 'cache/syndication/', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
 foreach($directories_list as $dir)
 {
 	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
