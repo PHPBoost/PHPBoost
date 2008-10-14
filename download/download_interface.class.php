@@ -195,7 +195,7 @@ class DownloadInterface extends ModuleInterface
         return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-	function syndication_data($idcat = 0)
+	function get_feed_data_struct($idcat = 0)
     {
         require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;

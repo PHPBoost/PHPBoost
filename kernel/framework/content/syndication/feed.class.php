@@ -160,22 +160,24 @@ class Feed
         }
        
         // Get the cache content or recreate it if not existing
-        $iteration = 0;
-        while( ($result = @include(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
+        if( ($result = @include($feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
         {
-            require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules.class.php');
+            require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
             $modules = new ModulesDiscoveryService();
             $module = $modules->get_module($module_id);
-            $data = $module->syndication_data($idcat);
-            Feed::update_cache($module_id, $name, $data, $idcat);
+            $data = $module->functionnality('get_feed_data_struct', $idcat);
             
-            if( $iteration++ > 1 )
+            if( !$module->got_error() )
             {
-                user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
-                break;
+                Feed::update_cache($module_id, $name, $data, $idcat);
             }
         }
-       
+        if( ($result = @include($feed_data_cache_file)) === false )
+        {
+            user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
+            return '';
+        }
+        
         $feed = new Feed($module_id, $name);
         $feed->load_data($feed_object);
         return $feed->export($template, $number, $begin_at);

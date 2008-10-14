@@ -57,7 +57,7 @@ else
     require_once('forum_interface.class.php');
     $Forum = new ForumInterface();
     
-    $Feed->load_data($Forum->syndication_data($idcat));
+    $Feed->load_data($Forum->get_feed_data_struct($idcat));
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed

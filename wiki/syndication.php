@@ -57,7 +57,7 @@ else
     require_once('wiki_interface.class.php');
     $Wiki = new WikiInterface();
     
-    $Feed->load_data($Wiki->syndication_data($idcat));
+    $Feed->load_data($Wiki->get_feed_data_struct($idcat));
     $Feed->cache();
     
     echo $Feed->export();                    // Print the feed
