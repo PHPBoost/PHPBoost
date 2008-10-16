@@ -209,7 +209,7 @@ class Authorizations
 	
 	//Fusion de deux tableaux d'autorisations
 	// le premier est le parent, le deuxième, le fils qui hérite du parent
-	function merge_auth($parent, $child, $auth_bit, $mode)
+	/*static*/ function merge_auth($parent, $child, $auth_bit, $mode)
 	{
 		//Parcours des différents types d'utilisateur
 		$merged = array();
@@ -240,6 +240,38 @@ class Authorizations
 				$merged[$key] = $value & $auth_bit;
 		}
 		return $merged;
+	}
+	
+	//Capture les autorisations et les place sur un bit en particulier passé en paramètre et vers un autre bit (1 par défaut)
+	/*static*/ function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
+	{
+		if( $final_bit == 0 )
+			die('<strong>Error :</strong> The destination bit must not be void.');
+		
+		$result = $auth;	
+		
+		if( $original_bit > $final_bit )
+		{
+			//De combien doit-on se décaler à droite (Combien de divisions par 2) ?
+			$quotient = log($original_bit / $final_bit, 2);
+			
+			foreach( $auth as $user_kind => $auth_values )
+				$result[$user_kind] = ($auth_values & $original_bit) >> $quotient;
+		}
+		elseif( $original_bit < $final_bit )
+		{
+			//De combien doit-on se décaler à gauche (combien de multiplications par 2) ?
+			$quotient = log($final_bit / $original_bit, 2);
+			
+			foreach( $auth as $user_kind => $auth_values )
+				$result[$user_kind] = ($auth_values & $original_bit) << $quotient;
+		}
+		else
+		{
+			foreach($auth as $user_kind => $auth_values)
+				$result[$user_kind] = $auth_values & $original_bit;
+		}
+		return $result;
 	}
 	
 	##  Private methods ##
