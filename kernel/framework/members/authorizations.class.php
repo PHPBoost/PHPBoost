@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                                autorizations.class.php
+ *                          autorizations.class.php
  *                            -------------------
  *   begin                : July 26 2008
- *   copyright          : (C) 2008 Viarre Régis / Sautel Benoit
+ *   copyright            : (C) 2008 Viarre Régis / Sautel Benoit
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *
@@ -25,12 +25,15 @@
  *
 ###################################################*/
 
+define('AUTH_PARENT_PRIORITY', 0x01);	// Generally read mode
+define('AUTH_CHILD_PRIORITY', 0x02);	// Generally write mode
+
 //This class contains only static methods, it souldn't be instantiated.
 class Authorizations
 {
 	## Public methods ##
 	//Retourne le tableau avec les droits issus des tableaux passés en argument. Tableau destiné à être serialisé.
-	/*static*/ function auth_array()
+	/*static*/ function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -53,7 +56,7 @@ class Authorizations
 		//Admin tous les droits dans n'importe quel cas.
 		if( $admin_auth_default )
 			$array_auth_all['r2'] = $sum_auth;
-		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
+		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
 		return $array_auth_all;
 	}
@@ -202,6 +205,41 @@ class Authorizations
 			default:
 				return false;
 		}
+	}
+	
+	//Fusion de deux tableaux d'autorisations
+	// le premier est le parent, le deuxième, le fils qui hérite du parent
+	function merge_auth($parent, $child, $auth_bit, $mode)
+	{
+		//Parcours des différents types d'utilisateur
+		$merged = array();
+		
+		if( empty($child) )
+			return $parent;
+		
+		if( $mode == AUTH_PARENT_PRIORITY )
+		{
+			foreach( $parent as $key => $value )
+			{
+				if( $bit = ($value & $auth_bit) )
+				{
+					if( !empty($child[$key]) )
+						$merged[$key] = $auth_bit;
+					else
+						$merged[$key] = 0;
+				}
+				else
+					$merged[$key] = $bit;
+			}
+		}
+		elseif( $mode == AUTH_CHILD_PRIORITY )
+		{
+			foreach( $parent as $key => $value )
+				$merged[$key] = $value & $auth_bit;
+			foreach( $child as $key => $value )
+				$merged[$key] = $value & $auth_bit;
+		}
+		return $merged;
 	}
 	
 	##  Private methods ##

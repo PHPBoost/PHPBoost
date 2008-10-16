@@ -40,7 +40,7 @@ if( !empty($_POST['valid']) )
 	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
 	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
-	$config_download['global_auth'] = addslashes(serialize(Authorizations::auth_array(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD)));
+	$config_download['global_auth'] = addslashes(serialize(Authorizations::build_auth_array_from_form(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD)));
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	

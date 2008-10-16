@@ -41,7 +41,7 @@ $bottom = retrieve(GET, 'bot', '');
 if( !empty($_POST['valid']) )
 {
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
+	$array_auth_all = Authorizations::build_auth_array_from_form(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);
 		
 	$CONFIG_FORUM['auth'] = serialize($array_auth_all);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);

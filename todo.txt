@@ -8,6 +8,7 @@
 [-] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [-] S'occuper du sort du panneau de modération.
 [-] Installation des modules vérifiée sur les modules suivants : articles, download, faq, gallery, guestbook, newsletter, search, pages
+[-] Créer un utilisateur qui sera administrateur dans l'installation
 
 ------------------------------------ MODULES -----------------------------------
 

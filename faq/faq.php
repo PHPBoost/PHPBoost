@@ -3,7 +3,7 @@
 *                               faq.php
 *                            -------------------
 *   begin                : November 10, 2007
-*   copyright          : (C) 2007 Sautel Benoit
+*   copyright            : (C) 2007 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *
@@ -183,6 +183,7 @@ if( $num_rows > 0 )
 				'U_MOVE' => transid('management.php?move=' . $row['id']),
 				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
+			
 			if( $row['q_order'] > 1 )
 				$Template->assign_block_vars('questions_block.contents.up', array());
 			if( $row['q_order'] < $num_rows )

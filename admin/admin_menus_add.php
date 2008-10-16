@@ -45,7 +45,7 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
 	$auth = retrieve(POST, 'auth', 0); 
-	$array_auth = Authorizations::auth_array(AUTH_MENUS);	
+	$array_auth = Authorizations::build_auth_array_from_form(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
@@ -72,7 +72,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get) )
 	{	
 		$activ = retrieve(POST, 'activ', 0);
-		$array_auth = Authorizations::auth_array(AUTH_MENUS);
+		$array_auth = Authorizations::build_auth_array_from_form(AUTH_MENUS);
 		$module_name = addslashes($array_get[1]);
 		$idmodule = $array_get[2];
 		
@@ -146,7 +146,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 {		
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
-	$array_auth = Authorizations::auth_array(AUTH_MENUS);	
+	$array_auth = Authorizations::build_auth_array_from_form(AUTH_MENUS);	
 	$contents = !empty($_POST['contents']) ? strparse($_POST['contents']) : '';	
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;

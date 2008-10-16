@@ -34,7 +34,7 @@ if( !empty($_POST['submit'])  )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
 	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
-	$CONFIG['html_auth'] = Authorizations::auth_array(1);
+	$CONFIG['html_auth'] = Authorizations::build_auth_array_from_form(1);
 	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
