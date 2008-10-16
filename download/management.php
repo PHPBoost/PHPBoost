@@ -304,7 +304,7 @@ if( $edit_file_id > 0 )
 			$file_visibility = 1;
 		else
 			$file_visibility = 0;
-		
+
 		$Template->assign_vars(array(
 			'TITLE' => $file_infos['title'],
 			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,

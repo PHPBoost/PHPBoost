@@ -61,7 +61,7 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 		$status = 1;
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
 	if( !empty($name) )
 	{	

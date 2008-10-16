@@ -39,7 +39,7 @@ if( !empty($_POST['submit']) )
 	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
 	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
 	// unused auth variables ?
-	$FAQ_CONFIG['global_auth'] = Authorizations::auth_array(AUTH_READ, AUTH_WRITE);
+	$FAQ_CONFIG['global_auth'] = Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE);
 	$FAQ_CONFIG['root'] = $FAQ_CATS[0];
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);

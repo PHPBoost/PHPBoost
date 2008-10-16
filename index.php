@@ -32,7 +32,29 @@ define('TITLE', 'Votre site à portée de main');
 require_once('./kernel/header.php');
 require_once('./kernel/framework/content/syndication/feed.class.php');
 
-global $LANG;
+$array1 = array(
+	'r2' => 3,
+	'r1' => 3,
+	'r0' => 0,
+	'r-1' => 3,
+	'5' => 0,
+	'm3' => 1,
+	'm4' => 0
+);
+
+$array2 = array(
+	'r2' => 3,
+	'r1' => 2,
+	'r0' => 0,
+	'r-1' => 1,
+	'm5' => 1,
+	'm4' => 1
+);
+
+print_r(Authorizations::merge_auth_arrays($array1, $array2, 2, AUTH_PARENT_PRIORITY));
+echo '<br />';
+print_r(Authorizations::merge_auth_arrays($array1, $array2, 1, AUTH_PARENT_PRIORITY));
+
 ?>
     <?php
         $tpl = new Template('news/framework/content/syndication/last_news.tpl');

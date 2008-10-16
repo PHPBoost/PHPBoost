@@ -3,7 +3,7 @@
  *                             download_cats.class.php
  *                            -------------------
  *   begin                : April 3, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   

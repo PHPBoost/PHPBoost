@@ -48,7 +48,7 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	$aprob = retrieve(POST, 'aprob', 0);    
 		
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_ARTICLES);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_ARTICLES);
 			
 	if( !empty($name) )
 	{	

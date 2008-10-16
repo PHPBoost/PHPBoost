@@ -40,7 +40,7 @@ if( !empty($_POST['update']) )  //Mise à jour
 	$activ_com = !empty($_POST['activ_com']) ? 1 : 0;
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_PAGE, EDIT_PAGE, READ_COM);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
 	
 	$_PAGES_CONFIG['auth'] = addslashes(serialize($array_auth_all));
 	$_PAGES_CONFIG['count_hits'] = $count_hits;

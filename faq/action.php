@@ -165,7 +165,7 @@ elseif( $cat_properties && (!empty($cat_name) || $id_cat == 0) )
 	{
 		if( $global_auth )
 		{
-			$array_auth_all = Authorizations::auth_array(AUTH_READ, AUTH_WRITE);
+			$array_auth_all = Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else

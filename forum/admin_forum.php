@@ -65,7 +65,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	}
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 	if( !empty($name) )
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', url = '" . $url . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);

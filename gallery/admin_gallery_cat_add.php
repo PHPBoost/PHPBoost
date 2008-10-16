@@ -49,7 +49,7 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 	$status = isset($_POST['status']) ? numeric($_POST['status']) : 0;   
 		
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
 	if( !empty($name) )
 	{	

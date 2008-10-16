@@ -49,7 +49,7 @@ if( !empty($_POST['valid'])  )
 	$CONFIG_UPLOADS['auth_extensions'] = $auth_extensions;
 
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(AUTH_FILES);
+	$array_auth_all = Authorizations::build_auth_array_from_form(AUTH_FILES);
 	$CONFIG_UPLOADS['auth_files'] = serialize($array_auth_all);
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);

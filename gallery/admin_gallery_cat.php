@@ -43,7 +43,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$aprob = isset($_POST['aprob']) ? numeric($_POST['aprob']) : 1;  
 
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 
 	if( !empty($name) )
 	{
@@ -189,7 +189,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 	$Cache->load('gallery');
 	
 	//Génération du tableau des droits.
-	$array_auth_all = Authorizations::auth_array(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
+	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
 	$CONFIG_GALLERY['auth_root'] = serialize($array_auth_all);
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);

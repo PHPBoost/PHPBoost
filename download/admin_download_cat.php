@@ -110,7 +110,7 @@ elseif( !empty($_POST['submit']) )
 		//Autorisations
 		if( !empty($_POST['special_auth']) )
 		{
-			$array_auth_all = Authorizations::auth_array(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
+			$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else

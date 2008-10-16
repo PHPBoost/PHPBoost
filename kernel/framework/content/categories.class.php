@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             categories.class.php
+ *                            categories.class.php
  *                            -------------------
  *   begin                : February 06, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   
@@ -469,8 +469,21 @@ class CategoriesManagement
 	{
 		return (bool)($this->errors ^ $error);
 	}
+	
+	//Compute the final authorisation level
+	function compute_heritated_auth($category_id, $bit, $mode)
+	{
+		$ids = array_reverse($this->build_parents_id_list($category_id, ADD_THIS_CATEGORY_IN_LIST));
+		$length = count($ids);
+		
+		$result = $this->cache_var[$ids[0]]['auth'];
+		
+		for( $i = 1; $i < $length; $i++)
+			$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
 
-
+		return $result;
+	}
+	
 	## Private methods ##
 	//Recursive method allowing to display the administration panel of a category and its daughters
 	function _create_row_interface_recount_cat_subquestions($id_cat, $level, $ajax_mode, &$reference_template)
