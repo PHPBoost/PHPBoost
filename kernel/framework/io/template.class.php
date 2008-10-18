@@ -341,7 +341,6 @@ class Template
     {
         return '<?php echo \'<?' . str_replace(array('\\', '\''), array('\\\\', '\\\''), trim($mask[1])) . '?>\'; ?>';
     }
-
     //Remplacement des variables de type bloc.
     function _parse_blocks_vars($blocks)
     {
