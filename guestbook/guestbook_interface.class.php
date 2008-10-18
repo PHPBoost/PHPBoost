@@ -30,7 +30,7 @@ if( defined('PHPBOOST') !== true) exit;
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class GuestbookInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -39,7 +39,7 @@ class GuestbookInterface extends ModuleInterface
         parent::ModuleInterface('guestbook');
     }
     
-	//RÃ©cupÃ©ration du cache.
+	//Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
@@ -71,7 +71,7 @@ class GuestbookInterface extends ModuleInterface
 		return $guestbook_code;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	function on_changeday()
 	{
 		global $Cache;

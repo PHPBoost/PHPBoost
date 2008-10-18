@@ -1,10 +1,9 @@
 DROP TABLE IF EXISTS `phpboost_guestbook`;
-CREATE TABLE `phpboost_shoutbox` (
+CREATE TABLE `phpboost_guestbook` (
   `id` int(11) NOT NULL auto_increment,
-  `login` varchar(150) NOT NULL default '',
-  `user_id` int(11) NOT NULL default '0',
-  `level` tinyint(1) NOT NULL default '0',
   `contents` text NOT NULL,
+  `login` varchar(255) NOT NULL default '',
+  `user_id` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `timestamp` (`timestamp`)

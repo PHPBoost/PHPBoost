@@ -465,6 +465,27 @@ elseif( $step == 5 )
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		
+		//Création de l'utilisateur
+		require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
+		$user_data = array(
+			'm_user_id' => 1,
+			'login' => 'login',
+			'level' => ADMIN_LEVEL,
+			'user_groups' => '',
+			'user_lang' => $lang, 
+			'user_theme' => DISTRIBUTION_THEME,
+			'user_mail' => '',
+			'user_pm' => 0,
+			'user_editor' => 'bbcode',
+			'user_timezone' => 1,
+			'avatar' => '',
+			'user_readonly' => 0,
+			'user_id' => 1,
+			'session_id' => ''
+		); 
+		$user_groups = array();
+		$User = new User($user_data, $user_groups);
+		
 		//Installation des modules de la distribution
 		require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach($DISTRIBUTION_MODULES as $module_name)

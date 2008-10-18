@@ -223,8 +223,8 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" /></a>';
 	}
 
-	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
-	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->sql_limit(0, 1), __LINE__, __FILE__);
+	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 
 	$tpl_news->assign_vars(array(
 	    'L_SYNDICATION' => $LANG['syndication'],
