@@ -1,5 +1,8 @@
-				# INCLUDE moderation_panel_top #
-				
+		<div class="module_position">
+			<div class="module_top_l"></div>		
+			<div class="module_top_r"></div>
+			<div class="module_top">{L_MODERATION_PANEL}</div>
+			<div class="module_contents" style="padding-bottom:75px;">	
 			# IF C_MODO_PANEL_MEMBER #
 				<table class="module_table">
 					<tr>
@@ -9,13 +12,19 @@
 					</tr>
 					<tr>							
 						<td style="text-align:center;width:34%" class="row2">
-							<a href="moderation_panel{U_WARNING}" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
+							<a href="moderation_panel{U_WARNING}" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /></a>
+							<br />
+							<a href="moderation_panel{U_WARNING}" title="{L_USERS_WARNING}">{L_USERS_WARNING}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_panel{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><img src="../templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
+							<a href="moderation_panel{U_PUNISH}" title="{L_USERS_PUNISHMENT}"><img src="../templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /></a>
+							<br />
+							<a href="moderation_panel{U_PUNISH}" title="{L_USERS_PUNISHMENT}">{L_USERS_PUNISHMENT}</a>
 						</td>
 						<td style="text-align:center;width:33%" class="row2">
-							<a href="moderation_panel{U_BAN}" title="{L_USERS_BAN}"><img src="../templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /><br />{L_USERS_BAN}</a>
+							<a href="moderation_panel{U_BAN}" title="{L_USERS_BAN}"><img src="../templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /></a>
+							<br />
+							<a href="moderation_panel{U_BAN}" title="{L_USERS_BAN}">{L_USERS_BAN}</a>
 						</td>
 					</tr>
 				</table>
@@ -57,18 +66,17 @@
 						<legend>{L_SEARCH_MEMBER}</legend>
 						<dl>
 							<dt><label for="login">{L_SEARCH_MEMBER}</label><br /><span>{L_JOKER}</span></dt>
-							<dd><label>
+							<dd>
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text" />						
+								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit" />
 								<script type="text/javascript">
-								<!--								
+								<!--	
+									document.getElementById("search_member").style.display = "none";
 									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search(this.form);" type="button" class="submit">');
 								-->
 								</script>
-								<noscript>
-									<input type="submit" name="search_member" value="{L_SEARCH}" class="submit" />
-								</noscript>
 								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-							</label></dd>
+							</dd>
 						</dl>
 					</fieldset>
 				</form>
@@ -105,7 +113,6 @@
 					</tr>		
 					# ENDIF #
 				</table>
-				</form>
 				# ENDIF #
 
 				
@@ -217,6 +224,9 @@
 				</form>					
 				# ENDIF #
 			# ENDIF #
-		
-		# INCLUDE moderation_panel_bottom #
-		
+				</div>
+			<div class="module_bottom_l"></div>		
+			<div class="module_bottom_r"></div>
+			<div class="module_bottom">
+			</div>
+		</div>
