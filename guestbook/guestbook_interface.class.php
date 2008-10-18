@@ -3,7 +3,7 @@
  *                              guestbook_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -46,7 +46,7 @@ class GuestbookInterface extends ModuleInterface
 	
 		$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
+		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_GUESTBOOK = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 		

@@ -613,6 +613,7 @@ if( !empty($id_get) ) //Espace membre
 	
 		$Template->assign_vars(array(
 			'C_MEMBER_INDEX' => true,
+			'C_IS_MODERATOR' => $User->get_attribute('level') >= MODERATOR_LEVEL,
 			'SID' => SID,
 			'LANG' => $CONFIG['lang'],
 			'COLSPAN' => $is_auth_files ? 3 : 2,
@@ -623,12 +624,14 @@ if( !empty($id_get) ) //Espace membre
 			'U_MEMBER_ID' => transid('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
 			'U_MEMBER_PM' => transid('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'U_CONTRIBUTION_PANEL' => transid('contribution_panel.php'),
+			'U_MODERATION_PANEL' => transid('moderation_panel.php'),
 			'L_PROFIL' => $LANG['profil'],
 			'L_WELCOME' => $LANG['welcome'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
 			'L_FILES_MANAGEMENT' => $LANG['files_management'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-			'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
+			'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
+			'L_MODERATION_PANEL' => $LANG['moderation_panel']
 		));
 		
 		//Affichage du lien vers l'interface des fichiers.
