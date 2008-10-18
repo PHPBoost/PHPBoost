@@ -8,7 +8,7 @@
 
 		<optgroup label="{L_GROUPS}">
 		# START groups_list #
-			<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED} >{groups_list.GROUP_NAME}</option>
+			<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 		# END groups_list #
 		</optgroup>
 	</select>
