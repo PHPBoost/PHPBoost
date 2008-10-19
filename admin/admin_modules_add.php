@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               admin_modules_add.php
+ *                           admin_modules_add.php
  *                            -------------------
  *   begin                : January 31, 2007
  *   copyright            : (C) 2007 Régis Viarre, Loïc Rouchon
@@ -38,93 +38,23 @@ if( $install ) //Installation du module
 		if( $value == $LANG['install'] )
 			$module_name = str_replace('module_', '', $key);
 
-	$activ_module = retrieve(POST, $module_name . 'activ', 0);
+	$enable_module = retrieve(POST, $module_name . 'activ', false);
 	
-	//Vérification de l'unicité du module
-	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+	require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.class.php');
 	
-	//Installation du module
-	if( !empty($module_name) && empty($ckeck_module) )
+	switch(PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
-		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
-		
-		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-		$dir_db_module = $CONFIG['lang'];
-		$dir = '../' . $module_name . '/db';
-		if( !is_dir($dir . '/' . $dir_db_module) )
-		{	
-			$dh = @opendir($dir);
-			while( !is_bool($dir_db = @readdir($dh)) )
-			{	
-				if( strpos($dir_db, '.') === false )
-				{
-					$dir_db_module = $dir_db;
-					break;
-				}
-			}	
-			@closedir($dh);
-		}
-			
-		//Insertion de la configuration du module.
-		$config = get_ini_config('../' . $module_name . '/lang/', $CONFIG['lang']); //Récupération des infos de config.
-		if( !empty($config) )
-		{	
-			$config = trim(str_replace('config=', '', $config), '"');
-			
-			$check_config = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."configs WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
-			if( empty($check_config) )
-				$Sql->query_inject("INSERT INTO ".PREFIX."configs (name, value) VALUES ('" . $module_name . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
-			else
-				redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_config_conflict#errorh');
-		}
-		
-		//Parsage du fichier sql.
-		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql') )
-			$Sql->parse('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
-		
-		//Parsage du fichier php.
-		if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php') )
-			@include_once('../' . $module_name . '/db/' . $dir_db_module . '/' . $module_name . '.php');
-		
-		//Génération du cache du module si il l'utilise
-		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
-		
-		$module_name = strprotect($module_name);
-		//Installation du mini module s'il existe
-		if( !empty($info_module['mini_module']) )
-		{
-			$array_menus = parse_ini_array($info_module['mini_module']);
-			$links = '';
-			foreach($array_menus as $path => $location)
-			{
-				$path = addslashes($path);
-				$module_mini_path = '../' . $module_name . '/' . $path;
-				if( file_exists($module_mini_path) )
-				{
-					$location = addslashes($location);
-					$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-					$Sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
-				}
-			}
-		}
-
-		//Insertion du modules dans la bdd => module installé.
-		$Sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_name . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . $activ_module . "')", __LINE__, __FILE__);
-		
-		//Génération du cache des modules
-		$Cache->Generate_file('modules');
-		$Cache->Generate_file('modules_mini');
-		$Cache->Generate_file('css');
-		
-		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-		if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-			$Cache->Generate_file('htaccess'); //Régénération du htaccess.			
-		
-		redirect(HOST . SCRIPT);	
+		case CONFIG_CONFLICT:
+			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_config_conflict#errorh');
+			break;
+		case UNEXISTING_MODULE:
+		case MODULE_ALREADY_INSTALLED:
+			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
+			break;
+		case MODULE_INSTALLED:
+		default:
+			redirect(HOST . DIR . '/admin/admin_modules.php');
 	}
-	else
-		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
 }			
 elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de l'archive Zip/Tar
 {

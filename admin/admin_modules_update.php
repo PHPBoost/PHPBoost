@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_modules_management.php
+ *                         admin_modules_update.php
  *                            -------------------
  *   begin                : January 31, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
