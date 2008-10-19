@@ -338,17 +338,20 @@
 							
 							<fieldset class="submit_case">
 								<form action="{U_CURRENT_STEP}#result_box" method="post">
-									<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
-									<script type="text/javascript">
-									<!--
-										document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
-									-->
-									</script>
-									<noscript>
-										<p><a href="{U_CURRENT_STEP}">{L_REFRESH}</a>&nbsp;&nbsp;</p>
-									</noscript>
-									<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
-									<input type="hidden"  name="submit" value="next" />
+									<p>
+										<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+										<a href="{U_CURRENT_STEP}" title="{L_REFRESH}" id="enougth_js_preview">
+											<img src="templates/images/refresh.png" alt="{L_REFRESH}" class="valign_middle" />
+										</a>
+										<script type="text/javascript">
+										<!--
+											document.getElementById("enougth_js_preview").style.display = "none";
+											document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+										-->
+										</script>
+										<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+										<input type="hidden"  name="submit" value="next" />
+									</p>
 								</form>
 							</fieldset>
 						</div>
