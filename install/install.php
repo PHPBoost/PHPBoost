@@ -491,7 +491,7 @@ elseif( $step == 5 )
 		foreach($DISTRIBUTION_MODULES as $module_name)
 		{
 			$Cache->load('modules');
-			PackagesManager::install_module($module_name, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 		}
 		
 		$Cache->Generate_all_files();

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_modules_management.php
+ *                       admin_modules_management.php
  *                            -------------------
  *   begin                : January 31, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -28,19 +28,23 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$uninstall = !empty($_GET['uninstall']) ? true : false;
+$uninstall = retrieve(GET, 'uninstall', false);
 $id = retrieve(GET, 'id', 0);
 $error = retrieve(GET, 'error', ''); 
 
+//Modification des propriétés des modules (activés et autorisations globales d'accès)
 if( isset($_POST['valid']) )		
 {
+	//Listage des modules
 	$result = $Sql->query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
+		//Récupération des propriétés du module courant
 		$activ = retrieve(POST, 'activ' . $row['id'], 0);
 		$array_auth_all = Authorizations::auth_array_simple(ACCESS_MODULE, $row['id']);
 		
+		//Enregistrement en base de données
 		$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	//Génération du cache des modules
@@ -53,76 +57,22 @@ elseif( $uninstall ) //Désinstallation du module
 	if( !empty($_POST['valid_del']) )
 	{
 		$idmodule = retrieve(POST, 'idmodule', 0);
-		$drop_files = !empty($_POST['drop_files']) ? true : false; 		
-		//Suppression du modules dans la bdd => module désinstallé.
-		$module_name = $Sql->query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
+		$drop_files = retrieve(POST, 'drop_files', false);
 		
-		//Désinstallation du module
-		if( !empty($idmodule) && !empty($module_name) )
+		require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.class.php');
+		
+		switch(PackagesManager::uninstall_module($idmodule, $drop_files))
 		{
-			$Sql->query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $idmodule . "'", __LINE__, __FILE__);
-			
-			//Récupération des infos de config.
-			$info_module = load_ini_file('../' . $module_name . '/lang/', $CONFIG['lang']);
-			
-			//Suppression du fichier cache
-			$Cache->delete_file($module_name);
-			
-			//Suppression des commentaires associés.
-			if( !empty($info_module['com']) )
-				$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
-			
-			//Suppression de la configuration.
-			$config = get_ini_config('../news/lang/', $CONFIG['lang']); //Récupération des infos de config.
-			if( !empty($config) )
-				$Sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-			
-			//Suppression du module mini.
-			$Sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-			
-			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-			$dir_db_module = $CONFIG['lang'];
-			$dir = '../' . $module_name . '/db';
-			if( !is_dir($dir . '/' . $dir_db_module) )
-			{	
-				$dh = @opendir($dir);
-				while( !is_bool($dir_db = @readdir($dh)) )
-				{	
-					if( strpos($dir_db, '.') === false )
-					{
-						$dir_db_module = $dir_db;
-						break;
-					}
-				}	
-				@closedir($dh);
-			}
-
-			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql') ) //Parsage du fichier sql de désinstallation.
-				$Sql->parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
-			
-			if( file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php') ) //Parsage fichier php de désinstallation.
-				@include_once('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
-				
-			$Cache->Generate_file('modules');
-			$Cache->Generate_file('modules_mini');
-			$Cache->Generate_file('css');
-
-			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-			if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
-				$Cache->Generate_file('htaccess'); //Régénération du htaccess.	 	
-			
-			//Suppression des fichiers du module
-			if( $drop_files )
-			{
-				if( !delete_directory('../' . $module_name, '../' . $module_name) )
-					$error = 'files_del_failed';
-			}
-			
-			$error = !empty($error) ? '?error=' . $error : '';
-			redirect(HOST . SCRIPT . $error);	
-		}
-		else
-			redirect(HOST . DIR . '/admin/admin_modules.php?error=incomplete#errorh');
+			case NOT_INSTALLED_MODULE:
+				redirect(HOST . DIR . '/admin/admin_modules.php?error=incomplete#errorh');
+				break;
+			case MODULE_FILES_COULD_NOT_BE_DROPPED:
+				redirect(HOST . DIR . '/admin/admin_modules.php?error=files_del_failed#errorh');
+				break;
+			case MODULE_UNINSTALLED:
+			default:
+				redirect(HOST . SCRIPT . $error);	
+		}	
 	}
 	else
 	{
