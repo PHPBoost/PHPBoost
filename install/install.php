@@ -196,6 +196,8 @@ elseif( $step == 3 )
 	
 	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../menus', '../templates', '../upload');
 	
+	$all_dirs_ok = true;
+	
 	//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
 	foreach($chmod_dir as $dir)
 	{
@@ -215,6 +217,21 @@ elseif( $step == 3 )
 			'C_EXISTING_DIR' => $is_dir,
 			'C_WRITIBLE_DIR' => $is_writable			
 		));
+		
+		if( $all_dirs_ok && (!$is_dir || !$is_writable) )
+			$all_dirs_ok = false;
+	}
+	
+	//On empêche de passer à l'étape suivant si cette étape n'est pas validée
+	if( retrieve(POST, 'submit', false) )
+	{
+		if( !$all_dirs_ok )
+			$template->assign_vars(array(
+				'C_ERROR' => true,
+				'L_ERROR' => $LANG['config_server_dirs_not_ok']
+			));
+		else
+			redirect(HOST . FILE . add_lang('?step=4', true));
 	}
 	
 	$template->assign_vars(array(

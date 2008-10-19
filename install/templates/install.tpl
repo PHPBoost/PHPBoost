@@ -314,6 +314,11 @@
 								<legend>
 									{L_RESULT}
 								</legend>
+								# IF C_ERROR #
+									<div class="error">
+										{L_ERROR}
+									</div>
+								# ENDIF #
 								<div style="margin:auto;width:500px;">
 									<div id="progress_info" style="text-align:center;"></div>
 									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
@@ -321,17 +326,30 @@
 								</div>
 							</fieldset>
 							
+							# IF C_ERROR #
+							<script type="text/javascript">
+							<!--
+								document.getElementById("result_box").style.display = "block";
+								load_progress_bar(5, '');
+								progress_bar(100, "{L_QUERY_SUCCESS}");
+							-->
+							</script>
+							# ENDIF #
+							
 							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
-								<script type="text/javascript">
-								<!--
-									document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
-								-->
-								</script>
-								<noscript>
-									<p><a href="{U_CURRENT_STEP}">{L_REFRESH}</a>&nbsp;&nbsp;</p>
-								</noscript>
-								<a href="{U_NEXT_STEP}" title="{L_NEXT_STEP}"><img src="templates/images/right.png" alt="{L_NEXT_STEP}" class="valign_middle" /></a>
+								<form action="{U_CURRENT_STEP}#result_box" method="post">
+									<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+									<script type="text/javascript">
+									<!--
+										document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+									-->
+									</script>
+									<noscript>
+										<p><a href="{U_CURRENT_STEP}">{L_REFRESH}</a>&nbsp;&nbsp;</p>
+									</noscript>
+									<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+									<input type="hidden"  name="submit" value="next" />
+								</form>
 							</fieldset>
 						</div>
 					</td>

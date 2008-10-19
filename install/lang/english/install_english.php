@@ -95,6 +95,7 @@ $LANG['unexisting'] = 'Unexisting';
 $LANG['writable'] = 'Writable';
 $LANG['unwritable'] = 'Not writable';
 $LANG['unknown'] = 'Unknown';
+$LANG['config_server_dirs_not_ok'] = 'The directories are not all existing and/or writable. Please do the operation manually before to continue.';
 
 //Base de données
 $LANG['db_title'] = 'Database connection parameters';
