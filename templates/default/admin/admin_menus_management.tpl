@@ -312,9 +312,9 @@
 										<h5 class="sub_title">{mod_main_uninstalled.NAME}</h5>
 									</div>
 									<div class="module_mini_contents">
-										<a href="{mod_main_uninstalled.U_INSTALL}"><img src="../templates/{THEME}/images/admin/files_mini.png" class="valign_middle" alt="" /><a/>
+										<a href="{mod_main_uninstalled.U_INSTALL}"><img src="../templates/{THEME}/images/admin/files_mini.png" class="valign_middle" alt="" /></a>
 										<br />
-										<a href="{mod_main_uninstalled.U_INSTALL}">{L_INSTALL}<a/>
+										<a href="{mod_main_uninstalled.U_INSTALL}">{L_INSTALL}</a>
 									</div>
 									<div class="module_mini_bottom">
 									</div>
@@ -329,7 +329,7 @@
 									<div class="module_top_l"></div>		
 									<div class="module_top_r"></div>
 									<div class="module_top">
-										<strong><span id="m{mod_bottomcentral.IDMENU}"></span><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5></strong>
+										<strong><span id="m{mod_bottomcentral.IDMENU}"></span></strong><h5 class="sub_title">{mod_bottomcentral.NAME} {mod_bottomcentral.EDIT}{mod_bottomcentral.DEL}</h5>
 									</div>
 									<div class="module_contents">
 										<p>

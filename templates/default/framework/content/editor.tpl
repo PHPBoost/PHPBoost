@@ -279,7 +279,7 @@
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/indent.png" class="bbcode_hover" {AUTH_INDENT} onclick="{DISABLED_INDENT}insertbbcode('[indent]', '[/indent]', '{FIELD}');" alt="{L_BB_INDENT}" title="{L_BB_INDENT}" />
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block7{FIELD}">
-									<div id="bbcolor{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
+									<div id="bbtable{FIELD}" class="bbcode_block" style="margin-left:130px;width:180px;" onmouseover="bb_hide_block('7', '{FIELD}', 1);" onmouseout="bb_hide_block('7', '{FIELD}', 0);">
 										<p><label style="font-size:10px;font-weight:normal">* {L_LINES} <input size="3" type="text" class="text" name="bb_lines{FIELD}" id="bb_lines{FIELD}" maxlength="3" value="2" /></label></p>
 										<p><label style="font-size:10px;font-weight:normal">* {L_COLS} <input size="3" type="text" class="text" name="bb_cols{FIELD}" id="bb_cols{FIELD}" maxlength="3" value="2" /></label></p>
 										<p><label style="font-size:10px;font-weight:normal">{L_ADD_HEAD} <input size="3" type="checkbox" name="bb_head{FIELD}" id="bb_head{FIELD}" /></label></p>
