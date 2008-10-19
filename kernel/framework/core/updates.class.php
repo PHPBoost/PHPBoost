@@ -65,7 +65,7 @@ class Updates
                 $kModules = array_keys($MODULES);
                 foreach( $kModules as $module )
                 {
-                    $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', $CONFIG['lang']);
+                    $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', $CONFIG['lang']);
                     if( !empty($infos['repository']) )
                         $this->apps[] = new Application($module, $CONFIG['lang'], APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
                 }
@@ -78,7 +78,7 @@ class Updates
                 $kThemes = array_keys($THEME_CONFIG);
                 foreach( $kThemes as $theme )
                 {
-                    $infos = load_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $CONFIG['lang']);
+                    $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $CONFIG['lang']);
                     if( !empty($infos['repository']) )
                         $this->apps[] = new Application($theme, $CONFIG['lang'], APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
                 }
@@ -131,7 +131,7 @@ class Updates
             
             $alert->set_fixing_url('admin/admin_update_detail.php?identifier=' . $identifier);
             $alert->set_priority($app->get_priority());
-            $alert->set_properties($app->serialize());
+            $alert->set_properties(serialize($app));
             $alert->set_type('updates');
             $alert->set_identifier($identifier);
             

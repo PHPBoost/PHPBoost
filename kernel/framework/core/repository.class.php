@@ -39,6 +39,7 @@ class Repository
     
     function check($app)
     {
+        global $CONFIG;
         $xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
         // can't compare strings with XPath, so we check the version number with PHP.
         if( $this->xml != null)
@@ -52,7 +53,18 @@ class Repository
                 $attributes = $versions[$i]->attributes();
                 $version = $attributes['num'];
                 if( $version > $app->get_version() )
-                    $newerVersions[(string) $version] = $i;
+                {
+                    $compatibility = $versions[$i]->xpath('compatibility');
+                    if( !empty($compatibility) && is_array($compatibility) && count($compatibility) > 0 )
+                    {
+                        $compatibility_attributes = $compatibility[0]->attributes();
+                        $version_min = (string) (!empty($compatibility_attributes['min']) ? $compatibility_attributes['min'] : '0');
+                        $version_max = (string) (!empty($compatibility_attributes['max']) ? $compatibility_attributes['max'] : $version_min);
+                        
+                        if( $CONFIG['version'] >= $version_min && $CONFIG['version'] <= $version_max && $version_max >= $version_min )
+                            $newerVersions[(string) $version] = $i;
+                    }
+                }
             }
             
             // Keep only the first applyable update
