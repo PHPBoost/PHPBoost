@@ -39,12 +39,17 @@ $tpl->assign_vars(array(
     'L_THEMES' => $LANG['themes']
 ));
 
+$app = null;
 require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+
 if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null )
 {
     require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
     $app = unserialize($update->get_properties());
-    
+}
+
+if( $app !== null && $app->check_compatibility() )
+{
     $authors = $app->get_authors();
     $new_features = $app->get_new_features();
     $improvments = $app->get_improvments();

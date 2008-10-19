@@ -50,7 +50,12 @@ if( phpversion() > PHP_MIN_VERSION_UPDATES )
         // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
         $update = unserialize($update_alert->get_properties());
         if( $update_type == '' || $update->get_type() == $update_type )
-            $updates[] = $update;
+        {
+            if( $update->check_compatibility() )
+                $updates[] = $update;
+            else
+                AdministratorAlertService::delete_alert($update_alert);
+        }
     }
 
     foreach( $updates as $update )

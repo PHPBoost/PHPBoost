@@ -62,6 +62,9 @@ class Application
         
         $this->version = Application::_get_attribute($xml_desc, 'num');
         
+        $this->compatibility_min = Application::_get_attribute($xml_desc, 'min', 'compatibility');
+        $this->compatibility_max = Application::_get_attribute($xml_desc, 'max', 'compatibility');
+        
         $pubdate = Application::_get_attribute($xml_desc, 'pubdate');
         if( !empty($pubdate) )
             $this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate,'y/m/d');
@@ -140,11 +143,13 @@ class Application
         return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
     }
     
-    ## SERIALIZATION ##
-    
-    function serialize()
+    function check_compatibility()
     {
-        return serialize($this);
+        global $CONFIG;
+        return ($this->get_version() > $this->_get_installed_version()) &&
+            ($CONFIG['version'] >= $this->compatibility_min) && 
+            ($CONFIG['version'] <= $this->compatibility_max) &&
+            ($this->compatibility_max >= $this->compatibility_min);
     }
     
     ## PUBLIC ACCESSORS ##
@@ -158,6 +163,8 @@ class Application
     function get_repository() { return $this->repository; }
     
     function get_version() { return $this->version; }
+    function get_compatibility_min() { return $this->compatibility_min; }
+    function get_compatibility_max() { return $this->compatibility_max; }
     function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
     function get_priority() { return $this->priority; }
     function get_security_update() { return $this->security_update; }
@@ -189,6 +196,23 @@ class Application
         return null;
     }
     
+    function _get_installed_version()
+    {
+        global $CONFIG;
+        switch( $this->type )
+        {
+            case APPLICATION_TYPE__KERNEL:
+                return $CONFIG['version'];
+            case APPLICATION_TYPE__MODULE:
+                $infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', $CONFIG['lang']);
+                return !empty($infos['version']) ? $infos['version'] : '0';
+            case APPLICATION_TYPE__THEME:
+                $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', $CONFIG['lang']);
+                return !empty($infos['version']) ? $infos['version'] : '0';
+            default:
+                return '0';
+        }
+    }
     
     ## PRIVATE ATTRIBUTES ##
     
@@ -201,6 +225,8 @@ class Application
     var $repository = '';
     
     var $version = '';
+    var $compatibility_min = '';
+    var $compatibility_max = '';
     var $pubdate = null;
     var $priority = null;
     var $security_update = false;
