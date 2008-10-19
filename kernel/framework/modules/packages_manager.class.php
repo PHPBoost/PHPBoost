@@ -199,7 +199,7 @@ class PackagesManager
 					return MODULE_FILES_COULD_NOT_BE_DROPPED;
 			}
 			
-			return MODULE_UNISTALLED;
+			return MODULE_UNINSTALLED;
 		}
 		else
 			return NOT_INSTALLED_MODULE;
