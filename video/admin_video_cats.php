@@ -98,7 +98,7 @@ elseif( !empty($_POST['submit']) )
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0);
-		
+
 		if( $delete_content )
 		{
 			$video_categories->Delete_category_recursively($cat_to_del_post);
@@ -115,7 +115,7 @@ elseif( !empty($_POST['submit']) )
 		$name = retrieve(POST, 'name', '');
 		$image = retrieve(POST, 'image', '');
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
-		
+
 		//Autorisations
 		if( !empty($_POST['special_auth']) )
 		{
@@ -124,10 +124,10 @@ elseif( !empty($_POST['submit']) )
 		}
 		else
 			$new_auth = addslashes(serialize($VIDEO_CATS[0]['auth']));
-		
+
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
-		
+
 		if( $id_cat > 0 )
 			$error_string = $video_categories->Update_category($id_cat, $id_parent, $name, $description, $image, $new_auth);
 		else
@@ -135,7 +135,7 @@ elseif( !empty($_POST['submit']) )
 	}
 
 	$Cache->Generate_module_file('video');
-	
+
 	redirect(transid(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
@@ -168,8 +168,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_SPECIAL_AUTH' => $VIDEO_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN' => $VIDEO_LANG['special_auth_explain']
 	));
-		
-	if( $id_edit > 0 && array_key_exists($id_edit, $VIDEO_CATS) )	
+
+	if( $id_edit > 0 && array_key_exists($id_edit, $VIDEO_CATS) )
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $VIDEO_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($VIDEO_CATS[$id_edit]['description']),
@@ -235,7 +235,7 @@ else
 				break;
 		}
 	}
-	
+
 	$cat_config = array(
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 		'administration_file_name' => 'admin_video_cats.php',
@@ -243,13 +243,13 @@ else
 			'unrewrited' => 'video.php?id=%d',
 			'rewrited' => 'video-%d+%s.php'),
 		);
-		
+
 	$video_categories->set_display_config($cat_config);
-	
+
 	$Template->assign_block_vars('categories_management', array(
 		'CATEGORIES' => $video_categories->build_administration_interface()
 	));
-	
+
 	$Template->assign_vars(array(
 		'L_RECOUNT_VIDEO' => $VIDEO_LANG['recount_video_number'],
 		'THEME' => $CONFIG['theme']

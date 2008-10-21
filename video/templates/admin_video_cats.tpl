@@ -40,14 +40,14 @@
 					-->
 					</script>
 			# ENDIF #
-			
+
 			# START categories_management #
 				<table class="module_table" style="width:99%;">
-					<tr>			
+					<tr>
 						<th colspan="3">
 							{L_CATS_MANAGEMENT}
 						</th>
-					</tr>							
+					</tr>
 					<tr>
 						<td style="padding-left:20px;" class="row2">
 							<br />
@@ -56,7 +56,7 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<div style="text-align:center; margin:30px 20px;" class="row1">
 					<a href="admin_video_cats.php?recount=1">
 						<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_VIDEO}" />
@@ -65,14 +65,14 @@
 					<a href="admin_video_cats.php?recount=1">{L_RECOUNT_VIDEO}</a>
 				</div>
 			# END categories_management #
-			
+
 			# START removing_interface #
-			
+
 			<form action="admin_video_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
-					
+
 					<label>
 						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
 					</label>
@@ -83,18 +83,18 @@
 					&nbsp;
 					{removing_interface.CATEGORY_TREE}
 				</fieldset>
-				
+
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				</fieldset>
 			</form>
-			
+
 			# END removing_interface #
 
 			# START edition_interface #
-			
+
 			<script type="text/javascript">
 			<!--
 			function check_form(){
@@ -167,7 +167,7 @@
 						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
 						<dd>
 							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {edition_interface.SPECIAL_CHECKED} />
-						</dd>					
+						</dd>
 					</dl>
 					<div id="hide_special_auth" style="display:{edition_interface.DISPLAY_SPECIAL_AUTH};">
 						<dl>
@@ -178,7 +178,7 @@
 							</dt>
 							<dd>
 								{edition_interface.READ_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -188,7 +188,7 @@
 							</dt>
 							<dd>
 								{edition_interface.WRITE_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -198,7 +198,7 @@
 							</dt>
 							<dd>
 								{edition_interface.APROB_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -208,7 +208,7 @@
 							</dt>
 							<dd>
 								{edition_interface.FLOOD_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -218,7 +218,7 @@
 							</dt>
 							<dd>
 								{edition_interface.EDIT_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -228,7 +228,7 @@
 							</dt>
 							<dd>
 								{edition_interface.DELETE_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 						<dl>
 							<dt>
@@ -238,11 +238,11 @@
 							</dt>
 							<dd>
 								{edition_interface.MODERATE_AUTH}
-							</dd>					
+							</dd>
 						</dl>
 					</div>
 				</fieldset>
-				
+
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
@@ -250,10 +250,9 @@
 					&nbsp;&nbsp;
 					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" />
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
 			# END edition_interface #
-			
+
 		</div>
-		
