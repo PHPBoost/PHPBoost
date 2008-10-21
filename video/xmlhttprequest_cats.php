@@ -31,18 +31,18 @@ require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
 if( $User->check_level(ADMIN_LEVEL) ) //Admin
-{	
+{
 	include_once('video_cats.class.php');
 	$video_categories = new VideoCats();
-	
+
 	$id_up = retrieve(GET, 'id_up', 0);
 	$id_down = retrieve(GET, 'id_down', 0);
 	$id_show = retrieve(GET, 'show', 0);
 	$id_hide = retrieve(GET, 'hide', 0);
 	$cat_to_del = retrieve(GET, 'del', 0);
-	
+
 	$result = false;
-	
+
 	if( $id_up > 0 )
 		$result = $video_categories->move($id_up, MOVE_CATEGORY_UP);
 	elseif( $id_down > 0 )
@@ -51,10 +51,10 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 		$result = $video_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif( $id_hide > 0 )
 		$result = $video_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	
+
 	//Operation was successfully
 	if( $result )
-	{	
+	{
 		$cat_config = array(
 			'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 			'administration_file_name' => 'admin_video_cats.php',
@@ -62,11 +62,11 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 				'unrewrited' => 'video.php?id=%d',
 				'rewrited' => 'video-%d+%s.php')
 		);
-		
+
 		$video_categories->set_display_config($cat_config);
-		
+
 		$Cache->load('video', RELOAD_CACHE);
-		
+
 		echo $video_categories->build_administration_interface(AJAX_MODE);
 	}
 }

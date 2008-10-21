@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if( defined('PHPBOOST') !== true)
 	exit;
 
 $Cache->load('video');
