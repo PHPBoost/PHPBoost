@@ -22,7 +22,7 @@
 		function change_img_theme(id, value)
 		{
 			if(document.images )
-				document.images[id].src = "../templates/" + value + "/images/theme.jpg";
+				document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 		}
 		
 		var array_identifier = new Array();
@@ -100,7 +100,7 @@
 								{select_theme.THEME}
 								# END select_theme #
 							</select>
-							<img id="img_theme" src="../templates/{USER_THEME}/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="../templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label>
 					</dd>
 				</dl>
@@ -178,14 +178,12 @@
 				<dl>
 					<dt><label for="user_sign">{L_SIGN}</label><br /><span>{L_SIGN_WHERE}</span></dt>
 					<dd>
-						{USER_SIGN_EDITOR}
 						<textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
 					</dd>
 				</dl>
 				<dl>
 					<dt><label for="user_desc">{L_BIOGRAPHY}</label></dt>
 					<dd>
-						{USER_DESC_EDITOR}
 						<textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
 					</dd>
 				</dl>
@@ -267,24 +265,38 @@
 				<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
 				<table class="module_table">
 					<tr>
-						<td class="row2" style="text-align:center;width:33%">
+						<td class="row2" style="text-align:center;">
 							<a href="member{U_MEMBER_ID}">{L_PROFIL_EDIT}</a>
 							<br /><br />
 							<a href="member{U_MEMBER_ID}" title="">
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 						</td>
-						<td class="row2" style="text-align:center;width:34%">
+						<td class="row2" style="text-align:center;">
 							<a href="pm{U_MEMBER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
 							<a href="pm{U_MEMBER_PM}">
 								<img src="../templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
 							</a>
 						</td>
 						# IF C_MEMBER_AUTH_FILES #
-						<td class="row2" style="text-align:center;width:33%">
+						<td class="row2" style="text-align:center;">
 							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 							<a href="upload.php{SID}">
 								<img src="../templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
+							</a>
+						</td>				
+						# ENDIF #
+						<td class="row2" style="text-align:center;">
+							<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
+							<a href="{U_CONTRIBUTION_PANEL}">
+								<img src="../templates/{THEME}/images/contribution.png" alt="{L_PRIVATE_MESSAGE}" title="{L_CONTRIBUTION_PANEL}" />
+							</a>
+						</td>
+						# IF C_IS_MODERATOR #
+						<td class="row2" style="text-align:center;">
+							<a href="{U_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> <br /><br />
+							<a href="{U_MODERATION_PANEL}">
+								<img src="../templates/{THEME}/images/moderation_panel.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
 						</td>				
 						# ENDIF #
