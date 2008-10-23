@@ -45,7 +45,7 @@ class FaqInterface extends ModuleInterface
 		global $Sql;
 	
 		//Configuration
-		$config = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
+		$config = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		$root_config['auth'] = $config['global_auth'];
 		unset($config['root']);
