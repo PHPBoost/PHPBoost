@@ -84,7 +84,7 @@
 							<strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
 						</td>
 						<td class="row2">					
-							<img src="../templates/{list.ICON}/images/theme.jpg" alt="" />
+							<img src="../templates/{list.ICON}/theme/images/theme.jpg" alt="" />
 						</td>
 						<td class="row2" style="vertical-align:top">
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />

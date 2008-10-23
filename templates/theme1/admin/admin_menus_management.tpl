@@ -322,7 +322,7 @@
 								# END mod_main_uninstalled #
 								<div class="spacer">&nbsp;</div>
 							</div>							
-							<div id="bottom_contents" style="border:1px solid black;background:#FF5F5F;clear:both">
+							<div id="bottom_contents" style="border:1px solid black;background:#FF5F5F;">
 								<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_BOTTOM_CENTRAL_MENU}</p>
 								# START mod_bottomcentral #
 								<div style="margin:15px;width:auto" class="module_position">					

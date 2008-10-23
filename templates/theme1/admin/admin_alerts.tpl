@@ -35,11 +35,13 @@
 					{
 						document.getElementById("status_" + id).innerHTML = "<img src=\"../templates/{THEME}/images/processed_mini.png\" alt=\"\" />";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '2');";
+						document.getElementById("status_" + id).title = "{L_UNFIX}";
 					}
 					else
 					{
 						document.getElementById("status_" + id).innerHTML = "<img src=\"../templates/{THEME}/images/not_processed_mini.png\" alt=\"\" />";
 						document.getElementById("status_" + id).href = "javascript:change_alert_status('" + id + "', '0');";
+						document.getElementById("status_" + id).title = "{L_FIX}";
 					}
 				}
 			}
@@ -149,11 +151,11 @@
 					<td class="row1" style="text-align:center;">
 						{alerts.ACTIONS}
 						# IF alerts.C_PROCESSED #
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" id="status_{alerts.ID}"><img src="../templates/{THEME}/images/processed_mini.png" alt="delete" /></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_UNFIX}" id="status_{alerts.ID}"><img src="../templates/{THEME}/images/processed_mini.png" alt="delete" /></a>
 						# ELSE #
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" id="status_{alerts.ID}"><img src="../templates/{THEME}/images/not_processed_mini.png" alt="delete" /></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="../templates/{THEME}/images/not_processed_mini.png" alt="delete" /></a>
 						# ENDIF #
-						<a href="javascript:delete_alert('{alerts.ID}');"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="delete" /></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="delete" /></a>
 					</td>			
 				</tr>
 				# END alerts #

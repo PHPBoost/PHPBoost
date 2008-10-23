@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
 		<title>{SITE_NAME} :: {TITLE}</title>
-		<link rel="stylesheet" href="../templates/{THEME}/design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="../templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="../templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="../templates/{THEME}/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
 		<link rel="shortcut" href="../favicon.ico" />
 		
 		<style type="text/css">
