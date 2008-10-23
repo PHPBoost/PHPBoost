@@ -28,7 +28,7 @@
 
 //Constants
 define('MODULE_INSTALLED', 0);
-define('MODULE_UNISTALLED', 0);
+define('MODULE_UNINSTALLED', 0);
 define('UNEXISTING_MODULE', 1);
 define('MODULE_ALREADY_INSTALLED', 2);
 define('CONFIG_CONFLICT', 3);
