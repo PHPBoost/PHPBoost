@@ -35,7 +35,7 @@ $page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
 if( !empty($_POST['submit']) )
 {
-	$FAQ_CONFIG['faq_name'] = retrieve(POST, 'faq_name', $FAQ_LANG['faq']);
+	$FAQ_CONFIG['faq_name'] = stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq']));
 	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
 	$FAQ_CONFIG['display_block'] = (!empty($_POST['display_mode']) && $_POST['display_mode'] == 'inline') ? false : true;
 	// unused auth variables ?
