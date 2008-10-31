@@ -123,10 +123,10 @@ class TinyMCEUnparser extends ContentUnparser
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
 			'`<ul( style="[^"]+")? class="bb_ul">`i',
 			'`<ol( style="[^"]+")? class="bb_ol">`i',
-			'`<h3 class="title1">(.*)</h3>`isU',
-			'`<h3 class="title2">(.*)</h3>`isU',
-			'`<h4 class="stitle1">(.*)</h4>`isU',
-			'`<h4 class="stitle2">(.*)</h4>`isU',
+			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
+			"`<h3 class=\"title2\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
+			"`<h4 class=\"stitle1\">(.*)</h4>(?:[\s]*<br />){0,}`isU",
+			"`<h4 class=\"stitle2\">(.*)</h4>(?:[\s]*<br />){0,}`isU",
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 		);
 		$array_preg_replace = array( 
@@ -138,7 +138,7 @@ class TinyMCEUnparser extends ContentUnparser
 			"<span style=\"background-color: $1\">$2</font>",
 			"<u>$1</u>",	
 			"<font color=\"$1\">$2</font>",
-			"<div align=\"$1\">$2</div>",
+			"<p align=\"$1\">$2</p>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
 			"<ul$1>",
 			"<ol$1>",
@@ -164,20 +164,9 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->parsed_content = str_replace('<hr class="bb_hr" />', '[line]', $this->parsed_content);
 		
 		$array_preg = array(
-			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
-			'`<span style="color:([^;]+);">(.*)</span>`isU',
-			'`<span style="background-color:([^;]+);">(.*)</span>`isU',
-			'`<span style="text-decoration: underline;">(.*)</span>`isU',
-			'`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU',
-			'`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU',
-			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<p class="float_(left|right)">(.*)</p>`isU',
-			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
 			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
 			'`<a href="mailto:(.*)">(.*)</a>`isU',
-			'`<a href="([^"]+)">(.*)</a>`isU',
-			'`<h3 class="title([1-2]+)">(.*)</h3>`isU',
-			'`<h4 class="stitle([1-2]+)">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./kernel/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
@@ -187,20 +176,9 @@ class TinyMCEUnparser extends ContentUnparser
 		);
 		
 		$array_preg_replace = array( 
-			"[img]$1[/img]",
-			"[color=$1]$2[/color]",
-			"[bgcolor=$1]$2[/bgcolor]",
-			"[u]$1[/u]",	
-			"[size=$1]$2[/size]",
-			"[font=$1]$2[/font]",
-			"[align=$1]$2[/align]",
 			"[float=$1]$2[/float]",
-			"[anchor=$1]$2[/anchor]",
 			"[acronym=$1]$2[/acronym]",
 			"[mail=$1]$2[/mail]",
-			"[url=$1]$2[/url]",
-			"[title=$1]$2[/title]",
-			"[stitle=$1]$2[/stitle]",
 			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
