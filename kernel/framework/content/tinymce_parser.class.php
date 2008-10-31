@@ -141,8 +141,8 @@ class TinyMCEParser extends ContentParser
 		//Style ?
 		if( strpos($table_properties, 'style') !== false )
 		{
-			preg_match('`style="([^"])"`iU', $table_properties, $temp_array);
-			$style_properties .= $temp_array[1];
+			if( preg_match('`style="([^"])"`iU', $table_properties, $temp_array) )
+				$style_properties .= $temp_array[1];
 		}
 		
 		return '<table class="bb_table"' . (!empty($style_properties) ? ' style="' . $style_properties . '"' : '') . '>' . $matches[2] . '</table>';
@@ -196,25 +196,19 @@ class TinyMCEParser extends ContentParser
 	function _parse_tinymce_formatting()
 	{
 		//Modification de quelques tags HTML envoyés par TinyMCE
-		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "\r\n", "\r\n", ' '), $this->parsed_content);
+		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "<br />\r\n", "<br />\r\n", ' '), $this->parsed_content);
 		
 		$array_preg = array(
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
-			'`&lt;/?font([^&]+)&gt;`i',
 			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
-			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU',
-			'`&lt;span[^&]*&gt;`i',
-			'`&lt;p[^&]*&gt;`i'
+			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU'
 		);
 		$array_preg_replace = array(
 			'$1' . "\n<br />",
 			'$1' . "\n<br />",
-			'',
 			'<span style="font-size: 10px;">$1</span><br />',
 			'<span style="font-size: 8px;">$1</span><br />',
-			'',
-			''
 		);
 		
 		//Strong tag
@@ -274,11 +268,7 @@ class TinyMCEParser extends ContentParser
 		//Background color tag
 		if( !in_array('bgcolor', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;font style="background-color: ([^"]+)"&gt;(.+)&lt;/font&gt;`isU');
 			array_push($array_preg, '`&lt;span style="background-color: ([^"]+)"&gt;(.+)&lt;/span&gt;`isU');
-			array_push($array_preg, '`&lt;p style="background-color: ([^"]+)"&gt;(.+)&lt;/p&gt;`isU');
-			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
-			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Font tag
@@ -290,8 +280,8 @@ class TinyMCEParser extends ContentParser
 		//Align tag
 		if( !in_array('align', $this->forbidden_tags) )
 		{
+			array_push($array_preg, '`&lt;p align="([a-z]+)"&gt;(.+)&lt;/p&gt;`isU');
 			array_push($array_preg, '`&lt;div align="([a-z]+)"&gt;(.+)&lt;/div&gt;`isU');
-			array_push($array_preg, '`&lt;div style="text-align: ([a-z]+)"&gt;(.+)&lt;/div&gt;`isU');
 			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
 			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
 		}
@@ -307,25 +297,25 @@ class TinyMCEParser extends ContentParser
 			array_push($array_preg, '`&lt;ul&gt;(.+)&lt;/ul&gt;`isU');
 			array_push($array_preg_replace, '<ul class="bb_ul">' . "\n" .'$1</ul>');
 			array_push($array_preg, '`&lt;ol&gt;(.+)&lt;/ol&gt;`isU');
-			array_push($array_preg_replace, '<ol class="bb_ol">' . "\n" .'$1</ul>');
+			array_push($array_preg_replace, '<ol class="bb_ol">' . "\n" .'$1</ol>');
 			array_push($array_preg, '`&lt;li&gt;(.*)&lt;/li&gt;`isU');
 			array_push($array_preg_replace, '<li class="bb_li">$1</li>' . "\n");
 		}
 		//Title tag
 		if( !in_array('title', $this->forbidden_tags) )
 		{
+			//Title 1
 			array_push($array_preg, '`&lt;h1&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, '<h3 class="title1">$1</h3>');
+			array_push($array_preg_replace, '<h3 class="title1">$1</h3>' . "\r\n<br />");
+			//Title 2
 			array_push($array_preg, '`&lt;h2&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, '<h3 class="title2">$1</h3>');
-		}
-		//Stitle tag
-		if( !in_array('stitle', $this->forbidden_tags) )
-		{
-			array_push($array_preg, '`&lt;h3&gt;(.+)&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, '<br /><h4 class="stitle1">$1</h4><br />');
-			array_push($array_preg, '`&lt;h4&gt;(.+)&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, '<br /><h4 class="stitle2">$1</h4><br />');
+			array_push($array_preg_replace, '<h3 class="title2">$1</h3>' . "\r\n<br />");
+			//Title 3
+			array_push($array_preg, '`&lt;h3&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
+			array_push($array_preg_replace, '<br /><h4 class="stitle1">$1</h4><br />' . "\r\n<br />");
+			//Title 4
+			array_push($array_preg, '`&lt;h4&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
+			array_push($array_preg_replace, '<br /><h4 class="stitle2">$1</h4><br />' . "\r\n<br />");
 		}
 		//Flash tag
 		if( !in_array('swf', $this->forbidden_tags) )
