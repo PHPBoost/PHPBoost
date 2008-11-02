@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,17 +25,17 @@
  *
 ###################################################*/
 
-// Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
-// Classe ForumInterface qui hérite de la classe ModuleInterface
+// Class DownloadInterface
+//  Provides download module services to the kernel and extern modules
 class DownloadInterface extends ModuleInterface
 {
     ## Public Methods ##
-    function DownloadInterface() //Constructeur de la classe ForumInterface
+    function DownloadInterface()
     {
         parent::ModuleInterface('download');
-    }    
+    }
   
 	//Récupération du cache.
 	function get_cache()
@@ -57,7 +57,7 @@ class DownloadInterface extends ModuleInterface
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$code .= '$DOWNLOAD_CATS[' . $row['id'] . '] = ' . 
+			$code .= '$DOWNLOAD_CATS[' . $row['id'] . '] = ' .
 			var_export(array(
 			'id_parent' => $row['id_parent'],
 			'order' => $row['c_order'],
@@ -195,65 +195,67 @@ class DownloadInterface extends ModuleInterface
         return $Tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-	function get_feed_data_struct($idcat = 0)
+	
+    // Generate the feed data structure used by RSS, ATOM and feed informations on the website
+    function get_feed_data_struct($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
-        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		
-        load_module_lang('download');
-        $Cache->load('download');
-        
-        $visible_cats = array();
-        include_once(PATH_TO_ROOT . '/download/download_auth.php');
-        $this->_check_cats_auth($idcat, $visible_cats);
-        
-        $data = new FeedData();
-        
+        require_once(PATH_TO_ROOT . '/download/download_auth.php');
+        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+        
+        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		load_module_lang('download');
+        $Cache->load('download');
+        $data = new FeedData();
         $date = new Date();
         
+        // Meta-informations generation
         $data->set_title($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_date($date);
         $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'download/syndication.php');
         $data->set_host(HOST);
         $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_lang($LANG['xml_lang']);
+        $data->set_auth_bit(READ_CAT_DOWNLOAD);
 		
-        // Last files
-        if( count($visible_cats) )
+        
+        // Building Categories to look in
+        $cats = new DownloadCats();
+        $children_cats = array();
+        $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
+        
+        $req = "SELECT id, idcat, title, contents, timestamp, image
+        FROM ".PREFIX."download
+        WHERE visible = 1 AND idcat IN (" . implode($children_cats, ','). " )
+        ORDER BY timestamp DESC" . $Sql->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
+        $result = $Sql->query_while($req, __LINE__, __FILE__);
+        
+        // Generation of the feed's items
+        while ($row = $Sql->fetch_assoc($result))
         {
-            $req = "SELECT id, title, contents, timestamp, image
-            FROM ".PREFIX."download
-            WHERE visible = 1 AND idcat IN (" . implode($visible_cats, ', ') . ")
-            ORDER BY timestamp DESC" . $Sql->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
-            $result = $Sql->query_while($req, __LINE__, __FILE__);
-            // Generation of the feed's items
-            while ($row = $Sql->fetch_assoc($result))
-            {
-                $item = new FeedItem();
-                // Rewriting
-                if ( $CONFIG['rewrite'] == 1 )
-                    $rewrited_title = '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-                else
-                    $rewrited_title = '.php?id=' . $row['id'];
-                $link = HOST . DIR . '/download/download' . $rewrited_title;
-                
-                // XML text's protection
-                $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-                
-                $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-                
-                $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
-                $item->set_link($link);
-                $item->set_guid($link);
-                $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-                $item->set_date($date);
-                $item->set_image_url($row['image']);
-                
-                $data->add_item($item);
-            }
-            $Sql->query_close($result);
+            $item = new FeedItem();
+            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
+            
+            // Rewriting
+            $link = HOST . DIR . '/download/download' . transid('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
+            // XML text's protection
+            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+            
+            // Adding item's informations
+            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_link($link);
+            $item->set_guid($link);
+            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
+            $item->set_date($date);
+            $item->set_image_url($row['image']);
+            $item->set_auth($cats->compute_heritated_auth($row['idcat'], READ_CAT_DOWNLOAD, AUTH_PARENT_PRIORITY));
+            
+            // Adding the item to the list
+            $data->add_item($item);
         }
+        $Sql->query_close($result);
+        
         return $data;
     }
     
@@ -272,7 +274,7 @@ class DownloadInterface extends ModuleInterface
         else
         {
 			if( !empty($DOWNLOAD_CATS[$id_cat]) )
-			{	
+			{
 				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $CONFIG_DOWNLOAD['global_auth'];
 				if( Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, READ_CAT_DOWNLOAD) )
 					$list[] = $id_cat;

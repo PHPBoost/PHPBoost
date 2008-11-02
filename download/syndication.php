@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,19 +39,19 @@ $idcat = retrieve(GET, 'idcat', 0);
 if( retrieve(GET, 'feed', 'rss') == 'rss' )
 {
     require_once('../kernel/framework/content/syndication/rss.class.php');
-    $Feed = new RSS('download');
+    $Feed = new RSS('download', DEFAULT_FEED_NAME, $idcat);
 }
 else
 {
     require_once('../kernel/framework/content/syndication/atom.class.php');
-    $Feed = new ATOM('download');
+    $Feed = new ATOM('download', DEFAULT_FEED_NAME, $idcat);
 }
 
-// if ( ($idcat == 0) && $Feed->is_in_cache() )
-// {   // If the file exist, we print it
-//     echo $Feed->read();
-// }
-// else
+if ( $Feed->is_in_cache() )
+{   // If the file exist, we print it
+    echo $Feed->read();
+}
+else
 {   // Otherwise, we regenerate it before printing it
     // Feeds Regeneration
     require_once('download_interface.class.php');

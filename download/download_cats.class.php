@@ -6,14 +6,14 @@
  *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,6 +24,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
+
+global $Cache;
 
 $Cache->load('download');
 include_once('../kernel/framework/content/categories.class.php');
@@ -74,7 +76,7 @@ class DownloadCats extends CategoriesManagement
 		foreach( $this->cache_var as $id_cat => $properties )
 		{
 			if( $id_cat != 0 && $properties['id_parent'] == $id_category )
-				parent::move_into_another($id_cat, $new_id_cat_content);			
+				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
 		$Sql->query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
@@ -107,7 +109,7 @@ class DownloadCats extends CategoriesManagement
 		{
 			if( $id_parent != $this->cache_var[$id_cat]['id_parent'] )
 			{
-				if( !parent::move_into_another($id_cat, $id_parent) )			
+				if( !parent::move_into_another($id_cat, $id_parent) )
 				{
 					if( $this->check_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST) )
 						return 'e_new_cat_does_not_exist';
@@ -176,7 +178,7 @@ class DownloadCats extends CategoriesManagement
 		return $result;
 	}
 	
-	## Private methods ##	
+	## Private methods ##
 	//method which deletes a category and its content (not recursive)
 	function _delete_category_with_content($id)
 	{
