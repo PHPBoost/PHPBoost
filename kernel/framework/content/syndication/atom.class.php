@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,9 +35,9 @@ require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.ph
 class ATOM extends Feed
 {
     ## Public Methods ##
-    function ATOM($feedName)
+    function ATOM($module_id, $feed_name = DEFAULT_FEED_NAME, $id_cat = 0)
     {
-        parent::Feed($feedName);
+        parent::Feed($module_id, $feed_name, $id_cat);
         $this->tpl = new Template(DEFAULT_ATOM_TEMPLATE);
     }
 

@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,11 +46,17 @@ $error = retrieve(GET, 'error', '');
 if( $id_up > 0 )
 {
 	$download_categories->move($id_up, MOVE_CATEGORY_UP);
+    // Feeds Regeneration
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    Feed::clear_cache('download');
 	redirect(transid('admin_download_cat.php'));
 }
 elseif( $id_down > 0 )
 {
 	$download_categories->move($id_down, MOVE_CATEGORY_DOWN);
+    // Feeds Regeneration
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    Feed::clear_cache('download');
 	redirect(transid('admin_download_cat.php'));
 }
 elseif( $cat_to_del > 0 )
@@ -99,8 +105,8 @@ elseif( !empty($_POST['submit']) )
 		$id_parent = retrieve(POST, 'id_parent', 0);
 		$name = retrieve(POST, 'name', '');
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
-		$icon = retrieve(POST, 'image', ''); 
-		$icon_path = retrieve(POST, 'alt_image', ''); 
+		$icon = retrieve(POST, 'image', '');
+		$icon_path = retrieve(POST, 'alt_image', '');
 		$visible = retrieve(POST, 'visible_cat', false);
 		$secure = retrieve(POST, 'secure', -1);
 
@@ -119,10 +125,14 @@ elseif( !empty($_POST['submit']) )
 		if( empty($name) )
 			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
-			if( $id_cat > 0 )
+		if( $id_cat > 0 )
 			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
 		else
 			$error_string = $download_categories->add($id_parent, $name, $description, $icon, $new_auth, $visible);
+		
+        // Feeds Regeneration
+        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        Feed::clear_cache('download');
 	}
 
 	$Cache->Generate_module_file('download');
@@ -133,6 +143,9 @@ elseif( !empty($_POST['submit']) )
 elseif( !empty($_GET['recount']) )
 {
 	$download_categories->Recount_sub_files();
+	// Feeds Regeneration
+    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    Feed::clear_cache('download');
 	redirect(transid(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
 elseif( $new_cat XOR $id_edit > 0 )
@@ -149,7 +162,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		$dh = @opendir( $rep);
 		$in_dir_icon = false;
 		while( !is_bool($image_name = @readdir($dh)) )
-		{       
+		{
 			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $image_name) )
 			{
 				if( $id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name )
@@ -161,7 +174,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 					$img_str .= '<option value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image non sélectionnée
 				
 			}
-		}       
+		}
 		@closedir($dh); //On ferme le dossier
 	}
 	
@@ -186,7 +199,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain']
 	));
 		
-	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )	
+	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )
 	{
 		$Template->assign_vars(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],

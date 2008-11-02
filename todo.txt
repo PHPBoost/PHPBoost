@@ -32,10 +32,9 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[+] Système de mise à jour du noyau et des modules (vérifications de compatibilité)
 
 ------------------------------------ MODULES -----------------------------------
-[+] Implémenter les autorisations de la syndication dans Forum, Download
+[+] Implémenter les autorisations de la syndication dans Forum
 
 ################################################################################
 
