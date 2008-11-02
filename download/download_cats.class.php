@@ -3,7 +3,7 @@
  *                             download_cats.class.php
  *                            -------------------
  *   begin                : April 3, 2008
- *   copyright            : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoït Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 global $Cache;
 
 $Cache->load('download');
-include_once('../kernel/framework/content/categories.class.php');
+include_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
 
 define('NOT_GENERATE_CACHE', true);
 
