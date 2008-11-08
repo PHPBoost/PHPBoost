@@ -195,6 +195,8 @@ class TinyMCEParser extends ContentParser
 	//Function which parses all the features provided by TinyMCE
 	function _parse_tinymce_formatting()
 	{
+		global $LANG;
+		
 		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "<br />\r\n", "<br />\r\n", ' '), $this->parsed_content);
 		
@@ -226,13 +228,13 @@ class TinyMCEParser extends ContentParser
 		//Underline tag
 		if( !in_array('u', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;u&gt;(.+)&lt;/u&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: underline;"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="text-decoration: underline;">$1</span>');
 		}
 		//Strike tag
 		if( !in_array('s', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;strike&gt;(.+)&lt;/strike&gt;`isU');
+			array_push($array_preg, '`&lt;span style="text-decoration: line-through;"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<strike>$1</strike>');
 		}
 		//Link tag
@@ -256,13 +258,13 @@ class TinyMCEParser extends ContentParser
 		//Pre tag
 		if( !in_array('pre', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;pre&gt;(.+)&lt;/pre&gt;`isU');
+			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isU');
 			array_push($array_preg_replace, '<pre>$1</pre>');
 		}
 		//Font tag
 		if( !in_array('color', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;font color="([^"]+)"&gt;(.+)&lt;/font&gt;`isU');
+			array_push($array_preg, '`&lt;span style="color: ([^"]+);"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
 		//Background color tag
@@ -280,9 +282,7 @@ class TinyMCEParser extends ContentParser
 		//Align tag
 		if( !in_array('align', $this->forbidden_tags) )
 		{
-			array_push($array_preg, '`&lt;p align="([a-z]+)"&gt;(.+)&lt;/p&gt;`isU');
-			array_push($array_preg, '`&lt;div align="([a-z]+)"&gt;(.+)&lt;/div&gt;`isU');
-			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
+			array_push($array_preg, '`&lt;p style="text-align: (left|right|center|justify);"&gt;(.+)&lt;/p&gt;`isU');
 			array_push($array_preg_replace, '<p style="text-align:$1">$2</p>' . "\n");
 		}
 		//Anchor tag
@@ -305,16 +305,16 @@ class TinyMCEParser extends ContentParser
 		if( !in_array('title', $this->forbidden_tags) )
 		{
 			//Title 1
-			array_push($array_preg, '`&lt;h1&gt;(.+)&lt;/h1&gt;`isU');
+			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
 			array_push($array_preg_replace, '<h3 class="title1">$1</h3>' . "\r\n<br />");
 			//Title 2
-			array_push($array_preg, '`&lt;h2&gt;(.+)&lt;/h2&gt;`isU');
+			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
 			array_push($array_preg_replace, '<h3 class="title2">$1</h3>' . "\r\n<br />");
 			//Title 3
-			array_push($array_preg, '`&lt;h3&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
+			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
 			array_push($array_preg_replace, '<br /><h4 class="stitle1">$1</h4><br />' . "\r\n<br />");
 			//Title 4
-			array_push($array_preg, '`&lt;h4&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
+			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
 			array_push($array_preg_replace, '<br /><h4 class="stitle2">$1</h4><br />' . "\r\n<br />");
 		}
 		//Flash tag
@@ -346,7 +346,7 @@ class TinyMCEParser extends ContentParser
 		//callback replacements
 		// size tag
 		if( !in_array('size', $this->forbidden_tags) )
-			$this->parsed_content = preg_replace_callback('`&lt;font size="([0-9]+)"&gt;(.+)&lt;/font&gt;`isU', create_function('$size', 'return \'<span style="font-size: \' . (8 + (3*$size[1])) . \'px;">\' . $size[2] . \'</span>\' . "\n<br />";'), $this->parsed_content);
+			$this->parsed_content = preg_replace_callback('`&lt;span style="font-size: ([a-z0-9-]+);"&gt;(.+)&lt;/span&gt;`isU', array(&$this, '_parse_size_tag'), $this->parsed_content);
 		
 		//image tag
 		if( !in_array('image', $this->forbidden_tags) )
@@ -354,7 +354,19 @@ class TinyMCEParser extends ContentParser
 		
 		//indent tag
 		if( !in_array('indent', $this->forbidden_tags) )
-			$this->_parse_imbricated('&lt;blockquote&gt;', '`&lt;blockquote&gt;(.+)&lt;/blockquote&gt;`isU', '<div class="indent">$1</div>');
+			$this->parsed_content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isU', array(&$this, '_parse_indent_tag'), $this->parsed_content);
+		
+		//Line tag
+		if( !in_array('line', $this->forbidden_tags) )
+			$this->parsed_content = str_replace('&lt;hr /&gt;', '<hr class="bb_hr" />', $this->parsed_content);
+		
+		//Quote tag
+		if( !in_array('quote', $this->forbidden_tags) )
+			$this->parsed_content = preg_replace('`&lt;blockquote&gt;(.+)(?:<br />[\s]*)*&lt;/blockquote&gt;`isU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
+		
+		//Font tag
+		if( !in_array('font', $this->forbidden_tags) )
+			$this->parsed_content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"&gt;(.*)&lt;/span&gt;`isU', array(&$this, '_parse_font_tag'), $this->parsed_content );
 	}
 	
 	//Function which parses tables
@@ -405,7 +417,6 @@ class TinyMCEParser extends ContentParser
 		global $LANG;
 		
 		$array_preg = array(
-			'font' => '`\[font=(arial|times|courier(?: new)?|impact|geneva|optima)\](.+)\[/font\]`isU',
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
 			'acronym' => '`\[acronym=([^\n[\]<]+)\](.*)\[/acronym\]`isU',
@@ -418,8 +429,7 @@ class TinyMCEParser extends ContentParser
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 		);
 		
-		$array_preg_replace = array( 
-			'font' => "<span style=\"font-family: $1;\">$2</span>",
+		$array_preg_replace = array(
 			'pre' => "<pre>$1</pre>",
 			'float' => "<p class=\"float_$1\">$2</p>",	
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
@@ -450,8 +460,6 @@ class TinyMCEParser extends ContentParser
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
 		);
-
-		$parse_line = true;
 		
 		//Suppression des remplacements des balises interdites.
 		if( !empty($this->forbidden_tags) )
@@ -469,10 +477,6 @@ class TinyMCEParser extends ContentParser
 					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
 					$array_preg_replace[$tag] = "$1";
 				}
-				elseif( $tag == 'line' )
-				{
-					$parse_line = false;
-				}
 				else
 				{	
 					unset($array_preg[$tag]);
@@ -484,20 +488,10 @@ class TinyMCEParser extends ContentParser
 		//Remplacement : on parse les balises classiques
 		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
 		
-		//Line tag
-		if( $parse_line )
-			$this->parsed_content = str_replace('[line]', '<hr class="bb_hr" />', $this->parsed_content);
 			
 		##Parsage des balises imbriquées.
-		//Citations
-		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
-		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
-		
 		//Texte caché
 		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
-		
-		//Texte indenté
-		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
 		
 		//Bloc HTML
 		$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->parsed_content);
@@ -523,6 +517,85 @@ class TinyMCEParser extends ContentParser
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 		
 		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';	
+	}
+	
+	// Handler which processes the indentation tag
+	function _parse_indent_tag($matches)
+	{
+		if( (int)$matches[1] > 0 )
+		{
+			$nbr_indent = (int)$matches[1] / 30;
+			return str_repeat('<div class="indent">', $nbr_indent) . $matches[2] . str_repeat('</div>', $nbr_indent);
+		}
+		else
+			return $matches[2];
+	}
+	
+	//Handler which processes the size tag
+	function _parse_size_tag($matches)
+	{
+		$size = 0;
+		//We retrieve the size (in pt)
+		switch($matches[1])
+		{
+			case 'xx-small':
+				$size = 8;
+				break;
+			case 'x-small':
+				$size = 10;
+				break;
+			case 'small':
+				$size = 12;
+				break;
+			case 'medium':
+				$size = 14;
+				break;
+			case 'large':
+				$size = 18;
+				break;
+			case 'x-large':
+				$size = 24;
+				break;
+			case 'xx-large':
+				$size = 36;
+				break;
+			default:
+				$size = 0;
+		}
+		//If the size is known, we put the HTML code and convert the size into pixels
+		if( $size > 0 )
+			return '<span style="font-size: ' . ($size / 0.75) . 'px;">' . $matches[2] . '</span>';
+		else
+			return $matches[2];
+	}
+	
+	// Handler which treats the font size
+	function _parse_font_tag($matches)
+	{
+		$fonts_array = array(
+			'trebuchet ms,geneva' => 'geneva',
+			'comic sans ms,sans-serif', 'optima',
+			'andale mono,times' => 'times',
+			'arial,helvetica,sans-serif' => 'arial',
+			'arial black,avant garde' => 'arial',
+			'book antiqua,palatino' => 'optima',
+			'courier new,courier' => 'courier new',
+			'georgia,palatino' => 'optima',
+			'helvetica' => 'arial',
+			'impact,chicago' => 'arial',
+			'symbol' => 'times',
+			'tahoma,arial,helvetica,sans-serif' => 'arial',
+			'terminal,monaco' => 'courier new',
+			'times new roman,times' => 'times',
+			'verdana,geneva' => 'arial',
+			'webdings' => 'times',
+			'wingdings,zapf dingbats' => 'times'
+		);
+		
+		if( !empty($fonts_array[$matches[1]]) )
+			return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+		else
+			return $matches[2];
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags
