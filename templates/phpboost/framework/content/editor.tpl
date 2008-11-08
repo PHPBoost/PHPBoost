@@ -50,11 +50,11 @@
 			content_css : "{PATH_TO_ROOT}/templates/{THEME}/theme/tinymce.css",
 			theme_advanced_buttons1 : "{THEME_ADVANCED_BUTTONS1}", 
 			theme_advanced_buttons2 : "{THEME_ADVANCED_BUTTONS2}", 
-			theme_advanced_buttons3 : "",
+			theme_advanced_buttons3 : "{THEME_ADVANCED_BUTTONS3}",
 			theme_advanced_toolbar_location : "top", 
 			theme_advanced_toolbar_align : "center", 
 			theme_advanced_statusbar_location : "bottom",
-			plugins : "table,flash",
+			plugins : "table,flash,searchreplace,inlinepopups,fullscreen",
 			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
 			theme_advanced_resize_horizontal : false, 
 			theme_advanced_resizing : true

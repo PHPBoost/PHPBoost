@@ -52,13 +52,13 @@ class TinyMCEEditor extends ContentEditor
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => implode(',', $this->forbidden_tags),
-			'TINYMCE_TRIGGER' => 'TinyMCE.prototype.triggerSave();',
+			'TINYMCE_TRIGGER' => 'tinyMCE.triggerSave();',
 			'IDENTIFIER' => $this->identifier,
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_BB_UPLOAD' => $LANG['bb_upload']
 		));
 		
-		list($theme_advanced_buttons1, $theme_advanced_buttons2) = array('', '');
+		list($theme_advanced_buttons1, $theme_advanced_buttons2, $theme_advanced_buttons3) = array('', '', '');
 		foreach($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{		
 			$tag = preg_replace('`[0-9]`', '', $tag);
@@ -72,9 +72,16 @@ class TinyMCEEditor extends ContentEditor
 			if( !in_array($tag, $this->forbidden_tags) )
 				$theme_advanced_buttons2 .= $tinymce_tag . ',';
 		}
+		foreach($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
+		{		
+			$tag = preg_replace('`[0-9]`', '', $tag);
+			if( !in_array($tag, $this->forbidden_tags) )
+				$theme_advanced_buttons3 .= $tinymce_tag . ',';
+		}
 		$template->assign_vars(array( 
 			'THEME_ADVANCED_BUTTONS1' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons1, ',')),
-			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ','))
+			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ',')),
+			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))
 		));
 		
 		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà inclus.
@@ -84,8 +91,9 @@ class TinyMCEEditor extends ContentEditor
 	}
 	
 	//Private attribute.
-	var $array_tags = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '_charmap' => 'charmap', '|4' => '|', '_undo' => 'undo', '_redo' => 'redo', '|5' => '|',  'img' => 'image', 'url1' => 'link', 'url2' => 'unlink', 'anchor' => 'anchor');
-	var $array_tags2 = array('color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', '|2' => '|', 'size' => 'fontsizeselect', 'title' => 'formatselect', '|3' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|4' => '|', 'table1' => 'table', 'table2' => 'split_cells', 'table3' => 'merge_cells', '|5' => '|', 'swf' => 'flash');
+	var $array_tags = array('align1' => 'justifyleft', 'align2' => 'justifycenter', 'align3' => 'justifyright', 'align4' => 'justifyfull', '|1' => '|', 'title' => 'formatselect', '|2' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|3' => '|', 'indent1' => 'outdent', 'indent2' => 'indent', '|4' => '|', 'quote' => 'blockquote', 'line' => 'hr', '|5' => '|', '_cut' => 'cut', '_copy' => 'copy', '_paste' => 'paste', '|6' => '|', '_undo' => 'undo', '_redo' => 'redo', '7|' => '|', '_cleanup' => 'cleanup', '_removeformat' => 'removeformat', '|7' => '|', '_search' => 'search', '_replace' => 'replace', '|8' => '|', '_fullscreen' => 'fullscreen');
+	var $array_tags2 = array('b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|1' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|1' => '|', '|2' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|3' => '|', 'sub' => 'sub', 'sup' => 'sup', '|4' => '|', '_charmap' => 'charmap', '|5' => '|', 'url1' => 'link', 'url2' => 'unlink', '|6' => '|', 'img' => 'image', 'swf' => 'flash');
+	var $array_tags3 = array('table' => 'tablecontrols',  '|2' => '|', 'image', 'anchor' => 'anchor');
 }
 
 ?>

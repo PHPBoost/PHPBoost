@@ -175,18 +175,16 @@
 						<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					</label></dd>
 				</dl>
-				<dl>
-					<dt><label for="user_sign">{L_SIGN}</label><br /><span>{L_SIGN_WHERE}</span></dt>
-					<dd>
-						<textarea class="post" rows="4" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
-					</dd>
-				</dl>
-				<dl>
-					<dt><label for="user_desc">{L_BIOGRAPHY}</label></dt>
-					<dd>
-						<textarea class="post" rows="6" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
-					</dd>
-				</dl>
+				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p></dt>
+                <p>
+                    {USER_SIGN_EDITOR}
+                    <textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
+                </p>
+				<p><label for="user_desc">{L_BIOGRAPHY}</label></p>
+                <p>
+                    {USER_DESC_EDITOR}
+					<textarea class="post" rows="15" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
+				</p>
 			</fieldset>
 				
 			<fieldset>

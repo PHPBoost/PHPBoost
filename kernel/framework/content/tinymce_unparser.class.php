@@ -125,8 +125,8 @@ class TinyMCEUnparser extends ContentUnparser
 			'`<ol( style="[^"]+")? class="bb_ol">`i',
 			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
 			"`<h3 class=\"title2\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
-			"`<h4 class=\"stitle1\">(.*)</h4>(?:[\s]*<br />){0,}`isU",
-			"`<h4 class=\"stitle2\">(.*)</h4>(?:[\s]*<br />){0,}`isU",
+			"`<br /><h4 class=\"stitle1\">(.*)</h4><br />(?:[\s]*<br />){0,}`isU",
+			"`<br /><h4 class=\"stitle2\">(.*)</h4><br />(?:[\s]*<br />){0,}`isU",
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 		);
 		$array_preg_replace = array( 
