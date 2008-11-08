@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -47,11 +47,11 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$subname = retrieve(POST, 'desc', '');
 	$url = retrieve(POST, 'url', '');
 	$type = retrieve(POST, 'type', '');
-	$aprob = retrieve(POST, 'aprob', 0);   
-	$status = retrieve(POST, 'status', 0);   
+	$aprob = retrieve(POST, 'aprob', 0);
+	$status = retrieve(POST, 'status', 0);
 
 	if( $type == 1 )
-	{	
+	{
 		$url = '';
 		$parent_category = 0;
 	}
@@ -64,13 +64,13 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
 	if( !empty($name) )
-	{	
+	{
 		if( isset($CAT_FORUM[$parent_category]) ) //Insertion sous forum de niveau x.
 		{
 			//Forums parent du forum cible.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."forum_cats 
+			FROM ".PREFIX."forum_cats
 			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
 			while( $row = $Sql->fetch_assoc($result) )
 			{
@@ -97,29 +97,30 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 			$level = 0;
 		}
 		
-		$Sql->query_inject("INSERT INTO ".PREFIX."forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO ".PREFIX."forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
-			
-		redirect(HOST . DIR . '/forum/admin_forum.php');	
-	}	
+		
+		forum_generate_feeds();
+		redirect(HOST . DIR . '/forum/admin_forum.php');
+	}
 	else
 		redirect(HOST . DIR . '/forum/admin_forum_add.php?error=incomplete#errorh');
 }
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 		'admin_forum_add'=> 'forum/admin_forum_add.tpl'
 	));
 			
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
+	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
-	FROM ".PREFIX."forum_cats 
+	FROM ".PREFIX."forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
-	{	
+	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 	}
@@ -128,7 +129,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],
@@ -157,7 +158,7 @@ else
 		'L_DESC' => $LANG['description'],
 		'L_URL' => $LANG['url'],
 		'L_URL_EXPLAIN' => $LANG['url_explain'],
-		'L_RESET' => $LANG['reset'],		
+		'L_RESET' => $LANG['reset'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_LOCK' => $LANG['lock'],
@@ -172,7 +173,7 @@ else
 		'L_AUTH_EDIT' => $LANG['auth_edit']
 	));
 	
-	$Template->pparse('admin_forum_add'); // traitement du modele	
+	$Template->pparse('admin_forum_add'); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');
