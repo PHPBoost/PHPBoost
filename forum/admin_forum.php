@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,10 +48,10 @@ if( !empty($_POST['valid']) && !empty($id) )
 	$type = retrieve(POST, 'type', '');
 	$subname = retrieve(POST, 'desc', '');
 	$status = retrieve(POST, 'status', 1);
-	$aprob = retrieve(POST, 'aprob', 0);  
+	$aprob = retrieve(POST, 'aprob', 0);
 
 	if( $type == 1 )
-	{	
+	{
 		$url = '';
 		$parent_category = 0;
 	}
@@ -76,9 +76,9 @@ if( !empty($_POST['valid']) && !empty($id) )
 			$to = $Sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
 			 
 			//Catégorie parente changée?
-			$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;		
+			$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;
 			if( $change_cat )
-			{	
+			{
 				require_once('../forum/admin_forum.class.php');
 				$admin_forum = new Admin_forum();
 				$admin_forum->move_cat($id, $to);
@@ -91,13 +91,14 @@ if( !empty($_POST['valid']) && !empty($id) )
 	}
 	else
 		redirect(HOST . DIR . '/forum/admin_forum.php?id=' . $id . '&error=incomplete');
-
+	
+    forum_generate_feeds();
 	redirect(HOST . DIR . '/forum/admin_forum.php');
 }
 elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 {
 	$Cache->load('forum');
-	$confirm_delete = false;	
+	$confirm_delete = false;
 	$idcat = $Sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if( !empty($idcat) && isset($CAT_FORUM[$idcat]) )
 	{
@@ -113,6 +114,7 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 			$admin_forum = new Admin_forum();
 			$admin_forum->del_cat($idcat, $confirm_delete);
 			
+			forum_generate_feeds();
 			redirect(HOST . SCRIPT);
 		}
 		else //Sinon on propose de déplacer les topics existants dans une autre catégorie.
@@ -125,14 +127,14 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 
 				if( $check_topic > 0 ) //Conserve les topics.
 				{
-					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
+					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$forums = '';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."forum_cats 
+					FROM ".PREFIX."forum_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while( $row = $Sql->fetch_assoc($result) )
-					{	
+					{
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$disabled = ($row['level'] > 0) ? '' : ' disabled="disabled"';
 						$forums .= '<option value="' . $row['id'] . '"' . $disabled . '>' . $margin . ' ' . $row['name'] . '</option>';
@@ -145,17 +147,17 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 						'L_MOVE_TOPICS' => $LANG['move_topics_to'],
 						'L_EXPLAIN_CAT' => sprintf($LANG['error_warning'], sprintf((($check_topic > 1) ? $LANG['explain_topics'] : $LANG['explain_topic']), $check_topic), '', '')
 					));
-				}		
+				}
 				if( $nbr_sub_cat > 0 ) //Concerne uniquement les sous-forums.
-				{			
-					//Listing des catégories disponibles, sauf celle qui va être supprimée.		
+				{
+					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$forums = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."forum_cats 
+					FROM ".PREFIX."forum_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while( $row = $Sql->fetch_assoc($result) )
-					{	
+					{
 						$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 						$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
 					}
@@ -185,17 +187,18 @@ elseif( !empty($del) ) //Suppression de la catégorie/sous-catégorie.
 					'L_SUBMIT' => $LANG['submit'],
 				));
 				
-				$Template->pparse('admin_forum_cat_del'); //Traitement du modele	
+				$Template->pparse('admin_forum_cat_del'); //Traitement du modele
 			}
 			else //Traitements.
-			{			
+			{
 				if( !empty($_POST['del_conf']) ) //Suppression complète.
 					$confirm_delete = true;
 				
 				require_once('../forum/admin_forum.class.php');
 				$admin_forum = new Admin_forum();
-				$admin_forum->del_cat($idcat, $confirm_delete);	
+				$admin_forum->del_cat($idcat, $confirm_delete);
 				
+				forum_generate_feeds();
 				redirect(HOST . SCRIPT);
 			}
 		}
@@ -215,8 +218,9 @@ elseif( !empty($id) && !empty($move) ) //Monter/descendre.
 	$admin_forum = new Admin_forum();
 	
 	if( $move == 'up' || $move == 'down' )
-		$admin_forum->move_updown_cat($id, $move);		
-		
+		$admin_forum->move_updown_cat($id, $move);
+	
+	forum_generate_feeds();
 	redirect(HOST . SCRIPT);
 }
 elseif( !empty($id) )
@@ -229,14 +233,14 @@ elseif( !empty($id) )
 			
 	$forum_info = $Sql->query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
+	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, id_left, id_right, name, level
-	FROM ".PREFIX."forum_cats 
+	FROM ".PREFIX."forum_cats
 	WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'
 	ORDER BY id_left", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
-	{	
+	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id_left'] < $forum_info['id_left'] && $row['id_right'] > $forum_info['id_right'] && ($forum_info['level'] - 1) == $row['level'] ) ? ' selected="selected"' : '';
 		$forums .= '<option value="' . $row['id'] . '"' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
@@ -246,7 +250,7 @@ elseif( !empty($id) )
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$is_root = ($forum_info['level'] > 0);
 
@@ -293,7 +297,7 @@ elseif( !empty($id) )
 		'L_URL' => $LANG['url'],
 		'L_URL_EXPLAIN' => $LANG['url_explain'],
 		'L_DESC' => $LANG['description'],
-		'L_RESET' => $LANG['reset'],		
+		'L_RESET' => $LANG['reset'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_LOCK' => $LANG['lock'],
@@ -310,8 +314,8 @@ elseif( !empty($id) )
 	
 	$Template->pparse('admin_forum_cat_edit'); // traitement du modele
 }
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 	'admin_forum_cat'=> 'forum/admin_forum_cat.tpl'
 	));
@@ -330,7 +334,7 @@ else
 		'L_NAME' => $LANG['name'],
 		'L_DESC' => $LANG['description'],
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset'],		
+		'L_RESET' => $LANG['reset'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_LOCK' => $LANG['lock'],
@@ -350,10 +354,10 @@ else
 
 	$max_cat = $Sql->query("SELECT MAX(id_left) FROM ".PREFIX."forum_cats", __LINE__, __FILE__);
 	$list_cats_js = '';
-	$array_js = '';	
+	$array_js = '';
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, subname, url, status
-	FROM ".PREFIX."forum_cats 
+	FROM ".PREFIX."forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
@@ -371,7 +375,7 @@ else
 		
 		$list_cats_js .= $row['id'] . ', ';
 		
-		$array_js .= 'array_cats[' . $row['id'] . '] = new Array();' . "\n"; 
+		$array_js .= 'array_cats[' . $row['id'] . '] = new Array();' . "\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id\'] = ' . $row['id'] . ";\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id_left\'] = ' . $row['id_left'] . ";\n";
 		$array_js .= 'array_cats[' . $row['id'] . '][\'id_right\'] = ' . $row['id_right'] . ";\n";
@@ -386,7 +390,7 @@ else
 		'ID_END' => ($i - 1)
 	));
 
-	$Template->pparse('admin_forum_cat'); // traitement du modele	
+	$Template->pparse('admin_forum_cat'); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');
