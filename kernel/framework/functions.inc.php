@@ -156,6 +156,15 @@ function numeric($var, $type = 'int')
         return 0;
 }
 
+//Unserialisation.
+function sunserialize($content)
+{
+	if( MAGIC_QUOTES == false )
+		return unserialize($content);
+	else
+		return unserialize(stripslashes($content));
+}
+
 //Récupère le thème utilisateur
 function get_utheme()
 {
