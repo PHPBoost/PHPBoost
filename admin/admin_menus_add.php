@@ -236,7 +236,7 @@ else
 		}
 		
 		//Récupération des tableaux des autorisations et des groupes.
-		$array_auth = !empty($menu['auth']) ? sunserialize($menu['auth']) : array();
+		$array_auth = !empty($menu['auth']) ? unserialize($menu['auth']) : array();
 
 		$Template->assign_vars(array(
 			'C_EDIT_MENU' => true,

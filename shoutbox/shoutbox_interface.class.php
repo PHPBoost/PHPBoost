@@ -45,7 +45,7 @@ class ShoutboxInterface extends ModuleInterface
 		$shoutbox_config = 'global $CONFIG_SHOUTBOX;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_SHOUTBOX = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
+		$CONFIG_SHOUTBOX = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
 		$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
 		
 		if(isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))

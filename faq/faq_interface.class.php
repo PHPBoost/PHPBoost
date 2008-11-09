@@ -72,7 +72,7 @@ class FaqInterface extends ModuleInterface
 				'image' => $row['image'],
 				'num_questions' => $row['num_questions'],
 				'description' => $row['description'],
-				'auth' => sunserialize($row['auth'])
+				'auth' => unserialize($row['auth'])
 				),
 			true)
 			. ';' . "\n";

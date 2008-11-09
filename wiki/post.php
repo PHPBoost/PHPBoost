@@ -96,7 +96,7 @@ if( !empty($contents) ) //On enregistre un article
 			$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
-			$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
+			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 			if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
@@ -177,7 +177,7 @@ if( $id_edit > 0 )//On édite
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
-	$article_auth = !empty($article_infos['auth']) ? sunserialize($article_infos['auth']) : array();
+	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	

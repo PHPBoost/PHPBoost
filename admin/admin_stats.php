@@ -1078,7 +1078,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 	//On lit le fichier
 	$file = @fopen('../cache/' . $stats_menu . '.txt', 'r');
 	$stats_array = @fgets($file);
-	$stats_array = !empty($stats_array) ? sunserialize($stats_array) : array();
+	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
 	@fclose($file);
 	include_once('../kernel/framework/util/images_stats.class.php');
 	$Stats = new Stats();
@@ -1141,7 +1141,7 @@ elseif( $bot )
 	//On lit le fichier
 	$file = @fopen('../cache/robots.txt', 'r');
 	$robot_serial = @fgets($file);	
-	$array_robot = !empty($robot_serial) ? sunserialize($robot_serial) : array('other' => 0);
+	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
 	$stats_array = array();
 	$array_date = array(0 => 0, 1 => 0, 2 => 0);
 	if( is_array($array_robot) )

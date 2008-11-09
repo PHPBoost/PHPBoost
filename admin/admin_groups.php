@@ -150,7 +150,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			}
 		}
 		
-		$array_group = sunserialize($group['auth']);
+		$array_group = unserialize($group['auth']);
 		$Template->assign_vars(array(
 			'NAME' => $group['name'],
 			'IMG' => $group['img'],

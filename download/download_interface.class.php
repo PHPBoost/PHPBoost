@@ -46,7 +46,7 @@ class DownloadInterface extends ModuleInterface
 			
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_DOWNLOAD = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
-		$CONFIG_DOWNLOAD['global_auth'] = sunserialize($CONFIG_DOWNLOAD['global_auth']);
+		$CONFIG_DOWNLOAD['global_auth'] = unserialize($CONFIG_DOWNLOAD['global_auth']);
 		
 		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 		
@@ -67,7 +67,7 @@ class DownloadInterface extends ModuleInterface
 			'icon' => $row['icon'],
 			'description' => $row['contents'],
 			'num_files' => $row['num_files'],
-			'auth' => sunserialize($row['auth'])
+			'auth' => unserialize($row['auth'])
 			), true)
 			. ';' . "\n";
 		}
