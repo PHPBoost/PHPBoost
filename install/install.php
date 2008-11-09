@@ -99,7 +99,7 @@ else
 }
 
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
-if( !is_dir('../cache') || !is_dir('../cache/tpl') || !is_writable('../') )
+if( !is_dir('../cache') || !is_dir('../cache/tpl') )
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
 	
 if( retrieve(GET, 'restart', false) )
