@@ -26,11 +26,19 @@
 
 var menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
-var menu_previous = new Array('', '', '');
-var menu_timeout = new Array(null, null, null);
-var menu_timeout_tmp = new Array(null, null, null);
-var menu_started = new Array(false, false, false);
+var menu_previous = new Array();
+var menu_timeout = new Array();
+var menu_timeout_tmp = new Array();
+var menu_started = new Array();
 var max_level = 3;
+
+for(var i = 0; i < max_level; i++)
+{
+	menu_previous.push('');
+	menu_timeout.push(null);
+	menu_timeout_tmp.push(null);
+	menu_started.push(false);
+}
 
 // Feeds menu gestion
 var feed_menu_timeout_in = null;
@@ -41,11 +49,15 @@ var feed_menu_elt = null;
 function showMenu(idmenu, level)
 {
 	if( !menu_started[level] )
+	{	// On ouvre le menu avec le délais
 		menu_timeout_tmp[level] = setTimeout('temporiseMenu(\'' + idmenu + '\', ' + level + ')', menu_delay_onmouseover);
+	}
 	else if( menu_previous[level] != idmenu )
-		temporise_menu(idmenu, level);
-	else
-	{
+	{	// On ouvre le menu sans délais car le niveau est déjà ouvert
+		temporiseMenu(idmenu, level);
+	}
+	else	
+	{	// Le menu actuel est déjà ouvert, on enlève les timeout
 		if( menu_timeout[level] )
 			clearTimeout(menu_timeout[level]);
 		if( menu_timeout_tmp[level] )
@@ -56,9 +68,7 @@ function showMenu(idmenu, level)
 //Fonction d'affichage du menu déroulant.
 function temporiseMenu(idmenu, level) 
 {
-	var divID = 'smenu';
-	var	id = document.getElementById(divID + idmenu);
-
+	var	id = document.getElementById(idmenu);
 	//Destruction du timeout.
 	if( menu_timeout[level] )
 		clearTimeout(menu_timeout[level]);
@@ -66,16 +76,15 @@ function temporiseMenu(idmenu, level)
 		clearTimeout(menu_timeout_tmp[level]);
 	
 	//Masque les menus
-	if( document.getElementById(divID + menu_previous[level]) ) 
+	if( document.getElementById(menu_previous[level]) ) 
 	{
-		document.getElementById(divID + menu_previous[level]).style.visibility = 'hidden';
+		document.getElementById(menu_previous[level]).style.visibility = 'hidden';
 		menu_started[level] = false;
 		
 		for(var i = level; i < max_level; i++) //Masque le sous menus.
 		{
-			var divID2 = str_repeat('s', i) + 'smenu';
-			if( document.getElementById(divID2 + menu_previous[i]) )
-				document.getElementById(divID2 + menu_previous[i]).style.visibility = 'hidden';
+			if( document.getElementById(menu_previous[i]) )
+				document.getElementById(menu_previous[i]).style.visibility = 'hidden';
 		}
 	}
 	

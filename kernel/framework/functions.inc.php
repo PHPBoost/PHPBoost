@@ -168,12 +168,14 @@ function sunserialize($content)
 //Récupère le thème utilisateur
 function get_utheme()
 {
+    global $User;
 	return $User->get_attribute('user_theme');
 }
 
 //Récupère le thème utilisateur
 function get_ulang()
 {
+    global $User;
 	return $User->get_attribute('user_lang');
 }
 
