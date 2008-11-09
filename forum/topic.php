@@ -167,13 +167,14 @@ $Template->assign_vars(array(
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
 $track = false;
+$track_mail = false;
 $poll_done = false; //N'execute qu'une fois les actions propres au sondage.
 $Cache->load('ranks'); //Récupère les rangs en cache.
 $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS track, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM ".PREFIX."forum_msg msg
 LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
@@ -392,8 +393,12 @@ while ( $row = $Sql->fetch_assoc($result) )
 	));
 	
 	//Marqueur de suivis du sujet.
-	if( !empty($row['track']) ) 
-		$track = true;
+	if( !empty($row['trackid']) ) 
+	{	
+		$track = ($row['track']) ? true : false;
+		$track_pm = ($row['trackpm']) ? true : false;
+		$track_mail = ($row['trackmail']) ? true : false;
+	}
 	$j++;
 }
 $Sql->query_close($result);
@@ -441,12 +446,20 @@ $Template->assign_vars(array(
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'U_SUSCRIBE' => ($track === false) ? transid('.php?t=' . $id_get) : transid('.php?ut=' . $id_get),
-	'IS_FAVORITE' => $track ? 'true' : 'false',
+	'IS_TRACK' => $track ? 'true' : 'false',
+	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',
+	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
 	'IS_CHANGE' => $topic['display_msg'] ? 'true' : 'false',
 	'U_ALERT' => transid('.php?id=' . $id_get),
-	'L_SUSCRIBE_DEFAULT' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
-	'L_SUSCRIBE' => $LANG['track_topic'],
-	'L_UNSUSCRIBE' => $LANG['untrack_topic'],
+	'L_TRACK_DEFAULT' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
+	'L_SUSCRIBE_DEFAULT' => ($track_mail === false) ? $LANG['track_topic_mail'] : $LANG['untrack_topic_mail'],
+	'L_SUSCRIBE_PM_DEFAULT' => ($track_pm === false) ? $LANG['track_topic_pm'] : $LANG['untrack_topic_pm'],
+	'L_TRACK' => $LANG['track_topic'],
+	'L_UNTRACK' => $LANG['untrack_topic'],
+	'L_SUSCRIBE_PM' => $LANG['track_topic_pm'],
+	'L_UNSUSCRIBE_PM' => $LANG['untrack_topic_pm'],
+	'L_SUSCRIBE' => $LANG['track_topic_mail'],
+	'L_UNSUSCRIBE' => $LANG['untrack_topic_mail'],
 	'L_ALERT' => $LANG['alert_topic'],
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
@@ -455,8 +468,8 @@ $Template->assign_vars(array(
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online']),
-));	
-		
+));
+
 //Récupération du message quoté.
 $contents = '';
 if( !empty($quote_get) )
@@ -483,13 +496,19 @@ elseif( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)
 }
 else
 {
-	$img_favorite_display = $track ? 'unfavorite_mini.png' : 'favorite_mini.png';
+	$img_track_display = $track ? 'untrack_mini.png' : 'track_mini.png';
+	$img_track_pm_display = $track_pm ? 'untrack_pm_mini.png' : 'track_pm_mini.png';
+	$img_track_mail_display = $track_mail ? 'untrack_mail_mini.png' : 'track_mail_mini.png';
 	$Template->assign_vars(array(
 		'C_AUTH_POST' => true,
 		'CONTENTS' => $contents,
 		'KERNEL_EDITOR' => display_editor(),
-		'ICON_FAVORITE' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" />',
-		'ICON_FAVORITE2' => '<img src="' . $module_data_path . '/images/' . $img_favorite_display . '" alt="" class="valign_middle" id="forum_favorite_img" />',
+		'ICON_TRACK' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" />',
+		'ICON_TRACK2' => '<img src="' . $module_data_path . '/images/' . $img_track_display . '" alt="" class="valign_middle" id="forum_track_img" />',
+		'ICON_SUSCRIBE_PM' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" />',
+		'ICON_SUSCRIBE_PM2' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" id="forum_track_pm_img" />',
+		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" />',
+		'ICON_SUSCRIBE2' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" id="forum_track_mail_img" />',
 		'U_FORUM_ACTION_POST' => transid('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg')
 	));
 

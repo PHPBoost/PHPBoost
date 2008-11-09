@@ -34,12 +34,12 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->add($LANG['moderation_panel'], '../member/moderation_panel.php' . SID);
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
 if( $action == 'alert' )
 	$Bread_crumb->add($LANG['alert_management'], transid('moderation_forum.php?action=alert'));
 elseif( $action == 'users' )
 	$Bread_crumb->add($LANG['warning_management'], transid('moderation_forum.php?action=warning'));
+$Bread_crumb->add($LANG['moderation_panel'], '../forum/moderation_forum.php' . SID);
 	
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['moderation_panel']);
 require_once('../kernel/header.php');
@@ -70,7 +70,7 @@ $Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
-	'FORUM_NAME' => $LANG['moderation_panel'] . ' : ' . $LANG['moderation_forum'],
+	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
@@ -597,7 +597,6 @@ else //Panneau de modération
 	$Template->assign_vars(array(
 		'SID' => SID,
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
-		'FORUM_NAME' => $LANG['moderation_panel'] . ' : ' . $LANG['moderation_forum'],
 		'L_DEL_HISTORY' => $LANG['alert_history'],
 		'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 		'L_MODERATION_FORUM' => $LANG['moderation_forum'],

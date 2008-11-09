@@ -283,7 +283,7 @@ class Cache
 
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
 			global $CONFIG_UPLOADS;
-			$this->Load_file('uploads');
+			$this->load('uploads');
 			if( $CONFIG_UPLOADS['bandwidth_protect'] )
 			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";

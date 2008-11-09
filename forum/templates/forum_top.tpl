@@ -87,14 +87,21 @@
 				<div style="padding:10px;">
 					<div style="float:left;">
 						<h2>{FORUM_NAME}</h2>
-						# IF C_FORUM_CONNEXION #
-							# IF C_MEMBER_NOTCONNECTED #
-							<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+						<div style="margin-top:4px;">
+							# IF C_FORUM_CONNEXION #
+								# IF C_MEMBER_NOTCONNECTED #
+								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
+								# ENDIF #
+								# IF C_MEMBER_CONNECTED #
+									<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
+								# ENDIF # 						
 							# ENDIF #
-							# IF C_MEMBER_CONNECTED #
-								<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a>
-							# ENDIF #						
-						# ENDIF #						
+							
+							# IF C_MODERATION_PANEL #
+								# IF C_FORUM_CONNEXION # <span style="color:#000000;">&bull;</span> # ENDIF #
+								<a class="small_link" href="./moderation_forum.php"><img src="../templates/{THEME}/images/admin/modo_mini.png" class="valign_middle" alt="" /> {L_MODERATION_PANEL}</a>
+							# ENDIF #
+						</div>
 					</div>
 					<div style="float:right;text-align:right">
 						<form action="search.php{SID}" method="post">
@@ -117,7 +124,7 @@
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
 				</div>
 				<div style="float:right;">
-					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
+					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics">{U_MSG_NOT_READ}</span>
 					
