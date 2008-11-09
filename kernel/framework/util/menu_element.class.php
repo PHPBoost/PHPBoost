@@ -2,9 +2,9 @@
 /*##################################################
  *                             menu_element.class.php
  *                            -------------------
-*   begin                : July 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : July 08, 2008
+ *   copyright            : (C) 2008 Régis Viarre; Loïc Rouchon
+ *   email                : crowkait@phpboost.com; horn@phpboost.com
  *
  *
 ###################################################
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,56 +25,49 @@
  *
 ###################################################*/
 
+
+// Abstract class : Do not instanciate it
+//      Menu and MenuLink classes are based on this class
+//      use, on of these
+
 class MenuElement
 {
 	## Public Methods ##
-	//Constructeur.
-	function MenuElement()
+	// Constructor.
+	function MenuElement($title, $url, $image = '')
 	{
+       $this->title = $title;
+       $this->url = $url;
+       $this->image = $image;
 	}
 	
-	//Définit l'image de l'élément.
-	function set_image(&$image)
-	{
-		$this->image = $image;
-	}
+	## Setters ##
+	function set_image(&$image) { $this->image = $image; }
+	function set_title(&$title) { $this->title = $title; }
+	function set_url(&$url) { $this->url = $url; }
 	
-	//Définit le titre de l'élément.
-	function set_title(&$title)
-	{
-		$this->title = $title;
-	}
-		
-	//Définit l'adresse.
-	function set_url(&$url)
-	{
-		$this->url = $url;
-	}
-	
-	//Récupère l'image de l'élément.
-	function get_image()
-	{
-		return $this->image;
-	}
-	
-	//Récupère le titre de l'élément.
-	function get_title()
-	{
-		return $this->title;
-	}
-	
-	//Récupération de l'adresse.
-	function get_url()
-	{
-		return $this->url;
-	}
+	## Getters ##
+	function get_image() { return strpos($this->image, '://') > 0 ? $this->image : PATH_TO_ROOT . $this->image; }
+	function get_title() { return $this->title; }
+	function get_url() { return $this->url; }
 	
 	## Private Methods ##
 	
+	// Assign tpl vars
+    function _assign(&$template)
+    {
+        $template->assign_vars(array(
+            'C_IMG' => !empty($this->image),
+            'TITLE' => $this->title,
+            'IMG' => $this->get_image(),
+            'URL' => $this->url
+        ));
+    }
+	
 	## Private attributes ##
-	var $title = ''; //titre de l'élément.
-	var $image = ''; //Image de l'élément.
-	var $url = ''; //Image de l'élément.
+	var $title = '';   // Element's title
+    var $url = '';     // Element's url
+	var $image = '';   // Element's image
 }
 
 ?>
