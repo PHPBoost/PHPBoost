@@ -39,7 +39,7 @@ class Menu extends MenuElement
 {
 	## Public Methods ##
 	// Constructor.
-	function Menu($type, $title, $url, $image = '')
+	function Menu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
 	{
 		$this->id = get_uid(); // Set a unique ID
 		
