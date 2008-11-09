@@ -156,6 +156,18 @@ function numeric($var, $type = 'int')
         return 0;
 }
 
+//Récupère le thème utilisateur
+function get_utheme()
+{
+	return $User->get_attribute('user_theme');
+}
+
+//Récupère le thème utilisateur
+function get_ulang()
+{
+	return $User->get_attribute('user_lang');
+}
+
 //Découpage avec retour à la ligne, d'une chaîne, en prenant compte les entités html.
 function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $boolean = true)
 {

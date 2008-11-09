@@ -50,11 +50,12 @@ class User
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 	
+	//R2cupère les attribut de la session.
 	function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
-			
+	
 	//Vérifie le niveau d'autorisation.
 	function check_level($secure)
 	{
@@ -90,6 +91,36 @@ class User
 		}
 			
 		return $max_auth;
+	}
+	
+	//Modifie le thème membre.
+	function set_user_theme($user_theme)
+	{
+		$this->user_data['user_theme'] = $user_theme;
+	}
+	
+	//Met à jour le thème visiteur.
+	function update_user_theme($user_theme)
+	{
+		if( $this->user_data['level'] > -1 )
+			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
+		else
+			$Sql->query_inject("UPDATE ".PREFIX."sessions SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
+	}
+	
+	//Modifie le thème membre.
+	function set_user_lang($user_lang)
+	{
+		$this->user_data['user_lang'] = $user_lang;
+	}
+	
+	//Met à jour le thème visiteur.
+	function update_user_lang($user_lang)
+	{
+		if( $this->user_data['level'] > -1 )
+			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
+		else
+			$Sql->query_inject("UPDATE ".PREFIX."sessions SET user_lang = '" . strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
 	}
 	
 	
