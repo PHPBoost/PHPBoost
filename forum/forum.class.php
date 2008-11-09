@@ -26,6 +26,8 @@
 ###################################################*/
 
 define('NO_HISTORY', false);
+define('FORUM_EMAIL_TRACKING', 1);
+define('FORUM_PM_TRACKING', 2);
 
 class Forum
 {	
@@ -254,14 +256,28 @@ class Forum
 	}
 	
 	//Suivi d'un sujet.
-	function Track_topic($idtopic)
+	function Track_topic($idtopic, $tracking_type = 0)
 	{
 		global $Sql, $Group, $User, $CONFIG_FORUM;
 		
+		list($mail, $pm, $track) = array(0, 0, 0);
+		if( $tracking_type == 0 ) //Suivi par email.
+			$track = '1';
+		elseif( $tracking_type == 1 ) //Suivi par email.
+			$mail = '1';
+		elseif($tracking_type == 2 ) //Suivi par email.
+			$pm = '1';
+			
 		$exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_track WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);	
 		if( $exist == 0 )
-			$Sql->query_inject("INSERT INTO ".PREFIX."forum_track (idtopic, user_id, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', 0, 1)", __LINE__, __FILE__);
-		
+			$Sql->query_inject("INSERT INTO ".PREFIX."forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
+		elseif( $tracking_type == 0 )
+			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		elseif( $tracking_type == 1 )
+			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		elseif( $tracking_type == 2 )
+			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			
 		//Limite de sujets suivis?
 		if( !$User->check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM) )
 		{
@@ -278,11 +294,34 @@ class Forum
 	}
 	
 	//Retrait du suivi d'un sujet.
-	function Untrack_topic($idtopic)
+	function Untrack_topic($idtopic, $tracking_type = 0)
 	{
 		global $Sql, $User;
 		
-		$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		if( $tracking_type == 1 )
+		{	
+			$info = $Sql->query_array("forum_track", "pm", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			if( $info['track'] == 0 && $info['pm'] == 0 )
+				$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			else
+				$Sql->query_inject("UPDATE ".PREFIX."forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		}
+		elseif( $tracking_type == 2 )
+		{	
+			$info = $Sql->query_array("forum_track", "mail", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			if( $info['mail'] == 0 && $info['track'] == 0 )
+				$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			else
+				$Sql->query_inject("UPDATE ".PREFIX."forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		}
+		else
+		{	
+			$info = $Sql->query_array("forum_track", "mail", "pm", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
+			if( $info['mail'] == 0 && $info['pm'] == 0 )
+				$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			else
+				$Sql->query_inject("UPDATE ".PREFIX."forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		}
 	}
 	
 	//Verrouillage d'un sujet.

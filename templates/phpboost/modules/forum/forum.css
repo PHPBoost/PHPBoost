@@ -100,7 +100,7 @@ a.forum_link_pseudo:hover {
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{
 	text-align:center;
-	margin-top:15px;
+	margin-top:5px;
 }
 /* Les des catégories de niveau 0 */
 a.forum_link_cat{

@@ -4,7 +4,7 @@
 					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
 				</div>
 				<div style="float:right;">
-					<img src="{MODULE_DATA_PATH}/images/favorite_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
+					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
 					<img src="{MODULE_DATA_PATH}/images/last_mini.png" alt="" class="valign_middle" /> {U_LAST_MSG_READ} &bull;
 					<img src="{MODULE_DATA_PATH}/images/new_mini.png" alt="" class="valign_middle" /> <span id="nbr_unread_topics2">{U_MSG_NOT_READ}</span>
 					
