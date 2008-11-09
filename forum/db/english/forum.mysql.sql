@@ -98,6 +98,7 @@ CREATE TABLE `phpboost_forum_track` (
 	`id` int(11) NOT NULL auto_increment,
 	`idtopic` int(11) NOT NULL default '0',
 	`user_id` int(11) NOT NULL default '0',
+	`track` tinyint(1) NOT NULL default '0',
 	`pm` tinyint(1) NOT NULL default '0',
 	`mail` tinyint(1) NOT NULL default '0',
 	PRIMARY KEY	(`id`),
