@@ -148,7 +148,7 @@
 						<div class="spacer">&nbsp;</div>
 					# END row #
 				# ELSE #
-					<div class="warning">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
+					<div class="notice">{L_NO_MODULE_IN_WHICH_CONTRIBUTE}</div>
 				# ENDIF #
 			</div>
 		<div class="module_bottom_l"></div>		
