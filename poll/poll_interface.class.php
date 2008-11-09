@@ -45,7 +45,7 @@ class PollInterface extends ModuleInterface
 		$code = 'global $CONFIG_POLL;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_POLL = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
+		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 		
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";

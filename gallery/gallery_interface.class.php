@@ -48,7 +48,7 @@ class GalleryInterface extends ModuleInterface
 		$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GALLERY = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
+		$CONFIG_GALLERY = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
 		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
 		if( isset($CONFIG_GALLERY['auth_root']) )
 			$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
@@ -69,7 +69,7 @@ class GalleryInterface extends ModuleInterface
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
-			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(sunserialize($row['auth']), true) . ';' . "\n";
+			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
 		}
 		$Sql->query_close($result);
 		
@@ -98,7 +98,7 @@ class GalleryInterface extends ModuleInterface
 			'\'width\' => ' . var_export($width, true) . ',' . "\n" .
 			'\'height\' => ' . var_export($height, true) . ',' . "\n" .
 			'\'idcat\' => ' . var_export($row['idcat'], true) . ',' . "\n" .
-			'\'auth\' => ' . var_export(sunserialize($row['auth']), true) . '),' . "\n";
+			'\'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}
 		$Sql->query_close($result);	
 		$_array_random_pics .= ');';

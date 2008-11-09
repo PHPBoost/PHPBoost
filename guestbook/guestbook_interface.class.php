@@ -47,7 +47,7 @@ class GuestbookInterface extends ModuleInterface
 		$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GUESTBOOK = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
+		$CONFIG_GUESTBOOK = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 		
 		if(isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))

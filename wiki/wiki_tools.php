@@ -66,7 +66,7 @@ $confirm_others = array();
 //Définition du tableau comprenant les autorisation de chaque groupe
 if( !empty($article_infos['auth']) )
 {
-	$article_auth = sunserialize($article_infos['auth']);
+	$article_auth = unserialize($article_infos['auth']);
 	$general_auth = false;
 }
 else

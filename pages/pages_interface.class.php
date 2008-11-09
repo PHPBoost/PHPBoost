@@ -55,16 +55,16 @@ class PagesInterface extends ModuleInterface
 			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
 				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
 				'name' => $row['title'],
-				'auth' => sunserialize($row['auth'])
+				'auth' => unserialize($row['auth'])
 			), true) . ';' . "\n";
 		}
 
 		//Configuration du module de pages
 		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
+		$CONFIG_PAGES = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
 								
 		if( is_array($CONFIG_PAGES) )
-			$CONFIG_PAGES['auth'] = sunserialize($CONFIG_PAGES['auth']);
+			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
 		else
 			$CONFIG_PAGES = array(
 			'count_hits' => 1,
@@ -131,7 +131,7 @@ class PagesInterface extends ModuleInterface
         {
             if ( !empty($row['auth']) )
             {
-                $auth = sunserialize($row['auth']);
+                $auth = unserialize($row['auth']);
                 if ( !$User->check_auth($auth, READ_PAGE) )
                 {
                     unset($row['auth']);

@@ -53,7 +53,7 @@ if( !empty($new_title) && $id_rename_post > 0 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
@@ -91,7 +91,7 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
@@ -115,7 +115,7 @@ elseif( $del_redirection > 0 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
@@ -133,7 +133,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	$page_infos = $Sql->query_array("pages", "encoded_title", "id_cat", "auth", "WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
-	$array_auth = !empty($page_infos['auth']) ? sunserialize($page_infos['auth']) : array();
+	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
 	if( !((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
@@ -193,7 +193,7 @@ if( $id_page > 0 )
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
@@ -231,7 +231,7 @@ if( $del_cat > 0 )
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect', "WHERE id = '" . $del_cat . "'", __LINE__, __FILE__);
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
@@ -373,7 +373,7 @@ else
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
-		$array_auth = sunserialize($row['auth']);
+		$array_auth = unserialize($row['auth']);
 		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . transid('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',

@@ -156,12 +156,6 @@ function numeric($var, $type = 'int')
         return 0;
 }
 
-//Unserialisation de chaînes.
-function sunserialize($string)
-{
-	return unserialize(stripslashes($string));
-}
-
 //Découpage avec retour à la ligne, d'une chaîne, en prenant compte les entités html.
 function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $boolean = true)
 {

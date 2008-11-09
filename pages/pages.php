@@ -193,7 +193,7 @@ elseif( $id_com > 0 )
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
-	$array_auth = sunserialize($page_infos['auth']);
+	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)) )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth_com');
@@ -294,7 +294,7 @@ else
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
-		$array_auth = sunserialize($row['auth']);
+		$array_auth = unserialize($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
 		if( ($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
