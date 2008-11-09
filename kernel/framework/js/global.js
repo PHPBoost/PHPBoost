@@ -38,6 +38,72 @@ var feed_menu_timeout_out = null;
 var feed_menu_elt = null;
 
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
+function showMenu(idmenu, level)
+{
+	if( !menu_started[level] )
+		menu_timeout_tmp[level] = setTimeout('temporiseMenu(\'' + idmenu + '\', ' + level + ')', menu_delay_onmouseover);
+	else if( menu_previous[level] != idmenu )
+		temporise_menu(idmenu, level);
+	else
+	{
+		if( menu_timeout[level] )
+			clearTimeout(menu_timeout[level]);
+		if( menu_timeout_tmp[level] )
+			clearTimeout(menu_timeout_tmp[level]);
+	}
+}
+
+//Fonction d'affichage du menu déroulant.
+function temporiseMenu(idmenu, level) 
+{
+	var divID = 'smenu';
+	var	id = document.getElementById(divID + idmenu);
+
+	//Destruction du timeout.
+	if( menu_timeout[level] )
+		clearTimeout(menu_timeout[level]);
+	if( menu_timeout_tmp[level] )
+		clearTimeout(menu_timeout_tmp[level]);
+	
+	//Masque les menus
+	if( document.getElementById(divID + menu_previous[level]) ) 
+	{
+		document.getElementById(divID + menu_previous[level]).style.visibility = 'hidden';
+		menu_started[level] = false;
+		
+		for(var i = level; i < max_level; i++) //Masque le sous menus.
+		{
+			var divID2 = str_repeat('s', i) + 'smenu';
+			if( document.getElementById(divID2 + menu_previous[i]) )
+				document.getElementById(divID2 + menu_previous[i]).style.visibility = 'hidden';
+		}
+	}
+	
+	//Affichage du menu, et enregistrement dans le tableau de gestion.
+	if( id ) 
+	{	
+		id.style.visibility = 'visible';
+		menu_previous[level] = idmenu;
+		menu_started[level] = true;
+	}
+}	
+
+//Cache le menu déroulant lorsque le curseur de la souris n'y est plus pendant delay_menu millisecondes.
+function hideMenu(level)
+{			
+	//Destruction du timeout lors du départ de la souris.
+	for(var i = 0; i < max_level; i++)
+	{
+		if( menu_timeout_tmp[i] && !menu_started[i] )
+			clearTimeout(menu_timeout_tmp[i]);
+	}
+	
+	//Masque le menu, après le délai défini.
+	if( menu_started[level] )
+		menu_timeout[level] = setTimeout('temporiseMenu(\'\', ' + level + ')', menu_delay);
+}
+
+//Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function show_menu(idmenu, level)
 {
 	if( !menu_started[level] )

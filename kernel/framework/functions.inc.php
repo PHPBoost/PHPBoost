@@ -836,7 +836,7 @@ function strhash($str)
 // Returns a Unique Identifier in the whole application
 function get_uid()
 {
-    static $uid = 0;
+    static $uid = 1764;
     return $uid++;
 }
 

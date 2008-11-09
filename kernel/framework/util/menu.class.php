@@ -62,7 +62,7 @@ class Menu extends MenuElement
 	function add($element)
 	{
 	    if( get_class($element) == get_class($this) )
-	       $element->_deeper();
+	       $element->_parent($this->type);
 		$this->elements[] = $element;
 	}
 		
@@ -85,7 +85,8 @@ class Menu extends MenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
-            'ID' => $this->id,
+            'DEPTH' => $this->depth,
+            'ID' => $this->id
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
@@ -94,10 +95,16 @@ class Menu extends MenuElement
 	
 	## Private Methods ##
 	
-	// Increase the Menu Depth
-	function _deeper()
+	// Increase the Menu Depth and set the menu type to its parent one
+	function _parent($type)
 	{
 	    $this->depth++;
+	    $this->type = $type;
+	    foreach( $this->elements as $element )
+	    {
+	        if( get_class($element) == get_class($this) )
+                $element->_parent($type);
+	    }
 	}
 	
 	## Private attributes ##
