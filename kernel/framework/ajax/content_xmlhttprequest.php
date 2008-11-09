@@ -38,7 +38,6 @@ $editor = retrieve(GET, 'editor', $CONFIG['editor']);
 
 $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 
-//echo '<pre>' . htmlentities($contents) . '</pre><hr />';
 $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 
 //On prend le bon parseur avec la bonne configuration

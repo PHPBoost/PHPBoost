@@ -39,7 +39,7 @@ class TinyMCEUnparser extends ContentUnparser
 	function unparse()
 	{
 		$this->parsed_content = $this->content;
-
+		
 		//Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -125,8 +125,8 @@ class TinyMCEUnparser extends ContentUnparser
 			'`<ol( style="[^"]+")? class="bb_ol">`i',
 			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
 			"`<h3 class=\"title2\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
-			"`<br /><h4 class=\"stitle1\">(.*)</h4><br />(?:[\s]*<br />){0,}`isU",
-			"`<br /><h4 class=\"stitle2\">(.*)</h4><br />(?:[\s]*<br />){0,}`isU",
+			"`<br /><h4 class=\"stitle1\">(.*)</h4><br />[\s]*<br />`isU",
+			"`<br /><h4 class=\"stitle2\">(.*)</h4><br />[\s]*<br />`isU",
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU'
 		);
 		$array_preg_replace = array( 
@@ -138,7 +138,7 @@ class TinyMCEUnparser extends ContentUnparser
 			"<span style=\"background-color: $1\">$2</font>",
 			"<u>$1</u>",	
 			"<font color=\"$1\">$2</font>",
-			"<p align=\"$1\">$2</p>",
+			"<p style=\"text-align: $1;\">$2</p>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
 			"<ul$1>",
 			"<ol$1>",
