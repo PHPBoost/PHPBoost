@@ -12,12 +12,10 @@
 	# ENDIF #
 	
 	# IF C_NEXT_MENU #
-		<ul id="smenu{ID}">
-			<li class="extend" onmouseover="show_menu({ID}{ID_SUB}, {DEPTH});" onmouseout="hide_menu(1);">
-				<a href="{URL}" style="# IF C_IMG #background-image:url({IMG});# ENDIF #">{TITLE}</a>
-				 <ul id="smenu{ID}"># START elements #{elements.DISPLAY}# END elements #</ul>
-			</li>
-		</ul>
+		<li class="extend" onmouseover="show_menu({ID}{ID_SUB}, {DEPTH});" onmouseout="hide_menu(1);">
+			<a href="{URL}" style="# IF C_IMG #background-image:url({IMG});# ENDIF #">{TITLE}</a>
+			 <ul id="smenul{ID}"># START elements #{elements.DISPLAY}# END elements #</ul>
+		</li>
 	# ENDIF #
 # ELSE #
     <!-- Simple Menu Link -->
