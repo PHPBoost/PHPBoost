@@ -125,7 +125,6 @@ class Sessions
             $password = strhash($password);
         
 		$error = '';
-		$cookie_on = false;
 		$session_script = addslashes($session_script);
 		$session_script_title = addslashes($session_script_title);
 		
@@ -136,7 +135,7 @@ class Sessions
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."compteur SET ip = ip + 1, time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = total + 1 WHERE id = 1", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0)", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', 0, '')", __LINE__, __FILE__);
 			
 			//Mise à jour du last_connect, pour un membre qui vient d'arriver sur le site.
 			if( $user_id !== '-1' )
@@ -174,12 +173,11 @@ class Sessions
                 if( md5($pwd) === $password_m ) // Si le mot de passe est encore stocké en md5, on l'update
                     $Sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				
-				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '')", __LINE__, __FILE__);
-				$cookie_on = true; //Génération du cookie!
+				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', '" . $user_id . "', '" . $level . "', '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '', '', '')", __LINE__, __FILE__);
 			}
 			else //Session visiteur, echec!
 			{
-				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $CONFIG['theme'] . "', '" . $CONFIG['lang'] . "', '')", __LINE__, __FILE__);
 				
 				$delay_ban = $Sql->query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				if( (time() - $delay_ban) >= 0 )
@@ -189,28 +187,24 @@ class Sessions
 			}
 		}
 		else //Session visiteur valide.
-		{
-			$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0')", __LINE__, __FILE__);
-		}
+			$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $CONFIG['theme'] . "', '" . $CONFIG['lang'] . "', '')", __LINE__, __FILE__);
 		
 		########Génération du cookie de session########
-		if( $cookie_on === true )
+		$data = array();
+		$data['user_id'] = isset($user_id) ? numeric($user_id) : -1;
+		$data['session_id'] = $session_uniq_id;
+		
+		setcookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
+		
+		########Génération du cookie d'autoconnection########
+		if( $autoconnect === true )
 		{
-			$data = array();
-			$data['user_id'] = isset($user_id) ? numeric($user_id) : -1;
-			$data['session_id'] = $session_uniq_id;
+			$session_autoconnect['user_id'] = $user_id;
+			$session_autoconnect['pwd'] = $password;
 			
-			setcookie($CONFIG['site_cookie'].'_data', serialize($data), time() + 31536000, '/');
-			
-			########Génération du cookie d'autoconnection########
-			if( $autoconnect === true )
-			{
-				$session_autoconnect['user_id'] = $user_id;
-				$session_autoconnect['pwd'] = $password;
-				
-				setcookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
-			}
+			setcookie($CONFIG['site_cookie'].'_autoconnect', serialize($session_autoconnect), time() + 31536000, '/');
 		}
+		
 		unset($pwd);
 		return $error;
 	}
@@ -227,7 +221,7 @@ class Sessions
 		if( $this->data['user_id'] > 0 && !empty($this->data['session_id']) )
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $Sql->query_while("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, me.*
+			$result = $Sql->query_while("SELECT m.user_id AS m_user_id, m.login, m.level, m.user_groups, m.user_lang, m.user_theme, m.user_mail, m.user_pm, m.user_editor, m.user_timezone, m.user_avatar avatar, m.user_readonly, s.modules_parameters, s.theme, me.*
 			FROM ".PREFIX."member m
             JOIN ".PREFIX."sessions s ON s.user_id = '" . $this->data['user_id'] . "' AND s.session_id = '" . $this->data['session_id'] . "'
 			LEFT JOIN ".PREFIX."member_extend me ON me.user_id = '" . $this->data['user_id'] . "'
@@ -244,6 +238,17 @@ class Sessions
 				$this->autoconnect['session_id'] = $this->data['session_id'];
 			}
 		}	
+		else
+		{
+			//Récupère également les champs membres supplémentaires
+			$result = $Sql->query_while("SELECT s.modules_parameters, s.user_theme, s.user_lang
+			FROM ".PREFIX."sessions 
+			WHERE user_id = '-1' AND session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
+			$userdata = $Sql->fetch_assoc($result);
+         
+			if( !empty($userdata) ) //Succès.
+				$this->data = array_merge($userdata, $this->data); //Fusion des deux tableaux.
+		}
 		
 		$this->data['user_id'] = isset($userdata['m_user_id']) ? (int)$userdata['m_user_id'] : -1;
 		$this->data['login'] = isset($userdata['login']) ? $userdata['login'] : '';	
@@ -257,6 +262,7 @@ class Sessions
 		$this->data['user_editor'] = !empty($userdata['user_editor']) ? $userdata['user_editor'] : $CONFIG['editor'];
 		$this->data['user_timezone'] = isset($userdata['user_timezone']) ? $userdata['user_timezone'] : $CONFIG['timezone'];
 		$this->data['avatar'] = isset($userdata['avatar']) ? $userdata['avatar'] : '';
+		$this->data['modules_parameters'] = isset($userdata['modules_parameters']) ? $userdata['modules_parameters'] : '';
 	}
 	
 	//Vérification de la session.
@@ -336,6 +342,21 @@ class Sessions
 		$this->_garbage_collector();
 	}
 	
+	//Récupère les paramtères de la sessions.
+	function set_module_paramaters($paramaters)
+	{
+		$modules_parameters = unserialize($this->data['modules_parameters']);
+		$modules_parameters[MODULE_NAME] = $paramaters;
+		
+		$Sql->query_inject("UPDATE ".PREFIX."sessions SET modules_parameters = '" . serialize($modules_parameters) . "'", __LINE__, __FILE__);		
+	}
+	
+	//Récupère les paramtères de la sessions.
+	function get_module_paramaters()
+	{
+		$array = unserialize($this->data['modules_parameters']);
+		return isset($array[MODULE_NAME]) ? $array[MODULE_NAME] : '';
+	}
 	
 	## Private Méthods ##
 	//Récupération des l'identifiants de session.

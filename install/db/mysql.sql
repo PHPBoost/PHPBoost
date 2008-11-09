@@ -264,6 +264,9 @@ CREATE TABLE `phpboost_sessions` (
   `session_script_get` varchar(100) NOT NULL default '0',
   `session_script_title` varchar(255) NOT NULL default '',
   `session_flag` tinyint(1) NOT NULL default '0',
+  `user_theme` varchar(50) NOT NULL default '',
+  `user_lang` varchar(50) NOT NULL default '',
+  `modules_parameters` text NOT NULL,
   PRIMARY KEY  (`session_id`),
   KEY `user_id` (`user_id`,`session_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

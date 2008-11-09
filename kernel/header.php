@@ -149,7 +149,7 @@ if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
 		$Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
-	'MODULES_MINI_HEADER_CONTENT' =>$MODULES_MINI['header'],
+	'MODULES_MINI_HEADER_CONTENT' => $MODULES_MINI['header'],
 	'MODULES_MINI_SUB_HEADER_CONTENT' => $MODULES_MINI['subheader']
 ));
 

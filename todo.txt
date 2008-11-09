@@ -18,8 +18,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [+] Intégrer le switcher de thème.
-[-] Stocker la langue et le thème de l'utilisateur dans les sessions de façon à pouvoir faire des menus pour switcher
-[-] Ajouter un lien vers le panneau de modération du forum dans le forum puisqu'il n'y est plus dans le panneau de modération du noyau.
 
 #################################################################################
 
