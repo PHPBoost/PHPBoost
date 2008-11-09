@@ -30,10 +30,23 @@
 //      Menu and MenuLink classes are based on this class
 //      use, on of these
 
+
+/**
+ * @author loic
+ * @abstract
+ * @desc A MenuElement contains a Title, an url, and an image url
+ *
+ */
 class MenuElement
 {
 	## Public Methods ##
-	// Constructor.
+	/**
+	 * @desc Build a MenuElement object
+	 * @param $title
+	 * @param $url
+	 * @param $image
+	 * @return unknown_type
+	 */
 	function MenuElement($title, $url, $image = '')
 	{
        $this->title = $title;
@@ -42,32 +55,66 @@ class MenuElement
 	}
 	
 	## Setters ##
-	function set_image(&$image) { $this->image = $image; }
-	function set_title(&$title) { $this->title = $title; }
-	function set_url(&$url) { $this->url = $url; }
+    /**
+     * @param string $image the value to set
+     */
+	function set_image($image) { $this->image = $image; }
+    /**
+     * @param string $title the value to set
+     */
+	function set_title($title) { $this->title = $title; }
+	/**
+	 * @param string $url the value to set
+	 */
+	function set_url($url) { $this->url = $url; }
 	
 	## Getters ##
+	/**
+	 * @return string the link $image url
+	 */
 	function get_image() { return strpos($this->image, '://') > 0 ? $this->image : PATH_TO_ROOT . $this->image; }
+    /**
+     * @return string the link $title
+     */
 	function get_title() { return $this->title; }
-	function get_url() { return $this->url; }
+    /**
+     * @return string the link $url
+     */
+	function get_url() { return strpos($this->image, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url; }
 	
 	## Private Methods ##
 	
-	// Assign tpl vars
+    /**
+     * @desc Assign tpl vars
+     * @access protected
+     * @param Template $template the template on which we gonna assign vars
+     */
     function _assign(&$template)
     {
         $template->assign_vars(array(
             'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
             'IMG' => $this->get_image(),
-            'URL' => $this->url
+            'URL' => $this->get_url()
         ));
     }
 	
 	## Private attributes ##
-	var $title = '';   // Element's title
-    var $url = '';     // Element's url
-	var $image = '';   // Element's image
+	/**
+	 * @access protected
+	 * @var string the MenuElement title
+	 */
+	var $title = '';
+    /**
+     * @access protected
+     * @var string the MenuElement url
+     */
+    var $url = '';
+    /**
+     * @access protected
+     * @var string the image url. Could be relative to the website root or absolute
+     */
+	var $image = '';
 }
 
 ?>

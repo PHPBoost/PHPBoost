@@ -27,16 +27,30 @@
 
 require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_element.class.php');
 
+/**
+ * @author loic
+ * @desc A Simple menu link
+ */
 class MenuLink extends MenuElement
 {
 	## Public Methods ##
-	// Constructor.
+	// .
+	/**
+     * @desc Constructor
+     * @param string $title Menu title
+     * @param string $url Destination url
+     * @param string $image Menu's image url relative to the website root or absolute
+	 */
 	function MenuLink($title, $url, $image = '')
 	{
 		parent::MenuElement($title, $url, $image);
 	}
 	
-	// Display the MenuLink
+	/**
+     * @desc Display the menu
+     * @param Template $template the template to use
+     * @return string the menu parsed in xHTML
+     */
 	function display($template)
 	{
         parent::_assign($template);

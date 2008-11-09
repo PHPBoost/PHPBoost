@@ -35,10 +35,21 @@ define('TREE_MENU', 'tree');
 define('VERTICAL_SCROLLING_MENU', 'vertical_scrolling');
 define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 
+/**
+ * @author loic
+ * @desc Create a Menu with children.
+ * Children could be Menu or MenuLink objects
+ */
 class Menu extends MenuElement
 {
 	## Public Methods ##
-	// Constructor.
+	/**
+	 * @desc Constructor
+	 * @param string $title Menu title
+	 * @param string $url Destination url
+	 * @param string $image Menu's image url relative to the website root or absolute
+	 * @param string $type Menu's type
+	 */
 	function Menu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
 	{
 		$this->id = get_uid(); // Set a unique ID
@@ -51,22 +62,32 @@ class Menu extends MenuElement
 		parent::MenuElement($title, $url, $image);
 	}
 	
-	// Add a list of MenuLink or (sub)Menu to the current one
+	/**
+	 * @desc Add a list of MenuLink or (sub)Menu to the current one
+	 * @param &MenuElement[] &$menu_elements A reference to a list of MenuLink and / or Menu to add
+	 */
 	function add_array(&$menu_elements)
 	{
 		foreach($menu_elements as $element)
 			$this->add($element);
 	}
 	
-	// Add a single MenuLink or (sub) Menu
+	/**
+	 * @desc Add a single MenuLink or (sub) Menu
+	 * @param MenuElement $element the MenuLink or Menu to add
+	 */
 	function add($element)
 	{
 	    if( get_class($element) == get_class($this) )
 	       $element->_parent($this->type);
 		$this->elements[] = $element;
 	}
-		
-	// Display the Menu
+	
+	/**
+	 * @desc Display the menu
+	 * @param Template $template the template to use
+	 * @return string the menu parsed in xHTML
+	 */
 	function display($template = false)
 	{
 		if( !is_object($template) || strtolower(get_class($template)) != 'template' )
@@ -95,7 +116,11 @@ class Menu extends MenuElement
 	
 	## Private Methods ##
 	
-	// Increase the Menu Depth and set the menu type to its parent one
+	/**
+	 * @desc Increase the Menu Depth and set the menu type to its parent one
+	 * @access protected
+	 * @param string $type the type of the menu
+	 */
 	function _parent($type)
 	{
 	    $this->depth++;
@@ -108,10 +133,29 @@ class Menu extends MenuElement
 	}
 	
 	## Private attributes ##
-	var $id;                   // Menu ID
-	var $type;                 // Menu Type
-	var $elements = array();   // Menu Elements
-	var $depth = 0;            // Menu Level
+	/**
+	 * @access protected
+	 * @var int menu's unique identifier
+	 */
+	var $id;
+	
+	/**
+     * @access protected
+	 * @var string menu's type
+	 */
+	var $type;
+	
+	/**
+     * @access protected
+	 * @var MenuElement[] Direct menu children list
+	 */
+	var $elements = array();
+	
+	/**
+     * @access protected
+	 * @var int Menu's depth
+	 */
+	var $depth = 0;
 }
 
 ?>
