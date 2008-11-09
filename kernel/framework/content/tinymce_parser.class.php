@@ -68,12 +68,13 @@ class TinyMCEParser extends ContentParser
 		//Parse the tags which are not supported by TinyMCE but expected in BBCode
 		$this->_parse_bbcode_tags();
 		
-		//If it remains </p> (it seems to be a bug in TinyMCE)
-		$this->parsed_content = str_replace('&lt;/p&gt;', '', $this->parsed_content);
-		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if( PATH_TO_ROOT != '..' )
 			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
+		
+		// Trim manuel
+		$this->parsed_content = preg_replace('`^([\s]|(?:<br />))*`i', '', $this->parsed_content);
+		$this->parsed_content = preg_replace('`([\s]|(?:<br />))*$`i', '', $this->parsed_content);
 		
 		//On remet le code HTML mis de côté
 		if( !empty($this->array_tags['html']) )
@@ -201,16 +202,20 @@ class TinyMCEParser extends ContentParser
 		$this->parsed_content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "<br />\r\n", "<br />\r\n", ' '), $this->parsed_content);
 		
 		$array_preg = array(
+			'`&lt;p&gt;[\s]*&nbsp;[\s]*&lt;/p&gt;[\s]*`',
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
 			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
-			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU'
+			'`&lt;h6&gt;(.+)&lt;/h6&gt;`isU',
+			'`&lt;/p&gt;[\s]*`i'
 		);
 		$array_preg_replace = array(
-			'$1' . "\n<br />",
-			'$1' . "\n<br />",
+			'',
+			'$1' . "\r\n<br />",
+			'$1' . "\n\n<br />",
 			'<span style="font-size: 10px;">$1</span><br />',
 			'<span style="font-size: 8px;">$1</span><br />',
+			'&lt;/p&gt;'
 		);
 		
 		//Strong tag
@@ -219,7 +224,7 @@ class TinyMCEParser extends ContentParser
 			array_push($array_preg, '`&lt;strong&gt;(.+)&lt;/strong&gt;`isU');
 			array_push($array_preg_replace, '<strong>$1</strong>');
 		}
-		//italic tag
+		//Italic tag
 	   	if( !in_array('i', $this->forbidden_tags) )
 		{
 			array_push($array_preg, '`&lt;em&gt;(.+)&lt;/em&gt;`isU');
