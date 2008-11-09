@@ -241,7 +241,7 @@ class Sessions
 		else
 		{
 			//Récupère également les champs membres supplémentaires
-			$result = $Sql->query_while("SELECT s.modules_parameters, s.user_theme, s.user_lang
+			$result = $Sql->query_while("SELECT modules_parameters, user_theme, user_lang
 			FROM ".PREFIX."sessions 
 			WHERE user_id = '-1' AND session_id = '" . $this->data['session_id'] . "'", __LINE__, __FILE__);
 			$userdata = $Sql->fetch_assoc($result);
@@ -386,8 +386,7 @@ class Sessions
 				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
 				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));				
 			}
-			
-			$session_data = unserialize($_COOKIE[$CONFIG['site_cookie'].'_data']);
+			$session_data = sunserialize($_COOKIE[$CONFIG['site_cookie'].'_data']);
 			
 			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
@@ -409,7 +408,7 @@ class Sessions
 		########Cookie Existe?########
 		if( isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) )
 		{
-			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? unserialize($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) : array();
+			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? sunserialize($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) : array();
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->query("SELECT level FROM ".PREFIX."member WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
@@ -530,7 +529,7 @@ class Sessions
 					$time = gmdate_format('YmdHis', time(), TIMEZONE_SYSTEM); //Date et heure du dernier passage!
 					
 					$line = file($file_path);
-					$data = unserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
+					$data = sunserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
 					
 					if( !isset($data[$robot]) )
 						$data[$robot] = $robot . '/1/' . $time; //Création du array contenant les valeurs.

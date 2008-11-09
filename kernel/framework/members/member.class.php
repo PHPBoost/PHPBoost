@@ -102,6 +102,8 @@ class User
 	//Met à jour le thème visiteur.
 	function update_user_theme($user_theme)
 	{
+		global $Sql;
+		
 		if( $this->user_data['level'] > -1 )
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
 		else
@@ -117,6 +119,8 @@ class User
 	//Met à jour le thème visiteur.
 	function update_user_lang($user_lang)
 	{
+		global $Sql;
+		
 		if( $this->user_data['level'] > -1 )
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
 		else
