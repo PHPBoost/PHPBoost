@@ -81,7 +81,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
 	switch($force_type)
 	{
-		case TINTEGER:		
+		case TINTEGER:
 			return (int)$var;
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
@@ -180,7 +180,7 @@ function substr_html(&$str, $start, $end = '')
 
 //Affichage de l'éditeur de contenu.
 function display_editor($field = 'contents', $forbidden_tags = array())
-{	
+{
 	$content_editor = new Content();
 	$editor =& $content_editor->get_editor();
 	if( !empty($forbidden_tags) )
@@ -193,7 +193,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 //Affichage des commentaires.
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-	include_once('../kernel/framework/content/comments.class.php'); 
+	include_once('../kernel/framework/content/comments.class.php');
 	$comments = new Comments($script, $idprov, $vars, $module_folder);
 	
 	return $comments->display();
@@ -274,7 +274,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
     $dir = find_require_dir($dir_path, $require_dir, false);
     $handle = @fopen($dir_path . $dir . '/' . $ini_name, 'r');
    	$config = '';
-    if( $handle ) 
+    if( $handle )
     {
         while( !feof($handle) )
         {
@@ -297,9 +297,9 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
     if( !file_exists($dir_path . $require_dir) )
     {
         if( is_dir($dir_path) && $dh = @opendir($dir_path) ) //Si le dossier existe et qu'on a les permissions suffisantes
-        {       
+        {
             while( !is_bool($dir = readdir($dh)) )
-            {   
+            {
                 if( strpos($dir, '.') === false   )
 				{
 					closedir($dh);
@@ -317,7 +317,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
         global $Errorh;
     
         //Déclenchement d'une erreur fatale.
-        $Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__); 
+        $Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__);
         exit;
     }
 }
@@ -391,8 +391,8 @@ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "');";	
-	$link_current = $path . '#anchor_' . $script;	
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "');";
+	$link_current = $path . '#anchor_' . $script;
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
 	
@@ -462,7 +462,7 @@ function transid($url, $mod_rewrite = '', $ampersand = '&amp;')
         $session_mod = $Session->session_mod;
         
     if( $session_mod == 0 )
-    {   
+    {
         if( $CONFIG['rewrite'] == 1 && !empty($mod_rewrite) ) //Activation du mod rewrite => cookies activés.
             return $mod_rewrite;
         else
@@ -564,7 +564,7 @@ function strtotimestamp($str, $date_format)
     $serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
     $timezone = $User->get_attribute('user_timezone') - $serveur_hour;
     if( $timezone != 0 )
-        $timestamp -= $timezone * 3600; 
+        $timestamp -= $timezone * 3600;
         
     return ($timestamp > 0) ? $timestamp : time();
 }
@@ -616,19 +616,19 @@ function delete_file($file)
 function delete_directory($dir_path, $path)
 {
     $dir = dir($path);
-    if( !is_object($dir) ) 
+    if( !is_object($dir) )
         return false;
         
-    while( $file = $dir->read() ) 
+    while( $file = $dir->read() )
     {
         if( $file != '.' && $file != '..' )
-        {           
+        {
             $path_file = $path . '/' . $file;
             if( is_file($path_file) )
                 if( !@unlink($path_file) )
                     return false;
             elseif( is_dir($path_file) )
-            {   
+            {
                 delete_directory($dir_path, $path_file);
                 if( !@rmdir($path_file) )
                     return false;
@@ -638,11 +638,11 @@ function delete_directory($dir_path, $path)
     
     //Fermeture du dossier et suppression de celui-ci.
     if( !$file )
-    {   
+    {
         $dir->close();
         if( @rmdir($dir_path) )
             return true;
-    }   
+    }
     return false;
 }
 
@@ -684,16 +684,16 @@ function number_round($number, $dec)
 //Remplacement de la fonction file_get_contents.
 function file_get_contents_emulate($filename, $incpath = false, $resource_context = null)
 {
-    if( false === ($fh = @fopen($filename, 'rb', $incpath)) ) 
+    if( false === ($fh = @fopen($filename, 'rb', $incpath)) )
     {
         user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
         return false;
     }
 
     clearstatcache();
-    if( $fsize = @filesize($filename) ) 
+    if( $fsize = @filesize($filename) )
         $data = fread($fh, $fsize);
-    else 
+    else
     {
         $data = '';
         while( !feof($fh) )
@@ -703,12 +703,12 @@ function file_get_contents_emulate($filename, $incpath = false, $resource_contex
     return $data;
 }
 
-//Emulation de la fonction PHP5 html_entity_decode().       
-if( !function_exists('html_entity_decode') ) 
+//Emulation de la fonction PHP5 html_entity_decode().
+if( !function_exists('html_entity_decode') )
 {
     function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
     {
-        if( !is_int($quote_style) ) 
+        if( !is_int($quote_style) )
         {
             user_error('html_entity_decode() expects parameter 2 to be long, ' .
             gettype($quote_style) . ' given', E_USER_WARNING);
@@ -721,25 +721,25 @@ if( !function_exists('html_entity_decode') )
         $trans_tbl['&#039;'] = '\'';
 
         // Not translating double quotes
-        if( $quote_style & ENT_NOQUOTES ) 
+        if( $quote_style & ENT_NOQUOTES )
             unset($trans_tbl['&quot;']); // Remove double quote from translation table
         return strtr($string, $trans_tbl);
     }
 }
 
-//Emulation de la fonction PHP5 htmlspecialchars_decode().  
-if( !function_exists('htmlspecialchars_decode') ) 
+//Emulation de la fonction PHP5 htmlspecialchars_decode().
+if( !function_exists('htmlspecialchars_decode') )
 {
     function htmlspecialchars_decode($string, $quote_style = null)
     {
         // Sanity check
-        if( !is_scalar($string) ) 
+        if( !is_scalar($string) )
         {
             user_error('htmlspecialchars_decode() expects parameter 1 to be string, ' . gettype($string) . ' given', E_USER_WARNING);
             return;
         }
 
-        if( !is_int($quote_style) && $quote_style !== null ) 
+        if( !is_int($quote_style) && $quote_style !== null )
         {
             user_error('htmlspecialchars_decode() expects parameter 2 to be integer, ' . gettype($quote_style) . ' given', E_USER_WARNING);
             return;
@@ -751,7 +751,7 @@ if( !function_exists('htmlspecialchars_decode') )
         
         // The function does not behave as documented
         // This matches the actual behaviour of the function
-        if( $quote_style & ENT_COMPAT || $quote_style & ENT_QUOTES ) 
+        if( $quote_style & ENT_COMPAT || $quote_style & ENT_QUOTES )
         {
             $from[] = '&quot;';
             $to[] = '"';
@@ -765,18 +765,18 @@ if( !function_exists('htmlspecialchars_decode') )
 }
 
 //Emulation de la fonction PHP5 array_combine
-if( !function_exists('array_combine') ) 
+if( !function_exists('array_combine') )
 {
     function array_combine($keys, $values)
     {
-        if( !is_array($keys) ) 
+        if( !is_array($keys) )
         {
             user_error('array_combine() expects parameter 1 to be array, ' .
                 gettype($keys) . ' given', E_USER_WARNING);
             return;
         }
 
-        if( !is_array($values) ) 
+        if( !is_array($values) )
         {
             user_error('array_combine() expects parameter 2 to be array, ' .
                 gettype($values) . ' given', E_USER_WARNING);
@@ -790,7 +790,7 @@ if( !function_exists('array_combine') )
             return false;
         }
 
-        if( $key_count === 0 || $value_count === 0 ) 
+        if( $key_count === 0 || $value_count === 0 )
         {
             user_error('array_combine() Both parameters should have number of elements at least 0', E_USER_WARNING);
             return false;
@@ -800,7 +800,7 @@ if( !function_exists('array_combine') )
         $values  = array_values($values);
 
         $combined = array();
-        for ($i = 0; $i < $key_count; $i++) 
+        for ($i = 0; $i < $key_count; $i++)
         {
             $combined[$keys[$i]] = $values[$i];
         }
@@ -831,6 +831,21 @@ function strhash($str)
 //     return hash('sha256', $str);
     require_once(PATH_TO_ROOT . '/kernel/framework/util/sha256.class.php');
     return SHA256::hash(md5($str) . $str);
+}
+
+// Returns a Unique Identifier in the whole application
+function get_uid()
+{
+    static $uid = 0;
+    return $uid++;
+}
+
+// Returns a HTML unique Identifier.
+// You could use it to define all your block's id
+// and use it with no issues in javascript
+function get_html_uid($prefix = 'html_uid_')
+{
+    return $prefix . get_uid();
 }
 
 ?>

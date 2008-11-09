@@ -2,9 +2,9 @@
 /*##################################################
  *                             menu_link.class.php
  *                            -------------------
-*   begin                : July 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : July 08, 2008
+ *   copyright            : (C) 2008 Régis Viarre; Loïc Rouchon
+ *   email                : crowkait@phpboost.com; horn@phpboost.com
  *
  *
 ###################################################
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,31 +30,22 @@ require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_element.class.php');
 class MenuLink extends MenuElement
 {
 	## Public Methods ##
-	//Constructeur.
-	function MenuLink()
+	// Constructor.
+	function MenuLink($title, $url, $image = '')
 	{
-		parent::MenuElement();
+		parent::MenuElement($title, $url, $image);
 	}
 	
-	//Affichage.
-	function display(&$template)
+	// Display the MenuLink
+	function display($template)
 	{
-		$template_string = $template->copy();		
-		
-		$template_string->assign_vars(array(
-			'C_LINK' => true,
-			'TITLE' => $this->title,
-			'IMAGE' => $this->image,
-			'URL' => $this->url
-		));
-		
-		return $template_string->parse(TEMPLATE_STRING_MODE);
+        parent::_assign($template);
+		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
 	## Private Methods ##
 	
 	## Private attributes ##
-	var $url; //Identifiant du menu.
 }
 
 ?>
