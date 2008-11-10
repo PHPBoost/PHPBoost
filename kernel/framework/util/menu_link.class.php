@@ -30,6 +30,8 @@ require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_element.class.php');
 /**
  * @author loic
  * @desc A Simple menu link
+ * @package util
+ * @subpackage menu
  */
 class MenuLink extends MenuElement
 {

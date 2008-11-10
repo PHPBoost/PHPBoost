@@ -39,6 +39,8 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
  * @author loic
  * @desc Create a Menu with children.
  * Children could be Menu or MenuLink objects
+ * @package util
+ * @subpackage menu
  */
 class Menu extends MenuElement
 {

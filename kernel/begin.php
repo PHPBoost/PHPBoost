@@ -34,7 +34,7 @@ header('Pragma: no-cache');
 
 //Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/framework/util/bench.class.php');
-$Bench = new Bench('site'); //Début du benchmark
+$Bench = new Bench(); //Début du benchmark
 
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
