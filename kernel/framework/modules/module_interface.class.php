@@ -1,30 +1,34 @@
 <?php
 
-/*##################################################
-*                      module_interface.class.php
-*                            -------------------
-*   begin                : January 15, 2008
-*   copyright            :(C) 2008 Loïc Rouchon
-*   email                : horn@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
+/**
+ *                      module_interface.class.php
+ *                            -------------------
+ *   begin                : January 15, 2008
+ *   copyright            : (C) 2008 Loïc Rouchon
+ *   email                : horn@phpboost.com
+ *
+ * @author      Loïc Rouchon
+ * @copyright   ( C) 2008 Loïc Rouchon - horn@phpboost.com
+ * @license     http://opensource.org/licenses/gpl-license.php GNU Public License
+ *
+ *###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ *###################################################
+ */
 
 define('MODULE_NOT_AVAILABLE', 1);
 define('ACCES_DENIED', 2);
@@ -32,33 +36,47 @@ define('MODULE_NOT_YET_IMPLEMENTED', 4);
 define('FUNCTIONNALITY_NOT_IMPLEMENTED', 8);
 define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
 
+/**
+ * @author loic
+ * @desc This Class allow you to call methods on a ModuleInterface extended class
+ * that you're not sure of the method's availality. It also provides a set of
+ * generic methods that you could use to integrate your module with others, or
+ * allow your module to share services.
+ * @package modules
+ * @subpackage modules-services
+ */
 class ModuleInterface
 {
     //-------------------------------------------------------------- CONSTRUCTOR
-    function ModuleInterface($moduleId = '', $error = 0)
     /**
-     *  Module constructor
+     * @desc ModuleInterface constructor
+     * @param string $moduleId the module id. It's the name of the folder in witch the module is
+     * @param int $error allow you to instanciate your module with an error code
      */
+    function ModuleInterface($moduleId = '', $error = 0)
     {
+        /**
+         * @global  CONFIG
+         */
         global $CONFIG;
         $this->id = $moduleId;
         $this->name = $this->id;
         $this->attributes =array();
         $this->infos = array();
         $this->functionnalities = array();
-        
+
         // Get the config.ini informations
         $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', $CONFIG['lang']);
         if ( isset($this->infos['name']) )
             $this->name = $this->infos['name'];
-        
+
         if( $error == 0 )
-        {            
+        {
             // Get modules methods
             $methods = get_class_methods(ucfirst($moduleId).'Interface'); // PHP4 returns it in lower case
             // generics module Methods from ModuleInterface
             $moduleMethods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
-            
+
             // Delete all generics private methods
             foreach($methods as $key => $function)
             {
@@ -68,155 +86,242 @@ class ModuleInterface
         }
         $this->errors = $error;
     }
-    
+
     //----------------------------------------------------------- PUBLIC METHODS
-    function get_id()
     /**
-     *  Return the name of the module
+     * @return string Return the id of the module
      */
+    function get_id()
     {
         return $this->id;
     }
-    
-    function get_name()
+
     /**
-     *  Return the name of the module
+     * @return string Return the name of the module
      */
+    function get_name()
     {
         return $this->name;
     }
-    
-    function get_infos()
+
     /**
-     *  Return all informations that you could find in the .ini file of the module,
-     *  his functionnalities and his name
+     * @return mixed[] All informations that you could find in the .ini file of the module,  his functionnalities and his name
      */
+    function get_infos()
     {
-        return array('name' => $this->name,
+        return array(
+            'name' => $this->name,
             'infos' => $this->infos,
             'functionnalities' => $this->functionnalities,
         );
     }
 
-    function get_attribute($attribute)
     /**
-     *  Return the value of the attribute identified by the string <$attribute>
-     *  if existing. Else set the <MODULE_ATTRIBUTE_DOES_NOT_EXIST> flag and
-     *  return <-1>
+     * @param $attribute the attribute identifier in the dictionary
+     * @return mixed The value of the attribute identified by the string $attribute
+     *  in the intern dictionary if existing. Else, the MODULE_ATTRIBUTE_DOES_NOT_EXIST flag is raised and it
+     *  returns -1
      */
+    function get_attribute($attribute)
+
     {
         $this->_clear_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
         if ( isset($this->attributes[$attribute]) )
             return $this->attributes[$attribute];
-
-        // else
+        
         $this->_set_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
         return -1;
     }
-    
-    function set_attribute($attribute, $value)
+
     /**
-     *  Set the value of the attribute identified by the string <$attribute>.
+     * @method Set the $value of the attribute identified by the string $attribute.
+     * @param string $attribute the attribute identifier
+     * @param mixed $value the value to set
      */
+    function set_attribute($attribute, $value)
     {
         $this->attributes[$attribute] = $value;
     }
-    
-    function unset_attribute($attribute)
+
     /**
-     *  Delete the attribute and free the memory of it.
+     * @method Delete the attribute and free its memory.
+     * @param string $attribute the attribute identifier
      */
+    function unset_attribute($attribute)
     {
         unset($this->attributes[$attribute]);
     }
-    
-    function got_error($error = 0)
+
     /**
-     *  If called with no arguments, return <true> if an error has occured
-     *  otherwise, <false>.
-     *  If the method got an argument, return <true> if the specified <$error>
-     *  has occured otherwise, <false>.
+     * @method Returns the last error. If called with no arguments, returns true if an error has occured
+     *  otherwise, false. If the method got an argument,
+     * @param int $error to check a specific error, 0 otherwise
+     * @return returns true if the specified $error has occured otherwise, false.
      */
+    function got_error($error = 0)
     {
         if ( $error == 0 )
             return $this->errors != 0;
         else
             return ($this->errors & $error) != 0;
     }
-    
-    function get_errors()
+
     /**
-     *  Return the errors flags
+     * @return int Returns the current errors flags
      */
+    function get_errors()
     {
         return $this->errors;
     }
-    
-    function functionnality($functionnality, $args = null)
+
     /**
-     *  Test the existance of the functionnality and if exist call it.
-     *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is set.
+     * @method Check the existance of the functionnality and if exists call it.
+     *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is raised.
+     * @param string $functionnality the name of the method you want to call
+     * @param mixed $args the args you want to pass to the $functionnality method
+     * @return mixed the $functionnality returns or if non-existing, false
      */
+    function functionnality($functionnality, $args = null)
     {
         $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         if( $this->has_functionnality($functionnality) )
             return $this->$functionnality($args);
-        else
-            $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
+        $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
+        return false;
     }
-    
-    function has_functionnality($functionnality)
+
     /**
-     *  Test the availability of the functionnality
+     * @method Check the availability of the functionnality (hook)
+     * @param string $functionnality the name of the method you want to check the availability
+     * @return bool true if the functionnality exists, false otherwise
      */
+    function has_functionnality($functionnality)
     {
         return in_array(strtolower($functionnality), $this->functionnalities);
     }
-    
-    function has_functionnalities($functionnalities)
+
     /**
-     *  Test the availability of all the functionnalities
+     * @method Check the availability of the functionnalities (hook)
+     * @param string[] $functionnalities the names of the methods you want to check the availability
+     * @return bool true if all functionnalities exist, false otherwise
      */
+    function has_functionnalities($functionnalities)
     {
         $nbFunctionnalities = count($functionnalities);
         for ( $i = 0; $i < $nbFunctionnalities; $i++ )
             $functionnalities[$i] = strtolower($functionnalities[$i]);
         return $functionnalities === array_intersect($functionnalities, $this->functionnalities);
     }
-    
+
+
+    /**
+     * @abstract get the "php instring" content of module's cache
+     * @return string the "php in string" code that will be written in the cache
+     */
+    function get_cache() {}
+
+    /**
+     * @abstract Daily event for periodic tasks
+     */
+    function on_changeday() {}
+
+    /**
+     * @abstract Get a module search request
+     * @param mixed $args defined by get_search_args()
+     * @see get_search_args
+     * @return string the search sql query for the module
+     */
+    function get_search_request($args=null) {}
+
+    /**
+     * @abstract Get search args
+     * @see get_search_request
+     * @return string[] List of args
+     */
+    function get_search_args() {}
+
+    /**
+     * @abstract Get the search form for the current module
+     * @param mixed $args Arguments to configure the form
+     * @return string the html form to be printed in the search module interface
+     */
+    function get_search_form($args=null) {}
+
+    /**
+     * @abstract Parse search results to specialize the default results display interface
+     * All the results have to be passed by references each time this method is call,
+     * but only the next unparsed result will be parsed and return. This for technical reasons
+     * and also for some optimizations.
+     * @param &mixed &$args all the search results to parse.
+     * @return string the new html display interface
+     */
+    function parse_search_results(&$args) {}
+
+    /**
+     * @abstract Get feed data structure
+     * @param int $idcat the category id to get the feed data from. default is 0,
+     * it corresponds to all the categories
+     * @param string $type the feed second nature, depend of the module
+     * @return FeedData
+     */
+    function get_feed_data_struct($idcat=0, $type='master') {}
+
     //------------------------------------------------------------------ PRIVATE
-	/**
-	 *  For compatibility reasons with PHP4, the private, protected and public
-	 *  keywords are not used.
-	 *
-	 *  So please, even if it's possible, do NOT call these methods.
-	 *
-     *  At your own risk!
-	 */
-	//-------------------------------------------------------- PROTECTED METHODS
-	function _set_error($error = 0)
-	/**
-	*  Set the flag error.
-	*/
-	{
-		$this->errors |= $error;
-	}
-	
-	function _clear_error($error)
-	/**
-	*  Clean the functionnality flag
-	*/
-	{
-		$this->errors &= (~$error);
-	}
-	
-	//----------------------------------------------------- PROTECTED ATTRIBUTES
+
+    //-------------------------------------------------------- PROTECTED METHODS
+    /**
+     * @method Set the flag error.
+     * @param int $error the error flag to raised
+     */
+    function _set_error($error = 0)
+    {
+        $this->errors |= $error;
+    }
+
+    /**
+     * @method Clear the $error error flag
+     * @param int $error the error flag to clear
+     */
+    function _clear_error($error)
+    {
+        $this->errors &= (~$error);
+    }
+
+    //----------------------------------------------------- PROTECTED ATTRIBUTES
+    /**
+     * @access protected
+     * @var string the module identifier
+     */
     var $id;
+    /**
+     * @access protected
+     * @var string the module full name
+     */
     var $name;
-	var $infos;
-	var $functionnalities;
-	var $errors;
+    /**
+     * @access protected
+     * @var mixed module's informations contained in ini files
+     */
+    var $infos;
+    /**
+     * @access protected
+     * @var string[] list of the functionnalities provided
+     */
+    var $functionnalities;
+    /**
+     * @access protected
+     * @var int error flag
+     */
+    var $errors;
+    /**
+     * @access protected
+     * @var mixed[string] the attributes dictionary
+     */
     var $attributes;
+
+
+
+
 }
 
 ?>
