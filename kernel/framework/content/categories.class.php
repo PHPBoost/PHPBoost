@@ -25,42 +25,6 @@
  *
 ###################################################*/
 
-/*
-This class allows you to manage easily categories for your modules.
-It's as generic as possible, if you want to complete some actions to specialize them for you module, 
-you can create a new class inheritating of it in which you call its methods using the syntax 
-parent::method().
-/!\ Warning : /!\
-- Your DB table must respect some rules :
-	* You must have an integer attribute whose name is id and which represents the identifier of each category. It must be a primary key.
-	* You also must have an integer attribute named id_parent which represents the identifier of the parent category (it will be 0 if its parent category is the root of the tree).
-	* To maintain order, you must have a field containing the rank of the category which be an integer named c_order.
-	* A field visible boolean (tynint 1 sur mysql)
-	*A field name containing the category name
-- In this class the user are supposed to be an administrator, no checking of his auth is done.
-- To be correctly displayed, you must supply to functions a variable extracted from a file cache. Use the Cache class to build your file cache. Your variable must be an array in which keys are categories identifiers, an values are still arrays which are as this :
-	* key id_parent containing the id_parent field of the database
-	* key name containing the name of the category
-	* key order 
-	* key visible which is a boolean 
-You can also have other fields such as auth level, description, visible, that class won't modify them.
-- To display the list of categories and actions you can do on them, you may want to customize it. For that you must build an array that you will give to set_display_config() containing your choices :
-	* Key 'xmlhttprequest_file' which corresponds to the name of the file which will treat the AJAX requests. We usually call it xmlhttprequest.php.
-	* Key 'url' which represents the url of the category (it won't display any link up to categories if you don't give this field). Its structure is the following :
-		# key 'unrewrited' => string containing unrewrited urls (let %d where you want to display the category identifier)
-		# Key administration_file_name which represents the file which allows you to update category
-		# rewrited url (optionnal) 'rewrited' => string containing rewrited urls (let %d where you want to display the category identifier and %s the category name if you need it) 
-*/
-
-//Config example
-/* $config = array(
-	'xmlhttprequest_file' => 'xmlhttprequest.php',
-	'administration_file_name' => 'admin_news_cats.php',
-	'url' => array(
-		'unrewrited' => PATH_TO_ROOT . '/news/news.php?id=%d',
-		'rewrited' => PATH_TO_ROOT . '/news-%d+%s.php'),
-); */
-
 //Class constants
 define('DEBUG_MODE', true);
 define('PRODUCTION_MODE', false);
@@ -72,8 +36,8 @@ define('MOVE_CATEGORY_UP', 'up');
 define('MOVE_CATEGORY_DOWN', 'down');
 define('DO_NOT_LOAD_CACHE', false);
 define('LOAD_CACHE', true);
-define('CAT_VISIBLE', '1');
-define('CAT_UNVISIBLE', '0');
+define('CAT_VISIBLE', true);
+define('CAT_UNVISIBLE', false);
 define('ADD_THIS_CATEGORY_IN_LIST', true);
 define('DO_NOT_ADD_THIS_CATEGORY_IN_LIST', false);
 define('STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH', 1);
@@ -90,9 +54,58 @@ define('INCORRECT_DISPLAYING_CONFIGURATION', 0x40);
 define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
 define('NEW_STATUS_UNKNOWN', 0x100);
 
+/**
+ * @author benoit
+ * @desc This class allows you to manage easily categories for your modules.
+ * It's as generic as possible, if you want to complete some actions to specialize them for you module, 
+ * you can create a new class inheritating of it in which you call its methods using the syntax 
+ * parent::method().
+ * <br />
+ * /!\ Warning : /!\
+ * <ul>
+ * 	<li>Your DB table must respect some rules :
+ * 		<ul>
+ * 			<li>You must have an integer attribute whose name is id and which represents the identifier of each category. It must be a primary key.</li>
+ *			<li>You also must have an integer attribute named id_parent which represents the identifier of the parent category (it will be 0 if its parent category is the root of the tree).</li>
+ * 			<li>To maintain order, you must have a field containing the rank of the category which be an integer named c_order.</li>
+ * 			<li>A field visible boolean (tynint 1 sur mysql)</li>
+ * 			<li>A field name containing the category name</li>
+ *		</ul>
+ *  </li>
+ *  <li>In this class the user are supposed to be an administrator, no checking of his auth is done.</li>
+ *  <li>To be correctly displayed, you must supply to functions a variable extracted from a file cache. Use the Cache class to build your file cache. Your variable must be an array in which keys are categories identifiers, an values are still arrays which are as this :
+ *  	<ul>
+ *  		<li>key id_parent containing the id_parent field of the database</li>
+ *  		<li>key name containing the name of the category</li>
+ *  		<li>key order</li>
+ *  		<li>key visible which is a boolean</li>
+ *  	</ul>
+ *  </li>
+ *  <li>You can also have other fields such as auth level, description, visible, that class won't modify them.</li>
+ *  <li>To display the list of categories and actions you can do on them, you may want to customize it. For that you must build an array that you will give to set_display_config() containing your choices :
+ *  	<ul>
+ *  		<li>Key 'xmlhttprequest_file' which corresponds to the name of the file which will treat the AJAX requests. We usually call it xmlhttprequest.php.</li>
+ *  		<li>Key 'url' which represents the url of the category (it won't display any link up to categories if you don't give this field). Its structure is the following :
+ *  			<ul>
+ *  				<li>key 'unrewrited' => string containing unrewrited urls (let %d where you want to display the category identifier)</li>
+ *  				<li>Key administration_file_name which represents the file which allows you to update category</li>
+ *  				<li>rewrited url (optionnal) 'rewrited' => string containing rewrited urls (let %d where you want to display the category identifier and %s the category name if you need it)</li>
+ *  			</ul>
+ *  		</li>
+ *  	</ul>
+ *  </li>
+ *  </ul>
+ *  If you need more informations to use this class, we advise you to look at the wiki of PHPBoost, in which there is a tutorial explaining how to use it step by step.
+ */
+
 class CategoriesManagement
 {
 	## Public methods ##
+	/**
+	 * @param string $table Table name of the database which contains the require fields (explained in the class description)
+	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
+	 * @param &array[] &$cache_var Array containing the correct data, descripted in the description of the class.
+	 */
 	function CategoriesManagement($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
@@ -101,11 +114,19 @@ class CategoriesManagement
 		$this->cache_var =& $cache_var;
 	}
 	
-	//Method which adds a category
-	function add($id_parent, $name, $visible = 1, $order = 0)
+	/**
+	 * @desc Adds a category. We can decide if it will be visible and what its position will be
+	 * @param int $id_parent Id of the category in which this category will be added
+	 * @param string $name Name of the category to add
+	 * @param bool $visible Is the category visible? CAT_VISIBLE if visible, CAT_UNVISIBLE else
+	 * @param int $order 
+	 * @return int The id of the category which has been added and 0 if it couldn't be added (the error will be explained in the check_error method).
+	 * The error can be only NEW_PARENT_CATEGORY_DOES_NOT_EXIST, which means that its parent category doesn't exist.
+	 */
+	function add($id_parent, $name, $visible = CAT_VISIBLE, $order = 0)
 	{
 		global $Sql, $Cache;
-		$this->_clean_error();
+		$this->_clear_error();
 		
 		//We cast this variable to integer
 		if( !is_int($visible) )
@@ -133,13 +154,24 @@ class CategoriesManagement
 		}
 	}
 
-	//Method which moves a category
+	/**
+	 * @desc Moves a category (makes it gone up or down)
+	 * @param int $id Id of the category to move
+	 * @param string $way The way according to which the category has to be moved. It must be either MOVE_CATEGORY_UP or MOVE_CATEGORY_DOWN.
+	 * @return bool true wether the category could be moved, false otherwise. If it's false, you will be able to know what was the error by using check_error method.
+	 * The error will be:
+	 * <ul>
+	 *		<li>CATEGORY_DOES_NOT_EXIST when the category to move doesn't exist</li>
+	 *		<li>ERROR_CAT_IS_AT_BOTTOM when you want to move down a category whereas it's already at the bottom of the parent category</li>
+	 *		<li>ERROR_CAT_IS_AT_TOP when you want to move up a categoty whereas it's already at the top of the parent category</li>
+	 *		<li>ERROR_UNKNOWN_MOTION if the motion you asked is neither MOVE_CATEGORY_UP nor MOVE_CATEGORY_DOWN</li>
+	 * </ul> 
+	 */
 	function move($id, $way)
 	{
 		global $Sql, $Cache;
-		$this->_clean_error();
+		$this->_clear_error();
 		if( in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)) )
-		
 		{
 			$cat_info = $Sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
@@ -149,7 +181,7 @@ class CategoriesManagement
 				$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 				return false;
 			}
-				
+			
 			if( $way == MOVE_CATEGORY_DOWN )
 			{
 				//Query which allows us to check if we don't want to move down the downest category
@@ -199,12 +231,23 @@ class CategoriesManagement
 		}
 	}
 
-	//Method which allows to move a category from its position to another category
-	//You can choose its position in the new category, otherwise it will be placed at the end
+	/**
+	 * @desc Moves a category into another category. You can specify its future position in its future parent category.
+	 * @param int $id Id of the category to move
+	 * @param int $new_id_cat Id of the parent category in which the category will be moved.
+	 * @param int $position Position (number) that the category has to take in its new parent category. If not specified, it will be placed at the end of the category. 
+	 * @return bool true if the category has been moved successfully, false otherwise, in this case you will be able to know the error by using the check_error method.
+	 * The errors can be
+	 * <ul>
+	 * 		<li>NEW_CATEGORY_IS_IN_ITS_CHILDRENS if you tried to move the category into one of its children. It's not possible because the structure won't be anymore a tree.</li>
+	 * 		<li>NEW_PARENT_CATEGORY_DOES_NOT_EXIST when the category in which you want it to be moved doesn't exist.</li>
+	 * 		<li>CATEGORY_DOES_NOT_EXIST when the category you want to move doesn't exist</li>
+	 * </ul>
+	 */
 	function move_into_another($id, $new_id_cat, $position = 0)
 	{
 		global $Sql, $Cache;
-		$this->_clean_error();
+		$this->_clear_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
 		if( ($id == 0 || array_key_exists($id, $this->cache_var)) && ($new_id_cat == 0 || array_key_exists($new_id_cat, $this->cache_var)) )
@@ -256,10 +299,16 @@ class CategoriesManagement
 	}
 
 	//Deleting a category
+	/**
+	 * @desc Deletes a category.
+	 * @param int $id Id of the category to delete.
+	 * @return bool true if the category has been deleted successfully and false otherwise, and in this case you can find the error in the check_error method.
+	 * The error CATEGORY_DOES_NOT_EXIST is raised if the category to delete doesn't exist. 
+	 */
 	function delete($id)
 	{
 		global $Sql, $Cache;
-		$this->_clean_error();
+		$this->_clear_error();
 		
 		//Checking that category exists
 		if( $id != 0 && !array_key_exists($id, $this->cache_var) )
@@ -282,7 +331,17 @@ class CategoriesManagement
 		return true;
 	}
 	
-	//Method which changes the visibility of a category
+	/**
+	 * @desc Changes the visibility of a category
+	 * @param int $category_id id of the category whose property must be changed
+	 * @param bool $visibility set to visible or unvisible (use constants CAT_VISIBLE and CAT_UNVISIBLE)
+	 * @param bool $generate_cache if you want that the system regenerate the cache file of the module. Use the constants LOAD_CACHE to regenerate and reload the cache or DO_NOT_LOAD_CACHE else. 
+	 * @return bool true if the visibility has been changed, false otherwise. If it fails, you can check the error with the method check_method, it can raise the following errors:
+	 * <ul>
+	 * 	<li>NEW_STATUS_UNKNOWN when the new status you want to give to the category is not supported (if it's neither CAT_VISIBLE nor CAT_UNVISIBLE)</li>
+	 * 	<li>CATEGORY_DOES_NOT_EXIST when the category for which you want to change the visibility doesn't exist</li>
+	 * </ul>
+	 */
 	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		global $Sql, $Cache;
@@ -311,7 +370,20 @@ class CategoriesManagement
 		}
 	}
 
-	//Method which sets the displaying configuration
+	/**
+	 * @desc Method which sets the displaying configuration
+	 * Config example
+	 * $config = array(
+	 * 		'xmlhttprequest_file' => 'xmlhttprequest.php',
+	 * 		'administration_file_name' => 'admin_news_cats.php',
+	 * 		'url' => array(
+	 * 			'unrewrited' => PATH_TO_ROOT . '/news/news.php?id=%d',
+	 * 			'rewrited' => PATH_TO_ROOT . '/news-%d+%s.php'
+	 * 		),
+	 * );
+	 * @param $config
+	 * @return unknown_type
+	 */
 	function set_display_config($config)
 	{
 		//Respect du standard à vérifier
@@ -349,7 +421,15 @@ class CategoriesManagement
 	}
 
 	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
-	//This method doesn't allow you tu use templates, it's not so important because you are in the administration panel
+	/**
+	 * @desc Builds the list of categories and links to makes operations to administrate them (delete, move, add...), it supplies a string ready to be displayed.
+	 * It uses AJAX, read the class description to understand this user interface.
+	 * @param bool $ajax_mode Set this parameter to NORMAL_MODE if it's the global display and AJAX_MODE if it's called in the AJAX handler.
+	 * @param Template $category_template Use this parameter if you want to use a particular template. The default theme is framework/content/category.tpl.
+	 * @return mixed If there was no error, it returns the HTML code which integrates the whole management of the category tree that you just have to display.
+	 * If there is an error, it will return false and you will be able to know the error by using the wheck_error method.
+	 * The raised erros can be INCORRECT_DISPLAYING_CONFIGURATION if the displaying configuration hasn't be established or is not correct.
+	 */
 	function build_administration_interface($ajax_mode = NORMAL_MODE, $category_template = NULL)
 	{
 		global $CONFIG, $LANG;
@@ -359,7 +439,7 @@ class CategoriesManagement
 		
 		$template = new Template('framework/content/categories.tpl');
 		
-		$this->_clean_error();
+		$this->_clear_error();
 		//If displaying configuration hasn't bee already set
 		if( !$this->check_display_config() )
 		{
@@ -390,6 +470,18 @@ class CategoriesManagement
 	}
 	
 	//Method which builds a select form to choose a category
+	/**
+	 * @desc Builds a formulary which allows user to choose a category in a select form.
+	 * @param int $selected_id Current category id (the id of the category selected in default displaying).
+	 * @param string $form_id HTML identifier of the object (id of the DOM Document Objet Model).t'
+	 * @param string $form_name HTML name of the select form in which you will manage to retrieve the selected category.
+	 * @param int $current_id_cat This parameter is to use when for instance you want to move a category in another, it will not display the children categories of the current category because you cannot move it into one of its subcategories.
+	 * @param int $num_auth If you don't want to display the categories which can not be chosen by the user, you can supply an authorization number which will be used on the $array_auth parameter
+	 * @param mixed[] $array_auth Authorization array which is used if a category hasn't special authorizations 
+	 * @param bool $recursion_mode Sets wether you want to display only the current category or its whole subcategories. Use the constant RECURSIVE_EXPLORATION if you want to explore the whole tree, NOT_RECURSIVE_EXPLORATION otherwise.
+	 * @param Template $template If you want to customize the displaying, you can give the method a template objet in which variables will be assigned. The default template is framework/content/categories_select_form.tpl.
+	 * @return string The HTML code which displays the select form.
+	 */
 	function build_select_form($selected_id, $form_id, $form_name, $current_id_cat = 0, $num_auth = 0, $array_auth = array(), $recursion_mode = STOP_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $template = NULL)
 	{
 		global $LANG, $User;
@@ -415,6 +507,15 @@ class CategoriesManagement
 	}
 	
 	//Recursive method which builds the list of all chlidren of one category
+	/**
+	 * @desc Builds the list of all the children of a category
+	 * @param int $category_id Id of the category for which we want to know the children
+	 * @param &int[] &$list Array in which the result will be written.
+	 * @param bool $recursive_exploration Sets if you want to explorer only the current sublevel of the tree or the whole subtree. Use RECURSIVE_OPERATION to make a recursive exploration, NOT_RECURSIVE_EXPLORATION otherwise.
+	 * @param bool $add_this If you want to add the current category to the list use ADD_THIS_CATEGORY_IN_LIST, DO_NOT_ADD_THIS_CATEGORY_IN_LIST otherwise.
+	 * @param int $num_auth If you want to filter the category according to an authorization bit, put its value here
+	 * @return int[] The list of the ids of the subcategories.
+	 */
 	function build_children_id_list($category_id, &$list, $recursive_exploration = RECURSIVE_EXPLORATION, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth = 0)
 	{
 		global $User;
@@ -447,6 +548,12 @@ class CategoriesManagement
 	}
 	
 	//Method which builds the list of all parents of one category
+	/**
+	 * @desc Builds the list of the parent categories of a category
+	 * @param int $category_id Id of the category of which you want the list of parents categories.
+	 * @param bool $add_this If you want to add the current cat at the list. Use ADD_THIS_CATEGORY_IN_LIST if you want, DO_NOT_ADD_THIS_CATEGORY_IN_LIST otherwise.
+	 * @return int[] The list of the ids of the parent categories.
+	 */
 	function build_parents_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
 	{
 		$list = array();
@@ -465,12 +572,25 @@ class CategoriesManagement
 	}
 	
 	//Method for users who want to know what was the error
+	/**
+	 * @desc Checks if an error has been raised on the last reported error.
+	 * At each call of a method of this class which can raise an error, the last error is erased.
+	 * @param int $error Constant corresponding to the error to check. Use the constant corresponding to the error (detailed in each method description).
+	 * @return bool true if the error has been raised and false else.
+	 */
 	function check_error($error)
 	{
 		return (bool)($this->errors ^ $error);
 	}
 	
 	//Compute the final authorisation level
+	/**
+	 * @desc Computes the global authorization level of the whole parent categories. The result corresponds to all the category's parents merged.
+	 * @param int $category_id Id of the category for which you want to know what is the global authorization
+	 * @param int $bit The autorization bit you want to check
+	 * @param int $mode Merge mode. If it corresponds to a read autorization, use AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
+	 * @return mixed[] The merged array that you can use only for the bit $bit.
+	 */
 	function compute_heritated_auth($category_id, $bit, $mode)
 	{
 		$ids = array_reverse($this->build_parents_id_list($category_id, ADD_THIS_CATEGORY_IN_LIST));
@@ -484,9 +604,16 @@ class CategoriesManagement
 		return $result;
 	}
 	
-	## Private methods ##
-	//Recursive method allowing to display the administration panel of a category and its daughters
-	function _create_row_interface_recount_cat_subquestions($id_cat, $level, $ajax_mode, &$reference_template)
+	## Private methods ##	
+	/**
+	 * @desc Recursive method allowing to display the administration panel of a category and its daughters
+	 * @param int $id_cat Id of the category for which we are building the interface
+	 * @param int $level recursion level
+	 * @param bool $ajax_mode Ajax mode or not (AJAX_MODE or NORMAL_MODE).
+	 * @param Template $reference_template Customized template.
+	 * @return string The row interface
+	 */
+	function _create_row_interface($id_cat, $level, $ajax_mode, &$reference_template)
 	{
 		global $CONFIG, $LANG;
 		
@@ -541,7 +668,7 @@ class CategoriesManagement
 					'ACTION_DELETE' => transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
-					'NEXT_CATEGORY' => $this->_create_row_interface_recount_cat_subquestions($id, $level + 1, $ajax_mode, $reference_template)
+					'NEXT_CATEGORY' => $this->_create_row_interface($id, $level + 1, $ajax_mode, $reference_template)
 				));
 				
 				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
@@ -552,7 +679,17 @@ class CategoriesManagement
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
-	//Recursive method which adds the category informations and thoses of its children
+	/**
+	 * @desc Recursive method which adds the category informations and thoses of its children in the select form
+	 * @param int $id_cat Id of the parent category to explore
+	 * @param int $level Recursion level
+	 * @param int $selected_id Selected category
+	 * @param int $current_id_cat Current category
+	 * @param bool $recursion_mode RECURSIVE_OPERATION or NOT_RECURSIVE_OPERATION
+	 * @param int $num_auth If we manage authorizations, the bit on which we check.
+	 * @param mixed[] $general_auth Authorization to use if a category hasn't special auth
+	 * @param Template $template Customized template to use
+	 */
 	function _create_select_row($id_cat, $level, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, &$template)
 	{
 		global $User;
@@ -625,14 +762,20 @@ class CategoriesManagement
 		}
 	}
 	
-	//Method which adds an error bit to current status
+	/**
+	 * @desc Adds an error to the current status
+	 * @param int $error Bit corresponding to the error
+	 */
 	function _add_error($error)
 	{
 		$this->errors |= $error;
 	}
 
-	//Method which cleans error status
-	function _clean_error($error = 0)
+	/**
+	 * @desc Cleans the error status.
+	 * @param int $error If given, the bit $error will be cleared, else it will clear the whole error status.
+	 */
+	function _clear_error($error = 0)
 	{
 		if( $error != 0 )
 		{
@@ -645,15 +788,29 @@ class CategoriesManagement
 	}
 
 	## Private attributes ##
-	//The table of the DB in which are saved categories
+	/**
+	 * @var string table name where are stocked the categories to manage (see the class description for more details).
+	 */
 	var $table = '';
-	//Name of the cache file cirresponding to the module
+	
+	/**
+	 * @var string name of the cache file of the module (usefull when this class regenerates it)
+	 */
 	var $cache_file_name = '';
-	//Last error
+	
+	/**
+	 * @var int Current error status
+	 */
 	var $errors = 0;
-	//Displaying configuration
+	
+	/**
+	 * @var mixed[] Current displaying configuration (see the class description to know its structure).
+	 */
 	var $display_config = array();
-	//Cache variable
+	
+	/**
+	 * @var mixed[] Reference to the module cache variable containing the categories tree.
+	 */
 	var $cache_var = array();
 }
 
