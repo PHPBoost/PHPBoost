@@ -35,7 +35,8 @@
  * @author loic
  * @abstract
  * @desc A MenuElement contains a Title, an url, and an image url
- *
+ * @package util
+ * @subpackage menu
  */
 class MenuElement
 {

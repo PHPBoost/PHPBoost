@@ -3,10 +3,8 @@
 *                                bench.class.php
 *                            -------------------
 *   begin                : March 14, 2006
-*   copyright          : (C) 2005 Viarre Régis
-*   email                : crowkait@phpboost.com
-*
-*   Function 2.0.0 
+*   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
+*   email                : crowkait@phpboost.com, horn@phpboost.com
 *
 ###################################################
 *
@@ -26,19 +24,37 @@
 *
 ###################################################*/
 
+/**
+ * @author loic
+ * @desc This class is done to time a process easily. You choose when to start and when to stop.
+ * @package util
+ */
 class Bench
 {
     ## Public Methods ##
-    function Bench($name) { $this->start = $this->_get_microtime(); }
+    /**
+     * @desc starts the bench now
+     */
+    function Bench() { $this->start = $this->_get_microtime(); }
     
-    //Calcul et retourne le temps écoulé.
-    function stop($name) { $this->duration = $this->_get_microtime() - $this->start; }
+    /**
+     * @desc stops the bench now
+     */
+    function stop() { $this->duration = $this->_get_microtime() - $this->start; }
     
-    //Calcul et retourne le temps écoulé.
-    function display($name) { return number_round($this->duration, $this->number_format); }
+    /**
+     * @desc returns the number formatted with $digits floating numbers
+     * @param int $digits the desired display precision
+     * @return string the formatted duration
+     */
+    function to_string($digits = 3) { return number_round($this->duration, $digits); }
     
     ## Private Methods ##
-    //Récupère l'heure en microsecondes 
+    /**
+     * @desc computes the time with a microsecond precision
+     * @access protected
+     * @return float
+     */
     function _get_microtime() 
     {
         list($usec, $sec) = explode(" ", microtime());
@@ -46,9 +62,16 @@ class Bench
     }
     
     ## Private Attributes ##
+    /**
+     * @access protected
+     * @var int start microtime
+     */
     var $start = 0;
+    /**
+     * @access protected
+     * @var int duration microtime
+     */
     var $duration = 0;
-    var $number_format = 3; //Nombre de décimales après la virgule, affichées dans le résultat.
 }
 
 ?>
