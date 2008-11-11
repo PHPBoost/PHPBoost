@@ -25,21 +25,31 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/content_parser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/content_parser.class.php');
 
+/**
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @desc Converts the PHPBoost BBCode language to the XHTML language which is stocked in
+ * the database and can be displayed nearly directly.
+ * It parses only the authorized tags (defined in the parent class which is ContentParser).
+ */
 class BBCodeParser extends ContentParser
 {
+	/**
+	 * @desc Builds a BBCodeParser object
+	 */
 	function BBCodeParser()
 	{
 		parent::ContentParser();
 	}
 	
-	//On parse le contenu: bbcode => xhtml.
+	/**
+	 * @desc Parses the parser content from BBCode to XHTML.
+	 * @return void You will find the result by using the get_content method
+	 */
 	function parse()
 	{
 		global $User;
-		
-		$this->parsed_content = $this->content;
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if( !in_array('code', $this->forbidden_tags) )
@@ -50,7 +60,7 @@ class BBCodeParser extends ContentParser
 			$this->_pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
-		$this->parsed_content = ' ' . $this->parsed_content . ' ';
+		$this->content = ' ' . $this->content . ' ';
 		
 		//Traitement du code HTML
 		$this->_protect_content();
@@ -59,23 +69,23 @@ class BBCodeParser extends ContentParser
 		$this->_parse_smilies();
 		
 		//Interprétation des sauts de ligne
-		$this->parsed_content = nl2br($this->parsed_content);
+		$this->content = nl2br($this->content);
 		
 		// BBCode simple tags
 		$this->_parse_simple_tags();
 		
 		//Tableaux
-		if( strpos($this->parsed_content, '[table') !== false )
+		if( strpos($this->content, '[table') !== false )
 			$this->_parse_table();
 		
 		//Listes
-		if( strpos($this->parsed_content, '[list') !== false )
+		if( strpos($this->content, '[list') !== false )
 			$this->_parse_list();
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if( PATH_TO_ROOT != '..' )
 		{
-			$this->parsed_content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->parsed_content);
+			$this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
 		}
 		
 		//On remet le code HTML mis de côté
@@ -94,17 +104,24 @@ class BBCodeParser extends ContentParser
 	}
 	
 	## Private ##
-	//Fonction de protection du code HTML
+	/**
+	 * @desc Protects the incoming content:
+	 * <ul>
+	 * 	<li>Breaks all HTML tags and javascript code</li>
+	 * 	<li>Accepts only the special character's entitites</li>
+	 * 	<li>Treats the Word pasted characters</li>
+	 * </ul>
+	 */
 	function _protect_content()
 	{	
-		//Protection : suppression du code html
-		$this->parsed_content = htmlspecialchars($this->parsed_content, ENT_NOQUOTES);
-		$this->parsed_content = strip_tags($this->parsed_content);
+		//Breaking the HTML code
+		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
+		$this->content = strip_tags($this->content);
 		
-		//Tant qu'on n'est pas en utf8 on représente les caractères par leur code HTML correspondant
-		$this->parsed_content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->parsed_content);
+		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
+		$this->content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->content);
 		
-		//Remplacement des caractères de word.
+		//Treatment of the Word pasted characters
 		$array_str = array( 
 			'€', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰',
 			'Š', '‹', 'Œ', 'Ž', '‘', '’', '“', '”', '•',
@@ -116,10 +133,12 @@ class BBCodeParser extends ContentParser
 			'&#352;', '&#8249;', '&#338;', '&#381;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;',
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
 		);		
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 	}
 	
-	//Traitement des smilies
+	/**
+	 * @desc Replaces the smiley's code by the corresponding HTML image tag 
+	 */
 	function _parse_smilies()
 	{
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
@@ -131,11 +150,16 @@ class BBCodeParser extends ContentParser
 				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
 				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
-			$this->parsed_content = preg_replace($smiley_code, $smiley_img_url, $this->parsed_content);
+			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
 	}
 	
 	//Interprétation des balises simples
+	/**
+	 * @desc Parses all BBCode simple tags.
+	 * The simple tags are those which can be treated enough requiring many different treatments.
+	 * The not simple tags are [code], [html], [table] and its content [row] [col] [head], [list].
+	 */
 	function _parse_simple_tags()
 	{
 		global $LANG;
@@ -270,38 +294,42 @@ class BBCodeParser extends ContentParser
 		}
 		
 		//Remplacement : on parse les balises classiques
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//Line tag
 		if( $parse_line )
-			$this->parsed_content = str_replace('[line]', '<hr class="bb_hr" />', $this->parsed_content);
+			$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
 			
 		//Titres
-		$this->parsed_content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, '_parse_title'), $this->parsed_content);
+		$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, '_parse_title'), $this->content);
 		
 		//Liens vers des articles de Wikipédia
-		$this->parsed_content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->parsed_content);
+		$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->content);
 		
 		##Parsage des balises imbriquées.
 		//Citations
-		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->parsed_content);
-		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->parsed_content);
+		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
 		
 		//Texte caché
-		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->parsed_content);
+		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
 		
 		//Texte indenté
-		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->parsed_content);
+		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
 		
 		//Bloc HTML
-		$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->parsed_content);
-		$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->parsed_content);
+		$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->content);
+		$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->content);
 		
 		//Bloc de formulaire
-		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->parsed_content);
+		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
 	}
 	
 	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
+	/**
+	 * @desc Serializes a split content according to the table tag and generates the complete HTML code.
+	 * @param string[] $content Content of the parser split according to the table tag
+	 */
 	function _parse_imbricated_table(&$content)
 	{
 		if( is_array($content) )
@@ -352,17 +380,24 @@ class BBCodeParser extends ContentParser
 			$content = $string_content;
 		}
 	}
-
+	
+	/**
+	 * @desc Parses the table tag in the content of the parser
+	 */
 	function _parse_table()
 	{
 		//On supprime les éventuels quote qui ont été transformés en leur entité html
-		$this->_split_imbricated_tag($this->parsed_content, 'table', ' style="[^"]+"');
-		$this->_parse_imbricated_table($this->parsed_content);
+		$this->_split_imbricated_tag($this->content, 'table', ' style="[^"]+"');
+		$this->_parse_imbricated_table($this->content);
 		//On remet les tableaux invalides tels qu'ils étaient avant
-		$this->parsed_content = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $this->parsed_content);
+		$this->content = str_replace(array('[\col', '[\row', '[\/col', '[\/row', '[\head', '[\/head'), array('[col', '[row', '[/col', '[/row', '[head', '[/head'), $this->content);
 	}
 	
-	//Fonction qui parse les listes
+	/**
+	 * @desc Serializes a split content according to the list tag
+	 * Generates the HTML code
+	 * @param string[] $content Content split according to the list tag
+	 */
 	function _parse_imbricated_list(&$content)
 	{
 		if( is_array($content) )
@@ -404,19 +439,25 @@ class BBCodeParser extends ContentParser
 		}
 	}
 	
-	//Parse les listes imbriquées
+	/**
+	 * @desc Parses the list tag of the content of the parser.
+	 */
 	function _parse_list()
 	{
 		//On nettoie les guillemets échappés
 		//on travaille dessus
-		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->parsed_content) )
+		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->content) )
 		{
-			$this->_split_imbricated_tag($this->parsed_content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
-			$this->_parse_imbricated_list($this->parsed_content);
+			$this->_split_imbricated_tag($this->content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
+			$this->_parse_imbricated_list($this->content);
 		}
 	}
 	
-	//Interprète les titres
+	/**
+	 * @desc Callback treating the title tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the title tag are parsed
+	 */
 	function _parse_title($matches)
 	{
 		$level = (int)$matches[1];
@@ -426,7 +467,11 @@ class BBCodeParser extends ContentParser
 			return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
 	}
 	
-	//Interprète les liens vers des pages de wikipédia
+	/**
+	 * @desc Callback which parses the wikipedia tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the wikipedia tag are parsed
+	 */
 	function _parse_wikipedia_links($matches)
 	{
 		global $LANG;
@@ -441,10 +486,14 @@ class BBCodeParser extends ContentParser
 		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';	
 	}
 	
-	//Nettoie le code HTML (notamment les retours à la ligne)
-	function clear_html_br($var)
+	/**
+	 * @desc Callback which clears the new line tag in the HTML generated code
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the new line tag are cleared
+	 */
+	function clear_html_br($matches)
 	{
-		return str_replace("<br />", "", $var[0]);
+		return str_replace("<br />", "", $matches[0]);
 	}
 }
 

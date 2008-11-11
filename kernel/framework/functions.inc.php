@@ -440,7 +440,7 @@ function strparse(&$content, $forbidden_tags = array())
     $parser->parse();
 	
     //Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
-	return $parser->get_parsed_content();
+	return $parser->get_content();
 }
 
 //Charge l'unparseur.
@@ -451,21 +451,19 @@ function unparse(&$content)
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
 	
-	return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 //Parse temps réel
 function second_parse(&$content)
-{
-	$content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $content);
-	
+{	
 	$content_manager = new Content();
 	
 	$parser =& $content_manager->get_second_parser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->second_parse();
 	
-    return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
+    return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!

@@ -50,7 +50,7 @@ if( !empty($forbidden_tags) )
 $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
-$contents = second_parse(stripslashes($parser->get_parsed_content()));
+$contents = second_parse(stripslashes($parser->get_content()));
 
 //Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
 if( preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')

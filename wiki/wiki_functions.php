@@ -37,7 +37,7 @@ function wiki_parse(&$var)
     $parser->parse();
 	
     //Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $parser->get_parsed_content());
+	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $parser->get_content());
 }
 
 //Retour au BBCode en tenant compte de [link]
@@ -52,7 +52,7 @@ function wiki_unparse($var)
     $parser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
 	
-	return $parser->get_parsed_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)
