@@ -55,7 +55,7 @@ define('NEW_CATEGORY_IS_IN_ITS_CHILDRENS', 0x80);
 define('NEW_STATUS_UNKNOWN', 0x100);
 
 /**
- * @author benoit
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class allows you to manage easily categories for your modules.
  * It's as generic as possible, if you want to complete some actions to specialize them for you module, 
  * you can create a new class inheritating of it in which you call its methods using the syntax 
@@ -97,7 +97,6 @@ define('NEW_STATUS_UNKNOWN', 0x100);
  *  </ul>
  *  If you need more informations to use this class, we advise you to look at the wiki of PHPBoost, in which there is a tutorial explaining how to use it step by step.
  */
-
 class CategoriesManagement
 {
 	## Public methods ##
@@ -420,10 +419,10 @@ class CategoriesManagement
 			return false;
 	}
 
-	//Method which builds the list of categories and links to makes operations to administrate them (delete, move, add...), it's return string is ready to be displayed
 	/**
 	 * @desc Builds the list of categories and links to makes operations to administrate them (delete, move, add...), it supplies a string ready to be displayed.
 	 * It uses AJAX, read the class description to understand this user interface.
+	 * @warning You must have defined a displaying configuration before calling this method. You must do it with the set_display_config method.
 	 * @param bool $ajax_mode Set this parameter to NORMAL_MODE if it's the global display and AJAX_MODE if it's called in the AJAX handler.
 	 * @param Template $category_template Use this parameter if you want to use a particular template. The default theme is framework/content/category.tpl.
 	 * @return mixed If there was no error, it returns the HTML code which integrates the whole management of the category tree that you just have to display.
