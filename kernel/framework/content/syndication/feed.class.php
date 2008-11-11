@@ -162,11 +162,10 @@ class Feed
         // Get the cache content or recreate it if not existing
         if( ($result = @include($feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
         {
-            require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
+            import('modules/modules_discovery_service');
             $modules = new ModulesDiscoveryService();
             $module = $modules->get_module($module_id);
             $data = $module->functionnality('get_feed_data_struct', $idcat);
-            
             if( !$module->got_error() )
             {
                 Feed::update_cache($module_id, $name, $data, $idcat);

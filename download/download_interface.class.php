@@ -25,8 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
-
+import('modules/module_interface');
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
 class DownloadInterface extends ModuleInterface
