@@ -29,8 +29,8 @@
 
 define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+import('io/template');
+import('content/syndication/feed');
 
 class ATOM extends Feed
 {

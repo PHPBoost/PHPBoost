@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
 
@@ -143,10 +143,10 @@ class ArticlesInterface extends ModuleInterface
 		$Cache->load('articles');
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
-		require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+		import('content/syndication/feed_data');
 		$data = new FeedData();
 
-		require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+		import('util/date');
         $date = new Date();
         
         $data->set_title($LANG['xml_articles_desc']);

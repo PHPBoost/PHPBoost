@@ -57,7 +57,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
 	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
 	// Feeds Regeneration
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    import('content/syndication/feed');
     Feed::clear_cache('articles');
     
 	redirect(HOST . SCRIPT);
@@ -407,7 +407,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$Sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		// Feeds Regeneration
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache('articles');
 		
 		redirect(HOST . SCRIPT);

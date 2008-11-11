@@ -59,7 +59,7 @@ elseif( $uninstall ) //Désinstallation du module
 		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = retrieve(POST, 'drop_files', false);
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.class.php');
+		import('modules/packages_manager');
 		
 		switch(PackagesManager::uninstall_module($idmodule, $drop_files))
 		{

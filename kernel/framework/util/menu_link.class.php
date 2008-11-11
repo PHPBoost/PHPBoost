@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_element.class.php');
+import('util/menu_element');
 
 /**
  * @author loic

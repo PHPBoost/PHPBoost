@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_element.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/util/menu_link.class.php');
+import('util/menu_element');
+import('util/menu_link');
 
 ## Menu types ##
 define('VERTICAL_MENU', 'vertical');

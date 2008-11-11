@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
+import('content/parser/parser');
 
 //Colors of each language elements
 //For a BBCode tag

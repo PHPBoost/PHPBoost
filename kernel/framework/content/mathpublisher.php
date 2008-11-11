@@ -42,7 +42,7 @@ function mathimage($text, $size)
 	{
 		//the image doesn't exist in the cache directory. we create it.		
 		global $symboles, $fontesmath;
-		include_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.class.php');
+		import('content/mathpublisher');
 		
 		$formula = new expression_math(tableau_expression(trim($text)));
 		$formula->dessine($size);

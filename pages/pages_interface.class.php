@@ -26,7 +26,7 @@
 ###################################################*/
  
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 define('PAGES_MAX_SEARCH_RESULTS', 100);
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface

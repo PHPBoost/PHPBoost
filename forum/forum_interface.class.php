@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 define('FORUM_MAX_SEARCH_RESULTS', 50);
 
@@ -117,7 +117,7 @@ class ForumInterface extends ModuleInterface
     {
         global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+        import('io/template');
         $Tpl = new Template('forum/forum_search_form.tpl');
         
         //Autorisation sur le module.
@@ -349,12 +349,12 @@ class ForumInterface extends ModuleInterface
 		
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+        import('content/syndication/feed_data');
         $idcat = $_idcat;   // Because <$idcat> is overwrite in /forum/forum_init_auth_cats.php
         
         $data = new FeedData();
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        import('util/date');
         $date = new Date();
         
         $data->set_title($LANG['xml_forum_desc']);

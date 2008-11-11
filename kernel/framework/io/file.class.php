@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/io/fse.class.php');
+import('io/fse');
 
 define('ERASE', false);
 define('ADD', true);

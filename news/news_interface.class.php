@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 define('NEWS_MAX_SEARCH_RESULTS', 100);
 
@@ -95,13 +95,13 @@ class NewsInterface extends ModuleInterface
     
     function get_feed_data_struct($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+        import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
         load_module_lang('news');
         
         $data = new FeedData();
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        import('util/date');
         $date = new Date();
         
         $data->set_title($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);

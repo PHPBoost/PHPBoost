@@ -29,8 +29,8 @@ define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('DEFAULT_FEED_NAME', 'master');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+import('functions', LIB_IMPORT);
+import('content/syndication/feed_data');
 
 class Feed
 {
@@ -125,7 +125,7 @@ class Feed
     // clear the cache
     /*static*/ function clear_cache($module_id = false)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/io/folder.class.php');
+        import('io/folder');
         $folder = new Folder(FEEDS_PATH, OPEN_NOW);
        
         $files = null;
@@ -140,7 +140,7 @@ class Feed
 
     /*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
+        import('io/file');
         $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
         $file->write('<?php $feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
         $file->close();
@@ -153,7 +153,7 @@ class Feed
             $template = $tpl->copy();
         else
         {
-            require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+            import('io/template');
             $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
             if( gettype($tpl) == 'array' )
                 $template->assign_vars($tpl);

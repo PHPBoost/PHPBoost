@@ -83,7 +83,7 @@ class Cache
     {
 		global $Errorh;
 		
-		include_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
+		import('modules/modules_discovery_service');
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
 		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
@@ -107,7 +107,7 @@ class Cache
 	{
 		global $MODULES;
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
+		import('modules/modules_discovery_service');
 		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach($modules as $module)
@@ -132,7 +132,7 @@ class Cache
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
+		import('io/file');
 		$cache_file = new File($file_path, WRITE);
 		
 		//Suppression du fichier (si il existe)
@@ -190,7 +190,7 @@ class Cache
 	{
 		global $Sql;
 		
-		include_once(PATH_TO_ROOT . '/kernel/framework/core/menu_manager.class.php');
+		import('core/menu_manager');
 		
 		$modules_mini = array();
 		$result = $Sql->query_while("SELECT name, contents, location, auth, added, use_tpl
@@ -383,11 +383,11 @@ class Cache
 		foreach($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/events/contribution_service.class.php');
+		import('events/contribution_service');
 		//Unread contributions for each profile
 		$config_member .= '$CONTRIBUTION_PANEL_UNREAD = ' . var_export(ContributionService::compute_number_contrib_for_each_profile(), true) . ';';
 		
-		require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+		import('events/administrator_alert_service');
 		$config_member .= "\n" . '$ADMINISTRATOR_ALERTS = ' . var_export(AdministratorAlertService::compute_number_unread_alerts(), true) . ';';
 		
 		return $config_member;

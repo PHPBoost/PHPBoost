@@ -83,7 +83,7 @@ if( $delete_news > 0 )
 		redirect(HOST. DIR . '/news/' . ($news_infos['idcat'] > 0 ? transid('news.php?cat=' . $news_infos['idcat'], 'category-' . $news_infos['idcat'] . '+' . url_encode_rewrite($NEWS_CATS[$news_infos['idcat']]['name']) . '.php') : transid('news.php')));
         
         // Feeds Regeneration
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache('news');
 	}
 	else
@@ -176,7 +176,7 @@ if( $edit_news_id > 0 )
 			}
             
             // Feeds Regeneration
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            import('content/syndication/feed');
             Feed::clear_cache('news');
             
 			redirect(HOST . DIR . '/news/' . transid('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php'));
@@ -363,7 +363,7 @@ elseif( $add_news )
 			}
             
             // Feeds Regeneration
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            import('content/syndication/feed');
             Feed::clear_cache('news');
             
 			redirect(HOST . DIR . '/news/' . transid('news.php?id=' . $new_id_news, 'news-' . $new_id_news . '+' . url_encode_rewrite($news_title) . '.php'));

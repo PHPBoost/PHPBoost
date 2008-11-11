@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-include_once(PATH_TO_ROOT . '/kernel/framework/content/editor/editor.class.php');
+import('content/editor/editor');
 
 class BBCodeEditor extends ContentEditor
 {

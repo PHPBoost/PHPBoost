@@ -140,7 +140,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
 					if( !$user_aprob )
 					{
-						require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+						import('events/administrator_alert_service');
 						
 						$alert = new AdministratorAlert();
 						$alert->set_entitled($LANG['member_registered_to_approbate']);

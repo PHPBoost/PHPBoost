@@ -36,7 +36,7 @@ require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 if( !$User->check_level(ADMIN_LEVEL) )
 	die('');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+import('events/administrator_alert_service');
 
 $change_status = retrieve(GET, 'change_status', 0);
 $id_to_delete = retrieve(GET, 'delete', 0);

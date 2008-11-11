@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/event.class.php');
+import('events/event');
 
 ## Constants ##
 //Priority levels

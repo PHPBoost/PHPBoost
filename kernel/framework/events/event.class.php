@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+import('util/date');
 
 ##Constants##
 //Those are the different status of events

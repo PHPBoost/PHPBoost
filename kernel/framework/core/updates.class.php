@@ -34,8 +34,8 @@ define('CHECK_MODULES', 0X02);
 define('CHECK_THEMES', 0X04);
 define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
-require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/core/repository.class.php');
+import('core/application');
+import('core/repository');
 
 
 class Updates
@@ -116,7 +116,7 @@ class Updates
     
     function _add_update_alert(&$app)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+        import('events/administrator_alert_service');
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
         if( AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null )

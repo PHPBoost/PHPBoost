@@ -3,7 +3,7 @@ header('Content-type: text/html; charset=iso-8859-15');
 
 define('PATH_TO_ROOT', '..');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+import('functions', LIB_IMPORT); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 
 define('ERROR_REPORTING', E_ALL | E_NOTICE);

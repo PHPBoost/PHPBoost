@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class GuestbookInterface extends ModuleInterface

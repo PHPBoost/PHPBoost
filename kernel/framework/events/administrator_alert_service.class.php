@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert.class.php');
+import('events/administrator_alert');
 
 //Flag which distinguishes an alert and a contribution in the database
 define('ADMINISTRATOR_ALERT_TYPE', 1);

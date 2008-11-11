@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
+import('content/parser/parser');
 
 //Classe de gestion du contenu
 class ContentParser extends Parser

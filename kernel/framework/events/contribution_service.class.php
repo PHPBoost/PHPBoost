@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/contribution.class.php');
+import('events/contribution');
 
 //Flag which distinguishes a contribution from an alert
 define('CONTRIBUTION_TYPE', 0);

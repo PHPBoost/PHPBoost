@@ -32,7 +32,7 @@ define('INVALID_URL', 'INVALID URL');
 define('PATH_TO_ROOT', '../../..');
 
 require_once(PATH_TO_ROOT . '/kernel/constant.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
+import('functions', LIB_IMPORT);
 
 $url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
 $content_type = retrieve(GET, 'ctype', '', TSTRING_UNSECURE);

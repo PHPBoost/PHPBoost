@@ -92,7 +92,7 @@ function forum_history_collector($type, $user_id_action = '', $url_action = '')
 //Gestion du rss du forum.
 function forum_generate_feeds()
 {
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    import('content/syndication/feed');
     Feed::clear_cache('forum');
 }
 

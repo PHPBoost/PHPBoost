@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/events/event.class.php');
+import('util/date');
+import('events/event');
 
 ## Constants ##
 
