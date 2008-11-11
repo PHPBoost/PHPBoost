@@ -72,17 +72,14 @@ class ModuleInterface
 
         if( $error == 0 )
         {
+            $class = ucfirst($moduleId).'Interface';
             // Get modules methods
-            $methods = get_class_methods(ucfirst($moduleId).'Interface'); // PHP4 returns it in lower case
+            $module_methods = get_class_methods($class); // PHP4 returns it in lower case
             // generics module Methods from ModuleInterface
-            $moduleMethods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
-
-            // Delete all generics private methods
-            foreach($methods as $key => $function)
-            {
-                if( !(in_array($function, $moduleMethods) || $function == $moduleId.'interface') )
-                    array_push($this->functionnalities, strtolower($methods[$key]));
-            }
+            $generics_methods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
+            $generics_methods[] = $class;
+            
+            $this->functionnalities = array_diff($module_methods, $generics_methods);
         }
         $this->errors = $error;
     }
@@ -134,7 +131,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Set the $value of the attribute identified by the string $attribute.
+     * @desc Set the $value of the attribute identified by the string $attribute.
      * @param string $attribute the attribute identifier
      * @param mixed $value the value to set
      */
@@ -144,7 +141,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Delete the attribute and free its memory.
+     * @desc Delete the attribute and free its memory.
      * @param string $attribute the attribute identifier
      */
     function unset_attribute($attribute)
@@ -153,7 +150,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Returns the last error. If called with no arguments, returns true if an error has occured
+     * @desc Returns the last error. If called with no arguments, returns true if an error has occured
      *  otherwise, false. If the method got an argument,
      * @param int $error to check a specific error, 0 otherwise
      * @return returns true if the specified $error has occured otherwise, false.
@@ -175,7 +172,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Check the existance of the functionnality and if exists call it.
+     * @desc Check the existance of the functionnality and if exists call it.
      *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is raised.
      * @param string $functionnality the name of the method you want to call
      * @param mixed $args the args you want to pass to the $functionnality method
@@ -191,7 +188,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Check the availability of the functionnality (hook)
+     * @desc Check the availability of the functionnality (hook)
      * @param string $functionnality the name of the method you want to check the availability
      * @return bool true if the functionnality exists, false otherwise
      */
@@ -201,7 +198,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Check the availability of the functionnalities (hook)
+     * @desc Check the availability of the functionnalities (hook)
      * @param string[] $functionnalities the names of the methods you want to check the availability
      * @return bool true if all functionnalities exist, false otherwise
      */
@@ -217,7 +214,7 @@ class ModuleInterface
 
     //-------------------------------------------------------- PROTECTED METHODS
     /**
-     * @method Set the flag error.
+     * @desc Set the flag error.
      * @param int $error the error flag to raised
      */
     function _set_error($error = 0)
@@ -226,7 +223,7 @@ class ModuleInterface
     }
 
     /**
-     * @method Clear the $error error flag
+     * @desc Clear the $error error flag
      * @param int $error the error flag to clear
      */
     function _clear_error($error)
