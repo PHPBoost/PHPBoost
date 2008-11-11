@@ -213,59 +213,6 @@ class ModuleInterface
         return $functionnalities === array_intersect($functionnalities, $this->functionnalities);
     }
 
-
-    /**
-     * @abstract get the "php instring" content of module's cache
-     * @return string the "php in string" code that will be written in the cache
-     */
-    function get_cache() {}
-
-    /**
-     * @abstract Daily event for periodic tasks
-     */
-    function on_changeday() {}
-
-    /**
-     * @abstract Get a module search request
-     * @param mixed $args defined by get_search_args()
-     * @see get_search_args
-     * @return string the search sql query for the module
-     */
-    function get_search_request($args=null) {}
-
-    /**
-     * @abstract Get search args
-     * @see get_search_request
-     * @return string[] List of args
-     */
-    function get_search_args() {}
-
-    /**
-     * @abstract Get the search form for the current module
-     * @param mixed $args Arguments to configure the form
-     * @return string the html form to be printed in the search module interface
-     */
-    function get_search_form($args=null) {}
-
-    /**
-     * @abstract Parse search results to specialize the default results display interface
-     * All the results have to be passed by references each time this method is call,
-     * but only the next unparsed result will be parsed and return. This for technical reasons
-     * and also for some optimizations.
-     * @param &mixed &$args all the search results to parse.
-     * @return string the new html display interface
-     */
-    function parse_search_results(&$args) {}
-
-    /**
-     * @abstract Get feed data structure
-     * @param int $idcat the category id to get the feed data from. default is 0,
-     * it corresponds to all the categories
-     * @param string $type the feed second nature, depend of the module
-     * @return FeedData
-     */
-    function get_feed_data_struct($idcat=0, $type='master') {}
-
     //------------------------------------------------------------------ PRIVATE
 
     //-------------------------------------------------------- PROTECTED METHODS

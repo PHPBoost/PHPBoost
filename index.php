@@ -31,7 +31,6 @@ define('ALTERNATIVE_CSS', 'news');
 define('TITLE', 'Votre site à portée de main');
 require_once('./kernel/header.php');
 require_once('./kernel/framework/content/syndication/feed.class.php');
-
 ?>
     <?php
         $tpl = new Template('news/framework/content/syndication/last_news.tpl');
@@ -203,7 +202,5 @@ require_once('./kernel/framework/content/syndication/feed.class.php');
         </div>
 
 <?php
-
 require_once('./kernel/footer.php');
-
 ?>
