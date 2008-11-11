@@ -27,32 +27,57 @@
 
 import('content/parser/parser');
 
-//Classe de gestion du contenu
+/**
+ * @package parser
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This class is an abstract one. It contains tools that are usefull for implement a content parser.
+ */
 class ContentParser extends Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	 * @desc Contructor of an ContentParser object
+	 */
 	function ContentParser()
 	{
 		global $CONFIG;
+		//We build the parent object
 		parent::Parser();
 		$this->html_auth =& $CONFIG['html_auth'];
 		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
 	}
 	
+	/**
+	 * @abstract
+	 * @desc Method which parses the content of the parser
+	 */
 	/*abstract*/ function parse() {}
 	
+	/**
+	 * @desc Function which sets the tags which mustn't be parsed.
+	 * @param string[] $forbidden_tags list of the name of the tags which mustn't be parsed.
+	 */
 	function set_forbidden_tags($forbidden_tags)
 	{
 		if( is_array($forbidden_tags) )
 			$this->forbidden_tags = $forbidden_tags;
 	}
 	
+	/**
+	 * @desc Gets the forbidden tags.
+	 *
+	 * @return string[] List of the forbidden tags
+	 */
 	function get_forbidden_tags()
 	{
 		return $this->forbidden_tags;
 	}
 	
+	/**
+	 * @desc Sets the required authorizations that are necessary to post some HTML code which
+	 * will be displayed by the web browser. 
+	 * @param mixed[] $array_auth authorization array
+	 */
 	function set_html_auth($array_auth)
 	{
 		global $CONFIG;
@@ -63,7 +88,18 @@ class ContentParser extends Parser
 	}
 	
 	## Private ##
-	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)
+	/**
+	 * @desc Splits a string accorting to a tag name.
+	 * Works also with nested tags.
+	 * @param string $content Content to split, will be converted in a string[] variable containing the following pattern:
+	 * <ul>
+	 * 	<li>The content between two tags (or at the begening or the end of the content)</li>
+	 * 	<li>The parameter of the tag</li>
+	 * 	<li>The content of the tag. If it contains a nested tag, it will be parsed according to the same pattern.</li>
+	 * </ul>
+	 * @param string $tag Tag name
+	 * @param string $attributes Regular expression of the attribute form
+	 */
 	function _split_imbricated_tag(&$content, $tag, $attributes)
 	{
 		$content = $this->_preg_split_safe_recurse($content, $tag, $attributes);
