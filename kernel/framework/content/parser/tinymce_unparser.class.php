@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/content_unparser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/content_unparser.class.php');
 
 class TinyMCEUnparser extends ContentUnparser
 {
@@ -37,9 +37,7 @@ class TinyMCEUnparser extends ContentUnparser
 	
 	//Unparser
 	function unparse()
-	{
-		$this->parsed_content = $this->content;
-		
+	{		
 		//Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -47,7 +45,7 @@ class TinyMCEUnparser extends ContentUnparser
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if( PATH_TO_ROOT != '..' )
 		{
-			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
+			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
 		}
 		
 		//Smilies
@@ -68,10 +66,10 @@ class TinyMCEUnparser extends ContentUnparser
 			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;', '<li>', '</tbody></table>', '<tr>'
 		);
 		
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
 		//Replacing <br /> by a paragraph
-		$this->parsed_content = str_replace('<br />', "</p>\n<p>", '<p>' . $this->parsed_content . '</p>');
+		$this->content = str_replace('<br />', "</p>\n<p>", '<p>' . $this->content . '</p>');
 		
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if( !empty($this->array_tags['html_unparse']) )
@@ -102,7 +100,7 @@ class TinyMCEUnparser extends ContentUnparser
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}	
-			$this->parsed_content = preg_replace($smiley_img_url, $smiley_code, $this->parsed_content);
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 	}
 	
@@ -149,19 +147,19 @@ class TinyMCEUnparser extends ContentUnparser
 			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>"
 		);	
 		
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//indent
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $this->parsed_content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $this->content);
 		
 		//Balise size
-		$this->parsed_content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if( $size[1] >= 36 ) $fontsize = 7;	elseif( $size[1] <= 12 ) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->parsed_content);
+		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if( $size[1] >= 36 ) $fontsize = 7;	elseif( $size[1] <= 12 ) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
 	}
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
 	function _unparse_bbcode_tags()
 	{
-		$this->parsed_content = str_replace('<hr class="bb_hr" />', '[line]', $this->parsed_content);
+		$this->content = str_replace('<hr class="bb_hr" />', '[line]', $this->content);
 		
 		$array_preg = array(
 			'`<p class="float_(left|right)">(.*)</p>`isU',
@@ -187,27 +185,27 @@ class TinyMCEUnparser extends ContentUnparser
 			"[math]$1[/math]"
 		);
 		
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		##Remplacement des balises imbriquées
 		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
 		
 		//Texte caché
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
+		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 		
 		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
 		
 		//Bloc HTML
-		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->parsed_content);
-		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 		
 		//Bloc de formulaire
-		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->parsed_content);
+		$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->content);
 
 		//Liens Wikipédia
-		$this->parsed_content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->parsed_content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->content);
 	}
 	
 	//Handler which clears the HTML code which is in the code and HTML tags

@@ -25,44 +25,52 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/content_unparser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/content_unparser.class.php');
 
+/**
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
+ * coming from a database) to the PHPBoost BBCode syntax.
+ */
 class BBCodeUnparser extends ContentUnparser
 {
-	function BBCodeParser()
+	/**
+	 * @desc Builds a BBCodeUnparser object
+	 */
+	function BBCodeUnparser()
 	{
+		//We call the parent constructor
 		parent::ContentUnparser();
 	}
 	
-	//On unparse le contenu xHTML => BBCode
+	/**
+	 * @desc Unparses the content of the parser.
+	 * Converts it from HTML syntax to BBcode syntax
+	 */
 	function unparse()
 	{
-		$this->parsed_content = $this->content;
-		
+		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if( PATH_TO_ROOT != '..' )
 		{
-			$this->parsed_content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->parsed_content);
+			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
 		}
 		
 		//Smilies
 		$this->_unparse_smilies();
-			
-		//caractères html
-		$this->_unparse_html_characters();
 		
 		//Remplacement des balises simples
 		$this->_unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<table class="bb_table"') !== false )
+		if( strpos($this->content, '<table class="bb_table"') !== false )
 			$this->_unparse_table();
 
 		//Unparsage de la balise table.
-		if( strpos($this->parsed_content, '<li class="bb_li"') !== false )
+		if( strpos($this->content, '<li class="bb_li"') !== false )
 			$this->_unparse_list();
 		
 		$this->_unparse_code(REIMPLANT);
@@ -70,7 +78,10 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	## Private ##
-	//Unparser
+	/**
+	 * @desc Unparse the smiley's code of the content of the parser.
+	 * Replace the HTML code by the smiley code (for instance :) or :|)
+	 */
 	function _unparse_smilies()
 	{
 		//Smilies
@@ -83,11 +94,14 @@ class BBCodeUnparser extends ContentUnparser
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}	
-			$this->parsed_content = preg_replace($smiley_img_url, $smiley_code, $this->parsed_content);
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 		}
 	}
 	
-	//Remplacement des balises simples
+	/**
+	 * @desc Unparsed the simple tags of the content of the parser.
+	 * The simple tags are the ones which are processable in a few lines
+	 */
 	function _unparse_simple_tags()
 	{
 		$array_str = array( 
@@ -97,7 +111,7 @@ class BBCodeUnparser extends ContentUnparser
 		$array_str_replace = array( 
 			'', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[line]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
 		);
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
+		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 		$array_preg = array( 
 			'`<img src="([^?\n\r\t].*)" alt="[^"]*"(?: class="[^"]+")? />`iU',
@@ -146,75 +160,64 @@ class BBCodeUnparser extends ContentUnparser
 			"[html]$1[/html]",
 			"[math]$1[/math]"
 		);	
-		$this->parsed_content = preg_replace($array_preg, $array_preg_replace, $this->parsed_content);
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		##Remplacement des balises imbriquées
 		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->parsed_content);
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
 		
 		//Texte caché
-		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->parsed_content);
+		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
 		
 		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
 		
 		//Bloc
-		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->parsed_content);
-		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->parsed_content);
+		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
+		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 		
 		//Bloc de formulaire
-		$this->parsed_content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->parsed_content);
+		$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->content);
 		
 		//Liens Wikipédia
-		$this->parsed_content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->parsed_content);
+		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->content);
 	}
 	
-	//Traitement des caractères html
-	function _unparse_html_characters()
-	{
-		$array_str = array( 
-			'&#8364;', '&#8218;', '&#402;', '&#8222;',
-			'&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;', '&#352;', '&#8249;', '&#338;', '&#381;',
-			'&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;', '&#8211;', '&#8212;', '&#732;', '&#8482;',
-			'&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);
-		
-		$array_str_replace = array( 
-			'€', '‚', 'ƒ',
-			'„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž',
-			'‘', '’', '“', '”', '•', '–', '—',  '˜', '™', 'š',
-			'›', 'œ', 'ž', 'Ÿ'
-		);	
-		$this->parsed_content = str_replace($array_str, $array_str_replace, $this->parsed_content);
-	}
-	
-	//Fonction de retour pour les tableaux
+	/**
+	 * @desc Unparses the table tag
+	 */
 	function _unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while( strpos($this->parsed_content, '<table class="bb_table"') !== false )
-			$this->parsed_content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<tr class="bb_table_row"') !== false )
-			$this->parsed_content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<th class="bb_table_head"') !== false )
-			$this->parsed_content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<td class="bb_table_col"') !== false )
-			$this->parsed_content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->parsed_content);
+		while( strpos($this->content, '<table class="bb_table"') !== false )
+			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
+		while( strpos($this->content, '<tr class="bb_table_row"') !== false )
+			$this->content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->content);
+		while( strpos($this->content, '<th class="bb_table_head"') !== false )
+			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
+		while( strpos($this->content, '<td class="bb_table_col"') !== false )
+			$this->content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 	}
 
-	//Fonction de retour pour les listes
+	/**
+	 * @desc Unparses the list tag
+	 */
 	function _unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while( strpos($this->parsed_content, '<ul class="bb_ul">') !== false )
-			$this->parsed_content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<ol class="bb_ol">') !== false )
-			$this->parsed_content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->parsed_content);
-		while( strpos($this->parsed_content, '<li class="bb_li">') !== false )
-			$this->parsed_content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->parsed_content);
+		while( strpos($this->content, '<ul class="bb_ul">') !== false )
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
+		while( strpos($this->content, '<ol class="bb_ol">') !== false )
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
+		while( strpos($this->content, '<li class="bb_li">') !== false )
+			$this->content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->content);
 	}
 	
-	//Fonction de retour de la balise liste
+	/**
+	 * @desc Callback which allows to unparse the fieldset tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fieldset tag are parsed
+	 */
 	function _unparse_fieldset($matches)
 	{
 		$style = '';
@@ -232,7 +235,11 @@ class BBCodeUnparser extends ContentUnparser
 			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
 	}
 	
-	//Function de retour des liens Wikipédia
+	/**
+	 * @desc Callback which allows to unparse the Wikipedia tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the wikipedia tag are parsed
+	 */
 	function _unparse_wikipedia_link($matches)
 	{
 		global $LANG;

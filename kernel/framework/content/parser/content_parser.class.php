@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
 
 //Classe de gestion du contenu
 class ContentParser extends Parser
@@ -34,10 +34,33 @@ class ContentParser extends Parser
 	//Constructeur
 	function ContentParser()
 	{
+		global $CONFIG;
 		parent::Parser();
+		$this->html_auth =& $CONFIG['html_auth'];
+		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
 	}
 	
-	/*abstract*/ function parse($forbidden_tags = array(), $html_protect = true) {}
+	/*abstract*/ function parse() {}
+	
+	function set_forbidden_tags($forbidden_tags)
+	{
+		if( is_array($forbidden_tags) )
+			$this->forbidden_tags = $forbidden_tags;
+	}
+	
+	function get_forbidden_tags()
+	{
+		return $this->forbidden_tags;
+	}
+	
+	function set_html_auth($array_auth)
+	{
+		global $CONFIG;
+		if( is_array($array_auth) )
+			$this->auth = $array_auth;
+		else
+			$this->auth =& $CONFIG['html_auth'];
+	}
 	
 	## Private ##
 	//Fonction pour éclater la chaîne selon les tableaux (gestion de l'imbrication infinie)
@@ -136,13 +159,13 @@ class ContentParser extends Parser
 	function _pick_up_tag($tag, $arguments = '')
 	{
 		//On éclate le contenu selon les tags (avec imbrication bien qu'on ne les gèrera pas => ça permettra de faire [code][code]du code[/code][/code])
-		$split_code = $this->_preg_split_safe_recurse($this->parsed_content, $tag, $arguments);
+		$split_code = $this->_preg_split_safe_recurse($this->content, $tag, $arguments);
 		
 		$num_codes = count($split_code);
 		//Si on a des apparitions de la balise
 		if( $num_codes > 1 )
 		{
-			$this->parsed_content = '';
+			$this->content = '';
 			$id_code = 0;
 			//On balaye le tableau trouvé
 			for( $i = 0; $i < $num_codes; $i++ )
@@ -150,10 +173,10 @@ class ContentParser extends Parser
 				//Contenu inter tags
 				if( $i % 3 == 0 )
 				{
-					$this->parsed_content .= $split_code[$i];
+					$this->content .= $split_code[$i];
 					//Si on n'est pas après la dernière balise fermante, on met une balise de signalement de la position du tag
 					if( $i < $num_codes - 1 )
-						$this->parsed_content .= '[' . strtoupper($tag) . '_TAG_' . $id_code++ . ']';
+						$this->content .= '[' . strtoupper($tag) . '_TAG_' . $id_code++ . ']';
 				}
 				//Contenu des balises
 				elseif( $i % 3 == 2 )
@@ -174,12 +197,19 @@ class ContentParser extends Parser
 		
 		//On réinjecte tous les contenus des balises
 		for( $i = 0; $i < $num_code; $i++ )
-			$this->parsed_content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->parsed_content);
+			$this->content = str_replace('[' . strtoupper($tag) . '_TAG_' . $i . ']', $this->array_tags[$tag][$i], $this->content);
 		
 		//On efface tout ce qu'on a prélevé du array
 		$this->array_tags[$tag] = array();
 		
 		return true;
 	}
+	
+	//Attributes
+	var $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
+	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
+	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym'); //Balises supportées
+	var $html_auth = array();
+	var $forbidden_tags = array();
 }
 ?>

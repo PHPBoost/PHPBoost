@@ -40,14 +40,10 @@ class Parser
 	//Constructeur
 	function Parser()
 	{
-		global $CONFIG;
-		$this->html_auth =& $CONFIG['html_auth'];
-		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
 		$this->content = '';
-		$this->parsed_content = '';
 	}
 
-	//Fonction qui renvoie le contenu traité
+	//Fonction qui renvoie le contenu du parser
 	function get_content($addslashes = ADD_SLASHES)
 	{
 		if( $addslashes )
@@ -64,52 +60,18 @@ class Parser
 		else
 			$this->content = $content;
 	}
-	
-	function set_html_auth($array_auth)
-	{
-		global $CONFIG;
-		if( is_array($array_auth) )
-			$this->auth = $array_auth;
-		else
-			$this->auth =& $CONFIG['html_auth'];
-	}
-	
-	function get_parsed_content($addslashes = true)
-	{
-		if( $addslashes )
-			return addslashes(trim($this->parsed_content));
-		else
-			return trim($this->parsed_content);
-	}
-	
-	function set_forbidden_tags($forbidden_tags)
-	{
-		if( is_array($forbidden_tags) )
-			$this->forbidden_tags = $forbidden_tags;
-	}
-	
-	function get_forbidden_tags()
-	{
-		return $this->forbidden_tags;
-	}	
-	
+		
 	####### Protected #######
 	//This array should be static
-	var $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url', 
-	'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
-	'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym'); //Balises supportées.
 	var $content = '';
 	var $array_tags = array();
-	var $parsed_content;
-	var $html_auth = array();
-	var $forbidden_tags = array();
 	
 	//Remplacement recursif des balises imbriquées.
 	function _parse_imbricated($match, $regex, $replace)
 	{
-		$nbr_match = substr_count($this->parsed_content, $match);
+		$nbr_match = substr_count($this->content, $match);
 		for($i = 0; $i <= $nbr_match; $i++)
-			$this->parsed_content = preg_replace($regex, $replace, $this->parsed_content); 
+			$this->content = preg_replace($regex, $replace, $this->content); 
 	}
 }
 

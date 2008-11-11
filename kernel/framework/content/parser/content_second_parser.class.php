@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
 
 //Classe de gestion du contenu
 class ContentSecondParser extends Parser
@@ -43,15 +43,15 @@ class ContentSecondParser extends Parser
 	{
 		global $LANG;
 
-		$this->parsed_content = $this->content;
+		$this->parsed_content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
 
 		//Balise code
-		if( strpos($this->parsed_content, '[[CODE') !== false )
-		$this->parsed_content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->parsed_content);
+		if( strpos($this->content, '[[CODE') !== false )
+		$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
 
 		//Balise latex.
-		if( strpos($this->parsed_content, '[[MATH]]') !== false )
-		$this->parsed_content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->parsed_content);
+		if( strpos($this->content, '[[MATH]]') !== false )
+		$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
 	}
 
 	## Private ##
@@ -62,26 +62,26 @@ class ContentSecondParser extends Parser
 		//BBCode PHPBoost
 		if( strtolower($language) == 'bbcode' )
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/bbcode_highlighter.class.php');
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_highlighter.class.php');
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$bbcode_highlighter->highlight($inline_code);
-			$contents = $bbcode_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
+			$contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
 		}
 		//Templates PHPBoost
-		elseif( strtolower($language) == 'tpl' )
+		elseif( strtolower($language) == 'tpl' || strtolower($language) == 'template' )
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/template_highlighter.class.php');
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/template_highlighter.class.php');
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 			
 			$template_highlighter = new TemplateHighlighter();
 			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-			$contents = $template_highlighter->get_parsed_content(DO_NOT_ADD_SLASHES);
+			$contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
 		}
 		elseif( $language != '' )
 		{
-			include_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 			$Geshi =& new GeSHi($contents, $language);
 				
 			if( $line_number ) //Affichage des numéros de lignes.

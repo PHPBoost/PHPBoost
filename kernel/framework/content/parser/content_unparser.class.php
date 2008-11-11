@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser.class.php');
+require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
 
 //Classe de gestion du contenu
 class ContentUnParser extends Parser
@@ -47,23 +47,23 @@ class ContentUnParser extends Parser
 		if( $action == PICK_UP )
 		{
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`is';
-			$content_split = preg_split($mask, $this->parsed_content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
 			$id_tag = 0;
 			
 			if( $content_length > 1 )
 			{
-				$this->parsed_content = '';
+				$this->content = '';
 				for($i = 0; $i < $content_length; $i++)
 				{
 					//contenu
 					if( $i % 2 == 0 )
 					{
-						$this->parsed_content .= $content_split[$i];
+						$this->content .= $content_split[$i];
 						//Ajout du tag de remplacement
 						if( $i < $content_length - 1 )
-							$this->parsed_content .= '[HTML_UNPARSE_TAG_' . $id_tag++ . ']';
+							$this->content .= '[HTML_UNPARSE_TAG_' . $id_tag++ . ']';
 					}
 					else
 					{
@@ -87,7 +87,7 @@ class ContentUnParser extends Parser
 			if( $content_length > 0 )
 			{
 				for( $i = 0; $i < $content_length; $i++ )
-					$this->parsed_content = str_replace('[HTML_UNPARSE_TAG_' . $i . ']', '[html]' . $this->array_tags['html_unparse'][$i] . '[/html]', $this->parsed_content);
+					$this->content = str_replace('[HTML_UNPARSE_TAG_' . $i . ']', '[html]' . $this->array_tags['html_unparse'][$i] . '[/html]', $this->content);
 				$this->array_tags['html_unparse'] = array();
 			}
 			return true;
@@ -101,23 +101,23 @@ class ContentUnParser extends Parser
 		if( $action == PICK_UP )
 		{
 			$mask = '`\[\[CODE(=[a-z0-9-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
-			$content_split = preg_split($mask, $this->parsed_content, -1, PREG_SPLIT_DELIM_CAPTURE);
+			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
 			$id_tag = 0;
 			
 			if( $content_length > 1 )
 			{
-				$this->parsed_content = '';
+				$this->content = '';
 				for($i = 0; $i < $content_length; $i++)
 				{
 					//contenu
 					if( $i % 3 == 0 )
 					{
-						$this->parsed_content .= $content_split[$i];
+						$this->content .= $content_split[$i];
 						//Ajout du tag de remplacement
 						if( $i < $content_length - 1 )
-							$this->parsed_content .= '[CODE_UNPARSE_TAG_' . $id_tag++ . ']';
+							$this->content .= '[CODE_UNPARSE_TAG_' . $id_tag++ . ']';
 					}
 					elseif( $i % 3 == 2 )
 					{
@@ -140,7 +140,7 @@ class ContentUnParser extends Parser
 			if( $content_length > 0 )
 			{
 				for( $i = 0; $i < $content_length; $i++ )
-					$this->parsed_content = str_replace('[CODE_UNPARSE_TAG_' . $i . ']', $this->array_tags['code_unparse'][$i], $this->parsed_content);
+					$this->content = str_replace('[CODE_UNPARSE_TAG_' . $i . ']', $this->array_tags['code_unparse'][$i], $this->content);
 				$this->array_tags['code_unparse'] = array();
 			}
 			return true;
