@@ -59,20 +59,20 @@ class Content
 		switch($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_parser.class.php');
+				import('content/parser/bbcode_parser');
 				return new BBCodeParser();
 			case TINYMCE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/tinymce_parser.class.php');
+				import('content/parser/tinymce_parser');
 				return new TinyMCEParser();
 			default:
 				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/tinymce_parser.class.php');
+					import('content/parser/tinymce_parser');
 					return new TinyMCEParser();
 				}
 				else
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_parser.class.php');
+					import('content/parser/bbcode_parser');
 					return new BBCodeParser();
 				}
 		}
@@ -85,20 +85,20 @@ class Content
 		switch($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_unparser.class.php');
+				import('content/parser/bbcode_unparser');
 				return new BBCodeUnparser();
 			case TINYMCE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/tinymce_unparser.class.php');
+				import('content/parser/tinymce_unparser');
 				return new TinyMCEUnparser();
 			default:
 				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/tinymce_unparser.class.php');
+					import('content/parser/tinymce_unparser');
 					return new TinyMCEUnparser();
 				}
 				else
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_unparser.class.php');
+					import('content/parser/bbcode_unparser');
 					return new BBCodeUnparser();
 				}
 		}
@@ -107,7 +107,7 @@ class Content
 	//Function which builds an object unparser and returns it
 	function get_second_parser()
 	{
-		require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/content_second_parser.class.php');
+		import('content/parser/content_second_parser');
 		return new ContentSecondParser();
 	}
 	
@@ -117,20 +117,20 @@ class Content
 		switch($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/editor/bbcode_editor.class.php');
+				import('content/editor/bbcode_editor');
 				return new BBCodeEditor();
 			case TINYMCE_LANGUAGE:
-				require_once(PATH_TO_ROOT . '/kernel/framework/content/editor/bbcode_editor.class.php');
+				import('content/editor/bbcode_editor');
 				return new BBCodeEditor();
 			default:
 				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/editor/tinymce_editor.class.php');
+					import('content/editor/tinymce_editor');
 					return new TinyMCEEditor();
 				}
 				else
 				{
-					require_once(PATH_TO_ROOT . '/kernel/framework/content/editor/bbcode_editor.class.php');
+					import('content/editor/bbcode_editor');
 					return new BBCodeEditor();
 				}
 		}

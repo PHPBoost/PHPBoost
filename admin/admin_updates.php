@@ -41,8 +41,8 @@ $updates_availables = 0;
 if( phpversion() > PHP_MIN_VERSION_UPDATES )
 {
     // Retrieves all the update alerts from the database
-    require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
-    require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
+    import('events/administrator_alert_service');
+    import('core/application');
     $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
     $updates = array();
     foreach( $update_alerts as $update_alert )

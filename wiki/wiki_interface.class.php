@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 // Classe WikiInterface qui hérite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
@@ -152,7 +152,7 @@ class WikiInterface extends ModuleInterface
     
     function get_feed_data_struct($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+        import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
         
         load_module_lang('wiki');
@@ -174,7 +174,7 @@ class WikiInterface extends ModuleInterface
         
         $data = new FeedData();
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        import('util/date');
         $date = new Date();
         
         $data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']);

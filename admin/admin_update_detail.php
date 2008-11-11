@@ -40,11 +40,11 @@ $tpl->assign_vars(array(
 ));
 
 $app = null;
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+import('events/administrator_alert_service');
 
 if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null )
 {
-    require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
+    import('core/application');
     $app = unserialize($update->get_properties());
 }
 

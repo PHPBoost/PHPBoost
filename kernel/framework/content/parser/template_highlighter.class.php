@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
+import('content/parser/parser');
 
 //Couleurs pour la coloration du BBCode
 define('TPL_BRACES_STYLE', 'color:#7F3300;');

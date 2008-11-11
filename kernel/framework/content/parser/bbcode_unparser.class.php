@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/content_unparser.class.php');
+import('content/parser/content_unparser');
 
 /**
  * @author Benoît Sautel <ben.popeye@phpboost.com>

@@ -66,7 +66,7 @@ else    // Génération du cache des rss
     //Si c'est confirmé on execute
     if( !empty($_POST['cache']) )
     {
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache();
         
         redirect(HOST . DIR . '/admin/admin_cache.php?cache=syndication&s=1');

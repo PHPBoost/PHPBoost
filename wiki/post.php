@@ -112,7 +112,7 @@ if( !empty($contents) ) //On enregistre un article
 			$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
         
             // Feeds Regeneration
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+            import('content/syndication/feed');
             Feed::clear_cache('wiki');
 			
 			//On redirige
@@ -156,7 +156,7 @@ if( !empty($contents) ) //On enregistre un article
 				$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
                 // Feeds Regeneration
-                require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+                import('content/syndication/feed');
                 Feed::clear_cache('wiki');
                 
 				$redirect = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);

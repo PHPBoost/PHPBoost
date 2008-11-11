@@ -40,7 +40,7 @@ if( $install ) //Installation du module
 
 	$enable_module = retrieve(POST, $module_name . 'activ', false);
 	
-	require_once(PATH_TO_ROOT . '/kernel/framework/modules/packages_manager.class.php');
+	import('modules/packages_manager');
 	
 	switch(PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{

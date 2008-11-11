@@ -100,7 +100,7 @@ if( !empty($_POST['valid']) )
 		$Cache->Generate_module_file('articles');
 		
 		// Feeds Regeneration
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache('articles');
 		
 		redirect(HOST . DIR . '/articles/admin_articles.php');

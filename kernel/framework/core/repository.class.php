@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/core/application.class.php');
+import('core/application');
 
 class Repository
 {

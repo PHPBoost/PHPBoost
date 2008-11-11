@@ -39,9 +39,9 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+import('functions', LIB_IMPORT); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
-require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
+import('io/template');
 
 @error_reporting(ERROR_REPORTING);
 
@@ -70,7 +70,7 @@ if( is_file('distribution/distribution_' . $lang . '.php') )
 }
 else
 {
-	require_once(PATH_TO_ROOT . '/kernel/framework/io/folder.class.php');
+	import('io/folder');
 	$distribution_folder = new Folder('distribution');
 	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
 	if( count($distribution_files) > 0)
@@ -483,7 +483,7 @@ elseif( $step == 5 )
 		$Cache = new Cache;
 		
 		//Création de l'utilisateur
-		require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
+		import('members/member');
 		$user_data = array(
 			'm_user_id' => 1,
 			'login' => 'login',

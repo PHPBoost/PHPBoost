@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/io/fse.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/io/file.class.php');
+import('io/fse');
+import('io/file');
 
 //Dossier
 class Folder extends FileSystemElement

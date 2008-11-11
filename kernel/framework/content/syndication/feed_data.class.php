@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_item.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+import('content/syndication/feed_item');
+import('util/date');
 
 class FeedData
 {

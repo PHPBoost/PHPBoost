@@ -173,9 +173,9 @@ class DownloadInterface extends ModuleInterface
         $index = $indexes[$resultsIndex];
         $result =& $results[$index];
         
-        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+        import('util/date');
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result['timestamp']);
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/note.class.php');
+        import('content/note');
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
         $Tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
@@ -200,8 +200,8 @@ class DownloadInterface extends ModuleInterface
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed_data.class.php');
+        import('util/date');
+        import('content/syndication/feed_data');
         
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');

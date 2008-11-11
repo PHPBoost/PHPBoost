@@ -41,7 +41,7 @@ define('SITEMAP_PRIORITY_AVERAGE', '0.5');
 define('SITEMAP_PRIORITY_LOW', '0.25');
 define('SITEMAP_PRIORITY_MIN', '0');
 
-include_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+import('util/date');
 
 //Should implement an interface in PHP 5
 

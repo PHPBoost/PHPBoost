@@ -35,8 +35,8 @@ $id_to_delete = retrieve(GET, 'del', 0);
 $id_to_update = retrieve(REQUEST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/contribution_service.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
+import('events/contribution_service');
+import('util/date');
 
 if( $contribution_id > 0 )
 {
@@ -215,7 +215,7 @@ elseif( $id_update > 0 )
 }
 else
 {
-	require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
+	import('util/pagination');
 	
 	$pagination = new Pagination();
 	$pagination->set_var_name_current_page('p');

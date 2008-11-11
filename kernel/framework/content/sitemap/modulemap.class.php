@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemaplink.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapsection.class.php');
-include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/sitemapexportconfig.class.php');
+import('sitemap/sitemaplink');
+import('sitemap/sitemapsection');
+import('sitemap/sitemapexportconfig');
 
 define('SITE_MAP_AUTH_GUEST', false);
 define('SITE_MAP_AUTH_USER', true);

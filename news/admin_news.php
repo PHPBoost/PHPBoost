@@ -94,7 +94,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //inject
         
         
         // Feeds Regeneration
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache('news');
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
@@ -119,7 +119,7 @@ elseif( $del && !empty($id) ) //Suppression de la news.
 	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'news'", __LINE__, __FILE__);
 
     // Feeds Regeneration
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    import('content/syndication/feed');
     Feed::clear_cache('news');
 	
 	//Mise à jour du nombre de news dans le cache de la configuration.

@@ -191,7 +191,7 @@ if( !empty($_POST['valid']) && !empty($id) )
 	else
 		redirect(HOST . DIR . '/articles/admin_articles_cat.php?id=' . $id . '&error=incomplete');
     
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    import('content/syndication/feed');
     Feed::clear_cache('articles');
     
 	redirect(HOST . DIR . '/articles/admin_articles_cat.php');
@@ -206,7 +206,7 @@ elseif( !empty($_POST['valid_root']) ) //Modification des autorisations de la ra
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	$Cache->Generate_module_file('articles');
 	
-    require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+    import('content/syndication/feed');
     Feed::clear_cache('articles');
     
 	redirect(HOST . DIR . '/articles/admin_articles_cat.php');
@@ -516,7 +516,7 @@ elseif( !empty($del) ) //Suppression de l'articles/sous-catégorie.
 			
 			redirect(HOST . DIR . '/articles/admin_articles_cat.php');
 		}
-        require_once(PATH_TO_ROOT . '/kernel/framework/content/syndication/feed.class.php');
+        import('content/syndication/feed');
         Feed::clear_cache('articles');
     }
 	else

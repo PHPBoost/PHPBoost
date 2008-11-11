@@ -31,11 +31,11 @@ require_once('../admin/admin_header.php');
 
 $template = new Template('admin/admin_alerts.tpl');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert_service.class.php');
+import('events/administrator_alert_service');
 
 define('NUM_ALERTS_PER_PAGE', 20);
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
+import('util/pagination');
 
 $pagination = new Pagination();
 $pagination->set_var_name_current_page('p');

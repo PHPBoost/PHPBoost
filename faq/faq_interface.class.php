@@ -26,7 +26,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
@@ -185,7 +185,7 @@ class FaqInterface extends ModuleInterface
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $Cache, $FAQ_LANG;
-		include_once(PATH_TO_ROOT . '/kernel/framework/sitemap/modulemap.class.php');
+		import('sitemap/modulemap');
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
 		$module_map = new ModuleMap($FAQ_LANG['faq']);

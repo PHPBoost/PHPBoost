@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 /**
  *  Les arguments de fonction nommé "$modules" sont assez particulier.

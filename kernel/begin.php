@@ -33,21 +33,21 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/framework/util/bench.class.php');
-$Bench = new Bench(); //Début du benchmark
 
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
+import('util/bench');
+$Bench = new Bench(); //Début du benchmark
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
-require_once(PATH_TO_ROOT . '/kernel/framework/core/errors.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/io/template.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/db/mysql.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/core/cache.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/members/sessions.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/members/member.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/members/groups.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/members/authorizations.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/core/breadcrumb.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/content/content.class.php');
+import('core/errors');
+import('io/template');
+import('db/mysql');
+import('core/cache');
+import('members/sessions');
+import('members/member');
+import('members/groups');
+import('members/authorizations');
+import('core/breadcrumb');
+import('content/content');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\

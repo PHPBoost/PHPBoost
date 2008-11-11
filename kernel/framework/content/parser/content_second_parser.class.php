@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/parser.class.php');
+import('content/parser/parser');
 
 //Classe de gestion du contenu
 class ContentSecondParser extends Parser
@@ -62,7 +62,7 @@ class ContentSecondParser extends Parser
 		//BBCode PHPBoost
 		if( strtolower($language) == 'bbcode' )
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/bbcode_highlighter.class.php');
+			import('content/parser/bbcode_highlighter');
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
 			$bbcode_highlighter->highlight($inline_code);
@@ -71,7 +71,7 @@ class ContentSecondParser extends Parser
 		//Templates PHPBoost
 		elseif( strtolower($language) == 'tpl' || strtolower($language) == 'template' )
 		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/parser/template_highlighter.class.php');
+			import('content/parser/template_highlighter');
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 			
 			$template_highlighter = new TemplateHighlighter();

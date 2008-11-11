@@ -29,8 +29,8 @@ define('APPLICATION_TYPE__KERNEL', 'kernel');
 define('APPLICATION_TYPE__MODULE', 'module');
 define('APPLICATION_TYPE__TEMPLATE', 'template');
 
-require_once(PATH_TO_ROOT . '/kernel/framework/util/date.class.php');
-require_once(PATH_TO_ROOT . '/kernel/framework/events/administrator_alert.class.php');
+import('util/date');
+import('events/administrator_alert');
 
 class Application
 {

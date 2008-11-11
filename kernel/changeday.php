@@ -72,11 +72,11 @@ if( empty($check_update) )
 	@closedir($dh); //On ferme le dossier
     
     //Check for availables updates
-    require_once(PATH_TO_ROOT . '/kernel/framework/core/updates.class.php');
+    import('core/updates');
     $updates = new Updates();
     
 	//Parcours des modules afin d'executer les actions journalières.
-	require_once(PATH_TO_ROOT . '/kernel/framework/modules/modules_discovery_service.class.php');
+	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('on_changeday');
 	foreach($modules as $module)
@@ -105,7 +105,7 @@ if( empty($check_update) )
 
     
     // Check kernel's, modules' or themes' availability
-    require_once(PATH_TO_ROOT . '/kernel/framework/core/updates.class.php');
+    import('core/updates');
     new Updates();
 
     //Optimisations des tables

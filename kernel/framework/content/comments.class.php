@@ -322,7 +322,7 @@ class Comments
 				}
 
 				//On crée une pagination si le nombre de commentaires est trop important.
-				require_once(PATH_TO_ROOT . '/kernel/framework/util/pagination.class.php');
+				import('util/pagination');
 				$pagination = new Pagination();
 
 				$Template->assign_vars(array(
