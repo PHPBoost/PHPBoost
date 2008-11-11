@@ -4,7 +4,7 @@
  *                                constant.php
  *                            -------------------
  *   begin                : April 26, 2008
- *   copyright            : (C) 2008 Viarre RÃ©gis
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   Constantes utiles
@@ -27,7 +27,7 @@
  *
 ###################################################*/
 
-//Si register_globals activÃ©, suppression des variables globales qui trainent. Fonction empruntÃ© Ã  phpBB3
+//Si register_globals activé, suppression des variables globales qui trainent. Fonction emprunté à phpBB3
 function securit_register_globals()
 {
     $not_unset = array(
@@ -78,7 +78,7 @@ function securit_register_globals()
     unset($input);
 }
 
-//RÃ©cupÃ©ration de la page d'installation.
+//Récupération de la page d'installation.
 function get_server_url_page($path)
 {
    
