@@ -62,7 +62,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 	$config['mail'] = strprotect(retrieve(POST, 'mail', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);  
 	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
-	$config['sign'] = strprotect(retrieve(POST, 'sign', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);   
+	$config['sign'] = strprotect(retrieve(POST, 'sign', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);  
 	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
