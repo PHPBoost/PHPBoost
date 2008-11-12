@@ -127,9 +127,13 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
 	switch($addslashes)
 	{
 		case ADDSLASHES_ON:
-			$var = addslashes($var);
+			//Si magic_quotes est activé
+			if( MAGIC_QUOTES )
+				$var = addslashes($var);
 			break;
 		case ADDSLASHES_OFF:
+			if( MAGIC_QUOTES )
+				$var = stripslashes($var);
 			break;
 		//Mode automatique
 		case ADDSLASHES_AUTO:
