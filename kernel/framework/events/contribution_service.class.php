@@ -58,7 +58,7 @@ class ContributionService
 	}
 	
 	//Function which returns all the contributions of the table (we can force it to be ordered)
-	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc')
+	/*static*/ function get_all_contributions($criteria = 'creation_date', $order = 'desc')
 	{
 		global $Sql;
 		
@@ -84,7 +84,7 @@ class ContributionService
 		return $array_result;
 	}
 	
-	//Function which builds a list of alerts matching the required criteria(s)
+	//Function which builds a list of the contributions matching the required criteria(s)
 	/*static*/ function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
 	{
 		global $Sql;

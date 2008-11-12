@@ -4,6 +4,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [*] Régler les bugs touchables de TinyMCE relevés par Ptithom.
+[*] Implémenter la contribution dans les téléchargements
 
 ------------------------------------ MODULES -----------------------------------
 

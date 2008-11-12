@@ -72,19 +72,12 @@
 				# INCLUDE download #
 				<hr />
 				<br />
-				<div class="module_position">			
-					<div class="module_top_l"></div>		
-					<div class="module_top_r"></div>
-					<div class="module_top">
-						{L_SHORT_CONTENTS}
-					</div>
-					<div class="module_contents">
-						{SHORT_DESCRIPTION_PREVIEW}
-					</div>
-					<div class="module_bottom_l"></div>		
-					<div class="module_bottom_r"></div>
-					<div class="module_bottom"></div>
-				</div>
+				<h1>{L_SHORT_CONTENTS}</h1>
+				{SHORT_DESCRIPTION_PREVIEW}
+				# IF C_CONTRIBUTION #
+				<h1>{L_CONTRIBUTION_COUNTERPART}</h1>
+				{CONTRIBUTION_COUNTERPART_PREVIEW}
+				# ENDIF #
 			# ENDIF #
 
 			<form action="{U_TARGET}" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -171,6 +164,18 @@
 						</dd>
 					</dl>
 				</fieldset>
+				# IF C_CONTRIBUTION #
+				<fieldset>
+					<legend>{L_CONTRIBUTION_LEGEND}</legend>
+					<div class="notice">
+						{L_NOTICE_CONTRIBUTION}
+					</div>
+					<p><label>{L_CONTRIBUTION_COUNTERPART}</label></p>
+					<p class="text_small">{L_CONTRIBUTION_COUNTERPART_EXPLAIN}</p>
+					{CONTRIBUTION_COUNTERPART_EDITOR}
+					<textarea rows="20" cols="40" id="counterpart" name="counterpart">{CONTRIBUTION_COUNTERPART}</textarea>
+				</fieldset>
+				# ENDIF #	
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>

@@ -155,7 +155,7 @@ class DownloadCats extends CategoriesManagement
 	function check_auth($id)
 	{
 		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
-		$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+		$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 		
 		$id_cat = $id;
 
@@ -163,7 +163,7 @@ class DownloadCats extends CategoriesManagement
 		while( $id_cat > 0 )
 		{
 			if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
-				$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+				$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 			
 			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 		}

@@ -48,6 +48,16 @@
 							{WRITE_AUTH}
 						</dd>					
 					</dl>
+					<dl>
+						<dt>
+							<label>
+								{L_CONTRIBUTION_AUTH}
+							</label>
+						</dt>
+						<dd>
+							{CONTRIBUTION_AUTH}
+						</dd>					
+					</dl>
 				</fieldset>
 				
 				<fieldset>

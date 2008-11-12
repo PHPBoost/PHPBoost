@@ -25,7 +25,11 @@
  *
 ###################################################*/
 
-define('READ_CAT_DOWNLOAD', 0x01);
-define('WRITE_CAT_DOWNLOAD', 0x02);
+//Authorization bit to read in a category
+define('DOWNLOAD_READ_CAT_AUTH_BIT', 0x01);
+//Authorization bit to write in a category
+define('DOWNLOAD_WRITE_CAT_AUTH_BIT', 0x02);
+//Authorization bit to contribution in a category
+define('DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT', 0x04);
 
 ?>

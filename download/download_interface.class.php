@@ -45,7 +45,6 @@ class DownloadInterface extends ModuleInterface
 			
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_DOWNLOAD = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
-		$CONFIG_DOWNLOAD['global_auth'] = unserialize($CONFIG_DOWNLOAD['global_auth']);
 		
 		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 		
@@ -216,7 +215,7 @@ class DownloadInterface extends ModuleInterface
         $data->set_host(HOST);
         $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_lang($LANG['xml_lang']);
-        $data->set_auth_bit(READ_CAT_DOWNLOAD);
+        $data->set_auth_bit(DOWNLOAD_READ_CAT_AUTH_BIT);
 		
         
         // Building Categories to look in
@@ -248,7 +247,7 @@ class DownloadInterface extends ModuleInterface
             $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
             $item->set_date($date);
             $item->set_image_url($row['image']);
-            $item->set_auth($cats->compute_heritated_auth($row['idcat'], READ_CAT_DOWNLOAD, AUTH_PARENT_PRIORITY));
+            $item->set_auth($cats->compute_heritated_auth($row['idcat'], DOWNLOAD_READ_CAT_AUTH_BIT, AUTH_PARENT_PRIORITY));
             
             // Adding the item to the list
             $data->add_item($item);
@@ -265,7 +264,7 @@ class DownloadInterface extends ModuleInterface
 
         if( $id_cat == 0 )
         {
-            if( Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD) )
+            if( Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT) )
                 $list[] = 0;
             else
                 return;
@@ -275,7 +274,7 @@ class DownloadInterface extends ModuleInterface
 			if( !empty($DOWNLOAD_CATS[$id_cat]) )
 			{
 				$auth = !empty($DOWNLOAD_CATS[$id_cat]['auth']) ? $DOWNLOAD_CATS[$id_cat]['auth'] : $CONFIG_DOWNLOAD['global_auth'];
-				if( Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, READ_CAT_DOWNLOAD) )
+				if( Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $auth, DOWNLOAD_READ_CAT_AUTH_BIT) )
 					$list[] = $id_cat;
             }
 			else
@@ -293,7 +292,7 @@ class DownloadInterface extends ModuleInterface
             
             if( $properties['id_parent'] == $id_cat )
             {
-                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], READ_CAT_DOWNLOAD) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD);
+                $this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], DOWNLOAD_READ_CAT_AUTH_BIT) :  Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
                 
                 if( $this_auth )
                 {
