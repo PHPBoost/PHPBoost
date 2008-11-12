@@ -61,8 +61,8 @@ else
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
-$auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], READ_CAT_DOWNLOAD);
-$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+$auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 
 //Bread_crumb : we read categories list recursively
 while( $id_cat_for_download > 0 )
@@ -71,8 +71,8 @@ while( $id_cat_for_download > 0 )
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
 		//If we can't read a category, we can't read sub elements.
-		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], READ_CAT_DOWNLOAD);
-		$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], WRITE_CAT_DOWNLOAD);
+		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
+		$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	}
 	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 }

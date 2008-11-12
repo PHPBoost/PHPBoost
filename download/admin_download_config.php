@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_download_config.php
+ *                          admin_download_config.php
  *                            -------------------
  *   begin                : March 12, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -40,7 +40,7 @@ if( !empty($_POST['valid']) )
 	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
 	$config_download['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	$config_download['root_contents'] = stripslashes(retrieve(POST, 'root_contents', '', TSTRING_PARSE));
-	$config_download['global_auth'] = addslashes(serialize(Authorizations::build_auth_array_from_form(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD)));
+	$config_download['global_auth'] = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
@@ -67,8 +67,9 @@ else
 		'NBR_FILE_MAX' => !empty($CONFIG_DOWNLOAD['nbr_file_max']) ? $CONFIG_DOWNLOAD['nbr_file_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_DOWNLOAD['nbr_column']) ? $CONFIG_DOWNLOAD['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_DOWNLOAD['note_max']) ? $CONFIG_DOWNLOAD['note_max'] : '10',
-		'READ_AUTH' => Authorizations::generate_select(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
-		'WRITE_AUTH' => Authorizations::generate_select(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
+		'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+		'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+		'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
 		'DESCRIPTION' => unparse($CONFIG_DOWNLOAD['root_contents']),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE' => $LANG['require'],		
@@ -86,6 +87,7 @@ else
 		'L_GLOBAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['global_auth_explain'],
 		'L_READ_AUTH' => $DOWNLOAD_LANG['auth_read'],
 		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
+		'L_CONTRIBUTION_AUTH' => $DOWNLOAD_LANG['auth_contribute'],
 		'L_ROOT_DESCRIPTION' => $DOWNLOAD_LANG['root_description']
 	));
 	

@@ -116,7 +116,7 @@ elseif( !empty($_POST['submit']) )
 		//Autorisations
 		if( !empty($_POST['special_auth']) )
 		{
-			$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_DOWNLOAD, WRITE_CAT_DOWNLOAD);
+			$array_auth_all = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
@@ -213,8 +213,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'JS_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'true' : 'false',
 			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
 			'SPECIAL_CHECKED' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'checked="checked"' : '',
-			'READ_AUTH' => Authorizations::generate_select(READ_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(WRITE_CAT_DOWNLOAD, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	else
@@ -230,8 +230,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'JS_SPECIAL_AUTH' => 'false',
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
-			'READ_AUTH' => Authorizations::generate_select(READ_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'])
+			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	

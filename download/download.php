@@ -130,7 +130,7 @@ else
 		foreach( $DOWNLOAD_CATS as $id => $value )
 		{
 			//List of children categories
-			if( $id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], READ_CAT_DOWNLOAD)) )
+			if( $id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)) )
 			{
 				if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
 					$Template->assign_block_vars('row', array());

@@ -97,6 +97,7 @@ if( $delete_file > 0 )
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
+//Editing a page
 elseif( $edit_file_id > 0 )
 {
 	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
@@ -105,7 +106,8 @@ elseif( $edit_file_id > 0 )
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
-	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], WRITE_CAT_DOWNLOAD);
+	$auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
 	
@@ -119,25 +121,29 @@ elseif( $edit_file_id > 0 )
 		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
-			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], WRITE_CAT_DOWNLOAD);
+		{
+			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+			$auth_contribute = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+		}
 		
 		$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 	}
 	
-	if( !$auth_write )
+	if( !$auth_write || !$auth_contribute )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
 {
 	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], transid('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
+	if( !($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)) || !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) )
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 
 
 $Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
 
 $Bread_crumb->reverse();
-	
 
 require_once('../kernel/header.php');
 
@@ -261,7 +267,7 @@ if( $edit_file_id > 0 )
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -314,7 +320,7 @@ if( $edit_file_id > 0 )
 			'URL' => $file_infos['url'],
 			'SIZE_FORM' => $file_infos['size'],
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $download_categories->build_select_form($file_infos['idcat'], 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -330,8 +336,10 @@ if( $edit_file_id > 0 )
 	}
 }
 //Adding a file
-elseif( $add_file )
+else
 {
+	$contribution_counterpart = retrieve(POST, 'counterpart', '', TSTRING_PARSE);
+	
 	if( $submit )
 	{
 		//The form is ok
@@ -343,6 +351,7 @@ elseif( $add_file )
 			
 			switch($file_visibility)
 			{
+				//If it's a time interval
 				case 2:		
 					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
@@ -353,6 +362,7 @@ elseif( $add_file )
 						$visible = 0;
 
 					break;
+				//If it's always visible
 				case 1:
 					list($start_timestamp, $end_timestamp) = array(0, 0);
 					break;
@@ -363,6 +373,25 @@ elseif( $add_file )
 			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."download");
+			
+			//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
+			if( !$auth_write )
+			{
+				//Importing the contribution classes
+				import('events/contribution');
+				import('events/contribution_service');
+				
+				$download_contribution = new Contribution();
+				$download_contribution->set_id_in_module($new_id_file);
+				$download_contribution->set_description($contribution_counterpart);
+				$download_contribution->set_entitled($LANG['contribution_entitled']);
+				$download_contribution->set_auth($download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY));
+				print_r($download_contribution->get_auth());
+				exit;
+
+				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved.			
+				ContributionService::save_contribution(Authorizations::capture_and_shift_bit_auth($download_contribution, DOWNLOAD_WRITE_CAT_AUTH_BIT, CONTRIBUTION_AUTH_BIT));	
+			}
 			
 			//Updating the number of subfiles in each category
 			if( $file_cat_id != $file_infos['idcat'] )
@@ -384,7 +413,9 @@ elseif( $add_file )
 	}
 	//Previewing a file
 	elseif( $preview )
-	{	
+	{
+		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
@@ -400,7 +431,7 @@ elseif( $add_file )
 		else
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
-		//Cr�ation des calendriers
+		//Calendars creation
 		$creation_calendar = new MiniCalendar('creation');
 		$creation_calendar->set_date($file_creation_date);
 		$release_calendar = new MiniCalendar('release_date');
@@ -426,6 +457,8 @@ elseif( $add_file )
 			'U_IMG' => $file_image,
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => $CONFIG['lang'],
+			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
+			'CONTRIBUTION_COUNTERPART_PREVIEW' => second_parse(stripslashes($contribution_counterpart)),
 			// Those langs are required by the template inclusion
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
@@ -440,6 +473,7 @@ elseif( $add_file )
 		));
 
 		$Template->assign_vars(array(
+			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
 			'DESCRIPTION' => $file_contents,
@@ -448,7 +482,9 @@ elseif( $add_file )
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $auth_write ? 
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
@@ -485,6 +521,7 @@ elseif( $add_file )
 		$file_visibility = 0;
 		
 		$Template->assign_vars(array(
+			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => '',
 			'COUNT' => 0,
 			'DESCRIPTION' => '',
@@ -493,7 +530,9 @@ elseif( $add_file )
 			'URL' => '',
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $download_categories->build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_DOWNLOAD, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $auth_write ? 
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
+									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -507,6 +546,12 @@ elseif( $add_file )
 			'U_TARGET' => transid('management.php?new=1')
 		));
 	}
+	$Template->assign_vars(array(
+		'L_NOTICE_CONTRIBUTION' => $DOWNLOAD_LANG['notice_contribution'],
+		'L_CONTRIBUTION_COUNTERPART' => $DOWNLOAD_LANG['contribution_counterpart'],
+		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $DOWNLOAD_LANG['contribution_counterpart_explain'],
+		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart')
+	));
 }
 
 $Template->assign_vars(array(
@@ -548,9 +593,10 @@ $Template->assign_vars(array(
 	'L_REQUIRE_URL' => $DOWNLOAD_LANG['require_url'],
 	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
 	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
-	'L_REQUIRE_TITLE' => $LANG['require_title']
+	'L_REQUIRE_TITLE' => $LANG['require_title'],
+	'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
 ));
-	
+
 $Template->pparse('file_management');
 require_once('../kernel/footer.php');
 

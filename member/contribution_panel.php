@@ -237,7 +237,7 @@ else
 	$order = $order == 'desc' ? 'desc' : 'asc';
 	
 	//On liste les contributions
-	foreach(ContributionService::get_all_alerts($criteria, $order) as $this_contribution)
+	foreach(ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
 	{
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();

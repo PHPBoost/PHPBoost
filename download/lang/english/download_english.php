@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              download_english.php
+ *                            download_english.php
  *                            -------------------
  *   begin                : July 27, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -114,6 +114,7 @@ $DOWNLOAD_LANG['order_by'] = 'Order by';
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Reading permissions';
 $DOWNLOAD_LANG['auth_write'] = 'Writing permissions';
+$DOWNLOAD_LANG['auth_contribute'] = 'Contribution permissions';
 $DOWNLOAD_LANG['special_auth'] = 'Special permissions';
 $DOWNLOAD_LANG['special_auth_explain'] = 'The category will have the general configuration of the module. You can apply particular permissions.';
 $DOWNLOAD_LANG['global_auth'] = 'Overall permissions';
@@ -131,7 +132,16 @@ $DOWNLOAD_LANG['recount_success'] = 'Files number for each category was recounte
 $DOWNLOAD_LANG['read_feed'] = 'Download';
 $DOWNLOAD_LANG['posted_on'] = 'The';
 
+//Contribution
+$DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an approbator, it will happen in the contribution panel.';
+$DOWNLOAD_LANG['contribution_counterpart'] = 'Contribution counterpart';
+$DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Explain why you want to submit your file. This field is not compulsory but it can help the approbator who will take care of your contribution.';
+
+//Erreurs
+$LANG['contribution_entitled'] = 'Un fichier a été proposé.';
+
 //Erreur
 $LANG['e_unexist_file_download'] = 'The file you asked for does not exist !';
 $LANG['e_unexist_category_download'] = 'The category you asked for does not exist !';
+
 ?>

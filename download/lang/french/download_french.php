@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              download_french.php
+ *                            download_french.php
  *                            -------------------
  *   begin                : July 27, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -114,6 +114,7 @@ $DOWNLOAD_LANG['order_by'] = 'Trier selon';
 //Autorisations
 $DOWNLOAD_LANG['auth_read'] = 'Permissions de lecture';
 $DOWNLOAD_LANG['auth_write'] = 'Permissions d\'écriture';
+$DOWNLOAD_LANG['auth_contribute'] = 'Permissions de contribution';
 $DOWNLOAD_LANG['special_auth'] = 'Permissions spéciales';
 $DOWNLOAD_LANG['special_auth_explain'] = 'Par défaut la catégorie aura la configuration générale du module. Vous pouvez lui appliquer des permissions particulières.';
 $DOWNLOAD_LANG['global_auth'] = 'Permissions globales';
@@ -131,7 +132,14 @@ $DOWNLOAD_LANG['recount_success'] = 'Le nombre de fichiers pour chaque catégorie
 $DOWNLOAD_LANG['read_feed'] = 'Télécharger';
 $DOWNLOAD_LANG['posted_on'] = 'Le';
 
+//Contribution
+$DOWNLOAD_LANG['notice_contribution'] = 'Vous n\'êtes pas autorisé à créer un fichier, cependant vous pouvez proposer un fichier. Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$DOWNLOAD_LANG['contribution_counterpart'] = 'Complément de contribution';
+$DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier au téléchargement). Ce champ est facultatif.';
+$LANG['contribution_entitled'] = 'Un fichier a été proposé.';
+
 //Erreurs
 $LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';
 $LANG['e_unexist_category_download'] = 'La catégorie que vous demandez n\'existe pas !';
+
 ?>
