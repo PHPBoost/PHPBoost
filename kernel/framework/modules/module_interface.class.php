@@ -37,7 +37,7 @@ define('FUNCTIONNALITY_NOT_IMPLEMENTED', 8);
 define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
 
 /**
- * @author loic
+ * @author Loïc Rouchon horn@phpboost.com
  * @desc This Class allow you to call methods on a ModuleInterface extended class
  * that you're not sure of the method's availality. It also provides a set of
  * generic methods that you could use to integrate your module with others, or
@@ -79,7 +79,14 @@ class ModuleInterface
             $generics_methods = get_class_methods('ModuleInterface'); // PHP4 returns it in lower case
             $generics_methods[] = $class;
             
-            $this->functionnalities = array_diff($module_methods, $generics_methods);
+            $methods_diff = array_diff($module_methods, $generics_methods);
+            
+            // keep only public methods from the functionnalities list
+            foreach( $methods_diff as $method )
+            {
+                if( substr($method, 0, 1) != '_' )
+                    $this->functionnalities[] = $method;
+            }
         }
         $this->errors = $error;
     }
