@@ -87,11 +87,17 @@ class Contribution extends Event
 	// current_status setter
 	function set_status($new_current_status)
 	{
+		global $User;
 		if( in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)) )
 		{
 			//If it just comes to be processed, we automatically consider it as processed
 			if( $this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED )
+			{
 				$this->fixing_date = new Date();
+				//If the fixer id is not defined, we define it
+				if( $this->fixer_id == 0 )
+					$this->fixer_id = $User->get_attribute('user_id');
+			}
 			
 			$this->current_status = $new_current_status;
 		}
