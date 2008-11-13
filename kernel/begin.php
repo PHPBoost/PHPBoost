@@ -43,7 +43,7 @@ import('io/template');
 import('db/mysql');
 import('core/cache');
 import('members/sessions');
-import('members/member');
+import('members/user');
 import('members/groups');
 import('members/authorizations');
 import('core/breadcrumb');
