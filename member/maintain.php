@@ -36,8 +36,8 @@ if( $CONFIG['maintain'] <= time() )
 }
 
 $Template->set_filenames(array(
-	'maintain'=> 'maintain.tpl')
-);
+	'maintain'=> 'member/maintain.tpl'
+));
 
 //Durée de la maintenance.
 $array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'); 

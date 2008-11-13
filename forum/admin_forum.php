@@ -288,7 +288,7 @@ elseif( !empty($id) )
 		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
 		'L_EDIT_CAT' => $LANG['cat_edit'],
 		'L_REQUIRE' => $LANG['require'],
-		'L_APROB' => $LANG['aprob'],
+		'L_APROB' => $LANG['visible'],
 		'L_STATUS' => $LANG['status'],
 		'L_RANK' => $LANG['rank'],
 		'L_DELETE' => $LANG['delete'],

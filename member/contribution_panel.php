@@ -132,7 +132,7 @@ else
 
 require_once('../kernel/header.php');
 
-$template = new Template('contribution_panel.tpl');
+$template = new Template('member/contribution_panel.tpl');
 
 if( $contribution_id > 0 )
 {

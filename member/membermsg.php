@@ -37,7 +37,7 @@ $script = retrieve(GET, 'script', '');
 if( !empty($memberId) ) //Affichage de tous les messages du membre
 {
 	$Template->set_filenames(array(
-		'membermsg'=> 'membermsg.tpl',
+		'membermsg'=> 'member/membermsg.tpl',
 	));
 	
 	require_once('../kernel/framework/modules/modules_discovery_service.class.php');

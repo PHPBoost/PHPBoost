@@ -112,7 +112,7 @@ if( $convers && empty($pm_edit) && empty($pm_del) ) //Envoi de conversation.
 elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('user_id')) && $pm_get > '0' ) //Interface pour poster la conversation.
 {
 	$Template->set_filenames(array(
-		'pm'=> 'pm.tpl'
+		'pm'=> 'member/pm.tpl'
 	));
 
 	$Template->assign_vars(array(
@@ -180,7 +180,7 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de la conversation.
 {
 	$Template->set_filenames(array(
-		'pm'=> 'pm.tpl'
+		'pm'=> 'member/pm.tpl'
 	));
 	
 	$Template->assign_vars(array(		
@@ -226,7 +226,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 	$convers_title = $Sql->query("SELECT title FROM ".PREFIX."pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
 	$Template->set_filenames(array(
-		'pm'=> 'pm.tpl'
+		'pm'=> 'member/pm.tpl'
 	));
 
 	$Template->assign_vars(array(
@@ -448,7 +448,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 			else //Interface d'édition
 			{
 				$Template->set_filenames(array(
-					'pm'=> 'pm.tpl'
+					'pm'=> 'member/pm.tpl'
 				));
 				
 				$Template->assign_vars(array(
@@ -511,7 +511,7 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 {
 	$Template->set_filenames(array(
-		'pm'=> 'pm.tpl'
+		'pm'=> 'member/pm.tpl'
 	));
 	
 	//On crée une pagination si le nombre de MP est trop important.
@@ -653,7 +653,11 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			$user_sex = $LANG['sex'] . ': <img src="../templates/' . $CONFIG['theme'] . '/images/woman.png" alt="" /><br />';
 				
 		//Nombre de message.
-		$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
+		//Affichage du nombre de message.
+		if( $row['user_msg'] >= 1 )
+			$user_msg = '<a href="../member/membermsg' . transid('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		else		
+			$user_msg = (!$is_guest) ? '<a href="../member/membermsg' . transid('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
 		
 		//Localisation.
 		if( !empty($row['user_local']) ) 
@@ -749,7 +753,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 else //Liste des conversation, dans la boite du membre.
 {
 	$Template->set_filenames(array(
-		'pm'=> 'pm.tpl'
+		'pm'=> 'member/pm.tpl'
 	));
 
 	$nbr_pm = $Privatemsg->count_conversations($User->get_attribute('user_id'));

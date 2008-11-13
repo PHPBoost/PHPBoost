@@ -32,7 +32,7 @@ define('TITLE', $LANG['title_error'] . ' 404');
 require_once('../kernel/header.php'); 
 
 $Template->set_filenames(array(
-	'error'=> 'error.tpl'
+	'error'=> 'member/error.tpl'
 ));
 
 $Template->assign_vars(array(

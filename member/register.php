@@ -43,7 +43,7 @@ if( empty($key) )
 	if( !$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
 	{
 		$Template->set_filenames(array(
-			'register'=> 'register.tpl'
+			'register' => 'member/register.tpl'
 		));
 		
 		$Template->assign_block_vars('confirm', array(
@@ -62,7 +62,7 @@ if( empty($key) )
 	elseif( $User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
 	{
 		$Template->set_filenames(array(
-			'register'=> 'register.tpl'
+			'register' => 'member/register.tpl'
 		));
 		
 		$Template->assign_block_vars('register', array(
@@ -362,7 +362,7 @@ if( empty($key) )
 elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
 {
 	$Template->set_filenames(array(
-		'register'=> 'register.tpl'
+		'register' => 'member/register.tpl'
 	));
 	
 	$Template->assign_block_vars('activ', array(
