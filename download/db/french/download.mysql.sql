@@ -27,6 +27,7 @@ CREATE TABLE `phpboost_download` (
   `timestamp` int(11) NOT NULL default '0',
   `release_timestamp` int(11) NOT NULL,
   `visible` tinyint(1) NOT NULL default '0',
+  `approved` tinyint(1) unsigned NOT NULL default '0',
   `start` int(11) NOT NULL default '0',
   `end` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
@@ -40,4 +41,4 @@ CREATE TABLE `phpboost_download` (
   FULLTEXT KEY `title` (`title`),
   FULLTEXT KEY `contents` (`contents`),
   FULLTEXT KEY `short_contents` (`short_contents`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

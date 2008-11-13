@@ -3,8 +3,8 @@
  *                               download.php
  *                            -------------------
  *   begin                : July 27, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2005 Viarre Régis, Sautel Benoit
+ *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
  *
  *
 ###################################################
@@ -40,12 +40,12 @@ if( $file_id > 0 ) //Contenu
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
-	include_once('../kernel/framework/util/date.class.php');
+	import('util/date');
  	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
  	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
 	
 	//Affichage notation.
-	include_once('../kernel/framework/content/note.class.php'); 
+	import('content/note');
 	$Note = new Note('download', $file_id, transid('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
 	$Template->assign_vars(array(
@@ -105,7 +105,7 @@ else
 		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
 		'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
 		'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents']),
-		'C_ADD_FILE' => $auth_write,
+		'C_ADD_FILE' => $auth_write || $auth_contribution,
 		'U_ADD_FILE' => transid('management.php?new=1&idcat=' . $category_id),
 		'L_ADD_FILE' => $DOWNLOAD_LANG['add_file']
 	));
@@ -239,7 +239,7 @@ else
 
 		$result = $Sql->query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
 		FROM ".PREFIX."download
-		WHERE visible = 1 AND idcat = '" . $category_id . "'
+		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )

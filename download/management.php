@@ -54,8 +54,9 @@ $file_url = retrieve(POST, 'url', '');
 $file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
 $file_hits = retrieve(POST, 'count', 0, TUNSIGNED_INT);
-$file_cat_id = retrieve(POST, 'idcat', 0);
-$file_visibility = retrieve(POST, 'visibility', 0);		
+$file_cat_id = retrieve(REQUEST, 'idcat', 0);
+$file_visibility = retrieve(POST, 'visibility', 0);
+$file_approved = retrieve(POST, 'approved', false);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 
 //Instanciations of objects required
@@ -85,7 +86,6 @@ if( $delete_file > 0 )
 		{
 			include_once('../kernel/framework/content/comments.class.php');
 			$Comments = new Comments('download', $delete_file, transid('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
-			//$Comments->set_arg($file_id);
 			$Comments->delete_all($delete_file);
 		}
 		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? transid('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : transid('download.php')));
@@ -148,7 +148,7 @@ $Template->set_filenames(array(
 ));
 
 if( $edit_file_id > 0 )
-{
+{	
 	if( $submit )
 	{
 		//The form is ok
@@ -177,19 +177,52 @@ if( $edit_file_id > 0 )
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			$file_properties = $Sql->query_array("download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			
+			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', " . 
+				"size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " . 
+				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " . 
+				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = '" . $file_approved . "' " .
+				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subfiles in each category
-			if( $file_cat_id != $file_infos['idcat'] )
+			if( $file_cat_id != $file_infos['idcat'] || (int)$file_properties['visible'] != $visible || (int)$file_properties['approved'] != $file_approved )
 			{
 				$download_categories->Recount_sub_files();
+			}
+			
+			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
+			if( $file_approved && !$file_properties['approved'] )
+			{
+				import('events/contribution');
+				import('events/contribution_service');
+				
+				$corresponding_contributions = ContributionService::find_by_criteria('download', $edit_file_id);
+				if( count($corresponding_contributions) > 0 )
+				{
+					$file_contribution = $corresponding_contributions[0];
+					//The contribution is now processed
+					$file_contribution->set_status(CONTRIBUTION_STATUS_PROCESSED);
+					
+					//We save the contribution
+					ContributionService::save_contribution($file_contribution);
+				}
 			}
             
             // Feeds Regeneration
             import('content/syndication/feed');
             Feed::clear_cache('download');
             
-			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
+            //If we cannot see the file, we redirect in its category
+            if( !$visible || !$file_approved )
+            {
+            	if( $$file_cat_id > 0 )
+					redirect(HOST . DIR . '/download/' . transid('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
+				else
+					redirect(HOST . DIR . '/download/' . transid('download.php'));
+            }
+			else
+				redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
@@ -215,7 +248,7 @@ if( $edit_file_id > 0 )
 		else
 			$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 		
-		//Crï¿½ation des calendriers
+		//Création des calendriers
 		$creation_calendar = new MiniCalendar('creation');
 		$creation_calendar->set_date($file_creation_date);
 		$release_calendar = new MiniCalendar('release_date');
@@ -255,6 +288,7 @@ if( $edit_file_id > 0 )
 		));
 
 		$Template->assign_vars(array(
+			'C_CONTRIBUTION' => false,
 			'TITLE' => $file_title,
 			'COUNT' => $file_hits,
 			'DESCRIPTION' => $file_contents,
@@ -267,14 +301,15 @@ if( $edit_file_id > 0 )
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'APPROVED' => $file_approved ? ' checked="checked"' : '',
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
 			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
 			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
 			'BEGINING_CALENDAR' => $begining_calendar->display(),
-			'END_CALENDAR' => $end_calendar->display(),
+			'END_CALENDAR' => $end_calendar->display()
 		));
 	}
 	//Default formulary, with file infos from the database
@@ -308,6 +343,7 @@ if( $edit_file_id > 0 )
 			$file_visibility = 0;
 
 		$Template->assign_vars(array(
+			'C_CONTRIBUTION' => false,
 			'TITLE' => $file_infos['title'],
 			'COUNT' => !empty($file_infos['count']) ? $file_infos['count'] : 0,
 			'DESCRIPTION' => unparse($file_infos['contents']),
@@ -326,7 +362,8 @@ if( $edit_file_id > 0 )
 			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
 			'U_TARGET' => transid('management.php?edit=' . $edit_file_id)
 		));
 	}
@@ -335,6 +372,10 @@ if( $edit_file_id > 0 )
 else
 {
 	$contribution_counterpart = retrieve(POST, 'counterpart', '', TSTRING_PARSE);
+	
+	//If we can't write, the file cannot be approved
+	if( !$auth_write )
+		$file_approved = false;
 	
 	if( $submit )
 	{
@@ -348,7 +389,7 @@ else
 			switch($file_visibility)
 			{
 				//If it's a time interval
-				case 2:		
+				case 2:
 					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -356,7 +397,6 @@ else
 					}
 					else
 						$visible = 0;
-
 					break;
 				//If it's always visible
 				case 1:
@@ -366,7 +406,9 @@ else
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " . 
+				"'" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."download");
 			
@@ -384,7 +426,7 @@ else
 				//The description of the contribution (the counterpart) to explain why did the contributor contributed
 				$download_contribution->set_description(stripslashes($contribution_counterpart));
 				//The entitled of the contribution
-				$download_contribution->set_entitled($DOWNLOAD_LANG['contribution_entitled']);
+				$download_contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_entitled'], $file_name));
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
@@ -513,7 +555,8 @@ else
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
 			'VISIBLE_WAITING' => $file_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
+			'APPROVED' => $file_approved ? ' checked="checked"' : '',
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
 			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
 			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
@@ -567,7 +610,8 @@ else
 			'END_CALENDAR' => $end_calendar->display(),
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
-			'VISIBLE_UNAPROVED' => '',
+			'VISIBLE_HIDDEN' => '',
+			'APPROVED' => $file_approved ? ' checked="checked"' : '',
 			'U_TARGET' => transid('management.php?new=1')
 		));
 	}
@@ -591,8 +635,9 @@ $Template->assign_vars(array(
 	'L_IGNORE_RELEASE_DATE' => $DOWNLOAD_LANG['ignore_release_date'],
 	'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 	'L_FILE_VISIBILITY' => $DOWNLOAD_LANG['file_visibility'],
+	'L_APPROVED' => $DOWNLOAD_LANG['approved'],
 	'L_NOW' => $LANG['now'],
-	'L_UNAPPROVED' => $LANG['unapproved'],
+	'L_HIDDEN' => $DOWNLOAD_LANG['hidden'],
 	'L_TO_DATE' => $LANG['to_date'],
 	'L_FROM_DATE' => $LANG['from_date'],
 	'L_DESC' => $LANG['description'],

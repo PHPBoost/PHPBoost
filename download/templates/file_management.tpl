@@ -159,10 +159,18 @@
 						</label>
 						<br />
 						<label>
-							<input type="radio" value="0" name="visibility" {VISIBLE_UNAPROVED} /> {L_UNAPPROVED}
+							<input type="radio" value="0" name="visibility" {VISIBLE_HIDDEN} /> {L_HIDDEN}
 						</label>
 						</dd>
 					</dl>
+					# IF NOT C_CONTRIBUTION #
+					<dl>
+						<dt><label>{L_APPROVED}</label></dt>
+						<dd>
+							<input type="checkbox" name="approved" id="approved" {APPROVED} />
+						</dd>
+					</dl>
+					# ENDIF #
 				</fieldset>
 				# IF C_CONTRIBUTION #
 				<fieldset>

@@ -40,7 +40,8 @@ $id_cat_for_download = 0;
 
 if( !empty($file_id) )
 {
-	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	
 	if( empty($download_info['id']) )
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
 	$Bread_crumb->add($download_info['title'], transid('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
@@ -63,6 +64,7 @@ $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GE
 
 $auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 $auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+$auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 
 //Bread_crumb : we read categories list recursively
 while( $id_cat_for_download > 0 )
@@ -73,6 +75,7 @@ while( $id_cat_for_download > 0 )
 		//If we can't read a category, we can't read sub elements.
 		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 		$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
+		$auth_contribution = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 	}
 	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 }

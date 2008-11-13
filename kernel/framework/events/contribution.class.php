@@ -84,6 +84,24 @@ class Contribution extends Event
 			$this->fixing_date = $date;
 	}
 	
+	// current_status setter
+	function set_status($new_current_status)
+	{
+		if( in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)) )
+		{
+			//If it just comes to be processed, we automatically consider it as processed
+			if( $this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED )
+				$this->fixing_date = new Date();
+			
+			$this->current_status = $new_current_status;
+		}
+		//Default
+		else
+			$this->current_status = EVENT_STATUS_UNREAD;
+		
+		$this->must_regenerate_cache = true;
+	}
+	
 	//Authorization array setter
 	function set_auth($auth)
 	{
