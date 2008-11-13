@@ -2,7 +2,7 @@
 	<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('{IDSELECT}r3').selected = true;">
 		<optgroup label="{L_RANKS}">
 		# START ranks_list #
-			<option {ranks_list.DISABLED} value="r{ranks_list.IDRANK}" id="{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
+			<option {ranks_list.DISABLED} value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
 		# END ranks_list #
 		</optgroup>
 
