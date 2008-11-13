@@ -80,14 +80,15 @@ elseif( $cat_to_del > 0 )
 		
 	$Template->pparse('admin_download_cat_remove');
 }
-elseif( !empty($_POST['submit']) )
+elseif( retrieve(POST, 'submit', false) )
 {
 	$error_string = 'e_success';
 	
 	//Deleting a category
 	if( $cat_to_del_post > 0 )
 	{
-		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
+		$action = retrieve(POST, 'action', '');
+		$delete_content = $action != 'move';
 		$id_parent = retrieve(POST, 'id_parent', 0);
 		
 		if( $delete_content )
@@ -116,7 +117,7 @@ elseif( !empty($_POST['submit']) )
 		//Autorisations
 		if( !empty($_POST['special_auth']) )
 		{
-			$array_auth_all = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT);
+			$array_auth_all = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 			$new_auth = addslashes(serialize($array_auth_all));
 		}
 		else
@@ -140,7 +141,7 @@ elseif( !empty($_POST['submit']) )
 	redirect(transid(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
-elseif( !empty($_GET['recount']) )
+elseif( retrieve(GET, 'recount', false) )
 {
 	$download_categories->Recount_sub_files();
 	// Feeds Regeneration
@@ -195,6 +196,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_READ_AUTH' => $DOWNLOAD_LANG['auth_read'],
 		'L_WRITE_AUTH' => $DOWNLOAD_LANG['auth_write'],
+		'L_CONTRIBUTION_AUTH' => $DOWNLOAD_LANG['auth_contribute'],
 		'L_SPECIAL_AUTH' => $DOWNLOAD_LANG['special_auth'],
 		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain']
 	));
@@ -214,7 +216,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'DISPLAY_SPECIAL_AUTH' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'block' : 'none',
 			'SPECIAL_CHECKED' => !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? 'checked="checked"' : '',
 			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth']),
+			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, !empty($DOWNLOAD_CATS[$id_edit]['auth']) ? $DOWNLOAD_CATS[$id_edit]['auth'] : $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	else
@@ -231,7 +234,8 @@ elseif( $new_cat XOR $id_edit > 0 )
 			'DISPLAY_SPECIAL_AUTH' => 'none',
 			'SPECIAL_CHECKED' => '',
 			'READ_AUTH' => Authorizations::generate_select(DOWNLOAD_READ_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
-			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'])
+			'WRITE_AUTH' => Authorizations::generate_select(DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth']),
+			'CONTRIBUTION_AUTH' => Authorizations::generate_select(DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'])
 		));
 	}
 	

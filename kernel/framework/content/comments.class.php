@@ -3,7 +3,7 @@
  *                             comments.class.php
  *                            -------------------
  *   begin                : March 08, 2008
- *   copyright          : (C) 2008 Viarre Régis, Sautel Benoit
+ *   copyright            : (C) 2008 Viarre Régis, Sautel Benoit
  *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
  * v 2.0
  *
@@ -160,7 +160,7 @@ class Comments
 			$Cache->load('com');
 			
 			###########################Insertion##############################
-			if( !empty($_POST['valid_com']) && !$updatecom )
+			if( retrieve(POST, 'valid_com', false) && !$updatecom )
 			{
 				//Membre en lecture seule?
 				if( $User->get_attribute('user_readonly') > time() ) 
