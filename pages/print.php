@@ -63,7 +63,7 @@ if( empty($page_infos['id']) )
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$template = new Template('print.tpl');
+$template = new Template('framework/content/print.tpl');
 
 $template->assign_vars(array(
 	'PAGE_TITLE' => $page_infos['title'] . ' - ' . $CONFIG['site_name'],
