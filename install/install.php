@@ -483,7 +483,7 @@ elseif( $step == 5 )
 		$Cache = new Cache;
 		
 		//Création de l'utilisateur
-		import('members/member');
+		import('members/user');
 		$user_data = array(
 			'm_user_id' => 1,
 			'login' => 'login',

@@ -50,7 +50,7 @@ class User
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 	
-	//R2cupère les attribut de la session.
+	//Récupère les attributs de la session.
 	function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
@@ -64,7 +64,7 @@ class User
 		return false;
 	}
 	
-	//Cherche les autorisations maximum parmis les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
+	//Cherche les autorisations maximum parmi les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
 	function check_auth($array_auth_groups, $check_auth)
 	{
 		if( !is_array($array_auth_groups) )
