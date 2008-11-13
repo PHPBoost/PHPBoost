@@ -25,10 +25,12 @@
  *
 ###################################################*/
 
-import('util/menu_element');
+import('util/menu/menu_element');
+
+define('MENU_LINK__CLASS', 'MenuLink');
 
 /**
- * @author loic
+ * @author Loïc Rouchon horn@phpboost.com
  * @desc A Simple menu link
  * @package util
  * @subpackage menu
@@ -36,16 +38,16 @@ import('util/menu_element');
 class MenuLink extends MenuElement
 {
 	## Public Methods ##
-	// .
 	/**
      * @desc Constructor
      * @param string $title Menu title
      * @param string $url Destination url
      * @param string $image Menu's image url relative to the website root or absolute
+     * @param int $id The Menu's id in the database
 	 */
-	function MenuLink($title, $url, $image = '')
+	function MenuLink($title, $url, $image = '', $id = 0)
 	{
-		parent::MenuElement($title, $url, $image);
+		parent::MenuElement($title, $url, $image, $id);
 	}
 	
 	/**
@@ -55,6 +57,10 @@ class MenuLink extends MenuElement
      */
 	function display($template)
 	{
+        // Stop if the user isn't authorised
+        if( !$this->_check_auth() )
+            return '';
+            
         parent::_assign($template);
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
