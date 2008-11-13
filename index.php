@@ -28,6 +28,7 @@
 @include_once('./kernel/auth/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd (on n'en a pas besoin sur cette page)
 
+define('PATH_TO_ROOT', './');
 require_once('./kernel/framework/functions.inc.php');
 
 $CONFIG = array();
