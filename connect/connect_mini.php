@@ -52,7 +52,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
 		
 		//On regarde si ce membre en particulier en a une
 		if( $contribution_number == 0 )
-			if( !empty($CONTRIBUTION_PANEL_UNREAD['m' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['m' . $id_group] == 1 )
+			if( !empty($CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')]) && $CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')] == 1 )
 				$contribution_number = -1;
 		
 		//On regarde dans ses groupes

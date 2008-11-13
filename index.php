@@ -32,7 +32,6 @@ define('PATH_TO_ROOT', './');
 require_once('./kernel/framework/functions.inc.php');
 
 $CONFIG = array();
-
 //Chargement manuel de la configuration générale
 @include_once('./cache/config.php');
 
@@ -53,6 +52,10 @@ elseif( empty($CONFIG) )
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 
-redirect(get_start_page());
+$start_page = get_start_page();
+if( $start_page != HOST . DIR . '/index.php' ) //Empêche une boucle de redirection.
+	redirect($start_page);
+else
+	redirect(HOST . DIR . '/member/member.php');
 
 ?>
