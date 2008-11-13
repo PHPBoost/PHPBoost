@@ -130,6 +130,7 @@ class Contribution extends Event
 	//Fixer id setter
 	function set_fixer_id($fixer_id)
 	{
+		global $Sql;
 		if( $fixer_id  > 0)
 		{
 			$this->fixer_id = $fixer_id;
