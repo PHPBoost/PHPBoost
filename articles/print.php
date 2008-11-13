@@ -51,7 +51,7 @@ if( empty($articles['title']) )
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$template = new Template('print.tpl');
+$template = new Template('framework/content/print.tpl');
 
 $contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
 
