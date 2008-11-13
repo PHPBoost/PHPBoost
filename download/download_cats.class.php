@@ -233,7 +233,7 @@ class DownloadCats extends CategoriesManagement
 			//We add to this number the number of questions of this category
 			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
 			
-			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1 AND approved = 1", __LINE__, __FILE__);
 			
 			return $num_subquestions;
 		}
