@@ -30,15 +30,21 @@ define('TITLE', $LANG['member_area']);
 
 $edit_get = retrieve(GET, 'edit', false);
 $id_get = retrieve(GET, 'id', 0, TUNSIGNED_INT);
+$view_get = retrieve(GET, 'view', 0);
 
-$title_mbr = !empty($id_get) ? (!empty($edit_get) ? $LANG['profil_edit'] : $LANG['member']) : $LANG['member_s'];
-if( $User->check_level(MEMBER_LEVEL) )
-	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-$Bread_crumb->add($title_mbr, '');
+if( !empty($view_get) || !empty($edit_get) ) 
+{	
+	if( $User->check_level(MEMBER_LEVEL) )
+		$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	
+	$title_mbr = !empty($edit_get) ? $LANG['profil_edit'] : '';
+	$Bread_crumb->add($title_mbr, '');
+}
+else
+	$Bread_crumb->add($LANG['member'], transid('member.php', ''));
 
 require_once('../kernel/header.php'); 
 
-$view_get = retrieve(GET, 'view', 0);
 $show_group = retrieve(GET, 'g', 0);
 $post_group = retrieve(GET, 'show_group', 0);
 $get_error = retrieve(GET, 'error', '');
