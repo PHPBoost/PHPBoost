@@ -111,7 +111,7 @@ class Authorizations
 	   
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
 		//Liste des rangs
-        $j = 0;
+        $j = -1;
         foreach($array_ranks as $idrank => $group_name)
         {
             $selected = '';   
@@ -120,12 +120,13 @@ class Authorizations
             $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
             
 			$Template->assign_block_vars('ranks_list', array(
-				'ID' => $j++,
+				'ID' => $j,
 				'IDRANK' => $idrank,
 				'RANK_NAME' => $group_name,
 				'DISABLED' => $disabled,
 				'SELECTED' => $selected
 			));
+			$j++;
         }
        
         //Liste des groupes.

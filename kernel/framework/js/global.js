@@ -509,7 +509,7 @@ function check_select_multiple(id, status)
 //Sélection auto des rangs supérieur à celui cliqué.
 function check_select_multiple_ranks(id, start)
 {
-	var i;				
+	var i;			
 	for(i = start; i <= 2; i++)
 	{	
 		if( document.getElementById(id + i) )
