@@ -47,7 +47,7 @@ $get_l_error = retrieve(GET, 'erroru', '');
 if( !empty($id_get) ) //Espace membre
 {	
 	$Template->set_filenames(array(
-		'member'=> 'member.tpl'
+		'member'=> 'member/member.tpl'
 	));
 	
 	if( $edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL)) ) //Edition du profil
@@ -806,7 +806,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	$user_group = !empty($show_group) ? $show_group : $post_group;
 	
 	$Template->set_filenames(array(
-		'member'=> 'member.tpl'
+		'member'=> 'member/member.tpl'
 	));
 	
 	$group = $Sql->query_array('group', 'id', 'name', 'img', "WHERE id = '" . $user_group . "'", __LINE__, __FILE__);
@@ -879,7 +879,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 else //Show all member!
 {
   	$Template->set_filenames(array(
-		'member'=> 'member.tpl'
+		'member'=> 'member/member.tpl'
 	));
 	
 	//Recherche d'un member si javascript bloqué.

@@ -37,7 +37,7 @@ if( in_array($id_error, $array_error) )
 	if( $User->get_attribute('user_id') === -1 )
 	{
 		$Template->set_filenames(array(
-			'error'=> 'error.tpl'
+			'error'=> 'member/error.tpl'
 		));
 
 		$errno = E_USER_WARNING;
@@ -120,7 +120,7 @@ if( in_array($id_error, $array_error) )
 elseif( !empty($id_error) )
 {
 	$Template->set_filenames(array(
-		'error'=> 'error.tpl'
+		'error'=> 'member/error.tpl'
 	));
 
 	//Inclusion des langues des erreurs pour le module si elle existe.
@@ -148,7 +148,7 @@ elseif( !empty($id_error) )
 elseif( $User->get_attribute('user_id') === -1 )
 {
 	$Template->set_filenames(array(
-		'error'=> 'error.tpl'
+		'error'=> 'member/error.tpl'
 	));
 
 	$Template->assign_vars(array(

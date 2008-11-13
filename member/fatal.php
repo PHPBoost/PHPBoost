@@ -48,7 +48,7 @@ if( empty($errinfo) )
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
 $Template->set_filenames(array(
-	'error'=> 'error.tpl'
+	'error'=> 'member/error.tpl'
 ));
 
 $class = $Errorh->get_errno_class($errinfo['errno']);	

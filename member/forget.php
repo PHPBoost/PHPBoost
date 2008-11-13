@@ -39,7 +39,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 	if( !$activ_confirm )
 	{	
 		$Template->set_filenames(array(
-			'forget'=> 'forget.tpl'
+			'forget'=> 'member/forget.tpl'
 		));
 			
 		if( !empty($forget))

@@ -247,7 +247,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 elseif( !empty($move_folder) || !empty($move_file) )
 {
 	$Template->set_filenames(array(
-		'upload_move'=> 'upload_move.tpl'
+		'upload_move'=> 'member/upload_move.tpl'
 	));
 	
 	$Template->assign_vars(array(
@@ -334,7 +334,7 @@ else
 	$is_admin = $User->check_level(ADMIN_LEVEL);
 	
 	$Template->set_filenames(array(
-		'upload'=> 'upload.tpl'
+		'upload' => 'member/upload.tpl'
 	));
 
 	//Gestion des erreurs.

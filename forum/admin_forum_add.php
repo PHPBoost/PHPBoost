@@ -145,7 +145,7 @@ else
 		'L_FORUM_CONFIG' => $LANG['forum_config'],
 		'L_FORUM_GROUPS' => $LANG['forum_groups_config'],
 		'L_REQUIRE' => $LANG['require'],
-		'L_APROB' => $LANG['aprob'],
+		'L_APROB' => $LANG['visible'],
 		'L_STATUS' => $LANG['status'],
 		'L_RANK' => $LANG['rank'],
 		'L_DELETE' => $LANG['delete'],

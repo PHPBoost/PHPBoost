@@ -99,7 +99,7 @@ class Sql
 	//Requête simple
 	function query($query, $errline, $errfile) 
 	{
-		$result = mysql_query($query, $this->link);// or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
+		$result = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
 		$result = mysql_fetch_row($result);
 		$this->query_close($result); //Déchargement mémoire.
 		$this->req++;
