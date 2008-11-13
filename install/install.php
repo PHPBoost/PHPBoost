@@ -39,7 +39,7 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-import('functions', LIB_IMPORT); //Fonctions de base.
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 import('io/template');
 

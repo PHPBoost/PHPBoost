@@ -3,7 +3,7 @@
  *                                index.php
  *                            -------------------
  *   begin                : August 23 2007
- *   copyright          : (C) 2007 CrowkaiT
+ *   copyright            : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('./kernel/auth/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
+@include_once('./kernel/auth/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd (on n'en a pas besoin sur cette page)
 
 require_once('./kernel/framework/functions.inc.php');
@@ -38,13 +38,13 @@ $CONFIG = array();
 //Si PHPBoost n'est pas installé, on renvoie vers l'installateur
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    import('unusual_functions', LIB_IMPORT);
+    import('unusual_functions', '.inc.php');
     redirect(get_server_url_page('install/install.php'));
 }
 //Si la configuratio n'existe pas mais que PHPBoost est installé on renvoie vers la page membre du noyau dont on est sûr qu'elle existe
-elseif( $CONFIG === array() )
+elseif( empty($CONFIG) )
 {
-    import('unusual_functions', LIB_IMPORT);
+    import('unusual_functions', '.inc.php');
     redirect(get_server_url_page('member/member.php'));
 }
 
