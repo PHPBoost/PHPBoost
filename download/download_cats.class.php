@@ -170,6 +170,25 @@ class DownloadCats extends CategoriesManagement
 		return $auth_write;
 	}
 	
+	//Method which determines if a category is writable by the current user
+	function check_contribution_auth($id)
+	{
+		global $User, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+		$contribution_auth = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+		
+		$id_cat = $id;
+
+		//We read the categories recursively
+		while( $id_cat > 0 )
+		{
+			if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
+				$contribution_auth = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
+			
+			$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
+		}
+		return $contribution_auth;
+	}
+	
 	//Method which changes the visibility of a category
 	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{

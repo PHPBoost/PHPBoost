@@ -47,6 +47,8 @@ class Contribution extends Event
 		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
+		if( defined(MODULE_NAME) )
+			$this->module = MODULE_NAME;
 	}
 	
 	//Constructor with all parameters of a contribution
@@ -92,6 +94,7 @@ class Contribution extends Event
 	//Poster id setter
 	function set_poster_id($poster_id)
 	{
+		global $Sql;
 		if( $poster_id  > 0)
 		{
 			$this->poster_id = $poster_id;
@@ -148,12 +151,18 @@ class Contribution extends Event
 	function get_module_name()
 	{
 		global $CONFIG;
-		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', $CONFIG['lang']);
-		return $module_ini['name'];
+		if( !empty($this->module) )
+		{
+			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', $CONFIG['lang']);
+			
+			return $module_ini['name'];
+		}
+		else
+			return '';
 	}
 	
 	## Protected ##
-	//Description of the alert (for instance to justify a contribution)
+	//Description of the contribution (for instance to justify a contribution)
 	var $description;
 	//String containing the identifier of the module corresponding to the contribution (ex: forum)
 	var $module = '';

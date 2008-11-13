@@ -136,7 +136,10 @@ $DOWNLOAD_LANG['posted_on'] = 'Le';
 $DOWNLOAD_LANG['notice_contribution'] = 'Vous n\'êtes pas autorisé à créer un fichier, cependant vous pouvez proposer un fichier. Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Complément de contribution';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier au téléchargement). Ce champ est facultatif.';
-$LANG['contribution_entitled'] = 'Un fichier a été proposé.';
+$DOWNLOAD_LANG['contribution_entitled'] = 'Un fichier a été proposé';
+$DOWNLOAD_LANG['contribution_confirmation'] = 'Confirmation de contribution';
+$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>Vous pourrez la suivre dans le <a href="' . transid('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>';
+$DOWNLOAD_LANG['contribution_success'] = 'Votre contribution a bien été enregistrée.';
 
 //Erreurs
 $LANG['e_unexist_file_download'] = 'Le fichier que vous demandez n\'existe pas !';

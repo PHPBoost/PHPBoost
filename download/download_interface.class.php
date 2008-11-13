@@ -39,7 +39,7 @@ class DownloadInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
+		global $Sql, $LANG;
 	
 		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			
@@ -50,6 +50,10 @@ class DownloadInterface extends ModuleInterface
 		
 		//Liste des catégories et de leurs propriétés
 		$code .= '$DOWNLOAD_CATS = array();' . "\n\n";
+		
+		//Racine
+		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $CONFIG_DOWNLOAD['global_auth']) ,true) . ';' . "\n\n";
+		
 		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
 		FROM ".PREFIX."download_cat
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);

@@ -5,6 +5,9 @@
 ------------------------------------- NOYAU ------------------------------------
 [*] Régler les bugs touchables de TinyMCE relevés par Ptithom.
 [*] Implémenter la contribution dans les téléchargements
+	- Mettre une autorisation de contribution dans chaque catégorie
+	- Intégrer la contribution dans l'interface des téléchargements
+	- Régler automatiquement les contributions
 
 ------------------------------------ MODULES -----------------------------------
 
