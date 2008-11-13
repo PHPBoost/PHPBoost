@@ -130,12 +130,16 @@ $DOWNLOAD_LANG['recount_success'] = 'Files number for each category was recounte
 
 //Syndication
 $DOWNLOAD_LANG['read_feed'] = 'Download';
-$DOWNLOAD_LANG['posted_on'] = 'The';
+$DOWNLOAD_LANG['posted_on'] = 'On';
 
 //Contribution
 $DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an approbator, it will happen in the contribution panel.';
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Contribution counterpart';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Explain why you want to submit your file. This field is not compulsory but it can help the approbator who will take care of your contribution.';
+$DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted';
+$DOWNLOAD_LANG['contribution_confirmation'] = 'Contribution confirmation';
+$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . transid('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
+$DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
 
 //Erreurs
 $LANG['contribution_entitled'] = 'Un fichier a été proposé.';

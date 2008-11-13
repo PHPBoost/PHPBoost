@@ -462,7 +462,7 @@ class CategoriesManagement
 			'L_COULD_NOT_BE_MOVED' => $LANG['cats_managment_could_not_be_moved'],
 			'L_VISIBILITY_COULD_NOT_BE_CHANGED' => $LANG['cats_managment_visibility_could_not_be_changed'],
 			//Categories list
-			'NESTED_CATEGORIES' => $this->_create_row_interface_recount_cat_subquestions(0, 0, $ajax_mode, $category_template)
+			'NESTED_CATEGORIES' => $this->_create_row_interface(0, 0, $ajax_mode, $category_template)
 		));
 				
 		return $template->parse(TEMPLATE_STRING_MODE);
@@ -558,7 +558,7 @@ class CategoriesManagement
 		$list = array();
 		if( $add_this )
 			$list[] = $category_id;
-		
+	
 		if( $category_id > 0 )
 		{
 			while( (int)$this->cache_var[$category_id]['id_parent'] != 0 )
@@ -594,11 +594,16 @@ class CategoriesManagement
 	{
 		$ids = array_reverse($this->build_parents_id_list($category_id, ADD_THIS_CATEGORY_IN_LIST));
 		$length = count($ids);
+
+		$result = array();
 		
-		$result = $this->cache_var[$ids[0]]['auth'];
+		if( count($ids) > 0 )
+		{
+			$this->cache_var[$ids[0]]['auth'];
 		
-		for( $i = 1; $i < $length; $i++)
-			$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
+			for( $i = 1; $i < $length; $i++)
+				$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
+		}
 
 		return $result;
 	}

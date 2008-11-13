@@ -106,7 +106,6 @@ elseif( $edit_file_id > 0 )
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
-	$auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
@@ -121,25 +120,22 @@ elseif( $edit_file_id > 0 )
 		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
-		{
 			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
-			$auth_contribute = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
-		}
 		
 		$id_cat = (int)$DOWNLOAD_CATS[$id_cat]['id_parent'];
 	}
 	
-	if( !$auth_write || !$auth_contribute )
+	if( !$auth_write )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
 {
 	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], transid('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
-	if( !($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)) || !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) )
+	
+	if( !($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
-
 
 $Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
 
@@ -343,7 +339,7 @@ else
 	if( $submit )
 	{
 		//The form is ok
-		if( !empty($file_title) && $download_categories->check_auth($file_cat_id) && !empty($file_url) && !empty($file_contents) )
+		if( !empty($file_title) && ($download_categories->check_auth($file_cat_id) || $download_categories->check_contribution_auth($file_cat_id)) && !empty($file_url) && !empty($file_contents) )
 		{
 			$visible = 1;
 			
@@ -382,15 +378,44 @@ else
 				import('events/contribution_service');
 				
 				$download_contribution = new Contribution();
+				
+				//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
 				$download_contribution->set_id_in_module($new_id_file);
-				$download_contribution->set_description($contribution_counterpart);
-				$download_contribution->set_entitled($LANG['contribution_entitled']);
-				$download_contribution->set_auth($download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY));
-				print_r($download_contribution->get_auth());
-				exit;
+				//The description of the contribution (the counterpart) to explain why did the contributor contributed
+				$download_contribution->set_description(stripslashes($contribution_counterpart));
+				//The entitled of the contribution
+				$download_contribution->set_entitled($DOWNLOAD_LANG['contribution_entitled']);
+				//The URL where a validator can treat the contribution (in the file edition panel)
+				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
+				//Who is the contributor?
+				$download_contribution->set_poster_id($User->get_attribute('user_id'));
+				//The module
+				$download_contribution->set_module('download');
+				
+				
+				//Assignation des autorisations d'écriture / Writing authorization assignation				
+				$download_contribution->set_auth(
+					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
+					//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
+					Authorizations::capture_and_shift_bit_auth(
+						//On fusionne toutes les autorisations pour obtenir l'autorisation d'écriture dans la catégorie sélectionnée :
+						//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
+						//We merge the whole authorizations of the branch constituted by the selected category
+						Authorizations::merge_auth(
+							$CONFIG_DOWNLOAD['global_auth'],
+							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée							
+							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY),
+							DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY
+						),
+						DOWNLOAD_WRITE_CAT_AUTH_BIT, CONTRIBUTION_AUTH_BIT
+					)
+				);
 
-				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved.			
-				ContributionService::save_contribution(Authorizations::capture_and_shift_bit_auth($download_contribution, DOWNLOAD_WRITE_CAT_AUTH_BIT, CONTRIBUTION_AUTH_BIT));	
+				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved	
+				ContributionService::save_contribution($download_contribution);
+				
+				//Redirection to the contribution confirmation page
+				redirect(HOST . DIR . '/download/contribution.php');
 			}
 			
 			//Updating the number of subfiles in each category
@@ -476,8 +501,8 @@ else
 			'C_CONTRIBUTION' => !$auth_write,
 			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => $file_contents,
-			'SHORT_DESCRIPTION' => $file_short_contents,
+			'DESCRIPTION' => stripslashes($file_contents),
+			'SHORT_DESCRIPTION' => stripslashes($file_short_contents),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,

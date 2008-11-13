@@ -64,7 +64,7 @@ class ContributionService
 		
 		$array_result = array();
 		
-		//On liste les alertes
+		//On liste les contributions
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
 		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
@@ -148,7 +148,7 @@ class ContributionService
 		{
 			$contribution_auth = $contribution->get_auth();
 			$creation_date = $contribution->get_creation_date();
-			$Sql->query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, contribution_type) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "', '" . CONTRIBUTION_TYPE . "')", __LINE__, __FILE__);
 			$contribution->set_id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX. EVENTS_TABLE_NAME));	
 		}
 		
@@ -166,7 +166,7 @@ class ContributionService
 		global $Sql, $Cache;
 		
 		//If it exists in database
-		if( $contribution->get_id()  >0 )
+		if( $contribution->get_id() > 0 )
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
 			//We reset the id
