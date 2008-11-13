@@ -460,7 +460,7 @@ function unparse(&$content)
 
 //Parse temps réel
 function second_parse(&$content)
-{	
+{
 	$content_manager = new Content();
 	
 	$parser =& $content_manager->get_second_parser();
@@ -875,10 +875,22 @@ define('LIB_IMPORT', '.inc.php');
  * @param string $path the class or lib path and its name withour .class.php or
  * .inc.php extensionlike content/bbcode_parser
  * @param string $import_type the import type. Default is CLASS_IMPORT,
- * but you could also import a library by using LIB_IMPORT 
+ * but you could also import a library by using LIB_IMPORT
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
 	require_once PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type;
 }
+
+/**
+ * @desc Tells if an object is an instance of a class
+ * @param object $object the object to check its type
+ * @param string $classname the classname you want to compare with
+ * @return bool true if the $object is an instance of the $classname class
+ */
+function of_class(&$object, $classname)
+{
+    return strtolower(get_class($object)) == strtolower($classname);
+}
+
 ?>

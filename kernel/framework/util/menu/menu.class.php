@@ -25,8 +25,9 @@
  *
 ###################################################*/
 
-import('util/menu_element');
-import('util/menu_link');
+import('util/menu/menu_link');
+
+define('MENU__CLASS', 'Menu');
 
 ## Menu types ##
 define('VERTICAL_MENU', 'vertical');
@@ -34,6 +35,7 @@ define('HORIZONTAL_MENU', 'horizontal');
 define('TREE_MENU', 'tree');
 define('VERTICAL_SCROLLING_MENU', 'vertical_scrolling');
 define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
+
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -50,18 +52,19 @@ class Menu extends MenuElement
 	 * @param string $title Menu title
 	 * @param string $url Destination url
 	 * @param string $image Menu's image url relative to the website root or absolute
-	 * @param string $type Menu's type
+     * @param string $type Menu's type
+     * @param int $id The Menu's id in the database
 	 */
-	function Menu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
+	function Menu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU, $id = 0)
 	{
-		$this->id = get_uid(); // Set a unique ID
+		$this->display_id = get_uid(); // Set a unique ID
 		
 		// Set the menu type
 		$menu_types = array(VERTICAL_MENU, HORIZONTAL_MENU, TREE_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU);
 		$this->type = in_array($type, $menu_types) ? $type : VERTICAL_SCROLLING_MENU;
 		
 		// Build the menu element on witch is based the menu
-		parent::MenuElement($title, $url, $image);
+		parent::MenuElement($title, $url, $image, $id);
 	}
 	
 	/**
@@ -92,29 +95,46 @@ class Menu extends MenuElement
 	 */
 	function display($template = false)
 	{
-		if( !is_object($template) || strtolower(get_class($template)) != 'template' )
+	    // Stop if the user isn't authorised
+		if( !$this->_check_auth() )
+    	    return '';
+		
+    	// Get the good Template object
+	    if( !is_object($template) || strtolower(get_class($template)) != 'template' )
 			$tpl = new Template('framework/menu/menu_' . $this->type . '.tpl');
 		else
 			$tpl = $template->copy();
         $original_tpl = $tpl->copy();
-			
-		foreach($this->elements as $element)
+		
+        // Children assignment
+        foreach($this->elements as $element)
 		{   // We use a new Tpl to avoid overwrite issues
 			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl->copy())));
 		}
 		
+		// Menu assignment
 		parent::_assign($tpl);
         $tpl->assign_vars(array(
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'DEPTH' => $this->depth,
-            'ID' => $this->id
+            'ID' => $this->display_id
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
 	}
 	
+	
+	## Getters ##
+    /**
+     * @return string the menu type
+     */
+    function get_type() { return $this->type; }
+    /**
+     * @return MenuElement[] the menu children elements
+     */
+    function get_children() { return $this->elements; }
 	
 	## Private Methods ##
 	
@@ -139,20 +159,17 @@ class Menu extends MenuElement
 	 * @access protected
 	 * @var int menu's unique identifier
 	 */
-	var $id;
-	
+	var $display_id;
 	/**
      * @access protected
 	 * @var string menu's type
 	 */
 	var $type;
-	
 	/**
      * @access protected
 	 * @var MenuElement[] Direct menu children list
 	 */
 	var $elements = array();
-	
 	/**
      * @access protected
 	 * @var int Menu's depth

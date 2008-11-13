@@ -25,14 +25,14 @@
  *
 ###################################################*/
 
-
 // Abstract class : Do not instanciate it
 //      Menu and MenuLink classes are based on this class
 //      use, on of these
 
+define('MENU_ELEMENT__CLASS','MenuElement');
 
 /**
- * @author loic
+ * @author Loïc Rouchon horn@phpboost.com
  * @abstract
  * @desc A MenuElement contains a Title, an url, and an image url
  * @package util
@@ -46,9 +46,9 @@ class MenuElement
 	 * @param $title
 	 * @param $url
 	 * @param $image
-	 * @return unknown_type
+     * @param int $id The Menu's id in the database
 	 */
-	function MenuElement($title, $url, $image = '')
+	function MenuElement($title, $url, $image = '', $id = 0)
 	{
        $this->title = $title;
        $this->url = $url;
@@ -68,22 +68,56 @@ class MenuElement
 	 * @param string $url the value to set
 	 */
 	function set_url($url) { $this->url = $url; }
+    /**
+     * @param array $url the authorisation array to set
+     */
+    function set_auth($auth) { $this->auth = $auth; }
 	
 	## Getters ##
-	/**
-	 * @return string the link $image url
-	 */
-	function get_image() { return strpos($this->image, '://') > 0 ? $this->image : PATH_TO_ROOT . $this->image; }
     /**
      * @return string the link $title
      */
 	function get_title() { return $this->title; }
     /**
+     * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the link $url
      */
-	function get_url() { return strpos($this->image, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url; }
+	function get_url($compute_relative_url = true)
+	{
+        if( $compute_relative_url )
+	       return strpos($this->image, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url;
+       return $this->url;
+	}
+    /**
+     * @param bool $compute_relative_url If true, computes relative urls to the website root
+     * @return string the link $image url
+     */
+    function get_image($compute_relative_url = true)
+    {
+        if( $compute_relative_url )
+            return strpos($this->image, '://') > 0 ? $this->image : PATH_TO_ROOT . $this->image;
+        return $this->image;
+    }
+	/**
+	 * @return array the authorization array $auth
+	 */
+	function get_auth() { return $this->auth; }
+    /**
+     * @return int the $id of the menu in the database
+     */
+    function get_id() { return $this->id; }
 	
 	## Private Methods ##
+	
+	/**
+	 * @desc Check the user authorization to see the MenuElement
+	 * @return bool true if the user is authorised, false otherwise
+	 */
+	function _check_auth()
+	{
+	    global $User;
+	    return empty($this->auth) || $User->check_auth($this->auth, 1);
+	}
 	
     /**
      * @desc Assign tpl vars
@@ -101,6 +135,12 @@ class MenuElement
     }
 	
 	## Private attributes ##
+	
+    /**
+     * @access protected
+     * @var int the element identifier, only used by the service
+     */
+    var $id = 0;
 	/**
 	 * @access protected
 	 * @var string the MenuElement title
@@ -116,6 +156,11 @@ class MenuElement
      * @var string the image url. Could be relative to the website root or absolute
      */
 	var $image = '';
+	/**
+	 * @access protected
+	 * @var int[string] Represents the MenuElement authorisations array
+	 */
+	var $auth = array();
 }
 
 ?>

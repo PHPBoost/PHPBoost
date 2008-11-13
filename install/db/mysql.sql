@@ -184,6 +184,18 @@ CREATE TABLE `phpboost_modules_mini` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `phpboost_links_menu`;
+CREATE TABLE IF NOT EXISTS `phpboost_links_menu` (
+  `id` int(11) NOT NULL auto_increment,
+  `parent` int(11) NOT NULL,
+  `ltype` tinyint(2) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  `auth` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `parent` (`parent`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (
