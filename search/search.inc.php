@@ -123,7 +123,7 @@ function get_html_results(&$results, &$htmlResults, &$Modules, &$resultsName)
                 $Template->assign_vars(array(
                     'L_MODULE_NAME' => ucfirst($module->get_name()),
                     'TITLE' => $results[$j]['title'],
-                    'U_LINK' => transid($results[$j]['link'])
+                    'U_LINK' => url($results[$j]['link'])
                 ));
                 $tempRes = $Template->pparse('search_generic_results', TEMPLATE_STRING_MODE);
             }

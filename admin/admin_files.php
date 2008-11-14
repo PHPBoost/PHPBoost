@@ -276,7 +276,7 @@ else
 			'DEL_TYPE_IMG' => $show_member ? '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/trash_mini.png" alt="" class="valign_middle" />' : '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />',
 			'ALERT_DEL' => $show_member ? 'member' : 'folder',
 			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/move.png" alt="" style="vertical-align:middle;" /></a>' : '',
-			'U_ONCHANGE_FOLDER' => "'admin_files" . transid(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
+			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],
 			'U_FOLDER' => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),
 			'U_MOVE' => '.php?movefd=' . $row['id']

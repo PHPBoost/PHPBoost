@@ -67,10 +67,10 @@ if( $checkdate === true && empty($id) && !$add )
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}	
 		else
-			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
+			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
 	elseif( $get_event == 'down' )
 	{
@@ -87,10 +87,10 @@ if( $checkdate === true && empty($id) && !$add )
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}	
 		else
-			redirect(HOST . DIR . '/calendar/calendar' . transid('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
+			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
 	$Template->set_filenames(array(
@@ -120,7 +120,7 @@ if( $checkdate === true && empty($id) && !$add )
 	
 	if( $User->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 	{
-		$add_event = '<a href="calendar' . transid('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" /></a><br />';
+		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" /></a><br />';
 	}
 	else
 		$add_event = '';
@@ -130,10 +130,10 @@ if( $checkdate === true && empty($id) && !$add )
 		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
-		'U_PREVIOUS' => ($month == 1) ? transid('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  transid('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
-		'U_NEXT' => ($month == 12) ? transid('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  transid('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
-		'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="calendar' . transid('.php?e=down&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
-		'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="calendar' . transid('.php?e=up&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
+		'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
+		'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
+		'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="calendar' . url('.php?e=down&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
+		'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="calendar' . url('.php?e=up&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
 		'L_CALENDAR' => $LANG['calendar'],
 		'L_ACTION' => $LANG['action'],
 		'L_EVENTS' => $LANG['events'],
@@ -191,7 +191,7 @@ if( $checkdate === true && empty($id) && !$add )
 	{
 		if( $i >= $first_day && $i < $last_day )
 		{
-			$action = !empty($array_action[$j]) ? '<a href="calendar' . transid('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>' : $j;
+			$action = !empty($array_action[$j]) ? '<a href="calendar' . url('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>' : $j;
 			$class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
 			$style = ($day == $j) ? 'border: 1px inset black;' : 'border: 1px outset black;';
 			
@@ -221,8 +221,8 @@ if( $checkdate === true && empty($id) && !$add )
 		{
 			if( $User->check_level(ADMIN_LEVEL) )
 			{
-				$edit = '&nbsp;&nbsp;<a href="calendar' . transid('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
+				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {
@@ -242,8 +242,8 @@ if( $checkdate === true && empty($id) && !$add )
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
-				'LOGIN' => '<a class="com" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
-				'COM' => com_display_link($row['nbr_com'], '../calendar/calendar' . transid('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
+				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
+				'COM' => com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
 				'DEL' => $del,				
 				'L_ON' => $LANG['on']
@@ -273,7 +273,7 @@ if( $checkdate === true && empty($id) && !$add )
 	if( isset($_GET['com']) )
 	{
 		$Template->assign_vars(array(
-			'COMMENTS' => display_comments('calendar', $get_event, transid('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
+			'COMMENTS' => display_comments('calendar', $get_event, url('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
 		));
 	}	
 
@@ -321,13 +321,13 @@ elseif( !empty($id) )
 					$month = gmdate_format('m', $timestamp);
 					$year = gmdate_format('Y', $timestamp);
 					
-					redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+					redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
-					redirect(HOST . SCRIPT . transid('?edit=1&error=incomplete', '', '&') . '#errorh');
+					redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
 			}	
 			else
-				redirect(HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
 		}
 		else //Formulaire d'édition
 		{
@@ -341,7 +341,7 @@ elseif( !empty($id) )
 			$Template->assign_vars(array(				
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
-				'UPDATE' => transid('?edit=1&amp;id=' . $id),
+				'UPDATE' => url('?edit=1&amp;id=' . $id),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
 				'MONTH_DATE' => !empty($row['timestamp']) ? gmdate_format('m', $row['timestamp']) : '',
@@ -415,13 +415,13 @@ elseif( $add ) //Ajout d'un évenement
 				$month = gmdate_format('m', $timestamp);
 				$year = gmdate_format('Y', $timestamp);
 				
-				redirect(HOST . DIR . '/calendar/calendar' . transid('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+				redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
 			else //Champs incomplet!
-				redirect(HOST . SCRIPT . transid('?add=1&error=incomplete', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#errorh');
 		}
 		else
-			redirect(HOST . SCRIPT . transid('?add=1&error=invalid_date', '', '&') . '#errorh');
+			redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
 	}
 	else
 	{
@@ -442,7 +442,7 @@ elseif( $add ) //Ajout d'un évenement
 		$Template->assign_vars(array(					
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
-			'UPDATE' => transid('?add=1'),			
+			'UPDATE' => url('?add=1'),			
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,
 			'MONTH_DATE' => $month,
@@ -483,7 +483,7 @@ elseif( $add ) //Ajout d'un évenement
 	}
 }
 else
-	redirect(HOST . SCRIPT . transid('?error=invalid_date', '', '&') . '#errorh');
+	redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#errorh');
 
 require_once('../kernel/footer.php'); 
 

@@ -45,7 +45,7 @@ $Template->assign_vars(array(
 	'L_MORE_STAT' => $LANG['more_stats'],
 	'L_MEMBER_REGISTERED' => sprintf($l_member_registered, $nbr_members),
 	'L_LAST_REGISTERED_MEMBER' => $LANG['last_member'],
-	'U_LINK_LAST_MEMBER' => '<a href="' . HOST . DIR . '/member/member' . transid('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
+	'U_LINK_LAST_MEMBER' => '<a href="' . HOST . DIR . '/member/member' . url('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
 ));
 
 ?>

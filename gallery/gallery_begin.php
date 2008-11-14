@@ -39,11 +39,11 @@ $g_idcat = retrieve(GET, 'cat', 0);
 if( !empty($g_idcat) )
 {
 	//Création de l'arborescence des catégories.
-	$Bread_crumb->add($LANG['title_gallery'], transid('gallery.php'));
+	$Bread_crumb->add($LANG['title_gallery'], url('gallery.php'));
 	foreach($CAT_GALLERY as $id => $array_info_cat)
 	{
 		if( $CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'] )
-			$Bread_crumb->add($array_info_cat['name'], 'gallery' . transid('.php?cat=' . $id, '-' . $id . '.php'));
+			$Bread_crumb->add($array_info_cat['name'], 'gallery' . url('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 }
 else

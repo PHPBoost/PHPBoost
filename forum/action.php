@@ -65,7 +65,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 		
-		redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
+		redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 	}
 	elseif( !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get ) //Suppression d'un message.
 	{	
@@ -82,7 +82,7 @@ if( !empty($idm_get) && $del ) //Suppression d'un message/topic.
 		$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 		$last_page = ($last_page > 1) ? '&pt=' . $last_page : '';
 			
-		redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
+		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $msg['idtopic'] . $last_page, '-' . $msg['idtopic'] . $last_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 	}
 	else //Non autorisé, on redirige.
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -108,7 +108,7 @@ elseif( !empty($idt_get) )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			
-			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
+			redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}	
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -143,7 +143,7 @@ elseif( !empty($idt_get) )
 			$Sql->query_inject("UPDATE ".PREFIX."forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		
-		redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
+		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 	}
 	elseif( !empty($lock_get) )
 	{
@@ -158,7 +158,7 @@ elseif( !empty($idt_get) )
 			
 				$Forumfct->Lock_topic($idt_get);
 			
-				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
+				redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
 			}
 			elseif( $lock_get === 'false' )  //Déverrouillage du topic.
 			{
@@ -168,7 +168,7 @@ elseif( !empty($idt_get) )
 				
 				$Forumfct->Unlock_topic($idt_get);
 			
-				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
+				redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get  . $rewrited_title . '.php', '&'));
 			}
 		}
 		else
@@ -181,13 +181,13 @@ elseif( !empty($track) && $User->check_level(MEMBER_LEVEL) ) //Ajout du sujet au
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	
-	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
 elseif( !empty($untrack) && $User->check_level(MEMBER_LEVEL) ) //Retrait du sujet, aux sujets suivis.
 {
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	
-	redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
 }
 elseif( $read ) //Marquer comme lu.
 {

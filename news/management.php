@@ -67,7 +67,7 @@ if( $delete_news > 0 )
 {
 	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
 	if( empty($news_infos['title']) )
-		redirect(HOST. DIR . transid('/news/news.php'));
+		redirect(HOST. DIR . url('/news/news.php'));
 	
 	if( $news_categories->check_auth($news_infos['idcat']) )
 	{
@@ -76,11 +76,11 @@ if( $delete_news > 0 )
 		if( $news_infos['nbr_com'] > 0 )
 		{
 			include_once('../kernel/framework/content/comments.class.php');
-			$Comments = new Comments('news', $delete_news, transid('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
+			$Comments = new Comments('news', $delete_news, url('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
 			//$Comments->set_arg($news_id);
 			$Comments->delete_all($delete_news);
 		}
-		redirect(HOST. DIR . '/news/' . ($news_infos['idcat'] > 0 ? transid('news.php?cat=' . $news_infos['idcat'], 'category-' . $news_infos['idcat'] . '+' . url_encode_rewrite($NEWS_CATS[$news_infos['idcat']]['name']) . '.php') : transid('news.php')));
+		redirect(HOST. DIR . '/news/' . ($news_infos['idcat'] > 0 ? url('news.php?cat=' . $news_infos['idcat'], 'category-' . $news_infos['idcat'] . '+' . url_encode_rewrite($NEWS_CATS[$news_infos['idcat']]['name']) . '.php') : url('news.php')));
         
         // Feeds Regeneration
         import('content/syndication/feed');
@@ -93,22 +93,22 @@ elseif( $edit_news_id > 0 )
 {
 	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
 	if( empty($news_infos['title']) )
-		redirect(HOST. DIR . transid('/news/news.php'));
+		redirect(HOST. DIR . url('/news/news.php'));
 	define('TITLE', $NEWS_LANG['news_management']);
 	
 	//Barre d'arborescence
 	$auth_write = $User->check_auth($CONFIG_NEWS['global_auth'], WRITE_CAT_NEWS);
 	
-	$Bread_crumb->add($NEWS_LANG['news_management'], transid('management.php?edit=' . $edit_news_id));
+	$Bread_crumb->add($NEWS_LANG['news_management'], url('management.php?edit=' . $edit_news_id));
 	
-	$Bread_crumb->add($news_infos['title'], transid('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_infos['title']) . '.php'));
+	$Bread_crumb->add($news_infos['title'], url('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_infos['title']) . '.php'));
 	
 	$id_cat = $news_infos['idcat'];
 
 	//Bread_crumb : we read categories list recursively
 	while( $id_cat > 0 )
 	{
-		$Bread_crumb->add($NEWS_CATS[$id_cat]['name'], transid('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
+		$Bread_crumb->add($NEWS_CATS[$id_cat]['name'], url('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($NEWS_CATS[$id_cat]['auth']) )
 			$auth_write = $User->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
@@ -121,12 +121,12 @@ elseif( $edit_news_id > 0 )
 }
 else
 {
-	$Bread_crumb->add($NEWS_LANG['news_addition'], transid('management.php?new=1'));
+	$Bread_crumb->add($NEWS_LANG['news_addition'], url('management.php?new=1'));
 	define('TITLE', $NEWS_LANG['news_addition']);
 }
 
 
-$Bread_crumb->add($NEWS_LANG['news'], transid('news.php'));
+$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
 
 $Bread_crumb->reverse();
 	
@@ -179,12 +179,12 @@ if( $edit_news_id > 0 )
             import('content/syndication/feed');
             Feed::clear_cache('news');
             
-			redirect(HOST . DIR . '/news/' . transid('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php'));
+			redirect(HOST . DIR . '/news/' . url('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/news/' . transid('news.php'));
+			redirect(HOST . DIR . '/news/' . url('news.php'));
 		}
 	}
 	//Previewing a news
@@ -241,7 +241,7 @@ if( $edit_news_id > 0 )
 			'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
 			'L_NEWSED' => $NEWS_LANG['newsed'],
 			'L_NOTE' => $LANG['note'],
-			'U_NEWS_FILE' => transid('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
+			'U_NEWS_FILE' => url('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
 		));
 
 		$Template->assign_vars(array(
@@ -317,7 +317,7 @@ if( $edit_news_id > 0 )
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'U_TARGET' => transid('management.php?edit=' . $edit_news_id)
+			'U_TARGET' => url('management.php?edit=' . $edit_news_id)
 		));
 	}
 }
@@ -366,12 +366,12 @@ elseif( $add_news )
             import('content/syndication/feed');
             Feed::clear_cache('news');
             
-			redirect(HOST . DIR . '/news/' . transid('news.php?id=' . $new_id_news, 'news-' . $new_id_news . '+' . url_encode_rewrite($news_title) . '.php'));
+			redirect(HOST . DIR . '/news/' . url('news.php?id=' . $new_id_news, 'news-' . $new_id_news . '+' . url_encode_rewrite($news_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/news/' . transid('news.php'));
+			redirect(HOST . DIR . '/news/' . url('news.php'));
 		}
 	}
 	//Previewing a news
@@ -428,7 +428,7 @@ elseif( $add_news )
 			'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
 			'L_NEWSED' => $NEWS_LANG['newsed'],
 			'L_NOTE' => $LANG['note'],
-			'U_NEWS_FILE' => transid('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
+			'U_NEWS_FILE' => url('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
 		));
 
 		$Template->assign_vars(array(
@@ -496,7 +496,7 @@ elseif( $add_news )
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_UNAPROVED' => '',
-			'U_TARGET' => transid('management.php?new=1')
+			'U_TARGET' => url('management.php?new=1')
 		));
 	}
 }

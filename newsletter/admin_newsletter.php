@@ -75,7 +75,7 @@ if( $member_list )
 	while( $row = $Sql->fetch_assoc($result) )
 		$Template->assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
-			'U_DELETE' => transid('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
+			'U_DELETE' => url('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
 		));
 }
 //Si on envoie avec un certain type

@@ -647,15 +647,15 @@ class CategoriesManagement
 					'MARGIN_LEFT' => $level * 50,
 					'C_DISPLAY_URL' => !empty($this->display_config['url']),
 					'URL' => (empty($this->display_config['url']['rewrited']) ?
-									transid(sprintf($this->display_config['url']['unrewrited'], $id))
+									url(sprintf($this->display_config['url']['unrewrited'], $id))
 								:
 									//with url_rewriting
 									(!empty($this->display_config['url']['rewrited']) ?
 									//The rewriting mask contains title
 									(strpos($this->display_config['url']['rewrited'], '%s') !== false ?
-										transid(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id, url_encode_rewrite($values['name']))) :
+										url(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id, url_encode_rewrite($values['name']))) :
 										//Only id
-										transid(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id)))
+										url(sprintf($this->display_config['url']['unrewrited'], $id), sprintf($this->display_config['url']['rewrited'], $id)))
 									: '')
 								),
 					'NAME' => $values['name'],
@@ -664,12 +664,12 @@ class CategoriesManagement
 					'ACTION_GO_UP' => $ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
 					//If it's not the last we can have it go upper
 					'C_NOT_LAST_CAT' => $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat,
-					'ACTION_GO_DOWN' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
+					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
 					'C_VISIBLE' => $values['visible'],
-					'ACTION_HIDE' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
-					'ACTION_SHOW' => $ajax_mode ? transid($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
-					'ACTION_EDIT' => transid($this->display_config['administration_file_name'] . '?edit=' . $id),
-					'ACTION_DELETE' => transid($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id),
+					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
+					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
+					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id),
+					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
 					'NEXT_CATEGORY' => $this->_create_row_interface($id, $level + 1, $ajax_mode, $reference_template)

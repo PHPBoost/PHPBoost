@@ -486,7 +486,7 @@ else
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'APROBATION' => $aprob,
 			'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
-			'U_CAT' => '<a href="../articles/articles' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
+			'U_CAT' => '<a href="../articles/articles' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '">' . (!empty($row['idcat']) ? $row['name'] : '<em>' . $LANG['root'] . '</em>') . '</a>'
 		));
 	}
 	$Sql->query_close($result);

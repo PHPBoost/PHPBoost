@@ -32,15 +32,15 @@ require_once('../kernel/header.php');
 $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 
 $Template->assign_vars(array(
-	'U_STATS_SITE' => transid('.php?site=1', '-site.php'),
-	'U_STATS_MEMBERS' => transid('.php?members=1', '-members.php'),
-	'U_STATS_VISIT' => transid('.php?visit=1', '-visit.php'),
-	'U_STATS_PAGES' => transid('.php?pages=1', '-pages.php'),
-	'U_STATS_REFERER' => transid('.php?referer=1', '-referer.php'),
-	'U_STATS_KEYWORD' => transid('.php?keyword=1', '-keyword.php'),
-	'U_STATS_BROWSER' => transid('.php?browser=1', '-browser.php'),
-	'U_STATS_OS' => transid('.php?os=1', '-os.php'),
-	'U_STATS_LANG' => transid('.php?lang=1', '-lang.php'),
+	'U_STATS_SITE' => url('.php?site=1', '-site.php'),
+	'U_STATS_MEMBERS' => url('.php?members=1', '-members.php'),
+	'U_STATS_VISIT' => url('.php?visit=1', '-visit.php'),
+	'U_STATS_PAGES' => url('.php?pages=1', '-pages.php'),
+	'U_STATS_REFERER' => url('.php?referer=1', '-referer.php'),
+	'U_STATS_KEYWORD' => url('.php?keyword=1', '-keyword.php'),
+	'U_STATS_BROWSER' => url('.php?browser=1', '-browser.php'),
+	'U_STATS_OS' => url('.php?os=1', '-os.php'),
+	'U_STATS_LANG' => url('.php?lang=1', '-lang.php'),
 	'L_SITE' => $LANG['site'],
 	'L_STATS' => $LANG['stats'],
 	'L_MEMBERS' => $LANG['member_s'],
@@ -61,7 +61,7 @@ if( $members )
 	$Template->assign_vars(array(
 		'C_STATS_MEMBERS' => true,
 		'LAST_USER' => $last_user['login'],
-		'U_LAST_USER_ID' => transid('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
+		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
 		'MEMBERS' => $nbr_member,
 		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
 		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/framework/ajax/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
@@ -148,7 +148,7 @@ if( $members )
 	{
 		$Template->assign_block_vars('top_poster', array(
 			'ID' => $i,
-			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'LOGIN' => $row['login'],
 			'USER_POST' => $row['user_msg']
 		));
@@ -207,8 +207,8 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			'SUM_NBR' => $info['sum_month'],
 			'MAX_NBR' => $info['max_month'],
 			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_month']/$info['nbr_month'], 1) : 1,
-			'U_NEXT_LINK' =>  transid('.php?year=' . $next_year),
-			'U_PREVIOUS_LINK' => transid('.php?year=' . $previous_year)
+			'U_NEXT_LINK' =>  url('.php?year=' . $next_year),
+			'U_PREVIOUS_LINK' => url('.php?year=' . $previous_year)
 		));
 
 		//Année maximale
@@ -239,7 +239,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
 			}
@@ -299,7 +299,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 					
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
 				
@@ -321,7 +321,7 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			foreach($array_l_months as $value)
 			{
 				$Template->assign_block_vars('legend', array(
-					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $visit_year . '&amp;visit=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
 			}
@@ -352,10 +352,10 @@ elseif( $visit || $visit_year ) //Visites par jour classées par mois.
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
 			'MOY_NBR' => number_round($info['avg_nbr'], 1),
-			'U_NEXT_LINK' => transid('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;visit=1', '-visit.php?m=' . $next_month . '&amp;y=' . $next_year),
-			'U_PREVIOUS_LINK' => transid('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1', '-visit.php?m=' . $previous_month . '&amp;y=' . $previous_year),
-			'U_YEAR' => '<a href="stats' . transid('.php?year=' . $year) . '#stats">' . $year . '</a>',
-			'U_VISITS_MORE' => '<a href="stats' . transid('.php?year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+			'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;visit=1', '-visit.php?m=' . $next_month . '&amp;y=' . $next_year),
+			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;visit=1', '-visit.php?m=' . $previous_month . '&amp;y=' . $previous_year),
+			'U_YEAR' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="stats' . url('.php?year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
 		));
 		
 		$months = '';
@@ -558,8 +558,8 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			'SUM_NBR' => $info['sum_nbr'],
 			'MAX_NBR' => $info['max_nbr'],
 			'MOY_NBR' => !empty($info['nbr_month']) ? number_round($info['sum_nbr']/$info['nbr_month'], 1) : 0,
-			'U_NEXT_LINK' =>  transid('.php?pages_year=' . $next_year),
-			'U_PREVIOUS_LINK' => transid('.php?pages_year=' . $previous_year)
+			'U_NEXT_LINK' =>  url('.php?pages_year=' . $next_year),
+			'U_PREVIOUS_LINK' => url('.php?pages_year=' . $previous_year)
 		));
 
 		//Année maximale
@@ -590,7 +590,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			{	
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
 			}
@@ -650,7 +650,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="stats' . transid('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
+					'U_DETAILS' => '<a href="stats' . url('.php?m=' . $row['stats_month'] . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . $array_l_months[$row['stats_month'] - 1] . '</a>',
 					'NBR' => $row['total']
 				));
 				
@@ -672,7 +672,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			foreach($array_l_months as $value)
 			{
 				$Template->assign_block_vars('legend', array(
-					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . transid('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
+					'LEGEND' => (in_array($i, $months_not_empty)) ? '<a href="stats' . url('.php?m=' . $i . '&amp;y=' . $pages_year . '&amp;pages=1') . '#stats">' . substr($value, 0, 3) . '</a>' : substr($value, 0, 3)
 				));
 				$i++;
 			}
@@ -702,10 +702,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
 			'MOY_NBR' => number_round($info['pages']/24, 1),
-			'U_NEXT_LINK' => transid('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year),
-			'U_PREVIOUS_LINK' => transid('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year),
-			'U_YEAR' => '<a href="stats' . transid('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
-			'U_VISITS_MORE' => '<a href="stats' . transid('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+			'U_NEXT_LINK' => url('.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?d=' . $next_day . '&amp;m=' . $next_month . '&amp;y=' . $next_year),
+			'U_PREVIOUS_LINK' => url('.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?d=' . $previous_day . '&amp;m=' . $previous_month . '&amp;y=' . $previous_year),
+			'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
 		));
 		
 		$days = '';
@@ -751,7 +751,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			
 			//On affiche les stats numériquement dans un tableau en dessous
 			$Template->assign_block_vars('value', array(
-				'U_DETAILS' => '<a href="stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+				'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 				'NBR' => $row['pages']
 			));
 		}
@@ -779,10 +779,10 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 			'MONTH' => $array_l_months[$month - 1],
 			'MAX_NBR' => $info['max_nbr'],
 			'MOY_NBR' => number_round($info['avg_nbr'], 1),
-			'U_NEXT_LINK' => transid('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?m=' . $next_month . '&amp;y=' . $next_year),
-			'U_PREVIOUS_LINK' => transid('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?m=' . $previous_month . '&amp;y=' . $previous_year),
-			'U_YEAR' => '<a href="stats' . transid('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
-			'U_VISITS_MORE' => '<a href="stats' . transid('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
+			'U_NEXT_LINK' => url('.php?m=' . $next_month . '&amp;y=' . $next_year . '&amp;pages=1', '-pages.php?m=' . $next_month . '&amp;y=' . $next_year),
+			'U_PREVIOUS_LINK' => url('.php?m=' . $previous_month . '&amp;y=' . $previous_year . '&amp;pages=1', '-pages.php?m=' . $previous_month . '&amp;y=' . $previous_year),
+			'U_YEAR' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $year . '</a>',
+			'U_VISITS_MORE' => '<a href="stats' . url('.php?pages_year=' . $year) . '#stats">' . $LANG['visits_year'] . ' ' . $year . '</a>'
 		));
 		
 		$months = '';
@@ -823,7 +823,7 @@ elseif( $pages || $pages_year ) //Pages par jour classées par mois.
 				
 				//On affiche les stats numériquement dans un tableau en dessous
 				$Template->assign_block_vars('value', array(
-					'U_DETAILS' => '<a href="stats' . transid('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
+					'U_DETAILS' => '<a href="stats' . url('.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year'] . '&amp;pages=1', '-pages.php?d=' . $row['stats_day'] . '&amp;m=' . $row['stats_month'] . '&amp;y=' . $row['stats_year']) . '#stats">' . $date_day . '/' . $row['stats_month'] . '/' . $row['stats_year'] . '</a>',
 					'NBR' => $row['pages']
 				));
 			}
@@ -966,7 +966,7 @@ elseif( $referer )
 	
 	$Template->assign_vars(array(
 		'C_STATS_REFERER' => true,
-		'PAGINATION' => $Pagination->display('stats' . transid('.php?referer=1&amp;p=%d', '-referer.php?p=%d'), $nbr_referer, 'p', 15, 3),
+		'PAGINATION' => $Pagination->display('stats' . url('.php?referer=1&amp;p=%d', '-referer.php?p=%d'), $nbr_referer, 'p', 15, 3),
 		'L_URL' => $LANG['url'],
 		'L_TOTAL_VISIT' => $LANG['total_visit'],
 		'L_AVERAGE_VISIT' => $LANG['average_visit'],
@@ -1023,7 +1023,7 @@ elseif( $keyword )
 		
 	$Template->assign_vars(array(
 		'C_STATS_KEYWORD' => true,
-		'PAGINATION' => $Pagination->display('stats' . transid('.php?keyword=1&amp;p=%d', '-keyword.php?p=%d'), $nbr_keyword, 'p', 15, 3),
+		'PAGINATION' => $Pagination->display('stats' . url('.php?keyword=1&amp;p=%d', '-keyword.php?p=%d'), $nbr_keyword, 'p', 15, 3),
 		'L_SEARCH_ENGINE' => $LANG['keyword_s'],
 		'L_TOTAL_VISIT' => $LANG['total_visit'],
 		'L_AVERAGE_VISIT' => $LANG['average_visit'],

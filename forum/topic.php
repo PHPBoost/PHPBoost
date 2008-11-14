@@ -47,10 +47,10 @@ $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'] )
-		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$topic['idcat']]['name']) ) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
+	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
 $Bread_crumb->add($topic['title'], '');
 
 define('TITLE', $LANG['title_topic'] . ' - ' . addslashes($topic['title']));
@@ -61,7 +61,7 @@ $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['t
 
 //Redirection changement de catégorie.
 if( !empty($_POST['change_cat']) )
-	redirect(HOST . DIR . '/forum/forum' . transid('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
+	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
 if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
@@ -81,12 +81,12 @@ if( $check_group_edit_auth )
 {
 	$lock_status = '';
 	if( $topic['status'] == '1' ) //Unlocked, affiche lien pour verrouiller.
-		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
 	elseif( $topic['status'] == '0' ) //Lock, affiche lien pour déverrouiler.
-		$lock_status = '<a href="action' . transid('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
 	
 	$Template->assign_vars(array(
-		'MOVE' => '<a href="move' . transid('.php?id=' . $id_get) . '" onclick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
+		'MOVE' => '<a href="move' . url('.php?id=' . $id_get) . '" onclick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
 		'LOCK' => $lock_status,
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
 		'L_ALERT_LOCK_TOPIC' => $LANG['alert_lock_topic'],
@@ -139,7 +139,7 @@ $Template->assign_vars(array(
 	'SID' => SID,		
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
-	'PAGINATION' => $Pagination->display('topic' . transid('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
+	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
 	'THEME' => $CONFIG['theme'],
 	'LANG' => $CONFIG['lang'],
 	'USER_ID' => $topic['user_id'],
@@ -148,11 +148,11 @@ $Template->assign_vars(array(
 	'PAGE' => $page,
 	'TITLE_T' => ucfirst($topic['title']),
 	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
-	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . transid('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-	'U_CHANGE_CAT'=> 'topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_cat_title . '.php'),
-	'U_ONCHANGE' => "'forum" . transid(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",		
+	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
+	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_cat_title . '.php'),
+	'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",		
 	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
-	'U_TITLE_T' => 'topic' . transid('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
+	'U_TITLE_T' => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 	'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -198,22 +198,22 @@ while ( $row = $Sql->fetch_assoc($result) )
 	if( $check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message) )
 	{
 		$valid = ($first_message) ? 'topic' : 'msg';
-		$edit = '&nbsp;&nbsp;<a href="post' . transid('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
+		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
 		$del = (!$first_message) ? '&nbsp;&nbsp;<script type="text/javascript"><!-- 
 		document.write(\'<img style="cursor: pointer;" onclick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
-		--></script><noscript><a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
-		: '&nbsp;&nbsp;<a href="action' . transid('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
+		--></script><noscript><a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
+		: '&nbsp;&nbsp;<a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
 		
 		//Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		if( $check_group_edit_auth )
 		{
-			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . transid('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
-			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
-			$readonly = !$is_guest ? '<a href="moderation_forum' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
+			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . url('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
+			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
+			$readonly = !$is_guest ? '<a href="moderation_forum' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
 		}
 	}
 	elseif( $User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message ) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
-		$edit = '&nbsp;&nbsp;<a href="post' . transid('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
+		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
 			
 	//Gestion des sondages => executé une seule fois.
 	if( !empty($row['question']) && $poll_done === false )
@@ -221,8 +221,8 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$Template->assign_vars(array(				
 			'C_POLL_EXIST' => true,
 			'QUESTION' => $row['question'],				
-			'U_POLL_RESULT' => transid('.php?id=' . $id_get . '&amp;r=1'),
-			'U_POLL_ACTION' => transid('.php?id=' . $id_get),
+			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1'),
+			'U_POLL_ACTION' => url('.php?id=' . $id_get),
 			'L_POLL' => $LANG['poll'], 
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_RESULT' => $LANG['poll_result']
@@ -354,13 +354,13 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$i++;
 	
 	//Ajout du marqueur d'édition si activé.
-	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1') ? '<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' ' . (!empty($row['login_edit']) ? '<a class="small_link" href="../member/member' . transid('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a>' : '<em>' . $LANG['guest'] . '</em>') . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span>' : '';
+	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1') ? '<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' ' . (!empty($row['login_edit']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a>' : '<em>' . $LANG['guest'] . '</em>') . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span>' : '';
 	
 	//Affichage du nombre de message.
 	if( $row['user_msg'] >= 1 )
-		$user_msg = '<a href="../forum/membermsg' . transid('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
+		$user_msg = '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
-		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . transid('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
+		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
 	$Template->assign_block_vars('msg', array(
 		'CONTENTS' => second_parse($row['contents']),
@@ -368,7 +368,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
 		'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && !$is_guest) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-		'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
+		'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 		'USER_IMG_ASSOC' => $user_assoc_img,
 		'USER_AVATAR' => $user_avatar,			
@@ -387,9 +387,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'PUNISHMENT' => $readonly,
 		'EDIT' => $edit,
 		'CUT' => $cut,
-		'DEL' => $del,'U_VARS_ANCRE' => transid('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
-		'U_VARS_QUOTE' => transid('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="pm" /></a>' : '',
+		'DEL' => $del,'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
+		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
+		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="pm" /></a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.
@@ -432,7 +432,7 @@ while( $row = $Sql->fetch_assoc($result) )
 		break;
 	} 
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
+	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
 $Sql->query_close($result);
 
@@ -445,12 +445,12 @@ $Template->assign_vars(array(
 	'MEMBER' => $total_member,
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
-	'U_SUSCRIBE' => ($track === false) ? transid('.php?t=' . $id_get) : transid('.php?ut=' . $id_get),
+	'U_SUSCRIBE' => ($track === false) ? url('.php?t=' . $id_get) : url('.php?ut=' . $id_get),
 	'IS_TRACK' => $track ? 'true' : 'false',
 	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',
 	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
 	'IS_CHANGE' => $topic['display_msg'] ? 'true' : 'false',
-	'U_ALERT' => transid('.php?id=' . $id_get),
+	'U_ALERT' => url('.php?id=' . $id_get),
 	'L_TRACK_DEFAULT' => ($track === false) ? $LANG['track_topic'] : $LANG['untrack_topic'],
 	'L_SUSCRIBE_DEFAULT' => ($track_mail === false) ? $LANG['track_topic_mail'] : $LANG['untrack_topic_mail'],
 	'L_SUSCRIBE_PM_DEFAULT' => ($track_pm === false) ? $LANG['track_topic_pm'] : $LANG['untrack_topic_pm'],
@@ -509,7 +509,7 @@ else
 		'ICON_SUSCRIBE_PM2' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" id="forum_track_pm_img" />',
 		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" />',
 		'ICON_SUSCRIBE2' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" id="forum_track_mail_img" />',
-		'U_FORUM_ACTION_POST' => transid('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg')
+		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg')
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
@@ -524,7 +524,7 @@ else
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
-			'U_ACTION_MSG_DISPLAY' => transid('.php?msg_d=1&amp;id=' . $id_get)
+			'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get)
 		));
 	}
 }

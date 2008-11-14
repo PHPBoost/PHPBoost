@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-import('util/menu/menu_element');
+import('util/menu/link_menu_element');
 
-define('MENU_LINK__CLASS', 'MenuLink');
+define('LINK_MENU_LINK__CLASS', 'LinkMenuLink');
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -35,7 +35,7 @@ define('MENU_LINK__CLASS', 'MenuLink');
  * @package util
  * @subpackage menu
  */
-class MenuLink extends MenuElement
+class LinkMenuLink extends LinkMenuElement
 {
 	## Public Methods ##
 	/**
@@ -45,9 +45,9 @@ class MenuLink extends MenuElement
      * @param string $image Menu's image url relative to the website root or absolute
      * @param int $id The Menu's id in the database
 	 */
-	function MenuLink($title, $url, $image = '', $id = 0)
+	function LinkMenuLink($title, $url, $image = '', $id = 0)
 	{
-		parent::MenuElement($title, $url, $image, $id);
+		parent::LinkMenuElement($title, $url, $image, $id);
 	}
 	
 	/**

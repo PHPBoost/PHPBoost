@@ -101,7 +101,7 @@ elseif( !empty($open_cat) || $root == 1 )
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$return .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('wiki') . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+		$return .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('wiki') . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
 	$Sql->query_close($result);
 	$return .= '</table>';

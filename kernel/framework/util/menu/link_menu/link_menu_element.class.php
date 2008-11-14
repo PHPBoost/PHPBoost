@@ -26,29 +26,29 @@
 ###################################################*/
 
 // Abstract class : Do not instanciate it
-//      Menu and MenuLink classes are based on this class
+//      LinkMenuLink and LinkMenuLink classes are based on this class
 //      use, on of these
 
-define('MENU_ELEMENT__CLASS','MenuElement');
+define('LINK_MENU_ELEMENT__CLASS','LinkMenuElement');
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @abstract
- * @desc A MenuElement contains a Title, an url, and an image url
+ * @desc A LinkMenuElement contains a Title, an url, and an image url
  * @package util
  * @subpackage menu
  */
-class MenuElement
+class LinkMenuElement
 {
 	## Public Methods ##
 	/**
-	 * @desc Build a MenuElement object
+	 * @desc Build a LinkMenuElement object
 	 * @param $title
 	 * @param $url
 	 * @param $image
      * @param int $id The Menu's id in the database
 	 */
-	function MenuElement($title, $url, $image = '', $id = 0)
+	function LinkMenuElement($title, $url, $image = '', $id = 0)
 	{
        $this->title = $title;
        $this->url = $url;
@@ -85,8 +85,8 @@ class MenuElement
 	function get_url($compute_relative_url = true)
 	{
         if( $compute_relative_url )
-	       return strpos($this->image, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url;
-       return $this->url;
+	       return url(strpos($this->url, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url);
+       return url($this->url);
 	}
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
@@ -110,7 +110,7 @@ class MenuElement
 	## Private Methods ##
 	
 	/**
-	 * @desc Check the user authorization to see the MenuElement
+	 * @desc Check the user authorization to see the LinkMenuElement
 	 * @return bool true if the user is authorised, false otherwise
 	 */
 	function _check_auth()
@@ -143,12 +143,12 @@ class MenuElement
     var $id = 0;
 	/**
 	 * @access protected
-	 * @var string the MenuElement title
+	 * @var string the LinkMenuElement title
 	 */
 	var $title = '';
     /**
      * @access protected
-     * @var string the MenuElement url
+     * @var string the LinkMenuElement url
      */
     var $url = '';
     /**
@@ -158,7 +158,7 @@ class MenuElement
 	var $image = '';
 	/**
 	 * @access protected
-	 * @var int[string] Represents the MenuElement authorisations array
+	 * @var int[string] Represents the LinkMenuElement authorisations array
 	 */
 	var $auth = array();
 }

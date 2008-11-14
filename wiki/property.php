@@ -133,9 +133,9 @@ if( $random )//Recherche d'une page aléatoire
 {
 	$page = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE redirect = 0 ORDER BY rand() " . $Sql->limit(0, 1), __LINE__, __FILE__);
 	if( !empty($page) ) //On redirige
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $page, $page));
+		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $page, $page));
 	else
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
+		redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 }
 elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 {
@@ -266,7 +266,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->assign_block_vars('redirect.list', array(
-			'U_REDIRECTION_DELETE' => transid('action.php?del_redirection=' . $row['id']),
+			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id']),
 			'REDIRECTION_NAME' => $row['title'],
 		));
 	}
@@ -282,7 +282,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 		'REDIRECTION_DELETE' => $LANG['wiki_redirection_delete'],
 		'L_ALERT_DELETE_REDIRECTION' => str_replace('"', '\"', $LANG['wiki_alert_delete_redirection']),
 		'L_CREATE_REDIRECTION' => $LANG['wiki_create_redirection'],
-		'U_CREATE_REDIRECTION' => transid('property.php?create_redirection=' . $redirect)
+		'U_CREATE_REDIRECTION' => url('property.php?create_redirection=' . $redirect)
 	));
 }
 elseif( $create_redirection > 0 ) //Création d'une redirection
@@ -308,16 +308,16 @@ elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
 {
 	$Template->assign_vars(array(
 		'C_COMMENTS' => true,
-		'COMMENTS' => display_comments('wiki_articles', $idcom, transid('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
+		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
 	));
 }
 elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 {	
 	if( empty($article_infos['title']) )//Si l'article n'existe pas
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
+		redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 	
 	if( $article_infos['is_cat'] == 0 )//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
-		redirect(HOST . DIR . '/wiki/' . transid('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
+		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 	else //Catégorie
 	{
 		$cats = array();
@@ -363,7 +363,7 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 	}
 }
 else
-	redirect(HOST . DIR . '/wiki/' . transid('wiki.php'));
+	redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = new Content(BBCODE_LANGUAGE);

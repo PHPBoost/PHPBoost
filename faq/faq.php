@@ -104,8 +104,8 @@ if( $num_subcats > 0 )
 				'SRC' => $value['image'],
 				'IMG_NAME' => addslashes($value['name']),
 				'NUM_QUESTIONS' => sprintf(((int)$value['num_questions'] > 1 ? $FAQ_LANG['num_questions_plural'] : $FAQ_LANG['num_questions_singular']), (int)$value['num_questions']),
-				'U_CAT' => transid('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
-				'U_ADMIN_CAT' => transid('admin_faq_cats.php?edit=' . $id)
+				'U_CAT' => url('faq.php?id=' . $id, 'faq-' . $id . '+' . url_encode_rewrite($value['name']) . '.php'),
+				'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
 			));
 			
 			if( !empty($value['image']) )
@@ -152,12 +152,12 @@ if( $num_rows > 0 )
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'ANSWER' => second_parse($row['answer']),
-				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
-				'U_DEL' => transid('action.php?del=' . $row['id']),
-				'U_DOWN' => transid('action.php?down=' . $row['id']),
-				'U_UP' => transid('action.php?up=' . $row['id']),
-				'U_MOVE' => transid('management.php?move=' . $row['id']),
-				'U_EDIT' => transid('management.php?edit=' . $row['id']),
+				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id'],
+				'U_DEL' => url('action.php?del=' . $row['id']),
+				'U_DOWN' => url('action.php?down=' . $row['id']),
+				'U_UP' => url('action.php?up=' . $row['id']),
+				'U_MOVE' => url('management.php?move=' . $row['id']),
+				'U_EDIT' => url('management.php?edit=' . $row['id']),
 				'C_HIDE_ANSWER' => $row['id'] != $id_question,
 				'C_SHOW_ANSWER' => $row['id'] == $id_question
 			));
@@ -176,12 +176,12 @@ if( $num_rows > 0 )
 				'ANSWER' => second_parse($row['answer']),
 				'QUESTION' => $row['question'],
 				'ID' => $row['id'],
-				'U_DEL' => transid('action.php?del=' . $row['id']),
-				'U_DOWN' => transid('action.php?down=' . $row['id']),
-				'U_UP' => transid('action.php?up=' . $row['id']),
-				'U_EDIT' => transid('management.php?edit=' . $row['id']),
-				'U_MOVE' => transid('management.php?move=' . $row['id']),
-				'U_QUESTION' => transid('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
+				'U_DEL' => url('action.php?del=' . $row['id']),
+				'U_DOWN' => url('action.php?down=' . $row['id']),
+				'U_UP' => url('action.php?up=' . $row['id']),
+				'U_EDIT' => url('management.php?edit=' . $row['id']),
+				'U_MOVE' => url('management.php?move=' . $row['id']),
+				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
 			
 			if( $row['q_order'] > 1 )
@@ -209,8 +209,8 @@ $Template->assign_vars(array(
 	'LANG' => $CONFIG['lang'],
 	'THEME' => $CONFIG['theme'],
 	'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
-	'U_MANAGEMENT' => transid('management.php?faq=' . $id_faq),
-	'U_ADMIN_CAT' => $id_faq > 0 ? transid('admin_faq_cats.php?edit=' . $id_faq) : transid('admin_faq_cats.php')
+	'U_MANAGEMENT' => url('management.php?faq=' . $id_faq),
+	'U_ADMIN_CAT' => $id_faq > 0 ? url('admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php')
 ));
 
 $Template->pparse('faq');

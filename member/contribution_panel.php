@@ -46,9 +46,9 @@ if( $contribution_id > 0 )
 	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
-	$Bread_crumb->add($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
+	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
+	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
 }
@@ -61,10 +61,10 @@ elseif( $id_update > 0 )
 	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
-	$Bread_crumb->add($contribution->get_entitled(), transid('contribution_panel.php?id=' . $contribution->get_id()));
-	$Bread_crumb->add($LANG['contribution_edition'], transid('contribution_panel.php?edit=' . $id_update));
+	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
+	$Bread_crumb->add($contribution->get_entitled(), url('contribution_panel.php?id=' . $contribution->get_id()));
+	$Bread_crumb->add($LANG['contribution_edition'], url('contribution_panel.php?edit=' . $id_update));
 	
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
 }
@@ -102,11 +102,11 @@ elseif( $id_to_update > 0 )
 		//Enregistrement en base de données
 		ContributionService::save_contribution($contribution);
 		
-		redirect(HOST . DIR . transid('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
+		redirect(HOST . DIR . url('/member/contribution_panel.php?id=' . $contribution->get_id(), '', '&'));
 	}
 	//Erreur
 	else
-		redirect(HOST . DIR . transid('/member/contribution_panel.php', '', '&'));
+		redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }
 //Suppression d'une contribution
 elseif( $id_to_delete > 0 )
@@ -121,12 +121,12 @@ elseif( $id_to_delete > 0 )
 	
 	$contribution->delete();
 	
-	redirect(HOST . DIR . transid('/member/contribution_panel.php', '', '&'));
+	redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }
 else
 {
-	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add($LANG['contribution_panel'], transid('contribution_panel.php'));
+	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['contribution_panel'], url('contribution_panel.php'));
 	define('TITLE', $LANG['contribution_panel']);
 }
 
@@ -141,7 +141,7 @@ if( $contribution_id > 0 )
 	));
 	
 	include_once('../kernel/framework/content/comments.class.php'); 
-	$comments = new Comments('events', $contribution_id, transid('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
+	$comments = new Comments('events', $contribution_id, url('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
 	//For PHP 4 :(
 	$contribution_creation_date = $contribution->get_creation_date();
@@ -157,8 +157,8 @@ if( $contribution_id > 0 )
 		'COMMENTS' => $comments->display(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
-		'U_CONTRIBUTOR_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php'),
-		'FIXING_URL' => transid(PATH_TO_ROOT . $contribution->get_fixing_url())
+		'U_CONTRIBUTOR_PROFILE' => url('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php'),
+		'FIXING_URL' => url(PATH_TO_ROOT . $contribution->get_fixing_url())
 	));
 	
 	//Si la contribution a été traitée
@@ -167,7 +167,7 @@ if( $contribution_id > 0 )
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
-			'U_FIXER_PROFILE' => transid('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
+			'U_FIXER_PROFILE' => url('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
 	
 	$template->assign_vars(array(
@@ -184,8 +184,8 @@ if( $contribution_id > 0 )
 		'L_CONFIRM_DELETE_CONTRIBUTION' => $LANG['confirm_delete_contribution'],
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
-		'U_UPDATE' => transid('contribution_panel.php?edit=' . $contribution_id),
-		'U_DELETE' => transid('contribution_panel.php?del=' . $contribution_id)
+		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
+		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id)
 	));
 }
 //Modification d'une contribution
@@ -210,7 +210,7 @@ elseif( $id_update > 0 )
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'U_TARGET' => transid('contribution_panel.php')
+		'U_TARGET' => url('contribution_panel.php')
 	));
 }
 else
@@ -257,9 +257,9 @@ else
 					'POSTER' => $this_contribution->get_poster_login(),
 					'FIXER' => $this_contribution->get_fixer_login(),
 					'ACTIONS' => '',
-					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
-					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . transid('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
-					'U_CONSULT' => PATH_TO_ROOT . '/member/' . transid('contribution_panel.php?id=' . $this_contribution->get_id()),
+					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
+					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
+					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
 					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED,
 					'C_PROCESSING' => $this_contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED
 				));
@@ -294,7 +294,7 @@ else
 			
 			$template->assign_block_vars('row.module', array(
 				'WIDTH' => (int)(100. / (NUMBER_OF_MODULES_PER_LINE)),
-				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module_name . '/' . transid($module_ini['contribution_interface']),
+				'U_MODULE_LINK' => PATH_TO_ROOT . '/' . $module_name . '/' . url($module_ini['contribution_interface']),
 				'MODULE_ID' => $module_name,
 				'MODULE_NAME' => $module_ini['name'],
 				'LINK_TITLE' => sprintf($LANG['contribute_in_module_name'], $module_ini['name'])
@@ -322,33 +322,33 @@ else
 	//Gestion du tri
 	$template->assign_vars(array(
 		'C_ORDER_ENTITLED_ASC' => $criteria == 'entitled' && $order == 'asc',
-		'U_ORDER_ENTITLED_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
+		'U_ORDER_ENTITLED_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC' => $criteria == 'entitled' && $order == 'desc',
-		'U_ORDER_ENTITLED_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
+		'U_ORDER_ENTITLED_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=entitled&amp;order=desc'),
 		'C_ORDER_MODULE_ASC' => $criteria == 'module' && $order == 'asc',
-		'U_ORDER_MODULE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=asc'),
+		'U_ORDER_MODULE_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=asc'),
 		'C_ORDER_MODULE_DESC' => $criteria == 'module' && $order == 'desc',
-		'U_ORDER_MODULE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=desc'),
+		'U_ORDER_MODULE_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=module&amp;order=desc'),
 		'C_ORDER_STATUS_ASC' => $criteria == 'current_status' && $order == 'asc',
-		'U_ORDER_STATUS_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
+		'U_ORDER_STATUS_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=asc'),
 		'C_ORDER_STATUS_DESC' => $criteria == 'current_status' && $order == 'desc',
-		'U_ORDER_STATUS_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=desc'),
+		'U_ORDER_STATUS_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=current_status&amp;order=desc'),
 		'C_ORDER_CREATION_DATE_ASC' => $criteria == 'creation_date' && $order == 'asc',
-		'U_ORDER_CREATION_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
+		'U_ORDER_CREATION_DATE_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=asc'),
 		'C_ORDER_CREATION_DATE_DESC' => $criteria == 'creation_date' && $order == 'desc',
-		'U_ORDER_CREATION_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
+		'U_ORDER_CREATION_DATE_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=creation_date&amp;order=desc'),
 		'C_ORDER_FIXING_DATE_ASC' => $criteria == 'fixing_date' && $order == 'asc',
-		'U_ORDER_FIXING_DATE_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=asc'),
+		'U_ORDER_FIXING_DATE_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=asc'),
 		'C_ORDER_FIXING_DATE_DESC' => $criteria == 'fixing_date' && $order == 'desc',
-		'U_ORDER_FIXING_DATE_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=desc'),	
+		'U_ORDER_FIXING_DATE_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixing_date&amp;order=desc'),	
 		'C_ORDER_POSTER_ASC' => $criteria == 'poster_id' && $order == 'asc',
-		'U_ORDER_POSTER_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=asc'),
+		'U_ORDER_POSTER_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=asc'),
 		'C_ORDER_POSTER_DESC' => $criteria == 'poster_id' && $order == 'desc',
-		'U_ORDER_POSTER_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=desc'),
+		'U_ORDER_POSTER_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=poster_id&amp;order=desc'),
 		'C_ORDER_FIXER_ASC' => $criteria == 'fixer_id' && $order == 'asc',
-		'U_ORDER_FIXER_ASC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=asc'),
+		'U_ORDER_FIXER_ASC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=asc'),
 		'C_ORDER_FIXER_DESC' => $criteria == 'fixer_id' && $order == 'desc',
-		'U_ORDER_FIXER_DESC' => transid('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=desc')
+		'U_ORDER_FIXER_DESC' => url('contribution_panel.php?p=' . $pagination->_get_var_page('p') . '&amp;criteria=fixer_id&amp;order=desc')
 	));
 }
 

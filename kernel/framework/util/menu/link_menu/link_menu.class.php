@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-import('util/menu/menu_link');
+import('util/menu/link_menu_link');
 
-define('MENU__CLASS', 'Menu');
+define('LINK_MENU__CLASS', 'LinkMenu');
 
 ## Menu types ##
 define('VERTICAL_MENU', 'vertical');
@@ -40,11 +40,11 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc Create a Menu with children.
- * Children could be Menu or MenuLink objects
+ * Children could be Menu or LinkMenuLink objects
  * @package util
  * @subpackage menu
  */
-class Menu extends MenuElement
+class LinkMenu extends LinkMenuElement
 {
 	## Public Methods ##
 	/**
@@ -55,7 +55,7 @@ class Menu extends MenuElement
      * @param string $type Menu's type
      * @param int $id The Menu's id in the database
 	 */
-	function Menu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU, $id = 0)
+	function LinkMenu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU, $id = 0)
 	{
 		$this->display_id = get_uid(); // Set a unique ID
 		
@@ -64,12 +64,12 @@ class Menu extends MenuElement
 		$this->type = in_array($type, $menu_types) ? $type : VERTICAL_SCROLLING_MENU;
 		
 		// Build the menu element on witch is based the menu
-		parent::MenuElement($title, $url, $image, $id);
+		parent::LinkMenuElement($title, $url, $image, $id);
 	}
 	
 	/**
-	 * @desc Add a list of MenuLink or (sub)Menu to the current one
-	 * @param &MenuElement[] &$menu_elements A reference to a list of MenuLink and / or Menu to add
+	 * @desc Add a list of LinkMenu or (sub)Menu to the current one
+	 * @param &LinkMenuElement[] &$menu_elements A reference to a list of LinkMenuLink and / or Menu to add
 	 */
 	function add_array(&$menu_elements)
 	{
@@ -78,8 +78,8 @@ class Menu extends MenuElement
 	}
 	
 	/**
-	 * @desc Add a single MenuLink or (sub) Menu
-	 * @param MenuElement $element the MenuLink or Menu to add
+	 * @desc Add a single LinkMenuLink or (sub) Menu
+	 * @param LinkMenuElement $element the LinkMenuLink or Menu to add
 	 */
 	function add($element)
 	{
@@ -132,7 +132,7 @@ class Menu extends MenuElement
      */
     function get_type() { return $this->type; }
     /**
-     * @return MenuElement[] the menu children elements
+     * @return LinkMenuElement[] the menu children elements
      */
     function get_children() { return $this->elements; }
 	
@@ -167,7 +167,7 @@ class Menu extends MenuElement
 	var $type;
 	/**
      * @access protected
-	 * @var MenuElement[] Direct menu children list
+	 * @var LinkMenuElement[] Direct menu children list
 	 */
 	var $elements = array();
 	/**

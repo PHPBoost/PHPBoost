@@ -44,7 +44,7 @@ if( !empty($file_id) )
 	
 	if( empty($download_info['id']) )
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
-	$Bread_crumb->add($download_info['title'], transid('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
+	$Bread_crumb->add($download_info['title'], url('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $download_info['title']);
 }
@@ -69,7 +69,7 @@ $auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD
 //Bread_crumb : we read categories list recursively
 while( $id_cat_for_download > 0 )
 {
-	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], transid('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
 	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
 	{
 		//If we can't read a category, we can't read sub elements.
@@ -80,7 +80,7 @@ while( $id_cat_for_download > 0 )
 	$id_cat_for_download = (int)$DOWNLOAD_CATS[$id_cat_for_download]['id_parent'];
 }
 
-$Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
+$Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
 
 $Bread_crumb->reverse();
 

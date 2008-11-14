@@ -63,8 +63,8 @@ if( !empty($popup) ) //Popup.
 }
 else //Affichage de l'interface de gestion.
 {	
-	$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-	$Bread_crumb->add($LANG['files_management'], transid('upload.php'));
+	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+	$Bread_crumb->add($LANG['files_management'], url('upload.php'));
 	require_once('../kernel/header.php');
 	$field = '';
 	$header = '';
@@ -102,21 +102,21 @@ $to = retrieve(POST, 'new_cat', -1);
 if( !empty($parent_folder) ) //Changement de dossier
 {
 	if( empty($parent_folder) )
-		redirect(HOST . DIR . transid('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
+		redirect(HOST . DIR . url('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	if( $info_folder['id_parent'] != 0 || $User->check_level(ADMIN_LEVEL) )
 	{
 		if( $parent_folder['user_id'] == -1 )
-			redirect(HOST . DIR . transid('/member/upload.php?showm=1', '', '&'));
+			redirect(HOST . DIR . url('/member/upload.php?showm=1', '', '&'));
 		else
-			redirect(HOST . DIR . transid('/member/upload.php?f=' . $info_folder['id_parent'] . '&' . $popup_noamp, '', '&'));
+			redirect(HOST . DIR . url('/member/upload.php?f=' . $info_folder['id_parent'] . '&' . $popup_noamp, '', '&'));
 	}
 	else
-		redirect(HOST . DIR . transid('/member/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
+		redirect(HOST . DIR . url('/member/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
 }
 elseif( $home_folder ) //Retour à la racine.
-	redirect(HOST . DIR . transid('/member/upload.php?' . $popup_noamp, '', '&'));
+	redirect(HOST . DIR . url('/member/upload.php?' . $popup_noamp, '', '&'));
 elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'un fichier.
 {		
 	$error = '';
@@ -159,7 +159,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	}
 	
 	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#errorh' : '&' . $popup_noamp;
-	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . $error, '', '&'));
+	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . $error, '', '&'));
 }
 elseif( !empty($del_folder) ) //Supprime un dossier.
 {
@@ -175,7 +175,7 @@ elseif( !empty($del_folder) ) //Supprime un dossier.
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	
-	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
+	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif( !empty($empty_folder) && $User->check_level(ADMIN_LEVEL) ) //Vide un dossier membre.
 {
@@ -195,7 +195,7 @@ elseif( !empty($del_file) ) //Suppression d'un fichier
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	
-	redirect(HOST . DIR . transid('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
+	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
 elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 {
@@ -214,11 +214,11 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 			if( $new_folder_owner == $User->get_attribute('user_id') || $to == 0 )
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
-				redirect(HOST . DIR . transid('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
+				redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 			}
 		}
 		else
-			redirect(HOST . DIR . transid('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
+			redirect(HOST . DIR . url('/member/upload.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder&' . $popup_noamp, '', '&'));
 	}
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -236,7 +236,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 		if( $new_folder_owner == $User->get_attribute('user_id') || $to == 0 )
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."upload SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . transid('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
+			redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 		}
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -288,7 +288,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
-			'TARGET' => transid('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;' . $popup)
+			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;' . $popup)
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $User->get_attribute('user_id'));
 	}
@@ -318,7 +318,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		));
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
-			'TARGET' => transid('upload.php?movefi=' . $move_file . '&amp;f=0&amp;' . $popup)
+			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;' . $popup)
 		));
 	}
 	
@@ -400,7 +400,7 @@ else
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'DEL_TYPE_IMG' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="" class="valign_middle" />',
 			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/move.png" alt="" class="valign_middle" /></a>',
-			'U_MOVE' => transid('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup),
+			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup),
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
 		));
 		$total_directories++;
@@ -461,7 +461,7 @@ else
 			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')"><img src="../templates/' . $CONFIG['theme'] . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
-			'U_MOVE' => transid('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup)
+			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup)
 		));
 		
 		$total_folder_size += $row['size'];

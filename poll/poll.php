@@ -96,7 +96,7 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 		
 		//Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		if( $check_bdd || $check_cookie )
-			redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
+			redirect(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
 		
 		//Récupération du vote.
 		$check_answer = false;
@@ -129,16 +129,16 @@ if( !empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives )
 			$Sql->query_inject("UPDATE ".PREFIX."poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
 			//Tout c'est bien déroulé, on redirige vers la page des resultats.
-			redirect_confirm(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
+			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
 			if( in_array($poll['id'], $CONFIG_POLL['poll_mini'])  ) //Vote effectué du mini poll => mise à jour du cache du mini poll.
 				$Cache->Generate_module_file('poll');
 		}	
 		else //Vote blanc
-			redirect_confirm(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
+			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
-		redirect(HOST . DIR . '/poll/poll' . transid('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
+		redirect(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
 elseif( !empty($poll['id']) && !$archives )
 {
@@ -156,8 +156,8 @@ elseif( !empty($poll['id']) && !$archives )
 		-->
 		</script>";
 		
-		$edit = '<a href="../poll/admin_poll' . transid('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
+		$edit = '<a href="../poll/admin_poll' . url('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>';
 	}
 		
 	//Résultats
@@ -241,14 +241,14 @@ elseif( !empty($poll['id']) && !$archives )
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short'),
 			'VOTES' => 0,
-			'ID_R' => transid('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
+			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
 			'JAVA' => $java,
 			'EDIT' => $edit,
 			'DEL' => $del,
-			'U_POLL_ACTION' => transid('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
-			'U_POLL_RESULT' => transid('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
+			'U_POLL_ACTION' => url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'),
+			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => $LANG['poll_vote'],
@@ -293,7 +293,7 @@ elseif( !$archives ) //Menu principal.
 	));
 
 	$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
-	$show_archives = !empty($show_archives) ? '<a href="poll' . transid('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
+	$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 	$edit = '';	
 	if( $User->check_level(ADMIN_LEVEL) )
@@ -314,7 +314,7 @@ elseif( !$archives ) //Menu principal.
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->assign_block_vars('list', array(
-			'U_POLL_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
+			'U_POLL_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 			'QUESTION' => $row['question']
 		));
 	}
@@ -337,7 +337,7 @@ elseif( $archives ) //Archives.
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
 		'THEME' => $CONFIG['theme'],		
-		'PAGINATION' => $Pagination->display('poll' . transid('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
+		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
 		'L_ARCHIVE' => $LANG['archives'],
@@ -361,8 +361,8 @@ elseif( $archives ) //Archives.
 
 		$Template->assign_block_vars('list', array(
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="../poll/admin_poll' . transid('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . transid('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
+			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" /></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" /></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

@@ -68,17 +68,17 @@ if( !empty($id_article) )
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . transid('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . transid('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
 		$Template->assign_block_vars('article.list', array(
 			'TITLE' => $LANG['wiki_consult_article'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
-			'U_ARTICLE' => $row['activ'] == 1 ? transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : transid('wiki.php?id_contents=' . $row['id_contents']),
+			'U_ARTICLE' => $row['activ'] == 1 ? url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) : url('wiki.php?id_contents=' . $row['id_contents']),
 			'CURRENT_RELEASE' => $row['activ'] == 1 ? '(' . $LANG['wiki_current_version'] . ')' : '',
 			'ACTIONS' => !empty($actions) ? $actions : $LANG['wiki_no_possible_action']
 		));
@@ -108,7 +108,7 @@ else //On affiche la liste des modifications
 	//On instancie la classe de pagination
 	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
-	$show_pagin = $Pagination->display(transid('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
+	$show_pagin = $Pagination->display(url('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
 	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
@@ -117,10 +117,10 @@ else //On affiche la liste des modifications
 		'L_TITLE' => $LANG['wiki_article_title'],
 		'L_AUTHOR' => $LANG['wiki_author'],
 		'L_DATE' => $LANG['date'],
-		'ARROW_TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
-		'ARROW_TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
-		'ARROW_BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : '<a href="' . transid('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
+		'ARROW_TOP_TITLE' => ($field == 'title' && $order == 'asc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
+		'ARROW_BOTTOM_TITLE' => ($field == 'title' && $order == 'desc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->page . '&amp;field=title&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
+		'ARROW_TOP_DATE' => ($field == 'timestamp' && $order == 'asc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=asc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/top.png" alt="asc" /></a>',
+		'ARROW_BOTTOM_DATE' => ($field == 'timestamp' && $order == 'desc') ? '' : '<a href="' . url('history.php?p=' . $Pagination->page . '&amp;field=timestamp&amp;order=desc') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/bottom.png" alt="desc" /></a>',
 		'PAGINATION' => ($nbr_articles > $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY  ?  $show_pagin : '') //Affichage de la pagination si il le faut
 	));	
 
@@ -135,9 +135,9 @@ else //On affiche la liste des modifications
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],
-			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
+			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : $row['user_ip'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
-			'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 		));
 	}
 	

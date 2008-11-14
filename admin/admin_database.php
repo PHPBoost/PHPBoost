@@ -153,12 +153,12 @@ elseif( $action == 'restore' )
 		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
 		{
 			if( @unlink($file_path) )
-				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
+				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
 			else
-				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
+				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
 		}
 		else
-			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
+			redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=file_does_not_exist', '', '&'));
 	}
 	
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
@@ -180,7 +180,7 @@ elseif( $action == 'restore' )
 			$Backup->Repair_tables($tables);
 			$Cache->Generate_all_files();
 			
-			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
+			redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=success', '', '&'));
 		}
 	}
 	//Fichier envoyé par post
@@ -202,15 +202,15 @@ elseif( $action == 'restore' )
 				$Backup->Repair_tables($tables);
 				$Cache->Generate_all_files();
 				
-				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=success', '', '&'));
+				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=success', '', '&'));
 			}
 			elseif( is_file($file_path) )//Le fichier existe déjà, on ne peut pas le copier
-				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
+				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
-				redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
+				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
 		}
 		else
-			redirect(HOST . DIR . transid('/admin/admin_database.php?action=restore&error=failure', '', '&'));
+			redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=failure', '', '&'));
 	}
 	
 	$Template->assign_vars(array(
@@ -296,7 +296,7 @@ else
 		
 		//Erreur, la liste des fichiers est vide
 		if( !isset($_POST['table_list']) || count($_POST['table_list']) == 0 )
-			redirect(HOST . DIR . transid('/admin/admin_database.php?error=empty_list'));
+			redirect(HOST . DIR . url('/admin/admin_database.php?error=empty_list'));
 
 		foreach( $Backup->tables as $table => $properties )
 		{
@@ -348,7 +348,7 @@ else
 
 		$Backup->Export_file($file_path); //Exportation de la bdd.
 		
-		redirect(HOST . DIR . transid('/admin/admin_database.php?error=backup_success&file=' . $file_name));
+		redirect(HOST . DIR . url('/admin/admin_database.php?error=backup_success&file=' . $file_name));
 	}
 
 	if( $tables_backup ) //Liste des tables pour les sauvegarder
@@ -356,7 +356,7 @@ else
 		$Template->assign_vars(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => count($Backup->tables),
-			'TARGET' => transid('admin_database.php'),
+			'TARGET' => url('admin_database.php'),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
 			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
@@ -446,7 +446,7 @@ else
 		
 		$Template->assign_vars(array(
 			'C_DATABASE_INDEX' => true,
-			'TARGET' => transid('admin_database.php'),
+			'TARGET' => url('admin_database.php'),
 			'NBR_TABLES' => count($Backup->tables),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,

@@ -53,14 +53,14 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 			if( !empty($check_time) )
 			{			
 				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
-					redirect(HOST . SCRIPT . transid('?error=flood', '', '&') . '#errorh');
+					redirect(HOST . SCRIPT . url('?error=flood', '', '&') . '#errorh');
 			}
 
 			$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 			if( !check_nbr_links($guestbook_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-				redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
-				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 			$Sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."guestbook"); //Dernier message inséré.
@@ -68,10 +68,10 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
 		else //utilisateur non autorisé!
-			redirect(HOST . SCRIPT . transid('?error=auth', '', '&') . '#errorh');
+			redirect(HOST . SCRIPT . url('?error=auth', '', '&') . '#errorh');
 	}
 	else
-		redirect(HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
+		redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 }
 elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 {
@@ -108,7 +108,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 		'CONTENTS' => $guestbook_contents,
 		'PSEUDO' => stripslashes($guestbook_pseudo),
 		'DATE' => gmdate_format('date_format_short'),
-		'UPDATE' => transid($update),
+		'UPDATE' => url($update),
 		'ERROR' => '',
 		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 		'L_ALERT_TEXT' => $LANG['require_text'],
@@ -162,7 +162,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				));		
 			
 			$Template->assign_vars(array(
-				'UPDATE' => transid('?update=1&amp;id=' . $id_get),
+				'UPDATE' => url('?update=1&amp;id=' . $id_get),
 				'CONTENTS' => unparse($row['contents']),
 				'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -189,7 +189,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			{
 				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
 				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
-					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
+					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 				
@@ -255,8 +255,8 @@ else //Affichage.
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
-		'UPDATE' => transid(''),
-		'PAGINATION' => $Pagination->display('guestbook' . transid('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
+		'UPDATE' => url(''),
+		'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
 		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
 		'L_ALERT_TEXT' => $LANG['require_text'],
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
@@ -295,20 +295,20 @@ else //Affichage.
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.
 		{
-			$warning = '&nbsp;<a href="../member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-			$readonly = '<a href="../member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 		}
 		
 		//Edition/suppression.
 		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 		{
-			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . transid('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
 		if( !$is_guest ) 
-			$guestbook_pseudo = '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			$guestbook_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		else
 			$guestbook_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 		
@@ -409,7 +409,7 @@ else //Affichage.
 			'PUNISHMENT' => $readonly,			
 			'DEL' => $del,
 			'EDIT' => $edit,
-			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
+			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'guestbook.php' . SID . '#m' . $row['id']
 		));
 		$j++;

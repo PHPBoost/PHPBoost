@@ -86,8 +86,8 @@ if( !empty($id_get) ) //Déplacement du sujet.
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
 		'CATEGORIES' => $cat_forum,
-		'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
-		'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
+		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
+		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
 		'L_SELECT_SUBCAT' => $LANG['require_subcat'],
 		'L_MOVE_SUBJECT' => $LANG['forum_move_subject'],
 		'L_CAT' => $LANG['category'],
@@ -124,7 +124,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 
@@ -162,7 +162,7 @@ elseif( !empty($id_post) ) //Déplacement du topic
 
 			$Forumfct->Move_topic($id_post, $idcat, $to); //Déplacement du topic
 
-			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
+			redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
 		else
 			$Errorh->handler('e_incomplete', E_USER_REDIRECT); 
@@ -227,8 +227,8 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		'SID' => SID,			
 		'IDTOPIC' => 0,
 		'U_ACTION' => 'move.php',
-		'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst($topic['title']) . '</a>',	
-		'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
+		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst($topic['title']) . '</a>',	
+		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
 		'L_ACTION' => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -371,7 +371,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 
@@ -446,10 +446,10 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 				$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 			}
 			
-			redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
+			redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
 		}
 		else
-			redirect(transid(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=false_t&idm=' . $id_post_msg, '', '&') . '#errorh');
 	}
 	else
 		$Errorh->handler('e_incomplete', E_USER_REDIRECT); 

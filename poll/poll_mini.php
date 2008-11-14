@@ -71,11 +71,11 @@ if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') ===
 			'L_MINI_POLL' => $LANG['mini_poll'],
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_POLL_RESULT' => $LANG['poll_result'],
-			'U_POLL_RESULT' => transid('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
+			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
 		));	
 		
 		$Template->assign_block_vars('question', array(
-			'ID' => transid('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
+			'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
 			'QUESTION' => $poll_mini['question']			
 		));		
 			

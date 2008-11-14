@@ -65,11 +65,11 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		'LANG' => $CONFIG['lang'],
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
-		'PAGINATION' => $Pagination->display('membermsg' . transid('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
+		'PAGINATION' => $Pagination->display('membermsg' . url('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
 		'L_BACK' => $LANG['back'],
 		'L_VIEW_MSG_MEMBER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
-		'U_FORUM_VIEW_MSG' => transid('.php?id=' . $view_msg)
+		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
 	
 	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, m.user_groups, t.title, t.status, t.idcat, c.name, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, s.user_id AS connect, msg.contents
@@ -92,7 +92,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 		$rewrited_title = ( $CONFIG['rewrite'] == 1 ) ? '+' . url_encode_rewrite($row['title']) : '';
 		
 		//Ajout du marqueur d'édition si activé.
-	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
+	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '0') ? '<br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' <a class="edit_pseudo" href="../member/member' . url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span><br />' : '';
 		
 		$Template->assign_block_vars('list', array(
 			'CONTENTS' => second_parse($row['contents']),
@@ -100,11 +100,11 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 			'ID' => $row['id'],
 			'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],			
-			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_VARS_ANCRE' => transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
-			'U_FORUM_CAT' => '<a href="../forum/forum' . transid('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
-			'U_TITLE_T' => '<a href="../forum/topic' . transid('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
+			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
+			'U_FORUM_CAT' => '<a href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
+			'U_TITLE_T' => '<a href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
 		));
 	}
 	$Sql->query_close($result);
@@ -138,7 +138,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 			break;
 		} 
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}
 	$Sql->query_close($result);
 

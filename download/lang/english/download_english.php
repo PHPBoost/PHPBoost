@@ -140,7 +140,7 @@ $DOWNLOAD_LANG['contribution_counterpart'] = 'Contribution counterpart';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Explain why you want to submit your file. This field is not compulsory but it can help the approbator who will take care of your contribution.';
 $DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted: %s';
 $DOWNLOAD_LANG['contribution_confirmation'] = 'Contribution confirmation';
-$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . transid('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
+$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
 $DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
 
 //Erreurs

@@ -51,15 +51,15 @@ if( !empty($mail_valid) )
 		$Mail = new Mail();
 
 		if( $Mail->send($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
-			redirect(HOST . SCRIPT . transid('?error=success', '', '&') . '#errorh');
+			redirect(HOST . SCRIPT . url('?error=success', '', '&') . '#errorh');
 		else //Erreur mail
-			redirect(HOST . SCRIPT . transid('?error=error', '', '&') . '#errorh');
+			redirect(HOST . SCRIPT . url('?error=error', '', '&') . '#errorh');
 	}
 	else //Champs incomplet!
-		redirect(HOST . SCRIPT . transid('?error=verif', '', '&') . '#errorh');
+		redirect(HOST . SCRIPT . url('?error=verif', '', '&') . '#errorh');
 }
 elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) ) ) //Champs incomplet!
-	redirect(HOST . SCRIPT . transid('?error=incomplete', '', '&') . '#errorh');
+	redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 else
 {	
 	###########################Affichage##############################

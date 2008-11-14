@@ -52,20 +52,20 @@ else
 if( $id_edit > 0 )
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
-	$Bread_crumb->add(TITLE, transid('post.php?id=' . $id_edit));
-	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->add(TITLE, url('post.php?id=' . $id_edit));
+	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
 else
-	$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+	$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	
 require_once('../kernel/header.php');
 
@@ -94,7 +94,7 @@ if( !empty($contents) )
 			$array_auth = unserialize($page_infos['auth']);
 			//Vérification de l'autorisation d'éditer la page
 			if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
+				redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			//on vérifie que la catégorie ne s'insère pas dans un de ses filles
 			if( $page_infos['is_cat'] == 1 )
@@ -112,7 +112,7 @@ if( !empty($contents) )
 				//On met à jour la table
 				$Sql->query_inject("UPDATE ".PREFIX."pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 			//catégories : risque de boucle infinie
 			elseif( $page_infos['is_cat'] == 1 && empty($error) )
@@ -127,14 +127,14 @@ if( !empty($contents) )
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 		}
 		//Création d'une page
 		elseif( !empty($title) )
 		{
 			if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-				redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
+				redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 			
 			$encoded_title = url_encode_rewrite($title);
 			$is_already_page = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -154,7 +154,7 @@ if( !empty($contents) )
 					$Cache->Generate_module_file('pages');
 				}
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 			}
 			//Sinon, message d'erreur
 			else
@@ -175,7 +175,7 @@ elseif( $del_article > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 		
 	//la page existe bien, on supprime
 	if( !empty($page_infos['title']) )
@@ -183,10 +183,10 @@ elseif( $del_article > 0 )
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE redirect = '" . $del_article . "'", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov = '" . $del_article . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_success', '', '&'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=delete_success', '', '&'));
 	}
 	else
-		redirect(HOST . DIR . transid('/pages/pages.php?error=delete_failure', '', '&'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=delete_failure', '', '&'));
 }
 
 $Template->set_filenames(array('post'=> 'pages/post.tpl'));
@@ -198,7 +198,7 @@ if( $id_edit > 0 )
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
-		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth', '', '&'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth', '', '&'));
 	
 	//Erreur d'enregistrement ?
 	if( $error == 'cat_contains_cat' )
@@ -308,7 +308,7 @@ $Template->assign_vars(array(
 	'L_PREVIEWING' => $LANG['pages_previewing'],
 	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
 	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit'],
-	'TARGET' => transid('post.php')
+	'TARGET' => url('post.php')
 ));
 
 $Template->pparse('post');

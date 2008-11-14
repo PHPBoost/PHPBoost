@@ -866,7 +866,7 @@ else
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
-			'U_GALLERY_VARS' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
+			'U_GALLERY_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
 		
 		$list_cats_js .= $row['id'] . ', ';

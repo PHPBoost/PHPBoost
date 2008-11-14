@@ -55,7 +55,7 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 			if( $row['level'] !== '-1' )
 			{
 				$Template->assign_block_vars('online', array(
-					'MEMBER' => '<a href="' . PATH_TO_ROOT . '/member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
+					'MEMBER' => '<a href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	
 				));
 				$i++;
 			}		 

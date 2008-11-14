@@ -76,7 +76,7 @@ if( $delete_file > 0 )
 {
 	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);	
 	if( empty($file_infos['title']) )
-		redirect(HOST. DIR . transid('/download/download.php'));
+		redirect(HOST. DIR . url('/download/download.php'));
 	
 	if( $download_categories->check_auth($file_infos['idcat']) )
 	{
@@ -85,10 +85,10 @@ if( $delete_file > 0 )
 		if( $file_infos['nbr_com'] > 0 )
 		{
 			include_once('../kernel/framework/content/comments.class.php');
-			$Comments = new Comments('download', $delete_file, transid('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
+			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}
-		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? transid('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : transid('download.php')));
+		redirect(HOST. DIR . '/download/' . ($file_infos['idcat'] > 0 ? url('download.php?cat=' . $file_infos['idcat'], 'category-' . $file_infos['idcat'] . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_infos['idcat']]['name']) . '.php') : url('download.php')));
         
         // Feeds Regeneration
         import('content/syndication/feed');
@@ -102,22 +102,22 @@ elseif( $edit_file_id > 0 )
 {
 	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
 	if( empty($file_infos['title']) )
-		redirect(HOST. DIR . transid('/download/download.php'));
+		redirect(HOST. DIR . url('/download/download.php'));
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
 	
 	//Barre d'arborescence
 	$auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 	
-	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], transid('management.php?edit=' . $edit_file_id));
+	$Bread_crumb->add($DOWNLOAD_LANG['file_management'], url('management.php?edit=' . $edit_file_id));
 	
-	$Bread_crumb->add($file_infos['title'], transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_infos['title']) . '.php'));
+	$Bread_crumb->add($file_infos['title'], url('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_infos['title']) . '.php'));
 	
 	$id_cat = $file_infos['idcat'];
 
 	//Bread_crumb : we read categories list recursively
 	while( $id_cat > 0 )
 	{
-		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], transid('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
+		$Bread_crumb->add($DOWNLOAD_CATS[$id_cat]['name'], url('download.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat]['name']) . '.php'));
 		
 		if( !empty($DOWNLOAD_CATS[$id_cat]['auth']) )
 			$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
@@ -130,14 +130,14 @@ elseif( $edit_file_id > 0 )
 }
 else
 {
-	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], transid('management.php?new=1'));
+	$Bread_crumb->add($DOWNLOAD_LANG['file_addition'], url('management.php?new=1'));
 	define('TITLE', $DOWNLOAD_LANG['file_addition']);
 	
 	if( !($auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT)) && !($auth_contribute = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT)) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 
-$Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
+$Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
 
 $Bread_crumb->reverse();
 
@@ -217,17 +217,17 @@ if( $edit_file_id > 0 )
             if( !$visible || !$file_approved )
             {
             	if( $$file_cat_id > 0 )
-					redirect(HOST . DIR . '/download/' . transid('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
+					redirect(HOST . DIR . '/download/' . url('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
 				else
-					redirect(HOST . DIR . '/download/' . transid('download.php'));
+					redirect(HOST . DIR . '/download/' . url('download.php'));
             }
 			else
-				redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
+				redirect(HOST . DIR . '/download/' . url('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/download/' . transid('download.php'));
+			redirect(HOST . DIR . '/download/' . url('download.php'));
 		}
 	}
 	//Previewing a file
@@ -284,7 +284,7 @@ if( $edit_file_id > 0 )
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
-			'U_DOWNLOAD_FILE' => transid('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
+			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
 
 		$Template->assign_vars(array(
@@ -364,7 +364,7 @@ if( $edit_file_id > 0 )
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
 			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
-			'U_TARGET' => transid('management.php?edit=' . $edit_file_id)
+			'U_TARGET' => url('management.php?edit=' . $edit_file_id)
 		));
 	}
 }
@@ -470,12 +470,12 @@ else
             import('content/syndication/feed');
             Feed::clear_cache('download');
             
-			redirect(HOST . DIR . '/download/' . transid('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
+			redirect(HOST . DIR . '/download/' . url('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/download/' . transid('download.php'));
+			redirect(HOST . DIR . '/download/' . url('download.php'));
 		}
 	}
 	//Previewing a file
@@ -536,7 +536,7 @@ else
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
-			'U_DOWNLOAD_FILE' => transid('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
+			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
 
 		$Template->assign_vars(array(
@@ -612,7 +612,7 @@ else
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_HIDDEN' => '',
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
-			'U_TARGET' => transid('management.php?new=1')
+			'U_TARGET' => url('management.php?new=1')
 		));
 	}
 	$Template->assign_vars(array(

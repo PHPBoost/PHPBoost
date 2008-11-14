@@ -122,7 +122,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 		if( $parse_redirection )
 		{
 			$Template->assign_block_vars('redirect', array(
-				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . transid('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
+				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			
@@ -130,7 +130,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 			{
 				$Template->assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
-					'U_REMOVE_REDIRECTION' => transid('action.php?del_redirection=' . $id_redirection),
+					'U_REMOVE_REDIRECTION' => url('action.php?del_redirection=' . $id_redirection),
 					'L_ALERT_REMOVE_REDIRECTION' => str_replace('\'', '\\\'', $LANG['wiki_alert_delete_redirection'])
 				));
 			}
@@ -183,7 +183,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 		{
 			$Template->assign_block_vars('cat.list_art', array(
 				'TITLE' => $row['title'],
-				'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 		}
 		if( $num_articles == 0 )
@@ -198,7 +198,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 			{
 				$Template->assign_block_vars('cat.list_cats', array(
 					'NAME' => $value['name'],
-					'U_CAT' => transid('wiki.php?title=' . url_encode_rewrite($value['name']), url_encode_rewrite($value['name']))
+					'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($value['name']), url_encode_rewrite($value['name']))
 				));
 				$i++;
 			}
@@ -217,7 +217,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 //Si l'article n'existe pas
 elseif( !empty($encoded_title) && $num_rows == 0 )
 {
-	redirect(HOST . DIR . '/wiki/' . transid('post.php?title=' . $encoded_title, '', '&'));
+	redirect(HOST . DIR . '/wiki/' . url('post.php?title=' . $encoded_title, '', '&'));
 }
 //Sinon c'est l'accueil
 else
@@ -243,7 +243,7 @@ else
 			$Template->assign_block_vars('last_articles.list', array(
 				'ARTICLE' => $row['title'],
 				'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
-				'U_ARTICLE' => transid('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 			$i++;
 		}
@@ -269,7 +269,7 @@ else
 			{
 				$Template->assign_block_vars('cat_list.list', array(
 					'CAT' => $infos['name'],
-					'U_CAT' => transid('wiki.php?title=' . url_encode_rewrite($infos['name']), url_encode_rewrite($infos['name']))
+					'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($infos['name']), url_encode_rewrite($infos['name']))
 				));
 				$i++;
 			}
@@ -284,7 +284,7 @@ else
 		'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
 		'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
 		'L_EXPLORER' => $LANG['wiki_explorer'],
-		'U_EXPLORER' => transid('explorer.php'),
+		'U_EXPLORER' => url('explorer.php'),
 		'WIKI_PATH' => $Template->get_module_data_path('wiki')
 	));
 

@@ -49,25 +49,25 @@ if( $shoutbox && empty($shout_id) ) //Insertion
 			if( !empty($check_time) && !$User->check_max_value(AUTH_FLOOD) )
 			{
 				if( $check_time >= (time() - $CONFIG['delay_flood']) )
-					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . transid('?error=flood', '', '&') . '#errorh');
+					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . url('?error=flood', '', '&') . '#errorh');
 			}
 			
 			//Vérifie que le message ne contient pas du flood de lien.
 			$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);		
 			if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-				redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 			if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
-				redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
+				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
-			redirect(HOST . transid(SCRIPT . '?' . QUERY_STRING, '', '&'));
+			redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
 		else //utilisateur non autorisé!
-			redirect(transid(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=auth', '', '&') . '#errorh');
 	}
 	else //Champs incomplet!
-		redirect(transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+		redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 }
 elseif( !empty($shout_id) ) //Edition + suppression!
 {
@@ -109,7 +109,7 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				));
 			
 			$Template->assign_vars(array(
-				'UPDATE' => transid('?update=1&amp;id=' . $row['id']),
+				'UPDATE' => url('?update=1&amp;id=' . $row['id']),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -136,16 +136,16 @@ elseif( !empty($shout_id) ) //Edition + suppression!
 				//Vérifie que le message ne contient pas du flood de lien.
 				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 				if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
-					redirect(HOST . SCRIPT . transid('?error=l_pseudo', '', '&') . '#errorh');
+					redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
 				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
-					redirect(HOST . SCRIPT . transid('?error=l_flood', '', '&') . '#errorh');
+					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 				redirect(HOST . SCRIPT. SID2);
 			}
 			else //Champs incomplet!
-				redirect(transid(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=incomplete', '', '&') . '#errorh');
 		}
 		else
 			redirect(HOST . SCRIPT . SID2);
@@ -217,7 +217,7 @@ else //Affichage.
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
-		'PAGINATION' => $Pagination->display('shoutbox' . transid('.php?p=%d'), $nbr_shout, 'p', 10, 3)
+		'PAGINATION' => $Pagination->display('shoutbox' . url('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));
 	
 	//Création du tableau des rangs.
@@ -245,20 +245,20 @@ else //Affichage.
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.
 		{
-			$warning = '&nbsp;<a href="../member/moderation_panel' . transid('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-			$readonly = '<a href="../member/moderation_panel' . transid('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 		}
 		
 		//Edition/suppression.
 		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 		{
-			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . transid('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
 		if( !$is_guest ) 
-			$shout_pseudo = '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
+			$shout_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		else
 			$shout_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
 		
@@ -359,7 +359,7 @@ else //Affichage.
 			'PUNISHMENT' => $readonly,			
 			'DEL' => $del_message,
 			'EDIT' => $edit_message,
-			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
+			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 		));
 		$j++;

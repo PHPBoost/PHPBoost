@@ -57,9 +57,9 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 		$check_user = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
-			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
+			redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif( $check_mail >= 1 ) 
-			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
+			redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
 		else
 		{
 			//Vérification des password.
@@ -77,10 +77,10 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 						$Sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                     }
 					else //Longueur minimale du password
-						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
+						redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
 				else
-					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
+					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
 			$user_level = retrieve(POST, 'level', -1);  
@@ -144,13 +144,13 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
-						redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
+						redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
 						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
-							redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+							redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -171,7 +171,7 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				$path = strprotect($_POST['avatar']);
 				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-					redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -281,11 +281,11 @@ if( !empty($_POST['valid']) && !empty($id_post) )
 				redirect(HOST . SCRIPT);	
 			}
 			else
-				redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 		}
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+		redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 }
 elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 {
@@ -302,9 +302,9 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if( $check_user >= 1 ) 
-			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=pseudo_auth&add=1') . '#errorh');
+			redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif( $check_mail >= 1 ) 
-			redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=auth_mail&add=1') . '#errorh');
+			redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
 		else
 		{
 			if( strlen($password) >= 6 && strlen($password_bis) >= 6 )
@@ -321,14 +321,14 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 					redirect(HOST . SCRIPT); 	
 				}
 				else
-					redirect(HOST . DIR . '/member/member' . transid('.php?error=incomplete&add=1') . '#errorh');
+					redirect(HOST . DIR . '/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
 			}
 			else //Longueur minimale du password
-				redirect(HOST . DIR . '/admin/admin_members' . transid('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
+				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
 		}
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_members' . transid('.php?error=invalid_mail&add=1') . '#errorh');
+		redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
 }
 elseif( !empty($id) && $delete ) //Suppression du membre.
 {

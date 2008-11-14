@@ -202,7 +202,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 				$Template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
 					'LOGIN' => $login,
-					'U_USER_ID' => transid('.php?id=' . $user_id, '-' . $user_id . '.php')
+					'U_USER_ID' => url('.php?id=' . $user_id, '-' . $user_id . '.php')
 				));
 			}
 		}
@@ -298,7 +298,7 @@ else //Liste des groupes.
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$Template->assign_block_vars('group', array(
-			'LINK' => transid('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
+			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
 			'IMAGE' => !empty($row['img']) ? '<img src="../images/group/' . $row['img'] . '" alt="" />' : ''

@@ -182,7 +182,7 @@ class DownloadInterface extends ModuleInterface
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
         $Tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
-            'U_LINK' => transid(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
+            'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
             'U_IMG' => $result['image'],
             'E_TITLE' => strprotect($result['title']),
             'TITLE' => $result['title'],
@@ -240,7 +240,7 @@ class DownloadInterface extends ModuleInterface
             $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
             
             // Rewriting
-            $link = HOST . DIR . '/download/download' . transid('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
+            $link = HOST . DIR . '/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
             // XML text's protection
             $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
             

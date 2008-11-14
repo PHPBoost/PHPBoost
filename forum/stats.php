@@ -98,7 +98,7 @@ ORDER BY t.last_timestamp DESC
 while($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('last_msg', array(
-		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
+		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }
@@ -114,7 +114,7 @@ ORDER BY t.nbr_views DESC
 while($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('popular', array(
-		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
+		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }
@@ -130,7 +130,7 @@ ORDER BY t.nbr_msg DESC
 while($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('answers', array(
-		'U_TOPIC_ID' => transid('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
+		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
 		'TITLE' => $row['title']
 	));
 }	
@@ -165,7 +165,7 @@ while( $row = $Sql->fetch_assoc($result) )
 		break;
 	} 
 	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
+	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 }
 $Sql->query_close($result);
 

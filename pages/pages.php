@@ -52,18 +52,18 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	
 	//Définition du fil d'Ariane de la page
 	if( $page_infos['is_cat'] == 0 )
-		$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $encoded_title, $encoded_title));
+		$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $encoded_title, $encoded_title));
 	
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
 		if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
 	$Bread_crumb->reverse();
 }
@@ -77,16 +77,16 @@ elseif( $id_com > 0 )
 	$page_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
-	$Bread_crumb->add($LANG['pages_com'], transid('pages.php?id=' . $id_com . '&amp;com=0'));
-	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+	$Bread_crumb->add($LANG['pages_com'], url('pages.php?id=' . $id_com . '&amp;com=0'));
+	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
-		$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
 else
@@ -94,9 +94,9 @@ else
 	define('TITLE', $LANG['pages']);
 	$auth_index = $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
 	if( $auth_index )
-		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	elseif( !$auth_index && empty($error) )
-		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 require_once('../kernel/header.php');
 
@@ -112,21 +112,21 @@ if( !empty($encoded_title) && $num_rows == 1 )
 
 	//Vérification de l'autorisation de voir la page
 	if( ($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
-		redirect(HOST . DIR . transid('/pages/pages.php?error=e_auth'));
+		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
 	if( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
 	{
-		$links[$LANG['pages_edit']] = array(transid('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
-		$links[$LANG['pages_rename']] = array(transid('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(transid('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(transid('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
-		$links[$LANG['pages_redirections']] = array(transid('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
-		$links[$LANG['pages_create']] = array(transid('post.php'), $pages_data_path . '/images/create_page.png');
-		$links[$LANG['printable_version']] = array(transid('print.php?title=' . $encoded_title), '../templates/' . $CONFIG['theme'] . '/images/print_mini.png');
+		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
+		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
+		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
+		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
+		$links[$LANG['pages_create']] = array(url('post.php'), $pages_data_path . '/images/create_page.png');
+		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . $CONFIG['theme'] . '/images/print_mini.png');
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
-		$links[$LANG['pages_explorer']] = array(transid('explorer.php'), $pages_data_path . '/images/explorer.png');
+		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $pages_data_path . '/images/explorer.png');
 		
 	$nbr_values = count($links);
 	$i = 1;
@@ -162,7 +162,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	{	
 		$Template->assign_vars(array(
 			'C_ACTIV_COM' => true,
-			'U_COM' => transid('pages.php?id=' . $page_infos['id'] . '&amp;com=0'),
+			'U_COM' => url('pages.php?id=' . $page_infos['id'] . '&amp;com=0'),
 			'L_COM' => $page_infos['nbr_com'] > 0 ? sprintf($LANG['pages_display_coms'], $page_infos['nbr_com']) : $LANG['pages_post_com']
 		));
 	}
@@ -183,7 +183,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 }
 //Page non trouvée
 elseif( (!empty($encoded_title) || $id_com > 0) && $num_rows == 0 )
-	redirect(HOST . DIR . transid('/pages/pages.php?error=e_page_not_found'));
+	redirect(HOST . DIR . url('/pages/pages.php?error=e_page_not_found'));
 //Commentaires
 elseif( $id_com > 0 )
 {
@@ -201,7 +201,7 @@ elseif( $id_com > 0 )
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	
 	$Template->assign_vars(array(
-		'COMMENTS' => display_comments('pages', $id_com, transid('pages.php?id=' . $id_com . '&amp;com=%s', ''))
+		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s', ''))
 	));
 	
 	$Template->pparse('com');
@@ -236,7 +236,7 @@ elseif( !empty($error) )
 			$Errorh->handler($LANG['pages_delete_failure'], E_USER_NOTICE);
 			break;
 		default :
-			redirect(HOST . DIR . transid('/pages/pages.php'));
+			redirect(HOST . DIR . url('/pages/pages.php'));
 	}
 	$Template->pparse('error');
 }
@@ -257,12 +257,12 @@ else
 	));
 	
 	$tools = array(
-		$LANG['pages_create'] => transid('post.php'),
-		$LANG['pages_redirections'] => transid('action.php'),
-		$LANG['pages_explorer'] => transid('explorer.php'),
+		$LANG['pages_create'] => url('post.php'),
+		$LANG['pages_redirections'] => url('action.php'),
+		$LANG['pages_explorer'] => url('explorer.php'),
 	);
 	if( $User->check_level(ADMIN_LEVEL) )
-		$tools[$LANG['pages_config']] = transid('admin_pages.php');
+		$tools[$LANG['pages_config']] = url('admin_pages.php');
 	
 	foreach($tools as $tool => $url )
 		$Template->assign_block_vars('tools', array(
@@ -298,7 +298,7 @@ else
 		//Vérification de l'autorisation d'éditer la page
 		if( ($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 		{
-			$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+			$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
 	}
 	$Sql->query_close($result);
