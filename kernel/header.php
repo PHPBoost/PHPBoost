@@ -51,7 +51,7 @@ if( $CONFIG['maintain'] > time() )
 		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
 		$array_delay = array(0 => $LANG['unspecified'], 1 => '', 2 => '1 ' . $LANG['minute'], 3 => '5 ' . $LANG['minutes'], 4 => '15 ' . $LANG['minutes'], 5 => '30 ' . $LANG['minutes'], 6 => '1 ' . $LANG['hour'], 7 => '2 ' . $LANG['hours'], 8 => '1 ' . $LANG['day'], 9 => '2 ' . $LANG['days'], 10 => '1 ' . $LANG['week']);
 
-		//Retourne le délai de maintenance le plus proche. 
+		//Retourne le délai de maintenance le plus proche.
 		if( $CONFIG['maintain'] != -1 )
 		{
 			$key = 0;
@@ -130,7 +130,7 @@ $Template->assign_vars(array(
 	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_MEMBER_CONNECTED' => $member_connected,
 	'C_MEMBER_NOTCONNECTED' => !$member_connected,
-	'L_XML_LANGUAGE' => $LANG['xml_lang'],	
+	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
 	'PATH_TO_ROOT' => PATH_TO_ROOT,
@@ -139,18 +139,18 @@ $Template->assign_vars(array(
 ));
 
 //Inclusion des blocs
-if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
+if( @!include_once(PATH_TO_ROOT . '/cache/menus.php') )
 {
 	//En cas d'échec, on régénère le cache
-	$Cache->Generate_file('modules_mini');
+	$Cache->Generate_file('menus');
 
 	//On inclut une nouvelle fois
-	if( @!include_once(PATH_TO_ROOT . '/cache/modules_mini.php') )
+	if( @!include_once(PATH_TO_ROOT . '/cache/menus.php') )
 	$Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
-	'MODULES_MINI_HEADER_CONTENT' => $MODULES_MINI['header'],
-	'MODULES_MINI_SUB_HEADER_CONTENT' => $MODULES_MINI['subheader']
+	'MENUS_HEADER_CONTENT' => $MENUS['header'],
+	'MENUS_SUB_HEADER_CONTENT' => $MENUS['subheader']
 ));
 
 //Si le compteur de visites est activé, on affiche le tout.
@@ -181,14 +181,14 @@ if( $left_column ) //Gestion des blocs de gauche.
 {
 	$Template->assign_vars(array(
 		'C_START_LEFT' => true,
-		'MODULES_MINI_LEFT_CONTENT' => $MODULES_MINI['left'] . (!$right_column ? $MODULES_MINI['right'] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
+		'MENUS_LEFT_CONTENT' => $MENUS['left'] . (!$right_column ? $MENUS['right'] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	));
 }
 if( $right_column )  //Gestion des blocs de droite.
 {
 	$Template->assign_vars(array(
 		'C_START_RIGHT' => true,
-		'MODULES_MINI_RIGHT_CONTENT' => $MODULES_MINI['right'] . (!$right_column ? $MODULES_MINI['left'] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
+		'MENUS_RIGHT_CONTENT' => $MENUS['right'] . (!$right_column ? $MENUS['left'] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	));
 }
 
@@ -196,7 +196,7 @@ if( $right_column )  //Gestion des blocs de droite.
 $Bread_crumb->display();
 
 $Template->assign_vars(array(
-	'MODULES_MINI_TOPCENTRAL_CONTENT' => $MODULES_MINI['topcentral']
+	'MENUS_TOPCENTRAL_CONTENT' => $MENUS['topcentral']
 ));
 
 $Template->pparse('header');

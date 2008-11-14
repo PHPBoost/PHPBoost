@@ -110,7 +110,7 @@ release({L_RELEASE_FORMAT});
 		<div id="sub_header_left">
 			<a href="{PATH_TO_ROOT}/news/news.php" title="Accueil du site" class="button">Accueil</a><a href="{PATH_TO_ROOT}/forum/index.php" title="Forum" class="button">Forum</a><a href="{PATH_TO_ROOT}/articles/articles.php" title="Articles" class="button">Articles</a><a href="{PATH_TO_ROOT}/gallery/gallery.php" title="Galerie" class="button">Galerie</a><a href="{PATH_TO_ROOT}/download/download.php" title="Téléchargements" class="button" style="border-right:none;">Téléchargements</a>
 		</div>
-		{MODULES_MINI_SUB_HEADER_CONTENT}
+		{MENUS_SUB_HEADER_CONTENT}
 	</div>
 
 	# IF C_COMPTEUR #
@@ -123,7 +123,7 @@ release({L_RELEASE_FORMAT});
 	
 	# IF C_START_LEFT #
 	<div id="left_menu">
-		{MODULES_MINI_LEFT_CONTENT}
+		{MENUS_LEFT_CONTENT}
 	</div>
 	# ENDIF #
 	
@@ -155,7 +155,7 @@ release({L_RELEASE_FORMAT});
 	        </form>
 		</div>
 		
-		{MODULES_MINI_RIGHT_CONTENT}
+		{MENUS_RIGHT_CONTENT}
 	</div>
 	# ENDIF #
 	
@@ -167,5 +167,5 @@ release({L_RELEASE_FORMAT});
 			# END link_bread_crumb #
 		</div>	
 		<div id="top_contents">
-			{MODULES_MINI_TOPCENTRAL_CONTENT}
+			{MENUS_TOPCENTRAL_CONTENT}
 		</div>

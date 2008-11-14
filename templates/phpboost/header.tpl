@@ -86,7 +86,7 @@ release({L_RELEASE_FORMAT});
 <div id="global">
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-		{MODULES_MINI_HEADER_CONTENT}
+		{MENUS_HEADER_CONTENT}
 		<div class="dynamic_menu" style="padding-left:190px;top:113px">
 			<ul>
 				<li onmouseover="show_menu('l0', 0);" onmouseout="hide_menu(0);">
@@ -134,7 +134,7 @@ release({L_RELEASE_FORMAT});
 		</div>
 	</div>
 	<div id="sub_header">
-		{MODULES_MINI_SUB_HEADER_CONTENT}
+		{MENUS_SUB_HEADER_CONTENT}
 	</div>
 	<div id="links_vertical">
 		<div id="links_vertical_top">
@@ -176,13 +176,13 @@ release({L_RELEASE_FORMAT});
 		<p class="text_center">
 			<a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png')" /></a>
 		</p>
-		{MODULES_MINI_LEFT_CONTENT}
+		{MENUS_LEFT_CONTENT}
 	</div>
 	# ENDIF #
 	
 	# IF C_START_RIGHT #
 	<div id="right_menu">
-		{MODULES_MINI_RIGHT_CONTENT}
+		{MENUS_RIGHT_CONTENT}
 	</div>
 	# ENDIF #
 	
@@ -194,6 +194,6 @@ release({L_RELEASE_FORMAT});
 			# END link_bread_crumb #
 		</div>	
 		<div id="top_contents">
-			{MODULES_MINI_TOPCENTRAL_CONTENT}
+			{MENUS_TOPCENTRAL_CONTENT}
 		</div>
         <div id="main_content">&nbsp;

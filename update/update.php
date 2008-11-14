@@ -155,7 +155,7 @@ elseif( $step == 2 )
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageconfig`", __LINE__, __FILE__); 	
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondageip`", __LINE__, __FILE__); 
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "sondagereponses`", __LINE__, __FILE__);
-		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "modules_mini'`", __LINE__, __FILE__);
+		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "menus'`", __LINE__, __FILE__);
 				
 		###########################Création de table.###########################
 		$Sql->query_inject("CREATE TABLE `" . PREFIX . "configs` (
@@ -256,7 +256,7 @@ elseif( $step == 2 )
 		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules` VALUES (17, 'wiki', '2.0', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1)", __LINE__, __FILE__);
 		
 		//Modules mini
-		$Sql->query_inject("CREATE TABLE `" . PREFIX . "modules_mini` (
+		$Sql->query_inject("CREATE TABLE `" . PREFIX . "menus` (
 			`id` int(11) NOT NULL auto_increment,
 			`class` int(11) NOT NULL default '0',
 			`name` varchar(150) NOT NULL default '',
@@ -268,14 +268,14 @@ elseif( $step == 2 )
 			`added` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (5, 2, 'online', 'include_once(''../online/online_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (6, 3, 'poll', 'include_once(''../poll/poll_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (7, 4, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "modules_mini` VALUES (8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (5, 2, 'online', 'include_once(''../online/online_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (6, 3, 'poll', 'include_once(''../poll/poll_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (7, 4, 'shoutbox', 'include_once(''../shoutbox/shoutbox_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (8, 4, 'stats', 'include_once(''../stats/stats_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 	
 		$Sql->query_inject("CREATE TABLE `" . PREFIX . "pm_msg` (
 			`id` int(11) NOT NULL auto_increment,

@@ -170,8 +170,8 @@ CREATE TABLE `phpboost_modules` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `phpboost_modules_mini`;
-CREATE TABLE `phpboost_modules_mini` (
+DROP TABLE IF EXISTS `phpboost_menus`;
+CREATE TABLE `phpboost_menus` (
   `id` int(11) NOT NULL auto_increment,
   `class` int(11) NOT NULL default '0',
   `name` varchar(150) NOT NULL default '',
@@ -181,21 +181,9 @@ CREATE TABLE `phpboost_modules_mini` (
   `activ` tinyint(1) NOT NULL default '0',
   `added` tinyint(1) NOT NULL default '0',
   `use_tpl` tinyint(1) NOT NULL default '0',
+  `type` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `phpboost_links_menu`;
-CREATE TABLE IF NOT EXISTS `phpboost_links_menu` (
-  `id` int(11) NOT NULL auto_increment,
-  `parent` int(11) NOT NULL,
-  `ltype` tinyint(2) NOT NULL,
-  `title` varchar(128) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `img` varchar(255) NOT NULL,
-  `auth` text NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `parent` (`parent`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (
