@@ -26,13 +26,7 @@
  ###################################################*/
 
 import('util/menu/menu');
-
-define('I_MENU_LINK', 0);
-define('I_TREE_MENU', 1);
-define('I_VERTICAL_MENU', 2);
-define('I_HORIZONTAL_MENU', 3);
-define('I_VERTICAL_SCROLLING_MENU', 4);
-define('I_HORIZONTAL_SCROLLING_MENU', 5);
+import('core/menu_manager');
 
 class MenuService
 {
@@ -95,40 +89,24 @@ class MenuService
     }
 
     //Creation or update of a contribution (in database)
-    /*static*/ function save(&$menu, $id_parent = 0)
+    /*static*/ function save(&$menu)
     {
         global $Sql;
         $query = '';
-        $id_menu = 0;
-        if( $menu->get_id() == 0 )
+        $id_menu = $menu->get_id();
+        if( $id_menu == 0 )
         {   // We have to insert the element in the database
-            $query = "INSERT INTO " . PREFIX . "links_menu (parent, ltype, title, url, img, auth)
-            VALUES ('" . $id_parent . "', '" . MenuService::_get_itype($menu) . "', '" . addslashes($menu->get_title()) . "',
-            '" . addslashes($menu->get_url(false)) . "', '" . addslashes($menu->get_image(false)) . "', '" . serialize($menu->get_auth()) . "');";
-            
-            $Sql->query_inject($query, __LINE__, __FILE__);
-            $id_menu = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "links_menu");
+            $query = "INSERT INTO " . PREFIX . "menus (name, contents, type)
+            VALUES ('" . addslashes($menu->get_title()) . "', '" . serialize($menu) . "',  '" . MENU_LINKS . "');";
         }
         else
         {   // We only have to update the element
-            $id_menu = $menu->get_id();
             $query = "UPDATE " . PREFIX . "links_menu SET
-                parent='" . $id_parent . "',
-                ltype='" . MenuService::_get_itype($menu) . "',
-                title='" . addslashes($menu->get_title()) . "',
-                url='" . addslashes($menu->get_url(false)) . "',
-                img='" . addslashes($menu->get_image(false)) . "',
-                auth='" . serialize($menu->get_auth()) . "'
+                name='" . addslashes($menu->get_title()) . "',
+                contents='" . serialize($menu) . "'
             WHERE id='" . $id_menu . "';";
-            
-            $Sql->query_inject($query, __LINE__, __FILE__);
         }
-    
-        if( of_class($menu, MENU__CLASS) )
-        {   // Saving Children
-            foreach( $menu->get_children() as $child )
-                MenuService::save($child, $id_menu);
-        }
+        $Sql->query_inject($query, __LINE__, __FILE__);
     }
 
     //Deleting a contribution in the database

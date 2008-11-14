@@ -93,7 +93,7 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-		{MODULES_MINI_HEADER_CONTENT}
+		{MENUS_HEADER_CONTENT}
 		<div class="dynamic_menu" style="padding-left:175px;top:124px">
 			<ul>
 				<li>
@@ -134,7 +134,7 @@ release({L_RELEASE_FORMAT});
 		</div>
 	</div>
 	<div id="sub_header">
-		{MODULES_MINI_SUB_HEADER_CONTENT}
+		{MENUS_SUB_HEADER_CONTENT}
 	</div>
 	    	<div style="clear:both;">
 	<div id="links_vertical">
@@ -164,13 +164,13 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# IF C_START_LEFT #
 	<div id="left_menu">	
-		{MODULES_MINI_LEFT_CONTENT}
+		{MENUS_LEFT_CONTENT}
 	</div>
 	# ENDIF #
 	
 	# IF C_START_RIGHT #
 	<div id="right_menu">
-		{MODULES_MINI_RIGHT_CONTENT}
+		{MENUS_RIGHT_CONTENT}
 	</div>
 	# ENDIF #
 	<div id="main">
@@ -182,5 +182,5 @@ release({L_RELEASE_FORMAT});
 			# END link_bread_crumb #
 		</div>	
 		<div id="top_contents">
-			{MODULES_MINI_TOPCENTRAL_CONTENT}
+			{MENUS_TOPCENTRAL_CONTENT}
 		</div>

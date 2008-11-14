@@ -1,14 +1,14 @@
 		</div>
         <div id="bottom_contents">
-			{MODULES_MINI_BOTTOMCENTRAL_CONTENT}
+			{MENUS_BOTTOMCENTRAL_CONTENT}
 		</div>
 	</div>
 	<div id="top_footer">
-		{MODULES_MINI_TOP_FOOTER_CONTENT}
+		{MENUS_TOP_FOOTER_CONTENT}
 		<div class="spacer"></div>
 	</div>
 	<div id="footer">
-		{MODULES_MINI_FOOTER_CONTENT}
+		{MENUS_FOOTER_CONTENT}
 		<span>
 			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com/news/news.php" title="PHPBoost">PHPBoost 2.1</a> {L_PHPBOOST_RIGHT}
 		</span>	

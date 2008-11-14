@@ -165,6 +165,13 @@ class Feed
             import('modules/modules_discovery_service');
             $modules = new ModulesDiscoveryService();
             $module = $modules->get_module($module_id);
+            
+            if ( $module->got_error() || !$module->has_functionnality('get_feed_data_struct') )
+            {   // If the module is not installed or doesn't have the get_feed_data_struct
+                // functionnality we break
+                return '';
+            }
+            
             $data = $module->functionnality('get_feed_data_struct', $idcat);
             if( !$module->got_error() )
             {

@@ -6,14 +6,14 @@
  *   copyright            : (C) 2006 Benoît Sautel / Régis Viarre
  *   email                : ben.popeye@phpboost / crowkait@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -57,7 +57,7 @@ class Cache
 			{
 				//Régénération du fichier
 				$this->generate_file($file);
-				//On inclue une nouvelle fois				
+				//On inclue une nouvelle fois
 				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
 					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
@@ -173,7 +173,7 @@ class Cache
 		FROM ".PREFIX."modules
 		ORDER BY name", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
-		{	
+		{
 			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
 				. "'name' => " . var_export($row['name'], true) . ',' . "\n"
 				. "'activ' => " . var_export($row['activ'], true) . ',' . "\n"
@@ -186,20 +186,20 @@ class Cache
 	}
 	
 	//Placements et autorisations des modules minis.
-	function _get_modules_mini()
+	function _get_menus()
 	{
 		global $Sql;
 		
 		import('core/menu_manager');
 		
-		$modules_mini = array();
+		$MENUS = array();
 		$result = $Sql->query_while("SELECT name, contents, location, auth, added, use_tpl
-		FROM ".PREFIX."modules_mini 
+		FROM ".PREFIX."menus
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$modules_mini[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
+			$MENUS[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
 		$Sql->query_close($result);
 
@@ -207,23 +207,23 @@ class Cache
 		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
 		foreach($array_seek as $location)
 		{
-			$code .= '$MODULES_MINI[\'' . $location . '\'] = \'\';' . "\n";
-			if( isset($modules_mini[$location]) )
+			$code .= '$MENUS[\'' . $location . '\'] = \'\';' . "\n";
+			if( isset($MENUS[$location]) )
 			{
-				foreach($modules_mini[$location] as $location_key => $info)
+				foreach($MENUS[$location] as $location_key => $info)
 				{
 					if( $info['added'] == '0' ) //Modules mini.
-					{	
+					{
 						$Menu = new MenuManager(MENU_MODULE);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
 					elseif( $info['added'] == '3' ) //Menu de liens.
-					{	
+					{
 						$Menu = new MenuManager(MENU_LINKS);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
 					elseif( $info['added'] == '2' ) //Menus personnels.
-					{	
+					{
 						$Menu = new MenuManager(MENU_PERSONNAL);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
@@ -273,13 +273,13 @@ class Cache
 				if( !empty($get_info_modules['url_rewrite']) )
 					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
 			}
-			$htaccess_rules .= 
-			'# Core #' . 
-			"\n" . 'RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]' . 
-			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]';	
+			$htaccess_rules .=
+			'# Core #' .
+			"\n" . 'RewriteRule ^(.*)member/member-([0-9]+)-?([0-9]*)\.php$ ' . DIR . '/member/member.php?id=$2&p=$3 [L,QSA]' .
+			"\n" . 'RewriteRule ^(.*)member/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})\.php$ ' . DIR . '/member/pm.php?pm=$2&id=$3&p=$4&quote=$5 [L,QSA]';
 			
 			//Page d'erreur.
-			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';						
+			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
 
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
 			global $CONFIG_UPLOADS;
@@ -290,7 +290,7 @@ class Cache
 			}
 		}
 		else
-			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';	
+			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
 		
 		if( !empty($CONFIG['htaccess_manual_content']) )
 			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
@@ -314,7 +314,7 @@ class Cache
 		//Listing des modules disponibles:
 		$modules_config = array();
 		foreach($MODULES as $name => $array)
-		{	
+		{
 			if( $array['activ'] == '1' ) //module activé.
 			{
 				if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $name . '/' . $name . '_mini.css') )
@@ -334,13 +334,13 @@ class Cache
 		
 		$code = 'global $THEME_CONFIG;' . "\n";
 		$result = $Sql->query_while("SELECT theme, left_column, right_column
-		FROM ".PREFIX."themes	
+		FROM ".PREFIX."themes
 		WHERE activ = 1", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
-		}			
+		}
 		$Sql->query_close($result);
         
 		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;';
@@ -359,12 +359,12 @@ class Cache
 		
 		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
 		$result = $Sql->query_while("SELECT id, name, img, auth
-		FROM ".PREFIX."group	
+		FROM ".PREFIX."group
 		ORDER BY id", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
-		}			
+		}
 		$Sql->query_close($result);
 		$code .= ');';
 		
@@ -398,19 +398,19 @@ class Cache
 	{
 		global $Sql;
 		
-		$stock_array_ranks = '$_array_rank = array(';	
+		$stock_array_ranks = '$_array_rank = array(';
 		$result = $Sql->query_while("SELECT name, msg, icon
-		FROM ".PREFIX."ranks 
+		FROM ".PREFIX."ranks
 		ORDER BY msg DESC", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
-		}	
+		}
 		$Sql->query_close($result);
 		
 		$stock_array_ranks = trim($stock_array_ranks, ',');
-		$stock_array_ranks .= ');';	
-		return	'global $_array_rank;' . "\n" . $stock_array_ranks;	
+		$stock_array_ranks .= ');';
+		return	'global $_array_rank;' . "\n" . $stock_array_ranks;
 	}
 	
 	//Uploads des membres.
@@ -424,11 +424,11 @@ class Cache
 		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
 		foreach($CONFIG_UPLOADS as $key => $value)
-		{	
+		{
 			if( $key == 'auth_files' )
 				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
 			else
-				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";		
+				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		}
 		return $config_uploads;
 	}
@@ -456,7 +456,7 @@ class Cache
 		
 		$i = 0;
 		$stock_smiley_code = '$_array_smiley_code = array(';
-		$result = $Sql->query_while("SELECT code_smiley, url_smiley 
+		$result = $Sql->query_while("SELECT code_smiley, url_smiley
 		FROM ".PREFIX."smileys", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
@@ -492,7 +492,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'modules_mini', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'menus', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

@@ -107,8 +107,8 @@ class PackagesManager
 				if( file_exists($module_mini_path) )
 				{
 					$location = addslashes($location);
-					$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-					$Sql->query_inject("INSERT INTO ".PREFIX."modules_mini (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_identifier . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
+					$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
+					$Sql->query_inject("INSERT INTO ".PREFIX."menus (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_identifier . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ class PackagesManager
 		if( $generate_cache )
 		{
 			$Cache->Generate_file('modules');
-			$Cache->Generate_file('modules_mini');
+			$Cache->Generate_file('menus');
 			$Cache->Generate_file('css');
 		
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
@@ -159,7 +159,7 @@ class PackagesManager
 				$Sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$Sql->query_inject("DELETE FROM ".PREFIX."modules_mini WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM ".PREFIX."menus WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = $CONFIG['lang'];
@@ -185,7 +185,7 @@ class PackagesManager
 				@include_once('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
 				
 			$Cache->Generate_file('modules');
-			$Cache->Generate_file('modules_mini');
+			$Cache->Generate_file('menus');
 			$Cache->Generate_file('css');
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte

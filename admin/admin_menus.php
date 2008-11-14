@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,99 +39,99 @@ $move = retrieve(GET, 'move', '');
 
 //Si c'est confirmé on execute
 if( !empty($_POST['valid']) )
-{	
+{
 	$result = $Sql->query_while("SELECT id, activ, auth
-	FROM ".PREFIX."modules_mini", __LINE__, __FILE__);
+	FROM ".PREFIX."menus", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$activ = retrieve(POST, $row['id'] . 'activ', 0);  
-		$auth = retrieve(POST, $row['id'] . 'auth', -1); 
+		$activ = retrieve(POST, $row['id'] . 'activ', 0);
+		$auth = retrieve(POST, $row['id'] . 'auth', -1);
 		
-		$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET activ = '" . $activ . "', auth = '" . $auth . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."menus SET activ = '" . $activ . "', auth = '" . $auth . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 	
-	$Cache->Generate_file('modules_mini');
+	$Cache->Generate_file('menus');
 	$Cache->Generate_file('css');
 	
-	redirect(HOST . SCRIPT);	
+	redirect(HOST . SCRIPT);
 }
 elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un module donné.
 {
-	$previous_location = $Sql->query("SELECT location FROM ".PREFIX."modules_mini WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" . $previous_location . "' AND activ = 1", __LINE__, __FILE__);
-	$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$previous_location = $Sql->query("SELECT location FROM ".PREFIX."menus WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" . $previous_location . "' AND activ = 1", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = '" . ($max_class + 1) . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$Cache->Generate_file('modules_mini');		
-	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
+	$Cache->Generate_file('menus');
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
 elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pour un module donné.
 {
-	$info_menu = $Sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = 0, activ = 0 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = 0, activ = 0 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Réordonnement du classement.
-	$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "'", __LINE__, __FILE__);
 
-	$Cache->Generate_file('modules_mini');		
-	$Cache->Generate_file('css');		
-	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
+	$Cache->Generate_file('menus');
+	$Cache->Generate_file('css');
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
 elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module donné.
 {
-	$info_menu = $Sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."modules_mini WHERE location = '" . $move . "' AND activ = 1", __LINE__, __FILE__);
+	$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" . $move . "' AND activ = 1", __LINE__, __FILE__);
 	
-	$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "' AND activ = 1", __LINE__, __FILE__);	
-	$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = '" . ($max_class + 1) . "', location = '" . $move . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE class > '" . $info_menu['class'] . "' AND location = '" . $info_menu['location'] . "' AND activ = 1", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = '" . ($max_class + 1) . "', location = '" . $move . "', activ = 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$Cache->Generate_file('modules_mini');		
+	$Cache->Generate_file('menus');
 	$Cache->Generate_file('css');
 	
-	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);	
+	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
 elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
 {
 	if( $top )
-	{	
-		$info_menu = $Sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$top = $Sql->query("SELECT id FROM ".PREFIX."modules_mini WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] - 1) . "' AND activ = 1", __LINE__, __FILE__);
+	{
+		$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$top = $Sql->query("SELECT id FROM ".PREFIX."menus WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] - 1) . "' AND activ = 1", __LINE__, __FILE__);
 		if( !empty($top) )
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class + 1 WHERE id = '" . $top . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class + 1 WHERE id = '" . $top . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		}
-		$Cache->Generate_file('modules_mini');
+		$Cache->Generate_file('menus');
 		
 		redirect(HOST . SCRIPT . '#m' . $id);
 	}
 	elseif( $bottom )
 	{
-		$info_menu = $Sql->query_array("modules_mini", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$bottom = $Sql->query("SELECT id FROM ".PREFIX."modules_mini WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] + 1) . "' AND activ = 1", __LINE__, __FILE__);
+		$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$bottom = $Sql->query("SELECT id FROM ".PREFIX."menus WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] + 1) . "' AND activ = 1", __LINE__, __FILE__);
 		if( !empty($bottom) )
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class - 1 WHERE id = '" . $bottom . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."modules_mini SET class = class + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE id = '" . $bottom . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		}
 		
-		$Cache->Generate_file('modules_mini');
+		$Cache->Generate_file('menus');
 		
 		redirect(HOST . SCRIPT . '#m' . $id);
 	}
 }
-else	
-{		
+else
+{
 	$Template->set_filenames(array(
 		'admin_menus_management'=> 'admin/admin_menus_management.tpl'
 	));
 	
-	$Cache->load('themes'); //Récupération de la configuration des thèmes.	
+	$Cache->load('themes'); //Récupération de la configuration des thèmes.
 
 	//Récupération du class le plus grand pour chaque positionnement possible.
 	$array_max = array();
 	$result = $Sql->query_while("SELECT MAX(class) AS max, location
-	FROM ".PREFIX."modules_mini
+	FROM ".PREFIX."menus
 	GROUP BY location
 	ORDER BY class", __LINE__, __FILE__);
 	
@@ -147,7 +147,7 @@ else
 	$uninstalled_menus = array();
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$result = $Sql->query_while("SELECT id, class, name, contents, location, activ, auth, added
-	FROM ".PREFIX."modules_mini
+	FROM ".PREFIX."menus
 	ORDER BY class", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
@@ -157,14 +157,14 @@ else
 		if( $row['added'] == 0 ) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
 		{
 			$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
-			if( is_array($config) )
-			{	
+			if( is_array($config) && !empty($config) )
+			{
 				unset($uncheck_modules[$row['name']]); //Module vérifié!
 				$array_menus = parse_ini_array($config['mini_module']);
 				foreach($array_menus as $module_path => $location)
 				{
 					if( strpos($row['contents'], $module_path) !== false ) //Module trouvé.
-					{	
+					{
 						$installed_menus[$row['name']][$module_path] = $location;
 						if( isset($uninstalled_menus[$row['name']][$module_path]) )
 							unset($uninstalled_menus[$row['name']][$module_path]);
@@ -174,15 +174,15 @@ else
 						$uninstalled_menus[$row['name']][$module_path] = $location;
 						if( isset($installed_menus[$row['name']][$module_path]) )
 							unset($installed_menus[$row['name']][$module_path]);
-					}	
-				}				
+					}
+				}
 					
-				$row['name'] = !empty($config['name']) ? $config['name'] : $row['name'];		
+				$row['name'] = !empty($config['name']) ? $config['name'] : $row['name'];
 			}
 		}
 		
-		$block_position = $row['location'];		
-		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) ) 
+		$block_position = $row['location'];
+		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && !$THEME_CONFIG[$CONFIG['theme']]['left_column']) )
 			$block_position = 'main';
 		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[$CONFIG['theme']]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[$CONFIG['theme']]['left_column'] )
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
@@ -204,7 +204,7 @@ else
 				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
 				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value"
 			));
-		}	
+		}
 		else //Affichage des menus désactivés
 		{
 			$Template->assign_block_vars('mod_main', array(
@@ -225,12 +225,12 @@ else
 	{
 		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', $CONFIG['lang']);
 		if( !empty($modules_config[$name]['mini_module']) )
-		{	
+		{
 			$array_menus = parse_ini_array($modules_config[$name]['mini_module']);
 			foreach($array_menus as $module_path => $location)
 				$uninstalled_menus[$name][$module_path] = $location; //On ajoute le menu.
 		}
-	}	
+	}
 	//On liste les menus non installés.
 	foreach($uninstalled_menus as $name => $array_menu)
 	{
@@ -255,11 +255,11 @@ else
 		$file_array = array();
 		$dh = @opendir($rep);
 		while( !is_bool($file = readdir($dh)) )
-		{	
+		{
 			//Si c'est un repertoire, on affiche.
 			if( preg_match('`[a-z0-9()_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso) )
 				$file_array[] = $file; //On crée un array, avec les different dossiers.
-		}	
+		}
 		closedir($dh); //On ferme le dossier
 
 		foreach($file_array as $name)
