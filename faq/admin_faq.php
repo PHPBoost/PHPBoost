@@ -46,7 +46,7 @@ if( !empty($_POST['submit']) )
 	//Régénération du cache
 	$Cache->Generate_module_file('faq');
 	
-	redirect(transid('admin_faq.php', '', '&'));
+	redirect(url('admin_faq.php', '', '&'));
 }
 
 //Questions list
@@ -73,8 +73,8 @@ if( $page > 0 )
 			'QUESTION' => $row['question'],
 			'CATEGORY' => !empty($row['idcat']) ? $row['name'] : $LANG['root'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-			'U_QUESTION' => transid('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
-			'U_CATEGORY' => !empty($row['idcat']) ? transid('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php') : transid('faq.php')
+			'U_QUESTION' => url('faq.php?id=' . $row['idcat'] . '&amp;question=' . $row['id'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php?question=' . $row['id']) . '#q' . $row['id'],
+			'U_CATEGORY' => !empty($row['idcat']) ? url('faq.php?id=' . $row['idcat'], 'faq-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php') : url('faq.php')
 		));
 	}
 	

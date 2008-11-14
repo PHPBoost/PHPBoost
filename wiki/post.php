@@ -117,7 +117,7 @@ if( !empty($contents) ) //On enregistre un article
 			
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
-			redirect(transid('wiki.php?title=' . $redirect, $redirect, '', '&'));
+			redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
 		}
 		elseif( !empty($title) ) //On crée un article
 		{
@@ -160,7 +160,7 @@ if( !empty($contents) ) //On enregistre un article
                 Feed::clear_cache('wiki');
                 
 				$redirect = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
-				redirect(transid('wiki.php?title=' . $redirect, $redirect, '' , '&'));
+				redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
 	}
@@ -286,7 +286,7 @@ $Template->assign_vars(array(
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
-	'TARGET' => transid('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],

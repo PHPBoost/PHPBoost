@@ -888,7 +888,7 @@ else
 			'NAME' => $row['name'],
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
-			'U_ARTICLES_VARS' => transid('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
+			'U_ARTICLES_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
 		
 		$list_cats_js .= $row['id'] . ', ';

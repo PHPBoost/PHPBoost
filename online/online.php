@@ -39,7 +39,7 @@ include_once('../kernel/framework/util/pagination.class.php');
 $Pagination = new Pagination();
 	
 $Template->assign_vars(array(
-	'PAGINATION' => $Pagination->display('online' . transid('.php?p=%d'), $nbr_member, 'p', 25, 3),
+	'PAGINATION' => $Pagination->display('online' . url('.php?p=%d'), $nbr_member, 'p', 25, 3),
 	'L_LOGIN' => $LANG['pseudo'],
 	'L_LOCATION' => $LANG['location'],
 	'L_LAST_UPDATE' => $LANG['last_update'],

@@ -25,10 +25,10 @@
  *
  ###################################################*/
 
-import('util/menu/menu');
+import('util/menu/link_menu');
 import('core/menu_manager');
 
-class MenuService
+class LinkMenuService
 {
     //Method returning the contribution when we know its integer identifier
     /*static*/ function find_by_id($id_contrib)

@@ -29,8 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../pages/pages_begin.php'); 
 define('TITLE', $LANG['pages'] . ' : ' . $LANG['pages_explorer']);
 $cat = retrieve(GET, 'cat', 0);
-$Bread_crumb->add($LANG['pages'], transid('pages.php'));
-$Bread_crumb->add($LANG['pages_explorer'], transid('explorer.php'));
+$Bread_crumb->add($LANG['pages'], url('pages.php'));
+$Bread_crumb->add($LANG['pages_explorer'], url('explorer.php'));
 require_once('../kernel/header.php');
 
 $Template->set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
@@ -63,7 +63,7 @@ while( $row = $Sql->fetch_assoc($result) )
 	//Vérification de l'autorisation d'éditer la page
 	if( ($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
 	{
-		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
 }
 $Sql->query_close($result);

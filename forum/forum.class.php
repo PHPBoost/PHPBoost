@@ -66,8 +66,8 @@ class Forum
 			$previous_msg_id = $Sql->query("SELECT MAX(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idtopic . "' AND id < '" . $last_msg_id . "'", __LINE__, __FILE__);
 		
 			$title_subject = html_entity_decode($title);
-			$title_subject_pm = '[url=' . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . ']' . $title_subject . '[/url]';			
-			$title_subject_mail = "\n" . HOST . DIR . '/forum/topic' . transid('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;				
+			$title_subject_pm = '[url=' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . ']' . $title_subject . '[/url]';			
+			$title_subject_mail = "\n" . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;				
 			if( $User->get_attribute('user_id') > 0 )
 			{
 				$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__); 
@@ -144,7 +144,7 @@ class Forum
 					
 		//Insertion de l'action dans l'historique.
 		if( $User->get_attribute('user_id') != $user_id_msg && $history ) 
-			forum_history_collector(H_EDIT_MSG, $user_id_msg, 'topic' . transid('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg);
+			forum_history_collector(H_EDIT_MSG, $user_id_msg, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg);
 			
 		return $nbr_msg_before;
 	}
@@ -161,7 +161,7 @@ class Forum
 
 		//Insertion de l'action dans l'historique.
 		if( $User->get_attribute('user_id') != $user_id_msg ) 
-			forum_history_collector(H_EDIT_TOPIC, $user_id_msg, 'topic' . transid('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+			forum_history_collector(H_EDIT_TOPIC, $user_id_msg, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 	}
 		
 	//Supression d'un message.
@@ -209,7 +209,7 @@ class Forum
 				$msg_page = ceil($nbr_msg / $CONFIG_FORUM['pagination_msg']);
 				$msg_page_rewrite = ($msg_page > 1) ? '-' . $msg_page : '';
 				$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
-				forum_history_collector(H_DELETE_MSG, $msg_user_id, 'topic' . transid('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
+				forum_history_collector(H_DELETE_MSG, $msg_user_id, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id);
 			}
 			forum_generate_feeds(); //Regénération des flux flux
 			
@@ -249,7 +249,7 @@ class Forum
 		
 		//Insertion de l'action dans l'historique.
 		if( $topic['user_id'] != $User->get_attribute('user_id') ) 
-			forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . transid('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
+			forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 		
 		if( $generate_rss )
             forum_generate_feeds(); //Regénération des flux flux
@@ -332,7 +332,7 @@ class Forum
 		$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET status = 0 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 				
 		//Insertion de l'action dans l'historique.
-		forum_history_collector(H_LOCK_TOPIC, 0, 'topic' . transid('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		forum_history_collector(H_LOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 	}
 	
 	//Déverrouillage d'un sujet.
@@ -343,7 +343,7 @@ class Forum
 		$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET status = 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 				
 		//Insertion de l'action dans l'historique.
-		forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . transid('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 	}
 	
 	//Déplacement d'un sujet.
@@ -369,7 +369,7 @@ class Forum
 		$this->Update_last_topic_id($idcat_dest);
 				
 		//Insertion de l'action dans l'historique.
-		forum_history_collector(H_MOVE_TOPIC, $topic['user_id'], 'topic' . transid('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
+		forum_history_collector(H_MOVE_TOPIC, $topic['user_id'], 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 	}
 	
 	//Déplacement d'un sujet
@@ -416,7 +416,7 @@ class Forum
 		$Sql->query_inject("UPDATE ".PREFIX."forum_view SET last_view_id = '" . $previous_topic['id'] . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 				
 		//Insertion de l'action dans l'historique.
-		forum_history_collector(H_CUT_TOPIC, 0, 'topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
+		forum_history_collector(H_CUT_TOPIC, 0, 'topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
 		
 		return $last_topic_id;
 	}

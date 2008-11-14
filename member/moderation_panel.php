@@ -27,22 +27,22 @@
 
 require_once('../kernel/begin.php');
 
-$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
-$Bread_crumb->add($LANG['moderation_panel'], transid('moderation_panel.php'));
+$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+$Bread_crumb->add($LANG['moderation_panel'], url('moderation_panel.php'));
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNSECURE);
 $id_get = retrieve(GET, 'id', 0);
 switch($action)
 {
 	case 'ban':
-		$Bread_crumb->add($LANG['bans'], transid('moderation_panel.php?action=ban'));
+		$Bread_crumb->add($LANG['bans'], url('moderation_panel.php?action=ban'));
 		break;
 	case 'punish':
-		$Bread_crumb->add($LANG['punishment'], transid('moderation_panel.php?action=punish'));
+		$Bread_crumb->add($LANG['punishment'], url('moderation_panel.php?action=punish'));
 		break;
 	case 'warning':
 	default:
-		$Bread_crumb->add($LANG['warning'], transid('moderation_panel.php?action=warning'));
+		$Bread_crumb->add($LANG['warning'], url('moderation_panel.php?action=warning'));
 }
 
 define('TITLE', $LANG['moderation_panel']);
@@ -64,9 +64,9 @@ $moderation_panel_template->assign_vars(array(
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
 	'L_USERS_BAN' => $LANG['ban_management'],
-	'U_WARNING' => transid('.php?action=warning'),
-	'U_PUNISH' => transid('.php?action=punish'),
-	'U_BAN' => transid('.php?action=ban')
+	'U_WARNING' => url('.php?action=warning'),
+	'U_PUNISH' => url('.php?action=punish'),
+	'U_BAN' => url('.php?action=ban')
 ));
 
 switch($action)
@@ -98,7 +98,7 @@ switch($action)
 				}
 			}
 			
-			redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
+			redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -117,9 +117,9 @@ switch($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if( !empty($user_id) && !empty($login) )
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=punish', '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish', '', '&'));
 			}	
 					
 			$moderation_panel_template->assign_vars(array(
@@ -143,9 +143,9 @@ switch($action)
 				$moderation_panel_template->assign_block_vars('member_list', array(
 					'LOGIN' => $row['login'],
 					'INFO' => gmdate_format('date_format', $row['user_readonly']),
-					'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" /></a>',
-					'U_PM' => transid('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
 				$i++;
@@ -194,7 +194,7 @@ switch($action)
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $LANG['user_readonly_changed']) : str_replace('%date%', '1 ' . $LANG['minute'], $LANG['user_readonly_changed']),
-				'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 				'INFO' => $array_sanction[$key_sanction],
 				'SELECT' => $select,
 				'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" . 
@@ -217,7 +217,7 @@ switch($action)
 				'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 				'document.getElementById(\'action_info\').innerHTML = replace_value;',
 				'REGEX'=> '[0-9]+ [a-zA-Z]+/',
-				'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
+				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get,
 				'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 				'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
@@ -251,7 +251,7 @@ switch($action)
 					$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
 				}			
 			}		
-			redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
+			redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -270,9 +270,9 @@ switch($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if( !empty($user_id) && !empty($login) )
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=ban', '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban', '', '&'));
 			}	
 			
 			$moderation_panel_template->assign_vars(array(
@@ -296,9 +296,9 @@ switch($action)
 				$moderation_panel_template->assign_block_vars('member_list', array(
 					'LOGIN' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 					'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
-					'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/forbidden.png" alt="" /></a>',
-					'U_PM' => transid('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
 				$i++;
@@ -317,8 +317,8 @@ switch($action)
 			$moderation_panel_template->assign_vars(array(
 				'C_MODO_PANEL_USER_BAN' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
-				'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
-				'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
+				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
+				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get,
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_LOGIN' => $LANG['pseudo'],
@@ -396,7 +396,7 @@ switch($action)
 				}	
 			}
 			
-			redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
+			redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 		}
 		
 		$moderation_panel_template->assign_vars(array(
@@ -415,9 +415,9 @@ switch($action)
 				$login = retrieve(POST, 'login_mbr', '');
 				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if( !empty($user_id) && !empty($login) )
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
 				else
-					redirect(HOST . DIR . transid('/member/moderation_panel.php?action=warning', '', '&'));
+					redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning', '', '&'));
 			}		
 			
 			$moderation_panel_template->assign_vars(array(
@@ -442,8 +442,8 @@ switch($action)
 					'LOGIN' => $row['login'],
 					'INFO' => $row['user_warning'] . '%',
 					'U_ACTION_USER' => '<a href="moderation_panel.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/admin/important.png" alt="" /></a>',
-					'U_PROFILE' => '../member/member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-					'U_PM' => transid('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
 				$i++;
@@ -474,13 +474,13 @@ switch($action)
 				'C_MODO_PANEL_USER_INFO' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'ALTERNATIVE_PM' => str_replace('%level%', $member['user_warning'], $LANG['user_warning_level_changed']),
-				'LOGIN' => '<a href="../member/member' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
+				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $member['login'] . '</a>',
 				'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 				'SELECT' => $select,
 				'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 				'REGEX'=> ' [0-9]+%/',
 				'U_ACTION_INFO' => '.php?action=warning&amp;id=' . $id_get,
-				'U_PM' => transid('.php?pm='. $id_get, '-' . $id_get . '.php'),
+				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 				'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],
 				'L_PM' => $LANG['user_contact_pm'],

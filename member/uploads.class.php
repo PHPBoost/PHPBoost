@@ -267,10 +267,10 @@ class Uploads
 		if( !empty($parent_folder['id_parent']) )
 		{	
 			$pwd .= $this->get_url($parent_folder['id_parent'], $pwd, $popup);	
-			return $pwd . '/<a href="' . transid('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
+			return $pwd . '/<a href="' . url('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
 		}
 		else
-			return $pwd . '/<a href="' . transid('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
+			return $pwd . '/<a href="' . url('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';
 	}
 	
 	//Récupération de la taille totale utilisée par un membre.

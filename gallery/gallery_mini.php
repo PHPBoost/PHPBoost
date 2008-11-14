@@ -129,13 +129,13 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 				'NAME' => $row['name'],		
 				'HEIGHT' => $row['height'],
 				'WIDTH' => $row['width'],
-				'U_PICS' => '../gallery/gallery' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')	
+				'U_PICS' => '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')	
 			));
 		}
 		else
 		{
 			$array_pics_mini .= 'array_pics_mini[' . $i . '] = new Array();' . "\n";
-			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'link\'] = \'' . transid('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '\';' . "\n";
+			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'link\'] = \'' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '\';' . "\n";
 			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'path\'] = \'' . $row['path'] . '\';' . "\n";
 		}
 		

@@ -66,13 +66,13 @@ if( !empty($new_title) && $id_rename_post > 0 )
 		}
 		else
 			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif( $num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'] )
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-		redirect(transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
 		redirect(HOST . DIR . '/pages/redirections.php?rename=' . $id_rename_post . '&error=title_already_exists');
@@ -96,7 +96,7 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	if( $num_rows_same_title == 0 )
 	{
 		$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/pages/' . transid('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
 		redirect(HOST . DIR . '/pages/redirections.php?new=' . $id_new_post . '&error=title_already_exists');
@@ -116,7 +116,7 @@ elseif( $del_redirection > 0 )
 	//On supprime la redirection
 	if( $page_infos['redirect'] > 0 )
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
-	redirect(HOST . DIR . transid('/pages/redirections.php?id=' . $page_infos['redirect'], '', '&'));
+	redirect(HOST . DIR . url('/pages/redirections.php?id=' . $page_infos['redirect'], '', '&'));
 }
 
 if( $id_page > 0 )
@@ -131,26 +131,26 @@ if( $id_page > 0 )
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	if($id_redirection > 0 )
-		$Bread_crumb->add($LANG['pages_redirection_management'], transid('redirections.php?id=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_redirection_management'], url('redirections.php?id=' . $id_redirection));
 	elseif( $id_new > 0 )
-		$Bread_crumb->add($LANG['pages_creation_redirection'], transid('redirections.php?new=' . $id_redirection));
+		$Bread_crumb->add($LANG['pages_creation_redirection'], url('redirections.php?new=' . $id_redirection));
 	else
-		$Bread_crumb->add($LANG['pages_rename'], transid('redirections.php?rename=' . $id_rename));
-	$Bread_crumb->add($page_infos['title'], transid('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
+		$Bread_crumb->add($LANG['pages_rename'], url('redirections.php?rename=' . $id_rename));
+	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
 	while( $id > 0 )
 	{
 		if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
-			$Bread_crumb->add($_PAGES_CATS[$id]['name'], transid('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
+			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
-		$Bread_crumb->add($LANG['pages'], transid('pages.php'));
+		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
 else
-	$Bread_crumb->add($LANG['pages'], transid('pages.php'));
-	$Bread_crumb->add($LANG['pages_redirections'], transid('redirections.php'));
+	$Bread_crumb->add($LANG['pages'], url('pages.php'));
+	$Bread_crumb->add($LANG['pages_redirections'], url('redirections.php'));
 
 require_once('../kernel/header.php');
 
@@ -160,7 +160,7 @@ if( $id_rename > 0 )
 {
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
-		'TARGET' => transid('redirections.php'),
+		'TARGET' => url('redirections.php'),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -179,7 +179,7 @@ elseif( $id_new > 0 )
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => transid('redirections.php'),
+		'TARGET' => url('redirections.php'),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection']
@@ -214,7 +214,7 @@ elseif( $id_redirection > 0 )
 		));
 	
 	$Template->assign_vars(array(
-		'U_CREATE_REDIRECTION' => transid('redirections.php?new=' . $id_redirection),
+		'U_CREATE_REDIRECTION' => url('redirections.php?new=' . $id_redirection),
 		'L_REDIRECTIONS' => $LANG['pages_redirections'],
 		'L_REDIRECTION_TITLE' => $LANG['pages_redirection_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -242,8 +242,8 @@ else
 		$special_auth = !empty($row['auth']);
 		$array_auth = unserialize($row['auth']);
 		$Template->assign_block_vars('redirections.list', array(
-			'REDIRECTION_TITLE' => '<a href="' . transid('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
-			'REDIRECTION_TARGET' => '<a href="' . transid('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
+			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
+			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
 			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="redirections.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="redirections.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}

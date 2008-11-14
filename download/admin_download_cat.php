@@ -49,7 +49,7 @@ if( $id_up > 0 )
     // Feeds Regeneration
     import('content/syndication/feed');
     Feed::clear_cache('download');
-	redirect(transid('admin_download_cat.php'));
+	redirect(url('admin_download_cat.php'));
 }
 elseif( $id_down > 0 )
 {
@@ -57,7 +57,7 @@ elseif( $id_down > 0 )
     // Feeds Regeneration
     import('content/syndication/feed');
     Feed::clear_cache('download');
-	redirect(transid('admin_download_cat.php'));
+	redirect(url('admin_download_cat.php'));
 }
 elseif( $cat_to_del > 0 )
 {
@@ -73,7 +73,7 @@ elseif( $cat_to_del > 0 )
 		'L_DELETE_CATEGORY_AND_CONTENT' => $DOWNLOAD_LANG['delete_category_and_its_content'],
 		'L_MOVE_CONTENT' => $DOWNLOAD_LANG['move_category_content'],
 		'L_SUBMIT' => $LANG['delete'],
-		'U_FORM_TARGET' => HOST . DIR . transid('/download/admin_download_cat.php')
+		'U_FORM_TARGET' => HOST . DIR . url('/download/admin_download_cat.php')
 	));
 	
 	include_once('admin_download_menu.php');
@@ -124,7 +124,7 @@ elseif( retrieve(POST, 'submit', false) )
 			$new_auth = '';
 
 		if( empty($name) )
-			redirect(transid(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
+			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
 		if( $id_cat > 0 )
 			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
@@ -138,7 +138,7 @@ elseif( retrieve(POST, 'submit', false) )
 
 	$Cache->Generate_module_file('download');
 	
-	redirect(transid(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
+	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
 elseif( retrieve(GET, 'recount', false) )
@@ -147,7 +147,7 @@ elseif( retrieve(GET, 'recount', false) )
 	// Feeds Regeneration
     import('content/syndication/feed');
     Feed::clear_cache('download');
-	redirect(transid(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
+	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
 elseif( $new_cat XOR $id_edit > 0 )
 {
@@ -289,7 +289,7 @@ else
 	$Template->assign_vars(array(
 		'CATEGORIES' => $download_categories->build_administration_interface(),
 		'L_RECOUNT_SUBFILES' => $DOWNLOAD_LANG['recount_subfiles'],
-		'U_RECOUNT_SUBFILES' => transid('admin_download_cat.php?recount=1')
+		'U_RECOUNT_SUBFILES' => url('admin_download_cat.php?recount=1')
 	));
 
 	$Template->pparse('admin_download_cat');

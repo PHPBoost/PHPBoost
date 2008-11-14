@@ -42,7 +42,7 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 
 	//Pseudo.
 	if( $guestbook_rand['user_id'] != -1 ) 
-		$guestbook_login = '<a class="small_link" href="../member/member' . transid('.php?id=' . $guestbook_rand['user_id'], '-' . $guestbook_rand['user_id'] . '.php') . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
+		$guestbook_login = '<a class="small_link" href="../member/member' . url('.php?id=' . $guestbook_rand['user_id'], '-' . $guestbook_rand['user_id'] . '.php') . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
 	else
 		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	

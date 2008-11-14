@@ -126,7 +126,7 @@ class NewsInterface extends ModuleInterface
         {
             $item = new FeedItem();
             // Rewriting
-            $link = HOST . DIR . '/news/news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
+            $link = HOST . DIR . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
             
             // XML text's protection
             $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));

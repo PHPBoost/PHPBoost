@@ -86,9 +86,9 @@ while( $row = $Sql->fetch_assoc($result) )
 		'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'] * 2524, 1) . ' ' . $LANG['unit_kilobytes'],
 		'APROBATION' => $aprob,
 		'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
-		'U_FILE' => transid('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-		'U_EDIT_FILE' => transid('management.php?edit=' . $row['id']),
-		'U_DEL_FILE' => transid('management.php?del=' . $row['id']),
+		'U_FILE' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+		'U_EDIT_FILE' => url('management.php?edit=' . $row['id']),
+		'U_DEL_FILE' => url('management.php?del=' . $row['id']),
 	));
 }
 $Sql->query_close($result);

@@ -46,9 +46,9 @@ $Template->assign_vars(Array(
     'TEXT_SEARCHED' => !empty($search) ? htmlentities(retrieve(REQUEST, 'q', '', TSTRING_UNCHANGE)) : $LANG['search'] . '...',
     'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
 	'L_SEARCH' => $LANG['search'],
-    'U_FORM_VALID' => transid(PATH_TO_ROOT . '/search/search.php#results'),
+    'U_FORM_VALID' => url(PATH_TO_ROOT . '/search/search.php#results'),
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
-    'U_ADVANCED_SEARCH' => transid(PATH_TO_ROOT . '/search/search.php'),
+    'U_ADVANCED_SEARCH' => url(PATH_TO_ROOT . '/search/search.php'),
 ));
 
 //------------------------------------------------------------- Other includes

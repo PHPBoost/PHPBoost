@@ -100,7 +100,7 @@ else
 		$Template->assign_block_vars('arch', array(
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'TITLE' => stripslashes($row['title']),
-			'MESSAGE' => ($row['type'] === 'bbcode' || $row['type'] === 'html') ? '<div style="text-align:center;"><a class="com" href="#" onclick="popup(\'' . HOST . DIR . transid('/newsletter/newsletter_arch.php?id=' . $row['id'], '', '') . '\', \'' . $row['title'] . '\');">' . $LANG['newsletter_msg_html'] . '</a></div>' : nl2br($row['message']), 
+			'MESSAGE' => ($row['type'] === 'bbcode' || $row['type'] === 'html') ? '<div style="text-align:center;"><a class="com" href="#" onclick="popup(\'' . HOST . DIR . url('/newsletter/newsletter_arch.php?id=' . $row['id'], '', '') . '\', \'' . $row['title'] . '\');">' . $LANG['newsletter_msg_html'] . '</a></div>' : nl2br($row['message']), 
 			'NBR_SENT_NEWSLETTERS' => sprintf($LANG['newsletter_nbr'], (int)$row['nbr']),
 		));
 		

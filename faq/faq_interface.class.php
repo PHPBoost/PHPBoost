@@ -202,7 +202,7 @@ class FaqInterface extends ModuleInterface
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
 		if( $id_cat > 0 )
-			$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . transid('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
+			$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
 		else
 			$this_category = new SitemapLink($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
 			

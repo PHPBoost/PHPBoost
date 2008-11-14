@@ -35,13 +35,13 @@ $view_get = retrieve(GET, 'view', 0);
 if( !empty($view_get) || !empty($edit_get) ) 
 {	
 	if( $User->check_level(MEMBER_LEVEL) )
-		$Bread_crumb->add($LANG['member_area'], transid('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
+		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	
 	$title_mbr = !empty($edit_get) ? $LANG['profil_edit'] : '';
 	$Bread_crumb->add($title_mbr, '');
 }
 else
-	$Bread_crumb->add($LANG['member'], transid('member.php', ''));
+	$Bread_crumb->add($LANG['member'], url('member.php', ''));
 
 require_once('../kernel/header.php'); 
 
@@ -109,7 +109,7 @@ if( !empty($id_get) ) //Espace membre
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_MEMBER_ACTION_UPDATE' => transid('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_MEMBER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MEMBER_AREA' => $LANG['member_area'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
@@ -399,10 +399,10 @@ if( !empty($id_get) ) //Espace membre
 						$Sql->query_inject("UPDATE ".PREFIX."member SET password = '" . $password_hash . "' WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					}
 					else //Longueur minimale du password
-						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
+						redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_mini') . '#errorh');
 				}
 				else //Password non identiques.
-					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
+					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=pass_same') . '#errorh');
 			}
 		}
 		
@@ -462,13 +462,13 @@ if( !empty($id_get) ) //Espace membre
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 					if( !empty($Upload->error) ) //Erreur, on arrête ici
-						redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
+						redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
 						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 						if( !empty($error) ) //Erreur, on arrête ici
-							redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+							redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -489,7 +489,7 @@ if( !empty($id_get) ) //Espace membre
 				$path = strprotect($_POST['avatar']);
 				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
 				if( !empty($error) ) //Erreur, on arrête ici
-					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
+					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -500,7 +500,7 @@ if( !empty($id_get) ) //Espace membre
 				$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);		
 				$user_mail = "user_mail = '" . $user_mail . "', ";				
 				if( $check_mail >= 1 ) //Autre utilisateur avec le même mail!
-					redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
+					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
 				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
 				$info_mbr = $Sql->query_array("member", "user_theme", "user_sex", "WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
@@ -599,13 +599,13 @@ if( !empty($id_get) ) //Espace membre
 					}
 				}
 				
-				redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
+				redirect(HOST . DIR . '/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 			}
 			else
-				redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+				redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 		}	
 		else
-			redirect(HOST . DIR . '/member/member' . transid('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
+			redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}	
 	elseif( !empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL)) ) //Zone membre
 	{
@@ -629,10 +629,10 @@ if( !empty($id_get) ) //Espace membre
 			'PM' => $User->get_attribute('user_pm'),
 			'IMG_PM' => ($User->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,
-			'U_MEMBER_ID' => transid('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
-			'U_MEMBER_PM' => transid('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
-			'U_CONTRIBUTION_PANEL' => transid('contribution_panel.php'),
-			'U_MODERATION_PANEL' => transid('moderation_panel.php'),
+			'U_MEMBER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
+			'U_MEMBER_PM' => url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_CONTRIBUTION_PANEL' => url('contribution_panel.php'),
+			'U_MODERATION_PANEL' => url('moderation_panel.php'),
 			'L_PROFIL' => $LANG['profil'],
 			'L_WELCOME' => $LANG['welcome'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
@@ -702,7 +702,7 @@ if( !empty($id_get) ) //Espace membre
 		{
 			$group = $Sql->query_array('group', 'id', 'name', 'img', "WHERE id = '" . numeric($group_id) . "'", __LINE__, __FILE__);
 			if( !empty($group['id']) )
-				$user_group_list .= '<li><a href="member' . transid('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : $group['name']) . '</a></li>';
+				$user_group_list .= '<li><a href="member' . url('.php?g=' . $group_id, '-0.php?g=' . $group_id) . '">' . (!empty($group['img']) ? '<img src="../images/group/' . $group['img'] . '" alt="' . $group['name'] . '" title="' . $group['name'] . '" class="valign_middle" />'  : $group['name']) . '</a></li>';
 		}
 		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
@@ -749,9 +749,9 @@ if( !empty($id_get) ) //Espace membre
 			'L_CONTACT' => $LANG['contact'],
 			'L_MAIL' => $LANG['mail'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-			'U_MEMBER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . transid('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
-			'U_MEMBER_MSG' => transid('.php?id=' . $id_get),
-			'U_MEMBER_PM' => transid('.php?pm=' . $id_get, '-' . $id_get . '.php')
+			'U_MEMBER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
+			'U_MEMBER_MSG' => url('.php?id=' . $id_get),
+			'U_MEMBER_PM' => url('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));
 				
 		//Champs supplémentaires.
@@ -875,7 +875,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
 				'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
-				'U_MEMBER' => '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
+				'U_MEMBER' => '<a href="member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
 			));	
 		}
 	}
@@ -895,7 +895,7 @@ else //Show all member!
 		$login = retrieve(POST, 'login', '');
 		$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if( !empty($user_id) )
-			redirect(HOST . DIR . '/member/member' . transid('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
+			redirect(HOST . DIR . '/member/member' . url('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
 		else
 			$login = $LANG['no_result'];
 	}
@@ -920,14 +920,14 @@ else //Show all member!
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 		'L_WEB_SITE' => $LANG['web_site'],
 		'U_SELECT_SHOW_GROUP' => "'member.php?g=' + this.options[this.selectedIndex].value",
-		'U_MEMBER_ALPHA_TOP' => transid('.php?sort=alph&amp;mode=desc', '-0.php?sort=alph&amp;mode=desc'),
-		'U_MEMBER_ALPHA_BOTTOM' => transid('.php?sort=alph&amp;mode=asc', '-0.php?sort=alph&amp;mode=asc'),
-		'U_MEMBER_TIME_TOP' => transid('.php?sort=time&amp;mode=desc', '-0.php?sort=time&amp;mode=desc'),
-		'U_MEMBER_TIME_BOTTOM' => transid('.php?sort=time&amp;mode=asc', '-0.php?sort=time&amp;mode=asc'),
-		'U_MEMBER_MSG_TOP' => transid('.php?sort=msg&amp;mode=desc', '-0.php?sort=msg&amp;mode=desc'),
-		'U_MEMBER_MSG_BOTTOM' => transid('.php?sort=msg&amp;mode=asc', '-0.php?sort=msg&amp;mode=asc'),
-		'U_MEMBER_LAST_TOP' => transid('.php?sort=last&amp;mode=desc', '-0.php?sort=last&amp;mode=desc'),
-		'U_MEMBER_LAST_BOTTOM' => transid('.php?sort=last&amp;mode=asc', '-0.php?sort=last&amp;mode=asc')
+		'U_MEMBER_ALPHA_TOP' => url('.php?sort=alph&amp;mode=desc', '-0.php?sort=alph&amp;mode=desc'),
+		'U_MEMBER_ALPHA_BOTTOM' => url('.php?sort=alph&amp;mode=asc', '-0.php?sort=alph&amp;mode=asc'),
+		'U_MEMBER_TIME_TOP' => url('.php?sort=time&amp;mode=desc', '-0.php?sort=time&amp;mode=desc'),
+		'U_MEMBER_TIME_BOTTOM' => url('.php?sort=time&amp;mode=asc', '-0.php?sort=time&amp;mode=asc'),
+		'U_MEMBER_MSG_TOP' => url('.php?sort=msg&amp;mode=desc', '-0.php?sort=msg&amp;mode=desc'),
+		'U_MEMBER_MSG_BOTTOM' => url('.php?sort=msg&amp;mode=asc', '-0.php?sort=msg&amp;mode=asc'),
+		'U_MEMBER_LAST_TOP' => url('.php?sort=last&amp;mode=desc', '-0.php?sort=last&amp;mode=desc'),
+		'U_MEMBER_LAST_BOTTOM' => url('.php?sort=last&amp;mode=asc', '-0.php?sort=last&amp;mode=asc')
 	));
 	
 	//Liste des groupes.
@@ -968,7 +968,7 @@ else //Show all member!
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
-		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . transid('.php' . (!empty($unget) ? '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
+		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
 	));
 
 	$result = $Sql->query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, user_local, user_web, last_connect 
@@ -993,8 +993,8 @@ else //Show all member!
 			'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 			'WEB' => $user_web,
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-			'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_MEMBER_PM' => transid('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
+			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_MEMBER_PM' => url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
 		));
 	}
 	$Sql->query_close($result);

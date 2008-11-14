@@ -55,12 +55,12 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	//Pagination activée, sinon affichage lien vers les archives.
 	if( $CONFIG_NEWS['activ_pagin'] == '1' )
 	{
-		$show_pagin = $Pagination->display('news' . transid('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
+		$show_pagin = $Pagination->display('news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
 		$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
 	}
 	elseif( $show_archive ) //Pagination des archives.
 	{
-		$show_pagin = $Pagination->display('news' . transid('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
+		$show_pagin = $Pagination->display('news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
 		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
 		$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
 	}
@@ -129,19 +129,19 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 				
 			$tpl_news->assign_block_vars('news', array(
 				'ID' => $row['id'],
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
+				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
-				'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
+				'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
 				'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
 				'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
 				'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
-				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
+				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 				'EDIT' => $admin,
 				'DEL' => $del,
 				'NEW_ROW' => $new_row,
-				'U_MEMBER_ID' => transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'U_NEWS_LINK' => transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
                 'FEED_MENU' => get_feed_menu(FEED_URL)
 			));
 			$z++;
@@ -198,11 +198,11 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			}
 			
 			$tpl_news->assign_block_vars('list', array(
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
+				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 				'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'NEW_ROW' => $new_row, 
-				'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+				'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 			));
 		}
 		$Sql->query_close($result);
@@ -232,8 +232,8 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'C_NEWS_NAVIGATION_LINKS' => true,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on'],
-		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . transid('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
-		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . transid('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . $CONFIG['theme'] . '/images/right.png" alt="" class="valign_middle" />' : '',
+		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . $CONFIG['theme'] . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
+		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . $CONFIG['theme'] . '/images/right.png" alt="" class="valign_middle" />' : '',
         'PATH_TO_ROOT' => PATH_TO_ROOT,
         'THEME' => $CONFIG['theme']
 	));
@@ -247,11 +247,11 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" />' : ''),
 		'PSEUDO' => $CONFIG_NEWS['display_author'] ? $news['login'] : '',				
 		'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $news['timestamp']) : '',
-		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . transid('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
+		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
-		'U_MEMBER_ID' => transid('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-		'U_NEWS_LINK' => transid('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
+		'U_MEMBER_ID' => url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+		'U_NEWS_LINK' => url('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));	
 }
@@ -278,10 +278,10 @@ elseif( !empty($idcat) )
 	while ($row = $Sql->fetch_assoc($result))
 	{ 
 		$tpl_news->assign_block_vars('list', array(
-			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . transid('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
+			'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 			'TITLE' => $row['title'],
 			'COM' => $row['nbr_com'],
-			'U_NEWS' => 'news' . transid('.php?id=' . $row['id'], '-0-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
+			'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
 		));
 	}
 }
@@ -290,7 +290,7 @@ elseif( !empty($idcat) )
 if( isset($_GET['com']) && $idnews > 0 )
 {
 	$tpl_news->assign_vars(array(
-		'COMMENTS' => display_comments('news', $idnews, transid('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
+		'COMMENTS' => display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
 	));
 }
 

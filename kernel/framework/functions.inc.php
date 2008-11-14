@@ -386,7 +386,7 @@ function get_start_page()
 {
     global $CONFIG;
     
-    $start_page = (substr($CONFIG['start_page'], 0, 1) == '/') ? transid(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
+    $start_page = (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
     return $start_page;
 }
 
@@ -412,7 +412,7 @@ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	$l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	$l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . transid('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "');";
+	$link_pop = "#\" onclick=\"popup('" . HOST . DIR . url('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "');";
 	$link_current = $path . '#anchor_' . $script;
 	
 	$link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
@@ -471,7 +471,7 @@ function second_parse(&$content)
 }
 
 //Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
-function transid($url, $mod_rewrite = '', $ampersand = '&amp;')
+function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
     global $CONFIG, $Session;
     
@@ -880,6 +880,32 @@ define('LIB_IMPORT', '.inc.php');
 function import($path, $import_type = CLASS_IMPORT)
 {
 	require_once PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type;
+}
+
+/**
+ * @desc Require a file
+ * @param string $file the file to require with an absolute path from the website root
+ * @param bool $once if false use require instead of require_once
+ */
+function req($file, $once = true)
+{
+    if( $once )
+        require_once (PATH_TO_ROOT . $file) !== false;
+    else
+        return (require PATH_TO_ROOT . $file) !== false;
+}
+
+/**
+ * @desc Include a file
+ * @param string $file the file to include with an absolute path from the website root
+ * @param bool $once if false use include instead of include_once
+ * @return bool true if the file have been included with success else, false
+ */
+function inc($file, $once = true)
+{
+    if( $once )
+        return include_once (PATH_TO_ROOT . $file) !== false;
+    return (include PATH_TO_ROOT . $file) !== false;
 }
 
 /**

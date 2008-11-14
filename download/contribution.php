@@ -39,8 +39,8 @@ if( !$User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CA
 
 define('TITLE', $DOWNLOAD_LANG['contribution_confirmation']);
 
-$Bread_crumb->add($DOWNLOAD_LANG['download'], transid('download.php'));
-$Bread_crumb->add($DOWNLOAD_LANG['contribution_confirmation'], transid('contribution.php'));
+$Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
+$Bread_crumb->add($DOWNLOAD_LANG['contribution_confirmation'], url('contribution.php'));
 
 require_once('../kernel/header.php');
 

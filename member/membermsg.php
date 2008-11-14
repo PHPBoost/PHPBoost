@@ -59,9 +59,9 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		'L_MEMBER_MSG_DISPLAY' => $LANG['member_msg_display'],
 		'L_COMMENTS' => $LANG['com_s'],
 		'L_BACK' => $LANG['back'],
-		'U_BACK' => transid('.php?id=' . $memberId, '-' . $memberId . '.php'),
-		'U_MEMBER_MSG' => transid('.php?id=' . $memberId),
-		'U_COMMENTS' => transid('.php?id=' . $memberId . '&amp;script=com')
+		'U_BACK' => url('.php?id=' . $memberId, '-' . $memberId . '.php'),
+		'U_MEMBER_MSG' => url('.php?id=' . $memberId),
+		'U_COMMENTS' => url('.php?id=' . $memberId . '&amp;script=com')
 	));
 		
 	if( !empty($script) )
@@ -89,11 +89,11 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		while($row = $Sql->fetch_assoc($result) )
 		{
 			$Template->assign_block_vars('msg_list', array(
-				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . transid('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',
+				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',
 				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
-				'U_TITLE' => transid($row['path'] . '#' . $row['script'])
+				'U_TITLE' => url($row['path'] . '#' . $row['script'])
 			));
 		}
 	}

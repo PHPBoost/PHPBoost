@@ -43,10 +43,10 @@ $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 foreach($CAT_FORUM as $idcat => $array_info_cat)
 {
 	if( $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'] )
-		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? transid('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . transid('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
+		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
 if( !empty($CAT_FORUM[$id_get]['name']) ) //Nom de la catégorie courante.
-	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], 'forum' . transid('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
+	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
 $Bread_crumb->add($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
@@ -84,7 +84,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	if( $previs ) //Prévisualisation des messages
 	{
 		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
@@ -100,7 +100,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);	
 		$post_update = retrieve(POST, 'p_update', '', TSTRING_UNSECURE);
 		
-		$update = !empty($post_update) ? $post_update : transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
+		$update = !empty($post_update) ? $post_update : url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get);
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 		
 		$Template->assign_vars(array(
@@ -118,7 +118,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			'C_FORUM_PREVIEW_MSG' => true,
 			'U_ACTION' => 'post.php' . $update,
 			'U_FORUM_CAT' => $forum_cats,
-			'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst($topic['title']) . '</a>',
+			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst($topic['title']) . '</a>',
 			'L_REQUIRE' => $LANG['require'],
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
 			'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -138,7 +138,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		{
 			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			if( $is_modo )
 				$type = retrieve(POST, 'type', 0); 
@@ -163,7 +163,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				
 				//Droit de flooder?.
 				if( $check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Flood
-					redirect(transid(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#errorh');
+					redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#errorh');
 			}
 			
 			if( $check_status == 1 )
@@ -193,18 +193,18 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 					}
 					
-					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
+					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
 				}
 				else
-					redirect(transid(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#errorh');
+					redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#errorh');
 			}
 			else //Verrouillé
-				redirect(transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		}
 		elseif( !empty($preview_topic) && !empty($id_get) )
 		{
 			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->set_filenames(array(
 				'forum_post'=> 'forum/forum_post.tpl',
@@ -281,9 +281,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'CONTENTS_PREVIEW' => second_parse(stripslashes(strparse($contents))),
 				'C_FORUM_PREVIEW_MSG' => true,
 				'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
-				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '">' . $title . '</a>',
+				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '">' . $title . '</a>',
 				'L_ACTION' => $LANG['forum_edit_subject'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -309,7 +309,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 		{
 			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-				redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->set_filenames(array(
 				'forum_post'=> 'forum/forum_post.tpl',
@@ -351,9 +351,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
-				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" class="valign_middle" /></a>',
+				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" class="valign_middle" /></a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -380,7 +380,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	elseif( $new_get === 'n_msg' && empty($error_get) ) //Nouveau message
 	{
 		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		//Verrouillé?
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
@@ -395,7 +395,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$check_status = 1;
 		
 		if( $check_status == 0 ) //Verrouillée
-			redirect(transid(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		
 		//Mod anti Flood
 		if( $check_time !== false ) 
@@ -403,7 +403,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$delay_expire = time() - $CONFIG['delay_flood']; //On calcul la fin du delai.			
 			//Droit de flooder?
 			if( $check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Ok
-				redirect( transid(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
+				redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		
 		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
@@ -420,18 +420,18 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 				
 				//Redirection après post.
-				redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
+				redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
 			}
 			else
-				redirect(transid(HOST . SCRIPT . '?error=incomplete&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
+				redirect(url(HOST . SCRIPT . '?error=incomplete&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		else
-			redirect(transid(HOST . SCRIPT . '?error=locked&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=locked&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 	}
 	elseif( $new_get === 'msg' && empty($error_get) ) //Edition d'un message/topic.
 	{
 		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
-			redirect(transid(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
+			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$id_m = retrieve(GET, 'idm', 0);		
 		$update = retrieve(GET, 'update', false);
@@ -500,10 +500,10 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$Forumfct->Del_poll($idt_get);
 					
 					//Redirection après post.
-					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
+					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
 				}
 				else
-					redirect(HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
+					redirect(HOST . DIR . '/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
 			}
 			elseif( !empty($preview_topic) )
 			{
@@ -582,9 +582,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'C_FORUM_PREVIEW_MSG' => true,
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
-					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $title . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
 					'L_REQUIRE' => $LANG['require'],
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -655,7 +655,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 						'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
-						'U_ACTION_MSG_DISPLAY' => transid('.php?msg_d=1&amp;id=' . $id_get)
+						'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get)
 					));
 				}
 				
@@ -698,9 +698,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					'NO_DISPLAY_POLL' => !empty($poll['question']) ? 'false' : 'true',
 					'C_DELETE_POLL' => ($is_modo) ? true : false, //Suppression d'un sondage => modo uniquement.
 					'C_ADD_POLL_FIELD' => ($nbr_poll_field <= 19) ? true : false,
-					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
-					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_ACTION' => $LANG['forum_edit_subject'],
 					'L_REQUIRE' => $LANG['require'],
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -766,10 +766,10 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 					
 					//Redirection après édition.
-					redirect(HOST . DIR . '/forum/topic' . transid('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
+					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
 				}
 				else
-					redirect(HOST . DIR . '/forum/post' . transid('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
+					redirect(HOST . DIR . '/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
 			}
 			else
 			{
@@ -786,16 +786,16 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 					
 				$Template->assign_vars(array(
-					'P_UPDATE' => transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
+					'P_UPDATE' => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
 					'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 					'DESC' => $topic['subtitle'],
 					'CONTENTS' => unparse($contents),
 					'KERNEL_EDITOR' => display_editor(),
-					'U_ACTION' => 'post.php' . transid('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
-					'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-					'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
+					'U_ACTION' => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
+					'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+					'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 					'L_REQUIRE' => $LANG['require'],
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
 					'L_FORUM_INDEX' => $LANG['forum_index'],
@@ -852,9 +852,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 				'DESC' => $topic['subtitle'],
 				'KERNEL_EDITOR' => display_editor(),
-				'U_ACTION' => 'post.php' . transid('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get),
-				'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-				'U_TITLE_T' => '<a href="topic' . transid('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
+				'U_ACTION' => 'post.php' . url('?new=n_msg&amp;idt=' . $idt_get . '&amp;id=' . $id_get),
+				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+				'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . $topic['title'] . '</a>',
 				'L_ACTION' => $LANG['respond'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -932,9 +932,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'NO_DISPLAY_POLL' => 'true',
 				'NBR_POLL_FIELD' => 0,
 				'C_ADD_POLL_FIELD' => true,
-				'U_ACTION' => 'post.php' . transid('?new=topic&amp;id=' . $id_get),
-				'U_FORUM_CAT' => '<a href="forum' . transid('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-				'U_TITLE_T' => '<a href="post' . transid('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" /></a>',
+				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get),
+				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
+				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" /></a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],

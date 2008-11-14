@@ -43,7 +43,7 @@ if( !empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
 		while( $row = $Sql->fetch_assoc($result) )
 		{
 			if( !empty($_GET['member']) )
-				echo '<a href="member' . transid('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
+				echo '<a href="member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a><br />';
 			elseif( !empty($_GET['insert_member']) )	
 				echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a><br />';
 			elseif( !empty($_GET['add_member_auth']) )	
@@ -75,9 +75,9 @@ elseif( !empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 		$result = $Sql->query_while("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : transid('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
-			$url_punish = ($admin) ? 'admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] : transid('moderation_panel.php?action=punish&amp;id=' . $row['user_id']);
-			$url_ban = ($admin) ? 'admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] : transid('moderation_panel.php?action=ban&amp;id=' . $row['user_id']);
+			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
+			$url_punish = ($admin) ? 'admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=punish&amp;id=' . $row['user_id']);
+			$url_ban = ($admin) ? 'admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=ban&amp;id=' . $row['user_id']);
 			
 			if( !empty($_GET['warning_user']) )
 				echo '<a href="' . $url_warn . '">' . $row['login'] . '</a><br />';

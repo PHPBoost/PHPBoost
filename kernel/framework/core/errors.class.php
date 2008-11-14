@@ -129,7 +129,7 @@ class Errors
 				//Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
 				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
-				redirect($this->redirect . '/member/error' . transid('.php?e=' . $errstr, '', '&'));
+				redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr, '', '&'));
 				break;				
 				//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
@@ -172,7 +172,7 @@ class Errors
                 if( $stop )
                 {
                     if( !empty($Session) && is_object($Session) )
-                        redirect($this->redirect . '/member/fatal' . transid('.php?error=' . $error_id, '', '&'));
+                        redirect($this->redirect . '/member/fatal' . url('.php?error=' . $error_id, '', '&'));
                     else
                         redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
                     exit;

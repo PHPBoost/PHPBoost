@@ -49,9 +49,9 @@ else
 	define('TITLE', $LANG['title_web']);
 	
 $l_com_note = !empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '');
-$Bread_crumb->add($LANG['title_web'], transid('web.php')); 
-$Bread_crumb->add($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : transid('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
-$Bread_crumb->add($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? transid('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
+$Bread_crumb->add($LANG['title_web'], url('web.php')); 
+$Bread_crumb->add($CAT_WEB[$idcat]['name'], (empty($idweb) ? '' : url('web.php?cat=' . $idcat, 'web-' . $idcat . '.php')));
+$Bread_crumb->add($web['title'], ((!empty($get_note) || !empty($_GET['i'])) ? url('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php') : ''));
 $Bread_crumb->add($l_com_note, '');
 
 ?>

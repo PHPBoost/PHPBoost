@@ -131,8 +131,8 @@ elseif( !empty($id_error) )
 	$Template->assign_vars(array(
 		'THEME' => $CONFIG['theme'],		
 		'L_ERROR' => $LANG['error'],
-		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . transid($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
-		'U_INDEX' => '<a href="' . transid(get_start_page()) .'">' . $LANG['index'] . '</a>', 
+		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
+		'U_INDEX' => '<a href="' . url(get_start_page()) .'">' . $LANG['index'] . '</a>', 
 	));
 	
 	$Template->assign_vars(array(

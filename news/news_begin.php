@@ -51,8 +51,8 @@ else
 }
 
 $news_title = !empty($idnews) ? $news['title'] : '';
-$Bread_crumb->add($LANG['title_news'], transid('news.php'));
-$Bread_crumb->add($news_title, (!empty($_GET['i']) ? transid('news.php?id=' . $idnews) : ''));
+$Bread_crumb->add($LANG['title_news'], url('news.php'));
+$Bread_crumb->add($news_title, (!empty($_GET['i']) ? url('news.php?id=' . $idnews) : ''));
 $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
