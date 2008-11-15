@@ -8,6 +8,7 @@ CREATE TABLE `phpboost_com` (
   `timestamp` int(11) NOT NULL default '0',
   `script` varchar(20) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',
+  `user_ip` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`idcom`),
   KEY `idprov` (`idprov`,`script`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
