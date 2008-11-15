@@ -32,24 +32,86 @@ import('menus/links/links_menu');
 import('menus/mini/mini_menu');
 import('menus/modules_mini/modules_mini_menu');
 
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc
+ * @static
+ */
 class MenuService
 {
+    /**
+     * @desc
+     * @param $block
+     * @param $enabled
+     * @return unknown_type
+     */
+    function get_menu_list($class = MENU__CLASS, $block = BLOCK_POSITION__ALL, $enabled = MENU_ENABLE_OR_NOT)
+    {
+        global $Sql;
+        
+        $query = "SELECT `id`, `object` FROM `" . PREFIX . "menuss`";
+        
+        $conditions = array();
+        if( $class != MENU__CLASS )
+            $conditions[] = "`class`='" . strtolower($class) . "'";
+        if( $block != BLOCK_POSITION__ALL )
+            $conditions[] = "`block`='" . $block . "'";
+        if( $enabled !== MENU_ENABLE_OR_NOT )
+            $conditions[] .= "`enabled`='" . $enabled . "'";
+        
+        if( count($conditions) > 0 )
+            $query .= " WHERE " . implode(' AND ', $conditions);
+        
+        $menus = array();
+        $result = $Sql->query_while($query . ";", __LINE__, __FILE__);
+        
+        while( $row = $Sql->fetch_assoc($result) )
+            $menus[] = MenuService::_load($row);
+            
+        $Sql->query_close($result);
+        
+        return $menus;
+    }
+    
+    /**
+     * @desc
+     * @return unknown_type
+     */
+    function get_menus_map()
+    {
+        global $Sql;
+        
+        // Initialize the map by using the value of the 9 constants used for blocks positions
+        $menus = MenuService::_initialize_menus_map();
+        
+        $query = "SELECT `id`, `object`, `block`, `enabled` FROM `" . PREFIX . "menuss`;";
+        $result = $Sql->query_while($query, __LINE__, __FILE__);
+        while( $row = $Sql->fetch_assoc($result) )
+        {
+            if( $row['enabled'] != MENU_ENABLED )
+                $menus[BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
+            else
+                $menus[$row['block']][] = MenuService::_load($row);
+        }
+        $Sql->query_close($result);
+        
+        return $menus;
+    }
+    
     /**
      * @desc Retrieve a Menu Object from the database
      * @param string $title the title of the Menu to retrieve from the database
      * @return Menu the requested Menu if it exists else, false
      */
-    /* static */ function load($title)
+    function load($title)
     {
         global $Sql;
         $result = $Sql->query_array('menuss', 'id', 'object', "WHERE `title`='" . addslashes($title) . "'", __LINE__, __FILE__);
         
         if( $result === false )
             return false;
-        $object = unserialize($result['object']);
-        $object->id($result['id']);
         
-        return $object;
+        return MenuService::_load($result);
     }
     
     /**
@@ -57,12 +119,9 @@ class MenuService
      * @param Menu $menu The Menu to save
      * @return bool true if the save have been correctly done, false if a Menu with the same title already exists
      */
-    /* static */ function save(&$menu)
+    function save(&$menu)
     {
         global $Sql;
-        
-        if( $Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0 )
-            return false;
         
         $query = '';
         $id_menu = $menu->get_id();
@@ -72,23 +131,28 @@ class MenuService
             UPDATE `" . PREFIX . "menuss` SET
                     `title`='" . addslashes($menu->get_title()) . "',
                     `object`='" . serialize($menu) . "',
-                    `class`='" . get_class($menu) . "',
+                    `class`='" . strtolower(get_class($menu)) . "',
                     `enabled`='" . $menu->is_enabled() . "',
-                    `block`='" . $menu->get_block_position() . "',
-                    `position`='" . $menu->get_position() . "'
+                    `block`='" . $menu->get_block() . "',
+                    `position`='" . $menu->get_block_position() . "'
             WHERE id='" . $id_menu . "';";
         }
         else
         {   // We have to insert the element in the database
+            
+            // Checking that no other menus exist with the same title
+            if( $Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0 )
+                return false;
+            
             $query = "
                 INSERT INTO `" . PREFIX . "menuss` (`title`,`object`,`class`,`enabled`,`block`,`position`)
                 VALUES (
                     '" . addslashes($menu->get_title()) . "',
                     '" . serialize($menu) . "',
-                    '" . get_class($menu) . "',
+                    '" . strtolower(get_class($menu)) . "',
                     '" . $menu->is_enabled() . "',
-                    '" . $menu->get_block_position() . "',
-                    '" . $menu->get_position() . "'
+                    '" . $menu->get_block() . "',
+                    '" . $menu->get_block_position() . "'
                 );";
         }
         $Sql->query_inject($query, __LINE__, __FILE__);
@@ -100,7 +164,7 @@ class MenuService
      * @desc Delete a Menu from the database
      * @param Menu $menu The Menu to delete from the database
      */
-    /*static*/ function delete(&$menu)
+    function delete(&$menu)
     {
         global $Sql;
         $id_menu = $menu->get_id();
@@ -110,12 +174,124 @@ class MenuService
 
     
     /**
+     * @desc Enable a menu
+     * @param Menu $menu the menu to enable
+     */
+    function enable(&$menu)
+    {
+        $menu->enabled(MENU_ENABLED);
+        MenuService::save($menu);
+    }
+    
+    /**
+     * @desc Disable a menu
+     * @param Menu $menu the menu to disable
+     */
+    function disable(&$menu)
+    {
+        $menu->enabled(MENU_NOT_ENABLED);
+        MenuService::save($menu);
+    }
+    
+    /**
+     * @desc Move a menu into a block. Enable or disable it according to the destination block
+     * @param Menu $menu the menu to move
+     * @param int $block the destination block
+     */
+    function move(&$menu, $block)
+    {
+        global $Sql;
+        
+        if( $menu->is_enabled() )
+        {   // Updates the previous block position counter
+            $update_query = "
+                UPDATE `" . PREFIX ."menuss`
+                SET `position`=`position` - 1
+                WHERE `block`='" . $menu->get_block() . "' AND `position`>'" . $menu->get_block_position() . "';";
+            $Sql->query_inject($update_query, __LINE__, __FILE__);
+        }
+        else
+        {   // Enables the menu if not
+            $menu->enabled();
+        }
+        
+        // Disables the menu if the destination block is the NOT_ENABLED block position
+        if( $block == BLOCK_POSITION__NOT_ENABLED )
+            $menu->enabled(MENU_NOT_ENABLED);
+        
+        // If not enabled, we do not move it so we can restore its position by reactivating it
+        if( $menu->is_enabled() )
+        {   // Moves the menu into the destination block
+            $menu->set_block($block);
+            
+            // Computes the new block position for the menu
+            $position_query = "SELECT MAX(`position`) FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "';";
+            $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__) + 1);
+        }
+        
+        MenuService::save($menu);
+    }
+    
+    /**
      * @desc Generate the cache
      */
-    /*static*/ function generate_cache()
+    function generate_cache()
     {
         global $Cache;
-        $Cache->generate_file('menus');
+        
+        // $MENUS global var initialization
+        $cache_str = '$MENUS = array();';
+        $cache_str .= '$MENUS[BLOCK_POSITION__HEADER] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__SUB_HEADER] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_CENTRAL] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__BOTTOM_CENTRAL] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_FOOTER] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__FOOTER] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__LEFT] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__RIGHT] = \'\'';
+        
+        $menus_map = MenuService::get_menus_map();
+        
+        foreach( $menus_map as $block => $block_menus )
+        {
+            if( $block != BLOCK_POSITION__NOT_ENABLED )
+            {
+                foreach( $block_menus as $menu )
+                    $cache_str .= $menu->cache_export();
+            }
+        }
+        
+        $Cache->_write_cache('menuss', $cache_str);
+    }
+    
+    /**
+     * @return array[] initialize the menus map structure
+     */
+    function _initialize_menus_map()
+    {
+        return array(
+            BLOCK_POSITION__HEADER => array(),
+            BLOCK_POSITION__SUB_HEADER => array(),
+            BLOCK_POSITION__TOP_CENTRAL => array(),
+            BLOCK_POSITION__BOTTOM_CENTRAL => array(),
+            BLOCK_POSITION__TOP_FOOTER => array(),
+            BLOCK_POSITION__FOOTER => array(),
+            BLOCK_POSITION__LEFT => array(),
+            BLOCK_POSITION__RIGHT => array(),
+            BLOCK_POSITION__NOT_ENABLED => array()
+        );
+    }
+    
+    /**
+     * @desc Build a Menu object from a database result
+     * @param string[key] $db_result the map from the database with the Menu id and serialized object
+     * @return Menu the menu object from the serialized one
+     */
+    function _load($db_result)
+    {
+        $menu = unserialize($db_result['object']);
+        $menu->id($db_result['id']);
+        return $menu;
     }
 }
 ?>

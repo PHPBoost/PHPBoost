@@ -101,7 +101,7 @@ class LinksMenu extends LinksMenuElement
 		
     	// Get the good Template object
 	    if( !is_object($template) || strtolower(get_class($template)) != 'template' )
-			$tpl = new Template('framework/menu/menu_' . $this->type . '.tpl');
+			$tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
 		else
 			$tpl = $template->copy();
         $original_tpl = $tpl->copy();
@@ -125,6 +125,37 @@ class LinksMenu extends LinksMenuElement
 		return $tpl->parse(TEMPLATE_STRING_MODE);
 	}
 	
+
+    /**
+     * @return string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        // Stop if the user isn't authorised
+        $cache_str = parent::cache_export();
+        
+        $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
+        $original_tpl = $tpl->copy();
+        
+        // Children assignment
+        foreach($this->elements as $element)
+        {   // We use a new Tpl to avoid overwrite issues
+            $tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export($original_tpl->copy())));
+        }
+        
+        // Menu assignment
+        parent::_assign($tpl);
+        $tpl->assign_vars(array(
+            'C_MENU' => true,
+            'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
+            'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
+            'DEPTH' => $this->depth,
+            'ID' => $this->display_id
+        ));
+        
+        $cache_str .= $tpl->parse(TEMPLATE_STRING_MODE);
+        return $cache_str . '<?php } ?>';
+    }
 	
 	## Getters ##
     /**

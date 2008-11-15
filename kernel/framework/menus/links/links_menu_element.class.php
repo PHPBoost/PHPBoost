@@ -107,6 +107,15 @@ class LinksMenuElement extends Menu
         ));
     }
 	
+    
+    /**
+     * @return string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        return parent::cache_export();
+    }
+    
 	## Private attributes ##
 	/**
      * @access protected
