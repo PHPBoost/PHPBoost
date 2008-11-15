@@ -27,6 +27,11 @@
 
 define('MENU__CLASS','Menu');
 
+define('MENU_ENABLE_OR_NOT', 42);
+define('MENU_ENABLED', true);
+define('MENU_NOT_ENABLED', false);
+
+define('BLOCK_POSITION__ALL',               0);
 define('BLOCK_POSITION__HEADER',            1);
 define('BLOCK_POSITION__SUB_HEADER',        2);
 define('BLOCK_POSITION__TOP_CENTRAL',       3);
@@ -35,6 +40,7 @@ define('BLOCK_POSITION__TOP_FOOTER',        5);
 define('BLOCK_POSITION__FOOTER',            6);
 define('BLOCK_POSITION__LEFT',              7);
 define('BLOCK_POSITION__RIGHT',             8);
+define('BLOCK_POSITION__NOT_ENABLED',       9);
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -66,15 +72,15 @@ class Menu
     /**
      * @param bool $enabled Enable or not the Menu
      */
-    function enabled($enabled = true) { $this->enabled = $enabled; }
+    function enabled($enabled = MENU_ENABLED) { $this->enabled = $enabled; }
     /**
      * @return int the Menu $block position
      */
-    function set_block_position($block) { $this->block = $block; }
+    function set_block($block) { $this->block = $block; }
     /**
      * @param int $position the Menu position to set
      */
-    function set_position($position) { $this->position = $position; }
+    function set_block_position($position) { $this->position = $position; }
 
     ## Getters ##
     /**
@@ -90,19 +96,26 @@ class Menu
      */
     function get_id() { return $this->id; }
     /**
-     * @return int the Menu $position
-     */
-    function get_position() { return $this->position; }
-    /**
      * @return int the Menu $block position
      */
-    function get_block_position() { return $this->block; }
+    function get_block() { return $this->block; }
+    /**
+     * @return int the Menu $position
+     */
+    function get_block_position() { return $this->position; }
     /**
      * @return bool true if the Menu is enabled, false otherwise
      */
     function is_enabled() { return $this->enabled; }
-        
     
+    
+    /**
+     * @return string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        return '<?php global $User; if( empty(' . var_export($this->auth, true) . ') ||  $User->check_auth(' . var_export($this->auth, true) . ', 1) ) { ?>';
+    }
     /**
      * @param int $id Set the Menu database id
      */
@@ -138,7 +151,7 @@ class Menu
      * @access protected
      * @var bool true if the Menu is used
      */
-    var $enabled = false;
+    var $enabled = MENU_NOT_ENABLED;
     /**
      * @var int The Menu block position
      */
