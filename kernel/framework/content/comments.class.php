@@ -47,7 +47,7 @@ class Comments
 	{
 		global $Sql, $User;
 		
-		$Sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."com (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM ".PREFIX."com");
 		
 		//Incrémente le nombre de commentaire dans la table du script concerné.
