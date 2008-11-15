@@ -71,7 +71,7 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) && is_writable($dir . $module_name) ) //Dossier en écriture, upload possible
+	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
