@@ -147,6 +147,9 @@ class Date
 		
 		$timestamp = $this->timestamp + $this->_compute_server_user_difference($referencial_timezone) * 3600;
 		
+		if( $timestamp <= 0 )
+			return '';
+		
 		switch($format)
 		{
 			case DATE_FORMAT_TINY:
