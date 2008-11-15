@@ -68,8 +68,8 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 		@chmod($dir, 0755);
 	if( !is_writable($dir . $module_name) )
 		@chmod($dir . $module_name, 0755);
-	die('test'. $module_name);
-	@clearstatcache();
+		
+	@clearstatcache();	
 	$error = '';
 	if( is_writable($dir) ) //Dossier en écriture, upload possible
 	{

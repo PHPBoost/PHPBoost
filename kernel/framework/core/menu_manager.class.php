@@ -95,9 +95,9 @@ class MenuManager
 					{
 						case 'left':
 						case 'right':
-							$code .= "\$Template->set_filenames(array('menus' => '/framework/menus/modules_mini/modules_mini.tpl'));\n"
-							. "\$Template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
-							. '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'modules_mini\', TEMPLATE_STRING_MODE);';
+							$code .= "\$tpl_menus = new Template('/framework/menus/modules_mini/modules_mini.tpl');\n"
+							. "\$tpl_menus->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
+							. '$MENUS[\'' . $location . '\'] .= $tpl_menus->parse(TEMPLATE_STRING_MODE);';
 						break;
 						case 'header':
 						case 'subheader':
@@ -105,9 +105,9 @@ class MenuManager
 						case 'bottomcentral':
 						case 'topfooter':
 						case 'footer':
-							$code .= "\$Template->set_filenames(array('modules_mini_horizontal' => '/framework/menus/modules_mini/modules_mini_horizontal.tpl'));"
-							. "\t\$Template->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
-							. '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'modules_mini_horizontal\', TEMPLATE_STRING_MODE);';
+							$code .= "\$tpl_menus = new Template('/framework/menus/modules_mini/modules_mini_horizontal.tpl')"
+							. "\t\$tpl_menus->assign_vars(array('MODULE_MINI_NAME' => " . var_export($name, true) . ", 'MODULE_MINI_CONTENTS' => " . var_export($contents, true) . "));\n"
+							. '$MENUS[\'' . $location . '\'] .= $tpl_menus->parse(TEMPLATE_STRING_MODE);';
 							
 						break;
 					}

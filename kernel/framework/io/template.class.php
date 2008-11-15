@@ -120,7 +120,11 @@ class Template
     //Affichage du traitement du tpl.
     function pparse($parse_name, $stringMode = false)
     {
-        $this->stringMode = $stringMode;
+		if( !isset($this->files[$parse_name]) )
+			return '';
+
+		$this->stringMode = $stringMode;
+		
         $file_cache_path = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
         if( $stringMode )
             $file_cache_path .= '_str';
