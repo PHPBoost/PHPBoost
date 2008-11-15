@@ -879,7 +879,7 @@ define('LIB_IMPORT', '.inc.php');
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
-	require_once PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type;
+	require_once(PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type);
 }
 
 /**
@@ -890,7 +890,7 @@ function import($path, $import_type = CLASS_IMPORT)
 function req($file, $once = true)
 {
     if( $once )
-        require_once (PATH_TO_ROOT . $file) !== false;
+        require_once(PATH_TO_ROOT . $file) !== false;
     else
         return (require PATH_TO_ROOT . $file) !== false;
 }
@@ -904,7 +904,7 @@ function req($file, $once = true)
 function inc($file, $once = true)
 {
     if( $once )
-        return include_once (PATH_TO_ROOT . $file) !== false;
+        return include_once(PATH_TO_ROOT . $file) !== false;
     return (include PATH_TO_ROOT . $file) !== false;
 }
 
