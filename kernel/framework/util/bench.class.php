@@ -12,7 +12,7 @@
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -36,7 +36,6 @@ class Bench
      * @desc starts the bench now
      */
     function Bench() { $this->start = $this->_get_microtime(); }
-    
     /**
      * @desc stops the bench now
      */
@@ -47,7 +46,7 @@ class Bench
      * @param int $digits the desired display precision
      * @return string the formatted duration
      */
-    function to_string($digits = 3) { return number_round($this->duration, $digits); }
+    function to_string($digits = 3) { $this->stop(); return number_round($this->duration, $digits); }
     
     ## Private Methods ##
     /**
@@ -55,7 +54,7 @@ class Bench
      * @access protected
      * @return float
      */
-    function _get_microtime() 
+    function _get_microtime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
