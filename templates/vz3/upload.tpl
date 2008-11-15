@@ -399,7 +399,7 @@
 					<span style="float:left">						
 						<strong>{L_ADD_FILES}</strong>
 						<br />
-							<input type="file" name="upload_file" size="30" class="submit" />					
+							<input type="file" name="upload_file" size="30" class="file" />					
 							<input type="hidden" name="max_file_size" value="2000000" />
 							<br />
 							<input type="submit" name="valid_up" value="{L_UPLOAD}" class="submit" />							

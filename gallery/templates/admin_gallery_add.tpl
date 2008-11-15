@@ -79,7 +79,7 @@
 					</dl>
 					<dl>
 						<dt><label for="gallery">{L_UPLOAD_IMG}</label></dt>
-						<dd><label><input type="file" name="gallery" id="gallery" size="30" class="submit" /></label></dd>
+						<dd><label><input type="file" name="gallery" id="gallery" size="30" class="file" /></label></dd>
 					</dl>
 				</fieldset>	
 				

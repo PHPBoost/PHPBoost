@@ -53,7 +53,7 @@
 					<legend>{L_UPLOAD_SMILEY}</legend>
 					<dl>
 						<dt><label for="upload_smiley">{L_EXPLAIN_UPLOAD_IMG}</label></dt>
-						<dd><label><input type="file" name="upload_smiley" id="upload_smiley" size="30" class="submit" />
+						<dd><label><input type="file" name="upload_smiley" id="upload_smiley" size="30" class="file" />
 						<input type="hidden" name="max_file_size" value="2000000" /></label></dd>
 					</dl>
 				</fieldset>			

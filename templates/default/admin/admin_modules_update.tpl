@@ -36,7 +36,7 @@
             <legend>{L_UPLOAD_MODULE}</legend>
             <dl>
                 <dt><label for="upload_module">{L_EXPLAIN_ARCHIVE_UPLOAD}</label></dt>
-                <dd><label><input type="file" name="upload_module" id="upload_module" size="30" class="submit" />
+                <dd><label><input type="file" name="upload_module" id="upload_module" size="30" class="file" />
                 <input type="hidden" name="max_file_size" value="2000000" /></label></dd>
             </dl>
         </fieldset>			

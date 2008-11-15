@@ -138,6 +138,15 @@ input.submit{
 	font-size:10px;
 	background:#A9CEE9 url(images/form.png) repeat-x;
 }
+input.file{
+	border:1px solid #B0C1CB;	
+	border-top:1px solid #D9EBF6;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+	background:#A9CEE9 url(images/form.png) repeat-x;
+}
 input.reset{
 	border:1px solid #B0C1CB;	
 	border-top:1px solid #D9EBF6;	
