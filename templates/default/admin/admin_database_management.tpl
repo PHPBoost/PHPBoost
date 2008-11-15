@@ -37,7 +37,7 @@
 					<div style="float:left;width:50%">
 						{L_RESTORE_FROM_UPLOADED_FILE}
 						<br /><br />
-						<input type="file" class="submit" name="file_sql" />
+						<input type="file" class="file" name="file_sql" />
 						<input type="hidden" name="max_file_size" value="10485760" />
 						<br /><br />
 						<input type="submit" class="submit" value="{L_RESTORE_NOW}" />

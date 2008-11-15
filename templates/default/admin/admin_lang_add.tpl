@@ -30,7 +30,7 @@
 					<legend>{L_UPLOAD_LANG}</legend>
 					<dl>
 						<dt><label for="upload_lang">{L_EXPLAIN_ARCHIVE_UPLOAD}</label></dt>
-						<dd><label><input type="file" name="upload_lang" id="upload_lang" size="30" class="submit" />
+						<dd><label><input type="file" name="upload_lang" id="upload_lang" size="30" class="file" />
 						<input type="hidden" name="max_file_size" value="2000000" /></label></dd>
 					</dl>
 				</fieldset>			

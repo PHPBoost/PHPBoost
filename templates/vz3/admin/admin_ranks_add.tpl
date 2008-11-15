@@ -56,7 +56,7 @@
 						<dt><label for="upload_ranks">{L_UPLOAD_RANKS}</label><br />{L_UPLOAD_FORMAT}</dt>
 						<dd><label>
 							<input type="hidden" name="max_file_size" value="2000000" />
-							<input type="file" id="upload_ranks" name="upload_ranks" size="30" class="submit" />
+							<input type="file" id="upload_ranks" name="upload_ranks" size="30" class="file" />
 						</label></dd>
 					</dl>
 				</fieldset>

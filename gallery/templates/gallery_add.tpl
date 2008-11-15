@@ -56,7 +56,7 @@
 						<label>{L_NAME}: <input type="text" size="40" maxlength="50" name="name" class="text" /></label>
 						<br /><br />
 						  					
-						* <input type="file" name="gallery" size="30" class="submit" /><br /><br />
+						* <input type="file" name="gallery" size="30" class="file" /><br /><br />
 					</div>
 					<br />
 					<fieldset class="fieldset_submit">

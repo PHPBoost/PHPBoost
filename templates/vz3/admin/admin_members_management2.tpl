@@ -366,7 +366,7 @@
 					<dl>
 						<dt><label for="avatars">{L_UPLOAD_AVATAR}</label><br /><span>{L_UPLOAD_AVATAR_WHERE}</span></dt>
 						<dd><label>
-							<input type="file" name="avatars" id="avatars" size="30" class="submit" />					
+							<input type="file" name="avatars" id="avatars" size="30" class="file" />					
 							<input type="hidden" name="max_file_size" value="2000000" />
 						</label></dd>
 					</dl>
