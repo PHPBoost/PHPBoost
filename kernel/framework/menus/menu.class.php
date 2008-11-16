@@ -110,12 +110,30 @@ class Menu
     
     
     /**
-     * @return string the string to write in the cache file
+     * @abstract
+     * @return string the string the string to write in the cache file
      */
-    function cache_export()
+    function cache_export() { }
+    /**
+     * @return string the string to write in the cache file at the beginning of the Menu element;
+     */
+    function cache_export_begin()
     {
-        return '<?php global $User; if( empty(' . var_export($this->auth, true) . ') ||  $User->check_auth(' . var_export($this->auth, true) . ', 1) ) { ?>';
+        if( !empty($this->auth) )
+            return "<?php\n" . '$__auth = ' . var_export($this->auth, true) . ";\n" . 'if( empty($__auth) ||  $User->check_auth($__auth, 1) ) { ?>';
+        return '';
     }
+    
+    /**
+     * @return string the string to write in the cache file at the end of the Menu element
+     */
+    function cache_export_end()
+    {
+        if( !empty($this->auth) )
+            return '<?php } ?>';
+        return '';
+    }
+    
     /**
      * @param int $id Set the Menu database id
      */

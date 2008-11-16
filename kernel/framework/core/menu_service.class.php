@@ -32,9 +32,13 @@ import('menus/links/links_menu');
 import('menus/mini/mini_menu');
 import('menus/modules_mini/modules_mini_menu');
 
+define('MOVE_UP',   -1);
+define('MOVE_DOWN',  1);
+
 /**
  * @author Loïc Rouchon horn@phpboost.com
- * @desc
+ * @desc This service manage kernel menus by adding the persistance to menus objects.
+ * It also provides all moving and disabling methods to change the website appearance.
  * @static
  */
 class MenuService
@@ -49,7 +53,7 @@ class MenuService
     {
         global $Sql;
         
-        $query = "SELECT `id`, `object` FROM `" . PREFIX . "menuss`";
+        $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`";
         
         $conditions = array();
         if( $class != MENU__CLASS )
@@ -84,7 +88,7 @@ class MenuService
         // Initialize the map by using the value of the 9 constants used for blocks positions
         $menus = MenuService::_initialize_menus_map();
         
-        $query = "SELECT `id`, `object`, `block`, `enabled` FROM `" . PREFIX . "menuss`;";
+        $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`;";
         $result = $Sql->query_while($query, __LINE__, __FILE__);
         while( $row = $Sql->fetch_assoc($result) )
         {
@@ -98,15 +102,32 @@ class MenuService
         return $menus;
     }
     
+    
     /**
-     * @desc Retrieve a Menu Object from the database
+     * @desc Retrieve a Menu Object from the database by its id
+     * @param int $id the id of the Menu to retrieve from the database
+     * @return Menu the requested Menu if it exists else, false
+     */
+    function load($id)
+    {
+        global $Sql;
+        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `id`='" . $id . "'", __LINE__, __FILE__);
+        
+        if( $result === false )
+            return false;
+        
+        return MenuService::_load($result);
+    }
+    
+    /**
+     * @desc Retrieve a Menu Object from the database by its title
      * @param string $title the title of the Menu to retrieve from the database
      * @return Menu the requested Menu if it exists else, false
      */
-    function load($title)
+    function load_by_title($title)
     {
         global $Sql;
-        $result = $Sql->query_array('menuss', 'id', 'object', "WHERE `title`='" . addslashes($title) . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `title`='" . addslashes($title) . "'", __LINE__, __FILE__);
         
         if( $result === false )
             return false;
@@ -233,6 +254,60 @@ class MenuService
     }
     
     /**
+     * @desc Change the menu position in a block
+     * @param Menu $menu The menu to move
+     * @param int $diff the direction to move it. positives integers move down, negatives, up.
+     */
+    function change_position(&$menu, $direction = MOVE_UP)
+    {
+        global $Sql;
+        
+        $block_position = $menu->get_block_position();
+        $new_block_position = $block_position;
+        $update_query = '';
+        
+        if( $direction > 0 )
+        {   // Moving the menu up
+            $max_position_query = "SELECT MAX(`position`) FROM `" . PREFIX . "menuss` WHERE `block`='" . $menu->get_block() . "'";
+            $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
+            // Getting the max diff
+            if( ($new_block_position = ($menu->get_block_position() + $direction)) > $max_position )
+                $new_block_position = $max_position;
+            
+            $update_query = "
+                UPDATE `" . PREFIX . "menuss` SET `position`=`position` - 1
+                WHERE
+                    `block`='" . $menu->get_block() . "' AND
+                    `position` BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
+            ";
+        }
+        else if( $direction < 0 )
+        {   // Moving the menu down
+            
+            // Getting the max diff
+            if( ($new_block_position = ($menu->get_block_position() + $direction)) < 0 )
+                $new_block_position = 0;
+                            
+            // Updating other menus
+            $update_query = "
+                UPDATE `" . PREFIX . "menuss` SET `position`=`position` + 1
+                WHERE
+                    `block`='" . $menu->get_block() . "' AND
+                    `position` BETWEEN " . ($block_position - 1) . "' AND '" . $new_block_postion . "
+            ";
+        }
+        
+        if( $block_position != $new_block_position )
+        {   // Updating other menus
+            $Sql->query_inject($update_query, __LINE__, __FILE__);
+            
+            // Updating the current menu
+            $menu->set_block_position($new_block_position);
+            MenuService::save($menu);
+        }
+    }
+    
+    /**
      * @desc Generate the cache
      */
     function generate_cache()
@@ -241,14 +316,15 @@ class MenuService
         
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
-        $cache_str .= '$MENUS[BLOCK_POSITION__HEADER] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__SUB_HEADER] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_CENTRAL] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__BOTTOM_CENTRAL] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_FOOTER] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__FOOTER] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__LEFT] = \'\'';
-        $cache_str .= '$MENUS[BLOCK_POSITION__RIGHT] = \'\'';
+        $cache_str .= '$MENUS[BLOCK_POSITION__HEADER] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__SUB_HEADER] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_CENTRAL] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__BOTTOM_CENTRAL] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__TOP_FOOTER] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__FOOTER] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__LEFT] = \'\';';
+        $cache_str .= '$MENUS[BLOCK_POSITION__RIGHT] = \'\';';
+        $cache_str .= 'global $User; ?>' . "\n";
         
         $menus_map = MenuService::get_menus_map();
         
@@ -261,7 +337,12 @@ class MenuService
             }
         }
         
-        $Cache->_write_cache('menuss', $cache_str);
+        $Cache->_write_cache('menuss', preg_replace(
+                array('`<!--.*-->`u', '`\n\s*\n`', '`[ ]{2,}`', '`>\s<`'),
+                array('', "\n", ' ', '><'),
+                $cache_str
+            )
+        );
     }
     
     /**
@@ -290,7 +371,13 @@ class MenuService
     function _load($db_result)
     {
         $menu = unserialize($db_result['object']);
+        
+        // Synchronize the object and the database
         $menu->id($db_result['id']);
+        $menu->enabled($db_result['enabled']);
+        $menu->set_block($db_result['block']);
+        $menu->set_block_position($db_result['position']);
+        
         return $menu;
     }
 }

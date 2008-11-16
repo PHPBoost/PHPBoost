@@ -70,9 +70,8 @@ class LinksMenuLink extends LinksMenuElement
      */
     function cache_export($template)
 	{
-        $cache_str = parent::cache_export();
         parent::_assign($template);
-	    return $cache_str . $template->parse(TEMPLATE_STRING_MODE) . '<?php } ?>';
+        return Menu::cache_export_begin() . $template->parse(TEMPLATE_STRING_MODE) . Menu::cache_export_end();
 	}
 	
 	## Private Methods ##
