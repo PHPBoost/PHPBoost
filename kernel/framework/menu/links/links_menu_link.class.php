@@ -25,15 +25,15 @@
  *
 ###################################################*/
 
-import('menus/links/links_menu_element');
+import('menu/links/links_menu_element');
 
 define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc A Simple menu link
- * @package util
- * @subpackage menu
+ * @package Menu
+ * @subpackage LinksMenu
  */
 class LinksMenuLink extends LinksMenuElement
 {

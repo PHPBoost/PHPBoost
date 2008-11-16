@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -79,7 +79,7 @@ class ModulesDiscoveryService
     function get_available_modules($functionnality='get_id', $modulesList = array())
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
-     *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci 
+     *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
      */
     {
         $modules = array();
@@ -125,11 +125,9 @@ class ModulesDiscoveryService
                     }
                     else $Module = new ModuleInterface($moduleId, MODULE_NOT_YET_IMPLEMENTED);
                 }
-                else 
-					$Module = new ModuleInterface($moduleId, ACCES_DENIED);
+                else $Module = new ModuleInterface($moduleId, ACCES_DENIED);
             }
-            else 
-				$Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
+            else $Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
 				
             $this->loaded_modules[$moduleId] = $Module;
         }

@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                          content_menu.class.php
+ *                          modules_mini_menu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
@@ -25,14 +25,20 @@
  *
 ###################################################*/
 
-import('menus/menu');
+import('menu/menu');
 
-define('CONTENT_MENU__CLASS','ContentMenu');
+define('MINI_MENU__CLASS','MiniMenu');
 
-class ContentMenu extends Menu
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc
+ * @package Menu
+ * @subpackage MiniMenu
+ */
+class MiniMenu extends Menu
 {
     ## Public Methods ##
-    function ContentMenu($title)
+    function MiniMenu($title)
     {
        parent::Menu($title);
     }
