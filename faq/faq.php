@@ -62,7 +62,7 @@ $Template->set_filenames(array(
 	'faq'=> 'faq/faq.tpl'
 ));
 $Template->assign_vars(array(
-	'THEME' => $CONFIG['theme'],
+	'THEME' => uget_theme(),
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq')
 ));
 
@@ -206,8 +206,8 @@ $Template->assign_vars(array(
 	'L_MOVE' => $FAQ_LANG['move'],
 	'L_CONFIRM_DELETE' => $FAQ_LANG['confirm_delete'],
 	'L_QUESTION_URL' => 'URL de la question',
-	'LANG' => $CONFIG['lang'],
-	'THEME' => $CONFIG['theme'],
+	'LANG' => uget_lang(),
+	'THEME' => uget_theme(),
 	'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
 	'U_MANAGEMENT' => url('management.php?faq=' . $id_faq),
 	'U_ADMIN_CAT' => $id_faq > 0 ? url('admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php')

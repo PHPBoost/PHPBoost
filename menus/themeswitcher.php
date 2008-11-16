@@ -54,7 +54,7 @@ if( is_dir($rep) ) //Si le dossier existe
 		if( !preg_match('`\.`', $theme) )
 		{	
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
-			$info_lang = @parse_ini_file('../templates/' . $theme . '/config/' . $CONFIG['lang'] . '/config.ini');
+			$info_lang = @parse_ini_file('../templates/' . $theme . '/config/' . uget_lang() . '/config.ini');
 			$Template->assign_block_vars('themes', array(
 				'NAME' => $info_lang['name'],
 				'IDNAME' => $theme,
@@ -66,7 +66,7 @@ if( is_dir($rep) ) //Si le dossier existe
 }	
 
 $Template->assign_vars(array(
-	'DEFAULT_THEME' => $configtheme_noreplace,
+	'DEFAULT_THEME' => $CONFIG['theme'],
 	'L_SWITCHTHEME' => 'Changer le thème',
 	'L_DEFAULT_THEME' => 'Thème par défaut',
 	'L_SUBMIT' => $LANG['submit']

@@ -90,7 +90,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		{
 			$Template->assign_block_vars('msg_list', array(
 				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',
-				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+				'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'CONTENTS' => ucfirst(second_parse($row['contents'])),
 				'U_TITLE' => url($row['path'] . '#' . $row['script'])

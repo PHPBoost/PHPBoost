@@ -28,7 +28,7 @@
 require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
-include_once('../lang/' . $CONFIG['lang'] . '/stats.php'); //Chargement de la langue.
+include_once('../lang/' . uget_lang() . '/stats.php'); //Chargement de la langue.
 
 $Template->set_filenames(array(
 	'admin_stats_management'=> 'admin/admin_stats_management.tpl'
@@ -94,7 +94,7 @@ if( !empty($members) )
 	ORDER BY compt DESC", __LINE__, __FILE__);
 	while($row = $Sql->fetch_assoc($result))
 	{
-		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
+		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', uget_lang());
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$stats_array[$name] = $row['compt'];
 	}	
@@ -960,12 +960,12 @@ elseif( !empty($referer) )
 		$Template->assign_block_vars('referer_list', array(
 			'ID' => $row['id'],
 			'URL' => $row['url'],
-			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'IMG_MORE' => '<img src="../templates/' . uget_theme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+			'TREND' => '<img src="../templates/' . uget_theme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}
 	$Sql->query_close($result);
@@ -1017,12 +1017,12 @@ elseif( !empty($keyword) )
 		$Template->assign_block_vars('keyword_list', array(
 			'ID' => $row['id'],
 			'KEYWORD' => $row['relative_url'],
-			'IMG_MORE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'IMG_MORE' => '<img src="../templates/' . uget_theme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-			'TREND' => '<img src="../templates/' . $CONFIG['theme'] . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+			'TREND' => '<img src="../templates/' . uget_theme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}	
 	$Sql->query_close($result);
@@ -1039,7 +1039,7 @@ elseif( !empty($keyword) )
 }
 elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques camenbert.
 {
-	include_once('../lang/' . $CONFIG['lang'] . '/stats.php');
+	include_once('../lang/' . uget_lang() . '/stats.php');
 	
 	if( !empty($browser) )
 	{
@@ -1099,7 +1099,7 @@ elseif( !empty($browser) || !empty($os) || !empty($user_lang) ) //Graphiques cam
 			$value_name = 'other';
 			$angle_value += $percent_other;
 			$percent_other += $angle_value;
-			$stats_img = '<img src="../templates/' . $CONFIG['theme'] . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
+			$stats_img = '<img src="../templates/' . uget_theme() . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
 			$name_stats = $LANG['other'];
 		}	
 		else

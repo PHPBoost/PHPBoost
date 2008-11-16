@@ -313,7 +313,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 				{	
 					//On insere le nouveau membre.
 					$Sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
-					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $configlang_noreplace . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
+					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
 					
 					//On régénère le cache
 					$Cache->Generate_file('stats');
@@ -572,7 +572,7 @@ elseif( !empty($id) )
 	FROM ".PREFIX."themes", __LINE__, __FILE__);
 	while( $row2 = $Sql->fetch_assoc($result) )
 	{	
-		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', $CONFIG['lang']);
+		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', uget_lang());
 		if( is_array($theme_info) )
 		{
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
@@ -649,7 +649,7 @@ elseif( !empty($id) )
 		'USER_AVATAR' => !empty($mbr['user_avatar']) ? '<img src="' . $mbr['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 		'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 		'WIDTH_MAX' => $CONFIG_MEMBER['width_max'],
@@ -872,8 +872,8 @@ else
 
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_PASS' => $LANG['require_pass'],
@@ -927,7 +927,7 @@ else
 			default: 0;
 		} 
 		
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
+		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
 		$Template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],

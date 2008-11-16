@@ -104,8 +104,8 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$submit = !empty($post_update) ? $LANG['update'] : $LANG['submit'];
 		
 		$Template->assign_vars(array(
-			'THEME' => $CONFIG['theme'],
-			'LANG' => $CONFIG['lang'],
+			'THEME' => uget_theme(),
+			'LANG' => uget_lang(),
 			'P_UPDATE' => $post_update,
 			'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 			'SID' => SID,
@@ -262,8 +262,8 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$poll_type = retrieve(POST, 'poll_type', 0);
 				
 			$Template->assign_vars(array(
-				'THEME' => $CONFIG['theme'],
-				'LANG' => $CONFIG['lang'],
+				'THEME' => uget_theme(),
+				'LANG' => uget_lang(),
 				'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 				'SID' => SID,	
 				'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),			
@@ -353,7 +353,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => $forum_cats,
-				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" class="valign_middle" /></a>',
+				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/post.png" alt="" class="valign_middle" /></a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -561,8 +561,8 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$poll_type = retrieve(POST, 'poll_type', 0);
 						
 				$Template->assign_vars(array(
-					'THEME' => $CONFIG['theme'],
-					'LANG' => $CONFIG['lang'],
+					'THEME' => uget_theme(),
+					'LANG' => uget_lang(),
 					'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 					'SID' => SID,
 					'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
@@ -934,7 +934,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
-				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="" /></a>',
+				'U_TITLE_T' => '<a href="post' . url('.php?new=topic&amp;id=' . $id_get) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/post.png" alt="" /></a>',
 				'L_ACTION' => $LANG['forum_new_subject'],
 				'L_REQUIRE' => $LANG['require'],
 				'L_REQUIRE_TEXT' => $LANG['require_text'],

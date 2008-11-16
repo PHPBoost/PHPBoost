@@ -49,7 +49,7 @@ if( $install )
 	if( empty($check_theme) && !empty($theme) )
 	{
 		//On récupère la configuration du thème.
-		$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
+		$info_theme = load_ini_file('../templates/' . $theme . '/config/', uget_lang());
 		
 		$Sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
@@ -121,8 +121,8 @@ else
 	));
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],		
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),		
+		'LANG' => uget_lang(),
 		'L_THEME_ADD' => $LANG['theme_add'],	
 		'L_UPLOAD_THEME' => $LANG['upload_theme'],
 		'L_EXPLAIN_ARCHIVE_UPLOAD' => $LANG['explain_archive_upload'],
@@ -186,7 +186,7 @@ else
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 		foreach($array_dir as $theme_array => $value_array) //On effectue la recherche dans le tableau.
 		{
-			$info_theme = load_ini_file('../templates/' . $value_array . '/config/', $CONFIG['lang']);
+			$info_theme = load_ini_file('../templates/' . $value_array . '/config/', uget_lang());
 		
 			$options = '';
 			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
@@ -201,7 +201,7 @@ else
 				'ICON' => $value_array,
 				'VERSION' => $info_theme['version'],
 				'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
 				'DESC' => $info_theme['info'],
 				'COMPAT' => $info_theme['compatibility'],
 				'HTML_VERSION' => $info_theme['html_version'],

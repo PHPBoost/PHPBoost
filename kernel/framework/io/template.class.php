@@ -50,8 +50,8 @@ class Template
                 $member_connected = $User->check_level(MEMBER_LEVEL);
                 $this->assign_vars(array(
                     'SID' => SID,
-                    'THEME' => $CONFIG['theme'],
-                    'LANG' => $CONFIG['lang'],
+                    'THEME' => uget_theme(),
+                    'LANG' => uget_lang(),
                     'C_MEMBER_CONNECTED' => $member_connected,
                     'C_MEMBER_NOTCONNECTED' => !$member_connected,
                     'PATH_TO_ROOT' => PATH_TO_ROOT
@@ -200,7 +200,7 @@ class Template
         //echo '<pre>'; print_r(array('filename' => $filename, 'module' => $module, 'file' => $file, 'folder' => $folder)); echo '</pre><hr />';
         
         $default_templates_folder = PATH_TO_ROOT . '/templates/default/';
-        $theme_templates_folder = PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/';
+        $theme_templates_folder = PATH_TO_ROOT . '/templates/' . uget_theme() . '/';
         
         if( empty($module) || in_array($module, array('admin') ) )
         {   // Kernel - Templates priority order

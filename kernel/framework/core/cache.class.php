@@ -272,7 +272,7 @@ class Cache
 			while( $row = $Sql->fetch_assoc($result) )
 			{
 				//Récupération des infos de config.
-				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', $CONFIG['lang']);
+				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', uget_lang());
 				if( !empty($get_info_modules['url_rewrite']) )
 					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
 			}
@@ -320,8 +320,8 @@ class Cache
 		{
 			if( $array['activ'] == '1' ) //module activé.
 			{
-				if( file_exists(PATH_TO_ROOT . '/templates/' . $CONFIG['theme'] . '/modules/' . $name . '/' . $name . '_mini.css') )
-					$css .= '$CSS[] = \'/templates/' . $CONFIG['theme'] . '/modules/' . $name . '/' . $name . "_mini.css';\n";
+				if( file_exists(PATH_TO_ROOT . '/templates/' . uget_theme() . '/modules/' . $name . '/' . $name . '_mini.css') )
+					$css .= '$CSS[] = \'/templates/' . uget_theme() . '/modules/' . $name . '/' . $name . "_mini.css';\n";
 				elseif( file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css') )
 					$css .= '$CSS[] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
 			}

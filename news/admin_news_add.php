@@ -226,7 +226,7 @@ else
 	
 	$Template->assign_vars(array(
 		'TITLE' => '',
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'VISIBLE_ENABLED' => 'checked="checked"',
 		'IMG_PREVIEW' => $LANG['no_img'],
 		'KERNEL_EDITOR' => display_editor(),

@@ -90,8 +90,8 @@ elseif( $uninstall ) //Désinstallation du module
 		
 		$Template->assign_vars(array(
 			'C_MODULES_DEL' => true,
-			'THEME' => $CONFIG['theme'],
-			'LANG' => $CONFIG['lang'],
+			'THEME' => uget_theme(),
+			'LANG' => uget_lang(),
 			'IDMODULE' => $idmodule,
 			'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 			'L_ADD_MODULES' => $LANG['add_modules'],
@@ -116,8 +116,8 @@ else
 	
 	$Template->assign_vars(array(
 		'C_MODULES_LIST' => true,
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
 		'L_UPDATE_MODULES' => $LANG['update_modules'],
@@ -161,7 +161,7 @@ else
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		//Récupération des infos de config.
-		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);		
+		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', uget_lang());		
 		$array_modules[$array_info_module[$row['name']]['name']] = array('id' => $row['id'], 'name' => $row['name'], 'auth' => $row['auth'], 'activ' => $row['activ']);
 	}
 	$Sql->query_close($result);
@@ -182,7 +182,7 @@ else
 			'ICON' => $row['name'],
 			'VERSION' => $info_module['version'],
 			'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-			'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+			'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
 			'DESC' => $info_module['info'],
 			'COMPAT' => $info_module['compatibility'],
 			'ADMIN' => ($info_module['admin'] ? $LANG['yes'] : $LANG['no']),

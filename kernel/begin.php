@@ -99,13 +99,13 @@ else
 }
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$User->set_user_theme(find_require_dir(PATH_TO_ROOT . '/templates/', ($User->get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $User->get_attribute('user_theme')));
+$User->set_user_theme(find_require_dir(PATH_TO_ROOT . '/templates/', ($User->get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? uget_theme() : $User->get_attribute('user_theme')));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', ($User->get_attribute('user_lang') == '' ? $configlang_noreplace : $User->get_attribute('user_lang'))));
+$User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', ($User->get_attribute('user_lang') == '' ? $CONFIG['lang'] : $User->get_attribute('user_lang'))));
 $LANG = array();
-require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/main.php'); //!\\ Langues //!\\
-require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/errors.php'); //Inclusion des langues des erreurs.
+require_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/main.php'); //!\\ Langues //!\\
+require_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/errors.php'); //Inclusion des langues des erreurs.
 
 //Chargement du cache du jour actuel.
 $Cache->load('day');
@@ -130,7 +130,7 @@ if( isset($MODULES[MODULE_NAME])  )
 }
 elseif( MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'kernel' ) //Empêche l'exécution d'un module non installé.
 {
-	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', $CONFIG['lang']);	
+	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', uget_lang());	
 	if( !empty($array_info_module['name']) ) //Module présent, et non installé.
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }

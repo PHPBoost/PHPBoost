@@ -428,8 +428,8 @@ else
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],

@@ -51,7 +51,7 @@ $Template->set_filenames(array(
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
-	'LANG' => $CONFIG['lang'],
+	'LANG' => uget_lang(),
 	'SID' => SID,
 	'SEARCH' => $search,
 	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
@@ -199,7 +199,7 @@ if( !empty($valid_search) && !empty($search) )
 			}
 			
 			$Template->assign_block_vars('list', array(
-				'USER_ONLINE' => '<img src="../templates/' . $CONFIG['theme'] . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+				'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . ((!empty($row['connect']) && $row['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 				'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 				'CONTENTS' => second_parse($contents),
 				'RELEVANCE' => ($relevance > $max_relevance ) ? '100' : number_round(($relevance * 100) / $max_relevance, 2),

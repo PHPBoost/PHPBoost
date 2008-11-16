@@ -109,7 +109,7 @@ else
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],	
+		'THEME' => uget_theme(),	
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],
 		'L_NEWS_MANAGEMENT' => $LANG['news_management'],

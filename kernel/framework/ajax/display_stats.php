@@ -41,7 +41,7 @@ $get_pages_month = !empty($_GET['pages_month']) ? true : false;
 $get_pages_year = !empty($_GET['pages_year']) ? true : false;
 
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
-include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
+include_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/stats.php');
 import('util/images_stats');
 $Stats = new Stats();
 

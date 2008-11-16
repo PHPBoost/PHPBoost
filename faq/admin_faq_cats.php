@@ -214,7 +214,7 @@ else
 	
 	$Template->assign_vars(array(
 		'L_RECOUNT_QUESTIONS' => $FAQ_LANG['recount_questions_number'],
-		'THEME' => $CONFIG['theme']
+		'THEME' => uget_theme()
 	));
 }
 

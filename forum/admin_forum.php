@@ -264,7 +264,7 @@ elseif( !empty($id) )
 		$type = 1;
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'ID' => $id,
 		'TYPE' => $type,
@@ -321,7 +321,7 @@ else
 	));
 		
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -368,7 +368,7 @@ else
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
 			'INDENT' => $row['level'] * 75, //Indentation des sous catégories.
-			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['lock'] . '" />' : '',
+			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . uget_theme() . '/images/readonly.png" alt="" title="' . $LANG['lock'] . '" />' : '',
 			'URL' => !empty($row['url']) ? '<a href="' . $row['url'] . '"><img src="./forum_mini.png" alt="" class="valign_middle" /></a> ' : '',
 			'U_FORUM_VARS' => !empty($row['url']) ? $row['url'] : (($row['level'] > 0) ? 'forum' . url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') : url('index.php?id=' . $row['id'], 'cat-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'))
 		));

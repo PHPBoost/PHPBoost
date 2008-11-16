@@ -223,15 +223,15 @@ elseif( $g_add )
 	
 	$Template->assign_vars(array(
 		'SID' => SID,
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'CAT_ID' => $g_idcat,
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'CATEGORIES' => $auth_cats,
 		'WIDTH_MAX' => $CONFIG_GALLERY['width_max'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height_max'],
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'IMG_FORMAT' => 'JPG, PNG, GIF',
 		'L_IMG_FORMAT' => $LANG['img_format'],
 		'L_WIDTH_MAX' => $LANG['width_max'],
@@ -332,8 +332,8 @@ else
 		'START_THUMB' => 0,
 		'END_THUMB' => 0,
 		'SID' => SID,
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'PAGINATION' => $Pagination->display('gallery' . url('.php?p=%d&amp;cat=' . $g_idcat . '&amp;id=' . $g_idpics . '&amp;' . $g_sort, '-' . $g_idcat . '-' . $g_idpics . '-%d.php?&' . $g_sort), $total_cat, 'p', $CONFIG_GALLERY['nbr_pics_max'], 3),	
 		'COLUMN_WIDTH_CATS' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
@@ -342,7 +342,7 @@ else
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 		'WIDTH_MAX' => $column_width_pics,
 		'MODULE_DATA_PATH' => $module_data_path,
-		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_PICS' => $User->check_auth($CAT_GALLERY[$g_idcat]['auth'], WRITE_CAT_GALLERY) ? '<a href="gallery' . url('.php?add=1&amp;cat=' . $g_idcat) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_FILE_FORBIDDEN_CHARS' => $LANG['file_forbidden_chars'],
 		'L_TOTAL_IMG' => sprintf($LANG['total_img_cat'], $nbr_pics),		
@@ -390,7 +390,7 @@ else
 	{
 		$Template->assign_vars(array(			
 			'C_GALLERY_CATS' => true,
-			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT_CAT' => $is_admin ? '<a href="admin_gallery_cat.php"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : ''
 		));
 			
 		$j = 0;	
@@ -412,8 +412,8 @@ else
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
 				'IMG' => !empty($row['path']) ? '<img src="pics/thumbnails/' . $row['path'] . '" alt="" />' : '',
-				'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : '',
-				'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+				'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : '',
+				'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . uget_theme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
 				'OPEN_TR' => is_int($j++/$nbr_column_cats) ? '<tr>' : '',
 				'CLOSE_TR' => is_int($j/$nbr_column_cats) ? '</tr>' : '',
 				'L_NBR_PICS' => sprintf($LANG['nbr_pics_info'], $row['nbr_pics']),
@@ -474,7 +474,7 @@ else
 
 		$Template->assign_vars(array(
 			'C_GALLERY_PICS' => true,
-			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT' => $is_admin ? '<a href="admin_gallery_cat.php' . (!empty($g_idcat) ? '?id=' . $g_idcat : '') . '"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : ''
 		));	
 				
 		//Liste des catégories.	
@@ -589,7 +589,7 @@ else
 					'CAT' => $cat_list,	
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),		
-					'IMG_APROB' => $CONFIG['lang'] . '/' . (($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
+					'IMG_APROB' => uget_lang() . '/' . (($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
 					'ARRAY_JS' => $array_js,
 					'NBR_PICS' => ($i - 1),
 					'MAX_START' => ($i - 1) - $nbr_column_pics,
@@ -610,10 +610,10 @@ else
 					'L_THUMBNAILS' => $LANG['thumbnails'],
 					'U_DEL' => url('.php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
 					'U_MOVE' => url('.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?move=\' + this.options[this.selectedIndex].value'),
-					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max"><img src="../templates/' . $CONFIG['theme'] . '/images/left.png" alt="" class="valign_middle" /></a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max">' . $LANG['previous'] . '</a>' : '',
-					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max">' . $LANG['next'] . '</a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max"><img src="../templates/' . $CONFIG['theme'] . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
-					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . $CONFIG['theme'] . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
-					'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="../templates/' . $CONFIG['theme'] . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
+					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max"><img src="../templates/' . uget_theme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max">' . $LANG['previous'] . '</a>' : '',
+					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max">' . $LANG['next'] . '</a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max"><img src="../templates/' . uget_theme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
+					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . uget_theme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
+					'U_RIGHT_THUMBNAILS' => (($pos_pics - $start_thumbnails) <= ($i - 1) - $nbr_column_pics) ? '<span id="display_right"><a href="javascript:display_thumbnails(\'right\')"><img src="../templates/' . uget_theme() . '/images/right.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_right"></span>'
 				));				
 
 				//Affichage de la liste des miniatures sous l'image.
@@ -697,7 +697,7 @@ else
 					'CAT' => $cat_list,
 					'RENAME' => addslashes($row['name']),
 					'RENAME_CUT' => addslashes($row['name']),		
-					'IMG_APROB' => $CONFIG['lang'] . '/' . (($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
+					'IMG_APROB' => uget_lang() . '/' . (($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
 					'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 					'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
