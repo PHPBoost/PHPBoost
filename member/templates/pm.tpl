@@ -307,7 +307,7 @@
 						</tr>	
 					</table>
 					# END edit_pm.show_pm #
-										
+					
 					<div class="fieldset_content">
 						<fieldset>
 							<legend>{L_EDIT}</legend>

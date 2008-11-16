@@ -27,7 +27,7 @@
 				# ENDIF #
 
 				<label for="shout_contents">* {L_MESSAGE}</label>
-				{KERNEL_EDITOR}
+				<div class="fieldset_mini">{KERNEL_EDITOR}</div>
 				<label><textarea rows="10" cols="50" id="shout_contents" name="shout_contents">{CONTENTS}</textarea></label>
 			</fieldset>
 			<fieldset class="fieldset_submit">
