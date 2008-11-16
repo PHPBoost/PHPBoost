@@ -28,7 +28,7 @@
 if( defined('PHPBOOST') !== true) exit;
 
 $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
-if( $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false )
+if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false )
 {
 	//Chargement de la langue du module.
 	load_module_lang('poll');
