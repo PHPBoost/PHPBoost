@@ -245,7 +245,7 @@ else
 	
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_poll.php?p=%d', $nbr_poll, 'p', 20, 3),
-		'LANG' => uget_lang(),
+		'LANG' => get_ulang(),
 		'L_CONFIRM_ERASE_POOL' => $LANG['confirm_del_poll'],
 		'L_POLL_MANAGEMENT' => $LANG['poll_management'],
 		'L_POLL_ADD' => $LANG['poll_add'],

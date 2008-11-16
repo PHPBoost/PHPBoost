@@ -79,7 +79,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 		if( strpos($module_name, '.php') === false ) //Menu associé à un module.
 		{
 			//Récupération des infos de config.
-			$info_module = load_ini_file('../' . $module_name . '/lang/', uget_lang());
+			$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 			//Installation du mini module s'il existe
 			if( !empty($info_module['mini_module']) )
 			{
@@ -230,7 +230,7 @@ else
 		//Nom du menus.
 		if( !empty($menu['name']) )
 		{
-			$config = load_ini_file('../' . $menu['name'] . '/lang/', uget_lang());
+			$config = load_ini_file('../' . $menu['name'] . '/lang/', get_ulang());
 			if( is_array($config) )
 				$menu['name'] = !empty($config['name']) ? $config['name'] : $menu['name'];	
 		}
@@ -268,7 +268,7 @@ else
 		$idmodule = $array_get[2];
 		
 		//Nom du menus.
-		$config = load_ini_file('../' . $module_name . '/lang/', uget_lang());
+		$config = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 		$name = $module_name;
 		if( is_array($config) )
 			$name = !empty($config['name']) ? $config['name'] : $name;	

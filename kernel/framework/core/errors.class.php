@@ -100,7 +100,7 @@ class Errors
 
 		//On affiche l'erreur
 		echo '<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;">
-			<img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" /> 
+			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" /> 
 			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />	
 		</div>';

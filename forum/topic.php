@@ -81,9 +81,9 @@ if( $check_group_edit_auth )
 {
 	$lock_status = '';
 	if( $topic['status'] == '1' ) //Unlocked, affiche lien pour verrouiller.
-		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
 	elseif( $topic['status'] == '0' ) //Lock, affiche lien pour déverrouiler.
-		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
+		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
 	
 	$Template->assign_vars(array(
 		'MOVE' => '<a href="move' . url('.php?id=' . $id_get) . '" onclick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
@@ -140,8 +140,8 @@ $Template->assign_vars(array(
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
 	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
-	'THEME' => uget_theme(),
-	'LANG' => uget_lang(),
+	'THEME' => get_utheme(),
+	'LANG' => get_ulang(),
 	'USER_ID' => $topic['user_id'],
 	'ID' => $topic['idcat'],
 	'IDTOPIC' => $id_get,
@@ -198,22 +198,22 @@ while ( $row = $Sql->fetch_assoc($result) )
 	if( $check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message) )
 	{
 		$valid = ($first_message) ? 'topic' : 'msg';
-		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
+		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
 		$del = (!$first_message) ? '&nbsp;&nbsp;<script type="text/javascript"><!-- 
-		document.write(\'<img style="cursor: pointer;" onclick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
-		--></script><noscript><a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
-		: '&nbsp;&nbsp;<a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
+		document.write(\'<img style="cursor: pointer;" onclick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
+		--></script><noscript><a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
+		: '&nbsp;&nbsp;<a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
 		
 		//Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		if( $check_group_edit_auth )
 		{
 			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . url('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
-			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . uget_theme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
-			$readonly = !$is_guest ? '<a href="moderation_forum' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . uget_theme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
+			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
+			$readonly = !$is_guest ? '<a href="moderation_forum' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
 		}
 	}
 	elseif( $User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message ) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
-		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
+		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
 			
 	//Gestion des sondages => executé une seule fois.
 	if( !empty($row['question']) && $poll_done === false )
@@ -314,7 +314,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	}
 
 	//Image associée au rang.
-	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . uget_theme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 				
 	//Affichage des groupes du membre.		
 	if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -332,15 +332,15 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Avatar			
 	if( empty($row['user_avatar']) ) 
-		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	if( $row['user_sex'] == 1 )	
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/man.png" alt="" /><br />';	
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 	elseif( $row['user_sex'] == 2 ) 
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/woman.png" alt="" /><br />';
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 	else $user_sex = '';
 			
 	//Localisation.
@@ -367,7 +367,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-		'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . ((!empty($row['connect']) && !$is_guest) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+		'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . ((!empty($row['connect']) && !$is_guest) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 		'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 		'USER_IMG_ASSOC' => $user_assoc_img,
@@ -377,19 +377,19 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_SEX' => $user_sex,
 		'USER_MSG' => (!$is_guest) ? $user_msg : '',
 		'USER_LOCAL' => $user_local,
-		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 		'USER_EDIT' => $edit_mark,
 		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . $row['user_sign'] : '',
-		'USER_WEB' => (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_web']  . '" /></a>' : '',
+		'USER_WEB' => (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_web']  . '" /></a>' : '',
 		'WARNING' => !empty($warning) ? $row['user_warning'] . '%' . $warning : '',
 		'PUNISHMENT' => $readonly,
 		'EDIT' => $edit,
 		'CUT' => $cut,
 		'DEL' => $del,'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/pm.png" alt="pm" /></a>' : '',
+		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
 	));
 	
 	//Marqueur de suivis du sujet.
@@ -518,8 +518,8 @@ else
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->assign_vars(array(
 			'C_DISPLAY_MSG' => true,
-			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . uget_theme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
-			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . uget_theme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
+			'ICON_DISPLAY_MSG' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle"  />' : '',
+			'ICON_DISPLAY_MSG2' => $CONFIG_FORUM['icon_activ_display_msg'] ? '<img src="../templates/' . get_utheme() . '/images/' . $img_msg_display . '" alt="" class="valign_middle" id="forum_change_img" />' : '',
 			'L_DISPLAY_MSG' => $CONFIG_FORUM['display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],

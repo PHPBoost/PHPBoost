@@ -254,9 +254,9 @@ class Comments
 							'SCRIPT' => $this->script,
 							'CONTENTS' => unparse($row['contents']),
 							'DATE' => gmdate_format('date_format', $row['timestamp']),
-							'THEME' => uget_theme(),
+							'THEME' => get_utheme(),
 							'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
-							'L_LANGUAGE' => substr(uget_lang(), 0, 2),				   
+							'L_LANGUAGE' => substr(get_ulang(), 0, 2),				   
 							'L_EDIT_COMMENT' => $LANG['edit_comment'],
 							'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 							'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -404,7 +404,7 @@ class Comments
 				$Template->assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
 					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
-					'LANG' => uget_lang(),
+					'LANG' => get_ulang(),
 					'IDCOM' => '',
 					'IDPROV' => $this->idprov,
 					'SCRIPT' => $this->script,
@@ -414,7 +414,7 @@ class Comments
 					'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
-					'THEME' => uget_theme(),
+					'THEME' => get_utheme(),
 					'CONTENTS' => unparse($contents),
 					'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -455,15 +455,15 @@ class Comments
 					$readonly = '';
 					if( $is_modo && !$is_guest ) //Modération.
 					{
-						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 					}
 					
 					//Edition/suppression.
 					if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 					{
-						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.
@@ -502,7 +502,7 @@ class Comments
 					}
 					
 					//Image associée au rang.
-					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 								
 					//Affichage des groupes du membre.		
 					if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -523,16 +523,16 @@ class Comments
 					
 					//Avatar			
 					if( empty($row['user_avatar']) ) 
-						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 					
 					//Affichage du sexe et du statut (connecté/déconnecté).	
 					$user_sex = '';
 					if( $row['user_sex'] == 1 )	
-						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/man.png" alt="" /><br />';	
+						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 					elseif( $row['user_sex'] == 2 ) 
-						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/woman.png" alt="" /><br />';
+						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 							
 					//Nombre de message.
 					$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -556,7 +556,7 @@ class Comments
 						'CONTENTS' => $contents,
 						'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 						'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-						'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+						'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 						'USER_PSEUDO' => $com_pseudo,			
 						'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 						'USER_IMG_ASSOC' => $user_assoc_img,
@@ -566,16 +566,16 @@ class Comments
 						'USER_SEX' => $user_sex,
 						'USER_MSG' => !$is_guest ? $user_msg : '',
 						'USER_LOCAL' => $user_local,
-						'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-						'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+						'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+						'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
-						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 						'PUNISHMENT' => $readonly,			
 						'DEL' => $del,
 						'EDIT' => $edit,
-						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/images/' . uget_lang() . '/pm.png" alt="" /></a>',
+						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 						'U_ANCHOR' => $this->path . $this->vars . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
 						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script
 					));
@@ -596,7 +596,7 @@ class Comments
 		global $Sql, $CONFIG;
 
 		//Récupération des informations sur le module.
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', uget_lang());
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
 		
 		$check_script = false;
 		if( isset($info_module['com']) )

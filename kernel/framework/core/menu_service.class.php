@@ -322,7 +322,7 @@ class MenuService
         $cache_str .= '$MENUS[BLOCK_POSITION__FOOTER] = \'\';';
         $cache_str .= '$MENUS[BLOCK_POSITION__LEFT] = \'\';';
         $cache_str .= '$MENUS[BLOCK_POSITION__RIGHT] = \'\';';
-        $cache_str .= 'global $User; ?>' . "\n";
+        $cache_str .= 'global $User;' . "\n";
         
         $menus_map = MenuService::get_menus_map();
         
@@ -331,13 +331,16 @@ class MenuService
             if( $block != BLOCK_POSITION__NOT_ENABLED )
             {
                 foreach( $block_menus as $menu )
-                    $cache_str .= $menu->cache_export();
+                {
+                    $cache_str .= '$__menu =\'' . $menu->cache_export() . '\';' . "\n";
+                    $cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+                }
             }
         }
         
         Cache::write('menuss', preg_replace(
-                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s<`', '`\n `'),
-                array('', '', "\n", ' ', '> <', "\n"),
+                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `'),
+                array('', '', "\n", ' ', '> ', "\n"),
                 $cache_str
             )
         );

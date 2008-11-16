@@ -123,7 +123,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
 		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
 		$links[$LANG['pages_create']] = array(url('post.php'), $pages_data_path . '/images/create_page.png');
-		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . uget_theme() . '/images/print_mini.png');
+		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
 	}
 	if( $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
 		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $pages_data_path . '/images/explorer.png');

@@ -120,14 +120,14 @@ if( $checkdate === true && empty($id) && !$add )
 	
 	if( $User->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
 	{
-		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/add.png" /></a><br />';
+		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" /></a><br />';
 	}
 	else
 		$add_event = '';
 	
 	$Template->assign_vars(array(
 		'C_CALENDAR_DISPLAY' => true,
-		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
+		'ADMIN_CALENDAR' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="' . HOST . DIR . '/calendar/admin_calendar.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" style="vertical-align:middle;" /></a>' : '',
 		'ADD' => $add_event,
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
@@ -221,8 +221,8 @@ if( $checkdate === true && empty($id) && !$add )
 		{
 			if( $User->check_level(ADMIN_LEVEL) )
 			{
-				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" class="valign_middle" /></a>';
+				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {

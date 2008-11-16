@@ -119,7 +119,8 @@ class LinksMenu extends LinksMenuElement
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'DEPTH' => $this->depth,
-            'ID' => $this->display_id
+            'ID' => $this->display_id,
+            'ID_VAR' => $this->display_id
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
@@ -131,8 +132,6 @@ class LinksMenu extends LinksMenuElement
      */
     function cache_export()
     {
-        $cache_str = '';
-        
         $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
         $original_tpl = $tpl->copy();
         
@@ -149,11 +148,21 @@ class LinksMenu extends LinksMenuElement
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'DEPTH' => $this->depth,
-            'ID' => $this->display_id
+            'ID' => '##.#GET_UID#.##',
+            'ID_VAR' => '##.#GET_UID_VAR#.##',
         ));
         
-        $cache_str .= $tpl->parse(TEMPLATE_STRING_MODE);
-        return Menu::cache_export_begin() . $cache_str . Menu::cache_export_end();
+        if( $this->depth == 0 )
+        {   // We protect and unprotect only on the top level
+            $cache_str = addcslashes($tpl->parse(TEMPLATE_STRING_MODE), '\'');
+            $cache_str = str_replace(
+                array('#GET_UID#', '#GET_UID_VAR#', '##'),
+                array('($__uid = get_uid())', '$__uid', '\''),
+                $cache_str
+            );
+            return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
+        }
+        return parent::cache_export_begin() . $tpl->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
     }
 	
 	## Getters ##

@@ -55,8 +55,8 @@ $moderation_panel_template = new Template('member/moderation_panel.tpl');
 
 $moderation_panel_template->assign_vars(array(
 	'SID' => SID,
-	'LANG' => uget_lang(),
-	'THEME' => uget_theme(),
+	'LANG' => get_ulang(),
+	'THEME' => get_utheme(),
 	'L_MODERATION_PANEL' => $LANG['moderation_panel'],
 	'L_PUNISHMENT' => $LANG['punishment'],
 	'L_WARNING' => $LANG['warning'],
@@ -144,7 +144,7 @@ switch($action)
 					'LOGIN' => $row['login'],
 					'INFO' => gmdate_format('date_format', $row['user_readonly']),
 					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-					'U_ACTION_USER' => '<a href="moderation_panel.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . uget_theme() . '/images/readonly.png" alt="" /></a>',
+					'U_ACTION_USER' => '<a href="moderation_panel.php?action=punish&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
@@ -297,7 +297,7 @@ switch($action)
 					'LOGIN' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 					'INFO' => ($row['user_warning'] != 100) ? gmdate_format('date_format', $row['user_ban']) : $LANG['illimited'],
 					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-					'U_ACTION_USER' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . uget_theme() . '/images/admin/forbidden.png" alt="" /></a>',
+					'U_ACTION_USER' => '<a href="moderation_panel.php?action=ban&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/forbidden.png" alt="" /></a>',
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));
 				
@@ -441,7 +441,7 @@ switch($action)
 				$moderation_panel_template->assign_block_vars('member_list', array(
 					'LOGIN' => $row['login'],
 					'INFO' => $row['user_warning'] . '%',
-					'U_ACTION_USER' => '<a href="moderation_panel.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . uget_theme() . '/images/admin/important.png" alt="" /></a>',
+					'U_ACTION_USER' => '<a href="moderation_panel.php?action=warning&amp;id=' . $row['user_id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 					'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 				));

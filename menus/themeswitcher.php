@@ -45,7 +45,7 @@ $Template->set_filenames(array(
 ));
 
 $rep = '../templates/';
-$utheme = uget_theme();
+$utheme = get_utheme();
 if( is_dir($rep) ) //Si le dossier existe
 {
 	$dh = @opendir($rep);
@@ -54,7 +54,7 @@ if( is_dir($rep) ) //Si le dossier existe
 		if( !preg_match('`\.`', $theme) )
 		{	
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
-			$info_lang = @parse_ini_file('../templates/' . $theme . '/config/' . uget_lang() . '/config.ini');
+			$info_lang = @parse_ini_file('../templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
 			$Template->assign_block_vars('themes', array(
 				'NAME' => $info_lang['name'],
 				'IDNAME' => $theme,

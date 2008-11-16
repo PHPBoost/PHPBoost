@@ -48,8 +48,8 @@ $Template->assign_vars(array(
 	'TITLE' => TITLE,
 	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'SID' => SID,
-	'LANG' => uget_lang(),
-	'THEME' => uget_theme(),
+	'LANG' => get_ulang(),
+	'THEME' => get_utheme(),
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],
@@ -104,7 +104,7 @@ $modules_config = array();
 
 foreach($MODULES as $name => $array)
 {	
-	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', uget_lang());
+	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
 	if( is_array($array_info) )
 	{
 		$array_info['module_name'] = $name;

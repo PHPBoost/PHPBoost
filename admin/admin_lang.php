@@ -123,7 +123,7 @@ else
 	 
 	$Template->assign_vars(array(
 		'C_LANG_MAIN' => true,
-		'THEME' => uget_theme(),		
+		'THEME' => get_utheme(),		
 		'L_LANG_ADD' => $LANG['lang_add'],	
 		'L_LANG_MANAGEMENT' => $LANG['lang_management'],
 		'L_LANG_ON_SERV' => $LANG['lang_on_serv'],
@@ -196,7 +196,7 @@ else
 				'LANG' =>  $info_lang['name'],
 				'IDENTIFIER' =>  $info_lang['identifier'],
 				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 				'COMPAT' => $info_lang['compatibility'],
 				'OPTIONS' => $options,
 				'LANG_ACTIV' => ($lang['activ'] == 1) ? 'checked="checked"' : '',

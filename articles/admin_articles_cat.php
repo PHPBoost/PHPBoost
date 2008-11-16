@@ -745,7 +745,7 @@ elseif( !empty($id) ) //Edition des catégories.
 	$array_auth = !empty($articles_info['auth']) ? unserialize($articles_info['auth']) : array(); //Récupération des tableaux des autorisations et des groupes.
 		
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('articles'),
 		'ID' => $id,
 		'CATEGORIES' => $articles,
@@ -803,7 +803,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	
 	$array_auth = isset($CONFIG_ARTICLES['auth_root']) ? $CONFIG_ARTICLES['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('articles'),
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_ARTICLES, $array_auth),
 		'L_ROOT' => $LANG['root'],
@@ -840,7 +840,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('articles'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],

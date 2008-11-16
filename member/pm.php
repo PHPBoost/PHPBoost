@@ -116,8 +116,8 @@ elseif( !empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	));
 
 	$Template->assign_vars(array(
-		'LANG' => uget_lang(),
-		'THEME' => uget_theme(),
+		'LANG' => get_ulang(),
+		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_RECIPIENT' => $LANG['require_recipient'],
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -184,8 +184,8 @@ elseif( !empty($_POST['prw_convers']) && empty($mp_edit) ) //Prévisualisation de
 	));
 	
 	$Template->assign_vars(array(		
-		'LANG' => uget_lang(),
-		'THEME' => uget_theme(),
+		'LANG' => get_ulang(),
+		'THEME' => get_utheme(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -230,7 +230,7 @@ elseif( !empty($_POST['prw']) && empty($pm_edit) && empty($pm_del) ) //Prévisual
 	));
 
 	$Template->assign_vars(array(
-		'LANG' => uget_lang(),
+		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -452,8 +452,8 @@ elseif( !empty($pm_edit) ) //Edition du message privé, si le destinataire ne la 
 				));
 				
 				$Template->assign_vars(array(
-					'LANG' => uget_lang(),
-					'THEME' => uget_theme(),					
+					'LANG' => get_ulang(),
+					'THEME' => get_utheme(),					
 					'KERNEL_EDITOR' => display_editor(),
 					'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 					'L_REQUIRE' => $LANG['require'],
@@ -541,7 +541,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -585,8 +585,8 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		{
 			if( $row['view_status'] === '0' ) //Si le destinataire ne la pas encore lu
 			{
-				$edit = '<a href="pm' . url('.php?edit=' . $row['id']) . '" title="'. $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" /></a>';
-				$del = '&nbsp;&nbsp;<a href="pm' . url('.php?del=' . $row['id']) . '" title="'. $LANG['delete'] . '"  onclick="javascript:return Confirm_pm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="" /></a>';
+				$edit = '<a href="pm' . url('.php?edit=' . $row['id']) . '" title="'. $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" /></a>';
+				$del = '&nbsp;&nbsp;<a href="pm' . url('.php?del=' . $row['id']) . '" title="'. $LANG['delete'] . '"  onclick="javascript:return Confirm_pm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" /></a>';
 			}
 		}
 		
@@ -620,7 +620,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		}
 		
 		//Image associée au rang.
-		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . uget_theme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 					
 		//Affichage des groupes du membre.		
 		if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -641,16 +641,16 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 		
 		//Avatar			
 		if( empty($row['user_avatar']) ) 
-			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
 		//Affichage du sexe et du statut (connecté/déconnecté).	
 		$user_sex = '';
 		if( $row['user_sex'] == 1 )	
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/man.png" alt="" /><br />';	
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 		elseif( $row['user_sex'] == 2 ) 
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/woman.png" alt="" /><br />';
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 				
 		//Nombre de message.
 		//Affichage du nombre de message.
@@ -676,7 +676,7 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-			'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => ($is_admin) ? $LANG['admin'] : (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']),			
 			'USER_RANK' => ($is_admin) ? '' : (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 			'USER_IMG_ASSOC' => ($is_admin) ? '' : $user_assoc_img,
@@ -686,18 +686,18 @@ elseif( !empty($pm_id_get) ) //Messages associés à la conversation.
 			'USER_SEX' => ($is_admin) ? '' : $user_sex,
 			'USER_MSG' => ($is_admin) ? '' : $user_msg,
 			'USER_LOCAL' => ($is_admin) ? '' : $user_local,
-			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'USER_MAIL' => ($is_admin) ? '' : ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+			'USER_MSN' => ($is_admin) ? '' : (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+			'USER_YAHOO' => ($is_admin) ? '' : (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . $row['user_sign'] : '',
-			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
 			'EDIT' => $edit,
 			'DEL' => $del,
 			'U_MEMBER_ID' => ($is_admin) ? '' : url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
-			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/quote.png" alt="" /></a>'),
-			'U_MEMBER_PM' => ($is_admin) ? '' : '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/pm.png" alt="" /></a>',
+			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/quote.png" alt="" /></a>'),
+			'U_MEMBER_PM' => ($is_admin) ? '' : '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 		));
 		
 		//Marqueur de suivis du sujet.
@@ -777,7 +777,7 @@ else //Liste des conversation, dans la boite du membre.
 		'U_MEMBER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page),
 		'U_MEMBER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',	
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
-		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
+		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
 	));
 	
 	//Aucun message privé.
@@ -797,7 +797,7 @@ else //Liste des conversation, dans la boite du membre.
 	}
 	
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
@@ -889,13 +889,13 @@ else //Liste des conversation, dans la boite du membre.
 		$participants = !empty($participants) ? '<a href="../member/member' . url('.php?id=' . $user_id_dest, '-' . $user_id_dest . '.php') . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		
 		//Affichage du dernier message posté.
-		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . uget_theme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />'; 
+		$last_msg = '<a href="pm' . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite . '.php') . '#m' . $row['last_msg_id'] . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />'; 
 		$last_msg .= ($row['user_id'] == -1) ? $LANG['by'] . ' ' . $LANG['admin'] : $LANG['by'] . ' <a href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . $row['last_login'] . '</a>';
 
 		$Template->assign_block_vars('convers.list', array(
 			'INCR' => $i,
 			'ID' => $row['id'],	
-			'ANNOUNCE' => '<img src="../templates/' . uget_theme() . '/images/' . $img_announce . '.gif" alt="" />',
+			'ANNOUNCE' => '<img src="../templates/' . get_utheme() . '/images/' . $img_announce . '.gif" alt="" />',
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),

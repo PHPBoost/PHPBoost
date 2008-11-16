@@ -41,12 +41,12 @@ if( !empty($popup) ) //Popup.
 <meta http-equiv="Content-Style-Type" content="text/css" />
 
 <title>' . $LANG['files_management'] . '</title>
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/design.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/bbcode.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/global.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/content.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/generic.css" type="text/css" media="screen, print, handheld" />
-<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . uget_theme() . '/bbcode.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/design.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/bbcode.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/global.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/content.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/generic.css" type="text/css" media="screen, print, handheld" />
+<link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/bbcode.css" type="text/css" media="screen, print, handheld" />
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/global.js"></script>
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/bbcode.js"></script>
 </head>
@@ -255,10 +255,10 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		'HEADER' => $header,
 		'FOOTER' => $footer,
 		'FIELD' => $field,
-		'LANG' => uget_lang(),
+		'LANG' => get_ulang(),
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'URL'=> '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
@@ -352,11 +352,11 @@ else
 		'HEADER' => $header,
 		'FOOTER' => $footer,
 		'FIELD' => $field,
-		'LANG' => uget_lang(),
+		'LANG' => get_ulang(),
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'USER_ID' => $User->get_attribute('user_id'),
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'URL' => '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
@@ -397,9 +397,9 @@ else
 		$Template->assign_block_vars('folder', array(
 			'ID' => $row['id'],
 			'NAME' => $name_cut,
-			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
-			'DEL_TYPE_IMG' => '<img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="" class="valign_middle" />',
-			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . uget_theme() . '/images/upload/move.png" alt="" class="valign_middle" /></a>',
+			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
+			'DEL_TYPE_IMG' => '<img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
+			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . get_utheme() . '/images/upload/move.png" alt="" class="valign_middle" /></a>',
 			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup),
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
 		));
@@ -451,14 +451,14 @@ else
 		
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
-			'IMG' => '<img src="../templates/' . uget_theme() . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
+			'IMG' => '<img src="../templates/' . get_utheme() . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
 			'URL' => $link,
 			'NAME' => $name_cut,
-			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
+			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
 			'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')"><img src="../templates/' . uget_theme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
+			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup)

@@ -90,8 +90,8 @@ $Template->assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'WARNING_CORE' => ($check_core_update) ? ' error_warning' : '',
 	'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
-	'UPDATE_AVAILABLE' => ($check_core_update) ? '<img src="../templates/' . uget_theme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
-	'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . uget_theme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
+	'UPDATE_AVAILABLE' => ($check_core_update) ? '<img src="../templates/' . get_utheme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
+	'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . get_utheme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
 	'L_UPDATE_AVAILABLE' => $LANG['update_available'],
 	'L_CORE_UPDATE' => $l_core_update,
 	'L_MODULES_UPDATE' => $l_modules_update	

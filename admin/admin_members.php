@@ -572,7 +572,7 @@ elseif( !empty($id) )
 	FROM ".PREFIX."themes", __LINE__, __FILE__);
 	while( $row2 = $Sql->fetch_assoc($result) )
 	{	
-		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', uget_lang());
+		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', get_ulang());
 		if( is_array($theme_info) )
 		{
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
@@ -649,7 +649,7 @@ elseif( !empty($id) )
 		'USER_AVATAR' => !empty($mbr['user_avatar']) ? '<img src="' . $mbr['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>',
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 		'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 		'WIDTH_MAX' => $CONFIG_MEMBER['width_max'],
@@ -872,8 +872,8 @@ else
 
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_members.php?p=%d' . $unget, $nbr_membre, 'p', 25, 3),	
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_PASS' => $LANG['require_pass'],
@@ -927,7 +927,7 @@ else
 			default: 0;
 		} 
 		
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
+		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '';
 		
 		$Template->assign_block_vars('member', array(
 			'IDMBR' => $row['user_id'],

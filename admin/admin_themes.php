@@ -80,7 +80,7 @@ elseif( $edit && !empty($id) ) //Edition
 		$config_theme = $Sql->query_array("themes", "theme", "left_column", "right_column", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//On récupère la configuration du thème.
-		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', uget_lang());
+		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', get_ulang());
 			
 		$Template->assign_vars(array(
 			'C_EDIT_THEME' => true,
@@ -144,7 +144,7 @@ elseif( $uninstall ) //Désinstallation.
 		$Template->assign_vars(array(
 			'C_DEL_THEME' => true,
 			'IDTHEME' => $idtheme,
-			'THEME' => uget_theme(),
+			'THEME' => get_utheme(),
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 			'L_DEL_THEME' => $LANG['del_theme'],
@@ -166,8 +166,8 @@ else
 	 
 	$Template->assign_vars(array(
 		'C_THEME_MAIN' => true,
-		'THEME' => uget_theme(),	
-		'LANG' => uget_lang(),	
+		'THEME' => get_utheme(),	
+		'LANG' => get_ulang(),	
 		'L_THEME_ADD' => $LANG['theme_add'],	
 		'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 		'L_THEME_ON_SERV' => $LANG['theme_on_serv'],
@@ -229,7 +229,7 @@ else
 		foreach($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le theme suivant les valeurs du tableau. 
-			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', uget_lang());
+			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', get_ulang());
 			
 			$options = '';
 			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
@@ -247,7 +247,7 @@ else
 				'ICON' => $theme['name'],
 				'VERSION' => $info_theme['version'],
 				'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 				'DESC' => $info_theme['info'],
 				'COMPAT' => $info_theme['compatibility'],
 				'HTML_VERSION' => $info_theme['html_version'],

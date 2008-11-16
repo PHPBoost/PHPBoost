@@ -83,7 +83,7 @@ if( $members )
 	ORDER BY compt DESC", __LINE__, __FILE__);
 	while($row = $Sql->fetch_assoc($result))
 	{
-		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', uget_lang());
+		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$stats_array[$name] = $row['compt'];
 	}	
@@ -954,12 +954,12 @@ elseif( $referer )
 		$Template->assign_block_vars('referer_list', array(
 			'ID' => $row['id'],
 			'URL' => $row['url'],
-			'IMG_MORE' => '<img src="../templates/' . uget_theme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'IMG_MORE' => '<img src="../templates/' . get_utheme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-			'TREND' => '<img src="../templates/' . uget_theme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}
 	$Sql->query_close($result);
@@ -1011,12 +1011,12 @@ elseif( $keyword )
 		$Template->assign_block_vars('keyword_list', array(
 			'ID' => $row['id'],
 			'KEYWORD' => $row['relative_url'],
-			'IMG_MORE' => '<img src="../templates/' . uget_theme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
+			'IMG_MORE' => '<img src="../templates/' . get_utheme() . '/images/upload/plus.png" alt="" onclick="XMLHttpRequest_referer(' . $row['id'] . ')" class="valign_middle" id="img_url' . $row['id'] . '" />',
 			'NBR_LINKS' => $row['count'],
 			'TOTAL_VISIT' => $row['total_visit'],
 			'AVERAGE_VISIT' => number_round($average, 1),
 			'LAST_UPDATE' => gmdate_format('date_format_short', $row['last_update']),
-			'TREND' => '<img src="../templates/' . uget_theme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
+			'TREND' => '<img src="../templates/' . get_utheme() . '/images/admin/' . $trend_img . '" alt="" class="valign_middle" /> (' . $sign . $trend . '%)'
 		));
 	}	
 	$Sql->query_close($result);
@@ -1033,7 +1033,7 @@ elseif( $keyword )
 }
 elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 {
-	include_once('../lang/' . uget_lang() . '/stats.php');
+	include_once('../lang/' . get_ulang() . '/stats.php');
 	
 	$path = '../images/stats/';
 	if( !empty($browser) )
@@ -1094,7 +1094,7 @@ elseif( $browser || $os || $user_lang ) //Graphiques camenbert.
 			$value_name = 'other';
 			$angle_value += $percent_other;
 			$percent_other += $angle_value;
-			$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="' . $path . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" />' : '<img src="../templates/' . uget_theme() . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
+			$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="' . $path . $array_stats_info['other'][1] . '" alt="' . $LANG['other'] . '" />' : '<img src="../templates/' . get_utheme() . '/images/stats/other.png" alt="' . $LANG['other'] . '" />';
 			$name_stats = $LANG['other'];
 		}	
 		else

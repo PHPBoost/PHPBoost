@@ -136,7 +136,7 @@ else
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('articles'),
 		'CATEGORIES' => $galleries,
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_ARTICLES, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),

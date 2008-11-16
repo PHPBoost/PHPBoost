@@ -195,7 +195,7 @@ if( !empty($id_get) ) //Espace membre
 			WHERE activ = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 			while( $row2 = $Sql->fetch_assoc($result) )
 			{	
-				$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', uget_lang());
+				$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', get_ulang());
 				if( $theme_info )
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
@@ -209,7 +209,7 @@ if( !empty($id_get) ) //Espace membre
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = load_ini_file('/config/', uget_lang());
+			$theme_info = load_ini_file('/config/', get_ulang());
 			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
 			$Template->assign_block_vars('select_theme', array(
 				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
@@ -623,7 +623,7 @@ if( !empty($id_get) ) //Espace membre
 			'C_MEMBER_INDEX' => true,
 			'C_IS_MODERATOR' => $User->get_attribute('level') >= MODERATOR_LEVEL,
 			'SID' => SID,
-			'LANG' => uget_lang(),
+			'LANG' => get_ulang(),
 			'COLSPAN' => $is_auth_files ? 3 : 2,
 			'USER_NAME' => $User->get_attribute('login'),
 			'PM' => $User->get_attribute('user_pm'),
@@ -661,9 +661,9 @@ if( !empty($id_get) ) //Espace membre
 		//Dernière connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp']; 
 	
-		$user_mail = ($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
+		$user_mail = ($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
 		
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
+		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
 		$user_avatar = !empty($row['user_avatar']) ? '<img src="' . $row['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>';
 		
 		$user_sex = !empty($row['user_sex']) ? $row['user_sex'] : '&nbsp;';
@@ -673,10 +673,10 @@ if( !empty($id_get) ) //Espace membre
 			$user_sex = '&nbsp;';
 			break;
 			case 1:
-			$user_sex = $LANG['male'] . ' <img src="../templates/' . uget_theme() . '/images/man.png" alt="" class="valign_middle" />';
+			$user_sex = $LANG['male'] . ' <img src="../templates/' . get_utheme() . '/images/man.png" alt="" class="valign_middle" />';
 			break;
 			case 2:
-			$user_sex = $LANG['female'] . ' <img src="../templates/' . uget_theme() . '/images/woman.png" alt="" class="valign_middle" />';
+			$user_sex = $LANG['female'] . ' <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" class="valign_middle" />';
 			break;
 			default:
 			$user_sex = '&nbsp;';
@@ -711,7 +711,7 @@ if( !empty($id_get) ) //Espace membre
 			'C_MEMBER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_MEMBER_VIEW' => true,
 			'SID' => SID,
-			'LANG' => uget_lang(),
+			'LANG' => get_ulang(),
 			'USER_NAME' => $row['login'],
 			'MAIL' => $user_mail,
 			'STATUT' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
@@ -822,7 +822,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 	$Template->assign_vars(array(
 		'SID' => SID,
 		'C_GROUP_LIST' => true,
-		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
+		'ADMIN_GROUPS' => ($User->check_level(ADMIN_LEVEL)) ? '<a href="../admin/admin_groups.php?id=' . $user_group . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt ="" class="valign_middle" /></a>' : '',
 		'GROUP_NAME' => $group['name'],
 		'L_BACK' => $LANG['back'],
 		'L_SELECT_GROUP' => $LANG['select_group'],
@@ -870,7 +870,7 @@ elseif( !empty($show_group) || !empty($post_group) ) //Vue du groupe.
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
 			if( empty($row['user_avatar']) && $CONFIG_MEMBER['activ_avatar'] == '1') 
-				$user_avatar = '<img class="valign_middle" src="../templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
+				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
 			
 			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
@@ -903,7 +903,7 @@ else //Show all member!
 	$Template->assign_vars(array(
 		'C_MEMBER_LIST' => true,
 		'SID' => SID,
-		'LANG' => uget_lang(),
+		'LANG' => get_ulang(),
 		'LOGIN' => $login,
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_SELECT_GROUP' => $LANG['select_group'],
@@ -978,10 +978,10 @@ else //Show all member!
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
+		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
 		$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
 		
-		$user_mail = ( $row['user_show_mail'] == 1 ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
+		$user_mail = ( $row['user_show_mail'] == 1 ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
 		
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 		

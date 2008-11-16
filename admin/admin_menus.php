@@ -156,7 +156,7 @@ else
 		
 		if( $row['added'] == 0 ) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
 		{
-			$config = load_ini_file('../' . $row['name'] . '/lang/', uget_lang());
+			$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
 			if( is_array($config) && !empty($config) )
 			{
 				unset($uncheck_modules[$row['name']]); //Module vérifié!
@@ -182,11 +182,11 @@ else
 		}
 		
 		$block_position = $row['location'];
-		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[uget_theme()]['right_column'] && !$THEME_CONFIG[uget_theme()]['left_column']) )
+		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[get_utheme()]['right_column'] && !$THEME_CONFIG[get_utheme()]['left_column']) )
 			$block_position = 'main';
-		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[uget_theme()]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[uget_theme()]['left_column'] )
+		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[get_utheme()]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[get_utheme()]['left_column'] )
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		elseif( ($row['location'] == 'right' || (!$THEME_CONFIG[uget_theme()]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[uget_theme()]['right_column'] )
+		elseif( ($row['location'] == 'right' || (!$THEME_CONFIG[get_utheme()]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[get_utheme()]['right_column'] )
 			$block_position = 'right';
 		
 		if( $row['activ'] == 1 && !empty($block_position) )
@@ -195,13 +195,13 @@ else
 			$Template->assign_block_vars('mod_' . $block_position, array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
-				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" class="valign_middle" /></a>',
-				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
+				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
+				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
 				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
 				'ACTIV_DISABLED' => ($row['activ'] == '0') ? 'selected="selected"' : '',
 				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
-				'UP' => ($row['class'] > 1) ? '<a href="admin_menus.php?top=1&amp;id=' . $row['id'] . '"><img src="../templates/' . uget_theme() . '/images/admin/up.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
-				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . uget_theme() . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
+				'UP' => ($row['class'] > 1) ? '<a href="admin_menus.php?top=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
+				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
 				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value"
 			));
 		}
@@ -210,8 +210,8 @@ else
 			$Template->assign_block_vars('mod_main', array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
-				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" class="valign_middle" /></a>',
-				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
+				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
+				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
 				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
 				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;activ=' + this.options[this.selectedIndex].value"
 			));
@@ -223,7 +223,7 @@ else
 	//On vérifie pour les modules qui n'ont pas de menu associé, qu'ils n'en ont toujours pas.
 	foreach($uncheck_modules as $name => $auth)
 	{
-		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', uget_lang());
+		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', get_ulang());
 		if( !empty($modules_config[$name]['mini_module']) )
 		{
 			$array_menus = parse_ini_array($modules_config[$name]['mini_module']);
@@ -272,13 +272,13 @@ else
 	}
 	
 	$colspan = 1;
-	$colspan += (int)$THEME_CONFIG[uget_theme()]['right_column'];
-	$colspan += (int)$THEME_CONFIG[uget_theme()]['left_column'];
+	$colspan += (int)$THEME_CONFIG[get_utheme()]['right_column'];
+	$colspan += (int)$THEME_CONFIG[get_utheme()]['left_column'];
 	
 	$Template->assign_vars(array(
 		'COLSPAN' => $colspan,
-		'LEFT_COLUMN' => $THEME_CONFIG[uget_theme()]['left_column'],
-		'RIGHT_COLUMN' => $THEME_CONFIG[uget_theme()]['right_column'],
+		'LEFT_COLUMN' => $THEME_CONFIG[get_utheme()]['left_column'],
+		'RIGHT_COLUMN' => $THEME_CONFIG[get_utheme()]['right_column'],
 		'L_INDEX' => $LANG['index'],
 		'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
 		'L_ACTIV' => $LANG['activ'],

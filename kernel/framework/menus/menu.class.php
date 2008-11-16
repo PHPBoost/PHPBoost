@@ -120,7 +120,7 @@ class Menu
     function cache_export_begin()
     {
         if( !empty($this->auth) )
-            return '<?php $__a=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if(empty($__a)||$User->check_auth($__a,1)){?>';
+            return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if(empty($__auth)||$User->check_auth($__auth,1)){$__menu.=\'';
         return '';
     }
     
@@ -130,7 +130,7 @@ class Menu
     function cache_export_end()
     {
         if( !empty($this->auth) )
-            return '<?php } ?>';
+            return '\';}$__menu.=\'';
         return '';
     }
     

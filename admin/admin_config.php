@@ -224,9 +224,9 @@ else //Sinon on rempli le formulaire
 			if( strpos($dir, '.') === false )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . uget_lang() . '/config.ini') )
+				if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
 				{
-					$config = load_ini_file($root . $dir . '/lang/', uget_lang());
+					$config = load_ini_file($root . $dir . '/lang/', get_ulang());
 					if( !empty($config['starteable_page']) ) //Module possible comme page de démarrage.
 					{	
 						$selected = '';
@@ -247,7 +247,7 @@ else //Sinon on rempli le formulaire
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 
 	$Template->assign_vars(array(		
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
@@ -385,7 +385,7 @@ else //Sinon on rempli le formulaire
 		
 		foreach($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
 		{
-			$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', uget_lang());
+			$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
 			if( $theme_info )
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;

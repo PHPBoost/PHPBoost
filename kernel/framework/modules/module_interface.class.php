@@ -66,7 +66,7 @@ class ModuleInterface
         $this->functionnalities = array();
 
         // Get the config.ini informations
-        $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', uget_lang());
+        $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
         if ( isset($this->infos['name']) )
             $this->name = $this->infos['name'];
 

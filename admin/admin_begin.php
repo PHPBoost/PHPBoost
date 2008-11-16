@@ -32,6 +32,6 @@ if( !defined('PATH_TO_ROOT') )
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
 //Inclusion des langues de l'administration.
-require_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/admin.php'); 
+require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php'); 
 
 ?>

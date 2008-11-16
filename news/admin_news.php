@@ -262,7 +262,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
 	$Template->assign_block_vars('news', array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 		'IDNEWS' => $id_post,
 		'TITLE' => stripslashes($title),
@@ -312,7 +312,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) ) //Prévisualisation de la 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);	
 		
 	$Template->assign_block_vars('news.preview', array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
@@ -375,8 +375,8 @@ else
 	
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
-		'LANG' => uget_lang(),
-		'THEME' => uget_theme(),
+		'LANG' => get_ulang(),
+		'THEME' => get_utheme(),
 		'L_CONFIRM_DEL_NEWS' => $LANG['confirm_del_news'],
 		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
 		'L_ADD_NEWS' => $LANG['add_news'],

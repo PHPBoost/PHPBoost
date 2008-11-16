@@ -36,13 +36,13 @@ $Template->set_filenames(array(
 ));
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . uget_theme() . '/config/', uget_lang());
+$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 	
 $Template->assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'VERSION' => $CONFIG['version'],
-	'THEME' => uget_theme(),
+	'THEME' => get_utheme(),
 	'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
 	'L_POWERED_BY' => $LANG['powered_by'],
 	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],

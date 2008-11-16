@@ -127,7 +127,7 @@ class Note
 						else
 							$star_img = 'stars3.png';
 					}			
-					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. uget_theme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
+					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
 				}
 				if( ($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0 ) //Affichage du nombre de votant.
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
@@ -192,7 +192,7 @@ class Note
 				else
 					$star_img = 'stars3.png';
 			}			
-			$display_note .= '<img src="../templates/'. uget_theme() . '/images/' . $star_img . '" alt="" class="valign_middle" />';
+			$display_note .= '<img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" />';
 		}
 		
 		return $display_note;
@@ -222,7 +222,7 @@ class Note
 		global $Sql, $CONFIG;
 
 		//Récupération des informations sur le module.
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', uget_lang());
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
 		$check_script = false;
 		if( isset($info_module['note']) )
 		{
