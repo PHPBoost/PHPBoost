@@ -26,7 +26,7 @@
 ###################################################*/
 
 global $CONFIG;
-include_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/stats.php');
+include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
 
 class StatsSaver
 {

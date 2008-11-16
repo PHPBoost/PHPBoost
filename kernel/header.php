@@ -139,7 +139,7 @@ $Template->assign_vars(array(
 ));
 
 //Inclusion des blocs
-if( @!include_once(PATH_TO_ROOT . '/cache/menus.php') )
+if( !include_once(PATH_TO_ROOT . '/cache/menus.php') )
 {
 	//En cas d'échec, on régénère le cache
 	$Cache->Generate_file('menus');
