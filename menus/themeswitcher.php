@@ -45,7 +45,7 @@ $Template->set_filenames(array(
 ));
 
 $rep = '../templates/';
-$utheme = get_utheme();
+$utheme = uget_theme();
 if( is_dir($rep) ) //Si le dossier existe
 {
 	$dh = @opendir($rep);

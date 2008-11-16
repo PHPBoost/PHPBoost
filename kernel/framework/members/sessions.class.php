@@ -75,9 +75,7 @@ class Sessions
 						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif( $info_connect['test_connect'] < 5 ) //Succès.
-					{
 						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
-					}
 					else //plus d'essais
 						redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
 				}
