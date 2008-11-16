@@ -337,9 +337,9 @@ class MenuService
             }
         }
         
-        $Cache->_write_cache('menuss', preg_replace(
-                array('`<!--.*-->`u', '`\n\s*\n`', '`[ ]{2,}`', '`>\s<`'),
-                array('', "\n", ' ', '><'),
+        Cache::write('menuss', preg_replace(
+                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s<`', '`\n `'),
+                array('', '', "\n", ' ', '> <', "\n"),
                 $cache_str
             )
         );
