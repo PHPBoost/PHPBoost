@@ -17,7 +17,7 @@
 [*] [color=red]Nouveauté :[/color] Nouvelle gestion de l'éditeur de contenu, désactivation des balises améliorée.
 [*] [color=red]Nouveauté :[/color] Gestion du temps global (GMT), et du décalage horaire. 
 [*] [color=red]Nouveauté :[/color] Gestionnaire automatisé des catégories infinies (Framework PHPBoost). 
-+ [color=red]Nouveauté :[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
+[*] [color=red]Nouveauté :[/color] Système de gestion des mises à jour du noyau et des modules avec gestion de différents dépôts.
 [*] [color=red]Nouveauté :[/color] Ajout d'un proxy web permettant d'effectuer des requêtes asynchrones sur des sites distants.
 + [color=red]Nouveauté :[/color] Gestions des liens du site, duplication possible. Gestion des menus dynamiques (déroulants et extensibles), verticaux et horizontaux. Extension automatique suivant la page consultée.
 [*] [color=red]Nouveauté :[/color] Gestionnaire de commentaires (Framework PHPBoost). 
@@ -40,7 +40,7 @@
 [*] Possibilité de définir une limite d'upload dans le gestionnaire de fichier en fonction des groupes.
 [*] Possibilité de définir un nombre maximum de messages privés en fonction des groupes.
 [*] Possibilité de définir les extensions autorisées (une par une ou par groupe) dans le gestionnaire de fichier.
-- Support de https dans l'installation et l'administration.
+[*] Support de https dans l'installation et l'administration.
 [*] Editeur de .htaccess
 [*] Ajout du phpinfo dans l'administration.
 [*] Possibilité de se déconnecter dans l'administration.
@@ -116,26 +116,23 @@
 [*] Nouveau système de notation.
 
 [b]News[/b]
-- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des news.
 [*] [color=red]Nouveauté:[/color] Possibilité de publier automatiquement des news à la minute près.
 [*] [color=red]Nouveauté:[/color] Lien vers la news précédente/suivante.
 [*] Possibilité de masquer le nom du posteur de la news.
 [*] Possibilité de masquer la date de la news.
 
 [b]Articles[/b]
-- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des articles.
 [*] [color=red]Nouveauté:[/color] Création d'une liste déroulante des pages consultables.
 [*] Ajout de la balise nouvelle page.
 [*] Nouveau système de notation.
 
 [b]Téléchargement[/b]
+[*] [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des fichiers.
 [*] [color=red]Nouveauté:[/color] Nouveau système pour la gestion des catégories infinies (moins lourd et plus sûr).
-- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des fichiers.
 [*] [color=red]Nouveauté:[/color] Nouvelle interface.
 [*] Nouveau système de notation.
 
 [b]Liens web[/b]
-- [color=red]Nouveauté:[/color] Possibilité aux membres de proposer des liens.
 [*] Nouveau système de notation.
 
 [b]Statistiques:[/b]
