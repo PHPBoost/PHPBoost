@@ -28,7 +28,7 @@
 				# ENDIF #			
 				
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
-				{KERNEL_EDITOR}
+				<div class="fieldset_mini">{KERNEL_EDITOR}</div>
 				<label><textarea rows="10" cols="47" id="guestbook_contents" name="guestbook_contents">{CONTENTS}</textarea></label>
 			</fieldset>
 			<fieldset class="fieldset_submit">
