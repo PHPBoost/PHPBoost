@@ -55,8 +55,8 @@ if( !empty($idart) && isset($_GET['cat'])  )
 		-->
 		</script>';
 		
-		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . url('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
+		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . url('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
 		
 		$Template->assign_vars(array(
 			'JAVA' => $java,
@@ -178,7 +178,7 @@ else
 	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;	
 	$Template->assign_vars(array(
 		'COLUMN_WIDTH_CAT' => $column_width_cats,
-		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/add.png" alt="" class="valign_middle" /></a>' : '',
+		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 		'L_ARTICLES' => $LANG['articles'],
 		'L_DATE' => $LANG['date'],
 		'L_VIEW' => $LANG['views'],
@@ -247,7 +247,7 @@ else
 		$Template->assign_vars(array(			
 			'C_ARTICLES_CAT' => true,
 			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
-			'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : ''
 		));	
 			
 		$i = 0;	
@@ -263,7 +263,7 @@ else
 				'CAT' => $row['name'],
 				'DESC' => $row['contents'],
 				'ICON_CAT' => !empty($row['icon']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a><br />' : '',
-				'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : '',
+				'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : '',
 				'L_NBR_ARTICLES' => sprintf($LANG['nbr_articles_info'], $row['nbr_articles']),
 				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 			));
@@ -278,7 +278,7 @@ else
 			'C_ARTICLES_LINK' => true,
 			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
 			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
-			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] .  '/images/' . $CONFIG['lang'] . '/edit.png" alt="" /></a>' : ''
+			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . uget_theme() .  '/images/' . uget_lang() . '/edit.png" alt="" /></a>' : ''
 		));
 
 		include_once('../kernel/framework/content/note.class.php');

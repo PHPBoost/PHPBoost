@@ -283,7 +283,7 @@ else
 	$i_module = 0;
 	foreach($MODULES as $module_name => $module_infos)
 	{
-		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', $CONFIG['lang']);
+		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', uget_lang());
 		
 		//Si le module a une interface de contribution
 		if( !empty($module_ini['contribution_interface']) )

@@ -55,7 +55,7 @@ class Updates
             
             if( $checks & CHECK_KERNEL )
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', $CONFIG['lang'], APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', uget_lang(), APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
             if( $checks & CHECK_KERNEL )
@@ -65,9 +65,9 @@ class Updates
                 $kModules = array_keys($MODULES);
                 foreach( $kModules as $module )
                 {
-                    $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', $CONFIG['lang']);
+                    $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', uget_lang());
                     if( !empty($infos['repository']) )
-                        $this->apps[] = new Application($module, $CONFIG['lang'], APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
+                        $this->apps[] = new Application($module, uget_lang(), APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
                 }
             }
             
@@ -78,9 +78,9 @@ class Updates
                 $kThemes = array_keys($THEME_CONFIG);
                 foreach( $kThemes as $theme )
                 {
-                    $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', $CONFIG['lang']);
+                    $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', uget_lang());
                     if( !empty($infos['repository']) )
-                        $this->apps[] = new Application($theme, $CONFIG['lang'], APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
+                        $this->apps[] = new Application($theme, uget_lang(), APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
                 }
             }
         }
@@ -123,7 +123,7 @@ class Updates
         {
             $alert = new AdministratorAlert();
             global $LANG, $CONFIG;
-            require_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/admin.php');
+            require_once(PATH_TO_ROOT . '/lang/' . uget_lang() . '/admin.php');
             if( $app->get_type() == APPLICATION_TYPE__KERNEL )
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else

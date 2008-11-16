@@ -128,7 +128,7 @@ if( !empty($id_get) )
 				$last_topic_title = (strlen(html_entity_decode($last_topic_title)) > 20) ? substr_html($last_topic_title, 0, 20) . '...' : $last_topic_title;
 
 				$last = '<a href="topic' . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . url_encode_rewrite($row['title'])  . '.php') . '" class="small_link">' . ucfirst($last_topic_title) . '</a><br />
-				<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
+				<a href="topic' . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id . '" title=""><img src="../templates/' . uget_theme() . '/images/ancre.png" alt="" /></a> ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br />
 				' . $LANG['by'] . (!empty($row['login']) ? ' <a href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '" class="small_link">' . wordwrap_html($row['login'], 13) . '</a>' : ' ' . $LANG['guest']);
 			}
 			else
@@ -231,7 +231,7 @@ if( !empty($id_get) )
 		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
 		'U_FORUM_CAT' => $forum_cats,		
-		'U_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat) ? '&raquo; <a href="post' . url('.php?new=topic&amp;id=' . $id_get, '') . '" title="' . $LANG['post_new_subject'] . '"><img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/post.png" alt="' . $LANG['post_new_subject'] . '" title="' . $LANG['post_new_subject'] . '" /></a>' : '',
+		'U_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat) ? '&raquo; <a href="post' . url('.php?new=topic&amp;id=' . $id_get, '') . '" title="' . $LANG['post_new_subject'] . '"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/post.png" alt="' . $LANG['post_new_subject'] . '" title="' . $LANG['post_new_subject'] . '" /></a>' : '',
 		'L_FORUM_INDEX' => $LANG['forum_index'],		
 		'L_SUBFORUMS' => $LANG['sub_forums'],
 		'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
@@ -306,10 +306,10 @@ if( !empty($id_get) )
 		$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($row['title']) : '';
 		
 		//Affichage du dernier message posté.
-		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
+		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . uget_theme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
 		//Ancre ajoutée aux messages non lus.	
-		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . $CONFIG['theme'] . '/images/ancre.png" alt="" /></a>' : '';
+		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . uget_theme() . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->assign_block_vars('topics', array(
 			'ANNOUNCE' => $img_announce,

@@ -43,8 +43,8 @@ include_once('../kernel/framework/util/pagination.class.php');
 $Pagination = new Pagination();
 
 $Template->assign_vars(array(
-	'THEME' => $CONFIG['theme'],
-	'LANG' => $CONFIG['lang'],
+	'THEME' => uget_theme(),
+	'LANG' => uget_lang(),
 	'PAGINATION' => $Pagination->display('admin_download.php?p=%d', $nbr_dl, 'p', 25, 3),
 	'L_DEL_ENTRY' => $LANG['del_entry'],
 	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],

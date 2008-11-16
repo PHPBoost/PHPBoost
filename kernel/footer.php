@@ -36,7 +36,7 @@ $Template->set_filenames(array(
 $Template->assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
-	'THEME' => $CONFIG['theme'],
+	'THEME' => uget_theme(),
 	'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS['bottomcentral'],
 	'MENUS_TOP_FOOTER_CONTENT' => $MENUS['topfooter'],
 	'MENUS_FOOTER_CONTENT' => $MENUS['footer'],

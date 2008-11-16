@@ -44,7 +44,7 @@ if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() &&
 	if( in_array($poll_mini['id'], $array_cookie) )
 	{
 		$Template->assign_vars(array(
-			'THEME' => $CONFIG['theme'],
+			'THEME' => uget_theme(),
 			'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 			'L_MINI_POLL' => $LANG['mini_poll'],
 			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']

@@ -109,7 +109,7 @@ if( in_array($id_error, $array_error) )
 			'L_REGISTER' => $LANG['register'],
 			'L_FORGOT_PASS' => $LANG['forget_pass'],
 			'L_AUTOCONNECT' => $LANG['autoconnect'],
-			'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php"><img src="../templates/' . $CONFIG['theme'] . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
+			'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php"><img src="../templates/' . uget_theme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
 		));
 		
 		$Template->pparse('error');
@@ -129,7 +129,7 @@ elseif( !empty($id_error) )
 		load_module_lang($module); //Chargement de la langue du module.
 
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],		
+		'THEME' => uget_theme(),		
 		'L_ERROR' => $LANG['error'],
 		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
 		'U_INDEX' => '<a href="' . url(get_start_page()) .'">' . $LANG['index'] . '</a>', 
@@ -159,7 +159,7 @@ elseif( $User->get_attribute('user_id') === -1 )
 		'L_REGISTER' => $LANG['register'],
 		'L_FORGOT_PASS' => $LANG['forget_pass'],
 		'L_AUTOCONNECT' => $LANG['autoconnect'],
-		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php"><img src="../templates/' . $CONFIG['theme'] . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
+		'U_REGISTER' => $CONFIG_MEMBER['activ_register'] ? '<a href="../member/register.php"><img src="../templates/' . uget_theme() . '/images/register_mini.png" alt="" class="valign_middle" /> ' . $LANG['register'] . '</a><br />' : ''
 	));
 	
 	$Template->pparse('error');

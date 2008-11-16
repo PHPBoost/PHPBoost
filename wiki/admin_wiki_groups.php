@@ -56,7 +56,7 @@ else
 	$array_auth = isset($_WIKI_CONFIG['auth']) ? $_WIKI_CONFIG['auth'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('wiki'),
 		'SELECT_CREATE_ARTICLE' => Authorizations::generate_select(WIKI_CREATE_ARTICLE, $array_auth),
 		'SELECT_CREATE_CAT' => Authorizations::generate_select(WIKI_CREATE_CAT, $array_auth),

@@ -156,8 +156,8 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 			'IMG' => $group['img'],
 			'GROUP_ID' => $idgroup,
 			'PAGINATION' => $Pagination->display('admin_groups.php?id=' . $idgroup . '&amp;p=%d', $nbr_member_group, 'p', 25, 3),
-			'THEME' => $CONFIG['theme'],
-			'LANG' => $CONFIG['lang'],	
+			'THEME' => uget_theme(),
+			'LANG' => uget_lang(),	
 			'IMG_GROUPS' => $img_groups,	
 			'C_EDIT_GROUP' => true,
 			'AUTH_FLOOD_ENABLED' => $array_group['auth_flood'] == 1 ? 'checked="checked"' : '',
@@ -240,8 +240,8 @@ elseif( $add ) //Interface d'ajout du groupe.
 	}
 		
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],	
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),	
 		'IMG_GROUPS' => $img_groups,
 		'C_ADD_GROUP' => true,
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
@@ -279,8 +279,8 @@ else //Liste des groupes.
 	
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('admin_groups', $nbr_group, 'p', 25, 3),	
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_CONFIRM_DEL_GROUP' => $LANG['confirm_del_group'],
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],

@@ -713,7 +713,7 @@ elseif( !empty($id) ) //Edition des catégories.
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'ID' => $id,
 		'CATEGORIES' => $galeries,
@@ -776,7 +776,7 @@ elseif( !empty($root) ) //Edition de la racine.
 	
 	$array_auth = !empty($CONFIG_GALLERY['auth_root']) ? $CONFIG_GALLERY['auth_root'] : array(); //Récupération des tableaux des autorisations et des groupes.
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, $array_auth),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, $array_auth),
@@ -817,7 +817,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);
 		
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'L_CONFIRM_DEL' => $LANG['del_entry'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
@@ -865,7 +865,7 @@ else
 			'NAME' => $row['name'],
 			'DESC' => $row['contents'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
-			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . $CONFIG['theme'] . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
+			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . uget_theme() . '/images/readonly.png" alt="" title="' . $LANG['gallery_lock'] . '" />' : '',
 			'U_GALLERY_VARS' => url('.php?id=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
 		

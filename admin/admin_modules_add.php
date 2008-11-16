@@ -121,8 +121,8 @@ else
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
 		'L_UPDATE_MODULES' => $LANG['update_modules'],
@@ -179,10 +179,10 @@ else
 			if( strpos($dir, '.') === false && !in_array($dir, $installed_modules) )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . $CONFIG['lang'] . '/config.ini') )
+				if( is_file($root . $dir . '/lang/' . uget_lang() . '/config.ini') )
 				{
 					//Récupération des infos de config.
-					$info_module = load_ini_file($root . $dir . '/lang/', $CONFIG['lang']);
+					$info_module = load_ini_file($root . $dir . '/lang/', uget_lang());
 					if( is_array($info_module) )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
@@ -192,7 +192,7 @@ else
 							'ICON' => $dir,
 							'VERSION' => $info_module['version'],
 							'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
 							'DESC' => $info_module['info'],
 							'COMPAT' => $info_module['compatibility'],
 							'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),

@@ -177,7 +177,7 @@ class Sessions
 			}
 			else //Session visiteur, echec!
 			{
-				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $configtheme_noreplace . "', '" . $configlang_noreplace . "', '')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $CONFIG['theme'] . "', '" . $CONFIG['lang'] . "', '')", __LINE__, __FILE__);
 				
 				$delay_ban = $Sql->query("SELECT user_ban FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				if( (time() - $delay_ban) >= 0 )
@@ -187,7 +187,7 @@ class Sessions
 			}
 		}
 		else //Session visiteur valide.
-			$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $configtheme_noreplace . "', '" . $configlang_noreplace . "', '')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO ".PREFIX."sessions VALUES('" . $session_uniq_id . "', -1, -1, '" . USER_IP . "', '" . time() . "', '" . $session_script . "', '" . $session_script_get . "', '" . $session_script_title . "', '0', '" . $CONFIG['theme'] . "', '" . $CONFIG['lang'] . "', '')", __LINE__, __FILE__);
 		
 		########Génération du cookie de session########
 		$data = array();
@@ -254,8 +254,8 @@ class Sessions
 		$this->data['login'] = isset($userdata['login']) ? $userdata['login'] : '';	
 		$this->data['level'] = isset($userdata['level']) ? (int)$userdata['level'] : -1;		
 		$this->data['user_groups'] = isset($userdata['user_groups']) ? $userdata['user_groups'] : '';
-		$this->data['user_lang'] = isset($userdata['user_lang']) ? $userdata['user_lang'] : $configlang_noreplace; //Langue membre
-		$this->data['user_theme'] = isset($userdata['user_theme']) ? $userdata['user_theme'] : $configtheme_noreplace; //Thème membre		
+		$this->data['user_lang'] = isset($userdata['user_lang']) ? $userdata['user_lang'] : $CONFIG['lang']; //Langue membre
+		$this->data['user_theme'] = isset($userdata['user_theme']) ? $userdata['user_theme'] : $CONFIG['theme']; //Thème membre		
 		$this->data['user_mail'] = isset($userdata['user_mail']) ? $userdata['user_mail'] : '';
 		$this->data['user_pm'] = isset($userdata['user_pm']) ? $userdata['user_pm'] : '0';	
 		$this->data['user_readonly'] = isset($userdata['user_readonly']) ? $userdata['user_readonly'] : '0';

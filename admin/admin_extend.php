@@ -35,8 +35,8 @@ $Template->set_filenames(array(
 ));
 
 $Template->assign_vars(array(
-	'LANG' => $CONFIG['lang'],
-	'THEME' => $CONFIG['theme'],
+	'LANG' => uget_lang(),
+	'THEME' => uget_theme(),
 	'L_CONFIGURATION' => $LANG['configuration'],
 	'L_INDEX_SITE' => $LANG['site'],
 	'L_INDEX_ADMIN' => $LANG['administration'],
@@ -70,7 +70,7 @@ WHERE activ = 1", __LINE__, __FILE__);
 $nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
 while( $row = $Sql->fetch_assoc($result) )
 {
-	$config = load_ini_file('../' . $row['name'] . '/lang/', $CONFIG['lang']);
+	$config = load_ini_file('../' . $row['name'] . '/lang/', uget_lang());
 	if( is_array($config) )
 	{	
 		if( $config['admin'] == 1 )

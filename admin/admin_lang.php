@@ -34,13 +34,13 @@ $error = retrieve(GET, 'error', '');
 
 if( isset($_GET['activ']) && !empty($id) ) //Activation
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $configlang_noreplace . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if( isset($_GET['secure']) && !empty($id) ) //Changement de niveau d'autorisation.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $configlang_noreplace . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
@@ -48,7 +48,7 @@ elseif( isset($_POST['valid']) ) //Mise à jour
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM ".PREFIX."lang
-	WHERE activ = 1 AND lang != '" . $configlang_noreplace . "'", __LINE__, __FILE__);
+	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
@@ -66,10 +66,10 @@ elseif( $uninstall ) //Désinstallation.
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
-		if( $previous_lang != $configlang_noreplace && !empty($idlang) && !empty($previous_lang) )
+		if( $previous_lang != $CONFIG['lang'] && !empty($idlang) && !empty($previous_lang) )
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $configlang_noreplace . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
 				
 			//On supprime le lang de la bdd.
 			$Sql->query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
@@ -123,7 +123,7 @@ else
 	 
 	$Template->assign_vars(array(
 		'C_LANG_MAIN' => true,
-		'THEME' => $CONFIG['theme'],		
+		'THEME' => uget_theme(),		
 		'L_LANG_ADD' => $LANG['lang_add'],	
 		'L_LANG_MANAGEMENT' => $LANG['lang_management'],
 		'L_LANG_ON_SERV' => $LANG['lang_on_serv'],
@@ -188,7 +188,7 @@ else
 				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 			}
 			
-			$default_lang = ($lang['name'] == $configlang_noreplace);
+			$default_lang = ($lang['name'] == $CONFIG['lang']);
 			$Template->assign_block_vars('list', array(
 				'C_LANG_DEFAULT' => $default_lang ? true : false,
 				'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
@@ -196,7 +196,7 @@ else
 				'LANG' =>  $info_lang['name'],
 				'IDENTIFIER' =>  $info_lang['identifier'],
 				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
 				'COMPAT' => $info_lang['compatibility'],
 				'OPTIONS' => $options,
 				'LANG_ACTIV' => ($lang['activ'] == 1) ? 'checked="checked"' : '',

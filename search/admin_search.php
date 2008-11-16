@@ -102,7 +102,7 @@ else
     require_once('../kernel/framework/modules/modules_discovery_service.class.php');
     
     $Tpl->assign_vars(array(
-        'THEME' => $CONFIG['theme'],
+        'THEME' => uget_theme(),
         'L_SEARCH_MANAGEMENT' => $LANG['search_management'],
         'L_SEARCH_CONFIG' => $LANG['search_config'],
         'L_SEARCH_CONFIG_WEIGHTING' => $LANG['search_config_weighting'],

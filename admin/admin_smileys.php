@@ -115,8 +115,8 @@ else
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),
+		'LANG' => uget_lang(),
 		'L_CONFIRM_DEL_SMILEY' => $LANG['confirm_del_smiley'],
 		'L_SMILEY_MANAGEMENT' => $LANG['smiley_management'],
 		'L_ADD_SMILEY' => $LANG['add_smiley'],

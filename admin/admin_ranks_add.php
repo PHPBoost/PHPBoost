@@ -91,7 +91,7 @@ else //Sinon on rempli le formulaire
 	//On recupère les images des groupes
 	$rank_options = '<option value="">--</option>';
 	
-	$rep = '../templates/' . $CONFIG['theme']  . '/images/ranks';
+	$rep = '../templates/' . uget_theme()  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
 	if( is_dir($rep) ) //Si le dossier existe

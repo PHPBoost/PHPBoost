@@ -33,11 +33,11 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 <head>
 	<title>' . $LANG['error'] . '</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link href="../templates/' . $CONFIG['theme'] . '/theme/design.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/theme/global.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/theme/generic.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/theme/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="../templates/' . $CONFIG['theme'] . '/theme/content.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . uget_theme() . '/theme/design.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . uget_theme() . '/theme/global.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . uget_theme() . '/theme/generic.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . uget_theme() . '/theme/bbcode.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="../templates/' . uget_theme() . '/theme/content.css" rel="stylesheet" type="text/css" media="screen" />
 	<link rel="shortcut" href="../favicon.ico" />
 </head>
 <body><br /><br /><br />';
@@ -54,7 +54,7 @@ $Template->set_filenames(array(
 $class = $Errorh->get_errno_class($errinfo['errno']);	
 	
 $Template->assign_vars(array(
-	'THEME' => $CONFIG['theme'],		
+	'THEME' => uget_theme(),		
 	'ERRORH_IMG' => 'stop',
 	'ERRORH_CLASS' => $class,
 	'C_ERRORH_CONNEXION' => false,

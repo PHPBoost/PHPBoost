@@ -159,7 +159,7 @@ else
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 		
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],
+		'THEME' => uget_theme(),
 		'IMG_LIST' => $image_list,
 		'L_DEL_ENTRY' => $LANG['del_entry'],		
 		'L_WEB_ADD' => $LANG['web_add'],
@@ -210,9 +210,9 @@ else
 		
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/up.png" alt="" title="" /></a>' : '';
+		<img src="../templates/' . uget_theme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
 		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . $CONFIG['theme'] . '/images/admin/down.png" alt="" title="" /></a>' : '';
+		<img src="../templates/' . uget_theme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';

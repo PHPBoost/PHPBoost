@@ -115,8 +115,8 @@ else
 	));
 	
 	$Template->assign_vars(array(
-		'THEME' => $CONFIG['theme'],		
-		'LANG' => $CONFIG['lang'],
+		'THEME' => uget_theme(),		
+		'LANG' => uget_lang(),
 		'L_LANG_ADD' => $LANG['lang_add'],	
 		'L_UPLOAD_LANG' => $LANG['upload_lang'],
 		'L_EXPLAIN_ARCHIVE_UPLOAD' => $LANG['explain_archive_upload'],
@@ -182,7 +182,7 @@ else
 				'LANG' =>  $info_lang['name'],	
 				'IDENTIFIER' =>  $info_lang['identifier'],
 				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . $CONFIG['theme'] . '/images/' . $CONFIG['lang'] . '/user_web.png" alt="" /></a>' : ''),
+				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
 				'COMPAT' => $info_lang['compatibility'],
 				'OPTIONS' => $options
 			));

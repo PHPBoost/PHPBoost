@@ -68,8 +68,8 @@ if( !$server_path )
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
-$lang_ini_file = load_ini_file('../lang/', $CONFIG['lang']);
-$template_ini_file = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', $CONFIG['lang']);
+$lang_ini_file = load_ini_file('../lang/', uget_lang());
+$template_ini_file = load_ini_file('../templates/' . uget_theme() . '/config/', uget_lang());
 
 $directories_summerization = '';
 $directories_list = array('/', '/cache', '/cache/backup', 'cache/syndication/', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
@@ -103,7 +103,7 @@ PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version         : " . $CONFIG['version'] . "
 server url               : " . $CONFIG['server_name'] . "
 site path                : " . $CONFIG['server_path']  . "
-default language         : " . $CONFIG['lang'] . "
+default language         : " . uget_lang() . "
 default editor           : " . $CONFIG['editor'] . "
 start page               : " . $CONFIG['start_page'] . "
 url rewriting            : " . $CONFIG['rewrite'] . "
