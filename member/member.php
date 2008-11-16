@@ -210,9 +210,9 @@ if( !empty($id_get) ) //Espace membre
 		else //Thème par défaut forcé.
 		{
 			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
+			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $configtheme_noreplace;
 			$Template->assign_block_vars('select_theme', array(
-				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
+				'THEME' => '<option value="' . $configtheme_noreplace . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
 		

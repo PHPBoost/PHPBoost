@@ -17,7 +17,7 @@
 						-->
 						</script>
 					</p>
-					<p style="text-align: center;"><a href="?switchtheme=themes">{L_DEFAULT_THEME}</a></p>
+					<p style="text-align: center;"><a href="?switchtheme={DEFAULT_THEME}">{L_DEFAULT_THEME}</a></p>
 				</div>
 			</form>
 			<div class="module_mini_bottom">

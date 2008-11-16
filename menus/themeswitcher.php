@@ -66,6 +66,7 @@ if( is_dir($rep) ) //Si le dossier existe
 }	
 
 $Template->assign_vars(array(
+	'DEFAULT_THEME' => $configtheme_noreplace,
 	'L_SWITCHTHEME' => 'Changer le thème',
 	'L_DEFAULT_THEME' => 'Thème par défaut',
 	'L_SUBMIT' => $LANG['submit']

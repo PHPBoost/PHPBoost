@@ -41,7 +41,7 @@ class Template
     {
         if( !empty($tpl) )
         {
-            global $CONFIG, $User;
+            global $User;
 
             $this->tpl = $this->_check_file($tpl);
             $this->files[$this->tpl] = $this->tpl;

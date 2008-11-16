@@ -223,7 +223,7 @@ function display_comments($script, $idprov, $vars, $module_folder = '')
 //Chercher le dossier langue d'un module, s'il n'est pas trouvé on retourne la première langue.
 function load_module_lang($module_name)
 {
-    global $CONFIG, $LANG;
+    global $LANG;
 
     if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $CONFIG['lang'] . '/' . $module_name . '_' . $CONFIG['lang'] . '.php') )
     {

@@ -67,7 +67,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
 
-	if( !empty($config['theme']) && !empty($CONFIG['lang']) ) //Nom de serveur obligatoire
+	if( !empty($config['theme']) && !empty($config['lang']) ) //Nom de serveur obligatoire
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
@@ -205,10 +205,6 @@ else //Sinon on rempli le formulaire
 		'admin_config'=> 'admin/admin_config.tpl'
 	));
 	
-	$theme_tmp = $CONFIG['theme'];
-	//On recupère toute les informations supplementaires.
-	$Cache->load('config', RELOAD_CACHE);
-
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if( $get_error == 'incomplete' )
@@ -346,7 +342,7 @@ else //Sinon on rempli le formulaire
 				
 				$array_identifier .= 'array_identifier[\'' . $lang_value . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
 				$selected = '';
-				if( $lang_value == $CONFIG['lang'] )
+				if( $lang_value == $configlang_noreplace )
 				{
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
@@ -393,15 +389,13 @@ else //Sinon on rempli le formulaire
 			if( $theme_info )
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
-				$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
+				$selected = $theme_value == $configtheme_noreplace ? 'selected="selected"' : '';
 				$Template->assign_block_vars('select', array(
 					'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
 				));
 			}
 		}
 	}
-
-	$CONFIG['theme'] = $theme_tmp;
 	
 	$Template->pparse('admin_config');
 }

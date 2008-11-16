@@ -32,25 +32,21 @@ $uninstall = isset($_GET['uninstall']) ? true : false;
 $edit = isset($_GET['edit']) ? true : false;	
 $id = retrieve(GET, 'id', 0);
 
-$theme_tmp = $CONFIG['theme'];
-//On recupère toute les informations supplementaires.
-$Cache->load('config', RELOAD_CACHE);
-
 if( isset($_GET['activ']) && !empty($id) ) //Aprobation du thème.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $configtheme_noreplace . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif( isset($_GET['secure']) && !empty($id) ) //Niveau d'autorisation du thème.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $configtheme_noreplace . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif( isset($_POST['valid']) ) //Modification de tout les thèmes.	
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM ".PREFIX."themes
-	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	WHERE activ = 1 AND theme != '" . $configtheme_noreplace . "'", __LINE__, __FILE__);
 	while( $row = $Sql->fetch_assoc($result) )
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
@@ -112,10 +108,10 @@ elseif( $uninstall ) //Désinstallation.
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_theme = $Sql->query("SELECT theme FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
-		if( $previous_theme != $CONFIG['theme'] && !empty($idtheme) )
+		if( $previous_theme != $configtheme_noreplace && !empty($idtheme) )
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . $CONFIG['theme'] . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . $configtheme_noreplace . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
 				
 			//On supprime le theme de la bdd.
 			$Sql->query_inject("DELETE FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
@@ -242,7 +238,7 @@ else
 				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 			}	
 			
-			$default_theme = ($theme['name'] == $CONFIG['theme']);
+			$default_theme = ($theme['name'] == $configtheme_noreplace);
 			$Template->assign_block_vars('list', array(
 				'C_THEME_DEFAULT' => $default_theme ? true : false,
 				'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
@@ -278,8 +274,6 @@ else
 		
 	$Template->pparse('admin_themes_management'); 
 }
-
-$CONFIG['theme'] = $theme_tmp;
 
 require_once('../admin/admin_footer.php');
 
