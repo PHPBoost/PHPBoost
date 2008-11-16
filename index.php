@@ -38,13 +38,13 @@ $CONFIG = array();
 //Si PHPBoost n'est pas installé, on renvoie vers l'installateur
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    import('unusual_functions', '.inc.php');
+    import('util/unusual_functions', '.inc.php');
     redirect(get_server_url_page('install/install.php'));
 }
 //Si la configuratio n'existe pas mais que PHPBoost est installé on renvoie vers la page membre du noyau dont on est sûr qu'elle existe
 elseif( empty($CONFIG) )
 {
-    import('unusual_functions', '.inc.php');
+    import('util/unusual_functions', '.inc.php');
     redirect(get_server_url_page('member/member.php'));
 }
 
