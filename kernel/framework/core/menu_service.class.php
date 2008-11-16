@@ -312,8 +312,6 @@ class MenuService
      */
     function generate_cache()
     {
-        global $Cache;
-        
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
         $cache_str .= '$MENUS[BLOCK_POSITION__HEADER] = \'\';';
