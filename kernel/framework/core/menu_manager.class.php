@@ -53,35 +53,10 @@ class MenuManager
 			
 			case MENU_LINKS:
 				return var_export($this->display(MENU_STRING_MODE), true);
-				/*$Template->set_filenames(array('links_menu' => 'links_menu.tpl'));
-				$links_list = array(
-					0 => array('Liens', '', 0, true, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1)),
-					1 => array('Accueil', 'index.php', 1, false, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1)),
-					2 => array('Forum', '../forum/index.php', 1, false, array('r-1' => 1,'r0' => 1,'r1' => 1,'r2' => 1))
-				);
-				foreach($links_list as $link_info)
-				{
-					if( $links_info[3] )
-					{
-						$Template->assign_block_vars('title', array(
-							'NAME' => $links_info[0],
-							'URL' => $links_info[1]
-						));
-					}
-					else
-					{
-						$Template->assign_block_vars('links', array(
-							'NAME' => $links_info[0],
-							'URL' => $links_info[1]
-						));
-					}
-				}
-				MENUS['left'] .= $Template->pparse('links_menu', TEMPLATE_STRING_MODE);*/
-				return '';
 			
 			case MENU_PERSONNAL:
 				return 'if( $User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
-				. "\t" . 'include_once(\'PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
+				. "\t" . 'include_once(PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
 				. "\t" . '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);'
 				. "\n" . '}';
 				
