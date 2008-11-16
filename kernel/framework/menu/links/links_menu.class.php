@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('menus/links/links_menu_link');
+import('menu/links/links_menu_link');
 
 define('LINKS_MENU__CLASS', 'LinksMenu');
 
@@ -41,8 +41,8 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
  * @author Loïc Rouchon horn@phpboost.com
  * @desc Create a Menu with children.
  * Children could be Menu or LinksMenuLink objects
- * @package util
- * @subpackage menu
+ * @package Menu
+ * @subpackage LinksMenu
  */
 class LinksMenu extends LinksMenuElement
 {
@@ -127,7 +127,7 @@ class LinksMenu extends LinksMenuElement
 	}
 	
 
-    /**
+	/**
      * @return string the string to write in the cache file
      */
     function cache_export()

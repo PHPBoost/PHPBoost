@@ -25,12 +25,12 @@
  *
  ###################################################*/
 
-import('menus/menu');
+import('menu/menu');
 
-import('menus/content/content_menu');
-import('menus/links/links_menu');
-import('menus/mini/mini_menu');
-import('menus/modules_mini/modules_mini_menu');
+import('menu/content/content_menu');
+import('menu/links/links_menu');
+import('menu/mini/mini_menu');
+import('menu/modules_mini/modules_mini_menu');
 
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
@@ -40,6 +40,7 @@ define('MOVE_DOWN',  1);
  * @desc This service manage kernel menus by adding the persistance to menus objects.
  * It also provides all moving and disabling methods to change the website appearance.
  * @static
+ * @package core
  */
 class MenuService
 {

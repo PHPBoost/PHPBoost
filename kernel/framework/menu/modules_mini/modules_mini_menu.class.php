@@ -25,10 +25,16 @@
  *
 ###################################################*/
 
-import('menus/menu');
+import('menu/menu');
 
 define('MODULES_MINI_MENU__CLASS','ModulesMiniMenu');
 
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc
+ * @package Menu
+ * @subpackage ModulesMiniMenu
+ */
 class ModulesMiniMenu extends Menu
 {
     ## Public Methods ##

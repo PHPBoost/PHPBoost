@@ -46,6 +46,7 @@ define('BLOCK_POSITION__NOT_ENABLED',       9);
  * @author Loïc Rouchon horn@phpboost.com
  * @desc This class represent a Menu element and is used to build every kind of menu
  * @abstract
+ * @package Menu
  */
 class Menu
 {
@@ -108,12 +109,34 @@ class Menu
      */
     function is_enabled() { return $this->enabled; }
     
+     
+    /**
+     * @desc Display the menu
+     * @abstract
+     * @param Template $template the template to use
+     * @return string the menu parsed in xHTML
+     */
+    function display($tpl = false)
+    {
+        return '';
+    }
+    
+    /**
+     * @desc Display the menu admin gui
+     * @return string the menu parsed in xHTML
+     */
+    function admin_display()
+    {
+        return $this->display();
+    }
+    
     
     /**
      * @abstract
      * @return string the string the string to write in the cache file
      */
-    function cache_export() { }
+    function cache_export()
+    { }
     /**
      * @return string the string to write in the cache file at the beginning of the Menu element;
      */
@@ -171,6 +194,7 @@ class Menu
      */
     var $enabled = MENU_NOT_ENABLED;
     /**
+     * @access protected
      * @var int The Menu block position
      */
     var $block = 0;

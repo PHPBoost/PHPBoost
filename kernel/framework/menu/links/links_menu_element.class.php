@@ -29,7 +29,7 @@
 //      LinksMenuLink and LinksMenuLink classes are based on this class
 //      use, on of these
 
-import('menus/menu');
+import('menu/menu');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
 
@@ -37,8 +37,8 @@ define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
  * @author Loïc Rouchon horn@phpboost.com
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
- * @package util
- * @subpackage menu
+ * @package Menu
+ * @subpackage LinksMenu
  */
 class LinksMenuElement extends Menu
 {
