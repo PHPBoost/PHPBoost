@@ -152,7 +152,7 @@ if( empty($key) )
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row['lang'];
 				$array_identifier .= 'array_identifier[\'' . $row['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
 				$selected = '';
-				if( $row['lang'] == $CONFIG['lang'] )
+				if( $row['lang'] == $configlang_noreplace )
 				{
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
@@ -252,11 +252,11 @@ if( empty($key) )
 			WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
 			while( $row = $Sql->fetch_assoc($result) )
 			{	
-				$theme_info = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
+				$theme_info = load_ini_file('../templates/' . $row['theme'] . '/config/', $configlang_noreplace);
 				if( $theme_info )
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row['theme'];
-					$selected = ($row['theme'] == $CONFIG['theme']) ? 'selected="selected"' : '';
+					$selected = ($row['theme'] == $configtheme_noreplace) ? 'selected="selected"' : '';
 					$Template->assign_block_vars('register.select_theme', array(
 						'THEME' => '<option value="' . $row['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
 					));
@@ -266,10 +266,10 @@ if( empty($key) )
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
+			$theme_info = load_ini_file('/config/', $configlang_noreplace);
+			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $configtheme_noreplace;
 			$Template->assign_block_vars('register.select_theme', array(
-				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
+				'THEME' => '<option value="' . $configtheme_noreplace . '" selected="selected">' . $theme_name . '</option>'
 			));
 		}
 

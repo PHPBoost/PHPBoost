@@ -434,8 +434,8 @@ elseif( $step == 5 )
 		$CONFIG['site_keyword'] = $site_keyword;
 		$CONFIG['start'] = time();
 		$CONFIG['version'] = UPDATE_VERSION;
-		$CONFIG['lang'] = $lang;
-		$CONFIG['theme'] = DISTRIBUTION_THEME;
+		$configlang_noreplace = $lang;
+		$configtheme_noreplace = DISTRIBUTION_THEME;
 		$CONFIG['editor'] = 'bbcode';
 		$CONFIG['timezone'] = $site_timezone;
 		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
@@ -473,10 +473,10 @@ elseif( $step == 5 )
         $Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
         
 		//On installe la langue
-		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES ('" . strprotect($configlang_noreplace) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On installe le thème
-		$Sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".PREFIX."themes (theme, activ, secure) VALUES ('" . strprotect($configtheme_noreplace) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');
@@ -619,7 +619,7 @@ elseif( $step == 6 )
 			$Cache->load('config');
 			
 			//On enregistre le membre (l'entrée était au préalable créée)
-			$Sql->query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."member SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $configlang_noreplace . "', user_theme = '" . $configtheme_noreplace . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
 			
 			//Génération de la clé d'activation, en cas de verrouillage de l'administration
 			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);

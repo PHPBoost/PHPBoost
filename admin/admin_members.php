@@ -313,7 +313,7 @@ elseif( $add && !empty($_POST['add']) ) //Ajout du membre.
 				{	
 					//On insere le nouveau membre.
 					$Sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,user_readonly,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
-					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $CONFIG['lang'] . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
+					VALUES('" . $login . "', '" . $password_hash . "', '" . $level . "', '0', '" . $configlang_noreplace . "', '', '" . $mail . "', '1', '" . time() . "', '', '0', '', '', '', '', '', '', '', '', '', '', '0', '0', '0', '0', '0', '', '', '0', '1')", __LINE__, __FILE__);
 					
 					//On régénère le cache
 					$Cache->Generate_file('stats');
