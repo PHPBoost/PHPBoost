@@ -54,12 +54,12 @@ class PackagesManager
 			return MODULE_ALREADY_INSTALLED;
 		
 		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_identifier . '/lang/', uget_lang());
+		$info_module = load_ini_file('../' . $module_identifier . '/lang/', get_ulang());
 		if( empty($info_module) )
 			return UNEXISTING_MODULE;
 		
 		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
-		$dir_db_module = uget_lang();
+		$dir_db_module = get_ulang();
 		$dir = '../' . $module_identifier . '/db';
 		if( !is_dir($dir . '/' . $dir_db_module) )
 		{
@@ -71,7 +71,7 @@ class PackagesManager
 		}
 			
 		//Insertion de la configuration du module.
-		$config = get_ini_config('../' . $module_identifier . '/lang/', uget_lang()); //Récupération des infos de config.
+		$config = get_ini_config('../' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 		if( !empty($config) )
 		{	
 			$config = trim(str_replace('config=', '', $config), '"');
@@ -144,7 +144,7 @@ class PackagesManager
 			$Sql->query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
-			$info_module = load_ini_file('../' . $module_name . '/lang/', uget_lang());
+			$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 			
 			//Suppression du fichier cache
 			$Cache->delete_file($module_name);
@@ -154,7 +154,7 @@ class PackagesManager
 				$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
-			$config = get_ini_config('../news/lang/', uget_lang()); //Récupération des infos de config.
+			$config = get_ini_config('../news/lang/', get_ulang()); //Récupération des infos de config.
 			if( !empty($config) )
 				$Sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
@@ -162,7 +162,7 @@ class PackagesManager
 			$Sql->query_inject("DELETE FROM ".PREFIX."menus WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-			$dir_db_module = uget_lang();
+			$dir_db_module = get_ulang();
 			$dir = '../' . $module_name . '/db';
 			if( !is_dir($dir . '/' . $dir_db_module) )
 			{	

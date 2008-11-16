@@ -178,7 +178,7 @@ class Contribution extends Event
 		global $CONFIG;
 		if( !empty($this->module) )
 		{
-			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', uget_lang());
+			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());
 			
 			return $module_ini['name'];
 		}

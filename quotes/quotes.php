@@ -172,7 +172,7 @@ elseif( !empty($id_get) ) //Edition + suppression!
 				'CONTENTS' => unparse($row['contents']),
 				'AUTHOR' => $row['author'],
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'THEME' => uget_theme(),
+				'THEME' => get_utheme(),
 				'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
 				'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
 				'L_ALERT_TEXT' => $LANG['require_text'],
@@ -302,15 +302,15 @@ else //Affichage.
 		$readonly = '';
 		if( $is_modo && !$is_guest ) //Modération.
 		{
-			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . uget_theme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
-			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . uget_theme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
+			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
+			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 		}
 		
 		//Edition/suppression.
 		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
 		{
-			$edit = '&nbsp;&nbsp;<a href="../quotes/quotes' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del = '&nbsp;&nbsp;<a href="../quotes/quotes' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$edit = '&nbsp;&nbsp;<a href="../quotes/quotes' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del = '&nbsp;&nbsp;<a href="../quotes/quotes' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
@@ -349,7 +349,7 @@ else //Affichage.
 		}
 		
 		//Image associée au rang.
-		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . uget_theme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 		
 		//Affichage des groupes du membre.		
 		if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -370,16 +370,16 @@ else //Affichage.
 		
 		//Avatar			
 		if( empty($row['user_avatar']) ) 
-			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
 		//Affichage du sexe et du statut (connecté/déconnecté).	
 		$user_sex = '';
 		if( $row['user_sex'] == 1 )	
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/man.png" alt="" /><br />';	
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 		elseif( $row['user_sex'] == 2 ) 
-			$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/woman.png" alt="" /><br />';
+			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 				
 		//Nombre de message.
 		$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -398,7 +398,7 @@ else //Affichage.
 			'AUTHOR' => ucfirst($row['author']),
 			'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 			'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-			'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => $quotes_pseudo,			
 			'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 			'USER_IMG_ASSOC' => $user_assoc_img,
@@ -408,16 +408,16 @@ else //Affichage.
 			'USER_SEX' => $user_sex,
 			'USER_MSG' => !$is_guest ? $user_msg : '',
 			'USER_LOCAL' => $user_local,
-			'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-			'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-			'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+			'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+			'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
-			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 			'PUNISHMENT' => $readonly,			
 			'DEL' => $del,
 			'EDIT' => $edit,
-			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/pm.png" alt="" /></a>' : '',
+			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'quotes.php' . SID . '#m' . $row['id']
 		));
 		$j++;

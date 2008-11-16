@@ -83,8 +83,8 @@ elseif( !empty($_POST['previs']) )
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'NAME' => $title,
 		'CONTENTS' => $contents,
 		'URL' => $url,

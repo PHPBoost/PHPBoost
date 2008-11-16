@@ -251,9 +251,9 @@ else
 	{
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . uget_theme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
+		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
 		$bottom_link = $max_cat != $row['class'] ? '<a href="admin_extend_field.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
-		<img src="../templates/' . uget_theme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
+		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 
 		$Template->assign_block_vars('field', array(
 			'ID' => $row['id'],

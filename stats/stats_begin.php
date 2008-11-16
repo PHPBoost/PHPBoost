@@ -29,7 +29,7 @@ if( defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('stats'); //Chargement de la langue du module.
-include_once('../lang/' . uget_lang() . '/stats.php'); //Chargement de la langue.
+include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
 $visit = retrieve(GET, 'visit', false);
 $visit_year = retrieve(GET, 'year', 0);

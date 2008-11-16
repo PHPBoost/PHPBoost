@@ -44,7 +44,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 			'C_NEWS_EDITO' => true,
 			'CONTENTS' => second_parse($CONFIG_NEWS['edito']),
 			'TITLE' => $CONFIG_NEWS['edito_title'],
-			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
+			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
 		));
 	}	
 
@@ -76,7 +76,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
         'PATH_TO_ROOT' => PATH_TO_ROOT,
-        'THEME' => uget_theme(),
+        'THEME' => get_utheme(),
 	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));
 	
@@ -116,8 +116,8 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		{
 			if( $is_admin )
 			{
-				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" /></a>';
-				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" /></a>';
+				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
+				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
 			}
 			
 			//Séparation des news en colonnes si activé.
@@ -219,8 +219,8 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	list($admin, $del) = array('', '');
 	if( $is_admin )
 	{
-		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" /></a>';
+		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
 	}
 
 	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -232,10 +232,10 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 		'C_NEWS_NAVIGATION_LINKS' => true,
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on'],
-		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . uget_theme() . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
-		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . uget_theme() . '/images/right.png" alt="" class="valign_middle" />' : '',
+		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
+		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" />' : '',
         'PATH_TO_ROOT' => PATH_TO_ROOT,
-        'THEME' => uget_theme()
+        'THEME' => get_utheme()
 	));
 	
 	$tpl_news->assign_block_vars('news', array(
@@ -266,7 +266,7 @@ elseif( !empty($idcat) )
 	$tpl_news->assign_vars(array(
 		'C_NEWS_LINK' => true,
 		'CAT_NAME' => $cat['name'],
-		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" /></a>' : '',
+		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>' : '',
 		'L_CATEGORY' => $LANG['category']
 	));
 		

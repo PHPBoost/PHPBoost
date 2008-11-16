@@ -156,8 +156,8 @@ elseif( !empty($poll['id']) && !$archives )
 		-->
 		</script>";
 		
-		$edit = '<a href="../poll/admin_poll' . url('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" class="valign_middle" /></a>';
+		$edit = '<a href="../poll/admin_poll' . url('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $poll['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
 	}
 		
 	//Résultats
@@ -297,7 +297,7 @@ elseif( !$archives ) //Menu principal.
 	
 	$edit = '';	
 	if( $User->check_level(ADMIN_LEVEL) )
-		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" /></a>';
+		$edit = '<a href="../poll/admin_poll.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 	
 	$Template->assign_vars(array(
 		'C_POLL_MAIN' => true,
@@ -336,7 +336,7 @@ elseif( $archives ) //Archives.
 	$Template->assign_vars(array(
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
-		'THEME' => uget_theme(),		
+		'THEME' => get_utheme(),		
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
@@ -361,8 +361,8 @@ elseif( $archives ) //Archives.
 
 		$Template->assign_block_vars('list', array(
 			'QUESTION' => $row['question'],
-			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" class="valign_middle" /></a>',
-			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" class="valign_middle" /></a>',
+			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
+			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
 			'VOTE' => $sum_vote,
 			'DATE' => gmdate_format('date_format'),			
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote'])

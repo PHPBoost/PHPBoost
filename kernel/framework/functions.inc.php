@@ -170,14 +170,14 @@ function sunserialize($content)
 }
 
 //Récupère le thème utilisateur
-function uget_theme()
+function get_utheme()
 {
     global $User;
 	return $User->get_attribute('user_theme');
 }
 
 //Récupère le thème utilisateur
-function uget_lang()
+function get_ulang()
 {
     global $User;
 	return $User->get_attribute('user_lang');
@@ -225,9 +225,9 @@ function load_module_lang($module_name)
 {
     global $LANG;
 
-    if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . uget_lang() . '/' . $module_name . '_' . uget_lang() . '.php') )
+    if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php') )
     {
-        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', uget_lang(), NO_FATAL_ERROR);
+        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
         if( !@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php') )
         {
             global $Errorh;
@@ -836,7 +836,7 @@ function get_feed_menu($feed_url)
     $feedMenu = new Template('framework/content/syndication/menu.tpl');
     $feedMenu->assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
-        'THEME' => uget_theme(),
+        'THEME' => get_utheme(),
         'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . (!empty($CONFIG['server_path']) ? trim($CONFIG['server_path'], '/') . '/' : '') . trim($feed_url, '/'),
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']

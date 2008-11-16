@@ -72,7 +72,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
+		'THEME' => get_utheme(),
 		'L_REQUIRE_RANK_NAME' => $LANG['require_rank_name'],
 		'L_REQUIRE_NBR_MSG_RANK' => $LANG['require_nbr_msg_rank'],
 		'L_CONFIRM_DEL_RANK' => $LANG['confirm_del_rank'],
@@ -88,7 +88,7 @@ else //Sinon on rempli le formulaire
 	));
 
 	//On recupère les images des groupes
-	$rep = '../templates/' . uget_theme()  . '/images/ranks';
+	$rep = '../templates/' . get_utheme()  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
 	if(  is_dir($rep) ) //Si le dossier existe
@@ -109,7 +109,7 @@ else //Sinon on rempli le formulaire
 	while( $row = $Sql->fetch_assoc($result) )
 	{				
 		if( $row['special'] == 0 )
-			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/delete.png" alt="" title="" /></a>';
+			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
 		else
 			$del = $LANG['special_rank'];
 

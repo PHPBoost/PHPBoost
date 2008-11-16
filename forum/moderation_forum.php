@@ -68,8 +68,8 @@ $Template->set_filenames(array(
 ));
 $Template->assign_vars(array(
 	'SID' => SID,
-	'LANG' => uget_lang(),
-	'THEME' => uget_theme(),
+	'LANG' => get_ulang(),
+	'THEME' => get_utheme(),
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
@@ -182,7 +182,7 @@ if( $action == 'alert' ) //Gestion des alertes
 			
 			$Template->assign_block_vars('alert_list', array(
 				'TITLE' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '">' . $row['title'] . '</a>',
-				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/edit.png" alt="" class="valign_middle" /></a>',
+				'EDIT' => '<a href="moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
 				'TOPIC' => '<a href="topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . url_encode_rewrite($row['topic_title']) . '.php') . '">' . $row['topic_title'] . '</a>',
 				'STATUS' => $status,
 				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
@@ -341,7 +341,7 @@ elseif( $action == 'punish' ) //Gestion des utilisateurs
 				'LOGIN' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id']) . '">' . $row['login'] . '</a>',
 				'INFO' => gmdate_format('date_format', $row['user_readonly']),
 				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id']) . '"><img src="../templates/' . uget_theme() . '/images/readonly.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id']) . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="" /></a>',
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));
 			
@@ -520,7 +520,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			$Template->assign_block_vars('user_list', array(
 				'LOGIN' => $row['login'],
 				'INFO' => $row['user_warning'] . '%',
-				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id']) . '"><img src="../templates/' . uget_theme() . '/images/admin/important.png" alt="" /></a>',
+				'U_ACTION_USER' => '<a href="moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id']) . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="" /></a>',
 				'U_PROFILE' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 				'U_PM' => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php'),
 			));

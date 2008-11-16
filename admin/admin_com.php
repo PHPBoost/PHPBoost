@@ -59,8 +59,8 @@ $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
 $Template->assign_vars(array(
-	'THEME' => uget_theme(),
-	'LANG' => uget_lang(),
+	'THEME' => get_utheme(),
+	'LANG' => get_ulang(),
 	'PAGINATION_COM' => $Pagination->display('admin_com.php?pc=%d', $nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 	'L_DISPLAY_RECENT' => $LANG['display_recent_com'],
 	'L_DISPLAY_TOPIC_COM' => $LANG['display_topic_com'],
@@ -84,10 +84,10 @@ if( is_dir($root) ) //Si le dossier existe
 		if( strpos($dir, '.') === false )
 		{
 			//Désormais on vérifie que le fichier de configuration est présent.
-			if( is_file($root . $dir . '/lang/' . uget_lang() . '/config.ini') )
+			if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
 			{
 				//Récupération des infos de config.
-				$info_module = load_ini_file($root . $dir . '/lang/', uget_lang());
+				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
 				if( isset($info_module['info']) && !empty($info_module['com']) )
 				{
 					$Template->assign_block_vars('modules_com', array(
@@ -152,7 +152,7 @@ while($row = $Sql->fetch_assoc($result) )
 	}
 	
 	//Image associée au rang.
-	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . uget_theme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
+	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 				
 	//Affichage des groupes du membre.		
 	if( !empty($row['user_groups']) && $_array_groups_auth ) 
@@ -173,16 +173,16 @@ while($row = $Sql->fetch_assoc($result) )
 	
 	//Avatar			
 	if( empty($row['user_avatar']) ) 
-		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . uget_theme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 	
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	$user_sex = '';
 	if( $row['user_sex'] == 1 )	
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/man.png" alt="" /><br />';	
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
 	elseif( $row['user_sex'] == 2 ) 
-		$user_sex = $LANG['sex'] . ': <img src="../templates/' . uget_theme() . '/images/woman.png" alt="" /><br />';
+		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 			
 	//Nombre de message.
 	$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
@@ -202,7 +202,7 @@ while($row = $Sql->fetch_assoc($result) )
 		'CONTENTS' => ucfirst(second_parse($row['contents'])),
 		'COM_SCRIPT' => $row['script'],
 		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
-		'USER_ONLINE' => '<img src="../templates/' . uget_theme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
+		'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 		'USER_PSEUDO' => $com_pseudo,			
 		'USER_RANK' => (($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned']),
 		'USER_IMG_ASSOC' => $user_assoc_img,
@@ -212,13 +212,13 @@ while($row = $Sql->fetch_assoc($result) )
 		'USER_SEX' => $user_sex,
 		'USER_MSG' => !$is_guest ? $user_msg : '',
 		'USER_LOCAL' => $user_local,
-		'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
-		'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
-		'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+		'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
+		'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
+		'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 		'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
-		'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
+		'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 		'U_PROV' => $row['path'],
-		'U_MEMBER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/pm.png" alt="" /></a>',
+		'U_MEMBER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
 		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
 	));

@@ -47,13 +47,13 @@ if( $update ) //Mise à jour du module
 	if( !empty($ckeck_module) )
 	{
 		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_name . '/lang/', uget_lang());
+		$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 		
 		//Récupération de l'ancienne version du module
 		$previous_version = $Sql->query("SELECT version FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
-		$dir_db_module = uget_lang();
+		$dir_db_module = get_ulang();
 		$dir = '../' . $module_name . '/db';
 		if( !is_dir($dir . '/' . $dir_db_module) )
 		{	
@@ -341,10 +341,10 @@ else
 			if( strpos($dir, '.') === false && array_key_exists($dir, $updated_modules) )
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . uget_lang() . '/config.ini') )
+				if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
 				{
 					//Récupération des infos de config.
-					$info_module = load_ini_file($root . $dir . '/lang/', uget_lang());					
+					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());					
 					if( is_array($info_module) && $info_module['version'] != $updated_modules[$dir] )
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
@@ -355,7 +355,7 @@ else
 							'VERSION' => $info_module['version'],
 							'PREVIOUS_VERSION' => $updated_modules[$dir],
 							'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . uget_theme() . '/images/' . uget_lang() . '/user_web.png" alt="" /></a>' : ''),
+							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
 							'DESC' => $info_module['info'],
 							'COMPAT' => $info_module['compatibility'],
 							'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
@@ -373,10 +373,10 @@ else
 	}
 	
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
-		'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . uget_theme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
+		'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . get_utheme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
 		'L_MODULES_MANAGEMENT' => $LANG['modules_management'],
 		'L_ADD_MODULES' => $LANG['add_modules'],
 		'L_UPDATE_MODULES' => $LANG['update_modules'],

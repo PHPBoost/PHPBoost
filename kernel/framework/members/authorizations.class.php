@@ -93,7 +93,7 @@ class Authorizations
 		$Template->assign_vars(array(
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
 			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
-            'THEME' => uget_theme(),
+            'THEME' => get_utheme(),
             'PATH_TO_ROOT' => PATH_TO_ROOT,
 			'IDSELECT' => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if(disabled == 0)' : ''),

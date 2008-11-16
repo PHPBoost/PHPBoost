@@ -204,10 +204,10 @@ class Application
             case APPLICATION_TYPE__KERNEL:
                 return $CONFIG['version'];
             case APPLICATION_TYPE__MODULE:
-                $infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', uget_lang());
+                $infos = get_ini_config(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
                 return !empty($infos['version']) ? $infos['version'] : '0';
             case APPLICATION_TYPE__THEME:
-                $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', uget_lang());
+                $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $this->id . '/config/', get_ulang());
                 return !empty($infos['version']) ? $infos['version'] : '0';
             default:
                 return '0';

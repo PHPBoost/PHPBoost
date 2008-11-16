@@ -89,6 +89,21 @@ class LinksMenuElement extends Menu
         return $this->image;
     }
 	
+    /**
+     * @return string the string to write in the cache file at the beginning of the Menu element;
+     */
+    function cache_export_begin()
+    {
+        return str_replace('\'', '##', parent::cache_export_begin());
+    }
+    
+    /**
+     * @return string the string to write in the cache file at the end of the Menu element
+     */
+    function cache_export_end()
+    {
+        return str_replace('\'', '##', parent::cache_export_end());
+    }
 	## Private Methods ##
 	
 	

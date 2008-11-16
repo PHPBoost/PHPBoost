@@ -140,8 +140,8 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	));
 
 	$Template->assign_vars(array(
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
 		'TITLE' => $title,
 		'KERNEL_EDITOR' => display_editor(),		
@@ -236,8 +236,8 @@ else
 
 	$Template->assign_vars(array(	
 		'PAGINATION' => $Pagination->display('admin_web.php?p=%d', $nbr_web, 'p', 25, 3),	
-		'THEME' => uget_theme(),
-		'LANG' => uget_lang(),
+		'THEME' => get_utheme(),
+		'LANG' => get_ulang(),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_WEB_ADD' => $LANG['web_add'],
 		'L_WEB_MANAGEMENT' => $LANG['web_management'],

@@ -100,8 +100,8 @@ if( defined('ALTERNATIVE_CSS') )
 	$module = $array_alternative_css[0];
 	foreach($array_alternative_css as $alternative)
 	{
-		if( file_exists(PATH_TO_ROOT . '/templates/' . uget_theme() . '/modules/' . $module . '/' . $alternative . '.css') )
-		$alternative = PATH_TO_ROOT . '/templates/' . uget_theme() . '/modules/' . $module . '/' . $alternative . '.css';
+		if( file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' . $alternative . '.css') )
+		$alternative = PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' . $alternative . '.css';
 		else
 		$alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
 		$alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
@@ -115,7 +115,7 @@ $alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $c
 
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
-$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . uget_theme() . '/config/', uget_lang());
+$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
 $member_connected = $User->check_level(MEMBER_LEVEL);
 $Template->assign_vars(array(
@@ -125,8 +125,8 @@ $Template->assign_vars(array(
 	'TITLE' => stripslashes(TITLE),
 	'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
-	'THEME' => uget_theme(),
-	'LANG' => uget_lang(),
+	'THEME' => get_utheme(),
+	'LANG' => get_ulang(),
 	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_MEMBER_CONNECTED' => $member_connected,
 	'C_MEMBER_NOTCONNECTED' => !$member_connected,
@@ -173,8 +173,8 @@ define('NO_LEFT_COLUMN', false);
 if( !defined('NO_RIGHT_COLUMN') )
 define('NO_RIGHT_COLUMN', false);
 
-$left_column = ($THEME_CONFIG[uget_theme()]['left_column'] && !NO_LEFT_COLUMN);
-$right_column = ($THEME_CONFIG[uget_theme()]['right_column'] && !NO_RIGHT_COLUMN);
+$left_column = ($THEME_CONFIG[get_utheme()]['left_column'] && !NO_LEFT_COLUMN);
+$right_column = ($THEME_CONFIG[get_utheme()]['right_column'] && !NO_RIGHT_COLUMN);
 
 //Début de la colonne de gauche.
 if( $left_column ) //Gestion des blocs de gauche.
