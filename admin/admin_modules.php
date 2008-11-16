@@ -49,6 +49,8 @@ if( isset($_POST['valid']) )
 	}
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
+	$Cache->Load('modules', RELOAD_CACHE);
+	$Cache->Generate_file('menus');
 	
 	redirect(HOST . SCRIPT);	
 }
