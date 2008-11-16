@@ -190,7 +190,7 @@ class Cache
 	//Placements et autorisations des modules minis.
 	function _get_menus()
 	{
-		global $Sql;
+		global $Sql, $MODULES;
 		
 		import('core/menu_manager');
 		
@@ -201,10 +201,11 @@ class Cache
 		ORDER BY location, class", __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
 		{
-			$MENUS[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
+			if( ($row['added'] == 0 && $MODULES[$row['name']]['activ'] == 1) || $row['added'] > 0 ) //Désactive le menu si le module est désactivé.
+				$MENUS[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
 		$Sql->query_close($result);
-
+		
 		$code = '';
 		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
 		foreach($array_seek as $location)
