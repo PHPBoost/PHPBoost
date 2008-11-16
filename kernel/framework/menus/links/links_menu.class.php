@@ -131,8 +131,7 @@ class LinksMenu extends LinksMenuElement
      */
     function cache_export()
     {
-        // Stop if the user isn't authorised
-        $cache_str = parent::cache_export();
+        $cache_str = '';
         
         $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
         $original_tpl = $tpl->copy();
@@ -154,7 +153,7 @@ class LinksMenu extends LinksMenuElement
         ));
         
         $cache_str .= $tpl->parse(TEMPLATE_STRING_MODE);
-        return $cache_str . '<?php } ?>';
+        return Menu::cache_export_begin() . $cache_str . Menu::cache_export_end();
     }
 	
 	## Getters ##

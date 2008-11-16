@@ -6,14 +6,14 @@
  *   copyright            : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,13 +38,13 @@ $CONFIG = array();
 //Si PHPBoost n'est pas installé, on renvoie vers l'installateur
 if( !defined('PHPBOOST_INSTALLED') )
 {
-    import('util/unusual_functions', '.inc.php');
+    import('util/unusual_functions', LIB_IMPORT);
     redirect(get_server_url_page('install/install.php'));
 }
 //Si la configuratio n'existe pas mais que PHPBoost est installé on renvoie vers la page membre du noyau dont on est sûr qu'elle existe
 elseif( empty($CONFIG) )
 {
-    import('util/unusual_functions', '.inc.php');
+    import('util/unusual_functions', LIB_IMPORT);
     redirect(get_server_url_page('member/member.php'));
 }
 
