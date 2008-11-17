@@ -68,7 +68,7 @@ class ContributionService
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
 		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = " . CONTRIBUTION_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
 		while( $row = $Sql->fetch_assoc($result) )
@@ -117,7 +117,7 @@ class ContributionService
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
 		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
 		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE " . $where_clause, __LINE__, __FILE__);
 		
 		while($row = $Sql->fetch_assoc($result) )

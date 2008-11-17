@@ -61,14 +61,14 @@ $Template->assign_vars(array(
 	'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file'])
 ));
 
-$result = $Sql->query_while("SELECT id, idcat, title, timestamp, visible, start, end, size
+$result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
 FROM ".PREFIX."download
 ORDER BY timestamp DESC 
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
 while( $row = $Sql->fetch_assoc($result) )
 {
-	if( $row['visible'] == 1 )
+	if( $row['approved'] == 1 )
 		$aprob = $LANG['yes'];
 	else
 		$aprob = $LANG['no'];
@@ -85,7 +85,6 @@ while( $row = $Sql->fetch_assoc($result) )
 		'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 		'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'] * 2524, 1) . ' ' . $LANG['unit_kilobytes'],
 		'APROBATION' => $aprob,
-		'VISIBLE' => ((!empty($visible)) ? '(' . $visible . ')' : ''),
 		'U_FILE' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 		'U_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 		'U_DEL_FILE' => url('management.php?del=' . $row['id']),

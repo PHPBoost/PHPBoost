@@ -426,7 +426,7 @@ else
 				//The description of the contribution (the counterpart) to explain why did the contributor contributed
 				$download_contribution->set_description(stripslashes($contribution_counterpart));
 				//The entitled of the contribution
-				$download_contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_entitled'], $file_name));
+				$download_contribution->set_entitled(sprintf($DOWNLOAD_LANG['contribution_entitled'], $file_title));
 				//The URL where a validator can treat the contribution (in the file edition panel)
 				$download_contribution->set_fixing_url('/download/management.php?edit=' . $new_id_file);
 				//Who is the contributor?
