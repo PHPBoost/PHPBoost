@@ -28,7 +28,7 @@
 
 define('TEMPLATE_STRING_MODE', true);
 define('AUTO_LOAD_FREQUENT_VARS', true);
-define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', FALSE);
+define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', false);
 
 class Template
 {

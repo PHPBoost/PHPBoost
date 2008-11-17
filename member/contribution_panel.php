@@ -119,7 +119,7 @@ elseif( $id_to_delete > 0 )
 	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	$contribution->delete();
+	ContributionService::delete_contribution($contribution);
 	
 	redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }

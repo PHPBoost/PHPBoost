@@ -98,10 +98,32 @@ else
 	}
 }
 
+//Création de l'utilisateur
+import('members/user');
+$user_data = array(
+	'm_user_id' => 1,
+	'login' => 'login',
+	'level' => ADMIN_LEVEL,
+	'user_groups' => '',
+	'user_lang' => $lang, 
+	'user_theme' => DISTRIBUTION_THEME,
+	'user_mail' => '',
+	'user_pm' => 0,
+	'user_editor' => 'bbcode',
+	'user_timezone' => 1,
+	'avatar' => '',
+	'user_readonly' => 0,
+	'user_id' => 1,
+	'session_id' => ''
+);
+$user_groups = array();
+$User = new User($user_data, $user_groups);
+
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if( !is_dir('../cache') || !is_dir('../cache/tpl') )
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
 	
+//Reprise de l'installation depuis le début
 if( retrieve(GET, 'restart', false) )
 	redirect(HOST . add_lang(FILE, true));
 
@@ -481,27 +503,6 @@ elseif( $step == 5 )
 		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
-		
-		//Création de l'utilisateur
-		import('members/user');
-		$user_data = array(
-			'm_user_id' => 1,
-			'login' => 'login',
-			'level' => ADMIN_LEVEL,
-			'user_groups' => '',
-			'user_lang' => $lang, 
-			'user_theme' => DISTRIBUTION_THEME,
-			'user_mail' => '',
-			'user_pm' => 0,
-			'user_editor' => 'bbcode',
-			'user_timezone' => 1,
-			'avatar' => '',
-			'user_readonly' => 0,
-			'user_id' => 1,
-			'session_id' => ''
-		); 
-		$user_groups = array();
-		$User = new User($user_data, $user_groups);
 		
 		//Installation des modules de la distribution
 		require_once('../kernel/framework/modules/packages_manager.class.php');
