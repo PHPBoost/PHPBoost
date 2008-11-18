@@ -90,6 +90,7 @@ class LinksMenuElement extends Menu
     }
 	
     /**
+     * @desc returns the string to write in the cache file at the beginning of the Menu element
      * @return string the string to write in the cache file at the beginning of the Menu element;
      */
     function cache_export_begin()
@@ -98,6 +99,7 @@ class LinksMenuElement extends Menu
     }
     
     /**
+     * @desc returns the string to write in the cache file at the end of the Menu element
      * @return string the string to write in the cache file at the end of the Menu element
      */
     function cache_export_end()
@@ -124,6 +126,7 @@ class LinksMenuElement extends Menu
 	
     
     /**
+     * @desc returns the string to write in the cache file
      * @return string the string to write in the cache file
      */
     function cache_export()

@@ -194,6 +194,7 @@ class LinksMenu extends LinksMenuElement
 	}
 	
 	## Private attributes ##
+	
 	/**
 	 * @access protected
 	 * @var int menu's unique identifier
