@@ -66,6 +66,7 @@ class LinksMenuLink extends LinksMenuElement
 	}
 	
 	/**
+     * @param Template $template the template to use to display the link
      * @return string the string to write in the cache file
      */
     function cache_export($template)

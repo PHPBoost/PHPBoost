@@ -42,6 +42,38 @@ class ContentMenu extends Menu
     {
        parent::Menu($title);
     }
+    
+    ## Setters ##
+    /**
+     * @param string $content the content to set
+     */
+    function set_content(&$content) { $this->content = $content; }
+    
+    ## Getters ##
+    /**
+     * @return string the menu content
+     */
+    function get_content() { return $this->content; }
+    
+    
+    function display()
+    {
+        return $this->content;
+    }
+    
+    function cache_export()
+    {
+        
+    }
+    
+    
+    ## Private Attributes
+    
+    /**
+     * @var string the menu's content
+     */
+    var $content = '';
+    
 }
 
 ?>
