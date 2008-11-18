@@ -75,7 +75,7 @@ class Application
         $this->security_update = strtolower($this->security_update) == 'true' ? true : false;
         
         $this->priority = Application::_get_attribute($xml_desc, 'priority');
-        switch( $this->priority )
+        switch ($this->priority)
         {
             case 'high':
                 $this->priority = ADMIN_ALERT_HIGH_PRIORITY;
@@ -113,7 +113,7 @@ class Application
         {
             $attributes = $novelty->attributes();
             $type = isset($attributes['type']) ? utf8_decode($attributes['type']) : 'feature';
-            switch( $type )
+            switch ($type)
             {
                 case 'improvment':
                     $this->improvments[] = (string) $novelty;
@@ -199,7 +199,7 @@ class Application
     function _get_installed_version()
     {
         global $CONFIG;
-        switch( $this->type )
+        switch ($this->type)
         {
             case APPLICATION_TYPE__KERNEL:
                 return $CONFIG['version'];

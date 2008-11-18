@@ -172,7 +172,7 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
+		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case -1:
 			$status = 'visiteur';

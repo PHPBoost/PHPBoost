@@ -344,7 +344,7 @@ class Comments
 				//Gestion des erreurs.
 				$get_error = !empty($_GET['errorh']) ? trim($_GET['errorh']) :'';
 				$errno = E_USER_NOTICE;
-				switch($get_error)
+				switch ($get_error)
 				{
 					case 'auth':
 						$errstr = $LANG['e_unauthorized'];

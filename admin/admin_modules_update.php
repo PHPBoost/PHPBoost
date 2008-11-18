@@ -204,7 +204,7 @@ else
 
             foreach ($updates as $update)
             {
-                switch( $update->get_priority() )
+                switch ($update->get_priority())
                 {
                     case ADMIN_ALERT_VERY_HIGH_PRIORITY:
                         $priority = 'priority_very_high';

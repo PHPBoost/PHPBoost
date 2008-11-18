@@ -351,7 +351,7 @@ function affiche_symbol($texte,$haut)
 	global $symboles, $fontesmath;
 	
 	$texte = trim(stripslashes($texte));
-	switch($texte)
+	switch ($texte)
 	{
 	case '':
 		$img = ImageCreate(1, max($haut, 1));
@@ -856,7 +856,7 @@ class expression_math extends  expression
 
 	function dessine($taille)
 	{
-		switch(count($this->noeuds))
+		switch (count($this->noeuds))
 		{
 			
 		case 1:
@@ -865,7 +865,7 @@ class expression_math extends  expression
 			$this->base_verticale = $this->noeuds[0]->base_verticale;
 			break;
 		case 2:
-			switch($this->noeuds[0]->texte)
+			switch ($this->noeuds[0]->texte)
 			{
 			case 'sqrt':
 				$this->dessine_racine($taille);
@@ -898,7 +898,7 @@ class expression_math extends  expression
 			}
 			else
 			{
-				switch($this->noeuds[1]->texte)
+				switch ($this->noeuds[1]->texte)
 				{						
 				case '/':
 					$this->dessine_fraction($taille);
@@ -925,7 +925,7 @@ class expression_math extends  expression
 			}
 			break;
 		case 4:
-			switch($this->noeuds[0]->texte)
+			switch ($this->noeuds[0]->texte)
 			{
 			case 'int':
 				$this->dessine_grandoperateur($taille,'_integrale');

@@ -295,7 +295,7 @@ else
 		
 			$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 			$size_img = '';
-			switch($row['type'])
+			switch ($row['type'])
 			{
 				//Images
 				case 'jpg':

@@ -134,7 +134,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	));		
 	
 	$get_sort = retrieve(GET, 'sort', '');	
-	switch($get_sort)
+	switch ($get_sort)
 	{
 		case 'alpha' : 
 		$sort = 'title';

@@ -825,7 +825,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			));
 
 			//Gestion erreur.
-			switch($error_get)
+			switch ($error_get)
 			{
 				case 'flood':
 				$errstr = $LANG['e_flood'];
@@ -887,7 +887,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			}
 			
 			//Gestion erreur.
-			switch($error_get)
+			switch ($error_get)
 			{
 				case 'flood_t':
 				$errstr = $LANG['e_flood'];

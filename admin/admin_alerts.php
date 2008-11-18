@@ -54,7 +54,7 @@ foreach ($alerts_list as $alert)
 {
 	$img_type = '';
 	
-	switch($alert->get_priority())
+	switch ($alert->get_priority())
 	{
 		case ADMIN_ALERT_VERY_LOW_PRIORITY:
 			$color = 'FFFFFF';

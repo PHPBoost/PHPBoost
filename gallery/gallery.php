@@ -203,7 +203,7 @@ elseif ($g_add)
 	$quota = isset($CAT_GALLERY[$g_idcat]['auth']['r-1']) ? ($CAT_GALLERY[$g_idcat]['auth']['r-1'] != '3') : true;
 	if ($quota)
 	{
-		switch( $User->get_attribute('level') )
+		switch ($User->get_attribute('level'))
 		{
 			case 2:
 			$l_pics_quota = $LANG['illimited'];
@@ -435,7 +435,7 @@ else
 	##### Affichage des photos #####	
 	if ($nbr_pics > 0)
 	{
-		switch($g_type)
+		switch ($g_type)
 		{
 			case 'name' : 
 			$sort_type = 'g.name';
@@ -455,7 +455,7 @@ else
 			default :
 			$sort_type = 'g.timestamp';
 		}	
-		switch($g_mode)
+		switch ($g_mode)
 		{
 			case 'desc' : 
 			$sort_mode = 'DESC';

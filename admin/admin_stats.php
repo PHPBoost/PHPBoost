@@ -121,7 +121,7 @@ if (!empty($members))
 	ORDER BY compt", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		switch($row['user_sex'])
+		switch ($row['user_sex'])
 		{
 			case 0:
 			$name = $LANG['unknow'];

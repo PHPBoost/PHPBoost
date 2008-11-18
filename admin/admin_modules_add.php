@@ -42,7 +42,7 @@ if ($install) //Installation du module
 	
 	import('modules/packages_manager');
 	
-	switch(PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
+	switch (PackagesManager::install_module($module_name, $enable_module, GENERATE_CACHE_AFTER_THE_OPERATION))
 	{
 		case CONFIG_CONFLICT:
 			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_config_conflict#errorh');

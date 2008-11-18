@@ -99,7 +99,7 @@ class AdministratorAlert extends Event
 	function get_priority_name()
 	{
 		global $LANG;
-		switch($this->priority)
+		switch ($this->priority)
 		{
 			case ADMIN_ALERT_VERY_LOW_PRIORITY:
 				return $LANG['priority_very_low'];

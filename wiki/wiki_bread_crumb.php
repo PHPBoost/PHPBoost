@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true)	exit;
 
 require_once('../wiki/wiki_auth.php');
 
-switch($bread_crumb_key)
+switch ($bread_crumb_key)
 {
 	case 'wiki':			
 		if (!empty($id_contents))

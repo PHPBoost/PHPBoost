@@ -153,7 +153,7 @@ class Upload
 	//Gestion des erreurs d'upload.
 	function _error_manager($error)
 	{
-		switch($error)
+		switch ($error)
 		{
 			//Ok
 			case 0:

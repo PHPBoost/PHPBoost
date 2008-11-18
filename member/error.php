@@ -41,7 +41,7 @@ if (in_array($id_error, $array_error))
 		));
 
 		$errno = E_USER_WARNING;
-		switch($id_error)
+		switch ($id_error)
 		{ 
 			case 'e_member_ban':
 				$ban = !empty($_GET['ban']) ? numeric($_GET['ban']) : '';

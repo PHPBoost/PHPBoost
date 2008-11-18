@@ -202,7 +202,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		$icon = $icon_path;	
 	
     $visible = 0;
-	switch( $get_visible )
+	switch ($get_visible)
 	{
         case 1:
             $visible = 1;

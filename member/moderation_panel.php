@@ -32,7 +32,7 @@ $Bread_crumb->add($LANG['moderation_panel'], url('moderation_panel.php'));
 
 $action = retrieve(GET, 'action', 'warning', TSTRING_UNSECURE);
 $id_get = retrieve(GET, 'id', 0);
-switch($action)
+switch ($action)
 {
 	case 'ban':
 		$Bread_crumb->add($LANG['bans'], url('moderation_panel.php?action=ban'));
@@ -69,7 +69,7 @@ $moderation_panel_template->assign_vars(array(
 	'U_BAN' => url('.php?action=ban')
 ));
 
-switch($action)
+switch ($action)
 {
 	case 'punish': //Gestion des utilisateurs
 		$readonly = retrieve(POST, 'new_info', 0);

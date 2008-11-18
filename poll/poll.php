@@ -179,7 +179,7 @@ elseif (!empty($poll['id']) && !$archives)
 	
 	//Gestion des erreurs
 	$get_error = retrieve(GET, 'error', '');
-	switch($get_error)
+	switch ($get_error)
 	{
 		case 'e_already_vote':
 		$errstr = $LANG['e_already_vote'];

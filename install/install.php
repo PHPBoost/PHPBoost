@@ -308,7 +308,7 @@ elseif ($step == 4)
 		else
 			$result = DB_UNKNOW_ERROR;
 		
-		switch($result)
+		switch ($result)
 		{
 			case DB_CONFIG_SUCCESS:
 			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:

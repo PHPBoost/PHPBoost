@@ -539,7 +539,7 @@ class TinyMCEParser extends ContentParser
 	{
 		$size = 0;
 		//We retrieve the size (in pt)
-		switch($matches[1])
+		switch ($matches[1])
 		{
 			case 'xx-small':
 				$size = 8;

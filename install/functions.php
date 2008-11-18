@@ -52,7 +52,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 	$status = CONNECTION_FAILED;
 	
 	//Tentative de connexion à la base de données
-	switch($Sql->connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
+	switch ($Sql->connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
 	{
 		//La connexion a échoué, l'hôte ou les identifiants sont erronés
 		case CONNECTION_FAILED:

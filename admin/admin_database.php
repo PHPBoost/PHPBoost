@@ -226,7 +226,7 @@ elseif ($action == 'restore')
 	
 	if (!empty($_GET['error']))
 	{
-		switch($_GET['error'])
+		switch ($_GET['error'])
 		{
 			case 'success' :
 				$Errorh->handler($LANG['db_restore_success'], E_USER_NOTICE);

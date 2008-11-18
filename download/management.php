@@ -158,7 +158,7 @@ if ($edit_file_id > 0)
 			
 			$date_now = new Date(DATE_NOW);
 			
-			switch($file_visibility)
+			switch ($file_visibility)
 			{
 				case 2:		
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
@@ -386,7 +386,7 @@ else
 			
 			$date_now = new Date(DATE_NOW);
 			
-			switch($file_visibility)
+			switch ($file_visibility)
 			{
 				//If it's a time interval
 				case 2:

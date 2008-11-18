@@ -159,7 +159,7 @@ class Captcha
 		##Génération du code##
 		$words = $LANG['_code_dictionnary'];
 		
-		switch($this->difficulty)
+		switch ($this->difficulty)
 		{
 			case 0;
 				$code = $words[array_rand($words)]; //Mot aléatoire

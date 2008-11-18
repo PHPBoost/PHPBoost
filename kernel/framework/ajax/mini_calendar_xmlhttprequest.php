@@ -107,7 +107,7 @@ if ($calendar_type == 'date')
         $array_date = explode('/', $LANG['date_format_short']);
         for ($i = 0; $i < 3; $i++)
         {
-                switch($array_date[$i])
+                switch ($array_date[$i])
                 {
                         case 'd':
                         $format .= "%1\$s";

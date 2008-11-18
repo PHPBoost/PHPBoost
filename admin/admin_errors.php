@@ -61,7 +61,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		while (!feof($handle)) 
 		{
 			$buffer = fgets($handle, 4096);
-			switch($i)
+			switch ($i)
 			{
 				case 1:
 				$errinfo['errdate'] = $buffer;

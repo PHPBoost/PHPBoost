@@ -35,7 +35,7 @@ if (!empty($_POST['valid']))
 {
 	
 	$maintain_check = retrieve(POST, 'maintain_check', 0);
-	switch($maintain_check) 
+	switch ($maintain_check) 
 	{
 		case 1:
 			$maintain = retrieve(POST, 'maintain', 0); //Désactivé par défaut.

@@ -83,7 +83,7 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 {
 	$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 	
-	switch($type)
+	switch ($type)
 	{
 		case 'html':
 			$error_mailing_list = $newsletter_sender->send_html($mail_object, $mail_contents);
@@ -152,7 +152,7 @@ elseif (!empty($type)) //Rédaction
 		$Errorh->handler($LANG['require_text'], E_USER_WARNING);
 	elseif ($send_test) //Si on doit envoyer un test
 	{
-		switch($type)
+		switch ($type)
 		{
 			case 'html':
 				$newsletter_sender->send_html($mail_object, $mail_contents, $User->get_attribute('user_mail'));

@@ -49,7 +49,7 @@ class Gallery
 			list($width, $height) = $this->get_resize_properties($width_s, $height_s, $width_max, $height_max);
 			
 			$source = false;
-			switch($ext) //Création de l'image suivant l'extension.
+			switch ($ext) //Création de l'image suivant l'extension.
 			{
 				case 'jpg':
 					$source = @imagecreatefromjpeg($path);
@@ -127,7 +127,7 @@ class Gallery
 		else 
 			$this->error = 'e_no_graphic_support';
 
-		switch($ext) //Création de l'image suivant l'extension.
+		switch ($ext) //Création de l'image suivant l'extension.
 		{
 			case 'jpg':
 				@imagejpeg($source, $path);
@@ -155,7 +155,7 @@ class Gallery
 			
 			if ($width_s <= $width && $height_s <= $height)
 			{
-				switch($ext_s) //Création de l'image suivant l'extension.
+				switch ($ext_s) //Création de l'image suivant l'extension.
 				{
 					case 'jpg':
 						$source = @imagecreatefromjpeg($CONFIG_GALLERY['logo']);
@@ -180,7 +180,7 @@ class Gallery
 				}
 				else
 				{
-					switch($ext) //Création de l'image suivant l'extension.
+					switch ($ext) //Création de l'image suivant l'extension.
 					{
 						case 'jpg':
 							$destination = @imagecreatefromjpeg($path);
@@ -204,7 +204,7 @@ class Gallery
 						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $CONFIG_GALLERY['trans'])) === false)
 							$this->error = 'e_unabled_incrust_logo';
 							
-						switch($ext) //Création de l'image suivant l'extension.
+						switch ($ext) //Création de l'image suivant l'extension.
 						{
 							case 'jpg':
 								imagejpeg($destination);
@@ -420,7 +420,7 @@ class Gallery
 	{
 		global $CONFIG_GALLERY;
 		
-		switch( $level )
+		switch ($level)
 		{
 			case 2:
 			$pics_quota = 10000;
@@ -508,7 +508,7 @@ class Gallery
 	{
 		global $LANG;
 		
-		switch( $ext )
+		switch ($ext)
 		{
 			case 'png':
 				$header = header('Content-type: image/png');
