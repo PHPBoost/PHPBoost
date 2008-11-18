@@ -33,13 +33,13 @@ $id_faq = retrieve(GET, 'id', 0);
 $id_question = retrieve(GET, 'question', 0);
 
 //if the category doesn't exist or is not visible
-if( !array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']) )
+if (!array_key_exists($id_faq, $FAQ_CATS) || (array_key_exists($id_faq, $FAQ_CATS) && $id_faq > 0 && !$FAQ_CATS[$id_faq]['visible']))
 {
 	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 	exit;
 }
 
-if( $id_faq > 0 )
+if ($id_faq > 0)
 	$TITLE = array_key_exists($id_faq, $FAQ_CATS) ? $FAQ_CATS[$id_faq]['name'] : $FAQ_LANG['faq'];
 else
 	$TITLE = $FAQ_CONFIG['faq_name'];
@@ -50,7 +50,7 @@ $id_cat_for_bread_crumb = $id_faq;
 include_once('faq_bread_crumb.php');
 
 //checking authorization
-if( !$auth_read )
+if (!$auth_read)
 {
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 	exit;
@@ -66,34 +66,34 @@ $Template->assign_vars(array(
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq')
 ));
 
-if( !empty($FAQ_CATS[$id_faq]['description']) )
+if (!empty($FAQ_CATS[$id_faq]['description']))
 	$Template->assign_block_vars('description', array(
 		'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['description'])
 	));
 
-if( $auth_write )
+if ($auth_write)
 	$Template->assign_block_vars('management', array());
 
 //let's check if there are some subcategories
 $num_subcats = 0;
-foreach( $FAQ_CATS as $id => $value )
+foreach ($FAQ_CATS as $id => $value)
 {
-	if( $id != 0 && $value['id_parent'] == $id_faq )
+	if ($id != 0 && $value['id_parent'] == $id_faq)
 		$num_subcats ++;
 }
 
 //listing of subcategories
-if( $num_subcats > 0 )
+if ($num_subcats > 0)
 {	
 	$Template->assign_vars(array(
 		'C_FAQ_CATS' => true
 	));	
 	
 	$i = 1;
-	foreach( $FAQ_CATS as $id => $value )
+	foreach ($FAQ_CATS as $id => $value)
 	{
 		//List of children categories
-		if( $id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)) )
+		if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)))
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
 				$Template->assign_block_vars('row', array());
@@ -108,7 +108,7 @@ if( $num_subcats > 0 )
 				'U_ADMIN_CAT' => url('admin_faq_cats.php?edit=' . $id)
 			));
 			
-			if( !empty($value['image']) )
+			if (!empty($value['image']))
 				$Template->assign_vars(array(
 					'C_CAT_IMG' => true
 				));
@@ -127,11 +127,11 @@ __LINE__, __FILE__);
 
 $num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 
-if( $num_rows > 0 )
+if ($num_rows > 0)
 {
 	//Display mode : if this category has a particular display mode we use it, else we use default display mode. If the category is the root we use default mode.
 	$faq_display_block = ($FAQ_CATS[$id_faq]['display_mode'] > 0) ? ($FAQ_CATS[$id_faq]['display_mode'] == 2 ? true : false ) : $FAQ_CONFIG['display_block'];
-	if( $id_question > 0 )
+	if ($id_question > 0)
 		$faq_display_block = false;
 	
 	//Displaying administration tools
@@ -139,14 +139,14 @@ if( $num_rows > 0 )
 		'C_ADMIN_TOOLS' => $auth_write
 	));
 	
-	if( !$faq_display_block )
+	if (!$faq_display_block)
 		$Template->assign_block_vars('questions', array());
 	else
 		$Template->assign_block_vars('questions_block', array());
 		
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( !$faq_display_block )
+		if (!$faq_display_block)
 		{
 			$Template->assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
@@ -161,9 +161,9 @@ if( $num_rows > 0 )
 				'C_HIDE_ANSWER' => $row['id'] != $id_question,
 				'C_SHOW_ANSWER' => $row['id'] == $id_question
 			));
-			if( $row['q_order'] > 1 )
+			if ($row['q_order'] > 1)
 				$Template->assign_block_vars('questions.faq.up', array());
-			if( $row['q_order'] < $num_rows )
+			if ($row['q_order'] < $num_rows)
 				$Template->assign_block_vars('questions.faq.down', array());
 		}
 		else
@@ -184,9 +184,9 @@ if( $num_rows > 0 )
 				'U_QUESTION' => url('faq.php?id=' . $id_faq . '&amp;question=' . $row['id'], 'faq-' . $id_faq . '+' . url_encode_rewrite($TITLE) . '.php?question=' . $row['id']) . '#q' . $row['id']
 			));
 			
-			if( $row['q_order'] > 1 )
+			if ($row['q_order'] > 1)
 				$Template->assign_block_vars('questions_block.contents.up', array());
-			if( $row['q_order'] < $num_rows )
+			if ($row['q_order'] < $num_rows)
 				$Template->assign_block_vars('questions_block.contents.down', array());
 		}
 	}

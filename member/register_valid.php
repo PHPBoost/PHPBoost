@@ -31,12 +31,12 @@ define('TITLE', $LANG['title_register']);
 require_once('../kernel/header.php'); 
 
 $Cache->load('member');
-if( !$CONFIG_MEMBER['activ_register'] )
+if (!$CONFIG_MEMBER['activ_register'])
 	redirect(get_start_page());
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
 $valid = retrieve(POST, 'register_valid', false);
-if( $valid && !empty($user_mail) && check_mail($user_mail) )
+if ($valid && !empty($user_mail) && check_mail($user_mail))
 {
 	//Info de connexion
 	$login = substr(retrieve(POST, 'log', ''), 0, 25);
@@ -71,11 +71,11 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	include_once('../kernel/framework/util/captcha.class.php');
 	$Captcha = new Captcha();
 	
-	if( !($CONFIG_MEMBER['verif_code'] == '1') || $Captcha->is_valid() ) //Code de vérification si activé
+	if (!($CONFIG_MEMBER['verif_code'] == '1') || $Captcha->is_valid()) //Code de vérification si activé
 	{
-		if( strlen($login) >= 3 && strlen($password) >= 6 && strlen($password_bis) >= 6 )
+		if (strlen($login) >= 3 && strlen($password) >= 6 && strlen($password_bis) >= 6)
 		{
-			if( !empty($login) && !empty($user_mail) && $password_hash === $password_bis_hash )
+			if (!empty($login) && !empty($user_mail) && $password_hash === $password_bis_hash)
 			{
 				####Vérification de la validité de l'avatar####
 				$user_avatar = '';
@@ -84,19 +84,19 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				include_once('../kernel/framework/io/upload.class.php');
 				$Upload = new Upload($dir);
 				
-				if( is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1 )
+				if (is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1)
 				{
-					if( $_FILES['avatars']['size'] > 0 )
+					if ($_FILES['avatars']['size'] > 0)
 					{
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
 						
-						if( !empty($Upload->error) ) //Erreur, on arrête ici
+						if (!empty($Upload->error)) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $Upload->error) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->filename['avatars'];
 							$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
-							if( !empty($error) ) //Erreur, on arrête ici
+							if (!empty($error)) //Erreur, on arrête ici
 								redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $error) . '#errorh');
 							else
 								$user_avatar = $path; //Avatar uploadé et validé.
@@ -105,10 +105,10 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				}
 				
 				$path = retrieve(POST, 'avatar', '');
-				if( !empty($path) )
+				if (!empty($path))
 				{
 					$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
-					if( !empty($error) ) //Erreur, on arrête ici
+					if (!empty($error)) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $error) . '#errorh');
 					else
 						$user_avatar = $path; //Avatar posté et validé.
@@ -119,9 +119,9 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 				$check_user = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
 				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
-				if( $check_user >= 1 ) 
+				if ($check_user >= 1) 
 					redirect(HOST . DIR . '/member/register' . url('.php?error=pseudo_auth') . '#errorh');
-				elseif( $check_mail >= 1 ) 
+				elseif ($check_mail >= 1) 
 					redirect(HOST . DIR . '/member/register' . url('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
@@ -138,7 +138,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Id du membre qu'on vient d'enregistrer
 					
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
-					if( !$user_aprob )
+					if (!$user_aprob)
 					{
 						import('events/administrator_alert_service');
 						
@@ -157,7 +157,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 						
 					//Champs supplémentaires.
 					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-					if( $extend_field_exist > 0 )
+					if ($extend_field_exist > 0)
 					{
 						$req_update = '';
 						$req_field = '';
@@ -165,11 +165,11 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex
 						FROM ".PREFIX."member_extend_cat
 						WHERE display = 1", __LINE__, __FILE__);
-						while( $row = $Sql->fetch_assoc($result) )
+						while ($row = $Sql->fetch_assoc($result))
 						{
 							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
 							//Validation par expressions régulières.
-							if( is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
+							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 							{
 								$array_regex = array(
 									1 => '`^[0-9]+$`',
@@ -182,29 +182,29 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 							}
 							
 							$valid_field = true;
-							if( !empty($row['regex']) && $row['field'] <= 2 )
+							if (!empty($row['regex']) && $row['field'] <= 2)
 							{
-								if( @preg_match($row['regex'], $field) )
+								if (@preg_match($row['regex'], $field))
 									$valid_field = true;
 								else
 									$valid_field = false;
 							}
 						
-							if( $row['field'] == 2 )
+							if ($row['field'] == 2)
 								$field = strparse($field);
-							elseif( $row['field'] == 4 )
+							elseif ($row['field'] == 4)
 							{
 								$array_field = is_array($field) ? $field : array();
 								$field = '';
-								foreach($array_field as $value)
+								foreach ($array_field as $value)
 									$field .= strprotect($value) . '|';
 							}
-							elseif( $row['field'] == 6 )
+							elseif ($row['field'] == 6)
 							{
 								$field = '';
 								$i = 0;
 								$array_possible_values = explode('|', $row['possible_values']);
-								foreach($array_possible_values as $value)
+								foreach ($array_possible_values as $value)
 								{
 									$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($value) . '|' : '';
 									$i++;
@@ -213,9 +213,9 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 							else
 								$field = strprotect($field);
 								
-							if( !empty($field) )
+							if (!empty($field))
 							{
-								if( $valid_field ) //Validation par expression régulière si présente.
+								if ($valid_field) //Validation par expression régulière si présente.
 								{
 									$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
 									$req_field .= $row['field_name'] . ', ';
@@ -226,9 +226,9 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 						$Sql->query_close($result);
 						
 						$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
-						if( $check_member && !empty($req_update) )
+						if ($check_member && !empty($req_update))
 								$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
-						else if( !empty($req_insert) )
+						else if (!empty($req_insert))
 								$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 					
@@ -236,12 +236,12 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					$Cache->Generate_file('stats');
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
-					if( $CONFIG_MEMBER['activ_mbr'] == 1 )
+					if ($CONFIG_MEMBER['activ_mbr'] == 1)
 					{	
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_email_confirm'];
 						$valid = sprintf($LANG['register_valid_email'], HOST . DIR . '/member/register.php?key=' . $activ_mbr);
 					}
-					elseif( $CONFIG_MEMBER['activ_mbr'] == 2 )							
+					elseif ($CONFIG_MEMBER['activ_mbr'] == 2)							
 					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_admin'];
 						$valid = $LANG['register_valid_admin'];				
@@ -259,7 +259,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					$Mail->send($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
 					
 					//On connecte le membre directement si aucune activation demandée.
-					if( $CONFIG_MEMBER['activ_mbr'] == 0 )
+					if ($CONFIG_MEMBER['activ_mbr'] == 0)
 					{
 						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 						$Session->Session_begin($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
@@ -270,7 +270,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 					redirect_confirm(get_start_page(), sprintf($l_register_confirm, stripslashes($login)), 5);
 				}
 			}
-			elseif( !empty($_POST['register_valid']) && $password !== $password_bis )
+			elseif (!empty($_POST['register_valid']) && $password !== $password_bis)
 				redirect(HOST . DIR . '/member/register' . url('.php?error=pass_same') . '#errorh');
 			else
 				redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
@@ -281,7 +281,7 @@ if( $valid && !empty($user_mail) && check_mail($user_mail) )
 	else
 		redirect(HOST . DIR . '/member/register' . url('.php?error=verif_code') . '#errorh');
 }	
-elseif( !empty($user_mail) )
+elseif (!empty($user_mail))
 	redirect(HOST . DIR . '/member/register' . url('.php?error=invalid_mail') . '#errorh');
 else
 	redirect(get_start_page());

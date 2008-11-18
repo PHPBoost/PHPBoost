@@ -46,7 +46,7 @@ class Parser
 	//Fonction qui renvoie le contenu du parser
 	function get_content($addslashes = ADD_SLASHES)
 	{
-		if( $addslashes )
+		if ($addslashes)
 			return addslashes(trim($this->content));
 		else
 			return trim($this->content);
@@ -55,7 +55,7 @@ class Parser
 	//Fonction de chargement de texte
 	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
-		if( $stripslashes )
+		if ($stripslashes)
 			$this->content = stripslashes($content);
 		else
 			$this->content = $content;
@@ -70,7 +70,7 @@ class Parser
 	function _parse_imbricated($match, $regex, $replace)
 	{
 		$nbr_match = substr_count($this->content, $match);
-		for($i = 0; $i <= $nbr_match; $i++)
+		for ($i = 0; $i <= $nbr_match; $i++)
 			$this->content = preg_replace($regex, $replace, $this->content); 
 	}
 }

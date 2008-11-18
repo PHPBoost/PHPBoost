@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
-if( strpos(SCRIPT, '/online/online.php') === false )
+if (strpos(SCRIPT, '/online/online.php') === false)
 {
 	//Chargement de la langue du module.
 	load_module_lang('online');
@@ -47,12 +47,12 @@ if( strpos(SCRIPT, '/online/online.php') === false )
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $i < $CONFIG_ONLINE['online_displayed'] )
+		if ($i < $CONFIG_ONLINE['online_displayed'])
 		{
 			//Visiteurs non pris en compte.
-			if( $row['level'] !== '-1' )
+			if ($row['level'] !== '-1')
 			{
 				$Template->assign_block_vars('online', array(
 					'MEMBER' => '<a href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'	

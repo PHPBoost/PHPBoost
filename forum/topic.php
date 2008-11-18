@@ -36,20 +36,20 @@ $quote_get = retrieve(GET, 'quote', 0);
 //On va chercher les infos sur le topic	
 $topic = !empty($id_get) ? $Sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__) : '';
 //Existance du topic.
-if( empty($topic['id']) )
+if (empty($topic['id']))
 	$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 //Existance de la catégorie.
-if( !isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0 )
+if (!isset($CAT_FORUM[$topic['idcat']]) || $CAT_FORUM[$topic['idcat']]['aprob'] == 0 || $CAT_FORUM[$topic['idcat']]['level'] == 0)
 	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-foreach($CAT_FORUM as $idcat => $array_info_cat)
+foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
-	if( $CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'] )
+	if ($CAT_FORUM[$topic['idcat']]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$topic['idcat']]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$topic['idcat']]['level'])
 		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
-if( !empty($CAT_FORUM[$topic['idcat']]['name']) ) //Nom de la catégorie courante.
+if (!empty($CAT_FORUM[$topic['idcat']]['name'])) //Nom de la catégorie courante.
 	$Bread_crumb->add($CAT_FORUM[$topic['idcat']]['name'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '+' . url_encode_rewrite($CAT_FORUM[$topic['idcat']]['name']) . '.php'));
 $Bread_crumb->add($topic['title'], '');
 
@@ -60,11 +60,11 @@ $rewrited_cat_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($CAT_
 $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Redirection changement de catégorie.
-if( !empty($_POST['change_cat']) )
+if (!empty($_POST['change_cat']))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
-if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']) )
+if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $Template->set_filenames(array(
@@ -77,12 +77,12 @@ $module_data_path = $Template->get_module_data_path('forum');
 
 //Si l'utilisateur a le droit de déplacer le topic, ou le verrouiller.	
 $check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
-if( $check_group_edit_auth )
+if ($check_group_edit_auth)
 {
 	$lock_status = '';
-	if( $topic['status'] == '1' ) //Unlocked, affiche lien pour verrouiller.
+	if ($topic['status'] == '1') //Unlocked, affiche lien pour verrouiller.
 		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
-	elseif( $topic['status'] == '0' ) //Lock, affiche lien pour déverrouiler.
+	elseif ($topic['status'] == '0') //Lock, affiche lien pour déverrouiler.
 		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
 	
 	$Template->assign_vars(array(
@@ -101,16 +101,16 @@ mark_topic_as_read($id_get, $topic['last_msg_id'], $topic['last_timestamp']);
 	
 //Gestion de la page si redirection vers le dernier message lu.
 $idm = retrieve(GET, 'idm', 0);
-if( !empty($idm) )
+if (!empty($idm))
 {
 	//Calcul de la page sur laquelle se situe le message.
 	$nbr_msg_before = $Sql->query("SELECT COUNT(*) as nbr_msg_before FROM ".PREFIX."forum_msg WHERE idtopic = " . $id_get . " AND id < '" . $idm . "'", __LINE__, __FILE__); //Nombre de message avant le message de destination.
 	
 	//Dernier message de la page? Redirection vers la page suivante pour prendre en compte la reprise du message précédent.
-	if( is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg']) ) 
+	if (is_int(($nbr_msg_before + 1) / $CONFIG_FORUM['pagination_msg'])) 
 	{	
 		//On redirige vers la page suivante, seulement si ce n'est pas la dernière.
-		if( $topic['nbr_msg'] != ($nbr_msg_before + 1) )
+		if ($topic['nbr_msg'] != ($nbr_msg_before + 1))
 			$nbr_msg_before++;
 	}
 	
@@ -125,11 +125,11 @@ $Pagination = new Pagination();
 $i = 0;
 $forum_cats = '';	
 $Bread_crumb->remove_last();
-foreach($Bread_crumb->array_links as $key => $array)
+foreach ($Bread_crumb->array_links as $key => $array)
 {
-	if( $i == 2 )
+	if ($i == 2)
 		$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
-	elseif( $i > 2 )		
+	elseif ($i > 2)		
 		$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 	$i++;
 }
@@ -189,13 +189,13 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$row['user_id'] = (int)$row['user_id'];
 	//Invité?
 	$is_guest = ($row['user_id'] === -1);
-	if( $is_guest )
+	if ($is_guest)
 		$row['level'] = -1;
 		
 	list($edit, $del, $cut, $warning, $readonly) = array('', '', '', '', '');
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
 	//Gestion du niveau d'autorisation.
-	if( $check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message) )
+	if ($check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message))
 	{
 		$valid = ($first_message) ? 'topic' : 'msg';
 		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
@@ -205,18 +205,18 @@ while ( $row = $Sql->fetch_assoc($result) )
 		: '&nbsp;&nbsp;<a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
 		
 		//Fonctions réservées à ceux possédants les droits de modérateurs seulement.
-		if( $check_group_edit_auth )
+		if ($check_group_edit_auth)
 		{
 			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . url('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
 			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
 			$readonly = !$is_guest ? '<a href="moderation_forum' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
 		}
 	}
-	elseif( $User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message ) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
 			
 	//Gestion des sondages => executé une seule fois.
-	if( !empty($row['question']) && $poll_done === false )
+	if (!empty($row['question']) && $poll_done === false)
 	{
 		$Template->assign_vars(array(				
 			'C_POLL_EXIST' => true,
@@ -229,7 +229,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		));
 		
 		$array_voter = explode('|', $row['voter_id']);			
-		if( in_array($User->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $User->get_attribute('user_id') === -1 ) //Déjà voté.
+		if (in_array($User->get_attribute('user_id'), $array_voter) || !empty($_GET['r']) || $User->get_attribute('user_id') === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
@@ -238,7 +238,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
 			$array_poll = array_combine($array_answer, $array_vote);
-			foreach($array_poll as $answer => $nbrvote)
+			foreach ($array_poll as $answer => $nbrvote)
 			{
 				$Template->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
@@ -256,9 +256,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 			
 			$z = 0;
 			$array_answer = explode('|', $row['answers']);
-			if( $row['type'] == 0 )
+			if ($row['type'] == 0)
 			{
-				foreach($array_answer as $answer)
+				foreach ($array_answer as $answer)
 				{						
 					$Template->assign_block_vars('poll_radio', array(
 						'NAME' => $z,
@@ -268,9 +268,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 					$z++;
 				}
 			}	
-			elseif( $row['type'] == 1 ) 
+			elseif ($row['type'] == 1) 
 			{
-				foreach($array_answer as $answer)
+				foreach ($array_answer as $answer)
 				{						
 					$Template->assign_block_vars('poll_checkbox', array(
 						'NAME' => $z,
@@ -288,13 +288,13 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
 	$user_rank_icon = '';
-	if( $row['level'] === '2' ) //Rang spécial (admins).  
+	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
 		$user_rank = $_array_rank[-2][0];
 		$user_group = $user_rank;
 		$user_rank_icon = $_array_rank[-2][1];
 	}
-	elseif( $row['level'] === '1' ) //Rang spécial (modos).  
+	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
 		$user_rank = $_array_rank[-1][0];
 		$user_group = $user_rank;
@@ -302,9 +302,9 @@ while ( $row = $Sql->fetch_assoc($result) )
 	}
 	else
 	{
-		foreach($_array_rank as $msg => $ranks_info)
+		foreach ($_array_rank as $msg => $ranks_info)
 		{
-			if( $msg >= 0 && $msg <= $row['user_msg'] )
+			if ($msg >= 0 && $msg <= $row['user_msg'])
 			{ 
 				$user_rank = $ranks_info[0];
 				$user_rank_icon = $ranks_info[1];
@@ -317,13 +317,13 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 				
 	//Affichage des groupes du membre.		
-	if( !empty($row['user_groups']) && $_array_groups_auth ) 
+	if (!empty($row['user_groups']) && $_array_groups_auth) 
 	{	
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['user_groups']);
-		foreach($_array_groups_auth as $idgroup => $array_group_info)
+		foreach ($_array_groups_auth as $idgroup => $array_group_info)
 		{
-			if( is_numeric(array_search($idgroup, $array_user_groups)) )
+			if (is_numeric(array_search($idgroup, $array_user_groups)))
 				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
 		}
 	}
@@ -331,20 +331,20 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$user_groups = $LANG['group'] . ': ' . $user_group;
 
 	//Avatar			
-	if( empty($row['user_avatar']) ) 
+	if (empty($row['user_avatar'])) 
 		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
 	//Affichage du sexe et du statut (connecté/déconnecté).	
-	if( $row['user_sex'] == 1 )	
+	if ($row['user_sex'] == 1)	
 		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
-	elseif( $row['user_sex'] == 2 ) 
+	elseif ($row['user_sex'] == 2) 
 		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 	else $user_sex = '';
 			
 	//Localisation.
-	if( !empty($row['user_local']) ) 
+	if (!empty($row['user_local'])) 
 		$user_local = $LANG['place'] . ': ' . (strlen($row['user_local']) > 15 ? substr_html($row['user_local'], 0, 15) . '...<br />' : $row['user_local'] . '<br />');	
 	else 
 		$user_local = '';
@@ -357,7 +357,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1') ? '<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' ' . (!empty($row['login_edit']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a>' : '<em>' . $LANG['guest'] . '</em>') . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span>' : '';
 	
 	//Affichage du nombre de message.
-	if( $row['user_msg'] >= 1 )
+	if ($row['user_msg'] >= 1)
 		$user_msg = '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 	else		
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
@@ -393,7 +393,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	));
 	
 	//Marqueur de suivis du sujet.
-	if( !empty($row['trackid']) ) 
+	if (!empty($row['trackid'])) 
 	{	
 		$track = ($row['track']) ? true : false;
 		$track_pm = ($row['trackpm']) ? true : false;
@@ -410,7 +410,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/topic.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -472,7 +472,7 @@ $Template->assign_vars(array(
 
 //Récupération du message quoté.
 $contents = '';
-if( !empty($quote_get) )
+if (!empty($quote_get))
 {	
 	$quote_msg = $Sql->query_array('forum_msg', 'user_id', 'contents', "WHERE id = '" . $quote_get . "'", __LINE__, __FILE__);
 	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $quote_msg['user_id'] . "'", __LINE__, __FILE__);	
@@ -480,14 +480,14 @@ if( !empty($quote_get) )
 }
 
 //Formulaire de réponse, non présent si verrouillé.
-if( $topic['status'] == '0' && !$check_group_edit_auth )
+if ($topic['status'] == '0' && !$check_group_edit_auth)
 {
 	$Template->assign_vars(array(
 		'C_ERROR_AUTH_WRITE' => true,
 		'L_ERROR_AUTH_WRITE' => $LANG['e_topic_lock_forum']
 	));
 }	
-elseif( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM) ) //On vérifie si l'utilisateur a les droits d'écritures.
+elseif (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], WRITE_CAT_FORUM)) //On vérifie si l'utilisateur a les droits d'écritures.
 {
 	$Template->assign_vars(array(
 		'C_ERROR_AUTH_WRITE' => true,
@@ -513,7 +513,7 @@ else
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
-	if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']) )
+	if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($check_group_edit_auth || $User->get_attribute('user_id') == $topic['user_id']))
 	{
 		$img_msg_display = $topic['display_msg'] ? 'not_processed_mini.png' : 'processed_mini.png';
 		$Template->assign_vars(array(

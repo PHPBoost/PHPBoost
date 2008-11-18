@@ -66,7 +66,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			$table_list = $Sql->list_databases();
 			$Sql->close();
 			
-			if( in_array($database_name, $table_list))
+			if (in_array($database_name, $table_list))
 				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED;
 			else
 				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED;
@@ -80,7 +80,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			$Sql->close();
 
 			//On fait le test sur quelques tables du noyau
-			if( !empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']) )
+			if (!empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']))
 				return DB_CONFIG_ERROR_TABLES_ALREADY_EXIST;
 			
 			return DB_CONFIG_SUCCESS;

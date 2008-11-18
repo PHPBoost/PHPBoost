@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('news'); //Chargement de la langue du module.
@@ -33,7 +33,7 @@ load_module_lang('news'); //Chargement de la langue du module.
 $idnews = retrieve(GET, 'id', 0);	
 $idcat = retrieve(GET, 'cat', 0);
 
-if( !empty($idnews) && empty($idcat) )
+if (!empty($idnews) && empty($idcat))
 {
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 	FROM ".PREFIX."news n
@@ -46,7 +46,7 @@ if( !empty($idnews) && empty($idcat) )
 }
 else
 {
-    if( !defined('TITLE') )
+    if (!defined('TITLE'))
         define('TITLE', $LANG['title_news']);
 }
 

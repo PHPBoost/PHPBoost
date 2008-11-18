@@ -74,7 +74,7 @@ class LinksMenuElement extends Menu
      */
 	function get_url($compute_relative_url = true)
 	{
-        if( $compute_relative_url )
+        if ($compute_relative_url)
 	       return url(strpos($this->url, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url);
        return url($this->url);
 	}
@@ -84,7 +84,7 @@ class LinksMenuElement extends Menu
      */
     function get_image($compute_relative_url = true)
     {
-        if( $compute_relative_url )
+        if ($compute_relative_url)
             return strpos($this->image, '://') > 0 ? $this->image : PATH_TO_ROOT . $this->image;
         return $this->image;
     }

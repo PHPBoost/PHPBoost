@@ -35,7 +35,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php');
 
-if( !$User->check_level(MEMBER_LEVEL) )
+if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $search_string = retrieve(GET, 'search', '');
@@ -60,7 +60,7 @@ $Template->assign_vars(array(
 	'L_CONTENTS' => $LANG['contents']
 ));
 
-if( !empty($search_string) ) //recherche
+if (!empty($search_string)) //recherche
 {
 	$title_search = "SELECT title, encoded_title, MATCH(title) AGAINST('" . $search_string . "') AS relevance
 		FROM ".PREFIX."wiki_articles
@@ -79,7 +79,7 @@ if( !empty($search_string) ) //recherche
 		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "')";
 	
-	$result = $Sql->query_while($query, __LINE__, __FILE__);
+	$result = $Sql->query_while ($query, __LINE__, __FILE__);
 	
 	$num_rows = $Sql->num_rows($result, $query_rows, __LINE__, __FILE__);
 	
@@ -87,7 +87,7 @@ if( !empty($search_string) ) //recherche
 	$Pagination = new Pagination();
 	$pages_links = $Pagination->display('search' . url('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	
-	if( $num_rows > 0 )
+	if ($num_rows > 0)
 		$Template->assign_block_vars('search_result', array(
 			'PAGES' => !empty($pages_links) ? $pages_links : '&nbsp;'
 		));
@@ -95,16 +95,16 @@ if( !empty($search_string) ) //recherche
 		$Errorh->handler($LANG['wiki_empty_search'], E_NOTICE);
 	
 	$i = 1; //On �mule le "limit" 10 r�sultats par page
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $i > ($page - 1) * 10 && $i <= $page * 10 ) //On affiche
+		if ($i > ($page - 1) * 10 && $i <= $page * 10) //On affiche
 			$Template->assign_block_vars('search_result.item', array(
 				'TITLE' => $row['title'],
 				'U_TITLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),
 				'RELEVANCE' => number_round(($row['relevance'] / 5.5), 2) * 100 . ' %'
 			));	
 		$i++;
-		if( $i > $page * 10 )
+		if ($i > $page * 10)
 			break;
 	}	
 }

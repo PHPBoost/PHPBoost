@@ -36,7 +36,7 @@ class Note
 	//Constructeur.
 	function Note($script, $idprov, $vars, $notation_scale, $module_folder = '', $options = 0) 
 	{
-		if( ($options & NOTE_NO_CONSTRUCT) === 0 )
+		if (($options & NOTE_NO_CONSTRUCT) === 0)
 		{
 			$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 			$this->options = (int)$options;
@@ -50,13 +50,13 @@ class Note
 	{
 		global $Sql, $User;
 		
-		if( $User->check_level(MEMBER_LEVEL) )
+		if ($User->check_level(MEMBER_LEVEL))
 		{
 			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.			
 			$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 			$user_id = $User->get_attribute('user_id');
 			$array_users_note = explode('/', $row_note['users_note']);
-			if( !in_array($user_id, $array_users_note) && $check_note ) //L'utilisateur n'a pas déjà voté, et la note est valide.
+			if (!in_array($user_id, $array_users_note) && $check_note) //L'utilisateur n'a pas déjà voté, et la note est valide.
 			{
 				$note = (($row_note['note'] * $row_note['nbrnote']) + $note)/($row_note['nbrnote'] + 1);
 				$users_note = !empty($row_note['users_note']) ? $row_note['users_note'] . '/' . $user_id : $user_id; //On ajoute l'id de l'utilisateur.
@@ -81,15 +81,15 @@ class Note
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
 
 		//Notes chargées?
-		if( $this->_note_loaded() ) //Utilisateur connecté.
+		if ($this->_note_loaded()) //Utilisateur connecté.
 		{
-			if( !is_object($template) || strtolower(get_class($template)) != 'template' )
+			if (!is_object($template) || strtolower(get_class($template)) != 'template')
 			$template = new template('framework/note.tpl');
 			
 			###########################Insertion##############################
-			if( !empty($_POST['valid_note']) )
+			if (!empty($_POST['valid_note']))
 			{
-				if( !empty($note) )
+				if (!empty($note))
 					$Note->Add_note($note); //Ajout de la note.
 				
 				redirect($path_redirect);
@@ -101,7 +101,7 @@ class Note
 					
 				//Génération de l'échelle de notation pour ceux ayant le javascript désactivé.
 				$select = '<option value="-1" selected="selected">' . $LANG['note'] . '</option>';
-				for( $i = 0; $i <= $this->notation_scale; $i++)
+				for ($i = 0; $i <= $this->notation_scale; $i++)
 					$select .= '<option value="' . $i . '">' . $i . '</option>';
 					
 				### Notation Ajax ###
@@ -112,24 +112,24 @@ class Note
 				$width = ($this->options & NOTE_DISPLAY_BLOCK) !== 0 ? 'width:' . ($this->notation_scale*16) . 'px;margin:auto;' : '';
 				
 				$ajax_note = '<div style="' . $width . 'display:none" id="note_stars' . $this->idprov . '" onmouseout="out_div(' . $this->idprov . ', array_note[' . $this->idprov . '])" onmouseover="over_div()">';
-				for($i = 1; $i <= $this->notation_scale; $i++)
+				for ($i = 1; $i <= $this->notation_scale; $i++)
 				{
 					$star_img = 'stars.png';
-					if( $row_note['note'] < $i )
+					if ($row_note['note'] < $i)
 					{							
 						$decimal = $i - $row_note['note'];
-						if( $decimal >= 1 )
+						if ($decimal >= 1)
 							$star_img = 'stars0.png';
-						elseif( $decimal >= 0.75 )
+						elseif ($decimal >= 0.75)
 							$star_img = 'stars1.png';
-						elseif( $decimal >= 0.50 )
+						elseif ($decimal >= 0.50)
 							$star_img = 'stars2.png';
 						else
 							$star_img = 'stars3.png';
 					}			
 					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
 				}
-				if( ($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0 ) //Affichage du nombre de votant.
+				if (($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0) //Affichage du nombre de votant.
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
 				else
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span> <div style="display:' . $display . '" id="nbrnote' . $this->idprov . '">(' . $row_note['nbrnote'] . ' ' . (($row_note['nbrnote'] > 1) ? strtolower($LANG['notes']) : strtolower($LANG['note'])) . ')</div>';
@@ -151,7 +151,7 @@ class Note
 				));
 			}
             
-			if( !defined('HANDLE_NOTE') )
+			if (!defined('HANDLE_NOTE'))
 				define('HANDLE_NOTE', true);
             
 			return $template->parse(TEMPLATE_STRING_MODE);
@@ -168,26 +168,26 @@ class Note
 	{
 		global $CONFIG;
 		
-		if( $notation_scale == 0 )
+		if ($notation_scale == 0)
 			return '';
 			
 		$display_note = '';
-		if( $num_stars_display > 0 )
+		if ($num_stars_display > 0)
 		{
 			$note *= $num_stars_display / $notation_scale;
 			$notation_scale = $num_stars_display;
 		}
-		for($i = 1; $i <= $notation_scale; $i++)
+		for ($i = 1; $i <= $notation_scale; $i++)
 		{
 			$star_img = 'stars.png';
-			if( $note < $i )
+			if ($note < $i)
 			{							
 				$decimal = $i - $note;
-				if( $decimal >= 1 )
+				if ($decimal >= 1)
 					$star_img = 'stars0.png';
-				elseif( $decimal >= 0.75 )
+				elseif ($decimal >= 0.75)
 					$star_img = 'stars1.png';
-				elseif( $decimal >= 0.50 )
+				elseif ($decimal >= 0.50)
 					$star_img = 'stars2.png';
 				else
 					$star_img = 'stars3.png';
@@ -210,7 +210,7 @@ class Note
 	{
 		global $Errorh;
 		
-		if( empty($this->sql_table) ) //Erreur avec le module non prévu pour gérer les commentaires.
+		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 		
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
@@ -224,12 +224,12 @@ class Note
 		//Récupération des informations sur le module.
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
 		$check_script = false;
-		if( isset($info_module['note']) )
+		if (isset($info_module['note']))
 		{
-			if( $info_module['note'] == $this->script )
+			if ($info_module['note'] == $this->script)
 			{
 				$idprov = $Sql->query("SELECT id FROM ".PREFIX.$info_module['note']." WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-				if( $idprov == $this->idprov )
+				if ($idprov == $this->idprov)
 					$check_script = true;
 			}
 		}

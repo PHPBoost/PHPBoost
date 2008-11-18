@@ -33,7 +33,7 @@ require_once('../admin/admin_header.php');
 
 $Cache->load('web');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$config_web = array();
 	$config_web['nbr_web_max'] = retrieve(POST, 'nbr_web_max', 10);
@@ -43,7 +43,7 @@ if( !empty($_POST['valid']) )
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
 	
-	if( $CONFIG_WEB['note_max'] != $config_web['note_max'] )
+	if ($CONFIG_WEB['note_max'] != $config_web['note_max'])
 		$Sql->query_inject("UPDATE ".PREFIX."web SET note = note * " . ($config_web['note_max']/$CONFIG_WEB['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######

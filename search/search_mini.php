@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //------------------------------------------------------------------- Language
 load_module_lang('search');

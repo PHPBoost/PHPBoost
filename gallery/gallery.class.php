@@ -42,7 +42,7 @@ class Gallery
 	{
 		global $LANG;
 			
-		if( file_exists($path) )
+		if (file_exists($path))
 		{	
 			list($width_s, $height_s, $weight, $ext) = $this->Arg_pics($path);
 			//Calcul des dimensions avec respect des proportions.
@@ -55,7 +55,7 @@ class Gallery
 					$source = @imagecreatefromjpeg($path);
 					break;
 				case 'gif':
-					$source = @imagecreatefromgif($path);
+					$source = @imagecreatefromgif ($path);
 					break;
 				case 'png':
 					$source = @imagecreatefrompng($path);
@@ -65,7 +65,7 @@ class Gallery
 					$source = false;
 			}
 			
-			if( !$source )
+			if (!$source)
 			{
 				$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 				$this->_create_pics_error($path_mini, $width, $height);	
@@ -74,34 +74,34 @@ class Gallery
 			else
 			{
 				//Préparation de l'image redimensionnée.
-				if( !function_exists('imagecreatetruecolor') )
+				if (!function_exists('imagecreatetruecolor'))
 				{	
 					$thumbnail = @imagecreate($width, $height);
-					if( $thumbnail === false )				
+					if ($thumbnail === false)				
 						$this->error = 'e_unabled_create_pics';
 				}
 				else
 				{	
 					$thumbnail = @imagecreatetruecolor($width, $height);
-					if( $thumbnail === false )				
+					if ($thumbnail === false)				
 						$this->error = 'e_unabled_create_pics';
 				}
 				
 				//Redimensionnement.
-				if( !function_exists('imagecopyresampled') )
+				if (!function_exists('imagecopyresampled'))
 				{	
-					if( @imagecopyresized($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false )				
+					if (@imagecopyresized($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)				
 						$this->error = 'e_error_resize';
 				}
 				else
 				{	
-					if( @imagecopyresampled($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false )				
+					if (@imagecopyresampled($thumbnail, $source, 0, 0, 0, 0, $width, $height, $width_s, $height_s) === false)				
 						$this->error = 'e_error_resize';
 				}
 			}
 			
 			//Création de l'image.
-			if( empty($this->error) )
+			if (empty($this->error))
 				$this->create_pics($thumbnail, $source, $path, $ext);
 		}
 		else
@@ -118,11 +118,11 @@ class Gallery
 		global $CONFIG_GALLERY;
 		
 		$path_mini = str_replace('pics', 'pics/thumbnails', $path);
-		if( function_exists('imagegif') && $ext === 'gif' ) 
-			imagegif($thumbnail, $path_mini);
-		elseif( function_exists('imagejpeg') && $ext === 'jpg' ) 
+		if (function_exists('imagegif') && $ext === 'gif') 
+			imagegif ($thumbnail, $path_mini);
+		elseif (function_exists('imagejpeg') && $ext === 'jpg') 
 			imagejpeg($thumbnail, $path_mini, $CONFIG_GALLERY['quality']);
-		elseif( function_exists('imagepng')  && $ext === 'png' ) 
+		elseif (function_exists('imagepng')  && $ext === 'png') 
 			imagepng($thumbnail, $path_mini);
 		else 
 			$this->error = 'e_no_graphic_support';
@@ -133,7 +133,7 @@ class Gallery
 				@imagejpeg($source, $path);
 				break;
 			case 'gif':
-				@imagegif($source, $path);
+				@imagegif ($source, $path);
 				break;
 			case 'png':
 				@imagepng($source, $path);
@@ -148,12 +148,12 @@ class Gallery
 	{
 		global $CONFIG_GALLERY, $LANG;
 		
-		if( $CONFIG_GALLERY['activ_logo'] == '1' && is_file($CONFIG_GALLERY['logo']) ) //Incrustation du logo.
+		if ($CONFIG_GALLERY['activ_logo'] == '1' && is_file($CONFIG_GALLERY['logo'])) //Incrustation du logo.
 		{
 			list($width_s, $height_s, $weight_s, $ext_s) = $this->Arg_pics($CONFIG_GALLERY['logo']);
 			list($width, $height, $weight, $ext) = $this->Arg_pics($path);
 			
-			if( $width_s <= $width && $height_s <= $height )
+			if ($width_s <= $width && $height_s <= $height)
 			{
 				switch($ext_s) //Création de l'image suivant l'extension.
 				{
@@ -161,7 +161,7 @@ class Gallery
 						$source = @imagecreatefromjpeg($CONFIG_GALLERY['logo']);
 						break;
 					case 'gif':
-						$source = @imagecreatefromgif($CONFIG_GALLERY['logo']);
+						$source = @imagecreatefromgif ($CONFIG_GALLERY['logo']);
 						break;
 					case 'png':
 						$source = @imagecreatefrompng($CONFIG_GALLERY['logo']);
@@ -171,7 +171,7 @@ class Gallery
 						$source = false;
 				}
 				
-				if( !$source )
+				if (!$source)
 				{
 					$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 					list($width_mini, $height_mini, $weight_mini, $ext_mini) = $this->Arg_pics($path_mini);
@@ -186,7 +186,7 @@ class Gallery
 							$destination = @imagecreatefromjpeg($path);
 							break;
 						case 'gif':
-							$destination = @imagecreatefromgif($path);
+							$destination = @imagecreatefromgif ($path);
 							break;
 						case 'png':
 							$destination = @imagecreatefrompng($path);
@@ -195,13 +195,13 @@ class Gallery
 							$this->error = 'e_unsupported_format';
 					}
 					
-					if( function_exists('imagecopymerge') )
+					if (function_exists('imagecopymerge'))
 					{
 						// On veut placer le logo en bas à droite, on calcule les coordonnées où on doit placer le logo sur la photo
 						$destination_x = $width - $width_s - $CONFIG_GALLERY['d_width'];
 						$destination_y =  $height - $height_s - $CONFIG_GALLERY['d_height'];
 						
-						if( @imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $CONFIG_GALLERY['trans'])) === false )
+						if (@imagecopymerge($destination, $source, $destination_x, $destination_y, 0, 0, $width_s, $height_s, (100 - $CONFIG_GALLERY['trans'])) === false)
 							$this->error = 'e_unabled_incrust_logo';
 							
 						switch($ext) //Création de l'image suivant l'extension.
@@ -210,7 +210,7 @@ class Gallery
 								imagejpeg($destination);
 								break;
 							case 'gif':
-								imagegif($destination);
+								imagegif ($destination);
 								break;
 							case 'png':
 								imagepng($destination);
@@ -243,14 +243,14 @@ class Gallery
 		$result = $Sql->query_while("SELECT id 
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
 		$Sql->query_close($result);
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if( empty($list_parent_cats_to) )
+		if (empty($list_parent_cats_to))
 			$clause_parent_cats_to = " id = '" . $idcat . "'";
 		else
 			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
@@ -272,7 +272,7 @@ class Gallery
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
 		$info_pics = $Sql->query_array("gallery", "path", "idcat", "aprob", "WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		if( !empty($info_pics['path']) )
+		if (!empty($info_pics['path']))
 		{
 			$Sql->query_inject("DELETE FROM ".PREFIX."gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);	
 		
@@ -281,19 +281,19 @@ class Gallery
 			$result = $Sql->query_while("SELECT id 
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left <= '" . $CAT_GALLERY[$info_pics['idcat']]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$info_pics['idcat']]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats_to .= $row['id'] . ', ';
 			}
 			$Sql->query_close($result);
 			$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 			
-			if( empty($list_parent_cats_to) )
+			if (empty($list_parent_cats_to))
 				$clause_parent_cats_to = " id = '" . $info_pics['idcat'] . "'";
 			else
 				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
 				
-			if( $info_pics['aprob'] )
+			if ($info_pics['aprob'])
 				$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 			else
 				$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
@@ -327,20 +327,20 @@ class Gallery
 		$result = $Sql->query_while("SELECT id 
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
 		$Sql->query_close($result);
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if( empty($list_parent_cats_to) )
+		if (empty($list_parent_cats_to))
 			$clause_parent_cats_to = " id = '" . $idcat . "'";
 		else
 			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
 			
 		$aprob = $Sql->query("SELECT aprob FROM ".PREFIX."gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		if( $aprob )
+		if ($aprob)
 		{	
 			$Sql->query_inject("UPDATE ".PREFIX."gallery SET aprob = 0 WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1, nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
@@ -360,7 +360,7 @@ class Gallery
 		global $CAT_GALLERY, $Sql;
 		
 		$idcat = $Sql->query("SELECT idcat FROM ".PREFIX."gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		if( empty($idcat) )
+		if (empty($idcat))
 		{
 			$CAT_GALLERY[$idcat]['id_left'] = 0;
 			$CAT_GALLERY[$idcat]['id_right'] = 0;
@@ -371,14 +371,14 @@ class Gallery
 		$result = $Sql->query_while("SELECT id 
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$list_parent_cats .= $row['id'] . ', ';
 		}
 		$Sql->query_close($result);
 		$list_parent_cats = trim($list_parent_cats, ', ');
 		
-		if( empty($list_parent_cats) )
+		if (empty($list_parent_cats))
 			$clause_parent_cats = " id = '" . $idcat . "'";
 		else
 			$clause_parent_cats = " id IN (" . $list_parent_cats . ")";
@@ -388,21 +388,21 @@ class Gallery
 		$result = $Sql->query_while("SELECT id 
 		FROM ".PREFIX."gallery_cats 
 		WHERE id_left <= '" . $CAT_GALLERY[$id_move]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$id_move]['id_right'] . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$list_parent_cats_to .= $row['id'] . ', ';
 		}
 		$Sql->query_close($result);
 		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if( empty($list_parent_cats_to) )
+		if (empty($list_parent_cats_to))
 			$clause_parent_cats_to = " id = '" . $id_move . "'";
 		else
 			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
 			
 		$aprob = $Sql->query("SELECT aprob FROM ".PREFIX."gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
 		
-		if( $aprob )
+		if ($aprob)
 		{	
 			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
@@ -432,7 +432,7 @@ class Gallery
 			$pics_quota = $CONFIG_GALLERY['limit_member'];
 		}
 
-		if( $this->get_nbr_upload_pics($user_id) >= $pics_quota )
+		if ($this->get_nbr_upload_pics($user_id) >= $pics_quota)
 			return false;
 			
 		return true;
@@ -444,10 +444,10 @@ class Gallery
 		global $Errorh, $LANG;
 		
 		//Vérification du chargement de la librairie GD.
-		if( !@extension_loaded('gd') ) 
+		if (!@extension_loaded('gd')) 
 			$Errorh->handler($LANG['e_no_gd'], E_USER_ERROR, __LINE__, __FILE__);
 		
-		if( function_exists('getimagesize') ) 
+		if (function_exists('getimagesize')) 
 		{
 			list($width, $height, $type) = @getimagesize($path);
 			$weight = @filesize($path);
@@ -455,7 +455,7 @@ class Gallery
 			
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
 			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png');
-			if( isset($array_type[$type]) )
+			if (isset($array_type[$type]))
 				return array($width, $height, $weight, $array_type[$type]);
 			else
 				$this->error = 'e_unsupported_format';
@@ -479,9 +479,9 @@ class Gallery
 		
 		$width_max = ($width_max == 0) ? $CONFIG_GALLERY['width'] : $width_max;
 		$height_max = ($height_max == 0) ? $CONFIG_GALLERY['height'] : $height_max;
-		if( $width_s > $width_max || $height_s > $height_max ) 
+		if ($width_s > $width_max || $height_s > $height_max) 
 		{
-			if( $width_s > $height_s )
+			if ($width_s > $height_s)
 			{
 				$ratio = $width_s / $height_s;
 				$width = $width_max;
@@ -535,31 +535,31 @@ class Gallery
 		$CAT_GALLERY[0]['id_right'] = 0;
 		
 		$info_cat = array();
-		$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_pics_aprob 
+		$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_pics_aprob 
 		FROM ".PREFIX."gallery 
 		WHERE aprob = 1 AND idcat > 0
 		GROUP BY idcat", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 			$info_cat[$row['idcat']]['aprob'] = $row['nbr_pics_aprob'];
 		$Sql->query_close($result);
 		
-		$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
+		$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_pics_unaprob 
 		FROM ".PREFIX."gallery 
 		WHERE aprob = 0 AND idcat > 0
 		GROUP BY idcat", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 			$info_cat[$row['idcat']]['unaprob'] = $row['nbr_pics_unaprob'];
 		$Sql->query_close($result);
 		
 		$result = $Sql->query_while("SELECT id, id_left, id_right
 		FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{			
 			$nbr_pics_aprob = 0;
 			$nbr_pics_unaprob = 0;
-			foreach($info_cat as $key => $value)
+			foreach ($info_cat as $key => $value)
 			{			
-				if( $CAT_GALLERY[$key]['id_left'] >= $row['id_left'] && $CAT_GALLERY[$key]['id_right'] <= $row['id_right'] )
+				if ($CAT_GALLERY[$key]['id_left'] >= $row['id_left'] && $CAT_GALLERY[$key]['id_right'] <= $row['id_right'])
 				{	
 					$nbr_pics_aprob += isset($info_cat[$key]['aprob']) ? $info_cat[$key]['aprob'] : 0;
 					$nbr_pics_unaprob += isset($info_cat[$key]['unaprob']) ? $info_cat[$key]['unaprob'] : 0; 
@@ -574,20 +574,20 @@ class Gallery
 	function Clear_cache()
 	{
 		$dir = 'pics/thumbnails/';
-		if( is_dir($dir) ) //Si le dossier existe
+		if (is_dir($dir)) //Si le dossier existe
 		{		
 			$j = 0;
 			$array_pics = array();
 			$dh = @opendir($dir);
-			while( !is_bool($pics = readdir($dh)) )
+			while (!is_bool($pics = readdir($dh)))
 			{	
-				if( $j > 1 && $pics != 'index.php' && $pics != 'Thumbs.db' )
+				if ($j > 1 && $pics != 'index.php' && $pics != 'Thumbs.db')
 					$array_pics[] = $pics; //On crée un array, avec les different fichiers.
 				$j++;
 			}	
 			@closedir($dh); //On ferme le dossier
 			
-			foreach($array_pics as  $key => $pics)
+			foreach ($array_pics as  $key => $pics)
 				$this->delete_file($dir . $pics);
 		}
 	}
@@ -605,7 +605,7 @@ class Gallery
 		$font_size = 12;
 
 		$thumbnail = @imagecreate($width, $height);
-		if( $thumbnail === false )				
+		if ($thumbnail === false)				
 			$this->error = 'e_unabled_create_pics';
 		$background = @imagecolorallocate($thumbnail, 255, 255, 255);
 		$text_color = @imagecolorallocate($thumbnail, 0, 0, 0);
@@ -625,7 +625,7 @@ class Gallery
 	//Suppression d'une image.
 	function delete_file($path)
 	{
-		if( function_exists('unlink') )
+		if (function_exists('unlink'))
 			return @unlink($path); //On supprime le fichier.
 		else //Fonction désactivée.	
 		{	

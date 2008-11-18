@@ -102,7 +102,7 @@ class Comments
 	{
 		global $Errorh;
 		
-		if( empty($this->sql_table) ) //Erreur avec le module non prévu pour gérer les commentaires.
+		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 			
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
@@ -111,12 +111,12 @@ class Comments
 	//Met à jour l'id du commentaire.
 	function set_arg($idcom, $path = '')
 	{
-		if( !empty($path) )
+		if (!empty($path))
 			$this->path = $path;
 		$this->idcom = (int)max($idcom, 0);
 		
 		//Si c'est un module qui appelle
-		if( !$this->is_kernel_script )
+		if (!$this->is_kernel_script)
 			list($this->sql_table, $this->nbr_com, $this->lock_com) = $this->_get_info_module();
 		//Sinon c'est le noyau
 		else
@@ -134,7 +134,7 @@ class Comments
 	{
 		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
-		if( $integrated_in_environment )
+		if ($integrated_in_environment)
 		{
 			$idcom_get = retrieve(GET, 'com', 0);
 			$idcom_post = retrieve(POST, 'idcom', 0);
@@ -150,51 +150,51 @@ class Comments
 		
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '');
 		
-		if( !is_object($Template) || strtolower(get_class($Template)) != 'template' )
+		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/content/com.tpl');
 		
 		//Commentaires chargés?
-		if( $this->is_loaded() )
+		if ($this->is_loaded())
 		{
 			//Chargement du cache
 			$Cache->load('com');
 			
 			###########################Insertion##############################
-			if( retrieve(POST, 'valid_com', false) && !$updatecom )
+			if (retrieve(POST, 'valid_com', false) && !$updatecom)
 			{
 				//Membre en lecture seule?
-				if( $User->get_attribute('user_readonly') > time() ) 
+				if ($User->get_attribute('user_readonly') > time()) 
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				
-				if( !empty($login) && !empty($contents) )
+				if (!empty($login) && !empty($contents))
 				{
 					//Status des commentaires, verrouillé/déverrouillé?
-					if( $this->lock_com >= 1 && !$User->check_level(MODO_LEVEL) )
+					if ($this->lock_com >= 1 && !$User->check_level(MODO_LEVEL))
 						redirect($path_redirect);
 					
 					//Autorisation de poster des commentaires? 
-					if( $User->check_level($CONFIG_COM['com_auth']) )
+					if ($User->check_level($CONFIG_COM['com_auth']))
 					{
 						//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 						$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."com WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-						if( !empty($check_time) && !$User->check_max_value(AUTH_FLOOD) )
+						if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 						{				
-							if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcule la fin du delai.	
+							if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcule la fin du delai.	
 								redirect($path_redirect . '&errorh=flood#errorh');
 						}
 						
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
 						//Correction des chemins du BBCode
-						if( !$integrated_in_environment && !empty($page_path_to_root) )
+						if (!$integrated_in_environment && !empty($page_path_to_root))
 							$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
 							
-						if( !check_nbr_links($login, 0) ) //Nombre de liens max dans le pseudo.
+						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 							redirect($path_redirect . '&errorh=l_pseudo#errorh');
-						if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
+						if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 							redirect($path_redirect . '&errorh=l_flood#errorh');
 						
 						//Récupération de l'adresse de la page.
@@ -209,18 +209,18 @@ class Comments
 				else
 					redirect($path_redirect . '&errorh=incomplete#errorh');
 			}
-			elseif( $updatecom || $delcom > 0 || $editcom > 0 ) //Modération des commentaires.
+			elseif ($updatecom || $delcom > 0 || $editcom > 0) //Modération des commentaires.
 			{
 				//Membre en lecture seule?
-				if( $User->get_attribute('user_readonly') > time() ) 
+				if ($User->get_attribute('user_readonly') > time()) 
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$row = $Sql->query_array('com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
-				if( $this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1)) ) //Modération des commentaires.
+				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))) //Modération des commentaires.
 				{
-					if( $delcom > 0) //Suppression du commentaire.
+					if ($delcom > 0) //Suppression du commentaire.
 					{
 						$lastid_com = $this->del();
 						$lastid_com = !empty($lastid_com) ? '#m' . $lastid_com : '';
@@ -228,7 +228,7 @@ class Comments
 						//Succès redirection.
 						redirect($path_redirect . $lastid_com);
 					}
-					elseif( $editcom > 0 ) //Edition du commentaire.
+					elseif ($editcom > 0) //Edition du commentaire.
 					{
 						$Template->assign_vars(array(
 							'CURRENT_PAGE_COM' => $integrated_in_environment,
@@ -237,7 +237,7 @@ class Comments
 						));
 						
 						//Pseudo du membre connecté.
-						if( $row['user_id'] !== -1 )
+						if ($row['user_id'] !== -1)
 							$Template->assign_vars(array(
 								'C_HIDDEN_COM' => true,
 								'LOGIN' => $User->get_attribute('login')
@@ -270,20 +270,20 @@ class Comments
 							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '')
 						));
 					}
-					elseif( $updatecom ) //Mise à jour du commentaire.
+					elseif ($updatecom) //Mise à jour du commentaire.
 					{
 						$contents = trim(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
 						$login = retrieve(POST, 'login', '');
 						
-						if( !empty($contents) && !empty($login) )
+						if (!empty($contents) && !empty($login))
 						{
 							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 							
 							//Correction des chemins du BBCode
-							if( !$integrated_in_environment && !empty($page_path_to_root) )
+							if (!$integrated_in_environment && !empty($page_path_to_root))
 								$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
 							
-							if( !check_nbr_links($contents, $CONFIG_COM['max_link']) ) //Nombre de liens max dans le message.
+							if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 								redirect($path_redirect . '&errorh=l_flood#errorh');
 
 							$this->update($contents, $login);
@@ -300,9 +300,9 @@ class Comments
 				else
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
-			elseif( isset($_GET['lock']) && $User->check_level(MODO_LEVEL) ) //Verrouillage des commentaires.
+			elseif (isset($_GET['lock']) && $User->check_level(MODO_LEVEL)) //Verrouillage des commentaires.
 			{
-				if( $User->check_level(MODO_LEVEL) )
+				if ($User->check_level(MODO_LEVEL))
 				{
 					$lock = retrieve(GET, 'lock', 0);
 					$this->lock($lock);
@@ -315,7 +315,7 @@ class Comments
 				$get_quote = retrieve(GET, 'quote', 0);
 				$contents = '';
 				
-				if( $get_quote > 0 )
+				if ($get_quote > 0)
 				{
 					$info_com = $Sql->query_array('com', 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
 					$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
@@ -331,7 +331,7 @@ class Comments
 				));
 				
 				//Affichage du lien de verrouillage/déverrouillage.
-				if( $User->check_level(MODO_LEVEL) )
+				if ($User->check_level(MODO_LEVEL))
 				{
 					$Template->assign_vars(array(
 						'COM_LOCK' => true,
@@ -366,13 +366,13 @@ class Comments
 						$errstr = '';
 				}
 				
-				if( !empty($errstr) )
+				if (!empty($errstr))
 					$Errorh->handler($errstr, E_USER_NOTICE);
 				
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
-				if( !$this->lock_com || $User->check_level(MODO_LEVEL) )
+				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
-					if( $User->check_level($CONFIG_COM['com_auth']) )
+					if ($User->check_level($CONFIG_COM['com_auth']))
 						$Template->assign_vars(array(
 							'AUTH_POST_COM' => true
 						));
@@ -380,7 +380,7 @@ class Comments
 						$Errorh->handler($LANG['e_unauthorized'], E_USER_NOTICE);
 					
 					//Pseudo du membre connecté.
-					if( $User->get_attribute('user_id') !== -1 )
+					if ($User->get_attribute('user_id') !== -1)
 						$Template->assign_vars(array(
 							'C_HIDDEN_COM' => true,
 							'LOGIN' => $User->get_attribute('login')
@@ -396,7 +396,7 @@ class Comments
 				
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 				
-				if( $get_pos )
+				if ($get_pos)
 					$get_page = substr($_SERVER['QUERY_STRING'], 0, $get_pos) . '&amp;pc';
 				else
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
@@ -453,21 +453,21 @@ class Comments
 					$is_modo = $User->check_level(MODO_LEVEL);
 					$warning = '';
 					$readonly = '';
-					if( $is_modo && !$is_guest ) //Modération.
+					if ($is_modo && !$is_guest) //Modération.
 					{
 						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
 						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 					}
 					
 					//Edition/suppression.
-					if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
+					if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 					{
 						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.
-					if( !$is_guest ) 
+					if (!$is_guest) 
 						$com_pseudo = '<a class="msg_link_pseudo" href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 					else
 						$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
@@ -476,13 +476,13 @@ class Comments
 					$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 					$user_group = $user_rank;
 					$user_rank_icon = '';
-					if( $row['level'] === '2' ) //Rang spécial (admins).  
+					if ($row['level'] === '2') //Rang spécial (admins).  
 					{
 						$user_rank = $_array_rank[-2][0];
 						$user_group = $user_rank;
 						$user_rank_icon = $_array_rank[-2][1];
 					}
-					elseif( $row['level'] === '1' ) //Rang spécial (modos).  
+					elseif ($row['level'] === '1') //Rang spécial (modos).  
 					{
 						$user_rank = $_array_rank[-1][0];
 						$user_group = $user_rank;
@@ -490,9 +490,9 @@ class Comments
 					}
 					else
 					{
-						foreach($_array_rank as $msg => $ranks_info)
+						foreach ($_array_rank as $msg => $ranks_info)
 						{
-							if( $msg >= 0 && $msg <= $row['user_msg'] )
+							if ($msg >= 0 && $msg <= $row['user_msg'])
 							{ 
 								$user_rank = $ranks_info[0];
 								$user_rank_icon = $ranks_info[1];
@@ -505,13 +505,13 @@ class Comments
 					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 								
 					//Affichage des groupes du membre.		
-					if( !empty($row['user_groups']) && $_array_groups_auth ) 
+					if (!empty($row['user_groups']) && $_array_groups_auth) 
 					{	
 						$user_groups = '';
 						$array_user_groups = explode('|', $row['user_groups']);
-						foreach($_array_groups_auth as $idgroup => $array_group_info)
+						foreach ($_array_groups_auth as $idgroup => $array_group_info)
 						{
-							if( is_numeric(array_search($idgroup, $array_user_groups)) )
+							if (is_numeric(array_search($idgroup, $array_user_groups)))
 								$user_groups .= !empty($array_group_info['img']) ? '<img src="' . PATH_TO_ROOT . '/images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 						}
 					}
@@ -522,23 +522,23 @@ class Comments
 					$user_online = !empty($row['connect']) ? 'online' : 'offline';
 					
 					//Avatar			
-					if( empty($row['user_avatar']) ) 
+					if (empty($row['user_avatar'])) 
 						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 					
 					//Affichage du sexe et du statut (connecté/déconnecté).	
 					$user_sex = '';
-					if( $row['user_sex'] == 1 )	
+					if ($row['user_sex'] == 1)	
 						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
-					elseif( $row['user_sex'] == 2 ) 
+					elseif ($row['user_sex'] == 2) 
 						$user_sex = $LANG['sex'] . ': <img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 							
 					//Nombre de message.
 					$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
 					
 					//Localisation.
-					if( !empty($row['user_local']) ) 
+					if (!empty($row['user_local'])) 
 					{
 						$user_local = $LANG['place'] . ': ' . $row['user_local'];
 						$user_local = $user_local > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';			
@@ -548,7 +548,7 @@ class Comments
 					$contents = ucfirst(second_parse($row['contents']));
 					
 					//Correction des chemins du BBCode
-					if( !$integrated_in_environment && !empty($page_path_to_root) )
+					if (!$integrated_in_environment && !empty($page_path_to_root))
 						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
 					
 					$Template->assign_block_vars('com_list', array(
@@ -599,12 +599,12 @@ class Comments
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->module_folder . '/lang/', get_ulang());
 		
 		$check_script = false;
-		if( isset($info_module['com']) )
+		if (isset($info_module['com']))
 		{
-			if( $info_module['com'] == $this->script )
+			if ($info_module['com'] == $this->script)
 			{
 				$info_sql_module = $Sql->query_array(strprotect($info_module['com']), "id", "nbr_com", "lock_com", "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
-				if( $info_sql_module['id'] == $this->idprov )
+				if ($info_sql_module['id'] == $this->idprov)
 					$check_script = true;
 			}
 		}

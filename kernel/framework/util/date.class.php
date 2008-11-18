@@ -53,15 +53,15 @@ class Date
 		//Nombre d'arguments
 		$num_args = func_num_args();
 		
-		if( $num_args == 0 )
+		if ($num_args == 0)
 			$format = DATE_NOW;
 		else
 			$format = func_get_arg(0);
 		
-		if( $format != DATE_NOW )
+		if ($format != DATE_NOW)
 		{
 			// Fuseau horaire
-			if( func_get_arg(1) !== false )
+			if (func_get_arg(1) !== false)
 				$referencial_timezone = func_get_arg(1);
 			else
 				$referencial_timezone = TIMEZONE_USER;
@@ -77,7 +77,7 @@ class Date
 				
 			// Année mois jour
 			case DATE_YEAR_MONTH_DAY:
-				if( $num_args >= 5 )
+				if ($num_args >= 5)
 				{
 					$year = func_get_arg(3);
 					$month = func_get_arg(4);
@@ -88,7 +88,7 @@ class Date
 				
 			// Année mois jour heure minute seconde
 			case DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
-				if( $num_args >= 7 )
+				if ($num_args >= 7)
 				{
 					$hour = func_get_arg(5);
 					$minute = func_get_arg(6);
@@ -110,7 +110,7 @@ class Date
 				$date_format = func_get_arg(3);
 			    $array_timestamp = explode('/', $str);
 			    $array_date = explode('/', $date_format);
-			    for($i = 0; $i < 3; $i++)
+			    for ($i = 0; $i < 3; $i++)
 			    {
 			        switch($array_date[$i])
 			        {
@@ -129,7 +129,7 @@ class Date
 			    }
 
 			    //Vérification du format de la date.
-			    if( $this->Check_date($month, $day, $year) )
+			    if ($this->Check_date($month, $day, $year))
 			        $this->timestamp = @mktime(0, 0, 1, $month, $day, $year) - $time_difference * 3600;
 				else
 			        $this->timestamp = time();
@@ -147,7 +147,7 @@ class Date
 		
 		$timestamp = $this->timestamp + $this->_compute_server_user_difference($referencial_timezone) * 3600;
 		
-		if( $timestamp <= 0 )
+		if ($timestamp <= 0)
 			return '';
 		
 		switch($format)

@@ -33,17 +33,17 @@ require_once('../admin/admin_header.php');
 $get_id = retrieve(GET, 'id', 0);	
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id, special 
 	FROM ".PREFIX."ranks", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name = retrieve(POST, $row['id'] . 'name', '');
 		$msg = retrieve(POST, $row['id'] . 'msg', 0);
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
-		if( !empty($name) && $row['special'] != 1 )
+		if (!empty($name) && $row['special'] != 1)
 			$Sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
 			$Sql->query_inject("UPDATE ".PREFIX."ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) )
 		
 	redirect(HOST . SCRIPT);	
 }
-elseif( !empty($_GET['del']) && !empty($get_id) ) //Suppression du rang.
+elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
@@ -91,12 +91,12 @@ else //Sinon on rempli le formulaire
 	$rep = '../templates/' . get_utheme()  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
-	if(  is_dir($rep) ) //Si le dossier existe
+	if ( is_dir($rep)) //Si le dossier existe
 	{
 		$dh = @opendir( $rep);
-		while( !is_bool($fichier = readdir($dh)) )
+		while (!is_bool($fichier = readdir($dh)))
 		{	
-			if( $j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db' )
+			if ($j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db')
 				$array_files[] = $fichier; //On crée un array, avec les different fichiers.
 			$j++;
 		}	
@@ -106,15 +106,15 @@ else //Sinon on rempli le formulaire
 	$result = $Sql->query_while("SELECT id, name, msg, icon, special
 	FROM ".PREFIX."ranks 
 	ORDER BY msg", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{				
-		if( $row['special'] == 0 )
+		if ($row['special'] == 0)
 			$del = '<a href="admin_ranks.php?del=1&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" title="" /></a>';
 		else
 			$del = $LANG['special_rank'];
 
 		$rank_options = '<option value="">--</option>';
-		foreach($array_files as $icon)
+		foreach ($array_files as $icon)
 		{			
 			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
 			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';

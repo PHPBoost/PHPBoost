@@ -28,7 +28,7 @@
 
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
-if( @ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' )
+if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
 {
     import('util/unusual_functions', LIB_IMPORT);
     securit_register_globals();
@@ -77,20 +77,20 @@ define('TUNSIGNED_DOUBLE', 'udouble');
 define('TUNSIGNED_FLOAT', 'udouble');
 
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
-if( $_SERVER )
+if ($_SERVER)
 {
-    if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) )
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    elseif( isset($_SERVER['HTTP_CLIENT_IP']) )
+    elseif (isset($_SERVER['HTTP_CLIENT_IP']))
 		$ip = $_SERVER['HTTP_CLIENT_IP'];
     else
 		$ip = $_SERVER['REMOTE_ADDR'];
 }
 else
 {
-    if( getenv('HTTP_X_FORWARDED_FOR') )
+    if (getenv('HTTP_X_FORWARDED_FOR'))
 		$ip = getenv('HTTP_X_FORWARDED_FOR');
-    elseif( getenv('HTTP_CLIENT_IP') )
+    elseif (getenv('HTTP_CLIENT_IP'))
 		$ip = getenv('HTTP_CLIENT_IP');
     else
 		$ip = getenv('REMOTE_ADDR');

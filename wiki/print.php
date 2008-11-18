@@ -34,7 +34,7 @@ include('../wiki/wiki_functions.php');
 $article_id = retrieve(GET, 'id', 0);
 
 //Requêtes préliminaires utiles par la suite
-if( $article_id > 0 ) //Si on connait son titre
+if ($article_id > 0) //Si on connait son titre
 {
 	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM ".PREFIX."wiki_articles a
@@ -46,7 +46,7 @@ if( $article_id > 0 ) //Si on connait son titre
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	if( !empty($article_infos['redirect']) )//Si on est redirigé
+	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
 		$id_redirection = $article_infos['id'];
 		
@@ -61,7 +61,7 @@ if( $article_id > 0 ) //Si on connait son titre
 	}
 }
 
-if( empty($article_infos['id']) )
+if (empty($article_infos['id']))
 	exit;
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');

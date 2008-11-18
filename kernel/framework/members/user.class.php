@@ -40,7 +40,7 @@ class User
 		
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();
-		foreach($groups_info as $idgroup => $array_info)
+		foreach ($groups_info as $idgroup => $array_info)
 			$groups_auth[$idgroup] = $array_info['auth'];
 		$this->groups_auth = $groups_auth;
 		
@@ -59,7 +59,7 @@ class User
 	//Vérifie le niveau d'autorisation.
 	function check_level($secure)
 	{
-		if( isset($this->user_data['level']) && $this->user_data['level'] >= $secure ) 
+		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure) 
 			return true;
 		return false;
 	}
@@ -67,7 +67,7 @@ class User
 	//Cherche les autorisations maximum parmi les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
 	function check_auth($array_auth_groups, $check_auth)
 	{
-		if( !is_array($array_auth_groups) )
+		if (!is_array($array_auth_groups))
 			return false;
 		
 		return (((int)$this->_sum_auth_groups($array_auth_groups) & (int)$check_auth) !== 0);
@@ -76,15 +76,15 @@ class User
 	//Cherche les valeurs maximum parmis les différents groupes dont le membre fait partie.
 	function check_max_value($key_auth, $max_value_compare = 0)
 	{
-		if( !is_array($this->groups_auth) )
+		if (!is_array($this->groups_auth))
 			return false;
 		
 		//Récupère les autorisations de tout les groupes dont le membre fait partie.
 		$array_user_auth_groups = $this->_array_group_intersect($this->groups_auth);
 		$max_auth = $max_value_compare;
-		foreach($array_user_auth_groups as $idgroup => $group_auth)
+		foreach ($array_user_auth_groups as $idgroup => $group_auth)
 		{	
-			if( $group_auth[$key_auth] == -1 )
+			if ($group_auth[$key_auth] == -1)
 				return -1;
 			else
 				$max_auth = max($max_auth, $group_auth[$key_auth]);
@@ -110,7 +110,7 @@ class User
 	{
 		global $Sql;
 		
-		if( $this->user_data['level'] > -1 )
+		if ($this->user_data['level'] > -1)
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
 		else
 			$Sql->query_inject("UPDATE ".PREFIX."sessions SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
@@ -127,7 +127,7 @@ class User
 	{
 		global $Sql;
 		
-		if( $this->user_data['level'] > -1 )
+		if ($this->user_data['level'] > -1)
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
 		else
 			$Sql->query_inject("UPDATE ".PREFIX."sessions SET user_lang = '" . strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
@@ -141,7 +141,7 @@ class User
 		//Récupère les autorisations de tout les groupes dont le membre fait partie.
 		$array_user_auth_groups = $this->_array_group_intersect($array_auth_groups);
 		$max_auth = 0;
-		foreach($array_user_auth_groups as $idgroup => $group_auth)
+		foreach ($array_user_auth_groups as $idgroup => $group_auth)
 			$max_auth |= (int)$group_auth;
 	
 		return $max_auth;
@@ -153,21 +153,21 @@ class User
 		global $User;
 		
 		$array_user_auth_groups = array();
-		foreach($array_auth_groups as $idgroup => $auth_group)
+		foreach ($array_auth_groups as $idgroup => $auth_group)
 		{
-			if( is_numeric($idgroup) ) //Groupe
+			if (is_numeric($idgroup)) //Groupe
 			{
-				if( in_array($idgroup, $this->user_groups) )
+				if (in_array($idgroup, $this->user_groups))
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
-			elseif( substr($idgroup, 0, 1) == 'r' ) //Rang
+			elseif (substr($idgroup, 0, 1) == 'r') //Rang
 			{
-				if( $User->get_attribute('level') >= (int)str_replace('r', '', $idgroup) )
+				if ($User->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 			else //Membre
 			{
-				if( $User->get_attribute('user_id') == (int)str_replace('m', '', $idgroup) )
+				if ($User->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
 					$array_user_auth_groups[$idgroup] = $auth_group;
 			}
 		}

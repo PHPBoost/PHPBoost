@@ -114,11 +114,11 @@ class BBCodeEditor extends ContentEditor
 			'L_PHPBOOST_LANGUAGES' => $LANG['phpboost_languages']
 		));
 		
-		foreach($this->forbidden_tags as $forbidden_tag) //Balises interdite.
+		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{		
 			$template->assign_vars(array( 
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
-				'DISABLED_' . strtoupper($forbidden_tag) => 'if( false ) '
+				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
 			));
 		}
 		
@@ -133,9 +133,9 @@ class BBCodeEditor extends ContentEditor
 		$nbr_smile = count($_array_smiley_code);
 		$i = 1;	
 		$z = 0;
-		foreach($_array_smiley_code as $code_smile => $url_smile)
+		foreach ($_array_smiley_code as $code_smile => $url_smile)
 		{
-			if( $z == $smile_max )
+			if ($z == $smile_max)
 			{ 
 				$z++;
 				break;		
@@ -146,9 +146,9 @@ class BBCodeEditor extends ContentEditor
 			
 			// On recupère la hauteur et la largeur de l'image.
 			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
-			if( $width_source > $width_max || $height_source > $height_max )
+			if ($width_source > $width_max || $height_source > $height_max)
 			{
-				if( $width_source > $height_source )
+				if ($width_source > $height_source)
 				{
 					$ratio = $width_source / $height_source;
 					$width = $width_max;
@@ -179,7 +179,7 @@ class BBCodeEditor extends ContentEditor
 			$z++;
 		}	
 
-		if( $z > $smile_max ) //Lien vers tous les smiley!
+		if ($z > $smile_max) //Lien vers tous les smiley!
 		{		
 			$template->assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
@@ -188,7 +188,7 @@ class BBCodeEditor extends ContentEditor
 			));
 		}
 		
-		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà includé.
+		if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà includé.
 			define('EDITOR_ALREADY_INCLUDED', true);
 		
 		return $template->parse(TEMPLATE_STRING_MODE);

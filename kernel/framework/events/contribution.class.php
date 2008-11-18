@@ -47,7 +47,7 @@ class Contribution extends Event
 		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
-		if( defined(MODULE_NAME) )
+		if (defined(MODULE_NAME))
 			$this->module = MODULE_NAME;
 	}
 	
@@ -80,7 +80,7 @@ class Contribution extends Event
 	//Fixing date setter
 	function set_fixing_date($date)
 	{
-		if( is_object($date) && strtolower(get_class($date)) == 'date' )
+		if (is_object($date) && strtolower(get_class($date)) == 'date')
 			$this->fixing_date = $date;
 	}
 	
@@ -88,14 +88,14 @@ class Contribution extends Event
 	function set_status($new_current_status)
 	{
 		global $User;
-		if( in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)) )
+		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
-			if( $this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED )
+			if ($this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED)
 			{
 				$this->fixing_date = new Date();
 				//If the fixer id is not defined, we define it
-				if( $this->fixer_id == 0 )
+				if ($this->fixer_id == 0)
 					$this->fixer_id = $User->get_attribute('user_id');
 			}
 			
@@ -111,7 +111,7 @@ class Contribution extends Event
 	//Authorization array setter
 	function set_auth($auth)
 	{
-		if( is_array($auth) )
+		if (is_array($auth))
 			$this->auth = $auth;
 	}
 	
@@ -119,7 +119,7 @@ class Contribution extends Event
 	function set_poster_id($poster_id)
 	{
 		global $Sql;
-		if( $poster_id  > 0)
+		if ($poster_id  > 0)
 		{
 			$this->poster_id = $poster_id;
 			//Assigning also the associated login
@@ -131,7 +131,7 @@ class Contribution extends Event
 	function set_fixer_id($fixer_id)
 	{
 		global $Sql;
-		if( $fixer_id  > 0)
+		if ($fixer_id  > 0)
 		{
 			$this->fixer_id = $fixer_id;
 			//Assigning also the associated login
@@ -142,7 +142,7 @@ class Contribution extends Event
 	//Description setter
 	function set_description($description)
 	{
-		if( is_string($description) )
+		if (is_string($description))
 			$this->description = $description;
 	}
 	
@@ -176,7 +176,7 @@ class Contribution extends Event
 	function get_module_name()
 	{
 		global $CONFIG;
-		if( !empty($this->module) )
+		if (!empty($this->module))
 		{
 			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());
 			

@@ -34,7 +34,7 @@ require_once('../admin/admin_header.php');
 
 include_once('download_auth.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$config_download['nbr_file_max'] = retrieve(POST, 'nbr_file_max', 10);
 	$config_download['nbr_column'] = retrieve(POST, 'nbr_column', 4);
@@ -44,7 +44,7 @@ if( !empty($_POST['valid']) )
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_download)) . "' WHERE name = 'download'", __LINE__, __FILE__);
 	
-	if( !empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'] )
+	if (!empty($CONFIG_DOWNLOAD['note_max']) && $CONFIG_DOWNLOAD['note_max'] != $config_download['note_max'])
 		$Sql->query_inject("UPDATE ".PREFIX."download SET note = note * " . ($config_download['note_max'] / $CONFIG_DOWNLOAD['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######

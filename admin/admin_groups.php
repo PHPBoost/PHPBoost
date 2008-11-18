@@ -38,7 +38,7 @@ $add_mbr = !empty($_POST['add_mbr']) ? true : false;
 $del_mbr = !empty($_GET['del_mbr']) ? true : false;
 $user_id = retrieve(GET, 'user_id', 0);
 
-if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
+if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -53,7 +53,7 @@ if( !empty($_POST['valid']) && !empty($idgroup_post) ) //Modification du groupe.
 	
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
 }
-elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
+elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
 	$name = retrieve(POST, 'name', '');
 	$img = retrieve(POST, 'img', '');
@@ -61,7 +61,7 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);	
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';	
 	
-	if( !empty($name) )
+	if (!empty($name))
 	{
 		//Insertion
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);	
@@ -74,10 +74,10 @@ elseif( !empty($_POST['valid']) && $add_post ) //ajout  du groupe.
 	else
 		redirect(HOST . DIR . '/admin/admin_groups.php?error=incomplete#errorh');
 }
-elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
+elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 {
 	$array_members = explode('|', $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
-	foreach($array_members as $key => $user_id)
+	foreach ($array_members as $key => $user_id)
 		$Group->remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
 
 	$Sql->query_inject("DELETE FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.	
@@ -86,13 +86,13 @@ elseif( !empty($idgroup) && $del_group ) //Suppression du groupe.
 	
 	redirect(HOST . SCRIPT);
 }
-elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
+elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
 	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
-	if( !empty($user_id) )
+	if (!empty($user_id))
 	{	
-		if( $Group->add_member($user_id, $idgroup) ) //Succès.
+		if ($Group->add_member($user_id, $idgroup)) //Succès.
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add'); 	
 		else
 			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
@@ -100,25 +100,25 @@ elseif( !empty($idgroup) && $add_mbr ) //Ajout du membre au groupe.
 	else
 		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
 }
-elseif( $del_mbr && !empty($user_id) && !empty($idgroup) ) //Suppression du membre du groupe.
+elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
 {
 	$Group->remove_member($user_id, $idgroup);
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
-elseif( !empty($idgroup) ) //Interface d'édition du groupe.
+elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {		
 	$Template->set_filenames(array(
 		'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
 	$group = $Sql->query_array('group', 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-	if( !empty($group['id']) )
+	if (!empty($group['id']))
 	{
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
-		if( $get_error == 'incomplete' )
+		if ($get_error == 'incomplete')
 			$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-		elseif( $get_error == 'already_group' )
+		elseif ($get_error == 'already_group')
 			$Errorh->handler($LANG['e_already_group'], E_USER_NOTICE);
 		
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
@@ -130,19 +130,19 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		$img_groups = '<option value="" selected="selected">--</option>';
 		$rep = '../images/group';
 		$y = 0;
-		if( is_dir($rep) ) //Si le dossier existe
+		if (is_dir($rep)) //Si le dossier existe
 		{
 			$dh = @opendir($rep);
-			while( !is_bool($file = readdir($dh)) )
+			while (!is_bool($file = readdir($dh)))
 			{	
-				if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+				if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
 					$fichier_array[] = $file; //On crée un array, avec les different fichiers.
 			}	
 			closedir($dh); //On ferme le dossier
 
-			if( is_array($fichier_array) )
+			if (is_array($fichier_array))
 			{			
-				foreach($fichier_array as $img_group)
+				foreach ($fichier_array as $img_group)
 				{
 					$selected = ($img_group == $group['img']) ? ' selected="selected"' : '';
 					$img_groups .= '<option value="' . $img_group . '"' . $selected . '>' . $img_group . '</option>';
@@ -194,10 +194,10 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 		//Liste des membres du groupe.
 		$members = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . numeric($group['id']) . "'", __LINE__, __FILE__);
 		$members = explode('|', $members);
-		foreach($members as $key => $user_id)
+		foreach ($members as $key => $user_id)
 		{
 			$login = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . numeric($user_id) . "'", __LINE__, __FILE__);
-			if( !empty($login) )
+			if (!empty($login))
 			{	
 				$Template->assign_block_vars('member', array(
 					'USER_ID' => $user_id,
@@ -212,7 +212,7 @@ elseif( !empty($idgroup) ) //Interface d'édition du groupe.
 	
 	$Template->pparse('admin_groups_management2');
 }
-elseif( $add ) //Interface d'ajout du groupe.
+elseif ($add) //Interface d'ajout du groupe.
 {		
 	$Template->set_filenames(array(
 	'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
@@ -222,19 +222,19 @@ elseif( $add ) //Interface d'ajout du groupe.
 	$img_groups = '<option value="" selected="selected">--</option>';
 	$rep = '../images/group';
 	$y = 0;
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while (!is_bool($file = readdir($dh)))
 		{	
-			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+			if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
 				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
 		}	
 		closedir($dh); //On ferme le dossier
 
-		if( is_array($fichier_array) )
+		if (is_array($fichier_array))
 		{			
-			foreach($fichier_array as $img_group)
+			foreach ($fichier_array as $img_group)
 				$img_groups .= '<option value="' . $img_group . '">' . $img_group . '</option>';
 		}
 	}
@@ -295,7 +295,7 @@ else //Liste des groupes.
 	FROM ".PREFIX."group 
 	ORDER BY name
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('group', array(
 			'LINK' => url('.php?g=' . $row['id'], '-0.php?g=' . $row['id']),

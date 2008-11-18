@@ -30,7 +30,7 @@ class ContentEditor
 	function ContentEditor($language_type = null)
 	{
 		global $CONFIG;
-		if( $language_type !== null )
+		if ($language_type !== null)
 			$this->set_language($language_type);
 		
 		$this->forbidden_tags =& $CONFIG['forbidden_tags'];
@@ -63,7 +63,7 @@ class ContentEditor
 	//Fonction qui renvoie le template courant
 	function get_template()
 	{
-		if( !is_object($this->template) || strtolower(get_class($this->template)) != 'template' )
+		if (!is_object($this->template) || strtolower(get_class($this->template)) != 'template')
 			return new template('framework/content/editor.tpl');
 		else
 			return $this->template;

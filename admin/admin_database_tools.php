@@ -56,7 +56,7 @@ $Template->assign_vars(array(
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
 
-if( !empty($table) && $action == 'data' )
+if (!empty($table) && $action == 'data')
 {
 	//On crée une pagination (si activé) si le nombre de news est trop important.
 	include_once('../kernel/framework/util/pagination.class.php'); 
@@ -66,12 +66,12 @@ if( !empty($table) && $action == 'data' )
 	
 	//Détection de la clée primaire.
 	$primary_key = '';
-	foreach($table_structure['fields'] as $fields_info)
+	foreach ($table_structure['fields'] as $fields_info)
 	{
 		$check_primary_key = false;
-		foreach($table_structure['index'] as $index_info) 
+		foreach ($table_structure['index'] as $index_info) 
 		{
-			if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
+			if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 			{
 				$primary_key = $fields_info['name'];
 				break;
@@ -82,13 +82,13 @@ if( !empty($table) && $action == 'data' )
 	//On éxécute la requête
 	$nbr_lines = $Sql->query("SELECT COUNT(*) FROM ".$table, __LINE__, __FILE__);
 	$query = "SELECT * FROM ".$table.$Sql->limit($Pagination->get_first_msg(30, 'p'), 30);
-	$result = $Sql->query_while($query, __LINE__, __FILE__);			
+	$result = $Sql->query_while ($query, __LINE__, __FILE__);			
 	$i = 1;
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('line', array());
 		//Premier passage: on liste le nom des champs sélectionnés
-		if( $i == 1 )
+		if ($i == 1)
 		{
 			$Template->assign_block_vars('line.field', array(
 				'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
@@ -96,7 +96,7 @@ if( !empty($table) && $action == 'data' )
 				'STYLE' => ''
 			));
 				
-			foreach($row as $field_name => $field_value)
+			foreach ($row as $field_name => $field_value)
 			{
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => '<strong>' . $field_name . '</strong>',
@@ -108,9 +108,9 @@ if( !empty($table) && $action == 'data' )
 		
 		//On parse les valeurs de sortie
 		$j = 0;
-		foreach($row as $field_name => $field_value)
+		foreach ($row as $field_name => $field_value)
 		{
-			if( $j == 0 && !empty($primary_key) ) //Clée primaire détectée.
+			if ($j == 0 && !empty($primary_key)) //Clée primaire détectée.
 			{
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update" title="' . $LANG['update'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" alt="" /></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
@@ -144,26 +144,26 @@ if( !empty($table) && $action == 'data' )
 		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
 	));
 }
-elseif( !empty($table) && $action == 'delete' )
+elseif (!empty($table) && $action == 'delete')
 {
 	$field = retrieve(GET, 'field', '');
 	$value = retrieve(GET, 'value', '');
 	
-	if( !empty($value) && !empty($field) )
+	if (!empty($value) && !empty($field))
 		$Sql->query("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
 }
-elseif( !empty($table) && $action == 'update' ) //Mise à jour.
+elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$value = retrieve(GET, 'value', '');
 	$field = retrieve(GET, 'field', '');
 	$submit = retrieve(POST, 'submit', '');
-	if( !empty($submit) ) //On exécute une requête
+	if (!empty($submit)) //On exécute une requête
 	{
 		$request = '';
-		foreach($table_structure['fields'] as $fields_info)
+		foreach ($table_structure['fields'] as $fields_info)
 		{
 			$field_value = retrieve(POST, $fields_info['name'], '');
 			$request .= $fields_info['name'] . " = '" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
@@ -172,7 +172,7 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 		$Sql->query("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
 	}
-	elseif( !empty($field) && !empty($value) )
+	elseif (!empty($field) && !empty($value))
 	{
 		$Template->assign_vars(array(
 			'C_DATABASE_UPDATE_FORM' => true,
@@ -191,7 +191,7 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 		$row = $Sql->query_array(str_replace(PREFIX, '', $table), '*', "WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		//On parse les valeurs de sortie
 		$i = 0;
-		foreach($row as $field_name => $field_value)
+		foreach ($row as $field_name => $field_value)
 		{
 			$Template->assign_block_vars('fields', array(
 				'FIELD_NAME' => $field_name,
@@ -204,20 +204,20 @@ elseif( !empty($table) && $action == 'update' ) //Mise à jour.
 		}
 	}
 }
-elseif( !empty($table) && $action == 'insert' ) //Mise à jour.
+elseif (!empty($table) && $action == 'insert') //Mise à jour.
 {
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$submit = retrieve(POST, 'submit', '');
-	if( !empty($submit) ) //On exécute une requête
+	if (!empty($submit)) //On exécute une requête
 	{
 		//Détection de la clée primaire.
 		$primary_key = '';
-		foreach($table_structure['fields'] as $fields_info)
+		foreach ($table_structure['fields'] as $fields_info)
 		{
-			foreach($table_structure['index'] as $index_info) 
+			foreach ($table_structure['index'] as $index_info) 
 			{
-				if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
+				if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 				{
 					$primary_key = $fields_info['name'];
 					break;
@@ -227,10 +227,10 @@ elseif( !empty($table) && $action == 'insert' ) //Mise à jour.
 			
 		$values = '';
 		$fields = '';
-		foreach($table_structure['fields'] as $fields_info)
+		foreach ($table_structure['fields'] as $fields_info)
 		{
 			$field_value = retrieve(POST, $fields_info['name'], '');
-			if( $fields_info['name'] == $primary_key  && empty($field_value) ) //Clée primaire vide => on ignore.
+			if ($fields_info['name'] == $primary_key  && empty($field_value)) //Clée primaire vide => on ignore.
 				continue;
 			$values .= "'" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
 			$fields .= $fields_info['name'] . ', ';
@@ -254,7 +254,7 @@ elseif( !empty($table) && $action == 'insert' ) //Mise à jour.
 			'L_EXECUTE' => $LANG['db_submit_query']
 		));
 		
-		foreach($table_structure['fields'] as $fields_info)
+		foreach ($table_structure['fields'] as $fields_info)
 		{
 			$Template->assign_block_vars('fields', array(
 				'FIELD_NAME' => $fields_info['name'],
@@ -266,22 +266,22 @@ elseif( !empty($table) && $action == 'insert' ) //Mise à jour.
 		}
 	}
 }
-elseif( !empty($table) && $action == 'optimize' )
+elseif (!empty($table) && $action == 'optimize')
 {
 	$Backup->Optimize_tables(array($table));	
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
 }
-elseif( !empty($table) && $action == 'truncate' )
+elseif (!empty($table) && $action == 'truncate')
 {
 	$Backup->truncate_tables(array($table));
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
 }
-elseif( !empty($table) && $action == 'drop' )
+elseif (!empty($table) && $action == 'drop')
 {
 	$Backup->drop_tables(array($table));
 	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
 }
-elseif( !empty($table) && $action == 'query' )
+elseif (!empty($table) && $action == 'query')
 {
 	$query = retrieve(POST, 'query', '', TSTRING_UNSECURE);
 
@@ -289,25 +289,25 @@ elseif( !empty($table) && $action == 'query' )
 		'C_DATABASE_TABLE_QUERY' => true
 	));
 
-	if( !empty($query) ) //On exécute une requête
+	if (!empty($query)) //On exécute une requête
 	{
 		$Template->assign_vars(array(
 			'C_QUERY_RESULT' => true
 		));
 	
 		$lower_query = strtolower($query);		
-		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
+		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
 			$i = 1;
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$Template->assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
-				if( $i == 1 )
+				if ($i == 1)
 				{
-					foreach( $row as $field_name => $field_value )
+					foreach ($row as $field_name => $field_value)
 						$Template->assign_block_vars('line.field', array(
 							'FIELD' => '<strong>' . $field_name . '</strong>',
 							'CLASS' => 'row3'
@@ -315,7 +315,7 @@ elseif( !empty($table) && $action == 'query' )
 					$Template->assign_block_vars('line', array());
 				}
 				//On parse les valeurs de sortie
-				foreach( $row as $field_name => $field_value )
+				foreach ($row as $field_name => $field_value)
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => strprotect($field_value),
 					'CLASS' => 'row1',
@@ -325,13 +325,13 @@ elseif( !empty($table) && $action == 'query' )
 				$i++;
 			}
 		}
-		elseif( substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table' ) //Requêtes d'autres types
+		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			$result = $Sql->query_inject($query, __LINE__, __FILE__);
 			$affected_rows = @$Sql->affected_rows($result, "");			
 		}
 	}	
-	elseif( !empty($table) )
+	elseif (!empty($table))
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
 	$Template->assign_vars(array(
@@ -345,18 +345,18 @@ elseif( !empty($table) && $action == 'query' )
 		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
 	));
 }
-elseif( !empty($table) )
+elseif (!empty($table))
 {
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	if( !isset($Backup->tables[$table]) ) //Table non existante.
+	if (!isset($Backup->tables[$table])) //Table non existante.
 		redirect(HOST . DIR . '/admin/admin_database.php');
 		
-	foreach($table_structure['fields'] as $fields_info)
+	foreach ($table_structure['fields'] as $fields_info)
 	{
 		$primary_key = false;
-		foreach($table_structure['index'] as $index_info) //Détection de la clée primaire.
+		foreach ($table_structure['index'] as $index_info) //Détection de la clée primaire.
 		{
-			if( $index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])) )
+			if ($index_info['type'] == 'PRIMARY KEY' && in_array($fields_info['name'], explode(',', $index_info['fields'])))
 			{
 				$primary_key = true;
 				break;
@@ -375,7 +375,7 @@ elseif( !empty($table) )
 	}
 	
 	//index
-	foreach($table_structure['index'] as $index_info)
+	foreach ($table_structure['index'] as $index_info)
 	{
 		$Template->assign_block_vars('index', array(
 			'INDEX_NAME' => $index_info['name'],

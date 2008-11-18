@@ -48,7 +48,7 @@ class ShoutboxInterface extends ModuleInterface
 		$CONFIG_SHOUTBOX = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
 		$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
 		
-		if(isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
+		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
 			$CONFIG_SHOUTBOX['shoutbox_forbidden_tags'] = unserialize($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
 		
 		$shoutbox_config .= '$CONFIG_SHOUTBOX = ' . var_export($CONFIG_SHOUTBOX, true) . ';' . "\n";
@@ -63,7 +63,7 @@ class ShoutboxInterface extends ModuleInterface
 		
 		$Cache->load('shoutbox'); //$CONFIG_SHOUTBOX en global.
 
-		if( $CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1 )
+		if ($CONFIG_SHOUTBOX['shoutbox_max_msg'] != -1)
 		{
 			//Suppression des messages en surplus dans la shoutbox.
 			$Sql->query_inject("SELECT @compt := id AS compt

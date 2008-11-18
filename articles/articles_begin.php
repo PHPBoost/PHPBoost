@@ -25,21 +25,21 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
     exit;
 
 require_once('articles_constants.php');
 	
-if( isset($_GET['cat']) )
+if (isset($_GET['cat']))
 { 
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_articles'], url('articles.php'));
-	foreach($CAT_ARTICLES as $id => $array_info_cat)
+	foreach ($CAT_ARTICLES as $id => $array_info_cat)
 	{
-		if( !empty($idartcat) && $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
+		if (!empty($idartcat) && $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'])
 			$Bread_crumb->add($array_info_cat['name'], 'articles' . url('.php?cat=' . $id, '-' . $id . '.php'));
 	}
-	if( !empty($idart) )
+	if (!empty($idart))
 	{
 		$articles = $Sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
@@ -47,9 +47,9 @@ if( isset($_GET['cat']) )
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
 		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
 		
-		if( !empty($get_note) )
+		if (!empty($get_note))
 			$Bread_crumb->add($LANG['note'], '');
-		elseif( !empty($_GET['i']) )
+		elseif (!empty($_GET['i']))
 			$Bread_crumb->add($LANG['com'], '');
 	}
 	else

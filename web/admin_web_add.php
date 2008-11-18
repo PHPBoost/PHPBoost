@@ -30,7 +30,7 @@ load_module_lang('web'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$title = retrieve(POST, 'name', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -39,7 +39,7 @@ if( !empty($_POST['valid']) )
 	$compt = retrieve(POST, 'compt', 0);
 	$aprob = retrieve(POST, 'aprob', 0);
 
-	if( !empty($title) && !empty($url) && !empty($idcat) && isset($aprob) )
+	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
 		$Sql->query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
@@ -48,7 +48,7 @@ if( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/web/admin_web_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_POST['previs']) )
+elseif (!empty($_POST['previs']))
 {
 	$Template->set_filenames(array(
 		'admin_web_add'=> 'web/admin_web_add.tpl'
@@ -120,7 +120,7 @@ elseif( !empty($_POST['previs']) )
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 		$Template->assign_block_vars('select', array(
@@ -130,7 +130,7 @@ elseif( !empty($_POST['previs']) )
 	}
 	$Sql->query_close($result);
 	
-	if( $i == 0 ) //Aucune catégorie => alerte.	 
+	if ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->pparse('admin_web_add'); 
@@ -172,7 +172,7 @@ else
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
@@ -183,9 +183,9 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
+	elseif ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->pparse('admin_web_add'); 

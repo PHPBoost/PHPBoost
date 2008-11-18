@@ -25,15 +25,15 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 $switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
-if( !empty($switchtheme) )
+if (!empty($switchtheme))
 {	
-	if( preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false )
+	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
 	{	
 		$User->update_user_theme($switchtheme); //Mise à jour du thème du membre.
-		if( QUERY_STRING != '' )
+		if (QUERY_STRING != '')
 			redirect(trim(HOST . SCRIPT . '?' . preg_replace('`switchtheme=[^&]+`', '', QUERY_STRING), '?'));
 		else
 			redirect(HOST . SCRIPT);					
@@ -46,12 +46,12 @@ $Template->set_filenames(array(
 
 $rep = '../templates/';
 $utheme = get_utheme();
-if( is_dir($rep) ) //Si le dossier existe
+if (is_dir($rep)) //Si le dossier existe
 {
 	$dh = @opendir($rep);
-	while( !is_bool($theme = @readdir($dh)) )
+	while (!is_bool($theme = @readdir($dh)))
 	{	
-		if( !preg_match('`\.`', $theme) )
+		if (!preg_match('`\.`', $theme))
 		{	
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
 			$info_lang = @parse_ini_file('../templates/' . $theme . '/config/' . get_ulang() . '/config.ini');

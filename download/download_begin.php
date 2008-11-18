@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('download'); //Chargement de la langue du module.
@@ -38,19 +38,19 @@ $category_id = retrieve(GET, 'cat', 0);
 $file_id = retrieve(GET, 'id', 0);
 $id_cat_for_download = 0;
 
-if( !empty($file_id) )
+if (!empty($file_id))
 {
 	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	
-	if( empty($download_info['id']) )
+	if (empty($download_info['id']))
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
 	$Bread_crumb->add($download_info['title'], url('download.php?id=' . $file_id, 'download-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php'));
 	$id_cat_for_download = $download_info['idcat'];
 	define('TITLE', $DOWNLOAD_LANG['title_download'] . ' - ' . $download_info['title']);
 }
-elseif( !empty($category_id) )
+elseif (!empty($category_id))
 {
-	if( !array_key_exists($category_id, $DOWNLOAD_CATS) )
+	if (!array_key_exists($category_id, $DOWNLOAD_CATS))
 		$Errorh->handler('e_unexist_category_download', E_USER_REDIRECT);
 	
 	$Bread_crumb->add($DOWNLOAD_LANG['title_download'] . ' - ' . $DOWNLOAD_CATS[$category_id]['name']);
@@ -67,10 +67,10 @@ $auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_
 $auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 
 //Bread_crumb : we read categories list recursively
-while( $id_cat_for_download > 0 )
+while ($id_cat_for_download > 0)
 {
 	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
-	if( !empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']) )
+	if (!empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
 	{
 		//If we can't read a category, we can't read sub elements.
 		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
@@ -84,7 +84,7 @@ $Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
 
 $Bread_crumb->reverse();
 
-if( !$auth_read )
+if (!$auth_read)
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 ?>

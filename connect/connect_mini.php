@@ -26,9 +26,9 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
-if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
+if ($User->check_level(MEMBER_LEVEL)) //Connecté.
 {
 	$Template->set_filenames(array(
 		'connect_mini'=> 'connect/connect_mini.tpl'
@@ -39,28 +39,28 @@ if( $User->check_level(MEMBER_LEVEL) ) //Connecté.
 	$contribution_number = 0;
 	
 	//Panneau de contributions, y-a-t'il des contributions que le membre peut lire ?
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r2'];
-	elseif( $User->check_level(MODERATOR_LEVEL) )
+	elseif ($User->check_level(MODERATOR_LEVEL))
 		$contribution_number = $CONTRIBUTION_PANEL_UNREAD['r1'];
 	//On vérifie les groupes et les levels ou tout simplement si il y en a pour les membres
 	else
 	{
 		//Si tous les membres ont une contribution non lue
-		if( $CONTRIBUTION_PANEL_UNREAD['r0'] > 0 )
+		if ($CONTRIBUTION_PANEL_UNREAD['r0'] > 0)
 			$contribution_number = -1;
 		
 		//On regarde si ce membre en particulier en a une
-		if( $contribution_number == 0 )
-			if( !empty($CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')]) && $CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')] == 1 )
+		if ($contribution_number == 0)
+			if (!empty($CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')]) && $CONTRIBUTION_PANEL_UNREAD['m' . $User->get_attribute('user_id')] == 1)
 				$contribution_number = -1;
 		
 		//On regarde dans ses groupes
-		if( $contribution_number == 0 )
+		if ($contribution_number == 0)
 		{
-			foreach($User->get_groups() as $id_group)
+			foreach ($User->get_groups() as $id_group)
 			{
-				if( !empty($CONTRIBUTION_PANEL_UNREAD['g' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['g' . $id_group] == 1 )
+				if (!empty($CONTRIBUTION_PANEL_UNREAD['g' . $id_group]) && $CONTRIBUTION_PANEL_UNREAD['g' . $id_group] == 1)
 				{
 					$contribution_number = -1;
 					break;

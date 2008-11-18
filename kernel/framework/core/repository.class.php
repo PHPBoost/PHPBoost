@@ -33,7 +33,7 @@ class Repository
     {
         $this->url = $url;
         $this->xml = @simplexml_load_file($this->url);
-        if( $this->xml == false )
+        if ($this->xml == false)
             $this->xml = null;
     }
     
@@ -42,26 +42,26 @@ class Repository
         global $CONFIG;
         $xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
         // can't compare strings with XPath, so we check the version number with PHP.
-        if( $this->xml != null)
+        if ($this->xml != null)
         {
             $newerVersions = array();
             $versions = $this->xml->xpath($xpath_query);
             $nbVersions = $versions != false ? count($versions) : 0;
             // Retrieves all the available updates for the current application
-            for( $i = 0; $i < $nbVersions; $i++ )
+            for ($i = 0; $i < $nbVersions; $i++)
             {
                 $attributes = $versions[$i]->attributes();
                 $version = $attributes['num'];
-                if( $version > $app->get_version() )
+                if ($version > $app->get_version())
                 {
                     $compatibility = $versions[$i]->xpath('compatibility');
-                    if( !empty($compatibility) && is_array($compatibility) && count($compatibility) > 0 )
+                    if (!empty($compatibility) && is_array($compatibility) && count($compatibility) > 0)
                     {
                         $compatibility_attributes = $compatibility[0]->attributes();
                         $version_min = (string) (!empty($compatibility_attributes['min']) ? $compatibility_attributes['min'] : '0');
                         $version_max = (string) (!empty($compatibility_attributes['max']) ? $compatibility_attributes['max'] : $version_min);
                         
-                        if( $CONFIG['version'] >= $version_min && $CONFIG['version'] <= $version_max && $version_max >= $version_min )
+                        if ($CONFIG['version'] >= $version_min && $CONFIG['version'] <= $version_max && $version_max >= $version_min)
                             $newerVersions[(string) $version] = $i;
                     }
                 }
@@ -69,7 +69,7 @@ class Repository
             
             // Keep only the first applyable update
             $firstNewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
-            if( !empty($firstNewVersion) )
+            if (!empty($firstNewVersion))
             {
                 $app->load($versions[$newerVersions[$firstNewVersion]]);
                 return $app;

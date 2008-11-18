@@ -41,15 +41,15 @@ class Folder extends FileSystemElement
 	{
 		parent::FileSystemElement(rtrim($path, '/'));
 		
-		if( @file_exists($this->path) )
+		if (@file_exists($this->path))
 		{
-			if( !@is_dir($this->path) )
+			if (!@is_dir($this->path))
 				return false;
 			
-			if( $whenopen == OPEN_NOW)
+			if ($whenopen == OPEN_NOW)
 				$this->open();
 		}
-		else if( !@mkdir($this->path) )
+		else if (!@mkdir($this->path))
 			return false;
 			
 		return true;
@@ -61,14 +61,14 @@ class Folder extends FileSystemElement
 		parent::open();
 		
 		$this->files = $this->folders = array();
-		if( $dh = @opendir($this->path) )
+		if ($dh = @opendir($this->path))
 	    {       
-	        while( !is_bool($fse_name = readdir($dh)) )
+	        while (!is_bool($fse_name = readdir($dh)))
 	        {
-				if( $fse_name == '.' || $fse_name == '..' )
+				if ($fse_name == '.' || $fse_name == '..')
 					continue;
 					
-				if( is_file($this->path . '/' . $fse_name) )
+				if (is_file($this->path . '/' . $fse_name))
 					$this->files[] = new File($this->path . '/' . $fse_name);
 	            else
 					$this->folders[] = new Folder($this->path . '/' . $fse_name);
@@ -81,18 +81,18 @@ class Folder extends FileSystemElement
 	{
 		parent::get();
 		
-		if( empty($regex) )
+		if (empty($regex))
 		{
 			$ret = array();
-			foreach( $this->files as $file )
+			foreach ($this->files as $file)
 				$ret[] = $file;
 			return $ret;
 		}
 		else
 		{
 			$ret = array();
-			foreach( $this->files as $file )
-				if( preg_match($regex, $file->path) )
+			foreach ($this->files as $file)
+				if (preg_match($regex, $file->path))
 					$ret[] = $file;
 			return $ret;
 		}
@@ -103,18 +103,18 @@ class Folder extends FileSystemElement
 	{
 		parent::get();
 		
-		if( empty($regex) )
+		if (empty($regex))
 		{
 			$ret = array();
-			foreach( $this->folders as $folder )
+			foreach ($this->folders as $folder)
 				$ret[] = $folder;
 			return $ret;
 		}
 		else
 		{
 			$ret = array();
-			foreach( $this->folders as $folder )
-				if( preg_match($regex, $folder->path) )
+			foreach ($this->folders as $folder)
+				if (preg_match($regex, $folder->path))
 					$ret[] = $folder;
 			return $ret;
 		}
@@ -125,7 +125,7 @@ class Folder extends FileSystemElement
 	{
 		parent::get();
 		
-		if( isset($this->folders[0]) )
+		if (isset($this->folders[0]))
 			return $this->folders[0];
 		else
 			return false;
@@ -144,7 +144,7 @@ class Folder extends FileSystemElement
 		
 		$fs = array_merge($this->files, $this->folders);
 		
-		foreach($fs as $fse)
+		foreach ($fs as $fse)
 			$fse->delete();
 			
 		rmdir($this->path);

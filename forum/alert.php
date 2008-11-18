@@ -44,10 +44,10 @@ $Bread_crumb->add($LANG['alert_topic'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
-if( empty($alert) && empty($alert_post) || empty($topic['idcat']) ) 
+if (empty($alert) && empty($alert_post) || empty($topic['idcat'])) 
 	redirect(HOST . DIR . '/forum/index' . url('.php'));  
 
-if( !$User->check_level(MEMBER_LEVEL) ) //Si c'est un invité
+if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
     $Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->set_filenames(array(
@@ -57,11 +57,11 @@ $Template->set_filenames(array(
 ));
 	
 //On fait un formulaire d'alerte
-if( !empty($alert) && empty($alert_post) )
+if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
-	if( empty($nbr_alert) ) //On affiche le formulaire
+	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor(),
@@ -94,7 +94,7 @@ if( !empty($alert) && empty($alert_post) )
 }
 
 //Si on enregistre une alerte
-if( !empty($alert_post) )
+if (!empty($alert_post))
 {
 	$Template->assign_vars(array(
 		'L_ALERT' => $LANG['alert_topic'],
@@ -104,7 +104,7 @@ if( !empty($alert_post) )
 	
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
 	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
-	if( empty($nbr_alert) ) //On enregistre
+	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');
 		$alert_contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -135,7 +135,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

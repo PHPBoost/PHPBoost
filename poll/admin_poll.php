@@ -34,7 +34,7 @@ $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-if( $del && !empty($id) ) //Suppresion poll
+if ($del && !empty($id)) //Suppresion poll
 {
 	$Cache->load('poll');
 	
@@ -42,7 +42,7 @@ if( $del && !empty($id) ) //Suppresion poll
 	$Sql->query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	###### Régénération du cache du mini poll #######
-	if( $id == $CONFIG_POLL['mini_poll'] )		
+	if ($id == $CONFIG_POLL['mini_poll'])		
 	{	
 		$CONFIG_POLL['poll_mini'] = '-1';
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
@@ -50,7 +50,7 @@ if( $del && !empty($id) ) //Suppresion poll
 	}
 	redirect(HOST . SCRIPT);
 }
-elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
+elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
 	$Cache->load('poll');
 	
@@ -65,27 +65,27 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
-	if( !empty($question) && !empty($id_post) )
+	if (!empty($question) && !empty($id_post))
 	{
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 		
 		$visible = 1;		
-		if( $get_visible == 2 )
+		if ($get_visible == 2)
 		{	
-			if( $start_timestamp > time() )
+			if ($start_timestamp > time())
 				$visible = 2;
-			elseif( $start_timestamp == 0 )
+			elseif ($start_timestamp == 0)
 				$visible = 1;
 			else //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0 )
+			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif( $start_timestamp != 0 ) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
-		elseif( $get_visible == 1 )
+		elseif ($get_visible == 1)
 		{	
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -98,7 +98,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		}
 		
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			//Ajout des heures et minutes
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else
@@ -107,9 +107,9 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$answers = '';
 		$votes = '';
 		$check_nbr_answer = 0;
-		for($i = 0; $i < 20; $i++)
+		for ($i = 0; $i < 20; $i++)
 		{
-			if( !empty($_POST['a'.$i]) )
+			if (!empty($_POST['a'.$i]))
 			{				
 				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
 				$votes .= strprotect(str_replace('|', '', (!empty($_POST['v'.$i]) ? $_POST['v'.$i] : '0'))) . '|';
@@ -120,7 +120,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		
 		$Sql->query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
-		if( $id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1') )
+		if ($id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1'))
 		{
 			$CONFIG_POLL['poll_mini'] = '-1';
 			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
@@ -129,7 +129,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 			$Cache->Generate_module_file('poll');
 		}	
 		//Régénaration du cache du mini poll, si celui-ci a été modifié.
-		if( $id_post == $CONFIG_POLL['poll_mini'] )
+		if ($id_post == $CONFIG_POLL['poll_mini'])
 			$Cache->Generate_module_file('poll');
 		
 		redirect(HOST . SCRIPT);
@@ -137,7 +137,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	else
 		redirect(HOST . DIR . '/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
 }	
-elseif( !empty($id) )
+elseif (!empty($id))
 {
 	$Template->set_filenames(array(
 		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
@@ -199,7 +199,7 @@ elseif( !empty($id) )
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['incomplete'], E_USER_NOTICE);
 	
 	$array_answer = explode('|', $row['answers']);
@@ -211,7 +211,7 @@ elseif( !empty($id) )
 	//Liste des choix des sondages => 20 maxi
 	$i = 0;
 	$array_poll = array_combine($array_answer, $array_vote);
-	foreach($array_poll as $answer => $nbrvote)
+	foreach ($array_poll as $answer => $nbrvote)
 	{
 		$percent = number_round(($nbrvote * 100 / $sum_vote), 1);
 		$Template->assign_block_vars('answers', array(
@@ -267,11 +267,11 @@ else
 	LEFT JOIN ".PREFIX."member m ON p.user_id = m.user_id	
 	ORDER BY p.timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(20, 'p'), 20), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $row['visible'] == 2 )
+		if ($row['visible'] == 2)
 			$aprob = $LANG['waiting'];			
-		elseif( $row['visible'] == 1 )
+		elseif ($row['visible'] == 1)
 			$aprob = $LANG['yes'];
 		else
 			$aprob = $LANG['no'];
@@ -282,11 +282,11 @@ else
 		$question = strlen($row['question']) > 45 ? substr($row['question'], 0, 45) . '...' : $row['question'];
 		
 		$visible = '';
-		if( $row['start'] > 0 )
+		if ($row['start'] > 0)
 			$visible .= gmdate_format('date_format_short', $row['start']);
-		if( $row['end'] > 0 && $row['start'] > 0 )
+		if ($row['end'] > 0 && $row['start'] > 0)
 			$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
-		elseif( $row['end'] > 0 )
+		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
 		$Template->assign_block_vars('questions', array(

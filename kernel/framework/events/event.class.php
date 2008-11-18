@@ -57,7 +57,7 @@ It's the common part between two types of event existing now in PHPBoost :
 	//Id setter
 	function set_id($id)
 	{
-		if( is_int($id) && $id > 0 )
+		if (is_int($id) && $id > 0)
 			$this->id = $id;
 	}
 	
@@ -76,7 +76,7 @@ It's the common part between two types of event existing now in PHPBoost :
 	// current_status setter
 	function set_status($new_current_status)
 	{
-		if( in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)) )
+		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)))
 		{
 			$this->current_status = $new_current_status;
 		}
@@ -90,7 +90,7 @@ It's the common part between two types of event existing now in PHPBoost :
 	//Creation date setter
 	function set_creation_date($date)
 	{
-		if( is_object($date) && strtolower(get_class($date)) == 'date' )
+		if (is_object($date) && strtolower(get_class($date)) == 'date')
 			$this->creation_date = $date;
 	}	
 	
@@ -115,7 +115,7 @@ It's the common part between two types of event existing now in PHPBoost :
 	//Must we regenerate cache (do the changes we have done affect cache files?)
 	function set_must_regenerate_cache($must)
 	{
-		if( is_bool($must) )
+		if (is_bool($must))
 			$this->must_regenerate_cache = $must;
 	}
 	

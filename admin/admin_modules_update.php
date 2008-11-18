@@ -30,12 +30,12 @@ require_once('../admin/admin_header.php');
 
 $update = !empty($_GET['update']) ? true : false;
 
-if( $update ) //Mise à jour du module
+if ($update) //Mise à jour du module
 {	
 	//Récupération de l'identifiant du module
 	$module_name = '';
-	foreach($_POST as $key => $value)
-		if( $value == $LANG['update_module'] )
+	foreach ($_POST as $key => $value)
+		if ($value == $LANG['update_module'])
 			$module_name = $key;
 	
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
@@ -44,7 +44,7 @@ if( $update ) //Mise à jour du module
 	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 	//Mise à jour du module
-	if( !empty($ckeck_module) )
+	if (!empty($ckeck_module))
 	{
 		//Récupération des infos de config.
 		$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
@@ -55,12 +55,12 @@ if( $update ) //Mise à jour du module
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = get_ulang();
 		$dir = '../' . $module_name . '/db';
-		if( !is_dir($dir . '/' . $dir_db_module) )
+		if (!is_dir($dir . '/' . $dir_db_module))
 		{	
 			$dh = @opendir($dir);
-			while( !is_bool($dir_db = @readdir($dh)) )
+			while (!is_bool($dir_db = @readdir($dh)))
 			{	
-				if( strpos($dir_db, '.') === false )
+				if (strpos($dir_db, '.') === false)
 				{
 					$dir_db_module = $dir_db;
 					break;
@@ -72,15 +72,15 @@ if( $update ) //Mise à jour du module
 		$filesupdate = array();
 		//Récupération des fichiers de mises à jour des différentes versions.
 		$dir_db = '../' . urldecode($module_name) . '/db/' . $dir_db_module . '/';
-		if( is_dir($dir_db) ) //Si le dossier existe
+		if (is_dir($dir_db)) //Si le dossier existe
 		{
 			$dh = @opendir($dir_db);
-			while( !is_bool($file = readdir($dh)) )
+			while (!is_bool($file = readdir($dh)))
 			{	
-				if( strpos($file, DBTYPE) !== false || strpos($file, '.php') !== false )
+				if (strpos($file, DBTYPE) !== false || strpos($file, '.php') !== false)
 				{	
 					$array_info = explode('_', $file);
-					if( isset($array_info[1]) && version_compare($info_module['version'], $array_info[1], '>=') && version_compare($previous_version, $array_info[1], '<') )
+					if (isset($array_info[1]) && version_compare($info_module['version'], $array_info[1], '>=') && version_compare($previous_version, $array_info[1], '<'))
 						$filesupdate[$array_info[1]] = $file;					
 				}
 			}
@@ -90,9 +90,9 @@ if( $update ) //Mise à jour du module
 		uksort($filesupdate, 'version_compare');
 		
 		//Execution des fichiers de mise à jour.	
-		foreach($filesupdate as $key => $module_update_name)
+		foreach ($filesupdate as $key => $module_update_name)
 		{	
-			if( strpos($file, '.php') !== false ) //Parsage fichier php.
+			if (strpos($file, '.php') !== false) //Parsage fichier php.
 				@include_once($dir_db . $module_update_name);
 			else //Requêtes sql de mise à jour.		
 				$Sql->parse($dir_db . $module_update_name, PREFIX);
@@ -110,7 +110,7 @@ if( $update ) //Mise à jour du module
 		$Cache->Generate_file('css');
 		
 		//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
-		if( $CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']) )
+		if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 			$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
 		
 		redirect(HOST . SCRIPT);	
@@ -118,7 +118,7 @@ if( $update ) //Mise à jour du module
 	else
 		redirect(HOST . DIR . '/admin/admin_modules_update.php?error=incomplete#errorh');
 }			
-elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
 	$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
@@ -126,41 +126,41 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		@chmod($dir, 0755);
-	if( !is_writable($dir . $module_name) )
+	if (!is_writable($dir . $module_name))
 		@chmod($dir . $module_name, 0755);
 
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) && is_writable($dir . $module_name) ) //Dossier en écriture, upload possible
+	if (is_writable($dir) && is_writable($dir . $module_name)) //Dossier en écriture, upload possible
 	{
-		if( !is_dir('../' . $_FILES['upload_module']['name']) )
+		if (!is_dir('../' . $_FILES['upload_module']['name']))
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
 				$archive_path = '../' . $Upload->filename['upload_module'];
 				//Place à la décompression.
-				if( $Upload->extension['upload_module'] == 'gzip' )
+				if ($Upload->extension['upload_module'] == 'gzip')
 				{
 					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
-					if( !$zip_files = PclTarExtract($Upload->filename['upload_module'], '../') )
+					if (!$zip_files = PclTarExtract($Upload->filename['upload_module'], '../'))
 						$error = $Upload->error;
 				}
-				elseif( $Upload->extension['upload_module'] == 'zip' )
+				elseif ($Upload->extension['upload_module'] == 'zip')
 				{
 					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
 					$Zip = new PclZip($archive_path);
-					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666) )
+					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
 				}
 				else
 					$error = 'e_upload_invalid_format';
 				
 				//Suppression de l'archive désormais inutile.
-				if( !@unlink($archive_path) )
+				if (!@unlink($archive_path))
 					$error = 'e_unlink_disabled';
 			}
 			else
@@ -185,7 +185,7 @@ else
         require_once('../kernel/framework/core/updates.class.php');
         $updates_availables = 0;
 
-        if( phpversion() > PHP_MIN_VERSION_UPDATES )
+        if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             // Retrieves all the update alerts from the database
             import('events/administrator_alert_service');
@@ -194,15 +194,15 @@ else
             
             $updates = array();
             $update_type = 'module';
-            foreach( $update_alerts as $update_alert )
+            foreach ($update_alerts as $update_alert)
             {
                 // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
                 $update = unserialize($update_alert->get_properties());
-                if( $update_type == '' || $update->get_type() == $update_type )
+                if ($update_type == '' || $update->get_type() == $update_type)
                     $updates[] = $update;
             }
 
-            foreach( $updates as $update )
+            foreach ($updates as $update)
             {
                 switch( $update->get_priority() )
                 {
@@ -238,7 +238,7 @@ else
                 ));
             }
             
-            if( $updates_availables = (count($updates) > 0) )
+            if ($updates_availables = (count($updates) > 0))
             {
                 $Template->assign_vars(array(
                     'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],
@@ -284,9 +284,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//Modules mis à jour
@@ -295,7 +295,7 @@ else
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$updated_modules[$row['name']] = $row['version'];
 	
 	$Sql->query_close($result);
@@ -304,21 +304,21 @@ else
 	$get_info_update = @file_get_contents_emulate('http://www.phpboost.com/phpboost/updates.txt');
 	$check_modules_update = false;
 	$modules_update = array();
-	if( !empty($get_info_update) )
+	if (!empty($get_info_update))
 	{	
 		$array_infos = explode("\n", $get_info_update);
-		foreach($array_infos as $key => $value)
+		foreach ($array_infos as $key => $value)
 		{
 			$array_infos_modules = explode(':', $value);
 			$name = $array_infos_modules[0];
 			$version = $array_infos_modules[1];
 			
 			//Nouvelle version du module.
-			if( isset($modules_config[$name]['version']) && $modules_config[$name]['version'] != $version )
+			if (isset($modules_config[$name]['version']) && $modules_config[$name]['version'] != $version)
 				$modules_update[$name] = $version;
 		}	
 		
-		if( count($modules_update) > 0 )
+		if (count($modules_update) > 0)
 		{
 			$check_modules_update = true;
 			$l_modules_update = $LANG['module_update_available'];
@@ -332,20 +332,20 @@ else
 	//Modules disponibles
 	$root = '../';
 	$i = 0;
-	if( is_dir($root) ) //Si le dossier existe
+	if (is_dir($root)) //Si le dossier existe
 	{
 		$dh = @opendir($root);
-		while( !is_bool($dir = readdir($dh)) )
+		while (!is_bool($dir = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($dir, '.') === false && array_key_exists($dir, $updated_modules) )
+			if (strpos($dir, '.') === false && array_key_exists($dir, $updated_modules))
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
+				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
 				{
 					//Récupération des infos de config.
 					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());					
-					if( is_array($info_module) && $info_module['version'] != $updated_modules[$dir] )
+					if (is_array($info_module) && $info_module['version'] != $updated_modules[$dir])
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 						$Template->assign_block_vars('available', array(
@@ -402,7 +402,7 @@ else
 	));
 	
 	//Listing des modules mis à jour.
-	foreach($modules_update as $name => $version)
+	foreach ($modules_update as $name => $version)
 	{
 		$Template->assign_block_vars('update_modules_available', array(
 			'ID' => $name,
@@ -411,7 +411,7 @@ else
 		));
 	}
 
-	if( $i == 0 )
+	if ($i == 0)
 		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
 		));

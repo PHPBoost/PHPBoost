@@ -56,14 +56,14 @@ include('newsletter.class.php');
 $newsletter_sender = new Newsletter_sender;
 
 //Liste des membres
-if( $member_list )
+if ($member_list)
 {
 	$Template->assign_block_vars('member_list', array());
 	
-	if( $del_member > 0 )
+	if ($del_member > 0)
 	{
 		$member_mail = $Sql->query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
-		if( !empty($member_mail) )
+		if (!empty($member_mail))
 		{
 			$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 			$Errorh->handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
@@ -71,15 +71,15 @@ if( $member_list )
 		else
 			$Errorh->handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
-	$result = $Sql->query_while("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	$result = $Sql->query_while ("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
 			'U_DELETE' => url('admin_newsletter.php?member_list=1&amp;del_member=' . $row['id'])
 		));
 }
 //Si on envoie avec un certain type
-elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents) )
+elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty($mail_contents))
 {
 	$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 	
@@ -104,14 +104,14 @@ elseif( !empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 		'L_NEWSLETTER' => $LANG['newsletter'],
 	));
 	
-	if( count($error_mailing_list) == 0 ) //Aucune erreur
+	if (count($error_mailing_list) == 0) //Aucune erreur
 		$Errorh->handler($LANG['newsletter_sent_successful'], E_USER_NOTICE);
 	else
 		$Errorh->handler(sprintf($LANG['newsletter_error_list'], implode(', ', $error_mailing_list)), E_USER_NOTICE);
 }
-elseif( !empty($type) ) //Rédaction
+elseif (!empty($type)) //Rédaction
 {
-	if( $type == 'bbcode' )
+	if ($type == 'bbcode')
 	{
 		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor()
@@ -141,16 +141,16 @@ elseif( !empty($type) ) //Rédaction
 		'L_NBR_SUBSCRIBERS' => $LANG['newsletter_nbr_subscribers'],
 	));
 	
-	if( $type == 'bbcode' )
+	if ($type == 'bbcode')
 		$Template->assign_block_vars('write.bbcode_explain', array(
 			'L_WARNING' => $LANG['newsletter_bbcode_warning']
 		));
 	
-	if( empty($mail_object) && $send_test )
+	if (empty($mail_object) && $send_test)
 		$Errorh->handler($LANG['require_title'], E_USER_WARNING);
-	elseif( empty($mail_contents) && $send_test )
+	elseif (empty($mail_contents) && $send_test)
 		$Errorh->handler($LANG['require_text'], E_USER_WARNING);
-	elseif( $send_test ) //Si on doit envoyer un test
+	elseif ($send_test) //Si on doit envoyer un test
 	{
 		switch($type)
 		{

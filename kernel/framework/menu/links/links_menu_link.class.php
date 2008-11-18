@@ -58,7 +58,7 @@ class LinksMenuLink extends LinksMenuElement
 	function display($template)
 	{
         // Stop if the user isn't authorised
-        if( !$this->_check_auth() )
+        if (!$this->_check_auth())
             return '';
             
         parent::_assign($template);

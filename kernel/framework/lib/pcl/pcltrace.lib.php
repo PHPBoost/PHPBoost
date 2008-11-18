@@ -1,5 +1,5 @@
 <?php
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Trace 1.0
@@ -38,7 +38,7 @@ if( defined('PHPBOOST') !== true)	exit;
 // --------------------------------------------------------------------------------
 
 // ----- Look for double include
-if( !defined("PCLTRACE_LIB") )
+if (!defined("PCLTRACE_LIB"))
 {
 	define( "PCLTRACE_LIB", 1 );
 
@@ -151,11 +151,11 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_entries;
 
 		// ----- Look for disabled trace
-		if( $g_pcl_trace_level < 1 )
+		if ($g_pcl_trace_level < 1)
 		return;
 
 		// ----- Add the function name in the list
-		if( !isset($g_pcl_trace_name) )
+		if (!isset($g_pcl_trace_name))
 		$g_pcl_trace_name = $p_name;
 		else
 		$g_pcl_trace_name .= ",".$p_name;
@@ -171,7 +171,7 @@ if( !defined("PCLTRACE_LIB") )
 		$g_pcl_trace_entries[$i][type] = "1"; // means start of function
 
 		// ----- Update the message entry
-		if( $p_message != "" )
+		if ($p_message != "")
 		{
 			$i = sizeof($g_pcl_trace_entries);
 			$g_pcl_trace_entries[$i][name] = "";
@@ -209,12 +209,12 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_entries;
 
 		// ----- Look for disabled trace
-		if( $g_pcl_trace_level < 1 )
+		if ($g_pcl_trace_level < 1)
 		return;
 
 		// ----- Extract the function name in the list
 		// ----- Remove the function name in the list
-		if( !($v_name = strrchr($g_pcl_trace_name, ",")) )
+		if (!($v_name = strrchr($g_pcl_trace_name, ",")))
 		{
 			$v_name = $g_pcl_trace_name;
 			$g_pcl_trace_name = "";
@@ -229,7 +229,7 @@ if( !defined("PCLTRACE_LIB") )
 		$g_pcl_trace_index--;
 
 		// ----- Update the message entry
-		if( $p_message != "" )
+		if ($p_message != "")
 		{
 			$i = sizeof($g_pcl_trace_entries);
 			$g_pcl_trace_entries[$i][name] = "";
@@ -271,7 +271,7 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_entries;
 
 		// ----- Look for disabled trace
-		if( $g_pcl_trace_level < $p_level )
+		if ($g_pcl_trace_level < $p_level)
 		return;
 
 		// ----- Update the entry
@@ -304,7 +304,7 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_entries;
 
 		// ----- Look for disabled trace
-		if( $g_pcl_trace_level < $p_level )
+		if ($g_pcl_trace_level < $p_level)
 		return;
 
 		// ----- Update the entry
@@ -338,7 +338,7 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_entries;
 
 		// ----- Look for disabled trace
-		if( ($g_pcl_trace_level <= 0) || ($g_pcl_trace_mode != "memory") )
+		if (($g_pcl_trace_level <= 0) || ($g_pcl_trace_mode != "memory"))
 		return;
 
 		$v_font = "\"Verdana, Arial, Helvetica, sans-serif\"";
@@ -370,9 +370,9 @@ if( !defined("PCLTRACE_LIB") )
 
 			for ($j=0; $j<=$g_pcl_trace_entries[$i][index]; $j++)
 			{
-				if( $j==$g_pcl_trace_entries[$i][index] )
+				if ($j==$g_pcl_trace_entries[$i][index])
 				{
-					if( ($g_pcl_trace_entries[$i][type] == 1) || ($g_pcl_trace_entries[$i][type] == 2) )
+					if (($g_pcl_trace_entries[$i][type] == 1) || ($g_pcl_trace_entries[$i][type] == 2))
 					echo "<td width=10><div align=center><font size=2 face=$v_font>+</font></div></td>";
 				}
 				else
@@ -437,13 +437,13 @@ if( !defined("PCLTRACE_LIB") )
 		global $g_pcl_trace_index;
 		global $g_pcl_trace_entries;
 
-		if( $g_pcl_trace_mode == "normal" )
+		if ($g_pcl_trace_mode == "normal")
 		{
 			for ($i=0; $i<$p_entry[index]; $i++)
 			echo "---";
-			if( $p_entry[type] == 1 )
+			if ($p_entry[type] == 1)
 			echo "<b>".$p_entry[name]."</b>(".$p_entry[param].") : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";
-			else if( $p_entry[type] == 2 )
+			else if ($p_entry[type] == 2)
 			echo "<b>".$p_entry[name]."</b>()=".$p_entry[param]." : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";
 			else
 			echo $p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";

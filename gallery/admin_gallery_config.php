@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$Cache->load('gallery');
 	
@@ -67,7 +67,7 @@ if( !empty($_POST['valid']) )
 
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 	
-	if( $CONFIG_GALLERY['note_max'] != $config_gallery['note_max'] )
+	if ($CONFIG_GALLERY['note_max'] != $config_gallery['note_max'])
 		$Sql->query_inject("UPDATE ".PREFIX."gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache de la gallery #######
@@ -75,7 +75,7 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);	
 }
-elseif( !empty($_POST['gallery_cache']) ) //Suppression des miniatures.
+elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 {
 	include_once('../gallery/gallery.class.php'); 
 	$Gallery = new Gallery;
@@ -112,7 +112,7 @@ else
 	//Vitesse de défilement des miniatures.
 	$speed_mini_pics = '';
 	$z = 10;
-	for($i = 1; $i <= 10; $i++)
+	for ($i = 1; $i <= 10; $i++)
 	{
 		$selected = ($CONFIG_GALLERY['speed_mini_pics'] == $z) ? ' selected="selected"' : '';
 		$speed_mini_pics .= '<option value="' . $z . '"' . $selected . '>' . $i . '</option>';
@@ -122,7 +122,7 @@ else
 	//Type de défilemennt
 	$scroll_types = '';
 	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll']);
-	foreach($array_scroll as $key => $name)
+	foreach ($array_scroll as $key => $name)
 	{
 		$selected = ($CONFIG_GALLERY['scroll_type'] == $key) ? ' selected="selected"' : '';
 		$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';

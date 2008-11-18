@@ -59,23 +59,23 @@ class TinyMCEEditor extends ContentEditor
 		));
 		
 		list($theme_advanced_buttons1, $theme_advanced_buttons2, $theme_advanced_buttons3) = array('', '', '');
-		foreach($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
+		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{		
 			$tag = preg_replace('`[0-9]`', '', $tag);
 			//bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,sub,sup,charmap,|,undo,redo,|,image,link,unlink,anchor
-			if( !in_array($tag, $this->forbidden_tags) )
+			if (!in_array($tag, $this->forbidden_tags))
 				$theme_advanced_buttons1 .= $tinymce_tag . ',';
 		}
-		foreach($this->array_tags2 as $tag => $tinymce_tag) //Balises autorisées.
+		foreach ($this->array_tags2 as $tag => $tinymce_tag) //Balises autorisées.
 		{		
 			$tag = preg_replace('`[0-9]`', '', $tag);
-			if( !in_array($tag, $this->forbidden_tags) )
+			if (!in_array($tag, $this->forbidden_tags))
 				$theme_advanced_buttons2 .= $tinymce_tag . ',';
 		}
-		foreach($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
+		foreach ($this->array_tags3 as $tag => $tinymce_tag) //Balises autorisées.
 		{		
 			$tag = preg_replace('`[0-9]`', '', $tag);
-			if( !in_array($tag, $this->forbidden_tags) )
+			if (!in_array($tag, $this->forbidden_tags))
 				$theme_advanced_buttons3 .= $tinymce_tag . ',';
 		}
 		$template->assign_vars(array( 
@@ -84,7 +84,7 @@ class TinyMCEEditor extends ContentEditor
 			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))
 		));
 		
-		if( !defined('EDITOR_ALREADY_INCLUDED') ) //Editeur déjà inclus.
+		if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà inclus.
 			define('EDITOR_ALREADY_INCLUDED', true);
 		
 		return $template->parse(TEMPLATE_STRING_MODE);

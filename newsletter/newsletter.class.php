@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 	
 class Newsletter_sender
 {
@@ -45,7 +45,7 @@ class Newsletter_sender
 		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 		$headers .= "\r\n";
 		
-		if( $email_test == '' ) // envoi définitif
+		if ($email_test == '') // envoi définitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
@@ -55,15 +55,15 @@ class Newsletter_sender
 			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
 			 
-			foreach($mailing_list as $array_mail)
+			foreach ($mailing_list as $array_mail)
 			{
-				if( !@mail($array_mail[1], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers) )
+				if (!@mail($array_mail[1], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers))
 					$error_mailing_list[] = $array_mail[1];
 			}
 
@@ -94,7 +94,7 @@ class Newsletter_sender
 <head><title>' . $mail_object . '</title></head><body>';
 		$mail_contents .= $message;
 		
-		if( $email_test == '' ) // envoi définitif
+		if ($email_test == '') // envoi définitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
@@ -104,16 +104,16 @@ class Newsletter_sender
 			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
 			 
-			foreach($mailing_list as $array_mail)
+			foreach ($mailing_list as $array_mail)
 			{
 				$mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
-				if( !@mail($array_mail[1], $mail_object, $mail_contents . $mail_contents_end, $headers) )
+				if (!@mail($array_mail[1], $mail_object, $mail_contents . $mail_contents_end, $headers))
 					$error_mailing_list[] = $array_mail[1];
 			}
 			
@@ -135,7 +135,7 @@ class Newsletter_sender
 		$header = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n"; 
 		$header .= 'Reply-To: ' . $_NEWSLETTER_CONFIG['sender_mail'] . "\r\n";
 		
-		if( $email_test == '' ) // envoi définitif
+		if ($email_test == '') // envoi définitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
@@ -145,16 +145,16 @@ class Newsletter_sender
 			$result = $Sql->query_while("SELECT id, mail 
 			FROM ".PREFIX."newsletter 
 			ORDER BY id", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
 			 
-			foreach($mailing_list as $array_mail)
+			foreach ($mailing_list as $array_mail)
 			{
 				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/membre/newsletter.php?id=' . $array_mail[0];			
-				if( !@mail($array_mail[1], $mail_object, $mail_contents, $header) )
+				if (!@mail($array_mail[1], $mail_object, $mail_contents, $header))
 					$error_mailing_list[] = $array_mail[1];
 			}
 			

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 $Template->set_filenames(array(
 	'gallery_mini'=> 'gallery/gallery_mini.tpl'
@@ -37,9 +37,9 @@ $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFI
 
 $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
 list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
-if( isset($_array_random_pics) && $_array_random_pics !== array() )
+if (isset($_array_random_pics) && $_array_random_pics !== array())
 {
-	if( !defined('READ_CAT_GALLERY') )
+	if (!defined('READ_CAT_GALLERY'))
 		define('READ_CAT_GALLERY', 0x01);
 	
 	$gallery_mini = array();
@@ -49,19 +49,19 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 	$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
 	//Vérification des autorisations.
 	$break = 0;
-	foreach($_array_random_pics as $key => $array_pics_info)
+	foreach ($_array_random_pics as $key => $array_pics_info)
 	{
-		if( $User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+		if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY))
 		{	
 			$gallery_mini[] = $array_pics_info;
 			$break++;
 		}
-		if( $break == $CONFIG_GALLERY['nbr_pics_mini'] )
+		if ($break == $CONFIG_GALLERY['nbr_pics_mini'])
 			break;
 	}
 	
 	//Aucune photo ne correspond, on fait une requête pour vérifier.
-	if( count($gallery_mini) == 0 ) 
+	if (count($gallery_mini) == 0) 
 	{
 		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
 		FROM ".PREFIX."gallery g
@@ -73,14 +73,14 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 		
 		//Vérification des autorisations.
 		$break = 0;
-		foreach($_array_random_pics as $key => $array_pics_info)
+		foreach ($_array_random_pics as $key => $array_pics_info)
 		{
-			if( $User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY) )
+			if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY))
 			{	
 				$gallery_mini[] = $array_pics_info;
 				$break++;
 			}
-			if( $break == $CONFIG_GALLERY['nbr_pics_mini'] )
+			if ($break == $CONFIG_GALLERY['nbr_pics_mini'])
 				break;
 		}
 	}
@@ -109,19 +109,19 @@ if( isset($_array_random_pics) && $_array_random_pics !== array() )
 			
 	//Affichage des miniatures disponibles
 	$i = 0;
-	foreach($gallery_mini as $key => $row)
+	foreach ($gallery_mini as $key => $row)
 	{	
 		//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-		if( !is_file('../gallery/pics/thumbnails/' . $row['path']) )
+		if (!is_file('../gallery/pics/thumbnails/' . $row['path']))
 			$Gallery->Resize_pics('../gallery/pics/' . $row['path']); //Redimensionnement + création miniature
 		
 		// On recupère la hauteur et la largeur de l'image.
-		if( $row['width'] == 0 || $row['height'] == 0 )
+		if ($row['width'] == 0 || $row['height'] == 0)
 			list($row['width'], $row['height']) = @getimagesize('../gallery/pics/thumbnails/' . $row['path']);
-		if( $row['width'] == 0 || $row['height'] == 0 )
+		if ($row['width'] == 0 || $row['height'] == 0)
 			list($row['width'], $row['height']) = array(142, 142);
 			
-		if( $CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2 )
+		if ($CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2)
 		{
 			$Template->assign_block_vars('pics_mini', array(
 				'ID' => $i,

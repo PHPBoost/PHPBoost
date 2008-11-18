@@ -52,20 +52,20 @@ class Upload
 		global $LANG;
 		
 		$file = $_FILES[$filepostname];
-		if( !empty($file) && $file['size'] > 0 )
+		if (!empty($file) && $file['size'] > 0)
 		{	
-			if( ($file['size']/1024) <= $weight_max )
+			if (($file['size']/1024) <= $weight_max)
 			{
 				//Récupération des infos sur le fichier à traiter.
 				$this->_generate_file_info($file['name'], $filepostname, $uniq_name);
-				if( $this->_check_file($file['name'], $regexp) )
+				if ($this->_check_file($file['name'], $regexp))
 				{					
-					if( !$check_exist || !file_exists($this->base_directory . $this->filename[$filepostname]) ) //Autorisation d'écraser le fichier?
+					if (!$check_exist || !file_exists($this->base_directory . $this->filename[$filepostname])) //Autorisation d'écraser le fichier?
 					{
 						$this->error = $this->_error_manager($file['error']);
-						if( empty($this->error) )
+						if (empty($this->error))
 						{
-							if( empty($this->filename[$filepostname]) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename[$filepostname]) )
+							if (empty($this->filename[$filepostname]) || empty($file['tmp_name']) || !move_uploaded_file($file['tmp_name'], $this->base_directory . $this->filename[$filepostname]))
 								$this->error = 'e_upload_error';
 							else
 								return true;
@@ -91,10 +91,10 @@ class Upload
 	{
 		$error = '';		
 		list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
-		if( $width > $width_max || $height > $height_max  ) //Hauteur et largeur max.
+		if ($width > $width_max || $height > $height_max ) //Hauteur et largeur max.
 			$error = 'e_upload_max_dimension';
 
-		if( !empty($error) && $delete )
+		if (!empty($error) && $delete)
 			@unlink($filepath);
 			
 		return $error;
@@ -105,9 +105,9 @@ class Upload
 	//Vérification de la conformité du fichier
 	function _check_file($filename, $regexp)
 	{
-		if( !empty($regexp) )
+		if (!empty($regexp))
 		{
-			if( preg_match($regexp, $filename) && strpos($filename, '.php') === false ) //Valide, sinon supprimé
+			if (preg_match($regexp, $filename) && strpos($filename, '.php') === false) //Valide, sinon supprimé
 				return true;
 			return false;
 		}
@@ -135,10 +135,10 @@ class Upload
 		$filename = str_replace('.', '_', $filename);
 		$filename = $this->_clean_filename($filename);
 
-		if( $uniq_name )
+		if ($uniq_name)
 		{
 			$filename_tmp = $filename;
-			while( file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]) )
+			while (file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]))
 			{
 				$filename_tmp = $filename;
 				$filename_tmp .= '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);

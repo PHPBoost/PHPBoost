@@ -34,7 +34,7 @@ class BreadCrumb
 	//Ajout d'un lien
 	function add($text, $target = '')
 	{
-		if( !empty($text) )
+		if (!empty($text))
 		{
 			$this->array_links[] = array(stripslashes($text), $target);
 			return true;
@@ -60,7 +60,7 @@ class BreadCrumb
 	{
 		global $Template, $CONFIG, $LANG;
 		
-		if( empty($this->array_links) )
+		if (empty($this->array_links))
 			$this->add(stripslashes(TITLE), HOST . SCRIPT . SID);
 		
 		$Template->assign_vars(array(
@@ -68,7 +68,7 @@ class BreadCrumb
 			'L_INDEX' => $LANG['index']	
 		));
 		
-		foreach($this->array_links as $key => $array)
+		foreach ($this->array_links as $key => $array)
 		{
 			$Template->assign_block_vars('link_bread_crumb', array(
 				'URL' => $array[1],

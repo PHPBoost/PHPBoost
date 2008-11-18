@@ -50,22 +50,22 @@ $Template->assign_vars(array(
 	
 $action = retrieve(GET, 'action', '');
 $id_get = retrieve(GET, 'id', 0);
-if( $action == 'punish' ) //Gestion des utilisateurs
+if ($action == 'punish') //Gestion des utilisateurs
 {
 	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
 	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
-	if( !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
+	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
-		if( !empty($info_mbr['user_id']) )
+		if (!empty($info_mbr['user_id']))
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-			if( $info_mbr['user_id'] != $User->get_attribute('user_id') )
+			if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 			{
-				if( !empty($readonly_contents) && !empty($readonly) )
+				if (!empty($readonly_contents) && !empty($readonly))
 				{					
 					include_once('../kernel/framework/members/pm.class.php');
 					$Privatemsg = new PrivateMsg();
@@ -86,13 +86,13 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		'U_ACTION' => '.php?action=punish'
 	));
 	
-	if( empty($id_get) ) //On liste les membres qui ont déjà un avertissement
+	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if( !empty($_POST['search_member']) )
+		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
-			if( !empty($user_id) && !empty($login) )
+			if (!empty($user_id) && !empty($login))
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=punish');
@@ -114,7 +114,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		FROM ".PREFIX."member
 		WHERE user_readonly > " . time() . "
 		ORDER BY user_readonly DESC", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=punish&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
@@ -127,7 +127,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			$i++;
 		}
 		
-		if( $i === 0 )
+		if ($i === 0)
 		{
 			$Template->assign_vars(array(
 				'C_NO_USER' => true,
@@ -147,13 +147,13 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 
 		$diff = ($member['user_readonly'] - time());	
 		$key_sanction = 0;
-		if( $diff > 0 )
+		if ($diff > 0)
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-			for($i = 12; $i > 0; $i--)
+			for ($i = 12; $i > 0; $i--)
 			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if( ($diff - $array_time[$i]) > $avg ) 
+				if (($diff - $array_time[$i]) > $avg) 
 				{	
 					$key_sanction = $i + 1;
 					break;
@@ -161,7 +161,7 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			}
 		}
 		//Affichge des sanctions
-		foreach( $array_time as $key => $time)
+		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
@@ -178,15 +178,15 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .  
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" . 
 			'var i; 		
-			for(i = 0; i <= 12; i++)
+			for (i = 0; i <= 12; i++)
 			{ 
-				if( array_time[i] == replace_value )
+				if (array_time[i] == replace_value)
 				{
 					replace_value = array_sanction[i];	
 					break;
 				}
 			}' . "\n" . 
-			'if( replace_value != \'' . addslashes($LANG['no']) . '\' )' . "\n" .
+			'if (replace_value != \'' . addslashes($LANG['no']) . '\')' . "\n" .
 			'{' . "\n" .
 				'contents = contents.replace(regex, replace_value);' . "\n" .
 				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
@@ -205,23 +205,23 @@ if( $action == 'punish' ) //Gestion des utilisateurs
 		));		
 	}	
 }
-elseif( $action == 'warning' ) //Gestion des utilisateurs
+elseif ($action == 'warning') //Gestion des utilisateurs
 {
 	$new_warning_level = retrieve(POST, 'new_info', 0);
 	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
-	if( $new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user']) ) //On met à  jour le niveau d'avertissement
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
-		if( !empty($info_mbr['user_id']) )
+		if (!empty($info_mbr['user_id']))
 		{
-			if( $new_warning_level < 100 ) //Ne peux pas mettre des avertissements supérieurs à 100.
+			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
-				if( $info_mbr['user_id'] != $User->get_attribute('user_id') )
+				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
 				{					
-					if( !empty($warning_contents) )
+					if (!empty($warning_contents))
 					{					
 						include_once('../kernel/framework/members/pm.class.php');
 						$Privatemsg = new PrivateMsg();
@@ -231,7 +231,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 					}
 				}
 			}
-			elseif( $new_warning_level == 100 ) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
+			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
@@ -253,13 +253,13 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		'U_ACTION' => '.php?action=warning'
 	));
 	
-	if( empty($id_get) ) //On liste les membres qui ont déjà un avertissement
+	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if( !empty($_POST['search_member']) )
+		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
-			if( !empty($user_id) && !empty($login) )
+			if (!empty($user_id) && !empty($login))
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=warning');
@@ -281,7 +281,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		FROM ".PREFIX."member
 		WHERE user_warning > 0
 		ORDER BY user_warning", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('list', array(
 				'LOGIN' => $row['login'],
@@ -294,7 +294,7 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 			$i++;
 		}
 		
-		if( $i === 0 )
+		if ($i === 0)
 		{
 			$Template->assign_vars(array(
 				'C_NO_USER' => true,
@@ -309,9 +309,9 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		//On crée le formulaire select
 		$select = '';
 		$j = 0;
-		for($j = 0; $j <=10; $j++)
+		for ($j = 0; $j <=10; $j++)
 		{
-			if( 10 * $j == $member['user_warning'] ) 
+			if (10 * $j == $member['user_warning']) 
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
 			else
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
@@ -337,21 +337,21 @@ elseif( $action == 'warning' ) //Gestion des utilisateurs
 		));	
 	}	
 }
-elseif( $action == 'ban' ) //Gestion des utilisateurs
+elseif ($action == 'ban') //Gestion des utilisateurs
 {
 	$user_ban = retrieve(POST, 'user_ban', 0);
 	$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
-	if( !empty($_POST['valid_user']) && !empty($id_get) ) //On banni le membre
+	if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 	{
 		$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
-		if( !empty($info_mbr['user_id']) )
+		if (!empty($info_mbr['user_id']))
 		{	
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			//Si avertissement à 100% et débanni, on réduit l'avertissement à 90%.
-			if( $user_ban == 0 && $info_mbr['user_warning'] == 100 )
+			if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 			
-			if( !empty($user_ban) ) //Envoi du mail
+			if (!empty($user_ban)) //Envoi du mail
 			{
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
@@ -368,13 +368,13 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		'U_ACTION' => '.php?action=ban'
 	));
 	
-	if( empty($id_get) ) //On liste les membres qui ont déjà un avertissement
+	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if( !empty($_POST['search_member']) )
+		if (!empty($_POST['search_member']))
 		{
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
-			if( !empty($user_id) && !empty($login) )
+			if (!empty($user_id) && !empty($login))
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban&id=' . $user_id);
 			else
 				redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');
@@ -396,7 +396,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		FROM ".PREFIX."member
 		WHERE user_ban > " . time() . " OR user_warning = 100
 		ORDER BY user_ban", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('list', array(
 				'LOGIN' => '<a href="admin_members_punishment.php?action=ban&amp;id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
@@ -409,7 +409,7 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 			$i++;
 		}
 		
-		if( $i === 0 )
+		if ($i === 0)
 		{
 			$Template->assign_vars(array(
 				'C_NO_USER' => true,
@@ -427,25 +427,25 @@ elseif( $action == 'ban' ) //Gestion des utilisateurs
 		
 		$diff = ($mbr['user_ban'] - time());	
 		$key_sanction = 0;
-		if( $diff > 0 )
+		if ($diff > 0)
 		{
 			//Retourne la sanction la plus proche correspondant au temp de bannissement. 
-			for($i = 12; $i > 0; $i--)
+			for ($i = 12; $i > 0; $i--)
 			{					
 				$avg = ceil(($array_time[$i] + $array_time[$i-1])/2);
-				if( ($diff - $array_time[$i]) > $avg )  
+				if (($diff - $array_time[$i]) > $avg)  
 				{	
 					$key_sanction = $i + 1;
 					break;
 				}
 			}
 		}	
-		if( $mbr['user_warning'] == 100 )
+		if ($mbr['user_warning'] == 100)
 			$key_sanction = 12;
 		
 		$ban_options = '';		
 		//Affichge des sanctions
-		foreach( $array_time as $key => $time)
+		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
 			$ban_options .= '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>';

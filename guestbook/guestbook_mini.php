@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //Mini guestbook non activée si sur la page archive guestbook.
-if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
+if (strpos(SCRIPT, '/guestbook/guestbook.php') === false)
 {
 	load_module_lang('guestbook');
 	$Cache->load('guestbook'); //Chargement du cache
@@ -41,7 +41,7 @@ if( strpos(SCRIPT, '/guestbook/guestbook.php') === false )
 	$guestbook_rand = $_guestbook_rand_msg[array_rand($_guestbook_rand_msg)];
 
 	//Pseudo.
-	if( $guestbook_rand['user_id'] != -1 ) 
+	if ($guestbook_rand['user_id'] != -1) 
 		$guestbook_login = '<a class="small_link" href="../member/member' . url('.php?id=' . $guestbook_rand['user_id'], '-' . $guestbook_rand['user_id'] . '.php') . '" title="' . $guestbook_rand['login'] . '"><span style="font-weight:bold;">' . wordwrap_html($guestbook_rand['login'], 13) . '</span></a>';
 	else
 		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';

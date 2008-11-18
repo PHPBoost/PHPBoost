@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse(&$var)
@@ -59,7 +59,7 @@ function wiki_unparse($var)
 function wiki_no_rewrite($var)
 {
 	global $CONFIG;
-	if( $CONFIG['rewrite'] == 0 ) //Pas de rewriting	
+	if ($CONFIG['rewrite'] == 0) //Pas de rewriting	
 		return preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="wiki.php?title=$1">$2</a>', $var);
 	else
 		return $var;
@@ -73,10 +73,10 @@ function wiki_explode_menu(&$content, $level)
 
 	$nbr_occur = count($content); //On compte le nombre d'éléments du tableau (on n'utilse pas de foreach car on a besoin de savoir si les clés sont paires ou impaires)
 	
-	for( $i = 1; $i < $nbr_occur; $i++ ) //On passe tous les éléments du tableau, on commence à 1 car on sait qu'il n'y a rien d'intéressant avant
+	for ($i = 1; $i < $nbr_occur; $i++) //On passe tous les éléments du tableau, on commence à 1 car on sait qu'il n'y a rien d'intéressant avant
 	{
 		//Si c'est un nombre pair, cela signifie qu'il contient peut-être des (sous){0,4} catégories, on vérifie
-		if( $i % 2 === 0 && $level <= 5 && preg_match('`[\-]{' . ($level + 1) . '}`isU', $content[$i]) )
+		if ($i % 2 === 0 && $level <= 5 && preg_match('`[\-]{' . ($level + 1) . '}`isU', $content[$i]))
 		{
 			wiki_explode_menu($content[$i], $level + 1); //On éclate la chaîne $content[$i] à un niveau intérieur
 		}
@@ -86,7 +86,7 @@ function wiki_explode_menu(&$content, $level)
 //Fonction d'affichage récursive
 function wiki_display_menu($array_menu, &$menu, $level)
 {
-	if( !is_array($array_menu) ) //Si ce n'est pas un tableau
+	if (!is_array($array_menu)) //Si ce n'est pas un tableau
 	{
 		$menu = '';
 		return 0;
@@ -97,13 +97,13 @@ function wiki_display_menu($array_menu, &$menu, $level)
 	
 	$nbr_occur = count($array_menu); //On compte le nombre d'éléments du tableau (on n'utilse pas de foreach car on a besoin de savoir si les clés sont paires ou impaires)
 	
-	for( $i = 1; $i < $nbr_occur; $i++ ) //On boucle sur le tableau
+	for ($i = 1; $i < $nbr_occur; $i++) //On boucle sur le tableau
 	{
-		if( $i % 2 === 0 && is_array($array_menu[$i]) && $level <= 5 )//Si c'est un nombre pair, cela signifie qu'il contient peut-être des (sous){0,4} catégories
+		if ($i % 2 === 0 && is_array($array_menu[$i]) && $level <= 5)//Si c'est un nombre pair, cela signifie qu'il contient peut-être des (sous){0,4} catégories
 		{
 			wiki_display_menu($array_menu[$i], $menu, $level + 1); //On appelle cette même fonction à un niveau de hiérarchie inférieur
 		}
-		elseif( $i % 2 === 1 && !empty($array_menu[$i]) ) //sinon on affiche simplement le titre du paragraphe et le lien vers l'ancre
+		elseif ($i % 2 === 1 && !empty($array_menu[$i])) //sinon on affiche simplement le titre du paragraphe et le lien vers l'ancre
 		{
 			$menu .= (($i === 1 || $i >= $nbr_occur - 1) ? '' : '</li><li>') . '<a href="#' . url_encode_rewrite($array_menu[$i]) . '">' . htmlentities($array_menu[$i]) . '</a>' . "\n"; //On affiche le lien vers l'ancre (on met rajoute une puce seulement si on n'est pas au premier ou au dernier élément de la liste)
 		}
@@ -121,7 +121,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	global $_WIKI_CATS;
 		
-	if( $id > 0)
+	if ($id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
@@ -130,7 +130,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 			$cats[] = (int)$_WIKI_CATS[$id_cat]['id_parent'];
 			$id_cat = (int)$_WIKI_CATS[$id_cat]['id_parent'];
 		}	
-		while( $id_cat > 0 );
+		while ($id_cat > 0);
 	}
 	
 
@@ -139,9 +139,9 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 	
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
-	foreach( $cats as $key => $value )
+	foreach ($cats as $key => $value)
 	{
-		if( $key != 0 )
+		if ($key != 0)
 			$opened_cats_list .= 'cat_status[' . $key . '] = 1;' . "\n";
 	}
 	return '<script type="text/javascript">
@@ -158,12 +158,12 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	global $_WIKI_CATS, $Sql, $Template;
 	$line = '';
-	foreach( $_WIKI_CATS as $key => $value )
+	foreach ($_WIKI_CATS as $key => $value)
 	{
 		//Si la catégorie appartient à la catégorie explorée
-		if( $value['id_parent']  == $id_cat )
+		if ($value['id_parent']  == $id_cat)
 		{
-			if( in_array($key, $cats) ) //Si cette catégorie contient notre catégorie, on l'explore
+			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
 				$line .= '<li><a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/minus.png" alt="" id="img2_' . $key . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/opened_cat.png" alt="" id="img_' . $key . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'wiki_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span><span id="cat_' . $key . '">
 				<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;padding-left:30px;">'
@@ -174,7 +174,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 				//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $key . "'", __LINE__, __FILE__);
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
-				if( $sub_cats_number > 0 )
+				if ($sub_cats_number > 0)
 					$line .= '<li><a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $key . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt="" id="img_' . $key . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'wiki_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
 					$line .= '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'wiki_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span></li>';
@@ -189,9 +189,9 @@ function wiki_find_subcats(&$array, $id_cat)
 {
 	global $_WIKI_CATS;
 	//On parcourt les catégories et on détermine les catégories filles
-	foreach( $_WIKI_CATS as $key => $value )
+	foreach ($_WIKI_CATS as $key => $value)
 	{
-		if( $value['id_parent'] == $id_cat )
+		if ($value['id_parent'] == $id_cat)
 		{
 			$array[] = $key;
 			//On rappelle la fonction pour la catégorie fille

@@ -29,7 +29,7 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
-if( $User->check_level(ADMIN_LEVEL) ) //Admin
+if ($User->check_level(ADMIN_LEVEL)) //Admin
 {	
 	include_once('download_cats.class.php');
 	$download_categories = new DownloadCats();
@@ -42,17 +42,17 @@ if( $User->check_level(ADMIN_LEVEL) ) //Admin
 	
 	$result = false;
 	
-	if( $id_up > 0 )
+	if ($id_up > 0)
 		$result = $download_categories->move($id_up, MOVE_CATEGORY_UP);
-	elseif( $id_down > 0 )
+	elseif ($id_down > 0)
 		$result = $download_categories->move($id_down, MOVE_CATEGORY_DOWN);
-	elseif( $id_show > 0 )
+	elseif ($id_show > 0)
 		$result = $download_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
-	elseif( $id_hide > 0 )
+	elseif ($id_hide > 0)
 		$result = $download_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	
 	//Operation was successfully
-	if( $result )
+	if ($result)
 	{	
 		$cat_config = array(
 			'xmlhttprequest_file' => 'xmlhttprequest_cats.php',

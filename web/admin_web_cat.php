@@ -36,12 +36,12 @@ $bottom = retrieve(GET, 'bot', '');
 $del = isset($_GET['del']) ?  true : false;
 
 //Si c'est confirmé on met à jour!
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$cat = retrieve(POST, $row['id'] . 'cat', '');  
 		$contents = retrieve(POST, $row['id'] . 'contents', '');
@@ -50,10 +50,10 @@ if( !empty($_POST['valid']) )
 		$aprob = retrieve(POST, $row['id'] . 'aprob', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', -1);
 		
-		if( !empty($icon_path) )
+		if (!empty($icon_path))
 			$icon = $icon_path;
 			
-		if( !empty($cat) )
+		if (!empty($cat))
 			$Sql->query_inject("UPDATE ".PREFIX."web_cat SET name = '" . $cat . "', contents = '" . $contents . "', icon = '" . $icon . "', aprob = '" . $aprob . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 
 	}
@@ -64,7 +64,7 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);
 }
-elseif( empty($top) && empty($bottom) && $del && !empty($id) ) //Suppression du lien.
+elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."web_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);	
@@ -75,9 +75,9 @@ elseif( empty($top) && empty($bottom) && $del && !empty($id) ) //Suppression du 
 	
 	redirect(HOST . SCRIPT);
 }
-elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
+elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
-	if( !empty($top) )
+	if (!empty($top))
 	{	
 		$idmoins = $top - 1;
 		
@@ -90,7 +90,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		
 		redirect(HOST . SCRIPT . '#w' . $id);
 	}
-	elseif( !empty($bottom) )
+	elseif (!empty($bottom))
 	{
 		$idplus = ($bottom + 1);
 		
@@ -105,7 +105,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 	}
 }
 //On ajoute la nouvelle catégorie
-elseif( !empty($_POST['add']) ) //Ajout du lien.
+elseif (!empty($_POST['add'])) //Ajout du lien.
 {
 	$cat = retrieve(POST, 'cat', '');  
 	$contents = retrieve(POST, 'contents', '');
@@ -114,10 +114,10 @@ elseif( !empty($_POST['add']) ) //Ajout du lien.
 	$aprob = retrieve(POST, 'aprob', 0);
 	$secure = retrieve(POST, 'secure', -1);
 		
-	if( !empty($icon_path) )
+	if (!empty($icon_path))
 		$icon = $icon_path;
 		
-	if( !empty($cat) )
+	if (!empty($cat))
 	{	
 		$order = $Sql->query("SELECT MAX(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
 		$order++;
@@ -142,20 +142,20 @@ else
 	  
 	//Images disponibles
 	$rep = './';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = @readdir($dh)) )
+		while (! is_bool($lang = @readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
 	}
 	
 	$image_list = '<option value="">--</option>';
-	foreach($img_array as $key => $img_path)
+	foreach ($img_array as $key => $img_path)
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 		
 	$Template->assign_vars(array(
@@ -189,7 +189,7 @@ else
 		
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$min_cat = $Sql->query("SELECT MIN(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
@@ -198,7 +198,7 @@ else
 	$result = $Sql->query_while("SELECT id, name, class, contents, icon, aprob, secure
 	FROM ".PREFIX."web_cat
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$row['name'] = html_entity_decode($row['name']);
@@ -216,7 +216,7 @@ else
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 		{	
 			$selected = ($img_path == $row['icon']) ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
@@ -236,7 +236,7 @@ else
 		));			
 		
 		//Rang d'autorisation.
-		for($i = -1; $i <= 2; $i++)
+		for ($i = -1; $i <= 2; $i++)
 		{
 			switch($i) 
 			{	

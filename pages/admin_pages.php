@@ -34,7 +34,7 @@ require_once('../admin/admin_header.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
-if( !empty($_POST['update']) )  //Mise à jour
+if (!empty($_POST['update']))  //Mise à jour
 {
 	$count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 	$activ_com = !empty($_POST['activ_com']) ? 1 : 0;

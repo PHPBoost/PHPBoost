@@ -39,14 +39,14 @@ $get_info_update = @file_get_contents_emulate('http://www.phpboost.com/phpboost/
 $check_core_update = false;
 $check_modules_update = false;
 $modules_update = array();
-if( !empty($get_info_update) )
+if (!empty($get_info_update))
 {	
 	//Maj du noyau.
 	$array_infos = explode("\n", $get_info_update);
-	if( isset($array_infos[0]) )
+	if (isset($array_infos[0]))
 	{
 		$check_version = substr(strstr($array_infos[0], ':'), 1);
-		if( version_compare($check_version, $CONFIG['version'], '<=') != -1 )
+		if (version_compare($check_version, $CONFIG['version'], '<=') != -1)
 		{
 			$check_core_update = true;
 			$l_core_update = sprintf($LANG['core_update_available'], $check_version);
@@ -59,21 +59,21 @@ if( !empty($get_info_update) )
 	
 	//Mise à jour des modules.
 	$count = count($array_infos);	
-	for($i = 1; $i < $count; $i++)
+	for ($i = 1; $i < $count; $i++)
 	{
-		if( isset($array_infos[$i]) )
+		if (isset($array_infos[$i]))
 		{
 			$array_infos_modules = explode(':', $array_infos[$i]);
 			$name = $array_infos_modules[0];
 			$version = $array_infos_modules[1];
 			
 			//Nouvelle version du module.
-			if( isset($modules_config[$name]['version']) && $modules_config[$name]['version'] != $version )
+			if (isset($modules_config[$name]['version']) && $modules_config[$name]['version'] != $version)
 				$modules_update[$name] = $version;
 		}
 	}	
 	
-	if( count($modules_update) > 0 )
+	if (count($modules_update) > 0)
 	{
 		$check_modules_update = true;
 		$l_modules_update = $LANG['module_update_available'];
@@ -97,7 +97,7 @@ $Template->assign_vars(array(
 	'L_MODULES_UPDATE' => $l_modules_update	
 ));
 //Listing des modules mis à jour.
-foreach($modules_update as $name => $version)
+foreach ($modules_update as $name => $version)
 {
 	$Template->assign_block_vars('modules_available', array(
 		'ID' => $name,
@@ -135,7 +135,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
 	$robot = $Session->_check_bot($row['session_ip']);
@@ -155,7 +155,7 @@ while( $row = $Sql->fetch_assoc($result) )
 		break;
 	} 
 		
-	if( !empty($robot) )
+	if (!empty($robot))
 		$login = '<span class="robot">' . ($robot == 'unknow_bot' ? $LANG['unknow_bot'] : $robot) . '</span>';
 	else
 		$login = !empty($row['login']) ? '<a class="' . $class . '" href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>' : $LANG['guest'];

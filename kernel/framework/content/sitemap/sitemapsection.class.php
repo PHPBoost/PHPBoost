@@ -67,20 +67,20 @@ class SitemapSection
 		//We get the stream in which we are going to write
 		$template = $export_config->get_section_stream();
 		
-		if( is_string($this->section_name) )
+		if (is_string($this->section_name))
 			$template->assign_vars(array(
 				'C_SECTION_NAME_IS_STRING' => !empty($this->section_name),
 				'SECTION_NAME' => $this->section_name,
 				'DEPTH' => $depth
 			));
-		elseif( is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link' )
+		elseif (is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link')
 			$template->assign_vars(array(
 					'C_SECTION_NAME_IS_LINK' => true,
 					'LINK_CODE' => $this->section_name->export($export_config),
 					'DEPTH' => $depth
 				));
 		
-		foreach($this->sub_sections as $sub_section)
+		foreach ($this->sub_sections as $sub_section)
 		{
 			$template->assign_block_vars('children', array(
 				'CHILD_CODE' => $sub_section->export($export_config, $depth + 1)

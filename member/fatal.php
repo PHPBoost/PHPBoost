@@ -44,7 +44,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 
 //Récupération de l'erreur dans les logs.
 $errinfo = $Errorh->get_last__error_log();
-if( empty($errinfo) )
+if (empty($errinfo))
 	list($errinfo['errno'], $errinfo['errstr'], $errinfo['errline'], $errinfo['errfile']) = array('-1', '???', '0', 'unknow');
 
 $Template->set_filenames(array(

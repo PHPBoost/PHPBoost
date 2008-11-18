@@ -152,7 +152,7 @@ class SHA256 extends hash
         static $modes = array( 'hex', 'bin', 'bit' );
         $ret = false;
         
-        if(!in_array(strtolower($mode), $modes))
+        if (!in_array(strtolower($mode), $modes))
         {
             trigger_error('mode specified is unrecognized: ' . $mode, E_USER_WARNING);
         }
@@ -163,7 +163,7 @@ class SHA256 extends hash
             SHA256::compute($data);
             
             $func = array('SHA256', 'hash' . $mode);
-            if(is_callable($func))
+            if (is_callable($func))
             {
                 $func = 'hash' . $mode;
                 $ret = SHA256::$func($data);
@@ -185,7 +185,7 @@ class SHA256 extends hash
     function sum()
     {
         $T = 0;
-        for($x = 0, $y = func_num_args(); $x < $y; $x++)
+        for ($x = 0, $y = func_num_args(); $x < $y; $x++)
         {
             //    argument
             $a = func_get_arg($x);
@@ -193,7 +193,7 @@ class SHA256 extends hash
             //    carry storage
             $c = 0;
 
-            for($i = 0; $i < 32; $i++)
+            for ($i = 0; $i < 32; $i++)
             {
                 //    sum of the bits at $i
                 $j = (($T >> $i) & 1) + (($a >> $i) & 1) + $c;
@@ -218,7 +218,7 @@ class SHA256 extends hash
         static $vars = 'abcdefgh';
         static $K = null;
 
-        if($K === null)
+        if ($K === null)
         {
             /*
             $K = array(
@@ -261,16 +261,16 @@ class SHA256 extends hash
         }
 
         $W = array();
-        for($i = 0, $numChunks = sizeof($hashData->chunks); $i < $numChunks; $i++)
+        for ($i = 0, $numChunks = sizeof($hashData->chunks); $i < $numChunks; $i++)
         {
             //    initialize the registers
-            for($j = 0; $j < 8; $j++)
+            for ($j = 0; $j < 8; $j++)
                 ${$vars{$j}} = $hashData->hash[$j];
             
             //    the SHA-256 compression function
-            for($j = 0; $j < 64; $j++)
+            for ($j = 0; $j < 64; $j++)
             {
-                if($j < 16)
+                if ($j < 16)
                 {
                     $T1  = ord($hashData->chunks[$i]{$j*4  }) & 0xFF; $T1 <<= 8;
                     $T1 |= ord($hashData->chunks[$i]{$j*4+1}) & 0xFF; $T1 <<= 8;
@@ -296,7 +296,7 @@ class SHA256 extends hash
             }
             
             //    compute the next hash set
-            for($j = 0; $j < 8; $j++)
+            for ($j = 0; $j < 8; $j++)
                 $hashData->hash[$j] = SHA256::sum(${$vars{$j}}, $hashData->hash[$j]);
         }
     }
@@ -312,7 +312,7 @@ class SHA256 extends hash
         {
             $str .= sprintf('%08x', current($hashData->hash));
         }
-        while(next($hashData->hash));
+        while (next($hashData->hash));
         
         return $str;
     }
@@ -328,7 +328,7 @@ class SHA256 extends hash
         {
             $str .= pack('N', current($hashData->hash));
         }
-        while(next($hashData->hash));
+        while (next($hashData->hash));
         
         return $str;
     }

@@ -41,20 +41,20 @@ class Authorizations
 		
 		//Récupération du dernier argument, si ce n'est pas un tableau => booléen demandant la sélection par défaut de l'admin.
 		$admin_auth_default = true;
-		if( $nbr_arg > 1 )
+		if ($nbr_arg > 1)
 		{
 			$admin_auth_default = func_get_arg($nbr_arg - 1);		
-			if( !is_bool($admin_auth_default) )
+			if (!is_bool($admin_auth_default))
 				$admin_auth_default = true;
 			else
 				$nbr_arg--; //On diminue de 1 le nombre d'argument, car le denier est le flag.
 		}
 		//On balaye les tableaux passés en argument.
-		for($i = 0; $i < $nbr_arg; $i++)
+		for ($i = 0; $i < $nbr_arg; $i++)
 			Authorizations::_get_auth_array(func_get_arg($i), '', $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
-		if( $admin_auth_default )
+		if ($admin_auth_default)
 			$array_auth_all['r2'] = $sum_auth;
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
@@ -71,7 +71,7 @@ class Authorizations
 		Authorizations::_get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
-		if( $admin_auth_default )
+		if ($admin_auth_default)
 			$array_auth_all['r2'] = $sum_auth;
 		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
 
@@ -96,7 +96,7 @@ class Authorizations
             'THEME' => get_utheme(),
             'PATH_TO_ROOT' => PATH_TO_ROOT,
 			'IDSELECT' => $idselect,
-			'DISABLED_SELECT' => (empty($disabled) ? 'if(disabled == 0)' : ''),
+			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
 			'L_MEMBERS' => $LANG['member_s'],
 			'L_ADD_MEMBER' => $LANG['add_member'],
 			'L_REQUIRE_PSEUDO' => addslashes($LANG['require_pseudo']),
@@ -112,10 +112,10 @@ class Authorizations
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
 		//Liste des rangs
         $j = -1;
-        foreach($array_ranks as $idrank => $group_name)
+        foreach ($array_ranks as $idrank => $group_name)
         {
             $selected = '';   
-            if( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled) )
+            if (array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
                 $selected = ' selected="selected"';
             $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
             
@@ -130,10 +130,10 @@ class Authorizations
         }
        
         //Liste des groupes.
-        foreach($Group->get_groups_array() as $idgroup => $group_name)
+        foreach ($Group->get_groups_array() as $idgroup => $group_name)
         {
             $selected = '';       
-            if( array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled) )
+            if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
                 $selected = ' selected="selected"';
 
             $Template->assign_block_vars('groups_list', array(
@@ -147,11 +147,11 @@ class Authorizations
 		##### Génération du formulaire pour les autorisations membre par membre. #####
 		//Recherche des membres autorisé.
 		$array_auth_members = array();
-		foreach($array_auth as $type => $auth)
+		foreach ($array_auth as $type => $auth)
 		{
-			if( substr($type, 0, 1) == 'm' )
+			if (substr($type, 0, 1) == 'm')
 			{	
-				if( array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0 )
+				if (array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0)
 					$array_auth_members[$type] = $auth;
 			}
 		}
@@ -162,12 +162,12 @@ class Authorizations
 		));
 		
 		//Listing des membres autorisés.
-		if( $advanced_auth )
+		if ($advanced_auth)
 		{
 			$result = $Sql->query_while("SELECT user_id, login 
 			FROM ".PREFIX."member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				 $Template->assign_block_vars('members_list', array(
 					'USER_ID' => $row['user_id'],
@@ -183,23 +183,23 @@ class Authorizations
 	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
 	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
 	{
-		if( !is_int($value) )
+		if (!is_int($value))
 			return false;
 		
 		switch($type)
 		{
 			case RANK_TYPE:
-				if( $value <= 2 && $value >= -1 )
+				if ($value <= 2 && $value >= -1)
 					return @$array_auth['r' . $value] & $bit;
 				else
 					return false;
 			case GROUP_TYPE:
-				if( $value >= 1 )
+				if ($value >= 1)
 					return !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
 				else
 					return false;
 			case USER_TYPE:
-				if( $value >= 1 )
+				if ($value >= 1)
 					return !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
 				else
 					return false;
@@ -215,16 +215,16 @@ class Authorizations
 		//Parcours des différents types d'utilisateur
 		$merged = array();
 		
-		if( empty($child) )
+		if (empty($child))
 			return $parent;
 		
-		if( $mode == AUTH_PARENT_PRIORITY )
+		if ($mode == AUTH_PARENT_PRIORITY)
 		{
-			foreach( $parent as $key => $value )
+			foreach ($parent as $key => $value)
 			{
-				if( $bit = ($value & $auth_bit) )
+				if ($bit = ($value & $auth_bit))
 				{
-					if( !empty($child[$key]) )
+					if (!empty($child[$key]))
 						$merged[$key] = $auth_bit;
 					else
 						$merged[$key] = 0;
@@ -233,11 +233,11 @@ class Authorizations
 					$merged[$key] = $bit;
 			}
 		}
-		elseif( $mode == AUTH_CHILD_PRIORITY )
+		elseif ($mode == AUTH_CHILD_PRIORITY)
 		{
-			foreach( $parent as $key => $value )
+			foreach ($parent as $key => $value)
 				$merged[$key] = $value & $auth_bit;
-			foreach( $child as $key => $value )
+			foreach ($child as $key => $value)
 				$merged[$key] = $value & $auth_bit;
 		}
 		return $merged;
@@ -246,30 +246,30 @@ class Authorizations
 	//Capture les autorisations et les place sur un bit en particulier passé en paramètre et vers un autre bit (1 par défaut)
 	/*static*/ function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
 	{
-		if( $final_bit == 0 )
+		if ($final_bit == 0)
 			die('<strong>Error :</strong> The destination bit must not be void.');
 		
 		$result = $auth;	
 		
-		if( $original_bit > $final_bit )
+		if ($original_bit > $final_bit)
 		{
 			//De combien doit-on se décaler à droite (Combien de divisions par 2) ?
 			$quotient = log($original_bit / $final_bit, 2);
 			
-			foreach( $auth as $user_kind => $auth_values )
+			foreach ($auth as $user_kind => $auth_values)
 				$result[$user_kind] = ($auth_values & $original_bit) >> $quotient;
 		}
-		elseif( $original_bit < $final_bit )
+		elseif ($original_bit < $final_bit)
 		{
 			//De combien doit-on se décaler à gauche (combien de multiplications par 2) ?
 			$quotient = log($final_bit / $original_bit, 2);
 			
-			foreach( $auth as $user_kind => $auth_values )
+			foreach ($auth as $user_kind => $auth_values)
 				$result[$user_kind] = ($auth_values & $original_bit) << $quotient;
 		}
 		else
 		{
-			foreach($auth as $user_kind => $auth_values)
+			foreach ($auth as $user_kind => $auth_values)
 				$result[$user_kind] = $auth_values & $original_bit;
 		}
 		return $result;
@@ -283,29 +283,29 @@ class Authorizations
 		
 		##### Niveau et Groupes #####
 		$array_auth_groups = !empty($_POST['groups_auth' . $idselect]) ? $_POST['groups_auth' . $idselect] : '';
-		if( !empty($array_auth_groups) ) //Récupération du formulaire.
+		if (!empty($array_auth_groups)) //Récupération du formulaire.
 		{
 			$sum_auth += $bit_value;
-			if( is_array($array_auth_groups) )
+			if (is_array($array_auth_groups))
 			{			
 				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique, modérateurs et administrateurs autorisés.
 				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1', 3 => 'r2');
 				$min_auth = 3;
-				foreach($array_level as $level => $key)
+				foreach ($array_level as $level => $key)
 				{
-					if( in_array($key, $array_auth_groups) )
+					if (in_array($key, $array_auth_groups))
 						$min_auth = $level;
 					else
 					{
-						if( $min_auth < $level )
+						if ($min_auth < $level)
 							$array_auth_groups[] = $key;
 					}
 				}
 				
 				//Ajout des autorisations au tableau final.
-				foreach($array_auth_groups as $key => $value)
+				foreach ($array_auth_groups as $key => $value)
 				{
-					if( isset($array_auth_all[$value]) )
+					if (isset($array_auth_all[$value]))
 						$array_auth_all[$value] += $bit_value;
 					else
 						$array_auth_all[$value] = $bit_value;
@@ -315,14 +315,14 @@ class Authorizations
 		
 		##### Membres (autorisations avancées) ######
 		$array_auth_members = !empty($_POST['members_auth' . $idselect]) ? $_POST['members_auth' . $idselect] : '';
-		if( !empty($array_auth_members) ) //Récupération du formulaire.
+		if (!empty($array_auth_members)) //Récupération du formulaire.
 		{
-			if( is_array($array_auth_members) )
+			if (is_array($array_auth_members))
 			{			
 				//Ajout des autorisations au tableau final.
-				foreach($array_auth_members as $key => $value)
+				foreach ($array_auth_members as $key => $value)
 				{
-					if( isset($array_auth_all['m' . $value]) )
+					if (isset($array_auth_all['m' . $value]))
 						$array_auth_all['m' . $value] += $bit_value;
 					else
 						$array_auth_all['m' . $value] = $bit_value;

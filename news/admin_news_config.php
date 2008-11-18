@@ -31,7 +31,7 @@ load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$config_news = array();
 	$config_news['type'] = retrieve(POST, 'type', 0);

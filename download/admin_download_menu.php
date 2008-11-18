@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( !defined('PHPBOOST') ) exit;
+if (!defined('PHPBOOST')) exit;
 
 $Template->set_filenames(array(
 	'admin_download_menu'=> 'download/admin_download_menu.tpl'

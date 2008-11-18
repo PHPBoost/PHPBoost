@@ -43,7 +43,7 @@ $Template->set_filenames(array(
 ));
 
 //Type date.
-if( $calendar_type == 'date' )
+if ($calendar_type == 'date')
 {
         $year = gmdate_format('Y');
         $month = gmdate_format('n');
@@ -52,7 +52,7 @@ if( $calendar_type == 'date' )
         $year = !empty($_GET['y']) ? numeric($_GET['y']) : $year;
         $month = !empty($_GET['m']) ? numeric($_GET['m']) : $month;
         $day = !empty($_GET['d']) ? numeric($_GET['d']) : $day;
-        if( !checkdate($month, $day, $year) )
+        if (!checkdate($month, $day, $year))
                 list($year, $month, $day) = array(gmdate_format('Y'), gmdate_format('n'), gmdate_format('j'));          
         $bissextile = (($year % 4) == 0) ? 29 : 28;
 
@@ -72,14 +72,14 @@ if( $calendar_type == 'date' )
         ));     
 
         //Génération des select.
-        for($i = 1; $i <= 12; $i++)
+        for ($i = 1; $i <= 12; $i++)
         {
                 $selected = ($month == $i) ? 'selected="selected"' : '';
                 $Template->assign_block_vars('month', array(
                         'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1]) . '</option>'
                 ));
         }                       
-        for($i = 1900; $i <= 2037; $i++)
+        for ($i = 1900; $i <= 2037; $i++)
         {
                 $selected = ($year == $i) ? 'selected="selected"' : '';
                 $Template->assign_block_vars('year', array(
@@ -90,7 +90,7 @@ if( $calendar_type == 'date' )
         //Génération des jours du calendrier.
         $array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'], 
         $LANG['sunday']);
-        foreach($array_l_days as $l_day)
+        foreach ($array_l_days as $l_day)
         {
                 $Template->assign_block_vars('day', array(
                         'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="text_small">' . $l_day . '</span></td>'
@@ -99,13 +99,13 @@ if( $calendar_type == 'date' )
 
         //Premier jour du mois.
         $first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year)); 
-        if( $first_day == 0 )
+        if ($first_day == 0)
                 $first_day = 7;
                 
         //Prise en compte et converstion des formats de dates.
         $format = '';
         $array_date = explode('/', $LANG['date_format_short']);
-        for($i = 0; $i < 3; $i++)
+        for ($i = 0; $i < 3; $i++)
         {
                 switch($array_date[$i])
                 {
@@ -127,9 +127,9 @@ if( $calendar_type == 'date' )
         $month = ($month < 10 && substr($month, 0, 1) != 0) ? '0' . $month : $month;
         $j = 1;
         $last_day = ($month_day + $first_day);
-        for($i = 1; $i <= 42; $i++)
+        for ($i = 1; $i <= 42; $i++)
         {
-                if( $i >= $first_day && $i < $last_day )
+                if ($i >= $first_day && $i < $last_day)
                 {
                         $class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
                         $style = ($day == $j) ? 'border: 1px inset black;' : 'border: 1px outset black;';

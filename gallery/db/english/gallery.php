@@ -25,18 +25,18 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //Mise à jour du cache.
 @clearstatcache();
 	
 $chmod_dir = array('../gallery/pics', '../gallery/pics/thumbnails');
 //Vérifications et le cas échéants changements des autorisations en écriture.
-foreach($chmod_dir as $dir)
+foreach ($chmod_dir as $dir)
 {
-	if( file_exists($dir) && is_dir($dir) )
+	if (file_exists($dir) && is_dir($dir))
 	{
-		if( !is_writable($dir) )
+		if (!is_writable($dir))
 			@chmod($dir, 0777);			
 	}
 	else

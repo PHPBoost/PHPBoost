@@ -53,7 +53,7 @@ $Template->assign_vars(array(
 	'U_THEME_AUTHOR_LINK' => $THEME['author_link']
 ));
 
-if( $CONFIG['bench'] )
+if ($CONFIG['bench'])
 {
 	$Bench->stop(); //On arrête le bench.
 	$Template->assign_vars(array(

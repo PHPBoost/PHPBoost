@@ -31,7 +31,7 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-if( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichiers.
+if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
 	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
@@ -41,9 +41,9 @@ if( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichi
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 
-	if( !empty($user_id) && $User->get_attribute('user_id') != $user_id )
+	if (!empty($user_id) && $User->get_attribute('user_id') != $user_id)
 	{	
-		if( $User->check_level(ADMIN_LEVEL) )
+		if ($User->check_level(ADMIN_LEVEL))
 			echo $Uploads->Add_folder($id_parent, $user_id, $name);
 		else
 			echo $Uploads->Add_folder($id_parent, $User->get_attribute('user_id'), $name);		
@@ -51,7 +51,7 @@ if( !empty($_GET['new_folder']) ) //Ajout d'un dossier dans la gestion des fichi
 	else
 		echo $Uploads->Add_folder($id_parent, $User->get_attribute('user_id'), $name);
 }
-elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion des fichiers.
+elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
 	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
@@ -62,11 +62,11 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
 	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
-	if( !empty($id_folder) && !empty($name) )
+	if (!empty($id_folder) && !empty($name))
 	{
-		if( $User->get_attribute('user_id') != $user_id )
+		if ($User->get_attribute('user_id') != $user_id)
 		{	
-			if( $User->check_level(ADMIN_LEVEL) )
+			if ($User->check_level(ADMIN_LEVEL))
 				echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
 				echo $Uploads->Rename_folder($id_folder, $name, $previous_name, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
@@ -77,7 +77,7 @@ elseif( !empty($_GET['rename_folder']) ) //Renomme un dossier dans la gestion de
 	else 
 		echo 0;
 }
-elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la gestion des fichiers.
+elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
 	//Initialisation  de la class de gestion des fichiers.
 	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
@@ -88,11 +88,11 @@ elseif( !empty($_GET['rename_file']) ) //Renomme un fichier d'un dossier dans la
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 	$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 	
-	if( !empty($id_file) && !empty($name) )
+	if (!empty($id_file) && !empty($name))
 	{		
-		if( $User->get_attribute('user_id') != $user_id )
+		if ($User->get_attribute('user_id') != $user_id)
 		{	
-			if( $User->check_level(ADMIN_LEVEL) )
+			if ($User->check_level(ADMIN_LEVEL))
 				echo $Uploads->Rename_file($id_file, $name, $previous_name, $user_id, ADMIN_NO_CHECK);
 			else
 				echo $Uploads->Rename_file($id_file, $name, $previous_name, $User->get_attribute('user_id'), ADMIN_NO_CHECK);

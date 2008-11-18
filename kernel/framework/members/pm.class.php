@@ -70,7 +70,7 @@ class PrivateMsg
 		global $CONFIG, $Sql;
 		
 		//Message privé envoyé par le système => user_id = -1
-		if( $system_pm )
+		if ($system_pm)
 		{	
 			$pm_from = '-1';
 			$user_convers_status = '1';
@@ -100,10 +100,10 @@ class PrivateMsg
 		global $Sql;
 		
 		//On vérifie qu'un message n'a pas été posté entre temps.
-        if( $check_mp_before_send )
+        if ($check_mp_before_send)
         {
             $info_convers =	$Sql->query_array("pm_topic", "last_user_id", "user_view_pm", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
-            if( $info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0 ) //Nouveau message
+            if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
             {
                 $Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_from . "'", __LINE__, __FILE__);
                 $Sql->query_inject("UPDATE ".PREFIX."pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
@@ -127,16 +127,16 @@ class PrivateMsg
 		global $CONFIG, $Sql;	
 				
 		$info_convers = $Sql->query_array("pm_topic", "user_view_pm", "last_user_id", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
-		if( $pm_update && $info_convers['last_user_id'] != $pm_userid )
+		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)
 		{
 			//Mise à jour du compteur de mp du destinataire.
-			if( $info_convers['user_view_pm'] > 0 )
+			if ($info_convers['user_view_pm'] > 0)
 				$Sql->query_inject("UPDATE ".PREFIX."member SET user_pm = user_pm - '" . $info_convers['user_view_pm'] . "' WHERE user_id = '" . $pm_userid . "'", __LINE__, __FILE__);
 		}
 		
-		if( $pm_expd ) //Expediteur.
+		if ($pm_expd) //Expediteur.
 		{
-			if( $pm_del ) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
+			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{
 				$Sql->query_inject("DELETE FROM ".PREFIX."pm_topic WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
@@ -146,7 +146,7 @@ class PrivateMsg
 		}
 		else //Destinataire
 		{
-			if( $pm_del ) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
+			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
 			{				
 				$Sql->query_inject("DELETE FROM ".PREFIX."pm_topic WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
@@ -167,7 +167,7 @@ class PrivateMsg
 		$pm_max_id = $Sql->query("SELECT MAX(id) FROM ".PREFIX."pm_msg WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		$pm_last_msg = $Sql->query_array('pm_msg', 'user_id', 'timestamp', "WHERE id = '" . $pm_max_id . "'", __LINE__, __FILE__);
 		
-		if( !empty($pm_max_id) )
+		if (!empty($pm_max_id))
 		{
 			//Mise à jour de la conversation.
 			$Sql->query_inject("UPDATE ".PREFIX."pm_topic SET nbr_msg = nbr_msg - 1, last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);

@@ -46,9 +46,9 @@ $Template->set_filenames(array('wiki_explorer'=> 'wiki/explorer.tpl'));
 //Contenu de la racine:
 $Cache->load('wiki');
 $root = '';
-foreach( $_WIKI_CATS as $key => $value )
+foreach ($_WIKI_CATS as $key => $value)
 {
-	if( $value['id_parent'] == 0 )
+	if ($value['id_parent'] == 0)
 		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 }
 $result = $Sql->query_while("SELECT title, id, encoded_title
@@ -56,7 +56,7 @@ $result = $Sql->query_while("SELECT title, id, encoded_title
 	WHERE id_cat = 0
 	AND a.redirect = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('wiki') . '/images/article.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 }
@@ -78,10 +78,10 @@ FROM ".PREFIX."wiki_cats c
 LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
 WHERE c.id_parent = 0
 ORDER BY title ASC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
-	if( $sub_cats_number > 0 )
+	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(
 			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 

@@ -89,7 +89,7 @@ class ModuleMap
 			'MODULE_DESCRIPTION' => $this->description
 			));
 		
-		foreach($this->sub_sections as $sub_section)
+		foreach ($this->sub_sections as $sub_section)
 		{
 			$template->assign_block_vars('children', array(
 				'CHILD_CODE' => $sub_section->export($export_config, 1)

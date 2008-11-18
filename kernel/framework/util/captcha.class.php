@@ -39,14 +39,14 @@ class Captcha
 	function Captcha()
 	{
 		Captcha::update_instance(); //Mise à jour de l'instance.
-		if( @extension_loaded('gd') )
+		if (@extension_loaded('gd'))
 			$this->gd_loaded = true;
 	}
 	
 	//Chargement de la librairie GD?
 	function gd_loaded()
 	{
-		if( $this->gd_loaded )
+		if ($this->gd_loaded)
 			return true;
 		return false;
 	}
@@ -107,7 +107,7 @@ class Captcha
 		//Suppression pour éviter une réutilisation du code frauduleuse.
 		$Sql->query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		
-		if( !empty($code) && $code == $get_code )
+		if (!empty($code) && $code == $get_code)
 			return true;
 		else 
 			return false;
@@ -118,7 +118,7 @@ class Captcha
 	{
 		global $LANG;
 		
-		return $this->gd_loaded() ? 'if(document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
+		return $this->gd_loaded() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
 			alert("' . $LANG['require_verif_code'] . '");
 			return false;
 		}' : '';
@@ -129,10 +129,10 @@ class Captcha
 	{
 		global $CONFIG;
 		
-		if( !is_object($Template) || strtolower(get_class($Template)) != 'template' )
+		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/captcha.tpl');
 		
-		if( $this->gd_loaded() )
+		if ($this->gd_loaded())
 		{		
 			$Template->assign_vars(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
@@ -179,14 +179,14 @@ class Captcha
 			default:
 				$code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2)));
 		}
-		if( $this->difficulty > 0 )
+		if ($this->difficulty > 0)
 		{	
 			$code = substr($code, 0, 6);
 			$code = str_replace(array('l', '1', 'o', '0'), array('', '', '', ''), $code);
 		}
 		
 		##Création de l'image##
-		if( !function_exists('imagecreatetruecolor') )
+		if (!function_exists('imagecreatetruecolor'))
 			$img = @imagecreate($this->width, $this->height);
 		else
 			$img = @imagecreatetruecolor($this->width, $this->height);
@@ -195,19 +195,19 @@ class Captcha
 		$bg_bis_index_color = array_rand($array_color);	
 		list($r, $g, $b) = $this->__image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
 		$bg_img = @imagecolorallocate($img, $r, $g, $b);
-		if( $this->difficulty < 3 )
+		if ($this->difficulty < 3)
 			unset($array_color[$bg_bis_index_color]);
 
 		$bg_index_color = array_rand($array_color);	
 		list($r, $g, $b) = $array_color[$bg_index_color];
 		$bg = @imagecolorallocate($img, $r, $g, $b);
-		if( $this->difficulty < 3)
+		if ($this->difficulty < 3)
 			unset($array_color[$bg_index_color]);
 
 		$bg_bis_index_color = array_rand($array_color);	
 		list($r, $g, $b) = $array_color[$bg_bis_index_color];
 		$bg_bis = @imagecolorallocate($img, $r, $g, $b);
-		if( $this->difficulty < 3)
+		if ($this->difficulty < 3)
 			unset($array_color[$bg_bis_index_color]);
 
 		$black = @imagecolorallocate($img, 0, 0, 0);
@@ -218,13 +218,13 @@ class Captcha
 		//Brouillage de l'image.
 		$style = array($bg, $bg, $bg, $bg, $bg_bis, $bg_bis, $bg_bis, $bg_bis, $bg_bis, $bg_bis);
 		@imagesetstyle($img, $style);
-		if( $this->difficulty > 0 )
+		if ($this->difficulty > 0)
 		{
-			if( $rand )
-				for($i = 0; $i <= $this->height; $i = ($i + 2))
+			if ($rand)
+				for ($i = 0; $i <= $this->height; $i = ($i + 2))
 					@imageline($img, 0, $i, $this->width, $i, IMG_COLOR_STYLED);
 			else
-				for($i = $this->height; $i >= 0; $i = ($i - 2))
+				for ($i = $this->height; $i >= 0; $i = ($i - 2))
 					@imageline($img, 0, $i, $this->width, $i, IMG_COLOR_STYLED);
 		}
 		
@@ -238,7 +238,7 @@ class Captcha
 		$text_y = ($this->height/2) + ($text_height/2);
 
 		preg_match_all('/.{1}/s', $code, $matches);
-		foreach($matches[0] as $key => $letter)
+		foreach ($matches[0] as $key => $letter)
 		{	
 			//Allocation des couleurs.
 			$index_color = array_rand($array_color);
@@ -249,14 +249,14 @@ class Captcha
 			$font_size = rand($global_font_size - 4, $global_font_size);
 			$angle = rand(-15, 15);
 			$move_y = $text_y + rand(-15, 4);
-			if( $this->difficulty < 2 )
+			if ($this->difficulty < 2)
 			{	
 				$angle = 0;
 				$move_y = $text_y - 2;
 			}
 			
 			//Ajout de l'ombre.
-			if( $this->difficulty == 4 )
+			if ($this->difficulty == 4)
 			{
 				list($r, $g, $b) = $this->__image_color_allocate_dark($array_color[$index_color], 90, 0.50);
 				$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
@@ -300,7 +300,7 @@ class Captcha
 		
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
 		$check_user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( $check_user_id == 1 )
+		if ($check_user_id == 1)
 			$Sql->query_inject("UPDATE ".PREFIX."verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
 			$Sql->query_inject("INSERT INTO ".PREFIX."verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);

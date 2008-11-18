@@ -32,33 +32,33 @@ require_once('../admin/admin_header.php');
 require_once('../kernel/framework/core/updates.class.php');
 
 $update_type = retrieve(GET, 'type', '');
-if( $update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme' )
+if ($update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme')
     $update_type = '';
 
 $tpl = new Template('admin/admin_updates.tpl');
 $updates_availables = 0;
 
-if( phpversion() > PHP_MIN_VERSION_UPDATES )
+if (phpversion() > PHP_MIN_VERSION_UPDATES)
 {
     // Retrieves all the update alerts from the database
     import('events/administrator_alert_service');
     import('core/application');
     $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
     $updates = array();
-    foreach( $update_alerts as $update_alert )
+    foreach ($update_alerts as $update_alert)
     {
         // Builds the asked updates (kernel updates, module updates, theme updates or all of them)
         $update = unserialize($update_alert->get_properties());
-        if( $update_type == '' || $update->get_type() == $update_type )
+        if ($update_type == '' || $update->get_type() == $update_type)
         {
-            if( $update->check_compatibility() )
+            if ($update->check_compatibility())
                 $updates[] = $update;
             else
                 AdministratorAlertService::delete_alert($update_alert);
         }
     }
 
-    foreach( $updates as $update )
+    foreach ($updates as $update)
     {
         switch( $update->get_priority() )
         {
@@ -94,7 +94,7 @@ if( phpversion() > PHP_MIN_VERSION_UPDATES )
         ));
     }  
 
-    if( $updates_availables = (count($updates) > 0) )
+    if ($updates_availables = (count($updates) > 0))
     {
         $tpl->assign_vars(array(
             'L_UPDATES_ARE_AVAILABLE' => $LANG['updates_are_available'],

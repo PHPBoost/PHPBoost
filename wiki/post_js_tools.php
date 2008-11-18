@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //On charge le template associé
 $Template->set_filenames(array('post_js_tools'=> 'wiki/wiki_js_tools.tpl'));

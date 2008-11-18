@@ -78,11 +78,11 @@ $Template->assign_vars(array(
 ));
 
 $auth_cats = '';
-if( is_array($CAT_FORUM) )
+if (is_array($CAT_FORUM))
 {
-	foreach($CAT_FORUM as $idcat => $key)
+	foreach ($CAT_FORUM as $idcat => $key)
 	{
-		if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -95,7 +95,7 @@ LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.last_timestamp DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->fetch_assoc($result))
+while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('last_msg', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
@@ -111,7 +111,7 @@ LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_views DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->fetch_assoc($result))
+while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('popular', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
@@ -127,7 +127,7 @@ LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
 WHERE c.level != 0 AND c.aprob = 1 " . $auth_cats . "
 ORDER BY t.nbr_msg DESC
 " . $Sql->limit(0, 10), __LINE__, __FILE__);
-while($row = $Sql->fetch_assoc($result))
+while ($row = $Sql->fetch_assoc($result))
 {
 	$Template->assign_block_vars('answers', array(
 		'U_TOPIC_ID' => url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
@@ -143,7 +143,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

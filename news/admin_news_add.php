@@ -31,7 +31,7 @@ load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$idcat = retrieve(POST, 'idcat', 0);
 	$title = retrieve(POST, 'title', '');
@@ -54,27 +54,27 @@ if( !empty($_POST['valid']) )
 	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNSECURE);
 	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNSECURE);
 	
-	if( !empty($idcat) && !empty($title) && !empty($contents) )
+	if (!empty($idcat) && !empty($title) && !empty($contents))
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']) + ($end_hour * 3600) + ($end_min * 60);
 		
 		$visible = 1;		
-		if( $get_visible == 2 )
+		if ($get_visible == 2)
 		{		
-			if( $start_timestamp < time() || $start_timestamp < 0 ) //Date inférieur à celle courante => inutile.
+			if ($start_timestamp < time() || $start_timestamp < 0) //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp < time() || ($end_timestamp < $start_timestamp && $start_timestamp != 0) ) //Date inférieur à celle courante => inutile.
+			if ($end_timestamp < time() || ($end_timestamp < $start_timestamp && $start_timestamp != 0)) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
-		elseif( $get_visible == 1 )
+		elseif ($get_visible == 1)
 			list($start_timestamp, $end_timestamp) = array(0, 0);
 		else
 			list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			$timestamp += ($current_hour * 3600) + ($current_min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
@@ -96,7 +96,7 @@ if( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/news/admin_news_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_POST['previs']) )
+elseif (!empty($_POST['previs']))
 {
 	$Template->set_filenames(array(
 		'admin_news_add'=> 'news/admin_news_add.tpl'
@@ -138,8 +138,8 @@ elseif( !empty($_POST['previs']) )
 
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->query_while("SELECT id, name FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	$result = $Sql->query_while ("SELECT id, name FROM ".PREFIX."news_cat", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('select', array(
@@ -149,7 +149,7 @@ elseif( !empty($_POST['previs']) )
 	}	
 	$Sql->query_close($result);
 	
-	if( $i == 0 ) //Aucune catégorie => alerte.	 
+	if ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->assign_vars(array(
@@ -267,7 +267,7 @@ else
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('select', array(
 			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
@@ -278,9 +278,9 @@ else
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
+	elseif ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 	
 	$Template->pparse('admin_news_add'); 

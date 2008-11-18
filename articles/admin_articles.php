@@ -37,13 +37,13 @@ $idcat = retrieve(GET, 'idcat', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-if( $del && !empty($id) ) //Suppresion de l'article.
+if ($del && !empty($id)) //Suppresion de l'article.
 {
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
 	
 	$Cache->load('articles');
-	if( empty($idcat) )//Racine.
+	if (empty($idcat))//Racine.
 	{
 		$CAT_ARTICLES[0]['id_left'] = 0;
 		$CAT_ARTICLES[0]['id_right'] = 0;
@@ -62,7 +62,7 @@ if( $del && !empty($id) ) //Suppresion de l'article.
     
 	redirect(HOST . SCRIPT);
 }	
-elseif( !empty($id) )
+elseif (!empty($id))
 {
 	$Template->set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
@@ -107,7 +107,7 @@ elseif( !empty($id) )
 	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $articles['idcat']) ? 'selected="selected"' : '';
@@ -119,18 +119,18 @@ elseif( !empty($id) )
 	$img_direct_path = (strpos($articles['icon'], '/') !== false);
 	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = readdir($dh)) )
+		while (! is_bool($lang = readdir($dh)))
 		{
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
 		}
 		closedir($dh); //On ferme le dossier
 
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 		{	
 			$selected = $img_path == $articles['icon'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
@@ -169,12 +169,12 @@ elseif( !empty($id) )
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$Template->pparse('admin_articles_management'); 
 }	
-elseif( !empty($_POST['previs']) && !empty($id_post) )
+elseif (!empty($_POST['previs']) && !empty($id_post))
 {
 	$Template->set_filenames(array(
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
@@ -198,7 +198,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
-	if( !empty($icon_path) )
+	if (!empty($icon_path))
 		$icon = $icon_path;	
 	
     $visible = 0;
@@ -208,12 +208,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
             $visible = 1;
             break;
         case 2:
-    		if( $start_timestamp > time() )
+    		if ($start_timestamp > time())
     			$visible = 2;
     		else
     			$start = '';
     	
-    		if( $end_timestamp > time() && $end_timestamp > $start_timestamp )
+    		if ($end_timestamp > time() && $end_timestamp > $start_timestamp)
     			$visible = 2;
     		else
     			$end = '';
@@ -228,7 +228,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -241,18 +241,18 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$img_direct_path = (strpos($icon, '/') !== false);
 	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = readdir($dh)) )
+		while (! is_bool($lang = readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
 		}
 		closedir($dh); //On ferme le dossier
 
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 		{
 			$selected = $img_path == $icon ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
@@ -333,7 +333,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	
 	$Template->pparse('admin_articles_management'); 
 }
-elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
+elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
@@ -347,31 +347,31 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
-	if( !empty($icon_path) )
+	if (!empty($icon_path))
 		$icon = $icon_path;
 			
 	//On met à jour la config de base du sondage
-	if( !empty($title) && !empty($contents) )
+	if (!empty($title) && !empty($contents))
 	{
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 		
 		$visible = 1;		
-		if( $get_visible == 2 )
+		if ($get_visible == 2)
 		{	
-			if( $start_timestamp > time() )
+			if ($start_timestamp > time())
 				$visible = 2;
-			elseif( $start_timestamp == 0 )
+			elseif ($start_timestamp == 0)
 				$visible = 1;
 			else //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0 )
+			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif( $start_timestamp != 0 ) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
-		elseif( $get_visible == 1 )
+		elseif ($get_visible == 1)
 		{	
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -384,7 +384,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		}
 		
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			//Ajout des heures et minutes
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else
@@ -393,9 +393,9 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 		$cat_clause = ' ';
 		//Changement de catégorie parente?
 		$articles_info = $Sql->query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
-		if( $articles_info['idcat'] != $idcat && !empty($articles_info['id']) )
+		if ($articles_info['idcat'] != $idcat && !empty($articles_info['id']))
 		{
-			if( $articles_info['visible'] == 1 )
+			if ($articles_info['visible'] == 1)
 				$is_visible = 'nbr_articles_visible';
 			else
 				$is_visible = 'nbr_articles_unvisible';
@@ -458,11 +458,11 @@ else
 	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id
 	ORDER BY a.timestamp DESC " .
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $row['visible'] == 2 )
+		if ($row['visible'] == 2)
 			$aprob = $LANG['waiting'];
-		elseif( $row['visible'] == 1 )
+		elseif ($row['visible'] == 1)
 			$aprob = $LANG['yes'];
 		else
 			$aprob = $LANG['no'];
@@ -471,11 +471,11 @@ else
 		$title = strlen($row['title']) > 45 ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
 
 		$visible = '';
-		if( $row['start'] > 0 )
+		if ($row['start'] > 0)
 			$visible .= gmdate_format('date_format_short', $row['start']);
-		if( $row['end'] > 0 && $row['start'] > 0 )
+		if ($row['end'] > 0 && $row['start'] > 0)
 			$visible .= ' ' . strtolower($LANG['until']) . ' ' . gmdate_format('date_format_short', $row['end']);
-		elseif( $row['end'] > 0 )
+		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
 		$Template->assign_block_vars('list.articles', array(

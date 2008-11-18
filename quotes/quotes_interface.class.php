@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
@@ -56,7 +56,7 @@ class QuotesInterface extends ModuleInterface
 		$CONFIG_QUOTES = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'quotes'", __LINE__, __FILE__));
 		$CONFIG_QUOTES = is_array($CONFIG_QUOTES) ? $CONFIG_QUOTES : array();
 		
-		if(isset($CONFIG_QUOTES['quotes_forbidden_tags']))
+		if (isset($CONFIG_QUOTES['quotes_forbidden_tags']))
 			$CONFIG_QUOTES['quotes_forbidden_tags'] = unserialize($CONFIG_QUOTES['quotes_forbidden_tags']);
 			
 		$location = $Sql->query("SELECT location FROM ".PREFIX."menus WHERE name ='quotes'", __LINE__, __FILE__);

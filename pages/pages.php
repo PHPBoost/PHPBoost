@@ -35,11 +35,11 @@ include_once('pages_begin.php');
 include_once('pages_functions.php');
 
 //Requêtes préliminaires utiles par la suite
-if( !empty($encoded_title) ) //Si on connait son titre
+if (!empty($encoded_title)) //Si on connait son titre
 {
 	$page_infos = $Sql->query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
-	if( $page_infos['redirect'] > 0 )
+	if ($page_infos['redirect'] > 0)
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
@@ -51,23 +51,23 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	define('TITLE', $page_infos['title']);
 	
 	//Définition du fil d'Ariane de la page
-	if( $page_infos['is_cat'] == 0 )
+	if ($page_infos['is_cat'] == 0)
 		$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $encoded_title, $encoded_title));
 	
 	$id = $page_infos['id_cat'];
-	while( $id > 0 )
+	while ($id > 0)
 	{
 		//Si on a les droits de lecture sur la catégorie, on l'affiche	
-		if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
+		if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
 			$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}	
-	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	//On renverse ce fil pour le mettre dans le bon ordre d'arborescence
 	$Bread_crumb->reverse();
 }
-elseif( $id_com > 0 )
+elseif ($id_com > 0)
 {
 	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits, count_hits, activ_com, nbr_com, contents
 		FROM ".PREFIX."pages
@@ -80,12 +80,12 @@ elseif( $id_com > 0 )
 	$Bread_crumb->add($LANG['pages_com'], url('pages.php?id=' . $id_com . '&amp;com=0'));
 	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
-	while( $id > 0 )
+	while ($id > 0)
 	{
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
@@ -93,15 +93,15 @@ else
 {
 	define('TITLE', $LANG['pages']);
 	$auth_index = $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE);
-	if( $auth_index )
+	if ($auth_index)
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
-	elseif( !$auth_index && empty($error) )
+	elseif (!$auth_index && empty($error))
 		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 }
 require_once('../kernel/header.php');
 
 
-if( !empty($encoded_title) && $num_rows == 1 )
+if (!empty($encoded_title) && $num_rows == 1)
 {
 	$Template->set_filenames(array('page'=> 'pages/page.tpl'));
 	$pages_data_path = $Template->get_module_data_path('pages');
@@ -111,12 +111,12 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	$array_auth = unserialize($page_infos['auth']);
 
 	//Vérification de l'autorisation de voir la page
-	if( ($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		redirect(HOST . DIR . url('/pages/pages.php?error=e_auth'));
 	
 	//Génération des liens de la page
 	$links = array();
-	if( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 	{
 		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
 		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
@@ -125,18 +125,18 @@ if( !empty($encoded_title) && $num_rows == 1 )
 		$links[$LANG['pages_create']] = array(url('post.php'), $pages_data_path . '/images/create_page.png');
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
 	}
-	if( $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE) )
+	if ($User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE))
 		$links[$LANG['pages_explorer']] = array(url('explorer.php'), $pages_data_path . '/images/explorer.png');
 		
 	$nbr_values = count($links);
 	$i = 1;
-	foreach( $links as $key => $value )
+	foreach ($links as $key => $value)
 	{
 		$Template->assign_block_vars('link', array(
 			'U_LINK' => $value[0],
 			'L_LINK' => $key
 		));
-		if( $i < $nbr_values && !empty($key) )
+		if ($i < $nbr_values && !empty($key))
 			$Template->assign_block_vars('link.separation', array());
 			
 		$Template->assign_block_vars('links_list', array(
@@ -149,7 +149,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	}
 	
 	//Redirections
-	if( !empty($redirect_title) )
+	if (!empty($redirect_title))
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
@@ -158,7 +158,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	}
 	
 	//Affichage des commentaires si il y en a la possibilité
-	if( $page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_COM))) )
+	if ($page_infos['activ_com'] == 1 && (($special_auth && $User->check_auth($array_auth, READ_COM)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_COM))))
 	{	
 		$Template->assign_vars(array(
 			'C_ACTIV_COM' => true,
@@ -168,7 +168,7 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	}
 	
 	//On compte le nombre de vus
-	if( $page_infos['count_hits'] == 1 )
+	if ($page_infos['count_hits'] == 1)
 		$Sql->query_inject("UPDATE ".PREFIX."pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
@@ -182,20 +182,20 @@ if( !empty($encoded_title) && $num_rows == 1 )
 	$Template->pparse('page');
 }
 //Page non trouvée
-elseif( (!empty($encoded_title) || $id_com > 0) && $num_rows == 0 )
+elseif ((!empty($encoded_title) || $id_com > 0) && $num_rows == 0)
 	redirect(HOST . DIR . url('/pages/pages.php?error=e_page_not_found'));
 //Commentaires
-elseif( $id_com > 0 )
+elseif ($id_com > 0)
 {
 	//Commentaires activés pour cette page ?
-	if( $page_infos['activ_com'] == 0 )
+	if ($page_infos['activ_com'] == 0)
 		redirect(HOST . DIR . '/pages/pages.php?error=e_unactiv_com');
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
-	if( ($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)) )
+	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth_com');
 	
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
@@ -207,7 +207,7 @@ elseif( $id_com > 0 )
 	$Template->pparse('com');
 }
 //gestionnaire d'erreurs
-elseif( !empty($error) )
+elseif (!empty($error))
 {
 	$Template->set_filenames(array('error'=> 'pages/error.tpl'));
 	
@@ -261,10 +261,10 @@ else
 		$LANG['pages_redirections'] => url('action.php'),
 		$LANG['pages_explorer'] => url('explorer.php'),
 	);
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 		$tools[$LANG['pages_config']] = url('admin_pages.php');
 	
-	foreach($tools as $tool => $url )
+	foreach ($tools as $tool => $url)
 		$Template->assign_block_vars('tools', array(
 			'L_TOOL' => $tool,
 			'U_TOOL' => $url
@@ -272,14 +272,14 @@ else
 	
 	//Liste des dossiers de la racine
 	$root = '';
-	foreach( $_PAGES_CATS as $key => $value )
+	foreach ($_PAGES_CATS as $key => $value)
 	{
-		if( $value['id_parent'] == 0 )
+		if ($value['id_parent'] == 0)
 		{
 			//Autorisation particulière ?
 			$special_auth = !empty($value['auth']);
 			//Vérification de l'autorisation d'éditer la page
-			if( ($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 			{
 				$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 			}
@@ -290,13 +290,13 @@ else
 		FROM ".PREFIX."pages
 		WHERE id_cat = 0 AND is_cat = 0
 		ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
 		$array_auth = unserialize($row['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
 			$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
@@ -321,10 +321,10 @@ else
 	LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 	WHERE c.id_parent = 0
 	ORDER BY p.title ASC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
-		if( $sub_cats_number > 0 )
+		if ($sub_cats_number > 0)
 		{	
 			$Template->assign_block_vars('list', array(
 				'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 

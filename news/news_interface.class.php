@@ -63,11 +63,11 @@ class NewsInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, start, end
 		FROM ".PREFIX."news	
 		WHERE visible != 0", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{ 
-			if( $row['start'] <= time() && $row['start'] != 0 )
+			if ($row['start'] <= time() && $row['start'] != 0)
 				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			if( $row['end'] <= time() && $row['end'] != 0 )
+			if ($row['end'] <= time() && $row['end'] != 0)
 				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}		

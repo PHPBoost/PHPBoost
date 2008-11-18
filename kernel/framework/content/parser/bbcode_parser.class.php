@@ -53,11 +53,11 @@ class BBCodeParser extends ContentParser
 		global $User;
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
-		if( !in_array('code', $this->forbidden_tags) )
+		if (!in_array('code', $this->forbidden_tags))
 			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,[01]){0,2}');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if( $User->check_auth($this->html_auth, 1) )
+		if ($User->check_auth($this->html_auth, 1))
 			$this->_pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
@@ -76,28 +76,28 @@ class BBCodeParser extends ContentParser
 		$this->_parse_simple_tags();
 		
 		//Tableaux
-		if( strpos($this->content, '[table') !== false )
+		if (strpos($this->content, '[table') !== false)
 			$this->_parse_table();
 		
 		//Listes
-		if( strpos($this->content, '[list') !== false )
+		if (strpos($this->content, '[list') !== false)
 			$this->_parse_list();
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
+		if (PATH_TO_ROOT != '..')
 		{
 			$this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
 		}
 		
 		//On remet le code HTML mis de côté
-		if( !empty($this->array_tags['html']) )
+		if (!empty($this->array_tags['html']))
 		{
 			$this->array_tags['html'] = array_map(create_function('$string', 'return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));'), $this->array_tags['html']);
 			$this->_reimplant_tag('html');
 		}
 		
 		//On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
-		if( !empty($this->array_tags['code']) )
+		if (!empty($this->array_tags['code']))
 		{
 			$this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
 			$this->_reimplant_tag('code');
@@ -143,10 +143,10 @@ class BBCodeParser extends ContentParser
 	function _parse_smilies()
 	{
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if( !empty($_array_smiley_code) )
+		if (!empty($_array_smiley_code))
 		{
 			//Création du tableau de remplacement.
-			foreach($_array_smiley_code as $code => $img)
+			foreach ($_array_smiley_code as $code => $img)
 			{
 				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
 				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
@@ -259,10 +259,10 @@ class BBCodeParser extends ContentParser
 		$parse_line = true;
 		
 		//Suppression des remplacements des balises interdites.
-		if( !empty($this->forbidden_tags) )
+		if (!empty($this->forbidden_tags))
 		{
 			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
-			if( in_array('url', $this->forbidden_tags) )
+			if (in_array('url', $this->forbidden_tags))
 			{
 				$this->forbidden_tags[] = 'url2';
 				$this->forbidden_tags[] = 'url3';
@@ -270,19 +270,19 @@ class BBCodeParser extends ContentParser
 				$this->forbidden_tags[] = 'url5';
 				$this->forbidden_tags[] = 'url6';
 			}
-			if( in_array('mail', $this->forbidden_tags) )
+			if (in_array('mail', $this->forbidden_tags))
 				$this->forbidden_tags[] = 'mail2';
 			
 			$other_tags = array('table', 'quote', 'hide', 'indent', 'list'); 
-			foreach($this->forbidden_tags as $key => $tag)
+			foreach ($this->forbidden_tags as $key => $tag)
 			{
 				//Balise interdite : on la supprime
-				if( in_array($tag, $other_tags) )
+				if (in_array($tag, $other_tags))
 				{
 					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
 					$array_preg_replace[$tag] = "$1";
 				}
-				elseif( $tag == 'line' )
+				elseif ($tag == 'line')
 				{
 					$parse_line = false;
 				}
@@ -298,7 +298,7 @@ class BBCodeParser extends ContentParser
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//Line tag
-		if( $parse_line )
+		if ($parse_line)
 			$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
 			
 		//Titres
@@ -333,19 +333,19 @@ class BBCodeParser extends ContentParser
 	 */
 	function _parse_imbricated_table(&$content)
 	{
-		if( is_array($content) )
+		if (is_array($content))
 		{
 			$string_content = '';
 			$nbr_occur = count($content);
-			for($i = 0; $i < $nbr_occur; $i++)
+			for ($i = 0; $i < $nbr_occur; $i++)
 			{
 				//Si c'est le contenu d'un tableau on le parse
-				if( $i % 3 === 2 )
+				if ($i % 3 === 2)
 				{
 					//On parse d'abord les sous tableaux éventuels
 					$this->_parse_imbricated_table($content[$i]);
 					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
-					if( preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]) )
+					if (preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]))
 					{						
 						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
 						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', array(&$this, 'clear_html_br'), $content[$i]);
@@ -375,7 +375,7 @@ class BBCodeParser extends ContentParser
 					}
 				}
 				//On concatène la chaîne finale si ce n'est pas le style du tableau
-				if( $i % 3 !== 1 )
+				if ($i % 3 !== 1)
 					$string_content .= $content[$i];
 			}
 			$content = $string_content;
@@ -401,25 +401,25 @@ class BBCodeParser extends ContentParser
 	 */
 	function _parse_imbricated_list(&$content)
 	{
-		if( is_array($content) )
+		if (is_array($content))
 		{
 			$string_content = '';
 			$nbr_occur = count($content);
-			for($i = 0; $i < $nbr_occur; $i++)
+			for ($i = 0; $i < $nbr_occur; $i++)
 			{
 				//Si c'est le contenu d'une liste on le parse
-				if( $i % 3 === 2 )
+				if ($i % 3 === 2)
 				{
 					//On parse d'abord les sous listes éventuelles
-					if( is_array($content[$i]) )
+					if (is_array($content[$i]))
 						$this->_parse_imbricated_list($content[$i]);
 					
-					if( strpos($content[$i], '[*]') !== false ) //Si il contient au moins deux éléments
+					if (strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
 					{				
 						//Nettoyage des listes (retours à la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', array(&$this, 'clear_html_br'), $content[$i]);
-						if( substr($content[$i - 1], 0, 8) == '=ordered' )
+						if (substr($content[$i - 1], 0, 8) == '=ordered')
 						{
 							$list_tag = 'ol';
 							$content[$i - 1] = substr($content[$i - 1], 8);
@@ -433,7 +433,7 @@ class BBCodeParser extends ContentParser
 					}
 				}
 				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
-				if( $i % 3 !== 1 )
+				if ($i % 3 !== 1)
 					$string_content .= $content[$i];
 			}
 			$content = $string_content;
@@ -447,7 +447,7 @@ class BBCodeParser extends ContentParser
 	{
 		//On nettoie les guillemets échappés
 		//on travaille dessus
-		if( preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->content) )
+		if (preg_match('`\[list(=(?:un)?ordered)?( style="[^"]+")?\](\s|<br />)*\[\*\].*\[/list\]`s', $this->content))
 		{
 			$this->_split_imbricated_tag($this->content, 'list', '(?:=ordered)?(?: style="[^"]+")?');
 			$this->_parse_imbricated_list($this->content);
@@ -462,7 +462,7 @@ class BBCodeParser extends ContentParser
 	function _parse_title($matches)
 	{
 		$level = (int)$matches[1];
-		if( $level <= 2 )
+		if ($level <= 2)
 			return '<h3 class="title' . $level . '">' . $matches[2] . '</h3>';
 		else
 			return '<br /><h4 class="stitle' . ($level - 2) . '">' . $matches[2] . '</h4><br />';
@@ -479,7 +479,7 @@ class BBCodeParser extends ContentParser
 		
 		//Langue
 		$lang = $LANG['wikipedia_subdomain'];
-		if( !empty($matches[2]))
+		if (!empty($matches[2]))
 			$lang = $matches[2];
 		
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];

@@ -46,7 +46,7 @@ import('util/images_stats');
 $Stats = new Stats();
 
 $array_stats = array('other' => 0);
-if( $get_visit_month )
+if ($get_visit_month)
 {
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	$month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
@@ -55,7 +55,7 @@ if( $get_visit_month )
 	$result = $Sql->query_while("SELECT nbr, stats_day 
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_day']] = $row['nbr'];
 	}
@@ -65,41 +65,41 @@ if( $get_visit_month )
 	$bissextile = (($year % 4) == 0) ? 29 : 28;
 	//Complément des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	for($i = 1; $i <= $array_month[$month - 1]; $i++)
+	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 	{
-		if( !isset($array_stats[$i]) )
+		if (!isset($array_stats[$i]))
 			$array_stats[$i] = 0;
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
-elseif( $get_visit_year )
+elseif ($get_visit_year)
 {
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	
 	$array_stats = array();
-	$result = $Sql->query_while("SELECT SUM(nbr) as total, stats_month
+	$result = $Sql->query_while ("SELECT SUM(nbr) as total, stats_month
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_month']] = $row['total'];
 	}
 	$Sql->query_close($result);
 	
 	//Complément des mois manquant
-	for($i = 1; $i <= 12; $i++)
+	for ($i = 1; $i <= 12; $i++)
 	{
-		if( !isset($array_stats[$i]) )
+		if (!isset($array_stats[$i]))
 			$array_stats[$i] = 0;
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array($LANG['month'], $LANG['guest_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
-elseif( $get_pages_day )
+elseif ($get_pages_day)
 {
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	$month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
@@ -107,21 +107,21 @@ elseif( $get_pages_day )
 	
 	$array_stats = array();
 	$pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
-	if( is_array($pages_details) )
-		foreach($pages_details as $hour => $pages)
+	if (is_array($pages_details))
+		foreach ($pages_details as $hour => $pages)
 			$array_stats[$hour] = $pages;
 	
 	//Complément des heures manquantes.
-	for($i = 0; $i <= 23; $i++)
+	for ($i = 0; $i <= 23; $i++)
 	{
-		if( !isset($array_stats[$i]) )
+		if (!isset($array_stats[$i]))
 			$array_stats[$i] = 0;
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array($LANG['hours'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
-elseif( $get_pages_month )
+elseif ($get_pages_month)
 {
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	$month = !empty($_GET['month']) ? numeric($_GET['month']) : '1';
@@ -130,7 +130,7 @@ elseif( $get_pages_month )
 	$result = $Sql->query_while("SELECT pages, stats_day 
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_day']] = $row['pages'];
 	}
@@ -140,41 +140,41 @@ elseif( $get_pages_month )
 	$bissextile = (($year % 4) == 0) ? 29 : 28;
 	//Complément des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	for($i = 1; $i <= $array_month[$month - 1]; $i++)
+	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
 	{
-		if( !isset($array_stats[$i]) )
+		if (!isset($array_stats[$i]))
 			$array_stats[$i] = 0;
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array($LANG['days'], $LANG['page_s']), NO_DRAW_LEGEND, NO_DRAW_VALUES, 8);
 }
-elseif( $get_pages_year )
+elseif ($get_pages_year)
 {
 	$year = !empty($_GET['year']) ? numeric($_GET['year']) : '';
 	
 	$array_stats = array();
-	$result = $Sql->query_while("SELECT SUM(pages) as total, stats_month
+	$result = $Sql->query_while ("SELECT SUM(pages) as total, stats_month
 	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array_stats[$row['stats_month']] = $row['total'];
 	}
 	$Sql->query_close($result);
 	
 	//Complément des mois manquant
-	for($i = 1; $i <= 12; $i++)
+	for ($i = 1; $i <= 12; $i++)
 	{
-		if( !isset($array_stats[$i]) )
+		if (!isset($array_stats[$i]))
 			$array_stats[$i] = 0;
 	}
 	$Stats->load_data($array_stats, 'histogram', 5);
 	//Tracé de l'histogramme.
 	$Stats->draw_histogram(440, 250, '', array($LANG['month'], $LANG['page_s']), NO_DRAW_LEGEND, DRAW_VALUES, 8);
 }
-elseif( $get_brw ) //Navigateurs.
+elseif ($get_brw) //Navigateurs.
 {
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/browsers.txt', 'r');
@@ -182,14 +182,14 @@ elseif( $get_brw ) //Navigateurs.
 	$array_browsers = !empty($browsers_serial) ? unserialize($browsers_serial) : array();
 	$array_stats = array();
 	$percent_other = 0;
-	foreach($array_browsers as $name => $value)
+	foreach ($array_browsers as $name => $value)
 	{
-		if( isset($stats_array_browsers[$name]) && $name != 'other' )
+		if (isset($stats_array_browsers[$name]) && $name != 'other')
 			$array_stats[$stats_array_browsers[$name][0]] = $value;
 		else
 			$percent_other += $value;
 	}
-	if( $percent_other > 0 )
+	if ($percent_other > 0)
 		$array_stats[$stats_array_browsers['other'][0]] = $percent_other;
 		
 	@fclose($file);
@@ -198,7 +198,7 @@ elseif( $get_brw ) //Navigateurs.
 	//Tracé de l'ellipse.
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/browsers.png');
 }
-elseif( $get_os )
+elseif ($get_os)
 {
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/os.txt', 'r');
@@ -206,14 +206,14 @@ elseif( $get_os )
 	$array_os = !empty($os_serial) ? unserialize($os_serial) : array();
 	$array_stats = array();
 	$percent_other = 0;
-	foreach($array_os as $name => $value)
+	foreach ($array_os as $name => $value)
 	{
-		if( isset($stats_array_os[$name]) && $name != 'other' )
+		if (isset($stats_array_os[$name]) && $name != 'other')
 			$array_stats[$stats_array_os[$name][0]] = $value;
 		else
 			$percent_other += $value;
 	}
-	if( $percent_other > 0 )
+	if ($percent_other > 0)
 		$array_stats[$stats_array_os['other'][0]] = $percent_other;
 	@fclose($file);
 	
@@ -221,7 +221,7 @@ elseif( $get_os )
 	//Tracé de l'ellipse.
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/os.png');
 }	
-elseif( $get_lang )
+elseif ($get_lang)
 {
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/lang.txt', 'r');
@@ -229,13 +229,13 @@ elseif( $get_lang )
 	$array_lang = !empty($lang_serial) ? unserialize($lang_serial) : array();
 	$array_stats = array();
 	$percent_other = 0;
-	foreach($array_lang as $name => $value)
+	foreach ($array_lang as $name => $value)
 	{
-		foreach($stats_array_lang as $regex => $array_country)
+		foreach ($stats_array_lang as $regex => $array_country)
 		{
-			if( preg_match('`' . $regex . '`', $name) )
+			if (preg_match('`' . $regex . '`', $name))
 			{	
-				if( $name != 'other' )
+				if ($name != 'other')
 					$array_stats[$array_country[0]] = $value;
 				else
 					$percent_other += $value;
@@ -243,7 +243,7 @@ elseif( $get_lang )
 			}
 		}
 	}
-	if( $percent_other > 0 )
+	if ($percent_other > 0)
 		$array_stats[$stats_array_lang['other'][0]] = $percent_other;
 
 	@fclose($file);
@@ -252,18 +252,18 @@ elseif( $get_lang )
 	//Tracé de l'ellipse.
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/lang.png');
 }
-elseif( $get_theme )
+elseif ($get_theme)
 {
 	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
 	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
-	$result = $Sql->query_while("SELECT at.theme, COUNT(m.user_theme) AS compt
+	$result = $Sql->query_while ("SELECT at.theme, COUNT(m.user_theme) AS compt
 	FROM ".PREFIX."themes at
 	LEFT JOIN ".PREFIX."member m ON m.user_theme = at.theme
 	GROUP BY at.theme", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name = isset($info_theme['name']) ? $info_theme['name'] : $row['theme'];
 		$array_stats[$name] = $row['compt'];
@@ -274,18 +274,18 @@ elseif( $get_theme )
 	//Tracé de l'ellipse.
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/theme.png');
 }
-elseif( $get_sex )
+elseif ($get_sex)
 {
 	include_once(PATH_TO_ROOT . '/kernel/begin.php');
 	define('TITLE', '');
 	include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 	
 	$array_stats = array();
-	$result = $Sql->query_while("SELECT count(user_sex) as compt, user_sex
+	$result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
 	FROM ".PREFIX."member
 	GROUP BY user_sex
 	ORDER BY compt", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch($row['user_sex'])
 		{
@@ -307,19 +307,19 @@ elseif( $get_sex )
 	//Tracé de l'ellipse.
 	$Stats->draw_ellipse(210, 100, PATH_TO_ROOT . '/cache/sex.png');
 }
-elseif( $get_bot )
+elseif ($get_bot)
 {
 	//On lit le fichier
 	$file = @fopen(PATH_TO_ROOT . '/cache/robots.txt', 'r');
 	$robot_serial = @fgets($file);	
 	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
 	$array_stats = array();
-	if( is_array($array_robot) )
+	if (is_array($array_robot))
 	{
-		foreach($array_robot as $key => $value)
+		foreach ($array_robot as $key => $value)
 		{
 			$array_info = explode('/', $value);			
-			if( isset($array_info[0]) && isset($array_info[1]) )
+			if (isset($array_info[0]) && isset($array_info[1]))
 				$array_stats[$array_info[0]] = $array_info[1];
 		}
 	}

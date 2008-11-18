@@ -41,7 +41,7 @@ class Uploads
 		global $Sql;
 		
 		$check_folder = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE name = '" . $name . "' AND id_parent = '" . $id_parent . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( !empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)) )
+		if (!empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return 0;
 			
 		$Sql->query_inject("INSERT INTO ".PREFIX."upload_cat (id_parent, user_id, name) VALUES ('" . $id_parent . "', '" . $user_id . "', '" . $name . "')", __LINE__, __FILE__);
@@ -59,11 +59,11 @@ class Uploads
 		$result = $Sql->query_while("SELECT path
 		FROM ".PREFIX."upload 
 		WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
-		if( $empty_folder && $i == 0 ) //Non suppression du dossier racine.
+		if ($empty_folder && $i == 0) //Non suppression du dossier racine.
 			$i++;
 		else
 			$Sql->query_inject("DELETE FROM ".PREFIX."upload_cat WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
@@ -72,9 +72,9 @@ class Uploads
 		$result = $Sql->query_while("SELECT id 
 		FROM ".PREFIX."upload_cat 
 		WHERE id_parent = '" . $id_folder . "'", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( !empty($row['id']) )
+			if (!empty($row['id']))
 				$this->del_folder($row['id'], false);
 		}
 	}
@@ -84,7 +84,7 @@ class Uploads
 	{	
 		global $Sql;
 		
-		if( $admin ) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			$name = $Sql->query("SELECT path FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			$Sql->query_inject("DELETE FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
@@ -95,7 +95,7 @@ class Uploads
 		{
 			$check_id_auth = $Sql->query("SELECT user_id FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			//Suppression d'un fichier.
-			if( $check_id_auth == $user_id )
+			if ($check_id_auth == $user_id)
 			{
 				$name = $Sql->query("SELECT path FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM ".PREFIX."upload WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
@@ -114,17 +114,17 @@ class Uploads
 		//Vérification de l'unicité du nom du dossier.
 		$info_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 		$check_folder = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE id_parent = '" . $info_folder['id_parent'] . "' AND name = '" . $name . "' AND id <> '" . $id_folder . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( $check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)) )
+		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '';
 		
-		if( $admin ) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
-			if( $user_id == $info_folder['user_id'] )
+			if ($user_id == $info_folder['user_id'])
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET name = '" . $name . "' WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
@@ -141,17 +141,17 @@ class Uploads
 		//Vérification de l'unicité du nom du fichier.
 		$info_cat = $Sql->query_array("upload", "idcat", "user_id", "WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 		$check_file = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."upload WHERE idcat = '" . $info_cat['idcat'] . "' AND name = '" . $name . "' AND id <> '" . $id_file . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( $check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)) )
+		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`', stripslashes($name)))
 			return '/';
 			
-		if( $admin ) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."upload SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 			return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
-			if( $user_id == $info_cat['user_id'] )
+			if ($user_id == $info_cat['user_id'])
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload SET name = '" . $name . "' WHERE id = '" . $id_file . "'", __LINE__, __FILE__);
 				return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
@@ -165,7 +165,7 @@ class Uploads
 	{		
 		global $Sql;
 		
-		if( $admin ) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
 			$change_user_id = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
@@ -174,7 +174,7 @@ class Uploads
 		}
 		else
 		{
-			if( $to == 0 ) //Déplacement dossier racine du membre.
+			if ($to == 0) //Déplacement dossier racine du membre.
 			{	
 				$get_mbr_folder = $Sql->query("SELECT id FROM ".PREFIX."upload_cat WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 				$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET id_parent = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -184,7 +184,7 @@ class Uploads
 			//Vérification de l'appartenance du dossier de destination.
 			$check_user_id_move = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			$check_user_id_to = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
-			if( $user_id == $check_user_id_move && $user_id == $check_user_id_to )
+			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET id_parent = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
@@ -199,7 +199,7 @@ class Uploads
 	{
 		global $Sql;
 		
-		if( $admin ) //Administration, on ne vérifie pas l'appartenance.
+		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
 			$change_user_id = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);	
@@ -208,7 +208,7 @@ class Uploads
 		}
 		else
 		{
-			if( $to == 0 ) //Déplacement dossier racine du membre.
+			if ($to == 0) //Déplacement dossier racine du membre.
 			{	
 				$get_mbr_folder = $Sql->query("SELECT id FROM ".PREFIX."upload_cat WHERE user_id = '" . $user_id . "' AND id_parent = 0", __LINE__, __FILE__);	
 				$Sql->query_inject("UPDATE ".PREFIX."upload SET idcat = '" . $get_mbr_folder . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -218,7 +218,7 @@ class Uploads
 			//Vérification de l'appartenance du dossier de destination.
 			$check_user_id_move = $Sql->query("SELECT user_id FROM ".PREFIX."upload WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			$check_user_id_to = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
-			if( $user_id == $check_user_id_move && $user_id == $check_user_id_to )
+			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload SET idcat = '" . $to . "' WHERE id = '" . $move . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 				return '';
@@ -232,9 +232,9 @@ class Uploads
 	function Find_subfolder($array_folders, $id_cat, &$array_child_folder)
 	{
 		//On parcourt les catégories et on déterminer les catégories filles
-		foreach($array_folders as $key => $value)
+		foreach ($array_folders as $key => $value)
 		{
-			if( $value == $id_cat )
+			if ($value == $id_cat)
 			{
 				$array_child_folder[] = $key;
 				//On rappelle la fonction pour la catégorie fille
@@ -249,7 +249,7 @@ class Uploads
 		global $LANG, $Sql;
 		
 		$parent_folder = $Sql->query_array("upload_cat", "id_parent", "name", "user_id", "WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
-		if( !empty($parent_folder['id_parent']) )
+		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= $this->get_admin_url($parent_folder['id_parent'], $pwd, $member_link);	
 			return $pwd . '/<a href="admin_files.php?f=' . $id_folder . '">' . $parent_folder['name'] . '</a>';
@@ -264,7 +264,7 @@ class Uploads
 		global $LANG, $Sql;
 		
 		$parent_folder = $Sql->query_array("upload_cat", "id_parent", "name", "WHERE id = '" . $id_folder . "' AND user_id <> -1", __LINE__, __FILE__);
-		if( !empty($parent_folder['id_parent']) )
+		if (!empty($parent_folder['id_parent']))
 		{	
 			$pwd .= $this->get_url($parent_folder['id_parent'], $pwd, $popup);	
 			return $pwd . '/<a href="' . url('upload.php?f=' . $id_folder . $popup) . '">' . $parent_folder['name'] . '</a>';

@@ -46,7 +46,7 @@ class FileSystemElement
 	// initialisation avant l'ouverture
 	function open()
 	{
-		if($this->is_open)
+		if ($this->is_open)
 			return;
 		
 		$this->is_open = true;
@@ -55,7 +55,7 @@ class FileSystemElement
 	// initialisation avant l'accès à un attribut de l'objet
 	function get()
 	{
-		if(!$this->is_open)
+		if (!$this->is_open)
 			$this->open();
 	}
 	
@@ -79,7 +79,7 @@ class FileSystemElement
 	//Change le CHMOD de l'élément du système de fichiers
 	function change_chmod($chmod)
 	{
-		if( !empty($this->path) )
+		if (!empty($this->path))
 			@chmod($this->path, $chmod);
 	}
 	

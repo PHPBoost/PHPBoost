@@ -31,7 +31,7 @@ load_module_lang('guestbook'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid'])  )
+if (!empty($_POST['valid']) )
 {
 	$config_guestbook = array();
 	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
@@ -58,10 +58,10 @@ else
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach(Content::get_available_tags() as $name)
+	foreach (Content::get_available_tags() as $name)
 	{
 		$selected = '';
-		if( in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']) )
+		if (in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
 			$selected = 'selected="selected"';
 		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $name . '</option>';
 	}
@@ -86,7 +86,7 @@ else
 		
 	$CONFIG_GUESTBOOK['guestbook_auth'] = isset($CONFIG_GUESTBOOK['guestbook_auth']) ? $CONFIG_GUESTBOOK['guestbook_auth'] : '-1';	
 	//Rang d'autorisation.
-	for($i = -1; $i <= 2; $i++)
+	for ($i = -1; $i <= 2; $i++)
 	{
 		switch($i) 
 		{	

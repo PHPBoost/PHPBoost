@@ -31,7 +31,7 @@ load_module_lang('contact'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid'])  )
+if (!empty($_POST['valid']) )
 {
 	$config_contact = array();
 	$config_contact['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
@@ -70,7 +70,7 @@ else
 		'L_RESET' => $LANG['reset']
 	));
 	
-	for($i = 0; $i < 5; $i++)
+	for ($i = 0; $i < 5; $i++)
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,

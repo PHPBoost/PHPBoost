@@ -53,7 +53,7 @@ JOIN ".PREFIX."member m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

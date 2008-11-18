@@ -63,7 +63,7 @@ $template->assign_vars(array(
 //Temp variables
 $temp_var = function_exists('apache_get_modules') ? apache_get_modules() : array();
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-if( !$server_path )
+if (!$server_path)
 	$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
@@ -73,7 +73,7 @@ $template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', 
 
 $directories_summerization = '';
 $directories_list = array('/', '/cache', '/cache/backup', 'cache/syndication/', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
-foreach($directories_list as $dir)
+foreach ($directories_list as $dir)
 {
 	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
 	$template->assign_block_vars('directories', array(

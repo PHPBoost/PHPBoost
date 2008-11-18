@@ -49,7 +49,7 @@ class WikiInterface extends ModuleInterface
 			FROM ".PREFIX."wiki_cats c
 			LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id 
 			ORDER BY a.title", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
 		}
@@ -158,7 +158,7 @@ class WikiInterface extends ModuleInterface
         load_module_lang('wiki');
         $Cache->load('wiki');
         
-        if( ($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS) )//Catégorie
+        if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//Catégorie
         {
             $desc = sprintf($LANG['wiki_rss_cat'], html_entity_decode($_WIKI_CATS[$idcat]['name']));
             $where = "AND a.id_cat = '" . $idcat . "'";

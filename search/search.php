@@ -83,13 +83,13 @@ $usedModules = array();
 $searchModule = $Modules->get_available_modules('get_search_request');
 
 // Génération des formulaires précomplétés et passage aux templates
-foreach( $searchModule as $module)
+foreach ($searchModule as $module)
 {
-	if( in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']))
+	if (in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']))
 	{
 	    // Ajout du paramètre search à tous les modules
 	    $modulesArgs[$module->get_id()]['search'] = $search;
-	    if( $module->has_functionnality('get_search_args') )
+	    if ($module->has_functionnality('get_search_args'))
 	    {
 	        // Récupération de la liste des paramètres
 	        $formModuleArgs = $module->functionnality('get_search_args');
@@ -97,7 +97,7 @@ foreach( $searchModule as $module)
 	        // Ils sont sécurisés à l'intérieur de chaque module.
 	        if ( $searchIn )
 	        {
-	            foreach( $formModuleArgs as $arg)
+	            foreach ($formModuleArgs as $arg)
 	            {
 	                if ( $arg == 'search' ) // 'search' non sécurisé
 	                    $modulesArgs[$module->get_id()]['search'] = $search;
@@ -142,7 +142,7 @@ foreach( $searchModule as $module)
 }
 
 
-//foreach( $search_config['authorized_modules'] as $moduleid )
+//foreach ($search_config['authorized_modules'] as $moduleid)
 //{
 //    $module = $modules->get_module($moduleid);
 //    if ( ($selectedmodules === array()) || in_array($moduleid, $selectedmodules) || ($searchin === $moduleid) )
@@ -163,7 +163,7 @@ foreach( $searchModule as $module)
 // parsage des formulaires de recherches
 $Template->pparse('search_forms');
 
-if( !empty($search) )
+if (!empty($search))
 {
     $results = array();
     $idsSearch = array();
@@ -177,7 +177,7 @@ if( !empty($search) )
     // Génération des résultats et passage aux templates
     $nbResults = get_search_results($search, $usedModules, $modulesArgs, $results, $idsSearch);
     
-    foreach( $usedModules as $module)
+    foreach ($usedModules as $module)
     {
         $Template->assign_block_vars('results', array(
             'MODULE_NAME' => $module->get_id(),

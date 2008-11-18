@@ -29,13 +29,13 @@ require_once('../kernel/begin.php');
 require_once('../download/download_begin.php');
 require_once('../kernel/header.php');
 
-if( $file_id > 0 ) //Contenu
+if ($file_id > 0) //Contenu
 {
 	$Template->set_filenames(array('download'=> 'download/download.tpl'));
 	
-	if( $download_info['size'] > 1 )
+	if ($download_info['size'] > 1)
 		$size_tpl = $download_info['size'] . ' ' . $LANG['unit_megabytes'];
-	elseif( $download_info['size'] > 0 )
+	elseif ($download_info['size'] > 0)
 		$size_tpl = ($download_info['size'] * 1024) . ' ' . $LANG['unit_kilobytes'];
 	else
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
@@ -85,7 +85,7 @@ if( $file_id > 0 ) //Contenu
 	));
 	
 	//Affichage commentaires.
-	if( isset($_GET['com']) )
+	if (isset($_GET['com']))
 	{
 		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('download', $file_id, url('download.php?id=' . $file_id . '&amp;com=%s', 'download-' . $file_id . '.php?com=%s'))
@@ -112,14 +112,14 @@ else
 	
 	//let's check if there are some subcategories
 	$num_subcats = 0;
-	foreach( $DOWNLOAD_CATS as $id => $value )
+	foreach ($DOWNLOAD_CATS as $id => $value)
 	{
-		if( $id != 0 && $value['id_parent'] == $category_id )
+		if ($id != 0 && $value['id_parent'] == $category_id)
 			$num_subcats ++;
 	}
 
 	//listing of subcategories
-	if( $num_subcats > 0 )
+	if ($num_subcats > 0)
 	{
 		$Template->assign_vars(array(
 			'C_SUB_CATS' => true
@@ -127,10 +127,10 @@ else
 		
 		$i = 1;
 		
-		foreach( $DOWNLOAD_CATS as $id => $value )
+		foreach ($DOWNLOAD_CATS as $id => $value)
 		{
 			//List of children categories
-			if( $id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)) )
+			if ($id != 0 && $value['visible'] && $value['id_parent'] == $category_id && (empty($value['auth']) || $User->check_auth($value['auth'], DOWNLOAD_READ_CAT_AUTH_BIT)))
 			{
 				if ( $i % $CONFIG_DOWNLOAD['nbr_column'] == 1 )
 					$Template->assign_block_vars('row', array());
@@ -153,7 +153,7 @@ else
 	
 	//Contenu de la catégorie	
 	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
-	if( $nbr_files > 0 )
+	if ($nbr_files > 0)
 	{
 		$get_sort = retrieve(GET, 'sort', '');	
 		$get_mode = retrieve(GET, 'mode', '');
@@ -195,7 +195,7 @@ else
 		}
 		
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-		if( $mode == 'ASC' )
+		if ($mode == 'ASC')
 			$selected_fields['asc'] = ' selected="selected"';
 		else
 			$selected_fields['desc'] = ' selected="selected"';
@@ -242,7 +242,7 @@ else
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('file', array(			
 				'NAME' => $row['title'],

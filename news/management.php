@@ -53,7 +53,7 @@ $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 //Instanciations of objects required
 $news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
 
-if( !$ignore_release_date )
+if (!$ignore_release_date)
 	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNSECURE);
 else
 	$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -63,17 +63,17 @@ $begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begin
 $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
 
 //Deleting a news
-if( $delete_news > 0 )
+if ($delete_news > 0)
 {
 	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
-	if( empty($news_infos['title']) )
+	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	
-	if( $news_categories->check_auth($news_infos['idcat']) )
+	if ($news_categories->check_auth($news_infos['idcat']))
 	{
 		$Sql->query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
 		//Deleting comments if the news has
-		if( $news_infos['nbr_com'] > 0 )
+		if ($news_infos['nbr_com'] > 0)
 		{
 			include_once('../kernel/framework/content/comments.class.php');
 			$Comments = new Comments('news', $delete_news, url('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
@@ -89,10 +89,10 @@ if( $delete_news > 0 )
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
-elseif( $edit_news_id > 0 )
+elseif ($edit_news_id > 0)
 {
 	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
-	if( empty($news_infos['title']) )
+	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	define('TITLE', $NEWS_LANG['news_management']);
 	
@@ -106,17 +106,17 @@ elseif( $edit_news_id > 0 )
 	$id_cat = $news_infos['idcat'];
 
 	//Bread_crumb : we read categories list recursively
-	while( $id_cat > 0 )
+	while ($id_cat > 0)
 	{
 		$Bread_crumb->add($NEWS_CATS[$id_cat]['name'], url('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
 		
-		if( !empty($NEWS_CATS[$id_cat]['auth']) )
+		if (!empty($NEWS_CATS[$id_cat]['auth']))
 			$auth_write = $User->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
 		
 		$id_cat = (int)$NEWS_CATS[$id_cat]['id_parent'];
 	}
 	
-	if( !$auth_write )
+	if (!$auth_write)
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 else
@@ -137,12 +137,12 @@ $Template->set_filenames(array(
 	'news_management'=> 'news/news_management.tpl'
 ));
 
-if( $edit_news_id > 0 )
+if ($edit_news_id > 0)
 {
-	if( $submit )
+	if ($submit)
 	{
 		//The form is ok
-		if( !empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents) )
+		if (!empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents))
 		{
 			$visible = 1;
 			
@@ -151,7 +151,7 @@ if( $edit_news_id > 0 )
 			switch($news_visibility)
 			{
 				case 2:		
-					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
+					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
 						$end_timestamp = $end_date->get_timestamp();
@@ -170,7 +170,7 @@ if( $edit_news_id > 0 )
 			$Sql->query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subnewss in each category
-			if( $news_cat_id != $news_infos['idcat'] )
+			if ($news_cat_id != $news_infos['idcat'])
 			{
 				$news_categories->Recount_sub_newss();
 			}
@@ -188,7 +188,7 @@ if( $edit_news_id > 0 )
 		}
 	}
 	//Previewing a news
-	elseif( $preview )
+	elseif ($preview)
 	{		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
@@ -198,9 +198,9 @@ if( $edit_news_id > 0 )
 
 		$Template->set_filenames(array('news' => 'news/news.tpl'));
 		
-		if( $news_size > 1 )
+		if ($news_size > 1)
 			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
-		elseif( $news_size > 0 )
+		elseif ($news_size > 0)
 			$size_tpl = ($news_size * 1024) . ' ' . $LANG['unit_kilobytes'];
 		else
 			$size_tpl = $NEWS_LANG['unknown_size'];
@@ -211,7 +211,7 @@ if( $edit_news_id > 0 )
 		$release_calendar = new MiniCalendar('release_date');
 		$release_calendar->set_date($news_release_date);
 		
-		if( $news_visibility < 0 || $news_visibility > 2 )
+		if ($news_visibility < 0 || $news_visibility > 2)
 			$news_visibility = 0;
 
 		$Template->assign_vars(array(
@@ -278,7 +278,7 @@ if( $edit_news_id > 0 )
 		
 		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = ($news_release_date->get_timestamp() == 0);
-		if( !$ignore_release_date )
+		if (!$ignore_release_date)
 			$release_calendar->set_date($news_release_date);
 		
 		
@@ -286,13 +286,13 @@ if( $edit_news_id > 0 )
 		$end_calendar = new MiniCalendar('end_date');		
 		$end_calendar->set_style('margin-left:150px;');
 		
-		if( !empty($news_infos['start']) && !empty($news_infos['end']) )
+		if (!empty($news_infos['start']) && !empty($news_infos['end']))
 		{
 			$news_visibility = 2;
 			$begining_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['start']));
 			$end_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['end']));
 		}
-		elseif( !empty($news_infos['visible']) )
+		elseif (!empty($news_infos['visible']))
 			$news_visibility = 1;
 		else
 			$news_visibility = 0;
@@ -322,12 +322,12 @@ if( $edit_news_id > 0 )
 	}
 }
 //Adding a news
-elseif( $add_news )
+elseif ($add_news)
 {
-	if( $submit )
+	if ($submit)
 	{
 		//The form is ok
-		if( !empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents) )
+		if (!empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents))
 		{
 			$visible = 1;
 			
@@ -336,7 +336,7 @@ elseif( $add_news )
 			switch($news_visibility)
 			{
 				case 2:		
-					if( $begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp() )
+					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
 						$end_timestamp = $end_date->get_timestamp();
@@ -357,7 +357,7 @@ elseif( $add_news )
 			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."news");
 			
 			//Updating the number of subnewss in each category
-			if( $news_cat_id != $news_infos['idcat'] )
+			if ($news_cat_id != $news_infos['idcat'])
 			{
 				$news_categories->Recount_sub_newss();
 			}
@@ -375,7 +375,7 @@ elseif( $add_news )
 		}
 	}
 	//Previewing a news
-	elseif( $preview )
+	elseif ($preview)
 	{	
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
@@ -385,9 +385,9 @@ elseif( $add_news )
 		
 		$Template->set_filenames(array('news' => 'news/news.tpl'));
 		
-		if( $news_size > 1 )
+		if ($news_size > 1)
 			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
-		elseif( $news_size > 0 )
+		elseif ($news_size > 0)
 			$size_tpl = ($news_size * 1024) . ' ' . $LANG['unit_kilobytes'];
 		else
 			$size_tpl = $NEWS_LANG['unknown_size'];
@@ -398,7 +398,7 @@ elseif( $add_news )
 		$release_calendar = new MiniCalendar('release_date');
 		$release_calendar->set_date($news_release_date);
 		
-		if( $news_visibility < 0 || $news_visibility > 2 )
+		if ($news_visibility < 0 || $news_visibility > 2)
 			$news_visibility = 0;
 
 		$Template->assign_vars(array(
@@ -464,7 +464,7 @@ elseif( $add_news )
 		
 		$release_calendar = new MiniCalendar('release_date');
 		$ignore_release_date = false;
-		if( !$ignore_release_date )
+		if (!$ignore_release_date)
 			$release_calendar->set_date($news_release_date);
 		
 		

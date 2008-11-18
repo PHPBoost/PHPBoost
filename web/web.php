@@ -29,16 +29,16 @@ require_once('../kernel/begin.php');
 require_once('../web/web_begin.php'); 
 require_once('../kernel/header.php'); 
 
-if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Contenu du lien.
+if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Contenu du lien.
 {
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
-	if( !$User->check_level($CAT_WEB[$idcat]['secure']) )
+	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
-	if( empty($web['id']) )
+	if (empty($web['id']))
 		$Errorh->handler('e_unexist_link_web', E_USER_REDIRECT);
 		
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 	{
 		$java = "<script language='JavaScript' type='text/javascript'>
 		<!--
@@ -91,7 +91,7 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 	));
 	
 	//Affichage commentaires.
-	if( isset($_GET['com']) )
+	if (isset($_GET['com']))
 	{
 		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=%s', 'web-' . $idcat . '-' . $idweb . '.php?com=%s'))
@@ -100,11 +100,11 @@ if( !empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat) ) //Con
 
 	$Template->pparse('web');
 }
-elseif( !empty($idcat) && empty($idweb) ) //Catégories.
+elseif (!empty($idcat) && empty($idweb)) //Catégories.
 {
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
-	if( !$User->check_level($CAT_WEB[$idcat]['secure']) )
+	if (!$User->check_level($CAT_WEB[$idcat]['secure']))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
@@ -174,7 +174,7 @@ elseif( !empty($idcat) && empty($idweb) ) //Catégories.
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long.
 		$row['title'] = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -203,7 +203,7 @@ else
 	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 
 	//On crée une pagination si le nombre de catégories est trop important.
@@ -234,7 +234,7 @@ else
 	GROUP BY aw.id
 	ORDER BY aw.class
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_cat_max'], 'p'), $CONFIG_WEB['nbr_cat_max']), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('cat_list', array(
 			'WIDTH' => $column_width,

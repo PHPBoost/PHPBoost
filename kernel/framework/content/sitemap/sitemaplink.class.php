@@ -54,7 +54,7 @@ class SitemapLink
 		$this->link = $link;
 		$this->set_change_freq($change_freq);
 		$this->set_priority($priority);
-		if( is_object($last_modification_date) )
+		if (is_object($last_modification_date))
 			$this->last_modification_date = $last_modification_date;
 	}
 	
@@ -91,7 +91,7 @@ class SitemapLink
 	//Function which changes the actualization frequency
 	function set_change_freq($change_freq)
 	{
-		if( in_array($change_freq, array(SITEMAP_FREQ_ALWAYS, SITEMAP_FREQ_HOURLY, SITEMAP_FREQ_DAILY, SITEMAP_FREQ_WEEKLY, SITEMAP_FREQ_MONTHLY, SITEMAP_FREQ_YEARLY, SITEMAP_FREQ_NEVER, SITEMAP_FREQ_DEFAULT)) )
+		if (in_array($change_freq, array(SITEMAP_FREQ_ALWAYS, SITEMAP_FREQ_HOURLY, SITEMAP_FREQ_DAILY, SITEMAP_FREQ_WEEKLY, SITEMAP_FREQ_MONTHLY, SITEMAP_FREQ_YEARLY, SITEMAP_FREQ_NEVER, SITEMAP_FREQ_DEFAULT)))
 			$this->change_freq = $change_freq;
 		else
 			$this->change_freq = SITEMAP_FREQ_DEFAULT;
@@ -106,7 +106,7 @@ class SitemapLink
 	//Priority setter
 	function set_priority($priority)
 	{
-		if( in_array($priority, array(SITEMAP_PRIORITY_MAX, SITEMAP_PRIORITY_HIGH, SITEMAP_PRIORITY_AVERAGE, SITEMAP_PRIORITY_LOW, SITEMAP_PRIORITY_MIN)) )
+		if (in_array($priority, array(SITEMAP_PRIORITY_MAX, SITEMAP_PRIORITY_HIGH, SITEMAP_PRIORITY_AVERAGE, SITEMAP_PRIORITY_LOW, SITEMAP_PRIORITY_MIN)))
 			$this->priority = $priority;
 		else
 			$this->priority = SITEMAP_PRIORITY_AVERAGE;

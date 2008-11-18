@@ -33,7 +33,7 @@ class FeedData
     ## Public Methods ##
     function FeedData($data = null)
     {
-		if( $data != null && strtolower(get_class($data)) == 'feeddata' )
+		if ($data != null && strtolower(get_class($data)) == 'feeddata')
 		{
 			$this->title = $data->title;
 			$this->link = $data->link;
@@ -70,9 +70,9 @@ class FeedData
     {
         global $User;
         $items = array();
-        foreach( $this->items as $item )
+        foreach ($this->items as $item)
         {
-            if( (gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $User->check_auth($item->get_auth(), $this->auth_bit) )
+            if ((gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || $User->check_auth($item->get_auth(), $this->auth_bit))
                 $items[] = $item;
         }
         
@@ -92,7 +92,7 @@ class FeedData
         
         $items = array();
         $end_at = $begin_at + $number;
-        for($i = $begin_at; ($i < $nb_items) && ($i < $end_at) ; $i++)
+        for ($i = $begin_at; ($i < $nb_items) && ($i < $end_at) ; $i++)
             $items[] =& $secured_items[$i];
         
         return $items;

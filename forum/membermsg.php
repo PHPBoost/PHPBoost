@@ -34,7 +34,7 @@ define('TITLE', $LANG['title_forum']);
 require_once('../kernel/header.php'); 
 
 $view_msg = retrieve(GET, 'id', 0);
-if( !empty($view_msg) ) //Affichage de tous les messages du membre
+if (!empty($view_msg)) //Affichage de tous les messages du membre
 {
 	$Template->set_filenames(array(
 		'membermsg'=> 'forum/forum_membermsg.tpl',
@@ -46,9 +46,9 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	$Pagination = new Pagination;
 	
 	$auth_cats = '';
-	foreach($CAT_FORUM as $idcat => $key)
+	foreach ($CAT_FORUM as $idcat => $key)
 	{
-		if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 			$auth_cats .= $idcat . ',';
 	}
 	$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -81,7 +81,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
 	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Membre en ligne?
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
@@ -116,7 +116,7 @@ if( !empty($view_msg) ) //Affichage de tous les messages du membre
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '" . DIR . "/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		

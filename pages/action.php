@@ -47,7 +47,7 @@ $del_cat_post = retrieve(GET, 'del_cat', 0);
 $report_cat = retrieve(GET, 'report_cat', 0);
 $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppression
 
-if( !empty($new_title) && $id_rename_post > 0 )
+if (!empty($new_title) && $id_rename_post > 0)
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 	
@@ -55,17 +55,17 @@ if( !empty($new_title) && $id_rename_post > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
-	if( $num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'] )
+	if ($num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'])
 	{
 		//On doit créer une redirection automatique
-		if( !empty($_POST['create_redirection']) )
+		if (!empty($_POST['create_redirection']))
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 			$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $page_infos['title'] . "', '" . $page_infos['encoded_title'] . "', '" . $id_rename_post . "')", __LINE__, __FILE__);
@@ -76,7 +76,7 @@ if( !empty($new_title) && $id_rename_post > 0 )
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
-	elseif( $num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'] )
+	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
@@ -85,7 +85,7 @@ if( !empty($new_title) && $id_rename_post > 0 )
 		redirect(HOST . DIR . '/pages/action.php?rename=' . $id_rename_post . '&error=title_already_exists');
 }
 //on poste une redirection
-elseif( !empty($redirection_name) && $id_new_post > 0 )
+elseif (!empty($redirection_name) && $id_new_post > 0)
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_new_post . "'", __LINE__, __FILE__);
 	
@@ -93,14 +93,14 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
-	if( $num_rows_same_title == 0 )
+	if ($num_rows_same_title == 0)
 	{
 		$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
@@ -109,7 +109,7 @@ elseif( !empty($redirection_name) && $id_new_post > 0 )
 		redirect(HOST . DIR . '/pages/action.php?new=' . $id_new_post . '&error=title_already_exists');
 }
 //Suppression des redirections
-elseif( $del_redirection > 0 )
+elseif ($del_redirection > 0)
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 	
@@ -117,24 +117,24 @@ elseif( $del_redirection > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
-	if( $page_infos['redirect'] > 0 )
+	if ($page_infos['redirect'] > 0)
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
 		
 	redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
 //Suppression d'une catégorie
-elseif( $del_cat_post > 0 && $report_cat >= 0 )
+elseif ($del_cat_post > 0 && $report_cat >= 0)
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
 	$page_infos = $Sql->query_array("pages", "encoded_title", "id_cat", "auth", "WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
-	if( !((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))) )
+	if (!((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	$sub_cats = array();
@@ -143,14 +143,14 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	$sub_cats[] = $page_infos['id_cat']; //On rajoute la catégorie que l'on supprime
 	$id_to_delete = implode($sub_cats, ', ');
 	
-	if( $remove_action == 'move_all' ) //Vérifications préliminaires si on va tout supprimer
+	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
 	{	
 		//Si on ne la déplace pas dans une de ses catégories filles
-		if( ($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'] )//Si on veut reporter dans une catégorie parente
+		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
 			redirect(HOST . DIR . '/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
 	}
 	
-	if( $remove_action == 'remove_all' ) //On supprime le contenu de la catégorie
+	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
 		//Suppression des pages contenues par cette catégorie
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id_cat IN (" . $id_to_delete . ")", __LINE__, __FILE__);
@@ -159,7 +159,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 		$Cache->Generate_module_file('pages');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
-		if( array_key_exists($page_infos['id_cat'], $_PAGES_CATS) && $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] > 0 )
+		if (array_key_exists($page_infos['id_cat'], $_PAGES_CATS) && $_PAGES_CATS[$page_infos['id_cat']]['id_parent'] > 0)
 		{
 			$title = $_PAGES_CATS[$_PAGES_CATS[$page_infos['id_cat']]['id_parent']]['name'];
 			redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
@@ -167,7 +167,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 		else
 			redirect(HOST . DIR . '/pages/' . url('pages.php', '', '&'));
 	}
-	elseif( $remove_action == 'move_all' ) //On déplace le contenu de la catégorie
+	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
 		//Quoi qu'il arrive on supprime l'article associé
 		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);	
@@ -177,7 +177,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 		$Sql->query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('pages');
 		
-		if( array_key_exists($report_cat, $_PAGES_CATS) )
+		if (array_key_exists($report_cat, $_PAGES_CATS))
 		{
 			$title = $_PAGES_CATS[$report_cat]['name'];
 			redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
@@ -187,7 +187,7 @@ elseif( $del_cat_post > 0 && $report_cat >= 0 )
 	}
 }
 
-if( $id_page > 0 )
+if ($id_page > 0)
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_page . "'", __LINE__, __FILE__);
 	
@@ -195,26 +195,26 @@ if( $id_page > 0 )
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
-	if($id_redirection > 0 )
+	if ($id_redirection > 0)
 		$Bread_crumb->add($LANG['pages_redirection_management'], url('action.php?id=' . $id_redirection));
-	elseif( $id_new > 0 )
+	elseif ($id_new > 0)
 		$Bread_crumb->add($LANG['pages_creation_redirection'], url('action.php?new=' . $id_redirection));
-	elseif( $del_cat > 0 )
+	elseif ($del_cat > 0)
 		$Bread_crumb->add($LANG['pages_delete_cat'], url('action.php?del_cat=' . $id_redirection));
 	else
 		$Bread_crumb->add($LANG['pages_rename'], url('action.php?rename=' . $id_rename));
 	$Bread_crumb->add($page_infos['title'], url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title']));
 	$id = $page_infos['id_cat'];
-	while( $id > 0 )
+	while ($id > 0)
 	{
-	if( empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )	
+	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))	
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
-	if( $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if ($User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		$Bread_crumb->add($LANG['pages'], url('pages.php'));
 	$Bread_crumb->reverse();
 }
@@ -226,30 +226,30 @@ require_once('../kernel/header.php');
 $Template->set_filenames(array('pages_action'=> 'pages/action.tpl'));
 
 
-if( $del_cat > 0 )
+if ($del_cat > 0)
 {
 	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect', "WHERE id = '" . $del_cat . "'", __LINE__, __FILE__);
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
-	if( ($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) )
+	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$cats = array();
 	$cat_list = display_cat_explorer($page_infos['id_cat'], $cats);
 	$cats = array_reverse($cats);
-	if( array_key_exists(0, $cats) )
+	if (array_key_exists(0, $cats))
 		unset($cats[0]);
 	$current_cat = '';
 	$nbr_cats = count($cats);
 	$i = 1;
-	foreach( $cats as $key => $value )
+	foreach ($cats as $key => $value)
 	{
 		$current_cat .= $_PAGES_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
 		$i++;
 	}
-	if( $page_infos['id_cat'] > 0 )
+	if ($page_infos['id_cat'] > 0)
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_PAGES_CATS[$page_infos['id_cat']]['name'];
 	else
 		$current_cat = $LANG['pages_no_selected_cat'];
@@ -276,16 +276,16 @@ if( $del_cat > 0 )
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
-	if( $error == 'e_cat_contains_cat' )
+	if ($error == 'e_cat_contains_cat')
 		$errstr = $LANG['pages_cat_contains_cat'];
-	elseif( $error == 'e_not_a_cat' )
+	elseif ($error == 'e_not_a_cat')
 		$errstr = $LANG['pages_not_a_cat'];
 	else
 		$errstr = '';
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_WARNING);
 }
-elseif( $id_rename > 0 )
+elseif ($id_rename > 0)
 {
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
@@ -300,13 +300,13 @@ elseif( $id_rename > 0 )
 	$Template->assign_block_vars('rename', array());
 	
 	//Erreur : la page existe déjà
-	if( $error == 'title_already_exists' )
+	if ($error == 'title_already_exists')
 	{
 		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Création d'une redirection
-elseif( $id_new > 0 )
+elseif ($id_new > 0)
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
@@ -318,13 +318,13 @@ elseif( $id_new > 0 )
 	));
 	$Template->assign_block_vars('new', array());
 	//Erreur : la page existe déjà
-	if( $error == 'title_already_exists' )
+	if ($error == 'title_already_exists')
 	{
 		$Errorh->handler($LANG['pages_already_exists'], E_USER_WARNING);
 	}
 }
 //Liste des redirections vers cette page
-elseif( $id_redirection > 0 )
+elseif ($id_redirection > 0)
 {
 	$Template->assign_block_vars('redirection', array());
 	
@@ -334,13 +334,13 @@ elseif( $id_redirection > 0 )
 	ORDER BY title ASC", __LINE__, __FILE__);
 	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
 			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
 		));
 
-		if( $nbr_rows == 0 )
+		if ($nbr_rows == 0)
 		$Template->assign_block_vars('redirection.no_redirection', array(
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));
@@ -357,7 +357,7 @@ elseif( $id_redirection > 0 )
 //Liste des redirections
 else
 {
-	if( !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE) )
+	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 
 	$Template->assign_block_vars('redirections', array());
@@ -369,7 +369,7 @@ else
 	ORDER BY r.title ASC", __LINE__, __FILE__);
 	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect > 0", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($row['auth']);
@@ -381,7 +381,7 @@ else
 		));
 	}
 	
-	if( $nbr_rows == 0 )
+	if ($nbr_rows == 0)
 		$Template->assign_block_vars('redirections.no_redirection', array(
 			'MESSAGE' => $LANG['pages_no_redirection']
 		));

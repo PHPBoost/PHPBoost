@@ -29,7 +29,7 @@ load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 1);
@@ -42,27 +42,27 @@ if( !empty($_POST['valid']) )
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
-	if( !empty($question) )
+	if (!empty($question))
 	{
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 		
 		$visible = 1;		
-		if( $get_visible == 2 )
+		if ($get_visible == 2)
 		{		
-			if( $start_timestamp > time() )
+			if ($start_timestamp > time())
 				$visible = 2;
-			elseif( $start_timestamp == 0 )
+			elseif ($start_timestamp == 0)
 				$visible = 1;
 			else //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0 )
+			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif( $start_timestamp != 0 ) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
-		elseif( $get_visible == 1 )
+		elseif ($get_visible == 1)
 		{	
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -75,7 +75,7 @@ if( !empty($_POST['valid']) )
 		}
 
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
@@ -83,9 +83,9 @@ if( !empty($_POST['valid']) )
 		$poll_type = (isset($_POST['poll_type']) && ($_POST['poll_type'] == 0 || $_POST['poll_type'] == 1)) ? numeric($_POST['poll_type']) : '0';
 		$answers = '';
 		$votes = '';
-		for($i = 0; $i < 20; $i++)
+		for ($i = 0; $i < 20; $i++)
 		{	
-			if( !empty($_POST['a'.$i]) )
+			if (!empty($_POST['a'.$i]))
 			{				
 				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
 				$votes .= strprotect(str_replace('|', '', $_POST['v'.$i])) . '|';
@@ -134,7 +134,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['incomplete'], E_USER_NOTICE);
 		
 	$Template->pparse('admin_poll_add'); 

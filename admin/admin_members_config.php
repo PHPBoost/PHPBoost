@@ -29,7 +29,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['msg_mbr']) ) //Message aux membres.
+if (!empty($_POST['msg_mbr'])) //Message aux membres.
 {
 	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
 	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
@@ -62,13 +62,13 @@ else
 	#####################Activation du mail par le membre pour s'inscrire##################
 	$array = array(0 => $LANG['no_activ_mbr'], 1 => $LANG['mail'], 2 => $LANG['admin']);
 	$activ_mode_option = '';
-	foreach($array as $key => $value )
+	foreach ($array as $key => $value)
 	{
 		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
 		$activ_mode_option .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
-	for($i = 0; $i < 5; $i++)
+	for ($i = 0; $i < 5; $i++)
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,

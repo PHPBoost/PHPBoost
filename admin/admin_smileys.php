@@ -33,13 +33,13 @@ $id = retrieve(GET, 'id', 0);
 $edit = !empty($_GET['edit']) ? true : false;
 $del = !empty($_GET['del']) ? true : false;
 
-if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
+if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 {
 	$url_smiley = retrieve(POST, 'url_smiley', '');
 	$code_smiley = retrieve(POST, 'code_smiley', '');
 
 	//On met à jour 
-	if( !empty($url_smiley) && !empty($code_smiley) )
+	if (!empty($url_smiley) && !empty($code_smiley))
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
 					
@@ -51,7 +51,7 @@ if( !empty($_POST['valid']) && !empty($id_post) ) //Mise à jour.
 	else
 		redirect(HOST . DIR . '/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
 }	
-elseif( !empty($id) && $del ) //Suppression.
+elseif (!empty($id) && $del) //Suppression.
 {
 	//On supprime le smiley de la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
@@ -61,7 +61,7 @@ elseif( !empty($id) && $del ) //Suppression.
 	
 	redirect(HOST . SCRIPT); 
 }	
-elseif( !empty($id) && $edit ) //Edition.
+elseif (!empty($id) && $edit) //Edition.
 {
 	$Template->set_filenames(array(
 		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
@@ -72,15 +72,15 @@ elseif( !empty($id) && $edit ) //Edition.
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	$smiley_options = '';
 	$result = $Sql->query_while("SELECT url_smiley 
 	FROM ".PREFIX."smileys", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $row['url_smiley'] == $url_smiley )
+		if ($row['url_smiley'] == $url_smiley)
 			$selected = 'selected="selected"';
 		else
 			$selected = '';
@@ -128,7 +128,7 @@ else
 
 	$result = $Sql->query_while("SELECT * 
 	FROM ".PREFIX."smileys", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('list', array(
 			'IDSMILEY' => $row['idsmiley'],

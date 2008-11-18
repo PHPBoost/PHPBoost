@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if( !$User->check_level(MEMBER_LEVEL) ) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!$User->check_level(MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
@@ -38,12 +38,12 @@ $id_update = retrieve(GET, 'edit', 0);
 import('events/contribution_service');
 import('util/date');
 
-if( $contribution_id > 0 )
+if ($contribution_id > 0)
 {
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')) )
+	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != $User->get_attribute('user_id')))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
@@ -53,12 +53,12 @@ if( $contribution_id > 0 )
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $contribution->get_entitled());
 }
 //Modification d'une contribution
-elseif( $id_update > 0 )
+elseif ($id_update > 0)
 {
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if (($contribution = ContributionService::find_by_id($id_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
@@ -69,13 +69,13 @@ elseif( $id_update > 0 )
 	define('TITLE', $LANG['contribution_panel'] . ' - ' . $LANG['contribution_edition']);
 }
 //Enregistrement de la modification d'une contribution
-elseif( $id_to_update > 0 )
+elseif ($id_to_update > 0)
 {
 	global $User;
 	
 	$contribution = new Contribution();
 	
-	if( ($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT) )
+	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
@@ -84,14 +84,14 @@ elseif( $id_to_update > 0 )
 	$status = retrieve(POST, 'status', CONTRIBUTION_STATUS_UNREAD);
 	
 	//Si le titre n'est pas vide
-	if( !empty($entitled) )
+	if (!empty($entitled))
 	{
 		//Mise à jour de l'objet contribution
 		$contribution->set_entitled($entitled);
 		$contribution->set_description($description);
 		
 		//Changement de statut ? On regarde si la contribution a été réglée
-		if( $status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED )
+		if ($status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id($User->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
@@ -109,14 +109,14 @@ elseif( $id_to_update > 0 )
 		redirect(HOST . DIR . url('/member/contribution_panel.php', '', '&'));
 }
 //Suppression d'une contribution
-elseif( $id_to_delete > 0 )
+elseif ($id_to_delete > 0)
 {
 	global $User;
 	
 	$contribution = new Contribution();
 	
 	//Loading the contribution into an object from the database and checking if the user is authorizes to read it
-	if( ($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)) )
+	if (($contribution = ContributionService::find_by_id($id_to_delete)) == null || (!$User->check_auth($contribution->get_auth(),CONTRIBUTION_AUTH_BIT)))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	ContributionService::delete_contribution($contribution);
@@ -134,7 +134,7 @@ require_once('../kernel/header.php');
 
 $template = new Template('member/contribution_panel.tpl');
 
-if( $contribution_id > 0 )
+if ($contribution_id > 0)
 {
 	$template->assign_vars(array(
 		'C_CONSULT_CONTRIBUTION' => true
@@ -162,7 +162,7 @@ if( $contribution_id > 0 )
 	));
 	
 	//Si la contribution a été traitée
-	if( $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED )
+	if ($contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED)
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
@@ -189,7 +189,7 @@ if( $contribution_id > 0 )
 	));
 }
 //Modification d'une contribution
-elseif( $id_update > 0 )
+elseif ($id_update > 0)
 {
 	$template->assign_vars(array(
 		'C_EDIT_CONTRIBUTION' => true,
@@ -232,22 +232,22 @@ else
 	$criteria = retrieve(GET, 'criteria', 'current_status');
 	$order = retrieve(GET, 'order', 'asc');
 
-	if( !in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')) )
+	if (!in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')))
 		$criteria = 'current_status';
 	$order = $order == 'desc' ? 'desc' : 'asc';
 	
 	//On liste les contributions
-	foreach(ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
+	foreach (ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
 	{
 		//Obligé de faire une variable temp à cause de php4.
 		$creation_date = $this_contribution->get_creation_date();
 		$fixing_date = $this_contribution->get_fixing_date();
 		
 		//Affichage des contributions du membre
-		if( $User->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id() )
+		if ($User->check_auth($this_contribution->get_auth(), CONTRIBUTION_AUTH_BIT) || $User->get_attribute('user_id') == $this_contribution->get_poster_id())
 		{
 			//On affiche seulement si on est dans le bon cadre d'affichage
-			if( $num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page() )
+			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($pagination->get_current_page() - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $pagination->get_current_page())
 				$template->assign_block_vars('contributions', array(
 					'ENTITLED' => $this_contribution->get_entitled(),
 					'MODULE' => $this_contribution->get_module_name(),
@@ -268,7 +268,7 @@ else
 		}
 	}
 	
-	if( $num_contributions > 1 )
+	if ($num_contributions > 1)
 		$template->assign_vars(array(
 			'PAGINATION' => $pagination->display('contribution_panel.php?p=%d&criteria=' . $criteria . '&order=' . $order, $num_contributions - 1, 'p', CONTRIBUTIONS_PER_PAGE, 3)
 		));
@@ -281,15 +281,15 @@ else
 	//Liste des modules proposant de contribuer
 	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
-	foreach($MODULES as $module_name => $module_infos)
+	foreach ($MODULES as $module_name => $module_infos)
 	{
 		$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());
 		
 		//Si le module a une interface de contribution
-		if( !empty($module_ini['contribution_interface']) )
+		if (!empty($module_ini['contribution_interface']))
 		{
 			//Nouvelle ligne
-			if( $i_module % NUMBER_OF_MODULES_PER_LINE == 0 )
+			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
 				$template->assign_block_vars('row', array());
 			
 			$template->assign_block_vars('row.module', array(

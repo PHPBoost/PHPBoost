@@ -44,13 +44,13 @@ $pagination->set_var_name_current_page('p');
 $criteria = retrieve(GET, 'criteria', 'current_status');
 $order = retrieve(GET, 'order', 'asc');
 
-if( !in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')) )
+if (!in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')))
 	$criteria = 'current_status';
 $order = $order == 'desc' ? 'desc' : 'asc';
 
 //On va chercher la liste des alertes
 $alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($pagination->_get_var_page('p') - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE);
-foreach($alerts_list as $alert)
+foreach ($alerts_list as $alert)
 {
 	$img_type = '';
 	

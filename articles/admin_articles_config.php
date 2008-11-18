@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 ##########################admin_news_config.tpl###########################
-if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
+if (!empty($_POST['valid']) && empty($_POST['valid_edito']))
 {
 	$Cache->load('articles');
 	
@@ -45,7 +45,7 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 		
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
-	if( $CONFIG_ARTICLES['note_max'] != $config_articles['note_max'] )
+	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
 		$Sql->query_inject("UPDATE ".PREFIX."articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
@@ -53,39 +53,39 @@ if( !empty($_POST['valid']) && empty($_POST['valid_edito']) )
 	
 	redirect(HOST . SCRIPT);	
 }
-elseif( !empty($_POST['articles_count']) ) //Recompte le nombre d'articles de chaque catégories
+elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de chaque catégories
 {
 	$Cache->load('articles');
 	
 	$info_cat = array();
-	$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_visible 
+	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_visible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
 	
-	while($row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
 		
 	$Sql->query_close($result);
 	
-	$result = $Sql->query_while("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
+	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
 	FROM ".PREFIX."articles 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
 		
 	$Sql->query_close($result);
 	
 	$result = $Sql->query_while("SELECT id, id_left, id_right
 	FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{			
 		$nbr_articles_visible = 0;
 		$nbr_articles_unvisible = 0;
-		foreach($info_cat as $key => $value)
+		foreach ($info_cat as $key => $value)
 		{			
-			if( $CAT_ARTICLES[$key]['id_left'] >= $row['id_left'] && $CAT_ARTICLES[$key]['id_right'] <= $row['id_right'] )
+			if ($CAT_ARTICLES[$key]['id_left'] >= $row['id_left'] && $CAT_ARTICLES[$key]['id_right'] <= $row['id_right'])
 			{	
 				$nbr_articles_visible += isset($info_cat[$key]['visible']) ? $info_cat[$key]['visible'] : 0;
 				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0; 

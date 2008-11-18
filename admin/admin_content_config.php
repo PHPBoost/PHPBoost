@@ -30,7 +30,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['submit'])  )
+if (!empty($_POST['submit']) )
 {
 	$editor = retrieve(POST, 'formatting_language', '');
 	$CONFIG['editor'] = $editor == 'tinymce' ? 'tinymce' : 'bbcode';
@@ -49,7 +49,7 @@ else
 	
 	$j = 0;
 	
-	foreach(Content::get_available_tags() as $name)
+	foreach (Content::get_available_tags() as $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,

@@ -31,7 +31,7 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-if( !empty($_GET['stats_referer']) ) //Recherche d'un membre pour envoyer le mp.
+if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idurl = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 	$url = $Sql->query("SELECT url FROM ".PREFIX."stats_referer WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
@@ -40,16 +40,16 @@ if( !empty($_GET['stats_referer']) ) //Recherche d'un membre pour envoyer le mp.
 	FROM ".PREFIX."stats_referer
 	WHERE url = '" . addslashes($url) . "' AND type = 0
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$average = ($row['total_visit'] / $row['nbr_day']);
-		if( $row['yesterday_visit'] > $average )
+		if ($row['yesterday_visit'] > $average)
 		{
 			$trend_img = 'up.png';
 			$sign = '+';
 			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 		}
-		elseif( $row['yesterday_visit'] < $average )
+		elseif ($row['yesterday_visit'] < $average)
 		{
 			$trend_img = 'down.png';
 			$sign = '-';
@@ -86,7 +86,7 @@ if( !empty($_GET['stats_referer']) ) //Recherche d'un membre pour envoyer le mp.
 	
 	$Sql->close(); //Fermeture de mysql*/
 }
-elseif( !empty($_GET['stats_keyword']) ) //Recherche d'un membre pour envoyer le mp.
+elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idkeyword = !empty($_GET['id']) ? numeric($_GET['id']) : '';
 	$keyword = $Sql->query("SELECT relative_url FROM ".PREFIX."stats_referer WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
@@ -95,16 +95,16 @@ elseif( !empty($_GET['stats_keyword']) ) //Recherche d'un membre pour envoyer le
 	FROM ".PREFIX."stats_referer
 	WHERE relative_url = '" . addslashes($keyword) . "' AND type = 1
 	ORDER BY total_visit DESC", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$average = ($row['total_visit'] / $row['nbr_day']);
-		if( $row['yesterday_visit'] > $average )
+		if ($row['yesterday_visit'] > $average)
 		{
 			$trend_img = 'up.png';
 			$sign = '+';
 			$trend = number_round((($row['yesterday_visit'] * 100) / $average), 1) - 100;
 		}
-		elseif( $row['yesterday_visit'] < $average )
+		elseif ($row['yesterday_visit'] < $average)
 		{
 			$trend_img = 'down.png';
 			$sign = '-';

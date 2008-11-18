@@ -33,14 +33,14 @@ class Content
 {
 	function Content($language_type = false)
 	{
-		if( $language_type !== false )
+		if ($language_type !== false)
 			$this->set_language($language_type);
 	}
 	
 	function set_language($language_type = DEFAULT_LANGUAGE)
 	{
 		//If the language type is specified and correct
-		if( in_array($language_type, array(BBCODE_LANGUAGE, TINYMCE_LANGUAGE)) )
+		if (in_array($language_type, array(BBCODE_LANGUAGE, TINYMCE_LANGUAGE)))
 			$this->language_type = $language_type;			
 		else
 			$this->language_type = DEFAULT_LANGUAGE;	
@@ -65,7 +65,7 @@ class Content
 				import('content/parser/tinymce_parser');
 				return new TinyMCEParser();
 			default:
-				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
+				if ($this->get_user_editor() == TINYMCE_LANGUAGE)
 				{
 					import('content/parser/tinymce_parser');
 					return new TinyMCEParser();
@@ -91,7 +91,7 @@ class Content
 				import('content/parser/tinymce_unparser');
 				return new TinyMCEUnparser();
 			default:
-				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
+				if ($this->get_user_editor() == TINYMCE_LANGUAGE)
 				{
 					import('content/parser/tinymce_unparser');
 					return new TinyMCEUnparser();
@@ -123,7 +123,7 @@ class Content
 				import('content/editor/bbcode_editor');
 				return new BBCodeEditor();
 			default:
-				if( $this->get_user_editor() == TINYMCE_LANGUAGE )
+				if ($this->get_user_editor() == TINYMCE_LANGUAGE)
 				{
 					import('content/editor/tinymce_editor');
 					return new TinyMCEEditor();

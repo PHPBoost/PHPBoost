@@ -79,9 +79,9 @@ class FaqInterface extends ModuleInterface
 		}
 		
 		//Random questions
-		$query = $Sql->query_while("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
+		$query = $Sql->query_while ("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
 		$questions = array();
-		while($row = $Sql->fetch_assoc($query) )
+		while ($row = $Sql->fetch_assoc($query))
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
 		
 		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
@@ -136,13 +136,13 @@ class FaqInterface extends ModuleInterface
         
         $Tpl = new Template('faq/search_result.tpl');
         
-        if( $this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        if ($this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST))
         {
             $ids = array();
             $results =& $args['results'];
             $newResults = array();
             $nbResults = count($results);
-            for( $i = 0; $i < $nbResults; $i++ )
+            for ($i = 0; $i < $nbResults; $i++)
                 $newResults[$results[$i]['id_content']] =& $results[$i];
             
             $results =& $newResults;
@@ -150,8 +150,8 @@ class FaqInterface extends ModuleInterface
             $request = "SELECT `idcat`,`id`,`question`,`answer`
             FROM " . PREFIX . "faq
             WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
-            $requestResults = $Sql->query_while($request, __LINE__, __FILE__);
-            while( $row = $Sql->fetch_assoc($requestResults) )
+            $requestResults = $Sql->query_while ($request, __LINE__, __FILE__);
+            while ($row = $Sql->fetch_assoc($requestResults))
             {
                 $results[$row['id']] = $row;
             }
@@ -201,7 +201,7 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
-		if( $id_cat > 0 )
+		if ($id_cat > 0)
 			$this_category = new SitemapLink($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
 		else
 			$this_category = new SitemapLink($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
@@ -213,11 +213,11 @@ class FaqInterface extends ModuleInterface
 		$keys = array_keys($FAQ_CATS);
 		$num_cats = count($FAQ_CATS);
 		$properties = array();
-		for( $j = 0; $j < $num_cats; $j++)
+		for ($j = 0; $j < $num_cats; $j++)
 		{
 			$id = $keys[$j];
 			$properties = $FAQ_CATS[$id];
-			if( $auth_mode == SITE_MAP_AUTH_GUEST )
+			if ($auth_mode == SITE_MAP_AUTH_GUEST)
 			{
 				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
@@ -225,14 +225,14 @@ class FaqInterface extends ModuleInterface
 			{
 				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
 			}
-			if( $this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat )
+			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
 				$category->push_element($this->_create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}
 		
-		if( $i == 0	)
+		if ($i == 0	)
 			$category = $this_category;
 		
 		return $category;

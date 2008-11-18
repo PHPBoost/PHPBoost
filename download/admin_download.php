@@ -66,9 +66,9 @@ FROM ".PREFIX."download
 ORDER BY timestamp DESC 
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
-	if( $row['approved'] == 1 )
+	if ($row['approved'] == 1)
 		$aprob = $LANG['yes'];
 	else
 		$aprob = $LANG['no'];

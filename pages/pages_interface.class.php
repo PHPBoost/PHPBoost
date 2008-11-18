@@ -50,7 +50,7 @@ class PagesInterface extends ModuleInterface
 		FROM ".PREFIX."pages_cats c
 		LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
 				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
@@ -63,7 +63,7 @@ class PagesInterface extends ModuleInterface
 		$code = 'global $_PAGES_CONFIG;' . "\n";
 		$CONFIG_PAGES = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
 								
-		if( is_array($CONFIG_PAGES) )
+		if (is_array($CONFIG_PAGES))
 			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
 		else
 			$CONFIG_PAGES = array(
@@ -102,13 +102,13 @@ class PagesInterface extends ModuleInterface
         $Cache->load('pages');
         
         $auth_cats = '';
-        if( is_array($_PAGES_CATS) )
+        if (is_array($_PAGES_CATS))
         {
-            if( isset($_PAGES_CATS['auth']) && !$User->check_auth($_PAGES_CATS['auth'], READ_PAGE) )
+            if (isset($_PAGES_CATS['auth']) && !$User->check_auth($_PAGES_CATS['auth'], READ_PAGE))
                 $auth_cats .= '0,';
-            foreach($_PAGES_CATS as $id => $key)
+            foreach ($_PAGES_CATS as $id => $key)
             {
-                if( !$User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE) )
+                if (!$User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
                     $auth_cats .= $id.',';
             }
         }
@@ -126,8 +126,8 @@ class PagesInterface extends ModuleInterface
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
             .$Sql->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
-        $result = $Sql->query_while($request, __LINE__, __FILE__);
-        while( $row = $Sql->fetch_assoc($result) )
+        $result = $Sql->query_while ($request, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($result))
         {
             if ( !empty($row['auth']) )
             {

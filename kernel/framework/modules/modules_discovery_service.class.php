@@ -63,14 +63,14 @@ class ModulesDiscoveryService
      */
     {
         $results = array();
-        foreach($modules as $moduleName => $args)
+        foreach ($modules as $moduleName => $args)
         {
             // Instanciation de l'objet $module
             $module = $this->get_module($moduleName);
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
             $module->clear_functionnality_error();
-            if( $module->has_functionnality($functionnality) == true )
+            if ($module->has_functionnality($functionnality) == true)
                 $results[$moduleName] = $module->functionnality($functionnality, $args);
         }
         return $results;
@@ -83,22 +83,22 @@ class ModulesDiscoveryService
      */
     {
         $modules = array();
-        if( $modulesList === array() )
+        if ($modulesList === array())
         {
             global $MODULES;
             
-            foreach(array_keys($MODULES) as $moduleId)
+            foreach (array_keys($MODULES) as $moduleId)
             {
 			   $module = $this->get_module($moduleId);
-                if( !$module->got_error() && $module->has_functionnality($functionnality) )
+                if (!$module->got_error() && $module->has_functionnality($functionnality))
                     array_push($modules, $module);
             }
         }
         else
         {
-            foreach($modulesList as $module)
+            foreach ($modulesList as $module)
             {
-                if( !$module->got_error() && $module->has_functionnality($functionnality) )
+                if (!$module->got_error() && $module->has_functionnality($functionnality))
                     array_push($modules, $module);
             }
         }
@@ -110,15 +110,15 @@ class ModulesDiscoveryService
      *  Instancie et renvoie le module demandé.
      */
     {
-		if( !isset($this->loaded_modules[$moduleId]) )
+		if (!isset($this->loaded_modules[$moduleId]))
         {
-            if( in_array($moduleId, $this->availables_modules) )
+            if (in_array($moduleId, $this->availables_modules))
             {
                 global $User, $MODULES;
                 
-                if( $User->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE) )
+                if ($User->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE))
                 {
-                    if( @include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php') )
+                    if (@include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php'))
                     {
                         $module_constructor = ucfirst($moduleId.'Interface');
                         $Module = new $module_constructor();

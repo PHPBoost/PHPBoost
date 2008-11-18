@@ -55,7 +55,7 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_unparse_code(PICK_UP);
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
+		if (PATH_TO_ROOT != '..')
 		{
 			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
 		}
@@ -67,11 +67,11 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_unparse_simple_tags();
 
 		//Unparsage de la balise table.
-		if( strpos($this->content, '<table class="bb_table"') !== false )
+		if (strpos($this->content, '<table class="bb_table"') !== false)
 			$this->_unparse_table();
 
 		//Unparsage de la balise table.
-		if( strpos($this->content, '<li class="bb_li"') !== false )
+		if (strpos($this->content, '<li class="bb_li"') !== false)
 			$this->_unparse_list();
 		
 		$this->_unparse_code(REIMPLANT);
@@ -87,10 +87,10 @@ class BBCodeUnparser extends ContentUnparser
 	{
 		//Smilies
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if(!empty($_array_smiley_code) )
+		if (!empty($_array_smiley_code))
 		{
 			//Création du tableau de remplacement
-			foreach($_array_smiley_code as $code => $img)
+			foreach ($_array_smiley_code as $code => $img)
 			{	
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
@@ -190,13 +190,13 @@ class BBCodeUnparser extends ContentUnparser
 	function _unparse_table()
 	{
 		//On boucle pour parcourir toutes les imbrications
-		while( strpos($this->content, '<table class="bb_table"') !== false )
+		while (strpos($this->content, '<table class="bb_table"') !== false)
 			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
-		while( strpos($this->content, '<tr class="bb_table_row"') !== false )
+		while (strpos($this->content, '<tr class="bb_table_row"') !== false)
 			$this->content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->content);
-		while( strpos($this->content, '<th class="bb_table_head"') !== false )
+		while (strpos($this->content, '<th class="bb_table_head"') !== false)
 			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
-		while( strpos($this->content, '<td class="bb_table_col"') !== false )
+		while (strpos($this->content, '<td class="bb_table_col"') !== false)
 			$this->content = preg_replace('`<td class="bb_table_col"([^>]*)>(.*)</td>`sU', '[col$1]$2[/col]', $this->content);
 	}
 
@@ -206,11 +206,11 @@ class BBCodeUnparser extends ContentUnparser
 	function _unparse_list()
 	{
 		//On boucle tant qu'il y a de l'imbrication
-		while( strpos($this->content, '<ul class="bb_ul">') !== false )
+		while (strpos($this->content, '<ul class="bb_ul">') !== false)
 			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">(.+)</ul>`sU', '[list$1]$2[/list]', $this->content);
-		while( strpos($this->content, '<ol class="bb_ol">') !== false )
+		while (strpos($this->content, '<ol class="bb_ol">') !== false)
 			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">(.+)</ol>`sU', '[list=ordered$1]$2[/list]', $this->content);
-		while( strpos($this->content, '<li class="bb_li">') !== false )
+		while (strpos($this->content, '<li class="bb_li">') !== false)
 			$this->content = preg_replace('`<li class="bb_li">(.+)</li>`isU', '[*]$1', $this->content);
 	}
 	
@@ -224,13 +224,13 @@ class BBCodeUnparser extends ContentUnparser
 		$style = '';
 		$legend = '';
 		
-		if( !empty($matches[1]) )
+		if (!empty($matches[1]))
 			$style = ' style="' . $matches[1] . '"';
 		
-		if( !empty($matches[2]) )
+		if (!empty($matches[2]))
 			$legend = ' legend="' . $matches[2] . '"';
 		
-		if( !empty($legend) || !empty($style) ) 
+		if (!empty($legend) || !empty($style)) 
 			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
 		else
 			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
@@ -246,13 +246,13 @@ class BBCodeUnparser extends ContentUnparser
 		global $LANG;
 		
 		//On est dans la langue par défaut
-		if( $matches[1] == $LANG['wikipedia_subdomain'] )
+		if ($matches[1] == $LANG['wikipedia_subdomain'])
 			$lang = '';
 		else
 			$lang = $matches[1];
 			
 		//L'intitulé du lien est différent du nom de l'article
-		if( $matches[2] != $matches[3] )
+		if ($matches[2] != $matches[3])
 			$page_name = $matches[2];
 		else
 			$page_name = '';

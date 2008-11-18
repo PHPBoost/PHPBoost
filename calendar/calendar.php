@@ -49,10 +49,10 @@ $del = retrieve(GET, 'delete', false);
 $edit = retrieve(GET, 'edit', false);
 	
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
-if( $checkdate === true && empty($id) && !$add )
+if ($checkdate === true && empty($id) && !$add)
 {
 	//Redirection vers l'évenement suivant/précédent.
-	if( $get_event == 'up' )
+	if ($get_event == 'up')
 	{
 		$event_up = $Sql->query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
@@ -60,7 +60,7 @@ if( $checkdate === true && empty($id) && !$add )
 		ORDER BY timestamp 
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
-		if( !empty($event_up) )
+		if (!empty($event_up))
 		{
 			$time = gmdate_format('Ymd', $event_up);
 			$year = substr($time, 0, 4);
@@ -72,7 +72,7 @@ if( $checkdate === true && empty($id) && !$add )
 		else
 			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
-	elseif( $get_event == 'down' )
+	elseif ($get_event == 'down')
 	{
 		$event_down = $Sql->query("SELECT timestamp 
 		FROM ".PREFIX."calendar 
@@ -80,7 +80,7 @@ if( $checkdate === true && empty($id) && !$add )
 		ORDER BY timestamp DESC 
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			
-		if( !empty($event_down) )
+		if (!empty($event_down))
 		{
 			$time = gmdate_format('Ymd', $event_down);
 			$year = substr($time, 0, 4);
@@ -110,7 +110,7 @@ if( $checkdate === true && empty($id) && !$add )
 		default:
 		$errstr = '';
 	}
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
@@ -118,7 +118,7 @@ if( $checkdate === true && empty($id) && !$add )
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
 	
-	if( $User->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+	if ($User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
 	{
 		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" /></a><br />';
 	}
@@ -141,14 +141,14 @@ if( $checkdate === true && empty($id) && !$add )
 	));	
 	
 	//Génération des select.
-	for($i = 1; $i <= 12; $i++)
+	for ($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . $array_l_month[$i - 1] . '</option>'
 		));
 	}			
-	for($i = 1970; $i <= 2037; $i++)
+	for ($i = 1970; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('year', array(
@@ -162,7 +162,7 @@ if( $checkdate === true && empty($id) && !$add )
 	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year, 0) . "'
 	ORDER BY timestamp
 	" . $Sql->limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{ 
 		$day_action = gmdate_format('j', $row['timestamp']);
 		$array_action[$day_action] = true;
@@ -172,7 +172,7 @@ if( $checkdate === true && empty($id) && !$add )
 	//Génération des jours du calendrier.
 	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'], 
 	$LANG['sunday']);
-	foreach($array_l_days as $l_day)
+	foreach ($array_l_days as $l_day)
 	{
 		$Template->assign_block_vars('day', array(
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
@@ -181,15 +181,15 @@ if( $checkdate === true && empty($id) && !$add )
 	
 	//Premier jour du mois.
 	$first_day = gmdate_format('w', mktime(0, 0, 0, $month, 1, $year)); 
-	if( $first_day == 0 )
+	if ($first_day == 0)
 		$first_day = 7;
 		
 	//Génération du calendrier. 
 	$j = 1;
 	$last_day = ($month_day + $first_day);
-	for($i = 1; $i <= 42; $i++)
+	for ($i = 1; $i <= 42; $i++)
 	{
-		if( $i >= $first_day && $i < $last_day )
+		if ($i >= $first_day && $i < $last_day)
 		{
 			$action = !empty($array_action[$j]) ? '<a href="calendar' . url('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>' : $j;
 			$class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
@@ -209,7 +209,7 @@ if( $checkdate === true && empty($id) && !$add )
 	
 	
 	//Affichage de l'action pour la période du jour donné.	
-	if( !empty($day) )
+	if (!empty($day))
 	{
 		$java = '';
 		$result = $Sql->query_while("SELECT cl.id, cl.timestamp, cl.title, cl.contents, cl.user_id, cl.nbr_com, m.login
@@ -217,9 +217,9 @@ if( $checkdate === true && empty($id) && !$add )
 		LEFT JOIN ".PREFIX."member m ON m.user_id=cl.user_id
 		WHERE cl.timestamp BETWEEN '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
 		GROUP BY cl.id", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( $User->check_level(ADMIN_LEVEL) )
+			if ($User->check_level(ADMIN_LEVEL))
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
 				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
@@ -253,7 +253,7 @@ if( $checkdate === true && empty($id) && !$add )
 		}
 		$Sql->query_close($result);
 			
-		if( !isset($check_action) )
+		if (!isset($check_action))
 		{		
 			$Template->assign_block_vars('action', array(
 				'TITLE' => '&nbsp;',
@@ -270,7 +270,7 @@ if( $checkdate === true && empty($id) && !$add )
 	}
 	
 	//Affichage commentaires.
-	if( isset($_GET['com']) )
+	if (isset($_GET['com']))
 	{
 		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('calendar', $get_event, url('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
@@ -279,12 +279,12 @@ if( $checkdate === true && empty($id) && !$add )
 
 	$Template->pparse('calendar');
 }
-elseif( !empty($id) )
+elseif (!empty($id))
 {
-	if( !$User->check_level(ADMIN_LEVEL) ) //Admins seulement autorisés à editer/supprimer!
+	if (!$User->check_level(ADMIN_LEVEL)) //Admins seulement autorisés à editer/supprimer!
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
-	if( $del ) //Suppression simple.
+	if ($del) //Suppression simple.
 	{
 		$Sql->query_inject("DELETE FROM ".PREFIX."calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
@@ -293,9 +293,9 @@ elseif( !empty($id) )
 		
 		redirect(HOST . SCRIPT . SID2);
 	}
-	elseif( $edit )
+	elseif ($edit)
 	{
-		if( !empty($_POST['valid']) )
+		if (!empty($_POST['valid']))
 		{
 			$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 			$title = retrieve(POST, 'title', '');
@@ -306,14 +306,14 @@ elseif( !empty($id) )
 			$min = retrieve(POST, 'min', 0);
 			
 			$timestamp = strtotimestamp($date, $LANG['date_format_short']);
-			if( $timestamp > 0 )
+			if ($timestamp > 0)
 				$timestamp += ($hour*3600) + ($min*60);
 			else
 				$timestamp = 0;
 				
-			if( $timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59) ) //Validité de la date entrée.
+			if ($timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59)) //Validité de la date entrée.
 			{
-				if( !empty($title) && !empty($contents) ) //succès
+				if (!empty($title) && !empty($contents)) //succès
 				{
 					$Sql->query_inject("UPDATE ".PREFIX."calendar SET title = '" . $title . "', contents = '" . $contents . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 					
@@ -375,7 +375,7 @@ elseif( !empty($id) )
 				default:
 				$errstr = '';
 			}
-			if( !empty($errstr) )
+			if (!empty($errstr))
 				$Errorh->handler($errstr, E_USER_NOTICE);
 			
 			$Template->pparse('calendar');
@@ -384,12 +384,12 @@ elseif( !empty($id) )
 	else
 		redirect(HOST . SCRIPT . SID2);
 }
-elseif( $add ) //Ajout d'un évenement
+elseif ($add) //Ajout d'un évenement
 {
-	if( !$User->check_level($CONFIG_CALENDAR['calendar_auth']) ) //Autorisation de poster?
+	if (!$User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
-	if( !empty($_POST['valid']) ) //Enregistrement
+	if (!empty($_POST['valid'])) //Enregistrement
 	{
 		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 		$title = retrieve(POST, 'title', '');
@@ -400,14 +400,14 @@ elseif( $add ) //Ajout d'un évenement
 		$min = retrieve(POST, 'min', 0);
 		
 		$timestamp = strtotimestamp($date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			$timestamp += ($hour*3600) + ($min*60);
 		else
 			$timestamp = 0;
 			
-		if( $timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59) ) //Validité de la date entrée.
+		if ($timestamp > 0 && ($hour >= 0 && $hour <= 23) && ($min >= 0 && $min <= 59)) //Validité de la date entrée.
 		{
-			if( !empty($title) && !empty($contents) ) //succès
+			if (!empty($title) && !empty($contents)) //succès
 			{
 				$Sql->query_inject("INSERT INTO ".PREFIX."calendar (timestamp,title,contents,user_id,nbr_com) VALUES ('" . $timestamp . "', '" . $title . "', '" . $contents . "', '" . $User->get_attribute('user_id') . "', 0)", __LINE__, __FILE__);
 				
@@ -476,7 +476,7 @@ elseif( $add ) //Ajout d'un évenement
 			default:
 			$errstr = '';
 		}
-		if( !empty($errstr) )
+		if (!empty($errstr))
 			$Errorh->handler($errstr, E_USER_NOTICE);
 
 		$Template->pparse('calendar');

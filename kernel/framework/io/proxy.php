@@ -37,16 +37,16 @@ import('functions', LIB_IMPORT);
 $url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
 $content_type = retrieve(GET, 'ctype', '', TSTRING_UNSECURE);
 
-if( $content_type == 'iso-8859-1' )
+if ($content_type == 'iso-8859-1')
 	header('Content-type: text/html; charset=iso-8859-1');
 	
-if( !empty($url) )
+if (!empty($url))
 {
     $authorized_protocols = array('http', 'https');
     $used_protocol = explode('://', $url);
-    if( count($used_protocol) > 1 )
+    if (count($used_protocol) > 1)
     {
-        if( in_array($used_protocol[0], $authorized_protocols) )
+        if (in_array($used_protocol[0], $authorized_protocols))
         {
             echo @file_get_contents_emulate($url);
             exit(0);

@@ -30,12 +30,12 @@ require_once('../admin/admin_header.php');
 
 $install = !empty($_GET['install']) ? true : false;
 
-if( $install ) //Installation du module
+if ($install) //Installation du module
 {	
 	//Récupération de l'identifiant du module
 	$module_name = '';
-	foreach($_POST as $key => $value)
-		if( $value == $LANG['install'] )
+	foreach ($_POST as $key => $value)
+		if ($value == $LANG['install'])
 			$module_name = str_replace('module_', '', $key);
 
 	$enable_module = retrieve(POST, $module_name . 'activ', false);
@@ -56,7 +56,7 @@ if( $install ) //Installation du module
 			redirect(HOST . DIR . '/admin/admin_modules.php');
 	}
 }			
-elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	$ext_name = strrchr($_FILES['upload_module']['name'], '.');
 	$module_name = str_replace($ext_name, '', $_FILES['upload_module']['name']);
@@ -64,42 +64,42 @@ elseif( !empty($_FILES['upload_module']['name']) ) //Upload et décompression de 
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		@chmod($dir, 0755);
-	if( !is_writable($dir . $module_name) )
+	if (!is_writable($dir . $module_name))
 		@chmod($dir . $module_name, 0755);
 		
 	@clearstatcache();	
 	$error = '';
-	if( is_writable($dir) ) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-		if( empty($ckeck_module) && !is_dir('../' . $module_name) )
+		if (empty($ckeck_module) && !is_dir('../' . $module_name))
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
 				$archive_path = '../' . $Upload->filename['upload_module'];
 				//Place à la décompression.
-				if( $Upload->extension['upload_module'] == 'gzip' )
+				if ($Upload->extension['upload_module'] == 'gzip')
 				{
 					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
-					if( !$zip_files = PclTarExtract($Upload->filename['upload_module'], '../') )
+					if (!$zip_files = PclTarExtract($Upload->filename['upload_module'], '../'))
 						$error = $Upload->error;
 				}
-				elseif( $Upload->extension['upload_module'] == 'zip' )
+				elseif ($Upload->extension['upload_module'] == 'zip')
 				{
 					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
 					$Zip = new PclZip($archive_path);
-					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666) )
+					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
 				}
 				else
 					$error = 'e_upload_invalid_format';
 				
 				//Suppression de l'archive désormais inutile.
-				if( !@unlink($archive_path) )
+				if (!@unlink($archive_path))
 					$error = 'unlink_disabled';
 			}
 			else
@@ -150,9 +150,9 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//Modules installé
@@ -162,7 +162,7 @@ else
 	FROM ".PREFIX."modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$installed_modules[] = $row['name'];
 	
 	$Sql->query_close($result);
@@ -170,20 +170,20 @@ else
 	//Modules disponibles
 	$root = '../';
 	$i = 0;
-	if( is_dir($root) ) //Si le dossier existe
+	if (is_dir($root)) //Si le dossier existe
 	{
 		$dh = @opendir($root);
-		while( !is_bool($dir = readdir($dh)) )
+		while (!is_bool($dir = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($dir, '.') === false && !in_array($dir, $installed_modules) )
+			if (strpos($dir, '.') === false && !in_array($dir, $installed_modules))
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
+				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
 				{
 					//Récupération des infos de config.
 					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-					if( is_array($info_module) )
+					if (is_array($info_module))
 					{
 						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
 						$Template->assign_block_vars('available', array(
@@ -211,7 +211,7 @@ else
 		closedir($dh); //On ferme le dossier
 	}
 	
-	if( $i == 0 )
+	if ($i == 0)
 		$Template->assign_vars( array(
 			'C_NO_MODULE' => true,
 		));

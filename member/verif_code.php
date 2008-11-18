@@ -46,7 +46,7 @@ $Captcha->set_width($width);
 $Captcha->set_height($height);
 $Captcha->set_font($font);
 
-if( $Captcha->gd_loaded() )
+if ($Captcha->gd_loaded())
 	$Captcha->display();
 
 require_once('../kernel/footer_no_display.php');

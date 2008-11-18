@@ -85,11 +85,11 @@ $Template->assign_vars(array(
 ));
 
 $auth_cats = '';
-if( is_array($CAT_FORUM) )
+if (is_array($CAT_FORUM))
 {	
-	foreach($CAT_FORUM as $id => $key)
+	foreach ($CAT_FORUM as $id => $key)
 	{
-		if( !$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
 			$auth_cats .= $id . ',';
 	}
 }
@@ -103,7 +103,7 @@ $result = $Sql->query_while("SELECT id, name, level
 FROM ".PREFIX."forum_cats 
 WHERE aprob = 1 " . $auth_cats_select . "
 ORDER BY id_left", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {	
 	$margin = ($row['level'] > 0) ? str_repeat('----------', $row['level']) : '----';
 	$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -115,12 +115,12 @@ $Sql->query_close($result);
 
 require_once('../forum/forum_functions.php');
 
-if( !empty($valid_search) && !empty($search) )
+if (!empty($valid_search) && !empty($search))
 {
-	if( $idcat == '-1' )
+	if ($idcat == '-1')
 		$idcat = 0;
 	
-	if( strlen($search) >= 4 )
+	if (strlen($search) >= 4)
 	{
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
@@ -174,11 +174,11 @@ if( !empty($valid_search) && !empty($search) )
 
 		$max_relevance = 4.5;		
 		$check_result = false;
-		$result = $Sql->query_while($req, __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) ) //On execute la requête dans une boucle pour afficher tout les résultats.
+		$result = $Sql->query_while ($req, __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 		{ 
 			$title = $row['title'];
-			if( !empty($row['title']) )
+			if (!empty($row['title']))
 				$title = (strlen(html_entity_decode($row['title'])) > 45 ) ? substr_html($row['title'], 0, 45) . '...' : $row['title'];
 			
 			//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -188,10 +188,10 @@ if( !empty($valid_search) && !empty($search) )
 			$relevance = max($row['relevance'], $row['relevance2']);
 			
 			$contents = $row['contents'];
-			if( $colorate_result )
+			if ($colorate_result)
 			{
 				$array_search = explode(' ', $search);
-				foreach($array_search as $token)
+				foreach ($array_search as $token)
 				{
 					$contents =  preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $contents);
 					$title = preg_replace_callback('`(.*)(' . preg_quote($token) . ')(.*)`isU', 'token_colorate', $title);
@@ -211,7 +211,7 @@ if( !empty($valid_search) && !empty($search) )
 		}	
 		$Sql->query_close($result);
 		
-		if( $check_result !== true )
+		if ($check_result !== true)
 			$Errorh->handler($LANG['no_result'], E_USER_NOTICE);
 		else
 		{
@@ -223,7 +223,7 @@ if( !empty($valid_search) && !empty($search) )
 	else //Gestion erreur.
 		$Errorh->handler($LANG['invalid_req'], E_USER_NOTICE);
 }
-elseif( !empty($valid_search) )
+elseif (!empty($valid_search))
 	$Errorh->handler($LANG['invalid_req'], E_USER_WARNING);
 	
 //Listes les utilisateurs en lignes.
@@ -233,7 +233,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/search.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

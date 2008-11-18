@@ -47,10 +47,10 @@ class Sql
 	function connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
 		//Identification sur le serveur
-		if( $this->link = @mysql_connect($sql_host, $sql_login, $sql_pass) )
+		if ($this->link = @mysql_connect($sql_host, $sql_login, $sql_pass))
 		{
 			//Sélection de la base de données
-			if( @mysql_select_db($sql_base, $this->link) )
+			if (@mysql_select_db($sql_base, $this->link))
 			{
 				$this->connected = true;
 				$this->sql_base = $sql_base;
@@ -59,7 +59,7 @@ class Sql
 			else
 			{
 				//Traitement des erreurs
-				if( $errors_management )
+				if ($errors_management)
 					$this->_error('', 'Can\t select database!', __LINE__, __FILE__);
 				else
 					return UNEXISTING_DATABASE;
@@ -68,7 +68,7 @@ class Sql
 		//La connexion a échoué
 		else
 		{
-			if( $errors_management )
+			if ($errors_management)
 				$this->_error('', 'Can\'t connect to database!', __LINE__, __FILE__);
 			else
 				return CONNECTION_FAILED;
@@ -82,7 +82,7 @@ class Sql
 		@require_once(PATH_TO_ROOT . '/kernel/auth/config.php');
 		
 		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
-		if( !defined('PHPBOOST_INSTALLED') )
+		if (!defined('PHPBOOST_INSTALLED'))
 		{
 		    import('util/unusual_functions', LIB_IMPORT);
 		    redirect(get_server_url_page('install/install.php'));
@@ -113,12 +113,12 @@ class Sql
 		$table = func_get_arg(0);
 		$nbr_arg = func_num_args();
 
-		if( func_get_arg(1) !== '*' )
+		if (func_get_arg(1) !== '*')
 		{
 			$nbr_arg_field_end = ($nbr_arg - 4);			
-			for($i = 1; $i <= $nbr_arg_field_end; $i++)
+			for ($i = 1; $i <= $nbr_arg_field_end; $i++)
 			{
-				if( $i > 1)
+				if ($i > 1)
 					$field .= ', ' . func_get_arg($i);
 				else
 					$field = func_get_arg($i);
@@ -153,7 +153,7 @@ class Sql
 	}
 
 	//Requête de boucle.
-	function query_while($query, $errline, $errfile) 
+	function query_while ($query, $errline, $errfile) 
 	{
 		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
 		$this->req++;
@@ -190,7 +190,7 @@ class Sql
     {
         $nbr_args = func_num_args();
         $concatString = func_get_arg(0);
-        for($i = 1; $i < $nbr_args; $i++)
+        for ($i = 1; $i < $nbr_args; $i++)
             $concatString = 'CONCAT(' . $concatString . ',' . func_get_arg($i) . ')';
         
         return ' ' . $concatString . ' ';
@@ -235,14 +235,14 @@ class Sql
 	//Déchargement mémoire.
 	function query_close($result)
 	{
-		if( is_resource($result) )
+		if (is_resource($result))
 			return mysql_free_result($result);
 	}
 
 	//Fermeture de la connexion mysql ouverte.
 	function close()
 	{
-		if( $this->connected ) // si la connexion est établie
+		if ($this->connected) // si la connexion est établie
 		{
 			$this->connected = false;
 			return mysql_close($this->link); // on ferme la connexion ouverte.
@@ -252,11 +252,11 @@ class Sql
 	//Liste les champs d'une table.
 	function list_fields($table)
 	{
-		if( !empty($table) )
+		if (!empty($table))
 		{
 			$array_fields_name = array();
-			$result = $this->query_while("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
-			while( $row = mysql_fetch_row($result) ) 
+			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
+			while ($row = mysql_fetch_row($result)) 
 				$array_fields_name[] = $row[0];
 			return $array_fields_name;
 		}
@@ -269,8 +269,8 @@ class Sql
 	{
 		$array_tables = array();
 		
-		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
-		while( $row = mysql_fetch_row($result) )
+		$result = $this->query_while ("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
+		while ($row = mysql_fetch_row($result))
 		{	
 			$array_tables[$row[0]] = array(
 				'name' => $row[0], 
@@ -293,24 +293,24 @@ class Sql
 	function parse($file_path, $tableprefix = '')
 	{
 		$handle_sql = @fopen($file_path, 'r');
-		if( $handle_sql ) 
+		if ($handle_sql) 
 		{
 			$req = '';
-			while( !feof($handle_sql) ) 
+			while (!feof($handle_sql)) 
 			{		
 				$sql_line = trim(fgets($handle_sql));
 				//Suppression des lignes vides, et des commentaires.
-				if( !empty($sql_line) && substr($sql_line, 0, 2) !== '--' )
+				if (!empty($sql_line) && substr($sql_line, 0, 2) !== '--')
 				{		
 					//On vérifie si la ligne est une commande SQL.
-					if( substr($sql_line, -1) == ';' )
+					if (substr($sql_line, -1) == ';')
 					{
-						if( empty($req) )
+						if (empty($req))
 							$req = $sql_line;
 						else
 							$req .= ' ' . $sql_line;
 							
-						if( !empty($tableprefix) )
+						if (!empty($tableprefix))
 							$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);						
 						else
 							$this->query_inject($req, __LINE__, __FILE__);						
@@ -392,7 +392,7 @@ class Sql
 		
 		$result = array();
 		
-		while( $row = mysql_fetch_assoc($db_list) )
+		while ($row = mysql_fetch_assoc($db_list))
 			$result[] = $row['Database'];
 		
 		return $result;

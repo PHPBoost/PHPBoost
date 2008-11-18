@@ -38,7 +38,7 @@ $top = retrieve(GET, 'top', '');
 $bottom = retrieve(GET, 'bot', '');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(FLOOD_FORUM, EDIT_MARK_FORUM, TRACK_TOPIC_FORUM, ADMIN_NOAUTH_DEFAULT);

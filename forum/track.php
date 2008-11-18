@@ -37,12 +37,12 @@ require_once('../kernel/header.php');
 $page = retrieve(GET, 'p', 1);
 
 //Redirection changement de catégorie.
-if( !empty($_POST['change_cat']) )
+if (!empty($_POST['change_cat']))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if( !$User->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 	
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -54,20 +54,20 @@ if( !empty($_POST['valid']) )
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$pm = (isset($_POST['p' . $row['id']]) && $_POST['p' . $row['id']] == 'on') ? 1 : 0;
-		if( $row['pm'] != $pm )
+		if ($row['pm'] != $pm)
 			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
-		if( $row['mail'] != $mail )
+		if ($row['mail'] != $mail)
 			$Sql->query_inject("UPDATE ".PREFIX."forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
-		if( $del )
+		if ($del)
 			$Sql->query_inject("DELETE FROM ".PREFIX."forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
 	}
 	$Sql->query_close($result);
 	
 	redirect(HOST . DIR . '/forum/track.php' . SID2);
 }
-elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_track'=> 'forum/forum_track.tpl',
@@ -102,12 +102,12 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'announce';		
 		$new_msg = false;
-		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
+		if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 		{		
 			$img_announce =  'new_' . $img_announce; 
 			$new_msg = true;
 		}
-		if( $row['type'] == '0' && $row['status'] != '0' ) //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
+		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
 			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';			
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
@@ -115,7 +115,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
-		if( !empty($row['last_view_id']) ) 
+		if (!empty($row['last_view_id'])) 
 		{
 			$last_msg_id = $row['last_view_id']; 
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
@@ -168,7 +168,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 	WHERE tr.user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	//Le membre a déjà lu tous les messages.
-	if( $nbr_topics == 0 )
+	if ($nbr_topics == 0)
 	{
 		$Template->assign_vars(array(
 			'C_NO_TRACKED_TOPICS' => true,
@@ -212,7 +212,7 @@ elseif( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) 
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/track.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		

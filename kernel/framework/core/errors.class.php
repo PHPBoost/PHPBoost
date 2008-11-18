@@ -43,12 +43,12 @@ class Errors
 		
 		//Récupération de l'adresse de redirection => constantes non initialisées.
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-		if( !$server_path )
+		if (!$server_path)
 			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 		$server_path = trim(dirname($server_path));
 		
 		$nbr_occur = substr_count(PATH_TO_ROOT, '..'); //On supprime les x dossiers par rapport au PATH_TO_ROOT
-		for($i = 0; $i < $nbr_occur; $i++)
+		for ($i = 0; $i < $nbr_occur; $i++)
 			$server_path = str_replace(substr(strrchr($server_path, '/'), 0), '', $server_path);
 		$this->redirect = 'http://' . $_SERVER['HTTP_HOST'] . $server_path;
 		
@@ -61,11 +61,11 @@ class Errors
 	{
 		global $LANG, $CONFIG;
 		
-		if( !($errno & ERROR_REPORTING) ) //Niveau de repport d'erreur.
+		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
 			return true;
 		
 		//Si une erreur est supprimé par un @ alors on passe
-		if( error_reporting() == 0 ) 
+		if (error_reporting() == 0) 
 			return true;
 		
 		switch($errno)
@@ -109,7 +109,7 @@ class Errors
 		$this->_error_log($errfile, $errline, $errno, $errstr, true);
 		
 		//Dans le cas d'un E_USER_ERROR on arrête l'execution
-		if( $errno == E_USER_ERROR )
+		if ($errno == E_USER_ERROR)
 			exit;
 		
 		//on ne veut pas que le gestionnaire d'erreur de php s'occupe de l'erreur en question
@@ -122,7 +122,7 @@ class Errors
 		global $LANG, $Template;
 		
 		//Parsage du bloc seulement si une erreur à afficher.
-		if( !empty($errstr) )
+		if (!empty($errstr))
 		{		
 			switch($errno) 
 			{
@@ -169,9 +169,9 @@ class Errors
 				//Enregistrement de l'erreur fatale dans tout les cas.
 				$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
 				
-                if( $stop )
+                if ($stop)
                 {
-                    if( !empty($Session) && is_object($Session) )
+                    if (!empty($Session) && is_object($Session))
                         redirect($this->redirect . '/member/fatal' . url('.php?error=' . $error_id, '', '&'));
                     else
                         redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
@@ -180,7 +180,7 @@ class Errors
 			}
 		
 			//Enregistrement de l'erreur si demandé.			
-			if( $archive )
+			if ($archive)
 				return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
@@ -192,19 +192,19 @@ class Errors
 	{
 		$errinfo = '';		
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
-		if( $handle ) 
+		if ($handle) 
 		{
 			$i = 1;
-			while( !feof($handle) ) 
+			while (!feof($handle)) 
 			{
 				$buffer = fgets($handle, 4096);
-				if( $i == 2 )
+				if ($i == 2)
 					$errinfo['errno'] = $buffer;
-				if( $i == 3 )
+				if ($i == 3)
 					$errinfo['errstr'] = $buffer;
-				if( $i == 4 )
+				if ($i == 4)
 					$errinfo['errfile'] = $buffer;
-				if( $i == 5 )
+				if ($i == 5)
 				{
 					$errinfo['errline'] = $buffer;		
 					$i = 0;	
@@ -252,7 +252,7 @@ class Errors
 	//Enregistre l'erreur dans le fichier de log.
 	function _error_log($errfile, $errline, $errno, $errstr, $archive)
 	{		
-		if( $archive || $this->archive_all )
+		if ($archive || $this->archive_all)
 		{				
 			//Nettoyage de la chaîne avant enregistrement.
 			$errstr = $this->_clean_error_string($errstr);

@@ -30,7 +30,7 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid'])  )
+if (!empty($_POST['valid']) )
 {
 	$CONFIG_UPLOADS = array();
 	$CONFIG_UPLOADS['size_limit'] = isset($_POST['size_limit']) ? max(numeric($_POST['size_limit'], 'float') * 1024, 1) : 500;
@@ -38,11 +38,11 @@ if( !empty($_POST['valid'])  )
 	$auth_extensions = isset($_POST['auth_extensions']) ? $_POST['auth_extensions'] : array();
 	$auth_extensions_sup = !empty($_POST['auth_extensions_sup']) ? preg_split('`, ?`', trim($_POST['auth_extensions_sup'])) : '';
 
-	if( is_array($auth_extensions_sup) )
+	if (is_array($auth_extensions_sup))
 	{	
-		foreach($auth_extensions_sup as $extension)
+		foreach ($auth_extensions_sup as $extension)
 		{
-			if( !isset($auth_extensions[$extension]) && $extension != 'php' ) 
+			if (!isset($auth_extensions[$extension]) && $extension != 'php') 
 				array_push($auth_extensions, $extension);
 		}
 	}
@@ -84,15 +84,15 @@ else
 
 	$i = 0;
 	$auth_extensions = '';
-	foreach($array_extensions_type as $file_type => $array_extensions)
+	foreach ($array_extensions_type as $file_type => $array_extensions)
 	{
 		$auth_extensions .= '<optgroup label="' . $file_type . '">';
-		foreach($array_extensions as $key => $extension)
+		foreach ($array_extensions as $key => $extension)
 		{
 			$extension_key = array_search($extension, $CONFIG_UPLOADS['auth_extensions']);
 			$selected = ($extension_key !== false) ? ' selected="selected"' : '';
 			$auth_extensions .= '<option value="' . $extension . '" id="ext' . $i . '"' . $selected . '>' . $extension . '</option>';
-			if( isset($array_ext_sup[$extension_key]) )
+			if (isset($array_ext_sup[$extension_key]))
 				unset($array_ext_sup[$extension_key]);
 			$i++;
 		}

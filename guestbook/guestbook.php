@@ -34,32 +34,32 @@ $guestbook = retrieve(POST, 'guestbook', false);
 //Chargement du cache
 $Cache->load('guestbook');
 		
-if( $guestbook && empty($id_get) ) //Enregistrement
+if ($guestbook && empty($id_get)) //Enregistrement
 {
 	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Membre en lecture seule?
-	if( $User->get_attribute('user_readonly') > time() ) 
+	if ($User->get_attribute('user_readonly') > time()) 
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
-	if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
+	if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 	{	
 		//Accès pour poster.			
-		if( $User->check_level($CONFIG_GUESTBOOK['guestbook_auth']) )
+		if ($User->check_level($CONFIG_GUESTBOOK['guestbook_auth']))
 		{
 			//Mod anti-flood
 			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-			if( !empty($check_time) )
+			if (!empty($check_time))
 			{			
-				if( $check_time >= (time() - $CONFIG['delay_flood']) ) //On calcul la fin du delai.	
+				if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcul la fin du delai.	
 					redirect(HOST . SCRIPT . url('?error=flood', '', '&') . '#errorh');
 			}
 
 			$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
-			if( !check_nbr_links($guestbook_pseudo, 0) ) //Nombre de liens max dans le pseudo.
+			if (!check_nbr_links($guestbook_pseudo, 0)) //Nombre de liens max dans le pseudo.
 				redirect(HOST . SCRIPT . url('?error=l_pseudo', '', '&') . '#errorh');
-			if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
+			if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 			$Sql->query_inject("INSERT INTO ".PREFIX."guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
@@ -73,7 +73,7 @@ if( $guestbook && empty($id_get) ) //Enregistrement
 	else
 		redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 }
-elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
+elseif (retrieve(POST, 'previs', false)) //Prévisualisation.
 {
 	$Template->set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
@@ -85,7 +85,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Pseudo du membre connecté.
-	if( $user_id !== -1)
+	if ($user_id !== -1)
 		$Template->assign_block_vars('hidden_guestbook', array(
 			'PSEUDO' => $guestbook_pseudo
 		));
@@ -124,7 +124,7 @@ elseif( retrieve(POST, 'previs', false) ) //Prévisualisation.
 	
 	$Template->pparse('guestbook'); 
 }
-elseif( !empty($id_get) ) //Edition + suppression!
+elseif (!empty($id_get)) //Edition + suppression!
 {
 	$del = retrieve(GET, 'del', false);
 	$edit = retrieve(GET, 'edit', false);
@@ -133,9 +133,9 @@ elseif( !empty($id_get) ) //Edition + suppression!
 	$row = $Sql->query_array('guestbook', '*', 'WHERE id="' . $id_get . '"', __LINE__, __FILE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
-	if( $User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
+	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	{
-		if( $del ) //Suppression.
+		if ($del) //Suppression.
 		{
 			$Sql->query_inject("DELETE FROM ".PREFIX."guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 			$previous_id = $Sql->query("SELECT MAX(id) FROM ".PREFIX."guestbook", __LINE__, __FILE__);
@@ -144,13 +144,13 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $previous_id);
 		}
-		elseif( $edit )
+		elseif ($edit)
 		{
 			$Template->set_filenames(array(
 				'guestbook'=> 'guestbook/guestbook.tpl'
 			));
 
-			if( $row['user_id'] !== -1 )
+			if ($row['user_id'] !== -1)
 				$Template->assign_vars(array(
 					'C_HIDDEN_GUESTBOOK' => true,
 					'PSEUDO' => $row['login']
@@ -181,14 +181,14 @@ elseif( !empty($id_get) ) //Edition + suppression!
 			
 			$Template->pparse('guestbook'); 
 		}
-		elseif( $update )
+		elseif ($update)
 		{
 			$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
 			$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
-			if( !empty($guestbook_contents) && !empty($guestbook_pseudo) )
+			if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 			{
 				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']); 			
-				if( !check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link']) ) //Nombre de liens max dans le message.
+				if (!check_nbr_links($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_max_link'])) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
 				$Sql->query_inject("UPDATE ".PREFIX."guestbook SET contents = '" . $guestbook_contents . "', login = '" . $guestbook_pseudo . "' WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -213,7 +213,7 @@ else //Affichage.
 	));
 		
 	//Pseudo du membre connecté.
-	if( $User->get_attribute('user_id') !== -1 )
+	if ($User->get_attribute('user_id') !== -1)
 		$Template->assign_vars(array(
 			'C_HIDDEN_GUESTBOOK' => true,
 			'PSEUDO' => $User->get_attribute('login')
@@ -246,7 +246,7 @@ else //Affichage.
 		default:
 		$errstr = '';
 	}
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
@@ -293,21 +293,21 @@ else //Affichage.
 		$is_modo = $User->check_level(MODO_LEVEL);
 		$warning = '';
 		$readonly = '';
-		if( $is_modo && !$is_guest ) //Modération.
+		if ($is_modo && !$is_guest) //Modération.
 		{
 			$warning = '&nbsp;<a href="../member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>'; 
 			$readonly = '<a href="../member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>'; 
 		}
 		
 		//Edition/suppression.
-		if( $is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
+		if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 		{
 			$edit = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
 			$del = '&nbsp;&nbsp;<a href="../guestbook/guestbook' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
-		if( !$is_guest ) 
+		if (!$is_guest) 
 			$guestbook_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 		else
 			$guestbook_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
@@ -316,13 +316,13 @@ else //Affichage.
 		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 		$user_group = $user_rank;
 		$user_rank_icon = '';
-		if( $row['level'] === '2' ) //Rang spécial (admins).  
+		if ($row['level'] === '2') //Rang spécial (admins).  
 		{
 			$user_rank = $_array_rank[-2][0];
 			$user_group = $user_rank;
 			$user_rank_icon = $_array_rank[-2][1];
 		}
-		elseif( $row['level'] === '1' ) //Rang spécial (modos).  
+		elseif ($row['level'] === '1') //Rang spécial (modos).  
 		{
 			$user_rank = $_array_rank[-1][0];
 			$user_group = $user_rank;
@@ -330,9 +330,9 @@ else //Affichage.
 		}
 		else
 		{
-			foreach($_array_rank as $msg => $ranks_info)
+			foreach ($_array_rank as $msg => $ranks_info)
 			{
-				if( $msg >= 0 && $msg <= $row['user_msg'] )
+				if ($msg >= 0 && $msg <= $row['user_msg'])
 				{ 
 					$user_rank = $ranks_info[0];
 					$user_rank_icon = $ranks_info[1];
@@ -345,13 +345,13 @@ else //Affichage.
 		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 					
 		//Affichage des groupes du membre.		
-		if( !empty($row['user_groups']) && $_array_groups_auth ) 
+		if (!empty($row['user_groups']) && $_array_groups_auth) 
 		{	
 			$user_groups = '';
 			$array_user_groups = explode('|', $row['user_groups']);
-			foreach($_array_groups_auth as $idgroup => $array_group_info)
+			foreach ($_array_groups_auth as $idgroup => $array_group_info)
 			{
-				if( is_numeric(array_search($idgroup, $array_user_groups)) )
+				if (is_numeric(array_search($idgroup, $array_user_groups)))
 					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 			}
 		}
@@ -362,23 +362,23 @@ else //Affichage.
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
 		
 		//Avatar			
-		if( empty($row['user_avatar']) ) 
+		if (empty($row['user_avatar'])) 
 			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
 		//Affichage du sexe et du statut (connecté/déconnecté).	
 		$user_sex = '';
-		if( $row['user_sex'] == 1 )	
+		if ($row['user_sex'] == 1)	
 			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
-		elseif( $row['user_sex'] == 2 ) 
+		elseif ($row['user_sex'] == 2) 
 			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 				
 		//Nombre de message.
 		$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
 		
 		//Localisation.
-		if( !empty($row['user_local']) ) 
+		if (!empty($row['user_local'])) 
 		{
 			$user_local = $LANG['place'] . ': ' . $row['user_local'];
 			$user_local = $user_local > 15 ? htmlentities(substr(html_entity_decode($user_local), 0, 15)) . '...<br />' : $user_local . '<br />';			

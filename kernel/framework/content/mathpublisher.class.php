@@ -294,12 +294,12 @@ function tableau_expression($expression)
 	//stupid code but token_get_all bug in some php versions
 	$d = 0;
 	$size_t = count($t);
-	for($i = 0; $i < $size_t; $i++)
+	for ($i = 0; $i < $size_t; $i++)
 	{
-		if( is_array($t[$i]) ) 
+		if (is_array($t[$i])) 
 		$t[$i] = $t[$i][1];
 		
-		if( preg_match('`formula`', $t[$i]) )
+		if (preg_match('`formula`', $t[$i]))
 		{
 			$d = $i + 2;
 			break;
@@ -307,36 +307,36 @@ function tableau_expression($expression)
 	}
 	
 	$size_t = count($t) - 1;
-	for($i = $d; $i < $size_t; $i++)
+	for ($i = $d; $i < $size_t; $i++)
 	{
-		if( is_array($t[$i]) ) $t[$i] = $t[$i][1];
-		if( $t[$i] == '<=' ) $t[$i] = 'le';
-		elseif( $t[$i] == '!=' ) $t[$i] = 'ne';
-		elseif( $t[$i] == '<>' ) $t[$i] = 'ne';
-		elseif( $t[$i] == '>=' ) $t[$i] = 'ge';
-		elseif( $t[$i] == '--' )
+		if (is_array($t[$i])) $t[$i] = $t[$i][1];
+		if ($t[$i] == '<=') $t[$i] = 'le';
+		elseif ($t[$i] == '!=') $t[$i] = 'ne';
+		elseif ($t[$i] == '<>') $t[$i] = 'ne';
+		elseif ($t[$i] == '>=') $t[$i] = 'ge';
+		elseif ($t[$i] == '--')
 		{
 			$t[$i] = '-';
 			$t[$i+1] = '-' . $t[$i+1];
 		}
-		elseif( $t[$i] == '++' ) $t[$i] = '+';
-		elseif( $t[$i] == '-' )
+		elseif ($t[$i] == '++') $t[$i] = '+';
+		elseif ($t[$i] == '-')
 		{
-			if( $t[$i - 1] == '^' || $t[$i - 1] == '_' || $t[$i - 1] == '*' || $t[$i - 1] == '/' || $t[$i - 1] == '+' || $t[$i - 1] == '(' )
+			if ($t[$i - 1] == '^' || $t[$i - 1] == '_' || $t[$i - 1] == '*' || $t[$i - 1] == '/' || $t[$i - 1] == '+' || $t[$i - 1] == '(')
 			{
 				$t[$i] = '';
-				if( is_array($t[$i+1]) ) 
+				if (is_array($t[$i+1])) 
 				$t[$i+1][1] = '-' . $t[$i+1][1];
 				else 
 				$t[$i+1] = '-' . $t[$i+1];
 			}
 		}
-		if( trim($t[$i]) != '' ) 
+		if (trim($t[$i]) != '') 
 		$extraits[] = $t[$i];
 	}
 	
 	$size_extraits = count($extraits);
-	for($i = 0; $i < $size_extraits; $i++)
+	for ($i = 0; $i < $size_extraits; $i++)
 	{
 		$result[] = new expression_texte($extraits[$i]);
 	}
@@ -403,17 +403,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if( $rgb !=$tmp_blanc )
+				if ($rgb !=$tmp_blanc)
 				{
 					$toutblanc=false;
-					if( $sy == -1 ) $sy = $y;
+					if ($sy == -1) $sy = $y;
 					else $ey = $y;
 					
-					if( $sx == -1 ) $sx = $x;
+					if ($sx == -1) $sx = $x;
 					else
 					{
-						if( $x < $sx ) $sx = $x;
-						else if( $x > $ex ) $ex = $x;
+						if ($x < $sx) $sx = $x;
+						else if ($x > $ex) $ex = $x;
 					}
 				}
 			}
@@ -449,17 +449,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if( $rgb !=$tmp_blanc )
+				if ($rgb !=$tmp_blanc)
 				{
 					$toutblanc=false;
-					if( $sy == -1 ) $sy = $y;
+					if ($sy == -1) $sy = $y;
 					else $ey = $y;
 					
-					if( $sx == -1 ) $sx = $x;
+					if ($sx == -1) $sx = $x;
 					else
 					{
-						if( $x < $sx ) $sx = $x;
-						else if( $x > $ex ) $ex = $x;
+						if ($x < $sx) $sx = $x;
+						else if ($x > $ex) $ex = $x;
 					}
 				}
 			}
@@ -475,11 +475,11 @@ function affiche_symbol($texte,$haut)
 		break;
 	case '_dintegrale':
 	case '_tintegrale':
-		if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-		elseif( is_numeric($texte) ) $font = DIR_FONT."/cmr10.ttf";
+		if (isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
+		elseif (is_numeric($texte)) $font = DIR_FONT."/cmr10.ttf";
 		else $font = DIR_FONT."/cmmi10.ttf";
 		$t=6;
-		if(isset($symboles[$texte])) $texte = $symboles[$texte];
+		if (isset($symboles[$texte])) $texte = $symboles[$texte];
 		
 		do
 		{
@@ -505,17 +505,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if( $rgb !=$tmp_blanc )
+				if ($rgb !=$tmp_blanc)
 				{
 					$toutblanc=false;
-					if( $sy == -1 ) $sy = $y;
+					if ($sy == -1) $sy = $y;
 					else $ey = $y;
 					
-					if( $sx == -1 ) $sx = $x;
+					if ($sx == -1) $sx = $x;
 					else
 					{
-						if( $x < $sx ) $sx = $x;
-						else if( $x > $ex ) $ex = $x;
+						if ($x < $sx) $sx = $x;
+						else if ($x > $ex) $ex = $x;
 					}
 				}
 			}
@@ -523,7 +523,7 @@ function affiche_symbol($texte,$haut)
 		
 		$nx = abs($ex - $sx);
 		$ny = abs($ey - $sy);
-		if( $toutblanc )
+		if ($toutblanc)
 		{
 			$img = ImageCreate(1, max($haut, 1));
 			$blanc=ImageColorAllocate($img, 255, 255, 255);
@@ -540,11 +540,11 @@ function affiche_symbol($texte,$haut)
 		}
 		break;
 	default:
-		if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-		elseif( is_numeric($texte) ) $font = DIR_FONT."/cmr10.ttf";
+		if (isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
+		elseif (is_numeric($texte)) $font = DIR_FONT."/cmr10.ttf";
 		else $font = DIR_FONT."/cmmi10.ttf";
 		$t=6;
-		if(isset($symboles[$texte])) $texte = $symboles[$texte];
+		if (isset($symboles[$texte])) $texte = $symboles[$texte];
 		
 		do
 		{
@@ -571,17 +571,17 @@ function affiche_symbol($texte,$haut)
 			for ($x = 0; $x < $tmp_largeur; $x++)
 			{
 				$rgb = ImageColorAt($tmp_img, $x, $y);
-				if( $rgb !=$tmp_blanc )
+				if ($rgb !=$tmp_blanc)
 				{
 					$toutblanc=false;
-					if( $sy == -1 ) $sy = $y;
+					if ($sy == -1) $sy = $y;
 					else $ey = $y;
 					
-					if( $sx == -1 ) $sx = $x;
+					if ($sx == -1) $sx = $x;
 					else
 					{
-						if( $x < $sx ) $sx = $x;
-						else if( $x > $ex ) $ex = $x;
+						if ($x < $sx) $sx = $x;
+						else if ($x > $ex) $ex = $x;
 					}
 				}
 			}
@@ -589,7 +589,7 @@ function affiche_symbol($texte,$haut)
 		
 		$nx = abs($ex - $sx);
 		$ny = abs($ey - $sy);
-		if( $toutblanc )
+		if ($toutblanc)
 		{
 			$img = ImageCreate(1, max($haut, 1));
 			$blanc=ImageColorAllocate($img, 255, 255, 255);
@@ -638,10 +638,10 @@ function affiche_math($texte, $taille)
 	global $symboles, $fontesmath;
 
 	$texte=stripslashes($texte);
-	if(isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
-	elseif( preg_match('`[a-z]`i', $texte) ) $font = DIR_FONT."/cmmi10.ttf";
+	if (isset($fontesmath[$texte])) $font = DIR_FONT."/".$fontesmath[$texte].".ttf";
+	elseif (preg_match('`[a-z]`i', $texte)) $font = DIR_FONT."/cmmi10.ttf";
 	else $font = DIR_FONT."/cmr10.ttf";
-	if(isset($symboles[$texte])) $texte = $symboles[$texte];
+	if (isset($symboles[$texte])) $texte = $symboles[$texte];
 	$htexte = 'dg'.$texte;
 	$hdim = ImageTTFBBox($taille, 0, $font, $htexte);
 	$wdim = ImageTTFBBox($taille, 0, $font, $texte); 
@@ -747,28 +747,28 @@ class expression_math extends  expression
 
 	function strparse()
 	{
-		if( count($this->noeuds) <= 3 ) return $this->noeuds;
+		if (count($this->noeuds) <= 3) return $this->noeuds;
 		$ret = array();
 		$parentheses = array();
 		
 		$size_noeud = count($this->noeuds);
-		for($i = 0; $i < $size_noeud; $i++)
+		for ($i = 0; $i < $size_noeud; $i++)
 		{
-			if($this->noeuds[$i]->texte == '(' || $this->noeuds[$i]->texte == '{') array_push($parentheses, $i);
-			elseif($this->noeuds[$i]->texte == ')' || $this->noeuds[$i]->texte == '}')
+			if ($this->noeuds[$i]->texte == '(' || $this->noeuds[$i]->texte == '{') array_push($parentheses, $i);
+			elseif ($this->noeuds[$i]->texte == ')' || $this->noeuds[$i]->texte == '}')
 			{
 				$pos = array_pop($parentheses);
-				if( count($parentheses) == 0 )
+				if (count($parentheses) == 0)
 				{
 					$sub = array_slice($this->noeuds, $pos + 1, $i - $pos - 1);
-					if($this->noeuds[$i]->texte == ')') 
+					if ($this->noeuds[$i]->texte == ')') 
 					{
 						$ret[] = new expression_math(array(new expression_texte("("), new expression_math($sub), new expression_texte(")")));
 					}
 					else $ret[] = new expression_math($sub);
 				}
 			}
-			elseif(count($parentheses) == 0) $ret[] = $this->noeuds[$i];
+			elseif (count($parentheses) == 0) $ret[] = $this->noeuds[$i];
 		}
 		
 		$ret = $this->traite_fonction($ret, 'sqrt', 1);
@@ -809,13 +809,13 @@ class expression_math extends  expression
 		{
 			$change = false;
 			
-			if( count($noeuds) <= 3 ) return $noeuds;
+			if (count($noeuds) <= 3) return $noeuds;
 			$ret = array();
 			
 			$size_noeud = count($noeuds);
-			for($i = 0; $i < $size_noeud; $i++)
+			for ($i = 0; $i < $size_noeud; $i++)
 			{
-				if( !$change && $i < count($noeuds) - 2 && $noeuds[$i+1]->texte == $operation )
+				if (!$change && $i < count($noeuds) - 2 && $noeuds[$i+1]->texte == $operation)
 				{
 					$ret[] = new expression_math(array($noeuds[$i], $noeuds[$i+1], $noeuds[$i+2]));
 					$i += 2;
@@ -826,23 +826,23 @@ class expression_math extends  expression
 			}
 			$noeuds = $ret;
 		}
-		while($change);
+		while ($change);
 		
 		return $ret;
 	}
 
 	function traite_fonction($noeuds, $fonction, $nbarg)
 	{
-		if( count($noeuds) <= $nbarg + 1 ) return $noeuds;
+		if (count($noeuds) <= $nbarg + 1) return $noeuds;
 		$ret = array();
 		
 		$size_noeud = count($noeuds);
-		for($i = 0; $i < $size_noeud; $i++)
+		for ($i = 0; $i < $size_noeud; $i++)
 		{
-			if($i < count($noeuds) - $nbarg && $noeuds[$i]->texte == $fonction)
+			if ($i < count($noeuds) - $nbarg && $noeuds[$i]->texte == $fonction)
 			{
 				$a = array();
-				for($j = $i; $j <= $i + $nbarg; $j++)
+				for ($j = $i; $j <= $i + $nbarg; $j++)
 				$a[] = $noeuds[$j];
 				$ret[] = new expression_math($a);
 				$i += $nbarg;
@@ -888,11 +888,11 @@ class expression_math extends  expression
 			}
 			break;
 		case 3:
-			if( $this->noeuds[0]->texte=="lim" ) 
+			if ($this->noeuds[0]->texte=="lim") 
 			{
 				$this->dessine_limite($taille);
 			}
-			elseif( $this->noeuds[0]->texte=="root" ) 
+			elseif ($this->noeuds[0]->texte=="root") 
 			{
 				$this->dessine_root($taille);
 			}
@@ -980,9 +980,9 @@ class expression_math extends  expression
 		
 		$img = array();
 		$size_noeud = count($this->noeuds);
-		for($i = 0; $i < $size_noeud; $i++)
+		for ($i = 0; $i < $size_noeud; $i++)
 		{
-			if( $this->noeuds[$i]->texte != '(' && $this->noeuds[$i]->texte != ')' )
+			if ($this->noeuds[$i]->texte != '(' && $this->noeuds[$i]->texte != ')')
 			{
 				$this->noeuds[$i]->dessine($taille);
 				$img[$i] = $this->noeuds[$i]->image;
@@ -997,11 +997,11 @@ class expression_math extends  expression
 		$parf = parenthese(max($dessus, $dessous) * 2, ")");
 		
 		$size_noeud = count($this->noeuds);
-		for($i = 0; $i < $size_noeud; $i++)
+		for ($i = 0; $i < $size_noeud; $i++)
 		{
-			if( !isset($img[$i]) )
+			if (!isset($img[$i]))
 			{
-				if( $this->noeuds[$i]->texte == "(" ) $img[$i] = $paro;
+				if ($this->noeuds[$i]->texte == "(") $img[$i] = $paro;
 				else $img[$i] = $parf;
 				$dessus=max(imagesy($img[$i])/2, $dessus);
 				$base[$i]=imagesy($img[$i])/2;
@@ -1020,9 +1020,9 @@ class expression_math extends  expression
 		$pos = 0;
 		
 		$size_img = count($img);
-		for($i = 0; $i < $size_img; $i++)
+		for ($i = 0; $i < $size_img; $i++)
 		{
-			if(isset($img[$i]))
+			if (isset($img[$i]))
 			{
 				Imagecopy($result, $img[$i],$pos,$dessus-$base[$i], 0, 0,imagesx($img[$i]), imagesy($img[$i]));
 				$pos += imagesx($img[$i]);
@@ -1070,7 +1070,7 @@ class expression_math extends  expression
 		$largeur1=imagesx($img1);
 		$largeur2=imagesx($img2);
 		$largeur =$largeur1 + $largeur2;
-		if( $hauteur1 >= $hauteur2 )
+		if ($hauteur1 >= $hauteur2)
 		{
 			$hauteur = ceil($hauteur2/2 + $hauteur1);
 			$this->base_verticale=$hauteur2/2 + $base1;
@@ -1112,7 +1112,7 @@ class expression_math extends  expression
 		$largeur2 = imagesx($img2);
 		$largeur = $largeur1 + $largeur2;
 		
-		if( $hauteur1 >= $hauteur2 )
+		if ($hauteur1 >= $hauteur2)
 		{
 			$hauteur = ceil($hauteur2/2+$hauteur1);
 			$this->base_verticale=$base1;
@@ -1345,23 +1345,23 @@ class expression_math extends  expression
 		$largeur_case=0;
 		$hauteur_case=0;
 
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$hauteur_ligne[$ligne]=0;
 			$dessus_ligne[$ligne]=0;
 		}
 		
-		for($col = 0; $col <$nbcolonne; $col++)
+		for ($col = 0; $col <$nbcolonne; $col++)
 		{
 			$largeur_colonne[$col]=0;
 		}
 		
 		$i=0;
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
-			for($col = 0; $col < $nbcolonne; $col++)
+			for ($col = 0; $col < $nbcolonne; $col++)
 			{
-				if( $i< count($this->noeuds[3]->noeuds) )
+				if ($i< count($this->noeuds[3]->noeuds))
 				{
 					$this->noeuds[3]->noeuds[$i]->dessine($taille*0.9);
 					$img[$i]=$this->noeuds[3]->noeuds[$i]->image;
@@ -1378,12 +1378,12 @@ class expression_math extends  expression
 
 		$hauteurfin=0;
 		$largeurfin=0;
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$hauteurfin+=$hauteur_ligne[$ligne]+$padding;
 		}
 		
-		for($col = 0; $col <$nbcolonne; $col++)
+		for ($col = 0; $col <$nbcolonne; $col++)
 		{
 			$largeurfin+=$largeur_colonne[$col]+$padding;
 		}
@@ -1397,12 +1397,12 @@ class expression_math extends  expression
 		ImageFilledRectangle($imgfin, 0, 0, $largeurfin-1, $hauteurfin-1, $blanc);
 		$i=0;
 		$h=$padding/2-1;
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$l=$padding/2-1;
-			for($col = 0; $col <$nbcolonne; $col++)
+			for ($col = 0; $col <$nbcolonne; $col++)
 			{
-				if( $i< count($this->noeuds[3]->noeuds) )
+				if ($i< count($this->noeuds[3]->noeuds))
 				{
 					Imagecopy($imgfin, $img[$i], $l+ceil($largeur_colonne[$col]-$largeur[$i])/2, $h+$dessus_ligne[$ligne]-$base[$i], 0, 0,$largeur[$i], $hauteur[$i]);
 					//ImageRectangle($imgfin,$l,$h,$l+$largeur_colonne[$col],$h+$hauteur_ligne[$ligne],$noir);
@@ -1428,23 +1428,23 @@ class expression_math extends  expression
 		$largeur_case=0;
 		$hauteur_case=0;
 
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$hauteur_ligne[$ligne]=0;
 			$dessus_ligne[$ligne]=0;
 		}
 		
-		for($col = 0; $col <$nbcolonne; $col++)
+		for ($col = 0; $col <$nbcolonne; $col++)
 		{
 			$largeur_colonne[$col]=0;
 		}
 		
 		$i=0;
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
-			for($col = 0; $col <$nbcolonne; $col++)
+			for ($col = 0; $col <$nbcolonne; $col++)
 			{
-				if( $i< count($this->noeuds[3]->noeuds) )
+				if ($i< count($this->noeuds[3]->noeuds))
 				{
 					$this->noeuds[3]->noeuds[$i]->dessine($taille*0.9);
 					$img[$i]=$this->noeuds[3]->noeuds[$i]->image;
@@ -1461,12 +1461,12 @@ class expression_math extends  expression
 
 		$hauteurfin=0;
 		$largeurfin=0;
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$hauteurfin+=$hauteur_ligne[$ligne]+$padding;
 		}
 		
-		for($col = 0; $col <$nbcolonne; $col++)
+		for ($col = 0; $col <$nbcolonne; $col++)
 		{
 			$largeurfin+=$largeur_colonne[$col]+$padding;
 		}
@@ -1478,24 +1478,24 @@ class expression_math extends  expression
 		ImageFilledRectangle($imgfin, 0, 0, $largeurfin-1, $hauteurfin-1, $blanc);
 		$i=0;
 		$h=$padding/2-1;
-		if( substr($typeligne, 0, 1) == '1') ImageLine($imgfin, 0, 0, $largeurfin-1, 0, $noir );
+		if (substr($typeligne, 0, 1) == '1') ImageLine($imgfin, 0, 0, $largeurfin-1, 0, $noir);
 		
-		for($ligne = 0; $ligne <$nbligne; $ligne++)
+		for ($ligne = 0; $ligne <$nbligne; $ligne++)
 		{
 			$l=$padding/2-1;
-			if( substr($typecolonne, 0, 1) == '1') ImageLine($imgfin, 0, $h-$padding/2, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
-			for($col = 0; $col <$nbcolonne; $col++)
+			if (substr($typecolonne, 0, 1) == '1') ImageLine($imgfin, 0, $h-$padding/2, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
+			for ($col = 0; $col <$nbcolonne; $col++)
 			{
-				if( $i< count($this->noeuds[3]->noeuds) )
+				if ($i< count($this->noeuds[3]->noeuds))
 				{
 					Imagecopy($imgfin, $img[$i], $l+ceil($largeur_colonne[$col]-$largeur[$i])/2, $h+$dessus_ligne[$ligne]-$base[$i], 0, 0,$largeur[$i], $hauteur[$i]);
-					if( substr($typecolonne, $col+1, 1) == '1') ImageLine($imgfin, $l+$largeur_colonne[$col]+$padding/2, $h-$padding/2, $l+$largeur_colonne[$col]+$padding/2, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
+					if (substr($typecolonne, $col+1, 1) == '1') ImageLine($imgfin, $l+$largeur_colonne[$col]+$padding/2, $h-$padding/2, $l+$largeur_colonne[$col]+$padding/2, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
 				}
 				$l+=$largeur_colonne[$col]+$padding;
 				$i++;
 			}
 			
-			if( substr($typeligne, $ligne+1, 1) == '1') ImageLine($imgfin, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $largeurfin-1, $h+$hauteur_ligne[$ligne]+$padding/2, $noir );
+			if (substr($typeligne, $ligne+1, 1) == '1') ImageLine($imgfin, 0, $h+$hauteur_ligne[$ligne]+$padding/2, $largeurfin-1, $h+$hauteur_ligne[$ligne]+$padding/2, $noir);
 			$h+=$hauteur_ligne[$ligne]+$padding;
 		}
 		
@@ -1643,10 +1643,10 @@ class expression_math extends  expression
 		$imgexp=$this->noeuds[2]->image;
 		$baseexp=$this->noeuds[2]->base_verticale;
 		$hauteurexp=imagesy($imgexp);
-		if( $this->noeuds[1]->texte=="&$") $imggauche=parenthese($hauteurexp, $this->noeuds[1]->noeuds[0]->texte );
+		if ($this->noeuds[1]->texte=="&$") $imggauche=parenthese($hauteurexp, $this->noeuds[1]->noeuds[0]->texte);
 		else $imggauche=parenthese($hauteurexp, $this->noeuds[1]->texte);
 		$basegauche=imagesy($imggauche)/2;
-		if( $this->noeuds[3]->texte=="&$") $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte );
+		if ($this->noeuds[3]->texte=="&$") $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte);
 		else $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->texte);
 		$basedroit=imagesy($imgdroit)/2;
 		$this->image=alignement3($imggauche, $basegauche, $imgexp, $baseexp, $imgdroit, $basedroit);

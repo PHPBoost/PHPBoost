@@ -31,15 +31,15 @@ require_once('../admin/admin_header.php');
 
 
 //Si c'est confirmé on execute
-if( !empty($_POST['add']) )
+if (!empty($_POST['add']))
 {
 	$code_smiley = retrieve(POST, 'code_smiley', '');
 	$url_smiley = retrieve(POST, 'url_smiley', '');
 	
-	if( !empty($code_smiley) && !empty($url_smiley) )
+	if (!empty($code_smiley) && !empty($url_smiley))
 	{
 		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."smileys WHERE code_smiley = '" . $code_smiley . "'", __LINE__, __FILE__);
-		if( empty($check_smiley) )
+		if (empty($check_smiley))
 		{
 			$Sql->query_inject("INSERT INTO ".PREFIX."smileys (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')", __LINE__, __FILE__);
 		
@@ -54,21 +54,21 @@ if( !empty($_POST['add']) )
 	else
 		redirect(HOST . DIR . '/admin/admin_smileys_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_FILES['upload_smiley']['name']) ) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../images/smileys/';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) ) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		if( !$Upload->file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
+		if (!$Upload->file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;
 	}
 	else
@@ -86,40 +86,40 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_smiley_already_exist');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 	$smiley_options = '';
 	$rep = '../images/smileys';
 	$y = 0;
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$file_array = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while (!is_bool($file = readdir($dh)))
 		{	
-			if( $file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db' )
+			if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
 				$file_array[] = $file; //On crée un array, avec les different fichiers.
 		}	
 		closedir($dh); //On ferme le dossier
 
 		$result = $Sql->query_while("SELECT url_smiley
 		FROM ".PREFIX."smileys", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			$key = array_search($row['url_smiley'], $file_array);
-			if( $key !== false)
+			if ($key !== false)
 				unset($file_array[$key]); //On supprime ces clées du tableau.
 		}
 		$Sql->query_close($result);
 		
-		foreach($file_array as $smiley)
+		foreach ($file_array as $smiley)
 		{
-			if( $y == 0)
+			if ($y == 0)
 			{
 				$smiley_options .= '<option value="" selected="selected">--</option>';
 				$y++;

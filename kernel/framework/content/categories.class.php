@@ -128,16 +128,16 @@ class CategoriesManagement
 		$this->_clear_error();
 		
 		//We cast this variable to integer
-		if( !is_int($visible) )
+		if (!is_int($visible))
 			$visible = (int)$visible;
 		
 		$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $id_parent . "'", __LINE__, __FILE__);
 		$max_order = numeric($max_order);
 		
-		if( $id_parent == 0 || array_key_exists($id_parent, $this->cache_var) )
+		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			//Whe add it at the end of the parent category
-			if( $order <= 0 || $order > $max_order )
+			if ($order <= 0 || $order > $max_order)
 				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
 			else
 			{
@@ -170,22 +170,22 @@ class CategoriesManagement
 	{
 		global $Sql, $Cache;
 		$this->_clear_error();
-		if( in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)) )
+		if (in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)))
 		{
 			$cat_info = $Sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			//Checking that category exists
-			if( empty($cat_info['c_order']) )
+			if (empty($cat_info['c_order']))
 			{
 				$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 				return false;
 			}
 			
-			if( $way == MOVE_CATEGORY_DOWN )
+			if ($way == MOVE_CATEGORY_DOWN)
 			{
 				//Query which allows us to check if we don't want to move down the downest category
 				$max_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $cat_info['id_parent'] . "'", __LINE__, __FILE__);
-				if( $cat_info['c_order'] < $max_order )
+				if ($cat_info['c_order'] < $max_order)
 				{
 					//Switching category with that which is upper
 					//Updating other category
@@ -205,7 +205,7 @@ class CategoriesManagement
 			}
 			else
 			{
-				if( $cat_info['c_order'] > 1 )
+				if ($cat_info['c_order'] > 1)
 				{
 					//Switching category with that which is upper
 					//Updating other category
@@ -249,16 +249,16 @@ class CategoriesManagement
 		$this->_clear_error();
 		
 		//Checking that both current category and new category exist and importing necessary information
-		if( ($id == 0 || array_key_exists($id, $this->cache_var)) && ($new_id_cat == 0 || array_key_exists($new_id_cat, $this->cache_var)) )
+		if (($id == 0 || array_key_exists($id, $this->cache_var)) && ($new_id_cat == 0 || array_key_exists($new_id_cat, $this->cache_var)))
 		{
 			//Checking that the new parent category is not the this category or one of its children
 			$subcats_list = array($id);
 			$this->build_children_id_list($id, $subcats_list);
-			if( !in_array($new_id_cat, $subcats_list) )
+			if (!in_array($new_id_cat, $subcats_list))
 			{
 				$max_new_cat_order = $Sql->query("SELECT MAX(c_order) FROM " . PREFIX . $this->table . " WHERE id_parent = '" . $new_id_cat . "'", __LINE__, __FILE__);	
 				//Default : inserting at the end of the list
-				if( $position <= 0 || $position > $max_new_cat_order )
+				if ($position <= 0 || $position > $max_new_cat_order)
 				{
 					//Moving the category $id
 					$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET id_parent = '" . $new_id_cat . "', c_order = '" . ($max_new_cat_order + 1). "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -288,9 +288,9 @@ class CategoriesManagement
 		}
 		else
 		{
-			if( $new_id_cat != 0 && !array_key_exists($new_id_cat, $this->cache_var) )
+			if ($new_id_cat != 0 && !array_key_exists($new_id_cat, $this->cache_var))
 				$this->_add_error(NEW_PARENT_CATEGORY_DOES_NOT_EXIST);
-			if( $id != 0 && !array_key_exists($id, $this->cache_var) )
+			if ($id != 0 && !array_key_exists($id, $this->cache_var))
 				$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 				
 			return false;
@@ -310,7 +310,7 @@ class CategoriesManagement
 		$this->_clear_error();
 		
 		//Checking that category exists
-		if( $id != 0 && !array_key_exists($id, $this->cache_var) )
+		if ($id != 0 && !array_key_exists($id, $this->cache_var))
 		{
 			$this->_add_error(CATEGORY_DOES_NOT_EXIST);
 			return false;
@@ -346,18 +346,18 @@ class CategoriesManagement
 		global $Sql, $Cache;
 		
 		//Default value
-		if( !in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)) )
+		if (!in_array($visibility, array(CAT_VISIBLE, CAT_UNVISIBLE)))
 		{
 			$this->_add_error(NEW_STATUS_UNKNOWN);
 			return false;
 		}
 			
-		if( $category_id > 0 && array_key_exists($category_id, $this->cache_var) )
+		if ($category_id > 0 && array_key_exists($category_id, $this->cache_var))
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET visible = '" . $visibility . "' WHERE id = '" . $category_id . "'", __LINE__, __FILE__);
 
 			//Regeneration of the cache file
-			if( $generate_cache )
+			if ($generate_cache)
 				$Cache->Generate_module_file($this->cache_file_name);
 			
 			return true;
@@ -394,23 +394,23 @@ class CategoriesManagement
 	//Method which checks if display configuration is good
 	function check_display_config($debug = PRODUCTION_MODE)
 	{
-		if( !empty($this->display_config) )
+		if (!empty($this->display_config))
 		{
-			if( array_key_exists('administration_file_name', $this->display_config) && array_key_exists('url' ,$this->display_config) && array_key_exists('xmlhttprequest_file', $this->display_config) && array_key_exists('unrewrited', $this->display_config['url'])
+			if (array_key_exists('administration_file_name', $this->display_config) && array_key_exists('url' ,$this->display_config) && array_key_exists('xmlhttprequest_file', $this->display_config) && array_key_exists('unrewrited', $this->display_config['url'])
 			 )
 				return true;
 			else
 			{
-				if( $debug )
+				if ($debug)
 					return false;
 				
-				if( !array_key_exists('administration_file_name', $this->display_config) )
+				if (!array_key_exists('administration_file_name', $this->display_config))
 					die('<strong>Categories_management error : </strong> you must specify the key <em>administration_file_name</em>');
-				if( !array_key_exists('url' ,$this->display_config) )
+				if (!array_key_exists('url' ,$this->display_config))
 					die('<strong>Categories_management error : </strong> you must specify the key <em>url</em>');
-				if( !array_key_exists('unrewrited', $this->display_config['url']) )
+				if (!array_key_exists('unrewrited', $this->display_config['url']))
 					die('<strong>Categories_management error : </strong> you must specify the key <em>unrewrited</em> in the <em>url</em> part');
-				if( !array_key_exists('xmlhttprequest_file', $this->display_config) )
+				if (!array_key_exists('xmlhttprequest_file', $this->display_config))
 					die('<strong>Categories_management error : </strong> you must specify the key <em>xhtmlhttprequest_file</em>');
 				return false;
 			}
@@ -433,21 +433,21 @@ class CategoriesManagement
 	{
 		global $CONFIG, $LANG;
 		
-		if( is_null($category_template) || !is_object($category_template) || !strtolower(get_class($category_template)) == 'template' )
+		if (is_null($category_template) || !is_object($category_template) || !strtolower(get_class($category_template)) == 'template')
 			$category_template = new Template('framework/content/category.tpl');
 		
 		$template = new Template('framework/content/categories.tpl');
 		
 		$this->_clear_error();
 		//If displaying configuration hasn't bee already set
-		if( !$this->check_display_config() )
+		if (!$this->check_display_config())
 		{
 			$this->_add_error(INCORRECT_DISPLAYING_CONFIGURATION);
 			return false;
 		}
 		
 		//If there is no category
-		if( count($this->cache_var) == 0 )
+		if (count($this->cache_var) == 0)
 		{
 			$template->assign_vars(array(
 				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
@@ -487,10 +487,10 @@ class CategoriesManagement
 		
 		$general_auth = false;
 		
-		if( is_null($template) || !is_object($template) || strtolower(get_class($template)) != 'template' )
+		if (is_null($template) || !is_object($template) || strtolower(get_class($template)) != 'template')
 			$template = new Template('framework/content/categories_select_form.tpl');
 		
-		if( $num_auth != 0 )
+		if ($num_auth != 0)
 			$general_auth = $User->check_auth($array_auth, $num_auth);
 		
 		$template->assign_vars(array(
@@ -521,27 +521,27 @@ class CategoriesManagement
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 		
-		if( $add_this && ($category_id == 0 || (($num_auth > 0 && $User->check_auth($this->cache_var[$category_id], $num_auth) || $num_auth == 0))) )
+		if ($add_this && ($category_id == 0 || (($num_auth > 0 && $User->check_auth($this->cache_var[$category_id], $num_auth) || $num_auth == 0))))
 			$list[] = $category_id;
 		
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
 		
 		// Browsing categories
-		for( $i = 0; $i < $num_cats; $i++ )
+		for ($i = 0; $i < $num_cats; $i++)
 		{
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
-			if( $id != 0 && $value['id_parent'] == $category_id )
+			if ($id != 0 && $value['id_parent'] == $category_id)
 			{
 				$list[] = $id;
-				if( $recursive_exploration && (($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)) )
+				if ($recursive_exploration && (($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth) || $num_auth == 0)))
 					$this->build_children_id_list($id, $list, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, $num_auth);
 				
-				if( !$end_of_category )
+				if (!$end_of_category)
 					$end_of_category = true;
 			}
-			elseif( $end_of_category )
+			elseif ($end_of_category)
 				break;
 		}
 	}
@@ -556,12 +556,12 @@ class CategoriesManagement
 	function build_parents_id_list($category_id, $add_this = DO_NOT_ADD_THIS_CATEGORY_IN_LIST)
 	{
 		$list = array();
-		if( $add_this )
+		if ($add_this)
 			$list[] = $category_id;
 	
-		if( $category_id > 0 )
+		if ($category_id > 0)
 		{
-			while( (int)$this->cache_var[$category_id]['id_parent'] != 0 )
+			while ((int)$this->cache_var[$category_id]['id_parent'] != 0)
 				$list[] = $category_id = (int)$this->cache_var[$category_id]['id_parent'];
 			
 			return $list;
@@ -597,11 +597,11 @@ class CategoriesManagement
 
 		$result = array();
 		
-		if( count($ids) > 0 )
+		if (count($ids) > 0)
 		{
 			$this->cache_var[$ids[0]]['auth'];
 		
-			for( $i = 1; $i < $length; $i++)
+			for ($i = 1; $i < $length; $i++)
 				$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
 		}
 
@@ -634,13 +634,13 @@ class CategoriesManagement
 		));
 		
 		// Browsing categories
-		for( $i = 0; $i < $num_cats; $i++ )
+		for ($i = 0; $i < $num_cats; $i++)
 		{
 			$id = $id_categories[$i];
 			$values =& $this->cache_var[$id];
 			
 			//If this category is in the category $id_cat
-			if( $id != 0 && $values['id_parent'] == $id_cat )
+			if ($id != 0 && $values['id_parent'] == $id_cat)
 			{
 				$template->assign_block_vars('categories', array(
 					'ID' => $id,
@@ -676,7 +676,7 @@ class CategoriesManagement
 				));
 				
 				//Loop interruption : if we have finished the current category we can stop looping, other keys aren't interesting in this function
-				if( $i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat )
+				if ($i + 1 < $num_cats && $this->cache_var[$id_categories[$i + 1]]['id_parent'] != $id_cat)
 					break;
 			}
 		}
@@ -704,17 +704,17 @@ class CategoriesManagement
 		$num_cats = count($id_categories);
 		
 		// Browsing categories
-		for( $i = 0; $i < $num_cats; $i++ )
+		for ($i = 0; $i < $num_cats; $i++)
 		{
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
-			if( $id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat )
+			if ($id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat)
 			{
 				// According to the recursion mode (this is default)
 				//Exploration which reading behaviour : if we can't se a folder, we can't see its children
-				if( $recursion_mode != IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH )
+				if ($recursion_mode != IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH)
 				{
-					if( $num_auth == 0 || $general_auth || $User->check_auth($value['auth'], $num_auth) )
+					if ($num_auth == 0 || $general_auth || $User->check_auth($value['auth'], $num_auth))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -730,7 +730,7 @@ class CategoriesManagement
 				else
 				{
 					//We mustn't check authorizations
-					if( $num_auth == 0 )
+					if ($num_auth == 0)
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -741,7 +741,7 @@ class CategoriesManagement
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 					}
 					//If we must check authorizations and it's good
-					elseif( (empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $User->check_auth($value['auth'], $num_auth)) )
+					elseif ((empty($value['auth']) && $general_auth) || (!empty($value['auth']) && $User->check_auth($value['auth'], $num_auth)))
 					{
 						$template->assign_block_vars('options', array(
 							'ID' => $id,
@@ -753,15 +753,15 @@ class CategoriesManagement
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, true, $template);
 					}
 					//If we must check authorizations and it's not good, we don't display it but we continue browsing
-					elseif( (empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$User->check_auth($value['auth'], $num_auth)) )
+					elseif ((empty($value['auth']) && !$general_auth) || (!empty($value['auth']) && !$User->check_auth($value['auth'], $num_auth)))
 					{
 						$this->_create_select_row($id, $level + 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, false, $template);
 					}
 				}
-				if( !$end_of_category )
+				if (!$end_of_category)
 					$end_of_category = true;
 			}
-			elseif( $end_of_category )
+			elseif ($end_of_category)
 				break;
 		}
 	}
@@ -781,7 +781,7 @@ class CategoriesManagement
 	 */
 	function _clear_error($error = 0)
 	{
-		if( $error != 0 )
+		if ($error != 0)
 		{
 			$this->errors &= (~$error);
 		}

@@ -34,7 +34,7 @@ require_once('../kernel/header.php');
 $memberId = retrieve(GET, 'id', 0, TUNSIGNED_INT);
 $script = retrieve(GET, 'script', '');
 
-if( !empty($memberId) ) //Affichage de tous les messages du membre
+if (!empty($memberId)) //Affichage de tous les messages du membre
 {
 	$Template->set_filenames(array(
 		'membermsg'=> 'member/membermsg.tpl',
@@ -43,7 +43,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 	require_once('../kernel/framework/modules/modules_discovery_service.class.php');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
-	foreach($modules as $module)
+	foreach ($modules as $module)
 	{
 		$img = $module->functionnality('get_member_msg_img');
 		$Template->assign_block_vars('available_modules_msg', array(
@@ -64,7 +64,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		'U_COMMENTS' => url('.php?id=' . $memberId . '&amp;script=com')
 	));
 		
-	if( !empty($script) )
+	if (!empty($script))
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
 		include_once('../kernel/framework/util/pagination.class.php'); 
@@ -86,7 +86,7 @@ if( !empty($memberId) ) //Affichage de tous les messages du membre
 		ORDER BY c.timestamp DESC 
 		" . $Sql->limit($Pagination->get_first_msg(25, 'pmsg'), 25), __LINE__, __FILE__);
 		$row = $Sql->fetch_assoc($result);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('msg_list', array(
 				'USER_PSEUDO' => '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $memberId, '-' . $memberId . '.php') . '"><span class="text_strong">' . wordwrap_html($row['login'], 13) . '</span></a>',

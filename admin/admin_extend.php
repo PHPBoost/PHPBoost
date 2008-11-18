@@ -68,12 +68,12 @@ $result = $Sql->query_while("SELECT name
 FROM ".PREFIX."modules
 WHERE activ = 1", __LINE__, __FILE__);
 $nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
-	if( is_array($config) )
+	if (is_array($config))
 	{	
-		if( $config['admin'] == 1 )
+		if ($config['admin'] == 1)
 		{
 			$Template->assign_block_vars('modules_extend', array(
 				'NAME' => $config['name'],
@@ -89,10 +89,10 @@ while( $row = $Sql->fetch_assoc($result) )
 $Sql->query_close($result);
 
 //Complétion éventuelle des cases du tableaux.
-if( $i != 0 )
+if ($i != 0)
 {
 	$i--;
-	while( ($i % 5) != 0 )
+	while (($i % 5) != 0)
 	{
 		$Template->assign_block_vars('modules_extend.td', array(
 			'TD' => '<td class="row2" style="width:20%;">&nbsp;</td>'

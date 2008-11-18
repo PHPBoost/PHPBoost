@@ -35,18 +35,18 @@ $new = retrieve(GET, 'new', false);
 $new_after_id = retrieve(GET, 'after', 0);
 $id_move = retrieve(GET, 'move', 0);
 
-if( $edit_question > 0 )
+if ($edit_question > 0)
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
 	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
-elseif( $cat_of_new_question >= 0 && $new )
+elseif ($cat_of_new_question >= 0 && $new)
 {
 	define('TITLE', $FAQ_LANG['question_creation']);
 	$id_cat_for_bread_crumb = $cat_of_new_question;
 }
-elseif( $id_move > 0 )
+elseif ($id_move > 0)
 {
 	define('TITLE', $FAQ_LANG['moving_a_question']);
 	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
@@ -61,24 +61,24 @@ else
 include_once('faq_bread_crumb.php');
 
 //checking authorization
-if( !$auth_write )
+if (!$auth_write)
 {
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 	exit;
 }
 
-if( $edit_question > 0 )
+if ($edit_question > 0)
 {
 	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $question_infos['idcat'])); 
 	$Bread_crumb->add($FAQ_LANG['question_edition'], url('management.php?edit=' . $edit_question)); 
 }
-elseif( $cat_of_new_question >= 0 && $new )
+elseif ($cat_of_new_question >= 0 && $new)
 {
 	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question)); 
 	$Bread_crumb->add($FAQ_LANG['question_creation'], url('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
 }
 //Moving interface
-elseif( $id_move > 0 )
+elseif ($id_move > 0)
 {
 	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question)); 
 	$Bread_crumb->add($FAQ_LANG['moving_a_question'], url('management.php?move=' . $id_move)); 
@@ -94,7 +94,7 @@ $Template->set_filenames(array(
 	'faq'=> 'faq/management.tpl'
 ));
 
-if( $edit_question > 0 )
+if ($edit_question > 0)
 {
 	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => $question_infos['question'],
@@ -111,7 +111,7 @@ if( $edit_question > 0 )
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
 }
-elseif( $cat_of_new_question >= 0 && $new )
+elseif ($cat_of_new_question >= 0 && $new)
 {
 	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => '',
@@ -129,7 +129,7 @@ elseif( $cat_of_new_question >= 0 && $new )
 		'L_REQUIRE_ANSWER' => $FAQ_LANG['require_answer']
 	));
 }
-elseif( $id_move > 0 )
+elseif ($id_move > 0)
 {
 	include_once('faq_cats.class.php');
 	$faq_cats = new Faqcats();
@@ -182,7 +182,7 @@ else
 	));
 	
 	//Special authorization
-	if( !empty($FAQ_CATS[$id_faq]['auth']) )
+	if (!empty($FAQ_CATS[$id_faq]['auth']))
 	{
 		$Template->assign_vars(array(
 			'GLOBAL_CHECKED' => 'checked="checked"',
@@ -207,7 +207,7 @@ else
 		'ID_FAQ' => $id_faq
 	));
 	
-	if( $id_faq > 0 )
+	if ($id_faq > 0)
 	{
 		$Template->assign_block_vars('category.not_root_name', array(
 			'CAT_TITLE' => $FAQ_CATS[$id_faq]['name'],
@@ -226,7 +226,7 @@ else
 	
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 	
-	if( $num_rows > 0 || $id_faq == 0 )
+	if ($num_rows > 0 || $id_faq == 0)
 	{
 		$Template->assign_vars(array(
 			'C_DISPLAY_ANSWERS' => true,
@@ -235,7 +235,7 @@ else
 			'L_DISPLAY_ANSWERS' => addslashes($FAQ_LANG['show_all_answers'])
 		));
 		
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],
@@ -248,9 +248,9 @@ else
 				'U_CREATE_AFTER' => url('management.php?new=1&amp;idcat=' . $id_faq . '&after=' . $row['q_order']),
 				'ANSWER' => $row['answer']
 			));
-			if( $row['q_order'] > 1 )
+			if ($row['q_order'] > 1)
 				$Template->assign_block_vars('category.questions.up', array());
-			if( $row['q_order'] < $num_rows )
+			if ($row['q_order'] < $num_rows)
 				$Template->assign_block_vars('category.questions.down', array());
 		}
 	}
