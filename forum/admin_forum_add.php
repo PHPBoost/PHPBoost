@@ -38,7 +38,7 @@ $class = retrieve(GET, 'id', 0);
 
 
 //Si c'est confirmé on execute
-if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
+if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 {
 	$Cache->load('forum');
 	
@@ -50,12 +50,12 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	$aprob = retrieve(POST, 'aprob', 0);
 	$status = retrieve(POST, 'status', 0);
 
-	if( $type == 1 )
+	if ($type == 1)
 	{
 		$url = '';
 		$parent_category = 0;
 	}
-	elseif( $type == 2 )
+	elseif ($type == 2)
 		$url = '';
 	else
 		$status = 1;
@@ -63,23 +63,23 @@ if( !empty($_POST['add']) ) //Nouveau forum/catégorie.
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 
-	if( !empty($name) )
+	if (!empty($name))
 	{
-		if( isset($CAT_FORUM[$parent_category]) ) //Insertion sous forum de niveau x.
+		if (isset($CAT_FORUM[$parent_category])) //Insertion sous forum de niveau x.
 		{
 			//Forums parent du forum cible.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
 			FROM ".PREFIX."forum_cats
 			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
 			$Sql->query_close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 						
-			if( empty($list_parent_cats) )
+			if (empty($list_parent_cats))
 				$clause_parent = "id = '" . $parent_category . "'";
 			else
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
@@ -119,7 +119,7 @@ else
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM ".PREFIX."forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$forums .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
@@ -128,7 +128,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$Template->assign_vars(array(

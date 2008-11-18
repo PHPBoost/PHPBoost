@@ -42,15 +42,15 @@ $create_redirection = retrieve(GET, 'create_redirection', 0);
 $idcom = retrieve(GET, 'com', 0);
 $del_article = retrieve(GET, 'del', 0);
 
-if( $id_auth > 0 ) //Autorisations de l'article
+if ($id_auth > 0) //Autorisations de l'article
 {
 	define('TITLE', $LANG['wiki_auth_management']);
 	$article_infos = $Sql->query_array('wiki_articles', 'id', 'title', 'encoded_title', 'auth', 'is_cat', 'id_cat', "WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	
-	if( !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION) )
+	if (!$User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
+elseif ($wiki_status > 0)//On s'intéresse au statut de l'article
 {
 	define('TITLE', $LANG['wiki_status_management']);
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $wiki_status, __LINE__, __FILE__);
@@ -58,10 +58,10 @@ elseif( $wiki_status > 0 )//On s'intéresse au statut de l'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_STATUS)) && ($general_auth || $User->check_auth($article_auth , WIKI_STATUS))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $move > 0 ) //Déplacement d'article
+elseif ($move > 0) //Déplacement d'article
 {
 	define('TITLE', $LANG['wiki_moving_article']);
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $move, __LINE__, __FILE__);
@@ -69,10 +69,10 @@ elseif( $move > 0 ) //Déplacement d'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_MOVE)) && ($general_auth || $User->check_auth($article_auth , WIKI_MOVE))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $rename > 0 ) //Renommer l'article
+elseif ($rename > 0) //Renommer l'article
 {
 	define('TITLE', $LANG['wiki_renaming_article']);
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = " . $rename, __LINE__, __FILE__);
@@ -80,12 +80,12 @@ elseif( $rename > 0 ) //Renommer l'article
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_RENAME)) && ($general_auth || $User->check_auth($article_auth , WIKI_RENAME))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
+elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 {
-	if( $redirect > 0 )
+	if ($redirect > 0)
 		$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $redirect . "'", __LINE__, __FILE__);	
 	else
 		$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $create_redirection . "'", __LINE__, __FILE__);	
@@ -94,27 +94,27 @@ elseif( $redirect > 0 || $create_redirection > 0 )//Redirection
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( isset($_GET['i']) && $idcom > 0 )
+elseif (isset($_GET['i']) && $idcom > 0)
 {
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $idcom . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_article_com']);
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 	
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
+elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_remove_cat']);
 	
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_DELETE)) && ($general_auth || $User->check_auth($article_auth , WIKI_DELETE))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 else
@@ -129,15 +129,15 @@ $Template->assign_vars(array(
 	'WIKI_PATH' => $Template->get_module_data_path('wiki')
 ));
 
-if( $random )//Recherche d'une page aléatoire
+if ($random)//Recherche d'une page aléatoire
 {
 	$page = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE redirect = 0 ORDER BY rand() " . $Sql->limit(0, 1), __LINE__, __FILE__);
-	if( !empty($page) ) //On redirige
+	if (!empty($page)) //On redirige
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $page, $page));
 	else
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 }
-elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
+elseif ($id_auth > 0) //gestion du niveau d'autorisation
 {
 	$array_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : $_WIKI_CONFIG['auth']; //Récupération des tableaux des autorisations et des groupes.
 	
@@ -161,7 +161,7 @@ elseif( $id_auth > 0 ) //gestion du niveau d'autorisation
 		'L_EXPLAIN_DEFAULT' => $LANG['wiki_explain_restore_default_auth']
 	));
 }
-elseif( $wiki_status > 0 )
+elseif ($wiki_status > 0)
 {
 	$Template->assign_block_vars('status', array(
 		'L_TITLE' => sprintf($LANG['wiki_status_management_article'], $article_infos['title']),
@@ -181,7 +181,7 @@ elseif( $wiki_status > 0 )
 		'ID_STATUS' => 0,
 		'SELECTED' => ($article_infos['defined_status'] == 0) ? 'selected = "selected"' : '',
 	));
-	foreach( $LANG['wiki_status_list'] as $key => $value )
+	foreach ($LANG['wiki_status_list'] as $key => $value)
 	{
 		$Template->assign_block_vars('status.list', array(
 			'L_STATUS' => $value[0],
@@ -194,22 +194,22 @@ elseif( $wiki_status > 0 )
 		));
 	}
 }
-elseif( $move > 0 ) //On déplace l'article
+elseif ($move > 0) //On déplace l'article
 {
 	$cats = array();
 	$cat_list = display_cat_explorer($article_infos['id_cat'], $cats, 1);
 	$cats = array_reverse($cats);
-	if( array_key_exists(0, $cats) )
+	if (array_key_exists(0, $cats))
 		unset($cats[0]);
 	$current_cat = '';
 	$nbr_cats = count($cats);
 	$i = 1;
-	foreach( $cats as $key => $value )
+	foreach ($cats as $key => $value)
 	{
 		$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
 		$i++;
 	}
-	if( $article_infos['id_cat'] > 0 )
+	if ($article_infos['id_cat'] > 0)
 		$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$article_infos['id_cat']]['name'];
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
@@ -226,14 +226,14 @@ elseif( $move > 0 ) //On déplace l'article
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
-	if( $error == 'e_cat_contains_cat' )
+	if ($error == 'e_cat_contains_cat')
 		$errstr = $LANG['wiki_cat_contains_cat'];
 	else
 		$errstr = '';
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_WARNING);
 }
-elseif( $rename > 0 )//On renomme un article
+elseif ($rename > 0)//On renomme un article
 {
 	$Template->assign_block_vars('rename', array(
 		'L_TITLE' => sprintf($LANG['wiki_renaming_this_article'], $article_infos['title']),
@@ -245,14 +245,14 @@ elseif( $rename > 0 )//On renomme un article
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
-	if( $error == 'title_already_exists' )
+	if ($error == 'title_already_exists')
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
 		$errstr = '';
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_WARNING);
 }
-elseif( $redirect > 0 ) //Redirections de l'article
+elseif ($redirect > 0) //Redirections de l'article
 {
 	$Template->assign_block_vars('redirect', array(
 		'L_TITLE' => sprintf($LANG['wiki_redirections_to_this_article'], $article_infos['title'])
@@ -263,7 +263,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 		WHERE redirect = '" . $redirect . "'
 		ORDER BY title", __LINE__, __FILE__);
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '" . $redirect . "'", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('redirect.list', array(
 			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id']),
@@ -272,7 +272,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 	}
 	
 	//Aucune redirection
-	if( $num_rows == 0 )
+	if ($num_rows == 0)
 		$Template->assign_block_vars('redirect.no_redirection', array(
 			'L_NO_REDIRECTION' => $LANG['wiki_no_redirection']
 		));
@@ -285,7 +285,7 @@ elseif( $redirect > 0 ) //Redirections de l'article
 		'U_CREATE_REDIRECTION' => url('property.php?create_redirection=' . $redirect)
 	));
 }
-elseif( $create_redirection > 0 ) //Création d'une redirection
+elseif ($create_redirection > 0) //Création d'une redirection
 {
 	$Template->assign_vars(array(
 		'L_REDIRECTION_NAME' => $LANG['wiki_redirection_name'],
@@ -297,43 +297,43 @@ elseif( $create_redirection > 0 ) //Création d'une redirection
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
-	if( $error == 'title_already_exists' )
+	if ($error == 'title_already_exists')
 		$errstr = $LANG['wiki_title_already_exists'];
 	else
 		$errstr = '';
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_WARNING);
 }
-elseif( isset($_GET['com']) && $idcom > 0 ) //Affichage des commentaires
+elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
 	$Template->assign_vars(array(
 		'C_COMMENTS' => true,
 		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
 	));
 }
-elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
+elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie
 {	
-	if( empty($article_infos['title']) )//Si l'article n'existe pas
+	if (empty($article_infos['title']))//Si l'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 	
-	if( $article_infos['is_cat'] == 0 )//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
+	if ($article_infos['is_cat'] == 0)//C'est un article on ne s'en occupe pas ici, on redirige vers l'article en question
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title']));
 	else //Catégorie
 	{
 		$cats = array();
 		$cat_list = display_cat_explorer($article_infos['id_cat'], $cats);
 		$cats = array_reverse($cats);
-		if( array_key_exists(0, $cats) )
+		if (array_key_exists(0, $cats))
 			unset($cats[0]);
 		$current_cat = '';
 		$nbr_cats = count($cats);
 		$i = 1;
-		foreach( $cats as $key => $value )
+		foreach ($cats as $key => $value)
 		{
 			$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
 		}
-		if( $article_infos['id_cat'] > 0 )
+		if ($article_infos['id_cat'] > 0)
 			$current_cat .= ($nbr_cats > 0 ? ' / ' : '') . $_WIKI_CATS[$article_infos['id_cat']]['name'];
 		else
 			$current_cat = $LANG['wiki_no_selected_cat'];
@@ -352,13 +352,13 @@ elseif( $del_article > 0 ) //Suppression d'un article ou d'une catégorie
 		
 		//Gestion des erreurs
 		$error = retrieve(GET, 'error', '');
-		if( $error == 'e_cat_contains_cat' )
+		if ($error == 'e_cat_contains_cat')
 			$errstr = $LANG['wiki_cat_contains_cat'];
-		elseif( $error == 'e_not_a_cat' )
+		elseif ($error == 'e_not_a_cat')
 			$errstr = $LANG['wiki_not_a_cat'];
 		else
 			$errstr = '';
-		if( !empty($errstr) )
+		if (!empty($errstr))
 			$Errorh->handler($errstr, E_USER_WARNING);
 	}
 }

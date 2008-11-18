@@ -39,13 +39,13 @@ class Template
     // Constructeur
     function Template($tpl = '', $auto_load_vars = AUTO_LOAD_FREQUENT_VARS)
     {
-        if( !empty($tpl) )
+        if (!empty($tpl))
         {
             global $User;
 
             $this->tpl = $this->_check_file($tpl);
             $this->files[$this->tpl] = $this->tpl;
-            if( $auto_load_vars )
+            if ($auto_load_vars)
             {
                 $member_connected = $User->check_level(MEMBER_LEVEL);
                 $this->assign_vars(array(
@@ -63,14 +63,14 @@ class Template
     //Stock les différents tpl en cours de traitement.
     function set_filenames($array_tpl)
     {
-        foreach($array_tpl as $parse_name => $filename)
+        foreach ($array_tpl as $parse_name => $filename)
             $this->files[$parse_name] = $this->_check_file($filename);
     }
     
     //Récupération du chemin des données du module.
     function get_module_data_path($module)
     {
-        if( isset($this->module_data_path[$module]) )
+        if (isset($this->module_data_path[$module]))
             return $this->module_data_path[$module];
         return '';
     }
@@ -78,20 +78,20 @@ class Template
     //Stock les variables simple.
     function assign_vars($array_vars)
     {
-        foreach($array_vars as $key => $val)
+        foreach ($array_vars as $key => $val)
             $this->_var[$key] = $val;
     }
         
     //Stock les variables des différents blocs.
     function assign_block_vars($block_name, $array_vars)
     {
-        if( strpos($block_name, '.') !== false ) //Bloc imbriqué.
+        if (strpos($block_name, '.') !== false) //Bloc imbriqué.
         {
             $blocks = explode('.', $block_name);
             $blockcount = count($blocks) - 1;
 
             $str = &$this->_block;
-            for($i = 0; $i < $blockcount; $i++)
+            for ($i = 0; $i < $blockcount; $i++)
             {
                 $str = &$str[$blocks[$i]];
                 $str = &$str[count($str) - 1];
@@ -105,7 +105,7 @@ class Template
     //Supprime un bloc.
     function unassign_block_vars($block_name)
     {
-        if( isset($this->_block[$block_name]) )
+        if (isset($this->_block[$block_name]))
             unset($this->_block[$block_name]);
     }
 
@@ -120,21 +120,21 @@ class Template
     //Affichage du traitement du tpl.
     function pparse($parse_name, $stringMode = false)
     {
-		if( !isset($this->files[$parse_name]) )
+		if (!isset($this->files[$parse_name]))
 			return '';
 
 		$this->stringMode = $stringMode;
 		
         $file_cache_path = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(array('/', '.', '..', 'tpl', 'templates'), array('_', '', '', '', 'tpl'), $this->files[$parse_name]), '_');
-        if( $stringMode )
+        if ($stringMode)
             $file_cache_path .= '_str';
         $file_cache_path .= '.php';
 
         //Vérification du statut du fichier de cache associé au template.
-        if( !$this->_check_cache_file($this->files[$parse_name], $file_cache_path) )
+        if (!$this->_check_cache_file($this->files[$parse_name], $file_cache_path))
         {
             //Chargement du template.
-            if( !$this->_load($parse_name) )
+            if (!$this->_load($parse_name))
                 return '';
 
             //Parse
@@ -145,7 +145,7 @@ class Template
         
         include($file_cache_path);
         
-        if( $this->stringMode )
+        if ($this->stringMode)
             return $tplString;
     }
 
@@ -202,19 +202,19 @@ class Template
         $default_templates_folder = PATH_TO_ROOT . '/templates/default/';
         $theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
         
-        if( empty($module) || in_array($module, array('admin') ) )
+        if (empty($module) || in_array($module, array('admin') ))
         {   // Kernel - Templates priority order
             //      /templates/$theme/.../$file.tpl
             //      /templates/default/.../$file.tpl
-            if( file_exists($file_path = $theme_templates_folder . $filename) )
+            if (file_exists($file_path = $theme_templates_folder . $filename))
                 return $file_path;
             return $default_templates_folder . $filename;
         }
-        elseif( $module == 'framework' )
+        elseif ($module == 'framework')
         {   // Framework - Templates priority order
             //      /templates/$theme/framework/.../$file.tpl
             //      /templates/default/framework/.../$file.tpl
-            if( file_exists($file_path = $theme_templates_folder . $filename) )
+            if (file_exists($file_path = $theme_templates_folder . $filename))
                 return $file_path;
             
             return $default_templates_folder . $filename;
@@ -224,31 +224,31 @@ class Template
             $theme_module_templates_folder = $theme_templates_folder . 'modules/' . $module . '/';
             $module_templates_folder = PATH_TO_ROOT . '/' . $module . '/templates/';
             
-            if( $folder == 'framework' )
+            if ($folder == 'framework')
             {   // Framework - Templates priority order
                 //      /templates/$theme/modules/$module/framework/.../$file.tpl
                 //      /templates/$theme/framework/.../$file.tpl
                 //      /$module/templates/framework/.../$file.tpl
                 //      /templates/default/framework/.../$file.tpl
-                if( file_exists($file_path = $theme_module_templates_folder . $file) )
+                if (file_exists($file_path = $theme_module_templates_folder . $file))
                     return $file_path;
-                if( file_exists($file_path = $theme_templates_folder . $filename) )
+                if (file_exists($file_path = $theme_templates_folder . $filename))
                     return $file_path;
-                if( file_exists($file_path = ($module_templates_folder . 'framework/' . $file)) )
+                if (file_exists($file_path = ($module_templates_folder . 'framework/' . $file)))
                     return $file_path;
                 return $default_templates_folder . $file;
             }
             
             //module data path
-            if( !isset($this->module_data_path[$module]) )
+            if (!isset($this->module_data_path[$module]))
             {
-                if( is_dir($theme_module_templates_folder . '/images') )
+                if (is_dir($theme_module_templates_folder . '/images'))
                     $this->module_data_path[$module] = trim($theme_module_templates_folder, '/');
                 else
                     $this->module_data_path[$module] = trim($module_templates_folder, '/');
             }
 
-            if( file_exists($file_path = $theme_module_templates_folder . $file) )
+            if (file_exists($file_path = $theme_module_templates_folder . $file))
                 return $file_path;
             else
                 return $module_templates_folder . $file;
@@ -259,9 +259,9 @@ class Template
     function _check_cache_file($tpl_path, $file_cache_path)
     {
         //fichier expiré
-        if( file_exists($file_cache_path) )
+        if (file_exists($file_cache_path))
         {	
-            if( @filemtime($tpl_path) > @filemtime($file_cache_path) || @filesize($file_cache_path) === 0 ) 
+            if (@filemtime($tpl_path) > @filemtime($file_cache_path) || @filesize($file_cache_path) === 0) 
                 return false;
             else
                 return true;
@@ -272,13 +272,13 @@ class Template
     //Charge un tpl.
     function _load($parse_name)
     {
-        if( !isset($this->files[$parse_name]) )
+        if (!isset($this->files[$parse_name]))
             return false;
             
         $this->template = @file_get_contents_emulate($this->files[$parse_name]); //Charge le contenu du fichier tpl.
-        if( $this->template === false )
+        if ($this->template === false)
             die('Template->_load(): Le chargement du fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' a échoué');
-        if( empty($this->template) )
+        if (empty($this->template))
             die('Template->_load(): Le fichier ' . $this->files[$parse_name] . ' pour parser ' . $parse_name . ' est vide');
             
         return true;
@@ -287,9 +287,9 @@ class Template
     //Inclusion d'un template dans un autre.
     function _include($parse_name)
     {
-        if( isset($this->files[$parse_name]) )
+        if (isset($this->files[$parse_name]))
         {
-            if( $this->stringMode )
+            if ($this->stringMode)
                 return $this->pparse($parse_name, $this->stringMode);
             else
                 $this->pparse($parse_name, $this->stringMode);
@@ -299,11 +299,11 @@ class Template
     //Parse du tpl.
     function _parse($parse_name)
     {
-        if( $this->stringMode )
+        if ($this->stringMode)
         {
             $this->template = '<?php $tplString = \'' . str_replace(array('\\', '\''), array('\\\\', '\\\''), $this->template) . '\'; ?>';
             //Remplacement des variables simples.
-            $this->template = preg_replace('`{([\w]+)}`i', '\'; if( isset($this->_var[\'$1\']) ) $tplString .= $this->_var[\'$1\']; $tplString .=\'', $this->template);
+            $this->template = preg_replace('`{([\w]+)}`i', '\'; if (isset($this->_var[\'$1\'])) $tplString .= $this->_var[\'$1\']; $tplString .=\'', $this->template);
             $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, '_parse_blocks_vars'), $this->template);
             
             //Parse des blocs imbriqués ou non.
@@ -324,7 +324,7 @@ class Template
             $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
             
             //Remplacement des variables simples.
-            $this->template = preg_replace('`{([\w]+)}`i', '<?php if( isset($this->_var[\'$1\']) ) echo $this->_var[\'$1\']; ?>', $this->template);
+            $this->template = preg_replace('`{([\w]+)}`i', '<?php if (isset($this->_var[\'$1\'])) echo $this->_var[\'$1\']; ?>', $this->template);
             $this->template = preg_replace_callback('`{([\w\.]+)}`i', array($this, '_parse_blocks_vars'), $this->template);
             
             //Parse des blocs imbriqués ou non.
@@ -348,16 +348,16 @@ class Template
     //Remplacement des variables de type bloc.
     function _parse_blocks_vars($blocks)
     {
-        if( isset($blocks[1]) )
+        if (isset($blocks[1]))
         {	
             $array_block = explode('.', $blocks[1]);
             $varname = array_pop($array_block);
             $last_block = array_pop($array_block);
 
-            if( $this->stringMode )
-                return '\'; if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) ) $tplString .= $_tmpb_' . $last_block . '[\'' . $varname . '\']; $tplString .= \'';
+            if ($this->stringMode)
+                return '\'; if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\'])) $tplString .= $_tmpb_' . $last_block . '[\'' . $varname . '\']; $tplString .= \'';
             else
-                return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) ) echo $_tmpb_' . $last_block . '[\'' . $varname . '\']; ?>';
+                return '<?php if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\'])) echo $_tmpb_' . $last_block . '[\'' . $varname . '\']; ?>';
         }		
         return '';
     }
@@ -365,25 +365,25 @@ class Template
     //Remplacement des blocs.
     function _parse_blocks($blocks)
     {
-        if( isset($blocks[1]) )
+        if (isset($blocks[1]))
         {	
-            if( strpos($blocks[1], '.') !== false ) //Contient un bloc imbriqué.
+            if (strpos($blocks[1], '.') !== false) //Contient un bloc imbriqué.
             {
                 $array_block = explode('.', $blocks[1]);
                 $current_block = array_pop($array_block);
                 $previous_block = array_pop($array_block);
                 
-                if( $this->stringMode )
-                    return '\';'."\n".'if( !isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) ) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key];'."\n".'$tplString .= \'';
+                if ($this->stringMode)
+                    return '\';'."\n".'if (!isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\'])) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach ($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key];'."\n".'$tplString .= \'';
                 else
-                    return '<?php if( !isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) ) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key]; ?>';
+                    return '<?php if (!isset($_tmpb_' . $previous_block . '[\'' . $current_block . '\']) || !is_array($_tmpb_' . $previous_block . '[\'' . $current_block . '\'])) $_tmpb_' . $previous_block . '[\'' . $current_block . '\'] = array();' . "\n" . 'foreach ($_tmpb_' . $previous_block . '[\'' . $current_block . '\'] as $' . $current_block . '_key => $' . $current_block . '_value) {' . "\n" . '$_tmpb_' . $current_block . ' = &$_tmpb_' . $previous_block . '[\'' . $current_block . '\'][$' . $current_block . '_key]; ?>';
             }
             else
             {
-                if( $this->stringMode )
-                    return '\';'."\n".'if( !isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\']) ) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key];'."\n".'$tplString .= \'';
+                if ($this->stringMode)
+                    return '\';'."\n".'if (!isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\'])) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach ($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key];'."\n".'$tplString .= \'';
                 else
-                    return '<?php if( !isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\']) ) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key]; ?>';
+                    return '<?php if (!isset($this->_block[\'' . $blocks[1] . '\']) || !is_array($this->_block[\'' . $blocks[1] . '\'])) $this->_block[\'' . $blocks[1] . '\'] = array();' . "\n" . 'foreach ($this->_block[\'' . $blocks[1] . '\'] as $' . $blocks[1] . '_key => $' . $blocks[1] . '_value) {' . "\n" . '$_tmpb_' . $blocks[1] . ' = &$this->_block[\'' . $blocks[1] . '\'][$' . $blocks[1] . '_key]; ?>';
             }
         }
         return '';
@@ -392,26 +392,26 @@ class Template
     //Remplacement des blocs conditionnels.
     function _parse_conditionnal_blocks($blocks)
     {
-        if( isset($blocks[2]) )
+        if (isset($blocks[2]))
         {
             $not = ($blocks[1] == 'NOT ' ? '!' : '');
-            if( strpos($blocks[2], '.') !== false ) //Contient un bloc imbriqué.
+            if (strpos($blocks[2], '.') !== false) //Contient un bloc imbriqué.
             {
                 $array_block = explode('.', $blocks[2]);
                 $varname = array_pop($array_block);
                 $last_block = array_pop($array_block);
 
-                if( $this->stringMode )
-                    return '\';'."\n".'if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\'] ) {'."\n".'$tplString .= \'';
+                if ($this->stringMode)
+                    return '\';'."\n".'if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\']) {'."\n".'$tplString .= \'';
                 else
-                    return '<?php if( isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\'] ) { ?>';
+                    return '<?php if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\']) { ?>';
             }
             else
             {
-                if( $this->stringMode )
-                    return '\';'."\n".'if( isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\'] ) {'."\n".'$tplString .= \'';
+                if ($this->stringMode)
+                    return '\';'."\n".'if (isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\']) {'."\n".'$tplString .= \'';
                 else
-                    return '<?php if( isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\'] ) { ?>';
+                    return '<?php if (isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\']) { ?>';
             }
         }
         return '';
@@ -426,7 +426,7 @@ class Template
         $this->template);
 
         //Evite à l'interpréteur PHP du travail inutile.
-        if( $this->stringMode )
+        if ($this->stringMode)
         {
             $this->template = str_replace('$tplString .= \'\';', '', $this->template);
             $this->template = preg_replace(array('`[\n]{2,}`', '`[\r]{2,}`', '`[\t]{2,}`', '`[ ]{2,}`'), array('', '', '', ''), $this->template);
@@ -443,7 +443,7 @@ class Template
     //Enregistrement du fichier de cache, avec pose préalable d'un verrou.
     function _save($file_cache_path, $stringMode = false)
     {
-        if( $file = @fopen($file_cache_path, 'wb') )
+        if ($file = @fopen($file_cache_path, 'wb'))
         {
             @flock($file, LOCK_EX);
             

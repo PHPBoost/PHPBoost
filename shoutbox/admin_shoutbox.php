@@ -31,7 +31,7 @@ load_module_lang('shoutbox'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid'])  )
+if (!empty($_POST['valid']) )
 {
 	$config_shoutbox = array();
 	$config_shoutbox['shoutbox_max_msg'] = retrieve(POST, 'shoutbox_max_msg', 10);
@@ -65,7 +65,7 @@ else
 	$CONFIG_SHOUTBOX['shoutbox_auth'] = isset($CONFIG_SHOUTBOX['shoutbox_auth']) ? $CONFIG_SHOUTBOX['shoutbox_auth'] : '-1';	
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$ranks = '';
-	foreach($array_auth_ranks as $rank => $name)
+	foreach ($array_auth_ranks as $rank => $name)
 	{
 		$selected = ($CONFIG_SHOUTBOX['shoutbox_auth'] == $rank) ? ' selected="selected"' : '' ;
 		$ranks .= '<option value="' . $rank . '"' . $selected . '>' . $name . '</option>';
@@ -98,11 +98,11 @@ else
 		
 	//Balises interdites
 	$i = 0;
-	foreach($array_tags as $name => $is_selected)
+	foreach ($array_tags as $name => $is_selected)
 	{
-		if( isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']) )
+		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
 		{	
-			if( in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']) )
+			if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
 				$selected = 'selected="selected"';
 		}
 		else

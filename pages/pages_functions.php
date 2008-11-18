@@ -25,14 +25,14 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
 function display_cat_explorer($id, &$cats, $display_select_link = 1)
 {
 	global $_PAGES_CATS;
 		
-	if( $id > 0)
+	if ($id > 0)
 	{
 		$id_cat = $id;
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
@@ -41,7 +41,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 			$cats[] = (int)$_PAGES_CATS[$id_cat]['id_parent'];
 			$id_cat = (int)$_PAGES_CATS[$id_cat]['id_parent'];
 		}	
-		while( $id_cat > 0 );
+		while ($id_cat > 0);
 	}
 	
 
@@ -50,9 +50,9 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1)
 	
 	//On liste les catégories ouvertes pour la fonction javascript
 	$opened_cats_list = '';
-	foreach( $cats as $key => $value )
+	foreach ($cats as $key => $value)
 	{
-		if( $key != 0 )
+		if ($key != 0)
 			$opened_cats_list .= 'cat_status[' . $key . '] = 1;' . "\n";
 	}
 	return '<script type="text/javascript">
@@ -69,12 +69,12 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 {
 	global $_PAGES_CATS, $Sql, $Template;
 	$line = '';
-	foreach( $_PAGES_CATS as $key => $value )
+	foreach ($_PAGES_CATS as $key => $value)
 	{
 		//Si la catégorie appartient à la catégorie explorée
-		if( $value['id_parent']  == $id_cat )
+		if ($value['id_parent']  == $id_cat)
 		{
-			if( in_array($key, $cats) ) //Si cette catégorie contient notre catégorie, on l'explore
+			if (in_array($key, $cats)) //Si cette catégorie contient notre catégorie, on l'explore
 			{
 				$line .= '<li><a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/minus.png" alt="" id="img2_' . $key . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/opened_cat.png" alt="" id="img_' . $key . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'pages_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span><span id="cat_' . $key . '">
 				<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;padding-left:30px;">'
@@ -85,7 +85,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 				//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
 				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $key . "'", __LINE__, __FILE__);
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
-				if( $sub_cats_number > 0 )
+				if ($sub_cats_number > 0)
 					$line .= '<li><a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $key . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt="" id="img_' . $key . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'pages_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span><span id="cat_' . $key . '"></span></li>';
 				else //Sinon on n'affiche pas le "+"
 					$line .= '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'pages_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span></li>';
@@ -100,9 +100,9 @@ function pages_find_subcats(&$array, $id_cat)
 {
 	global $_PAGES_CATS;
 	//On parcourt les catégories et on détermine les catégories filles
-	foreach( $_PAGES_CATS as $key => $value )
+	foreach ($_PAGES_CATS as $key => $value)
 	{
-		if( $value['id_parent'] == $id_cat )
+		if ($value['id_parent'] == $id_cat)
 		{
 			$array[] = $key;
 			//On rappelle la fonction pour la catégorie fille
@@ -134,7 +134,7 @@ function pages_second_parse($contents)
 	//On unparse d'abord la balise link, sinon c'est url qui la prendra
 	$contents = preg_replace_callback('`\[code\](.+)\[/code\]`isU', 'link_unparse', $contents);
 	$contents = second_parse($contents);
-	if( $CONFIG['rewrite'] == 0 ) //Pas de rewriting	
+	if ($CONFIG['rewrite'] == 0) //Pas de rewriting	
 		return preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="pages.php?title=$1">$2</a>', $contents);
 	else
 		return $contents;

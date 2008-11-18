@@ -37,15 +37,15 @@ class StatsSaver
 		global $Sql;
 		
 		$referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
-		if( !empty($referer) )
+		if (!empty($referer))
 		{
 			########### Détection des mots clés ###########
 			$is_search_engine = false;
 			$search_engine = '';
 			$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
-			foreach($array_search as $search_engine_check)
+			foreach ($array_search as $search_engine_check)
 			{	
-				if( strpos($referer['host'], $search_engine_check) !== false )
+				if (strpos($referer['host'], $search_engine_check) !== false)
 				{
 					$is_search_engine = true;
 					$search_engine = $search_engine_check;
@@ -53,32 +53,32 @@ class StatsSaver
 				}
 			}	
 
-			if( $is_search_engine )
+			if ($is_search_engine)
 			{
 				$query = !empty($referer['query']) ? $referer['query'] : '';
 				$keyword = strtolower(preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query));
 				$keyword = addslashes(str_replace('+', ' ', urldecode($keyword)));
 				
 				$check_search_engine = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
-				if( !empty($keyword) )
+				if (!empty($keyword))
 				{
-					if( !empty($check_search_engine) )
+					if (!empty($check_search_engine))
 						$Sql->query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
 					else
 						$Sql->query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
 				}
 			}
-			elseif( !empty($referer['host']) )
+			elseif (!empty($referer['host']))
 			{
 				########### Détection du site de provenance ###########
 				$url = addslashes($referer['scheme'] . '://' . $referer['host']);
-				if( strpos($url, HOST) === false )
+				if (strpos($url, HOST) === false)
 				{				
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
 					$check_url = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."stats_referer WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
-					if( !empty($check_url) )
+					if (!empty($check_url))
 						$Sql->query_inject("UPDATE ".PREFIX."stats_referer SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);			
 					else
 						$Sql->query_inject("INSERT INTO ".PREFIX."stats_referer (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 1, 1, '" . time() . "', 0)", __LINE__, __FILE__);
@@ -94,7 +94,7 @@ class StatsSaver
 		
 		//Suppression des images de statistiques en cache.
 		$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
-		foreach($array_stats_img as $key => $value)
+		foreach ($array_stats_img as $key => $value)
 			@unlink(PATH_TO_ROOT . '/cache/' . $value);
 		
 		########### Détection des navigateurs ###########
@@ -128,9 +128,9 @@ class StatsSaver
 			'ibrowse' => 'Ibrowse'
 		);
 		$browser = 'other';
-		foreach($array_browser as $regex => $name)
+		foreach ($array_browser as $regex => $name)
 		{
-			if( preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']) )
+			if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
 			{
 				$browser = $name;
 				break;
@@ -162,9 +162,9 @@ class StatsSaver
 			'NetBSD' => 'netbsd'
 		);
 		$os = 'other';
-		foreach($array_os as $regex => $name)
+		foreach ($array_os as $regex => $name)
 		{
-			if( preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']) )
+			if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
 			{
 				$os = $name;
 				break;
@@ -173,16 +173,16 @@ class StatsSaver
 		StatsSaver::_write_stats('os', $os);
 		
 		########### Détection de la langue utilisateur ###########
-		if( !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
+		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 		{
 			$user_lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$favorite_lang = strtolower($user_lang[0]);	
-			if( strpos($favorite_lang, '-') !== false )		
+			if (strpos($favorite_lang, '-') !== false)		
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);			
 			$lang = str_replace(array('cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da'), array('cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk'), $favorite_lang);
 			
 			$lang = 'other';
-			if( isset($stats_array_lang[$favorite_lang]) )
+			if (isset($stats_array_lang[$favorite_lang]))
 				$lang = $favorite_lang;
 				
 			StatsSaver::_write_stats('lang', $lang);
@@ -194,17 +194,17 @@ class StatsSaver
 	function _write_stats($file_path, $stats_item)
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
-		if( !file_exists($file_path) ) 
+		if (!file_exists($file_path)) 
 		{
 			$file = @fopen($file_path, 'w+');
 			@fwrite($file, serialize(array()));
 			@fclose($file);
 		}
-		if( is_file($file_path) && is_writable($file_path) )
+		if (is_file($file_path) && is_writable($file_path))
 		{		
 			$line = file($file_path);
 			$stats_array = unserialize($line[0]);
-			if( isset($stats_array[strtolower($stats_item)]) )
+			if (isset($stats_array[strtolower($stats_item)]))
 				$stats_array[strtolower($stats_item)]++;
 			else
 				$stats_array[strtolower($stats_item)] = 1;

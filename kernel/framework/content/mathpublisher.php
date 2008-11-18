@@ -19,9 +19,9 @@ function detectimg($n)
 	//Detects if the formula image already exists in the DIR_IMG cache directory. In that case, the function returns a parameter (recorded in the name of the image file) which allows to align correctly the image with the text.
 	$ret = 0;
 	$handle = opendir(DIR_IMG);
-	while( !is_bool($fi = readdir($handle)) )
+	while (!is_bool($fi = readdir($handle)))
 	{
-		if( strpos($fi, $n) !== false ) 
+		if (strpos($fi, $n) !== false) 
 		{
 			$v = explode('_', $fi);
 			$ret = $v[1];
@@ -38,7 +38,7 @@ function mathimage($text, $size)
 	//Creates the formula image (if the image is not in the cache) and returns the <img src=...></img> html code. 
 	$nameimg = md5(trim($text) . $size) . '.png';
 	$v = detectimg($nameimg);
-	if( $v == 0 )
+	if ($v == 0)
 	{
 		//the image doesn't exist in the cache directory. we create it.		
 		global $symboles, $fontesmath;

@@ -34,7 +34,7 @@ $order = retrieve(GET, 'order', '');
 
 define('TITLE' , $LANG['wiki_history']);
 
-if( !empty($id_article) )
+if (!empty($id_article))
 {
 	$article_infos = $Sql->query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
 }
@@ -44,7 +44,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php'); 
 
-if( !empty($id_article) )
+if (!empty($id_article))
 {
 	$Template->set_filenames(array('wiki_history'=> 'wiki/history.tpl'));
 
@@ -65,7 +65,7 @@ if( !empty($id_article) )
 		WHERE c.id_article = '" . $id_article . "'
 		ORDER BY c.timestamp DESC", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Restauration
 		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
@@ -131,7 +131,7 @@ else //On affiche la liste des modifications
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
 		" . $Sql->limit($Pagination->get_first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
-	while( $row = myfetch_assoc($result) )
+	while ($row = myfetch_assoc($result))
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],

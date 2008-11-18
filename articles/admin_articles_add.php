@@ -31,7 +31,7 @@ load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
@@ -44,27 +44,27 @@ if( !empty($_POST['valid']) )
 	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
-	if( !empty($title) && !empty($contents) )
+	if (!empty($title) && !empty($contents))
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 		
 		$visible = 1;		
-		if( $get_visible == 2 )
+		if ($get_visible == 2)
 		{		
-			if( $start_timestamp > time() )
+			if ($start_timestamp > time())
 				$visible = 2;
-			elseif( $start_timestamp == 0 )
+			elseif ($start_timestamp == 0)
 				$visible = 1;
 			else //Date inférieur à celle courante => inutile.
 				$start_timestamp = 0;
 
-			if( $end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0 )
+			if ($end_timestamp > time() && $end_timestamp > $start_timestamp && $start_timestamp != 0)
 				$visible = 2;
-			elseif( $start_timestamp != 0 ) //Date inférieur à celle courante => inutile.
+			elseif ($start_timestamp != 0) //Date inférieur à celle courante => inutile.
 				$end_timestamp = 0;
 		}
-		elseif( $get_visible == 1 )
+		elseif ($get_visible == 1)
 		{	
 			$start_timestamp = 0;
 			$end_timestamp = 0;
@@ -77,13 +77,13 @@ if( !empty($_POST['valid']) )
 		}
 
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
-		if( $timestamp > 0 )
+		if ($timestamp > 0)
 			$timestamp += ($hour * 3600) + ($min * 60);
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
 		$Cache->load('articles');
-		if( empty($idcat) )//Racine.
+		if (empty($idcat))//Racine.
 		{
 			$CAT_ARTICLES[0]['id_left'] = 0;
 			$CAT_ARTICLES[0]['id_right'] = 0;
@@ -108,7 +108,7 @@ if( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/articles/admin_articles_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_POST['previs']) )
+elseif (!empty($_POST['previs']))
 {
 	$Template->set_filenames(array(
 		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
@@ -127,10 +127,10 @@ elseif( !empty($_POST['previs']) )
 	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 		
-	if( !empty($icon_path) )
+	if (!empty($icon_path))
 		$icon = $icon_path;
 		
-	if( !empty($img) )
+	if (!empty($img))
 		$img ='<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin: 6px; border: 1px solid #000000;" />';
 	else
 		$img = '';
@@ -140,19 +140,19 @@ elseif( !empty($_POST['previs']) )
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
 	$visible = 1;		
-	if( $get_visible == 2 )
+	if ($get_visible == 2)
 	{	
-		if( $start_timestamp > time() )
+		if ($start_timestamp > time())
 			$visible = 2;
 		else
 			$start = '';
 	
-		if( $end_timestamp > time() && $end_timestamp > $start_timestamp )
+		if ($end_timestamp > time() && $end_timestamp > $start_timestamp)
 			$visible = 2;
 		else
 			$end = '';
 	}	
-	elseif( $get_visible == 1 )
+	elseif ($get_visible == 1)
 	{
 		$start = '';
 		$end = '';
@@ -179,7 +179,7 @@ elseif( !empty($_POST['previs']) )
 	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -192,18 +192,18 @@ elseif( !empty($_POST['previs']) )
 	$img_direct_path = (strpos($icon, '/') !== false);
 	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = readdir($dh)) )
+		while (! is_bool($lang = readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
 
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 		{	
 			$selected = $img_path == $icon ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
@@ -279,7 +279,7 @@ else
 	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$categories .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
@@ -290,18 +290,18 @@ else
 	//Images disponibles
 	$rep = './';
 	$image_list = '<option value="" selected="selected">--</option>';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = readdir($dh)) )
+		while (! is_bool($lang = readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
 
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	}
 	
@@ -341,7 +341,7 @@ else
 		
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$Template->pparse('admin_articles_add'); 

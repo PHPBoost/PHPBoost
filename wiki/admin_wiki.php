@@ -40,7 +40,7 @@ $last_articles = retrieve(POST, 'last_articles', 0);
 $display_cats = !empty($_POST['display_cats']) ? 1 : 0;
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
 
-if( !empty($_POST['update']) )  //Mise à jour
+if (!empty($_POST['update']))  //Mise à jour
 {
 	$_WIKI_CONFIG['wiki_name'] = $wiki_name;
 	$_WIKI_CONFIG['last_articles'] = $last_articles;

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('stats'); //Chargement de la langue du module.
@@ -54,7 +54,7 @@ $l_title = $os ? $LANG['os'] : $l_title;
 $l_title = $user_lang ? $LANG['stat_lang'] : $l_title;
 $l_title = !empty($l_title) ? $l_title : '';
 
-if( !empty($l_title) ) 
+if (!empty($l_title)) 
 	$Bread_crumb->add($LANG['stats'], url('stats.php'));
 	$Bread_crumb->add($l_title, '');	
 define('TITLE', $LANG['stats'] . (!empty($l_title) ? ' - ' . $l_title : ''));

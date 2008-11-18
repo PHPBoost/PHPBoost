@@ -29,7 +29,7 @@ require_once('../kernel/begin.php');
 define('TITLE', $LANG['files_management']);
 
 $popup = retrieve(GET, 'popup', '');
-if( !empty($popup) ) //Popup.
+if (!empty($popup)) //Popup.
 {	
 	require_once('../kernel/header_no_display.php');
 	$field = retrieve(GET, 'fd', '');
@@ -73,14 +73,14 @@ else //Affichage de l'interface de gestion.
 	$popup_noamp = '';
 }
 
-if( !$User->check_level(MEMBER_LEVEL) ) //Visiteurs interdits!
+if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 //Chargement de la configuration.
 $Cache->load('uploads');
 
 //Droit d'accès?.
-if( !$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES) )
+if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 //Initialisation  de la class de gestion des fichiers.
@@ -99,15 +99,15 @@ $move_folder = retrieve(GET, 'movefd', 0);
 $move_file = retrieve(GET, 'movefi', 0);
 $to = retrieve(POST, 'new_cat', -1);
 
-if( !empty($parent_folder) ) //Changement de dossier
+if (!empty($parent_folder)) //Changement de dossier
 {
-	if( empty($parent_folder) )
+	if (empty($parent_folder))
 		redirect(HOST . DIR . url('/member/upload.php?f=0&' . $popup_noamp, '', '&'));
 	
 	$info_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-	if( $info_folder['id_parent'] != 0 || $User->check_level(ADMIN_LEVEL) )
+	if ($info_folder['id_parent'] != 0 || $User->check_level(ADMIN_LEVEL))
 	{
-		if( $parent_folder['user_id'] == -1 )
+		if ($parent_folder['user_id'] == -1)
 			redirect(HOST . DIR . url('/member/upload.php?showm=1', '', '&'));
 		else
 			redirect(HOST . DIR . url('/member/upload.php?f=' . $info_folder['id_parent'] . '&' . $popup_noamp, '', '&'));
@@ -115,9 +115,9 @@ if( !empty($parent_folder) ) //Changement de dossier
 	else
 		redirect(HOST . DIR . url('/member/upload.php?f=' . $parent_folder . '&' . $popup_noamp, '', '&'));
 }
-elseif( $home_folder ) //Retour à la racine.
+elseif ($home_folder) //Retour à la racine.
 	redirect(HOST . DIR . url('/member/upload.php?' . $popup_noamp, '', '&'));
-elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
 {		
 	$error = '';
 	//Autorisation d'upload aux groupes.
@@ -125,27 +125,27 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
 	$member_memory_used = $Uploads->Member_memory_used($User->get_attribute('user_id'));
-	if( $member_memory_used >= $group_limit && !$unlimited_data )
+	if ($member_memory_used >= $group_limit && !$unlimited_data)
 		$error = 'e_max_data_reach';	
 	else
 	{
 		//Si le dossier n'est pas en écriture on tente un CHMOD 777
 		@clearstatcache();
 		$dir = '../upload/';
-		if( !is_writable($dir) )
+		if (!is_writable($dir))
 			$is_writable = (@chmod($dir, 0777)) ? true : false;
 		
 		@clearstatcache();
-		if( is_writable($dir) ) //Dossier en écriture, upload possible
+		if (is_writable($dir)) //Dossier en écriture, upload possible
 		{
 			$weight_max = $unlimited_data ? 100000000 : ($group_limit - $member_memory_used);
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
 			$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME, $weight_max);
 			
-			if( !empty($Upload->error) ) //Erreur, on arrête ici
+			if (!empty($Upload->error)) //Erreur, on arrête ici
 			{
-				if( $Upload->error == 'e_upload_max_weight' )
+				if ($Upload->error == 'e_upload_max_weight')
 					$Upload->error = 'e_max_data_reach';
 				redirect(HOST . DIR . '/member/upload.php?f=' . $folder . '&erroru=' . $Upload->error . '&' . $popup_noamp . '#errorh');
 			}
@@ -161,15 +161,15 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = !empty($error) ? '&error=' . $error . '&' . $popup_noamp . '#errorh' : '&' . $popup_noamp;
 	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . $error, '', '&'));
 }
-elseif( !empty($del_folder) ) //Supprime un dossier.
+elseif (!empty($del_folder)) //Supprime un dossier.
 {
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 		$Uploads->Del_folder($del_folder);
 	else
 	{
 		$check_user_id = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
 		//Suppression du dossier et de tout le contenu	
-		if( $check_user_id == $User->get_attribute('user_id') )	
+		if ($check_user_id == $User->get_attribute('user_id'))	
 			$Uploads->Del_folder($del_folder);
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -177,41 +177,41 @@ elseif( !empty($del_folder) ) //Supprime un dossier.
 	
 	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
-elseif( !empty($empty_folder) && $User->check_level(ADMIN_LEVEL) ) //Vide un dossier membre.
+elseif (!empty($empty_folder) && $User->check_level(ADMIN_LEVEL)) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
 	$Uploads->Del_folder($empty_folder, EMPTY_FOLDER);
 
 	redirect(HOST . DIR . '/member/upload.php?showm=1');
 }
-elseif( !empty($del_file) ) //Suppression d'un fichier
+elseif (!empty($del_file)) //Suppression d'un fichier
 {
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 		$Uploads->Del_file($del_file, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
 	{
 		$error = $Uploads->Del_file($del_file, $User->get_attribute('user_id'));
-		if( !empty($error) )
+		if (!empty($error))
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	}
 	
 	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
-elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
+elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	$folder_owner = $Sql->query("SELECT user_id FROM ".PREFIX . "upload_cat WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	
-	if( $folder_owner == $User->get_attribute('user_id') )
+	if ($folder_owner == $User->get_attribute('user_id'))
 	{
 		include('upload_functions.php');
 		$sub_cats = array();
 		upload_find_subcats($sub_cats, $move_folder, $User->get_attribute('user_id'));
 		$sub_cats[] = $move_folder;
 		//Si on ne déplace pas le dossier dans un de ses fils ou dans lui même
-		if( !in_array($to, $sub_cats) )
+		if (!in_array($to, $sub_cats))
 		{
 			$new_folder_owner = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
-			if( $new_folder_owner == $User->get_attribute('user_id') || $to == 0 )
+			if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 			{
 				$Sql->query_inject("UPDATE ".PREFIX."upload_cat SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 				redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
@@ -223,17 +223,17 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
+elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	$file_infos = $Sql->query_array("upload", "idcat", "user_id", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
-	if( $file_owner == $User->get_attribute('user_id') )
+	if ($file_owner == $User->get_attribute('user_id'))
 	{
 		$new_folder_owner = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		//Si le dossier de destination nous appartient
-		if( $new_folder_owner == $User->get_attribute('user_id') || $to == 0 )
+		if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."upload SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 			redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
@@ -244,7 +244,7 @@ elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( !empty($move_folder) || !empty($move_file) )
+elseif (!empty($move_folder) || !empty($move_file))
 {
 	$Template->set_filenames(array(
 		'upload_move'=> 'member/upload_move.tpl'
@@ -268,7 +268,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $User->get_attribute('login') . '</a>'
 	));
 	
-	if( $get_error == 'folder_contains_folder' )
+	if ($get_error == 'folder_contains_folder')
 		$Errorh->handler($LANG['upload_folder_contains_folder'], E_USER_WARNING);
 	
 	//liste des fichiers disponibles
@@ -277,7 +277,7 @@ elseif( !empty($move_folder) || !empty($move_file) )
 	
 	$is_folder = !empty($move_folder);
 	//Affichage du dossier/fichier à déplacer
-	if( $is_folder )
+	if ($is_folder)
 	{	
 		$folder_info = $Sql->query_array("upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 		$name = $folder_info['name'];
@@ -339,12 +339,12 @@ else
 
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);  
 
-	if( isset($LANG[$get_l_error]) )
+	if (isset($LANG[$get_l_error]))
 		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);  
 
 	$Template->assign_vars(array(
@@ -390,7 +390,7 @@ else
 	FROM ".PREFIX."upload_cat 
 	WHERE id_parent = '" . $folder . "' AND user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY name", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
@@ -413,7 +413,7 @@ else
 	LEFT JOIN ".PREFIX."member m ON m.user_id = up.user_id
 	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY up.name", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
@@ -483,7 +483,7 @@ else
 		'TOTAL_FILES' => $total_files
 	));
 
-	if( $total_directories == 0 && $total_files == 0 )
+	if ($total_directories == 0 && $total_files == 0)
 	{	
 		$Template->assign_vars(array(
 			'C_EMPTY_FOLDER' => true,
@@ -494,7 +494,7 @@ else
 	$Template->pparse('upload');	
 }
 
-if( empty($popup) )
+if (empty($popup))
 	require_once('../kernel/footer.php');
 else
 	require_once('../kernel/footer_no_display.php');

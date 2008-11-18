@@ -25,42 +25,42 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //Mini Shoutbox non activée si sur la page archive shoutbox.
-if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
+if (strpos(SCRIPT, '/shoutbox/shoutbox.php') === false)
 {
 	load_module_lang('shoutbox');
 	$Cache->load('shoutbox'); //Chargement du cache
 	
 	###########################Insertion##############################
 	$shoutbox = retrieve(POST, 'shoutbox', false);
-	if( $shoutbox )
+	if ($shoutbox)
 	{		
 		//Membre en lecture seule?
-		if( $User->get_attribute('user_readonly') > time() ) 
+		if ($User->get_attribute('user_readonly') > time()) 
 			$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 			
 		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
 		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);	
-		if( !empty($shout_pseudo) && !empty($shout_contents) )
+		if (!empty($shout_pseudo) && !empty($shout_contents))
 		{		
 			//Accès pour poster.
-			if( $User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']) )
+			if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
 			{
 				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
 				$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
-				if( !empty($check_time) && !$User->check_max_value(AUTH_FLOOD) )
+				if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 				{
-					if( $check_time >= (time() - $CONFIG['delay_flood']) )
+					if ($check_time >= (time() - $CONFIG['delay_flood']))
 						redirect(HOST . DIR . '/shoutbox/shoutbox.php' . url('?error=flood', '', '&'));
 				}
 				
 				//Vérifie que le message ne contient pas du flood de lien.				
 				$shout_contents = strparse($shout_contents, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']);
-				if( !check_nbr_links($shout_pseudo, 0) ) //Nombre de liens max dans le pseudo.
+				if (!check_nbr_links($shout_pseudo, 0)) //Nombre de liens max dans le pseudo.
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . url('?error=lp_flood', '', '&'));
-				if( !check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link']) ) //Nombre de liens max dans le message.
+				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
 					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
 					
 				$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
@@ -78,7 +78,7 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	));
 
 	//Pseudo du membre connecté.
-	if( $User->get_attribute('user_id') !== -1 )
+	if ($User->get_attribute('user_id') !== -1)
 		$Template->assign_vars(array(
 			'SHOUTBOX_PSEUDO' => $User->get_attribute('login'),
 			'C_HIDDEN_SHOUT' => true
@@ -113,17 +113,17 @@ if( strpos(SCRIPT, '/shoutbox/shoutbox.php') === false )
 	FROM ".PREFIX."shoutbox 
 	ORDER BY timestamp DESC 
 	" . $Sql->limit(0, 25), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$row['user_id'] = (int)$row['user_id'];		
-		if( $User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1) )
+		if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 			$del_message = '<script type="text/javascript"><!-- 
 			document.write(\'<a href="javascript:Confirm_del_shout(' . $row['id'] . ');" title="' . $LANG['delete'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a>\'); 
 			--></script><noscript><a href="' . PATH_TO_ROOT . '/shoutbox/shoutbox' . url('.php?del=true&amp;id=' . $row['id']) . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a></noscript>';
 		else
 			$del_message = '';
 	
-		if( $row['user_id'] !== -1 ) 
+		if ($row['user_id'] !== -1) 
 			$row['login'] = $del_message . ' <a style="font-size:10px;" class="' . $array_class[$row['level']] . '" href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest'])  . '</a>';
 		else
 			$row['login'] = $del_message . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';

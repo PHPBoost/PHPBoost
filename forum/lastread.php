@@ -37,12 +37,12 @@ require_once('../kernel/header.php');
 
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
-if( !empty($change_cat) )
+if (!empty($change_cat))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if( !$User->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 
-if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_topics'=> 'forum/forum_forum.tpl',
@@ -77,16 +77,16 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 			
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'announce';		
-		if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
+		if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
-		if( $row['type'] == '0' && $row['status'] != '0' ) //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
+		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
 			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';			
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
 		
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.		
-		if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
+		if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 		{
 			$last_msg_id = $row['last_view_id']; 
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
@@ -135,7 +135,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	WHERE t.last_timestamp >= '" . $max_time . "' AND v.user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	//Le membre a déjà lu tous les messages.
-	if( $nbr_topics == 0 )
+	if ($nbr_topics == 0)
 	{
 		$Template->assign_vars(array(
 			'C_NO_TOPICS' => true,
@@ -170,7 +170,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/lastread.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		

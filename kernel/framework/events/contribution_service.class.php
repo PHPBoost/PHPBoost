@@ -47,7 +47,7 @@ class ContributionService
 		
 		$properties = $Sql->fetch_assoc($result);
 		
-		if( (int)$properties['id'] > 0 )
+		if ((int)$properties['id'] > 0)
 		{
 			$contribution = new Contribution();
 			$contribution->build($properties['id'], $properties['entitled'], $properties['description'], $properties['fixing_url'], $properties['module'], $properties['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $properties['fixing_date']), unserialize($properties['auth']), $properties['poster_id'], $properties['fixer_id'], $properties['id_in_module'], $properties['identifier'], $properties['type'], $properties['poster_login'], $properties['fixer_login']);
@@ -71,7 +71,7 @@ class ContributionService
 		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = " . CONTRIBUTION_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$contri = new Contribution();
 			
@@ -91,24 +91,24 @@ class ContributionService
 		$criterias = array();
 		
 		//The module parameter must be specified and of string type, otherwise we can't continue
-		if( empty($module) || !is_string($module) )
+		if (empty($module) || !is_string($module))
 			return array();
 		
 		$criterias[] = "module = '" . strprotect($module) . "'";
 		
-		if( $id_in_module != null )
+		if ($id_in_module != null)
 			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
 		
-		if( $type != null)
+		if ($type != null)
 			$criterias[] = "type = '" . strprotect($type) . "'";
 			
-		if( $identifier != null )
+		if ($identifier != null)
 			$criterias[] = "identifier = '" . strprotect($identifier). "'";
 			
-		if( $poster_id != null )
+		if ($poster_id != null)
 			$criterias[] = "poster_id = '" . intval($poster_id) . "'";
 			
-		if( $fixer_id != null )
+		if ($fixer_id != null)
 			$criterias[] = "fixer_id = '" . intval($fixer_id) . "'";
 		
 		$array_result = array();
@@ -120,7 +120,7 @@ class ContributionService
 		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE " . $where_clause, __LINE__, __FILE__);
 		
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$contri = new Contribution();
 			$contri->build($row['id'], $row['entitled'], $row['description'], $row['fixing_url'], $row['module'], $row['current_status'], new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['creation_date']), new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['fixing_date']), unserialize($row['auth']), $row['poster_id'], $row['fixer_id'], $row['id_in_module'], $row['identifier'], $row['type'], $row['poster_login'], $row['fixer_login']);
@@ -136,7 +136,7 @@ class ContributionService
 		global $Sql, $Cache;
 		
 		// If it exists already in the data base
-		if( $contribution->get_id() > 0 )
+		if ($contribution->get_id() > 0)
 		{
 			//We write it for PHP 4 which doesn't understand (object->get_object()->method())
 			$creation_date = $contribution->get_creation_date();
@@ -153,7 +153,7 @@ class ContributionService
 		}
 		
 		//Regeneration of the member cache file
-		if( $contribution->get_must_regenerate_cache() )
+		if ($contribution->get_must_regenerate_cache())
 		{
 			$Cache->generate_file('member');
 			$contribution->set_must_regenerate_cache(false);
@@ -166,7 +166,7 @@ class ContributionService
 		global $Sql, $Cache;
 		
 		//If it exists in database
-		if( $contribution->get_id() > 0 )
+		if ($contribution->get_id() > 0)
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
 			//We reset the id
@@ -189,10 +189,10 @@ class ContributionService
 		
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = $Sql->query_while("SELECT auth FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ("SELECT auth FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( !($this_auth = @unserialize($row['auth'])) )
+			if (!($this_auth = @unserialize($row['auth'])))
 				$this_auth = array();
 			
 			//We can count only for ranks. For groups and users we can't generalize because there can be intersection problems. Yet, we know the maximum number of contributions they can see, and we can be sure if they have at least 1.
@@ -201,27 +201,27 @@ class ContributionService
 			$array_result['r2']++;
 			
 			//For moderators ?
-			if( Authorizations::check_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+			if (Authorizations::check_auth(RANK_TYPE, MODERATOR_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
 				$array_result['r1']++;
 			
 			//For members ?
-			if( Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT) )
+			if (Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
 				$array_result['r0']++;
 				
-			foreach($this_auth as $profile => $auth_profile)
+			foreach ($this_auth as $profile => $auth_profile)
 			{
 				//Groups
-				if( is_numeric($profile) )
+				if (is_numeric($profile))
 				{
 					//If this member has not already an entry and he can see that contribution
-					if( empty($array_result[$profile]) && Authorizations::check_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT) )
+					if (empty($array_result[$profile]) && Authorizations::check_auth(GROUP_TYPE, (int)$profile, $this_auth, CONTRIBUTION_AUTH_BIT))
 						$array_result['g' . $profile] = 1;
 				}
 				//Members
-				elseif( substr($profile, 0, 1) == 'm' )
+				elseif (substr($profile, 0, 1) == 'm')
 				{
 					//If this member has not already an entry and he can see that contribution
-					if( empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT) )
+					if (empty($array_result[$profile]) && Authorizations::check_auth(USER_TYPE, (int)substr($profile, 1), $this_auth, CONTRIBUTION_AUTH_BIT))
 						$array_result[$profile] = 1;
 				}
 			}

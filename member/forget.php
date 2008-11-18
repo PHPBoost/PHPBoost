@@ -34,23 +34,23 @@ $activ_get = retrieve(GET, 'activ', '');
 $user_get = retrieve(GET, 'u', 0);
 $forget = retrieve(POST, 'forget', '');
 
-if( !$User->check_level(MEMBER_LEVEL) )
+if (!$User->check_level(MEMBER_LEVEL))
 {
-	if( !$activ_confirm )
+	if (!$activ_confirm)
 	{	
 		$Template->set_filenames(array(
 			'forget'=> 'member/forget.tpl'
 		));
 			
-		if( !empty($forget))
+		if (!empty($forget))
 		{
 			$user_mail = retrieve(POST, 'mail', '');
 			$login = retrieve(POST, 'name', '');
 
-			if( !empty($user_mail) && check_mail($user_mail) )
+			if (!empty($user_mail) && check_mail($user_mail))
 			{	
 				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
-				if( !empty($user_id) ) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
+				if (!empty($user_id)) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
 				{
 					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
 					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
@@ -88,7 +88,7 @@ if( !$User->check_level(MEMBER_LEVEL) )
 			default:
 			$errstr = '';
 		}	
-		if( !empty($errstr) )
+		if (!empty($errstr))
 			$Errorh->handler($errstr, $errno);			
 	
 		$Template->assign_vars(array(
@@ -104,10 +104,10 @@ if( !$User->check_level(MEMBER_LEVEL) )
 		
 		$Template->pparse('forget');
 	}
-	elseif( !empty($activ_get) && !empty($user_get) && $activ_confirm )
+	elseif (!empty($activ_get) && !empty($user_get) && $activ_confirm)
 	{
 		$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
-		if( !empty($user_id) )
+		if (!empty($user_id))
 		{
 			//Mise é jour du nouveau password
 			$Sql->query_inject("UPDATE ".PREFIX."member SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);

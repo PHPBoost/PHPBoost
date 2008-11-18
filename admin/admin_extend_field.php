@@ -38,17 +38,17 @@ $Template->set_filenames(array(
 	'admin_extend_field'=> 'admin/admin_extend_field.tpl'
 ));
 	
-if( $del && !empty($id) )
+if ($del && !empty($id))
 {
 	$field_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	if( !empty($field_name) ) 
+	if (!empty($field_name)) 
 	{
 		$Sql->query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);
 }
-elseif( !empty($_POST['valid']) )
+elseif (!empty($_POST['valid']))
 {
 	$name = retrieve(POST, 'name', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -57,7 +57,7 @@ elseif( !empty($_POST['valid']) )
 	$default_values = retrieve(POST, 'default_values', '');
 	
 	$regex_type = retrieve(POST, 'regex_type', 0);
-	if( empty($regex_type) )
+	if (empty($regex_type))
 		$regex = retrieve(POST, 'regex1', 0);
 	else
 		$regex = retrieve(POST, 'regex2', '');
@@ -71,7 +71,7 @@ elseif( !empty($_POST['valid']) )
 		6 => 'TEXT NOT NULL'
 	);
 	
-	if( !empty($name) && !empty($field) )
+	if (!empty($name) && !empty($field))
 	{
 		function rewrite_field($field)
 		{
@@ -83,11 +83,11 @@ elseif( !empty($_POST['valid']) )
 		$field_name = rewrite_field($name);
 		
 		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
-		if( empty($check_name) ) 
+		if (empty($check_name)) 
 		{
 			$new_field_name = $field_name . ' ' . $array_field[$field];
 			$previous_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			if( $previous_name != $field_name )
+			if ($previous_name != $field_name)
 				$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
@@ -99,9 +99,9 @@ elseif( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
 }
-elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
+elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
-	if( !empty($top) )
+	if (!empty($top))
 	{	
 		$idmoins = ($top - 1);
 			
@@ -111,7 +111,7 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
-	elseif( !empty($bottom) )
+	elseif (!empty($bottom))
 	{
 		$idplus = ($bottom + 1);
 			
@@ -122,13 +122,13 @@ elseif( (!empty($top) || !empty($bottom)) && !empty($id) ) //Monter/descendre.
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
-elseif( !empty($id) )
+elseif (!empty($id))
 {	
 	$extend_field = $Sql->query_array("member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$regex_checked = 2;
 	$predef_regex = false;
-	if( is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5 )
+	if (is_numeric($extend_field['regex']) && $extend_field['regex'] >= 0 && $extend_field['regex'] <= 5)
 	{
 		$regex_checked = 1;
 		$predef_regex = true;
@@ -149,9 +149,9 @@ elseif( !empty($id) )
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $get_error == 'exist_field' )
+	elseif ($get_error == 'exist_field')
 		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
 	
 	$array_field = array(
@@ -163,7 +163,7 @@ elseif( !empty($id) )
 		6 => $LANG['check_mult']
 	);
 	$option_field = '';
-	foreach($array_field as $key => $value)
+	foreach ($array_field as $key => $value)
 	{
 		$selected = ($key == $extend_field['field']) ? 'selected="selected"' : '';
 		$option_field .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
@@ -179,7 +179,7 @@ elseif( !empty($id) )
 	
 	$selected = (!$predef_regex) ? 'selected="selected"' : ''; 
 	$option_regex = '<option value="0" ' . $selected . '>--</option>';
-	foreach($array_regex as $key => $value)
+	foreach ($array_regex as $key => $value)
 	{
 		$selected = ($key == $extend_field['regex']) ? 'selected="selected"' : '';
 		$option_regex .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
@@ -247,7 +247,7 @@ else
 	FROM ".PREFIX."member_extend_cat
 	WHERE display = 1
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
 		$top_link = $min_cat != $row['class'] ? '<a href="admin_extend_field.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">

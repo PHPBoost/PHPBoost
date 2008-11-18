@@ -37,14 +37,14 @@ $Template->set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
 
 //Liste des dossiers de la racine
 $root = '';
-foreach($_PAGES_CATS as $key => $value )
+foreach ($_PAGES_CATS as $key => $value)
 {
-	if( $value['id_parent'] == 0 )
+	if ($value['id_parent'] == 0)
 	{
 		//Autorisation particulière ?
 		$special_auth = !empty($value['auth']);
 		//Vérification de l'autorisation d'éditer la page
-		if( ($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+		if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
 			$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 		}
@@ -55,13 +55,13 @@ $result = $Sql->query_while("SELECT title, id, encoded_title, auth
 	FROM ".PREFIX."pages
 	WHERE id_cat = 0 AND is_cat = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	//Autorisation particulière ?
 	$special_auth = !empty($row['auth']);
 	$array_auth = unserialize($row['auth']);
 	//Vérification de l'autorisation d'éditer la page
-	if( ($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) )
+	if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 	{
 		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
@@ -83,10 +83,10 @@ FROM ".PREFIX."pages_cats c
 LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
 WHERE c.id_parent = 0
 ORDER BY p.title ASC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
-	if( $sub_cats_number > 0 )
+	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(
 			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 

@@ -45,7 +45,7 @@ $content_manager = new Content($editor);
 $parser =& $content_manager->get_parser($editor);
 
 $parser->set_content($contents, MAGIC_QUOTES);
-if( !empty($forbidden_tags) )
+if (!empty($forbidden_tags))
 	$parser->set_forbidden_tags($forbidden_tags);
 $parser->parse();
 
@@ -53,7 +53,7 @@ $parser->parse();
 $contents = second_parse(stripslashes($parser->get_content()));
 
 //Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
-if( preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
+if (preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
 	$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
 
 echo !empty($contents) ? $contents : '';

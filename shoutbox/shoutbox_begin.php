@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('shoutbox'); //Chargement de la langue du module.

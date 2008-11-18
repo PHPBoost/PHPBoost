@@ -54,15 +54,15 @@ class File extends FileSystemElement
 		
 		$this->mode = $mode;
 		
-		if( @file_exists($this->path) )
+		if (@file_exists($this->path))
 		{
-			if( !@is_file($this->path) )
+			if (!@is_file($this->path))
 				return false;
 			
-			if( $whenopen == OPEN_NOW )
+			if ($whenopen == OPEN_NOW)
 				$this->open();
 		}
-		else if( !@touch($this->path) )
+		else if (!@touch($this->path))
 			return false;
 			
 		return true;
@@ -73,7 +73,7 @@ class File extends FileSystemElement
 	{
 		parent::open();
 		
-		if( $this->mode & READ && is_file($this->path) )
+		if ($this->mode & READ && is_file($this->path))
 		{
 			$this->contents = file_get_contents_emulate($this->path);
 			$this->lines = explode("\n", $this->contents);
@@ -83,13 +83,13 @@ class File extends FileSystemElement
 	// renvoie le contenu du fichier en commençant à l'octet $start
 	function get_contents($start = 0, $len = -1)
 	{
-		if($this->mode & READ)
+		if ($this->mode & READ)
 		{
 			parent::get();
 			
-			if( !$start && $len == -1 )
+			if (!$start && $len == -1)
 				return $this->contents;
-			else if( $len == -1 )
+			else if ($len == -1)
 				return substr($this->contents, $start);
 			else
 				return substr($this->contents, $start, $len);
@@ -101,13 +101,13 @@ class File extends FileSystemElement
 	// renvoie le contenu du fichier sous forme de tableau
 	function get_lines($start = 0, $n = -1)
 	{
-		if($this->mode & READ)
+		if ($this->mode & READ)
 		{
 			parent::get();
 			
-			if( !$start && $n == -1 )
+			if (!$start && $n == -1)
 				return $this->lines;
-			else if( $n == -1 )
+			else if ($n == -1)
 				return array_slice($this->lines, $start);
 			else
 				return array_slice($this->lines, $start, $n);
@@ -119,22 +119,22 @@ class File extends FileSystemElement
 	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit passant en troisième paramètre la constante ADD
 	function write($data, $what = ERASE, $mode = CLOSEFILE)
 	{
-		if($this->mode & WRITE)
+		if ($this->mode & WRITE)
 		{	
-			if( ($mode == NOTCLOSEFILE && !is_ressource($this->fd)) || $mode == CLOSEFILE )
+			if (($mode == NOTCLOSEFILE && !is_ressource($this->fd)) || $mode == CLOSEFILE)
 			{
-				if( !($this->fd = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')) )
+				if (!($this->fd = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')))
 					return false;
 			}
 			
 			$bytes_to_write = strlen($data);
 			$bytes_written = 0;
-			while( $bytes_written < $bytes_to_write )
+			while ($bytes_written < $bytes_to_write)
 			{
 				// on écrit par bloc de 4Ko
 				$bytes = fwrite($this->fd, substr($data, $bytes_written, 4096));
 
-				if( $bytes === false || $bytes == 0 )
+				if ($bytes === false || $bytes == 0)
 					break;
 
 				$bytes_written += $bytes;
@@ -154,7 +154,7 @@ class File extends FileSystemElement
 		$this->contents = '';
 		$this->lines = array();
 		
-		if( is_resource($this->fd) )
+		if (is_resource($this->fd))
 			fclose($this->fd);
 	}
 	
@@ -162,7 +162,7 @@ class File extends FileSystemElement
 	function delete()
 	{
         $this->close();
-		if( !@unlink($this->path) ) // Empty the file if it couldn't delete it
+		if (!@unlink($this->path)) // Empty the file if it couldn't delete it
             $this->write('');
 	}
 	
@@ -175,7 +175,7 @@ class File extends FileSystemElement
 	//Verrouille le fichier
 	function lock()
 	{
-		if( !$this->is_open() )
+		if (!$this->is_open())
 			$this->open();
 		
 		//Verrouillage
@@ -185,7 +185,7 @@ class File extends FileSystemElement
 	//Déverrouille le fichier
 	function unlock()
 	{
-		if( !$this->is_open() )
+		if (!$this->is_open())
 			$this->open();
 		
 		//Verrouillage

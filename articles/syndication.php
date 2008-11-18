@@ -34,7 +34,7 @@ define('NO_SESSION_LOCATION', true); //Ne réactualise pas l'emplacement du visi
 require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
-if( retrieve(GET, 'feed', 'rss') == 'rss' )
+if (retrieve(GET, 'feed', 'rss') == 'rss')
 {
     require_once('../kernel/framework/content/syndication/rss.class.php');
     $Feed = new RSS('articles');
@@ -45,7 +45,7 @@ else
     $Feed = new ATOM('articles');
 }
 
-if( $Feed->is_in_cache() )
+if ($Feed->is_in_cache())
 {   // If the file exists, we print it
     echo $Feed->read();
 }

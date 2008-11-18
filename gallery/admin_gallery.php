@@ -41,7 +41,7 @@ $Gallery = new Gallery;
 	
 $Cache->load('gallery');
 
-if( !empty($idpics) && isset($_GET['move']) ) //Déplacement d'une image.
+if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
 	$Gallery->Move_pics($idpics, $move);
 	
@@ -50,7 +50,7 @@ if( !empty($idpics) && isset($_GET['move']) ) //Déplacement d'une image.
 					
 	redirect(HOST . DIR . '/gallery/admin_gallery.php?cat=' . $move);
 }
-elseif( !empty($del) ) //Suppression d'une image.
+elseif (!empty($del)) //Suppression d'une image.
 {
 	$Gallery->Del_pics($del);
 	
@@ -65,16 +65,16 @@ else
 		'admin_gallery_management'=> 'gallery/admin_gallery_management.tpl'
 	));
 	
-	if( !empty($idcat) && !isset($CAT_GALLERY[$idcat]) )
+	if (!empty($idcat) && !isset($CAT_GALLERY[$idcat]))
 		redirect(HOST . DIR . '/gallery/admin_gallery.php?error=unexist_cat');
 	
-	if( !empty($idcat) )
+	if (!empty($idcat))
 	{
 		//Création de l'arborescence des catégories.
 		$cat_links = '';
-		foreach($CAT_GALLERY as $id => $array_info_cat)
+		foreach ($CAT_GALLERY as $id => $array_info_cat)
 		{
-			if( $CAT_GALLERY[$idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$idcat]['level'] )
+			if ($CAT_GALLERY[$idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$idcat]['level'])
 				$cat_links .= ' <a href="admin_gallery.php?cat=' . $id . '">' . $array_info_cat['name'] . '</a> &raquo;';
 		}
 		
@@ -93,7 +93,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-	if( $get_error == 'unexist_cat' )
+	if ($get_error == 'unexist_cat')
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
@@ -147,20 +147,20 @@ else
 	));
 	
 	##### Catégorie disponibles #####	
-	if( $total_cat > 0 )
+	if ($total_cat > 0)
 	{
 		$Template->assign_block_vars('cat', array(			
 		));		
 			
 		$i = 0;	
-		$result = $Sql->query_while("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
+		$result = $Sql->query_while ("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
 		FROM ".PREFIX."gallery_cats gc
 		LEFT JOIN ".PREFIX."gallery g ON g.idcat = gc.id
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
 		" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On genère le tableau pour $CONFIG_GALLERY['nbr_column'] colonnes
 			$multiple_x = $i / $nbr_column_cats;
@@ -170,7 +170,7 @@ else
 			$tr_end = is_int($multiple_x) ? '</tr>' : '';
 
 			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-			if( !file_exists('pics/thumbnails/' . $row['path']) )
+			if (!file_exists('pics/thumbnails/' . $row['path']))
 				$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 			$Template->assign_block_vars('cat.list', array(
@@ -186,7 +186,7 @@ else
 		$Sql->query_close($result);	
 		
 		//Création des cellules du tableau si besoin est.
-		while( !is_int($i/$nbr_column_cats) )
+		while (!is_int($i/$nbr_column_cats))
 		{		
 			$i++;
 			$Template->assign_block_vars('cat.end_td', array(
@@ -197,7 +197,7 @@ else
 	}	
 		
 	##### Affichage des photos #####	
-	if( $nbr_pics > 0 )
+	if ($nbr_pics > 0)
 	{
 		$Template->assign_block_vars('pics', array(
 			'EDIT' => '<a href="admin_gallery_cat.php' . (!empty($idcat) ? '?id=' . $idcat : '') . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" /></a>',
@@ -216,14 +216,14 @@ else
 		$result = $Sql->query_while("SELECT id, level, name 
 		FROM ".PREFIX."gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 			$array_cat_list[$row['id']] = '<option value="' . $row['id'] . '" %s>' . $margin . ' ' . $row['name'] . '</option>';			
 		}
 		$Sql->query_close($result);
 		
-		if( !empty($idpics) )
+		if (!empty($idpics))
 		{
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
 			FROM ".PREFIX."gallery g
@@ -231,7 +231,7 @@ else
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
 			" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			$info_pics = $Sql->fetch_assoc($result);			
-			if( !empty($info_pics['id']) )
+			if (!empty($info_pics['id']))
 			{
 				//Affichage miniatures.		
 				$id_previous = 0;
@@ -245,16 +245,16 @@ else
 				FROM ".PREFIX."gallery g
 				LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
 				WHERE g.idcat = '" . $idcat . "'", __LINE__, __FILE__);
-				while( $row = $Sql->fetch_assoc($result) )
+				while ($row = $Sql->fetch_assoc($result))
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-					if( !file_exists('pics/thumbnails/' . $row['path']) )
+					if (!file_exists('pics/thumbnails/' . $row['path']))
 						$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 					//Affichage de la liste des miniatures sous l'image.
 					$array_pics[] = '<td class="row2" style="text-align:center;height:' . ($CONFIG_GALLERY['height'] + 16) . 'px"><span id="thumb' . $i . '"><a href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max' . '"><img src="pics/thumbnails/' . $row['path'] . '" alt="" / ></a></span></td>';
 					
-					if( $row['id'] == $idpics )
+					if ($row['id'] == $idpics)
 					{	
 						$reach_pics_pos = true;
 						$pos_pics = $i;						
@@ -262,7 +262,7 @@ else
 					else
 					{	
 						
-						if( !$reach_pics_pos )
+						if (!$reach_pics_pos)
 						{
 							$thumbnails_before++;
 							$id_previous = $row['id'];
@@ -270,7 +270,7 @@ else
 						else
 						{	
 							$thumbnails_after++;
-							if( empty($id_next) )
+							if (empty($id_next))
 								$id_next = $row['id'];
 						}
 					}	
@@ -282,9 +282,9 @@ else
 				}
 				$Sql->query_close($result);
 								
-				if( $thumbnails_before < $nbr_pics_display_before )	
+				if ($thumbnails_before < $nbr_pics_display_before)	
 					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;				
-				if( $thumbnails_after < $nbr_pics_display_after )
+				if ($thumbnails_after < $nbr_pics_display_after)
 					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;	
 					
 				$Template->assign_vars(array(
@@ -307,7 +307,7 @@ else
 
 				//Liste des catégories.
 				$cat_list = '';
-				foreach($array_cat_list as $key_cat => $option_value)
+				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 								
 				//Affichage de l'image et de ses informations.
@@ -335,9 +335,9 @@ else
 				
 				//Affichage de la liste des miniatures sous l'image.
 				$i = 0;
-				foreach($array_pics as $pics)
+				foreach ($array_pics as $pics)
 				{
-					if( $i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails) )
+					if ($i >= ($pos_pics - $start_thumbnails) && $i <= ($pos_pics + $end_thumbnails))
 					{
 						$Template->assign_block_vars('pics.pics_max.list_preview_pics', array(
 							'PICS' => $pics
@@ -356,10 +356,10 @@ else
 			WHERE g.idcat = '" . $idcat . "' 
 			ORDER BY g.timestamp 
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-				if( !file_exists('pics/thumbnails/' . $row['path']) )
+				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 				
 				$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
@@ -374,18 +374,18 @@ else
 				$tr_end = is_int($j / $nbr_column_pics) ? '</tr>' : '';
 
 				//Affichage de l'image en grand.
-				if( $CONFIG_GALLERY['display_pics'] == 3 ) //Ouverture en popup plein écran.
+				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
 					$display_link = '<a class="com" href="' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox" title="' . $row['name'] . '">';
-				elseif( $CONFIG_GALLERY['display_pics'] == 2 ) //Ouverture en popup simple.
+				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
 					$display_link = '<a class="com" href="javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')">';
-				elseif( $CONFIG_GALLERY['display_pics'] == 1 ) //Ouverture en agrandissement simple.
+				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
 					$display_link = '<a class="com" href="javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)">';
 				else //Ouverture nouvelle page.
 					$display_link = '<a class="com" href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max">';
 					
 				//Liste des catégories.
 				$cat_list = '';
-				foreach($array_cat_list as $key_cat => $option_value)
+				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $row['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 					
 				$Template->assign_block_vars('pics.list', array(
@@ -406,7 +406,7 @@ else
 			$Sql->query_close($result);
 			
 			//Création des cellules du tableau si besoin est.
-			while( !is_int($j/$nbr_column_pics) )
+			while (!is_int($j/$nbr_column_pics))
 			{		
 				$j++;
 				$Template->assign_block_vars('pics.end_td_pics', array(

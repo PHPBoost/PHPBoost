@@ -29,7 +29,7 @@ load_module_lang('poll'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']))
+if (!empty($_POST['valid']))
 {
 	$config_poll = array();
 	$config_poll['poll_auth'] = retrieve(POST, 'poll_auth', -1);
@@ -59,7 +59,7 @@ else
 	FROM ".PREFIX."poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = in_array($row['id'], $CONFIG_POLL['poll_mini']) ? 'selected="selected"' : '';
 		$mini_poll_list .= '<option value="' . $row['id'] . '" ' . $selected . ' id="poll_mini' . $i++ . '">' . $row['question'] . '</option>';
@@ -90,7 +90,7 @@ else
 	
 	//Rang d'autorisation.
 	$CONFIG_POLL['poll_auth'] = isset($CONFIG_POLL['poll_auth']) ? $CONFIG_POLL['poll_auth'] : '-1';	
-	for($i = -1; $i <= 2; $i++)
+	for ($i = -1; $i <= 2; $i++)
 	{
 		switch($i) 
 		{	

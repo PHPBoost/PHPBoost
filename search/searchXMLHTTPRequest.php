@@ -46,12 +46,12 @@ require_once('../search/search.inc.php');
 $Modules = new ModulesDiscoveryService();
 $modulesArgs = array();
 
-if( ($idSearch >= 0) && ($MODULE_NAME != '') )
+if (($idSearch >= 0) && ($MODULE_NAME != ''))
 {
     echo 'var syncErr = false;';
     
     $Search = new Search();
-    if( !$Search->is_search_id_in_cache($idSearch) )
+    if (!$Search->is_search_id_in_cache($idSearch))
     {
         // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
         // Listes des modules de recherches
@@ -61,19 +61,19 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
         $formsModule = $Modules->get_available_modules('get_search_form', $searchModules);
         
         // Ajout du paramétre search à tous les modules
-        foreach( $searchModules as $module)
+        foreach ($searchModules as $module)
             $modulesArgs[$module->get_id()] = array('search' => $searchTxt);
         
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
-        foreach( $formsModule as $formModule)
+        foreach ($formsModule as $formModule)
         {
-            if( $formModule->has_functionnality('get_search_args') )
+            if ($formModule->has_functionnality('get_search_args'))
             {
                 // Récupération de la liste des paramètres
                 $formModuleArgs = $formModule->functionnality('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
-                foreach( $formModuleArgs as $arg)
+                foreach ($formModuleArgs as $arg)
                 {
                     if ( isset($_POST[$arg]) )
                         $modulesArgs[$formModule->get_id()][$arg] = $_POST[$arg];
@@ -98,7 +98,7 @@ if( ($idSearch >= 0) && ($MODULE_NAME != '') )
     echo   'var resultsAJAX = new Array();';
     
     $nbResults = $Search->get_results_by_id($results, $Search->id_search[$MODULE_NAME]);
-    if( $nbResults > 0 )
+    if ($nbResults > 0)
     {
         $module = $Modules->get_module($MODULE_NAME);
         $htmlResults = '';

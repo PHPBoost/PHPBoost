@@ -36,7 +36,7 @@ require_once('../kernel/header_no_display.php');
 
 $idcat = retrieve(GET, 'idcat', 0);
 
-if( retrieve(GET, 'feed', 'rss') == 'rss' )
+if (retrieve(GET, 'feed', 'rss') == 'rss')
 {
     require_once('../kernel/framework/content/syndication/rss.class.php');
     $Feed = new RSS('wiki');

@@ -42,16 +42,16 @@ $weighting = retrieve(GET, 'weighting', false);
 $Cache->load('search');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
-    if( !$weighting )
+    if (!$weighting)
     {
         // Configuration de la classe search.class.php
         $CONFIG['search_cache_time'] = retrieve(POST, 'cache_time', 15);
         $CONFIG['search_max_use'] = retrieve(POST, 'max_use', 200);
         
         // Configuration du module 'Search'
-        if( !is_array($SEARCH_CONFIG) )
+        if (!is_array($SEARCH_CONFIG))
             $SEARCH_CONFIG = array();
         $SEARCH_CONFIG['nb_results_per_page'] = retrieve(POST, 'nb_results_p', 15);
         $SEARCH_CONFIG['authorized_modules'] = retrieve(POST, 'authorized_modules', array());
@@ -75,7 +75,7 @@ if( !empty($_POST['valid']) )
     else
     {
         // Configuration du module 'Search'
-        foreach( $SEARCH_CONFIG['authorized_modules'] as $module )
+        foreach ($SEARCH_CONFIG['authorized_modules'] as $module)
             $SEARCH_CONFIG['modules_weighting'][$module] = retrieve(POST, $module, 1);
         
         // Enregistrement des modifications de la config du module 'Search'
@@ -89,7 +89,7 @@ if( !empty($_POST['valid']) )
         redirect(HOST . SCRIPT . '?weighting=true');
     }
 }
-elseif( $clearOutCache ) // On vide le contenu du cache de la recherche
+elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 {
     $Sql->query_inject("TRUNCATE ".PREFIX."search_results", __LINE__, __FILE__);
     $Sql->query_inject("TRUNCATE ".PREFIX."search_index", __LINE__, __FILE__);
@@ -111,7 +111,7 @@ else
         'C_WEIGHTING' => $weighting
     ));
     
-    if( !$weighting )
+    if (!$weighting)
     {
         $SEARCH_CONFIG['search_cache_time'] = isset($CONFIG['search_cache_time']) ? $CONFIG['search_cache_time'] : 15;
         $SEARCH_CONFIG['search_max_use'] = isset($CONFIG['search_max_use']) ? $CONFIG['search_max_use'] : 200;
@@ -121,7 +121,7 @@ else
         $Modules = new ModulesDiscoveryService();
         $searchModules = $Modules->get_available_modules('get_search_request');
         
-        foreach( $searchModules as $module )
+        foreach ($searchModules as $module)
         {
             if ( in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']) )
                 $selected = ' selected="selected"';
@@ -153,10 +153,10 @@ else
     else
     {
         $Modules = new ModulesDiscoveryService();
-        foreach( $SEARCH_CONFIG['authorized_modules'] as $module_id )
+        foreach ($SEARCH_CONFIG['authorized_modules'] as $module_id)
         {
             $module = $Modules->get_module($module_id);
-            if( !$module->got_error() )
+            if (!$module->got_error())
             {
                 $Tpl->assign_block_vars('weights', array(
                     'MODULE' => $module->get_id(),

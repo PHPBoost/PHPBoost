@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 // field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
-if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
+if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
 	$name = retrieve(POST, 'name', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -39,7 +39,7 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 	$default_values = retrieve(POST, 'default_values', '');
 	
 	$regex_type = retrieve(POST, 'regex_type', 0);
-	if( empty($regex_type) )
+	if (empty($regex_type))
 		$regex = retrieve(POST, 'regex1', 0);
 	else
 		$regex = retrieve(POST, 'regex2', '');
@@ -53,7 +53,7 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 		6 => 'TEXT NOT NULL'
 	);
 	
-	if( !empty($name) && !empty($field) )
+	if (!empty($name) && !empty($field))
 	{
 		function rewrite_field($field)
 		{
@@ -64,7 +64,7 @@ if( !empty($_POST['valid']) ) //Insertion du nouveau champs.
 		}
 		$field_name = rewrite_field($name);
 		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
-		if( empty($check_name) ) 
+		if (empty($check_name)) 
 		{
 			$class = $Sql->query("SELECT MAX(class) + 1 FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 			$Sql->query_inject("INSERT INTO ".PREFIX."member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
@@ -89,9 +89,9 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $get_error == 'exist_field' )
+	elseif ($get_error == 'exist_field')
 		$Errorh->handler($LANG['e_exist_field'], E_USER_NOTICE);
 		
 	$Template->assign_vars(array(

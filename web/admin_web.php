@@ -36,7 +36,7 @@ $id = retrieve(GET, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-if( !empty($id) && !$del )
+if (!empty($id) && !$del)
 {
 	$Template->set_filenames(array(
 		'admin_web_management2'=> 'web/admin_web_management2.tpl'
@@ -83,7 +83,7 @@ if( !empty($id) && !$del )
 	$i = 0;	
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('select', array(
@@ -95,14 +95,14 @@ if( !empty($id) && !$del )
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $i == 0 ) //Aucune catégorie => alerte.	 
+	elseif ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);	
 	
 	$Template->pparse('admin_web_management2'); 
 }
-elseif( !empty($_POST['previs']) && !empty($id_post) )
+elseif (!empty($_POST['previs']) && !empty($id_post))
 {
 	$Template->set_filenames(array(
 		'admin_web_management'=> 'web/admin_web_management2.tpl'
@@ -179,7 +179,7 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
 	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
 		$Template->assign_block_vars('select', array(
@@ -189,12 +189,12 @@ elseif( !empty($_POST['previs']) && !empty($id_post) )
 	}
 	$Sql->query_close($result);
 	
-	if( $i == 0 ) //Aucune catégorie => alerte.	 
+	if ($i == 0) //Aucune catégorie => alerte.	 
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 		
 	$Template->pparse('admin_web_management'); 
 }				
-elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
+elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
 	$title = retrieve(POST, 'name', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -203,7 +203,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	$compt = retrieve(POST, 'compt', 0);
 	$aprob = retrieve(POST, 'aprob', 0);
 
-	if( !empty($title) && !empty($url) && !empty($idcat) )
+	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
@@ -212,7 +212,7 @@ elseif( !empty($_POST['valid']) && !empty($id_post) ) //inject
 	else
 		redirect(HOST . DIR . '/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
-elseif( $del && !empty($id) ) //Suppresion du lien web.
+elseif ($del && !empty($id)) //Suppresion du lien web.
 {
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM ".PREFIX."web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
@@ -260,7 +260,7 @@ else
 	LEFT JOIN ".PREFIX."web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$aprob = ($row['aprob'] == 1) ? $LANG['yes'] : $LANG['no'];
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 load_module_lang('faq');
 $Cache->load('faq'); //Chargement du cache
@@ -43,13 +43,13 @@ $faq_cats = new FaqCats();
 
 $i = 0;
 
-while( !$faq_cats->check_auth($random_question['idcat']) && $i < 5 )
+while (!$faq_cats->check_auth($random_question['idcat']) && $i < 5)
 {
 	$random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
 	$i++;
 }
 
-if( $i < 5 && !empty($random_question['question']) )
+if ($i < 5 && !empty($random_question['question']))
 	$Template->assign_vars(array(
 		'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
 		'FAQ_QUESTION' => $random_question['question'],

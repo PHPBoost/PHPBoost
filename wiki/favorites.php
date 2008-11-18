@@ -35,21 +35,21 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php'); 
 
-if( !$User->check_level(MEMBER_LEVEL) )
+if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $add_favorite = retrieve(GET, 'add', 0);
 $remove_favorite = retrieve(GET, 'del', 0);
 
-if( $add_favorite > 0 )//Ajout d'un favori
+if ($add_favorite > 0)//Ajout d'un favori
 {
 	//on vérifie que l'article existe
 	$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
-	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
+	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $User->get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
-	if( $is_favorite == 0 )
+	if ($is_favorite == 0)
 	{
 		$Sql->query_inject("INSERT INTO ".PREFIX."wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -57,17 +57,17 @@ if( $add_favorite > 0 )//Ajout d'un favori
 	else //Erreur: l'article est déjà en favoris
 		redirect(HOST . DIR . '/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
 }
-elseif( $remove_favorite > 0 )
+elseif ($remove_favorite > 0)
 {
 	//on vérifie que l'article existe
 	$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
-	if( empty($article_infos['encoded_title']) ) //L'article n'existe pas
+	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_favorites WHERE user_id = '" . $User->get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	//L'article est effectivement en favoris
-	if( $is_favorite > 0 )
+	if ($is_favorite > 0)
 	{
 		$Sql->query_inject("DELETE FROM ".PREFIX."wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
@@ -81,13 +81,13 @@ else
 	
 	//Gestion des erreurs
 	$error = !empty($_GET['error']) ? strprotect($_GET['error']) : '';
-	if( $error == 'e_no_favorite' )
+	if ($error == 'e_no_favorite')
 		$errstr = $LANG['wiki_article_is_not_a_favorite'];
-	elseif( $error == 'e_already_favorite' )
+	elseif ($error == 'e_already_favorite')
 		$errstr = $LANG['wiki_already_favorite'];
 	else
 		$errstr = '';
-	if( !empty($errstr) )
+	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_WARNING);
 	
 	//on liste les favoris
@@ -99,14 +99,14 @@ else
 	
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
-	if( $num_rows == 0 )
+	if ($num_rows == 0)
 	{
 		$Template->assign_block_vars('no_favorite', array(
 			'L_NO_FAVORITE' => $LANG['wiki_no_favorite']
 		));
 	}
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('list', array(
 			'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title']),

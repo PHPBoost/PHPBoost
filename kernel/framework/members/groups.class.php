@@ -37,7 +37,7 @@ class Group
 	function Group(&$groups_info)
 	{
 		$this->groups_name = array();
-		foreach($groups_info as $idgroup => $array_group_info)
+		foreach ($groups_info as $idgroup => $array_group_info)
 			$this->groups_name[$idgroup] = $array_group_info['name'];
 	}
 
@@ -48,14 +48,14 @@ class Group
 
 		//On insère le groupe au champ membre.
 		$user_groups = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if( strpos($user_groups, $idgroup . '|') === false ) //Le membre n'appartient pas déjà au groupe.
+		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
 			return false;
 
 		//On insère le membre dans le groupe.
 		$group_members = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		if( strpos($group_members, $user_id . '|') === false ) //Le membre n'appartient pas déjà au groupe.
+		if (strpos($group_members, $user_id . '|') === false) //Le membre n'appartient pas déjà au groupe.
 			$Sql->query_inject("UPDATE ".PREFIX."group SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		else
 			return false;
@@ -74,17 +74,17 @@ class Group
 		
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
 		$array_diff_pos = array_diff($array_user_groups, $array_user_groups_old);
-		foreach($array_diff_pos as $key => $idgroup)				
+		foreach ($array_diff_pos as $key => $idgroup)				
 		{	
-			if( !empty($idgroup) )	
+			if (!empty($idgroup))	
 				$this->add_member($user_id, $idgroup);
 		}	
 		
 		//Insertion du différentiel négatif des groupes précédent du membre et ceux choisis dans la table des groupes.
 		$array_diff_neg = array_diff($array_user_groups_old, $array_user_groups);
-		foreach($array_diff_neg as $key => $idgroup)				
+		foreach ($array_diff_neg as $key => $idgroup)				
 		{	
-			if( !empty($idgroup) )
+			if (!empty($idgroup))
 				$this->remove_member($user_id, $idgroup);
 		}
 	}

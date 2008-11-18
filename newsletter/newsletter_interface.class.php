@@ -45,7 +45,7 @@ class NewsletterInterface extends ModuleInterface
 		//Configuration de la newsletter
 		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
 		$NEWSLETTER_CONFIG = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'newsletter'", __LINE__, __FILE__));
-		if( is_array($NEWSLETTER_CONFIG) )
+		if (is_array($NEWSLETTER_CONFIG))
 		{
 			$mails = explode(';', $CONFIG['mail']);
 			$code .= '$_NEWSLETTER_CONFIG[\'sender_mail\'] = ' . var_export(!empty($NEWSLETTER_CONFIG['sender_mail']) ? $NEWSLETTER_CONFIG['sender_mail'] : $mails[0], true) . ';' . "\n";

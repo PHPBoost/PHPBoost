@@ -32,21 +32,21 @@ $Cache->load('articles');
 
 //Titre de l'article à afficher en version imprimable
 $idart = retrieve(GET, 'id', '', TSTRING);
-if( $idart > 0 )
+if ($idart > 0)
 {
 	$articles = $Sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
 	
 	$idartcat = $articles['idcat'];
 	
 	//Niveau d'autorisation de la catégorie
-	if( !isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+	if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	if( empty($articles['id']) )
+	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
 }
 
-if( empty($articles['title']) )
+if (empty($articles['title']))
 	exit;
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');

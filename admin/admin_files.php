@@ -47,30 +47,30 @@ $move_folder = retrieve(GET, 'movef', 0);
 $move_file = retrieve(GET, 'movefi', 0);
 $to = retrieve(GET, 'to', -1);
 
-if( isset($_GET['fup']) ) //Changement de dossier
+if (isset($_GET['fup'])) //Changement de dossier
 {
 	$parent_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	//die('test'.$parent_folder['id_parent'] );
-	if( !empty($folder_member) ) 
+	if (!empty($folder_member)) 
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
-	elseif( $parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']) )
+	elseif ($parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']))
 		redirect(HOST . DIR . '/admin/admin_files.php?fm=' . $parent_folder['user_id']);
 	else
 		redirect(HOST . DIR . '/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
-elseif( $home_folder ) //Retour à la racine.
+elseif ($home_folder) //Retour à la racine.
 	redirect(HOST . DIR . '/admin/admin_files.php');
-elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'un fichier.
+elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../upload/';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) ) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		//Chargement de la configuration.
 		$Cache->load('uploads');
@@ -79,7 +79,7 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 		$Upload = new Upload($dir);
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
-		if( !empty($Upload->error) ) //Erreur, on arrête ici
+		if (!empty($Upload->error)) //Erreur, on arrête ici
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
@@ -96,27 +96,27 @@ elseif( !empty($_FILES['upload_file']['name']) && isset($_GET['f']) ) //Ajout d'
 	$error = !empty($error) ? '&error=' . $error . '#errorh' : '';
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member . $error);
 }
-elseif( !empty($del_folder) ) //Supprime un dossier.
+elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	//Suppression du dossier et de tout le contenu	
 	$Uploads->Del_folder($del_folder);
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
 }
-elseif( !empty($empty_folder) ) //Vide un dossier membre.
+elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
 	$Uploads->Del_folder($empty_folder, EMPTY_FOLDER);
 
 	redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
 }
-elseif( !empty($del_file) ) //Suppression d'un fichier
+elseif (!empty($del_file)) //Suppression d'un fichier
 {
 	//Suppression d'un fichier.
 	$Uploads->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member);
 }
-elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
+elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
@@ -124,19 +124,19 @@ elseif( !empty($move_folder) && $to != -1 ) //Déplacement d'un dossier
 	WHERE user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
 	$Sql->query_close($result);
 
 	$array_child_folder = array();
 	$Uploads->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
-	if( !in_array($to, $array_child_folder) ) //Dossier de destination non sous-dossier du dossier source.
+	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
 		$Uploads->Move_folder($move_folder, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
-elseif( !empty($move_file) && $to != -1 ) //Déplacement d'un fichier
+elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
 	$Uploads->Move_file($move_file, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
@@ -163,24 +163,24 @@ else
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
-	$result = $Sql->query_while($sql_request, __LINE__, __FILE__);
+	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
 	$folder_info = $Sql->fetch_assoc($result);
 		
 	//Gestion des erreurs.
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_unlink_disabled');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);  
 
-	if( isset($LANG[$get_l_error]) )
+	if (isset($LANG[$get_l_error]))
 		$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);  
 
-	if( $show_member )
+	if ($show_member)
 		$url = $Uploads->get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
-	elseif( !empty($folder_member) || !empty($folder_info['user_id']) )
+	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
 		$url = $Uploads->get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
-	elseif( empty($folder) )
+	elseif (empty($folder))
 		$url = '/';	
 	else
 		$url = $Uploads->get_admin_url($folder, '');
@@ -217,7 +217,7 @@ else
 		'L_URL' => $LANG['url']
 	));
 
-	if( $folder == 0 && !$show_member && empty($folder_member) )
+	if ($folder == 0 && !$show_member && empty($folder_member))
 	{	
 		$Template->assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
@@ -233,7 +233,7 @@ else
 	LEFT JOIN ".PREFIX."member m ON m.user_id = up.user_id
 	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
 	
-	if( $show_member )
+	if ($show_member)
 		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
 		FROM ".PREFIX."upload_cat uc
 		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
@@ -244,7 +244,7 @@ else
 		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
 		ORDER BY name";
-	elseif( !empty($folder_member) )
+	elseif (!empty($folder_member))
 	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
 		FROM ".PREFIX."upload_cat 
@@ -262,8 +262,8 @@ else
 		ORDER BY name";
 
 	//Affichage des dossiers
-	$result = $Sql->query_while($sql_folder, __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	$result = $Sql->query_while ($sql_folder, __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];	
 		
@@ -285,11 +285,11 @@ else
 	}	
 	$Sql->query_close($result);
 		
-	if( !$show_member ) //Dossier membres.
+	if (!$show_member) //Dossier membres.
 	{
 		//Affichage des fichiers contenu dans le dossier
-		$result = $Sql->query_while($sql_files, __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ($sql_files, __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
@@ -350,7 +350,7 @@ else
 	));
 
 
-	if( $total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)) )
+	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
 		$Template->assign_block_vars('empty_folder', array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']

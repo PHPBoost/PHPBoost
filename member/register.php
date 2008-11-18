@@ -31,16 +31,16 @@ define('TITLE', $LANG['title_register']);
 require_once('../kernel/header.php'); 
 
 $Cache->load('member');
-if( !$CONFIG_MEMBER['activ_register'] )
+if (!$CONFIG_MEMBER['activ_register'])
 	redirect(get_start_page());
 
 $key = retrieve(GET, 'key', '');
 $get_error = retrieve(GET, 'error', '');
 $get_erroru = retrieve(GET, 'erroru', '');
 
-if( empty($key) )
+if (empty($key))
 {
-	if( !$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru) )
+	if (!$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -59,7 +59,7 @@ if( empty($key) )
 		
 		$Template->pparse('register');
 	}
-	elseif( $User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)) )
+	elseif ($User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -95,20 +95,20 @@ if( empty($key) )
 			default:
 			$errstr = '';
 		}
-		if( !empty($errstr) )
+		if (!empty($errstr))
 			$Errorh->handler($errstr, E_USER_NOTICE);  
 
-		if( isset($LANG[$get_erroru]) )
+		if (isset($LANG[$get_erroru]))
 			$Errorh->handler($LANG[$get_erroru], E_USER_WARNING);  
 			
 		//Mode d'activation du membre.
-		if( $CONFIG_MEMBER['activ_mbr'] == '1' )
+		if ($CONFIG_MEMBER['activ_mbr'] == '1')
 		{
 			$Template->assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_mail']
 			));
 		}
-		elseif( $CONFIG_MEMBER['activ_mbr'] == '2' )
+		elseif ($CONFIG_MEMBER['activ_mbr'] == '2')
 		{
 			$Template->assign_block_vars('register.activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_admin']
@@ -118,7 +118,7 @@ if( empty($key) )
 		//Code de vérification, anti-bots.
 		include_once('../kernel/framework/util/captcha.class.php');
 		$Captcha = new Captcha();
-		if( $Captcha->gd_loaded() && $CONFIG_MEMBER['verif_code'] == '1' )
+		if ($Captcha->gd_loaded() && $CONFIG_MEMBER['verif_code'] == '1')
 		{
 			$Captcha->set_difficulty($CONFIG_MEMBER['verif_code_difficulty']);
 			$Template->assign_vars(array(
@@ -129,7 +129,7 @@ if( empty($key) )
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
-		if( $CONFIG_MEMBER['activ_up_avatar'] == 1 )
+		if ($CONFIG_MEMBER['activ_up_avatar'] == 1)
 		{
 			$Template->assign_block_vars('register.upload_avatar', array(
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
@@ -144,15 +144,15 @@ if( empty($key) )
 		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang
 		WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{	
 			$lang_info = load_ini_file('../lang/', $row['lang']);
-			if( $lang_info )
+			if ($lang_info)
 			{
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row['lang'];
 				$array_identifier .= 'array_identifier[\'' . $row['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
 				$selected = '';
-				if( $row['lang'] == $CONFIG['lang'] )
+				if ($row['lang'] == $CONFIG['lang'])
 				{
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
@@ -167,7 +167,7 @@ if( empty($key) )
 		//Gestion éditeur par défaut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
 		$select_editors = '';
-		foreach($editors as $code => $name)
+		foreach ($editors as $code => $name)
 		{
 			$selected = ($code == $CONFIG['editor']) ? 'selected="selected"' : '';
 			$select_editors .= '<option value="' . $code . '" ' . $selected . '>' . $name . '</option>';
@@ -175,7 +175,7 @@ if( empty($key) )
 		
 		//Gestion fuseau horaire par défaut.
 		$select_timezone = '';
-		for($i = -12; $i <= 14; $i++)
+		for ($i = -12; $i <= 14; $i++)
 		{
 			$selected = ($i == $CONFIG['timezone']) ? 'selected="selected"' : '';
 			$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
@@ -245,15 +245,15 @@ if( empty($key) )
 			
 		
 		//Gestion thème par défaut.
-		if( $CONFIG_MEMBER['force_theme'] == 0 ) //Thèmes aux membres autorisés.
+		if ($CONFIG_MEMBER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
 			$result = $Sql->query_while("SELECT theme 
 			FROM ".PREFIX."themes
 			WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{	
 				$theme_info = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
-				if( $theme_info )
+				if ($theme_info)
 				{
 					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row['theme'];
 					$selected = ($row['theme'] == $CONFIG['theme']) ? 'selected="selected"' : '';
@@ -275,7 +275,7 @@ if( empty($key) )
 
 		//Champs supplémentaires.
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-		if( $extend_field_exist > 0 )
+		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
@@ -286,7 +286,7 @@ if( empty($key) )
 			FROM ".PREFIX."member_extend_cat AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{	
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
@@ -302,7 +302,7 @@ if( empty($key) )
 					$field = '<select name="' . $row['field_name'] . '" id="' . $row['field_name'] . '">';
 					$array_values = explode('|', $row['possible_values']);
 					$i = 0;
-					foreach($array_values as $values)
+					foreach ($array_values as $values)
 					{
 						$selected = ($values ==  $row['default_values']) ? 'selected="selected"' : '';
 						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
@@ -315,7 +315,7 @@ if( empty($key) )
 					$array_values = explode('|', $row['possible_values']);
 					$array_default_values = explode('|', $row['default_values']);
 					$i = 0;
-					foreach($array_values as $values)
+					foreach ($array_values as $values)
 					{
 						$selected = in_array($values, $array_default_values) ? 'selected="selected"' : '';
 						$field .= '<option name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $selected . '/> ' . ucfirst($values) . '</option>';
@@ -325,7 +325,7 @@ if( empty($key) )
 					break;
 					case 5:
 					$array_values = explode('|', $row['possible_values']);
-					foreach($array_values as $values)
+					foreach ($array_values as $values)
 					{
 						$checked = ($values ==  $row['default_values']) ? 'checked="checked"' : '';
 						$field .= '<input type="radio" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" value="' . $values . '" ' . $checked . ' /> ' . ucfirst($values) . '<br />';
@@ -335,7 +335,7 @@ if( empty($key) )
 					$array_values = explode('|', $row['possible_values']);
 					$array_default_values = explode('|', $row['default_values']);
 					$i = 0;
-					foreach($array_values as $values)
+					foreach ($array_values as $values)
 					{
 						$checked = in_array($values, $array_default_values) ? 'checked="checked"' : '';
 						$field .= '<input type="checkbox" name="' . $row['field_name'] . '_' . $i . '" value="' . $values . '" ' . $checked . '/> ' . ucfirst($values) . '<br />';
@@ -359,7 +359,7 @@ if( empty($key) )
 	else
 		redirect(get_start_page());
 }
-elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation du compte membre
+elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation du compte membre
 {
 	$Template->set_filenames(array(
 		'register' => 'member/register.tpl'
@@ -369,7 +369,7 @@ elseif( !empty($key) && $User->check_level(MEMBER_LEVEL) !== true ) //Activation
 	));	
 	
 	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
-	if( $check_mbr == '1' ) //Activation du compte.
+	if ($check_mbr == '1') //Activation du compte.
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		

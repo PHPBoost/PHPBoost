@@ -43,7 +43,7 @@ $id_edit = retrieve(GET, 'edit', 0);
 $new_cat = !empty($_GET['new']) ? true : false;
 $error = retrieve(GET, 'error', '');
 
-if( $id_up > 0 )
+if ($id_up > 0)
 {
 	$download_categories->move($id_up, MOVE_CATEGORY_UP);
     // Feeds Regeneration
@@ -51,7 +51,7 @@ if( $id_up > 0 )
     Feed::clear_cache('download');
 	redirect(url('admin_download_cat.php'));
 }
-elseif( $id_down > 0 )
+elseif ($id_down > 0)
 {
 	$download_categories->move($id_down, MOVE_CATEGORY_DOWN);
     // Feeds Regeneration
@@ -59,7 +59,7 @@ elseif( $id_down > 0 )
     Feed::clear_cache('download');
 	redirect(url('admin_download_cat.php'));
 }
-elseif( $cat_to_del > 0 )
+elseif ($cat_to_del > 0)
 {
 	$Template->set_filenames(array(
 		'admin_download_cat_remove'=> 'download/admin_download_cat_remove.tpl'
@@ -80,18 +80,18 @@ elseif( $cat_to_del > 0 )
 		
 	$Template->pparse('admin_download_cat_remove');
 }
-elseif( retrieve(POST, 'submit', false) )
+elseif (retrieve(POST, 'submit', false))
 {
 	$error_string = 'e_success';
 	
 	//Deleting a category
-	if( $cat_to_del_post > 0 )
+	if ($cat_to_del_post > 0)
 	{
 		$action = retrieve(POST, 'action', '');
 		$delete_content = $action != 'move';
 		$id_parent = retrieve(POST, 'id_parent', 0);
 		
-		if( $delete_content )
+		if ($delete_content)
 			$download_categories->Delete_category_recursively($cat_to_del_post);
 		else
 			$download_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
@@ -111,11 +111,11 @@ elseif( retrieve(POST, 'submit', false) )
 		$visible = retrieve(POST, 'visible_cat', false);
 		$secure = retrieve(POST, 'secure', -1);
 
-		if( !empty($icon_path) )
+		if (!empty($icon_path))
 			$icon = $icon_path;
 		
 		//Autorisations
-		if( !empty($_POST['special_auth']) )
+		if (!empty($_POST['special_auth']))
 		{
 			$array_auth_all = Authorizations::build_auth_array_from_form(DOWNLOAD_READ_CAT_AUTH_BIT, DOWNLOAD_WRITE_CAT_AUTH_BIT, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
 			$new_auth = addslashes(serialize($array_auth_all));
@@ -123,10 +123,10 @@ elseif( retrieve(POST, 'submit', false) )
 		else
 			$new_auth = '';
 
-		if( empty($name) )
+		if (empty($name))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 
-		if( $id_cat > 0 )
+		if ($id_cat > 0)
 			$error_string = $download_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $new_auth, $visible);
 		else
 			$error_string = $download_categories->add($id_parent, $name, $description, $icon, $new_auth, $visible);
@@ -141,7 +141,7 @@ elseif( retrieve(POST, 'submit', false) )
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
-elseif( retrieve(GET, 'recount', false) )
+elseif (retrieve(GET, 'recount', false))
 {
 	$download_categories->Recount_sub_files();
 	// Feeds Regeneration
@@ -149,7 +149,7 @@ elseif( retrieve(GET, 'recount', false) )
     Feed::clear_cache('download');
 	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
-elseif( $new_cat XOR $id_edit > 0 )
+elseif ($new_cat XOR $id_edit > 0)
 {
 	$Template->set_filenames(array(
 		'admin_download_cat_edition'=> 'download/admin_download_cat_edition.tpl'
@@ -157,16 +157,16 @@ elseif( $new_cat XOR $id_edit > 0 )
 	
 	//Images disponibles
 	$rep = './';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_str = '<option value="">--</option>';
 		$dh = @opendir( $rep);
 		$in_dir_icon = false;
-		while( !is_bool($image_name = @readdir($dh)) )
+		while (!is_bool($image_name = @readdir($dh)))
 		{
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $image_name) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $image_name))
 			{
-				if( $id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name )
+				if ($id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name)
 				{
 					$img_str .= '<option selected="selected" value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image sélectionnée
 					$in_dir_icon = true;
@@ -201,7 +201,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_SPECIAL_AUTH_EXPLAIN' => $DOWNLOAD_LANG['special_auth_explain']
 	));
 		
-	if( $id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS) )
+	if ($id_edit > 0 && array_key_exists($id_edit, $DOWNLOAD_CATS))
 	{
 		$Template->assign_vars(array(
 			'NAME' => $DOWNLOAD_CATS[$id_edit]['name'],
@@ -251,7 +251,7 @@ else
 	
 	include_once('admin_download_menu.php');
 
-	if( !empty($error) )
+	if (!empty($error))
 	{
 		switch($error)
 		{

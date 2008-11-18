@@ -30,9 +30,9 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['title_com']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-if( !empty($_GET['com']) )
+if (!empty($_GET['com']))
 {
-	if( !preg_match('`([0-9]+)([a-z]+)([0-9]*)`', trim($_GET['com']), $array_get) )
+	if (!preg_match('`([0-9]+)([a-z]+)([0-9]*)`', trim($_GET['com']), $array_get))
 		$array_get = array('', '', '', '');
 	$idcom = (empty($array_get[3]) && !empty($_POST['idcom'])) ? numeric($_POST['idcom']) : $array_get[3];
 	

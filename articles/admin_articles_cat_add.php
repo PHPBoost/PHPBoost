@@ -37,7 +37,7 @@ define('WRITE_CAT_ARTICLES', 0x02);
 define('EDIT_CAT_ARTICLES', 0x04);
 
 //Si c'est confirmé on execute
-if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
+if (!empty($_POST['add'])) //Nouvelle articles/catégorie.
 {
 	$Cache->load('articles');
 	
@@ -50,9 +50,9 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_ARTICLES);
 			
-	if( !empty($name) )
+	if (!empty($name))
 	{	
-		if( isset($CAT_ARTICLES[$parent_category]) ) //Insertion sous articles de niveau x.
+		if (isset($CAT_ARTICLES[$parent_category])) //Insertion sous articles de niveau x.
 		{
 			//Articles parente de la articles cible.
 			$list_parent_cats = '';
@@ -60,13 +60,13 @@ if( !empty($_POST['add']) ) //Nouvelle articles/catégorie.
 			FROM ".PREFIX."articles_cats 
 			WHERE id_left <= '" . $CAT_ARTICLES[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
 			
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 				$list_parent_cats .= $row['id'] . ', ';
 			
 			$Sql->query_close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
-			if( empty($list_parent_cats) )
+			if (empty($list_parent_cats))
 				$clause_parent = "id = '" . $parent_category . "'";
 			else
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
@@ -105,7 +105,7 @@ else
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM ".PREFIX."articles_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
@@ -115,24 +115,24 @@ else
 	//Images disponibles
 	$rep = './';
 	$image_list = '';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = @readdir($dh)) )
+		while (! is_bool($lang = @readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
 
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	}
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
 	$Template->assign_vars(array(

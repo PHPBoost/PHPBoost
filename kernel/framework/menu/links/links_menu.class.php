@@ -73,7 +73,7 @@ class LinksMenu extends LinksMenuElement
 	 */
 	function add_array(&$menu_elements)
 	{
-		foreach($menu_elements as $element)
+		foreach ($menu_elements as $element)
 			$this->add($element);
 	}
 	
@@ -83,7 +83,7 @@ class LinksMenu extends LinksMenuElement
 	 */
 	function add($element)
 	{
-	    if( get_class($element) == get_class($this) )
+	    if (get_class($element) == get_class($this))
 	       $element->_parent($this->type);
 		$this->elements[] = $element;
 	}
@@ -96,18 +96,18 @@ class LinksMenu extends LinksMenuElement
 	function display($template = false)
 	{
 	    // Stop if the user isn't authorised
-		if( !$this->_check_auth() )
+		if (!$this->_check_auth())
     	    return '';
 		
     	// Get the good Template object
-	    if( !is_object($template) || strtolower(get_class($template)) != 'template' )
+	    if (!is_object($template) || strtolower(get_class($template)) != 'template')
 			$tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
 		else
 			$tpl = $template->copy();
         $original_tpl = $tpl->copy();
 		
         // Children assignment
-        foreach($this->elements as $element)
+        foreach ($this->elements as $element)
 		{   // We use a new Tpl to avoid overwrite issues
 			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl->copy())));
 		}
@@ -136,7 +136,7 @@ class LinksMenu extends LinksMenuElement
         $original_tpl = $tpl->copy();
         
         // Children assignment
-        foreach($this->elements as $element)
+        foreach ($this->elements as $element)
         {   // We use a new Tpl to avoid overwrite issues
             $tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export($original_tpl->copy())));
         }
@@ -152,7 +152,7 @@ class LinksMenu extends LinksMenuElement
             'ID_VAR' => '##.#GET_UID_VAR#.##',
         ));
         
-        if( $this->depth == 0 )
+        if ($this->depth == 0)
         {   // We protect and unprotect only on the top level
             $cache_str = addcslashes($tpl->parse(TEMPLATE_STRING_MODE), '\'');
             $cache_str = str_replace(
@@ -186,9 +186,9 @@ class LinksMenu extends LinksMenuElement
 	{
 	    $this->depth++;
 	    $this->type = $type;
-	    foreach( $this->elements as $element )
+	    foreach ($this->elements as $element)
 	    {
-	        if( get_class($element) == get_class($this) )
+	        if (get_class($element) == get_class($this))
                 $element->_parent($type);
 	    }
 	}

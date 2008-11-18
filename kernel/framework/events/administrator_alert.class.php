@@ -81,7 +81,7 @@ class AdministratorAlert extends Event
 	function set_priority($priority)
 	{
 		$priority = intval($priority);
-		if( $priority >= ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= ADMIN_ALERT_VERY_HIGH_PRIORITY )
+		if ($priority >= ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= ADMIN_ALERT_VERY_HIGH_PRIORITY)
 			$this->priority = $priority;
 		else
 			$this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
@@ -91,7 +91,7 @@ class AdministratorAlert extends Event
 	function set_properties($properties)
 	{
 		//If properties has the good type
-		if( is_string($properties) )
+		if (is_string($properties))
 			$this->properties = $properties;
 	}
 	

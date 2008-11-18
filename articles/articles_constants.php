@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)
+if (defined('PHPBOOST') !== true)
     exit;
 
 define('READ_CAT_ARTICLES', 0x01);
@@ -38,7 +38,7 @@ load_module_lang('articles'); //Chargement de la langue du module.
 $idartcat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);
 
-if( empty($idartcat) )//Racine.
+if (empty($idartcat))//Racine.
 {
     $CAT_ARTICLES[0]['auth'] = $CONFIG_ARTICLES['auth_root'];
     $CAT_ARTICLES[0]['aprob'] = 1;

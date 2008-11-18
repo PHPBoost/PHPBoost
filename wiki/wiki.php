@@ -41,7 +41,7 @@ $num_rows = 0;
 $parse_redirection = false;
 
 //Requêtes préliminaires utiles par la suite
-if( !empty($encoded_title) ) //Si on connait son titre
+if (!empty($encoded_title)) //Si on connait son titre
 {
 	$result = $Sql->query_while("SELECT a.id, a.is_cat, a.hits, a.redirect, a.id_cat, a.title, a.encoded_title, a.is_cat, a.defined_status, a.nbr_com, f.id AS id_favorite, a.undefined_status, a.auth, c.menu, c.content
 	FROM ".PREFIX."wiki_articles a
@@ -54,7 +54,7 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	$Sql->query_close($result);
 	$id_article = $article_infos['id'];
 
-	if( !empty($article_infos['redirect']) )//Si on est redirigé
+	if (!empty($article_infos['redirect']))//Si on est redirigé
 	{
 		$ex_title = $article_infos['title'];
 		$id_redirection = $article_infos['id'];
@@ -72,7 +72,7 @@ if( !empty($encoded_title) ) //Si on connait son titre
 	}
 }
 //Sinon on cherche dans les archives
-elseif( !empty($id_contents) )
+elseif (!empty($id_contents))
 {
 	$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id, c.id_contents, a.id_cat, a.is_cat, a.defined_status, a.undefined_status, a.nbr_com, f.id AS id_favorite, c.menu, c.content
 	FROM ".PREFIX."wiki_contents c
@@ -103,13 +103,13 @@ $Template->assign_vars(array(
 ));
 
 //Si il s'agit d'un article
-if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
+if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 { 
-	if( $_WIKI_CONFIG['count_hits'] != 0 )//Si on prend en compte le nombre de vus
+	if ($_WIKI_CONFIG['count_hits'] != 0)//Si on prend en compte le nombre de vus
 		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
 
 	//Si c'est une archive
-	if( $id_contents > 0 )
+	if ($id_contents > 0)
 	{
 		$Template->assign_block_vars('warning', array(
 			'UPDATED_ARTICLE' => $LANG['wiki_warning_updated_article']
@@ -119,14 +119,14 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 	else //Sinon on affiche statut, avertissements en tout genre et redirection
 	{
 		//Si on doit parser le bloc redirection
-		if( $parse_redirection )
+		if ($parse_redirection)
 		{
 			$Template->assign_block_vars('redirect', array(
 				'REDIRECTED' => sprintf($LANG['wiki_redirecting_from'], '<a href="' . url('wiki.php?title=' . $encoded_title, $encoded_title) . '">' . $ex_title . '</a>')
 			));
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			
-			if( ((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))) )
+			if (((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 			{
 				$Template->assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
@@ -137,20 +137,20 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 		}
 		
 		//Cet article comporte un type
-		if( $article_infos['defined_status'] != 0 )
+		if ($article_infos['defined_status'] != 0)
 		{
-			if( $article_infos['defined_status'] < 0 && !empty($article_infos['undefined_status']) )
+			if ($article_infos['defined_status'] < 0 && !empty($article_infos['undefined_status']))
 			$Template->assign_block_vars('status', array(
 				'ARTICLE_STATUS' => second_parse(wiki_no_rewrite($article_infos['undefined_status']))
 			));
-			elseif( $article_infos['defined_status'] > 0 && is_array($LANG['wiki_status_list'][$article_infos['defined_status'] - 1]) )
+			elseif ($article_infos['defined_status'] > 0 && is_array($LANG['wiki_status_list'][$article_infos['defined_status'] - 1]))
 			$Template->assign_block_vars('status', array(
 				'ARTICLE_STATUS' => $LANG['wiki_status_list'][$article_infos['defined_status'] - 1][1]
 			));
 		}
 	}
 	
-	if( !empty($article_infos['menu']) )
+	if (!empty($article_infos['menu']))
 	$Template->assign_block_vars('menu', array(
 		'MENU' => $article_infos['menu']
 	));
@@ -163,7 +163,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 		'L_SUB_ARTICLES' => $LANG['wiki_subarticles'],
 		'L_TABLE_OF_CONTENTS' => $LANG['wiki_table_of_contents'],
 	));
-	if( $article_infos['is_cat'] == 1 && $id_contents == 0 ) //Catégorie non archivée
+	if ($article_infos['is_cat'] == 1 && $id_contents == 0) //Catégorie non archivée
 	{
 		//On liste les articles de la catégorie et ses sous catégories
 		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
@@ -179,22 +179,22 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 			'RSS' => $num_articles > 0 ? '<a href="syndication.php?cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('cat.list_art', array(
 				'TITLE' => $row['title'],
 				'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
 			));
 		}
-		if( $num_articles == 0 )
+		if ($num_articles == 0)
 		$Template->assign_block_vars('cat.no_sub_article', array(
 			'NO_SUB_ARTICLE' => $LANG['wiki_no_sub_article']
 		));
 		
 		$i = 0;
-		foreach( $_WIKI_CATS as $key => $value )
+		foreach ($_WIKI_CATS as $key => $value)
 		{
-			if( $value['id_parent'] == $id_cat )
+			if ($value['id_parent'] == $id_cat)
 			{
 				$Template->assign_block_vars('cat.list_cats', array(
 					'NAME' => $value['name'],
@@ -203,7 +203,7 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 				$i++;
 			}
 		}
-		if( $i == 0 )
+		if ($i == 0)
 		$Template->assign_block_vars('cat.no_sub_cat', array(
 			'NO_SUB_CAT' => $LANG['wiki_no_sub_cat']
 		));
@@ -215,14 +215,14 @@ if( (!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0 )
 	$Template->pparse('wiki');	
 }
 //Si l'article n'existe pas
-elseif( !empty($encoded_title) && $num_rows == 0 )
+elseif (!empty($encoded_title) && $num_rows == 0)
 {
 	redirect(HOST . DIR . '/wiki/' . url('post.php?title=' . $encoded_title, '', '&'));
 }
 //Sinon c'est l'accueil
 else
 {
-	if( $_WIKI_CONFIG['last_articles'] > 1 )
+	if ($_WIKI_CONFIG['last_articles'] > 1)
 	{
 		$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
 		FROM ".PREFIX."wiki_articles a
@@ -238,7 +238,7 @@ else
 		));
 		
 		$i = 0;
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('last_articles.list', array(
 				'ARTICLE' => $row['title'],
@@ -248,7 +248,7 @@ else
 			$i++;
 		}
 		
-		if( $articles_number == 0 )
+		if ($articles_number == 0)
 		{
 			$Template->assign_vars(array(
 				'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
@@ -256,16 +256,16 @@ else
 		}
 	}
 	//Affichage de toutes les catégories si c'est activé
-	if( $_WIKI_CONFIG['display_cats'] != 0 )
+	if ($_WIKI_CONFIG['display_cats'] != 0)
 	{
 		$Template->assign_block_vars('cat_list', array(
 			'L_CATS' => $LANG['wiki_cats_list']
 		));
 		$i = 0;
-		foreach( $_WIKI_CATS as $id => $infos )
+		foreach ($_WIKI_CATS as $id => $infos)
 		{
 			//Si c'est une catégorie mère
-			if( $infos['id_parent'] == 0 )
+			if ($infos['id_parent'] == 0)
 			{
 				$Template->assign_block_vars('cat_list.list', array(
 					'CAT' => $infos['name'],
@@ -274,7 +274,7 @@ else
 				$i++;
 			}
 		}
-		if( $i == 0 )
+		if ($i == 0)
 		$Template->assign_vars(array(
 			'L_NO_CAT' => $LANG['wiki_no_cat'],
 		));

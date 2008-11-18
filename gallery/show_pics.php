@@ -33,11 +33,11 @@ require_once('../kernel/header_no_display.php');
 $g_idpics = retrieve(GET, 'id', 0);
 $g_idcat = retrieve(GET, 'cat', 0);
 	
-if( !empty($g_idpics) )
+if (!empty($g_idpics))
 {
-	if( !empty($g_idcat) )
+	if (!empty($g_idcat))
 	{
-		if( !isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0 ) 
+		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0) 
 			redirect(HOST . DIR . '/gallery/gallery.php?error=unexist_cat');
 	}
 	else //Racine.
@@ -46,7 +46,7 @@ if( !empty($g_idpics) )
 		$CAT_GALLERY[0]['aprob'] = 1;
 	}
 	//Niveau d'autorisation de la catégorie
-	if( !$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY) )
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	//Mise à jour du nombre de vues.
@@ -54,7 +54,7 @@ if( !empty($g_idpics) )
 	
 	$clause_admin = $User->check_level(ADMIN_LEVEL) ? '' : ' AND aprob = 1';
 	$path = $Sql->query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
-	if( empty($path) )
+	if (empty($path))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	include_once('../gallery/gallery.class.php');
@@ -62,7 +62,7 @@ if( !empty($g_idpics) )
 		
 	list($width_s, $height_s, $weight_s, $ext) = $Gallery->Arg_pics('pics/' . $path);
 	$Gallery->Send_header($ext); //Header image.
-	if( !empty($Gallery->error) )
+	if (!empty($Gallery->error))
 		die($Gallery->error);
 	$Gallery->incrust_pics('pics/' . $path); // => logo.
 }

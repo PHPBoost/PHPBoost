@@ -34,18 +34,18 @@ $check_advanced = !empty($_GET['adv']);
 
 //Variables serveur.
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-if( !$server_path )
+if (!$server_path)
 	$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
 //Si c'est confirmé on exécute
-if( !empty($_POST['valid']) && empty($_POST['cache']) )
+if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
 	//Gestion de la page de démarrage.
-	if( !empty($_POST['start_page2'])  )
+	if (!empty($_POST['start_page2']) )
 		$start_page = strprotect($_POST['start_page2']);
-	elseif( !empty($_POST['start_page']) )
+	elseif (!empty($_POST['start_page']))
 		$start_page = strprotect($_POST['start_page']);
 	else
 		$start_page = '';
@@ -67,7 +67,7 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
 
-	if( !empty($config['theme']) && !empty($config['lang']) ) //Nom de serveur obligatoire
+	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
@@ -77,14 +77,14 @@ if( !empty($_POST['valid']) && empty($_POST['cache']) )
 	else
 		redirect(HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
 }
-elseif( $check_advanced && empty($_POST['advanced']) )
+elseif ($check_advanced && empty($_POST['advanced']))
 {
 	$Template->set_filenames(array(
 		'admin_config2'=> 'admin/admin_config2.tpl'
 	));	
 	
 	//Vérification serveur de l'activation du mod_rewrite.
-	if( function_exists('apache_get_modules') )
+	if (function_exists('apache_get_modules'))
 	{	
 		$get_rewrite = apache_get_modules();
 		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success">' . $LANG['yes'] . '</span>' : '<span class="failure">' . $LANG['no'] . '</span>';
@@ -94,14 +94,14 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( isset($_GET['mail']) )
+	elseif (isset($_GET['mail']))
 		$Errorh->handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
-	for($i = -12; $i <= 14; $i++)
+	for ($i = -12; $i <= 14; $i++)
 	{
 		$selected = ($i == $CONFIG['timezone']) ? 'selected="selected"' : '';
 		$name = (!empty($i) ? ($i > 0 ? ' + ' . $i : ' - ' . -$i) : '');
@@ -164,14 +164,14 @@ elseif( $check_advanced && empty($_POST['advanced']) )
 	
 	$Template->pparse('admin_config2');
 }
-elseif( !empty($_POST['advanced']) )
+elseif (!empty($_POST['advanced']))
 {
 	$CONFIG['rewrite'] = 1;
 	$CONFIG['server_name'] = trim(strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
 	 
 	$CONFIG['server_path'] = trim(strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
 	//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
-	if( $CONFIG['server_path'] != '' )
+	if ($CONFIG['server_path'] != '')
 		  $CONFIG['server_path'] = '/' . $CONFIG['server_path'];
 		  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
@@ -181,10 +181,10 @@ elseif( !empty($_POST['advanced']) )
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
 	$CONFIG['htaccess_manual_content'] = strprotect(retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
 	
-	if( !empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit'])  ) //Nom de serveur obligatoire
+	if (!empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
 		list($host, $dir) = array($CONFIG['server_name'], $CONFIG['server_path']); //Réassignation pour la redirection.
-		if( empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr') ) //Désactivation de l'url rewriting.
+		if (empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr')) //Désactivation de l'url rewriting.
 			$CONFIG['rewrite'] = 0;
 			
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -207,7 +207,7 @@ else //Sinon on rempli le formulaire
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$select_page = '';
@@ -215,22 +215,22 @@ else //Sinon on rempli le formulaire
 	//Pages de démarrage
 	$i = 0;
 	$root = '../';
-	if( is_dir($root) ) //Si le dossier existe
+	if (is_dir($root)) //Si le dossier existe
 	{
 		$dh = @opendir($root);
-		while( !is_bool($dir = readdir($dh)) )
+		while (!is_bool($dir = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($dir, '.') === false )
+			if (strpos($dir, '.') === false)
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
+				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
 				{
 					$config = load_ini_file($root . $dir . '/lang/', get_ulang());
-					if( !empty($config['starteable_page']) ) //Module possible comme page de démarrage.
+					if (!empty($config['starteable_page'])) //Module possible comme page de démarrage.
 					{	
 						$selected = '';
-						if( '/' . $dir . '/' . $config['starteable_page'] == $CONFIG['start_page'] )
+						if ('/' . $dir . '/' . $config['starteable_page'] == $CONFIG['start_page'])
 						{	
 							$selected = 'selected="selected"';
 							$start_page = $CONFIG['start_page'];
@@ -243,7 +243,7 @@ else //Sinon on rempli le formulaire
 		}	
 		closedir($dh); //On ferme le dossier
 	}
-	if( $i == 0 )
+	if ($i == 0)
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
 
 	$Template->assign_vars(array(		
@@ -309,13 +309,13 @@ else //Sinon on rempli le formulaire
 
 	//Gestion langue par défaut.
 	$rep = '../lang/';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$lang_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = readdir($dh)) )
+		while (! is_bool($lang = readdir($dh)))
 		{	
-			if( strpos($lang, '.') === false )
+			if (strpos($lang, '.') === false)
 				$lang_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		closedir($dh); //On ferme le dossier
@@ -323,26 +323,26 @@ else //Sinon on rempli le formulaire
 		$lang_array_bdd = array();
 		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if( array_search($row['lang'], $lang_array) !== false)
+			if (array_search($row['lang'], $lang_array) !== false)
 				$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
 		}
 		$Sql->query_close($result);
 		
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
-		foreach($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
+		foreach ($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
 		{
 			$lang_info = load_ini_file('../lang/', $lang_value);
-			if( $lang_info )
+			if ($lang_info)
 			{
 				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang_value;
 				
 				$array_identifier .= 'array_identifier[\'' . $lang_value . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
 				$selected = '';
-				if( $lang_value == $CONFIG['lang'] )
+				if ($lang_value == $CONFIG['lang'])
 				{
 					$selected = 'selected="selected"';
 					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
@@ -360,14 +360,14 @@ else //Sinon on rempli le formulaire
 	
 	//On recupère les dossier des thèmes contents dans le dossier templates.
 	$rep = '../templates/';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$fichier_array = array();
 		$dh = @opendir( $rep);
-		while( !is_bool($theme = readdir($dh)) )
+		while (!is_bool($theme = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($theme, '.') === false )
+			if (strpos($theme, '.') === false)
 				$fichier_array[] = $theme; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
@@ -375,18 +375,18 @@ else //Sinon on rempli le formulaire
 		$theme_array_bdd = array();
 		$result = $Sql->query_while("SELECT theme 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if( array_search($row['theme'], $fichier_array) !== false)
+			if (array_search($row['theme'], $fichier_array) !== false)
 				$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
 		}
 		$Sql->query_close($result);
 		
-		foreach($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
+		foreach ($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
 		{
 			$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
-			if( $theme_info )
+			if ($theme_info)
 			{
 				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
 				$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
@@ -401,7 +401,7 @@ else //Sinon on rempli le formulaire
 }
 
 //Renvoi du code de déblocage.
-if( !empty($_GET['unlock']) )
+if (!empty($_GET['unlock']))
 {
 	include_once('../kernel/framework/io/mail.class.php');
 	$Mail = new Mail();

@@ -31,7 +31,7 @@ function forum_list_cat()
 	global $Group, $CAT_FORUM, $AUTH_READ_FORUM;
 	
 	$select = '';
-	foreach($CAT_FORUM as $idcat => $array_cat)
+	foreach ($CAT_FORUM as $idcat => $array_cat)
 	{
 		$margin = ($array_cat['level'] > 0) ? str_repeat('--------', $array_cat['level']) : '--';
 		$select .= $AUTH_READ_FORUM[$idcat] ? '<option value="' . $idcat . '">' . $margin . ' ' . str_replace('\'', '\\\'', $array_cat['name']) . '</option>' : '';
@@ -61,15 +61,15 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	$last_view_forum = ($User->get_attribute('last_view_forum') > 0) ? $User->get_attribute('last_view_forum') : 0;
 	$max_time = (time() - $CONFIG_FORUM['view_time']);
 	$max_time_msg = ($last_view_forum > $max_time) ? $last_view_forum : $max_time;
-	if( $User->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg )
+	if ($User->get_attribute('user_id') !== -1 && $last_timestamp >= $max_time_msg)
 	{
 		$check_view_id = $Sql->query("SELECT last_view_id FROM ".PREFIX."forum_view WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
-		if( !empty($check_view_id) && $check_view_id != $last_msg_id ) 
+		if (!empty($check_view_id) && $check_view_id != $last_msg_id) 
 		{
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_view SET last_view_id = '" . $last_msg_id . "', timestamp = '" . time() . "' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
-		elseif( empty($check_view_id) )
+		elseif (empty($check_view_id))
 		{			
 			$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'", __LINE__, __FILE__);
 			$Sql->query_inject("INSERT ".LOW_PRIORITY." INTO ".PREFIX."forum_view (idtopic, last_view_id, user_id, timestamp) VALUES('" . $idtopic . "', '" . $last_msg_id . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);			
@@ -105,7 +105,7 @@ function token_colorate($matches)
     $open_tag += substr_count($matches[1], '<');
     $close_tag += substr_count($matches[1], '>');
     
-    if( $open_tag == $close_tag )
+    if ($open_tag == $close_tag)
         return $matches[1] . '<span style="background:yellow;">' . $matches[2] . '</span>' . $matches[3];
     else
         return $matches[0];

@@ -32,10 +32,10 @@ require_once('../admin/admin_header.php');
 
 $cache_mode = retrieve(GET, 'cache', '');
 
-if( empty($cache_mode) )    // Génération du cache de la configuration
+if (empty($cache_mode))    // Génération du cache de la configuration
 {
     //Si c'est confirmé on execute
-    if( !empty($_POST['cache']) )
+    if (!empty($_POST['cache']))
     {
         $Cache->Generate_all_files();
         redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
@@ -48,7 +48,7 @@ if( empty($cache_mode) )    // Génération du cache de la configuration
         
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
-        if( $get_error == 1 )
+        if ($get_error == 1)
             $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
         
         $Template->assign_vars(array(
@@ -64,7 +64,7 @@ if( empty($cache_mode) )    // Génération du cache de la configuration
 else    // Génération du cache des rss
 {
     //Si c'est confirmé on execute
-    if( !empty($_POST['cache']) )
+    if (!empty($_POST['cache']))
     {
         import('content/syndication/feed');
         Feed::clear_cache();
@@ -79,7 +79,7 @@ else    // Génération du cache des rss
         
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
-        if( $get_error == 1 )
+        if ($get_error == 1)
             $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
         
         $Template->assign_vars(array(

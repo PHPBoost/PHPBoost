@@ -31,7 +31,7 @@ load_module_lang('online'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$config_online = array();
 	$config_online['online_displayed'] = retrieve(POST, 'online_displayed', 4);
@@ -67,7 +67,7 @@ else
 		's.session_time DESC' => $LANG['last_update'], 
 		's.level DESC, s.session_time DESC' => $LANG['ranks'] . ' ' . $LANG['and'] . ' ' . $LANG['last_update']
 	);
-	foreach($array_order_online as $key => $value)
+	foreach ($array_order_online as $key => $value)
 	{
 		$selected = ($CONFIG_ONLINE['display_order_online'] == $key) ? 'selected="selected"' : '' ;
 		$Template->assign_block_vars('display_order', array(

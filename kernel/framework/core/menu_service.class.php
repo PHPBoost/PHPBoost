@@ -57,20 +57,20 @@ class MenuService
         $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`";
         
         $conditions = array();
-        if( $class != MENU__CLASS )
+        if ($class != MENU__CLASS)
             $conditions[] = "`class`='" . strtolower($class) . "'";
-        if( $block != BLOCK_POSITION__ALL )
+        if ($block != BLOCK_POSITION__ALL)
             $conditions[] = "`block`='" . $block . "'";
-        if( $enabled !== MENU_ENABLE_OR_NOT )
+        if ($enabled !== MENU_ENABLE_OR_NOT)
             $conditions[] .= "`enabled`='" . $enabled . "'";
         
-        if( count($conditions) > 0 )
+        if (count($conditions) > 0)
             $query .= " WHERE " . implode(' AND ', $conditions);
         
         $menus = array();
-        $result = $Sql->query_while($query . ";", __LINE__, __FILE__);
+        $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
         
-        while( $row = $Sql->fetch_assoc($result) )
+        while ($row = $Sql->fetch_assoc($result))
             $menus[] = MenuService::_load($row);
             
         $Sql->query_close($result);
@@ -90,10 +90,10 @@ class MenuService
         $menus = MenuService::_initialize_menus_map();
         
         $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`;";
-        $result = $Sql->query_while($query, __LINE__, __FILE__);
-        while( $row = $Sql->fetch_assoc($result) )
+        $result = $Sql->query_while ($query, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($result))
         {
-            if( $row['enabled'] != MENU_ENABLED )
+            if ($row['enabled'] != MENU_ENABLED)
                 $menus[BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
             else
                 $menus[$row['block']][] = MenuService::_load($row);
@@ -114,7 +114,7 @@ class MenuService
         global $Sql;
         $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `id`='" . $id . "'", __LINE__, __FILE__);
         
-        if( $result === false )
+        if ($result === false)
             return false;
         
         return MenuService::_load($result);
@@ -130,7 +130,7 @@ class MenuService
         global $Sql;
         $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `title`='" . addslashes($title) . "'", __LINE__, __FILE__);
         
-        if( $result === false )
+        if ($result === false)
             return false;
         
         return MenuService::_load($result);
@@ -147,7 +147,7 @@ class MenuService
         
         $query = '';
         $id_menu = $menu->get_id();
-        if( $id_menu > 0 )
+        if ($id_menu > 0)
         {   // We only have to update the element
             $query = "
             UPDATE `" . PREFIX . "menuss` SET
@@ -163,7 +163,7 @@ class MenuService
         {   // We have to insert the element in the database
             
             // Checking that no other menus exist with the same title
-            if( $Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0 )
+            if ($Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0)
                 return false;
             
             $query = "
@@ -190,7 +190,7 @@ class MenuService
     {
         global $Sql;
         $id_menu = $menu->get_id();
-        if( $id_menu > 0 )
+        if ($id_menu > 0)
             $Sql->query_inject("DELETE FROM `" . PREFIX . "menuss` WHERE `id`='" . $id_menu . "';" , __LINE__, __FILE__);
     }
 
@@ -224,7 +224,7 @@ class MenuService
     {
         global $Sql;
         
-        if( $menu->is_enabled() )
+        if ($menu->is_enabled())
         {   // Updates the previous block position counter
             $update_query = "
                 UPDATE `" . PREFIX ."menuss`
@@ -238,11 +238,11 @@ class MenuService
         }
         
         // Disables the menu if the destination block is the NOT_ENABLED block position
-        if( $block == BLOCK_POSITION__NOT_ENABLED )
+        if ($block == BLOCK_POSITION__NOT_ENABLED)
             $menu->enabled(MENU_NOT_ENABLED);
         
         // If not enabled, we do not move it so we can restore its position by reactivating it
-        if( $menu->is_enabled() )
+        if ($menu->is_enabled())
         {   // Moves the menu into the destination block
             $menu->set_block($block);
             
@@ -267,12 +267,12 @@ class MenuService
         $new_block_position = $block_position;
         $update_query = '';
         
-        if( $direction > 0 )
+        if ($direction > 0)
         {   // Moving the menu up
             $max_position_query = "SELECT MAX(`position`) FROM `" . PREFIX . "menuss` WHERE `block`='" . $menu->get_block() . "'";
             $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
             // Getting the max diff
-            if( ($new_block_position = ($menu->get_block_position() + $direction)) > $max_position )
+            if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;
             
             $update_query = "
@@ -282,11 +282,11 @@ class MenuService
                     `position` BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
             ";
         }
-        else if( $direction < 0 )
+        else if ($direction < 0)
         {   // Moving the menu down
             
             // Getting the max diff
-            if( ($new_block_position = ($menu->get_block_position() + $direction)) < 0 )
+            if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
                 $new_block_position = 0;
                             
             // Updating other menus
@@ -298,7 +298,7 @@ class MenuService
             ";
         }
         
-        if( $block_position != $new_block_position )
+        if ($block_position != $new_block_position)
         {   // Updating other menus
             $Sql->query_inject($update_query, __LINE__, __FILE__);
             
@@ -327,11 +327,11 @@ class MenuService
         
         $menus_map = MenuService::get_menus_map();
         
-        foreach( $menus_map as $block => $block_menus )
+        foreach ($menus_map as $block => $block_menus)
         {
-            if( $block != BLOCK_POSITION__NOT_ENABLED )
+            if ($block != BLOCK_POSITION__NOT_ENABLED)
             {
-                foreach( $block_menus as $menu )
+                foreach ($block_menus as $menu)
                 {
                     $cache_str .= '$__menu =\'' . $menu->cache_export() . '\';' . "\n";
                     $cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";

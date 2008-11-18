@@ -40,36 +40,36 @@ $idcat_post = !empty($_POST['idcat_post']) ? numeric($_POST['idcat_post']) : 0;
 $add_pic = !empty($_GET['add']) ? numeric($_GET['add']) : 0;
 $nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
 
-if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
+if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 { 
 	$dir = 'pics/';
 	include_once('../kernel/framework/io/upload.class.php');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
-	if( is_writable($dir) )
+	if (is_writable($dir))
 	{
-		if( $_FILES['gallery']['size'] > 0 )
+		if ($_FILES['gallery']['size'] > 0)
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
-			if( !empty($Upload->error) ) //Erreur, on arrête ici
+			if (!empty($Upload->error)) //Erreur, on arrête ici
 				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
 				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
-				if( !empty($error) ) //Erreur, on arrête ici
+				if (!empty($error)) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
 				else
 				{					
 					//Enregistrement de l'image dans la bdd.
 					$Gallery->Resize_pics($path);		
-					if( !empty($Gallery->error) )
+					if (!empty($Gallery->error))
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $User->get_attribute('user_id'));
-					if( !empty($Gallery->error) )
+					if (!empty($Gallery->error))
 						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
@@ -81,19 +81,19 @@ if( isset($_FILES['gallery']) && isset($_POST['idcat_post']) ) //Upload
 	
 	redirect(HOST . DIR . '/gallery/admin_gallery_add.php?add=' . $idpic);
 }
-elseif( !empty($_POST['valid']) && !empty($nbr_pics_post) ) //Ajout massif d'images par ftp.
+elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 {
-	for($i = 1; $i <= $nbr_pics_post; $i++)
+	for ($i = 1; $i <= $nbr_pics_post; $i++)
 	{
 		$activ = !empty($_POST[$i . 'activ']) ? trim($_POST[$i . 'activ']) : '';
 		$uniq = !empty($_POST[$i . 'uniq']) ? strprotect($_POST[$i . 'uniq']) : '';
-		if( $activ && !empty($uniq) ) //Sélectionné.
+		if ($activ && !empty($uniq)) //Sélectionné.
 		{
 			$name = !empty($_POST[$i . 'name']) ? strprotect($_POST[$i . 'name']) : 0;
 			$cat = !empty($_POST[$i . 'cat']) ? numeric($_POST[$i . 'cat']) : 0;
 			$del = !empty($_POST[$i . 'del']) ? numeric($_POST[$i . 'del']) : 0;
 			
-			if( $del )
+			if ($del)
 				delete_file('pics/' . $uniq);
 			else
 				$Gallery->Add_pics($cat, $name, $uniq, $User->get_attribute('user_id'));
@@ -114,7 +114,7 @@ else
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	
 	//Création de la liste des catégories.
@@ -123,7 +123,7 @@ else
 	$result = $Sql->query_while("SELECT id, level, name 
 	FROM ".PREFIX."gallery_cats
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -133,7 +133,7 @@ else
 	$Sql->query_close($result);
 	
 	//Aficchage de la photo uploadée.
-	if( !empty($add_pic) )
+	if (!empty($add_pic))
 	{	
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
 		$imageup = $Sql->query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
@@ -178,26 +178,26 @@ else
 		
 	//Affichage photos
 	$dir = 'pics/';
-	if( is_dir($dir) ) //Si le dossier existe
+	if (is_dir($dir)) //Si le dossier existe
 	{		
 		$array_pics = array();
 		$dh = @opendir($dir);
-		while( !is_bool($pics = readdir($dh)) )
+		while (!is_bool($pics = readdir($dh)))
 		{	
-			if( $pics != '.' && $pics != '..' && $pics != 'index.php' && $pics != 'Thumbs.db' && $pics != 'thumbnails' )
+			if ($pics != '.' && $pics != '..' && $pics != 'index.php' && $pics != 'Thumbs.db' && $pics != 'thumbnails')
 				$array_pics[] = $pics; //On crée un array, avec les different fichiers.
 		}	
 		@closedir($dh); //On ferme le dossier
 		
-		if( is_array($array_pics) )
+		if (is_array($array_pics))
 		{
 			$result = $Sql->query_while("SELECT path
 			FROM ".PREFIX."gallery", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.
 				$key = array_search($row['path'], $array_pics);
-				if( $key !== false)
+				if ($key !== false)
 					unset($array_pics[$key]); //On supprime ces clées du tableau.
 			}
 			$Sql->query_close($result);
@@ -214,11 +214,11 @@ else
 			));
 			
 			$j = 0;		
-			foreach($array_pics as  $key => $pics)
+			foreach ($array_pics as  $key => $pics)
 			{
 				$height = 150;
 				$width = 150;
-				if( function_exists('getimagesize') ) //On verifie l'existence de la fonction getimagesize.
+				if (function_exists('getimagesize')) //On verifie l'existence de la fonction getimagesize.
 				{
 					// On recupère la hauteur et la largeur de l'image.
 					list($width_source, $height_source) = @getimagesize($rep . $pics);
@@ -226,9 +226,9 @@ else
 					$height_max = 150;
 					$width_max = 150;
 					
-					if( ($width_source > $width_max) || ($height_source > $height_max) )
+					if (($width_source > $width_max) || ($height_source > $height_max))
 					{
-						if( $width_source > $height_source )
+						if ($width_source > $height_source)
 						{
 							$ratio = $width_source / $height_source;
 							$width = $width_max;
@@ -257,7 +257,7 @@ else
 				$name = strlen($pics) > 20 ? substr($pics, 0, 20) . '...' : $pics;
 
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-				if( !file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics) )
+				if (!file_exists('pics/thumbnails/' . $pics) && file_exists('pics/' . $pics))
 					$Gallery->Resize_pics('pics/' . $pics); //Redimensionnement + création miniature
 
 				$Template->assign_block_vars('list', array(
@@ -272,7 +272,7 @@ else
 			}
 			
 			//Création des cellules du tableau si besoin est.
-			while( !is_int($j/$nbr_column_pics) )
+			while (!is_int($j/$nbr_column_pics))
 			{		
 				$j++;
 				$Template->assign_block_vars('end_td_pics', array(
@@ -283,7 +283,7 @@ else
 		}
 	}	
 	
-	if( $j == 0 )
+	if ($j == 0)
 	{
 		$Template->assign_block_vars('no_img', array(
 			'L_NO_IMG' => $LANG['no_pics']

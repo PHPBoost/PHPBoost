@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('web'); //Chargement de la langue du module.
@@ -38,12 +38,12 @@ $Cache->load('web'); //$CAT_WEB et $CONFIG_WEB en global.
 
 $CAT_WEB[$idcat]['name'] = !empty($CAT_WEB[$idcat]['name']) ? $CAT_WEB[$idcat]['name'] : '';
 $web['title'] = '';
-if( !empty($idweb) && !empty($idcat) )
+if (!empty($idweb) && !empty($idcat))
 { 
 	$web = $Sql->query_array('web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($web['title']));
 }
-elseif( !empty($idcat) )
+elseif (!empty($idcat))
 	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($CAT_WEB[$idcat]['name']));
 else
 	define('TITLE', $LANG['title_web']);

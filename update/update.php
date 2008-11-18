@@ -38,7 +38,7 @@ define('DIR', str_replace('/update/update.php', '', $server_path));
 //Thème par défaut.
 define('DEFAULT_THEME', 'main');
 
-if( !@include_once('../kernel/framework/io/template.class.php') )
+if (!@include_once('../kernel/framework/io/template.class.php'))
 	die('Votre dossier de mise à jour n\'est pas placé où il faut');
 include_once('../kernel/framework/functions.inc.php');
 
@@ -47,12 +47,12 @@ $step = $step > 14 ? 1 : $step;
 $go_to_next_step = !empty($_POST['submit']) ? true : false;
 
 $lang = !empty($_GET['lang']) ? strprotect($_GET['lang']) : 'french';
-if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
+if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
 	include_once('lang/french/install.php');
 	
 $Template = new Template; //!\\Initialisation des templates//!\\
 
-if( $step >= 2 )
+if ($step >= 2)
 {
 	require_once('../kernel/framework/functions.inc.php'); //Fonctions de base.
 	require_once('../kernel/constant.php'); //Constante utiles.
@@ -88,10 +88,10 @@ $Template->set_filenames(array('update' => '../update/templates/update.tpl'));
 function add_lang($url, $header_location = false)
 {
 	global $lang;
-	if( $lang != 'french' )
+	if ($lang != 'french')
 	{
 		$ampersand = $header_location ? '&' : '&amp;';
-		if( strpos($url, '?') !== false )
+		if (strpos($url, '?') !== false)
 			return $url . $ampersand . 'lang=' . $lang;
 		else
 			return $url . '?' . 'lang=' . $lang;		
@@ -101,18 +101,18 @@ function add_lang($url, $header_location = false)
 }
 
 //Préambule
-if( $step == 1 )
+if ($step == 1)
 {
 	$config_contents = file_get_contents('../kernel/auth/config.php');
 	//Si le fichier de config est à l'ancien format
-	if( strpos($config_contents, 'DBSECURE') === false )
+	if (strpos($config_contents, 'DBSECURE') === false)
 	{
 		$INCLUDE_secure = 1;
 		include_once('../kernel/auth/config.php');
 		//Remplacement des fichiers de configuration
 		$file = @fopen('../kernel/auth/config.php', 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
 		@fputs($file, '<?php
-if( !defined(\'DBSECURE\') )
+if (!defined(\'DBSECURE\'))
 {
 	$sql_host = "' . $mysql_host . '"; //Adresse serveur mysql.
 	$sql_login = "' . $mysql_login . '"; //Login
@@ -138,9 +138,9 @@ else
 	));
 }
 //Mise à jour du noyau
-elseif( $step == 2 )
+elseif ($step == 2)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{		
 		###########################Suppression###########################
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "admin_album`", __LINE__, __FILE__);		
@@ -268,7 +268,7 @@ elseif( $step == 2 )
 			`added` tinyint(1) NOT NULL default '0',
 			PRIMARY KEY	(`id`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (1, 1, 'connexion', 'if( SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (1, 1, 'connexion', 'if (SCRIPT != DIR . ''/membre/error.php'')include_once(''../kernel/connect.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (2, 1, 'gallery', 'include_once(''../gallery/gallery_mini.php'');', '', 1, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (3, 2, 'links', 'include_once(''../links/links_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
 		$Sql->query_inject("INSERT INTO `" . PREFIX . "menus` VALUES (4, 3, 'newsletter', 'include_once(''../newsletter/newsletter_mini.php'');', '', 0, -1, 1, 0)", __LINE__, __FILE__);
@@ -398,7 +398,7 @@ elseif( $step == 2 )
 		JOIN " . PREFIX . "stats AS s2
 		WHERE s1.stats_day = s2.stats_day AND s1.stats_month = s2.stats_month AND s1.stats_year = s2.stats_year AND s1.id != s2.id
 		GROUP BY s2.stats_day", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Sql->query_inject("DELETE FROM " . PREFIX . "stats WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__); //Suppression des doublons.
 		}
@@ -539,13 +539,13 @@ elseif( $step == 2 )
 	
 	$Template->assign_block_vars('kernel_update', array());
 	
-	if( !is_dir('../cache/backup') )
+	if (!is_dir('../cache/backup'))
 	{	
 		@mkdir('../cache/backup');
 		@chmod('../cache/backup', 0777);
 	}
 		
-	if( !is_dir('../cache/backup') )
+	if (!is_dir('../cache/backup'))
 	{
 		$Template->assign_block_vars('kernel_update.error', array(
 			'ERROR' => 'Il manque le dossier backup dans le dossier cache du site (cache/backup). Vous devez le créer manuellement!'
@@ -561,9 +561,9 @@ elseif( $step == 2 )
 	));
 }
 //Articles
-elseif( $step == 3 )
+elseif ($step == 3)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "articles` ADD `lock_com` TINYINT( 1 ) NOT NULL AFTER `nbr_com`", __LINE__, __FILE__);
@@ -596,8 +596,8 @@ elseif( $step == 3 )
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->query_while("SELECT * FROM ".PREFIX."admin_articles", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."admin_articles", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
 			
@@ -620,9 +620,9 @@ elseif( $step == 3 )
 	));
 }
 //Calendrier
-elseif( $step == 4 )
+elseif ($step == 4)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		//Calendrier.
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "calendar` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
@@ -641,9 +641,9 @@ elseif( $step == 4 )
 	));
 }
 //Forum
-elseif( $step == 5 )
+elseif ($step == 5)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_config`", __LINE__, __FILE__); 
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "forum_alerts` ", __LINE__, __FILE__); 		
@@ -671,10 +671,10 @@ elseif( $step == 5 )
 		$start = false;
 		$right = array();
 		$current_cat = 0;
-		$result = $Sql->query_while("SELECT * FROM ".PREFIX."forum_cats ORDER BY `class`", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."forum_cats ORDER BY `class`", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( $row['type'] == 0 && $start )
+			if ($row['type'] == 0 && $start)
 			{	
 				$i += 1;
 				$j += 1;
@@ -684,7 +684,7 @@ elseif( $step == 5 )
 			$i += 2;			
 			$j += 2;
 				
-			if( $row['type'] == 0 )
+			if ($row['type'] == 0)
 			{
 				$i -= 1;
 				$j -= 1;
@@ -692,10 +692,10 @@ elseif( $step == 5 )
 				$right[$row['id']] = isset($right[$current_cat]) ? $right[$current_cat] : 0;
 				$current_cat = $row['id'];
 			}
-			if( isset($right[$current_cat]) ) 
+			if (isset($right[$current_cat])) 
 				$right[$current_cat] += 2;
 		}
-		foreach($right as $idcat => $right_edge)
+		foreach ($right as $idcat => $right_edge)
 			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_right = '" . $right_edge . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `class`", __LINE__, __FILE__); 
@@ -728,9 +728,9 @@ elseif( $step == 5 )
 	));
 }
 //Galerie
-elseif( $step == 6 )
+elseif ($step == 6)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("CREATE TABLE `phpboost_gallery` (
 		`id` int(11) NOT NULL auto_increment,
@@ -769,8 +769,8 @@ elseif( $step == 6 )
 		KEY `id_left` (`id_left`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$result = $Sql->query_while("SELECT * FROM ".PREFIX."album", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."album", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$image_name = explode('/', $row['large']);
 			$image_infos = getimagesize('../album/' . $image_name[1]);
@@ -782,8 +782,8 @@ elseif( $step == 6 )
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->query_while("SELECT * FROM ".PREFIX."admin_albumcat", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."admin_albumcat", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id, id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '', '0', '0', '1', '1', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
 			$i += 2;
@@ -803,13 +803,13 @@ elseif( $step == 6 )
 		'L_PREVIOUS_STEP' => 'Etape précédente',
 		'L_NEXT_STEP' => 'Etape suivante'
 	));
-	if( !@rename('../album/mini', '../album/thumbnails') )
+	if (!@rename('../album/mini', '../album/thumbnails'))
 	{
 		$Template->assign_block_vars('gallery_update.error', array(
 			'ERROR' => 'Veuillez renommer manuellement le dossier album/mini en album/thumbnails par l\'intermédiaire de votre client ftp'
 		));
 	}
-	if( !@rename('../album', '../gallery/pics') )
+	if (!@rename('../album', '../gallery/pics'))
 	{
 		$Template->assign_block_vars('gallery_update.error', array(
 			'ERROR' => 'Veuillez déplacer manuellement le dossier album dans le dossier gallery par l\'intermédiaire de votre client ftp'
@@ -817,9 +817,9 @@ elseif( $step == 6 )
 	}
 }
 //Livre d'or
-elseif( $step == 7 )
+elseif ($step == 7)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `login` `login` VARCHAR( 255 ) DEFAULT '' NOT NULL", __LINE__, __FILE__);  
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "livreor` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__); 
@@ -837,9 +837,9 @@ elseif( $step == 7 )
 	));
 }
 //News
-elseif( $step == 8 )
+elseif ($step == 8)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` ADD PRIMARY KEY ( `id` ) ", __LINE__, __FILE__);
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "news` DROP INDEX `id`", __LINE__, __FILE__); 
@@ -879,21 +879,21 @@ elseif( $step == 8 )
 	));
 }
 //Pages
-elseif( $step == 9 )
+elseif ($step == 9)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$i = 0;
 		$get_title = '';
 		//On explore le dossier pages/
-		if( is_dir('../pages') )
+		if (is_dir('../pages'))
 		{
-		   if( $dh = opendir($dir) )
+		   if ($dh = opendir($dir))
 			{
-				while( ($file = readdir($dh)) !== false )
+				while (($file = readdir($dh)) !== false)
 				{
 					$contents = @readfile('../pages/' . $file);
-					if( preg_match('`^[a-z0-9._-]+\.php$`', $file) && preg_match('`\$TITLE = \'\$TITLE = "(.+)";\';`isU', $contents, $get_title))				
+					if (preg_match('`^[a-z0-9._-]+\.php$`', $file) && preg_match('`\$TITLE = \'\$TITLE = "(.+)";\';`isU', $contents, $get_title))				
 					{
 						$title = stripslashes($get_title[1]);
 						$contents = preg_replace('`<\?php(.+)\?>`isU', '', $contents, 1);
@@ -918,9 +918,9 @@ elseif( $step == 9 )
 	));
 }
 //Shoutbox
-elseif( $step == 10 )
+elseif ($step == 10)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `user_id` `user_id` INT DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "shoutbox` CHANGE `contenu` `contents` TEXT NOT NULL", __LINE__, __FILE__);  
@@ -937,9 +937,9 @@ elseif( $step == 10 )
 	));
 }
 //Liens web
-elseif( $step == 11 )
+elseif ($step == 11)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "web` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
@@ -972,9 +972,9 @@ elseif( $step == 11 )
 	));
 }
 //Téléchargements
-elseif( $step == 12 )
+elseif ($step == 12)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` CHANGE `idcat` `idcat_tmp` INT( 11 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "download` ADD `idcat` INT NOT NULL AFTER `id`", __LINE__, __FILE__); 
@@ -1013,9 +1013,9 @@ elseif( $step == 12 )
 	));
 }
 //Finalisation
-elseif( $step == 13 )
+elseif ($step == 13)
 {
-	if( $go_to_next_step )
+	if ($go_to_next_step)
 	{
 		$Cache = new Cache; //!\\Initialisation  de la class de gestion du cache//!\\
 		
@@ -1035,7 +1035,7 @@ elseif( $step == 13 )
 	));
 }
 //Fin
-elseif( $step == 14 )
+elseif ($step == 14)
 {
 	$Template->assign_block_vars('end', array());
 	$Template->assign_vars(array());
@@ -1081,11 +1081,11 @@ $Template->assign_vars(array(
 	'U_RESTART' => add_lang('install.php')
 ));
 
-for($i = 1; $i <= 14; $i++ )
+for ($i = 1; $i <= 14; $i++)
 {
-	if( $i < $step )
+	if ($i < $step)
 		$row = 'row_success';
-	elseif( $i == $step )
+	elseif ($i == $step)
 		$row = 'row_current';
 	else
 		$row = 'row_next';

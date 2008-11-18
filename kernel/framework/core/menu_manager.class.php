@@ -46,7 +46,7 @@ class MenuManager
 		switch($this->type)
 		{
 			case MENU_MODULE:
-				return 'if( $User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
+				return 'if ($User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS)){' . "\n"
 				. "\t" . 'include_once(PATH_TO_ROOT . \'/' . $name . '/' . $contents . "');\n"
 				. "\t" . '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);'
 				. "\n" . '}';
@@ -55,14 +55,14 @@ class MenuManager
 				return var_export($this->display(MENU_STRING_MODE), true);
 			
 			case MENU_PERSONNAL:
-				return 'if( $User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS) ){' . "\n"
+				return 'if ($User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS)){' . "\n"
 				. "\t" . 'include_once(PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
 				. "\t" . '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);'
 				. "\n" . '}';
 				
 			case MENU_CONTENTS:
-				$code = 'if( $User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS) ){' . "\n";
-				if( $use_tpl == '0' )
+				$code = 'if ($User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS)){' . "\n";
+				if ($use_tpl == '0')
 					$code .= '$MENUS[\'' . $location . '\'] .= ' . var_export($contents, true) . ';' . "\n";
 				else
 				{

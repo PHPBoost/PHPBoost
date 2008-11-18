@@ -32,9 +32,9 @@ require_once('../kernel/header.php');
 $id_error = retrieve(GET, 'e', '');
 	
 $array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');	
-if( in_array($id_error, $array_error) )
+if (in_array($id_error, $array_error))
 {
-	if( $User->get_attribute('user_id') === -1 )
+	if ($User->get_attribute('user_id') === -1)
 	{
 		$Template->set_filenames(array(
 			'error'=> 'member/error.tpl'
@@ -45,26 +45,26 @@ if( in_array($id_error, $array_error) )
 		{ 
 			case 'e_member_ban':
 				$ban = !empty($_GET['ban']) ? numeric($_GET['ban']) : '';
-				if( $ban > 0 )
+				if ($ban > 0)
 				{
-					if( $ban < 60 )
+					if ($ban < 60)
 						$delay_ban = $ban . ' ' . (($ban > 1) ? $LANG['minutes'] : $LANG['minute']);
-					elseif( $ban < 1440 )
+					elseif ($ban < 1440)
 					{
 						$delay_ban = number_round($ban/60, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['hours'] : $LANG['hour']);				
 					}
-					elseif( $ban < 10080 )
+					elseif ($ban < 10080)
 					{
 						$delay_ban = number_round($ban/1440, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['days'] : $LANG['day']);				
 					}
-					elseif( $ban < 43200 )
+					elseif ($ban < 43200)
 					{
 						$delay_ban = number_round($ban/10080, 0);	
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['weeks'] : $LANG['week']);				
 					}
-					elseif( $ban < 525600 )
+					elseif ($ban < 525600)
 					{
 						$delay_ban = number_round($ban/43200, 0);
 						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['months'] : $LANG['month']);
@@ -98,7 +98,7 @@ if( in_array($id_error, $array_error) )
 			$errstr = '';
 		}	
 			
-		if( !empty($errstr) )
+		if (!empty($errstr))
 			$Errorh->handler($errstr, $errno);		
 			
 		$Template->assign_vars(array(
@@ -117,7 +117,7 @@ if( in_array($id_error, $array_error) )
 	else
 		redirect(get_start_page());
 }
-elseif( !empty($id_error) )
+elseif (!empty($id_error))
 {
 	$Template->set_filenames(array(
 		'error'=> 'member/error.tpl'
@@ -125,7 +125,7 @@ elseif( !empty($id_error) )
 
 	//Inclusion des langues des erreurs pour le module si elle existe.
 	$module = substr(strrchr($id_error, '_'), 1);
-	if( is_dir('../' . $module) )
+	if (is_dir('../' . $module))
 		load_module_lang($module); //Chargement de la langue du module.
 
 	$Template->assign_vars(array(
@@ -145,7 +145,7 @@ elseif( !empty($id_error) )
 	
 	$Template->pparse('error');
 }
-elseif( $User->get_attribute('user_id') === -1 )
+elseif ($User->get_attribute('user_id') === -1)
 {
 	$Template->set_filenames(array(
 		'error'=> 'member/error.tpl'

@@ -34,19 +34,19 @@ $install = !empty($_GET['install']) ? true : false;
 $error = retrieve(GET, 'error', '');
 
 //Si c'est confirmé on execute
-if( $install )
+if ($install)
 {
 	//Récupération de l'identifiant du thème.
 	$lang = '';
-	foreach($_POST as $key => $value)
-		if( $value == $LANG['install'] )
+	foreach ($_POST as $key => $value)
+		if ($value == $LANG['install'])
 			$lang = strprotect($key);
 			
 	$secure = retrieve(POST, $lang . 'secure', -1);
 	$activ = retrieve(POST, $lang . 'activ', 0);
 		
 	$check_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
-	if( empty($check_lang) && !empty($lang) )
+	if (empty($check_lang) && !empty($lang))
 	{
 		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
@@ -55,45 +55,45 @@ if( $install )
 	else
 		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
 }
-elseif( !empty($_FILES['upload_lang']['name']) ) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '../lang/';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) ) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		$check_lang = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
-		if( empty($check_lang) )
+		if (empty($check_lang))
 		{
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
-			if( $Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i') )
+			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
 				$archive_path = '../lang/' . $Upload->filename['upload_lang'];
 				//Place à la décompression.
-				if( $Upload->extension['upload_lang'] == 'gzip' )
+				if ($Upload->extension['upload_lang'] == 'gzip')
 				{
 					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
-					if( !$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/') )
+					if (!$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/'))
 						$error = $Upload->error;
 				}
-				elseif( $Upload->extension['upload_lang'] == 'zip' )
+				elseif ($Upload->extension['upload_lang'] == 'zip')
 				{
 					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
 					$Zip = new PclZip($archive_path);
-					if( !$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666) )
+					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
 				}
 				else
 					$error = 'e_upload_invalid_format';
 				
 				//Suppression de l'archive désormais inutile.
-				if( !@unlink($archive_path) )
+				if (!@unlink($archive_path))
 					$error = 'e_unlink_disabled';
 			}
 			else
@@ -137,40 +137,40 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_lang_already_exist', 'e_unlink_disabled');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
 	$z = 0;
 	$rep = '../lang/';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$array_file = array();
 		$dh = @opendir($rep);
-		while( !is_bool($dir = readdir($dh)) )
+		while (!is_bool($dir = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($dir, '.') === false )
+			if (strpos($dir, '.') === false)
 				$array_file[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier
 	
 		$result = $Sql->query_while("SELECT lang 
 		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
 			$key = array_search($row['lang'], $array_file);
-			if( $key !== false)
+			if ($key !== false)
 				unset($array_file[$key]); //On supprime ces clées du tableau.
 		}
 		$Sql->query_close($result);
 		
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.
+		foreach ($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.
 		{
 			$options = '';
-			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 			{
 				$selected = ($i == -1) ? 'selected="selected"' : '';
 				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
@@ -190,7 +190,7 @@ else
 		}
 	}	
 
-	if( $z != 0 )
+	if ($z != 0)
 		$Template->assign_vars(array(		
 			'C_LANG_PRESENT' => true
 		));

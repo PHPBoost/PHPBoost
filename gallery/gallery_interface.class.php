@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
@@ -50,7 +50,7 @@ class GalleryInterface extends ModuleInterface
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_GALLERY = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
 		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
-		if( isset($CONFIG_GALLERY['auth_root']) )
+		if (isset($CONFIG_GALLERY['auth_root']))
 			$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
 		
 		$gallery_config .= '$CONFIG_GALLERY = ' . var_export($CONFIG_GALLERY, true) . ';' . "\n";
@@ -59,9 +59,9 @@ class GalleryInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM ".PREFIX."gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{		
-			if( empty($row['auth']) )
+			if (empty($row['auth']))
 				$row['auth'] = serialize(array());
 			
 			$cat_gallery .= '$CAT_GALLERY[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
@@ -83,9 +83,9 @@ class GalleryInterface extends ModuleInterface
 		WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
 		ORDER BY RAND()
 		" . $Sql->limit(0, 30), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( $row['idcat'] == 0 )
+			if ($row['idcat'] == 0)
 				$row['auth'] = serialize($CONFIG_GALLERY['auth_root']);
 			
 			//Calcul des dimensions avec respect des proportions.

@@ -66,7 +66,7 @@ class Application
         $this->compatibility_max = Application::_get_attribute($xml_desc, 'max', 'compatibility');
         
         $pubdate = Application::_get_attribute($xml_desc, 'pubdate');
-        if( !empty($pubdate) )
+        if (!empty($pubdate))
             $this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate,'y/m/d');
         else
             $this->pubdate = new Date();
@@ -87,7 +87,7 @@ class Application
                 $this->priority = ADMIN_ALERT_LOW_PRIORITY;
                 break;
         }
-        if( $this->security_update )
+        if ($this->security_update)
                 $this->priority++;
         
         $this->download_url =  Application::_get_attribute($xml_desc, 'url', '//download');
@@ -95,7 +95,7 @@ class Application
         
         $this->authors = array();
         $authors_elts = $xml_desc->xpath('authors/author');
-        foreach( $authors_elts as $author )
+        foreach ($authors_elts as $author)
         {
             $this->authors[] = array('name' => Application::_get_attribute($author, 'name'), 'email' => Application::_get_attribute($author, 'email'));
         }
@@ -109,7 +109,7 @@ class Application
         $this->security_improvments = array();
         
         $novelties = $xml_desc->xpath('whatsnew/new');
-        foreach( $novelties  as $novelty  )
+        foreach ($novelties  as $novelty )
         {
             $attributes = $novelty->attributes();
             $type = isset($attributes['type']) ? utf8_decode($attributes['type']) : 'feature';
@@ -131,7 +131,7 @@ class Application
         }
         
         $this->warning_level = Application::_get_attribute($xml_desc, 'level', 'warning');
-        if( !empty($this->warning_level) )
+        if (!empty($this->warning_level))
         {
             $this->warning = $xml_desc->xpath('warning');
             $this->warning = utf8_decode((string) $this->warning[0]);
@@ -188,7 +188,7 @@ class Application
     function _get_attribute(&$xdoc, $attibute_name, $xpath_query = '.')
     {
         $elements = $xdoc->xpath($xpath_query);
-        if( count($elements) > 0 )
+        if (count($elements) > 0)
         {
             $attributes = $elements[0]->attributes();
             return isset($attributes[$attibute_name]) ? utf8_decode( (string) $attributes[$attibute_name]) : null;

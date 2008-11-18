@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
@@ -52,7 +52,7 @@ class ArticlesInterface extends ModuleInterface
 		$CONFIG_ARTICLES = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'articles'", __LINE__, __FILE__));
 		$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
 
-		if(isset($CONFIG_ARTICLES['auth_root']))
+		if (isset($CONFIG_ARTICLES['auth_root']))
 		$CONFIG_ARTICLES['auth_root'] = unserialize($CONFIG_ARTICLES['auth_root']);
 
 		$config_articles .= '$CONFIG_ARTICLES = ' . var_export($CONFIG_ARTICLES, true) . ';' . "\n";
@@ -61,9 +61,9 @@ class ArticlesInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
 		FROM ".PREFIX."articles_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( empty($row['auth']) )
+			if (empty($row['auth']))
 			$row['auth'] = serialize(array());
 
 			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
@@ -87,11 +87,11 @@ class ArticlesInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, start, end
 		FROM ".PREFIX."articles	
 		WHERE visible != 0", __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( $row['start'] <= time() && $row['start'] != 0 )
+			if ($row['start'] <= time() && $row['start'] != 0)
 			$Sql->query_inject("UPDATE ".PREFIX."articles SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
-			if( $row['end'] <= time() && $row['end'] != 0 )
+			if ($row['end'] <= time() && $row['end'] != 0)
 			$Sql->query_inject("UPDATE ".PREFIX."articles SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
@@ -106,14 +106,14 @@ class ArticlesInterface extends ModuleInterface
         
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
-		foreach($CAT_ARTICLES as $idcat => $key)
+		foreach ($CAT_ARTICLES as $idcat => $key)
 		{
-			if( $CAT_ARTICLES[$idcat]['aprob'] == 1 )
+			if ($CAT_ARTICLES[$idcat]['aprob'] == 1)
 			{
-				if( !$User->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES) )
+				if (!$User->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES))
 				{
 					$clause_level = !empty($g_idcat) ? ($CAT_ARTICLES[$idcat]['level'] == ($CAT_ARTICLES[$g_idcat]['level'] + 1)) : ($CAT_ARTICLES[$idcat]['level'] == 0);
-					if( $clause_level )
+					if ($clause_level)
 					$unauth_cats_sql[] = $idcat;
 				}
 			}

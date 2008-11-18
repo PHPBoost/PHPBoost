@@ -37,7 +37,7 @@ $Template->set_filenames(array(
 
 $file_path = '../cache/error.log';
 
-if( !empty($_POST['erase']) )
+if (!empty($_POST['erase']))
 	delete_file($file_path); //On supprime le fichier.
 
 $Template->assign_vars(array(
@@ -51,14 +51,14 @@ $Template->assign_vars(array(
 	'L_ERASE' => $LANG['erase']
 ));
 
-if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lecture
+if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
 {
 	$handle = @fopen($file_path, 'r');
-	if( $handle ) 
+	if ($handle) 
 	{
 		$array_errinfo = array();
 		$i = 1;
-		while( !feof($handle) ) 
+		while (!feof($handle)) 
 		{
 			$buffer = fgets($handle, 4096);
 			switch($i)
@@ -102,7 +102,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 		//Tri en sens inverse car enregistrement à la suite dans le fichier de log
 		krsort($array_errinfo);
 		$i = 0;
-		foreach($array_errinfo as $key => $errinfo)
+		foreach ($array_errinfo as $key => $errinfo)
 		{
 			$str_error = sprintf($LANG[$errinfo['errclass']], str_replace('&lt;br /&gt;', '<br />', htmlentities($errinfo['errstr'])), $errinfo['errline'], basename($errinfo['errfile']));
 			
@@ -114,7 +114,7 @@ if( is_file($file_path) && is_readable($file_path) ) //Fichier accessible en lec
 			));
 			$i++;
 			
-			if( $i > 15 && !$all )
+			if ($i > 15 && !$all)
 				break;
 		}
 	}

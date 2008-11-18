@@ -38,20 +38,20 @@ $Template->set_filenames(array(
 ));	
 
 //Inscription ou désinscription
-if( !empty($mail_newsletter) )
+if (!empty($mail_newsletter))
 {
 	//Vérification de la validité du mail proposé
-	if( preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $mail_newsletter) )
+	if (preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $mail_newsletter))
 	{
 		//Inscription ou désincription?
 		$subscribe = ($subscribe == 'subscribe') ? 1 : 0;
 		
 		//Inscription
-		if( $subscribe === 1)
+		if ($subscribe === 1)
 		{
 			$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
 			//Si il n'est pas déjà inscrit
-			if( $check_mail == 0 )
+			if ($check_mail == 0)
 			{
 				//On enregistre le mail
 				$Sql->query_inject("INSERT INTO ".PREFIX."newsletter (mail) VALUES ('" . $mail_newsletter . "')",  __LINE__, __FILE__);
@@ -63,7 +63,7 @@ if( !empty($mail_newsletter) )
 		else
 		{
 			$check_mail = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __LINE__, __FILE__);
-			if( $check_mail >= 1 )
+			if ($check_mail >= 1)
 			{
 				$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE mail = '" . $mail_newsletter . "'", __lINE__, __FILE__);
 				$Errorh->handler($LANG['newsletter_del_success'], E_USER_NOTICE);
@@ -76,7 +76,7 @@ if( !empty($mail_newsletter) )
 		$Errorh->handler($LANG['newsletter_email_address_is_not_valid'], E_USER_WARNING);
 }
 //Désinscription demandée suite à la réception d'une newsletter
-elseif( $id > 0 )
+elseif ($id > 0)
 {
 	$check_mail = $Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	$Errorh->handler($LANG['newsletter_del_success'], E_USER_NOTICE);
@@ -95,7 +95,7 @@ else
 	ORDER BY id DESC 
 	" . $Sql->limit($Pagination->get_first_msg(5, 'p'), 5), __LINE__, __FILE__);
 	
-	while($row = $Sql->fetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('arch', array(
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -109,7 +109,7 @@ else
 	
 	$total_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."newsletter_arch", __LINE__, __FILE__);
 	
-	if( $total_msg == 0 )
+	if ($total_msg == 0)
 		$Errorh->handler($LANG['newsletter_no_archives'], E_USER_NOTICE);
 	
 	$Template->assign_vars(array(
@@ -118,7 +118,7 @@ else
 		'L_NEWSLETTER_ARCHIVES_EXPLAIN' => $LANG['newsletter_archives_explain']
 		));
 	
-	if( $i === 0 )
+	if ($i === 0)
 	{	
 		$Template->assign_block_vars('mail', array(
 			'MSG' => 'Il n\'y a pas d\'archives pour le moment.'

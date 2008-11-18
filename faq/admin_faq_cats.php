@@ -56,27 +56,27 @@ $Template->assign_vars(array(
 	'L_ADD_CAT' => $FAQ_LANG['add_cat']
 ));
 
-if( $id_up > 0 )
+if ($id_up > 0)
 {
 	$faq_categories->move($id_up, MOVE_CATEGORY_UP);
 	redirect(url('admin_faq_cats.php'));
 }
-elseif( $id_down > 0 )
+elseif ($id_down > 0)
 {
 	$faq_categories->move($id_down, MOVE_CATEGORY_DOWN);
 	redirect(url('admin_faq_cats.php'));
 }
-elseif( $id_show > 0 )
+elseif ($id_show > 0)
 {
 	$faq_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	redirect(url('admin_faq_cats.php'));
 }
-elseif( $id_hide > 0 )
+elseif ($id_hide > 0)
 {
 	$faq_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
 	redirect(url('admin_faq_cats.php'));
 }
-elseif( $cat_to_del > 0 )
+elseif ($cat_to_del > 0)
 {
 	$Template->assign_vars(array(
 		'L_REMOVING_CATEGORY' => $FAQ_LANG['removing_category'],
@@ -90,16 +90,16 @@ elseif( $cat_to_del > 0 )
 		'IDCAT' => $cat_to_del,
 	));
 }
-elseif( !empty($_POST['submit']) )
+elseif (!empty($_POST['submit']))
 {
 	$error_string = 'e_success';
 	//Deleting a category
-	if( !empty( $cat_to_del_post) )
+	if (!empty( $cat_to_del_post))
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0);
 		
-		if( $delete_content )
+		if ($delete_content)
 		{
 			$faq_categories->Delete_category_recursively($cat_to_del_post);
 		}
@@ -116,10 +116,10 @@ elseif( !empty($_POST['submit']) )
 		$image = retrieve(POST, 'image', '');
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		
-		if( empty($name) )
+		if (empty($name))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		
-		if( $id_cat > 0 )
+		if ($id_cat > 0)
 			$error_string = $faq_categories->Update_category($id_cat, $id_parent, $name, $description, $image);
 		else
 			$error_string = $faq_categories->add($id_parent, $name, $description, $image);
@@ -130,12 +130,12 @@ elseif( !empty($_POST['submit']) )
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 //Updating the number of subquestions of each category
-elseif( !empty($_GET['recount']) )
+elseif (!empty($_GET['recount']))
 {
 	$faq_categories->Recount_subquestions();
 	redirect(url(HOST . SCRIPT . '?error=e_recount_success', '', '&'));
 }
-elseif( $new_cat XOR $id_edit > 0 )
+elseif ($new_cat XOR $id_edit > 0)
 {
 	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
@@ -151,7 +151,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 		'L_REQUIRE_TITLE' => $LANG['require_title']
 	));
 		
-	if( $id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS) )	
+	if ($id_edit > 0 && array_key_exists($id_edit, $FAQ_CATS))	
 		$Template->assign_block_vars('edition_interface', array(
 			'NAME' => $FAQ_CATS[$id_edit]['name'],
 			'DESCRIPTION' => unparse($FAQ_CATS[$id_edit]['description']),
@@ -173,7 +173,7 @@ elseif( $new_cat XOR $id_edit > 0 )
 }
 else
 {
-	if( !empty($error) )
+	if (!empty($error))
 	{
 		switch($error)
 		{

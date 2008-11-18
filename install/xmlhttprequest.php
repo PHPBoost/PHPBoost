@@ -10,12 +10,12 @@ define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
 
 $lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';
-if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
+if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
 	include_once('lang/french/install.php');
 $chmod = retrieve(GET, 'chmod', false);
 $db = retrieve(GET, 'db', false);
 
-if( $chmod )
+if ($chmod)
 {
 	//Mise à jour du cache.
 	@clearstatcache();
@@ -23,12 +23,12 @@ if( $chmod )
 	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../menus', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
-	foreach($chmod_dir as $dir)
+	foreach ($chmod_dir as $dir)
 	{
 		$is_writable = $is_dir = true;
-		if( file_exists($dir) && is_dir($dir) )
+		if (file_exists($dir) && is_dir($dir))
 		{
-			if( !is_writable($dir) )
+			if (!is_writable($dir))
 				$is_writable = (@chmod($dir, 0777)) ? true : false;			
 		}
 		else
@@ -46,7 +46,7 @@ if( $chmod )
 	}
 
 }
-elseif( $db )
+elseif ($db)
 {
 	//Assignation des variables et erreurs
 	$host = retrieve(POST, 'host', 'localhost');
@@ -57,7 +57,7 @@ elseif( $db )
 	
 	include_once('functions.php');
 	
-	if( !empty($host) && !empty($login) && !empty($database) )
+	if (!empty($host) && !empty($login) && !empty($database))
 		echo check_database_config($host, $login, $password, $database, $tables_prefix);
 	else
 		echo DB_UNKNOW_ERROR;

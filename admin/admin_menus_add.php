@@ -40,7 +40,7 @@ $id_post = retrieve(POST, 'id', 0);
 $action = retrieve(POST, 'action', '');
 
 //Si c'est confirmé on execute
-if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà existant.
+if ($action == 'edit' && !empty($id_post)) //Modification d'un menu déjà existant.
 {
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
@@ -52,12 +52,12 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 
 	$previous = $Sql->query_array("menus", "location", "added", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	$clause_class = '';
-	if( $previous['location'] != $location )
+	if ($previous['location'] != $location)
 	{	
 		$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
 		$clause_class .= " class = '" . ($class + 1) . "', ";
 	}
-	if( $previous['added'] == 1 )
+	if ($previous['added'] == 1)
 		$clause_class .= " name = '" . $name . "', contents = '" . $contents . "', use_tpl = '" . $use_tpl . "', ";
 
 	$Sql->query_inject("UPDATE ".PREFIX."menus SET " . $clause_class . " location = '" . $location . "', activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth)) . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
@@ -67,33 +67,33 @@ if( $action == 'edit' && !empty($id_post) ) //Modification d'un menu déjà exista
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id_post);	
 }
-elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => insertion dans la bdd
+elseif ($action == 'install' && !empty($idmodule)) //Module non installé => insertion dans la bdd
 {
-	if( preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get) )
+	if (preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get))
 	{	
 		$activ = retrieve(POST, 'activ', 0);
 		$array_auth = Authorizations::build_auth_array_from_form(AUTH_MENUS);
 		$module_name = addslashes($array_get[1]);
 		$idmodule = $array_get[2];
 		
-		if( strpos($module_name, '.php') === false ) //Menu associé à un module.
+		if (strpos($module_name, '.php') === false) //Menu associé à un module.
 		{
 			//Récupération des infos de config.
 			$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 			//Installation du mini module s'il existe
-			if( !empty($info_module['mini_module']) )
+			if (!empty($info_module['mini_module']))
 			{
 				$i = 1;
 				$array_menus = parse_ini_array($info_module['mini_module']);
-				foreach($array_menus as $path => $location)
+				foreach ($array_menus as $path => $location)
 				{
-					if( $idmodule == $i )
+					if ($idmodule == $i)
 					{
 						$path = addslashes($path);
 						$menu_path = '../' . $module_name . '/' . $path;
-						if( file_exists($menu_path) )
+						if (file_exists($menu_path))
 						{	
-							if( !empty($move) )
+							if (!empty($move))
 							{
 								$location = $move;
 								$activ = 1; //Activation.
@@ -102,7 +102,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 								$location = addslashes($location);
 				
 							$check_menu = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."menus WHERE name = '" .  $module_name . "' AND contents = '" . $path . "'", __LINE__, __FILE__);
-							if( empty($check_menu) )
+							if (empty($check_menu))
 							{
 								$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
 								$Sql->query_inject("INSERT INTO ".PREFIX."menus (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_name . "', '" . $path . "', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 0, 0)", __LINE__, __FILE__);
@@ -120,7 +120,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 		else //Menu perso dans le dossier /menus.
 		{
 			$menu_path = '../menus/' . $module_name;
-			if( !empty($move) )
+			if (!empty($move))
 			{
 				$location = $move;
 				$activ = 1; //Activation.
@@ -129,7 +129,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 				$location = 'left';
 
 			$check_menu = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."menus WHERE name = '" .  str_replace('.php', '', $module_name) . "' AND contents = '" . $module_name . "'", __LINE__, __FILE__);
-			if( empty($check_menu) )
+			if (empty($check_menu))
 			{
 				$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
 				$Sql->query_inject("INSERT INTO ".PREFIX."menus (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . str_replace('.php', '', $module_name) . "', '" . $module_name . "', '" . $location . "', '" . addslashes(serialize($array_auth)) . "', '" . $activ . "', 2, 0)", __LINE__, __FILE__);
@@ -142,7 +142,7 @@ elseif( $action == 'install' && !empty($idmodule) ) //Module non installé => ins
 	else
 		redirect(HOST . SCRIPT);
 }
-elseif( $action == 'add' ) //Ajout d'un menu.
+elseif ($action == 'add') //Ajout d'un menu.
 {		
 	$name = retrieve(POST, 'name', '');
 	$activ = retrieve(POST, 'activ', 0);  
@@ -151,7 +151,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	$location = retrieve(POST, 'location', 'left');
 	$use_tpl = !empty($_POST['use_tpl']) ? 1 : 0;
 	
-	if( !$activ )
+	if (!$activ)
 		$location = '';
 	
 	$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE activ = 1 AND location = '" . $location . "'", __LINE__, __FILE__);
@@ -163,7 +163,7 @@ elseif( $action == 'add' ) //Ajout d'un menu.
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);	
 }
-elseif( !empty($del) && !empty($id) ) //Suppression du menu.
+elseif (!empty($del) && !empty($id)) //Suppression du menu.
 {
 	$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = " . $id, __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM ".PREFIX."menus WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -214,24 +214,24 @@ else
 	));
 	
 	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	if( $edit )
+	if ($edit)
 	{
 		$menu = $Sql->query_array('menus', 'id', 'name', 'contents', 'activ', 'auth', 'location', 'use_tpl', 'added', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Localisation possibles.
 		$array_location = array('header' => $LANG['menu_header'], 'subheader' => $LANG['menu_subheader'], 'left' => $LANG['menu_left'], 'topcentral' => $LANG['menu_top_central'], 'bottomcentral' => $LANG['menu_bottom_central'], 'right' => $LANG['menu_right'], 'topfooter' => $LANG['menu_top_footer'], 'footer' => $LANG['menu_top_footer']);
 		$locations = '';
-		foreach($array_location as $key => $name)
+		foreach ($array_location as $key => $name)
 		{
 			$selected = ($menu['location'] == $key) ? 'selected="selected"' : '';
 			$locations .= '<option value="' . $key . '" ' . $selected . '>' . $name . '</option>';
 		}
 		
 		//Nom du menus.
-		if( !empty($menu['name']) )
+		if (!empty($menu['name']))
 		{
 			$config = load_ini_file('../' . $menu['name'] . '/lang/', get_ulang());
-			if( is_array($config) )
+			if (is_array($config))
 				$menu['name'] = !empty($config['name']) ? $config['name'] : $menu['name'];	
 		}
 		
@@ -253,12 +253,12 @@ else
 			'CONTENTS' => !empty($menu['contents']) ? unparse($menu['contents']) : ''
 		));
 	}
-	elseif( $install && preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get) )
+	elseif ($install && preg_match('`([a-zA-Z0-9._-]+) ([0-9]+)`', $idmodule, $array_get))
 	{
 		//Localisation possibles.
 		$array_location = array('header' => $LANG['menu_header'], 'subheader' => $LANG['menu_subheader'], 'left' => $LANG['menu_left'], 'topcentral' => $LANG['menu_top_central'], 'bottomcentral' => $LANG['menu_bottom_central'], 'right' => $LANG['menu_right'], 'topfooter' => $LANG['menu_top_footer'], 'footer' => $LANG['menu_top_footer']);
 		$locations = '';
-		foreach($array_location as $id => $name)
+		foreach ($array_location as $id => $name)
 		{
 			$selected = ('left' == $id) ? 'selected="selected"' : '';
 			$locations .= '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
@@ -270,7 +270,7 @@ else
 		//Nom du menus.
 		$config = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 		$name = $module_name;
-		if( is_array($config) )
+		if (is_array($config))
 			$name = !empty($config['name']) ? $config['name'] : $name;	
 		
 		$Template->assign_vars(array(
@@ -286,7 +286,7 @@ else
 			'L_ACTION' => $LANG['install']
 		));
 	}
-	elseif( $type == 2 ) //Ajout d'un menu de lien.
+	elseif ($type == 2) //Ajout d'un menu de lien.
 	{
 		$Template->assign_vars(array(
 			'C_ADD_MENU' => true,

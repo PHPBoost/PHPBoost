@@ -55,21 +55,21 @@ require_once('../kernel/header.php');
 //Variable d'erreur
 $error = '';
 
-if( !empty($contents) ) //On enregistre un article
+if (!empty($contents)) //On enregistre un article
 {
 	include_once('../wiki/wiki_functions.php');	
 	//On crée le menu des paragraphes et on enregistre le menu
 	$menu = '';
 	
 	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
-	if( preg_match('`[\-]{2,6}`isU', $contents) )
+	if (preg_match('`[\-]{2,6}`isU', $contents))
 	{
 		$menu_to_make = html_entity_decode($contents);		
 		wiki_explode_menu($menu_to_make, 1); //On éclate le menu en tableaux
 		wiki_display_menu($menu_to_make, $menu, 1); //On affiche le menu
 		
 		 //On insère les paragraphes dans la page
-		for( $i = 1; $i <= 5; $i++ )
+		for ($i = 1; $i <= 5; $i++)
 		{
 			$contents = preg_replace('`[\n\r]{1}[\-]{' . ($i + 1) . '}[\s]+(.+)[\s]+[\-]{' . ($i + 1) . '}(<br \/>|[\n\r]){1}`U', "\n" . '<div class="wiki_paragraph' .  $i . '" id="$1">$1</div><br />' . "\n", "\n" . $contents . "\n");
 			$contents = preg_replace_callback('`id="(.+)">`isU', 'wiki_make_anchors', $contents);
@@ -78,26 +78,26 @@ if( !empty($contents) ) //On enregistre un article
 	//On supprime les \n rajoutés en début et en fin
 	$contents = trim($contents);
 
-	if( $preview )//Prévisualisation
+	if ($preview)//Prévisualisation
 	{
 		$Template->assign_block_vars('preview', array(
 			'CONTENTS' => second_parse(wiki_no_rewrite(stripslashes($contents))),
 			'TITLE' => stripslashes($title)
 		));
-		if( !empty($menu) )
+		if (!empty($menu))
 			$Template->assign_block_vars('preview.menu', array(
 				'MENU' => stripslashes($menu)
 			));
 	}
 	else //Sinon on poste
 	{
-		if( $id_edit > 0 )//On édite un article
+		if ($id_edit > 0)//On édite un article
 		{		
 			$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-			if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
+			if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			$previous_id_contents = $Sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
@@ -119,12 +119,12 @@ if( !empty($contents) ) //On enregistre un article
 			$redirect = $article_infos['encoded_title'];
 			redirect(url('wiki.php?title=' . $redirect, $redirect, '', '&'));
 		}
-		elseif( !empty($title) ) //On crée un article
+		elseif (!empty($title)) //On crée un article
 		{
 			//autorisations
-			if( $is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
+			if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
-			elseif( !$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
+			elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
@@ -132,7 +132,7 @@ if( !empty($contents) ) //On enregistre un article
 			
 			
 			//Si il existe: message d'erreur
-			if( $article_exists > 0 )
+			if ($article_exists > 0)
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
@@ -144,7 +144,7 @@ if( !empty($contents) ) //On enregistre un article
 				//On met à jour le numéro du contenu dans la table articles
 				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
 				$cat_update = '';
-				if( $is_cat == 1 )//si c'est une catégorie, on la crée
+				if ($is_cat == 1)//si c'est une catégorie, on la crée
 				{
 					$Sql->query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
 					//on récupère l'id de la dernière catégorie créée
@@ -171,22 +171,22 @@ $Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
 $Template->assign_vars(array(
 	'WIKI_PATH' => $Template->get_module_data_path('wiki'),
 ));
-if( $id_edit > 0 )//On édite
+if ($id_edit > 0)//On édite
 {
 	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
-	if( !((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))) )
+	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$article_contents = $Sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
-	if( !empty($article_contents['menu']) ) //On reforme les paragraphes
+	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
 		$string_regex = '-';
-		for( $i = 1; $i <= 5; $i++ )
+		for ($i = 1; $i <= 5; $i++)
 		{
 			$string_regex .= '-';
 			$contents = preg_replace('`[\r\n]+<div class="wiki_paragraph' .  $i . '" id=".+">(.+)</div><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
@@ -203,26 +203,26 @@ if( $id_edit > 0 )//On édite
 else
 {
 	//autorisations
-	if( $is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT) )
+	if ($is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_CAT))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
-	elseif( !$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE) )
+	elseif (!$is_cat && !$User->check_auth($_WIKI_CONFIG['auth'], WIKI_CREATE_ARTICLE))
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	if( !empty($encoded_title) )
+	if (!empty($encoded_title))
 		$Errorh->handler($LANG['wiki_article_does_not_exist'], E_USER_WARNING);	
 	
-	if( $id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS) ) //Catégorie préselectionnée
+	if ($id_cat > 0 && array_key_exists($id_cat, $_WIKI_CATS)) //Catégorie préselectionnée
 	{
 		$Template->assign_block_vars('create', array());
 		$cats = array();
 		$cat_list = display_cat_explorer($id_cat, $cats, 1);
 		$cats = array_reverse($cats);
-		if( array_key_exists(0, $cats) )
+		if (array_key_exists(0, $cats))
 			unset($cats[0]);
 		$nbr_cats = count($cats);
 		$current_cat = '';
 		$i = 1;
-		foreach( $cats as $key => $value )
+		foreach ($cats as $key => $value)
 		{
 			$current_cat .= $_WIKI_CATS[$value]['name'] . (($i < $nbr_cats) ? ' / ' : '');
 			$i++;
@@ -244,10 +244,10 @@ else
 		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
 		WHERE c.id_parent = 0
 		ORDER BY title ASC", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
-			if( $sub_cats_number > 0 )
+			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(
 					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
@@ -304,7 +304,7 @@ $Template->assign_vars(array(
 include_once('../wiki/post_js_tools.php');
 
 //Eventuelles erreurs
-if( !empty($errstr) )
+if (!empty($errstr))
 	$Errorh->handler($errstr, E_USER_WARNING);
 
 $Template->pparse('wiki_edit');

@@ -34,11 +34,11 @@ $idcat = retrieve(GET, 'cat', 0);
 $show_archive = retrieve(GET, 'arch', false);
 
 $is_admin = $User->check_level(ADMIN_LEVEL);
-if( empty($idnews) && empty($idcat) ) // Accueil du module de news
+if (empty($idnews) && empty($idcat)) // Accueil du module de news
 {
 	$tpl_news = new Template('news/news.tpl');
 
-	if( $CONFIG_NEWS['activ_edito'] == 1 ) //Affichage de l'édito
+	if ($CONFIG_NEWS['activ_edito'] == 1) //Affichage de l'édito
 	{
 		$tpl_news->assign_vars( array(
 			'C_NEWS_EDITO' => true,
@@ -53,12 +53,12 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	$Pagination = new Pagination();
 		
 	//Pagination activée, sinon affichage lien vers les archives.
-	if( $CONFIG_NEWS['activ_pagin'] == '1' )
+	if ($CONFIG_NEWS['activ_pagin'] == '1')
 	{
 		$show_pagin = $Pagination->display('news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
 		$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
 	}
-	elseif( $show_archive ) //Pagination des archives.
+	elseif ($show_archive) //Pagination des archives.
 	{
 		$show_pagin = $Pagination->display('news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
 		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
@@ -81,14 +81,14 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	));
 	
 	//Si les news en block sont activées on recupère la page.
-	if( $CONFIG_NEWS['type'] == 1 && !$show_archive )
+	if ($CONFIG_NEWS['type'] == 1 && !$show_archive)
 	{		
 		$tpl_news->assign_vars(array(
 			'C_NEWS_BLOCK' => true
 		));
 		
 		$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
-		if( $column )
+		if ($column)
 		{
 			$i = 0;
 			$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
@@ -112,16 +112,16 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while($row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( $is_admin )
+			if ($is_admin)
 			{
 				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
 				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
 			}
 			
 			//Séparation des news en colonnes si activé.
-			if( $column )
+			if ($column)
 			{	
 				$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
 				$i++;
@@ -148,7 +148,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		}
 		$Sql->query_close($result);	
 		
-		if( $z == 0 )
+		if ($z == 0)
 		{
 			$tpl_news->assign_vars( array(
 				'C_NEWS_NO_AVAILABLE' => true,
@@ -159,7 +159,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 	else //News en liste
 	{
 		$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
-		if( $column )
+		if ($column)
 		{
 			$i = 0;
 			$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
@@ -191,7 +191,7 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		while ($row = $Sql->fetch_assoc($result))
 		{ 
 			//Séparation des news en colonnes si activé.
-			if( $column )
+			if ($column)
 			{	
 				$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
 				$i++;
@@ -208,16 +208,16 @@ if( empty($idnews) && empty($idcat) ) // Accueil du module de news
 		$Sql->query_close($result);
 	}
 }
-elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
+elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 {
-	if( empty($news['id']) )
+	if (empty($news['id']))
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 
 	$tpl_news = new Template('news/news.tpl');
 	
 	//Initialisation
 	list($admin, $del) = array('', '');
-	if( $is_admin )
+	if ($is_admin)
 	{
 		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
@@ -255,12 +255,12 @@ elseif( !empty($idnews) ) //On affiche la news correspondant à l'id envoyé.
 	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));	
 }
-elseif( !empty($idcat) )
+elseif (!empty($idcat))
 {
 	$tpl_news = new Template('news/news_cat.tpl');
 	
 	$cat = $Sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-	if( empty($cat['id']) )
+	if (empty($cat['id']))
 		$Errorh->handler('error_unexist_cat', E_USER_REDIRECT);
 	
 	$tpl_news->assign_vars(array(
@@ -287,7 +287,7 @@ elseif( !empty($idcat) )
 }
 	
 //Affichage commentaires.
-if( isset($_GET['com']) && $idnews > 0 )
+if (isset($_GET['com']) && $idnews > 0)
 {
 	$tpl_news->assign_vars(array(
 		'COMMENTS' => display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))

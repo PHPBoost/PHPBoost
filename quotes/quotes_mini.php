@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 //Mini quotes non activée si sur la page archive quotes.
-if( strpos(SCRIPT, '/quotes/quotes.php') === false )
+if (strpos(SCRIPT, '/quotes/quotes.php') === false)
 {
 	load_module_lang('quotes');
 	$Cache->load('quotes'); //Chargement du cache
@@ -46,7 +46,7 @@ if( strpos(SCRIPT, '/quotes/quotes.php') === false )
 	$quotes_rand = $_quotes_rand_msg[array_rand($_quotes_rand_msg)];
 
 	//Pseudo.
-	if( $quotes_rand['user_id'] != -1 ) 
+	if ($quotes_rand['user_id'] != -1) 
 		$quotes_login = '<a class="small_link" href="../member/member' . url('.php?id=' . $quotes_rand['user_id'], '-' . $quotes_rand['user_id'] . '.php') . '" title="' . $quotes_rand['login'] . '"><span style="font-weight:bold;">' . wordwrap_html($quotes_rand['login'], 13) . '</span></a>';
 	else
 		$quotes_login = '<span style="font-style:italic;">' . (!empty($quotes_rand['login']) ? wordwrap_html($quotes_rand['login'], 13) : $LANG['guest']) . '</span>';

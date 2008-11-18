@@ -70,7 +70,7 @@ class ModuleInterface
         if ( isset($this->infos['name']) )
             $this->name = $this->infos['name'];
 
-        if( $error == 0 )
+        if ($error == 0)
         {
             $class = ucfirst($moduleId).'Interface';
             // Get modules methods
@@ -82,9 +82,9 @@ class ModuleInterface
             $methods_diff = array_diff($module_methods, $generics_methods);
             
             // keep only public methods from the functionnalities list
-            foreach( $methods_diff as $method )
+            foreach ($methods_diff as $method)
             {
-                if( substr($method, 0, 1) != '_' )
+                if (substr($method, 0, 1) != '_')
                     $this->functionnalities[] = $method;
             }
         }
@@ -188,7 +188,7 @@ class ModuleInterface
     function functionnality($functionnality, $args = null)
     {
         $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
-        if( $this->has_functionnality($functionnality) )
+        if ($this->has_functionnality($functionnality))
             return $this->$functionnality($args);
         $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         return false;

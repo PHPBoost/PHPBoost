@@ -33,7 +33,7 @@ require_once('../admin/admin_header.php');
 
 $page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
 
-if( !empty($_POST['submit']) )
+if (!empty($_POST['submit']))
 {
 	$FAQ_CONFIG['faq_name'] = stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq']));
 	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
@@ -50,7 +50,7 @@ if( !empty($_POST['submit']) )
 }
 
 //Questions list
-if( $page > 0 )
+if ($page > 0)
 {
 	$Template->set_filenames(array(
 		'admin_faq_questions'=> 'faq/admin_faq_questions.tpl'
@@ -67,7 +67,7 @@ if( $page > 0 )
 	
 	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."faq", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('question', array(
 			'QUESTION' => $row['question'],

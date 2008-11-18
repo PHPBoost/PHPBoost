@@ -48,15 +48,15 @@ class Feed
     // Export the feed as a string parsed by the <$tpl> template
     function export($template = false, $number = 10, $begin_at = 0)
     {
-        if( $template === false )    // A specific template is used
+        if ($template === false)    // A specific template is used
             $tpl = $this->tpl->copy();
         else
             $tpl = $template->copy();
         
         global $User, $MODULES;
-        if( $User->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE) )
+        if ($User->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
         {
-            if( !empty($this->data) )
+            if (!empty($this->data))
             {
                 $tpl->assign_vars(array(
                     'DATE' => $this->data->get_date(),
@@ -70,7 +70,7 @@ class Feed
                 ));
 
                 $items = $this->data->subitems($number, $begin_at);
-                foreach( $items as $item )
+                foreach ($items as $item)
                 {
                     $tpl->assign_block_vars('item', array(
                         'TITLE' => $item->get_title(),
@@ -91,9 +91,9 @@ class Feed
 
     function read()
     {
-        if( $this->is_in_cache() )
+        if ($this->is_in_cache())
         {
-            if( @include($this->get_cache_file_name()) )
+            if (@include($this->get_cache_file_name()))
             {
                 $this->data = $feed_object;
                 return $this->export();
@@ -129,12 +129,12 @@ class Feed
         $folder = new Folder(FEEDS_PATH, OPEN_NOW);
        
         $files = null;
-        if( $module_id !== false )  // Clear only this module cache
+        if ($module_id !== false)  // Clear only this module cache
             $files = $folder->get_files('`.+/' . $module_id . '_.*`');
         else                        // Clear the whole cache
             $files = $folder->get_files();
        
-        foreach( $files as $file )
+        foreach ($files as $file)
             $file->delete();
     }
 
@@ -149,18 +149,18 @@ class Feed
     /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
     {
         // Choose the correct template
-        if( is_object($tpl) and strtolower(get_class($tpl)) == 'template' )
+        if (is_object($tpl) and strtolower(get_class($tpl)) == 'template')
             $template = $tpl->copy();
         else
         {
             import('io/template');
             $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
-            if( gettype($tpl) == 'array' )
+            if (gettype($tpl) == 'array')
                 $template->assign_vars($tpl);
         }
        
         // Get the cache content or recreate it if not existing
-        if( ($result = @include($feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false )
+        if (($result = @include($feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php')) === false)
         {
             import('modules/modules_discovery_service');
             $modules = new ModulesDiscoveryService();
@@ -173,12 +173,12 @@ class Feed
             }
             
             $data = $module->functionnality('get_feed_data_struct', $idcat);
-            if( !$module->got_error() )
+            if (!$module->got_error())
             {
                 Feed::update_cache($module_id, $name, $data, $idcat);
             }
         }
-        if( ($result = @include($feed_data_cache_file)) === false )
+        if (($result = @include($feed_data_cache_file)) === false)
         {
             user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
             return '';

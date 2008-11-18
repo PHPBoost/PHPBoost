@@ -43,7 +43,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->_unparse_code(PICK_UP);
 		
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if( PATH_TO_ROOT != '..' )
+		if (PATH_TO_ROOT != '..')
 		{
 			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
 		}
@@ -72,9 +72,9 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = str_replace('<br />', "</p>\n<p>", '<p>' . $this->content . '</p>');
 		
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-		if( !empty($this->array_tags['html_unparse']) )
+		if (!empty($this->array_tags['html_unparse']))
 			$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['html_unparse']);
-		if( !empty($this->array_tags['code_unparse']) )
+		if (!empty($this->array_tags['code_unparse']))
 			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['code_unparse']);
 		
 		//Unparsing tags supported by TinyMCE
@@ -92,10 +92,10 @@ class TinyMCEUnparser extends ContentUnparser
 	function _unparse_smilies()
 	{
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if( !empty($_array_smiley_code) )
+		if (!empty($_array_smiley_code))
 		{
 			//Création du tableau de remplacement
-			foreach($_array_smiley_code as $code => $img)
+			foreach ($_array_smiley_code as $code => $img)
 			{	
 				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
@@ -153,7 +153,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $this->content);
 		
 		//Balise size
-		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if( $size[1] >= 36 ) $fontsize = 7;	elseif( $size[1] <= 12 ) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
+		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36 ) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
 	}
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
@@ -221,13 +221,13 @@ class TinyMCEUnparser extends ContentUnparser
 		$style = '';
 		$legend = '';
 		
-		if( !empty($matches[1]) )
+		if (!empty($matches[1]))
 			$style = " style=" . $matches[1] . '"';
 		
-		if( !empty($matches[2]) )
+		if (!empty($matches[2]))
 			$legend = ' legend="' . $matches[2] . '"';
 		
-		if( !empty($legend) || !empty($style) ) 
+		if (!empty($legend) || !empty($style)) 
 			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
 		else
 			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
@@ -239,13 +239,13 @@ class TinyMCEUnparser extends ContentUnparser
 		global $LANG;
 		
 		//On est dans la langue par défaut
-		if( $matches[1] == $LANG['wikipedia_subdomain'] )
+		if ($matches[1] == $LANG['wikipedia_subdomain'])
 			$lang = '';
 		else
 			$lang = $matches[1];
 			
 		//L'intitulé du lien est différent du nom de l'article
-		if( $matches[2] != $matches[3] )
+		if ($matches[2] != $matches[3])
 			$page_name = $matches[2];
 		else
 			$page_name = '';

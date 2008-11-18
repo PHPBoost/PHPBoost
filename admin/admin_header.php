@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) 
+if (defined('PHPBOOST') !== true) 
 	exit;
 
-if( !defined('TITLE') )
+if (!defined('TITLE'))
 	define('TITLE', $LANG['unknow']);
 	
 $Session->check(TITLE); //Vérification de la session.
@@ -102,10 +102,10 @@ $Template->assign_vars(array(
 //Listing des modules disponibles:
 $modules_config = array();
 
-foreach($MODULES as $name => $array)
+foreach ($MODULES as $name => $array)
 {	
 	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
-	if( is_array($array_info) )
+	if (is_array($array_info))
 	{
 		$array_info['module_name'] = $name;
 		$modules_config[$array_info['name']] = $array_info;
@@ -113,23 +113,23 @@ foreach($MODULES as $name => $array)
 }
 
 ksort($modules_config);
-foreach($modules_config as $module_name => $auth)
+foreach ($modules_config as $module_name => $auth)
 {
 	$name = $modules_config[$module_name]['module_name'];
-	if( is_array($modules_config[$module_name]) )
+	if (is_array($modules_config[$module_name]))
 	{	
-		if( $modules_config[$module_name]['admin'] == 1 )
+		if ($modules_config[$module_name]['admin'] == 1)
 		{
-			if( !empty($modules_config[$module_name]['admin_links']) )
+			if (!empty($modules_config[$module_name]['admin_links']))
 			{	
 				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
 				$links = '';
-				foreach($admin_links as $key => $value)
+				foreach ($admin_links as $key => $value)
 				{
-					if( is_array($value) )
+					if (is_array($value))
 					{	
 						$links .= '<li class="extend" onmouseover="show_menu(\'7' . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(../' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu7' . $name . '">';
-						foreach($value as $key2 => $value2)
+						foreach ($value as $key2 => $value2)
 							$links .= '<li><a href="../' . $name . '/' . $value2 . '" style="background-image:url(../' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
 						$links .= '</ul></li>';
 					}

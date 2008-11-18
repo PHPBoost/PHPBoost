@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 	
 load_module_lang('quotes'); //Chargement de la langue du module.

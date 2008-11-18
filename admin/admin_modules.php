@@ -33,12 +33,12 @@ $id = retrieve(GET, 'id', 0);
 $error = retrieve(GET, 'error', ''); 
 
 //Modification des propriétés des modules (activés et autorisations globales d'accès)
-if( isset($_POST['valid']) )		
+if (isset($_POST['valid']))		
 {
 	//Listage des modules
 	$result = $Sql->query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Récupération des propriétés du module courant
 		$activ = retrieve(POST, 'activ' . $row['id'], 0);
@@ -54,9 +54,9 @@ if( isset($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);	
 }
-elseif( $uninstall ) //Désinstallation du module
+elseif ($uninstall) //Désinstallation du module
 {
-	if( !empty($_POST['valid_del']) )
+	if (!empty($_POST['valid_del']))
 	{
 		$idmodule = retrieve(POST, 'idmodule', 0);
 		$drop_files = retrieve(POST, 'drop_files', false);
@@ -80,8 +80,8 @@ elseif( $uninstall ) //Désinstallation du module
 	{
 		//Récupération de l'identifiant du module
 		$idmodule = '';
-		foreach($_POST as $key => $value)
-			if( $value == $LANG['uninstall'] )
+		foreach ($_POST as $key => $value)
+			if ($value == $LANG['uninstall'])
 				$idmodule = $key;
 				
 		$Template->set_filenames(array(
@@ -145,9 +145,9 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( !empty($get_error) && isset($LANG[$get_error]) )
+	elseif (!empty($get_error) && isset($LANG[$get_error]))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//Modules installé
@@ -158,7 +158,7 @@ else
 	$result = $Sql->query_while("SELECT id, name, auth, activ 
 	FROM ".PREFIX."modules
 	ORDER BY name", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Récupération des infos de config.
 		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());		
@@ -167,7 +167,7 @@ else
 	$Sql->query_close($result);
 	
 	ksort($array_modules);
-	foreach($array_modules as $name => $array_config)
+	foreach ($array_modules as $name => $array_config)
 	{
 		$row = $array_modules[$name];
 		$info_module = $array_info_module[$array_config['name']];
@@ -198,7 +198,7 @@ else
 		$i++;
 	}
 
-	if( $i == 0 )
+	if ($i == 0)
 		$Template->assign_vars(array(
 			'C_NO_MODULE_INSTALLED' => true
 		));

@@ -32,20 +32,20 @@ require_once('../forum/forum_tools.php');
 $id_get = retrieve(GET, 'id', 0);
 
 //Existance de la catégorie.
-if( !isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0 )
+if (!isset($CAT_FORUM[$id_get]) || $CAT_FORUM[$id_get]['aprob'] == 0 || $CAT_FORUM[$id_get]['level'] == 0)
 	$Errorh->handler('e_unexist_cat', E_USER_REDIRECT);
 
-if( $User->get_attribute('user_readonly') > time() ) //Lecture seule.
+if ($User->get_attribute('user_readonly') > time()) //Lecture seule.
 	$Errorh->handler('e_readonly', E_USER_REDIRECT);
 
 //Récupération de la barre d'arborescence.
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
-foreach($CAT_FORUM as $idcat => $array_info_cat)
+foreach ($CAT_FORUM as $idcat => $array_info_cat)
 {
-	if( $CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'] )
+	if ($CAT_FORUM[$id_get]['id_left'] > $array_info_cat['id_left'] && $CAT_FORUM[$id_get]['id_right'] < $array_info_cat['id_right'] && $array_info_cat['level'] < $CAT_FORUM[$id_get]['level'])
 		$Bread_crumb->add($array_info_cat['name'], ($array_info_cat['level'] == 0) ? url('index.php?id=' . $idcat, 'cat-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php') : 'forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($array_info_cat['name']) . '.php'));
 }
-if( !empty($CAT_FORUM[$id_get]['name']) ) //Nom de la catégorie courante.
+if (!empty($CAT_FORUM[$id_get]['name'])) //Nom de la catégorie courante.
 	$Bread_crumb->add($CAT_FORUM[$id_get]['name'], 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php'));
 $Bread_crumb->add($LANG['title_post'], '');
 define('TITLE', $LANG['title_forum']);
@@ -59,7 +59,7 @@ $post_topic = retrieve(POST, 'post_topic', false);
 $preview_topic = retrieve(POST, 'prw_t', '');
 
 //Niveau d'autorisation de la catégorie
-if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
+if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -72,23 +72,23 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 	$i = 0;
 	$forum_cats = '';	
 	$Bread_crumb->remove_last();
-	foreach($Bread_crumb->array_links as $key => $array)
+	foreach ($Bread_crumb->array_links as $key => $array)
 	{
-		if( $i == 2 )
+		if ($i == 2)
 			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
-		elseif( $i > 2 )		
+		elseif ($i > 2)		
 			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 		$i++;
 	}
 		
-	if( $previs ) //Prévisualisation des messages
+	if ($previs) //Prévisualisation des messages
 	{
-		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
-		if( empty($topic['idcat']) ) //Topic inexistant.
+		if (empty($topic['idcat'])) //Topic inexistant.
 			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
 		$Template->set_filenames(array(
@@ -132,15 +132,15 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		
 		$Template->pparse('edit_msg');
 	}
-	elseif( $new_get === 'topic' && empty($error_get) ) //Nouveau topic.
+	elseif ($new_get === 'topic' && empty($error_get)) //Nouveau topic.
 	{			
-		if( $post_topic && !empty($id_get) )
+		if ($post_topic && !empty($id_get))
 		{
 			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
-			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
-			if( $is_modo )
+			if ($is_modo)
 				$type = retrieve(POST, 'type', 0); 
 			else
 				$type = 0;
@@ -148,7 +148,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			//Verrouillé?
 			$check_status = $CAT_FORUM[$id_get]['status'];
 			//Déverrouillé pour admin et modo dans tous les cas
-			if( $is_modo ) 
+			if ($is_modo) 
 				$check_status = 1;
 			
 			$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE); 
@@ -156,35 +156,35 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$subtitle = retrieve(POST, 'desc', ''); 
 		
 			//Mod anti Flood
-			if( $check_time !== false && $check_status != 0 ) 
+			if ($check_time !== false && $check_status != 0) 
 			{
 				$delay_flood = $CONFIG['delay_flood']; //On recupère le delai de flood.
 				$delay_expire = time() - $delay_flood; //On calcul la fin du delai.
 				
 				//Droit de flooder?.
-				if( $check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Flood
+				if ($check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Flood
 					redirect(url(HOST . SCRIPT . '?error=flood_t&id=' . $id_get, '', '&') . '#errorh');
 			}
 			
-			if( $check_status == 1 )
+			if ($check_status == 1)
 			{
-				if( !empty($contents) && !empty($title) ) //Insertion nouveau topic.
+				if (!empty($contents) && !empty($title)) //Insertion nouveau topic.
 				{
 					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $contents, $type); //Insertion nouveau topic.
 					
 					//Ajout d'un sondage en plus du topic.
 					$question = retrieve(POST, 'question', '');
-					if( !empty($question) )
+					if (!empty($question))
 					{
 						$poll_type = retrieve(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
 						$nbr_votes = 0;
-						for($i = 0; $i < 20; $i++)
+						for ($i = 0; $i < 20; $i++)
 						{
 							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
-							if( !empty($answer) )
+							if (!empty($answer))
 							{				
 								$answers[$i] = $answer;
 								$nbr_votes++;
@@ -201,9 +201,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			else //Verrouillé
 				redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		}
-		elseif( !empty($preview_topic) && !empty($id_get) )
+		elseif (!empty($preview_topic) && !empty($id_get))
 		{
-			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->set_filenames(array(
@@ -220,7 +220,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 			$type = retrieve(POST, 'type', 0); 
 			
-			if( !$is_modo )
+			if (!$is_modo)
 				$type = ( $type == 1 || $type == 0 ) ? $type : 0;
 			else
 			{
@@ -238,10 +238,10 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
-			for($i = 0; $i < 20; $i++)
+			for ($i = 0; $i < 20; $i++)
 			{	
 				$answer = retrieve(POST, 'a'.$i, '');
-				if( !empty($answer) )
+				if (!empty($answer))
 				{
 					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
@@ -250,7 +250,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					$nbr_poll_field++;
 				} 					
 			}
-			for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+			for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 			{	
 				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -308,7 +308,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		}
 		else
 		{
-			if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 				redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 			$Template->set_filenames(array(
@@ -317,7 +317,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 
-			if( $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
+			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
 				$Template->assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -331,7 +331,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
-			for($i = 0; $i < 5; $i++)
+			for ($i = 0; $i < 5; $i++)
 			{	
 				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -377,41 +377,41 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			$Template->pparse('forum_post');
 		}
 	}
-	elseif( $new_get === 'n_msg' && empty($error_get) ) //Nouveau message
+	elseif ($new_get === 'n_msg' && empty($error_get)) //Nouveau message
 	{
-		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		//Verrouillé?
 		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
-		if( empty($topic['idcat']) )
+		if (empty($topic['idcat']))
 			$Errorh->handler('e_topic_lock_forum', E_USER_REDIRECT);
 		
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		//Catégorie verrouillée?
 		$check_status = $CAT_FORUM[$id_get]['status'];
 		//Déverrouillé pour admin et modo dans tous les cas
-		if( $is_modo ) 
+		if ($is_modo) 
 			$check_status = 1;
 		
-		if( $check_status == 0 ) //Verrouillée
+		if ($check_status == 0) //Verrouillée
 			redirect(url(HOST . SCRIPT . '?error=c_locked&id=' . $id_get, '', '&') . '#errorh');
 		
 		//Mod anti Flood
-		if( $check_time !== false ) 
+		if ($check_time !== false) 
 		{
 			$delay_expire = time() - $CONFIG['delay_flood']; //On calcul la fin du delai.			
 			//Droit de flooder?
-			if( $check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM) ) //Ok
+			if ($check_time >= $delay_expire && !$User->check_auth($CONFIG_FORUM['auth'], FLOOD_FORUM)) //Ok
 				redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 		}
 		
 		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 		
 		//Si le topic n'est pas vérrouilé on ajoute le message.
-		if( $topic['status'] != 0 || $is_modo )
+		if ($topic['status'] != 0 || $is_modo)
 		{
-			if( !empty($contents) && !empty($idt_get) && empty($update) ) //Nouveau message.
+			if (!empty($contents) && !empty($idt_get) && empty($update)) //Nouveau message.
 			{
 				$last_page = ceil( ($topic['nbr_msg'] + 1) / $CONFIG_FORUM['pagination_msg'] );
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
@@ -428,9 +428,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		else
 			redirect(url(HOST . SCRIPT . '?error=locked&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
 	}
-	elseif( $new_get === 'msg' && empty($error_get) ) //Edition d'un message/topic.
+	elseif ($new_get === 'msg' && empty($error_get)) //Edition d'un message/topic.
 	{
-		if( !$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM) )
+		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		$id_m = retrieve(GET, 'idm', 0);		
@@ -438,40 +438,40 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 		$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		$topic = $Sql->query_array('forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		
-		if( empty($id_get) || empty($id_first) ) //Topic/message inexistant.
+		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 		
 		$is_modo = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 		
 		//Edition du topic complet
-		if( $id_first == $id_m )
+		if ($id_first == $id_m)
 		{		
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.		
 			$user_id_msg = $Sql->query("SELECT user_id FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
 			$check_auth = false;
-			if( $user_id_msg == $User->get_attribute('user_id') ) 
+			if ($user_id_msg == $User->get_attribute('user_id')) 
 				$check_auth = true;
-			elseif( $is_modo ) 
+			elseif ($is_modo) 
 				$check_auth = true;
 		
-			if( !$check_auth )
+			if (!$check_auth)
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
-			if( $update && $post_topic )
+			if ($update && $post_topic)
 			{
 				$title = retrieve(POST, 'title', '');
 				$subtitle = retrieve(POST, 'desc', '');
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				$type = $is_modo ? retrieve(POST, 'type', 0) : 0; 
 				
-				if( !empty($title) && !empty($contents) )
+				if (!empty($title) && !empty($contents))
 				{				
 					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, $contents, $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
 					$del_poll = retrieve(POST, 'del_poll', false);
 					$question = retrieve(POST, 'question', '');
-					if( !empty($question) && !$del_poll ) //Enregistrement du sondage.
+					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
 						$check_poll = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_poll WHERE idtopic = '" . $idt_get . "'",  __LINE__, __FILE__);
@@ -481,22 +481,22 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						
 						$answers = array();
 						$nbr_votes = 0;
-						for($i = 0; $i < 20; $i++)
+						for ($i = 0; $i < 20; $i++)
 						{
 							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
-							if( !empty($answer) )
+							if (!empty($answer))
 							{				
 								$answers[$i] = $answer;
 								$nbr_votes++;
 							}
 						}	
 
-						if( $check_poll == 1 ) //Mise à jour.
+						if ($check_poll == 1) //Mise à jour.
 							$Forumfct->Update_poll($idt_get, $question, $answers, $poll_type);
-						elseif( $check_poll == 0 ) //Ajout du sondage.
+						elseif ($check_poll == 0) //Ajout du sondage.
 							$Forumfct->Add_poll($idt_get, $question, $answers, $nbr_votes, $poll_type); 
 					}
-					elseif( $del_poll && $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) ) //Suppression du sondage, admin et modo seulement biensûr...
+					elseif ($del_poll && $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM)) //Suppression du sondage, admin et modo seulement biensûr...
 						$Forumfct->Del_poll($idt_get);
 					
 					//Redirection après post.
@@ -505,7 +505,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				else
 					redirect(HOST . DIR . '/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
 			}
-			elseif( !empty($preview_topic) )
+			elseif (!empty($preview_topic))
 			{
 				$Template->set_filenames(array(
 					'forum_post'=> 'forum/forum_post.tpl',
@@ -519,7 +519,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$question = retrieve(POST, 'question', '', TSTRING_UNSECURE);
 				
 				$type = retrieve(POST, 'type', 0); 
-				if( !$is_modo )
+				if (!$is_modo)
 					$type = ($type == 1 || $type == 0) ? $type : 0;
 				else
 				{
@@ -537,10 +537,10 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 					
 				//Liste des choix des sondages => 20 maxi
 				$nbr_poll_field = 0;
-				for($i = 0; $i < 20; $i++)
+				for ($i = 0; $i < 20; $i++)
 				{	
 					$answer = retrieve(POST, 'a'.$i, '');
-					if( !empty($anwser) )
+					if (!empty($anwser))
 					{
 						$Template->assign_block_vars('answers_poll', array(
 							'ID' => $i,
@@ -549,7 +549,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$nbr_poll_field++;
 					} 
 				}
-				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{	
 					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
@@ -620,10 +620,10 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 							
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
-				if( $get_error_e == 'incomplete_t' )
+				if ($get_error_e == 'incomplete_t')
 					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 
-				if( $is_modo )
+				if ($is_modo)
 				{
 					$Template->assign_vars(array(
 						'C_FORUM_POST_TYPE' => true,
@@ -645,7 +645,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$module_data_path = $Template->get_module_data_path('forum');
 				
 				//Affichage du lien pour changer le display_msg du topic et autorisation d'édition.
-				if( $CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']) )
+				if ($CONFIG_FORUM['activ_display_msg'] == 1 && ($is_modo || $User->get_attribute('user_id') == $topic['user_id']))
 				{
 					$img_display = $topic['display_msg'] ? 'msg_display2.png' : 'msg_display.png';
 					$Template->assign_vars(array(
@@ -661,9 +661,9 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				
 				//Liste des choix des sondages => 20 maxi
 				$nbr_poll_field = 0;
-				foreach($array_answer as $key => $answer)
+				foreach ($array_answer as $key => $answer)
 				{	
-					if( !empty($answer) )
+					if (!empty($answer))
 					{
 						$nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
 						$Template->assign_block_vars('answers_poll', array(
@@ -675,7 +675,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 						$nbr_poll_field++;
 					}
 				}
-				for($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
+				for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
 				{	
 					$Template->assign_block_vars('answers_poll', array(
 						'ID' => $i,
@@ -723,13 +723,13 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				));
 				
 				//Type de réponses du sondage.
-				if( isset($poll['type']) && $poll['type'] == '0' )
+				if (isset($poll['type']) && $poll['type'] == '0')
 				{
 					$Template->assign_vars(array(
 						'SELECTED_SIMPLE' => 'checked="ckecked"'
 					));
 				}
-				elseif( isset($poll['type']) && $poll['type'] == '1' )				
+				elseif (isset($poll['type']) && $poll['type'] == '1')				
 				{
 					$Template->assign_vars(array(
 						'SELECTED_MULTIPLE' => 'checked="ckecked"'
@@ -740,23 +740,23 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 		}
 		//Sinon on édite simplement le message
-		elseif( $id_m > $id_first )
+		elseif ($id_m > $id_first)
 		{
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.		
 			$user_id_msg = $Sql->query("SELECT user_id FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 			$check_auth = false;
-			if( $user_id_msg == $User->get_attribute('user_id') ) 
+			if ($user_id_msg == $User->get_attribute('user_id')) 
 				$check_auth = true;
-			elseif( $is_modo ) 
+			elseif ($is_modo) 
 				$check_auth = true;
 	
-			if( !$check_auth ) //Non autorisé!
+			if (!$check_auth) //Non autorisé!
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
-			if( $update && retrieve(POST, 'edit_msg', false) )
+			if ($update && retrieve(POST, 'edit_msg', false))
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-				if( !empty($contents) )
+				if (!empty($contents))
 				{		
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, $contents, $user_id_msg);
 					
@@ -782,7 +782,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				$contents = $Sql->query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
-				if( $get_error_e == 'incomplete' )
+				if ($get_error_e == 'incomplete')
 					$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 					
 				$Template->assign_vars(array(
@@ -810,12 +810,12 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 			}
 		}
 	}
-	elseif( !empty($error_get) && (!empty($idt_get) || !empty($id_get)) )
+	elseif (!empty($error_get) && (!empty($idt_get) || !empty($id_get)))
 	{
-		if( !empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked') )
+		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
 			$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
-			if( empty($topic['idcat']) ) //Topic inexistant.
+			if (empty($topic['idcat'])) //Topic inexistant.
 				$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 			
 			$Template->set_filenames(array(
@@ -842,7 +842,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				default:
 				$errstr = '';
 			}
-			if( !empty($errstr) )
+			if (!empty($errstr))
 				$Errorh->handler($errstr, $type);
 	
 			$Template->assign_vars(array(
@@ -866,7 +866,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'L_RESET' => $LANG['reset']
 			));
 		}
-		elseif( !empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t') )
+		elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
 		{
 			$Template->set_filenames(array(
 				'error_post'=> 'forum/forum_post.tpl',
@@ -874,7 +874,7 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				'forum_bottom'=> 'forum/forum_bottom.tpl'
 			));
 		
-			if( $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM) )
+			if ($User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM))
 			{
 				$Template->assign_vars(array(
 					'C_FORUM_POST_TYPE' => true,
@@ -908,12 +908,12 @@ if( $User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM) )
 				default:
 				$errstr = '';
 			}	
-			if( !empty($errstr) )
+			if (!empty($errstr))
 				$Errorh->handler($errstr, $type);
 				
 			//Liste des choix des sondages => 20 maxi
 			$nbr_poll_field = 0;
-			for($i = 0; $i < 5; $i++)
+			for ($i = 0; $i < 5; $i++)
 			{	
 				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,

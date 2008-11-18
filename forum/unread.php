@@ -35,12 +35,12 @@ define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_not_reads']);
 require_once('../kernel/header.php'); 
 
 //Redirection changement de catégorie.
-if( !empty($_POST['change_cat']) )
+if (!empty($_POST['change_cat']))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if( !$User->check_level(MEMBER_LEVEL) ) //Réservé aux membres.
+if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 	
-if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du membre.
+if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_forum'=> 'forum/forum_forum.tpl',
@@ -56,11 +56,11 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	
 	//Vérification des autorisations.
 	$auth_cats = '';
-	if( is_array($CAT_FORUM) )
+	if (is_array($CAT_FORUM))
 	{
-		foreach($CAT_FORUM as $idcat => $key)
+		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -81,13 +81,13 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats . "
 	ORDER BY t.last_timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On définit un array pour l'appelation correspondant au type de champ
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 			
 		$img_announce = 'new_announce'; //Forcement non lu.
-		if( $row['type'] == '0' && $row['status'] != '0' ) //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
+		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
 			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';
 			
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
@@ -95,7 +95,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
 		
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.		
-		if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
+		if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 		{
 			$last_msg_id = $row['last_view_id']; 
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
@@ -144,7 +144,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	WHERE " . $clause_cat . "t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) " . $auth_cats, __LINE__, __FILE__);
 
 	//Le membre a déjà lu tous les messages.
-	if( $nbr_topics == 0 )
+	if ($nbr_topics == 0)
 	{
 		$Template->assign_vars(array(
 			'C_NO_MSG_NOT_READ' => true,
@@ -181,7 +181,7 @@ if( $User->check_level(MEMBER_LEVEL) ) //Affichage des message()s non lu(s) du m
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/unread.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		

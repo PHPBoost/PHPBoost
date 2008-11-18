@@ -29,10 +29,10 @@ require_once('../admin/admin_begin.php');
 
 //On regarde si on doit lire un fichier
 $read_file = retrieve(GET, 'read_file', '', TSTRING_UNSECURE);
-if( !empty($read_file) && substr($read_file, -4) == '.sql' )
+if (!empty($read_file) && substr($read_file, -4) == '.sql')
 {
 	//Si le fichier existe on le lit
-	if( is_file('../cache/backup/' . $read_file) )
+	if (is_file('../cache/backup/' . $read_file))
 	{
 		header('Content-Type: text/sql');
 		header('Content-Disposition: attachment; filename="' . $read_file . '"');
@@ -50,7 +50,7 @@ $tables_backup = !empty($_POST['backup']) ? true : false;
 $table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
 
-if( $action == 'backup_table' && !empty($table) ) //Sauvegarde pour une table unique.
+if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table unique.
 {	
 	$tables_backup = true;
 	$_POST['table_' . $table] = 'on';
@@ -79,7 +79,7 @@ $Template->assign_vars(array(
 	'L_DB_TOOLS' => $LANG['db_tools']
 ));
 
-if( !empty($_GET['query']) )
+if (!empty($_GET['query']))
 {
 	$query = retrieve(POST, 'query', '', TSTRING_UNSECURE);
 
@@ -87,7 +87,7 @@ if( !empty($_GET['query']) )
 		'C_DATABASE_QUERY' => true
 	));
 
-	if( !empty($query) ) //On exécute une requête
+	if (!empty($query)) //On exécute une requête
 	{
 		$Template->assign_vars(array(
 			'C_QUERY_RESULT' => true
@@ -95,18 +95,18 @@ if( !empty($_GET['query']) )
 	
 		$lower_query = strtolower($query);		
 			
-		if( strtolower(substr($query, 0, 6)) == 'select' ) //il s'agit d'une requête de sélection
+		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
-			$result = $Sql->query_while(str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
+			$result = $Sql->query_while (str_replace('phpboost_', PREFIX, $query), __LINE__, __FILE__);			
 			$i = 1;
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$Template->assign_block_vars('line', array());
 				//Premier passage: on liste le nom des champs sélectionnés
-				if( $i == 1 )
+				if ($i == 1)
 				{
-					foreach( $row as $field_name => $field_value )
+					foreach ($row as $field_name => $field_value)
 						$Template->assign_block_vars('line.field', array(
 							'FIELD' => '<strong>' . $field_name . '</strong>',
 							'CLASS' => 'row3'
@@ -114,7 +114,7 @@ if( !empty($_GET['query']) )
 					$Template->assign_block_vars('line', array());
 				}
 				//On parse les valeurs de sortie
-				foreach( $row as $field_name => $field_value )
+				foreach ($row as $field_name => $field_value)
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => strprotect($field_value),
 					'CLASS' => 'row1',
@@ -124,7 +124,7 @@ if( !empty($_GET['query']) )
 				$i++;
 			}
 		}
-		elseif( substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table' ) //Requêtes d'autres types
+		elseif (substr($lower_query, 0, 11) == 'insert into' || substr($lower_query, 0, 6) == 'update' || substr($lower_query, 0, 11) == 'delete from' || substr($lower_query, 0, 11) == 'alter table'  || substr($lower_query, 0, 8) == 'truncate' || substr($lower_query, 0, 10) == 'drop table') //Requêtes d'autres types
 		{
 			$result = $Sql->query_inject($query, __LINE__, __FILE__);
 			$affected_rows = @$Sql->affected_rows($result, "");			
@@ -142,17 +142,17 @@ if( !empty($_GET['query']) )
 		'L_EXECUTED_QUERY' => $LANG['db_executed_query']
 	));
 }
-elseif( $action == 'restore' )
+elseif ($action == 'restore')
 {
 	//Suppression d'un fichier
-	if( !empty($_GET['del']) )
+	if (!empty($_GET['del']))
 	{
 		$file = strprotect($_GET['del']);
 		$file_path = '../cache/backup/' . $file;
 		//Si le fichier existe
-		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
+		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
-			if( @unlink($file_path) )
+			if (@unlink($file_path))
 				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=unlink_success', '', '&'));
 			else
 				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=unlink_failure', '', '&'));
@@ -163,18 +163,18 @@ elseif( $action == 'restore' )
 	
 	$post_file = isset($_FILES['file_sql']) ? $_FILES['file_sql'] : '';
 	
-	if( !empty($_GET['file']) ) //Restauration d'un fichier sur le ftp
+	if (!empty($_GET['file'])) //Restauration d'un fichier sur le ftp
 	{
 		$file = strprotect($_GET['file']);
 		$file_path = '../cache/backup/' . $file;
-		if( preg_match('`[^/]+\.sql$`', $file) && is_file($file_path) )
+		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
 			$Sql->parse($file_path);
 			$Backup->tables = array();
 			$Backup->List_table();
 			//on liste les tables
 			$tables = array();
-			foreach( $Backup->tables as $id => $infos )
+			foreach ($Backup->tables as $id => $infos)
 				$tables[] = $infos['name'];
 			$Backup->Optimize_tables($tables);
 			$Backup->Repair_tables($tables);
@@ -184,19 +184,19 @@ elseif( $action == 'restore' )
 		}
 	}
 	//Fichier envoyé par post
-	elseif( !empty($post_file) )
+	elseif (!empty($post_file))
 	{
-		if( $post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']) )
+		if ($post_file['size'] < 10485760 && preg_match('`[^/]+\.sql$`', $post_file['name']))
 		{
 			$file_path = '../cache/backup/' . $post_file['name'];
-			if( !is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path) )
+			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
 				$Sql->parse($file_path);
 				$Backup->tables = array();
 				$Backup->List_table();
 				//on liste les tables
 				$tables = array();
-				foreach( $Backup->tables as $id => $infos )
+				foreach ($Backup->tables as $id => $infos)
 					$tables[] = $infos['name'];
 				$Backup->Optimize_tables($tables);
 				$Backup->Repair_tables($tables);
@@ -204,7 +204,7 @@ elseif( $action == 'restore' )
 				
 				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=success', '', '&'));
 			}
-			elseif( is_file($file_path) )//Le fichier existe déjà, on ne peut pas le copier
+			elseif (is_file($file_path))//Le fichier existe déjà, on ne peut pas le copier
 				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=file_already_exists', '', '&'));
 			else
 				redirect(HOST . DIR . url('/admin/admin_database.php?action=restore&error=upload_failure', '', '&'));
@@ -224,7 +224,7 @@ elseif( $action == 'restore' )
 		'L_DATE' => $LANG['date']
 	));
 	
-	if( !empty($_GET['error']) )
+	if (!empty($_GET['error']))
 	{
 		switch($_GET['error'])
 		{
@@ -254,13 +254,13 @@ elseif( $action == 'restore' )
 		
 	$dir = '../cache/backup';
 	$i = 0;
-	if( is_dir($dir) )
+	if (is_dir($dir))
 	{
-	   if( $dh = opendir($dir) )
+	   if ($dh = opendir($dir))
 		{
-			while( ($file = readdir($dh)) !== false )
+			while (($file = readdir($dh)) !== false)
 			{
-				if( strpos($file, '.sql') !== false )					
+				if (strpos($file, '.sql') !== false)					
 				{
 					$Template->assign_block_vars('file', array(
 						'FILE_NAME' => $file,
@@ -274,7 +274,7 @@ elseif( $action == 'restore' )
 		}
 	}
 	
-	if( $i == 0 )
+	if ($i == 0)
 		$Template->assign_vars(array(
 			'L_INFO' => $LANG['db_empty_dir'],
 		));
@@ -286,7 +286,7 @@ elseif( $action == 'restore' )
 else
 {
 	//Sauvegarde
-	if( $action == 'backup' )
+	if ($action == 'backup')
 	{
 		//Type de sauvegarde (1 => tout, 2 => données, 3 => structure)
 		$backup_type = (!empty($_POST['backup_type']) && $_POST['backup_type'] != 'all') ? ($_POST['backup_type'] == 'data' ? 2 : 3 ) : 1;
@@ -295,19 +295,19 @@ else
 		$selected_tables = array();
 		
 		//Erreur, la liste des fichiers est vide
-		if( !isset($_POST['table_list']) || count($_POST['table_list']) == 0 )
+		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
 			redirect(HOST . DIR . url('/admin/admin_database.php?error=empty_list'));
 
-		foreach( $Backup->tables as $table => $properties )
+		foreach ($Backup->tables as $table => $properties)
 		{
-			if( in_array($properties['name'], $_POST['table_list']) )
+			if (in_array($properties['name'], $_POST['table_list']))
 				$selected_tables[] = $properties['name'];
 		}
 
-		if( count($selected_tables) == count($Backup->tables) ) //On doit tout sauvegarder
+		if (count($selected_tables) == count($Backup->tables)) //On doit tout sauvegarder
 		{
 			//Structure, données ?
-			if( $backup_type != 2 )
+			if ($backup_type != 2)
 			{
 				//Suppression éventuelle des tables
 				$Backup->drop_tables_exists();
@@ -317,7 +317,7 @@ else
 				$Backup->save .= "\n\n";
 			}
 
-			if( $backup_type != 3 )
+			if ($backup_type != 3)
 			{
 				//Insertion des données dans les tables
 				$Backup->Insert_values();
@@ -326,7 +326,7 @@ else
 		else //Sauvegarde des tables sélectionnées
 		{
 			//structure, données ?
-			if( $backup_type != 2 )
+			if ($backup_type != 2)
 			{
 				//Suppression éventuelle des tables
 				$Backup->drop_tables_exists($selected_tables);
@@ -336,7 +336,7 @@ else
 				$Backup->save .= "\n\n";
 			}
 
-			if( $backup_type != 3 )
+			if ($backup_type != 3)
 			{
 				//Insertion des données dans les tables
 				$Backup->Insert_values($selected_tables);
@@ -351,7 +351,7 @@ else
 		redirect(HOST . DIR . url('/admin/admin_database.php?error=backup_success&file=' . $file_name));
 	}
 
-	if( $tables_backup ) //Liste des tables pour les sauvegarder
+	if ($tables_backup) //Liste des tables pour les sauvegarder
 	{	
 		$Template->assign_vars(array(
 			'C_DATABASE_BACKUP' => true,
@@ -370,9 +370,9 @@ else
 		
 		$selected_tables = array();
 		$i = 0;
-		foreach( $Backup->tables as $table => $properties )
+		foreach ($Backup->tables as $table => $properties)
 		{
-			if( !empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on' )
+			if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
 				$selected_tables[] = $properties['name'];
 			
 			$Template->assign_block_vars('table_list', array(
@@ -386,15 +386,15 @@ else
 	else
 	{
 		//Réparation ou optimisation des tables
-		if( $repair || $optimize )
+		if ($repair || $optimize)
 		{
 			$selected_tables = array();
-			foreach( $Backup->tables as $table => $properties )
+			foreach ($Backup->tables as $table => $properties)
 			{
-				if( !empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on' )
+				if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
 					$selected_tables[] = $properties['name'];
 			}
-			if( $repair )
+			if ($repair)
 			{
 				$Backup->Repair_tables($selected_tables);
 				$Errorh->handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
@@ -406,9 +406,9 @@ else
 			}	
 		}
 		
-		if( !empty($_GET['error']) )
+		if (!empty($_GET['error']))
 		{
-			if( trim($_GET['error']) == 'backup_success' && !empty($_GET['file']) )
+			if (trim($_GET['error']) == 'backup_success' && !empty($_GET['file']))
 				$Errorh->handler(sprintf($LANG['db_backup_success'], $_GET['file'], $_GET['file']), E_USER_NOTICE);
 		}
 		
@@ -416,7 +416,7 @@ else
 		$i = 0;
 		
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
-		foreach( $Backup->tables as $key => $table_info )
+		foreach ($Backup->tables as $key => $table_info)
 		{	
 			$free = number_round($table_info['data_free']/1024, 1);
 			$data = number_round(($table_info['data_length'] + $table_info['index_lenght'])/1024, 1);

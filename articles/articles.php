@@ -32,12 +32,12 @@ require_once('../kernel/header.php');
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 
-if( !empty($idart) && isset($_GET['cat'])  )
+if (!empty($idart) && isset($_GET['cat']) )
 {
 	//Niveau d'autorisation de la catégorie
-	if( !isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+	if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
-	if( empty($articles['id']) )
+	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT); 
 	
 	$Template->set_filenames(array('articles'=> 'articles/articles.tpl'));		
@@ -45,7 +45,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if( $User->check_level(ADMIN_LEVEL) )
+	if ($User->check_level(ADMIN_LEVEL))
 	{
 		$java = '<script type="text/javascript">
 		<!--
@@ -70,7 +70,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	$Pagination = new Pagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
-	if( substr(trim($articles['contents']), 0, 6) != '[page]' )
+	if (substr(trim($articles['contents']), 0, 6) != '[page]')
 		$articles['contents'] = ' [page]&nbsp;[/page]' . $articles['contents'];
 	else
 		$articles['contents'] = ' ' . $articles['contents'];
@@ -83,9 +83,9 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	$page_list = '<option value="1">' . $LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
-	foreach($array_page[1] as $page_name)
+	foreach ($array_page[1] as $page_name)
 	{
-		if( $page_name != '&nbsp;' )
+		if ($page_name != '&nbsp;')
 		{
 			$selected = ($i == $page) ? 'selected="selected"' : '';
 			$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
@@ -127,7 +127,7 @@ if( !empty($idart) && isset($_GET['cat'])  )
 	));
 
 	//Affichage commentaires.
-	if( isset($_GET['com']) )
+	if (isset($_GET['com']))
 	{
 		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
@@ -142,15 +142,15 @@ else
 		'articles_cat'=> 'articles/articles_cat.tpl'
 	));	
 
-	if( $idartcat > 0 )
+	if ($idartcat > 0)
 	{
-		if( !isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0 ) 
+		if (!isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 		$cat_links = '';
-		foreach($CAT_ARTICLES as $id => $array_info_cat)
+		foreach ($CAT_ARTICLES as $id => $array_info_cat)
 		{
-			if( $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'] )
+			if ($CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'])
 				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
 		}
 		$clause_cat = " WHERE ac.id_left > '" . $CAT_ARTICLES[$idartcat]['id_left'] . "' AND ac.id_right < '" . $CAT_ARTICLES[$idartcat]['id_right'] . "' AND ac.level = '" . ($CAT_ARTICLES[$idartcat]['level'] + 1) . "' AND ac.aprob = 1";
@@ -162,7 +162,7 @@ else
 	}
 
 	//Niveau d'autorisation de la catégorie
-	if( !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) ) 
+	if (!$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES)) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
@@ -233,16 +233,16 @@ else
 
 	//Catégories non autorisées.
 	$unauth_cats_sql = array();
-	foreach($CAT_ARTICLES as $id => $key)
+	foreach ($CAT_ARTICLES as $id => $key)
 	{
-		if( !$User->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES) )
+		if (!$User->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES))
 			$unauth_cats_sql[] = $id;
 	}
 	$nbr_unauth_cats = count($unauth_cats_sql);
 	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 	##### Catégories disponibles #####	
-	if( $total_cat > 0 )
+	if ($total_cat > 0)
 	{
 		$Template->assign_vars(array(			
 			'C_ARTICLES_CAT' => true,
@@ -256,7 +256,7 @@ else
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
 		" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$Template->assign_block_vars('cat_list', array(
 				'IDCAT' => $row['id'],
@@ -272,7 +272,7 @@ else
 	}
 	
 	##### Affichage des articles #####	
-	if( $nbr_articles > 0 )
+	if ($nbr_articles > 0)
 	{
 		$Template->assign_vars(array(		
 			'C_ARTICLES_LINK' => true,
@@ -288,7 +288,7 @@ else
 		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On reccourci le lien si il est trop long.
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];

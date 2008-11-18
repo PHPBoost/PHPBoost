@@ -32,7 +32,7 @@ include_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
 //Notation.
-if( !empty($_GET['note']) && $User->check_level(MEMBER_LEVEL) ) //Utilisateur connecté.
+if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
@@ -41,13 +41,13 @@ if( !empty($_GET['note']) && $User->check_level(MEMBER_LEVEL) ) //Utilisateur co
 	include_once('../kernel/framework/content/note.class.php');
 	$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
 	
-	if( !empty($note) && !empty($id) )
+	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
 	
-if( $User->check_level(MODO_LEVEL) ) //Modo
+if ($User->check_level(MODO_LEVEL)) //Modo
 {	
-	if( !empty($_GET['rename_pics']) ) //Renomme une image.
+	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once('../gallery/gallery.class.php');
@@ -57,19 +57,19 @@ if( $User->check_level(MODO_LEVEL) ) //Modo
 		$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 		$previous_name = !empty($_POST['previous_name']) ? strprotect(utf8_decode($_POST['previous_name'])) : '';
 		
-		if( !empty($id_file) )
+		if (!empty($id_file))
 			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
 		else 
 			echo -1;
 	}
-	elseif( !empty($_GET['aprob_pics']) )
+	elseif (!empty($_GET['aprob_pics']))
 	{
 		//Initialisation  de la class de gestion des fichiers.
 		include_once('../gallery/gallery.class.php');
 		$Gallery = new Gallery;
 		
 		$id_file = retrieve(POST, 'id_file', 0);
-		if( !empty($id_file) )
+		if (!empty($id_file))
 		{
 			echo $Gallery->Aprob_pics($id_file);
 			//Régénération du cache des photos aléatoires.

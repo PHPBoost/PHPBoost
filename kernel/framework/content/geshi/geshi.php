@@ -739,7 +739,7 @@ class GeSHi {
         else {
             $this->language_data['STYLES']['KEYWORDS'][$key] .= $style;
         }
-        if(!isset($this->lexic_permissions['KEYWORDS'][$key])) {
+        if (!isset($this->lexic_permissions['KEYWORDS'][$key])) {
             $this->lexic_permissions['KEYWORDS'][$key] = true;
         }
     }
@@ -871,7 +871,7 @@ class GeSHi {
             $this->language_data['STYLES']['SYMBOLS'][$group] .= $style;
         }
         // For backward compatibility
-        if(0 == $group) {
+        if (0 == $group) {
             $this->set_brackets_style ($style, $preserve_defaults);
         }
     }
@@ -1047,7 +1047,7 @@ class GeSHi {
     function set_tab_width($width) {
         $this->tab_width = intval($width);
         //Check if it fit's the constraints:
-        if($this->tab_width < 1) {
+        if ($this->tab_width < 1) {
             //Return it to the default
             $this->tab_width = 8;
         }
@@ -1612,7 +1612,7 @@ class GeSHi {
         $sc_disallowed_before = "";
         $sc_disallowed_after = "";
 
-        if(isset($this->language_data['PARSER_CONTROL'])) {
+        if (isset($this->language_data['PARSER_CONTROL'])) {
             if (isset($this->language_data['PARSER_CONTROL']['COMMENTS'])) {
                 if (isset($this->language_data['PARSER_CONTROL']['COMMENTS']['DISALLOWED_BEFORE'])) {
                     $sc_disallowed_before = $this->language_data['PARSER_CONTROL']['COMMENTS']['DISALLOWED_BEFORE'];
@@ -1952,7 +1952,7 @@ class GeSHi {
                                         $match = (strtolower($comment_mark) == strtolower($test_str));
                                     }
                                     //This check will find special variables like $# in bash or compiler directives of Delphi beginning {$
-                                    if($match) {
+                                    if ($match) {
                                         $match = $match && (empty($sc_disallowed_before) || ((false === strpos($sc_disallowed_before, $part[$i-1])) && (0 != $i)));
                                         $match = $match && (empty($sc_disallowed_after) || ((false === strpos($sc_disallowed_after, $part[$i+1])) && ($length-1>$i)));
                                     }
@@ -2079,7 +2079,7 @@ class GeSHi {
                     // html so that < or > would be allowed in user's styles
                     // (e.g. quotes: '<' '>'; or similar)
                     if ($IN_TAG) {
-                        if('>' == $char) {
+                        if ('>' == $char) {
                             $IN_TAG = false;
                         }
                         $lines[$key] .= $char;
@@ -2107,7 +2107,7 @@ class GeSHi {
                         //  3 => '&nbsp; &nbsp;' etc etc
                         // to use instead of building a string every time
                         $tab_end_width = $tab_width - ($pos % $tab_width); //Moved out of the look as it doesn't change within the loop
-                        if(($pos%2) || 1 == $tab_end_width) {
+                        if (($pos%2) || 1 == $tab_end_width) {
                             $str .= substr($tab_string, 6, $tab_end_width);
                         } else {
                             $str .= substr($tab_string, 0, $tab_end_width+5);
@@ -2274,7 +2274,7 @@ class GeSHi {
         if (preg_match('#[a-zA-Z]{2,}#', $stuff_to_parse)) {
             $disallowed_before = "a-zA-Z0-9\$_\|\#;>|^";
             $disallowed_after = "a-zA-Z0-9_\|%\\-&";
-            if(isset($this->language_data['PARSER_CONTROL'])) {
+            if (isset($this->language_data['PARSER_CONTROL'])) {
                 if (isset($this->language_data['PARSER_CONTROL']['KEYWORDS'])) {
                     if (isset($this->language_data['PARSER_CONTROL']['KEYWORDS']['DISALLOWED_BEFORE'])) {
                         $disallowed_before = $this->language_data['PARSER_CONTROL']['KEYWORDS']['DISALLOWED_BEFORE'];
@@ -2398,22 +2398,22 @@ class GeSHi {
         }
 
         //FIX for symbol highlighting ...
-        if($this->lexic_permissions['SYMBOLS'] && !empty($this->language_data['SYMBOLS'])) {
+        if ($this->lexic_permissions['SYMBOLS'] && !empty($this->language_data['SYMBOLS'])) {
             //As this is a costy operation, we avoid doing it for multiple groups ...
             //Instead we perform it for all symbols at once.
             //
             //For this to work, we need to reorganize the data arrays.
             $symbol_data = $symbol_preg = array();
-            foreach($this->language_data['SYMBOLS'] as $key => $symbols) {
-                if(is_array($symbols)) {
-                    foreach($symbols as $sym) {
-                        if(!isset($symbol_data[$sym])) {
+            foreach ($this->language_data['SYMBOLS'] as $key => $symbols) {
+                if (is_array($symbols)) {
+                    foreach ($symbols as $sym) {
+                        if (!isset($symbol_data[$sym])) {
                             $symbol_data[GeSHi::hsc($sym)] = $key;
                             $symbol_preg[] = preg_quote(GeSHi::hsc($sym), '/');
                         }
                     }
                 } else {
-                    if(!isset($symbol_data[$symbols])) {
+                    if (!isset($symbol_data[$symbols])) {
                         $symbol_data[GeSHi::hsc($symbols)] = 0;
                         $symbol_preg[] = preg_quote(GESHI::hsc($symbols), '/');
                     }
@@ -2428,10 +2428,10 @@ class GeSHi {
             preg_match_all("/(?:" . $sym_search . ")+/", $stuff_to_parse, $matches_in_stuff, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
             //Match anything that is a highlighted block ...
             preg_match_all("/<\|(?:<DOT>|[^>])+>(?:(?!\|>).*?)\|>|<\/a>/", $stuff_to_parse, $highlighted_in_stuff, PREG_OFFSET_CAPTURE);
-            foreach($matches_in_stuff as $stuff_match_id => $stuff_match_data) {
-                foreach($highlighted_in_stuff[0] as $highlight_id => $highlight_data) {
+            foreach ($matches_in_stuff as $stuff_match_id => $stuff_match_data) {
+                foreach ($highlighted_in_stuff[0] as $highlight_id => $highlight_data) {
                     //Do a range check of the found highlight identifier and the OOP match ...
-                    if(($highlight_data[1] <= $stuff_match_data[0][1]) &&
+                    if (($highlight_data[1] <= $stuff_match_data[0][1]) &&
                         ($highlight_data[1] + strlen($highlight_data[0]) >= $stuff_match_data[0][1] + strlen($stuff_match_data[0][0])))
                     {
                         //We found a match that was already highlighted ...
@@ -2442,20 +2442,20 @@ class GeSHi {
             }
             //Rebuild the matches array to be ordered by offset ...
             $symbol_offsets = array();
-            foreach($matches_in_stuff as $stuff_match_data) {
+            foreach ($matches_in_stuff as $stuff_match_data) {
                 $symbol_offsets[$stuff_match_data[0][1]] = $stuff_match_data[0][0];
             }
             krsort($symbol_offsets);
             //Perform the actual replacements ...
-            foreach($symbol_offsets as $symbol_offset => $symbol_match) {
+            foreach ($symbol_offsets as $symbol_offset => $symbol_match) {
                 $symbol_hl = "";
                 $old_sym = -1;
                 //Split the current stuff to replace into its atomic symbols ...
                 preg_match_all("/$sym_search/", $symbol_match, $sym_match_syms, PREG_PATTERN_ORDER);
-                foreach($sym_match_syms[0] as $sym_ms) {
+                foreach ($sym_match_syms[0] as $sym_ms) {
                     //Check if consequtive symbols belong to the same group to save output ...
                     if (isset($symbol_data[$sym_ms]) && ($symbol_data[$sym_ms] != $old_sym)) {
-                        if(-1 != $old_sym) {
+                        if (-1 != $old_sym) {
                             $symbol_hl .= "|>";
                         }
                         $old_sym = $symbol_data[$sym_ms];

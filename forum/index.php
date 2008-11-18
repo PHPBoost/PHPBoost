@@ -34,7 +34,7 @@ $cat_name = !empty($CAT_FORUM[$id_get]['name']) ? $CAT_FORUM[$id_get]['name'] : 
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->add($cat_name, '');
 
-if( !empty($id_get) && !empty($CAT_FORUM[$id_get]['name']) )
+if (!empty($id_get) && !empty($CAT_FORUM[$id_get]['name']))
 	define('TITLE', $LANG['title_forum'] . ' - ' . addslashes($CAT_FORUM[$id_get]['name']));
 else
 	define('TITLE', $LANG['title_forum']);
@@ -46,7 +46,7 @@ $Template->set_filenames(array(
 
 //Affichage des sous-catégories de la catégorie.
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
-if( !empty($id_get) )
+if (!empty($id_get))
 {
 	$intervall = $Sql->query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
@@ -58,11 +58,11 @@ $module_data_path = $Template->get_module_data_path('forum');
 
 //Vérification des autorisations.
 $unauth_cats = '';
-if( is_array($AUTH_READ_FORUM) )
+if (is_array($AUTH_READ_FORUM))
 {
-	foreach($AUTH_READ_FORUM as $idcat => $auth)
+	foreach ($AUTH_READ_FORUM as $idcat => $auth)
 	{
-		if( $auth === false )
+		if ($auth === false)
 			$unauth_cats .= $idcat . ',';
 	}
 	$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
@@ -89,13 +89,13 @@ while ($row = $Sql->fetch_assoc($result))
 	$Template->assign_block_vars('forums_list', array(
 	));	
 		
-	if( $CAT_FORUM[$row['cid']]['level'] == 0 && $i++ > 0) //Fermeture de la catégorie racine.
+	if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i++ > 0) //Fermeture de la catégorie racine.
 	{
 		$Template->assign_block_vars('forums_list.endcats', array(
 		));	
 	}
 		
-	if( $row['level'] === '0' ) //Si c'est une catégorie
+	if ($row['level'] === '0') //Si c'est une catégorie
 	{
 		$Template->assign_block_vars('forums_list.cats', array(
 			'IDCAT' => $row['cid'],
@@ -106,7 +106,7 @@ while ($row = $Sql->fetch_assoc($result))
 	else //On liste les sous-catégories
 	{
 		$subforums = '';
-		if( !empty($id_get) )
+		if (!empty($id_get))
 		{
 			$Template->assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
@@ -122,15 +122,15 @@ while ($row = $Sql->fetch_assoc($result))
 				'C_FORUM_CHILD_CAT' => true,
 				'C_END_S_CATS' => false
 			));			
-			if( $CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1 )
+			if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
 			{		
-				foreach($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+				foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
 				{
-					if( $CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'] )
+					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
 					{
-						if( $CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1) ) //Sous forum distant d'un niveau au plus.
+						if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
 						{
-							if( $AUTH_READ_FORUM[$row['cid']] ) //Autorisation en lecture.
+							if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
 							{
 								$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
@@ -142,10 +142,10 @@ while ($row = $Sql->fetch_assoc($result))
 			}
 		}
 		
-		if( !empty($row['last_topic_id']) )
+		if (!empty($row['last_topic_id']))
 		{
 			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
-			if( !empty($row['last_view_id']) ) //Calcul de la page du last_view_id réalisé dans topic.php
+			if (!empty($row['last_view_id'])) //Calcul de la page du last_view_id réalisé dans topic.php
 			{
 				$last_msg_id = $row['last_view_id']; 
 				$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
@@ -174,9 +174,9 @@ while ($row = $Sql->fetch_assoc($result))
 
 		//Vérifications des topics Lu/non Lus.
 		$img_announce = 'announce';		
-		if( !$is_guest )
+		if (!$is_guest)
 		{
-			if( $row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg ) //Nouveau message (non lu).
+			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
 				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
 		}
 		$img_announce .= ($row['status'] == '0') ? '_lock' : '';
@@ -197,7 +197,7 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 }
 $Sql->query_close($result);
-if( $i > 0) //Fermeture de la catégorie racine.
+if ($i > 0) //Fermeture de la catégorie racine.
 {
 	$Template->assign_block_vars('forums_list', array(
 	));
@@ -212,7 +212,7 @@ FROM ".PREFIX."sessions s
 LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while( $row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 	{ 		

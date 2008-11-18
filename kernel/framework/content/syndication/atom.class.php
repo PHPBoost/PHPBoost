@@ -43,10 +43,10 @@ class ATOM extends Feed
 
     function load_file($url)
     {
-        if( ($file = @file_get_contents_emulate($url)) !== false )
+        if (($file = @file_get_contents_emulate($url)) !== false)
         {
             $this->data = new FeedData();
-            if( preg_match('`<entry>(.*)</entry>`is', $file) )
+            if (preg_match('`<entry>(.*)</entry>`is', $file))
             {
                 $expParsed = explode('<entry>', $file);
                 $nbItems = (count($expParsed) - 1) > $nbItems ? $nbItems : count($expParsed) - 1;
@@ -56,7 +56,7 @@ class ATOM extends Feed
                 $this->data->set_link(preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '');
                 $this->data->set_host(preg_match('`<link href="(.*)"/>`is', $expParsed[0], $var) ? $var[1] : '');
                 
-                for($i = 1; $i <= $nbItems; $i++)
+                for ($i = 1; $i <= $nbItems; $i++)
                 {
                     $item = new FeedItem();
                     

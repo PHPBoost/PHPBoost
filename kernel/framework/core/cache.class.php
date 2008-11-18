@@ -35,7 +35,7 @@ class Cache
 	//On vérifie que le répertoire cache existe et est inscriptible
     function Cache()
     {
-        if( !is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache') )
+        if (!is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache'))
         {
             global $Errorh;
 		
@@ -51,14 +51,14 @@ class Cache
 		
 		//On charge le fichier
 		$include = !$reload_cache ? !@include_once(PATH_TO_ROOT . '/cache/' . $file . '.php') : !@include(PATH_TO_ROOT . '/cache/' . $file . '.php');
-		if( $include )
+		if ($include)
 		{
-			if( in_array($file, $this->files) )
+			if (in_array($file, $this->files))
 			{
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois
-				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
+				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
 					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 			else
@@ -66,7 +66,7 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if( !@include(PATH_TO_ROOT . '/cache/' . $file . '.php') )
+				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
 					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 		}
@@ -86,16 +86,16 @@ class Cache
 		import('modules/modules_discovery_service');
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
-		if( $module->has_functionnality('get_cache') ) //Le module implémente bien la fonction.
+		if ($module->has_functionnality('get_cache')) //Le module implémente bien la fonction.
 			$this->write($module_name, $module->functionnality('get_cache'));
-		elseif( !$no_alert_on_error )
+		elseif (!$no_alert_on_error)
 			$Errorh->handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);
     }
 	
 	//Génération de tous les fichiers
     function generate_all_files()
     {
-        foreach( $this->files as $cache_file )
+        foreach ($this->files as $cache_file)
             $this->generate_file($cache_file);
 		
 		//Génération de tout les fichiers de cache des modules.
@@ -110,9 +110,9 @@ class Cache
 		import('modules/modules_discovery_service');
 		$modulesLoader = new ModulesDiscoveryService();
 		$modules = $modulesLoader->get_available_modules('get_cache');
-		foreach($modules as $module)
+		foreach ($modules as $module)
 		{
-			if( $MODULES[strtolower($module->id)]['activ'] == '1' ) //Module activé
+			if ($MODULES[strtolower($module->id)]['activ'] == '1') //Module activé
 				$this->write(strtolower($module->id), $module->functionnality('get_cache'));
 		}
 	}
@@ -120,7 +120,7 @@ class Cache
 	//Suppression d'un fichier cache
 	function delete_file($file)
 	{
-		if( @file_exists(PATH_TO_ROOT . '/cache/' . $file . '.php') )
+		if (@file_exists(PATH_TO_ROOT . '/cache/' . $file . '.php'))
 			return @unlink(PATH_TO_ROOT . '/cache/' . $file . '.php');
 		else
 			return false;
@@ -157,7 +157,7 @@ class Cache
         $cache_file->change_chmod(0666);
         
         //Il est l'heure de vérifier si la génération a fonctionné.
-        if( !file_exists($file_path) && filesize($file_path) == 0 )
+        if (!file_exists($file_path) && filesize($file_path) == 0)
             $Errorh->handler('Cache -> La génération du fichier de cache <strong>' . $file . '</strong> a échoué!', E_USER_ERROR, __LINE__, __FILE__);
     }
 	
@@ -174,7 +174,7 @@ class Cache
 		$result = $Sql->query_while("SELECT name, auth, activ
 		FROM ".PREFIX."modules
 		ORDER BY name", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$code .= '$MODULES[\'' . $row['name'] . '\'] = array(' . "\n"
 				. "'name' => " . var_export($row['name'], true) . ',' . "\n"
@@ -199,33 +199,33 @@ class Cache
 		FROM ".PREFIX."menus
 		WHERE activ = 1
 		ORDER BY location, class", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( ($row['added'] == 0 && $MODULES[$row['name']]['activ'] == 1) || $row['added'] > 0 ) //Désactive le menu si le module est désactivé.
+			if (($row['added'] == 0 && $MODULES[$row['name']]['activ'] == 1) || $row['added'] > 0) //Désactive le menu si le module est désactivé.
 				$MENUS[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
 		}
 		$Sql->query_close($result);
 		
 		$code = '';
 		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
-		foreach($array_seek as $location)
+		foreach ($array_seek as $location)
 		{
 			$code .= '$MENUS[\'' . $location . '\'] = \'\';' . "\n";
-			if( isset($MENUS[$location]) )
+			if (isset($MENUS[$location]))
 			{
-				foreach($MENUS[$location] as $location_key => $info)
+				foreach ($MENUS[$location] as $location_key => $info)
 				{
-					if( $info['added'] == '0' ) //Modules mini.
+					if ($info['added'] == '0') //Modules mini.
 					{
 						$Menu = new MenuManager(MENU_MODULE);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
-					elseif( $info['added'] == '3' ) //Menu de liens.
+					elseif ($info['added'] == '3') //Menu de liens.
 					{
 						$Menu = new MenuManager(MENU_LINKS);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
 					}
-					elseif( $info['added'] == '2' ) //Menus personnels.
+					elseif ($info['added'] == '2') //Menus personnels.
 					{
 						$Menu = new MenuManager(MENU_PERSONNAL);
 						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
@@ -252,7 +252,7 @@ class Cache
 	
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
-		foreach($CONFIG as $key => $value)
+		foreach ($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 
 		return $config;
@@ -263,17 +263,17 @@ class Cache
 	{
 		global $CONFIG, $Sql;
 		
-		if( $CONFIG['rewrite'] )
+		if ($CONFIG['rewrite'])
 		{
 			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
 			$result = $Sql->query_while("SELECT name
 			FROM ".PREFIX."modules
 			WHERE activ = 1", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Récupération des infos de config.
 				$get_info_modules = load_ini_file(PATH_TO_ROOT . '/' . $row['name'] . '/lang/', get_ulang());
-				if( !empty($get_info_modules['url_rewrite']) )
+				if (!empty($get_info_modules['url_rewrite']))
 					$htaccess_rules .= str_replace('\n', "\n", str_replace('DIR', DIR, $get_info_modules['url_rewrite'])) . "\n\n";
 			}
 			$htaccess_rules .=
@@ -287,7 +287,7 @@ class Cache
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
 			global $CONFIG_UPLOADS;
 			$this->load('uploads');
-			if( $CONFIG_UPLOADS['bandwidth_protect'] )
+			if ($CONFIG_UPLOADS['bandwidth_protect'])
 			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
 			}
@@ -295,7 +295,7 @@ class Cache
 		else
 			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
 		
-		if( !empty($CONFIG['htaccess_manual_content']) )
+		if (!empty($CONFIG['htaccess_manual_content']))
 			$htaccess_rules .= "\n\n#Manual content\n" . $CONFIG['htaccess_manual_content'];
 		
 		//Ecriture du fichier .htaccess
@@ -316,13 +316,13 @@ class Cache
 		
 		//Listing des modules disponibles:
 		$modules_config = array();
-		foreach($MODULES as $name => $array)
+		foreach ($MODULES as $name => $array)
 		{
-			if( $array['activ'] == '1' ) //module activé.
+			if ($array['activ'] == '1') //module activé.
 			{
-				if( file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $name . '/' . $name . '_mini.css') )
+				if (file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $name . '/' . $name . '_mini.css'))
 					$css .= '$CSS[] = \'/templates/' . get_utheme() . '/modules/' . $name . '/' . $name . "_mini.css';\n";
-				elseif( file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css') )
+				elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css'))
 					$css .= '$CSS[] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
 			}
 		}
@@ -339,7 +339,7 @@ class Cache
 		$result = $Sql->query_while("SELECT theme, left_column, right_column
 		FROM ".PREFIX."themes
 		WHERE activ = 1", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
@@ -364,7 +364,7 @@ class Cache
 		$result = $Sql->query_while("SELECT id, name, img, auth
 		FROM ".PREFIX."group
 		ORDER BY id", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}
@@ -383,7 +383,7 @@ class Cache
 	
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_MEMBER = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
-		foreach($CONFIG_MEMBER as $key => $value)
+		foreach ($CONFIG_MEMBER as $key => $value)
 			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
 		import('events/contribution_service');
@@ -405,7 +405,7 @@ class Cache
 		$result = $Sql->query_while("SELECT name, msg, icon
 		FROM ".PREFIX."ranks
 		ORDER BY msg DESC", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$stock_array_ranks .= "\n" . var_export($row['msg'], true) . ' => array(' . var_export($row['name'], true) . ', ' . var_export($row['icon'], true) . '),';
 		}
@@ -426,9 +426,9 @@ class Cache
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
-		foreach($CONFIG_UPLOADS as $key => $value)
+		foreach ($CONFIG_UPLOADS as $key => $value)
 		{
-			if( $key == 'auth_files' )
+			if ($key == 'auth_files')
 				$config_uploads .= '$CONFIG_UPLOADS[\'auth_files\'] = ' . var_export(unserialize($value), true) . ';' . "\n";
 			else
 				$config_uploads .= '$CONFIG_UPLOADS[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
@@ -446,7 +446,7 @@ class Cache
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
-		foreach($CONFIG_COM as $key => $value)
+		foreach ($CONFIG_COM as $key => $value)
 			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
 		return $com_config;
@@ -461,7 +461,7 @@ class Cache
 		$stock_smiley_code = '$_array_smiley_code = array(';
 		$result = $Sql->query_while("SELECT code_smiley, url_smiley
 		FROM ".PREFIX."smileys", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			$coma = ($i != 0) ? ',' : '';
 			$stock_smiley_code .=  $coma . "\n" . '' . var_export($row['code_smiley'], true) . ' => ' . var_export($row['url_smiley'], true);
@@ -487,7 +487,7 @@ class Cache
 		$code .= '$last_member_id = ' . var_export($last_member['user_id'], true). ';' . "\n";
 		
 		$array_stats_img = array('browser.png', 'os.png', 'lang.png', 'theme.png', 'sex.png');
-		foreach($array_stats_img as $key => $value)
+		foreach ($array_stats_img as $key => $value)
 			@unlink(PATH_TO_ROOT . '/cache/' . $value);
 		
 		return $code;

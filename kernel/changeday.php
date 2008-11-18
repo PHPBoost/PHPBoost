@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
-if( empty($check_update) )
+if (empty($check_update))
 {
     #######Taches de maintenance#######
     $yesterday_timestamp = time() - 86400;
@@ -61,11 +61,11 @@ if( empty($check_update) )
 	$rep = PATH_TO_ROOT . '/images/maths/';
 	$dh = @opendir($rep);
 	$week = 3600*24*7;
-	while( !is_bool($fichier = readdir($dh)) )
+	while (!is_bool($fichier = readdir($dh)))
 	{	
-		if( preg_match('`\.png$`', $fichier) )
+		if (preg_match('`\.png$`', $fichier))
 		{
-			if( (time() - filemtime($rep . $fichier)) > $week ) //Une semaine avant péremption
+			if ((time() - filemtime($rep . $fichier)) > $week) //Une semaine avant péremption
 				@unlink($rep . $fichier);
 		}
 	}	
@@ -79,28 +79,28 @@ if( empty($check_update) )
 	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('on_changeday');
-	foreach($modules as $module)
+	foreach ($modules as $module)
 	{
-		if( $MODULES[strtolower($module->id)]['activ'] == '1' ) //Module activé
+		if ($MODULES[strtolower($module->id)]['activ'] == '1') //Module activé
 			$module->functionnality('on_changeday');
 	}
 
 	//Suppression des membres ayant dépassé le délai d'unactivation max, si non activation par admin.
 	$CONFIG_MEMBER['delay_unactiv_max'] = ($CONFIG_MEMBER['delay_unactiv_max'] * 3600 * 24); //On passe en secondes.
-	if( !empty($CONFIG_MEMBER['delay_unactiv_max']) && $CONFIG_MEMBER['activ_mbr'] != 2 )
+	if (!empty($CONFIG_MEMBER['delay_unactiv_max']) && $CONFIG_MEMBER['activ_mbr'] != 2)
 		$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE timestamp < '" . (time() - $CONFIG_MEMBER['delay_unactiv_max']) . "' AND user_aprob = 0", __LINE__, __FILE__);
     
     $rep = PATH_TO_ROOT . '/cache/';
     $dh = @opendir($rep);
-    while( !is_bool($fichier = readdir($dh)) )
+    while (!is_bool($fichier = readdir($dh)))
     {
-        if( preg_match('`\.png$`', $fichier) )
+        if (preg_match('`\.png$`', $fichier))
             @unlink($rep . $fichier);
     }
     @closedir($dh); //On ferme le dossier
     
 	//Vidage des entrées des inscriptions
-	if( $CONFIG_MEMBER['verif_code'] == '1' )
+	if ($CONFIG_MEMBER['verif_code'] == '1')
 		$Sql->query_inject("DELETE FROM ".PREFIX."verif_code WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
 
     
@@ -110,7 +110,7 @@ if( empty($check_update) )
 
     //Optimisations des tables
     $array_tables = $Sql->list_tables();
-    foreach($array_tables as $key => $table)
+    foreach ($array_tables as $key => $table)
         $Sql->query_inject("OPTIMIZE TABLE ".PREFIX . $table, __LINE__, __FILE__);
 }
 ?>

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 define('WIKI_CREATE_ARTICLE', 0x01);
 define('WIKI_CREATE_CAT', 0x02);

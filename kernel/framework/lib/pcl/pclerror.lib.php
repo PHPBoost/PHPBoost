@@ -1,5 +1,5 @@
 <?php
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Error 1.0
@@ -38,7 +38,7 @@ if( defined('PHPBOOST') !== true)	exit;
 // --------------------------------------------------------------------------------
 
 // ----- Look for double include
-if( !defined("PCLERROR_LIB") )
+if (!defined("PCLERROR_LIB"))
 {
 	define( "PCLERROR_LIB", 1 );
 

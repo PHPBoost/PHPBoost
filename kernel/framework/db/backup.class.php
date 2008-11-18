@@ -45,7 +45,7 @@ class Backup
 	{
 		global $Sql;
 		
-		if( $this->tables === array() )
+		if ($this->tables === array())
 			$this->tables = $Sql->list_tables();
 	}
 	
@@ -54,9 +54,9 @@ class Backup
 	{
 		$selected_tables =  array();
 		$all_tables = count($table_list) == 0 ? true : false;
-		foreach($this->tables as $id => $properties )
+		foreach ($this->tables as $id => $properties)
 		{
-			if( in_array($properties['name'], $table_list) || $all_tables )
+			if (in_array($properties['name'], $table_list) || $all_tables)
 				$selected_tables[] = $properties['name'];
 		}
 		$this->save .= 'DROP TABLE IF EXISTS ' . implode(', ', $selected_tables) . ';' . "\n";
@@ -69,12 +69,12 @@ class Backup
 		
 		$all_tables = count($table_list) == 0 ? true : false;
 			
-		foreach($this->tables as $id => $properties)
+		foreach ($this->tables as $id => $properties)
 		{
-			if( in_array($properties['name'], $table_list) || $all_tables )
+			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $Sql->query_while('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
-				while($row = $Sql->fetch_row($result))
+				$result = $Sql->query_while ('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
+				while ($row = $Sql->fetch_row($result))
 					$this->save .=  $row[1] . ';' . "\n\n";
 				$Sql->query_close($result);
 			}		
@@ -88,12 +88,12 @@ class Backup
 		
 		$all_tables = count($tables) == 0 ? true : false;
 		
-		foreach($this->tables as $id => $table_info)
+		foreach ($this->tables as $id => $table_info)
 		{
-			if( $all_tables || in_array($table_info['name'], $tables) ) //Table demandée
+			if ($all_tables || in_array($table_info['name'], $tables)) //Table demandée
 			{
 				$rows_number = $Sql->query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
-				if( $rows_number > 0 )
+				if ($rows_number > 0)
 				{
 					$this->save .= "INSERT INTO " . $table_info['name'] . " (`";
 					$this->save .= implode('`, `', $Sql->list_fields($table_info['name']));
@@ -101,20 +101,20 @@ class Backup
 					
 					$i = 1;
 					$list_fields = $Sql->list_fields($table_info['name']);
-					$result = $Sql->query_while('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
-					while($row = $Sql->fetch_row($result))
+					$result = $Sql->query_while ('SELECT * FROM ' . $table_info['name'], __LINE__, __FILE__);			
+					while ($row = $Sql->fetch_row($result))
 					{
-						if( $i % 10 == 0 ) //Toutes les 10 entrées on reforme une requête
+						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête
 						{
 							$this->save .= ";\n";
 							$this->save .= "INSERT INTO " . $table_info['name'] . " (";
 							$this->save .= implode(', ', $list_fields);
 							$this->save .= ") VALUES ";
 						}
-						elseif( $i > 1 )
+						elseif ($i > 1)
 							$this->save .= ", ";
 						$this->save .= "(";
-						foreach( $row as $key => $value )
+						foreach ($row as $key => $value)
 							$row[$key] = '\'' . str_replace(chr(13), '\r', str_replace(chr(10), '\n', str_replace('\\', '\\\\', str_replace("'", "''", $value)))) . '\'';
 						$this->save .= implode(', ', $row) . ")";
 						$i++;
@@ -137,11 +137,11 @@ class Backup
 		$struct = substr(strstr($this->save, '('), 1);
 		$struct = substr($struct, 0, strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
-		foreach($array_struct as $field)
+		foreach ($array_struct as $field)
 		{
 			preg_match('!`([a-z_]+)`!i', $field, $match);
 			$name = isset($match[1]) ? $match[1] : '';
-			if( strpos($field, 'KEY') !== false )
+			if (strpos($field, 'KEY') !== false)
 			{	
 				$type = trim(substr($field, 0, strpos($field, 'KEY') + 3));
 				preg_match('!\(([a-z_`,]+)\)!i', $field, $match);
@@ -177,7 +177,7 @@ class Backup
 	{		
 		global $Sql;
 		
-		if( count($table_array) != 0 )
+		if (count($table_array) != 0)
 			$Sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
@@ -186,7 +186,7 @@ class Backup
 	{
 		global $Sql;
 		
-		if( count($table_array) != 0 )
+		if (count($table_array) != 0)
 			$Sql->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
@@ -195,7 +195,7 @@ class Backup
 	{
 		global $Sql;
 		
-		if( count($table_array) != 0 )
+		if (count($table_array) != 0)
 			$Sql->query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	
@@ -204,7 +204,7 @@ class Backup
 	{
 		global $Sql;
 		
-		if( count($table_array) != 0 )
+		if (count($table_array) != 0)
 			$Sql->query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
 	}
 	## Private Methods ##

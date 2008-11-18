@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 
 $Cache->load('member');
 
-if( !empty($_POST['msg_register']) ) //Message à l'inscription.
+if (!empty($_POST['msg_register'])) //Message à l'inscription.
 {
 	$config_member['activ_register'] = isset($CONFIG_MEMBER['activ_register']) ? numeric($CONFIG_MEMBER['activ_register']) : 0;
 	$config_member['activ_mbr'] = isset($CONFIG_MEMBER['activ_mbr']) ? numeric($CONFIG_MEMBER['activ_mbr']) : 0; //désactivé par defaut. 

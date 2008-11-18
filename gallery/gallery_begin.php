@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 
 load_module_lang('gallery'); //Chargement de la langue du module.
@@ -36,13 +36,13 @@ define('WRITE_CAT_GALLERY', 0x02);
 define('EDIT_CAT_GALLERY', 0x04);
 
 $g_idcat = retrieve(GET, 'cat', 0);
-if( !empty($g_idcat) )
+if (!empty($g_idcat))
 {
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_gallery'], url('gallery.php'));
-	foreach($CAT_GALLERY as $id => $array_info_cat)
+	foreach ($CAT_GALLERY as $id => $array_info_cat)
 	{
-		if( $CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'] )
+		if ($CAT_GALLERY[$g_idcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_GALLERY[$g_idcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_GALLERY[$g_idcat]['level'])
 			$Bread_crumb->add($array_info_cat['name'], 'gallery' . url('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 }

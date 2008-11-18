@@ -42,13 +42,13 @@ $tpl->assign_vars(array(
 $app = null;
 import('events/administrator_alert_service');
 
-if( ($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null )
+if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updates')) !== null)
 {
     import('core/application');
     $app = unserialize($update->get_properties());
 }
 
-if( $app !== null && $app->check_compatibility() )
+if ($app !== null && $app->check_compatibility())
 {
     $authors = $app->get_authors();
     $new_features = $app->get_new_features();
@@ -89,19 +89,19 @@ if( $app !== null && $app->check_compatibility() )
         'C_NEW' => $has_new_feature || $has_improvments || $has_bug_corrections || $has_security_improvments
     ));
     
-    foreach( $authors as $author )
+    foreach ($authors as $author)
         $tpl->assign_block_vars('authors', array('name' => $author['name'], 'email' => $author['email']));
     
-    foreach( $new_features as $new_feature )
+    foreach ($new_features as $new_feature)
         $tpl->assign_block_vars('new_features', array('description' => $new_feature));
         
-    foreach( $improvments as $improvment )
+    foreach ($improvments as $improvment)
         $tpl->assign_block_vars('improvments', array('description' => $improvment));
     
-    foreach( $bug_corrections as $bug_correction )
+    foreach ($bug_corrections as $bug_correction)
         $tpl->assign_block_vars('bugs', array('description' => $bug_correction));
     
-    foreach( $security_improvments as $security_improvment )
+    foreach ($security_improvments as $security_improvment)
         $tpl->assign_block_vars('security', array('description' => $security_improvment));
 }
 else $tpl->assign_vars((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));

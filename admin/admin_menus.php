@@ -38,11 +38,11 @@ $bottom = retrieve(GET, 'bot', '');
 $move = retrieve(GET, 'move', '');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id, activ, auth
 	FROM ".PREFIX."menus", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$auth = retrieve(POST, $row['id'] . 'auth', -1);
@@ -56,7 +56,7 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);
 }
-elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un module donné.
+elseif (isset($_GET['activ']) && !empty($id)) //Gestion de l'activation pour un module donné.
 {
 	$previous_location = $Sql->query("SELECT location FROM ".PREFIX."menus WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" . $previous_location . "' AND activ = 1", __LINE__, __FILE__);
@@ -65,7 +65,7 @@ elseif( isset($_GET['activ']) && !empty($id) ) //Gestion de l'activation pour un
 	$Cache->Generate_file('menus');
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
-elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pour un module donné.
+elseif (isset($_GET['unactiv']) && !empty($id)) //Gestion de l'inactivation pour un module donné.
 {
 	$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE ".PREFIX."menus SET class = 0, activ = 0 WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -77,7 +77,7 @@ elseif( isset($_GET['unactiv']) && !empty($id) ) //Gestion de l'inactivation pou
 	$Cache->Generate_file('css');
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
-elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module donné.
+elseif (!empty($move) && !empty($id)) //Gestion de la sécurité pour un module donné.
 {
 	$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	$max_class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" . $move . "' AND activ = 1", __LINE__, __FILE__);
@@ -90,13 +90,13 @@ elseif( !empty($move) && !empty($id) ) //Gestion de la sécurité pour un module d
 	
 	redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id);
 }
-elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
+elseif (($top || $bottom) && !empty($id)) //Monter/descendre.
 {
-	if( $top )
+	if ($top)
 	{
 		$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$top = $Sql->query("SELECT id FROM ".PREFIX."menus WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] - 1) . "' AND activ = 1", __LINE__, __FILE__);
-		if( !empty($top) )
+		if (!empty($top))
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class + 1 WHERE id = '" . $top . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -105,11 +105,11 @@ elseif( ($top || $bottom) && !empty($id) ) //Monter/descendre.
 		
 		redirect(HOST . SCRIPT . '#m' . $id);
 	}
-	elseif( $bottom )
+	elseif ($bottom)
 	{
 		$info_menu = $Sql->query_array("menus", "class", "location", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		$bottom = $Sql->query("SELECT id FROM ".PREFIX."menus WHERE location = '" . $info_menu['location'] . "' AND class = '" . ($info_menu['class'] + 1) . "' AND activ = 1", __LINE__, __FILE__);
-		if( !empty($bottom) )
+		if (!empty($bottom))
 		{
 			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class - 1 WHERE id = '" . $bottom . "'", __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE ".PREFIX."menus SET class = class + 1 WHERE id = '" . $id . "'", __LINE__, __FILE__);
@@ -130,12 +130,12 @@ else
 
 	//Récupération du class le plus grand pour chaque positionnement possible.
 	$array_max = array();
-	$result = $Sql->query_while("SELECT MAX(class) AS max, location
+	$result = $Sql->query_while ("SELECT MAX(class) AS max, location
 	FROM ".PREFIX."menus
 	GROUP BY location
 	ORDER BY class", __LINE__, __FILE__);
 	
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 		$array_max[$row['location']] = $row['max'];
 	
 	$Sql->query_close($result);
@@ -149,30 +149,30 @@ else
 	$result = $Sql->query_while("SELECT id, class, name, contents, location, activ, auth, added
 	FROM ".PREFIX."menus
 	ORDER BY class", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		if( $row['added'] == 2 ) //Menu perso dans le dossier /menus
+		if ($row['added'] == 2) //Menu perso dans le dossier /menus
 			$installed_menus_perso[] = $row['name'];
 		
-		if( $row['added'] == 0 ) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
+		if ($row['added'] == 0) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
 		{
 			$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
-			if( is_array($config) && !empty($config) )
+			if (is_array($config) && !empty($config))
 			{
 				unset($uncheck_modules[$row['name']]); //Module vérifié!
 				$array_menus = parse_ini_array($config['mini_module']);
-				foreach($array_menus as $module_path => $location)
+				foreach ($array_menus as $module_path => $location)
 				{
-					if( strpos($row['contents'], $module_path) !== false ) //Module trouvé.
+					if (strpos($row['contents'], $module_path) !== false) //Module trouvé.
 					{
 						$installed_menus[$row['name']][$module_path] = $location;
-						if( isset($uninstalled_menus[$row['name']][$module_path]) )
+						if (isset($uninstalled_menus[$row['name']][$module_path]))
 							unset($uninstalled_menus[$row['name']][$module_path]);
 					}
 					else
 					{
 						$uninstalled_menus[$row['name']][$module_path] = $location;
-						if( isset($installed_menus[$row['name']][$module_path]) )
+						if (isset($installed_menus[$row['name']][$module_path]))
 							unset($installed_menus[$row['name']][$module_path]);
 					}
 				}
@@ -182,14 +182,14 @@ else
 		}
 		
 		$block_position = $row['location'];
-		if( ($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[get_utheme()]['right_column'] && !$THEME_CONFIG[get_utheme()]['left_column']) )
+		if (($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[get_utheme()]['right_column'] && !$THEME_CONFIG[get_utheme()]['left_column']))
 			$block_position = 'main';
-		elseif( ($row['location'] == 'left' || (!$THEME_CONFIG[get_utheme()]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[get_utheme()]['left_column'] )
+		elseif (($row['location'] == 'left' || (!$THEME_CONFIG[get_utheme()]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[get_utheme()]['left_column'])
 			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		elseif( ($row['location'] == 'right' || (!$THEME_CONFIG[get_utheme()]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[get_utheme()]['right_column'] )
+		elseif (($row['location'] == 'right' || (!$THEME_CONFIG[get_utheme()]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[get_utheme()]['right_column'])
 			$block_position = 'right';
 		
-		if( $row['activ'] == 1 && !empty($block_position) )
+		if ($row['activ'] == 1 && !empty($block_position))
 		{
 			//Affichage réduit des différents modules.
 			$Template->assign_block_vars('mod_' . $block_position, array(
@@ -221,23 +221,23 @@ else
 	$Sql->query_close($result);
 	
 	//On vérifie pour les modules qui n'ont pas de menu associé, qu'ils n'en ont toujours pas.
-	foreach($uncheck_modules as $name => $auth)
+	foreach ($uncheck_modules as $name => $auth)
 	{
 		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', get_ulang());
-		if( !empty($modules_config[$name]['mini_module']) )
+		if (!empty($modules_config[$name]['mini_module']))
 		{
 			$array_menus = parse_ini_array($modules_config[$name]['mini_module']);
-			foreach($array_menus as $module_path => $location)
+			foreach ($array_menus as $module_path => $location)
 				$uninstalled_menus[$name][$module_path] = $location; //On ajoute le menu.
 		}
 	}
 	//On liste les menus non installés.
-	foreach($uninstalled_menus as $name => $array_menu)
+	foreach ($uninstalled_menus as $name => $array_menu)
 	{
 		$i = 1;
-		foreach($array_menu as $path => $location)
+		foreach ($array_menu as $path => $location)
 		{
-			if( file_exists('../' . $name . '/' . $path) ) //Fichier présent.
+			if (file_exists('../' . $name . '/' . $path)) //Fichier présent.
 			{
 				$idmodule = $name . '+' . $i++;
 				$Template->assign_block_vars('mod_main_uninstalled', array(
@@ -250,19 +250,19 @@ else
 
 	//On recupère les menus dans le dossier /menus
 	$rep = '../menus/';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$file_array = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while (!is_bool($file = readdir($dh)))
 		{
 			//Si c'est un repertoire, on affiche.
-			if( preg_match('`[a-z0-9()_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso) )
+			if (preg_match('`[a-z0-9()_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso))
 				$file_array[] = $file; //On crée un array, avec les different dossiers.
 		}
 		closedir($dh); //On ferme le dossier
 
-		foreach($file_array as $name)
+		foreach ($file_array as $name)
 		{
 			$Template->assign_block_vars('mod_main_uninstalled', array(
 				'NAME' => ucfirst(str_replace('.php', '', $name)),

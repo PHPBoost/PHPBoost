@@ -35,7 +35,7 @@ $mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNSECURE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
 
 ###########################Envoi##############################
-if( !empty($mail_valid) )
+if (!empty($mail_valid))
 {
 	$Template->set_filenames(array(
 		'contact'=> 'contact/contact.tpl'
@@ -45,12 +45,12 @@ if( !empty($mail_valid) )
 	include_once('../kernel/framework/util/captcha.class.php');
 	$Captcha = new Captcha();
 	
-	if( !$CONFIG_CONTACT['contact_verifcode'] || $Captcha->is_valid() ) //Code de vérification si activé
+	if (!$CONFIG_CONTACT['contact_verifcode'] || $Captcha->is_valid()) //Code de vérification si activé
 	{
 		include_once('../kernel/framework/io/mail.class.php');
 		$Mail = new Mail();
 
-		if( $Mail->send($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user') ) //Succès mail
+		if ($Mail->send($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user')) //Succès mail
 			redirect(HOST . SCRIPT . url('?error=success', '', '&') . '#errorh');
 		else //Erreur mail
 			redirect(HOST . SCRIPT . url('?error=error', '', '&') . '#errorh');
@@ -58,7 +58,7 @@ if( !empty($mail_valid) )
 	else //Champs incomplet!
 		redirect(HOST . SCRIPT . url('?error=verif', '', '&') . '#errorh');
 }
-elseif( !empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) ) ) //Champs incomplet!
+elseif (!empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) )) //Champs incomplet!
 	redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 else
 {	
@@ -69,19 +69,19 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif( $get_error == 'verif' )
+	elseif ($get_error == 'verif')
 		$Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
-	elseif( $get_error == 'success' )//Message de succès.
+	elseif ($get_error == 'success')//Message de succès.
 		$Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
-	elseif( $get_error == 'error' )//Message de succès.
+	elseif ($get_error == 'error')//Message de succès.
 		$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
 		
 	//Code de vérification, anti-bots.
 	include_once('../kernel/framework/util/captcha.class.php');
 	$Captcha = new Captcha();
-	if( $Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'] )
+	if ($Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 	{
 		$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
 		$Template->assign_vars(array(

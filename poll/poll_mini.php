@@ -25,10 +25,10 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
-if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false )
+if (!empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false)
 {
 	//Chargement de la langue du module.
 	load_module_lang('poll');
@@ -41,7 +41,7 @@ if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() &&
 	#####################Résultats######################
 	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
-	if( in_array($poll_mini['id'], $array_cookie) )
+	if (in_array($poll_mini['id'], $array_cookie))
 	{
 		$Template->assign_vars(array(
 			'THEME' => get_utheme(),
@@ -55,7 +55,7 @@ if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() &&
 			'VOTES' => $poll_mini['total'],
 		));
 		
-		foreach($poll_mini['votes'] as $answer => $width)
+		foreach ($poll_mini['votes'] as $answer => $width)
 		{
 			$Template->assign_block_vars('result.answers', array(
 				'ANSWERS' => $answer,
@@ -80,9 +80,9 @@ if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() &&
 		));		
 			
 		$z = 0;
-		if( $poll_mini['type'] == '1' )
+		if ($poll_mini['type'] == '1')
 		{			
-			foreach($poll_mini['votes'] as $answer => $width)
+			foreach ($poll_mini['votes'] as $answer => $width)
 			{						
 				$Template->assign_block_vars('question.radio', array(
 					'NAME' => $z,
@@ -92,9 +92,9 @@ if( !empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() &&
 				$z++;
 			}
 		}	
-		elseif( $poll_mini['type'] == '0' ) 
+		elseif ($poll_mini['type'] == '0') 
 		{
-			foreach($poll_mini['votes'] as $answer => $width)
+			foreach ($poll_mini['votes'] as $answer => $width)
 			{						
 				$Template->assign_block_vars('question.checkbox', array(
 					'NAME' => $z,

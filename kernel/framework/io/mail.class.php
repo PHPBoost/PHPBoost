@@ -40,10 +40,10 @@ class Mail
 		$this->from = $mail_from;
 		$this->to = $mail_to;
 		
-		if( $mail_sender == 'admin' )
+		if ($mail_sender == 'admin')
 		{
 			$this->_clean($mail_objet, $mail_contents);
-			if( empty($mail_header) )
+			if (empty($mail_header))
 				$this->_send_headers();
 			else
 				$this->header = $mail_header;
@@ -53,10 +53,10 @@ class Mail
 		}
 		else
 		{
-			if( $this->check_validity($this->from) )
+			if ($this->check_validity($this->from))
 			{
 				$this->_clean($mail_objet, $mail_contents);
-				if( empty($mail_header) )
+				if (empty($mail_header))
 					$this->_send_headers();
 				else
 					$this->header = $mail_header;
@@ -77,7 +77,7 @@ class Mail
         $array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
         $this->from = $array_mail[0];
         
-        if( !preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from) )
+        if (!preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from))
         {
             $Errorh->handler('e_mail_format', E_USER_REDIRECT);
             return false;
@@ -92,7 +92,7 @@ class Mail
 	//Nettoie les entrées.
 	function _clean($mail_objet, $mail_contents)
 	{
-		if( get_magic_quotes_gpc() )
+		if (get_magic_quotes_gpc())
 		{
 			$this->objet = stripslashes($mail_objet);
 			$this->contents = stripslashes($mail_contents);
@@ -113,9 +113,9 @@ class Mail
 		$this->header .= 'From: "' . (($this->sender == 'admin') ? $LANG['admin'] : $LANG['user']) . ' ' . HOST . '" <' . $this->from . ">\r\n"; 
 
 		$nbr_cc = count($array_cc);
-		if( $nbr_cc > 1 ) 
+		if ($nbr_cc > 1) 
 		{	
-			for($i = 0; $i < $nbr_cc; $i++) 
+			for ($i = 0; $i < $nbr_cc; $i++) 
 				$this->header .= 'cc: ' . $array_cc[$i] . "\r\n";			
 		}
 	}

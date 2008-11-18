@@ -32,33 +32,33 @@ $uninstall = isset($_GET['uninstall']) ? true : false;
 $edit = isset($_GET['edit']) ? true : false;	
 $id = retrieve(GET, 'id', 0);
 
-if( isset($_GET['activ']) && !empty($id) ) //Aprobation du thème.
+if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
 	$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif( isset($_GET['secure']) && !empty($id) ) //Niveau d'autorisation du thème.
+elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
 	$Sql->query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif( isset($_POST['valid']) ) //Modification de tout les thèmes.	
+elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM ".PREFIX."themes
 	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
-		if( $row['activ'] != $activ || $row['secure'] != $secure )
+		if ($row['activ'] != $activ || $row['secure'] != $secure)
 			$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);	
 }
-elseif( $edit && !empty($id) ) //Edition
+elseif ($edit && !empty($id)) //Edition
 {
-	if( isset($_POST['valid_edit']) ) //Modication de la configuration du thème.
+	if (isset($_POST['valid_edit'])) //Modication de la configuration du thème.
 	{
 		$left_column = !empty($_POST['left_column']) ? 1 : 0; 
 		$right_column = !empty($_POST['right_column']) ? 1 : 0; 
@@ -100,15 +100,15 @@ elseif( $edit && !empty($id) ) //Edition
 		$Template->pparse('admin_themes_management'); 
 	}
 }
-elseif( $uninstall ) //Désinstallation.
+elseif ($uninstall) //Désinstallation.
 {
-	if( !empty($_POST['valid_del']) )
+	if (!empty($_POST['valid_del']))
 	{		
 		$idtheme = retrieve(POST, 'idtheme', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
 		$previous_theme = $Sql->query("SELECT theme FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
-		if( $previous_theme != $CONFIG['theme'] && !empty($idtheme) )
+		if ($previous_theme != $CONFIG['theme'] && !empty($idtheme))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
 			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . $CONFIG['theme'] . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
@@ -120,9 +120,9 @@ elseif( $uninstall ) //Désinstallation.
 			redirect(HOST . DIR . '/admin/admin_themes.php?error=incomplete#errorh');
 		
 		//Suppression des fichiers du module
-		if( $drop_files && !empty($previous_theme) )
+		if ($drop_files && !empty($previous_theme))
 		{
-			if( !delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme) )
+			if (!delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme))
 				$error = 'files_del_failed';
 		}
 	
@@ -133,8 +133,8 @@ elseif( $uninstall ) //Désinstallation.
 	{
 		//Récupération de l'identifiant du thème.
 		$idtheme = '';
-		foreach($_POST as $key => $value)
-			if( $value == $LANG['uninstall'] )
+		foreach ($_POST as $key => $value)
+			if ($value == $LANG['uninstall'])
 				$idtheme = $key;
 				
 		$Template->set_filenames(array(
@@ -194,23 +194,23 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
-	elseif( !empty($get_error) && isset($LANG[$get_error]) )
+	elseif (!empty($get_error) && isset($LANG[$get_error]))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	 
 	
 	//On recupère les dossier des thèmes contenu dans le dossier templates	
 	$z = 0;
 	$rep = '../templates/';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$dir_array = array();
 		$dh = @opendir( $rep);
-		while( !is_bool($dir = readdir($dh)) )
+		while (!is_bool($dir = readdir($dh)))
 		{	
 			//Si c'est un repertoire, on affiche.
-			if( strpos($dir, '.') === false )
+			if (strpos($dir, '.') === false)
 				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		closedir($dh); //On ferme le dossier		
@@ -218,21 +218,21 @@ else
 		$themes_bdd = array();
 		$result = $Sql->query_while("SELECT id, theme, activ, secure 
 		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if( array_search($row['theme'], $dir_array) !== false)
+			if (array_search($row['theme'], $dir_array) !== false)
 				$themes_bdd[] = array('id' => $row['id'], 'name' => $row['theme'], 'activ' => $row['activ'], 'secure' => $row['secure']); 		}
 		$Sql->query_close($result);
 		
 		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
+		foreach ($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
 		{
 			//On selectionne le theme suivant les valeurs du tableau. 
 			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', get_ulang());
 			
 			$options = '';
-			for($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
+			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 			{
 				$selected = ($i == $theme['secure']) ? 'selected="selected"' : '';
 				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
@@ -263,7 +263,7 @@ else
 		}
 	}	
 	
-	if( $z != 0 )
+	if ($z != 0)
 		$Template->assign_vars(array(		
 			'C_THEME_PRESENT' => true
 		));

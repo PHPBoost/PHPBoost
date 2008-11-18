@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)	
 	exit;
 
 ############### Header du forum ################
@@ -36,18 +36,18 @@ $Template->set_filenames(array(
 
 $is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
 $nbr_msg_not_read = 0;
-if( !$is_guest )
+if (!$is_guest)
 {
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
 	
 	//Vérification des autorisations.
 	$unauth_cats = '';
-	if( is_array($AUTH_READ_FORUM) )
+	if (is_array($AUTH_READ_FORUM))
 	{
-		foreach($AUTH_READ_FORUM as $idcat => $auth)
+		foreach ($AUTH_READ_FORUM as $idcat => $auth)
 		{
-			if( !$auth )
+			if (!$auth)
 				$unauth_cats .= $idcat . ',';
 		}
 		$unauth_cats = !empty($unauth_cats) ? " AND c.id NOT IN (" . trim($unauth_cats, ',') . ")" : '';
@@ -55,7 +55,7 @@ if( !$is_guest )
 
 	//Si on est sur un topic, on le supprime dans la requête => si ce topic n'était pas lu il ne sera plus dans la liste car désormais lu.
 	$clause_topic = '';
-	if( strpos(SCRIPT, '/forum/topic.php') !== false )
+	if (strpos(SCRIPT, '/forum/topic.php') !== false)
 	{
 		$id_get = retrieve(GET, 'id', 0);
 		$clause_topic = " AND t.id != '" . $id_get . "'";
@@ -70,7 +70,7 @@ if( !$is_guest )
 }
 
 //Formulaire de connexion sur le forum.
-if( $CONFIG_FORUM['display_connexion'] )
+if ($CONFIG_FORUM['display_connexion'])
 {
 	$Template->assign_vars(array(	
 		'C_FORUM_CONNEXION' => true,

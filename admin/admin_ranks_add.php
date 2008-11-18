@@ -31,13 +31,13 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Ajout du rang.
-if( !empty($_POST['add']) )
+if (!empty($_POST['add']))
 {
 	$name = retrieve(POST, 'name', '');
 	$msg = retrieve(POST, 'msg', 0);    
 	$icon = retrieve(POST, 'icon', ''); 
 	
-	if( !empty($name) && $msg >= 0 )
+	if (!empty($name) && $msg >= 0)
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		$Sql->query_inject("INSERT INTO ".PREFIX."ranks (name,msg,icon,special) 
@@ -51,21 +51,21 @@ if( !empty($_POST['add']) )
 	else
 		redirect(HOST . DIR . '/admin/admin_ranks_add.php?error=incomplete#errorh');
 }
-elseif( !empty($_FILES['upload_ranks']['name']) ) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_ranks']['name'])) //Upload et décompression de l'archive Zip/Tar
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
 	$dir = '/images/ranks/';
-	if( !is_writable($dir) )
+	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
 	@clearstatcache();
 	$error = '';
-	if( is_writable($dir) ) //Dossier en écriture, upload possible
+	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
 		include_once('../kernel/framework/io/upload.class.php');
 		$Upload = new Upload($dir);
-		if( !$Upload->file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i') )
+		if (!$Upload->file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;
 	}
 	else
@@ -83,9 +83,9 @@ else //Sinon on rempli le formulaire
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable');
-	if( in_array($get_error, $array_error) )
+	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	//On recupère les images des groupes
@@ -94,13 +94,13 @@ else //Sinon on rempli le formulaire
 	$rep = '../templates/' . get_utheme()  . '/images/ranks';
 	$j = 0;
 	$array_files = array();
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$array_file = array();
 		$dh = @opendir($rep);
-		while( !is_bool($file = readdir($dh)) )
+		while (!is_bool($file = readdir($dh)))
 		{	
-			if( $j > 1 && $file != 'index.php' && $file != 'Thumbs.db' )
+			if ($j > 1 && $file != 'index.php' && $file != 'Thumbs.db')
 				$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
 			$j++;
 		}	

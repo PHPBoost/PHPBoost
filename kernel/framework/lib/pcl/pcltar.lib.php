@@ -1,5 +1,5 @@
 <?php
-if( defined('PHPBOOST') !== true)	exit;
+if (defined('PHPBOOST') !== true)	exit;
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Tar Module 1.3.1

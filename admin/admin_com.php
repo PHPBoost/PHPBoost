@@ -44,11 +44,11 @@ $Cache->load('com');
 
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
-$result = $Sql->query_while("SELECT script, COUNT(*) as total
+$result = $Sql->query_while ("SELECT script, COUNT(*) as total
 FROM ".PREFIX."com 
 GROUP BY script", __LINE__, __FILE__);
 
-while($row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 	$array_com[$row['script']] = $row['total'];
 
 $Sql->query_close($result);
@@ -75,20 +75,20 @@ $Template->assign_vars(array(
 //Modules disponibles
 $root = '../';
 $i = 0;
-if( is_dir($root) ) //Si le dossier existe
+if (is_dir($root)) //Si le dossier existe
 {
 	$dh = @opendir($root);
-	while( !is_bool($dir = readdir($dh)) )
+	while (!is_bool($dir = readdir($dh)))
 	{	
 		//Si c'est un repertoire, on affiche.
-		if( strpos($dir, '.') === false )
+		if (strpos($dir, '.') === false)
 		{
 			//Désormais on vérifie que le fichier de configuration est présent.
-			if( is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') )
+			if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
 			{
 				//Récupération des infos de config.
 				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-				if( isset($info_module['info']) && !empty($info_module['com']) )
+				if (isset($info_module['info']) && !empty($info_module['com']))
 				{
 					$Template->assign_block_vars('modules_com', array(
 						'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
@@ -112,13 +112,13 @@ LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" 
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
 " . $Sql->limit($Pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
-while($row = $Sql->fetch_assoc($result) )
+while ($row = $Sql->fetch_assoc($result))
 {
 	$row['user_id'] = (int)$row['user_id'];
 	$is_guest = ($row['user_id'] === -1);
 
 	//Pseudo.
-	if( !$is_guest ) 
+	if (!$is_guest) 
 		$com_pseudo = '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '"><span style="font-weight: bold;">' . wordwrap_html($row['mlogin'], 13) . '</span></a>';
 	else
 		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
@@ -126,13 +126,13 @@ while($row = $Sql->fetch_assoc($result) )
 	//Rang de l'utilisateur.
 	$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
 	$user_group = $user_rank;
-	if( $row['level'] === '2' ) //Rang spécial (admins).  
+	if ($row['level'] === '2') //Rang spécial (admins).  
 	{
 		$user_rank = $_array_rank[-2][0];
 		$user_group = $user_rank;
 		$user_rank_icon = $_array_rank[-2][1];
 	}
-	elseif( $row['level'] === '1' ) //Rang spécial (modos).  
+	elseif ($row['level'] === '1') //Rang spécial (modos).  
 	{
 		$user_rank = $_array_rank[-1][0];
 		$user_group = $user_rank;
@@ -140,9 +140,9 @@ while($row = $Sql->fetch_assoc($result) )
 	}
 	else
 	{
-		foreach($_array_rank as $msg => $ranks_info)
+		foreach ($_array_rank as $msg => $ranks_info)
 		{
-			if( $msg >= 0 && $msg <= $row['user_msg'] )
+			if ($msg >= 0 && $msg <= $row['user_msg'])
 			{ 
 				$user_rank = $ranks_info[0];
 				$user_rank_icon = $ranks_info[1];
@@ -155,13 +155,13 @@ while($row = $Sql->fetch_assoc($result) )
 	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 				
 	//Affichage des groupes du membre.		
-	if( !empty($row['user_groups']) && $_array_groups_auth ) 
+	if (!empty($row['user_groups']) && $_array_groups_auth) 
 	{	
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['user_groups']);
-		foreach($_array_groups_auth as $idgroup => $array_group_info)
+		foreach ($_array_groups_auth as $idgroup => $array_group_info)
 		{
-			if( is_numeric(array_search($idgroup, $array_user_groups)) )
+			if (is_numeric(array_search($idgroup, $array_user_groups)))
 				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
 		}
 	}
@@ -172,23 +172,23 @@ while($row = $Sql->fetch_assoc($result) )
 	$user_online = !empty($row['connect']) ? 'online' : 'offline';
 	
 	//Avatar			
-	if( empty($row['user_avatar']) ) 
+	if (empty($row['user_avatar'])) 
 		$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
 	else
 		$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 	
 	//Affichage du sexe et du statut (connecté/déconnecté).	
 	$user_sex = '';
-	if( $row['user_sex'] == 1 )	
+	if ($row['user_sex'] == 1)	
 		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';	
-	elseif( $row['user_sex'] == 2 ) 
+	elseif ($row['user_sex'] == 2) 
 		$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
 			
 	//Nombre de message.
 	$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
 	
 	//Localisation.
-	if( !empty($row['user_local']) ) 
+	if (!empty($row['user_local'])) 
 	{
 		$user_local = $LANG['place'] . ': ' . $row['user_local'];
 		$user_local = $user_local > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';			

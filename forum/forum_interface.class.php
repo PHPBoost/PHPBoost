@@ -59,9 +59,9 @@ class ForumInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
 		FROM ".PREFIX."forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
-		while( $row = $Sql->fetch_assoc($result) )
+		while ($row = $Sql->fetch_assoc($result))
 		{
-			if( empty($row['auth']) )
+			if (empty($row['auth']))
 				$row['auth'] = serialize(array());
 				
 			$forum_cats .= '$CAT_FORUM[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
@@ -121,9 +121,9 @@ class ForumInterface extends ModuleInterface
         $Tpl = new Template('forum/forum_search_form.tpl');
         
         //Autorisation sur le module.
-        if( isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1 )
+        if (isset($MODULES['forum']) && $MODULES['forum']['activ'] == 1)
         {
-            if( !$User->check_auth($MODULES['forum']['auth'], ACCESS_MODULE) ) //Accès non autorisé!
+            if (!$User->check_auth($MODULES['forum']['auth'], ACCESS_MODULE)) //Accès non autorisé!
                 $Errorh->handler('e_auth', E_USER_REDIRECT);
         }
         
@@ -164,11 +164,11 @@ class ForumInterface extends ModuleInterface
             'L_ALL_CATS' => $LANG['all'],
             'IS_ALL_CATS_SELECTED' => ($idcat == '-1') ? ' selected="selected"' : '',
         ));
-        if( is_array($CAT_FORUM) )
+        if (is_array($CAT_FORUM))
         {
-            foreach($CAT_FORUM as $id => $key)
+            foreach ($CAT_FORUM as $id => $key)
             {
-                if( $User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if ($User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
                 {
                     $Tpl->assign_block_vars('cats', array(
                         'MARGIN' => ($key['level'] > 0) ? str_repeat('----------', $key['level']) : '----',
@@ -207,17 +207,17 @@ class ForumInterface extends ModuleInterface
         
         require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
         $auth_cats = '';
-        if( is_array($CAT_FORUM) )
+        if (is_array($CAT_FORUM))
         {
-            foreach($CAT_FORUM as $id => $key)
+            foreach ($CAT_FORUM as $id => $key)
             {
-                if( !$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM) )
+                if (!$User->check_auth($CAT_FORUM[$id]['auth'], READ_CAT_FORUM))
                     $auth_cats .= $id.',';
             }
         }
         $auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 
-        if( $where == 'all' )         // All
+        if ($where == 'all')         // All
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
@@ -232,7 +232,7 @@ class ForumInterface extends ModuleInterface
             GROUP BY t.id
             ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
         
-        if( $where == 'contents' )    // Contents
+        if ($where == 'contents')    // Contents
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
@@ -279,13 +279,13 @@ class ForumInterface extends ModuleInterface
             'L_TOPIC' => $LANG['topic']
         ));
         
-        if( $this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST) )
+        if ($this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST))
         {
             $ids = array();
             $results =& $args['results'];
             $newResults = array();
             $nbResults = count($results);
-            for( $i = 0; $i < $nbResults; $i++ )
+            for ($i = 0; $i < $nbResults; $i++)
                 $newResults[$results[$i]['id_content']] =& $results[$i];
             
             $results =& $newResults;
@@ -307,8 +307,8 @@ class ForumInterface extends ModuleInterface
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             WHERE msg.id IN (".implode(',', array_keys($results)).")
             GROUP BY t.id";
-            $requestResults = $Sql->query_while($request, __LINE__, __FILE__);
-            while( $row = $Sql->fetch_assoc($requestResults) )
+            $requestResults = $Sql->query_while ($request, __LINE__, __FILE__);
+            while ($row = $Sql->fetch_assoc($requestResults))
             {
                 $results[$row['msg_id']] = $row;
             }
@@ -374,7 +374,7 @@ class ForumInterface extends ModuleInterface
 		WHERE c.level != 0 AND c.aprob = 1 " . $req_cats . "
 		ORDER BY t.last_timestamp DESC
 		" . $Sql->limit(0, 2 * $CONFIG_FORUM['pagination_msg']);
-        $result = $Sql->query_while($req, __LINE__, __FILE__);
+        $result = $Sql->query_while ($req, __LINE__, __FILE__);
         // Generation of the feed's items
         while ($row = $Sql->fetch_assoc($result))
         {

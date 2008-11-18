@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( !defined('PATH_TO_ROOT') ) //Chemin vers la racine.
+if (!defined('PATH_TO_ROOT')) //Chemin vers la racine.
     define('PATH_TO_ROOT', '..');
 
 header('Content-type: text/html; charset=iso-8859-1');
@@ -75,7 +75,7 @@ define('HOST', $CONFIG['server_name']);
 $Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
 
 //Activation de la bufférisation de sortie
-if( $CONFIG['ob_gzhandler'] == 1 )
+if ($CONFIG['ob_gzhandler'] == 1)
 	ob_start('ob_gzhandler'); //Activation de la compression de données
 else
 	ob_start();
@@ -87,7 +87,7 @@ $Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de ges
 $User = new User($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
 
 //Définition de la constante de transmission des infos de session.
-if( $Session->session_mod )
+if ($Session->session_mod)
 {
 	define('SID', '?sid=' . $User->get_attribute('session_id') . '&amp;suid=' . $User->get_attribute('user_id'));
 	define('SID2', '?sid=' . $User->get_attribute('session_id') . '&suid=' . $User->get_attribute('user_id'));
@@ -110,7 +110,7 @@ require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion
 //Chargement du cache du jour actuel.
 $Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
-if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day) ) 
+if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day)) 
 {
     //Inscription du nouveau jour dans le fichier en cache.
     $Cache->Generate_file('day');
@@ -123,15 +123,15 @@ if( gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 
 //Autorisation sur le module chargé
 define('MODULE_NAME', get_module_name());
-if( isset($MODULES[MODULE_NAME])  )
+if (isset($MODULES[MODULE_NAME]) )
 {
-	if( $MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE) ) //Accès non autorisé !
+	if ($MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'kernel' ) //Empêche l'exécution d'un module non installé.
+elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'kernel') //Empêche l'exécution d'un module non installé.
 {
 	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', get_ulang());	
-	if( !empty($array_info_module['name']) ) //Module présent, et non installé.
+	if (!empty($array_info_module['name'])) //Module présent, et non installé.
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
 

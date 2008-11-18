@@ -29,7 +29,7 @@ include_once('../kernel/begin.php');
 define('TITLE', $LANG['title_maintain']);
 include_once('../kernel/header_no_display.php');
 
-if( $CONFIG['maintain'] <= time() )
+if ($CONFIG['maintain'] <= time())
 {	
 	header('location: ' . get_start_page());
 	exit;
@@ -44,14 +44,14 @@ $array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 =>
 $array_delay = array(0 => $LANG['unspecified'], 1 => '', 2 => '1 ' . $LANG['minute'], 3 => '5 ' . $LANG['minutes'], 4 => '15 ' . $LANG['minutes'], 5 => '30 ' . $LANG['minutes'], 6 => '1 ' . $LANG['hour'], 7 => '2 ' . $LANG['hours'], 8 => '1 ' . $LANG['day'], 9 => '2 ' . $LANG['days'], 10 => '1 ' . $LANG['week']);
 
 //Retourne le délai de maintenance le plus proche. 
-if( $CONFIG['maintain'] != -1 )
+if ($CONFIG['maintain'] != -1)
 {
 	$key = 0;
 	$current_time = time();
-	for($i = 10; $i >= 0; $i--)
+	for ($i = 10; $i >= 0; $i--)
 	{					
 		$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
-		if( $delay >= $array_time[$i] ) 
+		if ($delay >= $array_time[$i]) 
 		{	
 			$key = $i;
 			break;
@@ -88,7 +88,7 @@ $Template->assign_vars(array(
 	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right']
 ));
 
-if( $CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1 )
+if ($CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1)
 {
 	$Template->assign_vars(array(
 		'C_DISPLAY_DELAY' => true,

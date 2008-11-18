@@ -49,37 +49,37 @@ class Updates
     
     function _load_apps($checks = CHECK_ALL_UPDATES)
     {
-        if( phpversion() > PHP_MIN_VERSION_UPDATES )
+        if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
             global $CONFIG;
             
-            if( $checks & CHECK_KERNEL )
+            if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
                 $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
-            if( $checks & CHECK_KERNEL )
+            if ($checks & CHECK_KERNEL)
             {
                 global $MODULES;
                 // Add Modules
                 $kModules = array_keys($MODULES);
-                foreach( $kModules as $module )
+                foreach ($kModules as $module)
                 {
                     $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
-                    if( !empty($infos['repository']) )
+                    if (!empty($infos['repository']))
                         $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
                 }
             }
             
-            if( $checks & CHECK_THEMES )
+            if ($checks & CHECK_THEMES)
             {   
                 global $THEME_CONFIG;
                 // Add Themes
                 $kThemes = array_keys($THEME_CONFIG);
-                foreach( $kThemes as $theme )
+                foreach ($kThemes as $theme)
                 {
                     $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
-                    if( !empty($infos['repository']) )
+                    if (!empty($infos['repository']))
                         $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
                 }
             }
@@ -88,12 +88,12 @@ class Updates
     
     function _load_repositories()
     {
-        if( phpversion() > PHP_MIN_VERSION_UPDATES )
+        if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
-            foreach( $this->apps as $app )
+            foreach ($this->apps as $app)
             {
                 $rep = $app->get_repository();
-                if( !empty($rep) && !isset($this->repositories[$rep]) )
+                if (!empty($rep) && !isset($this->repositories[$rep]))
                     $this->repositories[$rep] = new Repository($rep);
             }
         }
@@ -101,12 +101,12 @@ class Updates
     
     function _check_repositories()
     {
-        if( phpversion() > PHP_MIN_VERSION_UPDATES )
+        if (phpversion() > PHP_MIN_VERSION_UPDATES)
         {
-            foreach( $this->apps as $app )
+            foreach ($this->apps as $app)
             {
                 $result = $this->repositories[$app->get_repository()]->check($app);
-                if( $result !== null )
+                if ($result !== null)
                 {   // processing to the update notification
                     $this->_add_update_alert($result);
                 }
@@ -119,12 +119,12 @@ class Updates
         import('events/administrator_alert_service');
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
-        if( AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null )
+        if (AdministratorAlertService::find_by_identifier($identifier, 'updates', 'kernel') === null)
         {
             $alert = new AdministratorAlert();
             global $LANG, $CONFIG;
             require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
-            if( $app->get_type() == APPLICATION_TYPE__KERNEL )
+            if ($app->get_type() == APPLICATION_TYPE__KERNEL)
                 $alert->set_entitled(sprintf($LANG['kernel_update_available'], $app->get_version()));
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));

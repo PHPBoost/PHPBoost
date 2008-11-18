@@ -48,11 +48,11 @@ class Stats
 		global $LANG;
 		
 		$this->decimal = $decimal;
-		if( $draw_type == 'ellipse' )
+		if ($draw_type == 'ellipse')
 		{				
 			//Nombre total d'entrées			
 			$this->nbr_entry = array_sum($array_stats);
-			if( $this->nbr_entry == 0 )
+			if ($this->nbr_entry == 0)
 				$this->data_stats = array($LANG['other'] => 360);
 			else
 			{
@@ -63,7 +63,7 @@ class Stats
 				$this->data_stats = array_map(array($this, 'value_to_angle'), $array_stats);
 			}
 		}
-		elseif( $draw_type == 'histogram' )
+		elseif ($draw_type == 'histogram')
 		{
 			ksort($array_stats);
 			$this->data_stats = $array_stats;
@@ -75,18 +75,18 @@ class Stats
 	//Graphique camenbert en ellipse.
 	function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
-		if( @extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>=') )
+		if (@extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>='))
 		{			
 			$w_ellipse = $w_arc/2;
 			$h_ellipse = $h_arc/2;			
 			
 			list($x_ellipse, $y_ellipse, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
-			if( $draw_legend ) //Tracé de la légende de l'ellipse.	
+			if ($draw_legend) //Tracé de la légende de l'ellipse.	
 			{
 				$x_legend_extend = 260;
 				$y_legend_extend = 120;
 			}
-			if( $draw_percent ) //Tracé des pourcentages autour de l'ellipse, calcul du décallage horizontal/vertical de l'ellipse.
+			if ($draw_percent) //Tracé des pourcentages autour de l'ellipse, calcul du décallage horizontal/vertical de l'ellipse.
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, '99.9%');
 				$x_ellipse = abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
@@ -104,14 +104,14 @@ class Stats
 			imagefilledrectangle($image, 1, 1, $w_arc + $x_legend_extend - 3, $h_arc + $height_3d + $y_legend_extend - 3, $background);				
 			
 			// Création de l'effet 3D
-			for($i = ($h_ellipse + $height_3d); $i >= $h_ellipse; $i--) 
+			for ($i = ($h_ellipse + $height_3d); $i >= $h_ellipse; $i--) 
 			{
 				$angle = 0;
 				$this->color_index = 0;
-				foreach($this->data_stats as $name_value => $angle_value)
+				foreach ($this->data_stats as $name_value => $angle_value)
 				{					
 					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image) . 'dark'];
-					if( $angle_value > 5 )
+					if ($angle_value > 5)
 						imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
 					$angle += $angle_value;
 				}
@@ -121,9 +121,9 @@ class Stats
 			$this->color_index = 0;
 			$angle = 0;
 			$angle_other = 0;
-			foreach($this->data_stats as $name_value => $angle_value)
+			foreach ($this->data_stats as $name_value => $angle_value)
 			{					
-				if( $angle_value > 5 && $draw_percent )
+				if ($angle_value > 5 && $draw_percent)
 				{
 					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					$this->color_index--;
@@ -155,7 +155,7 @@ class Stats
 					$angle_other += $angle_value;
 			}
 			
-			if( !empty($angle_other) )
+			if (!empty($angle_other))
 			{
 				$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 				$this->color_index--;
@@ -165,7 +165,7 @@ class Stats
 			}
 			
 			//Légende
-			if( $draw_legend ) //Tracé de la légende de l'ellipse.	
+			if ($draw_legend) //Tracé de la légende de l'ellipse.	
 			{				
 				$white = imagecolorallocate($image, 255, 255, 255);
 				$shadow = imagecolorallocate($image, 125, 121, 118);
@@ -179,10 +179,10 @@ class Stats
 				
 				$this->color_index = 0;
 				$i = 0;
-				foreach($this->data_stats as $name_value => $angle_value)
+				foreach ($this->data_stats as $name_value => $angle_value)
 				{					
 					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-					if( $i < 8 )
+					if ($i < 8)
 					{					
 						//Carré de couleur.
 						imagefilledrectangle($image, $x_legend_extend + 6, $y_legend_extend + (16*$i) + 7, $x_legend_extend + 18, $y_legend_extend + (16*$i) + 19, $black);
@@ -201,7 +201,7 @@ class Stats
 			
 			//Affichage de l'image
 			header('Content-type: image/png');				
-			if( !empty($img_cache) )
+			if (!empty($img_cache))
 				imagepng($image, $img_cache);
 			imagepng($image);		
 			imagedestroy($image);
@@ -218,12 +218,12 @@ class Stats
 	//Graphique en baton.
 	function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
-		if( @extension_loaded('gd') )
+		if (@extension_loaded('gd'))
 		{					
 			$max_element = max($this->data_stats);
 			$max_element = max(array($max_element, 1));
 			list($x_histo, $y_histo, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
-			if( $draw_legend ) //Tracé de la légende.	
+			if ($draw_legend) //Tracé de la légende.	
 			{
 				$x_legend_extend = 172;
 				$y_legend_extend = 0;
@@ -238,7 +238,7 @@ class Stats
 			imagefilledrectangle($image, 1, 1, $w_histo + $x_legend_extend - 3, $h_histo + $y_legend_extend - 3, $background);
 			
 			//Légende
-			if( $draw_legend ) //Tracé de la légende.	
+			if ($draw_legend) //Tracé de la légende.	
 			{				
 				$white = imagecolorallocate($image, 255, 255, 255);
 				$shadow = imagecolorallocate($image, 125, 121, 118);
@@ -252,10 +252,10 @@ class Stats
 				
 				$this->color_index = 0;
 				$i = 0;
-				foreach($this->data_stats as $name_value => $value)
+				foreach ($this->data_stats as $name_value => $value)
 				{					
 					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image)];
-					if( $i < 8 )
+					if ($i < 8)
 					{					
 						//Carré de couleur.
 						imagerectangle($image, $x_legend_extend + 6, $y_legend_extend + (16*$i) + 7, $x_legend_extend + 18, $y_legend_extend + (16*$i) + 19, $black);
@@ -291,11 +291,11 @@ class Stats
 			$scale_pos = $margin;
 			$scale_iteration = _number_round(($h_histo_content+1)/15, 2);
 			$j = 0;
-			for($i = 0; $i < 16; $i++)
+			for ($i = 0; $i < 16; $i++)
 			{
-				if( ($i%5) == 0 )
+				if (($i%5) == 0)
 				{
-					if( $i < 15  )
+					if ($i < 15 )
 					{
 						//Lignes pointillées
 						imagesetstyle($image, array($border_dashed, $border_dashed, $border_dashed, $histo_background, $histo_background, $histo_background));
@@ -314,7 +314,7 @@ class Stats
 				else
 					$separator = 1;
 					
-				if( $i < 15 )
+				if ($i < 15)
 					imageline($image, $x_histo, $scale_pos, $x_histo + $separator, $scale_pos, $border_scale);
 				$scale_pos += $scale_iteration;
 			}
@@ -328,7 +328,7 @@ class Stats
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
 			$i = 0;
-			foreach($this->data_stats as $name_value => $value)
+			foreach ($this->data_stats as $name_value => $value)
 			{
 				$height_bar = ($value * 100/$max_element) * $max_height / 100;
 				$x_bar = $x_histo + 4 + ($space_bar*$i) + $margin_bar;
@@ -338,7 +338,7 @@ class Stats
 				$y_bar = ($margin + $h_histo_content) - $height_bar;
 				$y2_bar = $margin + $h_histo_content;
 				
-				if( $value != 0 )
+				if ($value != 0)
 				{					
 					//Bordure.
 					imagerectangle($image, $x_bar + $width_bar/3, $y_bar - 4, $x2_bar + $width_bar/3 + 1, $y2_bar, $black);
@@ -364,7 +364,7 @@ class Stats
 					);
 					imagepolygon($image, $polygon_point, 4, $black);
 					
-					if( $draw_values ) //Texte, valeur					
+					if ($draw_values) //Texte, valeur					
 					{
 						$array_size_ttf = imagettfbbox($font_size, 0, $font, $value);
 						$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
@@ -384,14 +384,14 @@ class Stats
 			//Légende des axes
 			$scale_legend = array_map("ucfirst", $scale_legend);
 			$scale_legend = array_map(create_function('$a', 'return "("  . $a . ")";'), $scale_legend);
-			if( isset($scale_legend[0]) )
+			if (isset($scale_legend[0]))
 			{				
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[0]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
 				imagettftext($image, $font_size, 0, $x_histo + $w_histo_content - $x_text + $margin/2, $w_histo - $h_histo_content + $y_text/2, $black, $font, $scale_legend[0]);
 			}	
-			if( isset($scale_legend[1]) )
+			if (isset($scale_legend[1]))
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[1]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
@@ -401,7 +401,7 @@ class Stats
 			
 			//Affichage de l'image
 			header('Content-type: image/png');				
-			if( !empty($img_cache) )
+			if (!empty($img_cache))
 				imagepng($image, $img_cache);
 			imagepng($image);		
 			imagedestroy($image);
@@ -433,10 +433,10 @@ class Stats
 	//Allocation de la couleur et calcul de la version sombre. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
 	function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
-		if( $this->color_index == $this->nbr_color )
+		if ($this->color_index == $this->nbr_color)
 			$this->color_index = 0;
 			
-		if( !isset($this->array_allocated_color[$this->color_index]) )
+		if (!isset($this->array_allocated_color[$this->color_index]))
 		{
 			list($r, $g, $b) = $this->array_color_stats[$this->color_index];
 			$rd = round($r * $similar_color) + round($mask_color * (1 - $similar_color));
@@ -455,12 +455,12 @@ class Stats
 	function _generate_scale(&$array_scale, $max_element)
 	{
 		$max_element += ($max_element * 20/100);
-		while( ($max_element%3) != 0 )
+		while (($max_element%3) != 0)
 			$max_element++;
 		
 		$scale = $max_element;
 		$scale_iteration = $max_element/3;
-		for($i = 0; $i < 4; $i++)
+		for ($i = 0; $i < 4; $i++)
 		{	
 			$array_scale[$i] = _number_round(abs($scale), 0);
 			$scale -= $scale_iteration;
@@ -475,18 +475,18 @@ class Stats
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
-		if( $demi_dozen )
+		if ($demi_dozen)
 		{
-			if( $decimal < 2.5 )
+			if ($decimal < 2.5)
 				$number = $number - $decimal;
-			elseif( $decimal >= 2.5 && $decimal <= 7.5 )
+			elseif ($decimal >= 2.5 && $decimal <= 7.5)
 				$number = $number - $decimal + 5;
 			else
 				$number = $number - $decimal + 10;
 		}
 		else
 		{
-			if( $decimal < 5 )
+			if ($decimal < 5)
 				$number = $number - $decimal;
 			else
 				$number = $number - $decimal + 10;

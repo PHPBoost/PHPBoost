@@ -33,21 +33,21 @@ require_once('../admin/admin_header.php');
 $id = retrieve(GET, 'id', 0);
 
 //Si c'est confirmé on met à jour!
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id
 	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$cat = retrieve(POST, $row['id'] . 'cat', '');  
 		$icon = retrieve(POST, $row['id'] . 'icon', '');  
 		$icon_path = retrieve(POST, $row['id'] . 'icon_path', '');  
 		$contents = retrieve(POST, $row['id'] . 'contents', '');
 		
-		if( !empty($icon_path) )
+		if (!empty($icon_path))
 			$icon = $icon_path;
 		
-		if( !empty($cat) )
+		if (!empty($cat))
 			$Sql->query_inject("UPDATE ".PREFIX."news_cat SET name = '" . $cat . "', icon = '" . $icon . "', contents = '" . $contents . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			
 	}
@@ -55,7 +55,7 @@ if( !empty($_POST['valid']) )
 	
 	redirect(HOST . SCRIPT);
 }
-elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
+elseif (!empty($_GET['del']) && !empty($id)) //Suppression de la catégorie.
 {
 	$Sql->query_inject("DELETE FROM ".PREFIX."news_cat WHERE id = " . $id, __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE ".PREFIX."news SET idcat = 0 WHERE idcat = " . $id, __LINE__, __FILE__);
@@ -63,17 +63,17 @@ elseif( !empty($_GET['del']) && !empty($id) ) //Suppression de la catégorie.
 	redirect(HOST . SCRIPT);
 }
 //On ajoute la nouvelle catégorie
-elseif( !empty($_POST['add']) ) //Ajout de la catégorie.
+elseif (!empty($_POST['add'])) //Ajout de la catégorie.
 {
 	$cat = retrieve(POST, 'cat', '');  
 	$icon = retrieve(POST, 'icon', ''); 
 	$icon_path = retrieve(POST, 'icon_path', ''); 
 	$contents = retrieve(POST, 'contents', ''); 
 	
-	if( !empty($icon_path) )
+	if (!empty($icon_path))
 		$icon = $icon_path;
 	
-	if( !empty($cat) )
+	if (!empty($cat))
 	{
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
 		$Sql->query_inject("INSERT INTO ".PREFIX."news_cat (name, contents, icon) VALUES('" . $cat . "', '" . $contents . "', '" . $icon . "')", __LINE__, __FILE__);
@@ -92,20 +92,20 @@ else
 	
 	//Images disponibles
 	$rep = './';
-	if( is_dir($rep) ) //Si le dossier existe
+	if (is_dir($rep)) //Si le dossier existe
 	{
 		$img_array = array();
 		$dh = @opendir( $rep);
-		while( ! is_bool($lang = @readdir($dh)) )
+		while (! is_bool($lang = @readdir($dh)))
 		{	
-			if( preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang) )
+			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang))
 				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
 		}	
 		@closedir($dh); //On ferme le dossier
 	}
 	
 	$image_list = '<option value="">--</option>';
-	foreach($img_array as $key => $img_path)
+	foreach ($img_array as $key => $img_path)
 		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
 	
 	$Template->assign_vars(array(
@@ -129,12 +129,12 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 	
 	$result = $Sql->query_while("SELECT a.id, a.name, a.contents, a.icon
 	FROM ".PREFIX."news_cat a", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$row['name'] = html_entity_decode($row['name']);
@@ -142,7 +142,7 @@ else
 
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-		foreach($img_array as $key => $img_path)
+		foreach ($img_array as $key => $img_path)
 		{	
 			$selected = ($img_path == $row['icon']) ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';

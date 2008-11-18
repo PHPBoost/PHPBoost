@@ -31,7 +31,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	
 	$maintain_check = retrieve(POST, 'maintain_check', 0);
@@ -39,7 +39,7 @@ if( !empty($_POST['valid']) )
 	{
 		case 1:
 			$maintain = retrieve(POST, 'maintain', 0); //Désactivé par défaut.
-			if( $maintain != -1 )
+			if ($maintain != -1)
 				$maintain = !empty($maintain) ? time() + $maintain : '0';	
 		break;
 		case 2:
@@ -73,14 +73,14 @@ else //Sinon on rempli le formulaire
 	$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '4 ' . $LANG['hours'], '6 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours']); 
 	
 	$CONFIG['maintain'] = isset($CONFIG['maintain']) ? $CONFIG['maintain'] : -1;
-	if( $CONFIG['maintain'] != -1 )
+	if ($CONFIG['maintain'] != -1)
 	{
 		$key_delay = 0;
 		$current_time = time();
-		for($i = 11; $i >= 0; $i--)
+		for ($i = 11; $i >= 0; $i--)
 		{					
 			$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];		
-			if( $delay >= $array_time[$i] ) 
+			if ($delay >= $array_time[$i]) 
 			{	
 				$key_delay = $i;
 				break;
@@ -91,7 +91,7 @@ else //Sinon on rempli le formulaire
 		$key_delay = -1;
 
 	$delay_maintain_option = '';
-	foreach($array_time as $key => $time)
+	foreach ($array_time as $key => $time)
 	{
 		$selected = (($key_delay + 1) == $key) ? 'selected="selected"' : '' ;
 		$delay_maintain_option .= '<option value="' . $time . '" ' . $selected . '>' . $array_delay[$key] . '</option>';

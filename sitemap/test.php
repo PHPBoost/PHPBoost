@@ -9,7 +9,7 @@ import('sitemap/modulemap');
 import('modules/modules_discovery_service');
 
 $Modules = new ModulesDiscoveryService();
-foreach($Modules->get_availables_modules('get_module_map') as $module)
+foreach ($Modules->get_availables_modules('get_module_map') as $module)
 {
 	$modulemap = $module->get_module_map(SITE_MAP_AUTH_USER);
 	

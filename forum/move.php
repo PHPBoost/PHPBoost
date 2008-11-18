@@ -41,7 +41,7 @@ $error_get = retrieve(GET, 'error', ''); //Gestion des erreurs.
 $post_topic = retrieve(POST, 'post_topic', ''); //Création du topic scindé.
 $preview_topic = retrieve(POST, 'prw_t', ''); //Prévisualisation du topic scindé.
 
-if( !empty($id_get) ) //Déplacement du sujet.
+if (!empty($id_get)) //Déplacement du sujet.
 {
 	$Template->set_filenames(array(
 		'forum_move'=> 'forum/forum_move.tpl',
@@ -50,17 +50,17 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	));
 
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	$cat = $Sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	
 	$auth_cats = '';
-	if( is_array($CAT_FORUM) )
+	if (is_array($CAT_FORUM))
 	{
-		foreach($CAT_FORUM as $idcat => $key)
+		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -72,7 +72,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	FROM ".PREFIX."forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$disabled = ($row['id'] == $topic['idcat']) ? ' disabled="disabled"' : '';
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '"' . $disabled . '>' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
@@ -102,7 +102,7 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -147,14 +147,14 @@ if( !empty($id_get) ) //Déplacement du sujet.
 	
 	$Template->pparse('forum_move');
 }
-elseif( !empty($id_post) ) //Déplacement du topic
+elseif (!empty($id_post)) //Déplacement du topic
 {
 	$idcat = $Sql->query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
-	if( $User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if ($User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{		
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
 		$level = $Sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
-		if( !empty($to) && $level > 0 && $idcat != $to )
+		if (!empty($to) && $level > 0 && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
 			include_once('../forum/forum.class.php');
@@ -170,7 +170,7 @@ elseif( !empty($id_post) ) //Déplacement du topic
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
+elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //Choix de la nouvelle catégorie, titre, sous-titre du topic à scinder.
 {
 	$Template->set_filenames(array(
 		'forum_move'=> 'forum/forum_post.tpl',
@@ -182,23 +182,23 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	$msg =  $Sql->query_array('forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	
-	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 	$id_first = $Sql->query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
-	if( $id_first == $idm )
+	if ($id_first == $idm)
 		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT); 
 			
 	$cat = $Sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 	
 	$auth_cats = '';
-	if( is_array($CAT_FORUM) )
+	if (is_array($CAT_FORUM))
 	{	
-		foreach($CAT_FORUM as $idcat => $key)
+		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if( !$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) )
+			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
@@ -210,7 +210,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	FROM ".PREFIX."forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$cat_forum .= ($row['level'] > 0) ? '<option value="' . $row['id'] . '">' . str_repeat('--------', $row['level']) . ' ' . $row['name'] . '</option>' : '<option value="' . $row['id'] . '" disabled="disabled">-- ' . $row['name'] . '</option>';
 	}
@@ -250,11 +250,11 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 		'L_MULTIPLE' => $LANG['multiple_answer']
 	));
 		
-	if( empty($post_topic) && empty($preview_topic) )
+	if (empty($post_topic) && empty($preview_topic))
 	{
 		//Liste des choix des sondages => 20 maxi
 		$nbr_poll_field = 0;
-		for($i = 0; $i < 5; $i++)
+		for ($i = 0; $i < 5; $i++)
 		{	
 			$Template->assign_block_vars('answers_poll', array(
 				'ID' => $i,
@@ -279,7 +279,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 			'C_ADD_POLL_FIELD' => true
 		));
 	}
-	elseif( !empty($preview_topic) && !empty($id_post_msg) )
+	elseif (!empty($preview_topic) && !empty($id_post_msg))
 	{
 		$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
 		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNSECURE);
@@ -293,10 +293,10 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 						
 		//Liste des choix des sondages => 20 maxi
 		$nbr_poll_field = 0;
-		for($i = 0; $i < 20; $i++)
+		for ($i = 0; $i < 20; $i++)
 		{	
 			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNSECURE);
-			if( !empty($answer) )
+			if (!empty($answer))
 			{
 				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -304,7 +304,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 				));
 				$nbr_poll_field++;
 			}	
-			elseif( $i <= 5 ) //On complète s'il y a moins de 5 réponses.
+			elseif ($i <= 5) //On complète s'il y a moins de 5 réponses.
 			{
 				$Template->assign_block_vars('answers_poll', array(
 					'ID' => $i,
@@ -349,7 +349,7 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
@@ -394,22 +394,22 @@ elseif( (!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic) ) //
 	
 	$Template->pparse('forum_move');
 }
-elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
+elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
 	$msg =  $Sql->query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
 	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 	
-	if( !$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) ) //Accès en édition
+	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
-	if( $id_first == $id_post_msg )
+	if ($id_first == $id_post_msg)
 		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT); 
 	
 	$level = $Sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
-	if( !empty($to) && $level > 0 )
+	if (!empty($to) && $level > 0)
 	{
 		$title = retrieve(POST, 'title', '');
 		$subtitle = retrieve(POST, 'desc', '');
@@ -417,7 +417,7 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 		$type = retrieve(POST, 'type', 0); 
 		
 		//Requête de "scindage" du topic.
-		if( !empty($to) && !empty($contents) && !empty($title) )
+		if (!empty($to) && !empty($contents) && !empty($title))
 		{
 			//Instanciation de la class du forum.
 			include_once('../forum/forum.class.php');
@@ -427,17 +427,17 @@ elseif( !empty($id_post_msg) && !empty($post_topic) ) //Scindage du topic
 			
 			//Ajout d'un sondage en plus du topic.
 			$question = retrieve(POST, 'question', '');
-			if( !empty($question) )
+			if (!empty($question))
 			{
 				$poll_type = retrieve(POST, 'poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 				
 				$answers = array();
 				$nbr_votes = 0;
-				for($i = 0; $i < 20; $i++)
+				for ($i = 0; $i < 20; $i++)
 				{
 					$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
-					if( !empty($answer) )
+					if (!empty($answer))
 					{				
 						$answers[$i] = $answer;
 						$nbr_votes++;

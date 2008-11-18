@@ -30,11 +30,11 @@ define('TITLE', $LANG['files_management']);
 require_once('../kernel/header_no_display.php');
 
 $id = retrieve(GET, 'id', 0);
-if( !empty($id) )
+if (!empty($id))
 {
 	$basedir = '../upload/';
 	$info_file = $Sql->query_array("upload", "id", "path", "type", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
-	if( !empty($info_file['id']) )
+	if (!empty($info_file['id']))
 	{
 		switch($info_file['type'])
 		{

@@ -32,7 +32,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 ##########################admin_calendar.tpl###########################
-if( !empty($_POST['valid'])  )
+if (!empty($_POST['valid']) )
 {
 	$config_calendar = array();
 	$config_calendar['calendar_auth'] = retrieve(POST, 'calendar_auth', -1);
@@ -64,7 +64,7 @@ else
 	
 	$CONFIG_CALENDAR['calendar_auth'] = isset($CONFIG_CALENDAR['calendar_auth']) ? $CONFIG_CALENDAR['calendar_auth'] : '-1';	
 	//Rang d'autorisation.
-	for($i = -1; $i <= 2; $i++)
+	for ($i = -1; $i <= 2; $i++)
 	{
 		switch($i) 
 		{	

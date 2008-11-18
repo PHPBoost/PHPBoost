@@ -56,7 +56,7 @@ $step = $step > STEPS_NUMBER ? 1 : $step;
 $lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
 
 //Inclusion du fichier langue
-if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
+if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
 {
 	include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
 	$lang = DEFAULT_LANGUAGE;
@@ -64,7 +64,7 @@ if( !@include_once('lang/' . $lang . '/install_' . $lang . '.php') )
 
 
 //Chargement de la configuration de la distribution
-if( is_file('distribution/distribution_' . $lang . '.php') )
+if (is_file('distribution/distribution_' . $lang . '.php'))
 {
 	include('distribution/distribution_' . $lang . '.php');
 }
@@ -73,7 +73,7 @@ else
 	import('io/folder');
 	$distribution_folder = new Folder('distribution');
 	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
-	if( count($distribution_files) > 0)
+	if (count($distribution_files) > 0)
 		include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
 	else
 	{
@@ -120,11 +120,11 @@ $user_groups = array();
 $User = new User($user_data, $user_groups);
 
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
-if( !is_dir('../cache') || !is_dir('../cache/tpl') )
+if (!is_dir('../cache') || !is_dir('../cache/tpl'))
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
 	
 //Reprise de l'installation depuis le début
-if( retrieve(GET, 'restart', false) )
+if (retrieve(GET, 'restart', false))
 	redirect(HOST . add_lang(FILE, true));
 
 //Template d'installation
@@ -134,9 +134,9 @@ $template = new Template('install/install.tpl', DO_NOT_AUTO_LOAD_FREQUENT_VARS);
 function add_lang($url, $header_location = false)
 {
 	global $lang;
-	if( $lang != DEFAULT_LANGUAGE )
+	if ($lang != DEFAULT_LANGUAGE)
 	{
-		if( strpos($url, '?') !== false )
+		if (strpos($url, '?') !== false)
 		{
 			$ampersand = $header_location ? '&' : '&amp;';
 			return $url . $ampersand . 'lang=' . $lang;
@@ -150,14 +150,14 @@ function add_lang($url, $header_location = false)
 
 //Changement de langue
 $new_language = retrieve(POST, 'new_language', '');
-if( !empty($new_language) && is_file('lang/' . $new_language . '/install_' . $new_language . '.php') && $new_language != $lang)
+if (!empty($new_language) && is_file('lang/' . $new_language . '/install_' . $new_language . '.php') && $new_language != $lang)
 {
 	$lang = $new_language;
 	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
 //Préambule
-if( $step == 1 )
+if ($step == 1)
 {
 	$template->assign_vars(array(
 		'C_INTRO' => true,
@@ -171,12 +171,12 @@ if( $step == 1 )
 	));
 }
 //Licence
-elseif( $step == 2 )
+elseif ($step == 2)
 {
 	$submit = !empty($_POST['submit']) ? true : false;
 	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
 	//On vérifie l'étape et si elle est validée on passe à la suivante
-	if( $submit && $license_agreement )
+	if ($submit && $license_agreement)
 		redirect(HOST . FILE . add_lang('?step=3', true));
 		
 	$template->assign_vars(array(
@@ -194,10 +194,10 @@ elseif( $step == 2 )
 	));
 }
 //Configuration du serveur
-elseif( $step == 3 )
+elseif ($step == 3)
 {
 	//Url rewriting
-	if( function_exists('apache_get_modules') )
+	if (function_exists('apache_get_modules'))
 	{	
 		$get_rewrite = apache_get_modules();
 		$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
@@ -221,14 +221,14 @@ elseif( $step == 3 )
 	$all_dirs_ok = true;
 	
 	//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
-	foreach($chmod_dir as $dir)
+	foreach ($chmod_dir as $dir)
 	{
 		$is_writable = $is_dir = true;
 		//If the file exists and is a directory
-		if( file_exists($dir) && is_dir($dir) )
+		if (file_exists($dir) && is_dir($dir))
 		{
 			//Si il n'est pas inscriptible, on demande à Apache de le rendre inscriptible en espérant qu'il soit configurer pour accepter de telles requêtes
-			if( !is_writable($dir) )
+			if (!is_writable($dir))
 				$is_writable = (@chmod($dir, 0777)) ? true : false;			
 		}
 		else
@@ -240,14 +240,14 @@ elseif( $step == 3 )
 			'C_WRITIBLE_DIR' => $is_writable			
 		));
 		
-		if( $all_dirs_ok && (!$is_dir || !$is_writable) )
+		if ($all_dirs_ok && (!$is_dir || !$is_writable))
 			$all_dirs_ok = false;
 	}
 	
 	//On empêche de passer à l'étape suivant si cette étape n'est pas validée
-	if( retrieve(POST, 'submit', false) )
+	if (retrieve(POST, 'submit', false))
 	{
-		if( !$all_dirs_ok )
+		if (!$all_dirs_ok)
 			$template->assign_vars(array(
 				'C_ERROR' => true,
 				'L_ERROR' => $LANG['config_server_dirs_not_ok']
@@ -289,11 +289,11 @@ elseif( $step == 3 )
 	));	
 }
 //Mise en place de la base de données
-elseif( $step == 4 )
+elseif ($step == 4)
 {
 	require_once('functions.php');
 	
-	if( retrieve(POST, 'submit', false) )
+	if (retrieve(POST, 'submit', false))
 	{
 		//Récupération de la configuration de connexion
 		$host = retrieve(POST, 'host', 'localhost');
@@ -303,7 +303,7 @@ elseif( $step == 4 )
 		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_'));
 		
 		include_once('functions.php');
-		if( !empty($host) && !empty($login) && !empty($database) )
+		if (!empty($host) && !empty($login) && !empty($database))
 			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
 		else
 			$result = DB_UNKNOW_ERROR;
@@ -325,7 +325,7 @@ elseif( $step == 4 )
 				$file_path = '../kernel/auth/config.php';
 				
 				$db_config_content = '<?php
-if( !defined(\'DBSECURE\') )
+if (!defined(\'DBSECURE\'))
 {
     $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
     $sql_login = "' . $login . '"; //Login
@@ -424,18 +424,18 @@ else
 	));
 }
 // Configuration du site
-elseif( $step == 5 )
+elseif ($step == 5)
 {
 	//Variables serveur.
 	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-	if( !$server_path )
+	if (!$server_path)
 		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
 	$server_path = trim(str_replace('/install', '', dirname($server_path)));
 	$server_path = ($server_path == '/') ? '' : $server_path;
 	$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 	
 	//Enregistrement de la réponse
-	if( retrieve(POST, 'submit', false) )
+	if (retrieve(POST, 'submit', false))
 	{
 		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
 		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
@@ -447,7 +447,7 @@ elseif( $step == 5 )
 		$CONFIG = array();
 		$CONFIG['server_name'] = $server_url;
 		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
-		if( $server_path != '' )
+		if ($server_path != '')
 			  $CONFIG['server_path'] = '/' . $server_path;
 		else
 			$CONFIG['server_path'] = $server_path;		
@@ -506,7 +506,7 @@ elseif( $step == 5 )
 		
 		//Installation des modules de la distribution
 		require_once('../kernel/framework/modules/packages_manager.class.php');
-		foreach($DISTRIBUTION_MODULES as $module_name)
+		foreach ($DISTRIBUTION_MODULES as $module_name)
 		{
 			$Cache->load('modules');
 			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
@@ -528,12 +528,12 @@ elseif( $step == 5 )
 
 	//Balayage des fuseaux horaires
 	$site_timezone = (int)date('I');
-	for($i = -12; $i <= 14; $i++)
+	for ($i = -12; $i <= 14; $i++)
 	{
 		$timezone_name = '';
-		if( $i === 0 )
+		if ($i === 0)
 			$timezone_name = 'GMT';
-		elseif( $i > 0 )
+		elseif ($i > 0)
 			$timezone_name = 'GMT + ' . $i;
 		else
 			$timezone_name = 'GMT - ' . (-$i);
@@ -571,11 +571,11 @@ elseif( $step == 5 )
 		'L_CONFIRM_SITE_PATH' => $LANG['confirm_site_path']
 	));
 }
-elseif( $step == 6 )
+elseif ($step == 6)
 {
 	$template->assign_block_vars('admin', array());
 	//Validation de l'étape
-	if( retrieve(POST, 'submit', false) )
+	if (retrieve(POST, 'submit', false))
 	{
 		$login = retrieve(POST, 'login', '', TSTRING_UNCHANGE);
 		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
@@ -587,21 +587,21 @@ elseif( $step == 6 )
 		function check_admin_account($login, $password, $password_repeat, $user_mail)
 		{
 			global $LANG;
-			if( empty($login) )
+			if (empty($login))
 				return $LANG['admin_require_login'];
-			elseif( strlen($login) < 3 )
+			elseif (strlen($login) < 3)
 				return $LANG['admin_login_too_short'];
-			elseif( empty($password) )
+			elseif (empty($password))
 				return $LANG['admin_require_password'];
-			elseif( empty($password_repeat) )
+			elseif (empty($password_repeat))
 				return $LANG['admin_require_password_repeat'];
-			elseif( strlen($password) < 6 )
+			elseif (strlen($password) < 6)
 				return $LANG['admin_password_too_short'];
-			elseif( empty($user_mail) )
+			elseif (empty($user_mail))
 				return $LANG['admin_require_mail'];
-			elseif( $password != $password_repeat )
+			elseif ($password != $password_repeat)
 				return $LANG['admin_passwords_error'];
-			elseif( !preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail)  )
+			elseif (!preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail) )
 				return $LANG['admin_email_error'];
 			else
 				return '';
@@ -609,7 +609,7 @@ elseif( $step == 6 )
 		$error = check_admin_account($login, $password, $password_repeat, $user_mail);
 
 		//Si il n'y a pas d'erreur on enregistre dans la table
-		if( empty($error) )
+		if (empty($error))
 		{
 			require_once('functions.php');
 			load_db_connection();
@@ -649,7 +649,7 @@ elseif( $step == 6 )
 			$Mail->send($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
 			
 			//On connecte directement l'administrateur si il l'a demandé
-			if( $create_session )
+			if ($create_session)
 			{
 				include('../kernel/framework/members/sessions.class.php');
 				$Session = new Sessions;
@@ -703,7 +703,7 @@ elseif( $step == 6 )
 		'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
 	));		
 }
-elseif( $step == 7 )
+elseif ($step == 7)
 {
 	require_once('functions.php');
 	load_db_connection();
@@ -739,10 +739,10 @@ require_once('../kernel/framework/io/folder.class.php');
 
 $lang_dir = new Folder('../lang');
 
-foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
+foreach ($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 {
 	$info_lang = load_ini_file('../lang/', $folder->get_name());
-	if( !empty($info_lang['name']) )
+	if (!empty($info_lang['name']))
 	{	
 		$template->assign_block_vars('lang', array(
 			'LANG' => $folder->get_name(),
@@ -750,7 +750,7 @@ foreach($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
 		));
 		
-		if(	$folder->get_name() == $lang )
+		if (	$folder->get_name() == $lang)
 		{
 			$template->assign_vars(array(
 				'LANG_IDENTIFIER' => $info_lang['identifier']
@@ -784,15 +784,15 @@ $template->assign_vars(array(
 ));
 
 //Images de la barre de progression
-for($i = 1; $i <= floor($steps[$step - 1][2] * 24 / 100); $i++)
+for ($i = 1; $i <= floor($steps[$step - 1][2] * 24 / 100); $i++)
 	$template->assign_block_vars('progress_bar', array());
 
 //Etapes de l'installation
-for($i = 1; $i <= STEPS_NUMBER; $i++ )
+for ($i = 1; $i <= STEPS_NUMBER; $i++)
 {
-	if( $i < $step )
+	if ($i < $step)
 		$row_class = 'row_success';
-	elseif( $i == $step )
+	elseif ($i == $step)
 		$row_class = 'row_current';
 	else
 		$row_class = 'row_next';

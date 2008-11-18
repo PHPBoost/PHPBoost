@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
@@ -50,7 +50,7 @@ class GuestbookInterface extends ModuleInterface
 		$CONFIG_GUESTBOOK = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 		
-		if(isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
+		if (isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
 			$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = unserialize($CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
 			
 		$guestbook_code .= '$CONFIG_GUESTBOOK = ' . var_export($CONFIG_GUESTBOOK, true) . ';' . "\n";

@@ -38,7 +38,7 @@ $update_cached = !empty($_GET['upd']) ? true : false;
 $Cache->load('forum');
 
 //Si c'est confirmé on execute
-if( !empty($_POST['valid']) )
+if (!empty($_POST['valid']))
 {
 	$CONFIG_FORUM['forum_name'] = retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum', TSTRING_UNSECURE);  
 	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
@@ -56,7 +56,7 @@ if( !empty($_POST['valid']) )
 	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		
-	if( !empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']) )
+	if (!empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']))
 	{
 		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
 			
@@ -68,21 +68,21 @@ if( !empty($_POST['valid']) )
 	else
 		redirect(HOST . DIR . '/forum/admin_forum_config.php?error=incomplete#errorh');
 }
-elseif( $update_cached ) //Mise à jour des données stockées en cache dans la bdd.
+elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {
 	$result = $Sql->query_while("SELECT id, id_left, id_right
 	FROM ".PREFIX."forum_cats
 	WHERE level > 0", __LINE__, __FILE__);
-	while($row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$cat_list = $row['id'];
-		if( ($row['id_right'] - $row['id_left']) > 1 )
+		if (($row['id_right'] - $row['id_left']) > 1)
 		{
 			$result2 = $Sql->query_while("SELECT id
 			FROM ".PREFIX."forum_cats
 			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'", __LINE__, __FILE__);
 			
-			while($row2 = $Sql->fetch_assoc($result2) )
+			while ($row2 = $Sql->fetch_assoc($result2))
 				$cat_list .=  ', ' . $row2['id'];
 		}
 		
@@ -103,7 +103,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
 	$CONFIG_FORUM['edit_mark'] = isset($CONFIG_FORUM['edit_mark']) ? $CONFIG_FORUM['edit_mark'] : 0;

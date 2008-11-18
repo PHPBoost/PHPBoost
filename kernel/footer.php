@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 $Sql->close(); //Fermeture de mysql
 
@@ -53,7 +53,7 @@ $Template->assign_vars(array(
 //Stockage du nbr de pages vue par heures.
 pages_displayed();
 
-if( $CONFIG['bench'] )
+if ($CONFIG['bench'])
 {
 	$Bench->stop(); //On arrête le bench.
 	$Template->assign_vars(array(

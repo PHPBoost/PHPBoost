@@ -38,7 +38,7 @@ define('WRITE_CAT_GALLERY', 0x02);
 define('EDIT_CAT_GALLERY', 0x04);
 
 //Si c'est confirmé on execute
-if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
+if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 {
 	$Cache->load('gallery');
 	
@@ -51,23 +51,23 @@ if( !empty($_POST['add']) ) //Nouvelle galerie/catégorie.
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_GALLERY, WRITE_CAT_GALLERY, EDIT_CAT_GALLERY);
 	
-	if( !empty($name) )
+	if (!empty($name))
 	{	
-		if( isset($CAT_GALLERY[$parent_category]) ) //Insertion sous galerie de niveau x.
+		if (isset($CAT_GALLERY[$parent_category])) //Insertion sous galerie de niveau x.
 		{
 			//Galerie parente de la galerie cible.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
 			FROM ".PREFIX."gallery_cats 
 			WHERE id_left <= '" . $CAT_GALLERY[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
-			while( $row = $Sql->fetch_assoc($result) )
+			while ($row = $Sql->fetch_assoc($result))
 			{
 				$list_parent_cats .= $row['id'] . ', ';
 			}
 			$Sql->query_close($result);
 			$list_parent_cats = trim($list_parent_cats, ', ');
 				
-			if( empty($list_parent_cats) )
+			if (empty($list_parent_cats))
 				$clause_parent = "id = '" . $parent_category . "'";
 			else
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
@@ -106,7 +106,7 @@ else
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM ".PREFIX."gallery_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
-	while( $row = $Sql->fetch_assoc($result) )
+	while ($row = $Sql->fetch_assoc($result))
 	{	
 		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
 		$galleries .= '<option value="' . $row['id'] . '">' . $margin . ' ' . $row['name'] . '</option>';
@@ -115,7 +115,7 @@ else
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
-	if( $get_error == 'incomplete' )
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);	
 		
 	$Template->assign_vars(array(

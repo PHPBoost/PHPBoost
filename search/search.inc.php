@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-if( defined('PHPBOOST') !== true ) exit;
+if (defined('PHPBOOST') !== true) exit;
 
 require_once ( '../kernel/framework/modules/modules_discovery_service.class.php' );
 require_once ( '../kernel/framework/content/search.class.php' );
@@ -45,9 +45,9 @@ function execute_search($Search, &$searchModules, &$modulesArgs, &$results)
     
     global $SEARCH_CONFIG;
     
-    foreach($searchModules as $module)
+    foreach ($searchModules as $module)
     {
-        if( !$Search->is_in_cache($module->get_id()) )
+        if (!$Search->is_in_cache($module->get_id()))
         {
             $modulesArgs[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
@@ -69,7 +69,7 @@ function get_search_results($searchTxt, &$searchModules, &$modulesArgs, &$result
     $modulesOptions = array();
     
     // Generation des noms des modules utilisés et de la chaine options
-    foreach($searchModules as $module)
+    foreach ($searchModules as $module)
     {
         array_push($modulesIds, $module->get_id());
     }
