@@ -61,7 +61,7 @@ if (strpos(SCRIPT, '/online/online.php') === false)
 			}		 
 		}
 		
-		switch($row['level'])
+		switch ($row['level'])
 		{
 			case '-1':
 			$count_visit++;

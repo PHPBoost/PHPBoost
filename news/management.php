@@ -148,7 +148,7 @@ if ($edit_news_id > 0)
 			
 			$date_now = new Date(DATE_NOW);
 			
-			switch($news_visibility)
+			switch ($news_visibility)
 			{
 				case 2:		
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
@@ -333,7 +333,7 @@ elseif ($add_news)
 			
 			$date_now = new Date(DATE_NOW);
 			
-			switch($news_visibility)
+			switch ($news_visibility)
 			{
 				case 2:		
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())

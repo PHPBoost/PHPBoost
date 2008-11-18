@@ -167,7 +167,7 @@ else
 			'desc' => ''
 			);
 		
-		switch($get_sort)
+		switch ($get_sort)
 		{
 			case 'alpha' : 
 			$sort = 'title';

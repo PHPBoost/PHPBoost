@@ -43,7 +43,7 @@ class MenuManager
 	//Retourne le code a mettre en cache.
 	function get_cache($name, $contents, $location, $auth, $use_tpl = '0')
 	{
-		switch($this->type)
+		switch ($this->type)
 		{
 			case MENU_MODULE:
 				return 'if ($User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS)){' . "\n"
@@ -66,7 +66,7 @@ class MenuManager
 					$code .= '$MENUS[\'' . $location . '\'] .= ' . var_export($contents, true) . ';' . "\n";
 				else
 				{
-					switch($location)
+					switch ($location)
 					{
 						case 'left':
 						case 'right':

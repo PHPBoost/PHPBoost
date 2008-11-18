@@ -161,7 +161,7 @@ class Contribution extends Event
 	{
 		global $LANG;
 		
-		switch($this->current_status)
+		switch ($this->current_status)
 		{
 			case CONTRIBUTION_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];

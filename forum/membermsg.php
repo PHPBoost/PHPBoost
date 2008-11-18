@@ -118,7 +118,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		switch( $row['level'] ) //Coloration du membre suivant son level d'autorisation. 
+		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 		{ 		
 			case -1:
 			$status = 'visiteur';

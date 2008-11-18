@@ -297,7 +297,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$info_move = $Sql->query_array("upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 		$get_img_mimetype = $Uploads->get_img_mimetype($info_move['type']);
 		$size_img = '';
-		switch($info_move['type'])
+		switch ($info_move['type'])
 		{
 			//Images
 			case 'jpg':
@@ -419,7 +419,7 @@ else
 		
 		$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
 		$size_img = '';
-		switch($row['type'])
+		switch ($row['type'])
 		{
 			//Images
 			case 'jpg':

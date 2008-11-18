@@ -92,7 +92,7 @@ else
 	$CONFIG_POLL['poll_auth'] = isset($CONFIG_POLL['poll_auth']) ? $CONFIG_POLL['poll_auth'] : '-1';	
 	for ($i = -1; $i <= 2; $i++)
 	{
-		switch($i) 
+		switch ($i) 
 		{	
 			case -1:
 				$rank = $LANG['guest'];

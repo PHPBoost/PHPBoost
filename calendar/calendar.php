@@ -99,7 +99,7 @@ if ($checkdate === true && empty($id) && !$add)
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	switch($get_error)
+	switch ($get_error)
 	{
 		case 'invalid_date':
 		$errstr = $LANG['e_invalid_date'];
@@ -364,7 +364,7 @@ elseif (!empty($id))
 		
 			//Gestion erreur.
 			$get_error = retrieve(GET, 'error', '');
-			switch($get_error)
+			switch ($get_error)
 			{
 				case 'invalid_date':
 				$errstr = $LANG['e_invalid_date'];
@@ -465,7 +465,7 @@ elseif ($add) //Ajout d'un évenement
 		
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
-		switch($get_error)
+		switch ($get_error)
 		{
 			case 'invalid_date':
 			$errstr = $LANG['e_invalid_date'];

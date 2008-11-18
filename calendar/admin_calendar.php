@@ -66,7 +66,7 @@ else
 	//Rang d'autorisation.
 	for ($i = -1; $i <= 2; $i++)
 	{
-		switch($i) 
+		switch ($i) 
 		{	
 			case -1:
 				$rank = $LANG['guest'];

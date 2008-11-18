@@ -85,7 +85,7 @@ if (isset($_array_random_pics) && $_array_random_pics !== array())
 		}
 	}
 	
-	switch($CONFIG_GALLERY['scroll_type'])
+	switch ($CONFIG_GALLERY['scroll_type'])
 	{
 		case 0:
 		$scoll_mode = 'static_scroll';

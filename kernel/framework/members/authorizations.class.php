@@ -186,7 +186,7 @@ class Authorizations
 		if (!is_int($value))
 			return false;
 		
-		switch($type)
+		switch ($type)
 		{
 			case RANK_TYPE:
 				if ($value <= 2 && $value >= -1)

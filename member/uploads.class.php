@@ -287,7 +287,7 @@ class Uploads
 		global $LANG;
 		
 		$filetype = sprintf($LANG['file_type'], strtoupper($type));
-		switch($type)
+		switch ($type)
 		{
 			//Images
 			case 'jpg':			

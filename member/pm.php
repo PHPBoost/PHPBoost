@@ -151,7 +151,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	{
 		//Gestion des erreurs
 		$get_error = retrieve(GET, 'error', '');
-		switch($get_error)
+		switch ($get_error)
 		{
 			case 'e_unexist_user':
 				$errstr = $LANG['e_unexist_user'];
@@ -731,7 +731,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		//Gestion des erreurs
 		$get_error = retrieve(GET, 'error', '');
-		switch($get_error)
+		switch ($get_error)
 		{
 			case 'e_incomplete':
 				$errstr = $LANG['e_incomplete'];

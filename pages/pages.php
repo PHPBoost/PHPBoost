@@ -215,7 +215,7 @@ elseif (!empty($error))
 		'L_TITLE' => $LANG['error']
 	));
 	
-	switch($error)
+	switch ($error)
 	{
 		case 'e_page_not_found' :
 			$Errorh->handler($LANG['pages_not_found'], E_USER_WARNING);

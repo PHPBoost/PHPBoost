@@ -175,7 +175,7 @@ else
 {
 	if (!empty($error))
 	{
-		switch($error)
+		switch ($error)
 		{
 			case 'e_required_fields_empty' :
 				$Errorh->handler($FAQ_LANG['required_fields_empty'], E_USER_WARNING);

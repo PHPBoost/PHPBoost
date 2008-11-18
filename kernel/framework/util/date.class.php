@@ -69,7 +69,7 @@ class Date
 			$time_difference = $this->_compute_server_user_difference($referencial_timezone);
 		}
 		
-		switch($format)
+		switch ($format)
 		{
 			case DATE_NOW:
 				$this->timestamp = time();
@@ -112,7 +112,7 @@ class Date
 			    $array_date = explode('/', $date_format);
 			    for ($i = 0; $i < 3; $i++)
 			    {
-			        switch($array_date[$i])
+			        switch ($array_date[$i])
 			        {
 			            case 'd':
 			            $day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
@@ -150,7 +150,7 @@ class Date
 		if ($timestamp <= 0)
 			return '';
 		
-		switch($format)
+		switch ($format)
 		{
 			case DATE_FORMAT_TINY:
 				return date($LANG['date_format_tiny'], $timestamp);
@@ -249,7 +249,7 @@ class Date
 		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
 	    $server_hour = number_round(date('Z')/3600, 0) - date('I');
 	    
-		switch($referencial_timezone)
+		switch ($referencial_timezone)
 		{
 			// Référentiel : heure du site
 			case TIMEZONE_SITE:

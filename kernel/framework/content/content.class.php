@@ -56,7 +56,7 @@ class Content
 	function get_parser()
 	{
 		global $CONFIG;
-		switch($this->language_type)
+		switch ($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
 				import('content/parser/bbcode_parser');
@@ -82,7 +82,7 @@ class Content
 	function get_unparser()
 	{
 		global $CONFIG;
-		switch($this->language_type)
+		switch ($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
 				import('content/parser/bbcode_unparser');
@@ -114,7 +114,7 @@ class Content
 	//Function which builds an object editor and returns it
 	function get_editor()
 	{
-		switch($this->language_type)
+		switch ($this->language_type)
 		{
 			case BBCODE_LANGUAGE:
 				import('content/editor/bbcode_editor');

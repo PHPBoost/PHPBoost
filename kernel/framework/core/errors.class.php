@@ -68,7 +68,7 @@ class Errors
 		if (error_reporting() == 0) 
 			return true;
 		
-		switch($errno)
+		switch ($errno)
 		{
 			//Notice utilisateur.
 			case E_USER_NOTICE:
@@ -124,7 +124,7 @@ class Errors
 		//Parsage du bloc seulement si une erreur à afficher.
 		if (!empty($errstr))
 		{		
-			switch($errno) 
+			switch ($errno) 
 			{
 				//Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
@@ -219,7 +219,7 @@ class Errors
 	//Récupération du type de l'erreur.
 	function get_errno_class($errno)
 	{
-		switch($errno)
+		switch ($errno)
 		{
 			//Redirection utilisateur.
 			case E_USER_REDIRECT:

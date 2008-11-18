@@ -73,7 +73,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 		
 		$get_error = retrieve(GET, 'error', '', TSTRING_UNSECURE);			
 		$errno = E_USER_NOTICE;
-		switch($get_error)
+		switch ($get_error)
 		{ 
 			case 'forget_mail_send':
 				$errstr = $LANG['e_forget_mail_send'];					

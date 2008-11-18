@@ -347,7 +347,7 @@ elseif ($add)
 	));
 
 	//Gestion des erreurs.
-	switch($get_error)
+	switch ($get_error)
 	{
 		case 'pass_mini':
 		$errstr = $LANG['e_pass_mini'];
@@ -422,7 +422,7 @@ elseif (!empty($id))
 	}
 	
 	//Gestion des erreurs.
-	switch($get_error)
+	switch ($get_error)
 	{
 		case 'pass_mini':
 		$errstr = $LANG['e_pass_mini'];
@@ -740,7 +740,7 @@ elseif (!empty($id))
 			// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 			$field = '';
 			$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
-			switch($row['field'])
+			switch ($row['field'])
 			{
 				case 1:
 				$field = '<label><input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
@@ -847,7 +847,7 @@ else
 	$Pagination = new Pagination();
 	 
 	$get_sort = retrieve(GET, 'sort', '');	
-	switch($get_sort)
+	switch ($get_sort)
 	{
 		case 'time' : 
 		$sort = 'timestamp';

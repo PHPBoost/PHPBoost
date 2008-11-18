@@ -284,7 +284,7 @@ if (!empty($id_get)) //Espace membre
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
 				$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
-				switch($row['field'])
+				switch ($row['field'])
 				{
 					case 1:
 					$field = '<label><input type="text" size="30" id="' . $row['field_name'] . '" name="' . $row['field_name'] . '" class="text" value="' . $row[$row['field_name']] . '" /></label>';
@@ -349,7 +349,7 @@ if (!empty($id_get)) //Espace membre
 		}
 		
 		//Gestion des erreurs.
-		switch($get_error)
+		switch ($get_error)
 		{
 			case 'pass_mini':
 			$errstr = $LANG['e_pass_mini'];
@@ -667,7 +667,7 @@ if (!empty($id_get)) //Espace membre
 		$user_avatar = !empty($row['user_avatar']) ? '<img src="' . $row['user_avatar'] . '" alt="" />' : '<em>' . $LANG['no_avatar'] . '</em>';
 		
 		$user_sex = !empty($row['user_sex']) ? $row['user_sex'] : '&nbsp;';
-		switch($user_sex)
+		switch ($user_sex)
 		{		
 			case 0:
 			$user_sex = '&nbsp;';
@@ -681,7 +681,7 @@ if (!empty($id_get)) //Espace membre
 			default:
 			$user_sex = '&nbsp;';
 		}		
-		switch($row['level'])
+		switch ($row['level'])
 		{		
 			case 0:
 			$user_rank = $LANG['member'];
@@ -773,7 +773,7 @@ if (!empty($id_get)) //Espace membre
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
 				$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
-				switch($row['field'])
+				switch ($row['field'])
 				{
 					case 1:
 						$field = $row[$row['field_name']];
@@ -854,7 +854,7 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 		if (!empty($row['user_id']))
 		{
 			//Gestion des rangs
-			switch($row['level'])
+			switch ($row['level'])
 			{		
 				case 0:
 				$user_rank = $LANG['member'];
@@ -941,7 +941,7 @@ else //Show all member!
 	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
 	
 	$get_sort = retrieve(GET, 'sort', '', TSTRING_UNSECURE);	
-	switch($get_sort)
+	switch ($get_sort)
 	{
 		case 'time' : 
 		$sort = 'timestamp';

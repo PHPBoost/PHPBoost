@@ -226,7 +226,7 @@ else //Affichage.
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	switch($get_error)
+	switch ($get_error)
 	{
 		case 'auth':
 		$errstr = $LANG['e_unauthorized'];

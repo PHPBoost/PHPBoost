@@ -42,7 +42,7 @@ define('TIMEZONE_USER', 3);
 //Récupère les superglobales
 function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 {
-	switch($var_type)
+	switch ($var_type)
 	{
         case GET:
             if (isset($_GET[$var_name]))
@@ -79,7 +79,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 	}
 	
 	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
-	switch($force_type)
+	switch ($force_type)
 	{
 		case TINTEGER:
 			return (int)$var;
@@ -124,7 +124,7 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
     if ($html_protect)
         $var = htmlspecialchars($var, ENT_NOQUOTES);
     
-	switch($addslashes)
+	switch ($addslashes)
 	{
 		case ADDSLASHES_ON:
 			//Si magic_quotes est activé
@@ -510,7 +510,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
     
     if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
     {
-        switch($format)
+        switch ($format)
         {
             case 'date_format':
             $format = $LANG['date_format'];
@@ -560,7 +560,7 @@ function strtotimestamp($str, $date_format)
     $array_date = explode('/', $date_format);
     for ($i = 0; $i < 3; $i++)
     {
-        switch($array_date[$i])
+        switch ($array_date[$i])
         {
             case 'd':
             $day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
@@ -596,7 +596,7 @@ function strtodate($str, $date_format)
     $array_format = explode('/', $date_format);
     for ($i = 0; $i < 3; $i++)
     {
-        switch($array_format[$i])
+        switch ($array_format[$i])
         {
             case 'DD':
             $day = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;

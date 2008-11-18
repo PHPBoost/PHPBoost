@@ -69,7 +69,7 @@ if (empty($key))
 		));
 		
 		//Gestion des erreurs.
-		switch($get_error)
+		switch ($get_error)
 		{
 			case 'verif_code':
 			$errstr = $LANG['e_incorrect_verif_code'];
@@ -290,7 +290,7 @@ if (empty($key))
 			{	
 				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
-				switch($row['field'])
+				switch ($row['field'])
 				{
 					case 1:
 					$field = '<input type="text" size="30" name="' . $row['field_name'] . '" id="' . $row['field_name'] . '" class="text" value="' .  $row['default_values'] . '" />';
