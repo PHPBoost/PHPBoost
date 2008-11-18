@@ -149,18 +149,19 @@ class TinyMCEUnparser extends ContentUnparser
 		
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
-		//indent
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '<blockquote>$1</blockquote>', $this->content);
+		//Trait horizontal
+		$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
 		
 		//Balise size
-		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36 ) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
+		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
+		
+		//Balise indentation
+		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`isU', array(&$this, '_unparse_indent'), $this->content);
 	}
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
 	function _unparse_bbcode_tags()
-	{
-		$this->content = str_replace('<hr class="bb_hr" />', '[line]', $this->content);
-		
+	{		
 		$array_preg = array(
 			'`<p class="float_(left|right)">(.*)</p>`isU',
 			'`<acronym title="([^"]+)" class="bb_acronym">(.*)</acronym>`isU',
@@ -193,9 +194,6 @@ class TinyMCEUnparser extends ContentUnparser
 		
 		//Texte caché
 		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
-		
-		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`sU', '[indent]$1[/indent]', $this->content);
 		
 		//Bloc HTML
 		$this->_parse_imbricated('<div class="bb_block"', '`<div class="bb_block">(.+)</div>`sU', '[block]$1[/block]', $this->content);
@@ -251,6 +249,29 @@ class TinyMCEUnparser extends ContentUnparser
 			$page_name = '';
 		
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
+	}
+	
+	//Fonction de retour de l'indentation
+	function _unparse_indent($matches)
+	{
+		print_r($matches);
+		//Combien de fois c'est indenté ?
+		$nbr_indent = substr_count($matches[1], '<div class="indent">');
+		//Combien de fois c'est fermé ?
+		$nbr_indent_closed = substr_count($matches[3], '</div>');
+		//Si ça a été ouvert et fermé le même nombre de fois
+		if ($nbr_indent == $nbr_indent)
+		{
+			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . '</p>';
+		}
+		//Si c'est plus fermé qu'ouvert c'est que d'autres balises sont fermées, on prend en enlève $nbr_indent - 1
+		elseif ($nbr_indent < $nbr_indent_closed)
+		{
+			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . str_repeat('</p>', $nbr_indent_closed - $nbr_indent + 1);
+		}
+		//Sinon c'est une situation anormale, on renvoie ce qu'on a reçu
+		else
+			return $matches[1] . $matches[2] . $matches[3];
 	}
 }
 

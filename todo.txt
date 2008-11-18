@@ -18,6 +18,11 @@
 
 ------------------------------------- NOYAU ------------------------------------
 
+------------------------------------ MODULES -----------------------------------
+
+[-] Créer un module gestion de base de données (sortir le code de l'administration et le déporter dans un module)
+[-] Contribution dans les news
+
 #################################################################################
 
 
