@@ -75,6 +75,7 @@ html>body #row_contents{
 	width:250px;
 	margin:auto;
 	margin-top:30px;
+	margin-bottom:20px;
 	padding:2px;
 	text-align:center;
 	background-color:#E5E5E5;
@@ -144,26 +145,22 @@ th{
 	margin-left:70%;
 }
 .success_block{
+	float:left;
+	margin-left:5px;
 	text-align:center;
-	width:50%;
+	width:25%;
 	background:#8AC77F;
 	color:green;
 	font-weight:bold;
 	padding:2px;
 }
 .failure_block{	
+	float:left;
+	margin-left:5px;
 	text-align:center;
-	width:50%;
+	width:25%;
 	background:#ee8d8d;
 	color:red;
-	font-weight:bold;
-	padding:2px;
-}
-.unspecified_block{	
-	text-align:center;
-	width:50%;
-	background:#5189bb;
-	color:#133554;
 	font-weight:bold;
 	padding:2px;
 }
