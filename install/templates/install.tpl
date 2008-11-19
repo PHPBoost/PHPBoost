@@ -16,16 +16,7 @@
 			var step = {NUM_STEP};
 		-->
 		</script>
-		<div id="header">
-			<img src="templates/images/header_boost.jpg" alt="PHPBoost" />
-		</div>
-
-		<div id="sub_header">
-			<div id="sub_header_left">
-			</div>
-			<div id="sub_header_right">
-			</div>
-		</div>
+	<div id="global">
 		<div id="left_menu">
 			<table class="table_left">
 				<tr>
@@ -34,7 +25,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next" style="text-align:center;">
+					<td class="row_next row_final" style="text-align:center;">
 						<form action="{U_CHANGE_LANG}" method="post">
 							<p>
 								<select name="new_language" id="change_lang" onchange="document.location = 'install.php?step=' + step + '&amp;lang=' + document.getElementById('change_lang').value;">
@@ -56,9 +47,6 @@
 					</td>
 				</tr>
 			</table>
-						
-			<br /><br />
-			
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -73,9 +61,6 @@
 					</tr>
 				# END link_menu #
 			</table>
-			
-			<br /><br />
-			
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -83,7 +68,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next">
+					<td class="row_next row_final">
 						<div style="margin:auto;width:235px">
 							<div style="text-align:center;margin-bottom:5px;">{L_STEP}</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
@@ -93,9 +78,6 @@
 					</td>
 				</tr>						
 			</table>
-			
-			<br /><br />
-			
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -110,7 +92,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next">
+					<td class="row_next row_final">
 						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" class="valign_middle" />
 						&nbsp;&nbsp;
 						<a href="{U_RESTART}" onclick="return confirm('{L_CONFIRM_RESTART}');">{L_RESTART_INSTALL}</a>
@@ -123,7 +105,8 @@
 			<table class="table_contents">
 				<tr> 
 					<th colspan="2">
-						{L_STEP}
+						<span style="float:left;padding-left:35px;width:257px"><img src="templates/images/phpboost.jpg" alt="Logo PHPBoost" /></span>
+						<span style="float:right;padding-top:15px;padding-right:35px;">{L_STEP}</span>
 					</th>
 				</tr>
 				
@@ -143,7 +126,7 @@
 						{DISTRIBUTION_DESCRIPTION}
 						
 						<fieldset class="submit_case">
-							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" /></a>
+							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" class="valign_middle" /></a>
 						</fieldset>						
 					</td>
 					# ENDIF #
@@ -174,12 +157,10 @@
 								{L_REQUIRE_LICENSE_AGREEMENT}
 								<br />
 								<br />
-								<div style="width:auto;height:300px;overflow-y:scroll;background-color:#91BAD8;">
+								<div style="width:auto;height:340px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1">
 									{L_LICENSE_TERMS}
 								</div>
-								<br />
-								<br />
-								<div style="text-align:center;">
+								<div style="text-align:center;margin:15px;margin-bottom:10px;">
 									<label style="cursor:pointer;">
 										<input type="checkbox" name="license_agreement" id="license_agreement" class="valign_middle" />
 										{L_PLEASE_AGREE}
@@ -321,7 +302,7 @@
 								# ENDIF #
 								<div style="margin:auto;width:500px;">
 									<div id="progress_info" style="text-align:center;"></div>
-									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
+									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
 									&nbsp;<span id="progress_percent">0</span>%
 								</div>
 							</fieldset>
@@ -336,24 +317,22 @@
 							</script>
 							# ENDIF #
 							
-							<fieldset class="submit_case">
-								<form action="{U_CURRENT_STEP}#result_box" method="post">
-									<p>
-										<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
-										<a href="{U_CURRENT_STEP}" title="{L_REFRESH}" id="enougth_js_preview">
-											<img src="templates/images/refresh.png" alt="{L_REFRESH}" class="valign_middle" />
-										</a>
-										<script type="text/javascript">
-										<!--
-											document.getElementById("enougth_js_preview").style.display = "none";
-											document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
-										-->
-										</script>
-										<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
-										<input type="hidden"  name="submit" value="next" />
-									</p>
-								</form>
-							</fieldset>
+							<form action="{U_CURRENT_STEP}#result_box" method="post">
+								<fieldset class="submit_case">
+									<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+									<a href="{U_CURRENT_STEP}" title="{L_REFRESH}" id="enougth_js_preview">
+										<img src="templates/images/refresh.png" alt="{L_REFRESH}" class="valign_middle" />
+									</a>
+									<script type="text/javascript">
+									<!--
+										document.getElementById("enougth_js_preview").style.display = "none";
+										document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+									-->
+									</script>
+									<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+									<input type="hidden"  name="submit" value="next" />
+								</fieldset>
+							</form>
 						</div>
 					</td>
 					# ENDIF #
@@ -457,6 +436,7 @@
 							<img src="templates/images/mysql.png" alt="MySQL" style="float:right; margin-bottom:5px; margin-left:5px;"/>
 						</a>
 						{L_DB_EXPLAIN}
+						<br />
 						
 						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_db();" class="fieldset_content">
 							<fieldset>
@@ -498,7 +478,7 @@
 									<div id="progress_info" style="text-align:center;">
 										{PROGRESS_STATUS}
 									</div>
-									<div style="float:left;height:12px;border:1px solid black;background:white;width:448px;padding:2px;padding-left:3px;padding-right:1px;" id="progress_bar">
+									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
 										{PROGRESS_BAR}
 									</div>
 									&nbsp;<span id="progress_percent">{PROGRESS}</span>%
@@ -578,11 +558,11 @@
 								</dl>
 								<dl>
 									<dt><label for="site_desc">{L_SITE_DESCRIPTION}</label><br /><span>{L_SITE_DESCRIPTION_EXPLAIN}</span></dt>
-									<dd><textarea rows="3" cols="23" name="site_desc" id="site_desc"></textarea></dd>								
+									<dd><textarea rows="3" cols="23" name="site_desc" id="site_desc" class="post"></textarea></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
-									<dd><textarea rows="3" cols="23" name="site_keyword" id="site_keyword"></textarea></dd>								
+									<dd><textarea rows="3" cols="23" name="site_keyword" id="site_keyword" class="post"></textarea></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_timezone">{L_SITE_TIMEZONE}</label><br /><span>{L_SITE_TIMEZONE_EXPLAIN}</span></dt>
@@ -748,8 +728,6 @@
 				</tr>
 			</table>		
 		</div>
-		<div id="footer">
-			<span class="text_small">{L_GENERATED_BY}</span>
-		</div>
+	</div>
 	</body>
 </html>

@@ -32,6 +32,7 @@ define('ARCHIVE_ERROR', true); //Archivage de l'erreur courante, quel que soit l
 define('NO_ARCHIVE_ERROR', false); //N'archive pas l'erreur courante, quel que soit le type.
 define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
+define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
 class Errors
 {
@@ -65,7 +66,7 @@ class Errors
 			return true;
 		
 		//Si une erreur est supprimé par un @ alors on passe
-		if (error_reporting() == 0) 
+		if (!DISPLAY_ALL_ERROR && error_reporting() == 0) 
 			return true;
 		
 		switch ($errno)
