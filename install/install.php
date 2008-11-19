@@ -318,7 +318,7 @@ elseif ($step == 4)
 				$Sql = new Sql();
 	            //Connexion
 				$Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
-							
+					
 				//Création du fichier de configuration
 				require_once('../kernel/framework/io/file.class.php');
 				
@@ -769,7 +769,6 @@ $template->assign_vars(array(
 	'L_STEPS_LIST' => $LANG['steps_list'],
 	'L_LICENSE' => $LANG['license'],
 	'L_INSTALL_PROGRESS' => $LANG['install_progress'],
-	'L_GENERATED_BY' => sprintf($LANG['generated_by'], '<a href="http://www.phpboost.com" style="color:#799cbb;">PHPBoost ' . UPDATE_VERSION . '</a>'),
 	'L_APPENDICES' => $LANG['appendices'],
 	'L_DOCUMENTATION' => $LANG['documentation'],
 	'U_DOCUMENTATION' => $LANG['documentation_link'],
@@ -792,8 +791,12 @@ for ($i = 1; $i <= STEPS_NUMBER; $i++)
 {
 	if ($i < $step)
 		$row_class = 'row_success';
+	elseif ($i == $step && $i == STEPS_NUMBER)
+		$row_class = 'row_current row_final';
 	elseif ($i == $step)
 		$row_class = 'row_current';
+	elseif ($i == STEPS_NUMBER)
+		$row_class = 'row_next row_final';	
 	else
 		$row_class = 'row_next';
 	

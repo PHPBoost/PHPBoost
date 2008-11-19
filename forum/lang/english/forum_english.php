@@ -30,6 +30,8 @@
 #                                                           English                                                                             #
 ####################################################
 
+global $CONFIG;
+
 //Admin
 $LANG['parent_category'] = 'Parent category';
 $LANG['subcat'] = 'Subcategory';

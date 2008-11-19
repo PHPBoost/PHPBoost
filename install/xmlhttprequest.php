@@ -6,7 +6,6 @@ define('PATH_TO_ROOT', '..');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 
-define('ERROR_REPORTING', E_ALL | E_NOTICE);
 @error_reporting(ERROR_REPORTING);
 
 $lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';

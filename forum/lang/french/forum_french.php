@@ -30,6 +30,8 @@
 #                                                           French                                                                 #
 ####################################################
 
+global $CONFIG;
+
 //Admin
 $LANG['parent_category'] = 'Catégorie parente';
 $LANG['subcat'] = 'Sous-catégorie';

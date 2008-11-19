@@ -120,6 +120,9 @@ input:focus, textarea:focus{
 fieldset textarea.post{
 	width:90%;
 	display:inline;	
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 textarea{
 	display:block;
@@ -128,6 +131,9 @@ textarea{
 }
 input.text{
 	padding:2px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 input.submit{
 	border:1px solid #B0C1CB;	
@@ -166,7 +172,10 @@ optgroup, select{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	cursor:pointer;
 	vertical-align:middle;
-	width:auto;	
+	width:auto;		
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 optgroup{
 	font-weight:bold;
@@ -208,6 +217,9 @@ fieldset{
 	border:1px solid #71BAF1;
 	background:#F1F4F6;
 	position:relative;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 fieldset.fieldset_submit{
 	margin-top:-10px;
