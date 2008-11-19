@@ -33,7 +33,7 @@
 									<option value="{lang.LANG}" {lang.SELECTED}>{lang.LANG_NAME}</option>
 									# END lang #
 								</select>
-								<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
+								&nbsp;&nbsp;&nbsp;<img src="../images/stats/countries/{LANG_IDENTIFIER}.png" alt="" class="valign_middle" />
 							</p>
 							<p id="button_change_lang">
 								<input type="submit" class="submit" value="{L_CHANGE}" />
@@ -113,8 +113,8 @@
 				<tr> 					
 					# IF C_INTRO #
 					<td class="row_contents">						
-						<span style="float:left;padding:8px;padding-top:0px">
-							<img src="templates/images/phpboost.png" alt="Logo PHPBoost" />
+						<span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
+							<img src="templates/images/PHPBoost_box3.0.png" alt="Logo PHPBoost" />
 						</span>
 						<h1>{L_INTRO_TITLE}</h1>
 						{L_INTRO_EXPLAIN}
@@ -123,6 +123,7 @@
 						
 						<h1>{DISTRIBUTION}</h1>
 						{L_DISTRIBUTION_EXPLAIN}
+						<br />
 						{DISTRIBUTION_DESCRIPTION}
 						
 						<fieldset class="submit_case">

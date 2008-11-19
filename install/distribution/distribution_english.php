@@ -29,7 +29,7 @@
 define('DISTRIBUTION_NAME', 'Publication');
 
 //Description de la distribution
-define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;"/>
+define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
 <p>You are going to install the <strong>Publication</strong> distribution of PHPBoost.</p>
 <p>This distribution is ideal to create a website which will purpose some content to visitors, that can be text, pictures or others kinds of content.</p>');
 
