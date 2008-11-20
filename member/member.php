@@ -91,6 +91,7 @@ if (!empty($id_get)) //Espace membre
 		$Template->assign_vars(array(
 			'C_MEMBER_UPDATE_PROFIL' => true,
 			'USER_THEME' => $row['user_theme'],
+			'USER_LOGIN' => $User->get_attribute('login'),
 			'MAIL' => $row['user_mail'],
 			'LOCAL' => $row['user_local'],
 			'WEB' => $row['user_web'],
@@ -111,6 +112,10 @@ if (!empty($id_get)) //Espace membre
 			'USER_YAHOO' => $row['user_yahoo'],
 			'U_MEMBER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
+			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
+			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
+			'L_PASSWORD_SAME' => $LANG['e_pass_same'],
+			'L_PASSWORD_HOW' => $LANG['password_how'],
 			'L_MEMBER_AREA' => $LANG['member_area'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
 			'L_REQUIRE' => $LANG['require'],
