@@ -119,7 +119,7 @@
 					document.getElementById('msg_login').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PSEUDO_AUTH}";
 				}
 				else if( xhr_object.readyState == 4 )
-					alert(xhr_object.responseText);//document.getElementById('msg_login').innerHTML = '';
+					document.getElementById('msg_login').innerHTML = '';
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
