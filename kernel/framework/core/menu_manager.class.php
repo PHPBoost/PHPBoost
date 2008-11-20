@@ -57,7 +57,7 @@ class MenuManager
 			case MENU_PERSONNAL:
 				return 'if ($User->check_auth(' . var_export(unserialize($auth), true) . ', AUTH_MENUS)){' . "\n"
 				. "\t" . 'include_once(PATH_TO_ROOT . \'/menus/' . $contents . "');\n"
-				. "\t" . '$MENUS[\'' . $location . '\'] .= $Template->pparse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);'
+				. "\t" . '$MENUS[\'' . $location . '\'] .= $tpl_menu->parse(\'' . str_replace('.php', '', $contents) . '\', TEMPLATE_STRING_MODE);'
 				. "\n" . '}';
 				
 			case MENU_CONTENTS:

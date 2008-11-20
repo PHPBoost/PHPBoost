@@ -68,6 +68,7 @@ $Cache->load('groups'); //Cache des groupes.
 $Cache->load('member'); //Chargement de la configuration des membres.
 $Cache->load('modules'); //Cache des autorisations des modules
 $Cache->load('themes'); //Récupération de la configuration des thèmes.
+$Cache->load('langs'); //Récupération de la configuration des thèmes.
 
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
@@ -99,10 +100,17 @@ else
 }
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
-$User->set_user_theme(find_require_dir(PATH_TO_ROOT . '/templates/', ($User->get_attribute('user_theme') == '' || $CONFIG_MEMBER['force_theme'] == 1) ? $CONFIG['theme'] : $User->get_attribute('user_theme')));
+$user_theme = $User->get_attribute('user_theme');
+if ($CONFIG_MEMBER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure']) || !$User->check_level($THEME_CONFIG[$user_theme]['secure'])) //Thème autorisé pour le membre?
+	$user_theme = $CONFIG['theme'];
+$User->set_user_theme(find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme));
 
 //Si le dossier de langue n'existe pas on prend le suivant exisant.
-$User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', ($User->get_attribute('user_lang') == '' ? $CONFIG['lang'] : $User->get_attribute('user_lang'))));
+$user_lang = $User->get_attribute('user_lang');
+if (!isset($LANGS_CONFIG[$user_lang]['secure']) || !$User->check_level($LANGS_CONFIG[$user_lang]['secure'])) //Langue autorisée pour le membre?
+	$user_lang = $CONFIG['lang'];
+$User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang));
+
 $LANG = array();
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'); //!\\ Langues //!\\
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion des langues des erreurs.

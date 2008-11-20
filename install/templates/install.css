@@ -246,6 +246,11 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	border:none;
 	background:none;	
 }
+.img_submit:focus{
+	vertical-align:middle;
+	border:none;
+	background:none;	
+}
 
 input, textarea, optgroup, select, .xmlhttprequest_preview{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;

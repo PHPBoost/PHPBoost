@@ -33,7 +33,7 @@
 				</dl>		
 				<dl>
 					<dt><label for="mail_objet">{L_OBJET}</label></dt>
-					<dd><label><input type="text" size="30" name="mail_objet" id="mail_objet" class="text" /></label></dd>
+					<dd><label><input type="text" size="30" name="mail_object" id="mail_object" class="text" value="{CONTACT_OBJECT}" /></label></dd>
 				</dl>
 				# IF C_VERIF_CODE #
 				<dl>
@@ -46,7 +46,7 @@
 				</dl>
 				# ENDIF #
 				<label for="mail_contents">* {L_CONTENTS}</label>
-				<label><textarea rows="10" cols="47" id="mail_contents" name="mail_contents"></textarea></label>
+				<label><textarea rows="10" cols="47" id="mail_contents" name="mail_contents">{CONTACT_CONTENTS}</textarea></label>
 			</fieldset>
 			
 			<fieldset class="fieldset_submit">

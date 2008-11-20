@@ -50,7 +50,10 @@ if ($install)
 	{
 		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
-		redirect(HOST . SCRIPT); 
+		//Régénération du cache.
+		$Cache->Generate_file('langs');
+		
+		redirect(HOST . SCRIPT);
 	}
 	else
 		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');

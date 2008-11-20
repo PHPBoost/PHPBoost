@@ -46,10 +46,8 @@ if (empty($key))
 			'register' => 'member/register.tpl'
 		));
 		
-		$Template->assign_block_vars('confirm', array(
-		));
-				
 		$Template->assign_vars(array(
+			'C_CONFIRM_REGISTER' => true,
 			'MSG_REGISTER' => $CONFIG_MEMBER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
@@ -63,9 +61,6 @@ if (empty($key))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
-		));
-		
-		$Template->assign_block_vars('register', array(
 		));
 		
 		//Gestion des erreurs.
@@ -101,16 +96,20 @@ if (empty($key))
 		if (isset($LANG[$get_erroru]))
 			$Errorh->handler($LANG[$get_erroru], E_USER_WARNING);  
 			
+		$Template->assign_vars(array(
+			'C_REGISTER' => true
+		));	
+			
 		//Mode d'activation du membre.
 		if ($CONFIG_MEMBER['activ_mbr'] == '1')
 		{
-			$Template->assign_block_vars('register.activ_mbr', array(
+			$Template->assign_block_vars('activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_mail']
 			));
 		}
 		elseif ($CONFIG_MEMBER['activ_mbr'] == '2')
 		{
-			$Template->assign_block_vars('register.activ_mbr', array(
+			$Template->assign_block_vars('activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_admin']
 			));
 		}
@@ -131,7 +130,7 @@ if (empty($key))
 		//Autorisation d'uploader un avatar sur le serveur.
 		if ($CONFIG_MEMBER['activ_up_avatar'] == 1)
 		{
-			$Template->assign_block_vars('register.upload_avatar', array(
+			$Template->assign_block_vars('upload_avatar', array(
 				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
 				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
 				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
@@ -141,28 +140,26 @@ if (empty($key))
 		//Gestion langue par défaut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
-		$result = $Sql->query_while("SELECT lang 
-		FROM ".PREFIX."lang
-		WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{	
-			$lang_info = load_ini_file('../lang/', $row['lang']);
-			if ($lang_info)
+		foreach($LANGS_CONFIG as $lang => $array_info)
+		{
+			if ($array_info['secure'] == -1)
 			{
-				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row['lang'];
-				$array_identifier .= 'array_identifier[\'' . $row['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
+				$info_lang = load_ini_file('../lang/', $lang);
 				$selected = '';
-				if ($row['lang'] == $CONFIG['lang'])
+				if ($CONFIG['lang'] == $lang)
 				{
-					$selected = 'selected="selected"';
-					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-				}			
-				$Template->assign_block_vars('register.select', array(
-					'LANG' => '<option value="' . $row['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
+					$selected = ' selected="selected"';
+					$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
+				}
+				
+				$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
+				$Template->assign_block_vars('select_lang', array(
+					'NAME' => !empty($info_lang['name']) ? $info_lang['name'] : $lang,
+					'IDNAME' => $lang,
+					'SELECTED' => $selected
 				));
 			}
 		}
-		$Sql->query_close($result);
 		
 		//Gestion éditeur par défaut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -192,6 +189,10 @@ if (empty($key))
 			'L_REQUIRE_PASSWORD' => $LANG['require_password'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REQUIRE' => $LANG['require'],
+			'L_PASSWORD_SAME' => $LANG['e_pass_same'],
+			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
+			'L_PSEUDO_AUTH' => $LANG['e_pseudo_auth'],
+			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
 			'L_MAIL' => $LANG['mail'],
 			'L_VALID' => $LANG['valid'],
 			'L_PSEUDO' => $LANG['pseudo'],
@@ -247,29 +248,26 @@ if (empty($key))
 		//Gestion thème par défaut.
 		if ($CONFIG_MEMBER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
-			$result = $Sql->query_while("SELECT theme 
-			FROM ".PREFIX."themes
-			WHERE activ = 1 AND secure = -1", __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
-			{	
-				$theme_info = load_ini_file('../templates/' . $row['theme'] . '/config/', $CONFIG['lang']);
-				if ($theme_info)
+			foreach($THEME_CONFIG as $theme => $array_info)
+			{
+				if ($array_info['secure'] == -1)
 				{
-					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row['theme'];
-					$selected = ($row['theme'] == $CONFIG['theme']) ? 'selected="selected"' : '';
-					$Template->assign_block_vars('register.select_theme', array(
-						'THEME' => '<option value="' . $row['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
+					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
+					$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
+					$Template->assign_block_vars('select_theme', array(
+						'NAME' => $info_theme['name'],
+						'IDNAME' => $theme,
+						'SELECTED' => $selected
 					));
 				}
 			}
-			$Sql->query_close($result);	
 		}
 		else //Thème par défaut forcé.
 		{
-			$theme_info = load_ini_file('/config/', $CONFIG['lang']);
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
-			$Template->assign_block_vars('register.select_theme', array(
-				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
+			$theme_info = load_ini_file('/config/', get_ulang());
+			$Template->assign_block_vars('select_theme', array(
+				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'],
+				'IDNAME' => $CONFIG['theme']
 			));
 		}
 
@@ -280,7 +278,7 @@ if (empty($key))
 			$Template->assign_vars(array(			
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
-			$Template->assign_block_vars('register.miscellaneous', array(			
+			$Template->assign_block_vars('miscellaneous', array(			
 			));
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
 			FROM ".PREFIX."member_extend_cat AS exc
@@ -344,7 +342,7 @@ if (empty($key))
 					break;
 				}				
 				
-				$Template->assign_block_vars('register.miscellaneous.list', array(
+				$Template->assign_block_vars('miscellaneous.list', array(
 					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
@@ -365,7 +363,8 @@ elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation 
 		'register' => 'member/register.tpl'
 	));
 	
-	$Template->assign_block_vars('activ', array(
+	$Template->assign_vars(array(
+		'C_ACTIVATION_REGISTER' => true
 	));	
 	
 	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);

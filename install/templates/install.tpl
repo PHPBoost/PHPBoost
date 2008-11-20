@@ -472,14 +472,14 @@
 								<legend>
 									{L_RESULT}
 								</legend>
-								<div style="margin:auto;width:500px;">
+								<div style="margin:auto;margin-bottom:15px;width:500px;">
 									<div id="db_result">
 										{ERROR}
 									</div>
 									<div id="progress_info" style="text-align:center;">
 										{PROGRESS_STATUS}
 									</div>
-									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
+									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar">
 										{PROGRESS_BAR}
 									</div>
 									&nbsp;<span id="progress_percent">{PROGRESS}</span>%
@@ -704,10 +704,10 @@
 					# IF C_END #
 					<td class="row_contents">
 						{CONTENTS}						
-						<fieldset class="submit_case">
+						<fieldset class="submit_case" style="width:450px;text-align:center">
 							<table style="margin:auto;">
 								<tr>
-									<td>
+									<td style="width:50%">
 										<a href="{U_INDEX}"><img src="templates/images/go-home.png" alt="{L_SITE_INDEX}" /></a>
 									</td>
 									<td style="padding: 0 20px;">
@@ -715,7 +715,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td>
+									<td style="width:50%">
 										<a href="{U_INDEX}">{L_SITE_INDEX}</a>
 									</td>
 									<td style="padding:0 20px;">

@@ -35,11 +35,17 @@ $id = retrieve(GET, 'id', 0);
 if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
 	$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	//Régénération du cache.
+	$Cache->Generate_file('themes');
+	
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
 	$Sql->query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	//Régénération du cache.
+	$Cache->Generate_file('themes');
+		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
@@ -52,8 +58,11 @@ elseif (isset($_POST['valid'])) //Modification de tout les thèmes.
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-			$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
+	//Régénération du cache.
+	$Cache->Generate_file('themes');
+		
 	redirect(HOST . SCRIPT);	
 }
 elseif ($edit && !empty($id)) //Edition
