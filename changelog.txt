@@ -28,6 +28,8 @@
 [*] [color=red]Nouveauté :[/color] Enregistrement en xml des flux Rss/Atom, intégration d'un parseur xml.
 [*] [color=red]Nouveauté :[/color] Nouveau système de captcha (anti-spam), avec différents niveaux de difficulté.
 [*] [color=red]Nouveauté :[/color] Amélioration du système des sessions, les modules gèrent les sessions pour les invités.
+[*] [color=red]Nouveauté :[/color] Nouvelle vérifications interactive (ajax) dans l'inscription, permet de signaler instantanément les erreurs dans le formulaire.
+[*] [color=red]Nouveauté :[/color] Nouvel installateur.
 [*] Système de cache amélioré.
 [*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5
@@ -48,6 +50,7 @@
 [*] Automatisation des configurations par défaut des modules.
 [*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
 [*] Réorganisation du chargement de la tête de page.
+[*] Cache pour les thèmes et les langues.
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
 [*] Possibilité d'insérer plusieurs css pour les modules.

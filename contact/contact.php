@@ -30,85 +30,79 @@ require_once('../contact/contact_begin.php');
 require_once('../kernel/header.php'); 
 
 $mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNSECURE);
-$mail_objet = retrieve(POST, 'mail_objet', '', TSTRING_UNSECURE);
+$mail_object = retrieve(POST, 'mail_object', '', TSTRING_UNSECURE);
 $mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNSECURE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
+$get_error = '';
+
+include_once('../kernel/framework/util/captcha.class.php');
+$Captcha = new Captcha();
 
 ###########################Envoi##############################
 if (!empty($mail_valid))
 {
-	$Template->set_filenames(array(
-		'contact'=> 'contact/contact.tpl'
-	));	
-		
 	//Code de vérification si activé
-	include_once('../kernel/framework/util/captcha.class.php');
-	$Captcha = new Captcha();
-	
 	if (!$CONFIG_CONTACT['contact_verifcode'] || $Captcha->is_valid()) //Code de vérification si activé
 	{
 		include_once('../kernel/framework/io/mail.class.php');
 		$Mail = new Mail();
 
-		if ($Mail->send($CONFIG['mail'], $mail_objet, $mail_contents, $mail_from, '', 'user')) //Succès mail
-			redirect(HOST . SCRIPT . url('?error=success', '', '&') . '#errorh');
+		if ($Mail->send($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+			$get_error = 'success';
 		else //Erreur mail
-			redirect(HOST . SCRIPT . url('?error=error', '', '&') . '#errorh');
+			$get_error = 'error';
 	}
 	else //Champs incomplet!
-		redirect(HOST . SCRIPT . url('?error=verif', '', '&') . '#errorh');
+		$get_error = 'verif';
 }
 elseif (!empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) )) //Champs incomplet!
-	redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
-else
-{	
-	###########################Affichage##############################
-	$Template->set_filenames(array(
-		'contact'=> 'contact/contact.tpl'
-	));
+	$get_error = 'incomplete';
 	
-	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
-	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif ($get_error == 'verif')
-		$Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
-	elseif ($get_error == 'success')//Message de succès.
-		$Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
-	elseif ($get_error == 'error')//Message de succès.
-		$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
-		
-	//Code de vérification, anti-bots.
-	include_once('../kernel/framework/util/captcha.class.php');
-	$Captcha = new Captcha();
-	if ($Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
-	{
-		$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
-		$Template->assign_vars(array(
-			'C_VERIF_CODE' => true,
-			'VERIF_CODE' => $Captcha->display_form(),
-			'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
-		));		
-	}
-	
-	$Template->assign_vars(array(
-		'MAIL' => $User->get_attribute('user_mail'),
-		'L_REQUIRE_MAIL' => $LANG['require_mail'],
-		'L_REQUIRE_TEXT' => $LANG['require_text'] ,
-		'L_CONTACT_MAIL' => $LANG['contact_mail'],
-		'L_MAIL' => $LANG['mail'],
-		'L_VERIF_CODE' => $LANG['verif_code'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_VALID_MAIL' => $LANG['valid_mail'],
-		'L_OBJET' => $LANG['objet'],
-		'L_CONTENTS' => $LANG['contents'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_RESET' => $LANG['reset'],
-		'U_ACTION_CONTACT' => SID
-	));
+###########################Affichage##############################
+$Template->set_filenames(array(
+	'contact'=> 'contact/contact.tpl'
+));
 
-	$Template->pparse('contact'); 
+//Gestion erreur.
+if ($get_error == 'incomplete')
+	$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+elseif ($get_error == 'verif')
+	$Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
+elseif ($get_error == 'success')//Message de succès.
+	$Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
+elseif ($get_error == 'error')//Message de succès.
+	$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
+	
+//Code de vérification, anti-bots.
+if ($Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
+{
+	$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
+	$Template->assign_vars(array(
+		'C_VERIF_CODE' => true,
+		'VERIF_CODE' => $Captcha->display_form(),
+		'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
+	));		
 }
+
+$Template->assign_vars(array(
+	'MAIL' => $User->get_attribute('user_mail'),
+	'CONTACT_OBJECT' => $mail_object,
+	'CONTACT_CONTENTS' => $mail_contents,
+	'L_REQUIRE_MAIL' => $LANG['require_mail'],
+	'L_REQUIRE_TEXT' => $LANG['require_text'] ,
+	'L_CONTACT_MAIL' => $LANG['contact_mail'],
+	'L_MAIL' => $LANG['mail'],
+	'L_VERIF_CODE' => $LANG['verif_code'],
+	'L_REQUIRE' => $LANG['require'],
+	'L_VALID_MAIL' => $LANG['valid_mail'],
+	'L_OBJET' => $LANG['objet'],
+	'L_CONTENTS' => $LANG['contents'],
+	'L_SUBMIT' => $LANG['submit'],
+	'L_RESET' => $LANG['reset'],
+	'U_ACTION_CONTACT' => SID
+));
+
+$Template->pparse('contact'); 
 
 require_once('../kernel/footer.php'); 
 

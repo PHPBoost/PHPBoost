@@ -94,16 +94,16 @@
 						</td>
 						# IF list.C_THEME_NOT_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = \'admin_themes.php?activ=1&amp;id={list.IDTHEME}\'" /> {L_YES}
-							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = \'admin_themes.php?activ=0&amp;id={list.IDTHEME}\'" /> {L_NO}
+							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}'" /> {L_YES}
+							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}'" /> {L_NO}
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure" onchange="document.location = \'admin_themes.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id={list.IDTHEME}\'">'; 
+							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}'">'; 
 								{list.OPTIONS}
 							</select>
 						</td>
 						<td class="row2" style="text-align:center;">
-							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt /></a>
+							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
 						</td>
 						<td class="row2" style="text-align:center;">
 							<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
@@ -118,7 +118,7 @@
 							{L_GUEST}
 						</td>
 						<td class="row2" style="text-align:center;">
-							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt /></a>
+							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
 						</td>
 						<td class="row2" style="text-align:center;">
 							-

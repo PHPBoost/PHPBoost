@@ -336,17 +336,36 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $THEME_CONFIG;' . "\n";
-		$result = $Sql->query_while("SELECT theme, left_column, right_column
+		$result = $Sql->query_while("SELECT theme, left_column, right_column, secure
 		FROM ".PREFIX."themes
 		WHERE activ = 1", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'left_column\'] = ' . var_export((bool)$row['left_column'], true) . ';' . "\n";
-			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n\n";
+			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'right_column\'] = ' . var_export((bool)$row['right_column'], true) . ';' . "\n";
+			$code .= '$THEME_CONFIG[\'' . addslashes($row['theme']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n\n";
 		}
 		$Sql->query_close($result);
         
-		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;';
+		return $code . '$THEME_CONFIG[\'default\'][\'left_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'right_column\'] = true;' . "\n" . '$THEME_CONFIG[\'default\'][\'secure\'] = \'-1\'';
+	}
+	
+	//Configuration des langues.
+	function _get_langs()
+	{
+		global $Sql;
+		
+		$code = 'global $LANGS_CONFIG;' . "\n";
+		$result = $Sql->query_while("SELECT lang, secure
+		FROM ".PREFIX."lang
+		WHERE activ = 1", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$code .= '$LANGS_CONFIG[\'' . addslashes($row['lang']) . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n\n";
+		}
+		$Sql->query_close($result);
+        
+		return $code;
 	}
 	
 	//Day
@@ -495,7 +514,7 @@ class Cache
 	
 	## Private Attributes ##
 	//Tableau qui contient tous les fichiers supportés dans cette classe
-    var $files = array('config', 'modules', 'menus', 'htaccess', 'themes', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
+    var $files = array('config', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'smileys', 'stats');
 }
 
 ?>

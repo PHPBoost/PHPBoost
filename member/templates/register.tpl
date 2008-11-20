@@ -1,5 +1,4 @@
-		# START confirm #
-
+		# IF C_CONFIRM_REGISTER #
 		<form action="" method="post">
 			<table class="module_table">
 				<tr>
@@ -29,12 +28,10 @@
 				<input type="submit" name="register" value="{L_SUBMIT}" class="submit" />
 			</fieldset>
 		</form>
+		# ENDIF #
 
-		# END confirm #
 
-
-		# START activ #
-
+		# IF C_ACTIVATION_REGISTER #
 		<form action="" method="post">
 		<table class="module_table">
 			<tr>
@@ -56,12 +53,10 @@
 			</tr>
 		</table>
 		</form>
+		# ENDIF #
 
-		# END activ #
 
-
-		# START register #
-
+		# IF C_REGISTER #
 		<script type="text/javascript">
 		<!--
 		function check_form()
@@ -108,8 +103,83 @@
 		{JS_LANG_IDENTIFIER}
 		function change_img_lang(id, lang)
 		{
-			if( array_identifier[lang] && document.getElementById(id) ) 
+			if (array_identifier[lang] && document.getElementById(id)) 
 				document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
+		}
+		
+		function XMLHttpRequest_register_login(value)
+		{
+			document.getElementById('msg_login').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" />';
+			data = "login=" + value;
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php');
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
+				{
+					document.getElementById('msg_login').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PSEUDO_AUTH}";
+				}
+				else if( xhr_object.readyState == 4 )
+					alert(xhr_object.responseText);//document.getElementById('msg_login').innerHTML = '';
+			}
+			xmlhttprequest_sender(xhr_object, data);
+		}
+		function XMLHttpRequest_register_mail(value)
+		{
+			document.getElementById('msg_email').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" />';
+			data = "mail=" + value;
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php');
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
+				{
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_AUTH}";
+				}
+				else if( xhr_object.readyState == 4 )
+					document.getElementById('msg_email').innerHTML = '';
+			}
+			xmlhttprequest_sender(xhr_object, data);
+		}
+		function check_login(value) 
+		{
+			if (value.length<3)			
+				document.getElementById('msg_login').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PSEUDO_HOW}";
+			else	
+				XMLHttpRequest_register_login(value);
+		}
+		function check_email(value) 
+		{
+			regex=/^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+			if (!regex.test(value))
+				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_INVALID}";
+			else	
+				XMLHttpRequest_register_mail(value);	
+		}
+		function check_password(value) 
+		{
+			document.getElementById('msg_password2').innerHTML = "";
+			if (value.length<6)
+				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			else
+			{
+				document.getElementById('msg_password1').innerHTML = "";
+				var password = document.getElementById('pass_bis').value;
+				
+				if (password != value)
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+			}	
+		}
+		function check_password2(value) 
+		{
+			document.getElementById('msg_password1').innerHTML = "";
+			if (value.length<6)
+				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			else
+			{
+				document.getElementById('msg_password2').innerHTML = "";
+				var password = document.getElementById('pass').value;
+				if (password != value)
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+			}	
 		}
 		-->		
 		</script>
@@ -123,6 +193,7 @@
 		<br />		
 		# ENDIF #
 		
+		
 		<script type="text/javascript">
 		<!--
 			var theme = '{THEME}';
@@ -135,27 +206,27 @@
 				<p>
 					{L_REQUIRE}
 					
-					# START register.activ_mbr #
+					# START activ_mbr #
 					<br />
-					<strong>{register.activ_mbr.L_ACTIV_MBR}</strong>
-					# END register.activ_mbr #
+					<strong>{activ_mbr.L_ACTIV_MBR}</strong>
+					# END activ_mbr #
 				</p>
 				
 				<dl>
 					<dt><label for="log">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_HOW}</span></dt>
-					<dd><label><input size="25" type="text" class="text" name="log" id="log" maxlength="25" /></label></dd>			
+					<dd><label><input size="25" type="text" class="text" name="log" id="log" maxlength="25" onblur="check_login(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_login"></div></label></dd>			
 				</dl>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input size="30" type="text" class="text" name="mail" id="mail" maxlength="50" /></label></dd>			
+					<dd><label><input size="30" type="text" class="text" name="mail" id="mail" maxlength="50" onblur="check_email(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_email"></div></label></dd>			
 				</dl>
 				<dl>
 					<dt><label for="pass">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_HOW}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" /></label></dd>			
+					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password1"></div></label></dd>			
 				</dl>
 				<dl>
 					<dt><label for="pass_bis">* {L_CONFIRM_PASSWORD}</label></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" /></label></dd>			
+					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password2"></div></label></dd>			
 				</dl>
 				# IF C_VERIF_CODE #
 				<dl>
@@ -172,11 +243,11 @@
 					<dd>
 						<label>
 							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">						
-								# START register.select #						
-								{register.select.LANG}						
-								# END register.select #						
+								# START select_lang #
+									<option value="{select_lang.IDNAME}"{select_lang.SELECTED}>{select_lang.NAME}</option>
+								# END select_lang #					
 							</select>
-							<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+							&nbsp;<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label>
 					</dd>			
 				</dl>
@@ -189,9 +260,9 @@
 					<dd>
 						<label>
 							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">			
-								# START register.select_theme #						
-								{register.select_theme.THEME}						
-								# END register.select_theme #						
+								# START select_theme #
+									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
+								# END select_theme #
 							</select>
 							<img id="img_theme" src="../templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label>
@@ -283,45 +354,44 @@
 			
 			<fieldset>
 				<legend>{L_AVATAR_MANAGEMENT}</legend>		
-				# START register.upload_avatar #
+				# START upload_avatar #
 				<dl>
 					<dt><label for="avatars">{L_UPLOAD_AVATAR}</label><br /><span>{L_UPLOAD_AVATAR_WHERE}</span></dt>
 					<dd><label>
 						<input type="file" name="avatars" id="avatars" size="30" class="text" />					
 						<input type="hidden" name="max_file_size" value="2000000" />
 						<br />
-						{L_WEIGHT_MAX}: {register.upload_avatar.WEIGHT_MAX} ko
+						{L_WEIGHT_MAX}: {upload_avatar.WEIGHT_MAX} ko
 						<br />
-						{L_HEIGHT_MAX}: {register.upload_avatar.HEIGHT_MAX} pixels
+						{L_HEIGHT_MAX}: {upload_avatar.HEIGHT_MAX} pixels
 						<br />
-						{L_WIDTH_MAX}: {register.upload_avatar.WIDTH_MAX} pixels
+						{L_WIDTH_MAX}: {upload_avatar.WIDTH_MAX} pixels
 					</label></dd>			
 				</dl>
-				# END register.upload_avatar #		
+				# END upload_avatar #		
 				<dl>
 					<dt><label for="user_avatar">{L_AVATAR_LINK}</label><br /><span>{L_AVATAR_LINK_WHERE}</span></dt>
 					<dd><label><input type="text" name="user_avatar" id="user_avatar" size="30" /></label></dd>			
 				</dl>
 			</fieldset>
 
-			# START register.miscellaneous #
+			# START miscellaneous #
 			<fieldset>
 				<legend>{L_MISCELLANEOUS}</legend>	
 					
-				# START register.miscellaneous.list #
+				# START miscellaneous.list #
 				<dl>
-					<dt><label for="{register.miscellaneous.list.ID}">{register.miscellaneous.list.NAME}</label><br /><span>{register.miscellaneous.list.DESC}</span></dt>
-					<dd>{register.miscellaneous.list.FIELD}</dd>
+					<dt><label for="{miscellaneous.list.ID}">{miscellaneous.list.NAME}</label><br /><span>{miscellaneous.list.DESC}</span></dt>
+					<dd>{miscellaneous.list.FIELD}</dd>
 				</dl>
-				# END register.miscellaneous.list #	
+				# END miscellaneous.list #	
 			</fieldset>
-			# END register.miscellaneous #	
+			# END miscellaneous #	
 
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="register_valid" value="{L_SUBMIT}" class="submit" />	
+				<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />	
 			</fieldset>
 		</form>
-
-		# END register #
+		# ENDIF #
 		

@@ -159,29 +159,27 @@ if (!empty($id_get)) //Espace membre
 		//Gestion langue par défaut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
-		$result = $Sql->query_while("SELECT lang 
-		FROM ".PREFIX."lang
-		WHERE activ = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-		while ($row2 = $Sql->fetch_assoc($result))
-		{	
-			$lang_info = load_ini_file('../lang/', $row2['lang']);
-			if ($lang_info)
+		$ulang = get_ulang();
+		foreach($LANGS_CONFIG as $lang => $array_info)
+		{
+			if ($User->check_level($array_info['secure']))
 			{
-				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
-				$array_identifier .= 'array_identifier[\'' . $row2['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
+				$info_lang = load_ini_file('../lang/', $lang);
 				$selected = '';
-				if ($row2['lang'] == $row['user_lang'])
+				if ($ulang == $lang)
 				{
-					$selected = 'selected="selected"';
-					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-				}			
+					$selected = ' selected="selected"';
+					$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
+				}
+				
+				$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
 				$Template->assign_block_vars('select_lang', array(
-					'LANG' => '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>'
+					'NAME' => !empty($info_lang['name']) ? $info_lang['name'] : $lang,
+					'IDNAME' => $lang,
+					'SELECTED' => $selected
 				));
 			}
-		}
-		$Sql->query_close($result);
-		
+		}		
 		$Template->assign_vars(array(
 			'JS_LANG_IDENTIFIER' => $array_identifier,
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
@@ -190,29 +188,27 @@ if (!empty($id_get)) //Espace membre
 		//Gestion thème par défaut.
 		if ($CONFIG_MEMBER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
-			$result = $Sql->query_while("SELECT theme 
-			FROM ".PREFIX."themes
-			WHERE activ = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-			while ($row2 = $Sql->fetch_assoc($result))
-			{	
-				$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', get_ulang());
-				if ($theme_info)
+			$utheme = get_utheme();
+			foreach($THEME_CONFIG as $theme => $array_info)
+			{
+				if ($User->check_level($array_info['secure']))
 				{
-					$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
-					$selected = ($row2['theme'] == $row['user_theme']) ? 'selected="selected"' : '';
+					$selected = ($utheme == $theme) ? ' selected="selected"' : '';
+					$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
 					$Template->assign_block_vars('select_theme', array(
-						'THEME' => '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>'
+						'NAME' => $info_theme['name'],
+						'IDNAME' => $theme,
+						'SELECTED' => $selected
 					));
 				}
 			}
-			$Sql->query_close($result);	
 		}
 		else //Thème par défaut forcé.
 		{
 			$theme_info = load_ini_file('/config/', get_ulang());
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'];
 			$Template->assign_block_vars('select_theme', array(
-				'THEME' => '<option value="' . $CONFIG['theme'] . '" selected="selected">' . $theme_name . '</option>'
+				'NAME' => !empty($theme_info['name']) ? $theme_info['name'] : $CONFIG['theme'],
+				'IDNAME' => $CONFIG['theme']
 			));
 		}
 		

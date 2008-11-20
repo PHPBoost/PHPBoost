@@ -36,12 +36,18 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 {
 	$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
+	//Régénération du cache.
+	$Cache->Generate_file('langs');
+		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
 	$Sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
+	//Régénération du cache.
+	$Cache->Generate_file('langs');
+		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
 elseif (isset($_POST['valid'])) //Mise à jour
@@ -54,8 +60,12 @@ elseif (isset($_POST['valid'])) //Mise à jour
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-			$Sql->query_inject("UPDATE ".PREFIX."modules SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
+	
+	//Régénération du cache.
+	$Cache->Generate_file('langs');
+		
 	redirect(HOST . SCRIPT);	
 }
 elseif ($uninstall) //Désinstallation.
@@ -84,6 +94,9 @@ elseif ($uninstall) //Désinstallation.
 				$error = 'files_del_failed';
 		}
 	
+		//Régénération du cache.
+		$Cache->Generate_file('langs');
+		
 		$error = !empty($error) ? '?error=' . $error : '';
 		redirect(HOST . SCRIPT . $error);
 	}

@@ -79,11 +79,11 @@
 						</td>
 						# IF list.C_LANG_NOT_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDLANG}activ" value="1" {list.LANG_ACTIV} onchange="document.location = \'admin_lang.php?activ=1&amp;id={list.IDLANG}\'" /> {L_YES}
-							<input type="radio" name="{list.IDLANG}activ" value="0" {list.LANG_UNACTIV} onchange="document.location = \'admin_lang.php?activ=0&amp;id={list.IDLANG}\'" /> {L_NO}
+							<input type="radio" name="{list.IDLANG}activ" value="1" {list.LANG_ACTIV} onchange="document.location = 'admin_lang.php?activ=1&amp;id={list.IDLANG}'" /> {L_YES}
+							<input type="radio" name="{list.IDLANG}activ" value="0" {list.LANG_UNACTIV} onchange="document.location = 'admin_lang.php?activ=0&amp;id={list.IDLANG}'" /> {L_NO}
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDLANG}secure" onchange="document.location = \'admin_lang.php?secure=\' + this.options[this.selectedIndex].value + \'&amp;id={list.IDLANG}\'">'; 
+							<select name="{list.IDLANG}secure" onchange="document.location = 'admin_lang.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDLANG}'">'; 
 								{list.OPTIONS}
 							</select>
 						</td>

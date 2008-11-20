@@ -81,9 +81,9 @@
 						<label>
 							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[this.selectedIndex].value)">	
 								# START select_lang #
-								{select_lang.LANG}
+									<option value="{select_lang.IDNAME}"{select_lang.SELECTED}>{select_lang.NAME}</option>
 								# END select_lang #
-							</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+							</select> &nbsp;<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label>
 					</dd>
 				</dl>
@@ -97,7 +97,7 @@
 						<label>
 							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">
 								# START select_theme #
-								{select_theme.THEME}
+									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #
 							</select>
 							<img id="img_theme" src="../templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />

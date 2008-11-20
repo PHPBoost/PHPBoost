@@ -211,8 +211,10 @@
 						<dt><label for="user_lang">{L_LANG_CHOOSE}</label></dt>
 						<dd><label>
 							<select name="user_lang" id="user_lang" onChange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
-								{LANG_OPTIONS}						
-							</select> <img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+								# START select_lang #
+									<option value="{select_lang.IDNAME}"{select_lang.SELECTED}>{select_lang.NAME}</option>
+								# END select_lang #			
+							</select> &nbsp;<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						</label></dd>
 					</dl>	
 				</fieldset>
@@ -223,7 +225,9 @@
 						<dt><label for="user_theme">{L_THEME_CHOOSE}</label></dt>
 						<dd><label>
 							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
-								{THEME_OPTIONS}						
+								# START select_theme #
+									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
+								# END select_theme #				
 							</select>
 							<img id="img_theme" src="../templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />			
 						</label></dd>

@@ -543,44 +543,36 @@ elseif (!empty($id))
 	}
 	
 	//Gestion LANG par défaut.
-	$lang_options = '';
 	$array_identifier = '';
 	$lang_identifier = '../images/stats/other.png';
-	$result = $Sql->query_while("SELECT lang 
-	FROM ".PREFIX."lang", __LINE__, __FILE__);
-	while ($row2 = $Sql->fetch_assoc($result))
-	{	
-		$lang_info = load_ini_file('../lang/', $row2['lang']);
-		if (is_array($lang_info))
+	foreach($LANGS_CONFIG as $lang => $array_info)
+	{
+		$info_lang = load_ini_file('../lang/', $lang);
+		$selected = '';
+		if ($CONFIG['lang'] == $lang)
 		{
-			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $row2['lang'];
-			$array_identifier .= 'array_identifier[\'' . $row2['lang'] . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-			$selected = '';
-			if ($row2['lang'] == $mbr['user_lang'])
-			{
-				$selected = 'selected="selected"';
-				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-			}			
-			$lang_options .= '<option value="' . $row2['lang'] . '" ' . $selected . '>' . $lang_name . '</option>';
+			$selected = ' selected="selected"';
+			$lang_identifier = '../images/stats/countries/' . $info_lang['identifier'] . '.png';
 		}
+		$array_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
+		$Template->assign_block_vars('select_lang', array(
+			'NAME' => !empty($info_lang['name']) ? $info_lang['name'] : $lang,
+			'IDNAME' => $lang,
+			'SELECTED' => $selected
+		));
 	}
-	$Sql->query_close($result);
 	
 	//Gestion thème par défaut.
-	$theme_options = '';
-	$result = $Sql->query_while("SELECT theme 
-	FROM ".PREFIX."themes", __LINE__, __FILE__);
-	while ($row2 = $Sql->fetch_assoc($result))
-	{	
-		$theme_info = load_ini_file('../templates/' . $row2['theme'] . '/config/', get_ulang());
-		if (is_array($theme_info))
-		{
-			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $row2['theme'];
-			$selected = ($row2['theme'] == $mbr['user_theme']) ? 'selected="selected"' : '';
-			$theme_options .= '<option value="' . $row2['theme'] . '" ' . $selected . '>' . $theme_name . '</option>';
-		}
+	foreach($THEME_CONFIG as $theme => $array_info)
+	{
+		$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
+		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
+		$Template->assign_block_vars('select_theme', array(
+			'NAME' => $info_theme['name'],
+			'IDNAME' => $theme,
+			'SELECTED' => $selected
+		));
 	}
-	$Sql->query_close($result);
 	
 	//Editeur texte par défaut.
 	$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
@@ -625,8 +617,6 @@ elseif (!empty($id))
 		'RANKS_OPTIONS' => $ranks_options,
 		'GROUPS_OPTIONS' => $groups_options,
 		'NBR_GROUP' => $Sql->query("SELECT COUNT(*) FROM ".PREFIX."group", __LINE__, __FILE__),
-		'LANG_OPTIONS' => $lang_options,
-		'THEME_OPTIONS' => $theme_options,
 		'EDITOR_OPTIONS' => $editor_options,
 		'TIMEZONE_OPTIONS' => $timezone_options,
 		'BAN_OPTIONS' => $ban_options,
