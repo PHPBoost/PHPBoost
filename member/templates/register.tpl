@@ -163,8 +163,7 @@
 			{
 				document.getElementById('msg_password1').innerHTML = "";
 				var password = document.getElementById('pass_bis').value;
-				
-				if (password != value)
+				if (password.length > 0 && password != value)
 					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
 			}	
 		}
@@ -177,7 +176,7 @@
 			{
 				document.getElementById('msg_password2').innerHTML = "";
 				var password = document.getElementById('pass').value;
-				if (password != value)
+				if (password.length > 0 && password != value)
 					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
 			}	
 		}
