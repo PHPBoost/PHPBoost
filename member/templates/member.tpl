@@ -1,3 +1,5 @@
+		# IF C_MEMBER_UPDATE_PROFIL #
+		
 		<script type="text/javascript">
 		<!--
 		function check_form(){
@@ -32,10 +34,58 @@
 			if( array_identifier[lang] && document.getElementById(id) ) 
 				document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
 		}
+		function XMLHttpRequest_register_mail(value)
+		{
+			document.getElementById('msg_email').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" />';
+			data = "mail=" + value + "&login=" + "{USER_LOGIN}";
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php');
+			xhr_object.onreadystatechange = function() 
+			{
+				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
+				{
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_AUTH}";
+				}
+				else if( xhr_object.readyState == 4 )
+					document.getElementById('msg_email').innerHTML = '';
+			}
+			xmlhttprequest_sender(xhr_object, data);
+		}
+		function check_email(value) 
+		{
+			regex=/^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+			if (!regex.test(value))
+				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_INVALID}";
+			else	
+				XMLHttpRequest_register_mail(value);	
+		}
+		function check_password(value) 
+		{
+			document.getElementById('msg_password2').innerHTML = "";
+			if (value.length<6)
+				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			else
+			{
+				document.getElementById('msg_password1').innerHTML = "";
+				var password = document.getElementById('pass_bis').value;
+				if (password.length > 0 && password != value)
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+			}	
+		}
+		function check_password2(value) 
+		{
+			document.getElementById('msg_password1').innerHTML = "";
+			if (value.length<6)
+				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			else
+			{
+				document.getElementById('msg_password2').innerHTML = "";
+				var password = document.getElementById('pass').value;
+				if (password.length > 0 && password != value)
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+			}	
+		}
 		-->
 		</script>
-
-		# IF C_MEMBER_UPDATE_PROFIL #
 
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
@@ -57,7 +107,7 @@
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" /></label></dd>
+					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_email"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_old">(*) {L_PREVIOUS_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
@@ -65,11 +115,11 @@
 				</dl>
 				<dl>
 					<dt><label for="pass">(*) {L_NEW_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" /></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password1"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_bis">(*) {L_CONFIRM_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" /></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password2"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="del_member">{L_DEL_MEMBER}</label></dt>
