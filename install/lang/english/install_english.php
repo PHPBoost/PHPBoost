@@ -202,18 +202,19 @@ $LANG['end_installation'] = '<fieldset>
 							<p class="success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you to have trusted it and is proud to count you among its users.</p>
 							<p>We advise you keep yourself informed about the evolution of PHPBoost thanks to the english community website, <a href="http://www.phpboost.net">www.phpboost.net</a>. You will be warned in the administration panel when some updates will be available. It\'s important to keep your site up to date, you can take advantage of the new features and known bugs or error are corrected.</p>
 							<p class="warning">For security reasons we advice you to delete the installation folder and all its contents, hackers could manage to run installation script and you could loose some data !</p>
-							<p>Don\'t forget the <a href="http://www.phpboost.net/wiki/wiki.php">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.net/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
-							<p>If you have any problem please go to the <a href="http://www.phpboost.net/forum/index.php">support of PHPBoost</a>.</p>
+							<p>Don\'t forget the <a href="http://www.phpboost.net/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="http://www.phpboost.net/faq/faq.php"><acronym title="Frequently Asked Questions">FAQ</acronym></a>.</p>
+							<p>If you have any problem please go to the <a href="http://www.phpboost.net/forum/">support of PHPBoost</a>.</p>
 						</fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
 							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 2.1.</p>
-							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong> and <strong>akhenathon</strong> for the modules development.</p>
+							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong>, <strong>Alain91</strong> and <strong>akhenathon</strong> for the modules development.</p>
 							<h2>Other projects</h2>
 							<p>PHPBoost uses differents tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 							<ul>
 								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Very powerfull text editor used for the whole development, thanks a lot !</li>
+								<li><a href="http://www.eclipse.org/pdt/">Eclipse PDT</a> : PHP <acronym title="Integrated Development Environment">IDE</acronym> (development tool) based on Eclipse and using the <acronym title="PHP Development Tools">PDT</acronym> plug in developed by <a href="http://www.zend.com/fr/">Zend</a>.</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Icon set used in the whole interface.</li>
 								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP by PHPConcept</a> : PHP library which manage work with zip files.</li>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
