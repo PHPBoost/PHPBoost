@@ -28,11 +28,11 @@
 import('content/parser/parser');
 
 //Classe de gestion du contenu
-class ContentUnParser extends Parser
+class ContentUnparser extends Parser
 {
 	######## Public #######
 	//Constructeur
-	function ContentUnParser()
+	function ContentUnparser()
 	{
 		parent::Parser();
 	}

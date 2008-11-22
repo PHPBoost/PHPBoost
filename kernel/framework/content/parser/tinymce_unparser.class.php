@@ -156,7 +156,13 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
 		
 		//Balise indentation
-		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`isU', array(&$this, '_unparse_indent'), $this->content);
+		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`is', array(&$this, '_unparse_indent'), $this->content);
+		
+		//Citations
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote><p>$2</p></blockquote>', $this->content);
+		
+		//Police
+		$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, '_unparse_font'), $this->content );
 	}
 	
 	//Function which manages the whole tags which doesn't not exist in TinyMCE
@@ -189,8 +195,6 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		##Remplacement des balises imbriquées
-		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`sU', '[quote=$1]$2[/quote]', $this->content);
 		
 		//Texte caché
 		$this->_parse_imbricated('<span class="text_hide">', '`<span class="text_hide">(.*):</span><div class="hide" onclick="bb_hide\(this\)"><div class="hide2">(.*)</div></div>`sU', '[hide]$2[/hide]', $this->content);
@@ -253,25 +257,49 @@ class TinyMCEUnparser extends ContentUnparser
 	
 	//Fonction de retour de l'indentation
 	function _unparse_indent($matches)
-	{
-		print_r($matches);
+	{	    
 		//Combien de fois c'est indenté ?
 		$nbr_indent = substr_count($matches[1], '<div class="indent">');
+		
 		//Combien de fois c'est fermé ?
-		$nbr_indent_closed = substr_count($matches[3], '</div>');
+		$nbr_closed_indent_tags = substr_count($matches[3], '</div>');
+		//L'expression régulière ne capture que le dernier div fermant. Les autres ont à la fin du contenu central, on les traite à la main
+		while (substr($matches[2], -6) == '</div>')
+		{
+		    //On le supprime et on incrémente de 1 le nombre de div fermants
+		    $matches[2] = substr($matches[2], 0, -6);
+		    $nbr_closed_indent_tags++;
+		}
+		
 		//Si ça a été ouvert et fermé le même nombre de fois
 		if ($nbr_indent == $nbr_indent)
 		{
 			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . '</p>';
 		}
 		//Si c'est plus fermé qu'ouvert c'est que d'autres balises sont fermées, on prend en enlève $nbr_indent - 1
-		elseif ($nbr_indent < $nbr_indent_closed)
+		elseif ($nbr_indent < $nbr_closed_indent_tags)
 		{
-			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . str_repeat('</p>', $nbr_indent_closed - $nbr_indent + 1);
+			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . str_repeat('</p>', $nbr_closed_indent_tags - $nbr_indent + 1);
 		}
 		//Sinon c'est une situation anormale, on renvoie ce qu'on a reçu
 		else
 			return $matches[1] . $matches[2] . $matches[3];
+	}
+	
+	//Fonction de retour du changement de police
+	function _unparse_font($matches)
+	{
+		static $fonts_array = array(
+			'geneva' => 'trebuchet ms,geneva',
+			'optima' => 'comic sans ms,sans-serif',
+			'arial' => 'arial,helvetica,sans-serif',
+			'courier new' => 'courier new,courier'
+		);
+		
+		if (!empty($fonts_array[$matches[1]]))
+			return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+		else
+			return $matches[2];
 	}
 }
 
