@@ -65,12 +65,18 @@ class User
 	}
 	
 	//Cherche les autorisations maximum parmi les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
-	function check_auth($array_auth_groups, $check_auth)
+	function check_auth($array_auth_groups, $authorization_bit)
 	{
+		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
+		if ($this->check_level(ADMIN_LEVEL))
+			return true;
+		
+		//Si le tableau d'autorisation n'est pas valide, on renvoie faux pour des raisons de sécurité
 		if (!is_array($array_auth_groups))
 			return false;
 		
-		return (((int)$this->_sum_auth_groups($array_auth_groups) & (int)$check_auth) !== 0);
+		//Enfin, on regarde si le rang, le groupe ou son identifiant lui donnent l'autorisation sur le bit demandé
+		return (bool)($this->_sum_auth_groups($array_auth_groups) & (int)$authorization_bit);
 	}
 	
 	//Cherche les valeurs maximum parmis les différents groupes dont le membre fait partie.
