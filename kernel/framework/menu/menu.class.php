@@ -110,16 +110,16 @@ class Menu
     function is_enabled() { return $this->enabled; }
     
      
-    /**
-     * @desc Display the menu
-     * @abstract
-     * @param Template $template the template to use
-     * @return string the menu parsed in xHTML
-     */
-    function display($tpl = false)
-    {
-        return '';
-    }
+//    /**
+//     * @desc Display the menu
+//     * @abstract
+//     * @param Template $template the template to use
+//     * @return string the menu parsed in xHTML
+//     */
+//    function display($tpl = false)
+//    {
+//        return '';
+//    }
     
     /**
      * @desc Display the menu admin gui
@@ -127,7 +127,7 @@ class Menu
      */
     function admin_display()
     {
-        return $this->display();
+        return '';
     }
     
     

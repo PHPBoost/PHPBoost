@@ -30,7 +30,7 @@ import('menu/menu');
 import('menu/content/content_menu');
 import('menu/links/links_menu');
 import('menu/mini/mini_menu');
-import('menu/modules_mini/modules_mini_menu');
+import('menu/module_mini/module_mini_menu');
 
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
@@ -139,7 +139,7 @@ class MenuService
     /**
      * @desc save a Menu in the database
      * @param Menu $menu The Menu to save
-     * @return bool true if the save have been correctly done, false if a Menu with the same title already exists
+     * @return bool true if the save have been correctly done
      */
     function save(&$menu)
     {
@@ -163,8 +163,8 @@ class MenuService
         {   // We have to insert the element in the database
             
             // Checking that no other menus exist with the same title
-            if ($Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0)
-                return false;
+//            if ($Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0)
+//                return false;
             
             $query = "
                 INSERT INTO `" . PREFIX . "menuss` (`title`,`object`,`class`,`enabled`,`block`,`position`)
@@ -333,8 +333,11 @@ class MenuService
             {
                 foreach ($block_menus as $menu)
                 {
-                    $cache_str .= '$__menu =\'' . $menu->cache_export() . '\';' . "\n";
-                    $cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+                    if ($menu->is_enabled())
+                    {
+                        $cache_str .= '$__menu=\'' . $menu->cache_export() . '\';' . "\n";
+                        $cache_str .= '$MENUS[' . $menu->get_block() . '].=$__menu;' . "\n";
+                    }
                 }
             }
         }
