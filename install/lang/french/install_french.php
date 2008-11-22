@@ -209,13 +209,14 @@ $LANG['end_installation'] = '<fieldset>
 							<legend>Remerciements</legend>
 							<h2>Membres de la communauté</h2>
 							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 2.1 stable et efficace.</p>
-							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.</p>
+							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.</p>
 							<h2>Projets</h2>
 							<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 							<ul>
-								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur texte puissant très utilisé pour le développement de PHPBoost, un immense merci !</li>
+								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur de texte puissant très utilisé pour le développement de PHPBoost.</li>
+								<li><a href="http://www.eclipse.org/pdt/">Eclipse PDT</a> : <acronym title="Integrated Development Environment">IDE</acronym> PHP (outil de développement PHP) basé sur Eclipse et utilisant le plug in <acronym title="PHP Development Tools">PDT</acronym> développé par <a href="http://www.zend.com/fr/">Zend</a>.</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Ensemble d\'icônes diverses utilisées sur l\'ensemble de PHPBoost.</li>
-								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP par PHPConcept</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
+								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
 								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE est un éditeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
 								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
