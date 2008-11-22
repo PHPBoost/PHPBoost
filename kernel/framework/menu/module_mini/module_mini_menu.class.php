@@ -27,7 +27,7 @@
 
 import('menu/menu');
 
-define('MODULES_MINI_MENU__CLASS','ModulesMiniMenu');
+define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -35,12 +35,27 @@ define('MODULES_MINI_MENU__CLASS','ModulesMiniMenu');
  * @package Menu
  * @subpackage ModulesMiniMenu
  */
-class ModulesMiniMenu extends Menu
+class ModuleMiniMenu extends Menu
 {
     ## Public Methods ##
-    function ModulesMiniMenu($title)
+    /**
+     * @desc Build a ModuleMiniMenu element.
+     * @param string $title its name (according the the module folder name)
+     */
+    function ModuleMiniMenu($title)
     {
        parent::Menu($title);
+    }
+    
+    /**
+     * @return string the string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        $title = strtolower($this->get_title());
+        $cache_str = '\';include_once PATH_TO_ROOT.\'/' . $title . '/' . $title . '_mini.php\';';
+        $cache_str.= '$__menu.=' . $title . '_mini().\'';
+        return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
 }
 
