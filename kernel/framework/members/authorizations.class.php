@@ -53,9 +53,6 @@ class Authorizations
 		for ($i = 0; $i < $nbr_arg; $i++)
 			Authorizations::_get_auth_array(func_get_arg($i), '', $array_auth_all, $sum_auth);
 		
-		//Admin tous les droits dans n'importe quel cas.
-		if ($admin_auth_default)
-			$array_auth_all['r2'] = $sum_auth;
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
 		return $array_auth_all;
@@ -84,7 +81,7 @@ class Authorizations
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
         //Récupération du tableau des rangs.
-		$array_ranks = is_array($array_ranks) ? $array_ranks : array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+		$array_ranks = is_array($array_ranks) ? $array_ranks : array('-1' => $LANG['guest'], '0' => $LANG['member'], '1' => $LANG['modo']);
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect; 
 		
@@ -114,6 +111,10 @@ class Authorizations
         $j = -1;
         foreach ($array_ranks as $idrank => $group_name)
         {
+            //On ignore l'administrateur (il aura forcément les droits)
+            if ($idrank == '2')
+                continue;   
+         
             $selected = '';   
             if (array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
                 $selected = ' selected="selected"';
@@ -282,14 +283,14 @@ class Authorizations
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		
 		##### Niveau et Groupes #####
-		$array_auth_groups = !empty($_POST['groups_auth' . $idselect]) ? $_POST['groups_auth' . $idselect] : '';
+		$array_auth_groups = !empty($_REQUEST['groups_auth' . $idselect]) ? $_REQUEST['groups_auth' . $idselect] : '';
 		if (!empty($array_auth_groups)) //Récupération du formulaire.
 		{
 			$sum_auth += $bit_value;
 			if (is_array($array_auth_groups))
 			{			
-				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique, modérateurs et administrateurs autorisés.
-				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1', 3 => 'r2');
+				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
+				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1');
 				$min_auth = 3;
 				foreach ($array_level as $level => $key)
 				{
