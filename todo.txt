@@ -4,7 +4,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [*] Régler les bugs touchables de TinyMCE relevés par Ptithom.
-[-] Donner systématiquement tous les droits à l'administrateur
 
 ------------------------------------ MODULES -----------------------------------
 

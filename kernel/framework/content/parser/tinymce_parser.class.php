@@ -276,12 +276,6 @@ class TinyMCEParser extends ContentParser
 			array_push($array_preg, '`&lt;span style="background-color: ([^"]+)"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
-		//Font tag
-		if (!in_array('font', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;font face="([^"]+)"&gt;(.+)&lt;/font&gt;`isU');
-			array_push($array_preg_replace, '<span style="font-family: $1;">$2</span>');
-		}
 		//Align tag
 		if (!in_array('align', $this->forbidden_tags))
 		{
@@ -369,7 +363,7 @@ class TinyMCEParser extends ContentParser
 		
 		//Font tag
 		if (!in_array('font', $this->forbidden_tags))
-			$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"&gt;(.*)&lt;/span&gt;`isU', array(&$this, '_parse_font_tag'), $this->content );
+			$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);" mce_style="font-family: [^"]+"&gt;(.*)&lt;/span&gt;`isU', array(&$this, '_parse_font_tag'), $this->content );
 	}
 	
 	//Function which parses tables
@@ -575,9 +569,9 @@ class TinyMCEParser extends ContentParser
 	// Handler which treats the font size
 	function _parse_font_tag($matches)
 	{
-		$fonts_array = array(
+		static $fonts_array = array(
 			'trebuchet ms,geneva' => 'geneva',
-			'comic sans ms,sans-serif', 'optima',
+			'comic sans ms,sans-serif' => 'optima',
 			'andale mono,times' => 'times',
 			'arial,helvetica,sans-serif' => 'arial',
 			'arial black,avant garde' => 'arial',
