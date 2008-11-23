@@ -264,7 +264,7 @@ class TinyMCEParser extends ContentParser
 			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isU');
 			array_push($array_preg_replace, '<pre>$1</pre>');
 		}
-		//Font tag
+		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;span style="color: ([^"]+);"&gt;(.+)&lt;/span&gt;`isU');
@@ -363,7 +363,14 @@ class TinyMCEParser extends ContentParser
 		
 		//Font tag
 		if (!in_array('font', $this->forbidden_tags))
-			$this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);" mce_style="font-family: [^"]+"&gt;(.*)&lt;/span&gt;`isU', array(&$this, '_parse_font_tag'), $this->content );
+		{
+		    //TinyMCE a un comportement un peu spécial avec la gestion des polices, il les imbrique les unes dans les autres de façon pas très logique
+		    //Tant qu'il existe des occurences de cette balise à travailler, on les traite
+		    //Sécurité : on traite au maximum 10 fois pour éviter les boucles infinies éventuelles
+		    $nbr_font_parsing = 0;
+			while (preg_match('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', $this->content) && $nbr_font_parsing++ < 10)
+		        $this->content = preg_replace_callback('`&lt;span style="font-family: ([a-z, 0-9-]+);"(?: mce_style="font-family: [^"]+")?&gt;(.*)&lt;/span&gt;`isU', array(&$this, '_parse_font_tag'), $this->content );
+		}
 	}
 	
 	//Function which parses tables

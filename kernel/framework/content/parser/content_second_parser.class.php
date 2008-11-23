@@ -42,10 +42,10 @@ class ContentSecondParser extends Parser
 	function second_parse()
 	{
 		global $LANG;
-
-		$this->parsed_content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
-
-		wordwrap_html($this->content, 95, "\n", false); //Ajoute des retours à la ligne, pour éviter de trop déformer les forms.
+        
+		$this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
+        
+		//wordwrap_html($this->content, 95, "\n", false); //Ajoute des retours à la ligne, pour éviter de trop déformer les forms.
 		
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
