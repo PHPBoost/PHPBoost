@@ -145,6 +145,12 @@ class MenuService
     {
         global $Sql;
         
+        if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
+        {
+            $block_position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX . "menuss` WHERE `block`='" . $block. "'";
+            $block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
+        }
+        
         $query = '';
         $id_menu = $menu->get_id();
         if ($id_menu > 0)
@@ -155,17 +161,12 @@ class MenuService
                     `object`='" . serialize($menu) . "',
                     `class`='" . strtolower(get_class($menu)) . "',
                     `enabled`='" . $menu->is_enabled() . "',
-                    `block`='" . $menu->get_block() . "',
+                    `block`='" . $block . "',
                     `position`='" . $menu->get_block_position() . "'
             WHERE id='" . $id_menu . "';";
         }
         else
         {   // We have to insert the element in the database
-            
-            // Checking that no other menus exist with the same title
-//            if ($Sql->query("SELECT COUNT(*) FROM `" . PREFIX . "menuss` WHERE `title`='" . $menu->get_title() . "';", __LINE__, __FILE__) > 0)
-//                return false;
-            
             $query = "
                 INSERT INTO `" . PREFIX . "menuss` (`title`,`object`,`class`,`enabled`,`block`,`position`)
                 VALUES (
@@ -173,8 +174,8 @@ class MenuService
                     '" . serialize($menu) . "',
                     '" . strtolower(get_class($menu)) . "',
                     '" . $menu->is_enabled() . "',
-                    '" . $menu->get_block() . "',
-                    '" . $menu->get_block_position() . "'
+                    '" . $block . "',
+                    '" . $block_position . "'
                 );";
         }
         $Sql->query_inject($query, __LINE__, __FILE__);
@@ -184,12 +185,12 @@ class MenuService
 
     /**
      * @desc Delete a Menu from the database
-     * @param Menu $menu The Menu to delete from the database
+     * @param mixed $menu The (Menu) Menu or its (int) id to delete from the database
      */
     function delete(&$menu)
     {
         global $Sql;
-        $id_menu = $menu->get_id();
+        $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : 0);
         if ($id_menu > 0)
             $Sql->query_inject("DELETE FROM `" . PREFIX . "menuss` WHERE `id`='" . $id_menu . "';" , __LINE__, __FILE__);
     }
@@ -247,8 +248,8 @@ class MenuService
             $menu->set_block($block);
             
             // Computes the new block position for the menu
-            $position_query = "SELECT MAX(`position`) FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "';";
-            $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__) + 1);
+            $position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "';";
+            $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
         }
         
         MenuService::save($menu);

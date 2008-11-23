@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -174,14 +174,14 @@ $LANG['title_maintain'] = 'Site en maintenance';
 $LANG['loading'] = 'Chargement';
 
 //Commun
-$LANG['user'] = 'Utilisateur'; 
-$LANG['user_s'] = 'Utilisateurs'; 
+$LANG['user'] = 'Utilisateur';
+$LANG['user_s'] = 'Utilisateurs';
 $LANG['guest'] = 'Visiteur';
-$LANG['guest_s'] = 'Visiteurs'; 
+$LANG['guest_s'] = 'Visiteurs';
 $LANG['member'] = 'Membre';
 $LANG['member_s'] = 'Membres';
 $LANG['modo'] = 'Modérateur';
-$LANG['modo_s'] = 'Modérateurs';   
+$LANG['modo_s'] = 'Modérateurs';
 $LANG['admin'] = 'Administrateur';
 $LANG['admin_s'] = 'Administrateurs';
 $LANG['index'] = 'Accueil';
@@ -419,17 +419,17 @@ $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoi
 $LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site. 
-En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.                                              
+Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site.
+En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
 
-Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe. 
+Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
 
 Nous vous rappelons vos identifiants.
 
 Identifiant : %s
-Password : %s 
+Password : %s
 
-%s 
+%s
 
 %s';
 
@@ -598,8 +598,11 @@ $LANG['syndication'] = 'Syndication';
 $LANG['rss'] = 'RSS';
 $LANG['atom'] = 'ATOM';
 
+$LANG['enabled'] = 'Activé';
+$LANG['disabled'] = 'Désactivé';
+
 //Dictionnaire pour le captcha.
-$LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 'genre', 'design', 'web', 'inter', 'cache', 'media', 'cms', 'cesar', 'watt', 'site', 'mail', 'email', 'spam', 'index', 'membre', 
+$LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 'genre', 'design', 'web', 'inter', 'cache', 'media', 'cms', 'cesar', 'watt', 'site', 'mail', 'email', 'spam', 'index', 'membre',
 'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 
