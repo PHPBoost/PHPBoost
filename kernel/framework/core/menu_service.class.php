@@ -89,7 +89,11 @@ class MenuService
         // Initialize the map by using the value of the 9 constants used for blocks positions
         $menus = MenuService::_initialize_menus_map();
         
-        $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`;";
+        $query = "
+            SELECT `id`, `object`, `block`, `position`, `enabled`
+            FROM `" . PREFIX . "menuss`
+            ORDER BY `position` ASC
+        ;";
         $result = $Sql->query_while ($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
         {
@@ -203,7 +207,8 @@ class MenuService
     function enable(&$menu)
     {
         $menu->enabled(MENU_ENABLED);
-        MenuService::save($menu);
+        // Commputes the new Menu position and save it
+        MenuService::move($menu, $menu->get_block());
     }
     
     /**
@@ -248,7 +253,7 @@ class MenuService
             $menu->set_block($block);
             
             // Computes the new block position for the menu
-            $position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "';";
+            $position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "' AND `enabled`='1';";
             $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
         }
         
@@ -269,8 +274,8 @@ class MenuService
         $update_query = '';
         
         if ($direction > 0)
-        {   // Moving the menu up
-            $max_position_query = "SELECT MAX(`position`) FROM `" . PREFIX . "menuss` WHERE `block`='" . $menu->get_block() . "'";
+        {   // Moving the menu down
+            $max_position_query = "SELECT MAX(`position`) FROM `" . PREFIX . "menuss` WHERE `block`='" . $menu->get_block() . "' AND `enabled`='1'";
             $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
@@ -284,7 +289,7 @@ class MenuService
             ";
         }
         else if ($direction < 0)
-        {   // Moving the menu down
+        {   // Moving the menu up
             
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) < 0)
@@ -295,7 +300,7 @@ class MenuService
                 UPDATE `" . PREFIX . "menuss` SET `position`=`position` + 1
                 WHERE
                     `block`='" . $menu->get_block() . "' AND
-                    `position` BETWEEN " . ($block_position - 1) . "' AND '" . $new_block_postion . "
+                    `position` BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_postion . "'
             ";
         }
         

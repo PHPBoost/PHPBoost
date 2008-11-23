@@ -31,7 +31,7 @@ define('MENU_ENABLE_OR_NOT', 42);
 define('MENU_ENABLED', true);
 define('MENU_NOT_ENABLED', false);
 
-define('BLOCK_POSITION__ALL',               0);
+define('BLOCK_POSITION__NOT_ENABLED',       0);
 define('BLOCK_POSITION__HEADER',            1);
 define('BLOCK_POSITION__SUB_HEADER',        2);
 define('BLOCK_POSITION__TOP_CENTRAL',       3);
@@ -40,7 +40,7 @@ define('BLOCK_POSITION__TOP_FOOTER',        5);
 define('BLOCK_POSITION__FOOTER',            6);
 define('BLOCK_POSITION__LEFT',              7);
 define('BLOCK_POSITION__RIGHT',             8);
-define('BLOCK_POSITION__NOT_ENABLED',       9);
+define('BLOCK_POSITION__ALL',               9);
 
 /**
  * @author Loïc Rouchon horn@phpboost.com

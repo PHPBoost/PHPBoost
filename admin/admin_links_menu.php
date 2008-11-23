@@ -35,8 +35,6 @@ import('core/menu_service');
 $id = retrieve(GET, 'id', 0);
 $idmodule = retrieve(GET, 'idmodule', '', TSTRING_UNSECURE);
 $edit = retrieve(GET, 'edit', false);
-$del = retrieve(GET, 'del', false);
-$install = retrieve(GET, 'install', false);
 $type = retrieve(GET, 'type', 1);
 $id_post = retrieve(POST, 'id', 0);
 $action = retrieve(POST, 'action', '');
@@ -71,7 +69,7 @@ elseif ($action == 'add') //Ajout d'un menu.
     
     redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);
 }
-elseif (!empty($del) && !empty($id)) //Suppression du menu.
+elseif ($action =='delete' && !empty($id)) //Suppression du menu.
 {
     MenuService::delete($id);
     MenuService::generate_cache();
