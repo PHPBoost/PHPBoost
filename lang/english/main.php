@@ -6,7 +6,7 @@
 *   copyright            : (C) 2005 Viarre Régis
 *   email                : mickaelhemri@gmail.com
 *
-*  
+*
 ###################################################
 *
 *   This program is free software; you can redistribute it and/or modify
@@ -179,9 +179,9 @@ $LANG['user_s'] = 'Users';
 $LANG['guest'] = 'Visitor';
 $LANG['guest_s'] = 'Visitors';
 $LANG['member'] = 'Member';
-$LANG['member_s'] = 'Members';  
+$LANG['member_s'] = 'Members';
 $LANG['modo'] = 'Moderator';
-$LANG['modo_s'] = 'Moderators';  
+$LANG['modo_s'] = 'Moderators';
 $LANG['admin'] = 'Administrator';
 $LANG['admin_s'] = 'Administrators';
 $LANG['index'] = 'Home';
@@ -420,9 +420,9 @@ $LANG['register_valid_admin'] = 'Warning: Your account must be activated by an a
 $LANG['register_mail'] = 'Dear %s,
 
 First, thank you to have been signed up on %s. You are now member of the site.
-By signing up you on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.  
+By signing up you on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.
 
-To log in yourself, don\'t forget your login and your password (we can find them).  
+To log in yourself, don\'t forget your login and your password (we can find them).
 
 Here are your identifiers.
 
@@ -597,6 +597,10 @@ $LANG['achieved'] = 'Achieved in';
 $LANG['syndication'] = 'Syndication';
 $LANG['rss'] = 'RSS';
 $LANG['atom'] = 'ATOM';
+
+
+$LANG['enabled'] = 'Enabled';
+$LANG['disabled'] = 'Disabled';
 
 //Dictionnaire pour le captcha.
 $LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'genre', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');

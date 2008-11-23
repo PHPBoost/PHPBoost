@@ -122,9 +122,16 @@ elseif (($top || $bottom) && !empty($id)) //Monter/descendre.
 }
 else
 {
-	$Template->set_filenames(array(
-		'admin_menus_management'=> 'admin/admin_menus_management.tpl'
-	));
+    
+    $tpl = new Template('admin/links_menu.tpl');
+    $tpl->assign_vars(array(
+        'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
+        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
+        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
+    ));
+    $tpl->parse();
+    
+	$tpl = new Template('admin/admin_menus_management.tpl');
 	
 	$Cache->load('themes'); //Récupération de la configuration des thèmes.
 
@@ -192,7 +199,7 @@ else
 		if ($row['activ'] == 1 && !empty($block_position))
 		{
 			//Affichage réduit des différents modules.
-			$Template->assign_block_vars('mod_' . $block_position, array(
+			$tpl->assign_block_vars('mod_' . $block_position, array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
 				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
@@ -207,7 +214,7 @@ else
 		}
 		else //Affichage des menus désactivés
 		{
-			$Template->assign_block_vars('mod_main', array(
+			$tpl->assign_block_vars('mod_main', array(
 				'IDMENU' => $row['id'],
 				'NAME' => ucfirst($row['name']),
 				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
@@ -240,7 +247,7 @@ else
 			if (file_exists('../' . $name . '/' . $path)) //Fichier présent.
 			{
 				$idmodule = $name . '+' . $i++;
-				$Template->assign_block_vars('mod_main_uninstalled', array(
+				$tpl->assign_block_vars('mod_main_uninstalled', array(
 					'NAME' => ucfirst($modules_config[$name]['name']),
 					'U_INSTALL' => "admin_menus_add.php?idmodule=" . $idmodule . "&amp;install=1"
 				));
@@ -264,7 +271,7 @@ else
 
 		foreach ($file_array as $name)
 		{
-			$Template->assign_block_vars('mod_main_uninstalled', array(
+			$tpl->assign_block_vars('mod_main_uninstalled', array(
 				'NAME' => ucfirst(str_replace('.php', '', $name)),
 				'U_INSTALL' => "admin_menus_add.php?idmodule=" . $name . "+0&amp;install=1"
 			));
@@ -275,7 +282,7 @@ else
 	$colspan += (int)$THEME_CONFIG[get_utheme()]['right_column'];
 	$colspan += (int)$THEME_CONFIG[get_utheme()]['left_column'];
 	
-	$Template->assign_vars(array(
+	$tpl->assign_vars(array(
 		'COLSPAN' => $colspan,
 		'LEFT_COLUMN' => $THEME_CONFIG[get_utheme()]['left_column'],
 		'RIGHT_COLUMN' => $THEME_CONFIG[get_utheme()]['right_column'],
@@ -289,9 +296,6 @@ else
 		'L_MEMBER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
-		'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-		'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-		'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
 		'L_HEADER' => $LANG['menu_header'],
 		'L_SUB_HEADER' => $LANG['menu_subheader'],
 		'L_LEFT_MENU' => $LANG['menu_left'],
@@ -305,10 +309,9 @@ else
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));
+	$tpl->parse();
 	
-	$Template->pparse('admin_menus_management');
+    require_once('../admin/admin_footer.php');
 }
-
-require_once('../admin/admin_footer.php');
 
 ?>

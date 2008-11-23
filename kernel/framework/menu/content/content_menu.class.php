@@ -47,7 +47,7 @@ class ContentMenu extends Menu
     /**
      * @param string $content the content to set
      */
-    function set_content(&$content) { $this->content = $content; }
+    function set_content($content) { $this->content = $content; }
     
     ## Getters ##
     /**
@@ -63,7 +63,7 @@ class ContentMenu extends Menu
     
     function cache_export()
     {
-        
+        return parent::cache_export_begin() . addslashes($this->content) . parent::cache_export_end();
     }
     
     

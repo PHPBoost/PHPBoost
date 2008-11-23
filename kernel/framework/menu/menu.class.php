@@ -197,12 +197,12 @@ class Menu
      * @access protected
      * @var int The Menu block position
      */
-    var $block = 0;
+    var $block = BLOCK_POSITION__NOT_ENABLED;
     /**
      * @access protected
      * @var int The Menu position on the website
      */
-    var $position = 0;
+    var $position = -1;
 }
 
 ?>
