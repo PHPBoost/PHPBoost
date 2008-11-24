@@ -45,8 +45,6 @@ class ContentSecondParser extends Parser
         
 		$this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
         
-		//wordwrap_html($this->content, 95, "\n", false); //Ajoute des retours à la ligne, pour éviter de trop déformer les forms.
-		
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
 			$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);

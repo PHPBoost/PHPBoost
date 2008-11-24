@@ -88,12 +88,13 @@ while ($row = $Sql->fetch_assoc($result))
 {	
 	$Template->assign_block_vars('forums_list', array(
 	));	
-		
-	if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i++ > 0) //Fermeture de la catégorie racine.
+	
+	if ($CAT_FORUM[$row['cid']]['level'] == 0 && $i > 0) //Fermeture de la catégorie racine.
 	{
 		$Template->assign_block_vars('forums_list.endcats', array(
 		));	
 	}
+	$i++;
 		
 	if ($row['level'] === '0') //Si c'est une catégorie
 	{
