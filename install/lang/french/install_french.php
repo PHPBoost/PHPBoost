@@ -88,7 +88,7 @@ $LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile
 $LANG['url_rewriting'] = 'URL Rewriting';
 $LANG['url_rewriting_explain'] = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
 $LANG['auth_dir'] = 'Autorisations des dossiers';
-$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébégeur.';
+$LANG['check_auth_dir'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="http://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" title="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébergeur.';
 $LANG['refresh_chmod'] = 'Revérifier les dossiers';
 $LANG['existing'] = 'Existant';
 $LANG['unexisting'] = 'Inexistant';
@@ -110,7 +110,7 @@ $LANG['db_password_explain'] = 'Fourni par l\'hébergeur';
 $LANG['db_properties'] = 'Propriétés de la base de données';
 $LANG['db_name'] = 'Nom de la base de données';
 $LANG['db_name_explain'] = 'Fourni par l\'hébergeur. Si cette base n\'existe pas, PHPBoost essaiera de la créer si la configuration le lui permet.';
-$LANG['db_prefix'] = 'Prefixe des tables';
+$LANG['db_prefix'] = 'Préfixe des tables';
 $LANG['db_prefix_explain'] = 'Par défaut <em>phpboost_</em>. A changer si vous souhaitez installer plusieurs fois PHPBoost dans la même base de données.';
 $LANG['test_db_config'] = 'Essayer';
 $LANG['result'] = 'Résultats';
