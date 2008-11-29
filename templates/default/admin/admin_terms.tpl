@@ -16,7 +16,7 @@
 			<ul>
 				<li class="title_menu">{L_TERMS}</li>
 				<li>
-					<a href="admin_terms.php"><img src="../templates/{THEME}/images/admin/terms.png" alt="" /></a>
+					<a href="admin_terms.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/terms.png" alt="" /></a>
 					<br />
 					<a href="admin_terms.php" class="quick_link">{L_TERMS}</a>
 				</li>

@@ -6,45 +6,45 @@
 			</tr>
 			<tr style="text-align:center;">
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?site=1#stats"><img src="../templates/{THEME}/images/stats/site.png" alt="" /></a>
+					<a href="admin_stats.php?site=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/site.png" alt="" /></a>
 					<br /><a href="admin_stats.php?site=1#stats">{L_SITE}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?members=1#stats"><img src="../templates/{THEME}/images/upload/member.png" alt="" /></a>
+					<a href="admin_stats.php?members=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/member.png" alt="" /></a>
 					<br /><a href="admin_stats.php?members=1#stats">{L_MEMBERS}</a>
 				</td>
 				<td style="width:20%;" class="row1">
-					<a href="admin_stats.php?visit=1#stats"><img src="../templates/{THEME}/images/stats/visitors.png" alt="" /></a>
+					<a href="admin_stats.php?visit=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/visitors.png" alt="" /></a>
 					<br /><a href="admin_stats.php?visit=1#stats">{L_VISITS}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?pages=1#stats"><img src="../templates/{THEME}/images/stats/pages.png" alt="" /></a>
+					<a href="admin_stats.php?pages=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/pages.png" alt="" /></a>
 					<br /><a href="admin_stats.php?pages=1#stats">{L_PAGES}</a>
 				</td>				
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?browser=1#stats"><img src="../templates/{THEME}/images/stats/browsers.png" alt="" /></a>
+					<a href="admin_stats.php?browser=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/browsers.png" alt="" /></a>
 					<br /><a href="admin_stats.php?browser=1#stats">{L_BROWSERS}</a>
 				</td>
 			</tr>
 			<tr style="text-align:center;">						
 				<td style="width:20%;" class="row1">	
-					<a href="admin_stats.php?os=1#stats"><img src="../templates/{THEME}/images/stats/os.png" alt="" /></a>
+					<a href="admin_stats.php?os=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/os.png" alt="" /></a>
 					<br /><a href="admin_stats.php?os=1#stats">{L_OS}</a>		
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?lang=1#stats"><img src="../templates/{THEME}/images/stats/countries.png" alt="" /></a>
+					<a href="admin_stats.php?lang=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/countries.png" alt="" /></a>
 					<br /><a href="admin_stats.php?lang=1#stats">{L_LANG}</a>
 				</td>				
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?referer=1#stats"><img src="../templates/{THEME}/images/stats/referer.png" alt="" /></a>
+					<a href="admin_stats.php?referer=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/referer.png" alt="" /></a>
 					<br /><a href="admin_stats.php?referer=1#stats">{L_REFERER}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?keyword=1#stats"><img src="../templates/{THEME}/images/stats/keyword.png" alt="" /></a>
+					<a href="admin_stats.php?keyword=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/keyword.png" alt="" /></a>
 					<br /><a href="admin_stats.php?keyword=1#stats">{L_KEYWORD}</a>
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
-					<a href="admin_stats.php?bot=1#stats"><img src="../templates/{THEME}/images/stats/robots.png" alt="" /></a>
+					<a href="admin_stats.php?bot=1#stats"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stats/robots.png" alt="" /></a>
 					<br /><a href="admin_stats.php?bot=1#stats">{L_ROBOTS}</a>
 				</td>	
 			</tr>
@@ -93,7 +93,7 @@
 					{L_LAST_MEMBER}
 				</td>
 				<td class="row2">
-					<a href="../member/member{U_LAST_USER_ID}">{LAST_USER}</a>
+					<a href="{PATH_TO_ROOT}/member/member{U_LAST_USER_ID}">{LAST_USER}</a>
 				</td>
 			</tr>
 		</table>
@@ -135,7 +135,7 @@
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />
+					<img src="{PATH_TO_ROOT}/kernel/framework/ajax/display_stats.php?theme=1" alt="" />
 				</td>
 			</tr>
 		</table>
@@ -206,7 +206,7 @@
 					{top_poster.ID}
 				</td>
 				<td class="row1" style="text-align:center;">
-					<a href="../member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
+					<a href="{PATH_TO_ROOT}/member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
 				</td>
 				<td class="row1" style="text-align:center;">
 					{top_poster.USER_POST}
@@ -266,12 +266,12 @@
 									<table class="module_table" style="width:14px;margin:auto;">
 										# START head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:4px;background-image: url(../templates/{THEME}/images/stats2.png); background-repeat:no-repeat;">
+											<td style="margin-left:2px;width:10px;height:4px;background-image: url({PATH_TO_ROOT}/templates/{THEME}/images/stats2.png); background-repeat:no-repeat;">
 											</td>
 										</tr>
 										# END head #
 										<tr>
-											<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url(../templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
+											<td style="margin-left:2px;width:10px;height:{values.HEIGHT}px;background-image: url({PATH_TO_ROOT}/templates/{THEME}/images/stats.png);background-repeat:repeat-y;padding:0px">
 											</td>
 										</tr>
 									</table>
@@ -451,12 +451,12 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/plus.png';
+				document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png';
 			}
 			else
 			{
 				var xhr_object = null;
-				var filename = '../kernel/framework/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
+				var filename = '{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?stats_referer=1&id=' + divid;
 				var data = null;
 				
 				if(window.XMLHttpRequest) // Firefox
@@ -466,7 +466,7 @@
 				else // XMLHttpRequest non support� par le navigateur
 					return;
 				
-				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				document.getElementById('load' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 				
 				xhr_object.open("POST", filename, true);
 				xhr_object.onreadystatechange = function() 
@@ -476,7 +476,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/minus.png';
+						document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
@@ -548,12 +548,12 @@
 			if( document.getElementById('url' + divid).style.display == 'table' )
 			{
 				display_div_auto('url' + divid, 'table');
-				document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/plus.png';
+				document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png';
 			}
 			else
 			{
-				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/stats_xmlhttprequest.php?stats_keyword=1&id=' + divid);
+				document.getElementById('load' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -561,7 +561,7 @@
 						display_div_auto('url' + divid, 'table');
 						document.getElementById('url' + divid).innerHTML = xhr_object.responseText;
 						document.getElementById('load' + divid).innerHTML = '';
-						document.getElementById('img_url' + divid).src = '../templates/{THEME}/images/upload/minus.png';
+						document.getElementById('img_url' + divid).src = '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
 						document.getElementById('load' + divid).innerHTML = '';
@@ -671,7 +671,7 @@
 						</table>
 					</td>
 					<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-						<img src="../kernel/framework/ajax/display_stats.php?bot=1" alt="" />
+						<img src="{PATH_TO_ROOT}/kernel/framework/ajax/display_stats.php?bot=1" alt="" />
 					</td>
 				</tr>
 			</table>

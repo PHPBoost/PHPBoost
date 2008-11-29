@@ -16,7 +16,7 @@
 			function img_change(id, url)
 			{
 				if( document.images )
-					document.images[id].src = "../templates/{THEME}/images/ranks/" + url;
+					document.images[id].src = "{PATH_TO_ROOT}/templates/{THEME}/images/ranks/" + url;
 			}
 		-->
 		</script>
@@ -25,12 +25,12 @@
 			<ul>
 				<li class="title_menu">{L_RANKS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_ranks.php"><img src="../templates/{THEME}/images/admin/ranks.png" alt="" /></a>
+					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks.php" class="quick_link">{L_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_ranks_add.php"><img src="../templates/{THEME}/images/admin/ranks.png" alt="" /></a>
+					<a href="admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks_add.php" class="quick_link">{L_ADD_RANKS}</a>
 				</li>
@@ -43,7 +43,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 								{RANK_OPTIONS}
 							</select>
 							<br />
-							<img src="../templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" />
 						</label></dd>
 					</dl>
 				</fieldset>

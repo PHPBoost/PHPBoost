@@ -30,22 +30,22 @@
 			<ul>
 				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
 				</li>
 				<li>
-					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
 				</li>
@@ -60,7 +60,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />
 				</div>
 			</div>
@@ -126,13 +126,13 @@
 						img_sex = 'man.png';
 					else if( url == 2 )
 						img_sex = 'woman.png';
-					document.getElementById('img_sex').innerHTML = (img_sex != '') ? '<img src="../templates/{THEME}/images/' + img_sex + '" alt="" />' : '';
+					document.getElementById('img_sex').innerHTML = (img_sex != '') ? '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/' + img_sex + '" alt="" />' : '';
 				}
 			}
 			function change_img_theme(id, value)
 			{
 				if(document.images )
-					document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
+					document.images[id].src = "{PATH_TO_ROOT}/templates/" + value + "/theme/images/theme.jpg";
 			}
 		
 			var array_identifier = new Array();
@@ -140,7 +140,7 @@
 			function change_img_lang(id, lang)
 			{
 				if( array_identifier[lang] && document.getElementById(id) ) 
-					document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
+					document.getElementById(id).src = '{PATH_TO_ROOT}/images/stats/countries/' + array_identifier[lang] + '.png';
 			}
 			-->
 			</script>
@@ -149,13 +149,13 @@
 				var theme = '{THEME}';
 			-->
 			</script>
-			<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
+			<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/calendar.js"></script>
 				
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -229,7 +229,7 @@
 									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #				
 							</select>
-							<img id="img_theme" src="../templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />			
+							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{USER_THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />			
 						</label></dd>
 					</dl>
 					<dl>
@@ -326,7 +326,7 @@
 								<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 								</div>
 							</div>
-							<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+							<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a>
 						</label></dd>
 					</dl>
 					<dl>

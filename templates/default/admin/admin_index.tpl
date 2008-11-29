@@ -2,22 +2,22 @@
 			<ul>
 				<li class="title_menu">{L_QUICK_LINKS}</li>
 				<li>
-					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="admin_menus.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="admin_menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>
 					<br />
 					<a href="admin_menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="admin_modules.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="admin_updates.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
 				</li>

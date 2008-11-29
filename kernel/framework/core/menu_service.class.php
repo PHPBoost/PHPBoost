@@ -54,15 +54,15 @@ class MenuService
     {
         global $Sql;
         
-        $query = "SELECT `id`, `object`, `block`, `position`, `enabled` FROM `" . PREFIX . "menuss`";
+        $query = "SELECT id, object, block, position, enabled FROM " . PREFIX . "menuss";
         
         $conditions = array();
         if ($class != MENU__CLASS)
-            $conditions[] = "`class`='" . strtolower($class) . "'";
+            $conditions[] = "class='" . strtolower($class) . "'";
         if ($block != BLOCK_POSITION__ALL)
-            $conditions[] = "`block`='" . $block . "'";
+            $conditions[] = "block='" . $block . "'";
         if ($enabled !== MENU_ENABLE_OR_NOT)
-            $conditions[] .= "`enabled`='" . $enabled . "'";
+            $conditions[] .= "enabled='" . $enabled . "'";
         
         if (count($conditions) > 0)
             $query .= " WHERE " . implode(' AND ', $conditions);
@@ -90,9 +90,9 @@ class MenuService
         $menus = MenuService::_initialize_menus_map();
         
         $query = "
-            SELECT `id`, `object`, `block`, `position`, `enabled`
-            FROM `" . PREFIX . "menuss`
-            ORDER BY `position` ASC
+            SELECT id, object, block, position, enabled
+            FROM " . PREFIX . "menuss
+            ORDER BY position ASC
         ;";
         $result = $Sql->query_while ($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
@@ -111,15 +111,15 @@ class MenuService
     /**
      * @desc Retrieve a Menu Object from the database by its id
      * @param int $id the id of the Menu to retrieve from the database
-     * @return Menu the requested Menu if it exists else, false
+     * @return Menu the requested Menu if it exists else, null
      */
     function load($id)
     {
         global $Sql;
-        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `id`='" . $id . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
         
         if ($result === false)
-            return false;
+            return null;
         
         return MenuService::_load($result);
     }
@@ -132,7 +132,7 @@ class MenuService
     function load_by_title($title)
     {
         global $Sql;
-        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE `title`='" . addslashes($title) . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE title='" . addslashes($title) . "'", __LINE__, __FILE__);
         
         if ($result === false)
             return false;
@@ -151,7 +151,7 @@ class MenuService
         
         if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
         {
-            $block_position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX . "menuss` WHERE `block`='" . $block. "'";
+            $block_position_query = "SELECT MAX(position) + 1 FROM " . PREFIX . "menuss WHERE block='" . $block. "'";
             $block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
         }
         
@@ -160,19 +160,19 @@ class MenuService
         if ($id_menu > 0)
         {   // We only have to update the element
             $query = "
-            UPDATE `" . PREFIX . "menuss` SET
-                    `title`='" . addslashes($menu->get_title()) . "',
-                    `object`='" . serialize($menu) . "',
-                    `class`='" . strtolower(get_class($menu)) . "',
-                    `enabled`='" . $menu->is_enabled() . "',
-                    `block`='" . $block . "',
-                    `position`='" . $menu->get_block_position() . "'
+            UPDATE " . PREFIX . "menuss SET
+                    title='" . addslashes($menu->get_title()) . "',
+                    object='" . serialize($menu) . "',
+                    class='" . strtolower(get_class($menu)) . "',
+                    enabled='" . $menu->is_enabled() . "',
+                    block='" . $block . "',
+                    position='" . $menu->get_block_position() . "'
             WHERE id='" . $id_menu . "';";
         }
         else
         {   // We have to insert the element in the database
             $query = "
-                INSERT INTO `" . PREFIX . "menuss` (`title`,`object`,`class`,`enabled`,`block`,`position`)
+                INSERT INTO " . PREFIX . "menuss (title,object,class,enabled,block,position)
                 VALUES (
                     '" . addslashes($menu->get_title()) . "',
                     '" . serialize($menu) . "',
@@ -196,7 +196,7 @@ class MenuService
         global $Sql;
         $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : 0);
         if ($id_menu > 0)
-            $Sql->query_inject("DELETE FROM `" . PREFIX . "menuss` WHERE `id`='" . $id_menu . "';" , __LINE__, __FILE__);
+            $Sql->query_inject("DELETE FROM " . PREFIX . "menuss WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
     }
 
     
@@ -233,9 +233,9 @@ class MenuService
         if ($menu->is_enabled())
         {   // Updates the previous block position counter
             $update_query = "
-                UPDATE `" . PREFIX ."menuss`
-                SET `position`=`position` - 1
-                WHERE `block`='" . $menu->get_block() . "' AND `position`>'" . $menu->get_block_position() . "';";
+                UPDATE " . PREFIX ."menuss
+                SET position=position - 1
+                WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
             $Sql->query_inject($update_query, __LINE__, __FILE__);
         }
         else
@@ -253,7 +253,7 @@ class MenuService
             $menu->set_block($block);
             
             // Computes the new block position for the menu
-            $position_query = "SELECT MAX(`position`) + 1 FROM `" . PREFIX ."menuss` WHERE `block`='" . $menu->get_block() . "' AND `enabled`='1';";
+            $position_query = "SELECT MAX(position) + 1 FROM " . PREFIX ."menuss WHERE block='" . $menu->get_block() . "' AND enabled='1';";
             $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
         }
         
@@ -275,17 +275,17 @@ class MenuService
         
         if ($direction > 0)
         {   // Moving the menu down
-            $max_position_query = "SELECT MAX(`position`) FROM `" . PREFIX . "menuss` WHERE `block`='" . $menu->get_block() . "' AND `enabled`='1'";
+            $max_position_query = "SELECT MAX(position) FROM " . PREFIX . "menuss WHERE block='" . $menu->get_block() . "' AND enabled='1'";
             $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;
             
             $update_query = "
-                UPDATE `" . PREFIX . "menuss` SET `position`=`position` - 1
+                UPDATE " . PREFIX . "menuss SET position=position - 1
                 WHERE
-                    `block`='" . $menu->get_block() . "' AND
-                    `position` BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
+                    block='" . $menu->get_block() . "' AND
+                    position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
             ";
         }
         else if ($direction < 0)
@@ -297,10 +297,10 @@ class MenuService
                             
             // Updating other menus
             $update_query = "
-                UPDATE `" . PREFIX . "menuss` SET `position`=`position` + 1
+                UPDATE " . PREFIX . "menuss SET position=position + 1
                 WHERE
-                    `block`='" . $menu->get_block() . "' AND
-                    `position` BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_postion . "'
+                    block='" . $menu->get_block() . "' AND
+                    position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_postion . "'
             ";
         }
         
@@ -349,8 +349,8 @@ class MenuService
         }
         
         Cache::write('menuss', preg_replace(
-                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `'),
-                array('', '', "\n", ' ', '> ', "\n"),
+                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
+                array('', '', "\n", ' ', '> ', "\n", ''),
                 $cache_str
             )
         );

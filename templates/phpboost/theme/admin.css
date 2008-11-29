@@ -1,9 +1,9 @@
 /* --------------------------------------
 		admin.css
-Contient les classes supplémentaires pour l'administration.
+Contient les classes supplï¿½mentaires pour l'administration.
 --------------------------------------*/
 
-/* Entête de la page */
+/* Entï¿½te de la page */
 div#header_admin{
 }
 /* Menu de lien horizontal */
@@ -30,7 +30,7 @@ html>body div#admin_contents{
 	height:auto;
 	min-height:450px;
 }
-/* Menu déroulants verticaux */
+/* Menu dï¿½roulants verticaux */
 div#admin_quick_menu{
 	width:155px;
 	float:left;
@@ -43,9 +43,17 @@ div#admin_quick_menu ul{
 	margin-top:12px;
 }
 div#admin_quick_menu li{
-	display:block;
-	width:160px;
-	padding:15px 0px;
+    display:block;
+    width:160px;
+    padding:15px 0px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+div#admin_quick_menu li a.quick_link{
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 div#admin_quick_menu li.title_menu{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
@@ -80,7 +88,7 @@ div#admin_quick_menu li a.quick_link{
 	margin-top:15px;
 }
 
-/* Fond des catégories dans l'administration */
+/* Fond des catï¿½gories dans l'administration */
 .management_cat_admin{
 	width:100%;
 	height:20px;
@@ -88,7 +96,7 @@ div#admin_quick_menu li a.quick_link{
 	padding:4px 0px;
 }
 
-/* Liens vers les menus étendus */
+/* Liens vers les menus ï¿½tendus */
 a.admin_extend_link{
 	text-decoration:none;
 	color:#FFFFFF;

@@ -19,7 +19,7 @@
 			function img_change(id, url)
 			{
 				if( document.images )
-					document.images[id].src = "../templates/{THEME}/images/ranks/" + url;
+					document.images[id].src = "{PATH_TO_ROOT}/templates/{THEME}/images/ranks/" + url;
 			}
 		-->
 		</script>
@@ -28,12 +28,12 @@
 			<ul>
 				<li class="title_menu">{L_RANKS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_ranks.php"><img src="../templates/{THEME}/images/admin/ranks.png" alt="" /></a>
+					<a href="admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks.php" class="quick_link">{L_RANKS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_ranks_add.php"><img src="../templates/{THEME}/images/admin/ranks.png" alt="" /></a>
+					<a href="admin_ranks_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" alt="" /></a>
 					<br />
 					<a href="admin_ranks_add.php" class="quick_link">{L_ADD_RANKS}</a>
 				</li>
@@ -72,7 +72,7 @@
 									{rank.RANK_OPTIONS}
 								</select>
 								<br />
-								<img src="../templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" />
 							</td>
 							<td class="row2" style="text-align:center;">
 								{rank.DELETE}

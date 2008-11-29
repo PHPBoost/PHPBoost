@@ -2,12 +2,12 @@
 			<ul>
 				<li class="title_menu">{L_THEME_MANAGEMENT}</li>
 				<li>
-					<a href="admin_themes.php"><img src="../templates/{THEME}/images/admin/themes.png" alt="" /></a>
+					<a href="admin_themes.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>
 					<br />
 					<a href="admin_themes.php" class="quick_link">{L_THEME_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_themes_add.php"><img src="../templates/{THEME}/images/admin/themes.png" alt="" /></a>
+					<a href="admin_themes_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>
 					<br />
 					<a href="admin_themes_add.php" class="quick_link">{L_THEME_ADD}</a>
 				</li>
@@ -19,7 +19,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 							<strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
 						</td>
 						<td class="row2">					
-							<img src="../templates/{list.ICON}/theme/images/theme.jpg" alt="" />
+							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
 						</td>
 						<td class="row2" style="vertical-align:top">
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />

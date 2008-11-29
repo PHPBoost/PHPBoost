@@ -2,12 +2,12 @@
 		<ul>
 			<li class="title_menu">{L_EXTEND_FIELD}</li>
 			<li>
-				<a href="admin_extend_field.php"><img src="../templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
+				<a href="admin_extend_field.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
 				<br />
 				<a href="admin_extend_field.php" class="quick_link">{L_EXTEND_FIELD_MANAGEMENT}</a>
 			</li>
 			<li>
-				<a href="admin_extend_field_add.php"><img src="../templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
+				<a href="admin_extend_field_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
 				<br />
 				<a href="admin_extend_field_add.php" class="quick_link">{L_EXTEND_FIELD_ADD}</a>
 			</li>
@@ -49,10 +49,10 @@
 						{field.BOTTOM}
 					</td>
 					<td class="row2"> 
-						<a href="admin_extend_field.php?id={field.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_extend_field.php?id={field.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_extend_field.php?del=1&amp;id={field.ID}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_extend_field.php?del=1&amp;id={field.ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END field #
@@ -97,7 +97,7 @@
 		<div class="error_handler_position">
 			<span id="errorh"></span>
 			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />	
 			</div>
 		</div>

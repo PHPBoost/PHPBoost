@@ -26,9 +26,11 @@
  *
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
+define('PATH_TO_ROOT', '../..');
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = retrieve(GET, 'id', 0);
 
@@ -43,179 +45,178 @@ function menu_admin_link(&$menu, $mode)
     if ($mode == 'edit')
     {
         if ($class == strtolower(LINKS_MENU__CLASS))
-            return 'admin_links_menu.php?';
+            return 'links.php?';
         if ($class == strtolower(CONTENT_MENU__CLASS))
-            return 'admin_content_menu.php?';
-        return 'admin_auth_menus.php?';
+            return 'content.php?';
+        return 'auth.php?';
     }
     if ($mode == 'delete')
     {
-        if ($class == strtolower(LINKS_MENU__CLASS))
-            return 'admin_links_menu.php?action=delete&amp;';
-        if ($class == strtolower(CONTENT_MENU__CLASS))
-            return 'admin_content_menu.php?action=delete&amp;';
+        return 'delete.php?';
+//        if ($class == strtolower(LINKS_MENU__CLASS))
+//            return 'links.php?action=delete&amp;';
+//        if ($class == strtolower(CONTENT_MENU__CLASS))
+//            return 'content.php?action=delete&amp;';
     }
     return '';
 }
 
-if ($action == 'enable' && !empty($id))
-{   // Enable a Menu
+if (!empty($id))
+{
     $menu = MenuService::load($id);
-    MenuService::enable($menu);
-    MenuService::generate_cache();
-	redirect(HOST . SCRIPT . '#m' . $id);
+    if ($menu == null)
+        redirect('menus.php');
+    
+    if ($action == 'enable')
+    {   // Enable a Menu
+        MenuService::enable($menu);
+        MenuService::generate_cache();
+    	redirect(HOST . SCRIPT . '#m' . $id);
+    }
+    elseif ($action == 'disable')
+    {   // Disable a Menu
+        MenuService::disable($menu);
+        MenuService::generate_cache();
+        redirect(HOST . SCRIPT . '#m' . $id);
+    }
+    elseif (!empty($move))
+    {   // Move a Menu
+        MenuService::move($menu, $move);
+        
+        MenuService::generate_cache();
+        $Cache->Generate_file('css');
+    	
+    	redirect(HOST . SCRIPT . '#m' . $id);
+    }
+    elseif ($action == 'up' || $action == 'down')
+    {   // Move up or down a Menu in a block
+    	if ($action == 'up')
+    	   MenuService::change_position($menu, MOVE_UP);
+    	else
+           MenuService::change_position($menu, MOVE_DOWN);
+        
+        MenuService::generate_cache();
+        
+        redirect(HOST . SCRIPT . '#m' . $id);
+    }
 }
-elseif ($action == 'disable' && !empty($id))
-{   // Disable a Menu
-    $menu = MenuService::load($id);
-    MenuService::disable($menu);
-    MenuService::generate_cache();
-    redirect(HOST . SCRIPT . '#m' . $id);
+
+// Display the Menu dispositions
+include('lateral_menu.php');
+lateral_menu();
+
+$tpl = new Template('admin/menus/menus.tpl');
+$Cache->load('themes');
+
+// Compute the column number
+$right_column = $THEME_CONFIG[get_utheme()]['right_column'];
+$left_column = $THEME_CONFIG[get_utheme()]['left_column'];
+$colspan = 1 + (int) $right_column + (int) $left_column;
+
+// Retrieves all the menu
+$menus_blocks = MenuService::get_menus_map();
+$blocks = array(
+   BLOCK_POSITION__HEADER => 'mod_header',
+   BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
+   BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
+   BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
+   BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
+   BLOCK_POSITION__FOOTER => 'mod_footer',
+   BLOCK_POSITION__LEFT => 'mod_left',
+   BLOCK_POSITION__RIGHT => 'mod_right',
+   BLOCK_POSITION__NOT_ENABLED => 'mod_main'
+);
+
+foreach ($menus_blocks as $block => $menus)
+{   // For each block
+    $i = 0;
+    $max = count($menus);
+    foreach ($menus as $menu)
+    {   // For each Menu in this block
+        $menu_tpl = new Template('admin/menus/menu.tpl');
+        
+        $id = $menu->get_id();
+        $enabled = $menu->is_enabled();
+        $block_id = $menu->get_block();
+        
+        if (($block_id == BLOCK_POSITION__LEFT && !$left_column) || ($block_id == BLOCK_POSITION__RIGHT && !$right_column) || !$enabled)
+           $block_id = BLOCK_POSITION__NOT_ENABLED;
+        
+        $edit_link = menu_admin_link($menu, 'edit');
+        $del_link = menu_admin_link($menu, 'delete');
+        
+        $menu_tpl->assign_vars(array(
+            'NAME' => $menu->get_title(),
+            'IDMENU' => $id,
+            'U_ONCHANGE_ENABLED' => '\'menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '#m' . $id . '\'',
+            'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
+            'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
+            'CONTENTS' => $menu->admin_display(),
+            'C_EDIT' => !empty($edit_link),
+            'C_DEL' => !empty($del_link),
+            'EDIT' => $edit_link . 'id=' . $id,
+            'DEL' => $del_link . 'id=' . $id,
+            'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
+            'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
+            'C_MINI' => in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT)),
+            'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
+            'THEME' => get_utheme(),
+            'L_ENABLED' => $LANG['enabled'],
+            'L_DISABLED' => $LANG['disabled'],
+            'I_HEADER' => BLOCK_POSITION__HEADER,
+            'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
+            'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
+            'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
+            'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
+            'I_FOOTER' => BLOCK_POSITION__FOOTER,
+            'I_LEFT' => BLOCK_POSITION__LEFT,
+            'I_RIGHT' => BLOCK_POSITION__RIGHT,
+            'L_HEADER' => $LANG['menu_header'],
+            'L_SUB_HEADER' => $LANG['menu_subheader'],
+            'L_LEFT_MENU' => $LANG['menu_left'],
+            'L_RIGHT_MENU' => $LANG['menu_right'],
+            'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
+            'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
+            'L_TOP_FOOTER' => $LANG['menu_top_footer'],
+            'L_FOOTER' => $LANG['menu_footer'],
+            'L_MOVETO' => $LANG['moveto'],
+        ));
+        
+        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(TEMPLATE_STRING_MODE)));
+        $i++;
+    }
 }
-elseif (!empty($move) && !empty($id))
-{   // Move a Menu
-    $menu = MenuService::load($id);
-    MenuService::move($menu, $move);
-    
-    MenuService::generate_cache();
-    $Cache->Generate_file('css');
-	
-	redirect(HOST . SCRIPT . '#m' . $id);
-}
-elseif (($action == 'up' || $action == 'down') && !empty($id))
-{   // Move up or down a Menu in a block
-    $menu = MenuService::load($id);
-	if ($action == 'up')
-	   MenuService::change_position($menu, MOVE_UP);
-	else
-       MenuService::change_position($menu, MOVE_DOWN);
-    
-    MenuService::generate_cache();
-    
-    redirect(HOST . SCRIPT . '#m' . $id);
-}
-else
-{   // Display the Menu dispositions
-    $tpl = new Template('admin/links_menu.tpl');
-    $tpl->assign_vars(array(
-        'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
-    ));
-    $tpl->parse();
-    
-	$tpl = new Template('admin/admin_menus_management.tpl');
-	$Cache->load('themes');
-    
-    // Compute the column number
-    $right_column = $THEME_CONFIG[get_utheme()]['right_column'];
-    $left_column = $THEME_CONFIG[get_utheme()]['left_column'];
-    $colspan = 1 + (int) $right_column + (int) $left_column;
-	
-	// Retrieves all the menu
-	$menus_blocks = MenuService::get_menus_map();
-	$blocks = array(
-       BLOCK_POSITION__HEADER => 'mod_header',
-       BLOCK_POSITION__SUB_HEADER => 'mod_subheader',
-       BLOCK_POSITION__TOP_CENTRAL => 'mod_topcentral',
-       BLOCK_POSITION__BOTTOM_CENTRAL => 'mod_bottomcentral',
-       BLOCK_POSITION__TOP_FOOTER => 'mod_topfooter',
-       BLOCK_POSITION__FOOTER => 'mod_footer',
-       BLOCK_POSITION__LEFT => 'mod_left',
-       BLOCK_POSITION__RIGHT => 'mod_right',
-       BLOCK_POSITION__NOT_ENABLED => 'mod_main'
-	);
-	
-	foreach ($menus_blocks as $block => $menus)
-	{   // For each block
-	    $i = 0;
-	    $max = count($menus);
-	    foreach ($menus as $menu)
-	    {   // For each Menu in this block
-	        $menu_tpl = new Template('admin/admin_menus_management_menu.tpl');
-	        
-	        $id = $menu->get_id();
-            $enabled = $menu->is_enabled();
-            $block_id = $menu->get_block();
-            
-	        if (($block_id == BLOCK_POSITION__LEFT && !$left_column) || ($block_id == BLOCK_POSITION__RIGHT && !$right_column) || !$enabled)
-	           $block_id = BLOCK_POSITION__NOT_ENABLED;
-	        
-            $edit_link = menu_admin_link($menu, 'edit');
-            $del_link = menu_admin_link($menu, 'delete');
-            
-	        $menu_tpl->assign_vars(array(
-                'NAME' => $menu->get_title(),
-                'IDMENU' => $id,
-                'U_ONCHANGE_ENABLED' => '\'admin_menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '#m' . $id . '\'',
-                'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
-                'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
-                'CONTENTS' => $menu->admin_display(),
-                'C_EDIT' => !empty($edit_link),
-                'C_DEL' => !empty($del_link),
-                'EDIT' => $edit_link . 'id=' . $id,
-                'DEL' => $del_link . 'id=' . $id,
-                'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
-                'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-                'C_MINI' => in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT)),
-	            'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
-	            'THEME' => get_utheme(),
-                'L_ENABLED' => $LANG['enabled'],
-                'L_DISABLED' => $LANG['disabled'],
-                'I_HEADER' => BLOCK_POSITION__HEADER,
-                'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
-                'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
-                'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
-                'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
-                'I_FOOTER' => BLOCK_POSITION__FOOTER,
-                'I_LEFT' => BLOCK_POSITION__LEFT,
-                'I_RIGHT' => BLOCK_POSITION__RIGHT,
-                'L_HEADER' => $LANG['menu_header'],
-                'L_SUB_HEADER' => $LANG['menu_subheader'],
-                'L_LEFT_MENU' => $LANG['menu_left'],
-                'L_RIGHT_MENU' => $LANG['menu_right'],
-                'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-                'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-                'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-                'L_FOOTER' => $LANG['menu_footer'],
-                'L_MOVETO' => $LANG['moveto'],
-            ));
-            
-            $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(TEMPLATE_STRING_MODE)));
-            $i++;
-	    }
-	}
-	
-    
-    $tpl->assign_vars(array(
-        'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-        'COLSPAN' => $colspan,
-        'LEFT_COLUMN' => $left_column,
-        'RIGHT_COLUMN' => $right_column,
-        'L_INDEX' => $LANG['index'],
-        'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
-        'L_ACTIVATION' => $LANG['activation'],
-        'L_MOVETO' => $LANG['moveto'],
-        'L_GUEST' => $LANG['guest'],
-        'L_MEMBER' => $LANG['member'],
-        'L_MODO' => $LANG['modo'],
-        'L_ADMIN' => $LANG['admin'],
-        'L_HEADER' => $LANG['menu_header'],
-        'L_SUB_HEADER' => $LANG['menu_subheader'],
-        'L_LEFT_MENU' => $LANG['menu_left'],
-        'L_RIGHT_MENU' => $LANG['menu_right'],
-        'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-        'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-        'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-        'L_FOOTER' => $LANG['menu_footer'],
-        'L_MENUS_AVAILABLE' => count($menus_blocks[BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
-        'L_INSTALL' => $LANG['install'],
-        'L_UPDATE' => $LANG['update'],
-        'L_RESET' => $LANG['reset'],
-    ));
-    $tpl->parse();
-    
-    require_once('../admin/admin_footer.php');
+
+
+$tpl->assign_vars(array(
+    'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
+    'COLSPAN' => $colspan,
+    'LEFT_COLUMN' => $left_column,
+    'RIGHT_COLUMN' => $right_column,
+    'L_INDEX' => $LANG['index'],
+    'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
+    'L_ACTIVATION' => $LANG['activation'],
+    'L_MOVETO' => $LANG['moveto'],
+    'L_GUEST' => $LANG['guest'],
+    'L_MEMBER' => $LANG['member'],
+    'L_MODO' => $LANG['modo'],
+    'L_ADMIN' => $LANG['admin'],
+    'L_HEADER' => $LANG['menu_header'],
+    'L_SUB_HEADER' => $LANG['menu_subheader'],
+    'L_LEFT_MENU' => $LANG['menu_left'],
+    'L_RIGHT_MENU' => $LANG['menu_right'],
+    'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
+    'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
+    'L_TOP_FOOTER' => $LANG['menu_top_footer'],
+    'L_FOOTER' => $LANG['menu_footer'],
+    'L_MENUS_AVAILABLE' => count($menus_blocks[BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
+    'L_INSTALL' => $LANG['install'],
+    'L_UPDATE' => $LANG['update'],
+    'L_RESET' => $LANG['reset'],
+));
+$tpl->parse();
+
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
     
 //	//Récupération du class le plus grand pour chaque positionnement possible.
 //	$array_max = array();
@@ -359,6 +360,5 @@ else
 //			));
 //		}
 //	}
-}
 
 ?>

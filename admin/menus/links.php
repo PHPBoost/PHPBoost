@@ -26,9 +26,11 @@
  *
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
+define('PATH_TO_ROOT', '../..');
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 import('core/menu_service');
 
@@ -53,7 +55,7 @@ if ($action == 'edit' && !empty($id_post)) //Modification d'un menu déjà existan
     MenuService::save($menu);
     MenuService::generate_cache();
     
-    redirect(HOST . DIR . '/admin/admin_menus.php#m' . $id_post);
+    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $id_post);
 }
 elseif ($action == 'add') //Ajout d'un menu.
 {
@@ -67,18 +69,18 @@ elseif ($action == 'add') //Ajout d'un menu.
     MenuService::save($menu);
     MenuService::generate_cache();
     
-    redirect(HOST . DIR . '/admin/admin_menus.php#m' . $last_menu_id);
+    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $last_menu_id);
 }
 elseif ($action =='delete' && !empty($id)) //Suppression du menu.
 {
     MenuService::delete($id);
     MenuService::generate_cache();
     
-    redirect(HOST . DIR . '/admin/admin_menus.php');
+    redirect(HOST . DIR . '/admin/menus/menus.php');
 }
 else
 {
-    $tpl = new Template('admin/links_menu.tpl');
+    $tpl = new Template('admin/menus/panel.tpl');
     $tpl->assign_vars(array(
         'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
         'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
@@ -86,7 +88,7 @@ else
     ));
     $tpl->parse();
     
-    $tpl = new Template('admin/admin_links_menu.tpl');
+    $tpl = new Template('admin/menus/links.tpl');
 
     $tpl->assign_vars(array(
         'KERNEL_EDITOR' => display_editor(),
@@ -180,7 +182,7 @@ else
     }
     
     $tpl->parse();
-    require_once('../admin/admin_footer.php');
+    require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 }
 
 ?>

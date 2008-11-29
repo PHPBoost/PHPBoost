@@ -10,12 +10,12 @@
 			<ul>
 				<li class="title_menu">{L_ADD_SMILEY}</li>
 				<li>
-					<a href="admin_smileys.php"><img src="../templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys.php" class="quick_link">{L_SMILEY_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_smileys_add.php"><img src="../templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys_add.php" class="quick_link">{L_ADD_SMILEY}</a>
 				</li>
@@ -49,16 +49,16 @@
 				
 				<tr style="text-align:center;"> 
 					<td class="row2">
-						<img src="../images/smileys/{list.URL_SMILEY}" alt="" />
+						<img src="{PATH_TO_ROOT}/images/smileys/{list.URL_SMILEY}" alt="" />
 					</td>
 					<td class="row2">
 						{list.CODE_SMILEY}
 					</td>
 					<td class="row2">
-						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>
+						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;edit=1" title="{L_EDIT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+						<a href="admin_smileys.php?id={list.IDSMILEY}&amp;del=1" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
 					</td>
 				</tr>
 				

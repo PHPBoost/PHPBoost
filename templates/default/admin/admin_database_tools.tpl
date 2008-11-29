@@ -13,12 +13,12 @@
 				<ul>
 					<li class="title_menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
-					<a href="admin_database.php"><img src="../templates/{THEME}/images/admin/database.png" alt="" /></a>
+					<a href="admin_database.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" alt="" /></a>
 					<br />
 					<a href="admin_database.php" class="quick_link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
-					<a href="admin_database.php?query=1"><img src="../templates/{THEME}/images/admin/database.png" alt="" /></a>
+					<a href="admin_database.php?query=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" alt="" /></a>
 					<br />
 					<a href="admin_database.php?query=1" class="quick_link">{L_QUERY}</a>
 				</li>
@@ -28,30 +28,30 @@
 		<div id="admin_contents">
 			<div style="width:95%;margin:auto;">	
 				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
-					<img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<div class="dynamic_menu" style="z-index:0;float:none">
 					<ul>
 						<li>
-							<h5 class="links" style=""><img src="../templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{L_TABLE_STRUCTURE}</a></h5>
+							<h5 class="links" style=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{L_TABLE_STRUCTURE}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/tools_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=query">SQL</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">{L_INSERT}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=insert">{L_INSERT}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
 						</li>
 					</ul>
 				</div>
@@ -183,7 +183,7 @@
 					# IF TABLE_FREE #
 					<tr>
 						<td class="row3" colspan="2" style="text-align:center">
-							<img src="../templates/{THEME}/images/admin/database_mini.png" alt="" class="valign_middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database_mini.png" alt="" class="valign_middle" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">{L_OPTIMIZE}</a>
 						</td>
 					</tr>
 					# ENDIF #
@@ -285,7 +285,7 @@
 					</fieldset>
 					
 					<br />
-					# IF PAGINATION # <img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+					# IF PAGINATION # <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 					
 					<div style="width:99%;margin:auto;overflow:auto;padding:0px 2px">
 						<table class="module_table">
@@ -301,7 +301,7 @@
 						</table>
 					</div>
 					<br />
-					# IF PAGINATION # <img src="../templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
+					# IF PAGINATION # <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <strong>{L_PAGE}</strong> : {PAGINATION} # ENDIF #
 				</div>
 			</div>			
 			# ENDIF #
@@ -321,7 +321,7 @@
 					return false;
 				}
 				
-				//Vérification de la requête => alerte si elle contient un des mots clés DELETE, DROP ou TRUNCATE.
+				//Vï¿½rification de la requï¿½te => alerte si elle contient un des mots clï¿½s DELETE, DROP ou TRUNCATE.
 				for(i = 0; i < keyword.length; i++)
 				{
 					if( typeof(strpos(query_lowercase, keyword[i])) != 'boolean' )
@@ -347,7 +347,7 @@
 					<div class="block_contents2">
 						<span id="errorh"></span>
 						<div class="warning">
-							<img src="../templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
 						</div>
 					</div>
 					<div class="block_top">

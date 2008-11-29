@@ -15,12 +15,12 @@
 			<ul>
 				<li class="title_menu">{L_CONFIG}</li>
 				<li>
-					<a href="admin_config.php"><img src="../templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<a href="admin_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
 					<br />
 					<a href="admin_config.php" class="quick_link">{L_CONFIG_MAIN}</a>
 				</li>
 				<li>
-					<a href="admin_config.php?adv=1"><img src="../templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<a href="admin_config.php?adv=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
 					<br />
 					<a href="admin_config.php?adv=1" class="quick_link">{L_CONFIG_ADVANCED}</a>
 				</li>
@@ -33,7 +33,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>	
 			</div>
@@ -46,7 +46,7 @@
 			function change_img_lang(id, lang)
 			{
 				if( array_identifier[lang] && document.getElementById(id) ) 
-					document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
+					document.getElementById(id).src = '{PATH_TO_ROOT}/images/stats/countries/' + array_identifier[lang] + '.png';
 			}
 			-->
 			</script>
@@ -79,12 +79,12 @@
 					<dl>
 						<dt><label for="default_theme">* {L_DEFAULT_THEME}</label></dt>
 						<dd><label>
-							<select name="theme" id="default_theme" onchange="change_img_path('img_theme', '../templates/' + this.options[selectedIndex].value + '/theme/images/theme.jpg');">
+							<select name="theme" id="default_theme" onchange="change_img_path('img_theme', '{PATH_TO_ROOT}/templates/' + this.options[selectedIndex].value + '/theme/images/theme.jpg');">
 							# START select #				
 								{select.THEME}				
 							# END select #				
 							</select>
-							<img id="img_theme" src="../templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
 					<dl>

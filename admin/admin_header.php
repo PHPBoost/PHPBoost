@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,7 +26,7 @@
  *
 ###################################################*/
 
-if (defined('PHPBOOST') !== true) 
+if (defined('PHPBOOST') !== true)
 	exit;
 
 if (!defined('TITLE'))
@@ -59,7 +59,9 @@ $Template->assign_vars(array(
 	'L_TOOLS' => $LANG['tools'],
 	'L_CONFIGURATION' => $LANG['configuration'],
 	'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
-	'L_ADD' => $LANG['add'],
+    'L_ADD' => $LANG['add'],
+    'L_ADD_CONTENT_MENU' => $LANG['menus_content_add'],
+    'L_ADD_LINKS_MENU' => $LANG['menus_links_add'],
 	'L_MANAGEMENT' => $LANG['management'],
 	'L_PUNISHEMENT' => $LANG['punishement'],
 	'L_UPDATE_MODULES' => $LANG['update_module'],
@@ -80,7 +82,7 @@ $Template->assign_vars(array(
 	'L_LANG' => $LANG['languages'],
 	'L_SMILEY' => $LANG['smile'],
 	'L_ADMINISTRATOR_ALERTS' => $LANG['administrator_alerts'],
-	'L_STATS' => $LANG['stats'],	
+	'L_STATS' => $LANG['stats'],
 	'L_ERRORS' => $LANG['errors'],
 	'L_SERVER' => $LANG['server'],
 	'L_PHPINFO' => $LANG['phpinfo'],
@@ -103,7 +105,7 @@ $Template->assign_vars(array(
 $modules_config = array();
 
 foreach ($MODULES as $name => $array)
-{	
+{
 	$array_info = load_ini_file(PATH_TO_ROOT . '/' . $name . '/lang/', get_ulang());
 	if (is_array($array_info))
 	{
@@ -117,17 +119,17 @@ foreach ($modules_config as $module_name => $auth)
 {
 	$name = $modules_config[$module_name]['module_name'];
 	if (is_array($modules_config[$module_name]))
-	{	
+	{
 		if ($modules_config[$module_name]['admin'] == 1)
 		{
 			if (!empty($modules_config[$module_name]['admin_links']))
-			{	
+			{
 				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
 				$links = '';
 				foreach ($admin_links as $key => $value)
 				{
 					if (is_array($value))
-					{	
+					{
 						$links .= '<li class="extend" onmouseover="show_menu(\'7' . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(../' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu7' . $name . '">';
 						foreach ($value as $key2 => $value2)
 							$links .= '<li><a href="../' . $name . '/' . $value2 . '" style="background-image:url(../' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
@@ -161,6 +163,6 @@ foreach ($modules_config as $module_name => $auth)
 	}
 }
 
-$Template->pparse('admin_header'); 
+$Template->pparse('admin_header');
 
 ?>

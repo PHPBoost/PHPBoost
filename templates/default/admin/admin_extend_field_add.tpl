@@ -34,12 +34,12 @@
 		<ul>
 			<li class="title_menu">{L_EXTEND_FIELD}</li>
 			<li>
-				<a href="admin_extend_field.php"><img src="../templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
+				<a href="admin_extend_field.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
 				<br />
 				<a href="admin_extend_field.php" class="quick_link">{L_EXTEND_FIELD_MANAGEMENT}</a>
 			</li>
 			<li>
-				<a href="admin_extend_field_add.php"><img src="../templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
+				<a href="admin_extend_field_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" alt="" /></a>
 				<br />
 				<a href="admin_extend_field_add.php" class="quick_link">{L_EXTEND_FIELD_ADD}</a>
 			</li>
@@ -51,7 +51,7 @@
 		<div class="error_handler_position">
 			<span id="errorh"></span>
 			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />	
 			</div>
 			<br />		

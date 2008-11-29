@@ -2,12 +2,12 @@
 			<ul>
 				<li class="title_menu">{L_LANG_MANAGEMENT}</li>
 				<li>
-					<a href="admin_lang.php"><img src="../templates/{THEME}/images/admin/languages.png" alt="" /></a>
+					<a href="admin_lang.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" alt="" /></a>
 					<br />
 					<a href="admin_lang.php" class="quick_link">{L_LANG_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_lang_add.php"><img src="../templates/{THEME}/images/admin/languages.png" alt="" /></a>
+					<a href="admin_lang_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" alt="" /></a>
 					<br />
 					<a href="admin_lang_add.php" class="quick_link">{L_LANG_ADD}</a>
 				</li>
@@ -28,7 +28,7 @@
 						<td class="row2" colspan="5" style="text-align:center;">
 							<span id="errorh"></span>
 							<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-								<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 								<br />	
 							</div>
 							<br />		
@@ -71,7 +71,7 @@
 					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<img src="../images/stats/countries/{list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{list.IDLANG}"><strong>{list.LANG}</strong>		
+							<img src="{PATH_TO_ROOT}/images/stats/countries/{list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{list.IDLANG}"><strong>{list.LANG}</strong>		
 						</td>
 						<td class="row2" style="vertical-align:top">	
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />

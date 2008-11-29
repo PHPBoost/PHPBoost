@@ -11,12 +11,12 @@
 			<ul>
 				<li class="title_menu">{L_COM}</li>
 				<li>
-					<a href="admin_com.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
+					<a href="admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" alt="" /></a>
 					<br />
 					<a href="admin_com.php" class="quick_link">{L_COM_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_com_config.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
+					<a href="admin_com_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" alt="" /></a>
 					<br />
 					<a href="admin_com_config.php" class="quick_link">{L_COM_CONFIG}</a>
 				</li>
@@ -30,7 +30,7 @@
 				</div>
 				<div class="block_contents2">
 					<p class="text_center">
-						<img src="../templates/{THEME}/images/admin/com_mini.png" alt="" class="valign_middle" /> <a href="admin_com.php">{L_DISPLAY_RECENT}</a>
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com_mini.png" alt="" class="valign_middle" /> <a href="admin_com.php">{L_DISPLAY_RECENT}</a>
 						<br /><br />
 						# START modules_com #
 						<a href="admin_com.php?module={modules_com.U_MODULES}" class="small_link">{modules_com.MODULES}</a> |
@@ -47,8 +47,8 @@
 						<div class="msg_container">
 							<div class="msg_top_row">
 								<div class="msg_pseudo_mbr">{com.USER_ONLINE} {com.USER_PSEUDO}</div>
-								<span style="float:left;">&nbsp;&nbsp;<a href="{com.U_PROV}#{com.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</span>
-								<span style="float:right;">&nbsp;&nbsp;<a href="{com.U_EDIT_COM}#{com.COM_SCRIPT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" /></a>&nbsp;&nbsp;<a href="{com.U_DEL_COM}#{com.COM_SCRIPT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" /></a>&nbsp;&nbsp;</span>
+								<span style="float:left;">&nbsp;&nbsp;<a href="{com.U_PROV}#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</span>
+								<span style="float:right;">&nbsp;&nbsp;<a href="{com.U_EDIT_COM}#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" class="valign_middle" /></a>&nbsp;&nbsp;<a href="{com.U_DEL_COM}#{com.COM_SCRIPT}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" class="valign_middle" /></a>&nbsp;&nbsp;</span>
 							</div>
 							<div class="msg_contents_container">
 								<div class="msg_info_mbr">
@@ -65,7 +65,7 @@
 									<div class="msg_contents_overflow">
 										{com.CONTENTS}
 										<br /><br /><br />
-										<a href="{com.U_PROV}#{com.COM_SCRIPT}">{L_DISPLAY_TOPIC_COM}</a> <a href="{com.U_PROV}#{com.COM_SCRIPT}"><img src="../templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
+										<a href="{com.U_PROV}#{com.COM_SCRIPT}">{L_DISPLAY_TOPIC_COM}</a> <a href="{com.U_PROV}#{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/right.png" alt="" class="valign_middle" /></a>
 									</div>
 								</div>
 							</div>

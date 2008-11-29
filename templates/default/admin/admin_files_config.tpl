@@ -23,12 +23,12 @@
 			<ul>
 				<li class="title_menu">{L_FILES_MANAGEMENT}</li>
 				<li>
-					<a href="admin_files.php"><img src="../templates/{THEME}/images/admin/files.png" alt="" /></a>
+					<a href="admin_files.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files.png" alt="" /></a>
 					<br />
 					<a href="admin_files.php" class="quick_link">{L_FILES_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_files_config.php"><img src="../templates/{THEME}/images/admin/files.png" alt="" /></a>
+					<a href="admin_files_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files.png" alt="" /></a>
 					<br />
 					<a href="admin_files_config.php" class="quick_link">{L_CONFIG_FILES}</a>
 				</li>

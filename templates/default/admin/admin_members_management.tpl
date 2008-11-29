@@ -44,22 +44,22 @@
 			<ul>
 				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
 				</li>
 				<li>
-					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
 				</li>
@@ -105,14 +105,14 @@
 				</tr>
 				<tr style="text-align:center;">
 					<td class="row1">
-						<a href="admin_members.php?sort=alph&amp;mode=desc"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=alph&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_PSEUDO} 
-						<a href="admin_members.php?sort=alph&amp;mode=asc"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=alph&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
-						<a href="admin_members.php?sort=rank&amp;mode=desc"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=rank&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_RANK}
-						<a href="admin_members.php?sort=rank&amp;mode=asc"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=rank&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
 						{L_MAIL}
@@ -121,14 +121,14 @@
 						{L_WEBSITE}
 					</td>
 					<td class="row1">
-						<a href="admin_members.php?sort=time&amp;mode=desc"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=time&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_REGISTERED}
-						<a href="admin_members.php?sort=time&amp;mode=asc"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=time&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
-						<a href="admin_members.php?sort=aprob&amp;mode=desc"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=aprob&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_APROB}
-						<a href="admin_members.php?sort=aprob&amp;mode=asc"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=aprob&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
 						{L_UPDATE}
@@ -141,13 +141,13 @@
 				# START member #
 				<tr style="text-align:center;"> 
 					<td class="row2">
-						<a href="../member/member.php?id={member.IDMBR}">{member.NAME}</a>				
+						<a href="{PATH_TO_ROOT}/member/member.php?id={member.IDMBR}">{member.NAME}</a>				
 					</td>
 					<td class="row2"> 
 						{member.RANK}
 					</td>
 					<td class="row2">
-						<a href="mailto:{member.MAIL}"><img src="../templates/{THEME}/images/{LANG}/email.png" alt="{member.MAIL}" title="{member.MAIL}" /></a>
+						<a href="mailto:{member.MAIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/email.png" alt="{member.MAIL}" title="{member.MAIL}" /></a>
 					</td>
 					<td class="row2">
 						{member.WEB}
@@ -159,10 +159,10 @@
 						{member.APROB}
 					</td>
 					<td class="row2"> 
-						<a href="admin_members.php?id={member.IDMBR}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #

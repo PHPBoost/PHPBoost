@@ -2,7 +2,7 @@
 			<ul>
 				<li class="title_menu">{L_ERRORS}</li>
 				<li>
-					<a href="admin_errors.php"><img src="../templates/{THEME}/images/admin/errors.png" alt="" /></a>
+					<a href="admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" alt="" /></a>
 					<br />
 					<a href="admin_errors.php" class="quick_link">{L_ERRORS_MANAGEMENT}</a>
 				</li>
@@ -52,7 +52,7 @@
 				<tr>
 					<td class="row2">
 						<p class="{errors.CLASS}" style="width:500px;margin:auto;padding:8px;" id="errorh">
-							<img src="../templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> {errors.L_ERROR_DESC}
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> {errors.L_ERROR_DESC}
 							<br /><br />						
 						</p>
 					</td>

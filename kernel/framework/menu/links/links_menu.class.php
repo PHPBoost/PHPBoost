@@ -154,13 +154,13 @@ class LinksMenu extends LinksMenuElement
         
         if ($this->depth == 0)
         {   // We protect and unprotect only on the top level
-            $cache_str = addcslashes($tpl->parse(TEMPLATE_STRING_MODE), '\'');
+            $cache_str = var_export($tpl->parse(TEMPLATE_STRING_MODE), true);
             $cache_str = str_replace(
                 array('#GET_UID#', '#GET_UID_VAR#', '##'),
                 array('($__uid = get_uid())', '$__uid', '\''),
                 $cache_str
             );
-            return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
+            return parent::cache_export_begin() . '\'.' . $cache_str  . '.\'' . parent::cache_export_end();
         }
         return parent::cache_export_begin() . $tpl->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
     }
