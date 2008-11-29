@@ -34,7 +34,7 @@ $view_get = retrieve(GET, 'view', 0);
 
 if (!empty($view_get) || !empty($edit_get)) 
 {	
-	if ($User->check_level(MEMBER_LEVEL))
+	if ($User->check_level(USER_LEVEL))
 		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	
 	$title_mbr = !empty($edit_get) ? $LANG['profil_edit'] : '';
@@ -56,7 +56,7 @@ if (!empty($id_get)) //Espace membre
 		'member'=> 'member/member.tpl'
 	));
 	
-	if ($edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Edition du profil
+	if ($edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(USER_LEVEL))) //Edition du profil
 	{
 		//Update profil
 		$row = $Sql->query_array('member', 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -89,7 +89,7 @@ if (!empty($id_get)) //Espace membre
 			$user_sex = ($row['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
 	
 		$Template->assign_vars(array(
-			'C_MEMBER_UPDATE_PROFIL' => true,
+			'C_USER_UPDATE_PROFIL' => true,
 			'USER_THEME' => $row['user_theme'],
 			'USER_LOGIN' => $User->get_attribute('login'),
 			'MAIL' => $row['user_mail'],
@@ -110,13 +110,13 @@ if (!empty($id_get)) //Espace membre
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_MEMBER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
 			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
 			'L_PASSWORD_SAME' => $LANG['e_pass_same'],
 			'L_PASSWORD_HOW' => $LANG['password_how'],
-			'L_MEMBER_AREA' => $LANG['member_area'],
+			'L_USER_AREA' => $LANG['member_area'],
 			'L_PROFIL_EDIT' => $LANG['profil_edit'],
 			'L_REQUIRE' => $LANG['require'],
 			'L_MAIL' => $LANG['mail'],
@@ -125,7 +125,7 @@ if (!empty($id_get)) //Espace membre
 			'L_EDIT_JUST_IF_MODIF' => $LANG['edit_if_modif'],
 			'L_NEW_PASS' => $LANG['new_pass'],
 			'L_CONFIRM_PASS' => $LANG['confirm_pass'],
-			'L_DEL_MEMBER' => $LANG['del_member'],
+			'L_DEL_USER' => $LANG['del_member'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
 			'L_OPTIONS' => $LANG['options'],
 			'L_THEME_CHOOSE' => $LANG['choose_theme'],
@@ -191,7 +191,7 @@ if (!empty($id_get)) //Espace membre
 		));
 		
 		//Gestion thème par défaut.
-		if ($CONFIG_MEMBER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
 			$utheme = get_utheme();
 			foreach($THEME_CONFIG as $theme => $array_info)
@@ -256,13 +256,13 @@ if (!empty($id_get)) //Espace membre
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
-		if ($CONFIG_MEMBER['activ_up_avatar'] == 1)
+		if ($CONFIG_USER['activ_up_avatar'] == 1)
 		{
 			$Template->assign_vars(array(			
 				'C_UPLOAD_AVATAR' => true,
-				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
-				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
-				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
+				'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
+				'HEIGHT_MAX' => $CONFIG_USER['height_max'],
+				'WIDTH_MAX' => $CONFIG_USER['width_max']
 			));
 		}
 		
@@ -376,7 +376,7 @@ if (!empty($id_get)) //Espace membre
 		if (isset($LANG[$get_l_error]))
 			$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
 	}
-	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil
+	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(USER_LEVEL))) //Update du profil
 	{
 		$check_pass = !empty($_POST['pass']) ? true : false;
 		$check_pass_bis = !empty($_POST['pass_bis']) ? true : false;
@@ -457,17 +457,17 @@ if (!empty($id_get)) //Espace membre
 			include_once('../kernel/framework/io/upload.class.php');
 			$Upload = new Upload($dir);
 			
-			if (is_writable($dir) && $CONFIG_MEMBER['activ_up_avatar'] == 1)
+			if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
 			{
 				if ($_FILES['avatars']['size'] > 0)
 				{
-					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if (!empty($Upload->error)) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
-						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
@@ -488,7 +488,7 @@ if (!empty($id_get)) //Espace membre
 			if (!empty($_POST['avatar']))
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
@@ -608,10 +608,10 @@ if (!empty($id_get)) //Espace membre
 		else
 			redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}	
-	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
+	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(USER_LEVEL))) //Zone membre
 	{
 		//Info membre
-		$msg_mbr = !empty($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : '';
+		$msg_mbr = !empty($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
 		$msg_mbr = '<br />' . $msg_mbr . '<br />';
 	
 		//Chargement de la configuration.
@@ -621,7 +621,7 @@ if (!empty($id_get)) //Espace membre
 		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
 	
 		$Template->assign_vars(array(
-			'C_MEMBER_INDEX' => true,
+			'C_USER_INDEX' => true,
 			'C_IS_MODERATOR' => $User->get_attribute('level') >= MODERATOR_LEVEL,
 			'SID' => SID,
 			'LANG' => get_ulang(),
@@ -630,8 +630,8 @@ if (!empty($id_get)) //Espace membre
 			'PM' => $User->get_attribute('user_pm'),
 			'IMG_PM' => ($User->get_attribute('user_pm') > 0) ? 'new_pm.gif' : 'pm.png',
 			'MSG_MBR' => $msg_mbr,
-			'U_MEMBER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
-			'U_MEMBER_PM' => url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=true'),
+			'U_USER_PM' => url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'U_CONTRIBUTION_PANEL' => url('contribution_panel.php'),
 			'U_MODERATION_PANEL' => url('moderation_panel.php'),
 			'L_PROFIL' => $LANG['profil'],
@@ -647,7 +647,7 @@ if (!empty($id_get)) //Espace membre
 		if ($is_auth_files)
 		{
 			$Template->assign_vars(array(
-				'C_MEMBER_AUTH_FILES' => true
+				'C_USER_AUTH_FILES' => true
 			));
 		}
 	}
@@ -709,8 +709,8 @@ if (!empty($id_get)) //Espace membre
 		
 		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
 		$Template->assign_vars(array(
-			'C_MEMBER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
-			'C_PROFIL_MEMBER_VIEW' => true,
+			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
+			'C_PROFIL_USER_VIEW' => true,
 			'SID' => SID,
 			'LANG' => get_ulang(),
 			'USER_NAME' => $row['login'],
@@ -739,7 +739,7 @@ if (!empty($id_get)) //Espace membre
 			'L_REGISTERED' => $LANG['registered_on'],
 			'L_LAST_CONNECT' => $LANG['last_connect'],
 			'L_NBR_MSG' => $LANG['nbr_message'],			
-			'L_DISPLAY_MEMBER_MSG' => $LANG['member_msg_display'],
+			'L_DISPLAY_USER_MSG' => $LANG['member_msg_display'],
 			'L_WEB_SITE' => $LANG['web_site'],
 			'L_LOCALISATION' => $LANG['localisation'],
 			'L_JOB' => $LANG['job'],
@@ -750,9 +750,9 @@ if (!empty($id_get)) //Espace membre
 			'L_CONTACT' => $LANG['contact'],
 			'L_MAIL' => $LANG['mail'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-			'U_MEMBER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
-			'U_MEMBER_MSG' => url('.php?id=' . $id_get),
-			'U_MEMBER_PM' => url('.php?pm=' . $id_get, '-' . $id_get . '.php')
+			'U_USER_SCRIPT' => ($User->get_attribute('user_id') === $id_get) ? ('../member/member' . url('.php?id=' . $User->get_attribute('user_id') . '&amp;edit=1')) : ('../admin/admin_members.php?id=' . $id_get . '&amp;edit=1'),
+			'U_USER_MSG' => url('.php?id=' . $id_get),
+			'U_USER_PM' => url('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));
 				
 		//Champs supplémentaires.
@@ -870,13 +870,13 @@ elseif (!empty($show_group) || !empty($post_group)) //Vue du groupe.
 				
 			//Avatar	.
 			$user_avatar = !empty($row['user_avatar']) ? '<img class="valign_middle" src="' . $row['user_avatar'] . '" alt=""	/>' : '';
-			if (empty($row['user_avatar']) && $CONFIG_MEMBER['activ_avatar'] == '1') 
-				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />';
+			if (empty($row['user_avatar']) && $CONFIG_USER['activ_avatar'] == '1') 
+				$user_avatar = '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />';
 			
 			$Template->assign_block_vars('group_list', array(
 				'USER_AVATAR' => $user_avatar,
 				'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
-				'U_MEMBER' => '<a href="member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
+				'U_USER' => '<a href="member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>'
 			));	
 		}
 	}
@@ -902,13 +902,13 @@ else //Show all member!
 	}
 
 	$Template->assign_vars(array(
-		'C_MEMBER_LIST' => true,
+		'C_USER_LIST' => true,
 		'SID' => SID,
 		'LANG' => get_ulang(),
 		'LOGIN' => $login,
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_SELECT_GROUP' => $LANG['select_group'],
-		'L_SEARCH_MEMBER' => $LANG['search_member'],
+		'L_SEARCH_USER' => $LANG['search_member'],
 		'L_LIST' => $LANG['list'],
 		'L_SEARCH' => $LANG['search'],
 		'L_PROFIL' => $LANG['profil'],
@@ -921,14 +921,14 @@ else //Show all member!
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 		'L_WEB_SITE' => $LANG['web_site'],
 		'U_SELECT_SHOW_GROUP' => "'member.php?g=' + this.options[this.selectedIndex].value",
-		'U_MEMBER_ALPHA_TOP' => url('.php?sort=alph&amp;mode=desc', '-0.php?sort=alph&amp;mode=desc'),
-		'U_MEMBER_ALPHA_BOTTOM' => url('.php?sort=alph&amp;mode=asc', '-0.php?sort=alph&amp;mode=asc'),
-		'U_MEMBER_TIME_TOP' => url('.php?sort=time&amp;mode=desc', '-0.php?sort=time&amp;mode=desc'),
-		'U_MEMBER_TIME_BOTTOM' => url('.php?sort=time&amp;mode=asc', '-0.php?sort=time&amp;mode=asc'),
-		'U_MEMBER_MSG_TOP' => url('.php?sort=msg&amp;mode=desc', '-0.php?sort=msg&amp;mode=desc'),
-		'U_MEMBER_MSG_BOTTOM' => url('.php?sort=msg&amp;mode=asc', '-0.php?sort=msg&amp;mode=asc'),
-		'U_MEMBER_LAST_TOP' => url('.php?sort=last&amp;mode=desc', '-0.php?sort=last&amp;mode=desc'),
-		'U_MEMBER_LAST_BOTTOM' => url('.php?sort=last&amp;mode=asc', '-0.php?sort=last&amp;mode=asc')
+		'U_USER_ALPHA_TOP' => url('.php?sort=alph&amp;mode=desc', '-0.php?sort=alph&amp;mode=desc'),
+		'U_USER_ALPHA_BOTTOM' => url('.php?sort=alph&amp;mode=asc', '-0.php?sort=alph&amp;mode=asc'),
+		'U_USER_TIME_TOP' => url('.php?sort=time&amp;mode=desc', '-0.php?sort=time&amp;mode=desc'),
+		'U_USER_TIME_BOTTOM' => url('.php?sort=time&amp;mode=asc', '-0.php?sort=time&amp;mode=asc'),
+		'U_USER_MSG_TOP' => url('.php?sort=msg&amp;mode=desc', '-0.php?sort=msg&amp;mode=desc'),
+		'U_USER_MSG_BOTTOM' => url('.php?sort=msg&amp;mode=asc', '-0.php?sort=msg&amp;mode=asc'),
+		'U_USER_LAST_TOP' => url('.php?sort=last&amp;mode=desc', '-0.php?sort=last&amp;mode=desc'),
+		'U_USER_LAST_BOTTOM' => url('.php?sort=last&amp;mode=asc', '-0.php?sort=last&amp;mode=asc')
 	));
 	
 	//Liste des groupes.
@@ -994,8 +994,8 @@ else //Show all member!
 			'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 			'WEB' => $user_web,
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_MEMBER_PM' => url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
+			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_PM' => url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
 		));
 	}
 	$Sql->query_close($result);

@@ -95,7 +95,7 @@ $tpl->assign_vars(array(
 	'L_DISABLED' => $LANG['disabled'],
 	'L_ACTIVATION' => $LANG['activation'],
 	'L_GUEST' => $LANG['guest'],
-	'L_MEMBER' => $LANG['member'],
+	'L_USER' => $LANG['member'],
 	'L_MODO' => $LANG['modo'],
 	'L_ADMIN' => $LANG['admin'],
 	'L_LOCATION' => $LANG['location'],

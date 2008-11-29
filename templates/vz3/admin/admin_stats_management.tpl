@@ -11,7 +11,7 @@
 				</td>
 				<td style="width:20%;padding:15px;" class="row1">
 					<a href="admin_stats.php?members=1#stats"><img src="../templates/{THEME}/images/upload/member.png" alt="" /></a>
-					<br /><a href="admin_stats.php?members=1#stats">{L_MEMBERS}</a>
+					<br /><a href="admin_stats.php?members=1#stats">{L_USERS}</a>
 				</td>
 				<td style="width:20%;" class="row1">
 					<a href="admin_stats.php?visit=1#stats"><img src="../templates/{THEME}/images/stats/visitors.png" alt="" /></a>
@@ -73,24 +73,24 @@
 		# ENDIF #
 		
 		
-		# IF C_STATS_MEMBERS #
+		# IF C_STATS_USERS #
 		<table class="module_table">
 			<tr>
 				<th colspan="2">	
-					{L_MEMBERS}
+					{L_USERS}
 				</th>
 			</tr>
 			<tr>
 				<td class="row1" style="text-align:center;width:25%;">
-					{L_MEMBERS}
+					{L_USERS}
 				</td>
 				<td class="row2">
-					{MEMBERS}
+					{USERS}
 				</td>
 			 </tr>
 			<tr>
 				<td class="row1" style="text-align:center;width:50%;">
-					{L_LAST_MEMBER}
+					{L_LAST_USER}
 				</td>
 				<td class="row2">
 					<a href="../member/member{U_LAST_USER_ID}">{LAST_USER}</a>
@@ -115,7 +115,7 @@
 								{L_COLORS}
 							</th>
 							<th class="text_center">
-								{L_MEMBERS}
+								{L_USERS}
 							</th>				
 						</tr>
 						
@@ -157,7 +157,7 @@
 								{L_COLORS}
 							</th>
 							<th class="text_center">
-								{L_MEMBERS}
+								{L_USERS}
 							</th>				
 						</tr>
 						
@@ -206,7 +206,7 @@
 					{top_poster.ID}
 				</td>
 				<td class="row1" style="text-align:center;">
-					<a href="../member/member{top_poster.U_MEMBER_ID}">{top_poster.LOGIN}</a>
+					<a href="../member/member{top_poster.U_USER_ID}">{top_poster.LOGIN}</a>
 				</td>
 				<td class="row1" style="text-align:center;">
 					{top_poster.USER_POST}

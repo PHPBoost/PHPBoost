@@ -152,7 +152,7 @@ $other_tools[$LANG['wiki_random_page']] = array(url('property.php?random=1'), 'r
 //Recherche
 $other_tools[$LANG['wiki_search']] = array(url('search.php'), 'search');
 //Sujets suivis (membres seulement)
-if ($User->check_level(MEMBER_LEVEL))
+if ($User->check_level(USER_LEVEL))
 {
 	$other_tools[$LANG['wiki_followed_articles']] = array(url('favorites.php'), 'followed-articles');
 	//Suivre ce sujet (articles)

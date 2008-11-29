@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,84 +27,87 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-$Cache->load('poll'); //Mini sondages en cache => $_array_poll.
-if (!empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false)
+function poll_mini()
 {
-	//Chargement de la langue du module.
-	load_module_lang('poll');
-	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
-	
-	$Template->set_filenames(array(
-		'poll_mini'=> 'poll/poll_mini.tpl'
-	));
-		
-	#####################Résultats######################
-	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
-	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
-	if (in_array($poll_mini['id'], $array_cookie))
-	{
-		$Template->assign_vars(array(
-			'THEME' => get_utheme(),
-			'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
-			'L_MINI_POLL' => $LANG['mini_poll'],
-			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
-		));
-		
-		$Template->assign_block_vars('result', array(
-			'QUESTION' => $poll_mini['question'],
-			'VOTES' => $poll_mini['total'],
-		));
-		
-		foreach ($poll_mini['votes'] as $answer => $width)
-		{
-			$Template->assign_block_vars('result.answers', array(
-				'ANSWERS' => $answer,
-				'WIDTH' => number_round($width, 0), 
-				'PERCENT' => $width
-			));			
-		}
-	}
-	else
-	{
-		#####################Questions######################
-		$Template->assign_vars(array(			
-			'L_MINI_POLL' => $LANG['mini_poll'],
-			'L_VOTE' => $LANG['poll_vote'],
-			'L_POLL_RESULT' => $LANG['poll_result'],
-			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
-		));	
-		
-		$Template->assign_block_vars('question', array(
-			'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
-			'QUESTION' => $poll_mini['question']			
-		));		
-			
-		$z = 0;
-		if ($poll_mini['type'] == '1')
-		{			
-			foreach ($poll_mini['votes'] as $answer => $width)
-			{						
-				$Template->assign_block_vars('question.radio', array(
-					'NAME' => $z,
-					'TYPE' => 'radio',
-					'ANSWERS' => $answer
-				));
-				$z++;
-			}
-		}	
-		elseif ($poll_mini['type'] == '0') 
-		{
-			foreach ($poll_mini['votes'] as $answer => $width)
-			{						
-				$Template->assign_block_vars('question.checkbox', array(
-					'NAME' => $z,
-					'TYPE' => 'checkbox',
-					'ANSWERS' => $answer
-				));
-				$z++;	
-			}
-		}
-	}
+    global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
+    $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
+    if (!empty($CONFIG_POLL['poll_mini']) && $CONFIG_POLL['poll_mini'] != array() && strpos(SCRIPT, '/poll/poll.php') === false)
+    {
+    	//Chargement de la langue du module.
+    	load_module_lang('poll');
+    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
+    	
+    	$tpl = new Template('poll/poll_mini.tpl');
+    		
+    	#####################Résultats######################
+    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
+    	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
+    	if (in_array($poll_mini['id'], $array_cookie))
+    	{
+    		$tpl->assign_vars(array(
+    			'THEME' => get_utheme(),
+    			'MODULE_DATA_PATH' => $tpl->get_module_data_path('poll'),
+    			'L_MINI_POLL' => $LANG['mini_poll'],
+    			'L_VOTE' => ($poll_mini['total'] > 1) ? $LANG['poll_vote_s'] : $LANG['poll_vote']
+    		));
+    		
+    		$tpl->assign_block_vars('result', array(
+    			'QUESTION' => $poll_mini['question'],
+    			'VOTES' => $poll_mini['total'],
+    		));
+    		
+    		foreach ($poll_mini['votes'] as $answer => $width)
+    		{
+    			$tpl->assign_block_vars('result.answers', array(
+    				'ANSWERS' => $answer,
+    				'WIDTH' => number_round($width, 0),
+    				'PERCENT' => $width
+    			));
+    		}
+    	}
+    	else
+    	{
+    		#####################Questions######################
+    		$tpl->assign_vars(array(
+    			'L_MINI_POLL' => $LANG['mini_poll'],
+    			'L_VOTE' => $LANG['poll_vote'],
+    			'L_POLL_RESULT' => $LANG['poll_result'],
+    			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
+    		));
+    		
+    		$tpl->assign_block_vars('question', array(
+    			'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
+    			'QUESTION' => $poll_mini['question']
+    		));
+    			
+    		$z = 0;
+    		if ($poll_mini['type'] == '1')
+    		{
+    			foreach ($poll_mini['votes'] as $answer => $width)
+    			{
+    				$tpl->assign_block_vars('question.radio', array(
+    					'NAME' => $z,
+    					'TYPE' => 'radio',
+    					'ANSWERS' => $answer
+    				));
+    				$z++;
+    			}
+    		}
+    		elseif ($poll_mini['type'] == '0')
+    		{
+    			foreach ($poll_mini['votes'] as $answer => $width)
+    			{
+    				$tpl->assign_block_vars('question.checkbox', array(
+    					'NAME' => $z,
+    					'TYPE' => 'checkbox',
+    					'ANSWERS' => $answer
+    				));
+    				$z++;
+    			}
+    		}
+    	}
+        return $tpl->parse(TEMPLATE_STRING_MODE);
+    }
+    return '';
 }
-
 ?>

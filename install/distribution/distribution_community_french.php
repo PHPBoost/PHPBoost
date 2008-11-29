@@ -40,7 +40,7 @@ define('DISTRIBUTION_THEME', 'phpboost');
 define('DISTRIBUTION_START_PAGE', '/news/news.php');
 
 //Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
-define('DISTRIBUTION_ENABLE_MEMBER', true);
+define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
 $DISTRIBUTION_MODULES = array('articles', 'contact', 'news', 'pages', 'search', 'web', 'download', 'wiki', 'shoutbox', 'faq', 'forum', 'guestbook', 'online', 'poll');

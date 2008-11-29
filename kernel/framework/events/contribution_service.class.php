@@ -205,7 +205,7 @@ class ContributionService
 				$array_result['r1']++;
 			
 			//For members ?
-			if (Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
+			if (Authorizations::check_auth(RANK_TYPE, USER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
 				$array_result['r0']++;
 				
 			foreach ($this_auth as $profile => $auth_profile)

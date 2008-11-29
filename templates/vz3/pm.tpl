@@ -54,11 +54,11 @@
 		<br />		
 		# ENDIF #
 		
-		<form action="pm{convers.U_MEMBER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
+		<form action="pm{convers.U_USER_ACTION_PM}" method="post" onsubmit="javascript:return Confirm_pm();">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
-				<div class="module_top">&bull; {convers.U_MEMBER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
+				<div class="module_top">&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
 				<div class="module_contents">					
 					<div style="float:left;">{L_PRIVATE_MSG}: {convers.PM_POURCENT}</div>
 					<div style="float:right;"><img src="../templates/{THEME}/images/read_mini.png" alt="" class="valign_middle" /> {convers.U_MARK_AS_READ}</div>
@@ -139,7 +139,7 @@
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {convers.U_MEMBER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
+				<div class="module_bottom">&bull; {convers.U_USER_VIEW} &raquo; {convers.U_PM_BOX} &raquo; {convers.U_POST_NEW_CONVERS}</div>
 			</div>
 		</form>
 		# END convers #
@@ -152,7 +152,7 @@
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
 				<div style="float:left;">
-					&bull; {pm.U_MEMBER_VIEW} &raquo; {pm.U_PM_BOX} &raquo; {pm.U_TITLE_CONVERS}
+					&bull; {pm.U_USER_VIEW} &raquo; {pm.U_PM_BOX} &raquo; {pm.U_TITLE_CONVERS}
 				</div>
 				<div style="float:right;">
 					{pm.PAGINATION}
@@ -165,7 +165,7 @@
 				<div class="msg_top_row">
 					<span id="m{pm.msg.ID}"></span>
 					<div class="msg_pseudo_mbr">
-					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="../member/member{pm.msg.U_MEMBER_ID}">{pm.msg.USER_PSEUDO}</a>
+					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="../member/member{pm.msg.U_USER_ID}">{pm.msg.USER_PSEUDO}</a>
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{pm.msg.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{pm.msg.ID}" /></a> {pm.msg.DATE}</div>
 					<div style="float:right;">{pm.msg.U_QUOTE}&nbsp; {pm.msg.EDIT}{pm.msg.DEL}&nbsp;&nbsp;</div>
@@ -194,7 +194,7 @@
 				</div>				
 				<hr />
 				<div style="float:left;">
-					{pm.msg.U_MEMBER_PM} {pm.msg.USER_MAIL} {pm.msg.USER_MSN} {pm.msg.USER_YAHOO} {pm.msg.USER_WEB}
+					{pm.msg.U_USER_PM} {pm.msg.USER_MAIL} {pm.msg.USER_MSN} {pm.msg.USER_YAHOO} {pm.msg.USER_WEB}
 				</div>
 				<div style="float:right;font-size:10px;">
 					{pm.msg.WARNING}
@@ -207,7 +207,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom">
 				<div style="float:left;">
-					&bull; {pm.U_MEMBER_VIEW} &raquo; {pm.U_PM_BOX} &raquo; {pm.U_TITLE_CONVERS}
+					&bull; {pm.U_USER_VIEW} &raquo; {pm.U_PM_BOX} &raquo; {pm.U_TITLE_CONVERS}
 				</div>
 				<div style="float:right;">
 					{pm.PAGINATION}
@@ -223,7 +223,7 @@
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
-			<div class="module_top">&bull; {show_pm.U_MEMBER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
+			<div class="module_top">&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
 			<div class="module_contents">
 				<table class="module_table">
 					<tr>
@@ -242,7 +242,7 @@
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom">&bull; {show_pm.U_MEMBER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
+			<div class="module_bottom">&bull; {show_pm.U_USER_VIEW} &raquo; {show_pm.U_PM_BOX} &raquo; {show_pm.U_TITLE_CONVERS}</div>
 		</div>
 		# END show_pm #
 
@@ -288,7 +288,7 @@
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
-				<div class="module_top">&bull; {edit_pm.U_MEMBER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
+				<div class="module_top">&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
 				<div class="module_contents">	
 					# START edit_pm.show_pm #		
 					<table class="module_table">
@@ -342,7 +342,7 @@
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {edit_pm.U_MEMBER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
+				<div class="module_bottom">&bull; {edit_pm.U_USER_VIEW} &raquo; {edit_pm.U_PM_BOX}</div>
 			</div>
 		</form>
 		# END edit_pm #
@@ -354,7 +354,7 @@
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
-				<div class="module_top">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
+				<div class="module_top">&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
 				<div class="module_contents">	
 					# IF C_ERROR_HANDLER #
 					<br />
@@ -429,7 +429,7 @@
 				</div>
 				<div class="module_bottom_l"></div>		
 				<div class="module_bottom_r"></div>
-				<div class="module_bottom">&bull; {post_convers.U_MEMBER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
+				<div class="module_bottom">&bull; {post_convers.U_USER_VIEW} &raquo; {post_convers.U_PM_BOX}</div>
 			</div>
 		</form>
 		# END post_convers #

@@ -114,7 +114,7 @@
 				</div>				
 				<hr />
 				<div style="float:left;">
-					{com_list.U_MEMBER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
+					{com_list.U_USER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
 				</div>
 				<div style="float:right;font-size:10px;">
 					{com_list.WARNING} {com_list.PUNISHMENT}
@@ -274,7 +274,7 @@
 				</div>				
 				<hr />
 				<div style="float:left;">
-					{com_list.U_MEMBER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
+					{com_list.U_USER_PM} {com_list.USER_MAIL} {com_list.USER_MSN} {com_list.USER_YAHOO} {com_list.USER_WEB}
 				</div>
 				<div style="float:right;font-size:10px;">
 					{com_list.WARNING} {com_list.PUNISHMENT}

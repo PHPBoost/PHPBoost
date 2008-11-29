@@ -35,7 +35,7 @@
 		-->
 		</script>
 
-		# IF C_MEMBER_UPDATE_PROFIL #
+		# IF C_USER_UPDATE_PROFIL #
 
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
@@ -52,7 +52,7 @@
 		-->
 		</script>
 		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
-		<form action="member{U_MEMBER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
+		<form action="member{U_USER_ACTION_UPDATE}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
@@ -72,7 +72,7 @@
 					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" /></label></dd>
 				</dl>
 				<dl>
-					<dt><label for="del_member">{L_DEL_MEMBER}</label></dt>
+					<dt><label for="del_member">{L_DEL_USER}</label></dt>
 					<dd><label><input size="30" type="checkbox" name="del_member" id="del_member" /></label></dd>
 				</dl>
 				<dl>
@@ -258,7 +258,7 @@
 
 
 
-		# IF C_MEMBER_INDEX #
+		# IF C_USER_INDEX #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
@@ -268,19 +268,19 @@
 				<table class="module_table">
 					<tr>
 						<td class="row2" style="text-align:center;width:33%">
-							<a href="member{U_MEMBER_ID}">{L_PROFIL_EDIT}</a>
+							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a>
 							<br /><br />
-							<a href="member{U_MEMBER_ID}" title="">
+							<a href="member{U_USER_ID}" title="">
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 						</td>
 						<td class="row2" style="text-align:center;width:34%">
-							<a href="pm{U_MEMBER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
-							<a href="pm{U_MEMBER_PM}">
+							<a href="pm{U_USER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
+							<a href="pm{U_USER_PM}">
 								<img src="../templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
 							</a>
 						</td>
-						# IF C_MEMBER_AUTH_FILES #
+						# IF C_USER_AUTH_FILES #
 						<td class="row2" style="text-align:center;width:33%">
 							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 							<a href="upload.php{SID}">
@@ -301,7 +301,7 @@
 
 
 
-		# IF C_MEMBER_LIST #
+		# IF C_USER_LIST #
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
@@ -321,7 +321,7 @@
 				<td style="vertical-align:top;" class="row2">
 					<form action="member.php{SID}" method="post">
 						<span style="float:left;">
-							{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
 						</span>
 						<span style="float:left;margin-left:5px;">
@@ -352,30 +352,30 @@
 			</tr>	
 			<tr style="font-weight:bold;text-align: center;">
 				<td class="row3">
-					<a href="member{U_MEMBER_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
 					{L_PSEUDO} 
-					<a href="member{U_MEMBER_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 				</td>
 				<td class="row3">
 					{L_MAIL}
 				</td>
 				<td class="row3">
-					<a href="member{U_MEMBER_TIME_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_TIME_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
 					{L_REGISTERED}
-					<a href="member{U_MEMBER_TIME_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_TIME_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 				</td>
 				<td class="row3">
-					<a href="member{U_MEMBER_MSG_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_MSG_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
 					{L_MESSAGE}
-					<a href="member{U_MEMBER_MSG_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>	
+					<a href="member{U_USER_MSG_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>	
 				</td>
 				<td class="row3">
 					{L_LOCALISATION}
 				</td>
 				<td class="row3">
-					<a href="member{U_MEMBER_LAST_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_LAST_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
 					{L_LAST_CONNECT}
-					<a href="member{U_MEMBER_LAST_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_LAST_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
 				</td>
 				<td class="row3">
 					{L_PRIVATE_MESSAGE}
@@ -387,7 +387,7 @@
 			# START member_list #
 			<tr> 
 				<td class="row2" style="text-align:center;padding:4px 0px;">
-					<a href="member{member_list.U_MEMBER_ID}">{member_list.PSEUDO}</a>
+					<a href="member{member_list.U_USER_ID}">{member_list.PSEUDO}</a>
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
 					{member_list.MAIL}
@@ -405,7 +405,7 @@
 					{member_list.LAST_CONNECT}
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					<a href="pm{member_list.U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
+					<a href="pm{member_list.U_USER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
 				</td>
 				<td class="row2" style="text-align:center;padding:4px 0px;"> 
 					{member_list.WEB}
@@ -422,14 +422,14 @@
 
 
 
-		# IF C_PROFIL_MEMBER_VIEW #
+		# IF C_PROFIL_USER_VIEW #
 		<div class="fieldset_content">
 			<fieldset>
 				<legend>{L_PROFIL}</legend>
-				# IF C_MEMBER_PROFIL_EDIT #
+				# IF C_USER_PROFIL_EDIT #
 				<dl>
 					<dt>{L_PROFIL_EDIT}</dt>
-					<dd><a href="{U_MEMBER_SCRIPT}" title="{L_PROFIL_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_PROFIL_EDIT}" /></a></dd>
+					<dd><a href="{U_USER_SCRIPT}" title="{L_PROFIL_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_PROFIL_EDIT}" /></a></dd>
 				</dl>
 				# ENDIF #				
 				<dl>
@@ -454,7 +454,7 @@
 				</dl>
 				<dl>
 					<dt>{L_NBR_MSG}</dt>
-					<dd>{USER_MSG} <br /><a href="membermsg{U_MEMBER_MSG}">{L_DISPLAY_MEMBER_MSG}</a></dd>
+					<dd>{USER_MSG} <br /><a href="membermsg{U_USER_MSG}">{L_DISPLAY_USER_MSG}</a></dd>
 				</dl>
 				<dl>
 					<dt>{L_LAST_CONNECT}</dt>
@@ -498,7 +498,7 @@
 				</dl>
 				<dl>
 					<dt>{L_PRIVATE_MESSAGE}</dt>
-					<dd><a href="pm{U_MEMBER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a></dd>
+					<dd><a href="pm{U_USER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a></dd>
 				</dl>
 				<dl>
 					<dt>MSN</dt>
@@ -577,7 +577,7 @@
 					{group_list.USER_AVATAR}
 				</td>
 				<td class="row1">
-					{group_list.U_MEMBER}
+					{group_list.U_USER}
 				</td>
 				<td class="row1">
 					{group_list.USER_RANK}

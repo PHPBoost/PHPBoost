@@ -19,7 +19,7 @@
 			# START users # 
 			<tr>
 				<td class="row3">
-					{users.MEMBER}
+					{users.USER}
 				</td>
 				<td class="row3">
 					{users.LOCATION}

@@ -46,7 +46,7 @@
 								{L_ACTION}
 							</td>
 							<td class="row3">
-								{L_MEMBER_CONCERN}
+								{L_USER_CONCERN}
 							</td>
 							<td class="row3"style="width: 150px">
 								{L_DATE}
@@ -56,13 +56,13 @@
 						# START action_list # 
 						<tr style="text-align:center;">
 							<td class="row2" style="width: 150px">
-								<a href="../member/member{action_list.U_MEMBER_ID}">{action_list.LOGIN}</a>
+								<a href="../member/member{action_list.U_USER_ID}">{action_list.LOGIN}</a>
 							</td>
 							<td class="row2">
 								{action_list.U_ACTION}
 							</td>
 							<td class="row2" style="width: 150px">
-								{action_list.U_MEMBER_CONCERN}
+								{action_list.U_USER_CONCERN}
 							</td>
 							<td class="row2" style="width: 150px">
 								{action_list.DATE}
@@ -298,7 +298,7 @@
 					<tr>
 						<td class="row2">
 							<span style="float:left;">
-								{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" name="login" class="text" />
+								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" name="login" class="text" />
 								<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">

@@ -41,22 +41,20 @@ import('core/menu_service');
 
 function menu_admin_link(&$menu, $mode)
 {
-    $class = strtolower(get_class($menu));
     if ($mode == 'edit')
     {
-        if ($class == strtolower(LINKS_MENU__CLASS))
+        if (of_class($menu, LINKS_MENU__CLASS))
             return 'links.php?';
-        if ($class == strtolower(CONTENT_MENU__CLASS))
+        if (of_class($menu, CONTENT_MENU__CLASS))
             return 'content.php?';
         return 'auth.php?';
     }
     if ($mode == 'delete')
     {
-        return 'delete.php?';
-//        if ($class == strtolower(LINKS_MENU__CLASS))
-//            return 'links.php?action=delete&amp;';
-//        if ($class == strtolower(CONTENT_MENU__CLASS))
-//            return 'content.php?action=delete&amp;';
+        if (of_class($menu, LINKS_MENU__CLASS))
+            return 'delete.php?';
+        if (of_class($menu, CONTENT_MENU__CLASS))
+            return 'delete.php?';
     }
     return '';
 }
@@ -127,13 +125,38 @@ $blocks = array(
    BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
+
+$menu_template = new Template('admin/menus/menu.tpl');
+$menu_template->assign_vars(array(
+    'THEME' => get_utheme(),
+    'L_ENABLED' => $LANG['enabled'],
+    'L_DISABLED' => $LANG['disabled'],
+    'I_HEADER' => BLOCK_POSITION__HEADER,
+    'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
+    'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
+    'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
+    'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
+    'I_FOOTER' => BLOCK_POSITION__FOOTER,
+    'I_LEFT' => BLOCK_POSITION__LEFT,
+    'I_RIGHT' => BLOCK_POSITION__RIGHT,
+    'L_HEADER' => $LANG['menu_header'],
+    'L_SUB_HEADER' => $LANG['menu_subheader'],
+    'L_LEFT_MENU' => $LANG['menu_left'],
+    'L_RIGHT_MENU' => $LANG['menu_right'],
+    'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
+    'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
+    'L_TOP_FOOTER' => $LANG['menu_top_footer'],
+    'L_FOOTER' => $LANG['menu_footer'],
+    'L_MOVETO' => $LANG['moveto'],
+));
+
 foreach ($menus_blocks as $block => $menus)
 {   // For each block
     $i = 0;
     $max = count($menus);
     foreach ($menus as $menu)
     {   // For each Menu in this block
-        $menu_tpl = new Template('admin/menus/menu.tpl');
+        $menu_tpl = $menu_template->copy();
         
         $id = $menu->get_id();
         $enabled = $menu->is_enabled();
@@ -160,26 +183,6 @@ foreach ($menus_blocks as $block => $menus)
             'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
             'C_MINI' => in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT)),
             'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
-            'THEME' => get_utheme(),
-            'L_ENABLED' => $LANG['enabled'],
-            'L_DISABLED' => $LANG['disabled'],
-            'I_HEADER' => BLOCK_POSITION__HEADER,
-            'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
-            'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,
-            'I_BOTTOMCENTRAL' => BLOCK_POSITION__BOTTOM_CENTRAL,
-            'I_TOPFOOTER' => BLOCK_POSITION__TOP_FOOTER,
-            'I_FOOTER' => BLOCK_POSITION__FOOTER,
-            'I_LEFT' => BLOCK_POSITION__LEFT,
-            'I_RIGHT' => BLOCK_POSITION__RIGHT,
-            'L_HEADER' => $LANG['menu_header'],
-            'L_SUB_HEADER' => $LANG['menu_subheader'],
-            'L_LEFT_MENU' => $LANG['menu_left'],
-            'L_RIGHT_MENU' => $LANG['menu_right'],
-            'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-            'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-            'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-            'L_FOOTER' => $LANG['menu_footer'],
-            'L_MOVETO' => $LANG['moveto'],
         ));
         
         $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(TEMPLATE_STRING_MODE)));
@@ -198,7 +201,7 @@ $tpl->assign_vars(array(
     'L_ACTIVATION' => $LANG['activation'],
     'L_MOVETO' => $LANG['moveto'],
     'L_GUEST' => $LANG['guest'],
-    'L_MEMBER' => $LANG['member'],
+    'L_USER' => $LANG['member'],
     'L_MODO' => $LANG['modo'],
     'L_ADMIN' => $LANG['admin'],
     'L_HEADER' => $LANG['menu_header'],

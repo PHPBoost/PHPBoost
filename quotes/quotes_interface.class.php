@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                              quotes_interface.class.php
+ *                           quotes_interface.class.php
  *                            -------------------
- *   begin                : October 14, 2008
+ *   begin             : October 14, 2008
  *   copyright         : (C) 2008 Alain GANDON based on Guestbook_interface.class.php
- *   email                : 
+ *   email             :
  *
  *
  *
@@ -31,7 +31,7 @@ if (defined('PHPBOOST') !== true) exit;
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class QuotesInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -52,15 +52,16 @@ class QuotesInterface extends ModuleInterface
 	
 		$quotes_code = 'global $CONFIG_QUOTES;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
+		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_QUOTES = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'quotes'", __LINE__, __FILE__));
 		$CONFIG_QUOTES = is_array($CONFIG_QUOTES) ? $CONFIG_QUOTES : array();
 		
 		if (isset($CONFIG_QUOTES['quotes_forbidden_tags']))
 			$CONFIG_QUOTES['quotes_forbidden_tags'] = unserialize($CONFIG_QUOTES['quotes_forbidden_tags']);
-			
-		$location = $Sql->query("SELECT location FROM ".PREFIX."menus WHERE name ='quotes'", __LINE__, __FILE__);
-		$vertical = array('left', 'right');
+		
+		import('menu/menu');
+		$location = $Sql->query("SELECT block FROM ".PREFIX."menus WHERE title ='quotes'", __LINE__, __FILE__);
+		$vertical = array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT);
 		if (in_array($location, $vertical)) {
 			$CONFIG_QUOTES['tpl_vertical'] = TRUE;
 		} else {
@@ -74,7 +75,7 @@ class QuotesInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT q.id, q.user_id, q.timestamp, q.contents, q.author,	m.login AS mlogin
 		FROM ".PREFIX."quotes q
 		LEFT JOIN ".PREFIX."member m ON m.user_id = q.user_id
-		ORDER BY q.timestamp DESC" . $Sql->limit(0, 10), __LINE__, __FILE__);	
+		ORDER BY q.timestamp DESC" . $Sql->limit(0, 10), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$quotes_code .= '$_quotes_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(substr_html(strip_tags($row['contents']), 0), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['mlogin'], true) . ');' . "\n";

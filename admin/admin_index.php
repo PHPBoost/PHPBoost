@@ -117,7 +117,7 @@ $Template->assign_vars(array(
 	'L_UNREAD_ALERT' => $LANG['unread_alerts'],
 	'L_DISPLAY_ALL_ALERTS' => $LANG['display_all_alerts'],
 	'L_QUICK_LINKS' => $LANG['quick_links'],
-	'L_MEMBERS_MANAGMENT' => $LANG['members_managment'],
+	'L_USERS_MANAGMENT' => $LANG['members_managment'],
 	'L_MENUS_MANAGMENT' => $LANG['menus_managment'],
 	'L_MODULES_MANAGMENT' => $LANG['modules_managment'],
 	'L_STATS' => $LANG['stats'],
@@ -142,7 +142,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
-		case MEMBER_LEVEL:
+		case USER_LEVEL:
 		$class = 'member';
 		break;
 		

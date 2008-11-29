@@ -47,13 +47,13 @@ class Template
             $this->files[$this->tpl] = $this->tpl;
             if ($auto_load_vars)
             {
-                $member_connected = $User->check_level(MEMBER_LEVEL);
+                $member_connected = $User->check_level(USER_LEVEL);
                 $this->assign_vars(array(
                     'SID' => SID,
                     'THEME' => get_utheme(),
                     'LANG' => get_ulang(),
-                    'C_MEMBER_CONNECTED' => $member_connected,
-                    'C_MEMBER_NOTCONNECTED' => !$member_connected,
+                    'C_USER_CONNECTED' => $member_connected,
+                    'C_USER_NOTCONNECTED' => !$member_connected,
                     'PATH_TO_ROOT' => PATH_TO_ROOT
                 ));
             }

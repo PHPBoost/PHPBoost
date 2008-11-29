@@ -132,7 +132,7 @@ class Comments
 	//Méthode d'affichage
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_MEMBER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
 		
 		if ($integrated_in_environment)
 		{
@@ -523,7 +523,7 @@ class Comments
 					
 					//Avatar			
 					if (empty($row['user_avatar'])) 
-						$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+						$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 					
@@ -575,7 +575,7 @@ class Comments
 						'PUNISHMENT' => $readonly,			
 						'DEL' => $del,
 						'EDIT' => $edit,
-						'U_MEMBER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
+						'U_USER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 						'U_ANCHOR' => $this->path . $this->vars . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
 						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script
 					));

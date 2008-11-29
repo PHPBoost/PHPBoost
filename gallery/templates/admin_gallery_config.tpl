@@ -19,7 +19,7 @@
 			}
 			else
 			{
-				document.getElementById('limit_member').innerHTML = '<input type="text" size="5" name="limit_member" value="{LIMIT_MEMBER}" class="text" />';
+				document.getElementById('limit_member').innerHTML = '<input type="text" size="5" name="limit_member" value="{LIMIT_USER}" class="text" />';
 				document.getElementById('limit_modo').innerHTML = '<input type="text" size="5" name="limit_modo" value="{LIMIT_MODO}" class="text" />';		
 			}
 		}
@@ -259,7 +259,7 @@
 					<legend>{L_UPLOAD_PICS}</legend>
 					<dl>
 						<dt><label for="limit_member">{L_NUMBER_IMG}</label><br /><span>{L_NUMBER_IMG_EXPLAIN}</span></dt>
-						<dd><label><input type="text" size="5" name="limit_member" id="limit_member" value="{LIMIT_MEMBER}" class="text" /></label></dd>
+						<dd><label><input type="text" size="5" name="limit_member" id="limit_member" value="{LIMIT_USER}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="limit_modo">{L_NUMBER_IMG_MODO}</label><br /><span>{L_NUMBER_IMG_MODO_EXPLAIN}</span></dt>

@@ -51,7 +51,12 @@ class ModulesDiscoveryService
         global $MODULES;
         
         $this->loaded_modules = array();
-        $this->availables_modules = array_keys($MODULES);
+        $this->availables_modules = array();
+        foreach ($MODULES as $module_id => $module)
+        {
+            if (!empty($module['activ']) && $module['activ'] == true)
+                $this->availables_modules[] = $module_id;
+        }
     }
     
     //----------------------------------------------------------------- PUBLIC
@@ -87,9 +92,9 @@ class ModulesDiscoveryService
         {
             global $MODULES;
             
-            foreach (array_keys($MODULES) as $moduleId)
+            foreach (array_keys($MODULES) as $module_id)
             {
-			   $module = $this->get_module($moduleId);
+			   $module = $this->get_module($module_id);
                 if (!$module->got_error() && $module->has_functionnality($functionnality))
                     array_push($modules, $module);
             }
@@ -105,33 +110,33 @@ class ModulesDiscoveryService
         return $modules;
     }
 
-    function get_module($moduleId = '')
+    function get_module($module_id = '')
     /**
      *  Instancie et renvoie le module demandé.
      */
     {
-		if (!isset($this->loaded_modules[$moduleId]))
+		if (!isset($this->loaded_modules[$module_id]))
         {
-            if (in_array($moduleId, $this->availables_modules))
+            if (in_array($module_id, $this->availables_modules))
             {
                 global $User, $MODULES;
                 
-                if ($User->check_auth($MODULES[$moduleId]['auth'], ACCESS_MODULE))
+                if ($User->check_auth($MODULES[$module_id]['auth'], ACCESS_MODULE))
                 {
-                    if (@include_once(PATH_TO_ROOT . '/'.$moduleId.'/'.$moduleId.'_interface.class.php'))
+                    if (@include_once(PATH_TO_ROOT . '/'.$module_id.'/'.$module_id.'_interface.class.php'))
                     {
-                        $module_constructor = ucfirst($moduleId.'Interface');
-                        $Module = new $module_constructor();
+                        $module_constructor = ucfirst($module_id.'Interface');
+                        $module = new $module_constructor();
                     }
-                    else $Module = new ModuleInterface($moduleId, MODULE_NOT_YET_IMPLEMENTED);
+                    else $module = new ModuleInterface($module_id, MODULE_NOT_YET_IMPLEMENTED);
                 }
-                else $Module = new ModuleInterface($moduleId, ACCES_DENIED);
+                else $module = new ModuleInterface($module_id, ACCES_DENIED);
             }
-            else $Module = new ModuleInterface($moduleId, MODULE_NOT_AVAILABLE);
+            else $module = new ModuleInterface($module_id, MODULE_NOT_AVAILABLE);
 				
-            $this->loaded_modules[$moduleId] = $Module;
+            $this->loaded_modules[$module_id] = $module;
         }
-        return $this->loaded_modules[$moduleId];
+        return $this->loaded_modules[$module_id];
     }
 
     //------------------------------------------------------------------ PRIVE

@@ -142,13 +142,13 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			{
 				if ($_FILES['avatars']['size'] > 0)
 				{
-					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_MEMBER['weight_max']*1024);
+					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if (!empty($Upload->error)) //Erreur, on arrête ici
 						redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
-						$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
 							redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
@@ -169,7 +169,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			if (!empty($_POST['avatar']))
 			{
 				$path = strprotect($_POST['avatar']);
-				$error = $Upload->validate_img($path, $CONFIG_MEMBER['width_max'], $CONFIG_MEMBER['height_max'], DELETE_ON_ERROR);
+				$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
 					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
@@ -371,17 +371,17 @@ elseif ($add)
 		$Errorh->handler($errstr, E_USER_NOTICE);  
 		
 	$Template->assign_vars(array(
-		'C_MEMBERS_ADD' => true,
-		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
-		'L_MEMBERS_ADD' => $LANG['members_add'],
-		'L_MEMBERS_CONFIG' => $LANG['members_config'],
-		'L_MEMBERS_PUNISHMENT' => $LANG['punishment_management'],
+		'C_USERS_ADD' => true,
+		'L_USERS_MANAGEMENT' => $LANG['members_management'],
+		'L_USERS_ADD' => $LANG['members_add'],
+		'L_USERS_CONFIG' => $LANG['members_config'],
+		'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
 		'L_PASSWORD_CONFIRM' => $LANG['confirm_pass'],
 		'L_MAIL' => $LANG['mail'],
 		'L_RANK' => $LANG['rank'],
-		'L_MEMBER' => $LANG['member'],
+		'L_USER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
 		'L_RESET' => $LANG['reset'],
@@ -605,7 +605,7 @@ elseif (!empty($id))
 	
 	//On assigne les variables pour le POST en précisant l'user_id.
 	$Template->assign_vars(array(
-		'C_MEMBERS_MANAGEMENT' => true,
+		'C_USERS_MANAGEMENT' => true,
 		'JS_LANG_IDENTIFIER' => $array_identifier,
 		'IMG_LANG_IDENTIFIER' => $lang_identifier,
 		'IDMBR' => $mbr['user_id'],
@@ -640,18 +640,18 @@ elseif (!empty($id))
 		'AVATAR_LINK' => $mbr['user_avatar'],
 		'SHOW_MAIL_CHECKED' => ($mbr['user_show_mail'] == 0) ? 'checked="checked"' : '',
 		'THEME' => get_utheme(),
-		'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
-		'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
-		'WIDTH_MAX' => $CONFIG_MEMBER['width_max'],
+		'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
+		'HEIGHT_MAX' => $CONFIG_USER['height_max'],
+		'WIDTH_MAX' => $CONFIG_USER['width_max'],
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 		'L_REQUIRE' => $LANG['require'],
-		'L_CONFIRM_DEL_MEMBER' => $LANG['confirm_del_member'],
-		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
-		'L_MEMBERS_ADD' => $LANG['members_add'],
-		'L_MEMBERS_CONFIG' => $LANG['members_config'],
-		'L_MEMBERS_PUNISHMENT' => $LANG['punishment_management'],
+		'L_CONFIRM_DEL_USER' => $LANG['confirm_del_member'],
+		'L_USERS_MANAGEMENT' => $LANG['members_management'],
+		'L_USERS_ADD' => $LANG['members_add'],
+		'L_USERS_CONFIG' => $LANG['members_config'],
+		'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
@@ -684,9 +684,9 @@ elseif (!empty($id))
 		'L_LOCALISATION' => $LANG['localisation'],
 		'L_JOB' => $LANG['job'],
 		'L_HOBBIES' => $LANG['hobbies'],
-		'L_MEMBER_SIGN' => $LANG['member_sign'],
-		'L_MEMBER_SIGN_EXPLAIN' => $LANG['member_sign_explain'],
-		'L_MEMBER_BIOGRAPHY' => $LANG['biography'],
+		'L_USER_SIGN' => $LANG['member_sign'],
+		'L_USER_SIGN_EXPLAIN' => $LANG['member_sign_explain'],
+		'L_USER_BIOGRAPHY' => $LANG['biography'],
 		'L_SEX' => $LANG['sex'],
 		'L_DATE_BIRTH' => $LANG['date_of_birth'],
 		'L_VALID' => $LANG['valid'],
@@ -701,7 +701,7 @@ elseif (!empty($id))
 		'L_AVATAR_LINK' => $LANG['avatar_link'],
 		'L_AVATAR_LINK_WHERE' => $LANG['avatar_link_where'],
 		'L_AVATAR_DEL' => $LANG['avatar_del'],		
-		'L_MEMBER' => $LANG['member'],
+		'L_USER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
 		'L_WEBSITE' => $LANG['website'],
@@ -870,23 +870,23 @@ else
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
-		'L_CONFIRM_DEL_MEMBER' => $LANG['confirm_del_member'],
+		'L_CONFIRM_DEL_USER' => $LANG['confirm_del_member'],
 		'L_CONTENTS' => $LANG['contents'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
-		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
-		'L_MEMBERS_ADD' => $LANG['members_add'],
-		'L_MEMBERS_CONFIG' => $LANG['members_config'],
-		'L_MEMBERS_PUNISHMENT' => $LANG['members_punishment'],
+		'L_USERS_MANAGEMENT' => $LANG['members_management'],
+		'L_USERS_ADD' => $LANG['members_add'],
+		'L_USERS_CONFIG' => $LANG['members_config'],
+		'L_USERS_PUNISHMENT' => $LANG['members_punishment'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
 		'L_MAIL' => $LANG['mail'],
 		'L_RANK' => $LANG['rank'],
 		'L_APROB' => $LANG['aprob'],
-		'L_MEMBER' => $LANG['member'],
+		'L_USER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
-		'L_SEARCH_MEMBER' => $LANG['search_member'],
+		'L_SEARCH_USER' => $LANG['search_member'],
 		'L_JOKER' => $LANG['joker'],
 		'L_SEARCH' => $LANG['search'],
 		'L_WEBSITE' => $LANG['website'],

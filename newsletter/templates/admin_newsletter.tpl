@@ -14,7 +14,7 @@
 				<li>
 					<a href="admin_newsletter.php?member_list=1"><img src="newsletter.png" alt="" /></a>
 					<br />
-					<a href="admin_newsletter.php?member_list=1" class="quick_link">{L_MEMBER_LIST}</a>
+					<a href="admin_newsletter.php?member_list=1" class="quick_link">{L_USER_LIST}</a>
 				</li>
 			</ul>
 		</div>
@@ -197,7 +197,7 @@
 			<table class="module_table" style="width:50%;">
 				<tr> 
 					<th colspan="2">
-						{L_MEMBER_LIST}
+						{L_USER_LIST}
 					</th>
 				</tr>
 				<tr> 

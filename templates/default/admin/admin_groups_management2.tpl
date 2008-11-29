@@ -17,7 +17,7 @@
 		}
 
 		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_MEMBER_GROUP}");
+			return confirm("{L_CONFIRM_DEL_USER_GROUP}");
 		}
 		function img_change(url)
 		{

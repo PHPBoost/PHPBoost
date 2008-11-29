@@ -144,9 +144,9 @@ release({L_RELEASE_FORMAT});
 		</div>
 		<div id="links_vertical_central">
 			<p style="margin:0;"><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /></a></p>
-	# IF C_MEMBER_CONNECTED #		
-			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
-			<p style="margin:0"><a href="{U_MEMBER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
+	# IF C_USER_CONNECTED #		
+			<p style="margin:0"><a href="{PATH_TO_ROOT}/member/member{U_USER_ID}" class="small_link" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /></a>	</p>		
+			<p style="margin:0"><a href="{U_USER_PM}" class="small_link" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /></a></p>			
 			# IF C_ADMIN_AUTH # 
 			<p style="margin:0"><a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /></a></p>
 			# ENDIF #

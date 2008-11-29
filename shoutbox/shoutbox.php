@@ -313,7 +313,7 @@ else //Affichage.
 		
 		//Avatar			
 		if (empty($row['user_avatar'])) 
-			$user_avatar = ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($CONFIG_MEMBER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url'] . '" alt="" />' : '';
+			$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
 		
@@ -359,7 +359,7 @@ else //Affichage.
 			'PUNISHMENT' => $readonly,			
 			'DEL' => $del_message,
 			'EDIT' => $edit_message,
-			'U_MEMBER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
+			'U_USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>' : '',
 			'U_ANCHOR' => 'shoutbox.php' . SID . '#m' . $row['id']
 		));
 		$j++;

@@ -33,7 +33,7 @@ $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 
 $Template->assign_vars(array(
 	'U_STATS_SITE' => url('.php?site=1', '-site.php'),
-	'U_STATS_MEMBERS' => url('.php?members=1', '-members.php'),
+	'U_STATS_USERS' => url('.php?members=1', '-members.php'),
 	'U_STATS_VISIT' => url('.php?visit=1', '-visit.php'),
 	'U_STATS_PAGES' => url('.php?pages=1', '-pages.php'),
 	'U_STATS_REFERER' => url('.php?referer=1', '-referer.php'),
@@ -43,7 +43,7 @@ $Template->assign_vars(array(
 	'U_STATS_LANG' => url('.php?lang=1', '-lang.php'),
 	'L_SITE' => $LANG['site'],
 	'L_STATS' => $LANG['stats'],
-	'L_MEMBERS' => $LANG['member_s'],
+	'L_USERS' => $LANG['member_s'],
 	'L_VISITS' => $LANG['guest_s'],
 	'L_PAGES' => $LANG['page_s'],
 	'L_REFERER' => $LANG['referer_s'],
@@ -59,19 +59,19 @@ if ($members)
 	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
-		'C_STATS_MEMBERS' => true,
+		'C_STATS_USERS' => true,
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
-		'MEMBERS' => $nbr_member,
+		'USERS' => $nbr_member,
 		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
 		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/framework/ajax/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
-		'L_LAST_MEMBER' => $LANG['last_member'],
+		'L_LAST_USER' => $LANG['last_member'],
 		'L_TEMPLATES' => $LANG['theme_s'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_MSG' => $LANG['message_s'],
 		'L_TOP_TEN_POSTERS' => $LANG['top_10_posters'],
 		'L_COLORS' => $LANG['colors'],
-		'L_MEMBERS' => $LANG['member_s'],
+		'L_USERS' => $LANG['member_s'],
 		'L_SEX' => $LANG['sex']
 	));
 	
@@ -148,7 +148,7 @@ if ($members)
 	{
 		$Template->assign_block_vars('top_poster', array(
 			'ID' => $i,
-			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'LOGIN' => $row['login'],
 			'USER_POST' => $row['user_msg']
 		));

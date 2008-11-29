@@ -39,7 +39,7 @@
 			xmlhttprequest_sender(xhr_object, null);
 		}
 		
-		var delay_forum = 1000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+		var delay_forum = 1000; //Dï¿½lai aprï¿½s lequel le bloc est automatiquement masquï¿½, aprï¿½s le dï¿½part de la souris.
 		var timeout_forum;
 		var displayed_forum = false;
 		var previous_forumblock;
@@ -89,10 +89,10 @@
 						<h2>{FORUM_NAME}</h2>
 						<div style="margin-top:4px;">
 							# IF C_FORUM_CONNEXION #
-								# IF C_MEMBER_NOTCONNECTED #
+								# IF C_USER_NOTCONNECTED #
 								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
-								# IF C_MEMBER_CONNECTED #
+								# IF C_USER_CONNECTED #
 									<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
 								# ENDIF # 						
 							# ENDIF #

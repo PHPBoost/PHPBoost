@@ -248,7 +248,7 @@ $Template->assign_vars(array(
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
 	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
+	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'SID' => SID,
 	'MODULE_DATA_PATH' => $module_data_path,
@@ -269,7 +269,7 @@ $Template->assign_vars(array(
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online'])

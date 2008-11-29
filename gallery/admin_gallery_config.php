@@ -143,7 +143,7 @@ else
 		'NBR_COLUMN' => isset($CONFIG_GALLERY['nbr_column']) ? $CONFIG_GALLERY['nbr_column'] : '4',
 		'NBR_PICS_MAX' => isset($CONFIG_GALLERY['nbr_pics_max']) ? $CONFIG_GALLERY['nbr_pics_max'] : '16',
 		'NOTE_MAX' => isset($CONFIG_GALLERY['note_max']) ? $CONFIG_GALLERY['note_max'] : '5',
-		'LIMIT_MEMBER' => isset($CONFIG_GALLERY['limit_member']) ? $CONFIG_GALLERY['limit_member'] : '10',
+		'LIMIT_USER' => isset($CONFIG_GALLERY['limit_member']) ? $CONFIG_GALLERY['limit_member'] : '10',
 		'LIMIT_MODO' => isset($CONFIG_GALLERY['limit_modo']) ? $CONFIG_GALLERY['limit_modo'] : '25',
 		'TITLE_ENABLED' => ($CONFIG_GALLERY['activ_title'] == 1) ? 'checked="checked"' : '',
 		'TITLE_DISABLED' => ($CONFIG_GALLERY['activ_title'] == 0) ? 'checked="checked"' : '',

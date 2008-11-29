@@ -182,7 +182,7 @@ else
 		'L_RESET' => $LANG['reset'],
 		'L_RANK' => $LANG['rank'],
 		'L_GUEST' => $LANG['guest'],
-		'L_MEMBER' => $LANG['member'],
+		'L_USER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin']
 	));	

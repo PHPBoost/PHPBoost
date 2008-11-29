@@ -66,7 +66,7 @@
 						<td class="row2" style="width:20%;">
 							<a href="../admin/admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" /></a>		
 							<br />
-							<a href="../admin/admin_members.php">{L_MEMBER}</a>
+							<a href="../admin/admin_members.php">{L_USER}</a>
 						</td>
 						<td class="row2" style="width:20%;">
 							<a href="../admin/admin_groups.php"><img src="../templates/{THEME}/images/admin/groups.png" /></a>		

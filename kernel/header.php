@@ -117,7 +117,7 @@ $alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $c
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
-$member_connected = $User->check_level(MEMBER_LEVEL);
+$member_connected = $User->check_level(USER_LEVEL);
 $Template->assign_vars(array(
 	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],
@@ -128,8 +128,8 @@ $Template->assign_vars(array(
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'ALTERNATIVE_CSS' => $alternative_css,
-	'C_MEMBER_CONNECTED' => $member_connected,
-	'C_MEMBER_NOTCONNECTED' => !$member_connected,
+	'C_USER_CONNECTED' => $member_connected,
+	'C_USER_NOTCONNECTED' => !$member_connected,
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
@@ -139,6 +139,7 @@ $Template->assign_vars(array(
 ));
 
 //Inclusion des blocs
+import('menu/menu');
 if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 {
 	//En cas d'échec, on régénère le cache
@@ -146,11 +147,11 @@ if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
 
 	//On inclut une nouvelle fois
 	if (@!include_once(PATH_TO_ROOT . '/cache/menus.php'))
-	$Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
+	   $Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
-	'MENUS_HEADER_CONTENT' => $MENUS['header'],
-	'MENUS_SUB_HEADER_CONTENT' => $MENUS['subheader']
+	'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
+	'MENUS_SUB_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__SUB_HEADER]
 ));
 
 //Si le compteur de visites est activé, on affiche le tout.
@@ -181,14 +182,14 @@ if ($left_column) //Gestion des blocs de gauche.
 {
 	$Template->assign_vars(array(
 		'C_START_LEFT' => true,
-		'MENUS_LEFT_CONTENT' => $MENUS['left'] . (!$right_column ? $MENUS['right'] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
+		'MENUS_LEFT_CONTENT' => $MENUS[BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[BLOCK_POSITION__RIGHT] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
 	));
 }
 if ($right_column)  //Gestion des blocs de droite.
 {
 	$Template->assign_vars(array(
 		'C_START_RIGHT' => true,
-		'MENUS_RIGHT_CONTENT' => $MENUS['right'] . (!$right_column ? $MENUS['left'] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
+		'MENUS_RIGHT_CONTENT' => $MENUS[BLOCK_POSITION__RIGHT] . (!$right_column ? $MENUS[BLOCK_POSITION__LEFT] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
 	));
 }
 
@@ -196,7 +197,7 @@ if ($right_column)  //Gestion des blocs de droite.
 $Bread_crumb->display();
 
 $Template->assign_vars(array(
-	'MENUS_TOPCENTRAL_CONTENT' => $MENUS['topcentral']
+	'MENUS_TOPCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
 ));
 
 $Template->pparse('header');

@@ -33,7 +33,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 {
 	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
 	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
-	$config_member['msg_register'] = $CONFIG_MEMBER['msg_register'];
+	$config_member['msg_register'] = $CONFIG_USER['msg_register'];
 	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
 	$config_member['verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
@@ -48,7 +48,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
-	###### Régénération du cache $CONFIG_MEMBER #######
+	###### Régénération du cache $CONFIG_USER #######
 	$Cache->Generate_file('member');
 	
 	redirect(HOST . SCRIPT); 	
@@ -64,7 +64,7 @@ else
 	$activ_mode_option = '';
 	foreach ($array as $key => $value)
 	{
-		$selected = ( $CONFIG_MEMBER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
+		$selected = ( $CONFIG_USER['activ_mbr'] == $key ) ? 'selected="selected"' : '' ;		
 		$activ_mode_option .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
@@ -72,28 +72,28 @@ else
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
-			'SELECTED' => ($CONFIG_MEMBER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+			'SELECTED' => ($CONFIG_USER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
 	$Template->assign_vars(array(
 		'ACTIV_MODE_OPTION' => $activ_mode_option,
-		'ACTIV_REGISTER_ENABLED' => $CONFIG_MEMBER['activ_register'] == 1 ? 'selected="selected"' : '',
-		'ACTIV_REGISTER_DISABLED' => $CONFIG_MEMBER['activ_register'] == 0 ? 'selected="selected"' : '',
-		'VERIF_CODE_ENABLED' => ($CONFIG_MEMBER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
-		'VERIF_CODE_DISABLED' => ($CONFIG_MEMBER['verif_code'] == 0) ? 'checked="checked"' : '',
-		'DELAY_UNACTIV_MAX' => !empty($CONFIG_MEMBER['delay_unactiv_max']) ? $CONFIG_MEMBER['delay_unactiv_max'] : '',
-		'ALLOW_THEME_ENABLED' => ($CONFIG_MEMBER['force_theme'] == 0) ? 'checked="checked"' : '',
-		'ALLOW_THEME_DISABLED' => ($CONFIG_MEMBER['force_theme'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_UP_ENABLED' => ($CONFIG_MEMBER['activ_up_avatar'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_UP_DISABLED' => ($CONFIG_MEMBER['activ_up_avatar'] == 0) ? 'checked="checked"' : '',
-		'AVATAR_ENABLED' => ($CONFIG_MEMBER['activ_avatar'] == 1) ? 'checked="checked"' : '',
-		'AVATAR_DISABLED' => ($CONFIG_MEMBER['activ_avatar'] == 0) ? 'checked="checked"' : '',
-		'WIDTH_MAX' => !empty($CONFIG_MEMBER['width_max']) ? $CONFIG_MEMBER['width_max'] : '120',
-		'HEIGHT_MAX' => !empty($CONFIG_MEMBER['height_max']) ? $CONFIG_MEMBER['height_max'] : '120',
-		'WEIGHT_MAX' => !empty($CONFIG_MEMBER['weight_max']) ? $CONFIG_MEMBER['weight_max'] : '20',
-		'AVATAR_URL' => !empty($CONFIG_MEMBER['avatar_url']) ? $CONFIG_MEMBER['avatar_url'] : '',
-		'CONTENTS' => unparse($CONFIG_MEMBER['msg_mbr']),
+		'ACTIV_REGISTER_ENABLED' => $CONFIG_USER['activ_register'] == 1 ? 'selected="selected"' : '',
+		'ACTIV_REGISTER_DISABLED' => $CONFIG_USER['activ_register'] == 0 ? 'selected="selected"' : '',
+		'VERIF_CODE_ENABLED' => ($CONFIG_USER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
+		'VERIF_CODE_DISABLED' => ($CONFIG_USER['verif_code'] == 0) ? 'checked="checked"' : '',
+		'DELAY_UNACTIV_MAX' => !empty($CONFIG_USER['delay_unactiv_max']) ? $CONFIG_USER['delay_unactiv_max'] : '',
+		'ALLOW_THEME_ENABLED' => ($CONFIG_USER['force_theme'] == 0) ? 'checked="checked"' : '',
+		'ALLOW_THEME_DISABLED' => ($CONFIG_USER['force_theme'] == 1) ? 'checked="checked"' : '',
+		'AVATAR_UP_ENABLED' => ($CONFIG_USER['activ_up_avatar'] == 1) ? 'checked="checked"' : '',
+		'AVATAR_UP_DISABLED' => ($CONFIG_USER['activ_up_avatar'] == 0) ? 'checked="checked"' : '',
+		'AVATAR_ENABLED' => ($CONFIG_USER['activ_avatar'] == 1) ? 'checked="checked"' : '',
+		'AVATAR_DISABLED' => ($CONFIG_USER['activ_avatar'] == 0) ? 'checked="checked"' : '',
+		'WIDTH_MAX' => !empty($CONFIG_USER['width_max']) ? $CONFIG_USER['width_max'] : '120',
+		'HEIGHT_MAX' => !empty($CONFIG_USER['height_max']) ? $CONFIG_USER['height_max'] : '120',
+		'WEIGHT_MAX' => !empty($CONFIG_USER['weight_max']) ? $CONFIG_USER['weight_max'] : '20',
+		'AVATAR_URL' => !empty($CONFIG_USER['avatar_url']) ? $CONFIG_USER['avatar_url'] : '',
+		'CONTENTS' => unparse($CONFIG_USER['msg_mbr']),
 		'KERNEL_EDITOR' => display_editor(),
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
 		'L_KB' => $LANG['unit_kilobytes'],
@@ -102,11 +102,11 @@ else
 		'L_REQUIRE_MAX_WIDTH' => $LANG['require_max_width'],
 		'L_REQUIRE_HEIGHT' => $LANG['require_height'],
 		'L_REQUIRE_WEIGHT' => $LANG['require_weight'],
-		'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
-		'L_MEMBERS_ADD' => $LANG['members_add'],
-		'L_MEMBERS_CONFIG' => $LANG['members_config'],
-		'L_MEMBERS_PUNISHMENT' => $LANG['punishment_management'],
-		'L_MEMBERS_MSG' => $LANG['members_msg'],
+		'L_USERS_MANAGEMENT' => $LANG['members_management'],
+		'L_USERS_ADD' => $LANG['members_add'],
+		'L_USERS_CONFIG' => $LANG['members_config'],
+		'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
+		'L_USERS_MSG' => $LANG['members_msg'],
 		'L_ACTIV_MBR' => $LANG['activ_mbr'],
 		'L_DELAY_UNACTIV_MAX' => $LANG['delay_activ_max'],
 		'L_DELAY_UNACTIV_MAX_EXPLAIN' => $LANG['delay_activ_max_explain'],

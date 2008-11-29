@@ -61,7 +61,7 @@ $Template->assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
-	'L_MEMBER_LIST' => $LANG['newsletter_member_list'],
+	'L_USER_LIST' => $LANG['newsletter_member_list'],
 	'L_SENDER_MAIL' => $LANG['newsletter_sender_mail'],
 	'L_NEWSLETTER_NAME' => $LANG['newsletter_name'],
 	'SENDER_MAIL' => $_NEWSLETTER_CONFIG['sender_mail'],

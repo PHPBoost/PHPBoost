@@ -267,7 +267,7 @@ class ForumInterface extends ModuleInterface
      *  Return the string to print the results
      */
     {
-        global $CONFIG, $LANG, $Sql, $CONFIG_MEMBER;
+        global $CONFIG, $LANG, $Sql, $CONFIG_USER;
         
         require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('forum'); //Chargement de la langue du module.
@@ -335,7 +335,7 @@ class ForumInterface extends ModuleInterface
             'TITLE' => ucfirst($result['title']),
             'DATE' => gmdate_format('d/m/y', $result['date']),
             'CONTENTS' => second_parse($result['contents']),
-            'USER_AVATAR' => '<img src="' . ($CONFIG_MEMBER['activ_avatar'] == '1' && !empty($result['avatar']) ? $result['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_MEMBER['avatar_url']) . '" alt="" />'
+            'USER_AVATAR' => '<img src="' . ($CONFIG_USER['activ_avatar'] == '1' && !empty($result['avatar']) ? $result['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url']) . '" alt="" />'
         ));
         
         $this->set_attribute('ResultsIndex', ++$resultsIndex);

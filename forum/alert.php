@@ -47,7 +47,7 @@ require_once('../kernel/header.php');
 if (empty($alert) && empty($alert_post) || empty($topic['idcat'])) 
 	redirect(HOST . DIR . '/forum/index' . url('.php'));  
 
-if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
+if (!$User->check_level(USER_LEVEL)) //Si c'est un invité
     $Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->set_filenames(array(
@@ -171,7 +171,7 @@ $Template->assign_vars(array(
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
 	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
+	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php') . '">' . $CAT_FORUM[$topic['idcat']]['name'] . '</a>',
 	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . $topic['title'] . '</a>',
@@ -181,7 +181,7 @@ $Template->assign_vars(array(
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online'])

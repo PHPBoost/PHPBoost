@@ -57,8 +57,6 @@ class LinksMenu extends LinksMenuElement
 	 */
 	function LinksMenu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
 	{
-		$this->display_id = get_uid(); // Set a unique ID
-		
 		// Set the menu type
 		$menu_types = array(VERTICAL_MENU, HORIZONTAL_MENU, TREE_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU);
 		$this->type = in_array($type, $menu_types) ? $type : VERTICAL_SCROLLING_MENU;
@@ -119,8 +117,8 @@ class LinksMenu extends LinksMenuElement
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'DEPTH' => $this->depth,
-            'ID' => $this->display_id,
-            'ID_VAR' => $this->display_id
+            'ID' => $uid = get_uid(),
+            'ID_VAR' => $uid
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
@@ -195,11 +193,6 @@ class LinksMenu extends LinksMenuElement
 	
 	## Private attributes ##
 	
-	/**
-	 * @access protected
-	 * @var int menu's unique identifier
-	 */
-	var $display_id;
 	/**
      * @access protected
 	 * @var string menu's type

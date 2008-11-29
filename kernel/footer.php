@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -37,9 +37,9 @@ $Template->assign_vars(array(
 	'HOST' => HOST,
 	'DIR' => DIR,
 	'THEME' => get_utheme(),
-	'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS['bottomcentral'],
-	'MENUS_TOP_FOOTER_CONTENT' => $MENUS['topfooter'],
-	'MENUS_FOOTER_CONTENT' => $MENUS['footer'],
+	'MENUS_BOTTOMCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__BOTTOM_CENTRAL],
+	'MENUS_TOP_FOOTER_CONTENT' => $MENUS[BLOCK_POSITION__TOP_FOOTER],
+	'MENUS_FOOTER_CONTENT' => $MENUS[BLOCK_POSITION__FOOTER],
 	'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),
 	'L_POWERED_BY' => $LANG['powered_by'],
 	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
@@ -66,7 +66,7 @@ if ($CONFIG['bench'])
 	));
 }
 
-$Template->pparse('footer');				
+$Template->pparse('footer');
 
 ob_end_flush();
 
