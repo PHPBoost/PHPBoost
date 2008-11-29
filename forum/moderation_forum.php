@@ -325,7 +325,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
 			'L_PROFILE' => $LANG['profil'],
-			'L_SEARCH_MEMBER' => $LANG['search_member'],
+			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));	
@@ -505,7 +505,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_ACTION_USER' => $LANG['change_user_warning'],
-			'L_SEARCH_MEMBER' => $LANG['search_member'],
+			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
@@ -607,7 +607,7 @@ else //Panneau de modération
 		'L_HISTORY' => $LANG['history'],
 		'L_MODO' => $LANG['modo'],
 		'L_ACTION' => $LANG['action'],
-		'L_MEMBER_CONCERN' => $LANG['history_member_concern'],
+		'L_USER_CONCERN' => $LANG['history_member_concern'],
 		'L_DATE' => $LANG['date'],
 		'L_DELETE' => $LANG['delete'],
 		'L_MORE_ACTION' => $LANG['more_action']
@@ -628,8 +628,8 @@ else //Panneau de modération
 			'LOGIN' => !empty($row['login']) ? $row['login'] : $LANG['guest'],
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'U_ACTION' => (!empty($row['url']) ? '<a href="../forum/' . $row['url'] . '">' . $LANG[$row['action']] . '</a>' : $LANG[$row['action']]),
-			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_MEMBER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id_action'], '-' . $row['user_id_action'] . '.php') . '">' . $row['member'] . '</a>' : '-')
+			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_CONCERN' => (!empty($row['user_id_action']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id_action'], '-' . $row['user_id_action'] . '.php') . '">' . $row['member'] . '</a>' : '-')
 		));
 		
 		$i++;
@@ -684,13 +684,13 @@ $Template->assign_vars(array(
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 	'ADMIN' => $total_admin,
 	'MODO' => $total_modo,
-	'MEMBER' => $total_member,
+	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-	'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+	'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 	'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online']),

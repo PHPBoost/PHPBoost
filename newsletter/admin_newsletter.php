@@ -48,7 +48,7 @@ $Template->assign_vars(array(
 	'L_NEWSLETTER' => $LANG['newsletter'],
 	'L_SEND_NEWSLETTER' => $LANG['send_newsletter'],
 	'L_CONFIG_NEWSLETTER' => $LANG['newsletter_config'],
-	'L_MEMBER_LIST' => $LANG['newsletter_member_list']
+	'L_USER_LIST' => $LANG['newsletter_member_list']
 ));
 
 $Cache->load('newsletter');

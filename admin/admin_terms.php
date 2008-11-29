@@ -33,24 +33,24 @@ $Cache->load('member');
 
 if (!empty($_POST['msg_register'])) //Message à l'inscription.
 {
-	$config_member['activ_register'] = isset($CONFIG_MEMBER['activ_register']) ? numeric($CONFIG_MEMBER['activ_register']) : 0;
-	$config_member['activ_mbr'] = isset($CONFIG_MEMBER['activ_mbr']) ? numeric($CONFIG_MEMBER['activ_mbr']) : 0; //désactivé par defaut. 
-	$config_member['verif_code'] = isset($CONFIG_MEMBER['verif_code']) ? numeric($CONFIG_MEMBER['verif_code']) : 0; //désactivé par defaut. 
-	$config_member['delay_unactiv_max'] = isset($CONFIG_MEMBER['delay_unactiv_max']) ? numeric($CONFIG_MEMBER['delay_unactiv_max']) : '';
-	$config_member['force_theme'] = isset($CONFIG_MEMBER['force_theme']) ? numeric($CONFIG_MEMBER['force_theme']) : 0; //Désactivé par défaut.
-	$config_member['activ_up_avatar'] = isset($CONFIG_MEMBER['activ_up_avatar']) ? numeric($CONFIG_MEMBER['activ_up_avatar']) : 0; //Désactivé par défaut.
-	$config_member['width_max'] = isset($CONFIG_MEMBER['width_max']) ? numeric($CONFIG_MEMBER['width_max']) : 120;
-	$config_member['height_max'] = isset($CONFIG_MEMBER['height_max']) ? numeric($CONFIG_MEMBER['height_max']) : 120;
-	$config_member['weight_max'] = isset($CONFIG_MEMBER['weight_max']) ? numeric($CONFIG_MEMBER['weight_max']) : 20;
-	$config_member['activ_avatar'] = isset($CONFIG_MEMBER['activ_avatar']) ? numeric($CONFIG_MEMBER['activ_avatar']) : 0;
-	$config_member['avatar_url'] = isset($CONFIG_MEMBER['avatar_url']) ? $CONFIG_MEMBER['avatar_url'] : 0;
-	$config_member['msg_mbr'] = isset($CONFIG_MEMBER['msg_mbr']) ? $CONFIG_MEMBER['msg_mbr'] : '';
+	$config_member['activ_register'] = isset($CONFIG_USER['activ_register']) ? numeric($CONFIG_USER['activ_register']) : 0;
+	$config_member['activ_mbr'] = isset($CONFIG_USER['activ_mbr']) ? numeric($CONFIG_USER['activ_mbr']) : 0; //désactivé par defaut. 
+	$config_member['verif_code'] = isset($CONFIG_USER['verif_code']) ? numeric($CONFIG_USER['verif_code']) : 0; //désactivé par defaut. 
+	$config_member['delay_unactiv_max'] = isset($CONFIG_USER['delay_unactiv_max']) ? numeric($CONFIG_USER['delay_unactiv_max']) : '';
+	$config_member['force_theme'] = isset($CONFIG_USER['force_theme']) ? numeric($CONFIG_USER['force_theme']) : 0; //Désactivé par défaut.
+	$config_member['activ_up_avatar'] = isset($CONFIG_USER['activ_up_avatar']) ? numeric($CONFIG_USER['activ_up_avatar']) : 0; //Désactivé par défaut.
+	$config_member['width_max'] = isset($CONFIG_USER['width_max']) ? numeric($CONFIG_USER['width_max']) : 120;
+	$config_member['height_max'] = isset($CONFIG_USER['height_max']) ? numeric($CONFIG_USER['height_max']) : 120;
+	$config_member['weight_max'] = isset($CONFIG_USER['weight_max']) ? numeric($CONFIG_USER['weight_max']) : 20;
+	$config_member['activ_avatar'] = isset($CONFIG_USER['activ_avatar']) ? numeric($CONFIG_USER['activ_avatar']) : 0;
+	$config_member['avatar_url'] = isset($CONFIG_USER['avatar_url']) ? $CONFIG_USER['avatar_url'] : 0;
+	$config_member['msg_mbr'] = isset($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
 	
 	$config_member['msg_register'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
 	
 	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
-	###### Régénération du cache $CONFIG_MEMBER #######
+	###### Régénération du cache $CONFIG_USER #######
 	$Cache->Generate_file('member');
 		
 	redirect(HOST . SCRIPT); 	
@@ -69,7 +69,7 @@ else
 	$msg_register = $Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
 	$Template->assign_vars(array(
-		'CONTENTS' => unparse($CONFIG_MEMBER['msg_register']),
+		'CONTENTS' => unparse($CONFIG_USER['msg_register']),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],

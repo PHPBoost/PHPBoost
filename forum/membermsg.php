@@ -67,7 +67,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['show_member_msg'],
 		'PAGINATION' => $Pagination->display('membermsg' . url('.php?id=' . $view_msg . '&amp;p=%d'), $nbr_msg, 'p', 10, 3),
 		'L_BACK' => $LANG['back'],
-		'L_VIEW_MSG_MEMBER' => $LANG['show_member_msg'],
+		'L_VIEW_MSG_USER' => $LANG['show_member_msg'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'U_FORUM_VIEW_MSG' => url('.php?id=' . $view_msg)
 	));
@@ -100,8 +100,8 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 			'ID' => $row['id'],
 			'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . (!empty($row['connect']) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
 			'USER_PSEUDO' => !empty($row['login']) ? wordwrap(html_entity_decode($row['login']), 13, '<br />', 1) : $LANG['guest'],			
-			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-			'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'U_VARS_ANCRE' => url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php'),
 			'U_FORUM_CAT' => '<a href="../forum/forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . $rewrited_cat_title . '.php') . '">' . $row['name'] . '</a>',
 			'U_TITLE_T' => '<a href="../forum/topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . $rewrited_title . '.php') . '">' . ucfirst($row['title']) . '</a>'
@@ -148,12 +148,12 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
 		'MODO' => $total_modo,
-		'MEMBER' => $total_member,
+		'USER' => $total_member,
 		'GUEST' => $total_visit,
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])

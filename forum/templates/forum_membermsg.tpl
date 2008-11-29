@@ -7,7 +7,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_MEMBER}</a>
+					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>
@@ -18,7 +18,7 @@
 			<div class="msg_container">
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-						{list.USER_ONLINE} <a class="forum_link_pseudo" href="../member/member{list.U_MEMBER_ID}">{list.USER_PSEUDO}</a>
+						{list.USER_ONLINE} <a class="forum_link_pseudo" href="../member/member{list.U_USER_ID}">{list.USER_PSEUDO}</a>
 					</div>
 					<span style="float:left;">
 						<span id="m{list.ID}"></span><a href="../forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {list.DATE}
@@ -47,7 +47,7 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">
 				<span style="float:left;">
-					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_MEMBER}</a>
+					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
 				<span style="float:right;">
 					{PAGINATION}

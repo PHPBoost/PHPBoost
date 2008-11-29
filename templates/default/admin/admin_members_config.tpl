@@ -21,26 +21,26 @@
 			
 		<div id="admin_quick_menu">
 			<ul>
-				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
+				<li class="title_menu">{L_USERS_MANAGEMENT}</li>
 				<li>
 					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
+					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
+					<a href="admin_members.php?add=1" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
+					<a href="admin_members_config.php" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
+					<a href="admin_members_punishment.php" class="quick_link">{L_USERS_PUNISHMENT}</a>
 				</li>
 			</ul>
 		</div>
@@ -48,7 +48,7 @@
 		<div id="admin_contents">
 			<form action="admin_members_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
-					<legend>{L_MEMBERS_CONFIG}</legend>
+					<legend>{L_USERS_CONFIG}</legend>
 					<dl>
 						<dt><label for="activ_register">{L_ACTIV_REGISTER}</label></dt>
 						<dd><label>
@@ -140,7 +140,7 @@
 				</fieldset>
 				
 				<fieldset>
-					<legend>{L_MEMBERS_MSG}</legend>
+					<legend>{L_USERS_MSG}</legend>
 					<label for="contents">* {L_CONTENTS}</label>
 					<label>
 						{KERNEL_EDITOR}

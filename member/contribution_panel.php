@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!$User->check_level(USER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);

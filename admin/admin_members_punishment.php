@@ -37,10 +37,10 @@ $Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
-	'L_MEMBERS_MANAGEMENT' => $LANG['members_management'],
-	'L_MEMBERS_ADD' => $LANG['members_add'],
-	'L_MEMBERS_CONFIG' => $LANG['members_config'],
-	'L_MEMBERS_PUNISHMENT' => $LANG['punishment_management'],
+	'L_USERS_MANAGEMENT' => $LANG['members_management'],
+	'L_USERS_ADD' => $LANG['members_add'],
+	'L_USERS_CONFIG' => $LANG['members_config'],
+	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 	'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 	'L_USERS_WARNING' => $LANG['warning_management'],
@@ -104,7 +104,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_punish_until'],
 			'L_ACTION_USER' => $LANG['punishment_management'],
 			'L_PROFILE' => $LANG['profil'],
-			'L_SEARCH_MEMBER' => $LANG['search_member'],
+			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));	
@@ -271,7 +271,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_warning_level'],
 			'L_PM' => $LANG['user_contact_pm'],
 			'L_ACTION_USER' => $LANG['warning_management'],
-			'L_SEARCH_MEMBER' => $LANG['search_member'],
+			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));
@@ -386,7 +386,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			'L_INFO' => $LANG['user_ban_until'],
 			'L_ACTION_USER' => $LANG['ban_management'],
 			'L_PROFILE' => $LANG['profil'],
-			'L_SEARCH_MEMBER' => $LANG['search_member'],
+			'L_SEARCH_USER' => $LANG['search_member'],
 			'L_SEARCH' => $LANG['search'],
 			'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 		));	

@@ -3,7 +3,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">{L_MODERATION_PANEL}</div>
 			<div class="module_contents" style="padding-bottom:75px;">	
-			# IF C_MODO_PANEL_MEMBER #
+			# IF C_MODO_PANEL_USER #
 				<table class="module_table">
 					<tr>
 						<th colspan="3">
@@ -63,9 +63,9 @@
 				
 				<form action="moderation_panel{U_ACTION}" method="post" class="fieldset_content">
 					<fieldset>
-						<legend>{L_SEARCH_MEMBER}</legend>
+						<legend>{L_SEARCH_USER}</legend>
 						<dl>
-							<dt><label for="login">{L_SEARCH_MEMBER}</label><br /><span>{L_JOKER}</span></dt>
+							<dt><label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span></dt>
 							<dd>
 								<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text" />						
 								<input type="submit" name="search_member" id="search_member" value="{L_SEARCH}" class="submit" />

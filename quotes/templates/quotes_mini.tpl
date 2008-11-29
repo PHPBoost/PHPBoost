@@ -15,7 +15,7 @@
 			<div class="news_bottom_l"></div>
 			<div class="news_bottom_r"></div>
 			<div class="news_bottom">
-				<span style="float:left"><a class="small_link" href="../member/member{news.U_MEMBER_ID}">{PSEUDO}</a></span>
+				<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{PSEUDO}</a></span>
 				<span style="float:right">{DATE}</span>
 			</div>
 		</div>

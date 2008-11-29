@@ -91,7 +91,7 @@ else
 		define('DISTRIBUTION_START_PAGE', '/member/member.php');
 		
 		//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
-		define('DISTRIBUTION_ENABLE_MEMBER', false);
+		define('DISTRIBUTION_ENABLE_USER', false);
 		
 		//Liste des modules
 		$DISTRIBUTION_MODULES = array();
@@ -634,11 +634,11 @@ elseif ($step == 6)
 			//Configuration des membres
 			$Cache->load('member');
 			
-			$CONFIG_MEMBER['activ_mbr'] = (int)DISTRIBUTION_ENABLE_MEMBER;
-			$CONFIG_MEMBER['msg_mbr'] = $LANG['site_config_msg_mbr'];
-			$CONFIG_MEMBER['msg_register'] = $LANG['site_config_msg_register'];
+			$CONFIG_USER['activ_mbr'] = (int)DISTRIBUTION_ENABLE_USER;
+			$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
+			$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
 			
-			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_MEMBER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
 			
 			$Cache->generate_file('member');
 			

@@ -140,7 +140,7 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 				'EDIT' => $admin,
 				'DEL' => $del,
 				'NEW_ROW' => $new_row,
-				'U_MEMBER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 				'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
                 'FEED_MENU' => get_feed_menu(FEED_URL)
 			));
@@ -250,7 +250,7 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'EDIT' => $admin,
 		'DEL' => $del,
-		'U_MEMBER_ID' => url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+		'U_USER_ID' => url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 		'U_NEWS_LINK' => url('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 	    'FEED_MENU' => get_feed_menu(FEED_URL)
 	));	

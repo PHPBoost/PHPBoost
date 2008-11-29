@@ -35,33 +35,33 @@
 			return true;
 		}
 		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_MEMBER}");
+			return confirm("{L_CONFIRM_DEL_USER}");
 		}
 		-->
 		</script>
 		
 		<div id="admin_quick_menu">
 			<ul>
-				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
+				<li class="title_menu">{L_USERS_MANAGEMENT}</li>
 				<li>
 					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
+					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
+					<a href="admin_members.php?add=1" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
+					<a href="admin_members_config.php" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
+					<a href="admin_members_punishment.php" class="quick_link">{L_USERS_PUNISHMENT}</a>
 				</li>
 			</ul>
 		</div>
@@ -71,12 +71,12 @@
 			<span id="search"></span>
 			<form action="admin_members.php#search" method="post" onsubmit="return check_form_search();" class="fieldset_content">
 				<fieldset>
-					<legend>{L_SEARCH_MEMBER}</legend>
+					<legend>{L_SEARCH_USER}</legend>
 					<dl>
 						<dt><label for="login_mbr">* {L_PSEUDO}</label><br /><span>{L_JOKER}</span></dt>
 						<dd><label>
 							<span style="float:left;">
-								{L_SEARCH_MEMBER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
+								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
 							</span>
 							<span style="float:left;margin-left:5px;">
@@ -100,7 +100,7 @@
 			<table  class="module_table">
 				<tr> 
 					<th colspan="9">
-						{L_MEMBERS_MANAGEMENT}
+						{L_USERS_MANAGEMENT}
 					</th>
 				</tr>
 				<tr style="text-align:center;">

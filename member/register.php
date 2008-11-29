@@ -31,7 +31,7 @@ define('TITLE', $LANG['title_register']);
 require_once('../kernel/header.php'); 
 
 $Cache->load('member');
-if (!$CONFIG_MEMBER['activ_register'])
+if (!$CONFIG_USER['activ_register'])
 	redirect(get_start_page());
 
 $key = retrieve(GET, 'key', '');
@@ -40,7 +40,7 @@ $get_erroru = retrieve(GET, 'erroru', '');
 
 if (empty($key))
 {
-	if (!$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_MEMBER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru))
+	if (!$User->check_level(USER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -48,7 +48,7 @@ if (empty($key))
 		
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
-			'MSG_REGISTER' => $CONFIG_MEMBER['msg_register'],
+			'MSG_REGISTER' => $CONFIG_USER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
 			'L_ACCEPT' => $LANG['register_accept'],
@@ -57,7 +57,7 @@ if (empty($key))
 		
 		$Template->pparse('register');
 	}
-	elseif ($User->check_level(MEMBER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_MEMBER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
+	elseif ($User->check_level(USER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -101,13 +101,13 @@ if (empty($key))
 		));	
 			
 		//Mode d'activation du membre.
-		if ($CONFIG_MEMBER['activ_mbr'] == '1')
+		if ($CONFIG_USER['activ_mbr'] == '1')
 		{
 			$Template->assign_block_vars('activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_mail']
 			));
 		}
-		elseif ($CONFIG_MEMBER['activ_mbr'] == '2')
+		elseif ($CONFIG_USER['activ_mbr'] == '2')
 		{
 			$Template->assign_block_vars('activ_mbr', array(
 				'L_ACTIV_MBR' => $LANG['activ_mbr_admin']
@@ -117,9 +117,9 @@ if (empty($key))
 		//Code de vérification, anti-bots.
 		include_once('../kernel/framework/util/captcha.class.php');
 		$Captcha = new Captcha();
-		if ($Captcha->gd_loaded() && $CONFIG_MEMBER['verif_code'] == '1')
+		if ($Captcha->gd_loaded() && $CONFIG_USER['verif_code'] == '1')
 		{
-			$Captcha->set_difficulty($CONFIG_MEMBER['verif_code_difficulty']);
+			$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 			$Template->assign_vars(array(
 				'C_VERIF_CODE' => true,
 				'VERIF_CODE' => $Captcha->display_form(),
@@ -128,12 +128,12 @@ if (empty($key))
 		}
 		
 		//Autorisation d'uploader un avatar sur le serveur.
-		if ($CONFIG_MEMBER['activ_up_avatar'] == 1)
+		if ($CONFIG_USER['activ_up_avatar'] == 1)
 		{
 			$Template->assign_block_vars('upload_avatar', array(
-				'WEIGHT_MAX' => $CONFIG_MEMBER['weight_max'],
-				'HEIGHT_MAX' => $CONFIG_MEMBER['height_max'],
-				'WIDTH_MAX' => $CONFIG_MEMBER['width_max']
+				'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
+				'HEIGHT_MAX' => $CONFIG_USER['height_max'],
+				'WIDTH_MAX' => $CONFIG_USER['width_max']
 			));
 		}		
 		
@@ -246,7 +246,7 @@ if (empty($key))
 			
 		
 		//Gestion thème par défaut.
-		if ($CONFIG_MEMBER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
 			foreach($THEME_CONFIG as $theme => $array_info)
 			{
@@ -357,7 +357,7 @@ if (empty($key))
 	else
 		redirect(get_start_page());
 }
-elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation du compte membre
+elseif (!empty($key) && $User->check_level(USER_LEVEL) !== true) //Activation du compte membre
 {
 	$Template->set_filenames(array(
 		'register' => 'member/register.tpl'

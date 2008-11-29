@@ -4,7 +4,7 @@
 				<li>
 					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGMENT}</a>
+					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="admin_menus.php"><img src="../templates/{THEME}/images/admin/menus.png" alt="" /></a>

@@ -7,7 +7,7 @@
 					<div class="dynamic_menu" style="float:right;margin-right:55px;">
 						<ul>
 							<li onmouseover="show_menu(1, 0);" onmouseout="hide_menu(0);">
-								<h5 style="margin-right:25px;"><img src="../templates/{THEME}/images/admin/members_mini.png" class="valign_middle" alt="" /> {L_MEMBERS}</h5>
+								<h5 style="margin-right:25px;"><img src="../templates/{THEME}/images/admin/members_mini.png" class="valign_middle" alt="" /> {L_USERS}</h5>
 								<ul id="smenu1">
 									<li><a href="moderation_panel{U_WARNING}" style="background-image:url(../templates/{THEME}/images/admin/important.png);">{L_WARNING}</a></li>
 									<li><a href="moderation_panel{U_PUNISH}" style="background-image:url(../templates/{THEME}/images/admin/stop.png);background-repeat:no-repeat;background-position:5px;">{L_PUNISHMENT}</a></li>

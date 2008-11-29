@@ -1,25 +1,25 @@
 		<div id="admin_quick_menu">
 			<ul>
-				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
+				<li class="title_menu">{L_USERS_MANAGEMENT}</li>
 				<li>
 					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
+					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
+					<a href="admin_members.php?add=1" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
+					<a href="admin_members_config.php" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
+					<a href="admin_members_punishment.php" class="quick_link">{L_USERS_PUNISHMENT}</a>
 				</li>
 			</ul>
 		</div>
@@ -81,9 +81,9 @@
 			
 			<form action="admin_members_punishment{U_ACTION}" method="post" class="fieldset_content">
 				<fieldset>
-					<legend>{L_SEARCH_MEMBER}</legend>
+					<legend>{L_SEARCH_USER}</legend>
 					<dl>
-						<dt><label for="login">{L_SEARCH_MEMBER}</label><br /><span>{L_JOKER}</span></dt>
+						<dt><label for="login">{L_SEARCH_USER}</label><br /><span>{L_JOKER}</span></dt>
 						<dd><label>
 							<input type="text" size="20" maxlength="25" id="login" value="" name="login" class="text" />			
 							<script type="text/javascript">

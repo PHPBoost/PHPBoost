@@ -102,7 +102,7 @@ switch ($action)
 		}
 		
 		$moderation_panel_template->assign_vars(array(
-			'C_MODO_PANEL_MEMBER' => true,
+			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['punishment_management'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
@@ -128,7 +128,7 @@ switch ($action)
 				'L_INFO' => $LANG['user_punish_until'],
 				'L_ACTION_USER' => $LANG['punishment_management'],
 				'L_PROFILE' => $LANG['profil'],
-				'L_SEARCH_MEMBER' => $LANG['search_member'],
+				'L_SEARCH_USER' => $LANG['search_member'],
 				'L_SEARCH' => $LANG['search'],
 				'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 			));	
@@ -255,7 +255,7 @@ switch ($action)
 		}
 		
 		$moderation_panel_template->assign_vars(array(
-			'C_MODO_PANEL_MEMBER' => true,
+			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['ban_management'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['ban_management'],
@@ -281,7 +281,7 @@ switch ($action)
 				'L_INFO' => $LANG['user_ban_until'],
 				'L_ACTION_USER' => $LANG['ban_management'],
 				'L_PROFILE' => $LANG['profil'],
-				'L_SEARCH_MEMBER' => $LANG['search_member'],
+				'L_SEARCH_USER' => $LANG['search_member'],
 				'L_SEARCH' => $LANG['search'],
 				'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 			));	
@@ -400,7 +400,7 @@ switch ($action)
 		}
 		
 		$moderation_panel_template->assign_vars(array(
-			'C_MODO_PANEL_MEMBER' => true,
+			'C_MODO_PANEL_USER' => true,
 			'L_ACTION_INFO' => $LANG['warning_management'],
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['warning_management'],
@@ -426,7 +426,7 @@ switch ($action)
 				'L_INFO' => $LANG['user_warning_level'],
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_ACTION_USER' => $LANG['warning_management'],
-				'L_SEARCH_MEMBER' => $LANG['search_member'],
+				'L_SEARCH_USER' => $LANG['search_member'],
 				'L_SEARCH' => $LANG['search'],
 				'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
 			));

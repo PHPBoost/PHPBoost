@@ -47,20 +47,20 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	{
 		$img = $module->functionnality('get_member_msg_img');
 		$Template->assign_block_vars('available_modules_msg', array(
-			'NAME_MEMBER_MSG' => $module->functionnality('get_member_msg_name'),
-			'IMG_MEMBER_MSG' => $img,
-			'C_IMG_MEMBER_MSG' => !empty($img) ? true : false,
-			'U_LINK_MEMBER_MSG' => $module->functionnality('get_member_msg_link', array($memberId))
+			'NAME_USER_MSG' => $module->functionnality('get_member_msg_name'),
+			'IMG_USER_MSG' => $img,
+			'C_IMG_USER_MSG' => !empty($img) ? true : false,
+			'U_LINK_USER_MSG' => $module->functionnality('get_member_msg_link', array($memberId))
 		));
 	}
 	
 	$Template->assign_vars(array(
-		'L_MEMBER_MSG' => $LANG['member_msg'],
-		'L_MEMBER_MSG_DISPLAY' => $LANG['member_msg_display'],
+		'L_USER_MSG' => $LANG['member_msg'],
+		'L_USER_MSG_DISPLAY' => $LANG['member_msg_display'],
 		'L_COMMENTS' => $LANG['com_s'],
 		'L_BACK' => $LANG['back'],
 		'U_BACK' => url('.php?id=' . $memberId, '-' . $memberId . '.php'),
-		'U_MEMBER_MSG' => url('.php?id=' . $memberId),
+		'U_USER_MSG' => url('.php?id=' . $memberId),
 		'U_COMMENTS' => url('.php?id=' . $memberId . '&amp;script=com')
 	));
 		

@@ -17,7 +17,7 @@
 		}
 
 		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_MEMBER_GROUP}");
+			return confirm("{L_CONFIRM_DEL_USER_GROUP}");
 		}
 		function img_change(url)
 		{
@@ -59,7 +59,7 @@
 
 		function hide_div2(divID)
 		{
-			if( document.getElementById && document.getElementById(divID) ) //Pour les navigateurs récents
+			if( document.getElementById && document.getElementById(divID) ) //Pour les navigateurs rï¿½cents
 			{
 				Pdiv = document.getElementById(divID);
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
@@ -69,7 +69,7 @@
 				Pdiv = document.all[divID];
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
 			}
-			else if( document.layers && document.layers[divID] ) //Pour les très vieilles versions
+			else if( document.layers && document.layers[divID] ) //Pour les trï¿½s vieilles versions
 			{
 				Pdiv = document.layers[divID];
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';

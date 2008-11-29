@@ -86,9 +86,9 @@ if (empty($check_update))
 	}
 
 	//Suppression des membres ayant dépassé le délai d'unactivation max, si non activation par admin.
-	$CONFIG_MEMBER['delay_unactiv_max'] = ($CONFIG_MEMBER['delay_unactiv_max'] * 3600 * 24); //On passe en secondes.
-	if (!empty($CONFIG_MEMBER['delay_unactiv_max']) && $CONFIG_MEMBER['activ_mbr'] != 2)
-		$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE timestamp < '" . (time() - $CONFIG_MEMBER['delay_unactiv_max']) . "' AND user_aprob = 0", __LINE__, __FILE__);
+	$CONFIG_USER['delay_unactiv_max'] = ($CONFIG_USER['delay_unactiv_max'] * 3600 * 24); //On passe en secondes.
+	if (!empty($CONFIG_USER['delay_unactiv_max']) && $CONFIG_USER['activ_mbr'] != 2)
+		$Sql->query_inject("DELETE FROM ".PREFIX."member WHERE timestamp < '" . (time() - $CONFIG_USER['delay_unactiv_max']) . "' AND user_aprob = 0", __LINE__, __FILE__);
     
     $rep = PATH_TO_ROOT . '/cache/';
     $dh = @opendir($rep);
@@ -100,7 +100,7 @@ if (empty($check_update))
     @closedir($dh); //On ferme le dossier
     
 	//Vidage des entrées des inscriptions
-	if ($CONFIG_MEMBER['verif_code'] == '1')
+	if ($CONFIG_USER['verif_code'] == '1')
 		$Sql->query_inject("DELETE FROM ".PREFIX."verif_code WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
 
     

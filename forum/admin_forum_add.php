@@ -164,7 +164,7 @@ else
 		'L_LOCK' => $LANG['lock'],
 		'L_UNLOCK' => $LANG['unlock'],
 		'L_GUEST' => $LANG['guest'],
-		'L_MEMBER' => $LANG['member'],
+		'L_USER' => $LANG['member'],
 		'L_MODO' => $LANG['modo'],
 		'L_ADMIN' => $LANG['admin'],
 		'L_ADD' => $LANG['add'],

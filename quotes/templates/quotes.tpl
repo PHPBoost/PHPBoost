@@ -97,7 +97,7 @@
 				</div>				
 				<hr />
 				<div style="float:left;">
-					{quotes.U_MEMBER_PM} {quotes.USER_MAIL} {quotes.USER_MSN} {quotes.USER_YAHOO} {quotes.USER_WEB}
+					{quotes.U_USER_PM} {quotes.USER_MAIL} {quotes.USER_MSN} {quotes.USER_YAHOO} {quotes.USER_WEB}
 				</div>
 				<div style="float:right;font-size:10px;">
 					{quotes.WARNING} {quotes.PUNISHMENT}

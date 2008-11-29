@@ -76,7 +76,7 @@
 							</div>				
 							<hr />
 							<div style="float:left;">
-								{com.U_MEMBER_PM} {com.USER_MAIL} {com.USER_MSN} {com.USER_YAHOO} {com.USER_WEB}
+								{com.U_USER_PM} {com.USER_MAIL} {com.USER_MSN} {com.USER_YAHOO} {com.USER_WEB}
 							</div>
 							<div style="float:right;font-size:10px;">
 							</div>&nbsp;

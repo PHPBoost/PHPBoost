@@ -1,4 +1,4 @@
-		# IF C_MEMBER_NOTCONNECTED #		
+		# IF C_USER_NOTCONNECTED #		
 		<script type="text/javascript">
 		<!--
 		function check_connect(){
@@ -36,7 +36,7 @@
 					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 				</p>
 				<p style="margin:0;margin-top:5px;">
-					# IF C_MEMBER_REGISTER # 
+					# IF C_USER_REGISTER # 
 					<a class="small_link" href="{PATH_TO_ROOT}/member/register.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a> 
 					# ENDIF #
 					<br />
@@ -50,15 +50,15 @@
 		# ENDIF #		
 		
 		
-		# IF C_MEMBER_CONNECTED #
+		# IF C_USER_CONNECTED #
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_PROFIL}</h5>
 			</div>
 			<div class="module_mini_contents" style="text-align:left;">
 				<ul style="margin:0;padding:0;padding-left:4px;list-style-type:none;line-height:18px">
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
-					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_MEMBER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/member{U_USER_ID}" class="small_link">{L_PRIVATE_PROFIL}</a></li>
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;</li>
 					
 					# IF C_ADMIN_AUTH # 
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}</a></li> 

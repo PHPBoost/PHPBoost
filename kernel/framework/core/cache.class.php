@@ -190,57 +190,8 @@ class Cache
 	//Placements et autorisations des modules minis.
 	function _get_menus()
 	{
-		global $Sql, $MODULES;
-		
-		import('core/menu_manager');
-		
-		$MENUS = array();
-		$result = $Sql->query_while("SELECT name, contents, location, auth, added, use_tpl
-		FROM ".PREFIX."menus
-		WHERE activ = 1
-		ORDER BY location, class", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			if (($row['added'] == 0 && $MODULES[$row['name']]['activ'] == 1) || $row['added'] > 0) //Désactive le menu si le module est désactivé.
-				$MENUS[$row['location']][] = array('name' => $row['name'], 'contents' => $row['contents'], 'auth' => $row['auth'], 'added' => $row['added'], 'use_tpl' => $row['use_tpl']);
-		}
-		$Sql->query_close($result);
-		
-		$code = '';
-		$array_seek = array('header', 'subheader', 'left', 'right', 'topcentral', 'bottomcentral', 'topfooter', 'footer');
-		foreach ($array_seek as $location)
-		{
-			$code .= '$MENUS[\'' . $location . '\'] = \'\';' . "\n";
-			if (isset($MENUS[$location]))
-			{
-				foreach ($MENUS[$location] as $location_key => $info)
-				{
-					if ($info['added'] == '0') //Modules mini.
-					{
-						$Menu = new MenuManager(MENU_MODULE);
-						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
-					}
-					elseif ($info['added'] == '3') //Menu de liens.
-					{
-						$Menu = new MenuManager(MENU_LINKS);
-						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
-					}
-					elseif ($info['added'] == '2') //Menus personnels.
-					{
-						$Menu = new MenuManager(MENU_PERSONNAL);
-						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth']);
-					}
-					else //Menu de contenu.
-					{
-						$Menu = new MenuManager(MENU_CONTENTS);
-						$code .= $Menu->get_cache($info['name'], $info['contents'], $location, $info['auth'], $info['use_tpl']);
-					}
-				}
-				$code .= "\n";
-			}
-		}
-		
-		return $code;
+		import('core/menu_service');
+		return MenuService::generate_cache(true);
 	}
 	
 	//Configuration du site
@@ -398,12 +349,12 @@ class Cache
 	{
 		global $Sql;
 		
-		$config_member = 'global $CONFIG_MEMBER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;' . "\n";
+		$config_member = 'global $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_MEMBER = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
-		foreach ($CONFIG_MEMBER as $key => $value)
-			$config_member .= '$CONFIG_MEMBER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
+		$CONFIG_USER = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		foreach ($CONFIG_USER as $key => $value)
+			$config_member .= '$CONFIG_USER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
 		import('events/contribution_service');
 		//Unread contributions for each profile

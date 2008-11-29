@@ -21,40 +21,40 @@
 		<script type="text/javascript">
 		<!--
 		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_MEMBER}");
+		return confirm("{L_CONFIRM_DEL_USER}");
 		}
 		-->
 		</script>
 	
 		<div id="admin_quick_menu">
 			<ul>
-				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
+				<li class="title_menu">{L_USERS_MANAGEMENT}</li>
 				<li>
 					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
+					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGEMENT}</a>
 				</li>
 				<li>
 					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
+					<a href="admin_members.php?add=1" class="quick_link">{L_USERS_ADD}</a>
 				</li>
 				<li>
 					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
+					<a href="admin_members_config.php" class="quick_link">{L_USERS_CONFIG}</a>
 				</li>
 				<li>
 					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
-					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
+					<a href="admin_members_punishment.php" class="quick_link">{L_USERS_PUNISHMENT}</a>
 				</li>
 			</ul>
 		</div>
 
 		<div id="admin_contents">
 	
-			# IF C_MEMBERS_ADD #
+			# IF C_USERS_ADD #
 			
 			# IF C_ERROR_HANDLER #
 			<div class="error_handler_position">
@@ -67,7 +67,7 @@
 			# ENDIF #
 			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
-					<legend>{L_MEMBERS_ADD}</legend>
+					<legend>{L_USERS_ADD}</legend>
 					<dl>
 						<dt><label for="login2">* {L_PSEUDO}</label></dt>
 						<dd><label><input type="text" maxlength="25" size="20" id="login2" name="login2" class="text" /></label></dd>
@@ -88,7 +88,7 @@
 						<dt><label for="level2">* {L_RANK}</label></dt>
 						<dd><label>
 							<select id="level2" name="level2">
-								<option value="0" selected="selected">{L_MEMBER}</option>
+								<option value="0" selected="selected">{L_USER}</option>
 								<option value="1">{L_MODO}</option>
 								<option value="2">{L_ADMIN}</option>
 							</select>
@@ -106,7 +106,7 @@
 			# ENDIF #
 			
 			
-			# IF C_MEMBERS_MANAGEMENT #
+			# IF C_USERS_MANAGEMENT #
 			<script type="text/javascript">
 			<!--
 			function check_select_multiple(id, status)
@@ -163,7 +163,7 @@
 			
 			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
-					<legend>{L_MEMBERS_MANAGEMENT}</legend>
+					<legend>{L_USERS_MANAGEMENT}</legend>
 					<dl>
 						<dt><label for="name">* {L_PSEUDO}</label></dt>
 						<dd><label><input type="text" maxlength="25" size="25" id="name" name="name" value="{NAME}" class="text" /></label></dd>
@@ -261,7 +261,7 @@
 				<fieldset>
 					<legend>{L_SANCTION}</legend>				
 					<dl>
-						<dt><label for="delete">{L_CONFIRM_DEL_MEMBER}</label></dt>
+						<dt><label for="delete">{L_CONFIRM_DEL_USER}</label></dt>
 						<dd><label><input type="checkbox" name="delete" id="delete" value="1" /> </label></dd>
 					</dl>
 					<dl>
@@ -330,11 +330,11 @@
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="user_sign">{L_MEMBER_SIGN}</label><br /><span>{L_MEMBER_SIGN_EXPLAIN}</span></dt>
+						<dt><label for="user_sign">{L_USER_SIGN}</label><br /><span>{L_USER_SIGN_EXPLAIN}</span></dt>
 						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="user_desc">{L_MEMBER_BIOGRAPHY}</label></dt>
+						<dt><label for="user_desc">{L_USER_BIOGRAPHY}</label></dt>
 						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea></label></dd>
 					</dl>
 				</fieldset>	

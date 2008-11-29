@@ -117,10 +117,10 @@
 						</ul>
 					</li>
 					<li onmouseover="show_menu(4, 0);" onmouseout="hide_menu(0);">
-						<h5 class="links"><img src="../templates/{THEME}/images/admin/groups_mini.png" class="valign_middle" alt="" /> {L_MEMBER}</h5>
+						<h5 class="links"><img src="../templates/{THEME}/images/admin/groups_mini.png" class="valign_middle" alt="" /> {L_USER}</h5>
 						<ul id="smenu4">
 							<li class="extend" onmouseover="show_menu(41, 1);" onmouseout="hide_menu(1);">
-								<a href="../admin/admin_members.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_MEMBER}</a>
+								<a href="../admin/admin_members.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_USER}</a>
 								<ul id="ssmenu41">
 									<li><a href="../admin/admin_members.php" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_MANAGEMENT}</a></li>
 									<li><a href="../admin/admin_members.php?add=1" style="background-image:url(../templates/{THEME}/images/admin/members_mini.png);">{L_ADD}</a></li>

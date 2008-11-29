@@ -44,7 +44,7 @@ $Template->assign_vars(array(
 	'L_SITE_MENU' => $LANG['menu_management'],
 	'L_MODERATION' => $LANG['moderation'],
 	'L_MAINTAIN' => $LANG['maintain'],
-	'L_MEMBER' => $LANG['member'],
+	'L_USER' => $LANG['member'],
 	'L_EXTEND_FIELD' => $LANG['extend_field'],
 	'L_RANKS' => $LANG['ranks'],
 	'L_GROUP' => $LANG['group'],

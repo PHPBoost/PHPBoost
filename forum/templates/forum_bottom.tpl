@@ -22,7 +22,7 @@
 			
 			<div class="forum_online">
 				# IF C_FORUM_CONNEXION #
-					# IF C_MEMBER_NOTCONNECTED #
+					# IF C_USER_NOTCONNECTED #
 					<form action="" method="post">
 						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25" /></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30" /></label>
@@ -34,9 +34,9 @@
 					
 				# IF USERS_ONLINE #
 				<span style="float:left;">
-					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {MEMBER} {L_MEMBER} {L_AND} {GUEST} {L_GUEST}
+					{TOTAL_ONLINE} {L_USER} {L_ONLINE} :: {ADMIN} {L_ADMIN}, {MODO} {L_MODO}, {USER} {L_USER} {L_AND} {GUEST} {L_GUEST}
 					<br />
-					{L_MEMBER} {L_ONLINE}: {USERS_ONLINE}
+					{L_USER} {L_ONLINE}: {USERS_ONLINE}
 				</span>
 				<div style="float:right;text-align:right">
 					# IF SELECT_CAT #

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*##################################################
  *                               begin.php
  *                            -------------------
@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -73,7 +73,7 @@ $Cache->load('langs'); //Récupération de la configuration des thèmes.
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 
-$Session = new Sessions; //!\\Initialisation  de la class des sessions//!\\
+$Session = new Sessions(); //!\\Initialisation  de la class des sessions//!\\
 
 //Activation de la bufférisation de sortie
 if ($CONFIG['ob_gzhandler'] == 1)
@@ -101,7 +101,7 @@ else
 
 //Si le thème n'existe pas on prend le suivant présent sur le serveur/
 $user_theme = $User->get_attribute('user_theme');
-if ($CONFIG_MEMBER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure']) || !$User->check_level($THEME_CONFIG[$user_theme]['secure'])) //Thème autorisé pour le membre?
+if ($CONFIG_USER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure']) || !$User->check_level($THEME_CONFIG[$user_theme]['secure'])) //Thème autorisé pour le membre?
 	$user_theme = $CONFIG['theme'];
 $User->set_user_theme(find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme));
 
@@ -118,7 +118,7 @@ require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion
 //Chargement du cache du jour actuel.
 $Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
-if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day)) 
+if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day))
 {
     //Inscription du nouveau jour dans le fichier en cache.
     $Cache->Generate_file('day');
@@ -134,13 +134,13 @@ define('MODULE_NAME', get_module_name());
 if (isset($MODULES[MODULE_NAME]) )
 {
 	if ($MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'kernel') //Empêche l'exécution d'un module non installé.
 {
-	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', get_ulang());	
+	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', get_ulang());
 	if (!empty($array_info_module['name'])) //Module présent, et non installé.
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 
 

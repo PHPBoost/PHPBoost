@@ -50,7 +50,7 @@ class Note
 	{
 		global $Sql, $User;
 		
-		if ($User->check_level(MEMBER_LEVEL))
+		if ($User->check_level(USER_LEVEL))
 		{
 			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.			
 			$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);

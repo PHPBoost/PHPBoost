@@ -92,9 +92,9 @@ release({L_RELEASE_FORMAT});
 			<div id="header">
 <ul id="dock">
 						<li><a href="{PATH_TO_ROOT}/news/news.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/f1.png" alt="Home"  onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
-                        # IF C_MEMBER_CONNECTED #
-	<li><a href="{PATH_TO_ROOT}/member/member{U_MEMBER_ID}" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/user.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
-			<li><a href="{U_MEMBER_PM}" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
+                        # IF C_USER_CONNECTED #
+	<li><a href="{PATH_TO_ROOT}/member/member{U_USER_ID}" title="{L_PRIVATE_PROFIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/user.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
+			<li><a href="{U_USER_PM}" title="{L_NBR_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
 			# IF C_ADMIN_AUTH #
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php" title="{L_ADMIN_PANEL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/c1.png" alt="" onmouseover="enlarge(this)" onmouseout="reduce(this)"/></a></li>
 			# ENDIF #

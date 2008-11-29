@@ -54,7 +54,7 @@ class MenuService
     {
         global $Sql;
         
-        $query = "SELECT id, object, block, position, enabled FROM " . PREFIX . "menuss";
+        $query = "SELECT id, object, block, position, enabled FROM " . PREFIX . "menus";
         
         $conditions = array();
         if ($class != MENU__CLASS)
@@ -91,7 +91,7 @@ class MenuService
         
         $query = "
             SELECT id, object, block, position, enabled
-            FROM " . PREFIX . "menuss
+            FROM " . PREFIX . "menus
             ORDER BY position ASC
         ;";
         $result = $Sql->query_while ($query, __LINE__, __FILE__);
@@ -116,7 +116,7 @@ class MenuService
     function load($id)
     {
         global $Sql;
-        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array('menus', 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
         
         if ($result === false)
             return null;
@@ -132,7 +132,7 @@ class MenuService
     function load_by_title($title)
     {
         global $Sql;
-        $result = $Sql->query_array('menuss', 'id', 'object', 'block', 'position', 'enabled', "WHERE title='" . addslashes($title) . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array('menus', 'id', 'object', 'block', 'position', 'enabled', "WHERE title='" . addslashes($title) . "'", __LINE__, __FILE__);
         
         if ($result === false)
             return false;
@@ -148,10 +148,11 @@ class MenuService
     function save(&$menu)
     {
         global $Sql;
+        $block_position = $menu->get_block_position();
         
         if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
         {
-            $block_position_query = "SELECT MAX(position) + 1 FROM " . PREFIX . "menuss WHERE block='" . $block. "'";
+            $block_position_query = "SELECT MAX(position) + 1 FROM " . PREFIX . "menus WHERE block='" . $block. "'";
             $block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
         }
         
@@ -160,7 +161,7 @@ class MenuService
         if ($id_menu > 0)
         {   // We only have to update the element
             $query = "
-            UPDATE " . PREFIX . "menuss SET
+            UPDATE " . PREFIX . "menus SET
                     title='" . addslashes($menu->get_title()) . "',
                     object='" . serialize($menu) . "',
                     class='" . strtolower(get_class($menu)) . "',
@@ -172,7 +173,7 @@ class MenuService
         else
         {   // We have to insert the element in the database
             $query = "
-                INSERT INTO " . PREFIX . "menuss (title,object,class,enabled,block,position)
+                INSERT INTO " . PREFIX . "menus (title,object,class,enabled,block,position)
                 VALUES (
                     '" . addslashes($menu->get_title()) . "',
                     '" . serialize($menu) . "',
@@ -194,9 +195,9 @@ class MenuService
     function delete(&$menu)
     {
         global $Sql;
-        $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : 0);
+        $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : -1);
         if ($id_menu > 0)
-            $Sql->query_inject("DELETE FROM " . PREFIX . "menuss WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
+            $Sql->query_inject("DELETE FROM " . PREFIX . "menus WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
     }
 
     
@@ -218,7 +219,8 @@ class MenuService
     function disable(&$menu)
     {
         $menu->enabled(MENU_NOT_ENABLED);
-        MenuService::save($menu);
+        // Commputes menus positions of the previous block and save the current menu
+        MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
     }
     
     /**
@@ -233,7 +235,7 @@ class MenuService
         if ($menu->is_enabled())
         {   // Updates the previous block position counter
             $update_query = "
-                UPDATE " . PREFIX ."menuss
+                UPDATE " . PREFIX ."menus
                 SET position=position - 1
                 WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
             $Sql->query_inject($update_query, __LINE__, __FILE__);
@@ -253,7 +255,7 @@ class MenuService
             $menu->set_block($block);
             
             // Computes the new block position for the menu
-            $position_query = "SELECT MAX(position) + 1 FROM " . PREFIX ."menuss WHERE block='" . $menu->get_block() . "' AND enabled='1';";
+            $position_query = "SELECT MAX(position) + 1 FROM " . PREFIX ."menus WHERE block='" . $menu->get_block() . "' AND enabled='1';";
             $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
         }
         
@@ -275,14 +277,14 @@ class MenuService
         
         if ($direction > 0)
         {   // Moving the menu down
-            $max_position_query = "SELECT MAX(position) FROM " . PREFIX . "menuss WHERE block='" . $menu->get_block() . "' AND enabled='1'";
+            $max_position_query = "SELECT MAX(position) FROM " . PREFIX . "menus WHERE block='" . $menu->get_block() . "' AND enabled='1'";
             $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;
             
             $update_query = "
-                UPDATE " . PREFIX . "menuss SET position=position - 1
+                UPDATE " . PREFIX . "menus SET position=position - 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
                     position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
@@ -297,7 +299,7 @@ class MenuService
                             
             // Updating other menus
             $update_query = "
-                UPDATE " . PREFIX . "menuss SET position=position + 1
+                UPDATE " . PREFIX . "menus SET position=position + 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
                     position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_postion . "'
@@ -317,7 +319,7 @@ class MenuService
     /**
      * @desc Generate the cache
      */
-    function generate_cache()
+    function generate_cache($return_string = false)
     {
         // $MENUS global var initialization
         $cache_str = '$MENUS = array();';
@@ -348,15 +350,74 @@ class MenuService
             }
         }
         
-        Cache::write('menuss', preg_replace(
-                array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
-                array('', '', "\n", ' ', '> ', "\n", ''),
-                $cache_str
-            )
+        $cache_str = preg_replace(
+            array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
+            array('', '', "\n", ' ', '> ', "\n", ''),
+            $cache_str
         );
+        
+        if ($return_string)
+            return $cache_str;
+        
+        Cache::write('menus', $cache_str);
+        return '';
+            
     }
     
     /**
+     * @desc
+     * @param $update_cache
+     */
+    function update_mini_modules_list($update_cache = true)
+    {
+        global $Sql, $MODULES;
+        
+        // Retrieves the mini modules already installed
+        $installed_minimodules = array();
+        $query = "SELECT id, title FROM " . PREFIX . "menus WHERE class='" . strtolower(MODULE_MINI_MENU__CLASS) . "'";
+        
+        $modules = array();
+        // Build the availables modules list
+        foreach ($MODULES as $module_id => $module)
+        {
+            if (!empty($module['activ']) && $module['activ'] == 1)
+                $modules[] = $module_id;
+        }
+        
+        $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($result))
+        {
+            $title = strtolower($row['title']);
+            if (in_array($title, $modules))
+            {   // The Menu is installed and we gonna keep it
+                $installed_minimodules[] = strtolower($row['title']);
+            }
+            else
+            {   // The menu is not available anymore, so we delete it
+                MenuService::delete($row['id']);
+            }
+        }
+        $Sql->query_close($result);
+        
+        $new_modules = array_diff($modules, $installed_minimodules);
+        foreach ($new_modules as $module)
+        {   // Browse availables modules without mini modules
+            if (@include_once(PATH_TO_ROOT . '/' . $module . '/' . $module . '_mini.php'))
+            {   // We verify that a mini module is available for this module
+                if (function_exists($module . '_mini'))
+                {   // Add the new mini module
+                    $menu = new ModuleMiniMenu($module);
+                    MenuService::save($menu);
+                }
+            }
+        }
+        
+        if ($update_cache)
+            MenuService::generate_cache();
+    }
+    
+    /**
+     * @access private
      * @return array[] initialize the menus map structure
      */
     function _initialize_menus_map()
@@ -375,6 +436,7 @@ class MenuService
     }
     
     /**
+     * @access private
      * @desc Build a Menu object from a database result
      * @param string[key] $db_result the map from the database with the Menu id and serialized object
      * @return Menu the menu object from the serialized one

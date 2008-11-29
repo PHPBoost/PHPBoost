@@ -21,7 +21,7 @@
 # IF C_ADVANCED_AUTH #
 <div id="advanced_auth2{IDSELECT}" style="margin-left:5px;{ADVANCED_AUTH_STYLE}float:left;">
 	<select id="members_auth{IDSELECT}"  name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
-		<optgroup label="{L_MEMBERS}" id="advanced_auth3{IDSELECT}">
+		<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 			# START members_list #
 			<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 			# END members_list #
@@ -30,7 +30,7 @@
 </div>
 
 <div id="advanced_auth{IDSELECT}" style="{ADVANCED_AUTH_STYLE}float:left;margin-left:5px;width:150px;">
-	<strong>{L_ADD_MEMBER}</strong>
+	<strong>{L_ADD_USER}</strong>
 	<br />
 	<input type="text" size="15" class="text" value="" id="login{IDSELECT}" name="login{IDSELECT}" />
 	<span id="search_img{IDSELECT}"></span> 

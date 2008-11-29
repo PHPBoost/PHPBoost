@@ -174,17 +174,17 @@ CREATE TABLE `phpboost_modules` (
 DROP TABLE IF EXISTS `phpboost_menus`;
 CREATE TABLE `phpboost_menus` (
   `id` int(11) NOT NULL auto_increment,
-  `class` int(11) NOT NULL default '0',
-  `name` varchar(150) NOT NULL default '',
-  `contents` text NOT NULL,
-  `location` varchar(20) NOT NULL default '0',
-  `auth` text NOT NULL,
-  `activ` tinyint(1) NOT NULL default '0',
-  `added` tinyint(1) NOT NULL default '0',
-  `use_tpl` tinyint(1) NOT NULL default '0',
-  `type` tinyint(2) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `title` varchar(128) NOT NULL,
+  `object` text NOT NULL,
+  `class` varchar(64) NOT NULL,
+  `enabled` tinyint(1) NOT NULL,
+  `block` tinyint(2) NOT NULL,
+  `position` tinyint(2) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `block` (`block`),
+  KEY `class` (`class`),
+  KEY `enabled` (`enabled`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 DROP TABLE IF EXISTS `phpboost_pm_msg`;
 CREATE TABLE `phpboost_pm_msg` (

@@ -70,7 +70,7 @@ $Template->assign_vars(array(
 	'L_MODERATION' => $LANG['moderation'],
 	'L_DATABASE_QUERY' => $LANG['db_executed_query'],
 	'L_MAINTAIN' => $LANG['maintain'],
-	'L_MEMBER' => $LANG['member_s'],
+	'L_USER' => $LANG['member_s'],
 	'L_EXTEND_FIELD' => $LANG['extend_field'],
 	'L_RANKS' => $LANG['ranks'],
 	'L_TERMS' => $LANG['terms'],

@@ -159,7 +159,7 @@
 						<dd><label>
 							<select name="secure">
 								<option value="-1" selected="selected">{L_GUEST}</option>
-								<option value="0">{L_MEMBER}</option>
+								<option value="0">{L_USER}</option>
 								<option value="1">{L_MODO}</option>
 								<option value="2">{L_ADMIN}</option>
 							</select>

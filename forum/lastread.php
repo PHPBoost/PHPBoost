@@ -39,10 +39,10 @@ require_once('../kernel/header.php');
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
+if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 
-if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
+if ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_topics'=> 'forum/forum_forum.tpl',
@@ -202,13 +202,13 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
 		'ADMIN' => $total_admin,
 		'MODO' => $total_modo,
-		'MEMBER' => $total_member,
+		'USER' => $total_member,
 		'GUEST' => $total_visit,
 		'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
-		'L_MEMBER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
+		'L_USER' => ($total_member > 1) ? $LANG['member_s'] : $LANG['member'],
 		'L_GUEST' => ($total_visit > 1) ? $LANG['guest_s'] : $LANG['guest'],
 		'L_AND' => $LANG['and'],
 		'L_ONLINE' => strtolower($LANG['online'])

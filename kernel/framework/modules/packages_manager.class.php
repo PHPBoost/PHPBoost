@@ -73,11 +73,11 @@ class PackagesManager
 		//Insertion de la configuration du module.
 		$config = get_ini_config('../' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 		if (!empty($config))
-		{	
+		{
 			$config = trim(str_replace('config=', '', $config), '"');
 			
 			$check_config = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."configs WHERE name = '" . $module_identifier . "'", __LINE__, __FILE__);
-			if (empty($check_config)) 
+			if (empty($check_config))
 				$Sql->query_inject("INSERT INTO ".PREFIX."configs (name, value) VALUES ('" . $module_identifier . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
 			else
 				return CONFIG_CONFLICT;
@@ -165,16 +165,16 @@ class PackagesManager
 			$dir_db_module = get_ulang();
 			$dir = '../' . $module_name . '/db';
 			if (!is_dir($dir . '/' . $dir_db_module))
-			{	
+			{
 				$dh = @opendir($dir);
 				while (!is_bool($dir_db = @readdir($dh)))
-				{	
+				{
 					if (strpos($dir_db, '.') === false)
 					{
 						$dir_db_module = $dir_db;
 						break;
 					}
-				}	
+				}
 				@closedir($dh);
 			}
 
@@ -190,7 +190,7 @@ class PackagesManager
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
-				$Cache->Generate_file('htaccess'); //Régénération du htaccess.	 	
+				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
 			
 			//Suppression des fichiers du module
 			if ($drop_files)
