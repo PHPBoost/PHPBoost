@@ -23,7 +23,7 @@
 		{
 			if (document.images)
 			{
-				document.images['img_group'].src = "../images/group/" + url;
+				document.images['img_group'].src = "{PATH_TO_ROOT}/images/group/" + url;
 			}
 		}
 		function XMLHttpRequest_search()
@@ -32,10 +32,10 @@
 			if( login != "" )
 			{
 				if( document.getElementById('loading_groups') )
-					document.getElementById('loading_groups').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+					document.getElementById('loading_groups').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							
 				data = 'login=' + login;
-				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?insert_member=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?insert_member=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -59,7 +59,7 @@
 
 		function hide_div2(divID)
 		{
-			if( document.getElementById && document.getElementById(divID) ) //Pour les navigateurs récents
+			if( document.getElementById && document.getElementById(divID) ) //Pour les navigateurs rï¿½cents
 			{
 				Pdiv = document.getElementById(divID);
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
@@ -69,7 +69,7 @@
 				Pdiv = document.all[divID];
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
 			}
-			else if( document.layers && document.layers[divID] ) //Pour les très vieilles versions
+			else if( document.layers && document.layers[divID] ) //Pour les trï¿½s vieilles versions
 			{
 				Pdiv = document.layers[divID];
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
@@ -83,12 +83,12 @@
 			<ul>
 				<li class="title_menu">{L_GROUPS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_groups.php"><img src="../templates/{THEME}/images/admin/groups.png" alt="" /></a>
+					<a href="admin_groups.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" alt="" /></a>
 					<br />
 					<a href="admin_groups.php" class="quick_link">{L_GROUPS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_groups.php?add=1"><img src="../templates/{THEME}/images/admin/groups.png" alt="" /></a>
+					<a href="admin_groups.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" alt="" /></a>
 					<br />
 					<a href="admin_groups.php?add=1" class="quick_link">{L_ADD_GROUPS}</a>
 				</li>
@@ -125,7 +125,7 @@
 								<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>				
-								<img src="../images/group/{IMG}" name="img_group" alt="" class="valign_middle" />
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" class="valign_middle" />
 							</label>
 						</dd>
 					</dl>
@@ -143,7 +143,7 @@
 				<div class="error_handler_position">
 					<span id="errorh"></span>
 					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>
 				</div>
@@ -188,10 +188,10 @@
 				# START member #
 				<tr> 
 					<td class="row2">
-						<a href="../member/member{member.U_USER_ID}">{member.LOGIN}</a>
+						<a href="{PATH_TO_ROOT}/member/member{member.U_USER_ID}">{member.LOGIN}</a>
 					</td>
 					<td class="row2">
-						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #
@@ -229,7 +229,7 @@
 							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
 							</select>				
-							<img src="../images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" />
+							<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" />
 						</label></dd>
 					</dl>				
 				</fieldset>

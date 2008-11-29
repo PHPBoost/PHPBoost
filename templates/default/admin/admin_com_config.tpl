@@ -29,12 +29,12 @@
 			<ul>
 				<li class="title_menu">{L_COM}</li>
 				<li>
-					<a href="admin_com.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
+					<a href="admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" alt="" /></a>
 					<br />
 					<a href="admin_com.php" class="quick_link">{L_COM_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_com_config.php"><img src="../templates/{THEME}/images/admin/com.png" alt="" /></a>
+					<a href="admin_com_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" alt="" /></a>
 					<br />
 					<a href="admin_com_config.php" class="quick_link">{L_COM_CONFIG}</a>
 				</li>

@@ -2,22 +2,22 @@
 			<ul>
 				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
 				</li>
 				<li>
-					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
 				</li>
@@ -34,13 +34,13 @@
 				</tr>
 				<tr>			
 					<td style="text-align:center;width:34%" class="row2">
-						<a href="admin_members_punishment.php?action=warning" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
+						<a href="admin_members_punishment.php?action=warning" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/notice.png" alt="{L_USERS_WARNING}" /><br />{L_USERS_WARNING}</a>
 					</td>
 					<td style="text-align:center;width:33%" class="row2">
-						<a href="admin_members_punishment.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="../templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
+						<a href="admin_members_punishment.php?action=punish" title="{L_USERS_PUNISHMENT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_USERS_PUNISHMENT}" /><br />{L_USERS_PUNISHMENT}</a>
 					</td>
 					<td style="text-align:center;width:33%" class="row2">
-						<a href="admin_members_punishment.php?action=ban" title="{L_USERS_WARNING}"><img src="../templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /><br />{L_USERS_BAN}</a>
+						<a href="admin_members_punishment.php?action=ban" title="{L_USERS_WARNING}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/forbidden.png" alt="{L_USERS_BAN}" /><br />{L_USERS_BAN}</a>
 					</td>
 				</tr>
 			</table>
@@ -54,7 +54,7 @@
 					if( login != "" )
 					{
 						data = "login=" + login + "&admin=1";
-						var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+						var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
 						xhr_object.onreadystatechange = function() 
 						{
 							if( xhr_object.readyState == 4 ) 
@@ -110,7 +110,7 @@
 				# START list #
 				<tr>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="../member/{list.U_PROFILE}">{list.LOGIN}</a>
+						<a href="{PATH_TO_ROOT}/member/{list.U_PROFILE}">{list.LOGIN}</a>
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
 						{list.INFO}
@@ -119,7 +119,7 @@
 						{list.U_ACTION_USER}
 					</td>
 					<td class="row1" style="text-align:center;width:25%;">
-						<a href="../member/pm{list.U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/member/pm{list.U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
 				# END list #
@@ -164,7 +164,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
+						<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="PM" /></a>
 					</td>
 				</tr>
 				<tr>
@@ -210,7 +210,7 @@
 						{L_PM}
 					</td>
 					<td class="row2">
-						<a href="../member/pm{U_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
+						<a href="{PATH_TO_ROOT}/member/pm{U_PM}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/pm.png" alt="" /></a>
 					</td>
 				</tr>
 				<tr>

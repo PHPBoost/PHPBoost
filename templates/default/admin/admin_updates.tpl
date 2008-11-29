@@ -1,23 +1,23 @@
 <div id="admin_quick_menu">
     <ul>
-        <li class="title_menu">Mises à jour</li>
+        <li class="title_menu">Mises ï¿½ jour</li>
         <li>
-            <a href="admin_updates.php"><img src="../templates/{THEME}/images/admin/updater.png" alt="" /></a>
+            <a href="admin_updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
             <br />
             <a href="admin_updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=kernel"><img src="../templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+            <a href="admin_updates.php?type=kernel"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
             <br />
             <a href="admin_updates.php?type=kernel" class="quick_link">{L_KERNEL}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=module"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+            <a href="admin_updates.php?type=module"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
             <br />
             <a href="admin_updates.php?type=module" class="quick_link">{L_MODULES}</a>
         </li>
         <li>
-            <a href="admin_updates.php?type=theme"><img src="../templates/{THEME}/images/admin/themes.png" alt="" /></a>
+            <a href="admin_updates.php?type=theme"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" alt="" /></a>
             <br />
             <a href="admin_updates.php?type=theme" class="quick_link">{L_THEMES}</a>
         </li>

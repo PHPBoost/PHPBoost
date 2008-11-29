@@ -3,13 +3,13 @@
 			var theme = '{THEME}';
 		-->
 		</script>
-		<script type="text/javascript" src="../kernel/framework/js/calendar.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/calendar.js"></script>
 		
 		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_MAINTAIN}</li>
 				<li>
-					<a href="admin_maintain.php"><img src="../templates/{THEME}/images/admin/maintain.png" alt="" /></a>
+					<a href="admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain.png" alt="" /></a>
 					<br />
 					<a href="admin_maintain.php" class="quick_link">{L_MAINTAIN}</a>
 				</li>
@@ -43,7 +43,7 @@
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>
-								<a onclick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
+								<a onclick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a></label>
 							</label>
 						</dd>
 					</dl>

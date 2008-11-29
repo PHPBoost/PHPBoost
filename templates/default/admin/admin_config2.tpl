@@ -35,12 +35,12 @@
 			<ul>
 				<li class="title_menu">{L_CONFIG}</li>
 				<li>
-					<a href="admin_config.php"><img src="../templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<a href="admin_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
 					<br />
 					<a href="admin_config.php" class="quick_link">{L_CONFIG_MAIN}</a>
 				</li>
 				<li>
-					<a href="admin_config.php?adv=1"><img src="../templates/{THEME}/images/admin/configuration.png" alt="" /></a>
+					<a href="admin_config.php?adv=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="" /></a>
 					<br />
 					<a href="admin_config.php?adv=1" class="quick_link">{L_CONFIG_ADVANCED}</a>
 				</li>
@@ -53,7 +53,7 @@
 		<div class="error_handler_position">
 			<span id="errorh"></span>
 			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 				<br />	
 			</div>	
 		</div>

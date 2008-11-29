@@ -16,7 +16,7 @@
 		function img_smiley(smiley_url)
 		{
 			if( document.getElementById('img_smiley') )
-				document.getElementById('img_smiley').innerHTML = '<img src="../images/smileys/' + smiley_url + '" alt="" />';
+				document.getElementById('img_smiley').innerHTML = '<img src="{PATH_TO_ROOT}/images/smileys/' + smiley_url + '" alt="" />';
 		}
 		-->
 		</script>
@@ -25,12 +25,12 @@
 			<ul>
 				<li class="title_menu">{L_ADD_SMILEY}</li>
 				<li>
-					<a href="admin_smileys.php"><img src="../templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys.php" class="quick_link">{L_SMILEY_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_smileys_add.php"><img src="../templates/{THEME}/images/admin/smileys.png" alt="" /></a>
+					<a href="admin_smileys_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" alt="" /></a>
 					<br />
 					<a href="admin_smileys_add.php" class="quick_link">{L_ADD_SMILEY}</a>
 				</li>
@@ -42,7 +42,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>

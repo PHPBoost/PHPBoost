@@ -23,22 +23,22 @@
 			<ul>
 				<li class="title_menu">{L_MEMBERS_MANAGEMENT}</li>
 				<li>
-					<a href="admin_members.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_MEMBERS_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_members.php?add=1"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members.php?add=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php?add=1" class="quick_link">{L_MEMBERS_ADD}</a>
 				</li>
 				<li>
-					<a href="admin_members_config.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_config.php" class="quick_link">{L_MEMBERS_CONFIG}</a>
 				</li>
 				<li>
-					<a href="admin_members_punishment.php"><img src="../templates/{THEME}/images/admin/members.png" alt="" /></a>
+					<a href="admin_members_punishment.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members_punishment.php" class="quick_link">{L_MEMBERS_PUNISHMENT}</a>
 				</li>
@@ -134,7 +134,7 @@
 						<dt><label for="avatar_url">{L_URL_DEFAUT_AVATAR}</label><br /><span>{L_URL_DEFAUT_AVATAR_EXPLAIN}</span></dt></dt>
 						<dd><label>
 							<input type="text" maxlength="50" size="25" id="avatar_url" name="avatar_url" value="{AVATAR_URL}" class="text" />
-							<img src="../templates/{THEME}/images/{AVATAR_URL}" alt="" style="vertical-align:top" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{AVATAR_URL}" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
 				</fieldset>

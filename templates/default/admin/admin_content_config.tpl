@@ -2,7 +2,7 @@
 			<ul>
 				<li class="title_menu">{L_CONTENT_CONFIG}</li>
 				<li>
-					<a href="admin_content_config.php"><img src="../templates/{THEME}/images/admin/content.png" alt="" /></a>
+					<a href="admin_content_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/content.png" alt="" /></a>
 					<br />
 					<a href="admin_content_config.php" class="quick_link">{L_CONTENT_CONFIG}</a>
 				</li>

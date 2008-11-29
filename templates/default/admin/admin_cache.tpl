@@ -2,12 +2,12 @@
 			<ul>
 				<li class="title_menu">{L_CACHE}</li>
                 <li>
-                    <a href="admin_cache.php"><img src="../templates/{THEME}/images/admin/cache.png" alt="" /></a>
+                    <a href="admin_cache.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" alt="" /></a>
                     <br />
                     <a href="admin_cache.php" class="quick_link">{L_CACHE}</a>
                 </li>
                 <li>
-                    <a href="admin_cache.php?cache=syndication"><img src="../templates/{THEME}/images/admin/rss.png" alt="" /></a>
+                    <a href="admin_cache.php?cache=syndication"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/rss.png" alt="" /></a>
                     <br />
                     <a href="admin_cache.php?cache=syndication" class="quick_link">{L_SYNDICATION}</a>
                 </li>
@@ -20,7 +20,7 @@
 				<span id="errorh"></span>
 				<div id="error_msg">
 					<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-						<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						<br />	
 					</div>	
 				</div>
@@ -37,7 +37,7 @@
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<p>
-						<img src="../templates/{THEME}/images/admin/cache.png" alt="" class="img_left" />
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" alt="" class="img_left" />
 						{L_EXPLAIN_SITE_CACHE}
 						<br /><br />
 					</p>

@@ -29,7 +29,7 @@ h6.sub_title2{ /* Sous titre dans les menu */
 	color:#E53B00;
 }
 
-.block_top, th{ /* Entête de conteneur et des tableaux */
+.block_top, th{ /* Entï¿½te de conteneur et des tableaux */
 	padding:5px 6px;
 	color:#FFFFFF;
 	background:#3187C7 url(images/msg_top_row.png) repeat-x;
@@ -117,6 +117,11 @@ input:focus, textarea:focus{
 	border:1px solid #02A3FF;
 	background-color:#EFF9FF;
 }
+fieldset { 
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
 fieldset textarea.post{
 	width:90%;
 	display:inline;	
@@ -201,6 +206,9 @@ legend{
 	top:0;
 	vertical-align:middle;
 	text-transform:uppercase;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 legend{ 
 	top:-1.2em; 
@@ -291,7 +299,7 @@ fieldset dl dd label:hover{
 }
 
 
-/* Messages postés par les membres (messages privés, commentaires, etc...) 
+/* Messages postï¿½s par les membres (messages privï¿½s, commentaires, etc...) 
 --------------------------------------*/
 /* Classe du lien du pseudo des messages */
 a.msg_link_pseudo{
@@ -319,7 +327,7 @@ a.msg_link_pseudo:hover {
 .msg_container2{ /*  Case contenant l'ensemble du message => Couleur alternative */
 	background:#F4F9FA url(images/border.gif) repeat-y right;
 }
-/* Barre supérieur des messages */
+/* Barre supï¿½rieur des messages */
 .msg_top_l{
 	margin-right:0px !important;
 	margin-right:-3px;
@@ -394,7 +402,7 @@ a.msg_link_pseudo:hover {
 .msg_contents2{ /* Case du message => Couleur alternative */
 	background:#F4F9FA;
 }
-.msg_contents_overflow{	/* Case du contents du message, évite que les images trop grandes déforme */ 
+.msg_contents_overflow{	/* Case du contents du message, ï¿½vite que les images trop grandes dï¿½forme */ 
 	width:99%;
 	height:auto;
 	min-height:80px;
@@ -419,7 +427,7 @@ a.msg_link_pseudo:hover {
 	max-width:99%;
 	overflow:hidden;
 }
-.msg_bottom_l{ /* Barre inférieure des messages */
+.msg_bottom_l{ /* Barre infï¿½rieure des messages */
 }
 .msg_bottom_r{
 }
@@ -440,7 +448,7 @@ a.msg_link_pseudo:hover {
 	width:98%;
 	margin:auto;
 }
-.module_top_l{ /* Barre supérieur des modules */
+.module_top_l{ /* Barre supï¿½rieur des modules */
 }
 .module_top_r{
 }
@@ -460,7 +468,7 @@ a.msg_link_pseudo:hover {
 	clear:both;
 	text-align:justify;
 }
-.module_bottom_l{ /* Barre inférieure des modules */
+.module_bottom_l{ /* Barre infï¿½rieure des modules */
 }
 .module_bottom_r{
 }
@@ -470,7 +478,7 @@ a.msg_link_pseudo:hover {
 	padding-left:6px;
 	font-size:12px;
 }
-.module_table, .block_container{ /* Tableau global, utilisé dans les différents modules */
+.module_table, .block_container{ /* Tableau global, utilisï¿½ dans les diffï¿½rents modules */
 	width:98%;
 	margin:auto;
 	border-spacing:0px;
@@ -501,7 +509,7 @@ a.msg_link_pseudo:hover {
 	padding-top:5px;
 	padding-bottom:0px;
 }
-.module_mini_bottom{ /* Bordure inférieur des modules minis */ 
+.module_mini_bottom{ /* Bordure infï¿½rieur des modules minis */ 
 	height:15px;
 }
 

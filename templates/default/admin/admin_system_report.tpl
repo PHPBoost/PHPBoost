@@ -2,7 +2,7 @@
 			<ul>
 				<li class="title_menu">{L_SYSTEM_REPORT}</li>
 				<li>
-					<a href="admin_system_report.php"><img src="../templates/{THEME}/images/admin/system_report.png" alt="" /></a>
+					<a href="admin_system_report.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/system_report.png" alt="" /></a>
 					<br />
 					<a href="admin_system_report.php" class="quick_link">{L_SYSTEM_REPORT}</a>
 				</li>
@@ -27,9 +27,9 @@
 						<dt>{L_GD_LIBRARY}</dt>
 						<dd>
 							# IF C_SERVER_GD_LIBRARY #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>
@@ -38,12 +38,12 @@
 						<dd>
 							# IF C_URL_REWRITING_KNOWN #
 								# IF C_SERVER_URL_REWRITING #
-								<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 								# ELSE #
-								<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 								# ENDIF #
 							# ELSE #
-							<img src="../templates/{THEME}/images/question.png" alt="{L_UNKNOWN}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/question.png" alt="{L_UNKNOWN}" />
 							# ENDIF #
 						</dd>
 					</dl>
@@ -51,9 +51,9 @@
 						<dt>{L_REGISTER_GLOBALS_OPTION}</dt>
 						<dd>
 							# IF C_REGISTER_GLOBALS #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>
@@ -102,9 +102,9 @@
 						<dt>{L_URL_REWRITING}</dt>
 						<dd>
 							# IF C_KERNEL_URL_REWRITING #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>
@@ -112,9 +112,9 @@
 						<dt>{L_OUTPUT_GZ}</dt>
 						<dd>
 							# IF C_KERNEL_OUTPUT_GZ #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>
@@ -138,9 +138,9 @@
 						<dt>{directories.NAME}</dt>
 						<dd>
 							# IF directories.C_AUTH_DIR #
-							<img src="../templates/{THEME}/images/success.png" alt="{L_YES}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/success.png" alt="{L_YES}" />
 							# ELSE #
-							<img src="../templates/{THEME}/images/stop.png" alt="{L_NO}" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/stop.png" alt="{L_NO}" />
 							# ENDIF #
 						</dd>
 					</dl>

@@ -2,17 +2,17 @@
 			<ul>
 				<li class="title_menu">{L_MODULES_MANAGEMENT}</li>
 				<li>
-					<a href="admin_modules.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_modules_add.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules_add.php" class="quick_link">{L_ADD_MODULES}</a>
 				</li>
 				<li>
-					<a href="admin_modules_update.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules_update.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules_update.php" class="quick_link">{L_UPDATE_MODULES}</a>
 				</li>
@@ -25,7 +25,7 @@
 			<div class="error_handler_position">
 				<span id="errorh"></span>
 				<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-					<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 					<br />	
 				</div>
 			</div>
@@ -81,7 +81,7 @@
 					# START available #
 					<tr> 	
 						<td class="row2">					
-							<img class="valign_middle" src="../{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong> <em>({available.VERSION})</em>
+							<img class="valign_middle" src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong> <em>({available.VERSION})</em>
 						</td>
 						<td class="row2">	
 							<strong>{L_AUTHOR}:</strong> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />

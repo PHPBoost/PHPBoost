@@ -2,17 +2,17 @@
 			<ul>
 				<li class="title_menu">{L_MODULES_MANAGEMENT}</li>
 				<li>
-					<a href="admin_modules.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGEMENT}</a>
 				</li>
 				<li>
-					<a href="admin_modules_add.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules_add.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules_add.php" class="quick_link">{L_ADD_MODULES}</a>
 				</li>
 				<li>
-					<a href="admin_modules_update.php"><img src="../templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="admin_modules_update.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
 					<br />
 					<a href="admin_modules_update.php" class="quick_link">{L_UPDATE_MODULES}</a>
 				</li>
@@ -33,7 +33,7 @@
 							<td class="row2" colspan="5" style="text-align:center;">
 								<span id="errorh"></span>
 								<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-									<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
+									<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 									<br />	
 								</div>
 								<br />		
@@ -72,7 +72,7 @@
 						<tr> 	
 							<td class="row2" style="text-align:center;">					
 								<span id="m{installed.ID}"></span>
-								<img class="valign_middle" src="../{installed.ICON}/{installed.ICON}.png" alt="" /><br />
+								<img class="valign_middle" src="{PATH_TO_ROOT}/{installed.ICON}/{installed.ICON}.png" alt="" /><br />
 								<strong>{installed.NAME}</strong> <em>({installed.VERSION})</em>
 							</td>
 							<td class="row2">	
@@ -115,7 +115,7 @@
 					<fieldset>
 						<legend>{L_DEL_MODULE}</legend>
 						<div class="error_warning" style="width:500px;margin:auto;">
-							<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> {L_DEL_DATA}
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> {L_DEL_DATA}
 						</div>
 						<br />
 						<dl>
