@@ -124,21 +124,6 @@ class MenuService
         return MenuService::_load($result);
     }
     
-    /**
-     * @desc Retrieve a Menu Object from the database by its title
-     * @param string $title the title of the Menu to retrieve from the database
-     * @return Menu the requested Menu if it exists else, false
-     */
-    function load_by_title($title)
-    {
-        global $Sql;
-        $result = $Sql->query_array('menus', 'id', 'object', 'block', 'position', 'enabled', "WHERE title='" . addslashes($title) . "'", __LINE__, __FILE__);
-        
-        if ($result === false)
-            return false;
-        
-        return MenuService::_load($result);
-    }
     
     /**
      * @desc save a Menu in the database
@@ -364,6 +349,66 @@ class MenuService
             
     }
     
+    
+    /**
+     * @desc
+     * @param $name
+     * @return unknown_type
+     */
+    function add_mini_module($module)
+    {
+        // Break if no config file found
+        $info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+        if (empty($info_module) || empty($info_module['mini_module']))
+            return false;
+        
+        // Break if no mini module config
+        $mini_modules_menus = parse_ini_array($info_module['mini_module']);
+        if (empty($mini_modules_menus))
+            return false;
+
+        $installed = false;
+        foreach ($mini_modules_menus as $filename => $location)
+        {   // For each mini module for the current module
+            
+            // Check the mini module file
+            if (file_exists(PATH_TO_ROOT . '/' . $module . '/' . $filename))
+            {
+                $file = split('\.', $filename, 2);
+                if (!is_array($file) || count($file) < 1)
+                    continue;
+                
+                // Check the mini module function
+                include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
+                if (!function_exists($file[0]))
+                    continue;
+                    
+                import('core/menu_service');
+                $menu = new ModuleMiniMenu($module, $file[0]);
+                $menu->enabled(true);
+                $menu->set_block(MenuService::str_to_location($location));
+                MenuService::save($menu);
+                
+                $installed = true;
+            }
+        }
+        return $installed;
+    }
+    
+    /**
+     * @desc
+     * @param $name
+     * @return unknown_type
+     */
+    function delete_mini_module($module)
+    {
+        global $Sql;
+        $query = "DELETE FROM " . PREFIX . "menus WHERE
+            class='" . strtolower(MODULE_MINI_MENU__CLASS) . "' AND
+            title LIKE '" . strtolower(strprotect($module))  . "/%';";
+        return $Sql->query_inject($query . ";", __LINE__, __FILE__);
+    }
+    
     /**
      * @desc
      * @param $update_cache
@@ -387,10 +432,15 @@ class MenuService
         $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
         {
-            $title = strtolower($row['title']);
-            if (in_array($title, $modules))
+            // Build the module name from the mini module file_path
+            $title = split('/', strtolower($row['title']) , 2);
+            if (!is_array($title) || count($title) < 1)
+                continue;
+            
+            $module = $title[0];
+            if (in_array($module, $modules))
             {   // The Menu is installed and we gonna keep it
-                $installed_minimodules[] = strtolower($row['title']);
+                $installed_minimodules[] = $module;
             }
             else
             {   // The menu is not available anymore, so we delete it
@@ -402,18 +452,41 @@ class MenuService
         $new_modules = array_diff($modules, $installed_minimodules);
         foreach ($new_modules as $module)
         {   // Browse availables modules without mini modules
-            if (@include_once(PATH_TO_ROOT . '/' . $module . '/' . $module . '_mini.php'))
-            {   // We verify that a mini module is available for this module
-                if (function_exists($module . '_mini'))
-                {   // Add the new mini module
-                    $menu = new ModuleMiniMenu($module);
-                    MenuService::save($menu);
-                }
-            }
+            MenuService::add_mini_module($module);
         }
         
         if ($update_cache)
             MenuService::generate_cache();
+    }
+    
+    /**
+     * @desc
+     * @param $str_location
+     * @return unknown_type
+     */
+    function str_to_location($str_location)
+    {
+        switch ($str_location)
+        {
+            case 'header':
+                return BLOCK_POSITION__HEADER;
+            case 'subheader':
+                return BLOCK_POSITION__SUB_HEADER;
+            case 'topcentral':
+                return BLOCK_POSITION__TOP_CENTRAL;
+            case 'left':
+                return BLOCK_POSITION__LEFT;
+            case 'right':
+                return BLOCK_POSITION__RIGHT;
+            case 'bottomcentral':
+                return BLOCK_POSITION__BOTTOM_CENTRAL;
+            case 'topfooter':
+                return BLOCK_POSITION__TOP_FOOTER;
+            case 'footer':
+                return BLOCK_POSITION__FOOTER;
+            default:
+                return BLOCK_POSITION__NOT_ENABLED;
+        }
     }
     
     /**

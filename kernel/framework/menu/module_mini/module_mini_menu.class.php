@@ -42,9 +42,10 @@ class ModuleMiniMenu extends Menu
      * @desc Build a ModuleMiniMenu element.
      * @param string $title its name (according the the module folder name)
      */
-    function ModuleMiniMenu($title)
+    function ModuleMiniMenu($module, $filename)
     {
-       parent::Menu($title);
+       parent::Menu($module);
+       $this->filename = strprotect($filename);
     }
     
     /**
@@ -52,11 +53,17 @@ class ModuleMiniMenu extends Menu
      */
     function cache_export()
     {
-        $title = strtolower($this->get_title());
-        $cache_str = '\';include_once PATH_TO_ROOT.\'/' . $title . '/' . $title . '_mini.php\';';
-        $cache_str.= '$__menu.=' . $title . '_mini().\'';
+        $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
+        $cache_str.= '$__menu.=' . $this->filename . '().\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
+    
+    function get_title()
+    {
+        return $this->title . '/' . $this->filename;
+    }
+    
+    var $filename = '';
 }
 
 ?>

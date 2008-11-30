@@ -43,7 +43,7 @@ class PackagesManager
 {
 	/*static*/ function install_module($module_identifier, $enable_module = true, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)
 	{
-		global $Cache, $Sql, $CONFIG;
+		global $Cache, $Sql, $CONFIG, $MODULES;
 		
 		if (empty($module_identifier) || !is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 			return UNEXISTING_MODULE;
@@ -54,13 +54,13 @@ class PackagesManager
 			return MODULE_ALREADY_INSTALLED;
 		
 		//Récupération des infos de config.
-		$info_module = load_ini_file('../' . $module_identifier . '/lang/', get_ulang());
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang());
 		if (empty($info_module))
 			return UNEXISTING_MODULE;
 		
 		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
 		$dir_db_module = get_ulang();
-		$dir = '../' . $module_identifier . '/db';
+		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
 		if (!is_dir($dir . '/' . $dir_db_module))
 		{
 			import('io/folder');
@@ -71,7 +71,7 @@ class PackagesManager
 		}
 			
 		//Insertion de la configuration du module.
-		$config = get_ini_config('../' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
+		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 		if (!empty($config))
 		{
 			$config = trim(str_replace('config=', '', $config), '"');
@@ -84,34 +84,21 @@ class PackagesManager
 		}
 		
 		//Parsage du fichier sql.
-		if (file_exists('../' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql'))
-			$Sql->parse('../' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql', PREFIX);
+		if (file_exists(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql'))
+			$Sql->parse(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql', PREFIX);
 		
 		//Parsage du fichier php.
-		if (file_exists('../' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php'))
-			@include_once('../' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php');
+		if (file_exists(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php'))
+			@include_once(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php');
 		
 		//Génération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 		
 		$module_identifier = strprotect($module_identifier);
+		
 		//Installation du mini module s'il existe
-		if (!empty($info_module['mini_module']))
-		{
-			$array_menus = parse_ini_array($info_module['mini_module']);
-			$links = '';
-			foreach ($array_menus as $path => $location)
-			{
-				$path = addslashes($path);
-				$module_mini_path = '../' . $module_identifier . '/' . $path;
-				if (file_exists($module_mini_path))
-				{
-					$location = addslashes($location);
-					$class = $Sql->query("SELECT MAX(class) FROM ".PREFIX."menus WHERE location = '" .  $location . "'", __LINE__, __FILE__) + 1;
-					$Sql->query_inject("INSERT INTO ".PREFIX."menus (class, name, contents, location, auth, activ, added, use_tpl) VALUES ('" . $class . "', '" . $module_identifier . "', '" . $path . "', '" . $location . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', 1, 0, 0)", __LINE__, __FILE__);
-				}
-			}
-		}
+        import('core/menu_service');
+		MenuService::add_mini_module($module_identifier);
 
 		//Insertion du modules dans la bdd => module installé.
 		$Sql->query_inject("INSERT INTO ".PREFIX."modules (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . ((int)$enable_module) . "')", __LINE__, __FILE__);
@@ -134,7 +121,7 @@ class PackagesManager
 	//Désinstallation d'un module
 	/*static*/ function uninstall_module($module_id, $drop_files)
 	{
-		global $Cache, $Sql, $CONFIG;
+		global $Cache, $Sql, $CONFIG, $MODULES;
 		//Suppression du modules dans la bdd => module désinstallé.
 		$module_name = $Sql->query("SELECT name FROM ".PREFIX."modules WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 		
@@ -144,7 +131,7 @@ class PackagesManager
 			$Sql->query_inject("DELETE FROM ".PREFIX."modules WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
-			$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
+			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());
 			
 			//Suppression du fichier cache
 			$Cache->delete_file($module_name);
@@ -154,16 +141,17 @@ class PackagesManager
 				$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = '" . addslashes($info_module['com']) . "'", __LINE__, __FILE__);
 			
 			//Suppression de la configuration.
-			$config = get_ini_config('../news/lang/', get_ulang()); //Récupération des infos de config.
+			$config = get_ini_config(PATH_TO_ROOT . '/news/lang/', get_ulang()); //Récupération des infos de config.
 			if (!empty($config))
 				$Sql->query_inject("DELETE FROM ".PREFIX."configs WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 			
 			//Suppression du module mini.
-			$Sql->query_inject("DELETE FROM ".PREFIX."menus WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
-			
+            import('core/menu_service');
+            MenuService::delete_mini_module($module_name);
+            	
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = get_ulang();
-			$dir = '../' . $module_name . '/db';
+			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
 			if (!is_dir($dir . '/' . $dir_db_module))
 			{
 				$dh = @opendir($dir);
@@ -178,12 +166,12 @@ class PackagesManager
 				@closedir($dh);
 			}
 
-			if (file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql')) //Parsage du fichier sql de désinstallation.
-				$Sql->parse('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql')) //Parsage du fichier sql de désinstallation.
+				$Sql->parse(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 			
-			if (file_exists('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php')) //Parsage fichier php de désinstallation.
-				@include_once('../' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
-				
+			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php')) //Parsage fichier php de désinstallation.
+				@include_once(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
+			
 			$Cache->Generate_file('modules');
 			$Cache->Generate_file('menus');
 			$Cache->Generate_file('css');
@@ -195,7 +183,7 @@ class PackagesManager
 			//Suppression des fichiers du module
 			if ($drop_files)
 			{
-				if (!delete_directory('../' . $module_name, '../' . $module_name))
+				if (!delete_directory(PATH_TO_ROOT . '/' . $module_name, PATH_TO_ROOT . '/' . $module_name))
 					return MODULE_FILES_COULD_NOT_BE_DROPPED;
 			}
 			
