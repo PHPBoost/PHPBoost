@@ -370,7 +370,7 @@ function progress_bar(percent_progress, info_progress, result_msg, result_id)
 	if( this.percent_begin <= bar_progress )
 	{
 		if( document.getElementById('progress_bar' + progressbar_id) )
-			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="../templates/' + theme + '/images/progress.png" alt="" />';
+			document.getElementById('progress_bar' + progressbar_id).innerHTML += '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/progress.png" alt="" />';
 		if( document.getElementById('progress_percent' + progressbar_id) )
 			document.getElementById('progress_percent' + progressbar_id).innerHTML = Math.round((this.percent_begin * 100) / progressbar_size);
 		if( document.getElementById('progress_info' + progressbar_id) )
@@ -439,8 +439,8 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	if( login != '' )
 	{
 		if( document.getElementById('search_img' + searchid) )
-			document.getElementById('search_img' + searchid).innerHTML = '<img src="../templates/' + theme +'/images/loading_mini.gif" alt="" class="valign_middle" />';
-		var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1');
+			document.getElementById('search_img' + searchid).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
+		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 
 		{
@@ -450,7 +450,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 					document.getElementById('search_img' + searchid).innerHTML = '';
 				if( document.getElementById("xmlhttprequest_result_search" + searchid) )
 					document.getElementById("xmlhttprequest_result_search" + searchid).innerHTML = xhr_object.responseText;
-				Effect.BlindDown('xmlhttprequest_result_search'+ searchid, { duration: 0.5 });
+				Effect.BlindDown('xmlhttprequest_result_search' + searchid, { duration: 0.5 });
 			}
 			else if( xhr_object.readyState == 4 ) 
 			{

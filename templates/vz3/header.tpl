@@ -6,12 +6,11 @@
 		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/design.css" type="text/css" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{PATH_TO_ROOT}/templates/{THEME}/ajaxtabs/ajaxtabs/ajaxtabs.css" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/global.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/generic.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/content.css" type="text/css" media="screen, print, handheld" />
-        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/bbcode.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
         <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
 		{ALTERNATIVE_CSS}
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
@@ -22,7 +21,6 @@
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 		-->
 		</script>
-        <script type="text/javascript" src="{PATH_TO_ROOT}/templates/{THEME}/ajaxtabs/ajaxtabs/ajaxtabs.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>
@@ -30,20 +28,20 @@
 	<body>
 
 # IF C_ALERT_MAINTAIN #
-<div style="position:absolute;top:5px;width:99%;">					
-	<div style="position:relative;width:400px;margin:auto;" class="warning">		
+<div style="position:absolute;top:5px;width:99%;">
+	<div style="position:relative;width:400px;margin:auto;" class="warning">
 		{L_MAINTAIN_DELAY}
-		<br /><br />	
+		<br /><br />
 		<script type="text/javascript">
 			document.write('<div id="release">{L_LOADING}{PATH_TO_ROOT}.</div>');
 		</script>
-		<noscript>				
+		<noscript>
 			<strong>{DELAY}</strong>
 		</noscript>
 	</div>
 </div>
 <script type="text/javascript">
-<!--		
+<!--
 function release(year, month, day, hour, minute, second)
 {
 	if( document.getElementById('release') )
@@ -58,8 +56,8 @@ function release(year, month, day, hour, minute, second)
 		release_time = (end.getTime() - now.getTime())/1000;
 		if( release_time <= 0 )
 		{
-			document.location.reload();					
-			release_time = '0';					
+			document.location.reload();
+			release_time = '0';
 		}
 		else
 			timeout = setTimeout('release('+year+', '+month+', '+day+', '+hour+', '+minute+', '+second+')', 1000);

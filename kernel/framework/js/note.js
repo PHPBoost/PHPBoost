@@ -48,7 +48,7 @@ function select_stars(divid, note)
 		}
 					
 		if( document.getElementById(divid + '_stars' + i) )
-			document.getElementById(divid + '_stars' + i).src = '../templates/' + theme + '/images/' + star_img;
+			document.getElementById(divid + '_stars' + i).src = PATH_TO_ROOT + '/templates/' + theme + '/images/' + star_img;
 	}
 }
 function out_div(divid, note)
@@ -69,7 +69,7 @@ function send_note(id, note)
 	var get_nbrnote;
 	var get_note;
 	
-	document.getElementById('noteloading' + id).innerHTML = '<img src="../templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
+	document.getElementById('noteloading' + id).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
 	
 	data = "id=" + id + "&note=" + note;
 	var xhr_object = xmlhttprequest_init('xmlhttprequest.php?note=1');
