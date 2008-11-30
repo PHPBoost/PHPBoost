@@ -44,6 +44,7 @@ define('MOVE_DOWN',  1);
  */
 class MenuService
 {
+    ## Menus ##
     /**
      * @desc
      * @param $block
@@ -108,6 +109,8 @@ class MenuService
     }
     
     
+    ## Menu ##
+    
     /**
      * @desc Retrieve a Menu Object from the database by its id
      * @param int $id the id of the Menu to retrieve from the database
@@ -123,8 +126,7 @@ class MenuService
         
         return MenuService::_load($result);
     }
-    
-    
+
     /**
      * @desc save a Menu in the database
      * @param Menu $menu The Menu to save
@@ -148,7 +150,7 @@ class MenuService
             $query = "
             UPDATE " . PREFIX . "menus SET
                     title='" . addslashes($menu->get_title()) . "',
-                    object='" . serialize($menu) . "',
+                    object='" . addslashes(serialize($menu)) . "',
                     class='" . strtolower(get_class($menu)) . "',
                     enabled='" . $menu->is_enabled() . "',
                     block='" . $block . "',
@@ -161,7 +163,7 @@ class MenuService
                 INSERT INTO " . PREFIX . "menus (title,object,class,enabled,block,position)
                 VALUES (
                     '" . addslashes($menu->get_title()) . "',
-                    '" . serialize($menu) . "',
+                    '" . addslashes(serialize($menu)) . "',
                     '" . strtolower(get_class($menu)) . "',
                     '" . $menu->is_enabled() . "',
                     '" . $block . "',
@@ -185,6 +187,8 @@ class MenuService
             $Sql->query_inject("DELETE FROM " . PREFIX . "menus WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
     }
 
+    
+    ## Menu state ##
     
     /**
      * @desc Enable a menu
@@ -217,7 +221,7 @@ class MenuService
     {
         global $Sql;
         
-        if ($menu->is_enabled())
+        if ($menu->get_block() != BLOCK_POSITION__NOT_ENABLED)
         {   // Updates the previous block position counter
             $update_query = "
                 UPDATE " . PREFIX ."menus
@@ -225,7 +229,7 @@ class MenuService
                 WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
             $Sql->query_inject($update_query, __LINE__, __FILE__);
         }
-        else
+        if (!$menu->is_enabled())
         {   // Enables the menu if not
             $menu->enabled();
         }
@@ -301,6 +305,9 @@ class MenuService
         }
     }
     
+    
+    ## Cache ##
+    
     /**
      * @desc Generate the cache
      */
@@ -334,10 +341,9 @@ class MenuService
                 }
             }
         }
-        
         $cache_str = preg_replace(
-            array('`<!--.*-->`u', '`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
-            array('', '', "\n", ' ', '> ', "\n", ''),
+            array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
+            array('', "\n", ' ', '> ', "\n", ''),
             $cache_str
         );
         
@@ -350,10 +356,11 @@ class MenuService
     }
     
     
+    ## Mini Modules ##
     /**
-     * @desc
-     * @param $name
-     * @return unknown_type
+     * @desc Add the module named $module mini modules
+     * @param string $name the module name
+     * @return bool true if the module has been installed, else, false
      */
     function add_mini_module($module)
     {
@@ -396,9 +403,8 @@ class MenuService
     }
     
     /**
-     * @desc
-     * @param $name
-     * @return unknown_type
+     * @desc delete all the module mini modules
+     * @param string $name the module name
      */
     function delete_mini_module($module)
     {
@@ -406,12 +412,12 @@ class MenuService
         $query = "DELETE FROM " . PREFIX . "menus WHERE
             class='" . strtolower(MODULE_MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($module))  . "/%';";
-        return $Sql->query_inject($query . ";", __LINE__, __FILE__);
+        $Sql->query_inject($query, __LINE__, __FILE__);
     }
     
     /**
-     * @desc
-     * @param $update_cache
+     * @desc Update the mini modules list by adding new ones and delete old ones
+     * @param bool $update_cache if true it will also regenerate the cache
      */
     function update_mini_modules_list($update_cache = true)
     {
@@ -459,10 +465,13 @@ class MenuService
             MenuService::generate_cache();
     }
     
+    
+    ## Tools ##
+    
     /**
-     * @desc
-     * @param $str_location
-     * @return unknown_type
+     * @desc Convert the string location the int location
+     * @param string $str_location the location
+     * @return int the corresponding location
      */
     function str_to_location($str_location)
     {
@@ -488,6 +497,9 @@ class MenuService
                 return BLOCK_POSITION__NOT_ENABLED;
         }
     }
+    
+    
+    ## Private ##
     
     /**
      * @access private

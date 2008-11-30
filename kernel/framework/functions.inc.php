@@ -204,7 +204,7 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 {
 	$content_editor = new Content();
 	$editor =& $content_editor->get_editor();
-	if (!empty($forbidden_tags))
+	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 		$editor->set_forbidden_tags($forbidden_tags);
 	$editor->set_identifier($field);
 	
@@ -427,7 +427,7 @@ function check_mail($mail)
 }
 
 //Charge le parseur.
-function strparse(&$content, $forbidden_tags = array())
+function strparse(&$content, $forbidden_tags = array(), $addslashes = ADD_SLASHES)
 {
 	//On utilise le gestionnaire de contenu
     $content_manager = new Content();
@@ -444,7 +444,7 @@ function strparse(&$content, $forbidden_tags = array())
     $parser->parse();
 	
     //Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
-	return $parser->get_content();
+	return $parser->get_content($addslashes);
 }
 
 //Charge l'unparseur.
