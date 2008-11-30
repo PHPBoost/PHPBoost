@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-if (empty($check_update))
+if ($check_update == 0)
 {
     #######Taches de maintenance#######
     $yesterday_timestamp = time() - 86400;
@@ -48,7 +48,7 @@ if (empty($check_update))
     //Vidage de la table des visites de la journée.
     $total_visit = $Sql->query("SELECT total FROM ".PREFIX."compteur WHERE id = 1", __LINE__, __FILE__);
     $Sql->query_inject("DELETE FROM ".PREFIX."compteur WHERE id <> 1", __LINE__, __FILE__);
-    $Sql->query_inject("UPDATE ".PREFIX."compteur SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = 1 WHERE id = 1", __LINE__, __FILE__); 	//Remet le compteur à 1.  
+    $Sql->query_inject("UPDATE ".PREFIX."compteur SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', total = 1 WHERE id = 1", __LINE__, __FILE__); 	//Remet le compteur à 1.
     $Sql->query_inject("INSERT INTO ".PREFIX."compteur (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__); //Insère l'utilisateur qui a déclanché les requêtes de changement de jour.
 
     //Mise à jour des stats.
@@ -62,13 +62,13 @@ if (empty($check_update))
 	$dh = @opendir($rep);
 	$week = 3600*24*7;
 	while (!is_bool($fichier = readdir($dh)))
-	{	
+	{
 		if (preg_match('`\.png$`', $fichier))
 		{
 			if ((time() - filemtime($rep . $fichier)) > $week) //Une semaine avant péremption
 				@unlink($rep . $fichier);
 		}
-	}	
+	}
 	@closedir($dh); //On ferme le dossier
     
     //Check for availables updates
