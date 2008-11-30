@@ -27,9 +27,8 @@
 ###################################################*/
 
 define('PATH_TO_ROOT', '../..');
-define('TITLE', $LANG['administration']);
-
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $id = retrieve(GET, 'id', -1);
