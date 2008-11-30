@@ -52,7 +52,7 @@ class Authorizations
 		//On balaye les tableaux passés en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
 			Authorizations::_get_auth_array(func_get_arg($i), '', $array_auth_all, $sum_auth);
-		
+			
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
 		return $array_auth_all;
@@ -81,7 +81,15 @@ class Authorizations
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
         //Récupération du tableau des rangs.
-		$array_ranks = is_array($array_ranks) ? $array_ranks : array('-1' => $LANG['guest'], '0' => $LANG['member'], '1' => $LANG['modo']);
+		$array_ranks = is_array($array_ranks) ?
+			$array_ranks :
+			array(
+				'-1' => $LANG['guest'],
+				'0' => $LANG['member'],
+				'1' => $LANG['modo'],
+				'2' => $LANG['admin']
+			);
+			
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect; 
 		
@@ -111,22 +119,32 @@ class Authorizations
         $j = -1;
         foreach ($array_ranks as $idrank => $group_name)
         {
-            //On ignore l'administrateur (il aura forcément les droits)
-            if ($idrank == '2')
-                continue;   
-         
-            $selected = '';   
-            if (array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
-                $selected = ' selected="selected"';
-            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
-            
-			$Template->assign_block_vars('ranks_list', array(
-				'ID' => $j,
-				'IDRANK' => $idrank,
-				'RANK_NAME' => $group_name,
-				'DISABLED' => $disabled,
-				'SELECTED' => $selected
-			));
+           	//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
+        	if ($idrank == 2)
+        	{
+        		$Template->assign_block_vars('ranks_list', array(
+					'ID' => $j,
+					'IDRANK' => $idrank,
+					'RANK_NAME' => $group_name,
+					'DISABLED' => '',
+					'SELECTED' => ' selected="selected"'
+				));
+        	}
+        	else
+        	{
+	            $selected = '';   
+	            if (array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
+	                $selected = ' selected="selected"';
+	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
+	            
+				$Template->assign_block_vars('ranks_list', array(
+					'ID' => $j,
+					'IDRANK' => $idrank,
+					'RANK_NAME' => $group_name,
+					'DISABLED' => $disabled,
+					'SELECTED' => $selected
+				));
+        	}
 			$j++;
         }
        
@@ -288,8 +306,8 @@ class Authorizations
 		{
 			$sum_auth += $bit_value;
 			if (is_array($array_auth_groups))
-			{			
-				//Ajout des autorisations supérieure si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
+			{
+				//Ajout des autorisations supérieures si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
 				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1');
 				$min_auth = 3;
 				foreach ($array_level as $level => $key)
@@ -304,8 +322,10 @@ class Authorizations
 				}
 				
 				//Ajout des autorisations au tableau final.
-				foreach ($array_auth_groups as $key => $value)
+				foreach ($array_auth_groups as $value)
 				{
+					if ($value == 'r2')
+						continue;
 					if (isset($array_auth_all[$value]))
 						$array_auth_all[$value] += $bit_value;
 					else
@@ -315,7 +335,7 @@ class Authorizations
 		}
 		
 		##### Membres (autorisations avancées) ######
-		$array_auth_members = !empty($_POST['members_auth' . $idselect]) ? $_POST['members_auth' . $idselect] : '';
+		$array_auth_members = !empty($_REQUEST['members_auth' . $idselect]) ? $_REQUEST['members_auth' . $idselect] : '';
 		if (!empty($array_auth_members)) //Récupération du formulaire.
 		{
 			if (is_array($array_auth_members))

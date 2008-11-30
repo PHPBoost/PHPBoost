@@ -510,7 +510,7 @@ function check_select_multiple(id, status)
 function check_select_multiple_ranks(id, start)
 {
 	var i;			
-	for(i = start; i <= 1; i++)
+	for(i = start; i <= 2; i++)
 	{	
 		if( document.getElementById(id + i) )
 			document.getElementById(id + i).selected = true;
