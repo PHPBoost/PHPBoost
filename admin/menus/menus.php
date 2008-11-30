@@ -99,6 +99,9 @@ if (!empty($id))
     }
 }
 
+// Try to find out new mini-modules and delete old ones
+MenuService::update_mini_modules_list();
+
 // Display the Menu dispositions
 include('lateral_menu.php');
 lateral_menu();
@@ -125,6 +128,22 @@ $blocks = array(
    BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
+if (!$right_column)
+{
+    foreach ($menus_blocks[BLOCK_POSITION__RIGHT] as $menu)
+    {
+        $menu->enabled(false);
+        MenuService::save($menu);
+    }
+}
+elseif (!$left_column)
+{
+    foreach ($menus_blocks[BLOCK_POSITION__LEFT] as $menu)
+    {
+        $menu->enabled(false);
+        MenuService::save($menu);
+    }
+}
 
 $menu_template = new Template('admin/menus/menu.tpl');
 $menu_template->assign_vars(array(
@@ -150,7 +169,7 @@ $menu_template->assign_vars(array(
     'L_MOVETO' => $LANG['moveto'],
 ));
 
-foreach ($menus_blocks as $block => $menus)
+foreach ($menus_blocks as $block_id => $menus)
 {   // For each block
     $i = 0;
     $max = count($menus);
@@ -160,9 +179,8 @@ foreach ($menus_blocks as $block => $menus)
         
         $id = $menu->get_id();
         $enabled = $menu->is_enabled();
-        $block_id = $menu->get_block();
         
-        if (($block_id == BLOCK_POSITION__LEFT && !$left_column) || ($block_id == BLOCK_POSITION__RIGHT && !$right_column) || !$enabled)
+        if (!$enabled)
            $block_id = BLOCK_POSITION__NOT_ENABLED;
         
         $edit_link = menu_admin_link($menu, 'edit');
