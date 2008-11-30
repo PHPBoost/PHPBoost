@@ -107,7 +107,7 @@ class Authorizations
 			'L_REQUIRE_PSEUDO' => addslashes($LANG['require_pseudo']),
 			'L_RANKS' => $LANG['ranks'],
             'L_GROUPS' => $LANG['groups'],
-            'L_SEARCH' => $LANG['search'],
+            'L_GO' => $LANG['go'],
 			'L_ADVANCED_AUTHORIZATION' => $LANG['advanced_authorization'],
 			'L_SELECT_ALL' => $LANG['select_all'],
 			'L_SELECT_NONE' => $LANG['select_none'],

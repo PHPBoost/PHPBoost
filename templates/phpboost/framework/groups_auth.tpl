@@ -1,5 +1,5 @@
 <div style="float:left">
-	<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('{IDSELECT}r3').selected = true;">
+	<select id="groups_auth{IDSELECT}" name="groups_auth{IDSELECT}[]" size="8" multiple="multiple" onclick="{DISABLED_SELECT} document.getElementById('id{IDSELECT}r2').selected = true;">
 		<optgroup label="{L_RANKS}">
 		# START ranks_list #
 			<option {ranks_list.DISABLED} value="r{ranks_list.IDRANK}" id="id{IDSELECT}r{ranks_list.ID}" {ranks_list.SELECTED} onclick="check_select_multiple_ranks('id{IDSELECT}r', {ranks_list.ID})">{ranks_list.RANK_NAME}</option>
@@ -32,11 +32,11 @@
 <div id="advanced_auth{IDSELECT}" style="{ADVANCED_AUTH_STYLE}float:left;margin-left:5px;width:150px;">
 	<strong>{L_ADD_USER}</strong>
 	<br />
-	<input type="text" size="15" class="text" value="" id="login{IDSELECT}" name="login{IDSELECT}" />
-	<span id="search_img{IDSELECT}"></span> 
+	<input type="text" size="14" class="text" value="" id="login{IDSELECT}" name="login{IDSELECT}" />
+	<input onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" value="{L_GO}" class="submit" />
 	<br />
-	<input onclick="XMLHttpRequest_search_members('{IDSELECT}', '{THEME}', 'add_member_auth', '{L_REQUIRE_PSEUDO}');" type="button" name="valid" value="{L_SEARCH}" class="submit" />
-	<div id="xmlhttprequest_result_search{IDSELECT}" style="display:none;height:68px;" class="xmlhttprequest_result_search"></div>
+	<span id="search_img{IDSELECT}"></span> 
+	<div id="xmlhttprequest_result_search{IDSELECT}" style="display:none;width:125px;height:67px;margin-top:2px;" class="xmlhttprequest_result_search"></div>
 </div>
 # ENDIF #
 
