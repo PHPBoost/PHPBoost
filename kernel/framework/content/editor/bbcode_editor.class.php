@@ -6,14 +6,14 @@
 *   copyright            : (C) 2008 Régis Viarre
 *   email                : crowkait@phpboost.com
 *
-*   
+*
 ###################################################
 *
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 *  This program is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -63,8 +63,8 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_CONTAINER' => $LANG['bb_container'],
 			'L_BB_STYLE' => $LANG['bb_style'],
 			'L_BB_URL' => $LANG['bb_link'],
-			'L_BB_IMG' => $LANG['bb_picture'],		
-			'L_BB_QUOTE' => $LANG['bb_quote'],		
+			'L_BB_IMG' => $LANG['bb_picture'],
+			'L_BB_QUOTE' => $LANG['bb_quote'],
 			'L_BB_HIDE' => $LANG['bb_hide'],
 			'L_BB_COLOR' => $LANG['bb_color'],
 			'L_BB_SIZE' => $LANG['bb_size'],
@@ -74,7 +74,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_CENTER' => $LANG['bb_center'],
 			'L_BB_RIGHT' => $LANG['bb_right'],
 			'L_BB_FLOAT_LEFT' => $LANG['bb_float_left'],
-			'L_BB_FLOAT_RIGHT' => $LANG['bb_float_right'],	
+			'L_BB_FLOAT_RIGHT' => $LANG['bb_float_right'],
 			'L_BB_SUP' => $LANG['bb_sup'],
 			'L_BB_SUB' => $LANG['bb_sub'],
 			'L_BB_INDENT' => $LANG['bb_indent'],
@@ -83,7 +83,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_SWF' => $LANG['bb_swf'],
 			'L_BB_MOVIE' => $LANG['bb_movie'],
 			'L_BB_SOUND' => $LANG['bb_sound'],
-			'L_BB_CODE' => $LANG['bb_code'],		
+			'L_BB_CODE' => $LANG['bb_code'],
 			'L_BB_MATH' => $LANG['bb_math'],
 			'L_BB_ANCHOR' => $LANG['bb_anchor'],
 			'L_BB_HELP' => $LANG['bb_help'],
@@ -115,8 +115,8 @@ class BBCodeEditor extends ContentEditor
 		));
 		
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
-		{		
-			$template->assign_vars(array( 
+		{
+			$template->assign_vars(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
 			));
@@ -131,18 +131,18 @@ class BBCodeEditor extends ContentEditor
 		$height_max = 50;
 		$width_max = 50;
 		$nbr_smile = count($_array_smiley_code);
-		$i = 1;	
+		$i = 1;
 		$z = 0;
 		foreach ($_array_smiley_code as $code_smile => $url_smile)
 		{
 			if ($z == $smile_max)
-			{ 
+			{
 				$z++;
-				break;		
+				break;
 			}
 			
 			$width_source = 18; //Valeur par défaut.
-			$height_source = 18;		
+			$height_source = 18;
 			
 			// On recupère la hauteur et la largeur de l'image.
 			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
@@ -167,20 +167,20 @@ class BBCodeEditor extends ContentEditor
 				$height = $height_source;
 			}
 			
-			$img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />'; 
+			$img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 						
 			$template->assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
-			));	
+			));
 			
-			$i++;	
+			$i++;
 			$z++;
-		}	
+		}
 
 		if ($z > $smile_max) //Lien vers tous les smiley!
-		{		
+		{
 			$template->assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
