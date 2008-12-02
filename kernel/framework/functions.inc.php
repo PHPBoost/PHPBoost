@@ -427,7 +427,7 @@ function check_mail($mail)
 }
 
 //Charge le parseur.
-function strparse(&$content, $forbidden_tags = array(), $addslashes = ADD_SLASHES)
+function strparse(&$content, $forbidden_tags = array(), $addslashes = false)
 {
 	//On utilise le gestionnaire de contenu
     $content_manager = new Content();

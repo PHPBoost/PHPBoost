@@ -43,6 +43,6 @@ define('DISTRIBUTION_START_PAGE', '/news/news.php');
 define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'contact', 'news', 'pages', 'search', 'web');
+$DISTRIBUTION_MODULES = array('articles', 'contact', 'connect', 'news', 'pages', 'search', 'web');
 
 ?>
