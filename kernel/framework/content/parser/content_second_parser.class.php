@@ -47,7 +47,7 @@ class ContentSecondParser extends Parser
         
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([a-z0-9-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
 
 		//Balise latex.
 		if (strpos($this->content, '[[MATH]]') !== false)

@@ -41,11 +41,14 @@ class TinyMCEParser extends ContentParser
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
-			$this->_pick_up_tag('code', '=[a-z0-9-]+(?:,(?:0|1)(?:,0|1)?)?');
+			$this->_pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,0|1)?)?');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		if ($User->check_auth($this->html_auth, 1))
 			$this->_pick_up_tag('html');
+		
+        //On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
+		$this->content = preg_replace('`([\r\n]+)`isU', '', $this->content);
 		
 		//On enlève toutes les entités HTML rajoutées par TinyMCE
 		$this->content = html_entity_decode($this->content);
@@ -303,16 +306,16 @@ class TinyMCEParser extends ContentParser
 		{
 			//Title 1
 			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, '<h3 class="title1">$1</h3>' . "\r\n<br />");
+			array_push($array_preg_replace, "\r\n" . '<h3 class="title1">$1</h3>' . "\r\n<br />");
 			//Title 2
 			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, '<h3 class="title2">$1</h3>' . "\r\n<br />");
+			array_push($array_preg_replace, "\r\n" . '<h3 class="title2">$1</h3>' . "\r\n<br />");
 			//Title 3
 			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, '<br /><h4 class="stitle1">$1</h4><br />' . "\r\n<br />");
+			array_push($array_preg_replace, "\r\n" . '<br /><h4 class="stitle1">$1</h4><br />' . "\r\n<br />");
 			//Title 4
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, '<br /><h4 class="stitle2">$1</h4><br />' . "\r\n<br />");
+			array_push($array_preg_replace, "\r\n" . '<br /><h4 class="stitle2">$1</h4><br />' . "\r\n<br />");
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
