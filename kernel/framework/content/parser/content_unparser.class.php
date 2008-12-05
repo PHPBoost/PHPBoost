@@ -100,7 +100,7 @@ class ContentUnparser extends Parser
 		//Prélèvement du HTML
 		if ($action == PICK_UP)
 		{
-			$mask = '`\[\[CODE(=[a-z0-9-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
+			$mask = '`\[\[CODE(=[A-Za-z0-9#+-]+(?:,(?:0|1)(?:,1)?)?)?\]\]' . '(.+)' . '\[\[/CODE\]\]`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
