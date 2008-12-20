@@ -184,7 +184,7 @@ class DownloadInterface extends ModuleInterface
             'U_IMG' => $result_data['image'],
             'E_TITLE' => strprotect($result_data['title']),
             'TITLE' => $result_data['title'],
-            'SHORT_DESCRIPTION' => $result_data['short_contents'],
+            'SHORT_DESCRIPTION' => second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
             'L_MARK' => $result_data['note'] > 0 ? $Note->display_img((int)$result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')

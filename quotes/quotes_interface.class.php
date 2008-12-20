@@ -123,13 +123,13 @@ class QuotesInterface extends ModuleInterface
 //        return $Tpl->parse(TEMPLATE_STRING_MODE);
 //    }
 
-    /**
-	*  @method  Renvoie la liste des arguments de la méthode <GetSearchRequest>
-	*/
-    function get_search_args()
-    {
-        return Array('QuotesWhere');
-    }
+//    /**
+//	*  @method  Renvoie la liste des arguments de la méthode <GetSearchRequest>
+//	*/
+//    function get_search_args()
+//    {
+//        return Array('QuotesWhere');
+//    }
 
     /**
 	*  @method  Renvoie la requète de recherche dans le module
