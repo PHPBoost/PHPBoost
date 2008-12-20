@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -61,16 +61,16 @@ class NewsInterface extends ModuleInterface
 		
 		//Publication des news en attente pour la date donnée.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM ".PREFIX."news	
+		FROM ".PREFIX."news
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
-		{ 
+		{
 			if ($row['start'] <= time() && $row['start'] != 0)
 				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
 				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
-	}		
+	}
 	
 	function get_search_request($args)
     /**
@@ -80,15 +80,15 @@ class NewsInterface extends ModuleInterface
         global $Sql;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
-            n.id AS `id_content`,
-            n.title AS `title`,
-            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS `link`
+        $request = "SELECT " . $args['id_search'] . " AS id_search,
+            n.id AS id_content,
+            n.title AS title,
+            ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
+            . $Sql->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
             FROM " . PREFIX . "news n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
                 AND visible = 1 AND ('" . time() . "' > start AND ( end = 0 OR '" . time() . "' < end ) )
-            ORDER BY `relevance` " . $Sql->limit(0, NEWS_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC " . $Sql->limit(0, NEWS_MAX_SEARCH_RESULTS);
         
         return $request;
     }

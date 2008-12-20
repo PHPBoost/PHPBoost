@@ -85,7 +85,7 @@ class ArticlesInterface extends ModuleInterface
 
 		//Publication des articles en attente pour la date donnée.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM ".PREFIX."articles	
+		FROM ".PREFIX."articles
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -121,18 +121,17 @@ class ArticlesInterface extends ModuleInterface
 		$clause_unauth_cats = (count($unauth_cats_sql) > 0) ? " AND gc.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
 
 		$request = "SELECT
-				" . $args['id_search'] . " AS `id_search`,
-	             a.id AS `id_content`,
-	             a.title AS `title`,
-	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-	             . $Sql->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS `link`
+				" . $args['id_search'] . " AS id_search,
+	             a.id AS id_content,
+	             a.title AS title,
+	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+	             . $Sql->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
             FROM " . PREFIX . "articles a
             LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
             WHERE
             	a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
             	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
-            ORDER BY a.timestamp DESC
-            " . $Sql->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
+            ORDER BY relevance DESC " . $Sql->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
 		return $request;
 	}

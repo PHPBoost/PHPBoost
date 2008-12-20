@@ -61,7 +61,7 @@ class FaqInterface extends ModuleInterface
 		
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' . 
+			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' .
 				var_export(array(
 				'id_parent' => $row['id_parent'],
 				'order' => $row['c_order'],
@@ -113,72 +113,67 @@ class FaqInterface extends ModuleInterface
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
-        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
-            f.id AS `id_content`,
-            f.question AS `title`,
-            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS `relevance`, "
-            . $Sql->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS `link`
+        $request = "SELECT " . $args['id_search'] . " AS id_search,
+            f.id AS id_content,
+            f.question AS title,
+            ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+            . $Sql->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS link
             FROM " . PREFIX . "faq f
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY `relevance` " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;
     }
 	
-    function parse_search_results(&$args)
+    
     /**
-     *  Return the string to print the results
+     * @desc Return the array containing the result's data list
+     * @param &string[][] $args The array containing the result's id list
+     * @return string[] The array containing the result's data list
      */
+    function compute_search_results(&$args)
     {
-        global $Sql;
+        global $CONFIG, $Sql;
         
-        require_once(PATH_TO_ROOT . '/kernel/begin.php');
+        $results_data = array();
         
-        $Tpl = new Template('faq/search_result.tpl');
+        $results =& $args['results'];
+        $nb_results = count($results);
         
-        if ($this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST))
-        {
-            $ids = array();
-            $results =& $args['results'];
-            $newResults = array();
-            $nbResults = count($results);
-            for ($i = 0; $i < $nbResults; $i++)
-                $newResults[$results[$i]['id_content']] =& $results[$i];
-            
-            $results =& $newResults;
-            
-            $request = "SELECT `idcat`,`id`,`question`,`answer`
+        $ids = array();
+        for ($i = 0; $i < $nb_results; $i++)
+            $ids[] = $results[$i]['id_content'];
+        
+        $request = "SELECT idcat, id, question, answer
             FROM " . PREFIX . "faq
-            WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
-            $requestResults = $Sql->query_while ($request, __LINE__, __FILE__);
-            while ($row = $Sql->fetch_assoc($requestResults))
-            {
-                $results[$row['id']] = $row;
-            }
-            $Sql->query_close($requestResults);
-            
-            $this->set_attribute('ResultsReqExecuted', true);
-            $this->set_attribute('Results', $results);
-            $this->set_attribute('ResultsIndex', 0);
+            WHERE id IN (" . implode(',', $ids) . ")";
+        
+        $request_results = $Sql->query_while ($request, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($request_results))
+        {
+            $results_data[] = $row;
         }
+        $Sql->query_close($request_results);
         
-        $results = $this->get_attribute('Results');
-        $indexes = array_keys($results);
-        $indexSize = count($indexes);
-        $resultsIndex = $this->get_attribute('ResultsIndex');
-        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
-        $index = $indexes[$resultsIndex];
-        $result =& $results[$index];
+        return $results_data;
+    }
+    
+    /**
+     *  @desc Return the string to print the result
+     *  @param &string[] $result_data the result's data
+     *  @return string[] The string to print the result of a search element
+     */
+    function parse_search_result(&$result_data)
+    {
+        $tpl = new Template('faq/search_result.tpl');
         
-        $Tpl->assign_vars(array(
-            'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result['idcat'] . '&amp;question=' . $result['id'] . '#q' . $result['id'],
-            'QUESTION' => $result['question'],
-            'ANSWER' => second_parse($result['answer'])
+        $tpl->assign_vars(array(
+            'U_QUESTION' => PATH_TO_ROOT . '/faq/faq.php?id=' . $result_data['idcat'] . '&amp;question=' . $result_data['id'] . '#q' . $result_data['id'],
+            'QUESTION' => $result_data['question'],
+            'ANSWER' => second_parse($result_data['answer'])
         ));
         
-        $this->set_attribute('ResultsIndex', ++$resultsIndex);
-        
-        return $Tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
     // Returns the module map objet to build the global sitemap
