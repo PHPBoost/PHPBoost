@@ -1,6 +1,6 @@
         <br />
-        <script type="text/javascript">
-        <!--
+        <script type="text/javascript"><!--
+        
             const RESULTS = 'results_';
             const RESULTS_TITLE = 'results_title_';
             const INFOS_RESULTS = 'infos_results_';
@@ -22,19 +22,19 @@
                 var calculatedResults = new Array('all');
                 
                 function HideResults()
-                // Cache tous les rÈsultats
+                // Cache tous les r√©sultats
                 {
                     for( var i = 0; i < modulesResults.length; i++ )
                         hide_div(RESULTS + modulesResults[i]);
                 }
                 
                 function ChangeResults()
-                // Change le cadre des rÈsultats
+                // Change le cadre des r√©sultats
                 {
                     var module = document.getElementById('results_choice').value;
                     HideResults();
                     show_div(RESULTS + module);
-                    if( !inArray(module, calculatedResults) )
+                    if (!inArray(module, calculatedResults))
                     {
                         load_progress_bar(1, '{THEME}', '_' + module, 55);
                         XMLHttpRequest_search_module(module);
@@ -42,18 +42,33 @@
                 }
                 
                 function GetFormData()
-                // Reconstitution d'une chaine "POSTABLE" ‡ partir des formulaires
+                // Reconstitution d'une chaine "POSTABLE" √† partir des formulaires
                 {
                     var dataString = "";
                     var form = document.getElementById('search_form');
                     var elements = form.elements;
                     
-                    for( var i = 0; i < form.length; i++ )
+                    for (var i = 0; i < form.length; i++)
                     {
-                        if( elements[i].name )
+                        if (elements[i].name)
                         {
-                            dataString += elements[i].name + "=" + escape_xmlhttprequest(elements[i].value);
-                            if( (i + 1) < form.length )
+                        	dataString += elements[i].name.replace('[', '%5B').replace(']', '%5D') + '=';
+                            if (elements[i].name.indexOf('[]') > 0)
+                            {   // Cas des multi-s√©l√©ctions
+                                selectedChilds = new Array();
+                                for (var j = 0; j < elements[i].length; j++)
+                                {   // On ajoute tous les fils s√©l√©ctionn√©s
+	                            	if (elements[i].options[j].selected)
+	                            		selectedChilds.push(escape_xmlhttprequest(elements[i].options[j].value));
+                                }
+
+                                dataString += selectedChilds.join('&' + elements[i].name.replace('[', '%5B').replace(']', '%5D') + '='); 
+                            }
+                            else
+                            {
+                                dataString += escape_xmlhttprequest(elements[i].value);
+                            }
+                            if ((i + 1) < form.length)
                                 dataString += "&";
                         }
                     }
@@ -61,7 +76,7 @@
                 }
                 
                 function XMLHttpRequest_search_module(module)
-                // Affiche les rÈsultats de la recherche pour le module particulier <module>
+                // Affiche les r√©sultats de la recherche pour le module particulier <module>
                 {
                     var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
                     xhr_object.onreadystatechange = function()
@@ -74,11 +89,11 @@
                             progress_bar(75, "{L_QUERY_PROCESSING}");
                         else if( xhr_object.readyState == 4 )
                         {
+                        	//document.getElementById("DEBUG").innerHTML = xhr_object.responseText;
                             if( xhr_object.status == 200 )
                             {
                                 progress_bar(100, "{L_QUERY_SUCCESS}");
-                                // Si les rÈsultats sont toujours en cache, on les rÈcupËre.
-//                                 window.alert(xhr_object.responseText);
+                                // Si les r√©sultats sont toujours en cache, on les r√©cup√©re.
                                 eval(xhr_object.responseText);
                                 if( !syncErr )
                                 {
@@ -86,8 +101,8 @@
                                     document.getElementById(RESULTS_LIST + module).innerHTML = resultsAJAX['results'];
                                     ChangePagination(0, Math.ceil(nbResults[module] / NB_RESULTS_PER_PAGE), PAGINATION_RESULTS + module, RESULTS + module, 2, 2);
                                     
-                                    // Met ‡ jour la liste des rÈsultats affichÈ, pour ne pas les rechercher
-                                    // dans la base de donnÈe si ils sont dÈj‡ dans le html.
+                                    // Met √† jour la liste des r√©sultats affich√©, pour ne pas les rechercher
+                                    // dans la base de donn√©e si ils sont d√©j√† dans le html.
                                     calculatedResults.push(module);
                                 }
                                 else window.alert('SYNCHRONISATION ERROR');
@@ -99,8 +114,8 @@
                     xmlhttprequest_sender(xhr_object, GetFormData() + '&moduleName=' + module + '&idSearch=' + idSearch[module]);
                 }
             # ENDIF #
-        -->
-        </script>
+        
+        --></script>
 
         <div id="results" class="module_position">
             <div class="module_top_l"></div>
@@ -152,6 +167,7 @@
                         </div>
                     # END results #
                 # ENDIF #
+                <!--<div id="DEBUG"></div>-->
             </div>
             <div class="module_bottom_l"></div>
             <div class="module_bottom_r"></div>

@@ -222,125 +222,124 @@ class ForumInterface extends ModuleInterface
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(( 2 * MATCH(t.title) AGAINST('".$search."') + MATCH(msg.contents) AGAINST('".$search."') ) / 3) * " . $weight . " AS `relevance`,
-                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                MAX(( 2 * MATCH(t.title) AGAINST('" . $search."') + MATCH(msg.contents) AGAINST('" . $search."') ) / 3) * " . $weight . " AS `relevance`,
+                " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE ( MATCH(t.title) AGAINST('".$search."') OR MATCH(msg.contents) AGAINST('".$search."') )
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
+            WHERE ( MATCH(t.title) AGAINST('" . $search."') OR MATCH(msg.contents) AGAINST('" . $search."') )
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC" . $Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
         
         if ($where == 'contents')    // Contents
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 MIN(msg.id) AS `id_content`,
                 t.title AS `title`,
-                MAX(MATCH(msg.contents) AGAINST('".$search."')) * " . $weight . " AS `relevance`,
-                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                MAX(MATCH(msg.contents) AGAINST('" . $search."')) * " . $weight . " AS `relevance`,
+                " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE MATCH(msg.contents) AGAINST('".$search."')
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
+            WHERE MATCH(msg.contents) AGAINST('" . $search."')
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC" . $Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
         else                                         // Title only
             return "SELECT ".
                 $args['id_search']." AS `id_search`,
                 msg.id AS `id_content`,
                 t.title AS `title`,
-                MATCH(t.title) AGAINST('".$search."') * " . $weight . " AS `relevance`,
-                ".$Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
+                MATCH(t.title) AGAINST('" . $search."') * " . $weight . " AS `relevance`,
+                " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
             FROM ".PREFIX."forum_msg msg
             JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
             JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
-            WHERE MATCH(t.title) AGAINST('".$search."')
-            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." ".$auth_cats."
+            WHERE MATCH(t.title) AGAINST('" . $search."')
+            ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
-            ORDER BY relevance DESC".$Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC" . $Sql->limit(0, FORUM_MAX_SEARCH_RESULTS);
     }
     
-    function parse_search_results(&$args)
+    
+    
     /**
-     *  Return the string to print the results
+     * @desc Return the array containing the result's data list
+     * @param &string[][] $args The array containing the result's id list
+     * @return string[] The array containing the result's data list
      */
+    function compute_search_results(&$args)
     {
-        global $CONFIG, $LANG, $Sql, $CONFIG_USER;
+        global $CONFIG, $Sql;
         
-        require_once(PATH_TO_ROOT . '/kernel/begin.php');
+        $results_data = array();
+        
+        $results =& $args['results'];
+        $nb_results = count($results);
+        
+        $ids = array();
+        for ($i = 0; $i < $nb_results; $i++)
+            $ids[] = $results[$i]['id_content'];
+        
+        $request = "
+        SELECT
+            msg.id AS msg_id,
+            msg.user_id AS user_id,
+            msg.idtopic AS topic_id,
+            msg.timestamp AS date,
+            t.title AS title,
+            m.login AS login,
+            m.user_avatar AS avatar,
+            s.user_id AS connect,
+            msg.contents AS contents
+        FROM ".PREFIX."forum_msg msg
+        LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+        LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
+        JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+        WHERE msg.id IN (".implode(',', $ids).")
+        GROUP BY t.id";
+        
+        $request_results = $Sql->query_while ($request, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($request_results))
+        {
+            $results_data[] = $row;
+        }
+        $Sql->query_close($request_results);
+        
+        return $results_data;
+    }
+    
+    /**
+     *  @desc Return the string to print the result
+     *  @param &string[] $result_data the result's data
+     *  @return string[] The string to print the result of a search element
+     */
+    function parse_search_result(&$result_data)
+    {
+        global $CONFIG, $LANG, $CONFIG_USER;
+        
         load_module_lang('forum'); //Chargement de la langue du module.
         
-        $Tpl = new Template('forum/forum_generic_results.tpl');
+        $tpl = new Template('forum/forum_generic_results.tpl');
 
-        $Tpl->assign_vars(Array(
+        $tpl->assign_vars(Array(
             'L_ON' => $LANG['on'],
             'L_TOPIC' => $LANG['topic']
         ));
-        
-        if ($this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST))
-        {
-            $ids = array();
-            $results =& $args['results'];
-            $newResults = array();
-            $nbResults = count($results);
-            for ($i = 0; $i < $nbResults; $i++)
-                $newResults[$results[$i]['id_content']] =& $results[$i];
-            
-            $results =& $newResults;
-            
-            $request = "
-            SELECT
-                msg.id AS msg_id,
-                msg.user_id AS user_id,
-                msg.idtopic AS topic_id,
-                msg.timestamp AS date,
-                t.title AS title,
-                m.login AS login,
-                m.user_avatar AS avatar,
-                s.user_id AS connect,
-                msg.contents AS contents
-            FROM ".PREFIX."forum_msg msg
-            LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-            LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            WHERE msg.id IN (".implode(',', array_keys($results)).")
-            GROUP BY t.id";
-            $requestResults = $Sql->query_while ($request, __LINE__, __FILE__);
-            while ($row = $Sql->fetch_assoc($requestResults))
-            {
-                $results[$row['msg_id']] = $row;
-            }
-            $Sql->query_close($requestResults);
-            
-            $this->set_attribute('ResultsReqExecuted', true);
-            $this->set_attribute('Results', $results);
-            $this->set_attribute('ResultsIndex', 0);
-        }
-        
-        $results = $this->get_attribute('Results');
-        $indexes = array_keys($results);
-        $indexSize = count($indexes);
-        $resultsIndex = $this->get_attribute('ResultsIndex');
-        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
-        $result =& $results[$indexes[$resultsIndex]];
-        
-        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result['title']) : '';
-        $Tpl->assign_vars(array(
-            'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result['connect']) && $result['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-            'U_USER_PROFILE' => !empty($result['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result['user_id'],'-'.$result['user_id'].'.php') : '',
-            'USER_PSEUDO' => !empty($result['login']) ? wordwrap_html($result['login'], 13) : $LANG['guest'],
-            'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result['topic_id'], '-' . $result['topic_id'] . $rewrited_title . '.php') . '#m' . $result['msg_id'],
-            'TITLE' => ucfirst($result['title']),
-            'DATE' => gmdate_format('d/m/y', $result['date']),
-            'CONTENTS' => second_parse($result['contents']),
-            'USER_AVATAR' => '<img src="' . ($CONFIG_USER['activ_avatar'] == '1' && !empty($result['avatar']) ? $result['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url']) . '" alt="" />'
+        $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($result_data['title']) : '';
+        $tpl->assign_vars(array(
+            'USER_ONLINE' => '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . ((!empty($result_data['connect']) && $result_data['user_id'] !== -1) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
+            'U_USER_PROFILE' => !empty($result_data['user_id']) ? PATH_TO_ROOT . '/member/member'.url('.php?id='.$result_data['user_id'],'-'.$result_data['user_id'].'.php') : '',
+            'USER_PSEUDO' => !empty($result_data['login']) ? wordwrap_html($result_data['login'], 13) : $LANG['guest'],
+            'U_TOPIC' => PATH_TO_ROOT . '/forum/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
+            'TITLE' => ucfirst($result_data['title']),
+            'DATE' => gmdate_format('d/m/y', $result_data['date']),
+            'CONTENTS' => second_parse($result_data['contents']),
+            'USER_AVATAR' => '<img src="' . ($CONFIG_USER['activ_avatar'] == '1' && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url']) . '" alt="" />'
         ));
         
-        $this->set_attribute('ResultsIndex', ++$resultsIndex);
-        
-        return $Tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
     function get_feed_data_struct($idcat = 0)

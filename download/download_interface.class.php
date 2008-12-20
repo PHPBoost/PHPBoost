@@ -116,85 +116,81 @@ class DownloadInterface extends ModuleInterface
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
-        $request = "SELECT " . $args['id_search'] . " AS `id_search`,
-            d.id AS `id_content`,
-            d.title AS `title`,
-            ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS `relevance`, "
-            . $Sql->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS `link`
+        $request = "SELECT " . $args['id_search'] . " AS id_search,
+            d.id AS id_content,
+            d.title AS title,
+            ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS relevance, "
+            . $Sql->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
             FROM " . PREFIX . "download d
             WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY `relevance` " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;
 
     }
     
-    function parse_search_results(&$args)
     /**
-     *  Return the string to print the results
+     * @desc Return the array containing the result's data list
+     * @param &string[][] $args The array containing the result's id list
+     * @return string[] The array containing the result's data list
      */
+    function compute_search_results(&$args)
     {
-        global $Sql, $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
+        global $CONFIG, $Sql;
+        
+        $results_data = array();
+        
+        $results =& $args['results'];
+        $nb_results = count($results);
+        
+        $ids = array();
+        for ($i = 0; $i < $nb_results; $i++)
+            $ids[] = $results[$i]['id_content'];
+        
+        $request = "SELECT id, idcat, title, short_contents, url, note, image, count, timestamp, nbr_com
+            FROM " . PREFIX . "download
+            WHERE id IN (" . implode(',', $ids) . ")";
+        
+        $request_results = $Sql->query_while ($request, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($request_results))
+        {
+            $results_data[] = $row;
+        }
+        $Sql->query_close($request_results);
+        
+        return $results_data;
+    }
+    
+    /**
+     *  @desc Return the string to print the result
+     *  @param &string[] $result_data the result's data
+     *  @return string[] The string to print the result of a search element
+     */
+    function parse_search_result(&$result_data)
+    {
+        global $Cache, $CONFIG, $LANG, $DOWNLOAD_LANG, $CONFIG_DOWNLOAD;
         $Cache->load('download');
         
-        require_once(PATH_TO_ROOT . '/kernel/begin.php');
         load_module_lang('download'); //Chargement de la langue du module.
-        
-        $Tpl = new Template('download/download_generic_results.tpl');
-        
-        if ($this->get_attribute('ResultsReqExecuted') === false  || $this->got_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST))
-        {
-            $ids = array();
-            $results =& $args['results'];
-            $newResults = array();
-            $nbResults = count($results);
-            for ($i = 0; $i < $nbResults; $i++)
-                $newResults[$results[$i]['id_content']] =& $results[$i];
-            
-            $results =& $newResults;
-            
-            $request = "SELECT `id`,`idcat`,`title`,`short_contents`,`url`,`note`,`image`,`count`,`timestamp`,`nbr_com`
-            FROM " . PREFIX . "download
-            WHERE `id` IN (" . implode(',', array_keys($results)) . ")";
-            $requestResults = $Sql->query_while ($request, __LINE__, __FILE__);
-            while ($row = $Sql->fetch_assoc($requestResults))
-            {
-                $results[$row['id']] = $row;
-            }
-            $Sql->query_close($requestResults);
-            
-            $this->set_attribute('ResultsReqExecuted', true);
-            $this->set_attribute('Results', $results);
-            $this->set_attribute('ResultsIndex', 0);
-        }
-        
-        $results = $this->get_attribute('Results');
-        $indexes = array_keys($results);
-        $indexSize = count($indexes);
-        $resultsIndex = $this->get_attribute('ResultsIndex');
-        $resultsIndex = $resultsIndex < $indexSize ? $resultsIndex : ($indexSize > 0 ? $indexSize - 1 : 0);
-        $index = $indexes[$resultsIndex];
-        $result =& $results[$index];
+        $tpl = new Template('download/download_generic_results.tpl');
         
         import('util/date');
-        $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result['timestamp']);
+        $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
         import('content/note');
         $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
-        $Tpl->assign_vars(array(
+        $tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
-            'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result['id']),
-            'U_IMG' => $result['image'],
-            'E_TITLE' => strprotect($result['title']),
-            'TITLE' => $result['title'],
-            'SHORT_DESCRIPTION' => $result['short_contents'],
-            'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result['count']),
-            'L_NB_COMMENTS' => $result['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result['nbr_com']),
-            'L_MARK' => $result['note'] > 0 ? $Note->display_img((int)$result['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
+            'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
+            'U_IMG' => $result_data['image'],
+            'E_TITLE' => strprotect($result_data['title']),
+            'TITLE' => $result_data['title'],
+            'SHORT_DESCRIPTION' => $result_data['short_contents'],
+            'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
+            'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
+            'L_MARK' => $result_data['note'] > 0 ? $Note->display_img((int)$result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
         
-        $this->set_attribute('ResultsIndex', ++$resultsIndex);
-        
-        return $Tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
 	

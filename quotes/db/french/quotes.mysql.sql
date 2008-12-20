@@ -5,14 +5,16 @@ DROP TABLE IF EXISTS `phpboost_quotes`;
 -- 
 
 CREATE TABLE `phpboost_quotes` (
-  `id` int(11) NOT NULL auto_increment,
-  `contents` varchar(255) NOT NULL,
-  `author` varchar(63) NOT NULL,
-  `user_id` int(11) NOT NULL default '0',
-  `status` int(11) NOT NULL default '0',
-  `timestamp` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `timestamp` (`timestamp`)
+	`id` int(11) NOT NULL auto_increment,
+	`contents` varchar(255) NOT NULL,
+	`author` varchar(63) NOT NULL,
+	`user_id` int(11) NOT NULL default '0',
+	`status` int(11) NOT NULL default '0',
+    `timestamp` int(11) NOT NULL default '0',
+    PRIMARY KEY  (`id`),
+    KEY `timestamp` (`timestamp`),
+    FULLTEXT KEY `contents` (`contents`),
+    FULLTEXT KEY `author` (`author`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- 

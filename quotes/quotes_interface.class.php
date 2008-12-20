@@ -28,6 +28,8 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
+define('QUOTES_MAX_SEARCH_RESULTS', 100);
+
 // Inclusion du fichier contenant la classe ModuleInterface
 require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
 
@@ -44,7 +46,7 @@ class QuotesInterface extends ModuleInterface
     }
     
     /**
-	*  @method  Mise Ã  jour du cache
+	*  @method  Mise à  jour du cache
 	*/
 	function get_cache()
 	{
@@ -95,34 +97,34 @@ class QuotesInterface extends ModuleInterface
 		$Cache->generate_module_file('quotes');
 	}
 
-    /**
-	*  @method  Renvoie le formulaire de recherche du module
-	*/
-    function get_search_form($args=null)
-    {
-        require_once(PATH_TO_ROOT . '/kernel/begin.php');
-        load_module_lang('quotes');
-        global $CONFIG, $LANG;
-        
-        $Tpl = new Template('quotes/quotes_search_form.tpl');
-        
-        if ( empty($args['QuotesWhere']) || !in_array($args['QuotesWhere'], explode(',','author,contents,all')) )
-            $args['QuotesWhere'] = 'all';
+//    /**
+//	*  @method  Renvoie le formulaire de recherche du module
+//	*/
+//    function get_search_form($args=null)
+//    {
+//        require_once(PATH_TO_ROOT . '/kernel/begin.php');
+//        load_module_lang('quotes');
+//        global $CONFIG, $LANG;
+//
+//        $Tpl = new Template('quotes/quotes_search_form.tpl');
+//
+//        if ( empty($args['QuotesWhere']) || !in_array($args['QuotesWhere'], explode(',','author,contents,all')) )
+//            $args['QuotesWhere'] = 'all';
+//
+//        $Tpl->assign_vars(Array(
+//            'L_WHERE' => $LANG['quotes_search_where'],
+//            'IS_AUTHOR_SELECTED' => $args['QuotesWhere'] == 'author'? ' selected="selected"': '',
+//            'IS_CONTENTS_SELECTED' => $args['QuotesWhere'] == 'contents'? ' selected="selected"': '',
+//            'IS_ALL_SELECTED' => $args['QuotesWhere'] == 'all'? ' selected="selected"': '',
+//            'L_AUTHOR' => $LANG['quotes_author'],
+//            'L_CONTENTS' => $LANG['quotes_contents']
+//        ));
+//
+//        return $Tpl->parse(TEMPLATE_STRING_MODE);
+//    }
 
-        $Tpl->assign_vars(Array(
-            'L_WHERE' => $LANG['quotes_search_where'],
-            'IS_AUTHOR_SELECTED' => $args['QuotesWhere'] == 'author'? ' selected="selected"': '',
-            'IS_CONTENTS_SELECTED' => $args['QuotesWhere'] == 'contents'? ' selected="selected"': '',
-            'IS_ALL_SELECTED' => $args['QuotesWhere'] == 'all'? ' selected="selected"': '',
-            'L_AUTHOR' => $LANG['quotes_author'],
-            'L_CONTENTS' => $LANG['quotes_contents']
-        ));
-        
-        return $Tpl->parse(TEMPLATE_STRING_MODE);
-    }
-
     /**
-	*  @method  Renvoie la liste des arguments de la mÃ©thode <GetSearchRequest>
+	*  @method  Renvoie la liste des arguments de la méthode <GetSearchRequest>
 	*/
     function get_search_args()
     {
@@ -130,31 +132,53 @@ class QuotesInterface extends ModuleInterface
     }
 
     /**
-	*  @method  Renvoie la requÃªte de recherche dans le module
+	*  @method  Renvoie la requète de recherche dans le module
 	*/
     function get_search_request($args)
     {
+        global $Sql;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
-        if ( empty($args['QuotesWhere']) || !in_array($args['QuotesWhere'], explode(',','author,contents,all')) )
+        if ( empty($args['QuotesWhere']) || !in_array($args['QuotesWhere'], explode(',', 'author,contents,all')) )
             $args['QuotesWhere'] = 'all';
         
 		switch ($args['QuotesWhere']) {
 			case 'author':
-				$req = "SELECT "
-				.$args['id_search']." AS `id_search`,
-				q.author AS `title`,
-				q.id AS `id_content`,
-				MATCH(q.author) AGAINST('".$args['search']."') * " . $weight . " AS `relevance`
+				$req = "
+				SELECT " .
+				    $args['id_search'] . " AS `id_search`,
+    				q.author AS `title`,
+    				q.id AS `id_content`,
+    				MATCH(q.author) AGAINST('" . $args['search'] . "') * " . $weight . " AS `relevance`,
+                    CONCAT('" . PATH_TO_ROOT . "/quotes/quotes.php?id=',q.id) AS `link`
 				FROM ".PREFIX."quotes AS q
-				WHERE MATCH(q.author) AGAINST('".$args['search']."')";
+				WHERE MATCH(q.author) AGAINST('" . $args['search'] . "')
+				ORDER BY relevance DESC " . $Sql->limit(0, QUOTES_MAX_SEARCH_RESULTS);
 				break;
 			case 'contents':
-	            $req = "SELECT ";
+	            $req = "
+                SELECT " .
+                    $args['id_search'] . " AS `id_search`,
+                    q.author AS `title`,
+                    q.id AS `id_content`,
+                    MATCH(q.author) AGAINST('" . $args['search'] . "') * " . $weight . " AS `relevance`,
+                    CONCAT('" . PATH_TO_ROOT . "/quotes/quotes.php?id=',q.id) AS `link`
+                FROM ".PREFIX."quotes AS q
+                WHERE MATCH(q.author) AGAINST('" . $args['search'] . "')
+                ORDER BY relevance DESC " . $Sql->limit(0, QUOTES_MAX_SEARCH_RESULTS);
 				break;
 			case 'all':
 			default:
-	            $req = "SELECT ";
+	            $req = "
+                SELECT " .
+                    $args['id_search'] . " AS `id_search`,
+                    q.author AS `title`,
+                    q.id AS `id_content`,
+                    (2 * MATCH(q.author) AGAINST('" . $args['search'] . "') + MATCH(q.contents) AGAINST('" . $args['search'] . "')) / 3 * " . $weight . " AS `relevance`,
+                    CONCAT('" . PATH_TO_ROOT . "/quotes/quotes.php?id=',q.id) AS `link`
+                FROM ".PREFIX."quotes AS q
+                WHERE MATCH(q.author) AGAINST('" . $args['search'] . "') OR MATCH(q.contents) AGAINST('" . $args['search'] . "')
+                ORDER BY relevance DESC " . $Sql->limit(0, QUOTES_MAX_SEARCH_RESULTS);
 		}
         return $req;
     }

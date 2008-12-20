@@ -13,7 +13,7 @@
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,10 +40,8 @@ $Template->set_filenames(array(
 // A protéger impérativement;
 $search = retrieve(REQUEST, 'q', '');
 $unsecure_search = htmlentities(retrieve(REQUEST, 'q', '', TSTRING_UNCHANGE));
-$selectedModules = retrieve(POST, 'searched_modules', array());
-$searchIn = retrieve(POST, 'search_in', 'all');
-$simpleMode = ($searchIn == 'all') ? true : false;
-
+$search_in = retrieve(POST, 'search_in', 'all');
+$selected_modules = retrieve(POST, 'searched_modules', array());
 //--------------------------------------------------------------------- Header
 
 define('TITLE', $LANG['title_search']);
@@ -65,44 +63,45 @@ $Template->assign_vars(Array(
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
     'L_SIMPLE_SEARCH' => $LANG['simple_search'],
     'U_FORM_VALID' => url('../search/search.php#results'),
-    'C_SIMPLE_SEARCH' => $searchIn == 'all' ? true : false,
-    'SEARCH_MODE_MODULE' => $searchIn
+    'C_SIMPLE_SEARCH' => $search_in == 'all' ? true : false,
+    'SEARCH_MODE_MODULE' => $search_in
 ));
 
 //------------------------------------------------------------- Other includes
-require_once('../kernel/framework/modules/modules_discovery_service.class.php');
+
+import('modules/modules_discovery_service');
 require_once('../search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 
-$Modules = new ModulesDiscoveryService();
-$modulesArgs = array();
-$usedModules = array();
+$modules = new ModulesDiscoveryService();
+$modules_args = array();
+$used_modules = array();
 
 // Chargement des modules avec formulaires
-$searchModule = $Modules->get_available_modules('get_search_request');
+$search_module = $modules->get_available_modules('get_search_request');
 
 // Génération des formulaires précomplétés et passage aux templates
-foreach ($searchModule as $module)
+foreach ($search_module as $module)
 {
 	if (in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']))
 	{
 	    // Ajout du paramètre search à tous les modules
-	    $modulesArgs[$module->get_id()]['search'] = $search;
+	    $modules_args[$module->get_id()]['search'] = $search;
 	    if ($module->has_functionnality('get_search_args'))
 	    {
 	        // Récupération de la liste des paramètres
-	        $formModuleArgs = $module->functionnality('get_search_args');
+	        $form_module_args = $module->functionnality('get_search_args');
 	        // Ajout des paramètres optionnels sans les sécuriser.
 	        // Ils sont sécurisés à l'intérieur de chaque module.
-	        if ( $searchIn )
+	        if ($search_in == 'all')
 	        {
-	            foreach ($formModuleArgs as $arg)
+	            foreach ($form_module_args as $arg)
 	            {
 	                if ( $arg == 'search' ) // 'search' non sécurisé
-	                    $modulesArgs[$module->get_id()]['search'] = $search;
+	                    $modules_args[$module->get_id()]['search'] = $search;
 	                elseif ( isset($_POST[$arg]) )  // Argument non sécurisé (sécurisé par le module en question)
-	                    $modulesArgs[$module->get_id()][$arg] = $_POST[$arg];
+	                    $modules_args[$module->get_id()][$arg] = $_POST[$arg];
 	            }
 	        }
 	        
@@ -110,7 +109,7 @@ foreach ($searchModule as $module)
 	            'MODULE_NAME' => $module->get_id(),
 	            'L_MODULE_NAME' => ucfirst($module->get_name()),
 	            'C_SEARCH_FORM' => true,
-	            'SEARCH_FORM' => $module->functionnality('get_search_form', $modulesArgs[$module->get_id()])
+	            'SEARCH_FORM' => $module->functionnality('get_search_form', $modules_args[$module->get_id()])
 	        ));
 	    }
 	    else
@@ -124,11 +123,11 @@ foreach ($searchModule as $module)
 	    }
 	    
 	    // Récupération de la liste des modules à traiter
-	    if ( ($selectedModules === array()) || ($searchIn === $module->get_id()) ||
-	    	(($searchIn === 'all') && (in_array($module->get_id(), $selectedModules))) )
+	    if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
+	    	(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )
 	    {
 	        $selected = ' selected="selected"';
-	        $usedModules[$module->get_id()] = $module; // Ajout du module à traiter
+	        $used_modules[$module->get_id()] = $module; // Ajout du module à traiter
 	    }
 	    else $selected = '';
 	    
@@ -141,25 +140,6 @@ foreach ($searchModule as $module)
 	else unset($module);
 }
 
-
-//foreach ($search_config['authorized_modules'] as $moduleid)
-//{
-//    $module = $modules->get_module($moduleid);
-//    if ( ($selectedmodules === array()) || in_array($moduleid, $selectedmodules) || ($searchin === $moduleid) )
-//    {
-//        $selected = ' selected="selected"';
-//        $usedmodules[$moduleid] = $module; // ajout du module à traiter
-//    }
-//    else
-//        $selected = '';
-//    
-//    $template->assign_block_vars('searched_modules', array(
-//        'module' => $moduleid,
-//        'l_module_name' => ucfirst($module->get_name()),
-//        'selected' => $selected
-//    ));
-//}
-
 // parsage des formulaires de recherches
 $Template->pparse('search_forms');
 
@@ -168,16 +148,26 @@ if (!empty($search))
     $results = array();
     $idsSearch = array();
     
-    if ( $searchIn != 'all' ) // If we are searching in only onde module
+    if ( $search_in != 'all' ) // If we are searching in only onde module
     {
-        $usedModules = array($searchIn => $usedModules[$searchIn]);
-        $modulesArgs = array($searchIn => $modulesArgs[$searchIn]);
+        $used_modules = array($search_in => $used_modules[$search_in]);
+        $modules_args = array($search_in => $modules_args[$search_in]);
+    }
+    else
+    {   // We remove modules that we're not searching in
+        foreach ($modules_args as $module_id => $module_args)
+        {
+            if (!in_array($module_id, $selected_modules))
+            {
+                unset($modules_args[$module_id]);
+            }
+        }
     }
     
     // Génération des résultats et passage aux templates
-    $nbResults = get_search_results($search, $usedModules, $modulesArgs, $results, $idsSearch);
+    $nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
     
-    foreach ($usedModules as $module)
+    foreach ($used_modules as $module)
     {
         $Template->assign_block_vars('results', array(
             'MODULE_NAME' => $module->get_id(),
@@ -186,9 +176,9 @@ if (!empty($search))
         ));
     }
     
-    $allhtmlResult = '';
+    $all_html_result = '';
     if ( $nbResults > 0 )
-        get_html_results($results, $allhtmlResult, $Modules, $searchIn);
+        get_html_results($results, $all_html_result, $search_in);
     
     $Template->assign_vars(Array(
         'NB_RESULTS_PER_PAGE' => NB_RESULTS_PER_PAGE,
@@ -199,9 +189,9 @@ if (!empty($search))
         'L_NB_RESULTS_FOUND' => $nbResults > 1 ? $LANG['nb_results_found'] : ($nbResults == 0 ? $LANG['no_results_found'] : $LANG['one_result_found']),
         'L_SEARCH_RESULTS' => $LANG['search_results'],
         'NB_RESULTS' => $nbResults,
-        'ALL_RESULTS' => $allhtmlResult,
-        'SEARCH_IN' => $searchIn,
-        'C_SIMPLE_SEARCH' => ($searchIn == 'all') ? true : false
+        'ALL_RESULTS' => $all_html_result,
+        'SEARCH_IN' => $search_in,
+        'C_SIMPLE_SEARCH' => ($search_in == 'all') ? true : false
     ));
     
     // parsage des résultats de la recherche

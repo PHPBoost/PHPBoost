@@ -6,5 +6,7 @@ CREATE TABLE `phpboost_guestbook` (
 	`user_id` int(11) NOT NULL default '0',
 	`timestamp` int(11) NOT NULL default '0',
 	PRIMARY KEY	(`id`),
-	KEY `timestamp` (`timestamp`)
+	KEY `timestamp` (`timestamp`),
+    FULLTEXT KEY `contents` (`contents`),
+    FULLTEXT KEY `author` (`author`)
 ) ENGINE=MyISAM;
