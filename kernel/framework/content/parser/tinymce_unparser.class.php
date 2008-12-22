@@ -222,7 +222,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$legend = '';
 		
 		if (!empty($matches[1]))
-			$style = " style=" . $matches[1] . '"';
+			$style = ' style="' . $matches[1] . '"';
 		
 		if (!empty($matches[2]))
 			$legend = ' legend="' . $matches[2] . '"';

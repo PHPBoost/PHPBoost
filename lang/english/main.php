@@ -557,7 +557,7 @@ It may be an error, if you want you could contact the administrator of the web s
 %s';
 
 //Panneau de contribution
-$LANG['contribution_panel'] = 'Contribution pannel';
+$LANG['contribution_panel'] = 'Contribution panel';
 $LANG['contribution'] = 'Contribution';
 $LANG['contribution_status_unread'] = 'Unsolved';
 $LANG['contribution_status_being_processed'] = 'In progress';
