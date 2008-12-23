@@ -34,6 +34,7 @@ import('content/parser/content_unparser');
  * TinyMCE has a particular syntax and it must be respected if we want to make a formatting which
  * can be edited after having beeing written, enough what using a WYSIWYG editor hasn't any advantage.
  * @author Benoit Sautel ben.popeye@phpboost.com
+ * @see the TinyMCEParser class which makes the reverse operation.
  */
 class TinyMCEUnparser extends ContentUnparser
 {

@@ -30,13 +30,13 @@ import('content/parser/content_unparser');
 /**
  * @package parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
+ * BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.
  */
 class BBCodeUnparser extends ContentUnparser
 {
 	/**
-	 * @desc Builds a BBCodeUnparser object
+	 * Builds a BBCodeUnparser object
 	 */
 	function BBCodeUnparser()
 	{
@@ -45,7 +45,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * @desc Unparses the content of the parser.
+	 * Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
 	function unparse()
@@ -80,7 +80,7 @@ class BBCodeUnparser extends ContentUnparser
 	
 	## Private ##
 	/**
-	 * @desc Unparse the smiley's code of the content of the parser.
+	 * Unparse the smiley's code of the content of the parser.
 	 * Replace the HTML code by the smiley code (for instance :) or :|)
 	 */
 	function _unparse_smilies()
@@ -100,7 +100,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * @desc Unparsed the simple tags of the content of the parser.
+	 * Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
 	function _unparse_simple_tags()
@@ -185,7 +185,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * @desc Unparses the table tag
+	 * Unparses the table tag
 	 */
 	function _unparse_table()
 	{
@@ -201,7 +201,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 
 	/**
-	 * @desc Unparses the list tag
+	 * Unparses the list tag
 	 */
 	function _unparse_list()
 	{
@@ -215,7 +215,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * @desc Callback which allows to unparse the fieldset tag
+	 * Callback which allows to unparse the fieldset tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
@@ -237,7 +237,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * @desc Callback which allows to unparse the Wikipedia tag
+	 * Callback which allows to unparse the Wikipedia tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
