@@ -47,9 +47,6 @@ class TinyMCEParser extends ContentParser
 		if ($User->check_auth($this->html_auth, 1))
 			$this->_pick_up_tag('html');
 		
-        //On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
-		$this->content = preg_replace('`([\r\n]+)`isU', '', $this->content);
-		
 		//On enlève toutes les entités HTML rajoutées par TinyMCE
 		$this->content = html_entity_decode($this->content);
 			
@@ -200,7 +197,22 @@ class TinyMCEParser extends ContentParser
 		global $LANG;
 		
 		//Modification de quelques tags HTML envoyés par TinyMCE
-		$this->content = str_replace(array('&amp;nbsp;&amp;nbsp;&amp;nbsp;', '&amp;gt;', '&amp;lt;', '&lt;br /&gt;', '&lt;br&gt;', '&amp;nbsp;'), array("\t", '&gt;', '&lt;', "<br />\r\n", "<br />\r\n", ' '), $this->content);
+		$this->content = str_replace(
+			array(
+				'&amp;nbsp;&amp;nbsp;&amp;nbsp;',
+				'&amp;gt;',
+				'&amp;lt;',
+				'&lt;br /&gt;',
+				'&lt;br&gt;',
+				'&amp;nbsp;'
+			), array(
+				"\t",
+				'&gt;',
+				'&lt;',
+				"<br />\n",
+				"<br />\n",
+				' '
+			), $this->content);
 		
 		$array_preg = array(
 			'`&lt;p&gt;[\s]*&nbsp;[\s]*&lt;/p&gt;[\s]*`',
@@ -212,12 +224,22 @@ class TinyMCEParser extends ContentParser
 		);
 		$array_preg_replace = array(
 			'',
-			'$1' . "\r\n<br />",
-			'$1' . "\n\n<br />",
+			'$1' . "\n<br />",
+			'$1' . "\n<br />",
 			'<span style="font-size: 10px;">$1</span><br />',
 			'<span style="font-size: 8px;">$1</span><br />',
 			'&lt;/p&gt;'
 		);
+		
+		//Replacement
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		
+        //On supprime tous les retours à la ligne ajoutés par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
+		$this->content = str_replace('\r\n', '\n', $this->content);
+		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
+		
+		$array_preg = array();
+		$array_preg_replace = array();
 		
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
@@ -306,16 +328,16 @@ class TinyMCEParser extends ContentParser
 		{
 			//Title 1
 			array_push($array_preg, '`&lt;h1[^&]*&gt;(.+)&lt;/h1&gt;`isU');
-			array_push($array_preg_replace, "\r\n" . '<h3 class="title1">$1</h3>' . "\r\n<br />");
+			array_push($array_preg_replace, "\n" . '<h3 class="title1">$1</h3>' . "\n<br />");
 			//Title 2
 			array_push($array_preg, '`&lt;h2[^&]*&gt;(.+)&lt;/h2&gt;`isU');
-			array_push($array_preg_replace, "\r\n" . '<h3 class="title2">$1</h3>' . "\r\n<br />");
+			array_push($array_preg_replace, "\n" . '<h3 class="title2">$1</h3>' . "\n<br />");
 			//Title 3
 			array_push($array_preg, '`&lt;h3[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h3&gt;`isU');
-			array_push($array_preg_replace, "\r\n" . '<br /><h4 class="stitle1">$1</h4><br />' . "\r\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h4 class="stitle1">$1</h4><br />' . "\n<br />");
 			//Title 4
 			array_push($array_preg, '`&lt;h4[^&]*&gt;(.+)(<br />[\s]*)?&lt;/h4&gt;`isU');
-			array_push($array_preg_replace, "\r\n" . '<br /><h4 class="stitle2">$1</h4><br />' . "\r\n<br />");
+			array_push($array_preg_replace, "\n" . '<br /><h4 class="stitle2">$1</h4><br />' . "\n<br />");
 		}
 		//Flash tag
 		if (!in_array('swf', $this->forbidden_tags))
@@ -334,7 +356,7 @@ class TinyMCEParser extends ContentParser
 		}
 		
 		//Replacement
-		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);	
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
 		//Tags which are useless
 		$array_str = array( 
@@ -608,8 +630,8 @@ class TinyMCEParser extends ContentParser
 	//Handler which clears the HTML code which is in the code and HTML tags
 	function _clear_html_and_code_tag($var)
 	{
-		$var = preg_replace('`</p>\s*<p>`i', "\r\n", $var);
-		$var = str_replace('<br />', "\r\n", $var);
+		$var = preg_replace('`</p>\s*<p>`i', "\n", $var);
+		$var = str_replace('<br />', "\n", $var);
 		$var = html_entity_decode($var);
 		return $var;
 	}

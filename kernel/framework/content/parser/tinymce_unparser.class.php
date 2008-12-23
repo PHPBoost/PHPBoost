@@ -27,15 +27,28 @@
 
 import('content/parser/content_unparser');
 
+/**
+ * This class enables to translate the content formatting from the PHPBoost standard one to
+ * the TinyMCE one. The PHPBoost one is historically the one corresponding to the BBCode 
+ * translation in HTML and is now the reference.
+ * TinyMCE has a particular syntax and it must be respected if we want to make a formatting which
+ * can be edited after having beeing written, enough what using a WYSIWYG editor hasn't any advantage.
+ * @author Benoit Sautel ben.popeye@phpboost.com
+ */
 class TinyMCEUnparser extends ContentUnparser
 {
-	//Constructeur
-	function TinyMCEParser()
+	/**
+	 * Constructor of this kind of parser
+	 */
+	function TinyMCEUnparser()
 	{
-		parent::ContentParser();
+		parent::ContentUnparser();
 	}
 	
-	//Unparser
+	/**
+	 * Unparses the content of the parser. It goes from the PHPBoost reference formatting syntax
+	 * to the TinyMCE one.
+	 */
 	function unparse()
 	{		
 		//Extracting HTML and code tags
@@ -88,7 +101,9 @@ class TinyMCEUnparser extends ContentUnparser
 	}
 	
 	## Protected ##
-	//Function which replaces the image code for smilies by the text code
+	/**
+	 * Replaces the image code for smilies by the text code 
+	 */
 	function _unparse_smilies()
 	{
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
@@ -104,7 +119,9 @@ class TinyMCEUnparser extends ContentUnparser
 		}
 	}
 	
-	//Function which unparses only the tags supported by TinyMCE
+	/**
+	 * Function which unparses only the tags supported by TinyMCE
+	 */ 
 	function _unparse_tinymce_formatting()
 	{	
 		//Preg_replace.
@@ -153,17 +170,19 @@ class TinyMCEUnparser extends ContentUnparser
 		//Balise size
 		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
 		
-		//Balise indentation
-		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`is', array(&$this, '_unparse_indent'), $this->content);
-		
 		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote><p>$2</p></blockquote>', $this->content);
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote>$2</blockquote>', $this->content);
+		
+		//Balise indentation
+		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`isU', array(&$this, '_unparse_indent'), $this->content);
 		
 		//Police
 		$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, '_unparse_font'), $this->content );
 	}
 	
-	//Function which manages the whole tags which doesn't not exist in TinyMCE
+	/**
+	 * Manages the whole tags which doesn't not exist in TinyMCE
+	 */
 	function _unparse_bbcode_tags()
 	{		
 		$array_preg = array(
@@ -208,59 +227,99 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->content);
 	}
 	
-	//Handler which clears the HTML code which is in the code and HTML tags
+	/**
+	 * Handler which clears the HTML code which is in the code and HTML tags
+	 *
+	 * @param string $var variable to clear
+	 * @return the clean content
+	 */
 	function _clear_html_and_code_tag($var)
 	{
 		$var = str_replace("\n", '<br />', $var);
 		return htmlentities($var, ENT_NOQUOTES);
 	}
-	
-	//Fonction de retour de la balise liste
+
+	/**
+	 * Unparses the fieldset tag to BBCode syntax (it doesn't exist
+	 * in TinyMCE).
+	 *
+	 * @param string[] $matches The matched elements
+	 * @return string The corresponding BBCode syntax
+	 */
 	function _unparse_fieldset($matches)
 	{
 		$style = '';
 		$legend = '';
 		
 		if (!empty($matches[1]))
+		{
 			$style = ' style="' . $matches[1] . '"';
+		}
 		
 		if (!empty($matches[2]))
+		{
 			$legend = ' legend="' . $matches[2] . '"';
+		}
 		
-		if (!empty($legend) || !empty($style)) 
+		if (!empty($legend) || !empty($style))
+		{ 
 			return '[fieldset' . $legend . $style . ']' . $matches[3] . '[/fieldset]';
+		}
 		else
-			return '[fieldset]' . $matches[3] . '[/fieldset]'; 
+		{
+			return '[fieldset]' . $matches[3] . '[/fieldset]';
+		} 
 	}
 	
-	//Function de retour des liens Wikipédia
+	/**
+	 * Unparses the wikipedia links (exists only in BBCode), so it
+	 * uses the BBCode syntax.
+	 * @param string[] $matches The matched elements
+	 * @return string The corresponding BBCode syntax 
+	 */
 	function _unparse_wikipedia_link($matches)
 	{
 		global $LANG;
 		
 		//On est dans la langue par défaut
 		if ($matches[1] == $LANG['wikipedia_subdomain'])
+		{
 			$lang = '';
+		}
 		else
+		{
 			$lang = $matches[1];
+		}
 			
 		//L'intitulé du lien est différent du nom de l'article
 		if ($matches[2] != $matches[3])
+		{
 			$page_name = $matches[2];
+		}
 		else
+		{
 			$page_name = '';
+		}
 		
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
 	}
 	
-	//Fonction de retour de l'indentation
+	/**
+	 * Unparses the indentation tag. TinyMCE supports it but not with a similar way,
+	 * it we nest indentation, it returns only one indentation containing directly the good margin,
+	 * whereas in BBCode we must nest the indent tags.
+	 *
+	 * @param string[] $matches The matched elements
+	 * @return string The correct TinyMCE syntax
+	 */
 	function _unparse_indent($matches)
-	{	    
+	{
 		//Combien de fois c'est indenté ?
 		$nbr_indent = substr_count($matches[1], '<div class="indent">');
 		
 		//Combien de fois c'est fermé ?
 		$nbr_closed_indent_tags = substr_count($matches[3], '</div>');
+		
 		//L'expression régulière ne capture que le dernier div fermant. Les autres ont à la fin du contenu central, on les traite à la main
 		while (substr($matches[2], -6) == '</div>')
 		{
@@ -281,10 +340,19 @@ class TinyMCEUnparser extends ContentUnparser
 		}
 		//Sinon c'est une situation anormale, on renvoie ce qu'on a reçu
 		else
+		{
 			return $matches[1] . $matches[2] . $matches[3];
+		}
 	}
 	
-	//Fonction de retour du changement de police
+	/**
+	 * Computes the correct TinyMCE syntax for changing the font.
+	 * The problem is that in BBCode we only use one font, and to be compatible (and it's not so bad),
+	 * TinyMCE uses three or four similar fonts. This method enables to map these two different expressions.
+	 *
+	 * @param string[] $matches The matched elements
+	 * @return string The correct TinyMCE formatting
+	 */
 	function _unparse_font($matches)
 	{
 		static $fonts_array = array(
@@ -295,9 +363,13 @@ class TinyMCEUnparser extends ContentUnparser
 		);
 		
 		if (!empty($fonts_array[$matches[1]]))
+		{
 			return '<span style="font-family: ' . $fonts_array[$matches[1]] . ';">' . $matches[2] . '</span>';
+		}
 		else
+		{
 			return $matches[2];
+		}
 	}
 }
 
