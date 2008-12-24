@@ -1,19 +1,3 @@
-<script type="text/javascript">
-<!--
-function check_msg(){
-	if(document.getElementById('name').value == "") {
-		alert("{L_REQUIRE_TITLE}");
-		return false;
-    }
-	if(document.getElementById('contents').value == "") {
-		alert("{L_REQUIRE_TEXT}");
-		return false;
-    }
-	return true;
-}
--->
-</script>
-	
 <div id="admin_contents">
 	<form action="content.php" method="post" class="fieldset_content">
 		<fieldset> 

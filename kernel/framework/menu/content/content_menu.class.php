@@ -63,7 +63,7 @@ class ContentMenu extends Menu
     
     function cache_export()
     {
-        return parent::cache_export_begin() . addslashes($this->content) . parent::cache_export_end();
+        return parent::cache_export_begin() . trim(var_export($this->content, true), '\'') . parent::cache_export_end();
     }
     
     
