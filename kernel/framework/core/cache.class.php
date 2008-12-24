@@ -86,7 +86,7 @@ class Cache
 		import('modules/modules_discovery_service');
 		$modulesLoader = new ModulesDiscoveryService();
 		$module = $modulesLoader->get_module($module_name);
-		if ($module->has_functionnality('get_cache')) //Le module implémente bien la fonction.
+		if (!$module->get_errors() && $module->has_functionnality('get_cache')) //Le module implémente bien la fonction.
 			$this->write($module_name, $module->functionnality('get_cache'));
 		elseif (!$no_alert_on_error)
 			$Errorh->handler('Cache -> Le module <strong>' . $module_name . '</strong> n\'a pas de fonction de cache!', E_USER_ERROR, __LINE__, __FILE__);

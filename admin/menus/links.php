@@ -77,111 +77,84 @@ elseif ($action =='delete' && !empty($id)) //Suppression du menu.
     
     redirect(HOST . DIR . '/admin/menus/menus.php');
 }
+
+// Display the Menu administration
+$edit = !empty($id);
+
+include('lateral_menu.php');
+lateral_menu();
+
+$tpl = new Template('admin/menus/links.tpl');
+
+$tpl->assign_vars(array(
+	'L_REQUIRE_TITLE' => $LANG['require_title'],
+	'L_REQUIRE_TEXT' => $LANG['require_text'],
+	'L_NAME' => $LANG['name'],
+	'L_STATUS' => $LANG['status'],
+	'L_AUTHS' => $LANG['auths'],
+	'L_ENABLED' => $LANG['enabled'],
+	'L_DISABLED' => $LANG['disabled'],
+	'L_ACTIVATION' => $LANG['activation'],
+	'L_GUEST' => $LANG['guest'],
+	'L_USER' => $LANG['member'],
+	'L_MODO' => $LANG['modo'],
+	'L_ADMIN' => $LANG['admin'],
+	'L_LOCATION' => $LANG['location'],
+	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
+	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
+	'L_RESET' => $LANG['reset'],
+    'ACTION' => 'save',
+    'L_TYPE' => $LANG['type'],
+    'L_VERTICAL_MENU' => $LANG['vertical_menu'],
+    'L_HORIZONTAL_MENU' => $LANG['horizontal_menu'],
+    'L_TREE_MENU' => $LANG['tree_menu'],
+    'L_VERTICAL_SCROLL_MENU' => $LANG['vertical_scrolling_menu'],
+    'L_HORIZONTAL_SCROLL_MENU' => $LANG['horizontal_scrolling_menu']
+));
+
+//Localisation possibles.
+$block = BLOCK_POSITION__HEADER;
+$array_location = array(
+    BLOCK_POSITION__HEADER => $LANG['menu_header'],
+    BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+    BLOCK_POSITION__LEFT => $LANG['menu_left'],
+    BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+    BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+    BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+    BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+    BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
+);
+
+if ($edit)
+{
+	$menu = MenuService::load($id);
+	
+    if (!of_class($menu, LINKS_MENU__CLASS))
+        redirect('menus.php');
+    
+	$block = $menu->get_block();
+	
+	$tpl->assign_vars(array(
+		'IDMENU' => $id,
+		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+        'C_ENABLED' => $menu->is_enabled(),
+	));
+}
 else
 {
-    $tpl = new Template('admin/menus/panel.tpl');
-    $tpl->assign_vars(array(
-        'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
-    ));
-    $tpl->parse();
-    
-    $tpl = new Template('admin/menus/links.tpl');
-
-    $tpl->assign_vars(array(
-        'KERNEL_EDITOR' => display_editor(),
-        'L_REQUIRE_TITLE' => $LANG['require_title'],
-        'L_REQUIRE_TEXT' => $LANG['require_text'],
-        'L_NAME' => $LANG['name'],
-        'L_STATUS' => $LANG['status'],
-        'L_AUTHS' => $LANG['auths'],
-        'L_ACTIV' => $LANG['activ'],
-        'L_UNACTIV' => $LANG['unactiv'],
-        'L_ACTIVATION' => $LANG['activation'],
-        'L_GUEST' => $LANG['guest'],
-        'L_USER' => $LANG['member'],
-        'L_MODO' => $LANG['modo'],
-        'L_ADMIN' => $LANG['admin'],
-        'L_LOCATION' => $LANG['location'],
-        'L_USE_TPL' => $LANG['use_tpl'],
-        'L_HEADER' => $LANG['menu_header'],
-        'L_SUB_HEADER' => $LANG['menu_subheader'],
-        'L_LEFT_MENU' => $LANG['menu_left'],
-        'L_RIGHT_MENU' => $LANG['menu_right'],
-        'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-        'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-        'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-        'L_FOOTER' => $LANG['menu_footer'],
-        'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
-        'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
-        'L_RESET' => $LANG['reset'],
-        'C_ADD_MENU' => true,
-        'C_ADD_MENU_LINKS' => true,
-        'C_MENUS_ADDED' => true,
-        'ACTION' => 'add',
-        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
-        'L_TYPE' => $LANG['type'],
-        'L_ACTION' => $LANG['add'],
-        'L_VERTICAL_MENU' => $LANG['vertical_menu'],
-        'L_HORIZONTAL_MENU' => $LANG['horizontal_menu'],
-        'L_TREE_MENU' => $LANG['tree_menu'],
-        'L_VERTICAL_SCROLL_MENU' => $LANG['vertical_scrolling_menu'],
-        'L_HORIZONTAL_SCROLL_MENU' => $LANG['horizontal_scrolling_menu']
-    ));
-    
-    $array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-    if ($edit)
-    {
-        $menu = MenuService::load($id);
-        
-        //Localisation possibles.
-        $array_location = array(
-            BLOCK_POSITION__HEADER => $LANG['menu_header'],
-            BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-            BLOCK_POSITION__LEFT => $LANG['menu_left'],
-            BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-            BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-            BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-            BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-            BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
-        );
-        
-        $locations = '';
-        foreach ($array_location as $key => $name)
-        {
-            $selected = ($menu->get_block() == $key) ? 'selected="selected"' : '';
-            $locations .= '<option value="' . $key . '" ' . $selected . '>' . $name . '</option>';
-        }
-        
-        //Nom du menus.
-        if (!empty($menu['name']))
-        {
-            $config = load_ini_file('../' . $menu['name'] . '/lang/', get_ulang());
-            if (is_array($config))
-                $menu['name'] = !empty($config['name']) ? $config['name'] : $menu['name'];
-        }
-        
-        //Récupération des tableaux des autorisations et des groupes.
-        $array_auth = !empty($menu['auth']) ? unserialize($menu['auth']) : array();
-
-        $tpl->assign_vars(array(
-            'C_EDIT_MENU' => true,
-            'C_MENUS_ADDED' => ($menu['added'] == 1) ? true : false,
-            'C_MENUS_NOT_ADDED' => ($menu['added'] == 1) ? false : true,
-            'ACTION' => 'edit',
-            'IDMENU' => $id,
-            'NAME' => $menu['name'],
-            'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $array_auth),
-            'LOCATIONS' => $locations,
-            'ACTIV_ENABLED' => ($menu['activ'] == '1') ? 'selected="selected"' : '',
-            'ACTIV_DISABLED' => ($menu['activ'] == '0') ? 'selected="selected"' : '',
-            'CONTENTS' => !empty($menu['contents']) ? unparse($menu['contents']) : ''
-        ));
-    }
-    
-    $tpl->parse();
-    require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
+   $tpl->assign_vars(array(
+       'C_ENABLED' => true,
+       'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+   ));
 }
+
+$locations = '';
+foreach ($array_location as $key => $name)
+    $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+
+$tpl->assign_vars(array('LOCATIONS' => $locations));
+$tpl->parse();
+
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 
 ?>
