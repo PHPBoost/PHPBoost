@@ -58,12 +58,14 @@ class ContentMenu extends Menu
     
     function display()
     {
-        return $this->content;
+        $tpl = new Template('framework/menus/content/display.tpl');
+        $tpl->assign_vars(array('CONTENT' => $this->content));
+        return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
     function cache_export()
     {
-        return parent::cache_export_begin() . trim(var_export($this->content, true), '\'') . parent::cache_export_end();
+        return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
     }
     
     
