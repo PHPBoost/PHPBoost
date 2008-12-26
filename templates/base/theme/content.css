@@ -376,10 +376,6 @@ a.msg_link_pseudo:hover {
     border-bottom: 1px #cccccc solid;
 }
 
-.msg_top a {
-    color: #FFFFFF;
-}
-
 .msg_top {
     height: 25px;
     background: #ffffff;

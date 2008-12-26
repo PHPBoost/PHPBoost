@@ -1,12 +1,13 @@
 	# IF C_HORIZONTAL #
-		<div class="news_container">
-			<div class="news_top_l"></div>
-			<div class="news_top_r"></div>
-			<div class="news_top">
-				<div style="float:left; padding-left:30px"><a href="{PATH_TO_ROOT}/quotes/quotes.php" class="news_title">{L_RANDOM_QUOTES}</a></div>
+	<div class="block">
+	<div class="news_container">
+            <div class="msg_top_l"></div>           
+            <div class="msg_top_r"></div>
+            <div class="msg_top">
+    			<div style="float:left;"><h3 class="title valign_middle"><a href="{PATH_TO_ROOT}/quotes/quotes.php">{L_RANDOM_QUOTES}</a></h3></div>
 				<div style="float:right">{COM}{EDIT}{DEL}</div>
-			</div>		
-			<div class="news_content" style="text-align:center">
+			</div>
+	        <div class="news_content">
 				{RAND_MSG_CONTENTS}	
 				<br />
 				<strong>{RAND_MSG_AUTHOR}</strong>
@@ -18,6 +19,7 @@
 				<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{PSEUDO}</a></span>
 				<span style="float:right">{DATE}</span>
 			</div>
+		</div>
 		</div>
 	# ENDIF #
 	
