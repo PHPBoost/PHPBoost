@@ -62,6 +62,9 @@ class LinksMenuLink extends LinksMenuElement
             return '';
             
         parent::_assign($template);
+  		$template->assign_vars(array(
+  			'C_LINK' => true
+  		));
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	

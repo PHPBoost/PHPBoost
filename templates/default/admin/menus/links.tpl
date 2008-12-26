@@ -34,7 +34,15 @@
 				<dt><label for="auth">{L_AUTHS}</label></dt>
 				<dd><label>{AUTH_MENUS}</label></dd>
 			</dl>
-		</fieldset>		
+		</fieldset>
+		{TEST}
+	    <script type="text/javascript">
+	    <!--
+	    Sortable.create('menu', {tree:true,scroll:window});
+	    -->
+	    </script>
+	    <a href="#" onclick="alert(Sortable.serialize('menu'));return false">serialize 1</a>
+			
 	
 		<fieldset class="fieldset_submit">
 			<legend>{L_ACTION}</legend>

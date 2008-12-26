@@ -3,7 +3,7 @@
 Contient les classes supplï¿½mentaires pour l'administration.
 --------------------------------------*/
 
-/* Entï¿½te de la page */
+/* Entête de la page */
 div#header_admin{
 }
 /* Menu de lien horizontal */
@@ -160,3 +160,12 @@ pre {
 }
 .em{color: #666666; background-color: #cccccc;}
 
+/* Menus */
+.menu_link_list {
+	list-style:none;
+	list-style-position:outside;
+	margin-left:20px;
+}
+.menu_link_element {
+	margin-top:10px;
+}

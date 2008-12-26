@@ -126,10 +126,45 @@ $array_location = array(
 
 if ($edit)
 {
+	/*
 	$menu = MenuService::load($id);
 	
     if (!of_class($menu, LINKS_MENU__CLASS))
-        redirect('menus.php');
+        redirect('menus.php');*/
+	
+	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
+	
+	$auth = array('r2' => 1, '1' => 0);
+	$menu = new LinksMenu('Google', 'http://www.google.com', '', VERTICAL_SCROLLING_MENU);
+	$menu1 = new LinksMenu('Menu 1', 'http://www.google.com');
+	$menu2 = new LinksMenu('Menu 2', 'http://www.google.com');
+	$menu3 = new LinksMenu('Menu 3', 'http://www.google.com');
+	$menu4 = new LinksMenu('Menu 4', 'http://www.google.com');
+	$menu5 = new LinksMenu('Menu 5', 'http://www.google.com');
+	$menu6 = new LinksMenu('Menu 6', 'http://www.google.com');
+	$menu7 = new LinksMenu('Menu 7', 'http://www.google.com');
+	$element1 = new LinksMenuLink('Element 1', '/forum/index.php');
+	$element1->set_auth($auth);
+	$element2 = new LinksMenuLink('Element 2', 'http://www.google.com');
+	
+	$aelts0 = array($element1, $element2, $element1, $element1);
+	$menu7->add_array($aelts0);
+	$aelts1 = array($menu7, $element1, $element1, $element1, $element1);
+	$menu6->add_array($aelts1);
+	$aelts2 = array($menu6, $element1, $element1, $element2, $element2);
+	$aelts3 = array($element1, $element1, $element2, $element2);
+	$aelts4 = array($element2, $element2, $element1, $element1);
+	$aelts5 = array($element2, $element2, $element2, $element2);
+	
+	$menu1->add_array($aelts1);
+	$menu2->add_array($aelts2);
+	$menu3->add_array($aelts3);
+	$menu4->add_array($aelts4);
+	$menu5->add_array($aelts5);
+	
+	$amenu = array($menu1, $menu2, $menu3, $menu4, $menu5, $element1, $element2);
+	
+	$menu->add_array($amenu);
     
 	$block = $menu->get_block();
 	
@@ -137,6 +172,7 @@ if ($edit)
 		'IDMENU' => $id,
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
+		'TEST' => $menu->display($edit_menu_tpl)
 	));
 }
 else
