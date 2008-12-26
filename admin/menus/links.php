@@ -33,52 +33,105 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 import('core/menu_service');
 
-$id = retrieve(REQUEST, 'id', 0);
-$id_post = retrieve(POST, 'id', 0);
+$menu_id = retrieve(REQUEST, 'id', 0);
 
 $action = retrieve(REQUEST, 'action', '');
-$action_post = retrieve(POST, 'action', '');
 
-if ($action_post == 'save')
-{   // Save a Menu (New / Edit)
-    import('content/parser/parser');
-    $menu = null;
+if ($action == 'save')
+{   // Save a Menu (New / Edit)    
     
-    if (!empty($id_post))
+	//Properties of the menu we are creating/editing
+	$title = retrieve(POST, 'name', '');
+	$type = retrieve(POST, 'type', 0);    
+    
+    //Creation of the Menu objet which is going to be built
+    //Even if we edit it, we rebuild it and erase it in the database
+    $menu = new LinksMenu($title, '', '', $type);
+    
+    //If we edit the menu
+    if ($menu_id > 0)
     {   // Edit the Menu
-        $menu = MenuService::load($id_post);
-        $menu->set_title(retrieve(POST, 'name', ''));
-    }
-    else
-    {   // Add the new Menu
-        $menu = new ContentMenu(retrieve(POST, 'name', ''));
+        $menu->id($menu_id);
     }
     
-    if (!of_class($menu, LINKS_MENU__CLASS))
-        redirect('menus.php');
+    //Menu enabled?
+    $menu->enabled(retrieve(POST, 'enabled', MENU_NOT_ENABLED));
     
-    $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
     if ($menu->is_enabled())
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+        
+    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
     
-    //TODO Parser le menu (ajouts des fils ici)
+    function build_menu_from_form(&$elements_ids, &$parent_menu)
+    {
+    	$array_size = count($elements_ids);
+    	
+    	//If it's a menu, there's only one element
+    	if ($array_size == 1)
+    	{
+    		$menu_element_id = $elements_ids['id'];
+    		$menu = new LinksMenuLink(
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
+    		);
+    		//We add it to its father
+    		$parent_menu->add($menu);
+    	}
+    	else
+    	{
+    		$menu_element_id = $elements_ids['id'];
+    		$menu = new LinksMenu(
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
+    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
+    		);
+    		//We unset the id key of the array
+    		unset($elements_ids['id']);
+    		$array_size = count($elements_ids);
+	    	for ($i = 0; $i < $array_size; $i++)
+	    	{
+	    		$menu_element_id = $elements_ids[$i];
+	    		$menu = new LinksMenu(
+	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
+	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
+	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
+	    		);
+	    		//We build all its children
+	    		build_menu_from_form($elements_ids[++$i], $menu);
+	    		//We add it to its father
+	    		$parent_menu->add($menu);
+	    	}
+    	}
+    }
+    
+    //We build the array representing the tree
+    $result = array();
+    parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
+    //We build the tree
+    if (!empty($result['tree']))
+    {
+    	build_menu_from_form($result['amp;menu'], $menu);
+       	//Code de test
+    	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
+    	echo $menu->display($edit_menu_tpl);
+    	exit;
+    }
     
     MenuService::save($menu);
     MenuService::generate_cache();
-    
-    redirect('menus.php#m' . $id_post);
+    die('ici');
+    redirect('menus.php#m' . $menu_id);
 }
-elseif ($action == 'delete' && !empty($id))
+elseif ($action == 'delete' && !empty($menu_id))
 {   // Delete a Menu
-    MenuService::delete($id);
+    MenuService::delete($menu_id);
     MenuService::generate_cache();
     
     redirect('menus.php');
 }
 
 // Display the Menu administration
-$edit = !empty($id);
 
 include('lateral_menu.php');
 lateral_menu();
@@ -99,8 +152,8 @@ $tpl->assign_vars(array(
 	'L_MODO' => $LANG['modo'],
 	'L_ADMIN' => $LANG['admin'],
 	'L_LOCATION' => $LANG['location'],
-	'L_ACTION_MENUS' => ($edit) ? $LANG['menus_edit'] : $LANG['add'],
-	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
+	'L_ACTION_MENUS' => ($menu_id > 0) ? $LANG['menus_edit'] : $LANG['add'],
+	'L_ACTION' => ($menu_id > 0) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
     'L_TYPE' => $LANG['type'],
@@ -124,10 +177,10 @@ $array_location = array(
     BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
 );
 
-if ($edit)
+if ($menu_id > 0)
 {
 	/*
-	$menu = MenuService::load($id);
+	$menu = MenuService::load($menu_id);
 	
     if (!of_class($menu, LINKS_MENU__CLASS))
         redirect('menus.php');*/
@@ -169,10 +222,11 @@ if ($edit)
 	$block = $menu->get_block();
 	
 	$tpl->assign_vars(array(
-		'IDMENU' => $id,
+		'IDMENU' => $menu_id,
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
-		'TEST' => $menu->display($edit_menu_tpl)
+		'MENU_ID' => $menu->get_id(),
+		'MENU_TREE' => $menu->display($edit_menu_tpl)
 	));
 }
 else

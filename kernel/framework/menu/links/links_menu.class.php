@@ -116,9 +116,7 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
-            'DEPTH' => $this->depth,
-            'ID' => $uid = get_uid(),
-            'ID_VAR' => $uid
+            'DEPTH' => $this->depth
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);

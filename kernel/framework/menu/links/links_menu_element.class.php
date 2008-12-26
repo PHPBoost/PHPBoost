@@ -120,7 +120,9 @@ class LinksMenuElement extends Menu
             'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
             'IMG' => $this->get_image(),
-            'URL' => $this->get_url()
+            'URL' => $this->get_url(),
+            'ID' => $uid = get_uid(),
+            'ID_VAR' => $uid
         ));
     }
 	

@@ -39,6 +39,14 @@ class Authorizations
 		$sum_auth = 0;
 		$nbr_arg = func_num_args();
 		
+		//Si le nom du formulaire select est passé en paramètre, c'est le dernier
+		$idselect = '';
+		if (gettype(func_get_arg($nbr_arg - 1)) == 'string')
+		{
+			$nbr_arg--;
+			$idselect = func_get_arg($nbr_arg - 1);
+		}
+		
 		//Récupération du dernier argument, si ce n'est pas un tableau => booléen demandant la sélection par défaut de l'admin.
 		$admin_auth_default = true;
 		if ($nbr_arg > 1)
