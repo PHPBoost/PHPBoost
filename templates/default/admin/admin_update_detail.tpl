@@ -1,6 +1,6 @@
 <div id="admin_quick_menu">
     <ul>
-        <li class="title_menu">Mises � jour</li>
+        <li class="title_menu">{L_WEBSITE_UPDATES}</li>
         <li>
             <a href="admin_updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
             <br />
