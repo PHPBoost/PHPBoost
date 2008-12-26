@@ -17,8 +17,7 @@ h3.title{
 /* Sous-Titres */
 h5.sub_title{ /* Titre des menu */
 	font-size:12px;
-	color: #1F627F;
-	padding-top:15px;
+	color:#658BD1;
 }
 h6.sub_title2{ /* Sous titre dans les menu */
 	font-size:12px;
@@ -26,15 +25,15 @@ h6.sub_title2{ /* Sous titre dans les menu */
 	padding-top:4px;
 	text-indent:10px;
 	width:155px;
-	height:16px;
+	height:32px;
 	color:#E53B00;
 }
 
-.block_top, th{ /* Entête de conteneur et des tableaux */
+.block_top, th{ /* Entï¿½te de conteneur et des tableaux */
 	padding:5px 6px;
 	color:#FFFFFF;
 	background:#3187C7 url(images/msg_top_row.png) repeat-x;
-	border:1px solid #06699A;
+	border:1px solid #325889;
 	text-align:left;
 	font-size:0.75em;
 	font-weight:bold;
@@ -59,6 +58,45 @@ hr {
 	margin:auto;
 	margin-top:20px;
 }
+
+div.block_title span{
+	text-transform:uppercase;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#E53B00;
+	background:#FFFFFF;
+	border:1px solid #71BAF1;
+	padding:2px 8px;
+	padding:1px 0;
+    vertical-align:middle;
+	position:relative;
+	margin-top:-0.4em;
+    padding-left:10px;
+    padding-right:10px;
+	line-height:1.2em;
+}
+div.block_title {
+	position:relative;
+	top:-1.2em;
+}
+
+div.block_content{
+	width:95%;
+	margin:auto;
+	margin-top:20px;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #71BAF1;
+	background:#F1F4F6;
+	position:relative;
+}
+
+div.block_content ul {
+    padding-left:20px;
+}
+
 input, textarea, optgroup, select, .xmlhttprequest_preview{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	font-size:11px;
@@ -79,9 +117,17 @@ input:focus, textarea:focus{
 	border:1px solid #02A3FF;
 	background-color:#EFF9FF;
 }
+fieldset { 
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
 fieldset textarea.post{
 	width:90%;
 	display:inline;	
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 textarea{
 	display:block;
@@ -90,6 +136,9 @@ textarea{
 }
 input.text{
 	padding:2px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 input.submit{
 	border:1px solid #B0C1CB;	
@@ -98,7 +147,16 @@ input.submit{
 	padding:1px;
 	font-weight:bold;
 	font-size:10px;
-	background:#A9CEE9 url(images/form/form.png) repeat-x;
+	background:#A9CEE9 url(images/form.png) repeat-x;
+}
+input.file{
+	border:1px solid #B0C1CB;	
+	border-top:1px solid #D9EBF6;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+	background:#A9CEE9 url(images/form.png) repeat-x;
 }
 input.reset{
 	border:1px solid #B0C1CB;	
@@ -108,7 +166,7 @@ input.reset{
 	font-weight:bold;
 	font-size:10px;
 	padding:1px;
-	background:#FFFFFF url(images/form/form.png) repeat-x;
+	background:#FFFFFF url(images/form.png) repeat-x;
 }
 input.reset:hover, input.submit:hover{
 	border:1px solid #0578CC;
@@ -119,7 +177,10 @@ optgroup, select{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	cursor:pointer;
 	vertical-align:middle;
-	width:auto;	
+	width:auto;		
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 optgroup{
 	font-weight:bold;
@@ -145,6 +206,9 @@ legend{
 	top:0;
 	vertical-align:middle;
 	text-transform:uppercase;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 legend{ 
 	top:-1.2em; 
@@ -161,6 +225,9 @@ fieldset{
 	border:1px solid #71BAF1;
 	background:#F1F4F6;
 	position:relative;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 fieldset.fieldset_submit{
 	margin-top:-10px;
@@ -232,7 +299,7 @@ fieldset dl dd label:hover{
 }
 
 
-/* Messages postés par les membres (messages privés, commentaires, etc...) 
+/* Messages postï¿½s par les membres (messages privï¿½s, commentaires, etc...) 
 --------------------------------------*/
 /* Classe du lien du pseudo des messages */
 a.msg_link_pseudo{
@@ -260,13 +327,13 @@ a.msg_link_pseudo:hover {
 .msg_container2{ /*  Case contenant l'ensemble du message => Couleur alternative */
 	background:#F4F9FA url(images/border.gif) repeat-y right;
 }
-/* Barre supérieur des messages */
+/* Barre supï¿½rieur des messages */
 .msg_top_l{
 	margin-right:0px !important;
 	margin-right:-3px;
 	height:34px;
-	width:21px;
-	background:#C4DBE8 url(images/msg_top_l.png) no-repeat left;
+	width:29px;
+	background:#91BAD8 url(images/msg_top_l.png) no-repeat left;
 	float:left;
 }
 .msg_top_r{
@@ -274,7 +341,7 @@ a.msg_link_pseudo:hover {
 	margin-left:-3px;
 	height:34px;
 	width:21px;
-	background:#C4DBE8 url(images/msg_top_r.png) no-repeat right;
+	background:#91BAD8 url(images/msg_top_r.png) no-repeat right;
 	float:right;
 }
 .msg_top a{
@@ -335,7 +402,7 @@ a.msg_link_pseudo:hover {
 .msg_contents2{ /* Case du message => Couleur alternative */
 	background:#F4F9FA;
 }
-.msg_contents_overflow{	/* Case du contents du message, évite que les images trop grandes déforme */ 
+.msg_contents_overflow{	/* Case du contents du message, ï¿½vite que les images trop grandes dï¿½forme */ 
 	width:99%;
 	height:auto;
 	min-height:80px;
@@ -360,7 +427,7 @@ a.msg_link_pseudo:hover {
 	max-width:99%;
 	overflow:hidden;
 }
-.msg_bottom_l{ /* Barre inférieure des messages */
+.msg_bottom_l{ /* Barre infï¿½rieure des messages */
 }
 .msg_bottom_r{
 }
@@ -369,7 +436,7 @@ a.msg_link_pseudo:hover {
 	background:#FFFFFF;
 	padding-top:6px;
 	padding-left:6px;
-	border:1px solid #1171A3;
+	border:1px solid #71BAF1;
 	border-top:1px dotted #C4CED6;
 }
 
@@ -381,7 +448,7 @@ a.msg_link_pseudo:hover {
 	width:98%;
 	margin:auto;
 }
-.module_top_l{ /* Barre supérieur des modules */
+.module_top_l{ /* Barre supï¿½rieur des modules */
 }
 .module_top_r{
 }
@@ -401,7 +468,7 @@ a.msg_link_pseudo:hover {
 	clear:both;
 	text-align:justify;
 }
-.module_bottom_l{ /* Barre inférieure des modules */
+.module_bottom_l{ /* Barre infï¿½rieure des modules */
 }
 .module_bottom_r{
 }
@@ -411,7 +478,7 @@ a.msg_link_pseudo:hover {
 	padding-left:6px;
 	font-size:12px;
 }
-.module_table, .block_container{ /* Tableau global, utilisé dans les différents modules */
+.module_table, .block_container{ /* Tableau global, utilisï¿½ dans les diffï¿½rents modules */
 	width:98%;
 	margin:auto;
 	border-spacing:0px;
@@ -427,31 +494,27 @@ a.msg_link_pseudo:hover {
 	margin-top:10px;
 	padding-top:5px;
 	margin-bottom:10px;
+	border-top:1px solid #C4CED6;
 }
 .module_mini_top{
-	height:39px;
-	width:170px;
-	background:url(images/mini_module_top.png) no-repeat;
+	height:24px;
 	font-weight:bold;
 	text-align:center;
 }
 .module_mini_contents{
-	text-align:center;
-	width:170px;
-	background:url(images/mini_module.png) repeat-y;
-	padding-left:12px;
+	border-top:none;
+	border-bottom:none;
+	text-align:center; 
+	padding:4px;
+	padding-top:5px;
+	padding-bottom:0px;
 }
-.module_mini_bottom{ /* Bordure inférieur des modules minis */ 
-	height:37px;
-	width:170px;
-	background:url(images/mini_module_bottom.png) no-repeat;
+.module_mini_bottom{ /* Bordure infï¿½rieur des modules minis */ 
+	height:15px;
 }
 
 .label {
     font-weight:bold;
     font-size: 10px;
     color: #476a7f;
-}
-.bconnect{ 
-	background:url(images/connect.png);
 }

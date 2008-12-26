@@ -17,7 +17,7 @@
 }
 .row2, .block_contents2{
 	background:#F2F8F8;
-	border:1px solid #79a1b6;
+	border:1px solid #C4CED6;
 	padding:6px;
 	margin-bottom:-1px;
 }
@@ -35,6 +35,31 @@
 	padding:20px 6px;
 }
 
+.row_priority_very_high{
+    text-align:center;
+	background:#F3A29B;
+}
+
+.row_priority_high{
+    text-align:center;
+	background:#FFD5D1;
+}
+
+.row_priority_medium{
+    text-align:center;
+	background:#F5D5C6;
+}
+
+.row_priority_low{
+    text-align:center;
+	background:#ECDBB7;
+}
+
+.row_priority_very_low{
+    text-align:center;
+	background:#FFFFFF;
+}
+
 /* Case résultat recherche membre AJAX */
 .xmlhttprequest_result_search{
 	overflow:auto;
@@ -42,7 +67,7 @@
 	width:100px;	
 	overflow:auto;
 	font-size:11px;
-	background:#DEF2FF;
+	background:#EEF2F5;
 	border:1px solid #2C5169;
 	color:#061729;
 	padding:2px;
@@ -54,7 +79,7 @@
 	padding:6px 4px;
 	background:#AFD2E8;
 	border:1px solid #2C5169;
-	bottom:28px;
+	bottom:28px; 
 	width:204px;
 	z-index:100;
 }
@@ -81,10 +106,6 @@ a:hover{
 /* Liens petite taille */
 a.small_link{ 
 	font-size:10px;
-}
-a.connect{ 
-	font-size:10px;
-	color:#99FF99;
 }
 a.small_link:hover{ 
 	font-size:10px;
@@ -161,7 +182,7 @@ a.membre{
 	color:#0578CC;
 	text-align:center;
 	background:#F2F7FB;
-	border:1px solid #1171A3;
+	border:1px solid #C4CED6;
 	padding:4px 6px;
 	font-weight:bold;
 	font-size:12px;
@@ -212,10 +233,10 @@ a.membre{
 	background-position:5px;
 }
 .dynamic_menu li li a:hover{	
-	background:#C0DAE6;
+	background:#D7EDFA;
 	background-repeat:no-repeat;
 	background-position:5px;
-	border:1px solid #1171A3;
+	border:1px solid #0578CC;
 	padding-top:5px;
 	padding-bottom:5px;
 	cursor:pointer;
