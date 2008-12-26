@@ -33,49 +33,48 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 import('core/menu_service');
 
-$id = retrieve(GET, 'id', 0);
-$idmodule = retrieve(GET, 'idmodule', '', TSTRING_UNSECURE);
-$edit = retrieve(GET, 'edit', false);
-$type = retrieve(GET, 'type', 1);
+$id = retrieve(REQUEST, 'id', 0);
 $id_post = retrieve(POST, 'id', 0);
-$action = retrieve(POST, 'action', '');
 
-//Si c'est confirmé on execute
-if ($action == 'edit' && !empty($id_post)) //Modification d'un menu déjà existant.
-{
+$action = retrieve(REQUEST, 'action', '');
+$action_post = retrieve(POST, 'action', '');
+
+if ($action_post == 'save')
+{   // Save a Menu (New / Edit)
+    import('content/parser/parser');
+    $menu = null;
     
-    $menu = MenuService::load($id_post);
+    if (!empty($id_post))
+    {   // Edit the Menu
+        $menu = MenuService::load($id_post);
+        $menu->set_title(retrieve(POST, 'name', ''));
+    }
+    else
+    {   // Add the new Menu
+        $menu = new ContentMenu(retrieve(POST, 'name', ''));
+    }
+    
+    if (!of_class($menu, LINKS_MENU__CLASS))
+        redirect('menus.php');
+    
     $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
     if ($menu->is_enabled())
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    $menu->set_content(!empty($_POST['contents']) ? strparse($_POST['contents']) : '');
+    
+    //TODO Parser le menu (ajouts des fils ici)
     
     MenuService::save($menu);
     MenuService::generate_cache();
     
-    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $id_post);
+    redirect('menus.php#m' . $id_post);
 }
-elseif ($action == 'add') //Ajout d'un menu.
-{
-    $menu = new ContentMenu(retrieve(POST, 'name', ''));
-    $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
-    if ($menu->is_enabled())
-        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    $menu->set_content(!empty($_POST['contents']) ? strparse($_POST['contents']) : '');
-    
-    MenuService::save($menu);
-    MenuService::generate_cache();
-    
-    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $last_menu_id);
-}
-elseif ($action =='delete' && !empty($id)) //Suppression du menu.
-{
+elseif ($action == 'delete' && !empty($id))
+{   // Delete a Menu
     MenuService::delete($id);
     MenuService::generate_cache();
     
-    redirect(HOST . DIR . '/admin/menus/menus.php');
+    redirect('menus.php');
 }
 
 // Display the Menu administration
