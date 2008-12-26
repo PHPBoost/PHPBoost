@@ -104,15 +104,15 @@ release({L_RELEASE_FORMAT});
 			# IF C_START_LEFT #
 			   <td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
 			# ENDIF #
-		<td>
-			<div id="main">
-				<div id="links" class="block">
-					&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
-					# START link_bread_crumb #
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
-					# END link_bread_crumb #
-				</div>	
-				<div id="top_contents">
-					{MENUS_TOPCENTRAL_CONTENT}
-				</div>
-		        <div id="main_content" class="block">&nbsp;
+			<td>
+				<div id="main">
+					<div id="links" class="block">
+						&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
+						# START link_bread_crumb #
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
+						# END link_bread_crumb #
+					</div>	
+					<div id="top_contents">
+						{MENUS_TOPCENTRAL_CONTENT}
+					</div>
+			        <div id="main_content" class="block">&nbsp;

@@ -209,6 +209,13 @@ legend {
 
 legend {
     top: -1.2em;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 4px;
+    -moz-border-radius: 12px;
+    -khtml-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
 }
 
 * html legend {
@@ -224,6 +231,10 @@ fieldset {
     border: 1px solid #71BAF1;
     background: #F1F4F6;
     position: relative;
+    -moz-border-radius: 12px;
+    -khtml-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
 }
 
 fieldset.fieldset_submit {
@@ -346,21 +357,23 @@ a.msg_link_pseudo:hover {
 
 /* Barre supérieur des messages */
 .msg_top_l {
+    float: left;
     margin-right: 0px !important;
     margin-right: -3px;
     height: 34px;
     width: 29px;
-    background: #91BAD8 url(images/msg_top_l.png) no-repeat left;
-    float: left;
+    background-color: #ffffff;
+    border-bottom: 1px #cccccc solid;
 }
 
 .msg_top_r {
+    float: right;
     margin-left: 0px !important;
     margin-left: -3px;
     height: 34px;
     width: 21px;
-    background: #91BAD8 url(images/msg_top_r.png) no-repeat right;
-    float: right;
+    background-color: #ffffff;
+    border-bottom: 1px #cccccc solid;
 }
 
 .msg_top a {
@@ -369,11 +382,12 @@ a.msg_link_pseudo:hover {
 
 .msg_top {
     height: 25px;
-    background: #FFFFFF url(images/msg_top.png) repeat-x;
+    background: #ffffff;
     padding-left: 6px;
     margin-left: 20px;
     margin-right: 15px;
     padding-top: 9px;
+    border-bottom: 1px #cccccc solid;
 }
 
 .msg_pseudo_mbr { /* Pseudo du membre */
