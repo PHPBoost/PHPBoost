@@ -43,8 +43,9 @@ a.forum_link_pseudo:hover {
 }
 /* Barre de liens du forum */
 .forum_links{
-	background:#016798 url(images/msg_top_row.png) repeat-x;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
 	padding:6px;
+	border:2px solid #D1E3F6;
 }
 .forum_links a{ /* Couleur des liens */
 	color:#FFFFFF;
@@ -58,7 +59,7 @@ a.forum_link_pseudo:hover {
 /* Barre des textes relatifs aux colonnes */
 .forum_text_column {	
 	height:20px;
-	background:#3187C7 url(images/msg_text_column.png) repeat-x;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
 	border-bottom:1px solid #55819D;
 	font-size:10px;
 	color:#FFFFFF;	
@@ -98,13 +99,8 @@ a.forum_link_pseudo:hover {
 }
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
 .forum_action{
-	width:550px;
-	margin:auto;
-	background:#C0DAE6;
-	border:1px solid #1171A3;
-	border-spacing:1px;
 	text-align:center;
-	-moz-border-radius:0.4em;
+	margin-top:5px;
 }
 /* Les des catégories de niveau 0 */
 a.forum_link_cat{
@@ -113,7 +109,7 @@ a.forum_link_cat{
 /* Affichage des membres en ligne */
 .forum_online{
 	background:#FFFFFF;
-	border:2px solid #1171A3;
+	border:2px solid #D1E3F6;
 	color:#000000;
 	border-top:none;
 	padding:6px;
@@ -139,36 +135,37 @@ a.forum_link_cat{
 .module_top_l{ /* Barre supérieur des modules */
 	margin-right:0px !important;
 	margin-right:-3px;
-	width:8px;
-	height:24px;
+	width:29px;
+	height:34px;
 	background:url(images/msg_top_l.png) no-repeat left;
 	float:left;
 }
 .module_top_r{
 	margin-left:0px !important;
 	margin-left:-3px;
-	width:8px;
-	height:24px;
+	width:21px;
+	height:34px;
 	background:url(images/msg_top_r.png) no-repeat right;
 	float:right;
 }
 .module_top{
-	height:20px;
+	height:25px;
 	background:url(images/msg_top.png) repeat-x;
-	margin-left:7px;
-	margin-right:7px;
-	padding-top:4px;
-	color:#0578CC;
+	padding-left:6px;
+	margin-left:20px;
+	margin-right:15px;
+	padding-top:9px;
+	color:#FFFFFF;
 	font-weight:normal;
 	border-bottom:none;
 }
 .module_top a{
-	color:#1171A3;
+	color:#FFFFFF;
 }
 .module_contents{ /* Contenu des modules */
 	background:#FFFFFF;
-	border-left:1px solid #1171A3;	
-	border-right:1px solid #1171A3;	
+	border-left:1px solid #71BAF1;	
+	border-right:1px solid #71BAF1;	
 	border-bottom:1px solid #FFFFFF;	
 	clear:both;
 }

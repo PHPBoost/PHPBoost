@@ -1,9 +1,9 @@
 /* --------------------------------------
 		admin.css
-Contient les classes supplémentaires pour l'administration.
+Contient les classes supplï¿½mentaires pour l'administration.
 --------------------------------------*/
 
-/* Entête de la page */
+/* Entï¿½te de la page */
 div#header_admin{
 }
 /* Menu de lien horizontal */
@@ -11,26 +11,28 @@ div#sub_header_admin{
 }
 /* Lien du subheader */
 div#sub_header_admin .dynamic_menu{
-	padding-top:15px;
-	margin-left:60px;
+	margin-top:-31px;
+	margin-left:190px;
 }
 /* Conteneur principal */
 div#admin_main{
-	width:978px;
-	padding-left:5px;
+	padding:0px 6px;
+	border-left:1px solid #1C618C;	
+	border-right:1px solid #1C618C;	
 }
 /* Conteneurs */
 div#admin_contents{
 	height:450px;
 	margin-left:170px;	
+	border-left:1px solid #1C618C;	
 }
 html>body div#admin_contents{
 	height:auto;
 	min-height:450px;
 }
-/* Menu déroulants verticaux */
+/* Menu dï¿½roulants verticaux */
 div#admin_quick_menu{
-	width:185px;
+	width:155px;
 	float:left;
 	text-align:center;
 	padding-top:5px;
@@ -41,9 +43,17 @@ div#admin_quick_menu ul{
 	margin-top:12px;
 }
 div#admin_quick_menu li{
-	display:block;
-	width:160px;
-	padding:15px 0px;
+    display:block;
+    width:160px;
+    padding:15px 0px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+div#admin_quick_menu li a.quick_link{
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 div#admin_quick_menu li.title_menu{
 	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
@@ -67,9 +77,6 @@ div#admin_quick_menu li a.quick_link{
 	text-decoration:none;
 	line-height:2.2em;
 }
-#dynamic_menu li ul {
-	margin-top:1px;
-}
 
 /* Tableaux de l'administration */
 .module_table, .block_container{
@@ -81,7 +88,7 @@ div#admin_quick_menu li a.quick_link{
 	margin-top:15px;
 }
 
-/* Fond des catégories dans l'administration */
+/* Fond des catï¿½gories dans l'administration */
 .management_cat_admin{
 	width:100%;
 	height:20px;
@@ -89,12 +96,11 @@ div#admin_quick_menu li a.quick_link{
 	padding:4px 0px;
 }
 
-/* Liens vers les menus étendus */
+/* Liens vers les menus ï¿½tendus */
 a.admin_extend_link{
 	text-decoration:none;
-	color:#3465A4;
+	color:#FFFFFF;
 }
-
 /* Coloration des moteur de recherche */
 .robot{
 	color:#FF6600; 

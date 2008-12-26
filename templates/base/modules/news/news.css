@@ -1,10 +1,9 @@
 /* News */
 /* Contenu de la news */
 .news_container{	
-	width:99%;
+	width:100%;
 	margin:auto;
 	margin-bottom:25px;
-	padding-left:3px;
 }
 /* Barre supérieur des news */
 .news_top_l{
@@ -26,22 +25,18 @@
 a.news_title{
 	font-size:12px;
 	font-weight:bold;
-	color:#FFFFFF;
+	color:#E53B00;
 }
 .news_content{
-	background:#C4DBE8;
 	padding:8px;
 	text-align:justify;
 }
 /* Barre inférieure des news */
 .news_bottom_l{
-	background:#C4DBE8;
 }
 .news_bottom_r{
-	background:#C4DBE8;
 }
 .news_bottom{
-	background:#C4DBE8;
 	height:18px;
 	font-size:10px;
 	padding-left:6px;

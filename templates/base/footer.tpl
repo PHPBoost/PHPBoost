@@ -1,14 +1,13 @@
 		</div>
-        		<div id="bottom_contents">
+        <div id="bottom_contents">
 			{MENUS_BOTTOMCENTRAL_CONTENT}
 		</div>
 	</div>
 	<div id="top_footer">
 		{MENUS_TOP_FOOTER_CONTENT}
-
 		<div class="spacer"></div>
-	</div></div>
-        <div id="footer">
+	</div>
+	<div id="footer">
 		{MENUS_FOOTER_CONTENT}
 		<span>
 			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com/news/news.php" title="PHPBoost">PHPBoost 2.1</a> {L_PHPBOOST_RIGHT}
@@ -26,6 +25,6 @@
 		# ENDIF #
 	</div>
 </div>
-		<span id="scroll_bottom_page"></span>
+		<div id="scroll_bottom_page" />
 	</body>
 </html>
