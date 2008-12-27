@@ -55,16 +55,17 @@ class LinksMenuLink extends LinksMenuElement
      * @param Template $template the template to use
      * @return string the menu parsed in xHTML
      */
-	function display($template)
+	function display($template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
         // Stop if the user isn't authorised
         if (!$this->_check_auth())
             return '';
             
-        parent::_assign($template);
+        parent::_assign($template, $mode);
   		$template->assign_vars(array(
   			'C_LINK' => true
   		));
+  		
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
