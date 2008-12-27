@@ -127,7 +127,7 @@ class LinksMenuElement extends Menu
      * @access protected
      * @param Template $template the template on which we gonna assign vars
      */
-    function _assign(&$template, $mode)
+    function _assign(&$template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
         $template->assign_vars(array(
             'C_IMG' => !empty($this->image),
