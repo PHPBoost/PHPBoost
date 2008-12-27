@@ -165,7 +165,16 @@ class LinksMenu extends LinksMenuElement
     /**
      * @return string the menu type
      */
+    
     function get_type() { return $this->type; }
+    
+    /**
+     * Sets the type of the menu
+     *
+     * @param string $type Type of the menu
+     */
+    function set_type($type) { $this->type = $type; }
+    
     /**
      * @return LinksMenuElement[] the menu children elements
      */

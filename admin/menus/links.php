@@ -44,25 +44,6 @@ if ($action == 'save')
 	$title = retrieve(POST, 'name', '');
 	$type = retrieve(POST, 'type', VERTICAL_MENU);    
     
-    //Creation of the Menu objet which is going to be built
-    //Even if we edit it, we rebuild it and erase it in the database
-    $menu = new LinksMenu($title, '', '', $type);
-    $menu->set_title($title);
-    
-    //If we edit the menu
-    if ($menu_id > 0)
-    {   // Edit the Menu
-        $menu->id($menu_id);
-    }
-    
-    //Menu enabled?
-    $menu->enabled(retrieve(POST, 'enabled', MENU_NOT_ENABLED));
-    
-    if ($menu->is_enabled())
-        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
-        
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
-    
     function build_menu_from_form(&$elements_ids)
     {
     	$array_size = count($elements_ids);
@@ -127,6 +108,27 @@ if ($action == 'save')
     	//We build the menu
     	$menu = build_menu_from_form($menu_tree);
     }
+    
+    //Creation of the Menu objet which is going to be built
+    //Even if we edit it, we rebuild it and erase it in the database
+    //$menu = new LinksMenu($title, '', '', $type);
+    $menu->set_title($title);
+    $menu->set_type($type);
+    
+    //If we edit the menu
+    if ($menu_id > 0)
+    {   // Edit the Menu
+        $menu->id($menu_id);
+    }
+    
+    //Menu enabled?
+    $menu->enabled(retrieve(POST, 'enabled', MENU_NOT_ENABLED));
+    
+    if ($menu->is_enabled())
+        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
+        
+    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
+    
     
     MenuService::save($menu);
    	MenuService::generate_cache();
