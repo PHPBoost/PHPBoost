@@ -42,11 +42,12 @@ if ($action == 'save')
     
 	//Properties of the menu we are creating/editing
 	$title = retrieve(POST, 'name', '');
-	$type = retrieve(POST, 'type', 0);    
+	$type = retrieve(POST, 'type', VERTICAL_MENU);    
     
     //Creation of the Menu objet which is going to be built
     //Even if we edit it, we rebuild it and erase it in the database
     $menu = new LinksMenu($title, '', '', $type);
+    $menu->set_title($title);
     
     //If we edit the menu
     if ($menu_id > 0)
@@ -123,19 +124,14 @@ if ($action == 'save')
     		$result['amp;menu']
     	);
     	
+    	//We build the menu
     	$menu = build_menu_from_form($menu_tree);
-    	
-    	echo '<pre>'; print_r($menu); echo '</pre>';
-       	//Code de test
-    	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
-    	echo $menu->display($edit_menu_tpl);
-    	exit;
     }
     
     MenuService::save($menu);
-    MenuService::generate_cache();
-    die('ici');
-    redirect('menus.php#m' . $menu_id);
+   	MenuService::generate_cache();
+    
+    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $menu->get_id());
 }
 elseif ($action == 'delete' && !empty($menu_id))
 {   // Delete a Menu
@@ -170,12 +166,7 @@ $tpl->assign_vars(array(
 	'L_ACTION' => ($menu_id > 0) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
-    'L_TYPE' => $LANG['type'],
-    'L_VERTICAL_MENU' => $LANG['vertical_menu'],
-    'L_HORIZONTAL_MENU' => $LANG['horizontal_menu'],
-    'L_TREE_MENU' => $LANG['tree_menu'],
-    'L_VERTICAL_SCROLL_MENU' => $LANG['vertical_scrolling_menu'],
-    'L_HORIZONTAL_SCROLL_MENU' => $LANG['horizontal_scrolling_menu']
+    'L_TYPE' => $LANG['type']
 ));
 
 //Localisation possibles.
@@ -191,16 +182,17 @@ $array_location = array(
     BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
 );
 
+$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
+
 if ($menu_id > 0)
 {
-	/*
 	$menu = MenuService::load($menu_id);
 	
     if (!of_class($menu, LINKS_MENU__CLASS))
-        redirect('menus.php');*/
-	
-	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
-	
+        redirect('menus.php');	
+}
+else
+{
 	$auth = array('r2' => 1, 'r1' => 1, 'm1' => 1);
 	$menu = new LinksMenu('Google', 'http://www.google.com', '', VERTICAL_SCROLLING_MENU);
 	$menu1 = new LinksMenu('Menu 1', 'http://www.google.com');
@@ -233,24 +225,26 @@ if ($menu_id > 0)
 	$amenu = array($menu1, $menu2, $menu3, $menu4, $menu5, $element1, $element2);
 	
 	$menu->add_array($amenu);
-    
-	$block = $menu->get_block();
-	
-	$tpl->assign_vars(array(
-		'IDMENU' => $menu_id,
-		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
-        'C_ENABLED' => $menu->is_enabled(),
-		'MENU_ID' => $menu->get_id(),
-		'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-		'MENU_NAME' => $menu->get_title()
-	));
 }
-else
+
+$block = $menu->get_block();
+	
+$tpl->assign_vars(array(
+	'IDMENU' => $menu_id,
+	'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+    'C_ENABLED' => $menu->is_enabled(),
+	'MENU_ID' => $menu->get_id(),
+	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+	'MENU_NAME' => $menu->get_title()
+));
+
+foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
-   $tpl->assign_vars(array(
-       'C_ENABLED' => true,
-       'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
-   ));
+	$tpl->assign_block_vars('type', array(
+		'NAME' => $type_name,
+		'L_NAME' => $LANG[$type_name . '_menu'],
+		'SELECTED' => $menu->get_type() == $type_name ? ' selected="selected"' : ''
+	));
 }
 
 $locations = '';

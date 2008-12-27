@@ -115,10 +115,10 @@ class LinksMenuElement extends Menu
      * @param Template $template Template according to which the menu must be displayed.
      * If it's not displayed, a default template will be used.
      * @return string the HTML code of the menu
+     * @abstract
      */
     function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
-    	return '';
     }
 	
     ## Private Methods ##
