@@ -9,11 +9,9 @@
 			<dl>
 				<dt><label for="type">{L_TYPE}</label></dt>
 				<dd><label> <select name="type" id="type">
-					<option value="vertical" selected="selected">{L_VERTICAL_MENU}</option>
-					<option value="horizontal" selected="selected">{L_HORIZONTAL_MENU}</option>
-					<option value="tree" selected="selected">{L_TREE_MENU}</option>
-					<option value="vertical_scroll" selected="selected">{L_VERTICAL_SCROLL_MENU}</option>
-					<option value="horizontal_scroll" selected="selected">{L_HORIZONTAL_SCROLL_MENU}</option>
+					# START type #
+					<option value="{type.NAME}"{type.SELECTED}>{type.L_NAME}</option>
+					# END type #
 				</select> </label></dd>
 			</dl>
 			<dl>

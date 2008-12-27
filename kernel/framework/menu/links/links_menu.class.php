@@ -138,7 +138,7 @@ class LinksMenu extends LinksMenuElement
         }
         
         // Menu assignment
-        parent::_assign($tpl);
+        parent::_assign($tpl, LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
         $tpl->assign_vars(array(
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
@@ -170,6 +170,17 @@ class LinksMenu extends LinksMenuElement
      * @return LinksMenuElement[] the menu children elements
      */
     function get_children() { return $this->elements; }
+    
+    /**
+     * static method which returns all the menu types
+     *
+     * @return string[] The list of the menu types
+     * @static
+     */
+    function get_menu_types_list()
+    {
+    	return array(VERTICAL_MENU, HORIZONTAL_MENU, TREE_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU);
+    }
 	
 	## Private Methods ##
 	

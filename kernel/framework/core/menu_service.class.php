@@ -106,8 +106,7 @@ class MenuService
         $Sql->query_close($result);
         
         return $menus;
-    }
-    
+    }    
     
     ## Menu ##
     
@@ -156,6 +155,7 @@ class MenuService
                     block='" . $block . "',
                     position='" . $menu->get_block_position() . "'
             WHERE id='" . $id_menu . "';";
+            $Sql->query_inject($query, __LINE__, __FILE__);
         }
         else
         {   // We have to insert the element in the database
@@ -169,8 +169,10 @@ class MenuService
                     '" . $block . "',
                     '" . $block_position . "'
                 );";
-        }
-        $Sql->query_inject($query, __LINE__, __FILE__);
+            $Sql->query_inject($query, __LINE__, __FILE__);
+            //The object has now an id, we set it
+            $menu->id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX. "menus"));
+        }        
         
         return true;
     }

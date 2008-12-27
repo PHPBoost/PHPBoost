@@ -177,7 +177,7 @@ class Menu
      * @access protected
      * @var int the element identifier, only used by the service
      */
-    var $id = -1;
+    var $id = 0;
     /**
      * @access protected
      * @var string the Menu title
