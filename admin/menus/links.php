@@ -62,7 +62,7 @@ if ($action == 'save')
         
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
     
-    function build_menu_from_form(&$elements_ids, &$parent_menu)
+    function build_menu_from_form(&$elements_ids)
     {
     	$array_size = count($elements_ids);
     	
@@ -76,7 +76,7 @@ if ($action == 'save')
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
     		);
     		//We add it to its father
-    		$parent_menu->add($menu);
+    		return $menu;
     	}
     	else
     	{
@@ -86,32 +86,38 @@ if ($action == 'save')
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
     		);
+    		
     		//We unset the id key of the array
     		unset($elements_ids['id']);
     		$array_size = count($elements_ids);
-	    	for ($i = 0; $i < $array_size; $i++)
+    		
+    		for ($i = 0; $i < $array_size; $i++)
 	    	{
-	    		$menu_element_id = $elements_ids[$i];
-	    		$menu = new LinksMenu(
-	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
-	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
-	    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
-	    		);
-	    		//We build all its children
-	    		build_menu_from_form($elements_ids[++$i], $menu);
-	    		//We add it to its father
-	    		$parent_menu->add($menu);
+	    		//We build all its children and add it to its father
+	    		$menu->add(build_menu_from_form($elements_ids[$i]));
 	    	}
+    		
+	    	return $menu;
     	}
+    	
+    	return;
     }
     
     //We build the array representing the tree
     $result = array();
     parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
+    
     //We build the tree
     if (!empty($result['tree']))
     {
-    	build_menu_from_form($result['amp;menu'], $menu);
+    	//The parsed tree is not absolutely regular, we correct it
+    	$id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
+    	$menu_tree = array_merge(
+    		array('id' => $id_first_menu),
+    		$result['amp;menu']
+    	);
+    	
+    	$menu = build_menu_from_form($menu_tree);
        	//Code de test
     	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
     	echo $menu->display($edit_menu_tpl);
