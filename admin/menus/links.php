@@ -75,6 +75,7 @@ if ($action == 'save')
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
     		);
+    		$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth'));
     		//We add it to its father
     		return $menu;
     	}
@@ -86,6 +87,7 @@ if ($action == 'save')
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
     			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
     		);
+    		$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth'));
     		
     		//We unset the id key of the array
     		unset($elements_ids['id']);
@@ -112,12 +114,18 @@ if ($action == 'save')
     {
     	//The parsed tree is not absolutely regular, we correct it
     	$id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
-    	$menu_tree = array_merge(
+    	$result['amp;menu'][0] = array_merge(
     		array('id' => $id_first_menu),
+    		$result['amp;menu'][0]
+    	);
+    	$menu_tree = array_merge(
+    		array('id' => 0),
     		$result['amp;menu']
     	);
     	
     	$menu = build_menu_from_form($menu_tree);
+    	
+    	echo '<pre>'; print_r($menu); echo '</pre>';
        	//Code de test
     	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
     	echo $menu->display($edit_menu_tpl);

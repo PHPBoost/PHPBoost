@@ -43,8 +43,7 @@ class Authorizations
 		$idselect = '';
 		if (gettype(func_get_arg($nbr_arg - 1)) == 'string')
 		{
-			$nbr_arg--;
-			$idselect = func_get_arg($nbr_arg - 1);
+			$idselect = func_get_arg(--$nbr_arg);
 		}
 		
 		//Récupération du dernier argument, si ce n'est pas un tableau => booléen demandant la sélection par défaut de l'admin.
@@ -59,7 +58,7 @@ class Authorizations
 		}
 		//On balaye les tableaux passés en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
-			Authorizations::_get_auth_array(func_get_arg($i), '', $array_auth_all, $sum_auth);
+			Authorizations::_get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
 			
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
