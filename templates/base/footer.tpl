@@ -5,7 +5,9 @@
 					        </div>
 						</td>
 						# IF C_START_RIGHT #
-					       <td id="right_menu"><div>{MENUS_RIGHT_CONTENT}</div></td>
+							# IF MENUS_RIGHT_CONTENT #
+					        	<td id="right_menu"><div>{MENUS_RIGHT_CONTENT}</div></td>
+				        	# ENDIF #
 					    # ENDIF #
 				    </tr>
 			    </table>

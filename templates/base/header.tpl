@@ -102,7 +102,9 @@ release({L_RELEASE_FORMAT});
 	<table class="main_container">
 		<tr>
 			# IF C_START_LEFT #
-			   <td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
+				# IF MENUS_LEFT_CONTENT #
+			   	    <td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
+		   	    # ENDIF #
 			# ENDIF #
 			<td>
 				<div id="main">
