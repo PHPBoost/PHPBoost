@@ -109,9 +109,6 @@ if ($action == 'save')
     	$menu = build_menu_from_form($menu_tree);
     }
     
-    //Creation of the Menu objet which is going to be built
-    //Even if we edit it, we rebuild it and erase it in the database
-    //$menu = new LinksMenu($title, '', '', $type);
     $menu->set_title($title);
     $menu->set_type($type);
     
