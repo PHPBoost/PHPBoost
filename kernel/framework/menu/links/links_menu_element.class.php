@@ -32,6 +32,8 @@
 import('menu/menu');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
+define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
+define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -106,15 +108,26 @@ class LinksMenuElement extends Menu
     {
         return str_replace('\'', '##', parent::cache_export_end());
     }
-	## Private Methods ##
+    
+    /**
+     * Displays the menu according to the given template
+     *
+     * @param Template $template Template according to which the menu must be displayed.
+     * If it's not displayed, a default template will be used.
+     * @return string the HTML code of the menu
+     */
+    function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+    {
+    	return '';
+    }
 	
-	
+    ## Private Methods ##
     /**
      * @desc Assign tpl vars
      * @access protected
      * @param Template $template the template on which we gonna assign vars
      */
-    function _assign(&$template)
+    function _assign(&$template, $mode)
     {
         $template->assign_vars(array(
             'C_IMG' => !empty($this->image),
@@ -124,6 +137,14 @@ class LinksMenuElement extends Menu
             'ID' => $uid = get_uid(),
             'ID_VAR' => $uid
         ));
+        
+    	//Full displaying: we also show the authorization formulary
+  		if ($mode)
+  		{
+  			$template->assign_vars(array(
+  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->auth, array(), 'menu_element_' . $uid . '_auth')
+  			));
+		}
     }
 	
     

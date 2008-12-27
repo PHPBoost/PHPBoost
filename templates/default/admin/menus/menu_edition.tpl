@@ -22,7 +22,7 @@
 			<legend>Propriétés</legend>
 			<dl>
 				<dt><label>Autorisations</label></dt>
-				<dd>auth</dd>
+				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>
 		<ul class="menu_link_list">
@@ -49,7 +49,7 @@
 			<legend>Propriétés</legend>
 			<dl>
 				<dt><label for="menu_element_{ID}_auth">Autorisations</label></dt>
-				<dd>auth</dd>
+				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>
     </li>

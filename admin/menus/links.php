@@ -187,9 +187,10 @@ if ($menu_id > 0)
 	
 	$edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
 	
-	$auth = array('r2' => 1, '1' => 0);
+	$auth = array('r2' => 1, 'r1' => 1, 'm1' => 1);
 	$menu = new LinksMenu('Google', 'http://www.google.com', '', VERTICAL_SCROLLING_MENU);
 	$menu1 = new LinksMenu('Menu 1', 'http://www.google.com');
+	$menu1->set_auth($auth);
 	$menu2 = new LinksMenu('Menu 2', 'http://www.google.com');
 	$menu3 = new LinksMenu('Menu 3', 'http://www.google.com');
 	$menu4 = new LinksMenu('Menu 4', 'http://www.google.com');
@@ -226,7 +227,8 @@ if ($menu_id > 0)
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
 		'MENU_ID' => $menu->get_id(),
-		'MENU_TREE' => $menu->display($edit_menu_tpl)
+		'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+		'MENU_NAME' => $menu->get_title()
 	));
 }
 else

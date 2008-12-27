@@ -91,7 +91,7 @@ class LinksMenu extends LinksMenuElement
 	 * @param Template $template the template to use
 	 * @return string the menu parsed in xHTML
 	 */
-	function display($template = false)
+	function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 	    // Stop if the user isn't authorised
 		if (!$this->_check_auth())
@@ -107,11 +107,11 @@ class LinksMenu extends LinksMenuElement
         // Children assignment
         foreach ($this->elements as $element)
 		{   // We use a new Tpl to avoid overwrite issues
-			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl->copy())));
+			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display($original_tpl->copy(), $mode)));
 		}
 		
 		// Menu assignment
-		parent::_assign($tpl);
+		parent::_assign($tpl, $mode);
         $tpl->assign_vars(array(
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
