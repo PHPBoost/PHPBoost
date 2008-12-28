@@ -6,6 +6,14 @@
 		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
+		<!-- Default CSS -->
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/content.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
+        <!-- Theme CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
@@ -84,13 +92,16 @@ release({L_RELEASE_FORMAT});
 
 <div id="scroll_top_page" />
 <div id="global">
-	<div id="header">
-		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-		{MENUS_HEADER_CONTENT}
-	</div>
-	<div id="sub_header" class="block">
-		{MENUS_SUB_HEADER_CONTENT}
-	</div>
+	# IF C_MENUS_HEADER_CONTENT #
+		<div id="header">
+			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+			{MENUS_HEADER_CONTENT}
+		</div>
+	# ENDIF #
+	
+	# IF C_MENUS_SUB_HEADER_CONTENT #
+		<div id="sub_header" class="block">{MENUS_SUB_HEADER_CONTENT}</div>
+	# ENDIF #
 	# IF C_COMPTEUR #
 	<div id="compteur">
 		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
@@ -101,10 +112,8 @@ release({L_RELEASE_FORMAT});
 	
 	<table class="main_container">
 		<tr>
-			# IF C_START_LEFT #
-				# IF MENUS_LEFT_CONTENT #
-			   	    <td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
-		   	    # ENDIF #
+			# IF C_MENUS_LEFT_CONTENT #
+			   	<td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
 			# ENDIF #
 			<td>
 				<div id="main">
@@ -113,8 +122,8 @@ release({L_RELEASE_FORMAT});
 						# START link_bread_crumb #
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
 						# END link_bread_crumb #
-					</div>	
-					<div id="top_contents">
-						{MENUS_TOPCENTRAL_CONTENT}
 					</div>
+					# IF C_MENUS_TOPCENTRAL_CONTENT #
+						<div id="top_contents">{MENUS_TOPCENTRAL_CONTENT}</div>
+					# ENDIF #
 			        <div id="main_content" class="block">&nbsp;

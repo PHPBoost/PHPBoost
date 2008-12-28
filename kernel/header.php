@@ -150,7 +150,9 @@ if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 	   $Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
-	'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
+	'C_MENUS_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__HEADER]),
+    'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
+	'C_MENUS_SUB_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__SUB_HEADER]),
 	'MENUS_SUB_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__SUB_HEADER]
 ));
 
@@ -179,17 +181,20 @@ $right_column = ($THEME_CONFIG[get_utheme()]['right_column'] && !NO_RIGHT_COLUMN
 
 //Début de la colonne de gauche.
 if ($left_column) //Gestion des blocs de gauche.
-{
+{   // Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
+    $left_column_content = $MENUS[BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[BLOCK_POSITION__RIGHT] : '');
 	$Template->assign_vars(array(
-		'C_START_LEFT' => true,
-		'MENUS_LEFT_CONTENT' => $MENUS[BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[BLOCK_POSITION__RIGHT] : '') //Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
+		'C_MENUS_LEFT_CONTENT' => !empty($left_column_content),
+		'MENUS_LEFT_CONTENT' => $left_column_content
 	));
 }
 if ($right_column)  //Gestion des blocs de droite.
 {
+	// Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
+    $right_column_content = $MENUS[BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[BLOCK_POSITION__LEFT] : '');
 	$Template->assign_vars(array(
-		'C_START_RIGHT' => true,
-		'MENUS_RIGHT_CONTENT' => $MENUS[BLOCK_POSITION__RIGHT] . (!$right_column ? $MENUS[BLOCK_POSITION__LEFT] : '') //Affichage des modules gauches à droite sur les thèmes à une colonne (droite).
+		'C_MENUS_RIGHT_CONTENT' => !empty($right_column_content),
+		'MENUS_RIGHT_CONTENT' => $right_column_content
 	));
 }
 
@@ -197,6 +202,7 @@ if ($right_column)  //Gestion des blocs de droite.
 $Bread_crumb->display();
 
 $Template->assign_vars(array(
+	'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[BLOCK_POSITION__TOP_CENTRAL]),
 	'MENUS_TOPCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
 ));
 

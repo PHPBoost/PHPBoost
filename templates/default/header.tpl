@@ -6,6 +6,14 @@
 		<meta name="description" content="{SITE_DESCRIPTION} {TITLE}" />
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
+		<!-- Default CSS -->
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/design.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/global.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/generic.css" type="text/css" media="screen, print, handheld" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/content.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/framework/content/syndication/syndication.css" type="text/css" media="screen, print, handheld" />
+        <!-- Theme CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
@@ -171,7 +179,7 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	# IF C_START_LEFT #
+	# IF C_MENUS_LEFT_CONTENT #
 	<div id="left_menu">
 		<p class="text_center">
 			<a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png')" /></a>
@@ -180,7 +188,7 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	# IF C_START_RIGHT #
+	# IF C_MENUS_RIGHT_CONTENT #
 	<div id="right_menu">
 		{MENUS_RIGHT_CONTENT}
 	</div>
