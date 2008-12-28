@@ -171,7 +171,7 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	# IF C_START_LEFT #
+	# IF C_MENUS_LEFT_CONTENT #
 	<div id="left_menu">
 		<p class="text_center">
 			<a href="{PATH_TO_ROOT}/download/download-52+phpboost-2-0.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png" id="download_phpboost" alt="" onmouseover="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost2.png')" onmouseout="change_img_path('download_phpboost', '{PATH_TO_ROOT}/templates/{THEME}/theme/images/download_phpboost.png')" /></a>
@@ -180,7 +180,7 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	# IF C_START_RIGHT #
+	# IF C_MENUS_RIGHT_CONTENT #
 	<div id="right_menu">
 		{MENUS_RIGHT_CONTENT}
 	</div>

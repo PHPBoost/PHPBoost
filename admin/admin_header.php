@@ -39,7 +39,8 @@ require_once(PATH_TO_ROOT . '/admin/admin_access.php');
 
 
 $Template->set_filenames(array(
-	'admin_header'=> 'admin/admin_header.tpl'
+	'admin_header'=> 'admin/admin_header.tpl',
+	'subheader_menu'=> 'admin/subheader_menu.tpl'
 ));
 
 $Template->assign_vars(array(

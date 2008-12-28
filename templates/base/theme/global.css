@@ -96,20 +96,6 @@
 
 /* Lien du site
 --------------------------------------*/
-a {
-    color: #0578CC;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 11px;
-}
-
-a:hover {
-    color: #01528D;
-    text-decoration: underline;
-    font-weight: bold;
-    font-size: 11px;
-}
-
 /* Liens petite taille */
 a.small_link {
     font-size: 10px;

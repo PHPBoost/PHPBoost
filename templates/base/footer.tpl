@@ -1,23 +1,25 @@
 							    </div>
-					            <div id="bottom_contents">
-						            {MENUS_BOTTOMCENTRAL_CONTENT}
-						        </div>
+							    # IF C_MENUS_BOTTOMCENTRAL_CONTENT #
+					            	<div id="bottom_contents">{MENUS_BOTTOMCENTRAL_CONTENT}</div>
+					            # ENDIF #
 					        </div>
 						</td>
-						# IF C_START_RIGHT #
-							# IF MENUS_RIGHT_CONTENT #
-					        	<td id="right_menu"><div>{MENUS_RIGHT_CONTENT}</div></td>
-				        	# ENDIF #
+						# IF C_MENUS_RIGHT_CONTENT #
+					        <td id="right_menu"><div>{MENUS_RIGHT_CONTENT}</div></td>
 					    # ENDIF #
 				    </tr>
 			    </table>
 			</div>
-			<div id="top_footer">
-				{MENUS_TOP_FOOTER_CONTENT}
-				<div class="spacer"></div>
-			</div>
+			# IF C_MENUS_TOP_FOOTER_CONTENT #
+				<div id="top_footer">
+					{MENUS_TOP_FOOTER_CONTENT}
+					<div class="spacer"></div>
+				</div>
+			# ENDIF #
 			<div id="footer">
-				{MENUS_FOOTER_CONTENT}
+				# IF C_MENUS_FOOTER_CONTENT #
+					{MENUS_FOOTER_CONTENT}
+				# ENDIF #
 				<div class="block">
 					<span>
 						{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com/news/news.php" title="PHPBoost">PHPBoost 3</a> {L_PHPBOOST_RIGHT}

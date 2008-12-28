@@ -142,13 +142,13 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	# IF C_START_LEFT #
+	# IF C_MENUS_LEFT_CONTENT #
 	<div id="left_menu">
 		{MENUS_LEFT_CONTENT}
 	</div>
 	# ENDIF #
 	
-	# IF C_START_RIGHT #
+	# IF C_MENUS_RIGHT_CONTENT #
 	<div id="right_menu">
 		{MENUS_RIGHT_CONTENT}
 	</div>
