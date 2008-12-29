@@ -151,6 +151,8 @@ $tpl->assign_vars(array(
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_NAME' => $LANG['name'],
+	'L_URL' => $LANG['url'],
+	'L_IMAGE' => $LANG['img'],
 	'L_STATUS' => $LANG['status'],
 	'L_AUTHS' => $LANG['auths'],
 	'L_ENABLED' => $LANG['enabled'],
@@ -165,7 +167,8 @@ $tpl->assign_vars(array(
 	'L_ACTION' => ($menu_id > 0) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
-    'L_TYPE' => $LANG['type']
+    'L_TYPE' => $LANG['type'],
+    'L_CONTENT' => $LANG['contents']
 ));
 
 //Localisation possibles.
@@ -182,6 +185,13 @@ $array_location = array(
 );
 
 $edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
+$edit_menu_tpl->assign_vars(array(
+    'L_NAME' => $LANG['name'],
+    'L_IMAGE' => $LANG['img'],
+    'L_URL' => $LANG['url'],
+    'L_PROPERTIES' => $LANG['properties'],
+    'L_AUTHORIZATIONS' => $LANG['authorizations']
+));
 
 if ($menu_id > 0)
 {
@@ -234,7 +244,9 @@ $tpl->assign_vars(array(
     'C_ENABLED' => $menu->is_enabled(),
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-	'MENU_NAME' => $menu->get_title()
+	'MENU_NAME' => $menu->get_title(),
+	'MENU_LINK' => $menu->get_url(false),
+	'MENU_IMG' => $menu->get_image(false),
 ));
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
