@@ -63,6 +63,8 @@ class LinksMenuLink extends LinksMenuElement
             
         parent::_assign($template, $mode);
   		$template->assign_vars(array(
+  			'URL' => $this->get_url(false),
+  			'IMG' => $this->get_image(false),
   			'C_LINK' => true
   		));
   		

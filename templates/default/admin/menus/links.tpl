@@ -7,15 +7,27 @@
 				<dd><input type="text" name="name" id="name" value="{MENU_NAME}" /></dd>
 			</dl>
 			<dl>
-				<dt><label for="type">{L_TYPE}</label></dt>
-				<dd><label> <select name="type" id="type">
-					# START type #
-					<option value="{type.NAME}"{type.SELECTED}>{type.L_NAME}</option>
-					# END type #
-				</select> </label></dd>
+				<dt><label for="name">{L_URL}</label></dt>
+				<dd><input type="text" name="name" id="name" value="{MENU_LINK}" /></dd>
 			</dl>
 			<dl>
-				<dt><label for="location">* {L_LOCATION}</label></dt>
+				<dt><label for="name">{L_IMAGE}</label></dt>
+				<dd><input type="text" name="name" id="name" value="{MENU_IMG}" /></dd>
+			</dl>
+			<dl>
+				<dt><label for="type">{L_TYPE}</label></dt>
+				<dd>
+					<label>
+						<select name="type" id="type">
+							# START type #
+								<option value="{type.NAME}"{type.SELECTED}>{type.L_NAME}</option>
+							# END type #
+						</select>
+					</label>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="location">{L_LOCATION}</label></dt>
 				<dd><label><select name="location" id="location">{LOCATIONS}</select></label></dd>
 			</dl>
 			<dl>
@@ -39,7 +51,7 @@
 		</fieldset>
 		
 		<fieldset>
-			<legend>Contenu du menu</legend>
+			<legend>{L_CONTENT}</legend>
 			{MENU_TREE}
 		    <script type="text/javascript">
 		    <!--
@@ -50,7 +62,7 @@
 			<!--
 			function show_sub_menu_properties(id)
 			{
-				//Si les propriétés sont repliées, on les affiche
+				//Si les propriÃ©tÃ©s sont repliÃ©es, on les affiche
 				if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
 				{
 					Effect.Appear("menu_element_" + id + "_properties");

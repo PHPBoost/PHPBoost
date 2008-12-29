@@ -171,3 +171,14 @@ pre {
 	color: #666666;
 	background-color: #cccccc;
 }
+
+/* Menus */
+.menu_link_list {
+	list-style:none;
+	list-style-position:outside;
+	margin-left:20px;
+	padding:10px 0;
+}
+.menu_link_element {
+	margin-top:10px;
+}

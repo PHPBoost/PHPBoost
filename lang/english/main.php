@@ -197,6 +197,7 @@ $LANG['description'] = 'Description';
 $LANG['view'] = 'View';
 $LANG['views'] = 'Views';
 $LANG['name'] = 'Name';
+$LANG['properties'] = 'Properties';
 $LANG['image'] = 'Picture';
 $LANG['note'] = 'Note';
 $LANG['notes'] = 'Notes';
@@ -304,6 +305,7 @@ $LANG['and'] = 'and';
 $LANG['by'] = 'By';
 
 //Authorized forms management.
+$LANG['authorizations'] = 'Authorizations';
 $LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make multiple choose';
 $LANG['advanced_authorization'] = 'Advanced authorizations';
 $LANG['select_all'] = 'Select all';
