@@ -7,7 +7,6 @@
 		<meta name="keywords" content="{SITE_KEYWORD}" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<!-- Default CSS -->
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/content.css" type="text/css" media="screen, print, handheld" />
@@ -92,16 +91,20 @@ release({L_RELEASE_FORMAT});
 
 <div id="scroll_top_page" />
 <div id="global">
-	# IF C_MENUS_HEADER_CONTENT #
+	<div id="header_container">
 		<div id="header">
 			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+			# IF C_MENUS_HEADER_CONTENT #
 			{MENUS_HEADER_CONTENT}
+			# ENDIF #
 		</div>
-	# ENDIF #
+		<div id="sub_header">
+			# IF C_MENUS_SUB_HEADER_CONTENT #
+			{MENUS_SUB_HEADER_CONTENT}
+			# ENDIF #
+		</div>
+	</div>
 	
-	# IF C_MENUS_SUB_HEADER_CONTENT #
-		<div id="sub_header" class="block">{MENUS_SUB_HEADER_CONTENT}</div>
-	# ENDIF #
 	# IF C_COMPTEUR #
 	<div id="compteur">
 		<span class="text_strong">{L_VISIT}:</span> {COMPTEUR_TOTAL}
@@ -110,20 +113,28 @@ release({L_RELEASE_FORMAT});
 	</div>
 	# ENDIF #
 	
-	<table class="main_container">
-		<tr>
-			# IF C_MENUS_LEFT_CONTENT #
-			   	<td id="left_menu"><div>{MENUS_LEFT_CONTENT}</div></td>
-			# ENDIF #
-			<td>
-				<div id="main">
-					<div id="links" class="block">
-						&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
-						# START link_bread_crumb #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
-						# END link_bread_crumb #
-					</div>
-					# IF C_MENUS_TOPCENTRAL_CONTENT #
-						<div id="top_contents">{MENUS_TOPCENTRAL_CONTENT}</div>
-					# ENDIF #
-			        <div id="main_content" class="block">&nbsp;
+	# IF C_MENUS_LEFT_CONTENT #
+	<div id="left_menu">
+		{MENUS_LEFT_CONTENT}
+	</div>
+	# ENDIF #
+	
+	# IF C_MENUS_RIGHT_CONTENT #
+	<div id="right_menu">
+		{MENUS_RIGHT_CONTENT}
+	</div>
+	# ENDIF #
+	
+	<div id="main">
+		# IF C_MENUS_TOPCENTRAL_CONTENT #
+		<div id="top_contents">
+			{MENUS_TOPCENTRAL_CONTENT}
+		</div>
+		# ENDIF #
+		<div id="main_content">&nbsp;
+			<div id="links">
+				&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a>
+				# START link_bread_crumb #
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" /> <a class="small_link" href="{link_bread_crumb.URL}" title="{link_bread_crumb.TITLE}">{link_bread_crumb.TITLE}</a>
+				# END link_bread_crumb #
+			</div>
