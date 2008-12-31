@@ -42,6 +42,8 @@ if ($action == 'save')
     
 	//Properties of the menu we are creating/editing
 	$title = retrieve(POST, 'name', '');
+	$url = retrieve(POST, 'url', '');
+	$image = retrieve(POST, 'image', '');
 	$type = retrieve(POST, 'type', VERTICAL_MENU);    
     
     function build_menu_from_form(&$elements_ids)
@@ -84,7 +86,7 @@ if ($action == 'save')
 	    	return $menu;
     	}
     	
-    	return;
+    	return null;
     }
     
     //We build the array representing the tree
@@ -92,24 +94,28 @@ if ($action == 'save')
     parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
     
     //We build the tree
-    if (!empty($result['tree']))
-    {
-    	//The parsed tree is not absolutely regular, we correct it
-    	$id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
-    	$result['amp;menu'][0] = array_merge(
-    		array('id' => $id_first_menu),
-    		$result['amp;menu'][0]
-    	);
-    	$menu_tree = array_merge(
-    		array('id' => 0),
-    		$result['amp;menu']
-    	);
-    	
-    	//We build the menu
-    	$menu = build_menu_from_form($menu_tree);
-    }
+    if (empty($result['tree']))
+        die('Error saving the menu!');
+        
+    //The parsed tree is not absolutely regular, we correct it
+    $id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
+    $result['amp;menu'][0] = array_merge(
+    	array('id' => $id_first_menu),
+    	$result['amp;menu'][0]
+    );
+    $menu_tree = array_merge(
+    	array('id' => 0),
+    	$result['amp;menu']
+    );
+    
+    //We build the menu
+    $menu = build_menu_from_form($menu_tree);
+    if ($menu == null)
+        die('Error saving the menu : null menu exception');
     
     $menu->set_title($title);
+    $menu->set_url($url);
+    $menu->set_image($image);
     $menu->set_type($type);
     
     //If we edit the menu
@@ -125,7 +131,6 @@ if ($action == 'save')
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
         
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
-    
     
     MenuService::save($menu);
    	MenuService::generate_cache();
@@ -168,7 +173,15 @@ $tpl->assign_vars(array(
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
     'L_TYPE' => $LANG['type'],
-    'L_CONTENT' => $LANG['contents']
+    'L_CONTENT' => $LANG['contents'],
+    'L_AUTHORIZATIONS' => $LANG['authorizations'],
+    'L_ADD' => $LANG['add'],
+    'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(AUTH_MENUS, array(), array(), 'menu_element_##UID##_auth')),
+    'JL_AUTHORIZATIONS' => to_js_string($LANG['authorizations']),
+    'JL_PROPERTIES' => to_js_string($LANG['properties']),
+    'JL_NAME' => to_js_string($LANG['name']),
+    'JL_URL' => to_js_string($LANG['url']),
+    'JL_IMAGE' => to_js_string($LANG['img']),
 ));
 
 //Localisation possibles.
@@ -190,7 +203,8 @@ $edit_menu_tpl->assign_vars(array(
     'L_IMAGE' => $LANG['img'],
     'L_URL' => $LANG['url'],
     'L_PROPERTIES' => $LANG['properties'],
-    'L_AUTHORIZATIONS' => $LANG['authorizations']
+    'L_AUTHORIZATIONS' => $LANG['authorizations'],
+    'L_ADD' => $LANG['add']
 ));
 
 if ($menu_id > 0)
@@ -236,18 +250,20 @@ else
 	$menu->add_array($amenu);
 }
 
-$block = $menu->get_block();
-	
-$tpl->assign_vars(array(
-	'IDMENU' => $menu_id,
-	'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
-    'C_ENABLED' => $menu->is_enabled(),
-	'MENU_ID' => $menu->get_id(),
-	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-	'MENU_NAME' => $menu->get_title(),
-	'MENU_LINK' => $menu->get_url(false),
-	'MENU_IMG' => $menu->get_image(false),
-));
+{
+	$block = $menu->get_block();
+	$tpl->assign_vars(array(
+		'IDMENU' => $menu_id,
+		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
+	    'C_ENABLED' => $menu->is_enabled(),
+		'MENU_ID' => $menu->get_id(),
+		'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+		'MENU_NAME' => $menu->get_title(),
+		'MENU_URL' => $menu->get_url(false),
+		'MENU_IMG' => $menu->get_image(false),
+	    //'ID' => $menu->get_uid()
+	));
+}
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
@@ -262,7 +278,10 @@ $locations = '';
 foreach ($array_location as $key => $name)
     $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 
-$tpl->assign_vars(array('LOCATIONS' => $locations));
+$tpl->assign_vars(array(
+    'LOCATIONS' => $locations,
+    'ID_MAX' => get_uid()
+));
 $tpl->parse();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

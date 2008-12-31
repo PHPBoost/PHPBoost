@@ -919,4 +919,14 @@ function of_class(&$object, $classname)
     return strtolower(get_class($object)) == strtolower($classname);
 }
 
+/**
+ * @param string $string A PHP string to convert to a JS one
+ * @return string The js equivalent string
+ */
+function to_js_string($string)
+{
+    return '"' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
+        addcslashes($string, '"')) . '"';
+}
+
 ?>
