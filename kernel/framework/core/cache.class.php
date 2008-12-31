@@ -234,7 +234,7 @@ class Cache
 			
 			//Page d'erreur.
 			$htaccess_rules .= "\n\n" . '# Error page #' . "\n" . 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';
-
+			
 			//Protection de la bande passante, interdiction d'accès aux fichiers du répertoire upload depuis un autre serveur.
 			global $CONFIG_UPLOADS;
 			$this->load('uploads');

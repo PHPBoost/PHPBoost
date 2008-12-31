@@ -1,9 +1,11 @@
 # IF C_FIRST_MENU #
-	<ul id="menu" class="menu_link_list">
-		# START elements #
-			{elements.DISPLAY}
-		# END elements #
-	</ul>
+    <div id="menu_element_{ID}">
+    	<ul id="menu_element_{ID}_list" class="menu_link_list">
+    		# START elements #
+    			{elements.DISPLAY}
+    		# END elements #
+    	</ul>
+    </div>
 # ENDIF #
 
 # IF C_NEXT_MENU #
@@ -15,7 +17,7 @@
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="show_sub_menu_properties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggle_properties({ID});" />
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
@@ -25,11 +27,15 @@
 				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>
-		<ul class="menu_link_list">
-		# START elements #
-			{elements.DISPLAY}
-		# END elements #
+        <hr style="background-color:#999999;margin-top:5px;" />
+		<ul class="menu_link_list" id="menu_element_{ID}_list">
+    		# START elements #
+    			{elements.DISPLAY}
+    		# END elements #
 		</ul>
+		<fieldset class="fieldset_submit" style="margin-bottom:0px;padding-bottom:0px;">
+			<input type="button" id="menu_element_{ID}_add" name="menu_element_{ID}_add" value="{L_ADD}" onclick="addSubElement('menu_element_{ID}');" class="submit" />
+		</fieldset>
 	</li>
 # ENDIF #
 
@@ -42,7 +48,7 @@
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png"" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="show_sub_menu_properties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggle_properties({ID});" />
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">

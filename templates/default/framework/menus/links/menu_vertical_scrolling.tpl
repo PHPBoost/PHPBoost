@@ -4,7 +4,7 @@
 		<div class="dynamic_menu">
 			<ul>
 				<li onmouseover="showMenu('gmenu{ID}', {DEPTH});" onmouseout="hideMenu({DEPTH});">
-					<h5 class="links"><a href="{URL}" title="{TITLE}"># IF C_IMAGE #<img src="{IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a></h5>
+					<h5 class="links"><a href="{URL}" title="{TITLE}"># IF C_IMG #<img src="{IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a></h5>
 					<ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul>
 				</li>
 	        </ul>
