@@ -1,10 +1,14 @@
 # IF C_FIRST_MENU #
     <div id="menu_element_{ID}">
+        <input type="hidden" id="menu_uid" name="menu_uid" value="{ID}" />
     	<ul id="menu_element_{ID}_list" class="menu_link_list">
     		# START elements #
     			{elements.DISPLAY}
     		# END elements #
     	</ul>
+        <fieldset class="fieldset_submit" style="margin-bottom:0px;padding-bottom:0px;">
+            <input type="button" id="menu_element_{ID}_add" name="menu_element_{ID}_add" value="{L_ADD}" onclick="addSubElement('menu_element_{ID}');" class="submit" />
+        </fieldset>
     </div>
 # ENDIF #
 

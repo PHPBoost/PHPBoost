@@ -28,13 +28,10 @@ function toggle_properties(id)
 
 function build_menu_elements_tree()
 {
-    window.alert("coucou");
-    window.alert(Sortable.serialize('menu_element_{ID}_list'));
     document.getElementById("menu_tree").value = Sortable.serialize('menu_element_{ID}_list');
 }
 
 function addSubElement(menu_element_id) {
-    window.alert(menu_element_id);
     var authForm = new String({J_AUTH_FORM});
     authForm = new String(authForm.replace(/##UID##/g, idMax));
     var authElt = Builder.build(authForm);
@@ -138,9 +135,6 @@ function addSubElement(menu_element_id) {
 		    createSortableMenu();
             -->
             </script>
-            <fieldset class="fieldset_submit" style="margin-bottom:0px;padding-bottom:0px;">
-                <input type="button" id="menu_element_{ID}_add" name="menu_element_{ID}_add" value="{L_ADD}" onclick="addSubElement('menu_element_{ID}');" class="submit" />
-            </fieldset>
 	    </fieldset>			
 	
 		<fieldset class="fieldset_submit">

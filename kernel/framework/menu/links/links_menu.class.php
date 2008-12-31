@@ -221,11 +221,11 @@ class LinksMenu extends LinksMenuElement
 	 * @var LinksMenuElement[] Direct menu children list
 	 */
 	var $elements = array();
-	/**
+    /**
      * @access protected
-	 * @var int Menu's depth
-	 */
-	var $depth = 0;
+     * @var int Menu's depth
+     */
+    var $depth = 0;
 }
 
 ?>

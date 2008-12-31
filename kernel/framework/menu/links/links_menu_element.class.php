@@ -56,6 +56,7 @@ class LinksMenuElement extends Menu
 	{
        $this->url = $url;
        $this->image = $image;
+       $this->uid = get_uid();
        parent::Menu($title);
 	}
 	
@@ -71,15 +72,23 @@ class LinksMenuElement extends Menu
      
 	## Getters ##
     /**
+     * Returns the menu uid
+     * @return int the menu uid
+     */
+    function get_uid()
+    {
+        return $this->uid;
+    }
+    /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the link $url
      */
-	function get_url($compute_relative_url = true)
-	{
+    function get_url($compute_relative_url = true)
+    {
         if ($compute_relative_url)
-	       return url(strpos($this->url, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url);
+           return url(strpos($this->url, '://') > 0 ? $this->url : PATH_TO_ROOT . $this->url);
        return url($this->url);
-	}
+    }
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the link $image url
@@ -134,15 +143,15 @@ class LinksMenuElement extends Menu
             'TITLE' => $this->title,
             'IMG' => $this->get_image(),
             'URL' => $this->get_url(),
-            'ID' => $uid = get_uid(),
-            'ID_VAR' => $uid
+            'ID' => $this->uid,
+            'ID_VAR' => $this->uid
         ));
         
     	//Full displaying: we also show the authorization formulary
   		if ($mode)
   		{
   			$template->assign_vars(array(
-  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->auth, array(), 'menu_element_' . $uid . '_auth')
+  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->auth, array(), 'menu_element_' . $this->uid . '_auth')
   			));
 		}
     }
@@ -168,6 +177,11 @@ class LinksMenuElement extends Menu
      * @var string the image url. Could be relative to the website root or absolute
      */
 	var $image = '';
+    /**
+     * @access protected
+     * @var int Menu's uid
+     */
+    var $uid = 0;
 }
 
 ?>
