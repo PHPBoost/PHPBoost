@@ -45,6 +45,7 @@ $LANG['e_mail_format'] = 'Invalid e-mail address!';
 $LANG['e_unexist_member'] = 'This login doesn\'t exist!';
 $LANG['e_unauthorized'] = 'You aren\'t authorized to post!';
 $LANG['e_flood'] = 'You can\'t post yet, retry in a few moments';
+$LANG['e_l_flood'] = 'Maximum number of weblink(s) : %d';
 $LANG['e_l_flood'] = 'You can\'t post more than %d link(s) in your message';
 $LANG['e_link_pseudo'] = 'Your login can\'t contain weblink';
 

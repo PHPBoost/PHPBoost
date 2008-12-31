@@ -45,7 +45,7 @@ $LANG['e_mail_format'] = 'Mail invalide !';
 $LANG['e_unexist_member'] = 'Ce pseudo n\'existe pas !';
 $LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
 $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
-$LANG['e_l_flood'] = 'Vous ne pouvez pas mettre plus de %d lien(s) dans votre message';
+$LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
 
 //Cache

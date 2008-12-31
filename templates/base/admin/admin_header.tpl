@@ -32,16 +32,19 @@
 	</head>
 	<body>
 	<div id="global">
-		<div id="header_admin" style="height:100px;"><h1>Le header qui tue</h1></div>
-		<div id="sub_header_admin">
-			<div class="dynamic_menu block" style="height:25px;">
-				# INCLUDE subheader_menu #
-			    <div style="float:right;margin-right:15px;">
-			        <a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
-			            <img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
-			        </a>
-			    </div>
+		<div id="header_container">
+			<div id="header_admin">&nbsp;<br />
 			</div>
-	    </div>
+			<div id="sub_header_admin">
+				<div class="dynamic_menu">
+					# INCLUDE subheader_menu #
+					<div style="float:right;margin-right:15px;">
+						<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}</h5>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
         <div id="admin_main">
 	        &nbsp;
