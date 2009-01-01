@@ -925,8 +925,8 @@ function of_class(&$object, $classname)
  */
 function to_js_string($string)
 {
-    return '"' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
-        addcslashes($string, '"')) . '"';
+    return '\'' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
+        addcslashes($string, '\'')) . '\'';
 }
 
 ?>

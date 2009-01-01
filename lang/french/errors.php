@@ -84,7 +84,7 @@ $LANG['e_already_group'] = 'Le membre appartient déjà au groupe';
 $LANG['e_mail_forget'] = 'Le mail entré ne correspond pas à celui de l\'utilisateur !';
 $LANG['e_forget_mail_send'] = 'Un mail vient de vous être envoyé, avec une clé d\'activation pour confirmer !';
 $LANG['e_forget_confirm_change'] = 'Mot de passe changé avec succès!<br />Vous pouvez désormais vous enregistrer avec le nouveau mot de passe qui vous a été transmis par email.';
-$LANG['e_forget_echec_change'] = 'Echec le password ne peut être changé';
+$LANG['e_forget_echec_change'] = 'Echec le mot de passe ne peut être changé';
 
 //Register
 $LANG['e_incorrect_verif_code'] = 'Le code de vérification entré est incorrect !';
