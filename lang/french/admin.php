@@ -449,6 +449,12 @@ $LANG['menu_top_footer'] = 'Sur pied de page';
 $LANG['menu_footer'] = 'Pied de page';
 $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';
+$LANG['add_sub_element'] = 'Ajouter un élément';
+$LANG['add_sub_menu'] = 'Ajouter un sous-menu';
+$LANG['new_sub_element'] = 'Nouvel élément';
+$LANG['new_sub_menu'] = 'Nouveau sous-menu';
+
+
 
 //Gestion du contenu
 $LANG['content_config'] = 'Contenu';

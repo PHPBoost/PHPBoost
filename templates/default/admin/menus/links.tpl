@@ -2,18 +2,15 @@
 <!--
 var idMax = {ID_MAX};
 
-function destroySortableMenu()
-{
+function destroySortableMenu() {
     Sortable.destroy('menu_element_{ID}_list');   
 }
 
-function createSortableMenu()
-{
+function createSortableMenu() {
     Sortable.create('menu_element_{ID}_list', {tree:true,scroll:window,format: /^menu_element_([0-9]+)$/});   
 }
 
-function toggleProperties(id)
-{
+function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
     {   //Si les propriétés sont repliées, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
@@ -26,16 +23,18 @@ function toggleProperties(id)
     }
 }
 
-function build_menu_elements_tree()
-{
+function build_menu_elements_tree() {
     document.getElementById("menu_tree").value = Sortable.serialize('menu_element_{ID}_list');
+}
+
+function getAuthForm() {
+    var authForm = new String({J_AUTH_FORM});
+    authForm = new String(authForm.replace(/##UID##/g, idMax));
+    return Builder.build(authForm);
 }
 
 function addSubElement(menu_element_id) {
     idMax++;
-    var authForm = new String({J_AUTH_FORM});
-    authForm = new String(authForm.replace(/##UID##/g, idMax));
-    var authElt = Builder.build(authForm);
     
     var newDiv = Builder.node('li', {id: 'menu_element_' + idMax, className: 'row2 menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
@@ -43,7 +42,7 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_name', name: 'menu_element_' + idMax + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_ELEMENT}, id: 'menu_element_' + idMax + '_name', name: 'menu_element_' + idMax + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_url'}, {JL_URL}),
             ' ',
@@ -65,7 +64,7 @@ function addSubElement(menu_element_id) {
                 Builder.node('dt', [
                     Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_auth'}, {JL_AUTHORIZATIONS})
                 ]),
-                Builder.node('dd', authElt),
+                Builder.node('dd', getAuthForm()),
             ]),
         ])
     ]);
@@ -74,6 +73,53 @@ function addSubElement(menu_element_id) {
     Effect.Appear(newDiv.id);
     destroySortableMenu();
     createSortableMenu();
+}
+
+function addSubMenu(menu_element_id) {
+    idMax++;
+    var newDiv = Builder.node('li', {id: 'menu_element_' + idMax, className: 'row1 menu_link_element', style: 'display:none;' }, [
+        Builder.node('div', {style: 'float:left;'}, [
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
+            ' ',
+            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_name'}, {JL_NAME}),
+            ' ',
+            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_MENU}, id: 'menu_element_' + idMax + '_name', name: 'menu_element_' + idMax + '_name'}),
+            ' ',
+            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_url'}, {JL_URL}),
+            ' ',
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_url', name: 'menu_element_' + idMax + '_url'}),
+            ' ',
+            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_name'}, {JL_IMAGE}),
+            ' ',
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_image', name: 'menu_element_' + idMax + '_image'})
+        ]),
+        Builder.node('div', {style: 'float:right;'}, [
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + idMax + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + idMax + ');'}),
+            ' ',
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + idMax + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + idMax + '\');'})
+        ]),
+        Builder.node('div', {className: 'spacer'}),
+        Builder.node('fieldset', {id: 'menu_element_' + idMax + '_properties', style: 'display:none;'}, [
+            Builder.node('legend', {JL_PROPERTIES}),
+            Builder.node('dl', [
+                Builder.node('dt', [
+                  Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_auth'}, {JL_AUTHORIZATIONS})
+                ]),
+                Builder.node('dd', getAuthForm()),
+            ]),
+        ]),
+        Builder.node('hr', {style: 'background-color:#999999;margin-top:5px;'}),
+        Builder.node('ul', {id: 'menu_element_' + idMax + '_list', className: 'menu_link_list'}),
+        Builder.node('fieldset', {className: 'fieldset_submit', style: 'margin-bottom:0px;padding-bottom:0px;'}, [
+            Builder.node('input', {type: 'button', id: 'menu_element_' + idMax + '_add_sub_element', name: 'menu_element_' + idMax + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + idMax + '\');', className: 'submit'}),
+            ' ',
+            Builder.node('input', {type: 'button', id: 'menu_element_' + idMax + '_add_sub_menu', name: 'menu_element_' + idMax + '_add_sub_menu', value: {JL_ADD_SUB_MENU}, onclick: 'addSubMenu(\'menu_element_' + idMax + '\');', className: 'submit'}),
+        ]),
+    ]);
+
+    $(menu_element_id + '_list').appendChild(newDiv);
+    Effect.Appear(newDiv.id);
+    addSubElement('menu_element_' + idMax);
 }
 
 function deleteElement(element_id)

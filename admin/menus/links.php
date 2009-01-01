@@ -188,7 +188,11 @@ $tpl->assign_vars(array(
     'JL_IMAGE' => to_js_string($LANG['img']),
     'JL_DELETE_ELEMENT' => to_js_string($LANG['confirm_delete_element']),
     'JL_MORE' => to_js_string($LANG['more_details']),
-    'JL_DELETE' => to_js_string($LANG['delete'])
+    'JL_DELETE' => to_js_string($LANG['delete']),
+    'JL_ADD_SUB_ELEMENT' => to_js_string($LANG['add_sub_element']),
+    'JL_ADD_SUB_MENU' => to_js_string($LANG['add_sub_menu']),
+    'JL_NEW_SUB_ELEMENT' => to_js_string($LANG['new_sub_element']),
+    'JL_NEW_SUB_MENU' => to_js_string($LANG['new_sub_menu']),
 ));
 
 //Localisation possibles.
@@ -211,7 +215,8 @@ $edit_menu_tpl->assign_vars(array(
     'L_URL' => $LANG['url'],
     'L_PROPERTIES' => $LANG['properties'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
-    'L_ADD' => $LANG['add'],
+    'L_ADD_SUB_ELEMENT' => $LANG['add_sub_element'],
+    'L_ADD_SUB_MENU' => $LANG['add_sub_menu'],
     'L_MORE' => $LANG['more_details'],
     'L_DELETE' => $LANG['delete']
 ));
