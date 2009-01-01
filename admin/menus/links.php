@@ -186,6 +186,9 @@ $tpl->assign_vars(array(
     'JL_NAME' => to_js_string($LANG['name']),
     'JL_URL' => to_js_string($LANG['url']),
     'JL_IMAGE' => to_js_string($LANG['img']),
+    'JL_DELETE_ELEMENT' => to_js_string($LANG['confirm_delete_element']),
+    'JL_MORE' => to_js_string($LANG['more_details']),
+    'JL_DELETE' => to_js_string($LANG['delete'])
 ));
 
 //Localisation possibles.
@@ -208,7 +211,9 @@ $edit_menu_tpl->assign_vars(array(
     'L_URL' => $LANG['url'],
     'L_PROPERTIES' => $LANG['properties'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
-    'L_ADD' => $LANG['add']
+    'L_ADD' => $LANG['add'],
+    'L_MORE' => $LANG['more_details'],
+    'L_DELETE' => $LANG['delete']
 ));
 
 if ($menu_id > 0)

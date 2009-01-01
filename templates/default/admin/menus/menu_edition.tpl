@@ -21,7 +21,8 @@
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggle_properties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
+            <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" id="menu_element_{ID}_delete_image" class="valign_middle" onclick="deleteElement('menu_element_{ID}');" />
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
@@ -52,7 +53,8 @@
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
 		</div>
 		<div style="float:right;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="More..." id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggle_properties({ID});" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" alt="{L_MORE}" id="menu_element_{ID}_more_image" class="valign_middle" onclick="toggleProperties({ID});" />
+            <img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" id="menu_element_{ID}_delete_image" class="valign_middle" onclick="deleteElement('menu_element_{ID}');" />
 		</div>
 		<div class="spacer"></div>
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">

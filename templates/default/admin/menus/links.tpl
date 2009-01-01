@@ -12,7 +12,7 @@ function createSortableMenu()
     Sortable.create('menu_element_{ID}_list', {tree:true,scroll:window,format: /^menu_element_([0-9]+)$/});   
 }
 
-function toggle_properties(id)
+function toggleProperties(id)
 {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
     {   //Si les propriétés sont repliées, on les affiche
@@ -32,11 +32,11 @@ function build_menu_elements_tree()
 }
 
 function addSubElement(menu_element_id) {
+    idMax++;
     var authForm = new String({J_AUTH_FORM});
     authForm = new String(authForm.replace(/##UID##/g, idMax));
     var authElt = Builder.build(authForm);
     
-    idMax++;
     var newDiv = Builder.node('li', {id: 'menu_element_' + idMax, className: 'row2 menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
@@ -54,7 +54,9 @@ function addSubElement(menu_element_id) {
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_image', name: 'menu_element_' + idMax + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: 'More...', id: 'menu_element_' + idMax + '_more_image', className: 'valign_middle', onclick: 'toggle_properties(' + idMax + ');'})
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + idMax + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + idMax + ');'}),
+            ' ',
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + idMax + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + idMax + '\');'})
         ]),
         Builder.node('div', {className: 'spacer'}),
         Builder.node('fieldset', {id: 'menu_element_' + idMax + '_properties', style: 'display:none;'}, [
@@ -72,6 +74,17 @@ function addSubElement(menu_element_id) {
     Effect.Appear(newDiv.id);
     destroySortableMenu();
     createSortableMenu();
+}
+
+function deleteElement(element_id)
+{
+    if (confirm({JL_DELETE_ELEMENT}))
+    {
+        var elementToDelete = document.getElementById(element_id);
+        elementToDelete.parentNode.removeChild(elementToDelete);
+        destroySortableMenu();
+        createSortableMenu();
+    }
 }
 -->
 </script>

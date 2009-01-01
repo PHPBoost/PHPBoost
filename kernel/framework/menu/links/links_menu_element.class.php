@@ -56,7 +56,6 @@ class LinksMenuElement extends Menu
 	{
        $this->url = $url;
        $this->image = $image;
-       $this->uid = get_uid();
        parent::Menu($title);
 	}
 	
@@ -77,6 +76,8 @@ class LinksMenuElement extends Menu
      */
     function get_uid()
     {
+        if ($this->uid == null)
+            $this->uid = get_uid();
         return $this->uid;
     }
     /**
@@ -143,8 +144,8 @@ class LinksMenuElement extends Menu
             'TITLE' => $this->title,
             'IMG' => $this->get_image(),
             'URL' => $this->get_url(),
-            'ID' => $this->uid,
-            'ID_VAR' => $this->uid
+            'ID' => $this->get_uid(),
+            'ID_VAR' => $this->get_uid()
         ));
         
     	//Full displaying: we also show the authorization formulary
@@ -181,7 +182,7 @@ class LinksMenuElement extends Menu
      * @access protected
      * @var int Menu's uid
      */
-    var $uid = 0;
+    var $uid = null;
 }
 
 ?>

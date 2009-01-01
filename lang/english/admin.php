@@ -427,6 +427,7 @@ $LANG['files_misc'] = 'Miscellaneous';
 
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Delete this menu?';
+$LANG['confirm_delete_element'] = 'Delete this item?';
 $LANG['menus_management'] = 'Menus management';
 $LANG['menus_content_add'] = 'Add content menu';
 $LANG['menus_links_add'] = 'Add links menu';
