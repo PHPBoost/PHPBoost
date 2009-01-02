@@ -86,6 +86,16 @@ class LinksMenu extends LinksMenuElement
 		$this->elements[] = $element;
 	}
 	
+    /**
+     * Update the menu uid
+     */
+    function update_uid()
+    {
+        parent::update_uid();
+        foreach ($this->elements as $element)
+            $element->update_uid();
+    }
+	
 	/**
 	 * @desc Display the menu
 	 * @param Template $template the template to use
@@ -116,7 +126,12 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
-            'DEPTH' => $this->depth
+            'C_HAS_CHILD' => count($this->elements) > 0,
+            'DEPTH' => $this->depth,
+            'ABSOLUTE_URL' => $this->get_url(false),
+            'ABSOLUTE_IMG' => $this->get_image(false),
+            'RELATIVE_URL' => $this->get_url(true),
+            'RELATIVE_IMG' => $this->get_image(true)
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
@@ -143,6 +158,7 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
+            'C_HAS_CHILD' => count($this->elements) > 0,
             'DEPTH' => $this->depth,
             'ID' => '##.#GET_UID#.##',
             'ID_VAR' => '##.#GET_UID_VAR#.##',
