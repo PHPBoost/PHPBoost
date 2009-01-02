@@ -1,5 +1,5 @@
-<script type="text/javascript">
-<!--
+<script type="text/javascript"><!--
+
 var idMax = {ID_MAX};
 
 function destroySortableMenu() {
@@ -27,58 +27,63 @@ function build_menu_elements_tree() {
     document.getElementById("menu_tree").value = Sortable.serialize('menu_element_{ID}_list');
 }
 
-function getAuthForm() {
-    var authForm = new String({J_AUTH_FORM});
-    authForm = new String(authForm.replace(/##UID##/g, idMax));
-    return Builder.build(authForm);
+function select(element_id, execute) {
+    if (execute) {
+        document.getElementById(element_id).select();
+    } else {
+        setTimeout('select(\'' + element_id + '\', true)', 100);
+    }
+}
+
+var authForm = new String('<div>' + {J_AUTH_FORM} + '</div>');
+function getAuthForm(id) {
+    return Builder.build(authForm.replace(/##UID##/g, id));
 }
 
 function addSubElement(menu_element_id) {
-    idMax++;
-    
-    var newDiv = Builder.node('li', {id: 'menu_element_' + idMax, className: 'row2 menu_link_element', style: 'display:none;' }, [
+    var id = idMax++;
+    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'row2 menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_name'}, {JL_NAME}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_ELEMENT}, id: 'menu_element_' + idMax + '_name', name: 'menu_element_' + idMax + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_ELEMENT}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_url'}, {JL_URL}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
-            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_url', name: 'menu_element_' + idMax + '_url'}),
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_url', name: 'menu_element_' + id + '_url'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_name'}, {JL_IMAGE}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_IMAGE}),
             ' ',
-            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + idMax + '_image', name: 'menu_element_' + idMax + '_image'})
+            Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
         Builder.node('div', {style: 'float:right;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + idMax + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + idMax + ');'}),
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png', alt: {JL_MORE}, id: 'menu_element_' + id + '_more_image', className: 'valign_middle', onclick: 'toggleProperties(' + id + ');'}),
             ' ',
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + idMax + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + idMax + '\');'})
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png', alt: {JL_DELETE}, id: 'menu_element_' + id + '_delete_image', className: 'valign_middle', onclick: 'deleteElement(\'menu_element_' + id + '\');'})
         ]),
         Builder.node('div', {className: 'spacer'}),
-        Builder.node('fieldset', {id: 'menu_element_' + idMax + '_properties', style: 'display:none;'}, [
+        Builder.node('fieldset', {id: 'menu_element_' + id + '_properties', style: 'display:none;'}, [
             Builder.node('legend', {JL_PROPERTIES}),
             Builder.node('dl', [
                 Builder.node('dt', [
-                    Builder.node('label', {htmlFor: 'menu_element_' + idMax + '_auth'}, {JL_AUTHORIZATIONS})
+                    Builder.node('label', {htmlFor: 'menu_element_' + id + '_auth'}, {JL_AUTHORIZATIONS})
                 ]),
-                Builder.node('dd', getAuthForm()),
+                Builder.node('dd', getAuthForm(id)),
             ]),
         ])
     ]);
 
     $(menu_element_id + '_list').appendChild(newDiv);
     Effect.Appear(newDiv.id);
-    document.getElementById('menu_element_' + idMax + '_name').focus();
     destroySortableMenu();
     createSortableMenu();
+    select('menu_element_' + id + '_name');
 }
 
 function addSubMenu(menu_element_id) {
-    idMax++;
-    var id = idMax;
+    var id = idMax++;
     var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'row1 menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
             Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
@@ -107,7 +112,7 @@ function addSubMenu(menu_element_id) {
                 Builder.node('dt', [
                   Builder.node('label', {htmlFor: 'menu_element_' + id + '_auth'}, {JL_AUTHORIZATIONS})
                 ]),
-                Builder.node('dd', getAuthForm()),
+                Builder.node('dd', getAuthForm(id)),
             ]),
         ]),
         Builder.node('hr', {style: 'background-color:#999999;margin-top:5px;'}),
@@ -122,7 +127,7 @@ function addSubMenu(menu_element_id) {
     $(menu_element_id + '_list').appendChild(newDiv);
     Effect.Appear(newDiv.id);
     addSubElement('menu_element_' + id);
-    document.getElementById('menu_element_' + id + '_name').focus();
+    select('menu_element_' + id + '_name');
 }
 
 function deleteElement(element_id)
@@ -135,8 +140,8 @@ function deleteElement(element_id)
         createSortableMenu();
     }
 }
--->
-</script>
+
+--></script>
 <div id="admin_contents">
 	<form action="links.php?action=save" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 

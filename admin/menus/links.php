@@ -39,12 +39,8 @@ $action = retrieve(REQUEST, 'action', '');
 if ($action == 'save')
 {   // Save a Menu (New / Edit)    
     $menu_uid = retrieve(POST, 'menu_uid', 0);
-//    echo 'UID : ' . $menu_uid . '<hr />';
     
 	//Properties of the menu we are creating/editing
-//	$title = retrieve(POST, 'menu_element_' . $menu_uid . '_name', '');
-//	$url = retrieve(POST, 'menu_element_' . $menu_uid . '_url', '');
-//	$image = retrieve(POST, 'menu_element_' . $menu_uid . '_image', '');
 	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', VERTICAL_MENU);    
     
     function build_menu_from_form(&$elements_ids, $level = 0)
@@ -54,7 +50,7 @@ if ($action == 'save')
         $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '');
         $menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
         $menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
-//        echo '==&gt;' . $menu_element_id . ' ' . $menu_name . ' ' . $menu_url . ' ' . $menu_image . ' '; print_r($elements_ids);
+        
     	$array_size = count($elements_ids);
     	if ($array_size == 1 && $level > 0)
     	{   // If it's a menu, there's only one element
@@ -87,13 +83,10 @@ if ($action == 'save')
     // We build the tree        
     // The parsed tree is not absolutely regular, we correct it
     $id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
-    echo 'ID : ' . $id_first_menu . '<br />';
-    echo '<pre>RESULT TREE : '; print_r($result['tree']); echo '</pre>';
     
     // Correcting the first item
     if (!empty($id_first_menu))
     {   // This menu contains item
-        echo 'COCO<table><tr><td>CACA0<pre>'; print_r($result); echo '</pre></td>'; 
         $menus =& $result['amp;menu_element_' . $menu_uid . '_list'];
 	    if (!empty($menus[0]))
 	    {   // The first item is a sub menu
@@ -106,34 +99,26 @@ if ($action == 'save')
 	    {   // The first item is a link
 	        $menus[0] = array('id' => $id_first_menu);
 	    }
-//	    echo '<td><pre>'; print_r($menus); echo '</pre></td>';
 	    ksort($menus);  // Sort the menus to get the first at the beginning
-	    
-	    echo '<td>CACA1<pre>'; print_r($menus); echo '</pre></td>';
 	    // Adding the root element
 	    $menu_tree = array_merge(
 	        array('id' => $menu_uid),
 	        $menus
 	    );
-        echo '<td>CACA2<pre>'; print_r($menus); echo '</pre></td></tr></table>';
     }
     else
     {   // There no item in this menu
         $menu_tree = array('id' => $menu_uid);
     }
-//    echo $result['tree'] . '<br />';
-    echo '<pre>TREE : '; print_r($menu_tree); echo '</pre>';
     // We build the menu
     $menu = build_menu_from_form($menu_tree);
-    if ($menu == null)
-        die('Error saving the menu : null menu exception');
-    
     $menu->set_type($type);
     
     //If we edit the menu
     if ($menu_id > 0)
     {   // Edit the Menu
         $menu->id($menu_id);
+        $previous_menu = MenuService::load($menu_id);
     }
     
     //Menu enabled?
@@ -142,13 +127,17 @@ if ($action == 'save')
     $menu->set_auth(Authorizations::build_auth_array_from_form(
         AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
     ));
-//    echo '<pre>'; print_r($menu); echo '</pre>';
-    echo $menu->display();
-//    exit;
     
     if ($menu->is_enabled())
-    {   // Move and the saves the menu if enabled
-        MenuService::move($menu, $menu->get_block());
+    {   
+        if ($menu->get_block() == $previous_menu->get_block())
+        {   // Save the menu if enabled
+            MenuService::save($menu);
+        }
+        else
+        {   // Move the menu to its new location and save it
+            MenuService::move($menu, $menu->get_block());
+        }
     }
     else
     {   // The menu is not enabled, we only save it with its block location

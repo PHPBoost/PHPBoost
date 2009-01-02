@@ -127,11 +127,7 @@ class LinksMenu extends LinksMenuElement
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
             'C_HAS_CHILD' => count($this->elements) > 0,
-            'DEPTH' => $this->depth,
-            'ABSOLUTE_URL' => $this->get_url(false),
-            'ABSOLUTE_IMG' => $this->get_image(false),
-            'RELATIVE_URL' => $this->get_url(true),
-            'RELATIVE_IMG' => $this->get_image(true)
+            'DEPTH' => $this->depth
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);

@@ -223,7 +223,7 @@ class MenuService
     {
         global $Sql;
         
-        if ($menu->get_block() != BLOCK_POSITION__NOT_ENABLED)
+        if ($menu->get_block() != BLOCK_POSITION__NOT_ENABLED && $menu->is_enabled())
         {   // Updates the previous block position counter
             $update_query = "
                 UPDATE " . PREFIX ."menus
@@ -231,14 +231,9 @@ class MenuService
                 WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
             $Sql->query_inject($update_query, __LINE__, __FILE__);
         }
-        if (!$menu->is_enabled())
-        {   // Enables the menu if not
-            $menu->enabled();
-        }
         
         // Disables the menu if the destination block is the NOT_ENABLED block position
-        if ($block == BLOCK_POSITION__NOT_ENABLED)
-            $menu->enabled(MENU_NOT_ENABLED);
+        $menu->enabled($block == BLOCK_POSITION__NOT_ENABLED ? MENU_NOT_ENABLED : MENU_ENABLED);
         
         // If not enabled, we do not move it so we can restore its position by reactivating it
         if ($menu->is_enabled())
@@ -293,7 +288,7 @@ class MenuService
                 UPDATE " . PREFIX . "menus SET position=position + 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_postion . "'
+                    position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_position . "'
             ";
         }
         
