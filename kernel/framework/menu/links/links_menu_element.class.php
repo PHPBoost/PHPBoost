@@ -56,6 +56,7 @@ class LinksMenuElement extends Menu
 	{
        $this->url = $url;
        $this->image = $image;
+       $this->uid = get_uid();
        parent::Menu($title);
 	}
 	
@@ -76,9 +77,14 @@ class LinksMenuElement extends Menu
      */
     function get_uid()
     {
-        if ($this->uid == null)
-            $this->uid = get_uid();
         return $this->uid;
+    }
+    /**
+     * Update the menu uid
+     */
+    function update_uid()
+    {
+        $this->uid = get_uid();
     }
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
@@ -92,7 +98,7 @@ class LinksMenuElement extends Menu
     }
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
-     * @return string the link $image url
+     * @return string the $image url
      */
     function get_image($compute_relative_url = true)
     {

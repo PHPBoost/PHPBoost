@@ -42,84 +42,92 @@ if ($action == 'save')
 //    echo 'UID : ' . $menu_uid . '<hr />';
     
 	//Properties of the menu we are creating/editing
-	$title = retrieve(POST, 'name', '');
-	$url = retrieve(POST, 'url', '');
-	$image = retrieve(POST, 'image', '');
-	$type = retrieve(POST, 'type', VERTICAL_MENU);    
+//	$title = retrieve(POST, 'menu_element_' . $menu_uid . '_name', '');
+//	$url = retrieve(POST, 'menu_element_' . $menu_uid . '_url', '');
+//	$image = retrieve(POST, 'menu_element_' . $menu_uid . '_image', '');
+	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', VERTICAL_MENU);    
     
-    function build_menu_from_form(&$elements_ids, $root_uid = 0)
+    function build_menu_from_form(&$elements_ids, $level = 0)
     {
         $menu = null;
+        $menu_element_id = $elements_ids['id'];
+        $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '');
+        $menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
+        $menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
+//        echo '==&gt;' . $menu_element_id . ' ' . $menu_name . ' ' . $menu_url . ' ' . $menu_image . ' '; print_r($elements_ids);
     	$array_size = count($elements_ids);
-    	if ($array_size == 1)
+    	if ($array_size == 1 && $level > 0)
     	{   // If it's a menu, there's only one element
-            $menu_element_id = $elements_ids['id'];
-    		$menu = new LinksMenuLink(
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
-    		);
-    		$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth'));
+    		$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
     	}
     	else
     	{
-//            $menu_element_id = !empty($elements_ids['id']) || $elements_ids['id'] == 0 ?
-//                $elements_ids['id'] : $root_uid;
-    	    $menu_element_id = $elements_ids['id'];
-//    		echo '<pre>'; print_r($elements_ids); echo '</pre><hr />';
-            $menu = new LinksMenu(
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_name', ''),
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_url', ''),
-    			retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '')
-    		);
-    		$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth'));
+            $menu = new LinksMenu($menu_name, $menu_url, $menu_image);	
     		
-    		//We unset the id key of the array
+            // We unset the id key of the array
     		unset($elements_ids['id']);
+    		
     		$array_size = count($elements_ids);
     		for ($i = 0; $i < $array_size; $i++)
-	    	{
-//	    	    echo 'ID : ' . $menu_element_id . ' - i : ' . $i .  '/' . $array_size . '<br />';
-//	    	    echo '<pre>'; print_r($elements_ids[$i]); echo '</pre><hr /><hr/>';
-	    		//We build all its children and add it to its father
-	    		$menu->add(build_menu_from_form($elements_ids[$i]));
+	    	{	// We build all its children and add it to its father
+	    		$menu->add(build_menu_from_form($elements_ids[$i], $level + 1));
 	    	}
     	}
-//    	echo '||' . $menu->display() . '||';
+        
+        $menu->set_auth(Authorizations::build_auth_array_from_form(
+            AUTH_MENUS, 'menu_element_' . $menu_element_id . '_auth')
+        );
     	return $menu;
     }
     
-    //We build the array representing the tree
+    // We build the array representing the tree
     $result = array();
     parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
     
-    //We build the tree
-    if (empty($result['tree']))
-        die('Error saving the menu!');
-        
-    //The parsed tree is not absolutely regular, we correct it
+    // We build the tree        
+    // The parsed tree is not absolutely regular, we correct it
     $id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
-//    echo 'AA' . $id_first_menu . 'AA';
-    // Correcting the first element
-    $result['amp;menu_element_' . $menu_uid . '_list'][0] = array_merge(
-    	array('id' => $id_first_menu),
-    	$result['amp;menu_element_' . $menu_uid . '_list'][0]
-    );
-    // Adding the root element
-    $menu_tree = array_merge(
-    	array('id' => $menu_uid),
-    	$result['amp;menu_element_' . $menu_uid . '_list']
-    );
+    echo 'ID : ' . $id_first_menu . '<br />';
+    echo '<pre>RESULT TREE : '; print_r($result['tree']); echo '</pre>';
+    
+    // Correcting the first item
+    if (!empty($id_first_menu))
+    {   // This menu contains item
+        echo 'COCO<table><tr><td>CACA0<pre>'; print_r($result); echo '</pre></td>'; 
+        $menus =& $result['amp;menu_element_' . $menu_uid . '_list'];
+	    if (!empty($menus[0]))
+	    {   // The first item is a sub menu
+	        $menus[0] = array_merge(
+		        array('id' => $id_first_menu),
+		        $menus[0]
+		    );
+	    }
+	    else
+	    {   // The first item is a link
+	        $menus[0] = array('id' => $id_first_menu);
+	    }
+//	    echo '<td><pre>'; print_r($menus); echo '</pre></td>';
+	    ksort($menus);  // Sort the menus to get the first at the beginning
+	    
+	    echo '<td>CACA1<pre>'; print_r($menus); echo '</pre></td>';
+	    // Adding the root element
+	    $menu_tree = array_merge(
+	        array('id' => $menu_uid),
+	        $menus
+	    );
+        echo '<td>CACA2<pre>'; print_r($menus); echo '</pre></td></tr></table>';
+    }
+    else
+    {   // There no item in this menu
+        $menu_tree = array('id' => $menu_uid);
+    }
 //    echo $result['tree'] . '<br />';
-//    echo '<pre>'; print_r($menu_tree); echo '</pre>';
-    //We build the menu
-    $menu = build_menu_from_form($menu_tree, $menu_uid);
+    echo '<pre>TREE : '; print_r($menu_tree); echo '</pre>';
+    // We build the menu
+    $menu = build_menu_from_form($menu_tree);
     if ($menu == null)
         die('Error saving the menu : null menu exception');
     
-    $menu->set_title($title);
-    $menu->set_url($url);
-    $menu->set_image($image);
     $menu->set_type($type);
     
     //If we edit the menu
@@ -129,15 +137,24 @@ if ($action == 'save')
     }
     
     //Menu enabled?
-    $menu->enabled(retrieve(POST, 'enabled', MENU_NOT_ENABLED));
+    $menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', MENU_NOT_ENABLED));
+    $menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', BLOCK_POSITION__NOT_ENABLED));
+    $menu->set_auth(Authorizations::build_auth_array_from_form(
+        AUTH_MENUS, 'menu_element_' . $menu_uid . '_auth'
+    ));
+//    echo '<pre>'; print_r($menu); echo '</pre>';
+    echo $menu->display();
+//    exit;
     
     if ($menu->is_enabled())
-        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
-        
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS, "menu_auth"));
-//    echo '<pre>'; print_r($menu); echo '</pre>';
-//    exit;
-    MenuService::save($menu);
+    {   // Move and the saves the menu if enabled
+        MenuService::move($menu, $menu->get_block());
+    }
+    else
+    {   // The menu is not enabled, we only save it with its block location
+        // When enabling it, the menu will be moved to this block location
+        MenuService::save($menu);
+    }
    	MenuService::generate_cache();
     redirect(HOST . DIR . '/admin/menus/menus.php#m' . $menu->get_id());
 }
@@ -180,7 +197,10 @@ $tpl->assign_vars(array(
     'L_CONTENT' => $LANG['contents'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
-    'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(AUTH_MENUS, array(), array(), 'menu_element_##UID##_auth')),
+    'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(
+        AUTH_MENUS, array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' =>AUTH_MENUS),
+        array(), 'menu_element_##UID##_auth'
+     )),
     'JL_AUTHORIZATIONS' => to_js_string($LANG['authorizations']),
     'JL_PROPERTIES' => to_js_string($LANG['properties']),
     'JL_NAME' => to_js_string($LANG['name']),
@@ -221,6 +241,7 @@ $edit_menu_tpl->assign_vars(array(
     'L_DELETE' => $LANG['delete']
 ));
 
+$menu = null;
 if ($menu_id > 0)
 {
 	$menu = MenuService::load($menu_id);
@@ -229,56 +250,24 @@ if ($menu_id > 0)
         redirect('menus.php');	
 }
 else
-{
-	$auth = array('r2' => 1, 'r1' => 1, 'm1' => 1);
-	$menu = new LinksMenu('Google', 'http://www.google.com', '', VERTICAL_SCROLLING_MENU);
-	$menu1 = new LinksMenu('Menu 1', 'http://www.google.com');
-	$menu1->set_auth($auth);
-	$menu2 = new LinksMenu('Menu 2', 'http://www.google.com');
-	$menu3 = new LinksMenu('Menu 3', 'http://www.google.com');
-	$menu4 = new LinksMenu('Menu 4', 'http://www.google.com');
-	$menu5 = new LinksMenu('Menu 5', 'http://www.google.com');
-	$menu6 = new LinksMenu('Menu 6', 'http://www.google.com');
-	$menu7 = new LinksMenu('Menu 7', 'http://www.google.com');
-	$element1 = new LinksMenuLink('Element 1', '/forum/index.php');
-	$element1->set_auth($auth);
-	$element2 = new LinksMenuLink('Element 2', 'http://www.google.com');
-	
-	$aelts0 = array($element1, $element2, $element1, $element1);
-	$menu7->add_array($aelts0);
-	$aelts1 = array($menu7, $element1, $element1, $element1, $element1);
-	$menu6->add_array($aelts1);
-	$aelts2 = array($menu6, $element1, $element1, $element2, $element2);
-	$aelts3 = array($element1, $element1, $element2, $element2);
-	$aelts4 = array($element2, $element2, $element1, $element1);
-	$aelts5 = array($element2, $element2, $element2, $element2);
-	
-	$menu1->add_array($aelts1);
-	$menu2->add_array($aelts2);
-	$menu3->add_array($aelts3);
-	$menu4->add_array($aelts4);
-	$menu5->add_array($aelts5);
-	
-	$amenu = array($menu1, $menu2, $menu3, $menu4, $menu5, $element1, $element2);
-	
-	$menu->add_array($amenu);
-	echo $menu->display();
+{   // Create a new generic menu
+    $menu = new LinksMenu('', '', '', VERTICAL_SCROLLING_MENU);
 }
 
-{
-	$block = $menu->get_block();
-	$tpl->assign_vars(array(
-		'IDMENU' => $menu_id,
-		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
-	    'C_ENABLED' => $menu->is_enabled(),
-		'MENU_ID' => $menu->get_id(),
-		'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-		'MENU_NAME' => $menu->get_title(),
-		'MENU_URL' => $menu->get_url(false),
-		'MENU_IMG' => $menu->get_image(false),
-	    'ID' => $menu->get_uid()
-	));
-}
+$block = $menu->get_block();
+$tpl->assign_vars(array(
+	'IDMENU' => $menu_id,
+	'AUTH_MENUS' => Authorizations::generate_select(
+        AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
+    ),
+    'C_ENABLED' => $menu->is_enabled(),
+	'MENU_ID' => $menu->get_id(),
+	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+	'MENU_NAME' => $menu->get_title(),
+	'MENU_URL' => $menu->get_url(false),
+	'MENU_IMG' => $menu->get_image(false),
+    'ID' => $menu->get_uid()
+));
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
@@ -289,12 +278,16 @@ foreach (LinksMenu::get_menu_types_list() as $type_name)
 	));
 }
 
-$locations = '';
 foreach ($array_location as $key => $name)
-    $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+{
+    $tpl->assign_block_vars('location', array(
+        'C_SELECTED' => $block == $key,
+        'VALUE' => $key,
+        'NAME' => $name
+    ));
+}
 
 $tpl->assign_vars(array(
-    'LOCATIONS' => $locations,
     'ID_MAX' => get_uid()
 ));
 $tpl->parse();

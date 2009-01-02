@@ -37,7 +37,7 @@
                 # ENDIF #
             </div>
             <div style="position:relative;float:right">
-                <div style="position:absolute;z-index:100;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{IDMENU}">
+                <div style="position:absolute;z-index:99;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{IDMENU}">
                     <div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);">
                         <div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
                         <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_HEADER}&amp;id={IDMENU}">{L_HEADER}</a></div>

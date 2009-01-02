@@ -215,7 +215,7 @@ class MenuService
     }
     
     /**
-     * @desc Move a menu into a block. Enable or disable it according to the destination block
+     * @desc Move a menu into a block and save it. Enable or disable it according to the destination block
      * @param Menu $menu the menu to move
      * @param int $block the destination block
      */
@@ -537,6 +537,9 @@ class MenuService
         $menu->enabled($db_result['enabled']);
         $menu->set_block($db_result['block']);
         $menu->set_block_position($db_result['position']);
+        
+        if (of_class($menu, LINKS_MENU__CLASS) || of_class($menu, LINKS_MENU_LINK__CLASS))
+            $menu->update_uid();
         
         return $menu;
     }
