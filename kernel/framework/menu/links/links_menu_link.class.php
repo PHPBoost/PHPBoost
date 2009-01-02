@@ -80,6 +80,9 @@ class LinksMenuLink extends LinksMenuElement
     function cache_export($template)
 	{
         parent::_assign($template);
+        $template->assign_vars(array(
+            'C_LINK' => true
+        ));
         return parent::cache_export_begin() . $template->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
 	}
 	

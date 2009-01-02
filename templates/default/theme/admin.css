@@ -180,5 +180,18 @@ pre {
 	padding:10px 0;
 }
 .menu_link_element {
-	margin-top:10px;
+    margin-top:10px;
+}
+
+.menu_link_element:hover {
+	border-color: #aaaaaa;
+    cursor: move;
+}
+
+.menu_link_element:hover label {
+    cursor: move;
+}
+
+.menu_link_element:hover img {
+    cursor: default;
 }

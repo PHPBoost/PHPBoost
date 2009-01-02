@@ -9,19 +9,18 @@
                 <li>
                 # ENDIF #
 					<h5 class="links"><a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a></h5>
-					<ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul>
+					# IF C_HAS_CHILD #<ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul># ENDIF #
 				</li>
 	        </ul>
 	    </div>
 	# ENDIF #
-	
 	# IF C_NEXT_MENU #
         <!-- Global Menu structure -->
 		<li class="extend" onmouseover="showMenu('gmenu{ID}', {DEPTH});" onmouseout="hideMenu({DEPTH});">
 			<a href="{RELATIVE_URL}" style="# IF C_IMG #background-image:url({RELATIVE_IMG});# ENDIF #">{TITLE}</a>
-			 <ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul>
+			 # IF C_HAS_CHILD #<ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul># ENDIF #
 		</li>
-	# ENDIF #
+    # ENDIF #
 # ELSE #
     <!-- Simple Menu Link -->
     <li><a href="{RELATIVE_URL}" title="{TITLE}" style="# IF C_IMG #background-image:url({RELATIVE_IMG});# ENDIF #">{TITLE}</a></li>

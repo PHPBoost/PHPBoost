@@ -113,7 +113,7 @@ class LinksMenuElement extends Menu
      */
     function cache_export_begin()
     {
-        return str_replace('\'', '##', parent::cache_export_begin());
+        return parent::cache_export_begin();
     }
     
     /**
@@ -122,7 +122,7 @@ class LinksMenuElement extends Menu
      */
     function cache_export_end()
     {
-        return str_replace('\'', '##', parent::cache_export_end());
+        return parent::cache_export_end();
     }
     
     /**
@@ -148,8 +148,10 @@ class LinksMenuElement extends Menu
         $template->assign_vars(array(
             'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
-            'IMG' => $this->get_image(),
-            'URL' => $this->get_url(),
+            'ABSOLUTE_URL' => $this->get_url(false),
+            'ABSOLUTE_IMG' => $this->get_image(false),
+            'RELATIVE_URL' => $this->get_url(true),
+            'RELATIVE_IMG' => $this->get_image(true),
             'ID' => $this->get_uid(),
             'ID_VAR' => $this->get_uid()
         ));
