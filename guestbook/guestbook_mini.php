@@ -56,7 +56,9 @@ function guestbook_mini()
     		'RAND_MSG_LOGIN' => $guestbook_login,
     		'L_BY' => $LANG['by']
     	));
+		return $tpl->parse(TEMPLATE_STRING_MODE);
     }
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+	return '';
 }
+
 ?>

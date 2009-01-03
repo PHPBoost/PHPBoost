@@ -90,7 +90,7 @@ release({L_RELEASE_FORMAT});
 </script>
 # ENDIF #
 
-<div id="scroll_top_page" />
+<span id="scroll_top_page"></span>
 <div id="global">
 	<div id="header">
 		<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
