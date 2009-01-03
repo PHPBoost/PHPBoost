@@ -89,6 +89,8 @@ class StatsSaver
 	
 	/*static*/ function compute_users()
 	{
+		global $stats_array_lang;
+		
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
