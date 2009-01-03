@@ -1,16 +1,16 @@
 		</div>
+		# IF C_MENUS_BOTTOMCENTRAL_CONTENT #
         <div id="bottom_contents">
-			# IF C_MENUS_BOTTOMCENTRAL_CONTENT #
 			{MENUS_BOTTOMCENTRAL_CONTENT}
-			# ENDIF #
 		</div>
-	</div>
-	<div id="top_footer">
-		# IF C_MENUS_TOP_FOOTER_CONTENT #
-		{MENUS_TOP_FOOTER_CONTENT}
 		# ENDIF #
+	</div>
+	# IF C_MENUS_TOP_FOOTER_CONTENT #
+	<div id="top_footer">
+		{MENUS_TOP_FOOTER_CONTENT}
 		<div class="spacer"></div>
 	</div>
+	# ENDIF #
 	<div id="footer">
 		# IF C_MENUS_FOOTER_CONTENT #
 		{MENUS_FOOTER_CONTENT}
@@ -33,6 +33,6 @@
 		</div>
 	</div>
 </div>
-	<div id="scroll_bottom_page" />
+	<span id="scroll_bottom_page"></span>
 	</body>
 </html>

@@ -142,4 +142,5 @@ function shoutbox_mini()
     }
     return '';
 }
+
 ?>
