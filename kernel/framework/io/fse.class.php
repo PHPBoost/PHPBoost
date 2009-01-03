@@ -6,14 +6,14 @@
  *   copyright          : (C) 2008 Nicolas Duhamel
  *   email                : akhenathon2@gmail.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,7 +35,7 @@ class FileSystemElement
 	var $path;
 	var $is_open;
 	
-	## Public Methods ##	
+	## Public Methods ##
 	// Constructeur
 	function FileSystemElement($path)
 	{
@@ -67,13 +67,19 @@ class FileSystemElement
 	}
 	
 	// renvoie le nom de l'élément
-	function get_name()
+	function get_name($full_path = false, $no_extension = false)
 	{
+	    if ($full_path)
+	       return $this->path;
+	    
 		$path = trim($this->path, '/');
-		
 		$parts = explode('/', $path);
+		$name =$parts[count($parts) - 1];
 		
-		return $parts[count($parts) - 1];
+		if ($no_extension)
+		    return substr($name, 0, strrpos($name, '.'));
+		
+		return $name;
 	}
 	
 	//Change le CHMOD de l'élément du système de fichiers

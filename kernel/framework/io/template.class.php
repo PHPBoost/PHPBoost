@@ -180,7 +180,7 @@ class Template
              $module = forum
              $file_name = forum_topic.tpl
              $file = forum_topic.tpl
-             $folder = 
+             $folder =
         
         
         $filename = /news/framework/content/syndication/last_news.tpl
@@ -196,6 +196,7 @@ class Template
         $module = substr($filename, 0, $i);
         $file = trim(substr($filename, $i), '/');
         $folder = trim(substr($file, 0, strpos($file, '/')), '/');
+        $file_name = trim(substr($filename, strrpos($filename, '/')));
         //$file_name = substr($filename, strrpos($filename, '/') + 1);
         //echo '<pre>'; print_r(array('filename' => $filename, 'module' => $module, 'file' => $file, 'folder' => $folder)); echo '</pre><hr />';
         
@@ -218,6 +219,18 @@ class Template
                 return $file_path;
             
             return $default_templates_folder . $filename;
+        }
+        elseif ($module == 'menus')
+        {   // Framework - Templates priority order
+            //      /templates/$theme/menus/$menu/filename.tpl
+            //      /menus/$menu/default/framework/.../$file.tpl
+            $menu = substr($folder, 0, strpos('/'));
+            if (empty($menu))
+                $menu = $folder;
+            if (file_exists($file_path = $theme_templates_folder . '/menus/' . $menu . '/' . $file_name))
+                return $file_path;
+            
+            return PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $file_name;
         }
         else
         {   // Module - Templates
@@ -260,8 +273,8 @@ class Template
     {
         //fichier expiré
         if (file_exists($file_cache_path))
-        {	
-            if (@filemtime($tpl_path) > @filemtime($file_cache_path) || @filesize($file_cache_path) === 0) 
+        {
+            if (@filemtime($tpl_path) > @filemtime($file_cache_path) || @filesize($file_cache_path) === 0)
                 return false;
             else
                 return true;
@@ -349,7 +362,7 @@ class Template
     function _parse_blocks_vars($blocks)
     {
         if (isset($blocks[1]))
-        {	
+        {
             $array_block = explode('.', $blocks[1]);
             $varname = array_pop($array_block);
             $last_block = array_pop($array_block);
@@ -358,7 +371,7 @@ class Template
                 return '\'; if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\'])) $tplString .= $_tmpb_' . $last_block . '[\'' . $varname . '\']; $tplString .= \'';
             else
                 return '<?php if (isset($_tmpb_' . $last_block . '[\'' . $varname . '\'])) echo $_tmpb_' . $last_block . '[\'' . $varname . '\']; ?>';
-        }		
+        }
         return '';
     }
     
@@ -366,7 +379,7 @@ class Template
     function _parse_blocks($blocks)
     {
         if (isset($blocks[1]))
-        {	
+        {
             if (strpos($blocks[1], '.') !== false) //Contient un bloc imbriqué.
             {
                 $array_block = explode('.', $blocks[1]);
@@ -421,8 +434,8 @@ class Template
     function _clean()
     {
         $this->template = preg_replace(
-            array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`s', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'), 
-            array('', '', '', ''), 
+            array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`s', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'),
+            array('', '', '', ''),
         $this->template);
 
         //Evite à l'interpréteur PHP du travail inutile.

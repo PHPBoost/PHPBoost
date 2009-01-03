@@ -131,13 +131,13 @@ foreach ($modules_config as $module_name => $auth)
 				{
 					if (is_array($value))
 					{
-						$links .= '<li class="extend" onmouseover="show_menu(\'7' . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(../' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu7' . $name . '">';
+						$links .= '<li class="extend" onmouseover="show_menu(\'7' . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu7' . $name . '">';
 						foreach ($value as $key2 => $value2)
-							$links .= '<li><a href="../' . $name . '/' . $value2 . '" style="background-image:url(../' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
+							$links .= '<li><a href="../' . $name . '/' . $value2 . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
 						$links .= '</ul></li>';
 					}
 					else
-						$links .= '<li><a href="../' . $name . '/' . $value . '" style="background-image:url(../' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>';
+						$links .= '<li><a href="../' . $name . '/' . $value . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>';
 				}
 				
 				$Template->assign_block_vars('modules', array(
@@ -145,7 +145,7 @@ foreach ($modules_config as $module_name => $auth)
 					'C_DEFAULT_LINK' => false,
 					'ID' => $name,
 					'LINKS' => $links,
-					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
+					'DM_A_STYLE' => ' style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);"',
 					'NAME' => $modules_config[$module_name]['name'],
 					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
 				));
@@ -155,7 +155,7 @@ foreach ($modules_config as $module_name => $auth)
 				$Template->assign_block_vars('modules', array(
 					'C_DEFAULT_LINK' => true,
 					'C_ADVANCED_LINK' => false,
-					'DM_A_STYLE' => ' style="background-image:url(../' . $name . '/' . $name . '_mini.png);"',
+					'DM_A_STYLE' => ' style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);"',
 					'NAME' => $modules_config[$module_name]['name'],
 					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
 				));
