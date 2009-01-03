@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,13 +30,13 @@ require_once('../admin/admin_header.php');
 
 $uninstall = retrieve(GET, 'uninstall', false);
 $id = retrieve(GET, 'id', 0);
-$error = retrieve(GET, 'error', ''); 
+$error = retrieve(GET, 'error', '');
 
 //Modification des propriétés des modules (activés et autorisations globales d'accès)
-if (isset($_POST['valid']))		
+if (isset($_POST['valid']))
 {
 	//Listage des modules
-	$result = $Sql->query_while("SELECT id, name, auth, activ 
+	$result = $Sql->query_while("SELECT id, name, auth, activ
 	FROM ".PREFIX."modules", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -50,9 +50,10 @@ if (isset($_POST['valid']))
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');
 	$Cache->Load('modules', RELOAD_CACHE);
-	$Cache->Generate_file('menus');
+	import('core/menu_service');
+	MenuService::generate_cache();
 	
-	redirect(HOST . SCRIPT);	
+	redirect(HOST . SCRIPT);
 }
 elseif ($uninstall) //Désinstallation du module
 {
@@ -73,8 +74,8 @@ elseif ($uninstall) //Désinstallation du module
 				break;
 			case MODULE_UNINSTALLED:
 			default:
-				redirect(HOST . SCRIPT . $error);	
-		}	
+				redirect(HOST . SCRIPT . $error);
+		}
 	}
 	else
 	{
@@ -105,11 +106,11 @@ elseif ($uninstall) //Désinstallation du module
 			'L_SUBMIT' => $LANG['submit']
 		));
 
-		$Template->pparse('admin_modules_management'); 
+		$Template->pparse('admin_modules_management');
 	}
-}	
+}
 else
-{			
+{
 	$Template->set_filenames(array(
 		'admin_modules_management'=> 'admin/admin_modules_management.tpl'
 	));
@@ -151,17 +152,17 @@ else
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//Modules installé
-	$i = 0;	
+	$i = 0;
 	$array_modules = array();
 	$array_info_module = array();
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-	$result = $Sql->query_while("SELECT id, name, auth, activ 
+	$result = $Sql->query_while("SELECT id, name, auth, activ
 	FROM ".PREFIX."modules
 	ORDER BY name", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Récupération des infos de config.
-		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());		
+		$array_info_module[$row['name']] = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
 		$array_modules[$array_info_module[$row['name']]['name']] = array('id' => $row['id'], 'name' => $row['name'], 'auth' => $row['auth'], 'activ' => $row['activ']);
 	}
 	$Sql->query_close($result);
@@ -189,7 +190,7 @@ else
 			'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
 			'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
 			'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
+			'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),
 			'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
 			'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
 			'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : ''),
@@ -207,7 +208,7 @@ else
 			'C_MODULES_INSTALLED' => true
 		));
 	
-	$Template->pparse('admin_modules_management'); 
+	$Template->pparse('admin_modules_management');
 }
 
 require_once('../admin/admin_footer.php');

@@ -107,8 +107,8 @@ class PackagesManager
 		if ($generate_cache)
 		{
 			$Cache->Generate_file('modules');
-			$Cache->Generate_file('menus');
 			$Cache->Generate_file('css');
+            MenuService::generate_cache();
 		
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
@@ -173,8 +173,8 @@ class PackagesManager
 				@include_once(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
 			
 			$Cache->Generate_file('modules');
-			$Cache->Generate_file('menus');
 			$Cache->Generate_file('css');
+            MenuService::generate_cache();
 
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))

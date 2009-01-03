@@ -6,14 +6,14 @@
  *   copyright            : (C) 2008 Nicolas Duhamel, Benoit Sautel
  *   email                : akhenathon2@gmail.com, ben.popeye@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,7 +46,7 @@ class File extends FileSystemElement
 	var $mode;
 	var $fd;
 	
-	## Public Methods ##	
+	## Public Methods ##
 	// Constructeur
 	function File($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
 	{
@@ -120,7 +120,7 @@ class File extends FileSystemElement
 	function write($data, $what = ERASE, $mode = CLOSEFILE)
 	{
 		if ($this->mode & WRITE)
-		{	
+		{
 			if (($mode == NOTCLOSEFILE && !is_ressource($this->fd)) || $mode == CLOSEFILE)
 			{
 				if (!($this->fd = @fopen($this->path, ( $what == ADD ) ? 'a' : 'w')))
@@ -192,7 +192,31 @@ class File extends FileSystemElement
 		@flock($this->fd, LOCK_UN);
 	}
 	
-	## Private Methods ##	
+	
+	/**
+     * @desc Include the file
+     * @param bool $once include once if true
+     * @return true if the file has been successfully included
+     */
+    function finclude($once = true)
+    {
+        if ($once)
+           return include_once $this->path;
+        return include $this->path;
+    }
+    
+    /**
+     * @desc Require the file
+     * @param bool $once require once if true
+     * @return true if the file has been successfully included
+     */
+    function frequire($once = true)
+    {
+        if ($once)
+           return require_once $this->path;
+        return require $this->path;
+    }
+	## Private Methods ##
 }
 
 ?>

@@ -99,7 +99,9 @@ if (!empty($id))
 }
 
 // Try to find out new mini-modules and delete old ones
-MenuService::update_mini_modules_list();
+MenuService::update_mini_modules_list(false);
+// The same with the mini menus
+MenuService::update_mini_menus_list();
 
 // Display the Menu dispositions
 include('lateral_menu.php');

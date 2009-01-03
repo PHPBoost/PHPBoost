@@ -353,11 +353,99 @@ class MenuService
             
     }
     
+    ## Mini Menus ##
+    /**
+     * @desc Add the menu named in the $menu folder
+     * @param Folder $menu the menu folder
+     * @return bool true if the menu has been installed, else, false
+     */
+    function add_mini_menu($menu, &$installed_menus_names)
+    {
+        // Break if no mini menu file found
+        $i = 0;
+        $menu_name = $menu->get_name();
+        $files = $menu->get_files('`.+\.php`');
+        
+        foreach ($files as $file)
+        {
+            $file_name = $file->get_name(false, true);
+            // We do not installed the mini menu if it's already installed or
+            // if it's not correct
+            if (in_array($menu_name . '/' . $file_name, $installed_menus_names) ||
+                !$file->finclude() ||
+                !function_exists('menu_' . $menu_name . '_' . $file_name))
+                 continue;
+            
+            $menu = new MiniMenu($menu_name, $file_name);
+            MenuService::save($menu);
+             
+            $i++;
+        }
+        
+        return $i > 0;
+    }
+    
+    /**
+     * @desc delete the mini menu named $menu
+     * @param string $menu the mini menu name
+     */
+    function delete_mini_menu($menu)
+    {
+        global $Sql;
+        $query = "DELETE FROM " . PREFIX . "menus WHERE
+            class='" . strtolower(MINI_MENU__CLASS) . "' AND
+            title LIKE '" . strtolower(strprotect($menu))  . "/%';";
+        $Sql->query_inject($query, __LINE__, __FILE__);
+    }
+    
+    /**
+     * @desc Update the mini menus list by adding new ones and delete old ones
+     * @param bool $update_cache if true it will also regenerate the cache
+     */
+    function update_mini_menus_list($update_cache = true)
+    {
+        global $Sql;
+        
+        import('io/folder');
+        $m_menus_directory = new Folder(PATH_TO_ROOT . '/menus');
+        $m_menus_list = $m_menus_directory->get_folders();
+        
+        $menus_names = array();
+        $installed_menus_names = array();
+        $processed_folders = array();
+        foreach ($m_menus_list as $menu)
+            $menus_names[] = $menu->get_name();
+        
+        $query = "SELECT title FROM " . PREFIX . "menus WHERE
+            class='" . strtolower(MINI_MENU__CLASS) . "';";
+        $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
+        while ($menu = $Sql->fetch_assoc($result))
+        {
+            $menu_folder = substr($menu['title'], 0, strpos($menu['title'], '/'));
+            if (!in_array($menu_folder, $processed_folders))
+            {
+                if (!in_array($menu_folder, $menus_names))
+                    MenuService::delete_mini_menu($menu_folder);
+                else
+                    $installed_menus_names[] = $menu['title'];
+                $processed_folders[] = $menu_folder;
+            }
+        }
+        $Sql->query_close($result);
+        
+        foreach ($m_menus_list as $menu)
+        {
+            MenuService::add_mini_menu($menu, $installed_menus_names);
+        }
+        
+        if ($update_cache)
+            MenuService::generate_cache();
+    }
     
     ## Mini Modules ##
     /**
      * @desc Add the module named $module mini modules
-     * @param string $name the module name
+     * @param string $module the module name
      * @return bool true if the module has been installed, else, false
      */
     function add_mini_module($module)
@@ -387,8 +475,7 @@ class MenuService
                 include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
                 if (!function_exists($file[0]))
                     continue;
-                    
-                import('core/menu_service');
+                
                 $menu = new ModuleMiniMenu($module, $file[0]);
                 $menu->enabled(true);
                 $menu->set_block(MenuService::str_to_location($location));
@@ -401,8 +488,8 @@ class MenuService
     }
     
     /**
-     * @desc delete all the module mini modules
-     * @param string $name the module name
+     * @desc delete the mini module $module
+     * @param string $module the mini module name
      */
     function delete_mini_module($module)
     {
