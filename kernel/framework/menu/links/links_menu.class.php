@@ -137,9 +137,13 @@ class LinksMenu extends LinksMenuElement
 	/**
      * @return string the string to write in the cache file
      */
-    function cache_export()
+    function cache_export($template = false)
     {
-        $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
+        // Get the good Template object
+        if (!is_object($template) || strtolower(get_class($template)) != 'template')
+            $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
+        else
+            $tpl = $template->copy();
         $original_tpl = $tpl->copy();
         
         // Children assignment
@@ -162,13 +166,17 @@ class LinksMenu extends LinksMenuElement
         
         if ($this->depth == 0)
         {   // We protect and unprotect only on the top level
-            $cache_str = var_export($tpl->parse(TEMPLATE_STRING_MODE), true);
+            $cache_str = parent::cache_export_begin() . '\'.' .
+                var_export($tpl->parse(TEMPLATE_STRING_MODE), true) .
+                '.\'' . parent::cache_export_end();
             $cache_str = str_replace(
                 array('#GET_UID#', '#GET_UID_VAR#', '##'),
                 array('($__uid = get_uid())', '$__uid', '\''),
                 $cache_str
             );
-            return parent::cache_export_begin() . '\'.' . $cache_str  . '.\'' . parent::cache_export_end();
+//            echo '<pre>' . htmlentities($cache_str) . '</pre>';
+//            exit;
+            return $cache_str;
         }
         return parent::cache_export_begin() . $tpl->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
     }
@@ -200,7 +208,7 @@ class LinksMenu extends LinksMenuElement
      */
     function get_menu_types_list()
     {
-    	return array(VERTICAL_MENU, HORIZONTAL_MENU, TREE_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU);
+    	return array(VERTICAL_MENU, /*HORIZONTAL_MENU, TREE_MENU,*/ VERTICAL_SCROLLING_MENU, /*HORIZONTAL_SCROLLING_MENU*/);
     }
 	
 	## Private Methods ##

@@ -37,11 +37,11 @@ $menu_id = retrieve(REQUEST, 'id', 0);
 $action = retrieve(REQUEST, 'action', '');
 
 if ($action == 'save')
-{   // Save a Menu (New / Edit)    
+{   // Save a Menu (New / Edit)
     $menu_uid = retrieve(POST, 'menu_uid', 0);
     
 	//Properties of the menu we are creating/editing
-	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', VERTICAL_MENU);    
+	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', VERTICAL_MENU);
     
     function build_menu_from_form(&$elements_ids, $level = 0)
     {
@@ -58,7 +58,7 @@ if ($action == 'save')
     	}
     	else
     	{
-            $menu = new LinksMenu($menu_name, $menu_url, $menu_image);	
+            $menu = new LinksMenu($menu_name, $menu_url, $menu_image);
     		
             // We unset the id key of the array
     		unset($elements_ids['id']);
@@ -80,7 +80,7 @@ if ($action == 'save')
     $result = array();
     parse_str('tree=' . retrieve(POST, 'menu_tree', ''), $result);
     
-    // We build the tree        
+    // We build the tree
     // The parsed tree is not absolutely regular, we correct it
     $id_first_menu = preg_replace('`[^=]*=([0-9]+)`isU', '$1', $result['tree']);
     
@@ -129,7 +129,7 @@ if ($action == 'save')
     ));
     
     if ($menu->is_enabled())
-    {   
+    {
         if ($menu->get_block() == $previous_menu->get_block())
         {   // Save the menu if enabled
             MenuService::save($menu);
@@ -236,7 +236,7 @@ if ($menu_id > 0)
 	$menu = MenuService::load($menu_id);
 	
     if (!of_class($menu, LINKS_MENU__CLASS))
-        redirect('menus.php');	
+        redirect('menus.php');
 }
 else
 {   // Create a new generic menu
