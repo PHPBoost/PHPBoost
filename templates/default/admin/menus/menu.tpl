@@ -47,7 +47,7 @@
                         <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_BOTTOMCENTRAL}&amp;id={IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
                         <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_RIGHT}&amp;id={IDMENU}">{L_RIGHT_MENU}</a></div>
                         <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPFOOTER}&amp;id={IDMENU}">{L_TOP_FOOTER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}">{L_FOOTER}</a></div
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}">{L_FOOTER}</a></div>
                     </div>
                 </div>
                 <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
