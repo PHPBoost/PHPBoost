@@ -13,9 +13,8 @@
 	    			</span>	
 	    			# ENDIF #
 	    			# IF C_DISPLAY_AUTHOR_THEME #
-	    			<br />
 	    			<span>
-	    				{L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
+	    				| {L_THEME} {L_THEME_NAME} {L_BY} <a href="{U_THEME_AUTHOR_LINK}" style="font-size:10px;">{L_THEME_AUTHOR}</a>
 	    			</span>
 	    			# ENDIF #
 	    		</div>
