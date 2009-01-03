@@ -1,3 +1,4 @@
+	<div id="admin_contents" style="margin-left:0;padding:0">
 		<table class="module_table">
 			<tr>
 				<th id="stats" colspan="5">
@@ -682,4 +683,5 @@
 			</fieldset>
 		</form>
 		# ENDIF #
-		
+	</div>
+	

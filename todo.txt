@@ -19,6 +19,9 @@
 
 ------------------------------------ MODULES -----------------------------------
 
+[-] News du site PHPBoost dans l'admin?
+[-] Améliorer la sélection de la page de démarrage.
+
 [-] Préparer l'insertion par défaut de contenu dans le site, création d'une page de bienvenue?
 [-] Nouveau thème par "défaut" du site, dans l'esprit de l'installateur.
 [-] Créer un module gestion de base de données (sortir le code de l'administration et le déporter dans un module)
