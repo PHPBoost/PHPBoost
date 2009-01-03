@@ -40,6 +40,8 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles),
         verticaux et horizontaux. Extension automatique suivant la page consultée.
 
+[-] Désactivation des modules mini qui ne marche plus.
+
 ------------------------------------ MODULES -----------------------------------
 
 ################################################################################
