@@ -148,6 +148,7 @@ $stats_array_os = array(
 );
 
 //Pays.
+global $stats_array_lang;
 $stats_array_lang = array(
        'ac' => array('Ascension Islands', 'ac.png'),
        'ad' => array('Andorra', 'ad.png'),
