@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,7 +50,7 @@ class Authorizations
 		$admin_auth_default = true;
 		if ($nbr_arg > 1)
 		{
-			$admin_auth_default = func_get_arg($nbr_arg - 1);		
+			$admin_auth_default = func_get_arg($nbr_arg - 1);
 			if (!is_bool($admin_auth_default))
 				$admin_auth_default = true;
 			else
@@ -65,7 +65,7 @@ class Authorizations
 		return $array_auth_all;
 	}
 	
-	//Retourne le tableau avec les droits issus du tableau passé en argument. Tableau destiné à être serialisé. 
+	//Retourne le tableau avec les droits issus du tableau passé en argument. Tableau destiné à être serialisé.
 	/*static*/ function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
@@ -80,7 +80,7 @@ class Authorizations
 		ksort($array_auth_all); //Tri des clées du tableau par ordre alphabétique, question de lisibilité.
 
 		return $array_auth_all;
-	}	
+	}
 	
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
     /*static*/ function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
@@ -98,7 +98,7 @@ class Authorizations
 			);
 			
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
-		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect; 
+		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
 		
 		$Template = new Template('framework/groups_auth.tpl');
        
@@ -139,7 +139,7 @@ class Authorizations
         	}
         	else
         	{
-	            $selected = '';   
+	            $selected = '';
 	            if (array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
 	                $selected = ' selected="selected"';
 	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
@@ -158,7 +158,7 @@ class Authorizations
         //Liste des groupes.
         foreach ($Group->get_groups_array() as $idgroup => $group_name)
         {
-            $selected = '';       
+            $selected = '';
             if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
                 $selected = ' selected="selected"';
 
@@ -176,7 +176,7 @@ class Authorizations
 		foreach ($array_auth as $type => $auth)
 		{
 			if (substr($type, 0, 1) == 'm')
-			{	
+			{
 				if (array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0)
 					$array_auth_members[$type] = $auth;
 			}
@@ -190,7 +190,7 @@ class Authorizations
 		//Listing des membres autorisés.
 		if ($advanced_auth)
 		{
-			$result = $Sql->query_while("SELECT user_id, login 
+			$result = $Sql->query_while("SELECT user_id, login
 			FROM ".PREFIX."member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -275,7 +275,7 @@ class Authorizations
 		if ($final_bit == 0)
 			die('<strong>Error :</strong> The destination bit must not be void.');
 		
-		$result = $auth;	
+		$result = $auth;
 		
 		if ($original_bit > $final_bit)
 		{
@@ -346,7 +346,7 @@ class Authorizations
 		if (!empty($array_auth_members)) //Récupération du formulaire.
 		{
 			if (is_array($array_auth_members))
-			{			
+			{
 				//Ajout des autorisations au tableau final.
 				foreach ($array_auth_members as $key => $value)
 				{

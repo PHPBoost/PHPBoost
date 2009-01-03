@@ -106,7 +106,7 @@ class MenuService
         $Sql->query_close($result);
         
         return $menus;
-    }    
+    }
     
     ## Menu ##
     
@@ -172,7 +172,7 @@ class MenuService
             $Sql->query_inject($query, __LINE__, __FILE__);
             //The object has now an id, we set it
             $menu->id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX. "menus"));
-        }        
+        }
         
         return true;
     }
@@ -338,6 +338,7 @@ class MenuService
                 }
             }
         }
+        // Cache compression
         $cache_str = preg_replace(
             array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
             array('', "\n", ' ', '> ', "\n", ''),

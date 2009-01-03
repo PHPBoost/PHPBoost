@@ -113,7 +113,7 @@ class LinksMenuElement extends Menu
      */
     function cache_export_begin()
     {
-        return parent::cache_export_begin();
+        return str_replace('\'', '##', parent::cache_export_begin());
     }
     
     /**
@@ -122,7 +122,7 @@ class LinksMenuElement extends Menu
      */
     function cache_export_end()
     {
-        return parent::cache_export_end();
+        return str_replace('\'', '##', parent::cache_export_end());
     }
     
     /**
