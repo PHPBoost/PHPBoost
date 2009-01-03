@@ -582,7 +582,7 @@ ul.menu_vertical a {
 }
 
 ul.menu_vertical {
-    
+    text-align: left;
 }
 
 ul.menu_vertical li {
