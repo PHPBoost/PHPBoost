@@ -166,9 +166,7 @@ $Template->assign_vars(array(
 //Création du tableau des rangs.
 $array_ranks = array(-1 => $LANG['guest_s'], 0 => $LANG['member_s'], 1 => $LANG['modo_s'], 2 => $LANG['admin_s']);
 
-$track = false;
-$track_mail = false;
-$poll_done = false; //N'execute qu'une fois les actions propres au sondage.
+list($track, $track_pm, $track_mail, $poll_done) = array(false, false, false, false);
 $Cache->load('ranks'); //Récupère les rangs en cache.
 $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.

@@ -16,6 +16,22 @@ div#sub_header_admin .dynamic_menu {
 	height:35px;
 	margin-top:10px;
 	padding-left:15px;
+	float:left;
+}
+div#admin_extend_link{
+	float:right;
+	margin-right:15px;
+	margin-top:10px;
+	background:#F2F7FB;
+    border:1px solid #C4CED6;
+    padding:4px 6px;
+    -moz-border-radius-topleft:12px;
+    -khtml-border-radius-topleft:12px;
+    -webkit-border-radius-topleft:12px;
+    -moz-border-radius-bottomright:12px;
+    -khtml-border-radius-bottomright:12px;
+    -webkit-border-radius-bottomright:12px;
+    border-radius:12px;
 }
 
 /* Conteneur principal */

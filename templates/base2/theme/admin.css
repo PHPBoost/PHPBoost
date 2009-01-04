@@ -14,6 +14,12 @@ div#sub_header_admin .dynamic_menu{
 	padding-top:15px;
 	margin-left:60px;
 }
+div#admin_extend_link{
+	float:right;
+	margin-right:115px;
+	margin-top:5px;
+}
+
 /* Conteneur principal */
 div#admin_main{
 	width:978px;
