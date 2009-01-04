@@ -216,7 +216,7 @@ elseif ($step == 3)
 	//Mise à jour du cache de Apache à propos du système de fichiers
 	@clearstatcache();
 	
-	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../templates', '../upload');
+	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../menus', '../templates', '../upload');
 	
 	$all_dirs_ok = true;
 	
