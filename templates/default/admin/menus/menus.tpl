@@ -56,47 +56,58 @@ function menu_hide_block(idfield, stop)
 			# IF LEFT_COLUMN #
 			<td style="width:18%;vertical-align:top;padding:4px;border:1px solid black;background:#9B8FFF">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_LEFT_MENU}</p>
+				<div class="module_mini_container" style="background:none;padding:0;margin:auto;float:none;border:none;">
 				# START mod_left #{mod_left.MENU}# END mod_left #				
+				</div>
 			</td>
 			# ENDIF #
 			
 			<td style="vertical-align:top;border:1px solid black;background:#E5E5E5">
-				<div id="links">
-					&nbsp;&nbsp;<a class="small_link" href="" title="{L_INDEX}">{L_INDEX}</a>
-				</div>
-				<div id="top_contents" style="border:1px solid black;background:#FFE25F">
-					<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_TOP_CENTRAL_MENU}</p>
+				<table class="module_table" style="width:100%;margin-top:0;">
+					<tr>
+						<td style="border:1px solid black;padding:4px;">
+							&nbsp;&nbsp;<a class="small_link" href="{START_PAGE}" title="{L_INDEX}">{L_INDEX}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/breadcrumb.png" alt="" class="valign_middle" />
+						</td>
+					</tr>
+					<tr>
+						<td style="border:1px solid black;background:#FFE25F">
+							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_TOP_CENTRAL_MENU}</p>
 					# START mod_topcentral #{mod_topcentral.MENU}# END mod_topcentral #
 					&nbsp;
-				</div>
-				<div style="width:96%;min-height:250px;margin:auto;border:1px solid black;">
-					<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_MENUS_AVAILABLE}</p>
-					# START mod_main #{mod_main.MENU}# END mod_main #
-					
-					<div class="spacer">&nbsp;</div>
-					
-					<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_UNINSTALLED_MENUS}</p>								
-					# START mod_main_uninstalled #
-					<div class="module_mini_container" style="margin:5px;margin-top:0px;float:left">
-						<div class="module_mini_top">
-							<h5 class="sub_title">{mod_main_uninstalled.NAME}</h5>
-						</div>
-						<div class="module_mini_contents">
-							<a href="{mod_main_uninstalled.U_INSTALL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files_mini.png" class="valign_middle" alt="" /></a>
-							<br />
-							<a href="{mod_main_uninstalled.U_INSTALL}">{L_INSTALL}</a>
-						</div>
-						<div class="module_mini_bottom">
-						</div>
-					</div>
-					# END mod_main_uninstalled #
-					<div class="spacer">&nbsp;</div>
-				</div>							
-				<div id="bottom_contents" style="border:1px solid black;background:#FF5F5F;">
-					<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_BOTTOM_CENTRAL_MENU}</p>
+						</td>
+					</tr>
+					<tr>
+						<td style="border:1px solid black;">
+							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_MENUS_AVAILABLE}</p>
+							# START mod_main #{mod_main.MENU}# END mod_main #
+							
+							<div class="spacer">&nbsp;</div>
+							
+							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_UNINSTALLED_MENUS}</p>								
+							# START mod_main_uninstalled #
+							<div class="module_mini_container" style="margin:5px;margin-top:0px;float:left">
+								<div class="module_mini_top">
+									<h5 class="sub_title">{mod_main_uninstalled.NAME}</h5>
+								</div>
+								<div class="module_mini_contents">
+									<a href="{mod_main_uninstalled.U_INSTALL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files_mini.png" class="valign_middle" alt="" /></a>
+									<br />
+									<a href="{mod_main_uninstalled.U_INSTALL}">{L_INSTALL}</a>
+								</div>
+								<div class="module_mini_bottom">
+								</div>
+							</div>
+							# END mod_main_uninstalled #
+						</td>
+					</tr>
+					<tr>
+						<td style="border:1px solid black;background:#FF5F5F">
+							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_BOTTOM_CENTRAL_MENU}</p>
 					# START mod_bottomcentral #{mod_bottomcentral.MENU}# END mod_bottomcentral #
 					&nbsp;
-				</div>							
+						</td>
+					</tr>
+				</table>							
 			</td>
 			
 			# IF RIGHT_COLUMN #

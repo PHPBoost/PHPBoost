@@ -123,10 +123,12 @@ input, textarea, optgroup, select, .xmlhttprequest_preview{
 	color:#2E3B5F;
 	padding:1px 2px;
 }
+
 input:hover, textarea:hover{
 	border:1px solid #213D4F;
 	background-color:#FFFFFF; 
 }
+
 input:focus, textarea:focus{
 	border:1px solid #02A3FF;
 	background-color:#EFF9FF;
@@ -152,15 +154,18 @@ input.text{
 	-khtml-border-radius:3px;
 	-webkit-border-radius:3px;
 }
+
 input.submit{
+	padding:1px 2px;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	border:1px solid #B0C1CB;	
 	border-top:1px solid #D9EBF6;	
 	color:#FFFFFF;	
-	padding:1px;
 	font-weight:bold;
 	font-size:10px;
 	background:#A9CEE9 url(images/form.png) repeat-x;
 }
+
 input.file{
 	border:1px solid #B0C1CB;	
 	border-top:1px solid #D9EBF6;	
@@ -170,16 +175,18 @@ input.file{
 	font-size:10px;
 	background:#A9CEE9 url(images/form.png) repeat-x;
 }
+
 input.reset{
+	padding:1px 2px;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
 	border:1px solid #B0C1CB;	
 	border-top:1px solid #D9EBF6;	
 	color:#E10000;
-	font-family:"Lucida Grande","Lucida Sans Unicode",Verdana,'Bitstream Vera Sans',Times,serif;
 	font-weight:bold;
 	font-size:10px;
-	padding:1px;
-	background:#FFFFFF url(images/form.png) repeat-x;
+	background:url(images/form.png) repeat-x;
 }
+
 input.reset:hover, input.submit:hover{
 	border:1px solid #0578CC;
 	cursor:pointer;

@@ -65,7 +65,7 @@ class BreadCrumb
 		
 		$Template->assign_vars(array(
 			'START_PAGE' => get_start_page(),
-			'L_INDEX' => $LANG['index']	
+			'L_INDEX' => $LANG['reception']	
 		));
 		
 		foreach ($this->array_links as $key => $array)
