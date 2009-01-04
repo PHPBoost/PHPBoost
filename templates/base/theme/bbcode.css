@@ -23,7 +23,7 @@
 }
 /* Affichage des smiley */
 .smiley{
-	vertical-align: middle;
+	vertical-align:middle;
 }
 /** Titres **/
 h3.title1, h3.title2{
@@ -49,7 +49,7 @@ h3.title2{
 	border-right:3px solid #E53B00;
 }
 h4.stitle1, h4.stitle2{
-	display: inline;
+	display:inline;
 	color:#333333;
 	font-size:14px;
 	font-weight:bold;
@@ -129,10 +129,10 @@ h4.stitle2{
     margin:4px 25px;
     border:1px solid #7C7D6A;   
     background-position:4px 4px;
-    -moz-border-radius: 12px;
-    -khtml-border-radius: 12px;
-    -webkit-border-radius: 12px;
-    border-radius: 12px;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
 }
 html>body .question, html>body .notice, html>body .warning, html>body .error, html>body .success
 {
@@ -145,7 +145,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 	display:block;
 	width:93%;
 	padding-bottom:2px;
-	font-weight: bold;
+	font-weight:bold;
 	margin:auto;
 }
 .blockquote, .code, .hide {
@@ -208,6 +208,6 @@ a.wikipedia_link:before{
 }
 
 a.wikipedia_link{
-	border-bottom: 1px dotted;
+	border-bottom:1px dotted;
 }
 

@@ -99,10 +99,10 @@ div#admin_quick_menu li.title_menu {
     border:1px solid #18415B;
     color:#FFFFFF;
     padding:3px 0px;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 div#admin_quick_menu li a.quick_link {
@@ -116,10 +116,10 @@ div#admin_quick_menu li a.quick_link {
     padding:3px 8px;
     text-decoration:none;
     line-height:2.2em;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 /* Tableaux de l'administration */
