@@ -54,8 +54,8 @@ class LinksMenuElement extends Menu
 	 */
 	function LinksMenuElement($title, $url, $image = '')
 	{
-       $this->url = $url;
-       $this->image = $image;
+       $this->set_url($url);
+       $this->set_image($image);
        $this->uid = get_uid();
        parent::Menu($title);
 	}
@@ -64,11 +64,40 @@ class LinksMenuElement extends Menu
     /**
      * @param string $image the value to set
      */
-	function set_image($image) { $this->image = $image; }
+	function set_image($image)
+	{
+	   if (!strpos($image, '://') && !strpos($image, '/') == 0)
+        {   // The url is relative and we need to put it in the right format
+            $this->image = '/' . preg_replace('`(^\./)`', '',
+                preg_replace('`((?=[/^]?)\.{2})/`', '', $image, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
+            );
+        }
+        else
+        {  // Absolute url (http or from the website root),
+           // we do not need to do anything
+           $this->image = $image;
+        }
+	}
 	/**
 	 * @param string $url the value to set
 	 */
-	function set_url($url) { $this->url = $url; }
+	function set_url($url)
+	{
+//	    $url = '/../forum/forum.php';
+	    if (!strpos($url, '://') && !strpos($url, '/') == 0)
+	    {   // The url is relative and we need to put it in the right format
+            $this->url = '/' . preg_replace('`(^\./)`', '',
+                preg_replace('`((?=[/^]?)\.{2})/`', '', $url, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
+            );
+	    }
+	    else
+	    {  // Absolute url (http or from the website root),
+	       // we do not need to do anything
+	       $this->url = $url;
+	    }
+//	    echo $url . '<br />' . $this->url;
+//	    exit;
+	}
      
 	## Getters ##
     /**
