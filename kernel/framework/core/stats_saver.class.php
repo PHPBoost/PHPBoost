@@ -128,12 +128,15 @@ class StatsSaver
 			'ibrowse' => 'Ibrowse'
 		);
 		$browser = 'other';
-		foreach ($array_browser as $regex => $name)
+		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
-			if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+			foreach ($array_browser as $regex => $name)
 			{
-				$browser = $name;
-				break;
+				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+				{
+					$browser = $name;
+					break;
+				}
 			}
 		}
 		StatsSaver::_write_stats('browsers', $browser);
@@ -162,13 +165,16 @@ class StatsSaver
 			'NetBSD' => 'netbsd'
 		);
 		$os = 'other';
-		foreach ($array_os as $regex => $name)
+		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
-			if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+			foreach ($array_os as $regex => $name)
 			{
-				$os = $name;
-				break;
-			}
+				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
+				{
+					$os = $name;
+					break;
+				}
+			}		
 		}		
 		StatsSaver::_write_stats('os', $os);
 		
@@ -179,15 +185,15 @@ class StatsSaver
 			$favorite_lang = !empty($user_lang[0]) ? strtolower($user_lang[0]) : '';
 			if (strpos($favorite_lang, '-') !== false)		
 				$favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`i', '$1', $favorite_lang);			
-			$lang = str_replace(array('cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da'), array('cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk'), $favorite_lang);
+			$lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk'), $favorite_lang);
 			
 			if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
 			{
-				$lang = 'other';
-				if (isset($stats_array_lang[$favorite_lang]))
-					$lang = $favorite_lang;
+				$wlang = 'other';
+				if (isset($stats_array_lang[$lang]))
+					$wlang = $lang;
 					
-				StatsSaver::_write_stats('lang', $lang);
+				StatsSaver::_write_stats('lang', $wlang);
 			}
 		}
 	}
