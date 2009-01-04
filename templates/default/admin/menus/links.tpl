@@ -210,6 +210,7 @@ function deleteElement(element_id)
 		    createSortableMenu();
             -->
             </script>
+			<br />
 	    </fieldset>			
 	
 		<fieldset class="fieldset_submit">
