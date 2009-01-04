@@ -1,0 +1,90 @@
+/* --------------------------------------
+		generic.css
+ Contient les classes génériques, ne devant pas être modifiée pour chaque thème.
+--------------------------------------*/
+
+/* Balises */
+img{
+	border:none;
+}
+hr{
+	color:#061729;
+	height:1px;
+}
+ul{
+	margin:0;
+	line-height:normal;
+}
+p{
+	margin-bottom:0.7em;
+	line-height:1.40em;
+	font-size:1em;
+}
+/* Classes textes */
+.text_center{
+	text-align:center;
+}
+.text_small{
+	font-size:10px;
+	font-weight:normal;
+}
+.text_strong{
+	font-weight:bold;	
+}
+.text_justify{
+	text-align:justify;
+}
+.img_right{
+	float:right;
+	margin:6px;
+}
+.img_left{
+	float:left;
+	margin:6px;
+}
+.valign_top{
+	vertical-align:top;
+}
+.valign_middle{
+	vertical-align:middle;
+}
+.valign_bottom{
+	vertical-align:bottom;
+}
+.spacer{
+	clear:both;
+}
+
+/* Erreurs
+--------------------------------------*/
+#error_handler{
+	margin:auto;
+}
+.error_unknow{
+	background:#b2bc99;
+}
+.error_success{
+	background:#8AC77F;
+}
+.error_notice{
+	background:#ACA899;
+}
+.error_warning{
+	background:#FF9900;
+}
+.error_fatal{
+	background:#d92e00;
+}
+.error_unknow, .error_success, .error_notice, .error_warning, .error_fatal{
+	height:35px;	
+	width:440px;
+	color:#000000;
+	border:1px solid #7C7D6A;
+	margin:auto;
+	padding:0.75em;
+	text-align:left;
+}
+html>body .error_unknow, html>body .error_success, html>body .error_notice, html>body .error_warning, html>body .error_fatal{
+	height:auto;
+	min-height:35px;
+}

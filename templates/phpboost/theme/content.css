@@ -1,0 +1,520 @@
+/* --------------------------------------
+		content.css
+Contient les formulaires, les modules (et modules minis), et messages.
+--------------------------------------*/
+
+/* Titres */
+h2.title{
+	font-size:16px;
+	font-weight:bold;
+}
+/* Titres */
+h3.title{
+	font-size:12px;
+	font-weight:bold;
+	display:inline;
+}
+/* Sous-Titres */
+h5.sub_title{ /* Titre des menu */
+	font-size:12px;
+	color:#658BD1;
+}
+h6.sub_title2{ /* Sous titre dans les menu */
+	font-size:12px;
+	font-weight:bold;
+	padding-top:4px;
+	text-indent:10px;
+	width:155px;
+	height:32px;
+	color:#E53B00;
+}
+
+.block_top, th{ /* Ent�te de conteneur et des tableaux */
+	padding:5px 6px;
+	color:#FFFFFF;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	border:1px solid #325889;
+	text-align:left;
+	font-size:0.75em;
+	font-weight:bold;
+	text-transform:uppercase;
+}
+hr {
+	background:#C4CED6;
+	border:none;
+	margin:1px auto;
+	height:1px;
+	width:99%;
+}
+/* Formulaires 
+--------------------------------------*/
+.fieldset_mini{	
+	width:540px;
+	margin:auto;
+	margin-top:20px;
+}
+.fieldset_content{
+	width:95%;
+	margin:auto;
+	margin-top:20px;
+}
+
+div.block_title span{
+	text-transform:uppercase;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#E53B00;
+	background:#FFFFFF;
+	border:1px solid #71BAF1;
+	padding:2px 8px;
+	padding:1px 0;
+    vertical-align:middle;
+	position:relative;
+	margin-top:-0.4em;
+    padding-left:10px;
+    padding-right:10px;
+	line-height:1.2em;
+}
+div.block_title {
+	position:relative;
+	top:-1.2em;
+}
+
+div.block_content{
+	width:95%;
+	margin:auto;
+	margin-top:20px;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #71BAF1;
+	background:#F1F4F6;
+	position:relative;
+}
+
+div.block_content ul {
+    padding-left:20px;
+}
+
+input, textarea, optgroup, select, .xmlhttprequest_preview{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:11px;
+	vertical-align:middle;
+	border-left:1px solid #6993AE;
+	border-top:1px solid #6993AE;
+	border-right:1px solid #71BAF1;
+	border-bottom:1px solid #71BAF1;
+	background-color:#FFFFFF;	
+	color:#2E3B5F;
+	padding:1px 2px;
+}
+input:hover, textarea:hover{
+	border:1px solid #213D4F;
+	background-color:#FFFFFF; 
+}
+input:focus, textarea:focus{
+	border:1px solid #02A3FF;
+	background-color:#EFF9FF;
+}
+fieldset { 
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+fieldset textarea.post{
+	width:90%;
+	display:inline;	
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+textarea{
+	display:block;
+	width:94%;
+	margin:auto;
+}
+input.text{
+	padding:2px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+input.submit{
+	border:1px solid #B0C1CB;	
+	border-top:1px solid #D9EBF6;	
+	color:#FFFFFF;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+	background:#A9CEE9 url(images/form.png) repeat-x;
+}
+input.file{
+	border:1px solid #B0C1CB;	
+	border-top:1px solid #D9EBF6;	
+	color:#2E3B5F;	
+	padding:1px;
+	font-weight:bold;
+	font-size:10px;
+	background:#A9CEE9 url(images/form.png) repeat-x;
+}
+input.reset{
+	border:1px solid #B0C1CB;	
+	border-top:1px solid #D9EBF6;	
+	color:#E10000;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-weight:bold;
+	font-size:10px;
+	padding:1px;
+	background:#FFFFFF url(images/form.png) repeat-x;
+}
+input.reset:hover, input.submit:hover{
+	border:1px solid #0578CC;
+	cursor:pointer;
+	color:#507CA2;
+}
+optgroup, select{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	cursor:pointer;
+	vertical-align:middle;
+	width:auto;		
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+optgroup{
+	font-weight:bold;
+	border:none;
+	border-bottom:1px solid #5B5A5A;
+}
+option{
+	padding:0px 3px;
+}
+legend{
+	padding:1px 0;
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#E53B00;
+	background:#FFFFFF;
+	border:1px solid #71BAF1;
+	padding:2px 8px;
+	margin-top:-0.4em;
+	position:relative;
+	text-transform:none;
+	line-height:1.2em;
+	top:0;
+	vertical-align:middle;
+	text-transform:uppercase;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+legend{ 
+	top:-1.2em; 
+}
+* html legend{
+	margin:0 0 -10px -7px;
+	line-height:1em;
+	font-size:.85em;
+}
+fieldset{
+	font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+	margin:20px 0;
+	padding:6px;
+	border:1px solid #71BAF1;
+	background:#F1F4F6;
+	position:relative;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+fieldset.fieldset_submit{
+	margin-top:-10px;
+	padding-bottom:15px;
+	width:99%;
+	text-align:center;
+	background:none;
+	border:none;
+}
+fieldset.fieldset_submit legend{
+	display:none;
+}
+fieldset dl{
+	height:1%;
+	overflow:hidden;
+	margin-bottom:16px;
+	font-size:11px;	
+}
+fieldset dl.overflow_visible{
+	overflow:visible;
+}
+html>body fieldset dl{
+	height:auto;
+	min-height:20px;
+}
+fieldset dt{
+	width:45%;
+	text-align:left;
+	padding-top:3px;
+}
+fieldset dd{
+	margin:0 0 0 45%;
+	padding:0 0 0 5px;
+	border:none;
+	vertical-align:top;
+	font-size:11px;
+}
+dt{
+	float:left;
+	width:auto;
+}
+dt span{ 
+	padding:0 5px 0 0;
+}
+label{
+	cursor:pointer;
+}
+fieldset label{
+	font-size:11px;
+	text-align:left;
+	font-weight:bold;
+	color:#0578CC;
+}
+dd label{
+	white-space:nowrap;
+	margin:0 10px 0 0;
+	font-weight:normal;
+	color:#476A7F;
+}
+dt span{
+	font-size:10px;
+	color:#476A7F;
+}
+label img{
+	vertical-align:middle;
+}
+fieldset dl dd label:hover{
+	color:#183A4F;
+}
+
+
+/* Messages post�s par les membres (messages priv�s, commentaires, etc...) 
+--------------------------------------*/
+/* Classe du lien du pseudo des messages */
+a.msg_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.msg_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+.msg_position{ /* Conteneur des messages */
+	width:98%;
+	margin:auto;
+	background:#E3EDF5 url(images/border.gif) repeat-y left;
+}
+.msg_container, .msg_container2{ /* Case contenant l'ensemble du message */
+	background:#FFFFFF url(images/border.gif) repeat-y right;
+	margin-left:1px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+.msg_container2{ /*  Case contenant l'ensemble du message => Couleur alternative */
+	background:#F4F9FA url(images/border.gif) repeat-y right;
+}
+/* Barre sup�rieur des messages */
+.msg_top_l{
+	margin-right:0px !important;
+	margin-right:-3px;
+	height:34px;
+	width:29px;
+	background:#91BAD8 url(images/msg_top_l.png) no-repeat left;
+	float:left;
+}
+.msg_top_r{
+	margin-left:0px !important;
+	margin-left:-3px;
+	height:34px;
+	width:21px;
+	background:#91BAD8 url(images/msg_top_r.png) no-repeat right;
+	float:right;
+}
+.msg_top a{
+	color:#FFFFFF;
+}
+.msg_top{
+	height:25px;
+	background:#FFFFFF url(images/msg_top.png) repeat-x;
+	padding-left:6px;
+	margin-left:20px;
+	margin-right:15px;
+	padding-top:9px;
+}
+.msg_pseudo_mbr{ /* Pseudo du membre */
+	width:127px;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	padding:2px 4px;
+	float:left;
+	margin-right:0px !important;
+	margin-right:-3px;
+	margin-left:-127px !important;
+	margin-left:-64px;
+	margin-top:-4px;
+}
+.msg_top_row{ /* Case au dessus du message, indique la date et les boutons d'administration */
+	height:16px;
+	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	font-size:10px;
+	color:#e8eaeb;
+	margin-right:1px;
+	border-top:1px solid #325889;
+	border-bottom:1px solid #325889;
+	padding-top:4px;
+	padding-left:127px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+}
+.msg_info_mbr{	/* Case des informations du membre */ 
+	background:#E3EDF5;
+	width:127px;
+	padding:4px;
+	float:left;
+	font-size:10px;
+	border-right:1px dotted #C4CED6;
+}
+.msg_contents_container{ /* Case contenant l'ensemble du message, infos membre + contenu */
+	margin-right:1px;
+	background:#E3EDF5;
+}
+.msg_contents, .msg_contents2{ /* Case du message */
+	margin-left:135px;
+	background:#FFFFFF;
+	padding:0px 5px;
+	border-left:1px dotted #C4CED6;
+}
+.msg_contents2{ /* Case du message => Couleur alternative */
+	background:#F4F9FA;
+}
+.msg_contents_overflow{	/* Case du contents du message, �vite que les images trop grandes d�forme */ 
+	width:99%;
+	height:auto;
+	min-height:80px;
+	overflow:auto;
+	padding:10px 0px;
+}
+.msg_sign, .msg_sign2{ /* Signature du membre */
+	background:#FFFFFF url(images/border.gif) repeat-y right;
+	padding:4px;
+	font-size:11px;
+	margin-left:136px;
+	border-left:1px dotted #C4CED6;
+}
+.msg_sign2{ /* Signature du membre => Couleur alternative */
+	background:#F4F9FA url(images/border.gif) repeat-y right;
+}
+.msg_sign_overflow{ /* Signature du membre, fixe la hauteur maximale */
+	height:auto !important;
+	height:80px;
+	width:99%;
+	max-height:80px;
+	max-width:99%;
+	overflow:hidden;
+}
+.msg_bottom_l{ /* Barre inf�rieure des messages */
+}
+.msg_bottom_r{
+}
+.msg_bottom{
+	height:23px;
+	background:#FFFFFF;
+	padding-top:6px;
+	padding-left:6px;
+	border:1px solid #71BAF1;
+	border-top:1px dotted #C4CED6;
+}
+
+
+/* Modules
+--------------------------------------*/
+/* Conteneur des modules */
+.module_position{
+	width:98%;
+	margin:auto;
+}
+.module_top_l{ /* Barre sup�rieur des modules */
+}
+.module_top_r{
+}
+.module_top{
+	height:18px;
+	text-indent:10px;
+	font-size:12px;
+	font-weight:bold;
+	color:#E53B00;
+	border-bottom:2px solid #E53B00;
+}
+.module_top a{
+}
+.module_contents{ /* Contenu des modules */
+	padding:20px 15px;
+	padding-bottom:15px;
+	clear:both;
+	text-align:justify;
+}
+.module_bottom_l{ /* Barre inf�rieure des modules */
+}
+.module_bottom_r{
+}
+.module_bottom{
+	height:22px;
+	padding-top:2px;
+	padding-left:6px;
+	font-size:12px;
+}
+.module_table, .block_container{ /* Tableau global, utilis� dans les diff�rents modules */
+	width:98%;
+	margin:auto;
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
+
+/* Modules minis
+--------------------------------------*/
+.module_mini_container{ /*Placement des mini modules */
+	width:165px;
+	margin:auto;
+	margin-top:10px;
+	padding-top:5px;
+	margin-bottom:10px;
+	border-top:1px solid #C4CED6;
+}
+.module_mini_top{
+	height:24px;
+	font-weight:bold;
+	text-align:center;
+}
+.module_mini_contents{
+	border-top:none;
+	border-bottom:none;
+	text-align:center; 
+	padding:4px;
+	padding-top:5px;
+	padding-bottom:0px;
+}
+.module_mini_bottom{ /* Bordure inf�rieur des modules minis */ 
+	height:15px;
+}
+
+.label {
+    font-weight:bold;
+    font-size: 10px;
+    color: #476a7f;
+}
