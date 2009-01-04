@@ -209,7 +209,7 @@ a.membre {
     color:#0578CC;
     background:#FFFFFF url(images/bgmenu.png) repeat-y;
     display:block;
-    width:167px;
+    width:169px;
 }
 
 .dynamic_menu li li a {
@@ -217,7 +217,7 @@ a.membre {
     font-size:10px;
     text-decoration:none;
     padding-left:32px;
-    width:131px;
+    width:133px;
     display:block;
     white-space:nowrap;
     margin:auto;
@@ -240,6 +240,7 @@ a.membre {
 /* Niveau 2 */
 .dynamic_menu li li ul {
     visibility:hidden;
-    top:-2px;
+    top:-1px;
     left:100%;
+	z-index:101;
 }
