@@ -86,7 +86,7 @@ function addSubMenu(menu_element_id) {
     var id = idMax++;
     var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'row1 menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png', alt: 'folder', className: 'valign_middle'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
