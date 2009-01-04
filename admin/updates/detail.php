@@ -6,14 +6,14 @@
  *   copyright              : (C) 2008 Loïc Rouchon
  *   email                  : horn@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,12 +25,14 @@
  *
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
+define('PATH_TO_ROOT', '../..');
+
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 $identifier = retrieve(GET, 'identifier', '');
-$tpl = new Template('admin/admin_update_detail.tpl');
+$tpl = new Template('admin/updates/detail.tpl');
 
 $tpl->assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates'],
@@ -62,6 +64,22 @@ if ($app !== null && $app->check_compatibility())
     $has_bug_corrections = count($bug_corrections) > 0 ? true : false;
     $has_security_improvments = count($security_improvments) > 0 ? true : false;
     
+    switch ($update->get_priority())
+    {
+        case ADMIN_ALERT_VERY_HIGH_PRIORITY:
+            $priority = 'priority_very_high';
+            break;
+        case ADMIN_ALERT_HIGH_PRIORITY:
+            $priority = 'priority_high';
+            break;
+        case ADMIN_ALERT_MEDIUM_PRIORITY:
+            $priority = 'priority_medium';
+            break;
+        default:
+            $priority = 'priority_low';
+            break;
+    }
+    
     $tpl->assign_vars(array(
         'APP_NAME' => $app->get_name(),
         'APP_VERSION' => $app->get_version(),
@@ -72,6 +90,7 @@ if ($app !== null && $app->check_compatibility())
         'APP_WARNING' => $app->get_warning(),
         'U_APP_DOWNLOAD' => $app->get_download_url(),
         'U_APP_UPDATE' => $app->get_update_url(),
+        'PRIORITY_CSS_CLASS' => 'row_' . $priority,
         'L_AUTHORS' => $nb_authors > 1 ? $LANG['authors'] : $LANG['author'],
         'L_NEW_FEATURES' => $LANG['new_features'],
         'L_IMPROVMENTS' => $LANG['improvments'],
@@ -107,6 +126,6 @@ if ($app !== null && $app->check_compatibility())
 else $tpl->assign_vars((array('C_UNEXISTING_UPDATE' => true, 'L_UNEXISTING_UPDATE' => $LANG['unexisting_update'])));
     
 $tpl->parse();
-require_once('../admin/admin_footer.php');
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 
 ?>
