@@ -49,7 +49,7 @@ else
 	
 	$j = 0;
 	
-	foreach (Content::get_available_tags() as $name)
+	foreach (ContentManager::get_available_tags() as $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,

@@ -41,7 +41,7 @@ $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 
 //On prend le bon parseur avec la bonne configuration
-$content_manager = new Content($editor);
+$content_manager = new ContentManager($editor);
 $parser =& $content_manager->get_parser($editor);
 
 $parser->set_content($contents, MAGIC_QUOTES);
