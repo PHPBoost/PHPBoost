@@ -305,7 +305,7 @@ $LANG['and'] = 'et';
 $LANG['by'] = 'Par';
 
 //Gestion formulaires autorisation
-$LANG['authorizations'] = 'Authorisations';
+$LANG['authorizations'] = 'Autorisations';
 $LANG['explain_select_multiple'] = 'Maintenez ctrl puis cliquez dans la liste pour faire plusieurs choix';
 $LANG['advanced_authorization'] = 'Autorisations avancées';
 $LANG['select_all'] = 'Tout sélectionner';
