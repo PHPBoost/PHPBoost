@@ -366,7 +366,7 @@ else
 	redirect(HOST . DIR . '/wiki/' . url('wiki.php'));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new Content(BBCODE_LANGUAGE);
+$content_editor = new ContentManager(BBCODE_LANGUAGE);
 $editor =& $content_editor->get_editor();
 $editor->set_identifier('contents');
 	

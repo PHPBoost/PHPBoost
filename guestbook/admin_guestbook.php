@@ -58,7 +58,7 @@ else
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach (Content::get_available_tags() as $name)
+	foreach (ContentManager::get_available_tags() as $name)
 	{
 		$selected = '';
 		if (in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))

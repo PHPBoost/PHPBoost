@@ -1,9 +1,9 @@
 <?php
 /*##################################################
-*                             content.class.php
+*                         content_service.class.php
 *                            -------------------
 *   begin                : July 3 2008
-*   copyright          : (C) 2008 Benoit Sautel
+*   copyright            : (C) 2008 Benoit Sautel
 *   email                :  ben.popeye@phpboost.com
 *
 *   
@@ -29,9 +29,9 @@ define('BBCODE_LANGUAGE', 'bbcode');
 define('TINYMCE_LANGUAGE', 'tinymce');
 define('DEFAULT_LANGUAGE', 'default');
 
-class Content
+class ContentManager
 {
-	function Content($language_type = false)
+	function ContentManager($language_type = false)
 	{
 		if ($language_type !== false)
 			$this->set_language($language_type);
