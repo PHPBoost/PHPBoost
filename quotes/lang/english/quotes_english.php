@@ -36,6 +36,7 @@ $LANG['rank_post'] = 'Level to post';
 
 //Title
 $LANG['title_quotes'] = 'Quote';
+$LANG['title_all_quotes'] = 'All quotes';
 $LANG['quotes_more_contents'] = '[More...]';
 $LANG['contents'] = 'Quote';
 $LANG['author'] = 'Author';

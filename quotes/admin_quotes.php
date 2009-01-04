@@ -31,7 +31,7 @@ load_module_lang('quotes'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-if (!empty($_POST['valid']) )
+if( !empty($_POST['valid'])  )
 {
 	$config_quotes = array();
 	$config_quotes['quotes_auth'] = retrieve(POST, 'quotes_auth', -1);
@@ -65,9 +65,9 @@ else
 		
 	$config_quotes['quotes_auth'] = isset($CONFIG_QUOTES['quotes_auth']) ? $CONFIG_QUOTES['quotes_auth'] : '-1';	
 	//Rang d'autorisation.
-	for ($i = -1; $i <= 2; $i++)
+	for($i = -1; $i <= 2; $i++)
 	{
-		switch ($i) 
+		switch($i) 
 		{	
 			case -1:
 				$rank = $LANG['guest'];

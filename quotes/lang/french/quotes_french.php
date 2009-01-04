@@ -36,6 +36,7 @@ $LANG['rank_post'] = 'Niveau pour pouvoir poster';
 
 //Titre
 $LANG['title_quotes'] = 'Citation';
+$LANG['title_all_quotes'] = 'Toutes les citations';
 $LANG['quotes_more_contents'] = '[Suite...]';
 $LANG['quotes_contents'] = 'Citation';
 $LANG['quotes_author'] = 'Auteur';
