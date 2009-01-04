@@ -9,8 +9,8 @@
 [*] [color=red]Nouveauté :[/color] Système d'ajout de menus personnel automatisé, création pour les débutants facilité.
 [*] [color=red]Nouveauté :[/color] Détection automatisée des menus non installés, possibilité d'associer plusieurs menus à un module. 
 [*] [color=red]Nouveauté :[/color] Nouveau système de menu dynamique (déroulant), avec sous-menus infinis.
-[*] [color=red]Nouveauté :[/color] Nouvelle interface de déplacement des menus.
-[*] [color=red]Nouveauté :[/color] Nouveau placement possible des menus (Haut/Centre haut/Centre bas).
+[*] [color=red]Nouveauté :[/color] Nouvelle interface de déplacement des menus (drag 'n drop).
+[*] [color=red]Nouveauté :[/color] 5 Nouveaux placements possible des menus (Tête de page/Haut/Centre haut/Centre bas/Pied de page).
 [*] [color=red]Nouveauté :[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
 [*] Refonte totale des commentaires. Intégration simplifiée dans les modules.
 [*] [color=red]Nouveauté :[/color] Interface de visualisation/édition des commentaires du site.
@@ -50,7 +50,7 @@
 [*] Automatisation des configurations par défaut des modules.
 [*] Nouveau système de chargement des langues/thèmes, avec déclenchement d'erreur en cas d'échec.
 [*] Réorganisation du chargement de la tête de page.
-[*] Cache pour les thèmes et les langues.
+[*] Cache pour les thèmes, les langues et les css.
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
 [*] Possibilité d'insérer plusieurs css pour les modules.
@@ -80,6 +80,7 @@
 [*] Changement du système de page de démarrage (plus fiable).
 [*] Capture de toutes les erreurs php par le gestionnaire, et archivage.
 [*] Pose de verroux lors de l'écriture des fichiers de cache (plus sûr).
+[*] Nouveau système de gestion de lecture/écriture des fichiers sur le serveur.
 [*] Nouvelle fonction de redirection.
 [*] Amélioration du chargement des fichiers de configuration.
 [*] Amélioration de la gestion des erreurs.
