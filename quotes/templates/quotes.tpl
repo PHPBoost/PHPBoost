@@ -15,6 +15,7 @@
 		-->
 		</script>
 
+		# IF C_POST_ACCESS #
 		<form action="quotes.php{UPDATE}" method="post" onsubmit="return check_form_or(this);" class="fieldset_mini">
 			<fieldset>
 				<legend>{L_ADD_QUOTES}{L_UPDATE_QUOTES}</legend>
@@ -43,7 +44,8 @@
 				<input type="hidden" size="25" maxlength="25" name="quotes_pseudo" value="{PSEUDO}" class="text" />
 			# ENDIF #
 		</form>
-
+		# ENDIF #
+		
 		<br />
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>
@@ -61,7 +63,7 @@
 		</div>
 		# START quotes #
 		<div class="msg_position">
-			<div class="msg_container{quotes.CLASS_COLOR}">
+			<div class="msg_container">
 				<span id="m{quotes.ID}"></span>
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
@@ -70,39 +72,12 @@
 					<div style="float:left;">&nbsp;&nbsp;<a href="{quotes.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{quotes.ID}" /></a> {quotes.DATE}</div>
 					<div style="float:right;">{quotes.EDIT}{quotes.DEL}&nbsp;&nbsp;</div>
 				</div>
-				<div class="msg_contents_container">
-					<div class="msg_info_mbr">
-						<p style="text-align:center;">{quotes.USER_RANK}</p>
-						<p style="text-align:center;">{quotes.USER_IMG_ASSOC}</p>
-						<p style="text-align:center;">{quotes.USER_AVATAR}</p>
-						<p style="text-align:center;">{quotes.USER_GROUP}</p>
-						{quotes.USER_SEX}
-						{quotes.USER_DATE}<br />
-						{quotes.USER_MSG}<br />
-						{quotes.USER_LOCAL}
-					</div>
-					<div class="msg_contents{quotes.CLASS_COLOR}">
-						<div class="msg_contents_overflow">
+				<div class="msg_contents_container" style="text-align:center; padding:5px">
 							{quotes.CONTENTS}
-						</div>
-						<div class="msg_contents_overflow">
-							{quotes.AUTHOR}
-						</div>
-					</div>
+							<br /><br />
+							<strong>{quotes.AUTHOR}</strong>
 				</div>
-			</div>	
-			<div class="msg_sign{quotes.CLASS_COLOR}">				
-				<div class="msg_sign_overflow">
-					{quotes.USER_SIGN}	
-				</div>				
-				<hr />
-				<div style="float:left;">
-					{quotes.U_USER_PM} {quotes.USER_MAIL} {quotes.USER_MSN} {quotes.USER_YAHOO} {quotes.USER_WEB}
-				</div>
-				<div style="float:right;font-size:10px;">
-					{quotes.WARNING} {quotes.PUNISHMENT}
-				</div>&nbsp;
-			</div>	
+			</div>
 		</div>				
 		# END quotes #		
 		<div class="msg_position">		
