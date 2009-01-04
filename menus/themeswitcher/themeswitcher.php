@@ -27,7 +27,9 @@
 
 function menu_themeswitcher_themeswitcher()
 {
-    $switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
+   global $THEME_CONFIG, $User;
+
+	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
@@ -41,7 +43,6 @@ function menu_themeswitcher_themeswitcher()
     }
     
     $tpl = new Template('menus/themeswitcher/themeswitcher.tpl');
-    
     $utheme = get_utheme();
     foreach($THEME_CONFIG as $theme => $array_info)
     {
