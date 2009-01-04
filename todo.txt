@@ -19,11 +19,11 @@
 
 ------------------------------------ MODULES -----------------------------------
 
+[-] Refaire le thème par défaut.
 [-] News du site PHPBoost dans l'admin?
 [-] Améliorer la sélection de la page de démarrage.
 
 [-] Préparer l'insertion par défaut de contenu dans le site, création d'une page de bienvenue?
-[-] Nouveau thème par "défaut" du site, dans l'esprit de l'installateur.
 [-] Créer un module gestion de base de données (sortir le code de l'administration et le déporter dans un module)
 [-] Corriger les bugs des mini modules (au moins livre d'or et discussion) quand il n'y a aucun message il y a une undefined index
 
@@ -40,7 +40,7 @@
 [+] Interface d'ajout de menu de liens. Gestion des menus dynamiques (déroulants et extensibles),
         verticaux et horizontaux. Extension automatique suivant la page consultée.
 
-[-] Désactivation des modules mini qui ne marche plus.
+[-] Liens relatifs et images relatives dans les menus non fonctionnel.
 
 ------------------------------------ MODULES -----------------------------------
 
