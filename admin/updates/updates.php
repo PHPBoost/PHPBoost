@@ -6,14 +6,14 @@
  *   copyright              : (C) 2008 Loïc Rouchon
  *   email                  : horn@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,17 +25,19 @@
  *
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+define('PATH_TO_ROOT', '../..');
 
-require_once('../kernel/framework/core/updates.class.php');
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
+define('TITLE', $LANG['administration']);
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
+
+import('core/updates');
 
 $update_type = retrieve(GET, 'type', '');
 if ($update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme')
     $update_type = '';
 
-$tpl = new Template('admin/admin_updates.tpl');
+$tpl = new Template('admin/updates/updates.tpl');
 $updates_availables = 0;
 
 if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -92,7 +94,7 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
             'download_url' => $update->get_download_url(),
             'update_url' => $update->get_update_url()
         ));
-    }  
+    }
 
     if ($updates_availables = (count($updates) > 0))
     {
@@ -138,6 +140,6 @@ $tpl->assign_vars(array(
 
 $tpl->parse();
 
-require_once('../admin/admin_footer.php');
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 
 ?>

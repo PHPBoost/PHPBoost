@@ -38,31 +38,6 @@
     padding:20px 6px;
 }
 
-.row_priority_very_high {
-    text-align:center;
-    background:#F3A29B;
-}
-
-.row_priority_high {
-    text-align:center;
-    background:#FFD5D1;
-}
-
-.row_priority_medium {
-    text-align:center;
-    background:#F5D5C6;
-}
-
-.row_priority_low {
-    text-align:center;
-    background:#ECDBB7;
-}
-
-.row_priority_very_low {
-    text-align:center;
-    background:#FFFFFF;
-}
-
 /* Case résultat recherche membre AJAX */
 .xmlhttprequest_result_search {
     overflow:auto;

@@ -3,6 +3,72 @@
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
 --------------------------------------*/ /* Titres */
 
+/* Sécurité */
+.row_priority_very_high {
+    text-align: center;
+    background: #F3A29B !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
+
+.row_priority_high {
+    text-align: center;
+    background: #FFD5D1 !important;
+}
+
+.row_priority_medium {
+    text-align: center;
+    background: #F5D5C6 !important;
+}
+
+.row_priority_low {
+    text-align: center;
+    background: #ECDBB7 !important;
+}
+
+.row_priority_very_low {
+    text-align: center;
+    background: #FFFFFF !important;
+}
+
+/* Imite l'affichage fieldset / legend */
+
+.fieldset_content {
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+div.block_title span {
+    border: 1px solid;
+    padding: 2px 8px;
+    padding: 1px 0;
+    vertical-align: middle;
+    position: relative;
+    margin-top: -0.4em;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 1.2em;
+}
+
+div.block_title {
+    position: relative;
+    top: -1.2em;
+}
+
+div.block_content {
+    width: 95%;
+    margin: auto;
+    margin: 20px auto;
+    padding: 6px;
+    border: 1px solid;
+    position: relative;
+}
+
+div.block_content ul {
+    padding-left: 20px;
+}
+
 /* Menu Vertical */
 h3.menu_vertical_0 {
     text-align: center;

@@ -77,11 +77,11 @@
 				</ul>
 			</li>
                         <li class="extend" onmouseover="show_menu(34, 1);" onmouseout="hide_menu(1);">
-				<a href="{PATH_TO_ROOT}/admin/admin_updates.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/updater_mini.png);">{L_WEBSITE_UPDATES}</a>
+				<a href="{PATH_TO_ROOT}/admin/updates/updates.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/updater_mini.png);">{L_WEBSITE_UPDATES}</a>
 				<ul id="ssmenu34">
-					<li><a href="{PATH_TO_ROOT}/admin/admin_updates.php?type=kernel" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration_mini.png);">{L_KERNEL}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_updates.php?type=module" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a></li>
-					<li><a href="{PATH_TO_ROOT}/admin/admin_updates.php?type=theme" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration_mini.png);">{L_KERNEL}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/modules_mini.png);">{L_MODULES}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=theme" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a></li>
 				</ul>
 			</li>
 		</ul>
