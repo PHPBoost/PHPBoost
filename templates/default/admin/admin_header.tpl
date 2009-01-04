@@ -5,12 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
 		<!-- Default CSS -->
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/design.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/global.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/generic.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/content.css" type="text/css" media="screen, print, handheld" />
-        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/admin.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen" />
         <!-- Theme CSS -->
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen" />
@@ -32,17 +27,20 @@
 	</head>
 	<body>
 	<div id="global">
-		<div id="header_admin"></div>
-		<div id="sub_header_admin">
-			<div class="dynamic_menu block" style="height:25px;">
-				# INCLUDE subheader_menu #
-			</div>
-			<div style="float:right;margin-top:2px;margin-right:15px;">
-				<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
-				</a>
+		<div id="header_container">
+			<div id="header_admin">&nbsp;</div>
+			<div id="sub_header_admin">
+				<div class="dynamic_menu">
+					# INCLUDE subheader_menu #
+				</div>
+				<div id="admin_extend_link">
+					<a href="{PATH_TO_ROOT}/admin/admin_extend.php" class="admin_extend_link">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield_mini.png" class="valign_middle" alt="" /> {L_EXTEND_MENU}
+					</a>
+				</div>
+				<div class="spacer"></div>
 			</div>
 		</div>
-			
+		
 		<div id="admin_main">
 			&nbsp;

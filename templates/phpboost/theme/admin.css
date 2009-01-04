@@ -12,8 +12,19 @@ div#sub_header_admin{
 /* Lien du subheader */
 div#sub_header_admin .dynamic_menu{
 	margin-top:-31px;
-	margin-left:190px;
+	margin-left:190px;	
+	float:left;
 }
+div#admin_extend_link{
+	float:right;
+	margin-right:15px;
+	margin-top:-31px;
+	text-align:center;
+	background:#F2F7FB;
+	border:1px solid #C4CED6;
+	padding:4px 6px;
+}
+	
 /* Conteneur principal */
 div#admin_main{
 	padding:0px 6px;
@@ -99,7 +110,6 @@ div#admin_quick_menu li a.quick_link{
 /* Liens vers les menus étendus */
 a.admin_extend_link{
 	text-decoration:none;
-	color:#FFFFFF;
 }
 /* Coloration des moteur de recherche */
 .robot{
