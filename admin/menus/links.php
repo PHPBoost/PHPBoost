@@ -114,6 +114,7 @@ if ($action == 'save')
     $menu = build_menu_from_form($menu_tree);
     $menu->set_type($type);
     
+    $previous_menu = null;
     //If we edit the menu
     if ($menu_id > 0)
     {   // Edit the Menu
@@ -130,7 +131,7 @@ if ($action == 'save')
     
     if ($menu->is_enabled())
     {
-        if ($menu->get_block() == $previous_menu->get_block())
+        if ($previous_menu != null && $menu->get_block() == $previous_menu->get_block())
         {   // Save the menu if enabled
             MenuService::save($menu);
         }

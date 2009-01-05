@@ -38,8 +38,7 @@
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="action" value="{ACTION}" />
 			<input type="hidden" name="id" value="{IDMENU}" />
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />
-			<input type="reset" value="{L_RESET}" class="reset" />					
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />			
 		</fieldset>	
 	</form>
 </div>

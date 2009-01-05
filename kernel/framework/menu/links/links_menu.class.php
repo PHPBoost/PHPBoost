@@ -208,7 +208,7 @@ class LinksMenu extends LinksMenuElement
      */
     function get_menu_types_list()
     {
-    	return array(VERTICAL_MENU, /*HORIZONTAL_MENU, TREE_MENU,*/ VERTICAL_SCROLLING_MENU, /*HORIZONTAL_SCROLLING_MENU*/);
+    	return array(VERTICAL_MENU, HORIZONTAL_MENU, /*TREE_MENU,*/ VERTICAL_SCROLLING_MENU, /*HORIZONTAL_SCROLLING_MENU*/);
     }
 	
 	## Private Methods ##
