@@ -30,5 +30,5 @@
         </li>
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-    <li><a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /> # ENDIF #{TITLE}</a></li>
+    <li><a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a></li>
 # ENDIF #
