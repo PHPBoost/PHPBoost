@@ -13,6 +13,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au fr
     margin-top: 10px;
 }
 
+
 .menu_link_element:hover {
     border-color: #aaaaaa;
     cursor: move;
@@ -23,5 +24,9 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au fr
 }
 
 .menu_link_element:hover img {
-    cursor: default;
+    cursor: pointer;
+}
+
+.menu_link_element:hover label {
+    cursor: pointer;
 }
