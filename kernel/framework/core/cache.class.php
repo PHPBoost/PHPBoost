@@ -257,6 +257,7 @@ class Cache
 			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
 			}
+			$htaccess_rules .= "\n\n" . '# Avoid Hacking Attempt #' . "\n" . 'RewriteCond %{HTTP_USER_AGENT} libwww [NC]' . "\n" . 'RewriteRule .* - [F,L]';
 		}
 		else
 			$htaccess_rules = 'ErrorDocument 404 ' . HOST . DIR . '/member/404.php';

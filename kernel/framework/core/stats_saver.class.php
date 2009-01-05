@@ -92,6 +92,9 @@ class StatsSaver
 		//Inclusion une fois par jour et par visiteur.
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'libwww') !== false) //Evite les bots.
+			return;
+		
 		//Suppression des images de statistiques en cache.
 		$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 		foreach ($array_stats_img as $key => $value)
@@ -127,9 +130,9 @@ class StatsSaver
 			'amiga-aweb'=> 'Amiga-aweb',
 			'ibrowse' => 'Ibrowse'
 		);
-		$browser = 'other';
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
+			$browser = 'other';
 			foreach ($array_browser as $regex => $name)
 			{
 				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
@@ -138,8 +141,8 @@ class StatsSaver
 					break;
 				}
 			}
+			StatsSaver::_write_stats('browsers', $browser);
 		}
-		StatsSaver::_write_stats('browsers', $browser);
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
@@ -164,9 +167,9 @@ class StatsSaver
 			'os2|OS/2' => 'os2',
 			'NetBSD' => 'netbsd'
 		);
-		$os = 'other';
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
+			$os = 'other';
 			foreach ($array_os as $regex => $name)
 			{
 				if (preg_match('`' . $regex . '`i', $_SERVER['HTTP_USER_AGENT']))
@@ -175,8 +178,8 @@ class StatsSaver
 					break;
 				}
 			}		
+			StatsSaver::_write_stats('os', $os);
 		}		
-		StatsSaver::_write_stats('os', $os);
 		
 		########### Détection de la langue utilisateur ###########
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']))
