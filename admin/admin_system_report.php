@@ -103,6 +103,7 @@ PHPBOOST CONFIGURATION---------------------------------------------------------
 phpboost version         : " . $CONFIG['version'] . "
 server url               : " . $CONFIG['server_name'] . "
 site path                : " . $CONFIG['server_path']  . "
+default theme            : " . $template_ini_file['name'] . "
 default language         : " . get_ulang() . "
 default editor           : " . $CONFIG['editor'] . "
 start page               : " . $CONFIG['start_page'] . "
