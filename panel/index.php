@@ -1,1 +1,0 @@
-<?php header('location: ./quotes.php'); ?>
