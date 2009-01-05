@@ -223,14 +223,12 @@ class MenuService
     {
         global $Sql;
         
-        if ($menu->get_block() != BLOCK_POSITION__NOT_ENABLED && $menu->is_enabled())
-        {   // Updates the previous block position counter
-            $update_query = "
-                UPDATE " . PREFIX ."menus
-                SET position=position - 1
-                WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
-            $Sql->query_inject($update_query, __LINE__, __FILE__);
-        }
+        // Updates the previous block position counter
+        $update_query = "
+            UPDATE " . PREFIX ."menus
+            SET position=position - 1
+            WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
+        $Sql->query_inject($update_query, __LINE__, __FILE__);
         
         // Disables the menu if the destination block is the NOT_ENABLED block position
         $menu->enabled($block == BLOCK_POSITION__NOT_ENABLED ? MENU_NOT_ENABLED : MENU_ENABLED);

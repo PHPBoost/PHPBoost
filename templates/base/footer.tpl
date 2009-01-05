@@ -1,5 +1,5 @@
 		</div>
-		# IF C_MENUS_BOTTOMCENTRAL_CONTENT #
+		# IF C_MENUS_BOTTOM_CENTRAL_CONTENT #
         <div id="bottom_contents">
 			{MENUS_BOTTOMCENTRAL_CONTENT}
 		</div>

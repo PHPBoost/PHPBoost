@@ -1,9 +1,7 @@
 /* --------------------------------------
 		default.css
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
---------------------------------------*/ /* Titres */
-
-/* Sécurité */
+--------------------------------------*/ /* Titres */ /* Sécurité */
 .row_priority_very_high {
     text-align: center;
     background: #F3A29B !important;
@@ -32,7 +30,6 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au fr
 }
 
 /* Imite l'affichage fieldset / legend */
-
 .fieldset_content {
     width: 95%;
     margin: auto;
@@ -67,6 +64,19 @@ div.block_content {
 
 div.block_content ul {
     padding-left: 20px;
+}
+
+/* Menu Horizontal */
+div.menu_horizontal {
+    padding: 10px;
+}
+
+ul.menu_horizontal {
+    
+}
+
+ul.menu_horizontal li {
+    display: inline;
 }
 
 /* Menu Vertical */
@@ -107,7 +117,7 @@ ul.menu_vertical li_0 {
     
 }
 
-ul.menu_vertical_0 li a, ul.menu_vertical_0 li span {
+ul.menu_vertical_0 li a,ul.menu_vertical_0 li span {
     color: #334455;
 }
 
@@ -119,7 +129,7 @@ ul.menu_vertical_1 li {
     
 }
 
-ul.menu_vertical_1 li a, ul.menu_vertical_1 li span  {
+ul.menu_vertical_1 li a,ul.menu_vertical_1 li span {
     color: #445566;
 }
 
@@ -131,7 +141,7 @@ ul.menu_vertical_2 li {
     font-style: italic;
 }
 
-ul.menu_vertical_2 li a, ul.menu_vertical_2 li span  {
+ul.menu_vertical_2 li a,ul.menu_vertical_2 li span {
     color: #556677;
 }
 
@@ -143,7 +153,7 @@ ul.menu_vertical_3 li {
     font-style: normal;
 }
 
-ul.menu_vertical_3 li a, ul.menu_vertical_3 li span  {
+ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
     color: #778899;
     font-size: 80%;
 }
