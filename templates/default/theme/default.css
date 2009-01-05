@@ -94,6 +94,11 @@ ul.menu_vertical li {
     margin-left: 10px;
 }
 
+ul.menu_vertical li span {
+    font-size: 11px;
+    font-weight: bold;
+}
+
 ul.menu_vertical_0 {
     
 }
@@ -102,7 +107,7 @@ ul.menu_vertical li_0 {
     
 }
 
-ul.menu_vertical_0 li a {
+ul.menu_vertical_0 li a, ul.menu_vertical_0 li span {
     color: #334455;
 }
 
@@ -114,7 +119,7 @@ ul.menu_vertical_1 li {
     
 }
 
-ul.menu_vertical_1 li a {
+ul.menu_vertical_1 li a, ul.menu_vertical_1 li span  {
     color: #445566;
 }
 
@@ -126,7 +131,7 @@ ul.menu_vertical_2 li {
     font-style: italic;
 }
 
-ul.menu_vertical_2 li a {
+ul.menu_vertical_2 li a, ul.menu_vertical_2 li span  {
     color: #556677;
 }
 
@@ -138,7 +143,7 @@ ul.menu_vertical_3 li {
     font-style: normal;
 }
 
-ul.menu_vertical_3 li a {
+ul.menu_vertical_3 li a, ul.menu_vertical_3 li span  {
     color: #778899;
     font-size: 80%;
 }

@@ -121,13 +121,17 @@ class LinksMenuElement extends Menu
      */
     function get_url($compute_relative_url = true)
     {
-        if ($compute_relative_url)
+        if (!empty($this->url))
         {
-            global $CONFIG;
-            return url(strpos($this->url, '://') > 0 ? $this->url :
-                trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->url);
+            if ($compute_relative_url)
+            {
+                global $CONFIG;
+                return url(strpos($this->url, '://') > 0 ? $this->url :
+                    trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->url);
+            }
+            return url($this->url);
         }
-       return url($this->url);
+        return '';
     }
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
@@ -135,13 +139,17 @@ class LinksMenuElement extends Menu
      */
     function get_image($compute_relative_url = true)
     {
-        if ($compute_relative_url)
+        if (!empty($this->url))
         {
-            global $CONFIG;
-            return strpos($this->image, '://') > 0 ? $this->image :
-                trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->image;
+            if ($compute_relative_url)
+            {
+                global $CONFIG;
+                return strpos($this->image, '://') > 0 ? $this->image :
+                    trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->image;
+            }
+            return $this->image;
         }
-        return $this->image;
+        return '';
     }
 	
     /**

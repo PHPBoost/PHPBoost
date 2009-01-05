@@ -12,7 +12,7 @@ function createSortableMenu() {
 
 function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
-    {   //Si les propriétés sont repliées, on les affiche
+    {   //Si les propriï¿½tï¿½s sont repliï¿½es, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
         document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png";
     }
@@ -54,7 +54,7 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_url', name: 'menu_element_' + id + '_url'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_IMAGE}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
@@ -96,7 +96,7 @@ function addSubMenu(menu_element_id) {
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_url', name: 'menu_element_' + id + '_url'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_IMAGE}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
@@ -217,8 +217,7 @@ function deleteElement(element_id)
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}" />
 			<input type="hidden" name="menu_tree" id="menu_tree" value="" />
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />
-			<input type="reset" value="{L_RESET}" class="reset" />					
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />					
 		</fieldset>
 	</form>
 </div>
