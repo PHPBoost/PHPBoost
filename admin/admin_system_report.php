@@ -3,7 +3,7 @@
  *                               admin_system_report.php
  *                            -------------------
  *   begin                : July 14 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -72,7 +72,7 @@ $lang_ini_file = load_ini_file('../lang/', get_ulang());
 $template_ini_file = load_ini_file('../templates/' . get_utheme() . '/config/', get_ulang());
 
 $directories_summerization = '';
-$directories_list = array('/', '/cache', '/cache/backup', 'cache/syndication/', '/cache/tpl', '/images/avatar', '/images/group', '/image/maths', '/image/smileys', '/lang', '/menus', '/templates', '/uploads');
+$directories_list = array('/', '/cache', '/cache/backup', '/cache/syndication/', '/cache/tpl', '/images/avatars', '/images/group', '/images/maths', '/images/smileys', '/lang', '/menus', '/templates', '/upload');
 foreach ($directories_list as $dir)
 {
 	$dir_status = is_dir('..' . $dir) && is_writable('..' . $dir);
