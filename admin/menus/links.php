@@ -267,7 +267,6 @@ foreach (LinksMenu::get_menu_types_list() as $type_name)
 	));
 }
 
-$block
 foreach ($array_location as $key => $name)
 {
     $tpl->assign_block_vars('location', array(
