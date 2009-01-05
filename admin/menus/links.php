@@ -249,7 +249,7 @@ $tpl->assign_vars(array(
 	'AUTH_MENUS' => Authorizations::generate_select(
         AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
     ),
-    'C_ENABLED' => $menu->is_enabled(),
+    'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),
@@ -267,6 +267,7 @@ foreach (LinksMenu::get_menu_types_list() as $type_name)
 	));
 }
 
+$block
 foreach ($array_location as $key => $name)
 {
     $tpl->assign_block_vars('location', array(
