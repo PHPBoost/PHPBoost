@@ -565,13 +565,16 @@ elseif (!empty($id))
 	//Gestion thème par défaut.
 	foreach($THEME_CONFIG as $theme => $array_info)
 	{
-		$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
-		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
-		$Template->assign_block_vars('select_theme', array(
-			'NAME' => $info_theme['name'],
-			'IDNAME' => $theme,
-			'SELECTED' => $selected
-		));
+		if ($theme != 'default')
+		{
+			$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
+			$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
+			$Template->assign_block_vars('select_theme', array(
+				'NAME' => $info_theme['name'],
+				'IDNAME' => $theme,
+				'SELECTED' => $selected
+			));
+		}
 	}
 	
 	//Editeur texte par défaut.
