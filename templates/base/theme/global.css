@@ -154,7 +154,7 @@ a.membre {
 
 /* Séparateur */
 .dynamic_menu ul li.separator {
-    background:#104069;
+    background:#849AAC;
 }
 
 .dynamic_menu ul li.extend {
@@ -163,7 +163,7 @@ a.membre {
 
 /* Case du menu */
 .dynamic_menu li ul {
-    border:1px solid #C4CED6;
+    border:1px solid #849AAC;
 }
 
 .dynamic_menu li li {
