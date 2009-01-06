@@ -54,10 +54,10 @@ class LinksMenuElement extends Menu
 	 */
 	function LinksMenuElement($title, $url, $image = '')
 	{
+       parent::Menu($title);
        $this->set_url($url);
        $this->set_image($image);
        $this->uid = get_uid();
-       parent::Menu($title);
 	}
 	
 	## Setters ##
@@ -83,7 +83,6 @@ class LinksMenuElement extends Menu
 	 */
 	function set_url($url)
 	{
-//	    $url = '/../forum/forum.php';
 	    if (!strpos($url, '://') && !strpos($url, '/') == 0)
 	    {   // The url is relative and we need to put it in the right format
             $this->url = '/' . preg_replace('`(^\./)`', '',
@@ -95,8 +94,6 @@ class LinksMenuElement extends Menu
 	       // we do not need to do anything
 	       $this->url = $url;
 	    }
-//	    echo $url . '<br />' . $this->url;
-//	    exit;
 	}
      
 	## Getters ##
@@ -139,7 +136,7 @@ class LinksMenuElement extends Menu
      */
     function get_image($compute_relative_url = true)
     {
-        if (!empty($this->url))
+        if (!empty($this->image))
         {
             if ($compute_relative_url)
             {
@@ -182,6 +179,15 @@ class LinksMenuElement extends Menu
     {
     }
 	
+    /**
+     * @desc returns the string to write in the cache file
+     * @return string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        return parent::cache_export();
+    }
+    
     ## Private Methods ##
     /**
      * @desc Assign tpl vars
@@ -210,15 +216,15 @@ class LinksMenuElement extends Menu
 		}
     }
 	
-    
     /**
-     * @desc returns the string to write in the cache file
-     * @return string the string to write in the cache file
+     * @desc Increase the Menu Depth and set the menu type to its parent one
+     * @access protected
      */
-    function cache_export()
+    function _parent()
     {
-        return parent::cache_export();
+        $this->depth++;
     }
+    
     
 	## Private attributes ##
 	/**
@@ -236,6 +242,11 @@ class LinksMenuElement extends Menu
      * @var int Menu's uid
      */
     var $uid = null;
+    /**
+     * @access protected
+     * @var int Menu's depth
+     */
+    var $depth = 0;
 }
 
 ?>

@@ -66,6 +66,17 @@ div.block_content ul {
     padding-left: 20px;
 }
 
+/* Menu Horizontal - Scrolling */
+ul.horizontal_scrolling_menu li {
+    display: inline;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+ul.horizontal_scrolling_menu li.first_level {
+    padding-left: 20px;
+}
+
 /* Menu Horizontal */
 div.menu_horizontal {
     padding: 10px;
