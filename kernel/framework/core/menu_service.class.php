@@ -446,7 +446,7 @@ class MenuService
      * @param string $module the module name
      * @return bool true if the module has been installed, else, false
      */
-    function add_mini_module($module)
+    function add_mini_module($module, $generate_cache = true)
     {
         // Break if no config file found
         $info_module = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
@@ -477,7 +477,9 @@ class MenuService
                 $menu = new ModuleMiniMenu($module, $file[0]);
                 $menu->enabled(true);
                 $menu->set_block(MenuService::str_to_location($location));
-                MenuService::save($menu);
+                MenuService::move($menu, $menu->get_block());
+                if ($generate_cache)
+                    MenuService::generate_cache();
                 
                 $installed = true;
             }
@@ -541,7 +543,7 @@ class MenuService
         $new_modules = array_diff($modules, $installed_minimodules);
         foreach ($new_modules as $module)
         {   // Browse availables modules without mini modules
-            MenuService::add_mini_module($module);
+            MenuService::add_mini_module($module, false);
         }
         
         if ($update_cache)
