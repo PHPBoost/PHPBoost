@@ -43,15 +43,15 @@ a.forum_link_pseudo:hover {
 }
 /* Barre de liens du forum */
 .forum_links{
-	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	background:#4184B6 url(images/msg_top_row.png) repeat-x;
 	padding:6px;
-	border:2px solid #D1E3F6;
+	border:2px solid #A1C3E0;
 }
 .forum_links a{ /* Couleur des liens */
 	color:#FFFFFF;
 }
 .forum_notread{ /* Message non lus */
-	background:#3187C7;
+	background:#4184B6;
 	padding:4px;
 	font-size:10px;
 	color:#FFFFFF;
@@ -59,7 +59,7 @@ a.forum_link_pseudo:hover {
 /* Barre des textes relatifs aux colonnes */
 .forum_text_column {	
 	height:20px;
-	background:#3187C7 url(images/msg_top_row.png) repeat-x;
+	background:#4184B6 url(images/msg_top_row.png) repeat-x;
 	border-bottom:1px solid #55819D;
 	font-size:10px;
 	color:#FFFFFF;	
@@ -109,7 +109,7 @@ a.forum_link_cat{
 /* Affichage des membres en ligne */
 .forum_online{
 	background:#FFFFFF;
-	border:2px solid #D1E3F6;
+	border:2px solid #A1C3E0;
 	color:#000000;
 	border-top:none;
 	padding:6px;
@@ -164,8 +164,8 @@ a.forum_link_cat{
 }
 .module_contents{ /* Contenu des modules */
 	background:#FFFFFF;
-	border-left:1px solid #71BAF1;	
-	border-right:1px solid #71BAF1;	
+	border-left:1px solid #A1C3E0;	
+	border-right:1px solid #A1C3E0;	
 	border-bottom:1px solid #FFFFFF;	
 	clear:both;
 }
