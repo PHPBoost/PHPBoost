@@ -138,7 +138,7 @@ class MenuService
         
         if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
         {
-            $block_position_query = "SELECT MAX(position) + 1 FROM " . PREFIX . "menus WHERE block='" . $block. "'";
+            $block_position_query = "SELECT MAX(position) + 1 FROM " . DB_TABLE_MENUS . " WHERE block='" . $block. "'";
             $block_position = (int) $Sql->query($block_position_query, __LINE__, __FILE__);
         }
         
@@ -147,7 +147,7 @@ class MenuService
         if ($id_menu > 0)
         {   // We only have to update the element
             $query = "
-            UPDATE " . PREFIX . "menus SET
+            UPDATE " . DB_TABLE_MENUS . " SET
                     title='" . addslashes($menu->get_title()) . "',
                     object='" . addslashes(serialize($menu)) . "',
                     class='" . strtolower(get_class($menu)) . "',
@@ -160,7 +160,7 @@ class MenuService
         else
         {   // We have to insert the element in the database
             $query = "
-                INSERT INTO " . PREFIX . "menus (title,object,class,enabled,block,position)
+                INSERT INTO " . DB_TABLE_MENUS . " (title,object,class,enabled,block,position)
                 VALUES (
                     '" . addslashes($menu->get_title()) . "',
                     '" . addslashes(serialize($menu)) . "',
@@ -186,7 +186,7 @@ class MenuService
         global $Sql;
         $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : -1);
         if ($id_menu > 0)
-            $Sql->query_inject("DELETE FROM " . PREFIX . "menus WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
+            $Sql->query_inject("DELETE FROM " . DB_TABLE_MENUS . " WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
     }
 
     
@@ -261,14 +261,14 @@ class MenuService
         
         if ($direction > 0)
         {   // Moving the menu down
-            $max_position_query = "SELECT MAX(position) FROM " . PREFIX . "menus WHERE block='" . $menu->get_block() . "' AND enabled='1'";
+            $max_position_query = "SELECT MAX(position) FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1'";
             $max_position = $Sql->query($max_position_query, __LINE__, __FILE__);
             // Getting the max diff
             if (($new_block_position = ($menu->get_block_position() + $direction)) > $max_position)
                 $new_block_position = $max_position;
             
             $update_query = "
-                UPDATE " . PREFIX . "menus SET position=position - 1
+                UPDATE " . DB_TABLE_MENUS . " SET position=position - 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
                     position BETWEEN '" . ($block_position + 1) . "' AND '" . $new_block_position . "'
@@ -283,7 +283,7 @@ class MenuService
                             
             // Updating other menus
             $update_query = "
-                UPDATE " . PREFIX . "menus SET position=position + 1
+                UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
                     position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_position . "'
@@ -390,7 +390,7 @@ class MenuService
     function delete_mini_menu($menu)
     {
         global $Sql;
-        $query = "DELETE FROM " . PREFIX . "menus WHERE
+        $query = "DELETE FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($menu))  . "/%';";
         $Sql->query_inject($query, __LINE__, __FILE__);
@@ -414,7 +414,7 @@ class MenuService
         foreach ($m_menus_list as $menu)
             $menus_names[] = $menu->get_name();
         
-        $query = "SELECT title FROM " . PREFIX . "menus WHERE
+        $query = "SELECT title FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MINI_MENU__CLASS) . "';";
         $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
         while ($menu = $Sql->fetch_assoc($result))
@@ -492,7 +492,7 @@ class MenuService
     function delete_mini_module($module)
     {
         global $Sql;
-        $query = "DELETE FROM " . PREFIX . "menus WHERE
+        $query = "DELETE FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MODULE_MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($module))  . "/%';";
         $Sql->query_inject($query, __LINE__, __FILE__);
@@ -508,7 +508,7 @@ class MenuService
         
         // Retrieves the mini modules already installed
         $installed_minimodules = array();
-        $query = "SELECT id, title FROM " . PREFIX . "menus WHERE class='" . strtolower(MODULE_MINI_MENU__CLASS) . "'";
+        $query = "SELECT id, title FROM " . DB_TABLE_MENUS . " WHERE class='" . strtolower(MODULE_MINI_MENU__CLASS) . "'";
         
         $modules = array();
         // Build the availables modules list

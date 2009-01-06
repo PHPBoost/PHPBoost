@@ -267,7 +267,7 @@ if (!empty($id_get)) //Espace membre
 		}
 		
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
@@ -276,8 +276,8 @@ if (!empty($id_get)) //Espace membre
 			));
 
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
-			FROM " . PREFIX . "member_extend_cat exc
-			LEFT JOIN " . PREFIX . "member_extend ex ON ex.user_id = '" . $id_get . "'
+			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
+			LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id_get . "'
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -518,7 +518,7 @@ if (!empty($id_get)) //Espace membre
 				user_sign = '" . $user_sign . "' WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
 				
 				//Champs supplémentaires.
-				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 				if ($extend_field_exist > 0)
 				{
 					$req_update = '';
@@ -587,16 +587,16 @@ if (!empty($id_get)) //Espace membre
 					}
 					$Sql->query_close($result);	
 					
-					$check_member = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
+					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 					if ($check_member)
 					{	
 						if (!empty($req_update))
-							$Sql->query_inject("UPDATE " . PREFIX . "member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
+							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__); 
 					}
 					else
 					{	
 						if (!empty($req_insert))
-							$Sql->query_inject("INSERT INTO " . PREFIX . "member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . numeric($User->get_attribute('user_id')) . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}
 				
@@ -756,7 +756,7 @@ if (!empty($id_get)) //Espace membre
 		));
 				
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
@@ -765,8 +765,8 @@ if (!empty($id_get)) //Espace membre
 			));
 
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.field_name, exc.possible_values, exc.default_values, ex.*
-			FROM " . PREFIX . "member_extend_cat exc
-			LEFT JOIN " . PREFIX . "member_extend ex ON ex.user_id = '" . $id_get . "'
+			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
+			LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id_get . "'
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))

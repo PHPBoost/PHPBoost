@@ -90,7 +90,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
-	LEFT JOIN " . PREFIX . "member_extend me ON me.user_id = '" . $User->get_attribute('user_id') . "'
+	LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " me ON me.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE tr.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY t.last_timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);
@@ -208,7 +208,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM " . PREFIX . "sessions s 
+	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/track.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);

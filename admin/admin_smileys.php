@@ -41,7 +41,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 	//On met à jour 
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
-		$Sql->query_inject("UPDATE " . PREFIX . "smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
 					
 		###### Régénération du cache des smileys #######
 		$Cache->Generate_file('smileys');
@@ -54,7 +54,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 elseif (!empty($id) && $del) //Suppression.
 {
 	//On supprime le smiley de la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des smileys #######	
 	$Cache->Generate_file('smileys');

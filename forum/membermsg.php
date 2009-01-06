@@ -77,7 +77,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
 	JOIN " . PREFIX . "forum_cats c ON t.idcat = c.id AND c.aprob = 1
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = '" . $view_msg . "'
-	LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	WHERE msg.user_id = '" . $view_msg . "'" . $auth_cats . "
 	ORDER BY msg.id DESC
 	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
@@ -112,7 +112,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM " . PREFIX . "sessions s 
+	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '" . DIR . "/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);

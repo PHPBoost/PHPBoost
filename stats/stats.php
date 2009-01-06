@@ -77,7 +77,7 @@ if ($members)
 	
 	$stats_array = array();
 	$result = $Sql->query_while ("SELECT at.theme, COUNT(m.user_theme) AS compt
-	FROM " . PREFIX . "themes at
+	FROM " . DB_TABLE_THEMES . " at
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_theme = at.theme
 	GROUP BY at.theme
 	ORDER BY compt DESC", __LINE__, __FILE__);
@@ -232,7 +232,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			
 			//On fait la liste des visites journalières
 			$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -248,7 +248,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		else
 		{
 			$result = $Sql->query_while ("SELECT SUM(nbr) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
@@ -265,7 +265,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			$last_month = 1;
 			$months_not_empty = array();
 			$result = $Sql->query_while ("SELECT stats_month, SUM(nbr) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -388,7 +388,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 			
 			//On fait la liste des visites journalières
 			$result = $Sql->query_while("SELECT nbr, stats_day AS day 
-			FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 			ORDER BY stats_day", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{	
@@ -418,7 +418,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 				//On fait la liste des visites journalières
 				$j = 0;
 				$result = $Sql->query_while("SELECT nbr, stats_day AS day 
-				FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 				ORDER BY stats_day", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{	
@@ -583,7 +583,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			
 			//On fait la liste des visites journalières
 			$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $pages_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -599,7 +599,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		else
 		{
 			$result = $Sql->query_while ("SELECT SUM(nbr) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $visit_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			$max_month = 1;
@@ -616,7 +616,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			$last_month = 1;
 			$months_not_empty = array();			
 			$result = $Sql->query_while ("SELECT stats_month, SUM(pages) AS total 
-			FROM " . PREFIX . "stats 
+			FROM " . DB_TABLE_STATS . " 
 			WHERE stats_year = '" . $pages_year . "' 
 			GROUP BY stats_month", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -743,7 +743,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		
 		//On fait la liste des visites journalières
 		$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
-		FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+		FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 		ORDER BY stats_day", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{	
@@ -815,7 +815,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			
 			//On fait la liste des visites journalières
 			$result = $Sql->query_while("SELECT pages, stats_day, stats_month, stats_year
-			FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+			FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 			ORDER BY stats_day", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{	
@@ -845,7 +845,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 				//On fait la liste des visites journalières
 				$j = 0;
 				$result = $Sql->query_while("SELECT pages, stats_day AS day, stats_month, stats_year 
-				FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+				FROM " . DB_TABLE_STATS . " WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 				ORDER BY stats_day", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{	
@@ -922,7 +922,7 @@ elseif ($referer)
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . PREFIX . "stats_referer WHERE type = 0", __LINE__, __FILE__);
+	$nbr_referer = $Sql->query("SELECT COUNT(DISTINCT(url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 0", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE type = 0
@@ -979,7 +979,7 @@ elseif ($keyword)
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . PREFIX . "stats_referer WHERE type = 1", __LINE__, __FILE__);
+	$nbr_keyword = $Sql->query("SELECT COUNT(DISTINCT(relative_url)) FROM " . DB_TABLE_STATS_REFERER . " WHERE type = 1", __LINE__, __FILE__);
 	$result = $Sql->query_while ("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
 	FROM " . PREFIX . "stats_referer
 	WHERE type = 1

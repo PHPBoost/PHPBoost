@@ -61,8 +61,8 @@ if ($read)
 	
 	$j = 0;
 	$result = $Sql->query_while("SELECT pm.last_msg_id, pm.user_view_pm
-	FROM " . PREFIX . "pm_topic pm
-	LEFT JOIN " . PREFIX . "pm_msg msg ON msg.idconvers = pm.id AND msg.id = pm.last_msg_id
+	FROM " . DB_TABLE_PM_TOPIC . "  pm
+	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.idconvers = pm.id AND msg.id = pm.last_msg_id
 	WHERE " . $User->get_attribute('user_id') . " IN (pm.user_id, pm.user_id_dest) AND pm.last_user_id <> '" . $User->get_attribute('user_id') . "' AND msg.view_status = 0
 	ORDER BY pm.last_timestamp DESC ", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -71,7 +71,7 @@ if ($read)
 		$j++;
 		if (!$unlimited_pm && ($nbr_waiting_pm - $j) >= 0)
 			continue;
-		$Sql->query_inject("UPDATE " . PREFIX . "pm_msg SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
+		$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__); 		
 	}
 	$Sql->query_close($result);
 	
@@ -223,7 +223,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisualisation du message.
 {
 	//On récupère les info de la conversation.
-	$convers_title = $Sql->query("SELECT title FROM " . PREFIX . "pm_topic WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+	$convers_title = $Sql->query("SELECT title FROM " . DB_TABLE_PM_TOPIC . "  WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 	
 	$Template->set_filenames(array(
 		'pm'=> 'member/pm.tpl'
@@ -307,7 +307,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 	//Conversation supprimée chez l'expediteur: user_convers_status => 1.
 	//Conversation supprimée chez le destinataire: user_convers_status => 2.
 	$result = $Sql->query_while("SELECT id, user_id, user_id_dest, user_convers_status, last_msg_id
-	FROM " . PREFIX . "pm_topic
+	FROM " . DB_TABLE_PM_TOPIC . " 
 	WHERE 
 	(
 		" . $User->get_attribute('user_id') . " IN (user_id, user_id_dest)
@@ -343,7 +343,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 					$del_convers = true;
 			}
 			
-			$view_status = $Sql->query("SELECT view_status FROM " . PREFIX . "pm_msg WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
+			$view_status = $Sql->query("SELECT view_status FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $row['last_msg_id'] . "'", __LINE__, __FILE__);	
 			$update_nbr_pm = ($view_status == '0') ? true : false;	
 			$Privatemsg->delete_conversation($User->get_attribute('user_id'), $row['id'], $expd, $del_convers, $update_nbr_pm);
 		}
@@ -379,7 +379,7 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 			//Le destinataire n'a pas lu le message => on peut éditer.
 			if ($view === false)
 			{
-				$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
+				$id_first = $Sql->query("SELECT MIN(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);
 				if ($pm_del > $id_first) //Suppression du message.
 				{	
 					$pm_last_msg = $Privatemsg->delete($pm_to, $pm_del, $pm['idconvers']);					
@@ -416,7 +416,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 		//Le destinataire n'a pas lu le message => on peut éditer.
 		if ($view === false)
 		{
-			$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "pm_msg WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
+			$id_first = $Sql->query("SELECT MIN(id) as id FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm['idconvers'] . "'", __LINE__, __FILE__);			
 			if (!empty($_POST['convers']) XOR !empty($_POST['edit_pm']))
 			{
 				$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -425,7 +425,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				if (!empty($_POST['edit_pm']) && !empty($contents))
 				{
 					if ($pm_edit > $id_first) //Maj du message.
-						$Sql->query_inject("UPDATE " . PREFIX . "pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					else //Echec.
 						$Errorh->handler('e_auth', E_USER_REDIRECT); 
 				}
@@ -433,8 +433,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				{
 					if ($pm_edit == $id_first)
 					{	
-						$Sql->query_inject("UPDATE " . PREFIX . "pm_topic SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
-						$Sql->query_inject("UPDATE " . PREFIX . "pm_msg SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
+						$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET title = '" . $title . "', last_timestamp = '" . time() . "' WHERE id = '" . $pm['idconvers'] . "' AND last_msg_id = '" . $pm_edit . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . DB_TABLE_PM_MSG . " SET contents = '" . $contents . "', timestamp = '" . time() . "' WHERE id = '" . $pm_edit . "'", __LINE__, __FILE__);	
 					}
 					else //Echec.
 						$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -528,8 +528,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != $User->get_attribute('user_id')) //Membre n'ayant pas encore lu la conversation.
 	{
 		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__); 
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "pm_topic SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . PREFIX . "pm_msg SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	}	
 	
 	$pagination_msg = 25;	
@@ -565,9 +565,9 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	$i = 0;	
 	$j = 0;	
 	$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.view_status, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, msg.contents
-	FROM " . PREFIX . "pm_msg msg
+	FROM " . DB_TABLE_PM_MSG . " msg
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
-	LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id <> -1
+	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id <> -1
 	WHERE msg.idconvers = '" . $pm_id_get . "'
 	ORDER BY msg.timestamp 
 	" . $Sql->limit($Pagination->get_first_msg($pagination_msg, 'p'), $pagination_msg), __LINE__, __FILE__);
@@ -820,8 +820,8 @@ else //Liste des conversation, dans la boite du membre.
 	$i = 0;
 	$j = 0;
 	$result = $Sql->query_while("SELECT pm.id, pm.title, pm.user_id, pm.user_id_dest, pm.user_convers_status, pm.nbr_msg, pm.last_user_id, pm.last_msg_id, pm.last_timestamp, msg.view_status, m.login AS login, m1.login AS login_dest, m2.login AS last_login
-	FROM " . PREFIX . "pm_topic pm
-	LEFT JOIN " . PREFIX . "pm_msg msg ON msg.id = pm.last_msg_id
+	FROM " . DB_TABLE_PM_TOPIC . "  pm
+	LEFT JOIN " . DB_TABLE_PM_MSG . " msg ON msg.id = pm.last_msg_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = pm.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = pm.user_id_dest
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = pm.last_user_id

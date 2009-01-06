@@ -33,13 +33,13 @@ if ($check_update == 0)
     $yesterday_timestamp = time() - 86400;
 	
     //Pose d'un verrou supplémentaire
-    $Sql->query_inject("INSERT INTO " . PREFIX . "stats (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
+    $Sql->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
     $last_stats = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats"); //Récupération de la dernière insertion.
 	
     #######Statistiques#######
-    $Sql->query_inject("UPDATE " . PREFIX . "stats_referer SET yesterday_visit = today_visit", __LINE__, __FILE__);
-    $Sql->query_inject("UPDATE " . PREFIX . "stats_referer SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
-    $Sql->query_inject("DELETE FROM " . PREFIX . "stats_referer WHERE last_update < '" . (time() - 604800) . "'", __LINE__, __FILE__); //Suppression des entrées non mise à jour depuis 1 semaine.
+    $Sql->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET yesterday_visit = today_visit", __LINE__, __FILE__);
+    $Sql->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
+    $Sql->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER . " WHERE last_update < '" . (time() - 604800) . "'", __LINE__, __FILE__); //Suppression des entrées non mise à jour depuis 1 semaine.
 	
     //Visites et pages vues.
     $pages_displayed = pages_displayed();
@@ -52,7 +52,7 @@ if ($check_update == 0)
     $Sql->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER . " (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__); //Insère l'utilisateur qui a déclanché les requêtes de changement de jour.
 
     //Mise à jour des stats.
-    $Sql->query_inject("UPDATE " . PREFIX . "stats SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'", __LINE__, __FILE__);
+    $Sql->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'", __LINE__, __FILE__);
 
 	//Suppression des sessions périmées
 	$Session->_garbage_collector();
@@ -101,7 +101,7 @@ if ($check_update == 0)
     
 	//Vidage des entrées des inscriptions
 	if ($CONFIG_USER['verif_code'] == '1')
-		$Sql->query_inject("DELETE FROM " . PREFIX . "verif_code WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
 
     
     // Check kernel's, modules' or themes' availability

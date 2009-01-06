@@ -40,7 +40,7 @@ if (!empty($_POST['add']))
 	if (!empty($name) && $msg >= 0)
 	{	
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->query_inject("INSERT INTO " . PREFIX . "ranks (name,msg,icon,special) 
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_RANKS . " (name,msg,icon,special) 
 		VALUES('" . $name . "', '" . $msg . "', '" . $icon . "', '0')", __LINE__, __FILE__);	
 				
 		###### Régénération du cache des rangs #######

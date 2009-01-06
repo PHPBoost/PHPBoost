@@ -45,13 +45,13 @@ if ($install)
 	$secure = retrieve(POST, $theme . 'secure', -1);
 	$activ = retrieve(POST, $theme . 'activ', 0);
 		
-	$check_theme = $Sql->query("SELECT theme FROM " . PREFIX . "themes WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
+	$check_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE theme = '" . strprotect($theme) . "'", __LINE__, __FILE__);	
 	if (empty($check_theme) && !empty($theme))
 	{
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
 		
-		$Sql->query_inject("INSERT INTO " . PREFIX . "themes (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
@@ -73,7 +73,7 @@ elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$check_theme = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "themes WHERE theme = '" . strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
+		$check_theme = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_THEMES . " WHERE theme = '" . strprotect($_FILES['upload_theme']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_theme) && !is_dir('../templates/' . $_FILES['upload_theme']['name']))
 		{
 			include_once('../kernel/framework/io/upload.class.php');

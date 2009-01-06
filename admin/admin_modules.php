@@ -45,7 +45,7 @@ if (isset($_POST['valid']))
 		$array_auth_all = Authorizations::auth_array_simple(ACCESS_MODULE, $row['id']);
 		
 		//Enregistrement en base de données
-		$Sql->query_inject("UPDATE " . PREFIX . "modules SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MODULES . " SET activ = '" . $activ . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	//Génération du cache des modules
 	$Cache->Generate_file('modules');

@@ -151,7 +151,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			}
 			else //Insertion dans la bdd
 			{
-				$Sql->query("INSERT INTO " . PREFIX . "upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $User->get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $User->get_attribute('user_id') . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 			}
 		}
 		else
@@ -167,7 +167,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 		$Uploads->Del_folder($del_folder);
 	else
 	{
-		$check_user_id = $Sql->query("SELECT user_id FROM " . PREFIX . "upload_cat WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
+		$check_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
 		//Suppression du dossier et de tout le contenu
 		if ($check_user_id == $User->get_attribute('user_id'))
 			$Uploads->Del_folder($del_folder);
@@ -199,7 +199,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
-	$folder_owner = $Sql->query("SELECT user_id FROM ".PREFIX . "upload_cat WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
+	$folder_owner = $Sql->query("SELECT user_id FROM ".DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	
 	if ($folder_owner == $User->get_attribute('user_id'))
 	{
@@ -210,10 +210,10 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 		//Si on ne déplace pas le dossier dans un de ses fils ou dans lui même
 		if (!in_array($to, $sub_cats))
 		{
-			$new_folder_owner = $Sql->query("SELECT user_id FROM " . PREFIX . "upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
+			$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 			if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 			{
-				$Sql->query_inject("UPDATE " . PREFIX . "upload_cat SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "' WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 				redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 			}
 		}
@@ -231,11 +231,11 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	//Si le fichier nous appartient alors on peut en faire ce que l'on veut
 	if ($file_owner == $User->get_attribute('user_id'))
 	{
-		$new_folder_owner = $Sql->query("SELECT user_id FROM " . PREFIX . "upload_cat WHERE id = '" . $to . "'", __LINE__, __FILE__);
+		$new_folder_owner = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		//Si le dossier de destination nous appartient
 		if ($new_folder_owner == $User->get_attribute('user_id') || $to == 0)
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "upload SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "' WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 			redirect(HOST . DIR . url('/member/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
 		}
 		else
@@ -409,7 +409,7 @@ else
 
 	//Affichage des fichiers contenu dans le dossier
 	$result = $Sql->query_while("SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
-	FROM " . PREFIX . "upload up
+	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE up.idcat = '" . $folder . "' AND up.user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY up.name", __LINE__, __FILE__);
@@ -473,7 +473,7 @@ else
 	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $CONFIG_UPLOADS['size_limit']);
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? $Uploads->Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$total_size = !empty($folder) ? $Uploads->Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'PERCENT' => !$unlimited_data ? '(' . number_round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? number_round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],

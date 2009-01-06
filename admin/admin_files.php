@@ -83,11 +83,11 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = $Sql->query("SELECT user_id FROM " . PREFIX . "upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
+			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
 			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->query("INSERT INTO " . PREFIX . "upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query("INSERT INTO " . DB_TABLE_UPLOAD . " (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -150,16 +150,16 @@ else
 
 	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
-		FROM " . PREFIX . "upload_cat uc
+		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.user_id = '" . $folder_member . "'
 		UNION
 		SELECT u.user_id, m.login
-		FROM " . PREFIX . "upload u
+		FROM " . DB_TABLE_UPLOAD . " u
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id = '" . $folder_member . "'")
 	: 	("SELECT uc.user_id, m.login
-		FROM " . PREFIX . "upload_cat uc
+		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
@@ -229,35 +229,35 @@ else
 	$total_folder_size = $total_files = $total_directories = 0;
 
 	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
-	FROM " . PREFIX . "upload up
+	FROM " . DB_TABLE_UPLOAD . " up
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
 	
 	if ($show_member)
 		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
-		FROM " . PREFIX . "upload_cat uc
+		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
 		UNION
 		SELECT u.user_id as id, u.user_id, m.login as name, 0 as id_parent
-		FROM " . PREFIX . "upload u
+		FROM " . DB_TABLE_UPLOAD . " u
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
 		ORDER BY name";
 	elseif (!empty($folder_member))
 	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM " . PREFIX . "upload_cat 
+		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = 0 AND user_id = '" . $folder_member . "'
 		ORDER BY name";
 		$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
-		FROM " . PREFIX . "upload up
+		FROM " . DB_TABLE_UPLOAD . " up
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 		WHERE up.idcat = 0 AND up.user_id = '" . $folder_member . "'";
 	}
 	else
 		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM " . PREFIX . "upload_cat 
+		FROM " . DB_TABLE_UPLOAD_CAT . " 
 		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
 		ORDER BY name";
 
