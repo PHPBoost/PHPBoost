@@ -63,11 +63,6 @@ class LinksMenuLink extends LinksMenuElement
             
         parent::_assign($template, $mode);
   		$template->assign_vars(array(
-            'C_FIRST_LEVEL' => $this->depth == 1,
-            'ABSOLUTE_URL' => $this->get_url(false),
-            'ABSOLUTE_IMG' => $this->get_image(false),
-            'RELATIVE_URL' => $this->get_url(true),
-            'RELATIVE_IMG' => $this->get_image(true),
   			'C_LINK' => true
   		));
   		
@@ -82,7 +77,6 @@ class LinksMenuLink extends LinksMenuElement
 	{
         parent::_assign($template);
         $template->assign_vars(array(
-            'C_FIRST_LEVEL' => $this->depth == 1,
             'C_LINK' => true
         ));
         return parent::cache_export_begin() . $template->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();

@@ -199,6 +199,9 @@ class LinksMenuElement extends Menu
         $template->assign_vars(array(
             'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
+            'C_FIRST_LEVEL' => $this->depth == 1,
+            'DEPTH' => $this->depth,
+            'PARENT_DEPTH' => $this->depth - 1,
             'ABSOLUTE_URL' => $this->get_url(false),
             'ABSOLUTE_IMG' => $this->get_image(false),
             'RELATIVE_URL' => $this->get_url(true),
