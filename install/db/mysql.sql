@@ -14,7 +14,7 @@ CREATE TABLE `phpboost_com` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `phpboost_compteur`;
+DROP TABLE IF EXISTS `phpboost_visit_counter`;
 CREATE TABLE `phpboost_compteur` (
   `id` int(11) NOT NULL auto_increment,
   `ip` varchar(50) NOT NULL default '',
@@ -72,18 +72,6 @@ CREATE TABLE `phpboost_group` (
   `members` text NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `phpboost_guestbook`;
-CREATE TABLE `phpboost_guestbook` (
-  `id` int(11) NOT NULL auto_increment,
-  `contents` text NOT NULL,
-  `login` varchar(255) NOT NULL default '',
-  `user_id` int(11) NOT NULL default '0',
-  `timestamp` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 
 DROP TABLE IF EXISTS `phpboost_lang`;

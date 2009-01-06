@@ -63,15 +63,15 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 			return 'f_' . $field;
 		}
 		$field_name = rewrite_field($name);
-		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
+		$check_name = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
 		if (empty($check_name)) 
 		{
-			$class = $Sql->query("SELECT MAX(class) + 1 FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO ".PREFIX."member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
+			$class = $Sql->query("SELECT MAX(class) + 1 FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
 			
 			//Alteration de la table pour prendre en compte le nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
-			$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend ADD " . $field_name, __LINE__, __FILE__);
+			$Sql->query_inject("ALTER TABLE " . PREFIX . "member_extend ADD " . $field_name, __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}

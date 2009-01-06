@@ -108,7 +108,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
-	FROM ".PREFIX."web 
+	FROM " . PREFIX . "web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
@@ -170,7 +170,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	include_once('../kernel/framework/content/note.class.php');
 	$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
-	FROM ".PREFIX."web
+	FROM " . PREFIX . "web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
@@ -197,10 +197,10 @@ else
 {
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
-	$total_link = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
-	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id
+	$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
+	LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
 	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
 	$edit = '';
 	if ($User->check_level(ADMIN_LEVEL))
@@ -228,8 +228,8 @@ else
 	$column_width = floor(100/$CONFIG_WEB['nbr_column']);
 	$result = $Sql->query_while(
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
-	FROM ".PREFIX."web_cat aw
-	LEFT JOIN ".PREFIX."web w ON w.idcat = aw.id AND w.aprob = 1
+	FROM " . PREFIX . "web_cat aw
+	LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
 	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class

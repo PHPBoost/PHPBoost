@@ -53,7 +53,7 @@ if ($get_visit_month)
 	
 	$array_stats = array();
 	$result = $Sql->query_while("SELECT nbr, stats_day 
-	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+	FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -80,7 +80,7 @@ elseif ($get_visit_year)
 	
 	$array_stats = array();
 	$result = $Sql->query_while ("SELECT SUM(nbr) as total, stats_month
-	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
+	FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -106,7 +106,7 @@ elseif ($get_pages_day)
 	$day = !empty($_GET['day']) ? numeric($_GET['day']) : '1';
 	
 	$array_stats = array();
-	$pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
+	$pages_details = unserialize((string)$Sql->query("SELECT pages_detail FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' AND stats_day = '" . $day . "'", __LINE__, __FILE__));
 	if (is_array($pages_details))
 		foreach ($pages_details as $hour => $pages)
 			$array_stats[$hour] = $pages;
@@ -128,7 +128,7 @@ elseif ($get_pages_month)
 	
 	$array_stats = array();
 	$result = $Sql->query_while("SELECT pages, stats_day 
-	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
+	FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "' AND stats_month = '" . $month . "' 
 	ORDER BY stats_day", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -155,7 +155,7 @@ elseif ($get_pages_year)
 	
 	$array_stats = array();
 	$result = $Sql->query_while ("SELECT SUM(pages) as total, stats_month
-	FROM ".PREFIX."stats WHERE stats_year = '" . $year . "'
+	FROM " . PREFIX . "stats WHERE stats_year = '" . $year . "'
 	GROUP BY stats_month
 	ORDER BY stats_month", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -260,8 +260,8 @@ elseif ($get_theme)
 	
 	$array_stats = array();
 	$result = $Sql->query_while ("SELECT at.theme, COUNT(m.user_theme) AS compt
-	FROM ".PREFIX."themes at
-	LEFT JOIN ".PREFIX."member m ON m.user_theme = at.theme
+	FROM " . PREFIX . "themes at
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_theme = at.theme
 	GROUP BY at.theme", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -282,7 +282,7 @@ elseif ($get_sex)
 	
 	$array_stats = array();
 	$result = $Sql->query_while ("SELECT count(user_sex) as compt, user_sex
-	FROM ".PREFIX."member
+	FROM " . PREFIX . "member
 	GROUP BY user_sex
 	ORDER BY compt", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

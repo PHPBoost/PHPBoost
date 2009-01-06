@@ -61,19 +61,19 @@ if (!empty($_POST['valid']) && !empty($id))
 	{
 		$status = 1;
 		if (empty($url)) //Ne doit pas être vide dans tout les cas.
-			$url = $Sql->query("SELECT url FROM ".PREFIX."forum_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$url = $Sql->query("SELECT url FROM " . PREFIX . "forum_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	}
 	
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_FORUM, WRITE_CAT_FORUM, EDIT_CAT_FORUM);
 	if (!empty($name))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET name = '" . $name . "', subname = '" . $subname . "', url = '" . $url . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET name = '" . $name . "', subname = '" . $subname . "', url = '" . $url . "', status = '" . $status . "', aprob = '" . $aprob . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		if ($type != 3 || !empty($to))
 		{
 			//Empêche le déplacement dans une catégorie fille.
-			$to = $Sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$to = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'", __LINE__, __FILE__);
 			 
 			//Catégorie parente changée?
 			$change_cat = !empty($to) ? !($CAT_FORUM[$to]['id_left'] < $CAT_FORUM[$id]['id_left'] && $CAT_FORUM[$to]['id_right'] > $CAT_FORUM[$id]['id_right'] && ($CAT_FORUM[$id]['level'] - 1) == $CAT_FORUM[$to]['level']) : $CAT_FORUM[$id]['level'] > 0;
@@ -99,13 +99,13 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
 	$Cache->load('forum');
 	$confirm_delete = false;
-	$idcat = $Sql->query("SELECT id FROM ".PREFIX."forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	$idcat = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if (!empty($idcat) && isset($CAT_FORUM[$idcat]))
 	{
 		//On vérifie si la catégorie contient des sous forums.
 		$nbr_sub_cat = (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] - 1) / 2);
 		//On vérifie si la catégorie ne contient pas de topic.
-		$check_topic = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+		$check_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 		
 		if ($check_topic == 0 && $nbr_sub_cat == 0) //Si vide on supprime simplement, la catégorie.
 		{
@@ -130,7 +130,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$forums = '';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."forum_cats
+					FROM " . PREFIX . "forum_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
@@ -153,7 +153,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$forums = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."forum_cats
+					FROM " . PREFIX . "forum_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
@@ -171,7 +171,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					));
 				}
 		
-				$forum_name = $Sql->query("SELECT name FROM ".PREFIX."forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$forum_name = $Sql->query("SELECT name FROM " . PREFIX . "forum_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 				$Template->assign_vars(array(
 					'IDCAT' => $idcat,
 					'FORUM_NAME' => $forum_name,
@@ -231,12 +231,12 @@ elseif (!empty($id))
 		'admin_forum_cat_edit'=> 'forum/admin_forum_cat_edit.tpl'
 	));
 			
-	$forum_info = $Sql->query_array("forum_cats", "id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$forum_info = $Sql->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "name", "subname", "url", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, id_left, id_right, name, level
-	FROM ".PREFIX."forum_cats
+	FROM " . PREFIX . "forum_cats
 	WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$id]['id_left'] . "' AND '" . $CAT_FORUM[$id]['id_right'] . "'
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -352,12 +352,12 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = $Sql->query("SELECT MAX(id_left) FROM ".PREFIX."forum_cats", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(id_left) FROM " . PREFIX . "forum_cats", __LINE__, __FILE__);
 	$list_cats_js = '';
 	$array_js = '';
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, subname, url, status
-	FROM ".PREFIX."forum_cats
+	FROM " . PREFIX . "forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

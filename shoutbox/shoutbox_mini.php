@@ -53,7 +53,7 @@ function shoutbox_mini()
     			if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
     			{
     				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-    				$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+    				$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
     				if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
     				{
     					if ($check_time >= (time() - $CONFIG['delay_flood']))
@@ -67,7 +67,7 @@ function shoutbox_mini()
     				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
     					redirect(HOST . DIR . '/shoutbox/shoutbox.php' . url('?error=l_flood', '', '&'));
     					
-    				$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+    				$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES ('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "', '" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
     				
     				redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
     			}
@@ -112,7 +112,7 @@ function shoutbox_mini()
     	
     	$array_class = array('member', 'modo', 'admin');
     	$result = $Sql->query_while("SELECT id, login, user_id, level, contents
-    	FROM ".PREFIX."shoutbox
+    	FROM " . PREFIX . "shoutbox
     	ORDER BY timestamp DESC
     	" . $Sql->limit(0, 25), __LINE__, __FILE__);
     	while ($row = $Sql->fetch_assoc($result))

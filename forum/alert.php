@@ -32,7 +32,7 @@ require_once('../forum/forum_tools.php');
 $alert = retrieve(GET, 'id', 0);	
 $alert_post = retrieve(POST, 'id', 0);	
 $topic_id = !empty($alert) ? $alert : $alert_post;
-$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
+$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
@@ -60,7 +60,7 @@ $Template->set_filenames(array(
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$Template->assign_vars(array(
@@ -103,7 +103,7 @@ if (!empty($alert_post))
 	));
 	
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');
@@ -131,8 +131,8 @@ if (!empty($alert_post))
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 $result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM ".PREFIX."sessions s 
-LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
+FROM " . PREFIX . "sessions s 
+LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))

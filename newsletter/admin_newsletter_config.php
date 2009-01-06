@@ -48,7 +48,7 @@ if (!empty($sender_mail) && !empty($newsletter_name))
 {
 	if (preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $sender_mail))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . serialize(array('sender_mail' => $sender_mail, 'newsletter_name' => $newsletter_name)) . "' WHERE name = 'newsletter'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . serialize(array('sender_mail' => $sender_mail, 'newsletter_name' => $newsletter_name)) . "' WHERE name = 'newsletter'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('newsletter');
 		$_NEWSLETTER_CONFIG['sender_mail'] = $sender_mail;
 		$_NEWSLETTER_CONFIG['newsletter_name'] = $newsletter_name;

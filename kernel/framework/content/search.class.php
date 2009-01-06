@@ -57,7 +57,7 @@ class Search
         // Suppression des vieux résultats du cache
         // Ici 3 requêtes pour éviter un delete multi-table non portable ou 2 requête avec un NOT IN long en exécution
         // Liste des résultats à supprimer
-        $reqOldIndex = "SELECT id_search FROM ".PREFIX."search_index
+        $reqOldIndex = "SELECT id_search FROM " . PREFIX . "search_index
                         WHERE  last_search_use <= '".(time() - (CACHE_TIME * 60))."'
                             OR times_used >= '".CACHE_TIMES_USED."'";
         
@@ -76,8 +76,8 @@ class Search
         // Si il y a des résultats à supprimer, on les supprime
         if ( $nbIdsToDelete > 0 )
         {
-            $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE id_search IN (".$idsToDelete.")";
-            $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteIdx = "DELETE FROM " . PREFIX . "search_index WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteRst = "DELETE FROM " . PREFIX . "search_results WHERE id_search IN (".$idsToDelete.")";
             
             $Sql->query_inject($reqDeleteIdx, __LINE__, __FILE__);
             $Sql->query_inject($reqDeleteRst, __LINE__, __FILE__);
@@ -174,7 +174,7 @@ class Search
         
         // Récupération des $nb_lines résultats à partir de l'$offset
         $reqResults = "SELECT module, id_content, title, relevance, link
-                        FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
+                        FROM " . PREFIX . "search_index idx, " . PREFIX . "search_results rst
                         WHERE idx.id_search = '" . $id_search . "' AND rst.id_search = '" . $id_search . "'
                         AND id_user = '".$this->id_user."' ORDER BY relevance DESC ";
         if ( $nb_lines > 0 )
@@ -241,7 +241,7 @@ class Search
         }
         
         // Récupération du nombre de résultats correspondant à la recherche
-        $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modules_conditions." )";
+        $reqNbResults  = "SELECT COUNT(*) FROM " . PREFIX . "search_results WHERE id_search IN ( ".$modules_conditions." )";
         if ( $modules_conditions > 0 )
             $nbResults = $Sql->query($reqNbResults, __LINE__, __FILE__  );
         else
@@ -315,7 +315,7 @@ class Search
             
             // Exécution des derniéres requêtes d'insertions
             if ($nbReqInsert > 0)
-                $Sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+                $Sql->query_inject("INSERT INTO " . PREFIX . "search_results VALUES ".$reqInsert, __LINE__, __FILE__);
         }
     }
     
@@ -331,11 +331,11 @@ class Search
         }
 
         global $Sql;
-        $id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = '".$id_search."' AND id_user = '".$this->id_user."';", __LINE__, __FILE__);
+        $id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "search_index WHERE id_search = '".$id_search."' AND id_user = '".$this->id_user."';", __LINE__, __FILE__);
         if ($id == 1)
         {
             // la recherche est déjà, en cache, on la met à jour.
-            $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, last_search_use='".time()."' WHERE ";
+            $reqUpdate  = "UPDATE " . PREFIX . "search_index SET times_used=times_used+1, last_search_use='".time()."' WHERE ";
             $reqUpdate .= "id_search = '".$id_search."' AND id_user = '".$this->id_user."';";
             $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             

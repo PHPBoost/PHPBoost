@@ -34,7 +34,7 @@ $Template->set_filenames(array(
 ));
 	
 //Membre connectés..
-$nbr_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
+$nbr_member = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "sessions WHERE level <> -1 AND session_time > '" . (time() - $CONFIG['site_session_invit']) . "'", __LINE__, __FILE__);
 include_once('../kernel/framework/util/pagination.class.php'); 
 $Pagination = new Pagination();
 	
@@ -48,8 +48,8 @@ $Template->assign_vars(array(
 
 $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login
-FROM ".PREFIX."sessions s
-JOIN ".PREFIX."member m ON (m.user_id = s.user_id)
+FROM " . PREFIX . "sessions s
+JOIN " . DB_TABLE_MEMBER . " m ON (m.user_id = s.user_id)
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY " . $CONFIG_ONLINE['display_order_online'] . "
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__); //Membres enregistrés.

@@ -126,7 +126,7 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
     //Vérification pour empêcher une double mise à jour.
     $yesterday_timestamp = time() - 86400;
     $check_update = (int) $Sql->query(
-        "SELECT COUNT(*) FROM ".PREFIX."stats
+        "SELECT COUNT(*) FROM " . PREFIX . "stats
         WHERE
             stats_year = '" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND
             stats_month = '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND

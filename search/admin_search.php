@@ -58,12 +58,12 @@ if (!empty($_POST['valid']))
         
         // Enregistrement des modifications de la config
         $config_string = addslashes(serialize($CONFIG));
-        $request = "UPDATE ".PREFIX."configs SET value = '".$config_string."' WHERE name = 'config'";
+        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$config_string."' WHERE name = 'config'";
         $Sql->query_inject($request, __LINE__, __FILE__);
         
         // Enregistrement des modifications de la config du module 'Search'
         $search_cfg = addslashes(serialize($SEARCH_CONFIG));
-        $request = "UPDATE ".PREFIX."configs SET value = '".$search_cfg."' WHERE name = 'search'";
+        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
         $Sql->query_inject($request, __LINE__, __FILE__);
         
         // Génération des nouveaux fichiers de cache
@@ -80,7 +80,7 @@ if (!empty($_POST['valid']))
         
         // Enregistrement des modifications de la config du module 'Search'
         $search_cfg = addslashes(serialize($SEARCH_CONFIG));
-        $request = "UPDATE ".PREFIX."configs SET value = '".$search_cfg."' WHERE name = 'search'";
+        $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
         $Sql->query_inject($request, __LINE__, __FILE__);
         
         // Génération des nouveaux fichiers de cache
@@ -91,8 +91,8 @@ if (!empty($_POST['valid']))
 }
 elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 {
-    $Sql->query_inject("TRUNCATE ".PREFIX."search_results", __LINE__, __FILE__);
-    $Sql->query_inject("TRUNCATE ".PREFIX."search_index", __LINE__, __FILE__);
+    $Sql->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
+    $Sql->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
     redirect(HOST.SCRIPT);
 }
 else

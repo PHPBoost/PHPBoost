@@ -47,7 +47,7 @@ class NewsInterface extends ModuleInterface
 		$news_config = 'global $CONFIG_NEWS;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_NEWS = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'news'", __LINE__, __FILE__));
+		$CONFIG_NEWS = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 		
 		$news_config .= '$CONFIG_NEWS = ' . var_export($CONFIG_NEWS, true) . ';' . "\n";
 
@@ -61,14 +61,14 @@ class NewsInterface extends ModuleInterface
 		
 		//Publication des news en attente pour la date donnée.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM ".PREFIX."news
+		FROM " . PREFIX . "news
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($row['start'] <= time() && $row['start'] != 0)
-				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "news SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
-				$Sql->query_inject("UPDATE ".PREFIX."news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "news SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 	
@@ -116,7 +116,7 @@ class NewsInterface extends ModuleInterface
         
         // Last news
         $result = $Sql->query_while("SELECT id, title, contents, timestamp, img
-            FROM ".PREFIX."news
+            FROM " . PREFIX . "news
             WHERE visible = 1
             ORDER BY timestamp DESC
         " . $Sql->limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);

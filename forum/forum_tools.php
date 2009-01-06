@@ -63,9 +63,9 @@ if (!$is_guest)
 	
 	//Requête pour compter le nombre de messages non lus.
 	$nbr_msg_not_read = $Sql->query("SELECT COUNT(*)
-	FROM ".PREFIX."forum_topics t
-	LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-	LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+	FROM " . PREFIX . "forum_topics t
+	LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+	LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . $unauth_cats, __LINE__, __FILE__);
 }
 

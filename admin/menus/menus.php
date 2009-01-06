@@ -244,7 +244,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 //	//Récupération du class le plus grand pour chaque positionnement possible.
 //	$array_max = array();
 //	$result = $Sql->query_while ("SELECT MAX(class) AS max, location
-//	FROM ".PREFIX."menus
+//	FROM " . PREFIX . "menus
 //	GROUP BY location
 //	ORDER BY class", __LINE__, __FILE__);
 //
@@ -260,7 +260,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 //	$uninstalled_menus = array();
 //	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 //	$result = $Sql->query_while("SELECT id, class, name, contents, location, activ, auth, added
-//	FROM ".PREFIX."menus
+//	FROM " . PREFIX . "menus
 //	ORDER BY class", __LINE__, __FILE__);
 //	while ($row = $Sql->fetch_assoc($result))
 //	{

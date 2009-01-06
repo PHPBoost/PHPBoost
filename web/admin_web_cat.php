@@ -39,7 +39,7 @@ $del = isset($_GET['del']) ?  true : false;
 if (!empty($_POST['valid']))
 {
 	$result = $Sql->query_while("SELECT id
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -54,7 +54,7 @@ if (!empty($_POST['valid']))
 			$icon = $icon_path;
 			
 		if (!empty($cat))
-			$Sql->query_inject("UPDATE ".PREFIX."web_cat SET name = '" . $cat . "', contents = '" . $contents . "', icon = '" . $icon . "', aprob = '" . $aprob . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET name = '" . $cat . "', contents = '" . $contents . "', icon = '" . $icon . "', aprob = '" . $aprob . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 
 	}
 	$Sql->query_close($result);
@@ -67,8 +67,8 @@ if (!empty($_POST['valid']))
 elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM ".PREFIX."web_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);	
-	$Sql->query_inject("UPDATE ".PREFIX."web SET idcat = '' WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . PREFIX . "web_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("UPDATE " . PREFIX . "web SET idcat = '' WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache des catégories.
 	$Cache->Generate_module_file('web');
@@ -81,9 +81,9 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{	
 		$idmoins = $top - 1;
 		
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = 0 WHERE class = '" . $top . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = '" . $top . "' WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = '" . $idmoins . "' WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = 0 WHERE class = '" . $top . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = '" . $top . "' WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = '" . $idmoins . "' WHERE class = 0", __LINE__, __FILE__);
 		
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
@@ -94,9 +94,9 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{
 		$idplus = ($bottom + 1);
 		
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = '" . $bottom . "' WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."web_cat SET class = '" . $idplus . "' WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = '" . $bottom . "' WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web_cat SET class = '" . $idplus . "' WHERE class = 0", __LINE__, __FILE__);
 		
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
@@ -119,11 +119,11 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		
 	if (!empty($cat))
 	{	
-		$order = $Sql->query("SELECT MAX(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
+		$order = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
 		$order++;
 		
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->query_inject("INSERT INTO ".PREFIX."web_cat (class,name,contents,icon,aprob,secure) VALUES('" . $order . "', '" . $cat . "', '" . $contents . "', '" . $icon . "', '" . $aprob . "', '" . $secure . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web_cat (class,name,contents,icon,aprob,secure) VALUES('" . $order . "', '" . $cat . "', '" . $contents . "', '" . $icon . "', '" . $aprob . "', '" . $secure . "')", __LINE__, __FILE__);	
 	
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
@@ -192,11 +192,11 @@ else
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM ".PREFIX."web_cat", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
 
 	$result = $Sql->query_while("SELECT id, name, class, contents, icon, aprob, secure
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

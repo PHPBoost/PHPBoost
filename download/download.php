@@ -152,7 +152,7 @@ else
 	}
 	
 	//Contenu de la catégorie	
-	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
+	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
 	if ($nbr_files > 0)
 	{
 		$get_sort = retrieve(GET, 'sort', '');	
@@ -238,7 +238,7 @@ else
 			));
 
 		$result = $Sql->query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
-		FROM ".PREFIX."download
+		FROM " . PREFIX . "download
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);

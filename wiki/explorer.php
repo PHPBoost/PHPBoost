@@ -52,7 +52,7 @@ foreach ($_WIKI_CATS as $key => $value)
 		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 }
 $result = $Sql->query_while("SELECT title, id, encoded_title
-	FROM ".PREFIX."wiki_articles a
+	FROM " . PREFIX . "wiki_articles a
 	WHERE id_cat = 0
 	AND a.redirect = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
@@ -74,13 +74,13 @@ $Template->assign_vars(array(
 
 $contents = '';
 $result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
-FROM ".PREFIX."wiki_cats c
-LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
+FROM " . PREFIX . "wiki_cats c
+LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 WHERE c.id_parent = 0
 ORDER BY title ASC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
-	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(

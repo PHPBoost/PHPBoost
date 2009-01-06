@@ -70,7 +70,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		include_once('../kernel/framework/util/pagination.class.php'); 
 		$Pagination = new Pagination();
 
-		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
+		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
 		$Template->assign_vars(array(
 			'C_START_MSG' => true,
 			'PAGINATION' => $Pagination->display('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
@@ -79,9 +79,9 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		));
 
 		$result = $Sql->query_while("SELECT c.timestamp, c.script, c.path, m.login, s.user_id AS connect, c.contents
-		FROM ".PREFIX."com c
-		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
-		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+		FROM " . DB_TABLE_COM . " c
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
+		LEFT JOIN " . PREFIX . "sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 		WHERE m.user_id = '" . $memberId . "'
 		ORDER BY c.timestamp DESC 
 		" . $Sql->limit($Pagination->get_first_msg(25, 'pmsg'), 25), __LINE__, __FILE__);

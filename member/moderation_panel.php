@@ -77,12 +77,12 @@ switch ($action)
 		$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 		if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
-			$info_mbr = $Sql->query_array('member', 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			
 			//Modérateur ne peux avertir l'admin (logique non?).
 			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."member SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_readonly = '" . $readonly . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
@@ -115,7 +115,7 @@ switch ($action)
 			if (!empty($_POST['search_member']))
 			{
 				$login = retrieve(POST, 'login_mbr', '');
-				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
 					redirect(HOST . DIR . url('/member/moderation_panel.php?action=punish&id=' . $user_id, '', '&'));
 				else
@@ -135,7 +135,7 @@ switch ($action)
 				
 			$i = 0;
 			$result = $Sql->query_while("SELECT user_id, login, user_readonly
-			FROM ".PREFIX."member
+			FROM " . PREFIX . "member
 			WHERE user_readonly > " . time() . "
 			ORDER BY user_readonly DESC", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -160,7 +160,7 @@ switch ($action)
 		}
 		else //On affiche les infos sur l'utilisateur
 		{
-			$member = $Sql->query_array('member', 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_readonly', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 					
 			//On crée le formulaire select
 			$select = '';
@@ -234,15 +234,15 @@ switch ($action)
 		$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 		if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 		{
-			$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_warning', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			//Modérateur ne peux avertir l'admin (logique non?).
 			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."member SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);			
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_ban = '" . $user_ban . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);			
 				
 				//Si avertissement à 100% et débanni, on réduit l'avertissement à 90%.
 				if ($user_ban == 0 && $info_mbr['user_warning'] == 100)
-					$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '90' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				if (!empty($user_ban)) //Envoi du mail
 				{
@@ -268,7 +268,7 @@ switch ($action)
 			if (!empty($_POST['search_member']))
 			{
 				$login = retrieve(POST, 'login_mbr', '');
-				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
 					redirect(HOST . DIR . url('/member/moderation_panel.php?action=ban&id=' . $user_id, '', '&'));
 				else
@@ -288,7 +288,7 @@ switch ($action)
 				
 			$i = 0;
 			$result = $Sql->query_while("SELECT user_id, login, user_ban, user_warning
-			FROM ".PREFIX."member
+			FROM " . PREFIX . "member
 			WHERE user_ban > " . time() . " OR user_warning = 100
 			ORDER BY user_ban", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -313,7 +313,7 @@ switch ($action)
 		}
 		else //On affiche les infos sur l'utilisateur
 		{
-			$mbr = $Sql->query_array('member', 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$mbr = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			$moderation_panel_template->assign_vars(array(
 				'C_MODO_PANEL_USER_BAN' => true,
 				'KERNEL_EDITOR' => display_editor('action_contents'),
@@ -362,14 +362,14 @@ switch ($action)
 		$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
 		if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
-			$info_mbr = $Sql->query_array('member', 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 			
 			//Modérateur ne peux avertir l'admin (logique non?).
 			if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || $User->check_level(ADMIN_LEVEL)))
 			{
 				if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 				{
-					$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = '" . $new_warning_level . "' WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 					
 					//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 					if ($info_mbr['user_id'] != $User->get_attribute('user_id'))
@@ -386,8 +386,8 @@ switch ($action)
 				}
 				elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 				{
-					$Sql->query_inject("UPDATE ".PREFIX."member SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-					$Sql->query_inject("DELETE FROM ".PREFIX."sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("DELETE FROM " . PREFIX . "sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 					//Envoi du mail
 					include_once('../kernel/framework/io/mail.class.php');
@@ -413,7 +413,7 @@ switch ($action)
 			if (!empty($_POST['search_member']))
 			{
 				$login = retrieve(POST, 'login_mbr', '');
-				$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
+				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 				if (!empty($user_id) && !empty($login))
 					redirect(HOST . DIR . url('/member/moderation_panel.php?action=warning&id=' . $user_id, '', '&'));
 				else
@@ -433,7 +433,7 @@ switch ($action)
 			
 			$i = 0;
 			$result = $Sql->query_while("SELECT user_id, login, user_warning
-			FROM ".PREFIX."member
+			FROM " . PREFIX . "member
 			WHERE user_warning > 0
 			ORDER BY user_warning", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -458,7 +458,7 @@ switch ($action)
 		}
 		else //On affiche les infos sur l'utilisateur
 		{
-			$member = $Sql->query_array('member', 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+			$member = $Sql->query_array(DB_TABLE_MEMBER, 'login', 'user_warning', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 						
 			//On crée le formulaire select
 			$select = '';

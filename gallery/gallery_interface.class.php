@@ -48,7 +48,7 @@ class GalleryInterface extends ModuleInterface
 		$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GALLERY = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'gallery'", __LINE__, __FILE__));
+		$CONFIG_GALLERY = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'gallery'", __LINE__, __FILE__));
 		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
 		if (isset($CONFIG_GALLERY['auth_root']))
 			$CONFIG_GALLERY['auth_root'] = unserialize($CONFIG_GALLERY['auth_root']);
@@ -57,7 +57,7 @@ class GalleryInterface extends ModuleInterface
 
 		$cat_gallery = 'global $CAT_GALLERY;' . "\n";
 		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
-		FROM ".PREFIX."gallery_cats
+		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{		
@@ -78,8 +78,8 @@ class GalleryInterface extends ModuleInterface
 				
 		$_array_random_pics = 'global $_array_random_pics;' . "\n" . '$_array_random_pics = array(';
 		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth 
-		FROM ".PREFIX."gallery g
-		LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
+		FROM " . PREFIX . "gallery g
+		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
 		WHERE g.aprob = 1 AND (gc.aprob = 1 OR g.idcat = 0)
 		ORDER BY RAND()
 		" . $Sql->limit(0, 30), __LINE__, __FILE__);

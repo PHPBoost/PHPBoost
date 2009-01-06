@@ -49,11 +49,11 @@ class Newsletter_sender
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . $message . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "','" . $message . "', '" . time() . "', 'html', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 
-			FROM ".PREFIX."newsletter 
+			FROM " . PREFIX . "newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -98,11 +98,11 @@ class Newsletter_sender
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'bbcode', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 
-			FROM ".PREFIX."newsletter 
+			FROM " . PREFIX . "newsletter 
 			ORDER BY id", __LINE__, __FILE__);			
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -139,11 +139,11 @@ class Newsletter_sender
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
 			//On enregistre dans les archives la newsletter envoyée
-			$Sql->query_inject("INSERT INTO ".PREFIX."newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "newsletter_arch (title,message,timestamp,type,nbr) VALUES('" . $mail_object . "', '" . $message . "', '" . time() . "', 'text', '" . $nbr . "')", __LINE__, __FILE__);
 			
 			$mailing_list = array();
 			$result = $Sql->query_while("SELECT id, mail 
-			FROM ".PREFIX."newsletter 
+			FROM " . PREFIX . "newsletter 
 			ORDER BY id", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{

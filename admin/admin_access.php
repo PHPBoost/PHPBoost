@@ -43,10 +43,10 @@ if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 //Lancement de la session
 if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 {
-	$user_id = $Sql->query("SELECT user_id FROM ".PREFIX."member WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
+	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
 	if (!empty($user_id)) //Membre existant.
 	{
-		$info_connect = $Sql->query_array('member', 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__);
+		$info_connect = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__);
 		$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
 		$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
 		
@@ -59,12 +59,12 @@ if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 			}
 			elseif ($delay_connect >= 600 && $info_connect['test_connect'] == '5') //5 nouveau essais, 10 minutes après.
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			elseif ($delay_connect >= 300 && $info_connect['test_connect'] == '5') //2 essais 5 minutes après
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
 				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
@@ -83,7 +83,7 @@ if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 		if (!empty($error_report)) //Erreur
 		{
 			$info_connect['test_connect']++;
-			$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
 			redirect(HOST . DIR . '/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 		}
@@ -93,7 +93,7 @@ if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 			redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
 		}
 		else //Succès redonne tous les essais.
-			$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 	}
 	else
 		redirect(HOST . DIR . '/member/error.php?unexist=1');

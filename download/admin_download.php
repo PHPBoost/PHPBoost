@@ -62,7 +62,7 @@ $Template->assign_vars(array(
 ));
 
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
-FROM ".PREFIX."download
+FROM " . PREFIX . "download
 ORDER BY timestamp DESC 
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 

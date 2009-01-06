@@ -79,7 +79,7 @@ if (!empty($_POST['valid']))
 		else //Ajout des heures et minutes
 			$timestamp = time();
 		
-		$Sql->query_inject("INSERT INTO ".PREFIX."news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
+		$Sql->query_inject("INSERT INTO " . PREFIX . "news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
 		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
         // Feeds Regeneration
@@ -88,8 +88,8 @@ if (!empty($_POST['valid']))
 		
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->load('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
-		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM ".PREFIX."news WHERE visible = 1", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
+		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM " . PREFIX . "news WHERE visible = 1", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 			
 		redirect(HOST . DIR . '/news/admin_news.php');
 	}
@@ -138,7 +138,7 @@ elseif (!empty($_POST['previs']))
 
 	//Catégories.	
 	$i = 0;
-	$result = $Sql->query_while ("SELECT id, name FROM ".PREFIX."news_cat", __LINE__, __FILE__);
+	$result = $Sql->query_while ("SELECT id, name FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -266,7 +266,7 @@ else
 	//Catégories.	
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."news_cat", __LINE__, __FILE__);
+	FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('select', array(

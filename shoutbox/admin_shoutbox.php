@@ -40,7 +40,7 @@ if (!empty($_POST['valid']) )
 	$config_shoutbox['shoutbox_max_link'] = retrieve(POST, 'shoutbox_max_link', -1);
 	$config_shoutbox['shoutbox_refresh_delay'] = numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float');
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('shoutbox');

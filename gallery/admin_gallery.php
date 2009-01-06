@@ -88,8 +88,8 @@ else
 		$CAT_GALLERY[0]['level'] = -1;
 	}
 	
-	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
+	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -154,8 +154,8 @@ else
 			
 		$i = 0;	
 		$result = $Sql->query_while ("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
-		FROM ".PREFIX."gallery_cats gc
-		LEFT JOIN ".PREFIX."gallery g ON g.idcat = gc.id
+		FROM " . PREFIX . "gallery_cats gc
+		LEFT JOIN " . PREFIX . "gallery g ON g.idcat = gc.id
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
@@ -214,7 +214,7 @@ else
 		
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name 
-		FROM ".PREFIX."gallery_cats
+		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -226,8 +226,8 @@ else
 		if (!empty($idpics))
 		{
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
-			FROM ".PREFIX."gallery g
-			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
+			FROM " . PREFIX . "gallery g
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id		
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
 			" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			$info_pics = $Sql->fetch_assoc($result);			
@@ -242,8 +242,8 @@ else
 				$array_pics = array();
 				$array_js = 'var array_pics = new Array();';
 				$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
-				FROM ".PREFIX."gallery g
-				LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
+				FROM " . PREFIX . "gallery g
+				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id		
 				WHERE g.idcat = '" . $idcat . "'", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
@@ -351,8 +351,8 @@ else
 		{
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.login, m.user_id
-			FROM ".PREFIX."gallery g
-			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
+			FROM " . PREFIX . "gallery g
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' 
 			ORDER BY g.timestamp 
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);

@@ -52,7 +52,7 @@ foreach ($_PAGES_CATS as $key => $value)
 }
 //Liste des fichiers de la racine
 $result = $Sql->query_while("SELECT title, id, encoded_title, auth
-	FROM ".PREFIX."pages
+	FROM " . PREFIX . "pages
 	WHERE id_cat = 0 AND is_cat = 0
 	ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
@@ -79,13 +79,13 @@ $Template->assign_vars(array(
 
 $contents = '';
 $result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title
-FROM ".PREFIX."pages_cats c
-LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
+FROM " . PREFIX . "pages_cats c
+LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 WHERE c.id_parent = 0
 ORDER BY p.title ASC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
-	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+	$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(

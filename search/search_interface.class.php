@@ -43,7 +43,7 @@ class SearchInterface extends ModuleInterface
 		global $Sql;
 		    
 		//Configuration
-		$search_config = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'search'", __LINE__, __FILE__));
+		$search_config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'search'", __LINE__, __FILE__));
 		
 		return 'global $SEARCH_CONFIG;' . "\n" . '$SEARCH_CONFIG = '.var_export($search_config, true).';';	
 	}
@@ -54,8 +54,8 @@ class SearchInterface extends ModuleInterface
 		global $Sql;
 		
 		// Délestage du cache des recherches
-		$Sql->query_inject("TRUNCATE ".PREFIX."search_results", __LINE__, __FILE__);
-		$Sql->query_inject("TRUNCATE ".PREFIX."search_index", __LINE__, __FILE__);
+		$Sql->query_inject("TRUNCATE " . PREFIX . "search_results", __LINE__, __FILE__);
+		$Sql->query_inject("TRUNCATE " . PREFIX . "search_index", __LINE__, __FILE__);
 	}
 }
 

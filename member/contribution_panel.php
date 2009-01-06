@@ -153,7 +153,7 @@ if ($contribution_id > 0)
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
-		'CONTRIBUTER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
+		'CONTRIBUTER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
 		'COMMENTS' => $comments->display(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
@@ -165,7 +165,7 @@ if ($contribution_id > 0)
 	if ($contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED)
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
-			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
+			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => url('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));

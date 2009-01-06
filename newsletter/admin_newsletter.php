@@ -62,16 +62,16 @@ if ($member_list)
 	
 	if ($del_member > 0)
 	{
-		$member_mail = $Sql->query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+		$member_mail = $Sql->query("SELECT mail FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 		if (!empty($member_mail))
 		{
-			$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 			$Errorh->handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
 			$Errorh->handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
-	$result = $Sql->query_while ("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
+	$result = $Sql->query_while ("SELECT id, mail FROM " . PREFIX . "newsletter ORDER by id", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],

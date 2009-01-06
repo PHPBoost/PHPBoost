@@ -39,7 +39,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $Sql->query_while ("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if (!empty($_GET['member']))
@@ -72,7 +72,7 @@ elseif (!empty($_GET['warning_user']) || !empty($_GET['punish_user']) || !empty(
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $Sql->query_while ("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);
