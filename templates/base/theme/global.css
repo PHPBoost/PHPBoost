@@ -135,7 +135,10 @@ a.membre {
 --------------------------------------*/
 /* Lien du menu */
 .dynamic_menu h5 {
-    -moz-border-radius-topleft:12px;
+    color:#0578CC;
+    background:#F2F7FB;
+    border:1px solid #C4CED6;
+	-moz-border-radius-topleft:12px;
     -khtml-border-radius-topleft:12px;
     -webkit-border-radius-topleft:12px;
     -moz-border-radius-bottomright:12px;
@@ -144,5 +147,35 @@ a.membre {
     border-radius:12px;
 }
 
+.dynamic_menu h5:hover {
+    color:#01528D;
+    background:#E4F0F9;
+}
+
+/* Séparateur */
+.dynamic_menu ul li.separator {
+    background:#104069;
+}
+
 .dynamic_menu ul li.extend {
+	background:url(images/bgmenu_extend.png);
+}
+
+/* Case du menu */
+.dynamic_menu li ul {
+    border:1px solid #C4CED6;
+}
+
+.dynamic_menu li li {
+    color:#0578CC;
+    background:#FFFFFF url(images/bgmenu.png) repeat-y;
+}
+
+.dynamic_menu li li a {
+    color:#0578CC;
+}
+
+.dynamic_menu li li a:hover {
+    background-color:#D2E3F1;
+    border:1px solid #8BBFE8;
 }
