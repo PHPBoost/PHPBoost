@@ -128,9 +128,7 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
-            'C_FIRST_LEVEL' => $this->depth == 1,
-            'C_HAS_CHILD' => count($this->elements) > 0,
-            'DEPTH' => $this->depth
+            'C_HAS_CHILD' => count($this->elements) > 0
         ));
         
 		return $tpl->parse(TEMPLATE_STRING_MODE);
@@ -161,9 +159,7 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => $this->depth > 0,
             'C_FIRST_MENU' => $this->depth == 0,
-            'C_FIRST_LEVEL' => $this->depth == 1,
             'C_HAS_CHILD' => count($this->elements) > 0,
-            'DEPTH' => $this->depth,
             'ID' => '##.#GET_UID#.##',
             'ID_VAR' => '##.#GET_UID_VAR#.##',
         ));
