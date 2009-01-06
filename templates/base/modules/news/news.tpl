@@ -94,9 +94,9 @@
         
         # IF C_NEWS_LINK #		
 		<div class="news_container">
-			<div class="msg_top_l"></div>			
-			<div class="msg_top_r"></div>
-			<div class="msg_top">
+			<div class="news_top_l"></div>			
+			<div class="news_top_r"></div>
+			<div class="news_top">
 				<div style="float:left"><a href="syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	

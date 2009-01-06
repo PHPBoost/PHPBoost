@@ -251,7 +251,7 @@ else //Sinon on rempli le formulaire
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
-		'SELECT_PAGE' => empty($start_page) ? '<option value="" selected="selected">--</option>' . $select_page : $select_page, 
+		'SELECT_PAGE' => empty($start_page) ? '<option value="" selected="selected" id="start_page_default">--</option>' . $select_page : $select_page, 
 		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
 		'MAIL' => !empty($CONFIG['mail']) ? $CONFIG['mail'] : '',   
 		'SIGN' => !empty($CONFIG['sign']) ? $CONFIG['sign'] : '',

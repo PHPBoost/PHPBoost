@@ -37,5 +37,6 @@ $LANG['rank_post'] = 'Rank to post';
 //Title
 $LANG['title_guestbook'] = 'Guest Book';
 $LANG['guestbook_more_contents'] = '[More...]';
+$LANG['no_message_guestbook'] = 'No messages';
 
 ?>

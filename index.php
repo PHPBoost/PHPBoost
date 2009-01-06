@@ -25,12 +25,11 @@
  *
 ###################################################*/
 
+define('PATH_TO_ROOT', './');
 @include_once('./kernel/db/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
 unset($sql_host, $sql_login, $sql_pass); //Destruction des identifiants bdd (on n'en a pas besoin sur cette page)
 
-define('PATH_TO_ROOT', './');
 require_once('./kernel/framework/functions.inc.php');
-
 $CONFIG = array();
 //Chargement manuel de la configuration générale
 @include_once('./cache/config.php');
@@ -51,9 +50,9 @@ elseif (empty($CONFIG))
 //Sinon, c'est que tout a bien marché, on renvoie sur la page de démarrage
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
-
 $start_page = get_start_page();
-if ($start_page != HOST . DIR . '/index.php') //Empêche une boucle de redirection.
+
+if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
 	redirect($start_page);
 else
 	redirect(HOST . DIR . '/member/member.php');

@@ -38,7 +38,7 @@ $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');	
 $msg_d = retrieve(GET, 'msg_d', '');
 
-if (retrieve(GET, 'refresh_unread', false)) //Suppression d'un message.
+if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
