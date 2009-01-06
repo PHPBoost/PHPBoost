@@ -117,7 +117,6 @@ div.block_content ul {
 }
 
 .dynamic_menu ul li.extend {
-    background:url(images/bgmenu_extend.png);
 }
 
 /* Case du menu */
@@ -178,6 +177,11 @@ ul.vertical_scrolling_menu li {
     /*list-style: none;*/
     padding-left: 5px;
     padding-right: 5px;
+}
+
+ul.vertical_scrolling_menu li ul {
+    /*list-style: none;*/
+    margin-left: 155px;
 }
 
 ul.vertical_scrolling_menu li.first_level {
