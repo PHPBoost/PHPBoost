@@ -67,7 +67,7 @@ $i = 1;
 $result = $Sql->query_while("SELECT name 
 FROM " . PREFIX . "modules
 WHERE activ = 1", __LINE__, __FILE__);
-$nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "modules WHERE activ = 1 AND admin = 1");
+$nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE activ = 1 AND admin = 1");
 while ($row = $Sql->fetch_assoc($result))
 {
 	$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());

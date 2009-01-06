@@ -103,9 +103,9 @@ class Captcha
 		
 		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNSECURE);
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$code = $Sql->query("SELECT code FROM " . PREFIX . "verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$code = $Sql->query("SELECT code FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		//Suppression pour éviter une réutilisation du code frauduleuse.
-		$Sql->query_inject("DELETE FROM " . PREFIX . "verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		
 		if (!empty($code) && $code == $get_code)
 			return true;
@@ -299,11 +299,11 @@ class Captcha
 		global $Sql;
 		
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if ($check_user_id == 1)
-			$Sql->query_inject("UPDATE " . PREFIX . "verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
-			$Sql->query_inject("INSERT INTO " . PREFIX . "verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
 	}
 		
 	## Private Attributes ##

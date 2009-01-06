@@ -44,9 +44,9 @@ if (!empty($_POST['valid']))
 		$icon = retrieve(POST, $row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-			$Sql->query_inject("UPDATE " . PREFIX . "ranks SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', msg = '" . $msg . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		else
-			$Sql->query_inject("UPDATE " . PREFIX . "ranks SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_RANKS . " SET name = '" . $name . "', icon = '" . $icon . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 
@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 elseif (!empty($_GET['del']) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "ranks WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_RANKS . " WHERE id = '" . $get_id . "'", __LINE__, __FILE__);	
 
 	###### Régénération du cache des rangs #######
 	$Cache->Generate_file('ranks');
@@ -104,7 +104,7 @@ else //Sinon on rempli le formulaire
 	}	
 	
 	$result = $Sql->query_while("SELECT id, name, msg, icon, special
-	FROM " . PREFIX . "ranks 
+	FROM " . DB_TABLE_RANKS . " 
 	ORDER BY msg", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{				

@@ -177,7 +177,7 @@ if ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du memb
 	//Listes les utilisateurs en lignes.	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM " . PREFIX . "sessions s 
+	FROM " . DB_TABLE_SESSIONS . " s 
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/unread.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);

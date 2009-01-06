@@ -210,18 +210,18 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
                 //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
                 if ($member_infos['level'] != $user_level)
-					$Sql->query_inject("UPDATE " . PREFIX . "sessions SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
 				if ($user_ban > 0)	//Suppression de la session si le membre se fait bannir.
 				{	
-					$Sql->query_inject("DELETE FROM " . PREFIX . "sessions WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
 					$Mail->send($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail']);
 				}
 				
 				//Champs supplémentaires.
-				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 				if ($extend_field_exist > 0)
 				{
 					$req_update = '';
@@ -265,16 +265,16 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					}
 					$Sql->query_close($result);	
 										
-					$check_member = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					if ($check_member)
 					{	
 						if (!empty($req_update))
-							$Sql->query_inject("UPDATE " . PREFIX . "member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
+							$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__); 
 					}
 					else
 					{	
 						if (!empty($req_insert))
-							$Sql->query_inject("INSERT INTO " . PREFIX . "member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}	
 				
@@ -712,7 +712,7 @@ elseif (!empty($id))
 	));
 
 	//Champs supplémentaires.
-	$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 	if ($extend_field_exist > 0)
 	{
 		$Template->assign_vars(array(			
@@ -721,8 +721,8 @@ elseif (!empty($id))
 		));
 
 		$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
-		FROM " . PREFIX . "member_extend_cat exc
-		LEFT JOIN " . PREFIX . "member_extend ex ON ex.user_id = '" . $id . "'
+		FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id . "'
 		WHERE exc.display = 1
 		ORDER BY exc.class", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))

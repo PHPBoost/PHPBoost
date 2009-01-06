@@ -73,7 +73,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if (empty($ckeck_module) && !is_dir('../' . $module_name))
 		{
 			include_once('../kernel/framework/io/upload.class.php');

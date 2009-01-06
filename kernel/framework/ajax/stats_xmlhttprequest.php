@@ -34,7 +34,7 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idurl = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-	$url = $Sql->query("SELECT url FROM " . PREFIX . "stats_referer WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
+	$url = $Sql->query("SELECT url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idurl . "'", __LINE__, __FILE__);
 
 	$result = $Sql->query_while("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer
@@ -89,7 +89,7 @@ if (!empty($_GET['stats_referer'])) //Recherche d'un membre pour envoyer le mp.
 elseif (!empty($_GET['stats_keyword'])) //Recherche d'un membre pour envoyer le mp.
 {
 	$idkeyword = !empty($_GET['id']) ? numeric($_GET['id']) : '';
-	$keyword = $Sql->query("SELECT relative_url FROM " . PREFIX . "stats_referer WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
+	$keyword = $Sql->query("SELECT relative_url FROM " . DB_TABLE_STATS_REFERER . " WHERE id = '" . $idkeyword . "'", __LINE__, __FILE__);
 
 	$result = $Sql->query_while("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 	FROM " . PREFIX . "stats_referer

@@ -288,7 +288,7 @@ elseif ($step == 2)
 			KEY `idconvers` (`idconvers`,`user_id`,`timestamp`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$Sql->query_inject("CREATE TABLE `" . PREFIX . "pm_topic` (
+		$Sql->query_inject("CREATE TABLE `" . DB_TABLE_PM_TOPIC . " ` (
 			`id` int(11) NOT NULL auto_increment,
 			`title` varchar(150) NOT NULL default '',
 			`user_id` int(11) NOT NULL default '0',
@@ -395,12 +395,12 @@ elseif ($step == 2)
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` CHANGE `day` `stats_day` TINYINT( 4 ) DEFAULT '0' NOT NULL", __LINE__, __FILE__);  
 		$result = $Sql->query_while("SELECT s1.id
 		FROM `" . PREFIX . "stats` AS s1
-		JOIN " . PREFIX . "stats AS s2
+		JOIN " . DB_TABLE_STATS . " AS s2
 		WHERE s1.stats_day = s2.stats_day AND s1.stats_month = s2.stats_month AND s1.stats_year = s2.stats_year AND s1.id != s2.id
 		GROUP BY s2.stats_day", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . "stats WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__); //Suppression des doublons.
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_STATS . " WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__); //Suppression des doublons.
 		}
 		$Sql->query_close($result);
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "stats` ADD PRIMARY KEY ( `id` )", __LINE__, __FILE__);  

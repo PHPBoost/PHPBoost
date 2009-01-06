@@ -500,7 +500,7 @@ elseif ($step == 5)
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On installe le thème
-		$Sql->query_inject("INSERT INTO " . PREFIX . "themes (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1)", __LINE__, __FILE__);
 		
 		//On génère le cache
 		include('../kernel/framework/core/cache.class.php');

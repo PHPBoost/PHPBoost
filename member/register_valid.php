@@ -156,7 +156,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					}
 						
 					//Champs supplémentaires.
-					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 					if ($extend_field_exist > 0)
 					{
 						$req_update = '';
@@ -225,11 +225,11 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						}
 						$Sql->query_close($result);
 						
-						$check_member = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
+						$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
 						if ($check_member && !empty($req_update))
-								$Sql->query_inject("UPDATE " . PREFIX . "member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
+								$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
 						else if (!empty($req_insert))
-								$Sql->query_inject("INSERT INTO " . PREFIX . "member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+								$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 					
 					//On régénère le cache

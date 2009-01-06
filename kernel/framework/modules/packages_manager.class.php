@@ -49,7 +49,7 @@ class PackagesManager
 			return UNEXISTING_MODULE;
 		
 		//Vérification de l'unicité du module
-		$check_module = (int)$Sql->query("SELECT COUNT(*) FROM " . PREFIX . "modules WHERE name = '" . strprotect($module_identifier) . "'", __LINE__, __FILE__);
+		$check_module = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . strprotect($module_identifier) . "'", __LINE__, __FILE__);
 		if ($check_module > 0)
 			return MODULE_ALREADY_INSTALLED;
 		
@@ -101,7 +101,7 @@ class PackagesManager
 		MenuService::add_mini_module($module_identifier);
 
 		//Insertion du modules dans la bdd => module installé.
-		$Sql->query_inject("INSERT INTO " . PREFIX . "modules (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . ((int)$enable_module) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_MODULES . " (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . ((int)$enable_module) . "')", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		if ($generate_cache)
@@ -123,12 +123,12 @@ class PackagesManager
 	{
 		global $Cache, $Sql, $CONFIG, $MODULES;
 		//Suppression du modules dans la bdd => module désinstallé.
-		$module_name = $Sql->query("SELECT name FROM " . PREFIX . "modules WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
+		$module_name = $Sql->query("SELECT name FROM " . DB_TABLE_MODULES . " WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 		
 		//Désinstallation du module
 		if (!empty($module_id) && !empty($module_name))
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . "modules WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_MODULES . " WHERE id = '" . $module_id . "'", __LINE__, __FILE__);
 			
 			//Récupération des infos de config.
 			$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang());

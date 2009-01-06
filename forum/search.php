@@ -126,7 +126,7 @@ if (!empty($valid_search) && !empty($search))
 		
 		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
-		LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
@@ -138,7 +138,7 @@ if (!empty($valid_search) && !empty($search))
 
 		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
 		FROM " . PREFIX . "forum_msg msg
-		LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
@@ -150,7 +150,7 @@ if (!empty($valid_search) && !empty($search))
 		
 		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
 		FROM " . PREFIX . "forum_msg msg
-		LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
 		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
 		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
@@ -229,7 +229,7 @@ elseif (!empty($valid_search))
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 $result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM " . PREFIX . "sessions s 
+FROM " . DB_TABLE_SESSIONS . " s 
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/search.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);

@@ -460,7 +460,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_warning = 100 WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM " . PREFIX . "sessions WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $info_mbr['user_id'] . "'", __LINE__, __FILE__);
 				
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
@@ -648,7 +648,7 @@ else //Panneau de modération
 //Listes les utilisateurs en lignes.
 list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 $result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM " . PREFIX . "sessions s 
+FROM " . DB_TABLE_SESSIONS . " s 
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/moderation_forum.php'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);

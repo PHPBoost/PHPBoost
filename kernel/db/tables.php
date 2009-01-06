@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 define('DB_TABLE_COM', PREFIX . 'com');
 define('DB_TABLE_VISIT_COUNTER', PREFIX . 'visit_counter');
@@ -6,7 +6,6 @@ define('DB_TABLE_CONFIGS', PREFIX . 'configs');
 define('DB_TABLE_EVENTS', PREFIX . 'events');
 define('DB_TABLE_GROUP', PREFIX . 'group');
 define('DB_TABLE_LANG', PREFIX . 'lang');
-//
 define('DB_TABLE_MEMBER', PREFIX . 'member');
 define('DB_TABLE_MEMBER_EXTEND', PREFIX . 'member_extend');
 define('DB_TABLE_MEMBER_EXTEND_CAT', PREFIX . 'member_extend_cat');

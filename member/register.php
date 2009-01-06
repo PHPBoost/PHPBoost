@@ -272,7 +272,7 @@ if (empty($key))
 		}
 
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
@@ -281,7 +281,7 @@ if (empty($key))
 			$Template->assign_block_vars('miscellaneous', array(			
 			));
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
-			FROM " . PREFIX . "member_extend_cat AS exc
+			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
