@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -60,7 +60,7 @@ class Sql
 			{
 				//Traitement des erreurs
 				if ($errors_management)
-					$this->_error('', 'Can\t select database!', __LINE__, __FILE__);
+					$this->_error('', 'Can \'t select database!', __LINE__, __FILE__);
 				else
 					return UNEXISTING_DATABASE;
 			}
@@ -96,7 +96,7 @@ class Sql
 	}
 
 	//Requête simple
-	function query($query, $errline, $errfile) 
+	function query($query, $errline, $errfile)
 	{
 		$result = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
 		$result = mysql_fetch_row($result);
@@ -114,7 +114,7 @@ class Sql
 
 		if (func_get_arg(1) !== '*')
 		{
-			$nbr_arg_field_end = ($nbr_arg - 4);			
+			$nbr_arg_field_end = ($nbr_arg - 4);
 			for ($i = 1; $i <= $nbr_arg_field_end; $i++)
 			{
 				if ($i > 1)
@@ -137,13 +137,13 @@ class Sql
 		
 		//Fermeture de la ressource
 		$this->query_close($result);
-		$this->req++;		
+		$this->req++;
 		
 		return $result;
 	}
 
 	//Requete d'injection (insert, update, et requêtes complexes..)
-	function query_inject($query, $errline, $errfile) 
+	function query_inject($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid inject request', $errline, $errfile);
 		$this->req++;
@@ -152,7 +152,7 @@ class Sql
 	}
 
 	//Requête de boucle.
-	function query_while ($query, $errline, $errfile) 
+	function query_while ($query, $errline, $errfile)
 	{
 		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
 		$this->req++;
@@ -162,10 +162,10 @@ class Sql
 	
 	//Nombre d'entrées dans la table.
 	function count_table($table, $errline, $errfile)
-	{ 
+	{
 		$result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
 		$result = mysql_fetch_assoc($result);
-		$this->query_close($result); //Déchargement mémoire.		
+		$this->query_close($result); //Déchargement mémoire.
 		$this->req++;
 		
 		return $result['total'];
@@ -197,13 +197,13 @@ class Sql
     
 	//Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
 	function fetch_assoc($result)
-	{	
+	{
 		return mysql_fetch_assoc($result);
 	}
 	
 	//Balayage du retour de la requête sous forme de tableau indexé numériquement.
 	function fetch_row($result)
-	{	
+	{
 		return mysql_fetch_row($result);
 	}
 	
@@ -255,11 +255,11 @@ class Sql
 		{
 			$array_fields_name = array();
 			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
-			while ($row = mysql_fetch_row($result)) 
+			while ($row = mysql_fetch_row($result))
 				$array_fields_name[] = $row[0];
 			return $array_fields_name;
 		}
-		else 
+		else
 			return array();
 	}
 	
@@ -270,12 +270,12 @@ class Sql
 		
 		$result = $this->query_while ("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
 		while ($row = mysql_fetch_row($result))
-		{	
+		{
 			$array_tables[$row[0]] = array(
-				'name' => $row[0], 
-				'engine' => $row[1], 
-				'row_format' => $row[3], 
-				'rows' => $row[4], 
+				'name' => $row[0],
+				'engine' => $row[1],
+				'row_format' => $row[3],
+				'rows' => $row[4],
 				'data_length' => $row[6],
 				'index_lenght' => $row[8],
 				'data_free' => $row[9],
@@ -292,15 +292,15 @@ class Sql
 	function parse($file_path, $tableprefix = '')
 	{
 		$handle_sql = @fopen($file_path, 'r');
-		if ($handle_sql) 
+		if ($handle_sql)
 		{
 			$req = '';
-			while (!feof($handle_sql)) 
-			{		
+			while (!feof($handle_sql))
+			{
 				$sql_line = trim(fgets($handle_sql));
 				//Suppression des lignes vides, et des commentaires.
 				if (!empty($sql_line) && substr($sql_line, 0, 2) !== '--')
-				{		
+				{
 					//On vérifie si la ligne est une commande SQL.
 					if (substr($sql_line, -1) == ';')
 					{
@@ -310,18 +310,18 @@ class Sql
 							$req .= ' ' . $sql_line;
 							
 						if (!empty($tableprefix))
-							$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);						
+							$this->query_inject(str_replace('phpboost_', $tableprefix, $req), __LINE__, __FILE__);
 						else
-							$this->query_inject($req, __LINE__, __FILE__);						
+							$this->query_inject($req, __LINE__, __FILE__);
 						$req = '';
-					}	
+					}
 					else //Concaténation de la requête qui peut être multi ligne.
-						$req .= ' ' . $sql_line;					
-				}		
+						$req .= ' ' . $sql_line;
+				}
 			}
 			@fclose($handle);
 		}
-	}	
+	}
 	
 	//Affichage du nombre de requête sql.
 	function display_request()
@@ -405,7 +405,7 @@ class Sql
 	
 	## Private Methods ##
 	//Gestion des erreurs.
-	function _error($query, $errstr, $errline = '', $errfile = '') 
+	function _error($query, $errstr, $errline = '', $errfile = '')
 	{
 		global $Errorh;
 		
@@ -413,7 +413,7 @@ class Sql
         $too_many_connections = strpos($errstr, 'already has more than \'max_user_connections\' active connections') > 0;
 		$Errorh->handler($errstr . '<br /><br />' . $query . '<br /><br />' . mysql_error(), E_USER_ERROR, $errline, $errfile, false, !$too_many_connections);
         redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
-	}	
+	}
 	
 	
 	## Private attributes ##
@@ -421,5 +421,5 @@ class Sql
 	var $req = 0; //Nombre de requêtes.
 	var $connected = false;
 	var $sql_base = '';
-}		
+}
 ?>

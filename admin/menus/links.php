@@ -53,7 +53,7 @@ if ($action == 'save')
         
     	$array_size = count($elements_ids);
     	if ($array_size == 1 && $level > 0)
-    	{   // If it's a menu, there's only one element
+    	{   // If it's a menu, there's only one element;
     		$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
     	}
     	else
@@ -146,7 +146,7 @@ if ($action == 'save')
         MenuService::save($menu);
     }
    	MenuService::generate_cache();
-    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $menu->get_id());
+    redirect('menus.php#m' . $menu->get_id());
 }
 elseif ($action == 'delete' && !empty($menu_id))
 {   // Delete a Menu

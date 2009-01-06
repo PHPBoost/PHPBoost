@@ -58,8 +58,7 @@ class LinksMenu extends LinksMenuElement
 	function LinksMenu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
 	{
 		// Set the menu type
-		$menu_types = array(VERTICAL_MENU, HORIZONTAL_MENU, TREE_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU);
-		$this->type = in_array($type, $menu_types) ? $type : VERTICAL_SCROLLING_MENU;
+		$this->type = in_array($type, LinksMenu::get_menu_types_list()) ? $type : VERTICAL_SCROLLING_MENU;
 		
 		// Build the menu element on witch is based the menu
 		parent::LinksMenuElement($title, $url, $image);
@@ -82,7 +81,10 @@ class LinksMenu extends LinksMenuElement
 	function add($element)
 	{
 	    if (get_class($element) == get_class($this))
-	       $element->_parent($this->type);
+	        $element->_parent($this->type);
+        else
+            $element->_parent();
+        
 		$this->elements[] = $element;
 	}
 	
@@ -106,10 +108,10 @@ class LinksMenu extends LinksMenuElement
 	    // Stop if the user isn't authorised
 		if (!$this->_check_auth())
     	    return '';
-		
+    	
     	// Get the good Template object
 	    if (!is_object($template) || strtolower(get_class($template)) != 'template')
-			$tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
+			$tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
 		else
 			$tpl = $template->copy();
         $original_tpl = $tpl->copy();
@@ -126,6 +128,7 @@ class LinksMenu extends LinksMenuElement
             'C_MENU' => true,
             'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
             'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
+            'C_FIRST_LEVEL' => $this->depth == 1,
             'C_HAS_CHILD' => count($this->elements) > 0,
             'DEPTH' => $this->depth
         ));
@@ -141,7 +144,7 @@ class LinksMenu extends LinksMenuElement
     {
         // Get the good Template object
         if (!is_object($template) || strtolower(get_class($template)) != 'template')
-            $tpl = new Template('framework/menus/links/menu_' . $this->type . '.tpl');
+            $tpl = new Template('framework/menus/links/' . $this->type . '.tpl');
         else
             $tpl = $template->copy();
         $original_tpl = $tpl->copy();
@@ -156,8 +159,9 @@ class LinksMenu extends LinksMenuElement
         parent::_assign($tpl, LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
         $tpl->assign_vars(array(
             'C_MENU' => true,
-            'C_NEXT_MENU' => ($this->depth > 0) ? true : false,
-            'C_FIRST_MENU' => ($this->depth == 0) ? true : false,
+            'C_NEXT_MENU' => $this->depth > 0,
+            'C_FIRST_MENU' => $this->depth == 0,
+            'C_FIRST_LEVEL' => $this->depth == 1,
             'C_HAS_CHILD' => count($this->elements) > 0,
             'DEPTH' => $this->depth,
             'ID' => '##.#GET_UID#.##',
@@ -174,8 +178,6 @@ class LinksMenu extends LinksMenuElement
                 array('($__uid = get_uid())', '$__uid', '\''),
                 $cache_str
             );
-//            echo '<pre>' . htmlentities($cache_str) . '</pre>';
-//            exit;
             return $cache_str;
         }
         return parent::cache_export_begin() . $tpl->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
@@ -208,27 +210,25 @@ class LinksMenu extends LinksMenuElement
      */
     function get_menu_types_list()
     {
-    	return array(VERTICAL_MENU, HORIZONTAL_MENU, /*TREE_MENU,*/ VERTICAL_SCROLLING_MENU, /*HORIZONTAL_SCROLLING_MENU*/);
+    	return array(VERTICAL_MENU, HORIZONTAL_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU/*, TREE_MENU*/);
     }
 	
 	## Private Methods ##
-	
-	/**
-	 * @desc Increase the Menu Depth and set the menu type to its parent one
-	 * @access protected
-	 * @param string $type the type of the menu
-	 */
-	function _parent($type)
-	{
-	    $this->depth++;
-	    $this->type = $type;
-	    foreach ($this->elements as $element)
-	    {
-	        if (get_class($element) == get_class($this))
-                $element->_parent($type);
-	    }
-	}
-	
+    /**
+     * @desc Increase the Menu Depth and set the menu type to its parent one
+     * @access protected
+     * @param string $type the type of the menu
+     */
+    function _parent($type)
+    {
+        parent::_parent($type);
+        
+        $this->type = $type;
+        foreach ($this->elements as $element)
+        {
+            $element->_parent($type);
+        }
+    }
 	## Private attributes ##
 	
 	/**
@@ -241,11 +241,6 @@ class LinksMenu extends LinksMenuElement
 	 * @var LinksMenuElement[] Direct menu children list
 	 */
 	var $elements = array();
-    /**
-     * @access protected
-     * @var int Menu's depth
-     */
-    var $depth = 0;
 }
 
 ?>
