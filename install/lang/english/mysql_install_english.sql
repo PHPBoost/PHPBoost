@@ -1,4 +1,4 @@
-INSERT INTO `phpboost_compteur` (`id`, `ip`, `time`, `total`) VALUES (1, '', NOW(), 1);
+INSERT INTO `phpboost_visit_counter` (`id`, `ip`, `time`, `total`) VALUES (1, '', NOW(), 1);
 
 INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES 
 (1, 'config', ''),
