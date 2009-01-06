@@ -60,7 +60,7 @@ if ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du memb
 	{
 		foreach ($CAT_FORUM as $idcat => $key)
 		{
-			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
+			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM) || !$CAT_FORUM[$idcat]['aprob'])
 				$auth_cats .= $idcat . ',';
 		}
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';

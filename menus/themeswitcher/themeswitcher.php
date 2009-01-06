@@ -27,7 +27,7 @@
 
 function menu_themeswitcher_themeswitcher()
 {
-   global $THEME_CONFIG, $User;
+   global $CONFIG, $THEME_CONFIG, $User;
 
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))

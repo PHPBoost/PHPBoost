@@ -19,14 +19,8 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[-] Refaire le thème par défaut.
-[-] News du site PHPBoost dans l'admin?
-[-] Améliorer la sélection de la page de démarrage.
-[-] Bloquer le switcher si changement de thème aux membre désactivé.
-
 [-] Préparer l'insertion par défaut de contenu dans le site, création d'une page de bienvenue?
 [-] Créer un module gestion de base de données (sortir le code de l'administration et le déporter dans un module)
-[-] Corriger les bugs des mini modules (au moins livre d'or et discussion) quand il n'y a aucun message il y a une undefined index
 
 #################################################################################
 

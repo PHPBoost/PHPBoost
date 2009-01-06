@@ -90,13 +90,13 @@
 					<dl>
 						<dt><label for="start_page">* {L_START_PAGE}</label></dt>
 						<dd><label>
-							<select name="start_page" id="start_page">		
+							<select name="start_page" id="start_page" onclick="document.getElementById('start_page2').value = '';">		
 								{SELECT_PAGE}			
 							</select> 
 						</label>
 						<br />
 						<label>{L_OTHER} 
-						<input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" /></label>
+						<input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" onclick="document.getElementById('start_page_default').selected = true;" /></label>
 						</dd>
 					</dl>
 					<dl>

@@ -343,7 +343,7 @@ else
 			}
 		}
 		
-		$file_name = 'backup_' . $sql_base . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
+		$file_name = 'backup_' . $Sql->sql_base . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
 		$file_path = '../cache/backup/' . $file_name;
 
 		$Backup->Export_file($file_path); //Exportation de la bdd.

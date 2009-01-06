@@ -38,7 +38,7 @@ $Template->set_filenames(array(
 
 //outils de sauvegarde de la base de données
 include_once('../kernel/framework/db/backup.class.php');
-$Backup = new Backup($sql_base);
+$Backup = new Backup($Sql->sql_base);
 
 $Template->assign_vars(array(
 	'TABLE_NAME' => $table,

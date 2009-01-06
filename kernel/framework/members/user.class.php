@@ -114,12 +114,15 @@ class User
 	//Met à jour le thème visiteur.
 	function update_user_theme($user_theme)
 	{
-		global $Sql;
+		global $Sql, $CONFIG_USER;
 		
-		if ($this->user_data['level'] > -1)
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
-		else
-			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
+		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		{
+			if ($this->user_data['level'] > -1)
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
+			else
+				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
+		}
 	}
 	
 	//Modifie le thème membre.
