@@ -50,7 +50,7 @@ if ($install)
 	{
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());
-		
+
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES('" . strprotect($theme) . "', '" . $activ . "', '" .  $secure . "', '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
 		
 		//Régénération du cache.
