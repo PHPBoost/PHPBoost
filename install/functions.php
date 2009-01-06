@@ -80,7 +80,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			$Sql->close();
 
 			//On fait le test sur quelques tables du noyau
-			if (!empty($tables_list[$tables_DB_TABLE_MEMBER]) || !empty($tables_list[$tables_prefix . 'configs']))
+			if (!empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']))
 				return DB_CONFIG_ERROR_TABLES_ALREADY_EXIST;
 			
 			return DB_CONFIG_SUCCESS;

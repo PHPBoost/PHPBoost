@@ -190,7 +190,7 @@ if ($edit_file_id > 0)
 			{
 				$download_categories->Recount_sub_files();
 			}
-			
+
 			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 			if ($file_approved && !$file_properties['approved'])
 			{
@@ -385,7 +385,7 @@ else
 			$visible = 1;
 			
 			$date_now = new Date(DATE_NOW);
-			
+            
 			switch ($file_visibility)
 			{
 				//If it's a time interval

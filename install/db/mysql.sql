@@ -15,7 +15,7 @@ CREATE TABLE `phpboost_com` (
 
 
 DROP TABLE IF EXISTS `phpboost_visit_counter`;
-CREATE TABLE `phpboost_compteur` (
+CREATE TABLE `phpboost_visit_counter` (
   `id` int(11) NOT NULL auto_increment,
   `ip` varchar(50) NOT NULL default '',
   `time` date NOT NULL default '0000-00-00',
