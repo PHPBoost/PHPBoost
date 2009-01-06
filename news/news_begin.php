@@ -36,9 +36,9 @@ $idcat = retrieve(GET, 'cat', 0);
 if (!empty($idnews) && empty($idcat))
 {
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
-	FROM ".PREFIX."news n
-	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
-	LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
+	FROM " . PREFIX . "news n
+	LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id		
 	WHERE n.visible = 1 AND n.id = '" . $idnews . "'", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	

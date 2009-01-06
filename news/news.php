@@ -106,9 +106,9 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 		$z = 0;
 		list($admin, $del) = array('', ''); 			
 		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
-		FROM ".PREFIX."news n
-		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
-		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
+		FROM " . PREFIX . "news n
+		LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id		
 		WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
@@ -183,8 +183,8 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 		}
 		
 		$result = $Sql->query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
-		FROM ".PREFIX."news n
-		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
+		FROM " . PREFIX . "news n
+		LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
 		WHERE n.visible = 1
 		ORDER BY n.timestamp DESC 
 		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
@@ -223,8 +223,8 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
 	}
 
-	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
-	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$next_news = $Sql->query_array(PREFIX . "news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$previous_news = $Sql->query_array(PREFIX . "news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 
 	$tpl_news->assign_vars(array(
 	    'L_SYNDICATION' => $LANG['syndication'],
@@ -259,7 +259,7 @@ elseif (!empty($idcat))
 {
 	$tpl_news = new Template('news/news_cat.tpl');
 	
-	$cat = $Sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if (empty($cat['id']))
 		$Errorh->handler('error_unexist_cat', E_USER_REDIRECT);
 	
@@ -271,8 +271,8 @@ elseif (!empty($idcat))
 	));
 		
 	$result = $Sql->query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
-	FROM ".PREFIX."news n
-	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
+	FROM " . PREFIX . "news n
+	LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
 	WHERE n.visible = 1 AND n.idcat = '" . $idcat . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

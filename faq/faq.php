@@ -120,12 +120,12 @@ if ($num_subcats > 0)
 
 //Displaying the questions that this cat contains
 $result = $Sql->query_while("SELECT id, question, q_order, answer
-FROM ".PREFIX."faq
+FROM " . PREFIX . "faq
 WHERE idcat = '" . $id_faq . "'
 ORDER BY q_order",
 __LINE__, __FILE__);
 
-$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq_cats WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 
 if ($num_rows > 0)
 {

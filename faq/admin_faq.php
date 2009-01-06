@@ -42,7 +42,7 @@ if (!empty($_POST['submit']))
 	$FAQ_CONFIG['global_auth'] = Authorizations::build_auth_array_from_form(AUTH_READ, AUTH_WRITE);
 	$FAQ_CONFIG['root'] = $FAQ_CATS[0];
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($FAQ_CONFIG)) . "' WHERE name = 'faq'", __LINE__, __FILE__);
 	//Régénération du cache
 	$Cache->Generate_module_file('faq');
 	
@@ -60,12 +60,12 @@ if ($page > 0)
 	$Pagination = new Pagination();
 	
 	$result = $Sql->query_while("SELECT q.id, q.question, q.timestamp, q.idcat, c.name
-	FROM ".PREFIX."faq q
-	LEFT JOIN ".PREFIX."faq_cats c ON c.id = q.idcat
+	FROM " . PREFIX . "faq q
+	LEFT JOIN " . PREFIX . "faq_cats c ON c.id = q.idcat
 	ORDER BY q.timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	
-	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."faq", __LINE__, __FILE__);
+	$nbr_questions = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "faq", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{

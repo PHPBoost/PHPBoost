@@ -89,12 +89,12 @@ if (!empty($_POST['valid']))
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
-		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
+		$Sql->query_inject("INSERT INTO " . PREFIX . "articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "articles");
 		
 		//Mise à jours du nombre d'articles des parents.
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
         ###### Regénération du cache #######
 		$Cache->Generate_module_file('articles');
@@ -164,7 +164,7 @@ elseif (!empty($_POST['previs']))
 		$end = '';
 	}	
 	
-	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $User->get_attribute('user_id'), __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = " . $User->get_attribute('user_id'), __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => $title,
@@ -177,7 +177,7 @@ elseif (!empty($_POST['previs']))
 	$i = 0;	
 	$categories = '<option value="0" %s>' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -277,7 +277,7 @@ else
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

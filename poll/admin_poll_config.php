@@ -37,7 +37,7 @@ if (!empty($_POST['valid']))
 	$config_poll['poll_cookie'] = retrieve(POST, 'poll_cookie', 'poll', TSTRING_UNSECURE);	
 	$config_poll['poll_cookie_lenght'] = !empty($_POST['poll_cookie_lenght']) ? (numeric($_POST['poll_cookie_lenght']) * 3600 * 24) : 30*24*3600;	
 		
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_poll)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des sondages #######
 	$Cache->Generate_module_file('poll');
@@ -56,7 +56,7 @@ else
 	//Mini poll courant	
 	$mini_poll_list = '';
 	$result = $Sql->query_while("SELECT id, question 
-	FROM ".PREFIX."poll
+	FROM " . PREFIX . "poll
 	WHERE archive = 0 AND visible = 1
 	ORDER BY timestamp", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

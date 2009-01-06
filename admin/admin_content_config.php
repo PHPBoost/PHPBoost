@@ -37,7 +37,7 @@ if (!empty($_POST['submit']) )
 	$CONFIG['html_auth'] = Authorizations::build_auth_array_from_form(1);
 	$CONFIG['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	$Cache->Generate_file('config');
 		
 	redirect(HOST . SCRIPT);	

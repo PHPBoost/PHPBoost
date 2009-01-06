@@ -19,7 +19,7 @@ if ($chmod)
 	//Mise à jour du cache.
 	@clearstatcache();
 	
-	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../menus', '../templates', '../upload');
+	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/db', '../lang', '../menus', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
 	foreach ($chmod_dir as $dir)

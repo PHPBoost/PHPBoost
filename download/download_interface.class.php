@@ -44,7 +44,7 @@ class DownloadInterface extends ModuleInterface
 		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_DOWNLOAD = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'download'", __LINE__, __FILE__));
+		$CONFIG_DOWNLOAD = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
 		
 		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 		
@@ -55,7 +55,7 @@ class DownloadInterface extends ModuleInterface
 		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $CONFIG_DOWNLOAD['global_auth']) ,true) . ';' . "\n\n";
 		
 		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
-		FROM ".PREFIX."download_cat
+		FROM " . PREFIX . "download_cat
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -84,18 +84,18 @@ class DownloadInterface extends ModuleInterface
 		
 		//Publication des téléchargements en attente pour la date donnée.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM ".PREFIX."download
+		FROM " . PREFIX . "download
 		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
 		$time = time();
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//If the file wasn't visible and it becomes visible
 			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
-				$Sql->query_inject("UPDATE ".PREFIX."download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			
 			//If it's not visible anymore
 			if ($row['start'] >= $time || $row['end'] <= $time && $row['visible'] = 1)
-				$Sql->query_inject("UPDATE ".PREFIX."download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -224,7 +224,7 @@ class DownloadInterface extends ModuleInterface
         $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
         
         $req = "SELECT id, idcat, title, contents, timestamp, image
-        FROM ".PREFIX."download
+        FROM " . PREFIX . "download
         WHERE visible = 1 AND idcat IN (" . implode($children_cats, ','). " )
         ORDER BY timestamp DESC" . $Sql->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
         $result = $Sql->query_while ($req, __LINE__, __FILE__);

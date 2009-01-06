@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 		
 	if (!empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
 			
 		###### Régénération du cache du forum ###### 
 		$Cache->Generate_module_file('forum');
@@ -71,7 +71,7 @@ if (!empty($_POST['valid']))
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {
 	$result = $Sql->query_while("SELECT id, id_left, id_right
-	FROM ".PREFIX."forum_cats
+	FROM " . PREFIX . "forum_cats
 	WHERE level > 0", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{	
@@ -79,15 +79,15 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 		if (($row['id_right'] - $row['id_left']) > 1)
 		{
 			$result2 = $Sql->query_while("SELECT id
-			FROM ".PREFIX."forum_cats
+			FROM " . PREFIX . "forum_cats
 			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'", __LINE__, __FILE__);
 			
 			while ($row2 = $Sql->fetch_assoc($result2))
 				$cat_list .=  ', ' . $row2['id'];
 		}
 		
-		$info_cat = $Sql->query_array("forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$info_cat = $Sql->query_array(PREFIX . "forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 	

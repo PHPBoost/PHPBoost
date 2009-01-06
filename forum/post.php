@@ -66,7 +66,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	$Forumfct = new Forum;
 	
 	//Mod anti-flood
-	$check_time = ($CONFIG['anti_flood'] == 1 && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
+	$check_time = ($CONFIG['anti_flood'] == 1 && $User->get_attribute('user_id') != -1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "forum_msg WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : false;
 	
 	//Affichage de l'arborescence des catégories.
 	$i = 0;
@@ -86,7 +86,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		if (!$User->check_auth($CAT_FORUM[$id_get]['auth'], WRITE_CAT_FORUM))
 			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
-		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 		if (empty($topic['idcat'])) //Topic inexistant.
 			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
@@ -383,7 +383,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#errorh');
 			
 		//Verrouillé?
-		$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'nbr_msg', 'last_user_id', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if (empty($topic['idcat']))
 			$Errorh->handler('e_topic_lock_forum', E_USER_REDIRECT);
 		
@@ -435,8 +435,8 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			
 		$id_m = retrieve(GET, 'idm', 0);		
 		$update = retrieve(GET, 'update', false);
-		$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
-		$topic = $Sql->query_array('forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+		$topic = $Sql->query_array(PREFIX . 'forum_topics', 'title', 'subtitle', 'type', 'user_id', 'display_msg', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		
 		if (empty($id_get) || empty($id_first)) //Topic/message inexistant.
 			$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
@@ -447,7 +447,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		if ($id_first == $id_m)
 		{		
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.		
-			$user_id_msg = $Sql->query("SELECT user_id FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
+			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'",  __LINE__, __FILE__);
 			$check_auth = false;
 			if ($user_id_msg == $User->get_attribute('user_id')) 
 				$check_auth = true;
@@ -474,7 +474,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
-						$check_poll = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_poll WHERE idtopic = '" . $idt_get . "'",  __LINE__, __FILE__);
+						$check_poll = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_poll WHERE idtopic = '" . $idt_get . "'",  __LINE__, __FILE__);
 						
 						$poll_type = retrieve(POST, 'poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
@@ -616,7 +616,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
-				$contents = $Sql->query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
+				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
 							
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
@@ -638,7 +638,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				}
 	
 				//Récupération des infos du sondage associé si il existe
-				$poll = $Sql->query_array('forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+				$poll = $Sql->query_array(PREFIX . 'forum_poll', 'question', 'answers', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 				$array_answer = explode('|', $poll['answers']);
 				$array_votes = explode('|', $poll['votes']);
 	
@@ -743,7 +743,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 		elseif ($id_m > $id_first)
 		{
 			//User_id du message correspondant à l'utilisateur connecté => autorisation.		
-			$user_id_msg = $Sql->query("SELECT user_id FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
+			$user_id_msg = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 			$check_auth = false;
 			if ($user_id_msg == $User->get_attribute('user_id')) 
 				$check_auth = true;
@@ -779,7 +779,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'forum_bottom'=> 'forum/forum_bottom.tpl'
 				));
 				
-				$contents = $Sql->query("SELECT contents FROM ".PREFIX."forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
+				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_m . "'", __LINE__, __FILE__);
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete')
@@ -814,7 +814,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 	{
 		if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
 		{
-			$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+			$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			if (empty($topic['idcat'])) //Topic inexistant.
 				$Errorh->handler('e_unexist_topic_forum', E_USER_REDIRECT);
 			

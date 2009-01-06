@@ -103,14 +103,14 @@ function add_lang($url, $header_location = false)
 //Préambule
 if ($step == 1)
 {
-	$config_contents = file_get_contents('../kernel/auth/config.php');
+	$config_contents = file_get_contents('../kernel/db/config.php');
 	//Si le fichier de config est à l'ancien format
 	if (strpos($config_contents, 'DBSECURE') === false)
 	{
 		$INCLUDE_secure = 1;
-		include_once('../kernel/auth/config.php');
+		include_once('../kernel/db/config.php');
 		//Remplacement des fichiers de configuration
-		$file = @fopen('../kernel/auth/config.php', 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
+		$file = @fopen('../kernel/db/config.php', 'w+'); //On ouvre le fichier, si il n'existe pas on le crée.
 		@fputs($file, '<?php
 if (!defined(\'DBSECURE\'))
 {
@@ -166,7 +166,7 @@ elseif ($step == 2)
 		UNIQUE KEY `name` (`name`)
 		) ENGINE=MyISAM", __LINE__, __FILE__); 
 			
-		$config_info = $Sql->query_array("config", "*", __LINE__, __FILE__);		
+		$config_info = $Sql->query_array(PREFIX . "config", "*", __LINE__, __FILE__);		
 		$Sql->query_inject("DROP TABLE IF EXISTS  `" . PREFIX . "config`", __LINE__, __FILE__);
 		
 		$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES 
@@ -596,12 +596,12 @@ elseif ($step == 3)
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."admin_articles", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT * FROM " . PREFIX . "admin_articles", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."articles_cats (id, id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '" . addslashes($row['contenu']) . "', '0', '0', '', '" . $aprob . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "articles_cats (id, id_left, id_right, level, name, contents, nbr_articles_visible, nbr_articles_unvisible, icon, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '" . addslashes($row['contenu']) . "', '0', '0', '', '" . $aprob . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
 			$i += 2;
 			$j += 2;
 		}
@@ -671,7 +671,7 @@ elseif ($step == 5)
 		$start = false;
 		$right = array();
 		$current_cat = 0;
-		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."forum_cats ORDER BY `class`", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT * FROM " . PREFIX . "forum_cats ORDER BY `class`", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($row['type'] == 0 && $start)
@@ -680,7 +680,7 @@ elseif ($step == 5)
 				$j += 1;
 			}
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
-			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_left = '" . $i . "', id_right = '" . $j . "', level = '" . $row['type'] . "', aprob = '" . $aprob . "', auth = 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:7;}' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = '" . $i . "', id_right = '" . $j . "', level = '" . $row['type'] . "', aprob = '" . $aprob . "', auth = 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:7;}' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			$i += 2;			
 			$j += 2;
 				
@@ -696,7 +696,7 @@ elseif ($step == 5)
 				$right[$current_cat] += 2;
 		}
 		foreach ($right as $idcat => $right_edge)
-			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_right = '" . $right_edge . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = '" . $right_edge . "' WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `class`", __LINE__, __FILE__); 
 		$Sql->query_inject("ALTER TABLE `" . PREFIX . "forum_cats` DROP `type`", __LINE__, __FILE__); 
@@ -769,7 +769,7 @@ elseif ($step == 6)
 		KEY `id_left` (`id_left`)
 		) ENGINE=MyISAM", __LINE__, __FILE__);
 
-		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."album", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT * FROM " . PREFIX . "album", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$image_name = explode('/', $row['large']);
@@ -777,15 +777,15 @@ elseif ($step == 6)
 			
 			$aprob = ($row['aprob'] == 1) ? 0 : 1;
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."gallery (id, idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com, lock_com) VALUES ('" . $row['idphoto'] . "', '" . $row['cat'] . "', '" . addslashes($row['name']) . "', '" . addslashes($image_name[1]) . "', '" . $image_infos[0] . "', '" . $image_infos[1] . "' , '" . filesize('../album/' . $image_name[1]) . "', '" . $row['user'] . "', '" . $aprob . "', '" . $row['compt'] . "', '" . $row['timestamp'] . "', '" . $row['user_id'] . "', '" . $row['nbrnote'] . "', '" . $row['note'] . "', '" . $row['nbr_com'] . "', '0')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "gallery (id, idcat, name, path, width, height, weight, user_id, aprob, views, timestamp, users_note, nbrnote, note, nbr_com, lock_com) VALUES ('" . $row['idphoto'] . "', '" . $row['cat'] . "', '" . addslashes($row['name']) . "', '" . addslashes($image_name[1]) . "', '" . $image_infos[0] . "', '" . $image_infos[1] . "' , '" . filesize('../album/' . $image_name[1]) . "', '" . $row['user'] . "', '" . $aprob . "', '" . $row['compt'] . "', '" . $row['timestamp'] . "', '" . $row['user_id'] . "', '" . $row['nbrnote'] . "', '" . $row['note'] . "', '" . $row['nbr_com'] . "', '0')", __LINE__, __FILE__);
 		}
 
 		$i = 1;
 		$j = 2;
-		$result = $Sql->query_while ("SELECT * FROM ".PREFIX."admin_albumcat", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT * FROM " . PREFIX . "admin_albumcat", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$Sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id, id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '', '0', '0', '1', '1', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id, id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES ('" . $row['idcat'] . "', '" . $i . "', '" . $j . "', '0', '" . addslashes($row['cat']) . "', '', '0', '0', '1', '1', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}')", __LINE__, __FILE__);
 			$i += 2;
 			$j += 2;
 		}
@@ -900,7 +900,7 @@ elseif ($step == 9)
 						$contents = preg_replace('`<\?php .* include_once\(\'../kernel/footer.php\'\); \?>`isU', '', $contents);
 						$contents = preg_replace('`<!-- START -->(.*)<!-- END -->`is', '$1', $contents);
 						$contents = trim($contents);
-						$Sql->query_inject("INSERT INTO ".PREFIX."pages ('title', 'encoded_title', 'contents', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'user_id', 'timestamp', 'activ_com', 'nbr_com', 'lock_com', 'redirect') VALUES ('" . $title . "', '" . str_replace('.php', '', $file) . "', '" . $contents . "', '', '0', '0', '0', '1', '1', '" . time() . "' . '1', '0', '0', '0')", __LINE__, __FILE__);
+						$Sql->query_inject("INSERT INTO " . PREFIX . "pages ('title', 'encoded_title', 'contents', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'user_id', 'timestamp', 'activ_com', 'nbr_com', 'lock_com', 'redirect') VALUES ('" . $title . "', '" . str_replace('.php', '', $file) . "', '" . $contents . "', '', '0', '0', '0', '1', '1', '" . time() . "' . '1', '0', '0', '0')", __LINE__, __FILE__);
 					}
 				}
 			}

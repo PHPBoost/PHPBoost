@@ -40,7 +40,7 @@ $id_cat_for_download = 0;
 
 if (!empty($file_id))
 {
-	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	
 	if (empty($download_info['id']))
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);

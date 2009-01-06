@@ -45,8 +45,8 @@ function online_mini()
     	$i = 0;
     	$array_class = array('member', 'modo', 'admin');
     	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login
-    	FROM ".PREFIX."sessions s
-    	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
+    	FROM " . PREFIX . "sessions s
+    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
     	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
     	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
     	while ($row = $Sql->fetch_assoc($result))

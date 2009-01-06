@@ -40,11 +40,11 @@ $Template->set_filenames(array(
 	
 if ($del && !empty($id))
 {
-	$field_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$field_name = $Sql->query("SELECT field_name FROM " . PREFIX . "member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (!empty($field_name)) 
 	{
-		$Sql->query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE " . PREFIX . "member_extend DROP " . $field_name, __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);
 }
@@ -82,14 +82,14 @@ elseif (!empty($_POST['valid']))
 		}
 		$field_name = rewrite_field($name);
 		
-		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
+		$check_name = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
 		if (empty($check_name)) 
 		{
 			$new_field_name = $field_name . ' ' . $array_field[$field];
-			$previous_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$previous_name = $Sql->query("SELECT field_name FROM " . PREFIX . "member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			if ($previous_name != $field_name)
-				$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE " . PREFIX . "member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
@@ -105,9 +105,9 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{	
 		$idmoins = ($top - 1);
 			
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
@@ -115,16 +115,16 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{
 		$idplus = ($bottom + 1);
 			
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
 elseif (!empty($id))
 {	
-	$extend_field = $Sql->query_array("member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$extend_field = $Sql->query_array(PREFIX . "member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$regex_checked = 2;
 	$predef_regex = false;
@@ -240,11 +240,11 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat", __LINE__, __FILE__);
 	
 	$result = $Sql->query_while("SELECT id, class, name
-	FROM ".PREFIX."member_extend_cat
+	FROM " . PREFIX . "member_extend_cat
 	WHERE display = 1
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

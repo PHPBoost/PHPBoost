@@ -49,11 +49,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'forum_bottom'=> 'forum/forum_bottom.tpl'
 	));
 
-	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
-	$cat = $Sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	
 	$auth_cats = '';
 	if (is_array($CAT_FORUM))
@@ -69,7 +69,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
-	FROM ".PREFIX."forum_cats 
+	FROM " . PREFIX . "forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -98,8 +98,8 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listes les utilisateurs en lignes.	
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM ".PREFIX."sessions s 
-	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
+	FROM " . PREFIX . "sessions s 
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -149,11 +149,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 }
 elseif (!empty($id_post)) //Déplacement du topic
 {
-	$idcat = $Sql->query("SELECT idcat FROM ".PREFIX."forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+	$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "forum_topics WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 	if ($User->check_auth($CAT_FORUM[$idcat]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 	{		
 		$to = retrieve(POST, 'to', $idcat); //Catégorie cible.
-		$level = $Sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+		$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 		if (!empty($to) && $level > 0 && $idcat != $to)
 		{
 			//Instanciation de la class du forum.
@@ -179,18 +179,18 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	));
 
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
-	$msg =  $Sql->query_array('forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
-	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'contents', "WHERE id = '" . $idm . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
-	$id_first = $Sql->query("SELECT MIN(id) as id FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->query("SELECT MIN(id) as id FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT); 
 			
-	$cat = $Sql->query_array('forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'forum_cats', 'id', 'name', "WHERE id = '" . $topic['idcat'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', $cat['id']); //Catégorie cible.
 	
 	$auth_cats = '';
@@ -207,7 +207,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
-	FROM ".PREFIX."forum_cats 
+	FROM " . PREFIX . "forum_cats 
 	" . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -345,8 +345,8 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
 	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM ".PREFIX."sessions s 
-	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
+	FROM " . PREFIX . "sessions s 
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -396,19 +396,19 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 }
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
-	$msg =  $Sql->query_array('forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
-	$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$msg =  $Sql->query_array(PREFIX . 'forum_msg', 'idtopic', 'user_id', 'timestamp', 'contents', "WHERE id = '" . $id_post_msg . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	$to = retrieve(POST, 'to', 0); //Catégorie cible.
 	
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM)) //Accès en édition
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
-	$id_first = $Sql->query("SELECT MIN(id) FROM ".PREFIX."forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$id_first = $Sql->query("SELECT MIN(id) FROM " . PREFIX . "forum_msg WHERE idtopic = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 		$Errorh->handler('e_unable_cut_forum', E_USER_REDIRECT); 
 	
-	$level = $Sql->query("SELECT level FROM ".PREFIX."forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
+	$level = $Sql->query("SELECT level FROM " . PREFIX . "forum_cats WHERE id = '" . $to . "'", __LINE__, __FILE__);
 	if (!empty($to) && $level > 0)
 	{
 		$title = retrieve(POST, 'title', '');

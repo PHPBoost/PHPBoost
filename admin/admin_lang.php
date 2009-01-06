@@ -34,7 +34,7 @@ $error = retrieve(GET, 'error', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
@@ -43,7 +43,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
@@ -53,14 +53,14 @@ if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation
 elseif (isset($_POST['valid'])) //Mise à jour
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
-	FROM ".PREFIX."lang
+	FROM " . PREFIX . "lang
 	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-			$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	
 	//Régénération du cache.
@@ -75,14 +75,14 @@ elseif ($uninstall) //Désinstallation.
 		$idlang = retrieve(POST, 'idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
-		$previous_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+		$previous_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		if ($previous_lang != $CONFIG['lang'] && !empty($idlang) && !empty($previous_lang))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
 				
 			//On supprime le lang de la bdd.
-			$Sql->query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
 			redirect(HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
@@ -179,7 +179,7 @@ else
 
 		$lang_bdd = array();
 		$result = $Sql->query_while("SELECT id, lang, activ, secure 
-		FROM ".PREFIX."lang", __LINE__, __FILE__);
+		FROM " . PREFIX . "lang", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.

@@ -41,7 +41,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 	//On met à jour 
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "smileys SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
 					
 		###### Régénération du cache des smileys #######
 		$Cache->Generate_file('smileys');
@@ -54,7 +54,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 elseif (!empty($id) && $del) //Suppression.
 {
 	//On supprime le smiley de la bdd.
-	$Sql->query_inject("DELETE FROM ".PREFIX."smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . PREFIX . "smileys WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des smileys #######	
 	$Cache->Generate_file('smileys');
@@ -67,7 +67,7 @@ elseif (!empty($id) && $edit) //Edition.
 		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
 	));
 
-	$row = $Sql->query_array('smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $row['url_smiley'];
 	
 	//Gestion erreur.
@@ -77,7 +77,7 @@ elseif (!empty($id) && $edit) //Edition.
 		
 	$smiley_options = '';
 	$result = $Sql->query_while("SELECT url_smiley 
-	FROM ".PREFIX."smileys", __LINE__, __FILE__);
+	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if ($row['url_smiley'] == $url_smiley)
@@ -127,7 +127,7 @@ else
 	));
 
 	$result = $Sql->query_while("SELECT * 
-	FROM ".PREFIX."smileys", __LINE__, __FILE__);
+	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('list', array(

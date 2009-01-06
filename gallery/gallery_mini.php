@@ -68,8 +68,8 @@ function gallery_mini()
     	if (count($gallery_mini) == 0)
     	{
     		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
-    		FROM ".PREFIX."gallery g
-    		LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
+    		FROM " . PREFIX . "gallery g
+    		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
     		WHERE g.aprob = 1 AND gc.aprob = 1
     		ORDER BY RAND()
     		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);

@@ -49,7 +49,7 @@ $to = retrieve(GET, 'to', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {
-	$parent_folder = $Sql->query_array("upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
+	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	//die('test'.$parent_folder['id_parent'] );
 	if (!empty($folder_member)) 
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
@@ -83,11 +83,11 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
-			$check_user_folder = $Sql->query("SELECT user_id FROM ".PREFIX."upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
+			$check_user_folder = $Sql->query("SELECT user_id FROM " . PREFIX . "upload_cat WHERE id = '" . $folder . "'", __LINE__, __FILE__);
 			$user_id = ($check_user_folder <= 0) ? -1 : $User->get_attribute('user_id');
 			$user_id = max($user_id, $folder_member);
 			
-			$Sql->query("INSERT INTO ".PREFIX."upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query("INSERT INTO " . PREFIX . "upload (idcat, name, path, user_id, size, type, timestamp) VALUES ('" . $folder . "', '" . addslashes($_FILES['upload_file']['name']) . "', '" . addslashes($Upload->filename['upload_file']) . "', '" . $user_id . "', '" . numeric(number_round($_FILES['upload_file']['size']/1024, 1), 'float') . "', '" . $Upload->extension['upload_file'] . "', '" . time() . "')", __LINE__, __FILE__);
 		}
 	}
 	else
@@ -120,7 +120,7 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
-	FROM ".PREFIX."upload_cat
+	FROM " . PREFIX . "upload_cat
 	WHERE user_id = '" . $User->get_attribute('user_id') . "'
 	ORDER BY id", __LINE__, __FILE__);
 	
@@ -150,17 +150,17 @@ else
 
 	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
-		FROM ".PREFIX."upload_cat uc
-		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
+		FROM " . PREFIX . "upload_cat uc
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.user_id = '" . $folder_member . "'
 		UNION
 		SELECT u.user_id, m.login
-		FROM ".PREFIX."upload u
-		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
+		FROM " . PREFIX . "upload u
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id = '" . $folder_member . "'")
 	: 	("SELECT uc.user_id, m.login
-		FROM ".PREFIX."upload_cat uc
-		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
+		FROM " . PREFIX . "upload_cat uc
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id = '" . $folder . "'");
 
 	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
@@ -229,35 +229,35 @@ else
 	$total_folder_size = $total_files = $total_directories = 0;
 
 	$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
-	FROM ".PREFIX."upload up
-	LEFT JOIN ".PREFIX."member m ON m.user_id = up.user_id
+	FROM " . PREFIX . "upload up
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 	WHERE idcat = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND up.user_id = -1' : ' AND up.user_id != -1');
 	
 	if ($show_member)
 		$sql_folder = "SELECT uc.user_id as id, uc.user_id, m.login as name, 0 as id_parent
-		FROM ".PREFIX."upload_cat uc
-		LEFT JOIN ".PREFIX."member m ON m.user_id = uc.user_id
+		FROM " . PREFIX . "upload_cat uc
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
 		WHERE uc.id_parent = '" . $folder . "' AND uc.user_id <> -1 
 		UNION
 		SELECT u.user_id as id, u.user_id, m.login as name, 0 as id_parent
-		FROM ".PREFIX."upload u
-		LEFT JOIN ".PREFIX."member m ON m.user_id = u.user_id
+		FROM " . PREFIX . "upload u
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
 		ORDER BY name";
 	elseif (!empty($folder_member))
 	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM ".PREFIX."upload_cat 
+		FROM " . PREFIX . "upload_cat 
 		WHERE id_parent = 0 AND user_id = '" . $folder_member . "'
 		ORDER BY name";
 		$sql_files = "SELECT up.id, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.login
-		FROM ".PREFIX."upload up
-		LEFT JOIN ".PREFIX."member m ON m.user_id = up.user_id
+		FROM " . PREFIX . "upload up
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
 		WHERE up.idcat = 0 AND up.user_id = '" . $folder_member . "'";
 	}
 	else
 		$sql_folder = "SELECT id, name, id_parent, user_id
-		FROM ".PREFIX."upload_cat 
+		FROM " . PREFIX . "upload_cat 
 		WHERE id_parent = '" . $folder . "'" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
 		ORDER BY name";
 
@@ -341,7 +341,7 @@ else
 	}
 	
 
-	$total_size = $Sql->query("SELECT SUM(size) FROM ".PREFIX."upload", __LINE__, __FILE__);
+	$total_size = $Sql->query("SELECT SUM(size) FROM " . PREFIX . "upload", __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'TOTAL_SIZE' => ($total_size > 1024) ? number_round($total_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_size, 0) . ' ' . $LANG['unit_kilobytes'],
 		'TOTAL_FOLDER_SIZE' => ($total_folder_size > 1024) ? number_round($total_folder_size/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($total_folder_size, 0) . ' ' . $LANG['unit_kilobytes'],

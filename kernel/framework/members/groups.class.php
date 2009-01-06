@@ -47,16 +47,16 @@ class Group
 		global $Sql;
 
 		//On insère le groupe au champ membre.
-		$user_groups = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
 			return false;
 
 		//On insère le membre dans le groupe.
-		$group_members = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$group_members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		if (strpos($group_members, $user_id . '|') === false) //Le membre n'appartient pas déjà au groupe.
-			$Sql->query_inject("UPDATE ".PREFIX."group SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		else
 			return false;
 			
@@ -69,7 +69,7 @@ class Group
 		global $Sql;
 		
 		//Récupération des groupes précédent du membre.
-		$user_groups_old = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups_old = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		$array_user_groups_old = explode('|', $user_groups_old);
 		
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
@@ -101,12 +101,12 @@ class Group
 		global $Sql;
 
 		//Suppression dans la table des membres.
-		$user_groups = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 		//Suppression dans la table des groupes.
-		$members_group = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."group SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	}
 	
 	var $groups_name; //Tableau contenant le nom des groupes disponibles.

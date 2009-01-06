@@ -79,7 +79,7 @@ class Sql
 	function auto_connect()
 	{
 		//Lecture du fichier de configuration.
-		@require_once(PATH_TO_ROOT . '/kernel/auth/config.php');
+		@require_once(PATH_TO_ROOT . '/kernel/db/config.php');
 		
 		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
 		if (!defined('PHPBOOST_INSTALLED'))
@@ -90,7 +90,6 @@ class Sql
 
 		//Connexion à la base de données
 		$result =  $this->connect($sql_host, $sql_login, $sql_pass, $sql_base);
-		define('PREFIX', $table_prefix); //Préfixe des tables de la base de données
 		$this->sql_base = $sql_base;
 		
 		return $result;
@@ -133,7 +132,7 @@ class Sql
 		
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
-		$result = mysql_query('SELECT ' . $field . ' FROM ' . PREFIX . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . PREFIX . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
+		$result = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
 		$result = mysql_fetch_assoc($result);
 		
 		//Fermeture de la ressource

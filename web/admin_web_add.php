@@ -41,7 +41,7 @@ if (!empty($_POST['valid']))
 
 	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
-		$Sql->query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
 		redirect(HOST . DIR . '/web/admin_web.php');
 	}
@@ -64,7 +64,7 @@ elseif (!empty($_POST['previs']))
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
@@ -118,7 +118,7 @@ elseif (!empty($_POST['previs']))
 	//Catégories.
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -170,7 +170,7 @@ else
 	//Catégories.	
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

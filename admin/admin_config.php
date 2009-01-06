@@ -69,7 +69,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
 		
 		redirect(HOST . SCRIPT);
@@ -187,7 +187,7 @@ elseif (!empty($_POST['advanced']))
 		if (empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr')) //Désactivation de l'url rewriting.
 			$CONFIG['rewrite'] = 0;
 			
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
 		
@@ -322,7 +322,7 @@ else //Sinon on rempli le formulaire
 		
 		$lang_array_bdd = array();
 		$result = $Sql->query_while("SELECT lang 
-		FROM ".PREFIX."lang", __LINE__, __FILE__);
+		FROM " . PREFIX . "lang", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
@@ -374,7 +374,7 @@ else //Sinon on rempli le formulaire
 		
 		$theme_array_bdd = array();
 		$result = $Sql->query_while("SELECT theme 
-		FROM ".PREFIX."themes", __LINE__, __FILE__);
+		FROM " . PREFIX . "themes", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
@@ -410,7 +410,7 @@ if (!empty($_GET['unlock']))
 	$unlock_admin = strhash($unlock_admin_clean);
 	
 	$CONFIG['unlock_admin'] = $unlock_admin;
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 	
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');

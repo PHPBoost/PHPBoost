@@ -41,7 +41,7 @@ if ($update) //Mise à jour du module
 	$activ_module = retrieve(POST, $module_name . 'activ', 0);
 	
 	//Vérification de l'existance du module
-	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+	$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 	//Mise à jour du module
 	if (!empty($ckeck_module))
@@ -50,7 +50,7 @@ if ($update) //Mise à jour du module
 		$info_module = load_ini_file('../' . $module_name . '/lang/', get_ulang());
 		
 		//Récupération de l'ancienne version du module
-		$previous_version = $Sql->query("SELECT version FROM ".PREFIX."modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
+		$previous_version = $Sql->query("SELECT version FROM " . PREFIX . "modules WHERE name = '" . strprotect($module_name) . "'", __LINE__, __FILE__);
 	
 		//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 		$dir_db_module = get_ulang();
@@ -102,7 +102,7 @@ if ($update) //Mise à jour du module
 		$Cache->generate_module_file($module_name, NO_FATAL_ERROR_CACHE);
 
 		//Insertion du modules dans la bdd => module mis à jour.
-		$Sql->query_inject("UPDATE ".PREFIX."modules SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "modules SET version = '" . $info_module['version'] . "' WHERE name = '" . $module_name . "'", __LINE__, __FILE__);
 		
 		//Génération du cache des modules
 		$Cache->Generate_file('modules');
@@ -292,7 +292,7 @@ else
 	//Modules mis à jour
 	$updated_modules = array();
 	$result = $Sql->query_while("SELECT name, version
-	FROM ".PREFIX."modules
+	FROM " . PREFIX . "modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))

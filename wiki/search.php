@@ -63,20 +63,20 @@ $Template->assign_vars(array(
 if (!empty($search_string)) //recherche
 {
 	$title_search = "SELECT title, encoded_title, MATCH(title) AGAINST('" . $search_string . "') AS relevance
-		FROM ".PREFIX."wiki_articles
+		FROM " . PREFIX . "wiki_articles
 		WHERE MATCH(title) AGAINST('" . $search_string . "') 
 		ORDER BY relevance DESC";
 	
 	$contents_search = "SELECT a.title, a.encoded_title, MATCH(c.content) AGAINST('" . $search_string . "') AS relevance
-		FROM ".PREFIX."wiki_articles a
-		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+		FROM " . PREFIX . "wiki_articles a
+		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "') 
 		ORDER BY relevance DESC";
 	
 	$query = ($where_search == 'title' ? $title_search : $contents_search);
 	
-	$query_rows = $where_search == 'title' ? "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE MATCH(title) AGAINST('" . $search_string . "')" : "SELECT COUNT(*) 		FROM ".PREFIX."wiki_articles a
-		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+	$query_rows = $where_search == 'title' ? "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE MATCH(title) AGAINST('" . $search_string . "')" : "SELECT COUNT(*) 		FROM " . PREFIX . "wiki_articles a
+		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "')";
 	
 	$result = $Sql->query_while ($query, __LINE__, __FILE__);

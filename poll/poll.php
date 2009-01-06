@@ -33,7 +33,7 @@ $poll = array();
 $poll_id = retrieve(GET, 'id', 0);
 if (!empty($poll_id))
 {
-	$poll = $Sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+	$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', 'timestamp', "WHERE id = '" . $poll_id . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 	
 	//Pas de sondage trouvé => erreur.
 	if (empty($poll['id']))
@@ -74,22 +74,22 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		if ($CONFIG_POLL['poll_auth'] == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$ip = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($ip))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO ".PREFIX."poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', -1, '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', -1, '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
 		else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 		{
 			//Injection de l'adresse ip du visiteur dans la bdd.	
-			$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+			$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 			if (empty($user_id))
 			{
 				//Insertion de l'adresse ip.
-				$Sql->query_inject("INSERT INTO ".PREFIX."poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', '" . $User->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "poll_ip (ip, user_id, idpoll, timestamp) VALUES('" . USER_IP . "', '" . $User->get_attribute('user_id') . "', '" . $poll['id'] . "', '" . time() . "')", __LINE__, __FILE__);
 				$check_bdd = false;
 			}
 		}
@@ -126,7 +126,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 
 		if ($check_answer) //Enregistrement vote du sondage
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
 			//Tout c'est bien déroulé, on redirige vers la page des resultats.
 			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
@@ -165,14 +165,14 @@ elseif (!empty($poll['id']) && !$archives)
 	if ($CONFIG_POLL['poll_auth'] == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$ip = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$ip = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE ip = '" . USER_IP . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($ip))
 			$check_bdd = true;
 	}
 	else //Autorisé aux membres, on filtre par le user_id => fiabilité 100%.
 	{
 		//Injection de l'adresse ip du visiteur dans la bdd.	
-		$user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
+		$user_id = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "poll_ip WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idpoll = '" . $poll['id'] . "'",  __LINE__, __FILE__);		
 		if (!empty($user_id))
 			$check_bdd = true;
 	}
@@ -292,7 +292,7 @@ elseif (!$archives) //Menu principal.
 		'poll'=> 'poll/poll.tpl'
 	));
 
-	$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
+	$show_archives = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	$show_archives = !empty($show_archives) ? '<a href="poll' . url('.php?archives=1', '.php?archives=1') . '">' . $LANG['archives'] . '</a>' : '';
 	
 	$edit = '';	
@@ -308,7 +308,7 @@ elseif (!$archives) //Menu principal.
 	));
 	
 	$result = $Sql->query_while("SELECT id, question 
-	FROM ".PREFIX."poll 
+	FROM " . PREFIX . "poll 
 	WHERE archive = 0 AND visible = 1
 	ORDER BY id DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -328,7 +328,7 @@ elseif ($archives) //Archives.
 		'poll'=> 'poll/poll.tpl'
 	));
 		
-	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM ".PREFIX."poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
+	$nbrarchives = $Sql->query("SELECT COUNT(*) as id FROM " . PREFIX . "poll WHERE archive = 1 AND visible = 1", __LINE__, __FILE__);
 	
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
@@ -347,7 +347,7 @@ elseif ($archives) //Archives.
 	
 	//On recupère les sondages archivés.
 	$result = $Sql->query_while("SELECT id, question, votes, answers, type, timestamp
-	FROM ".PREFIX."poll
+	FROM " . PREFIX . "poll
 	WHERE archive = 1 AND visible = 1
 	ORDER BY timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg(10, 'archives'), 10), __LINE__, __FILE__); 

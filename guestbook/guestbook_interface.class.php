@@ -47,7 +47,7 @@ class GuestbookInterface extends ModuleInterface
 		$guestbook_code = 'global $CONFIG_GUESTBOOK;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_GUESTBOOK = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'guestbook'", __LINE__, __FILE__));
+		$CONFIG_GUESTBOOK = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'guestbook'", __LINE__, __FILE__));
 		$CONFIG_GUESTBOOK = is_array($CONFIG_GUESTBOOK) ? $CONFIG_GUESTBOOK : array();
 		
 		if (isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
@@ -58,8 +58,8 @@ class GuestbookInterface extends ModuleInterface
 		$guestbook_code .= "\n\n" . 'global $_guestbook_rand_msg;' . "\n";
 		$guestbook_code .= "\n" . '$_guestbook_rand_msg = array();' . "\n";
 		$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
-		FROM ".PREFIX."guestbook g
-		LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
+		FROM " . PREFIX . "guestbook g
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		ORDER BY g.timestamp DESC 
 		" . $Sql->limit(0, 10), __LINE__, __FILE__);	
 		while ($row = $Sql->fetch_assoc($result))

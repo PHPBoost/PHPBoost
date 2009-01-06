@@ -187,7 +187,7 @@ class Cache
 		$code = 'global $MODULES;' . "\n";
 		$code .= '$MODULES = array();' . "\n\n";
 		$result = $Sql->query_while("SELECT name, auth, activ
-		FROM ".PREFIX."modules
+		FROM " . PREFIX . "modules
 		ORDER BY name", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -217,7 +217,7 @@ class Cache
 		$config = 'global $CONFIG;' . "\n" . '$CONFIG = array();' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'config'", __LINE__, __FILE__));
+		$CONFIG = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'config'", __LINE__, __FILE__));
 		foreach ($CONFIG as $key => $value)
 			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
 		
@@ -233,7 +233,7 @@ class Cache
 		{
 			$htaccess_rules = 'Options +FollowSymlinks' . "\n" . 'RewriteEngine on' . "\n";
 			$result = $Sql->query_while("SELECT name
-			FROM ".PREFIX."modules
+			FROM " . PREFIX . "modules
 			WHERE activ = 1", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -304,7 +304,7 @@ class Cache
 		
 		$code = 'global $THEME_CONFIG;' . "\n";
 		$result = $Sql->query_while("SELECT theme, left_column, right_column, secure
-		FROM ".PREFIX."themes
+		FROM " . PREFIX . "themes
 		WHERE activ = 1", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -324,7 +324,7 @@ class Cache
 		
 		$code = 'global $LANGS_CONFIG;' . "\n";
 		$result = $Sql->query_while("SELECT lang, secure
-		FROM ".PREFIX."lang
+		FROM " . PREFIX . "lang
 		WHERE activ = 1", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -348,7 +348,7 @@ class Cache
 		
 		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
 		$result = $Sql->query_while("SELECT id, name, img, auth
-		FROM ".PREFIX."group
+		FROM " . PREFIX . "group
 		ORDER BY id", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -368,7 +368,7 @@ class Cache
 		$config_member = 'global $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;' . "\n";
 	
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_USER = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__));
+		$CONFIG_USER = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'member'", __LINE__, __FILE__));
 		foreach ($CONFIG_USER as $key => $value)
 			$config_member .= '$CONFIG_USER[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
 		
@@ -389,7 +389,7 @@ class Cache
 		
 		$stock_array_ranks = '$_array_rank = array(';
 		$result = $Sql->query_while("SELECT name, msg, icon
-		FROM ".PREFIX."ranks
+		FROM " . PREFIX . "ranks
 		ORDER BY msg DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -410,7 +410,7 @@ class Cache
 		$config_uploads = 'global $CONFIG_UPLOADS;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'uploads'", __LINE__, __FILE__));
+		$CONFIG_UPLOADS = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'uploads'", __LINE__, __FILE__));
 		$CONFIG_UPLOADS = is_array($CONFIG_UPLOADS) ? $CONFIG_UPLOADS : array();
 		foreach ($CONFIG_UPLOADS as $key => $value)
 		{
@@ -430,7 +430,7 @@ class Cache
 		$com_config = 'global $CONFIG_COM;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'com'", __LINE__, __FILE__));
+		$CONFIG_COM = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'com'", __LINE__, __FILE__));
 		$CONFIG_COM = is_array($CONFIG_COM) ? $CONFIG_COM : array();
 		foreach ($CONFIG_COM as $key => $value)
 			$com_config .= '$CONFIG_COM[\'' . $key . '\'] = ' . var_export($value, true) . ';' . "\n";
@@ -446,7 +446,7 @@ class Cache
 		$i = 0;
 		$stock_smiley_code = '$_array_smiley_code = array(';
 		$result = $Sql->query_while("SELECT code_smiley, url_smiley
-		FROM ".PREFIX."smileys", __LINE__, __FILE__);
+		FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$coma = ($i != 0) ? ',' : '';
@@ -465,8 +465,8 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $nbr_members, $last_member_login, $last_member_id;' . "\n";
-		$nbr_members = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member WHERE user_aprob = 1", __LINE__, __FILE__);
-		$last_member = $Sql->query_array('member', 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+		$nbr_members = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_aprob = 1", __LINE__, __FILE__);
+		$last_member = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'login', "WHERE user_aprob = 1 ORDER BY timestamp DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 
 		$code .= '$nbr_members = ' . var_export($nbr_members, true) . ';' . "\n";
 		$code .= '$last_member_login = ' . var_export($last_member['login'], true) . ';' . "\n";

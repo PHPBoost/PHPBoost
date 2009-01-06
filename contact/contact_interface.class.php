@@ -45,7 +45,7 @@ class ContactInterface extends ModuleInterface
 		$contact_config = 'global $CONFIG_CONTACT;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_CONTACT = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'contact'", __LINE__, __FILE__));
+		$CONFIG_CONTACT = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'contact'", __LINE__, __FILE__));
 		$CONFIG_CONTACT = is_array($CONFIG_CONTACT) ? $CONFIG_CONTACT : array();
 		
 		$contact_config .= '$CONFIG_CONTACT = ' . var_export($CONFIG_CONTACT, true) . ';' . "\n";

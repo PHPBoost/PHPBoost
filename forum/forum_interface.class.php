@@ -48,7 +48,7 @@ class ForumInterface extends ModuleInterface
 		$forum_config = 'global $CONFIG_FORUM;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_FORUM = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'forum'", __LINE__, __FILE__));
+		$CONFIG_FORUM = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'forum'", __LINE__, __FILE__));
 		$CONFIG_FORUM['auth'] = unserialize($CONFIG_FORUM['auth']);
 			
 		$forum_config .= '$CONFIG_FORUM = ' . var_export($CONFIG_FORUM, true) . ';' . "\n";
@@ -57,7 +57,7 @@ class ForumInterface extends ModuleInterface
 		$i = 0;
 		$forum_cats = 'global $CAT_FORUM;' . "\n";
 		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, url, status, aprob, auth, aprob
-		FROM ".PREFIX."forum_cats
+		FROM " . PREFIX . "forum_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -85,7 +85,7 @@ class ForumInterface extends ModuleInterface
 		
 		//Suppression des marqueurs de vue du forum trop anciens.
 		$Cache->load('forum'); //Requête des configuration générales (forum), $CONFIG_FORUM variable globale.
-		$Sql->query_inject("DELETE FROM ".PREFIX."forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE timestamp < '" . (time() - $CONFIG_FORUM['view_time']) . "'", __LINE__, __FILE__);
 	}
 	
 	//Récupère le lien vers la listes des messages du membre.
@@ -224,9 +224,9 @@ class ForumInterface extends ModuleInterface
                 t.title AS `title`,
                 MAX(( 2 * MATCH(t.title) AGAINST('" . $search."') + MATCH(msg.contents) AGAINST('" . $search."') ) / 3) * " . $weight . " AS `relevance`,
                 " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM ".PREFIX."forum_msg msg
-            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+            FROM " . PREFIX . "forum_msg msg
+            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE ( MATCH(t.title) AGAINST('" . $search."') OR MATCH(msg.contents) AGAINST('" . $search."') )
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
@@ -239,9 +239,9 @@ class ForumInterface extends ModuleInterface
                 t.title AS `title`,
                 MAX(MATCH(msg.contents) AGAINST('" . $search."')) * " . $weight . " AS `relevance`,
                 " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM ".PREFIX."forum_msg msg
-            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+            FROM " . PREFIX . "forum_msg msg
+            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(msg.contents) AGAINST('" . $search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
@@ -253,9 +253,9 @@ class ForumInterface extends ModuleInterface
                 t.title AS `title`,
                 MATCH(t.title) AGAINST('" . $search."') * " . $weight . " AS `relevance`,
                 " . $Sql->concat("'" . PATH_TO_ROOT . "'", "'/forum/topic.php?id='", 't.id', "'#m'", 'msg.id')."  AS `link`
-            FROM ".PREFIX."forum_msg msg
-            JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-            JOIN ".PREFIX."forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
+            FROM " . PREFIX . "forum_msg msg
+            JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+            JOIN " . PREFIX . "forum_cats c ON c.level != 0 AND c.aprob = 1 AND c.id = t.idcat
             WHERE MATCH(t.title) AGAINST('" . $search."')
             ".($idcat != -1 ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '')." " . $auth_cats."
             GROUP BY t.id
@@ -293,10 +293,10 @@ class ForumInterface extends ModuleInterface
             m.user_avatar AS avatar,
             s.user_id AS connect,
             msg.contents AS contents
-        FROM ".PREFIX."forum_msg msg
-        LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-        LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-        JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
+        FROM " . PREFIX . "forum_msg msg
+        LEFT JOIN " . PREFIX . "sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+        LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+        JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
         WHERE msg.id IN (".implode(',', $ids).")
         GROUP BY t.id";
         
@@ -367,9 +367,9 @@ class ForumInterface extends ModuleInterface
         $req_cats = (($idcat > 0) && isset($CAT_FORUM[$idcat])) ? " AND c.id_left >= '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right <= '" . $CAT_FORUM[$idcat]['id_right'] . "' " : "";
         
         $req = "SELECT t.id, t.title, t.last_timestamp, t.last_msg_id, t.display_msg, t.nbr_msg AS t_nbr_msg, msg.id mid, msg.contents, c.auth
-		FROM ".PREFIX."forum_topics t
-		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-		LEFT JOIN ".PREFIX."forum_msg msg ON msg.id = t.last_msg_id
+		FROM " . PREFIX . "forum_topics t
+		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+		LEFT JOIN " . PREFIX . "forum_msg msg ON msg.id = t.last_msg_id
 		WHERE c.level != 0 AND c.aprob = 1 " . $req_cats . "
 		ORDER BY t.last_timestamp DESC
 		" . $Sql->limit(0, 2 * $CONFIG_FORUM['pagination_msg']);

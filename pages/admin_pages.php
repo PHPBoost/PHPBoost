@@ -46,7 +46,7 @@ if (!empty($_POST['update']))  //Mise à jour
 	$_PAGES_CONFIG['count_hits'] = $count_hits;
 	$_PAGES_CONFIG['activ_com'] = $activ_com;
 
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
 	//Régénération du cache
 	$Cache->Generate_module_file('pages');
 	

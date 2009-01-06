@@ -45,10 +45,10 @@ if ($install)
 	$secure = retrieve(POST, $lang . 'secure', -1);
 	$activ = retrieve(POST, $lang . 'activ', 0);
 		
-	$check_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
+	$check_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE lang = '" . $lang . "'", __LINE__, __FILE__);	
 	if (empty($check_lang) && !empty($lang))
 	{
-		$Sql->query_inject("INSERT INTO ".PREFIX."lang (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES('" . $lang . "', '" . $activ . "', '" .  $secure . "')", __LINE__, __FILE__);
 		
 		//Régénération du cache.
 		$Cache->Generate_file('langs');
@@ -70,7 +70,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$check_lang = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."lang WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
+		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_lang))
 		{
 			include_once('../kernel/framework/io/upload.class.php');
@@ -159,7 +159,7 @@ else
 		closedir($dh); //On ferme le dossier
 	
 		$result = $Sql->query_while("SELECT lang 
-		FROM ".PREFIX."lang", __LINE__, __FILE__);
+		FROM " . PREFIX . "lang", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.

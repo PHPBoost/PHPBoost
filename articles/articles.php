@@ -43,7 +43,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 	$Template->set_filenames(array('articles'=> 'articles/articles.tpl'));		
 	
 	//MAJ du compteur.
-	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
+	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
 	if ($User->check_level(ADMIN_LEVEL))
 	{
@@ -105,7 +105,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
-		'PSEUDO' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
+		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
 		'CONTENTS' => isset($array_contents[$page]) ? second_parse($array_contents[$page]) : '',
 		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
@@ -165,8 +165,8 @@ else
 	if (!$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES)) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
-	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles_cats ac " . $clause_cat, __LINE__, __FILE__);	
+	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
+	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles_cats ac " . $clause_cat, __LINE__, __FILE__);	
 		
 	$rewrite_title = url_encode_rewrite($CAT_ARTICLES[$idartcat]['name']);
 	
@@ -252,7 +252,7 @@ else
 			
 		$i = 0;	
 		$result = $Sql->query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, ac.nbr_articles_visible AS nbr_articles
-		FROM ".PREFIX."articles_cats ac
+		FROM " . PREFIX . "articles_cats ac
 		" . $clause_cat . $clause_unauth_cats . "
 		ORDER BY ac.id_left
 		" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
@@ -284,7 +284,7 @@ else
 		include_once('../kernel/framework/content/note.class.php');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		$result = $Sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
-		FROM ".PREFIX."articles
+		FROM " . PREFIX . "articles
 		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);

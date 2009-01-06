@@ -39,13 +39,13 @@ if ($del && !empty($id)) //Suppresion poll
 	$Cache->load('poll');
 	
 	//On supprime des tables config et reponses des polls.
-	$Sql->query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	###### Régénération du cache du mini poll #######
 	if ($id == $CONFIG_POLL['mini_poll'])		
 	{	
 		$CONFIG_POLL['poll_mini'] = '-1';
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('poll');
 	}
 	redirect(HOST . SCRIPT);
@@ -118,12 +118,12 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		}
 		$votes = trim($votes, '|');
 		
-		$Sql->query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		if ($id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1'))
 		{
 			$CONFIG_POLL['poll_mini'] = '-1';
-			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
+			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
 		
 			###### Régénération du cache #######
 			$Cache->Generate_module_file('poll');
@@ -143,7 +143,7 @@ elseif (!empty($id))
 		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
 	));
 
-	$row = $Sql->query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	$Template->assign_vars(array(
 		'IDPOLL' => $row['id'],
@@ -263,8 +263,8 @@ else
 	)); 
 
 	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
-	FROM ".PREFIX."poll p
-	LEFT JOIN ".PREFIX."member m ON p.user_id = m.user_id	
+	FROM " . PREFIX . "poll p
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id	
 	ORDER BY p.timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(20, 'p'), 20), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

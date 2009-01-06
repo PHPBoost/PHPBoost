@@ -191,7 +191,7 @@ class Authorizations
 		if ($advanced_auth)
 		{
 			$result = $Sql->query_while("SELECT user_id, login
-			FROM ".PREFIX."member
+			FROM " . PREFIX . "member
 			WHERE user_id IN(" . implode(str_replace('m', '', array_keys($array_auth_members)), ', ') . ")", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{

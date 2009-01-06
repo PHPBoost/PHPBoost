@@ -172,7 +172,7 @@ class CategoriesManagement
 		$this->_clear_error();
 		if (in_array($way, array(MOVE_CATEGORY_UP, MOVE_CATEGORY_DOWN)))
 		{
-			$cat_info = $Sql->query_array($this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$cat_info = $Sql->query_array(PREFIX . $this->table, "c_order", "id_parent", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			//Checking that category exists
 			if (empty($cat_info['c_order']))

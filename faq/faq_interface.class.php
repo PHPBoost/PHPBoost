@@ -45,7 +45,7 @@ class FaqInterface extends ModuleInterface
 		global $Sql;
 	
 		//Configuration
-		$config = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'faq'", __LINE__, __FILE__));
+		$config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'faq'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		$root_config['auth'] = $config['global_auth'];
 		unset($config['root']);
@@ -56,7 +56,7 @@ class FaqInterface extends ModuleInterface
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
 		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
-		FROM ".PREFIX."faq_cats
+		FROM " . PREFIX . "faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
 		
 		while ($row = $Sql->fetch_assoc($result))
@@ -79,7 +79,7 @@ class FaqInterface extends ModuleInterface
 		}
 		
 		//Random questions
-		$query = $Sql->query_while ("SELECT id, question, idcat FROM ".PREFIX."faq LIMIT 0, 20", __LINE__, __FILE__);
+		$query = $Sql->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20", __LINE__, __FILE__);
 		$questions = array();
 		while ($row = $Sql->fetch_assoc($query))
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);

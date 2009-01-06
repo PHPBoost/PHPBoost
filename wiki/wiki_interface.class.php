@@ -46,8 +46,8 @@ class WikiInterface extends ModuleInterface
 		$config = 'global $_WIKI_CATS;' . "\n";
 		$config .= '$_WIKI_CATS = array();' . "\n";
 		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
-			FROM ".PREFIX."wiki_cats c
-			LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id 
+			FROM " . PREFIX . "wiki_cats c
+			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id 
 			ORDER BY a.title", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -56,7 +56,7 @@ class WikiInterface extends ModuleInterface
 
 		//Configuration du wiki
 		$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-		$CONFIG_WIKI = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'wiki'", __LINE__, __FILE__));
+		$CONFIG_WIKI = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'wiki'", __LINE__, __FILE__));
 		
 		$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
 		$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
@@ -124,8 +124,8 @@ class WikiInterface extends ModuleInterface
                 a.title AS `title`,
                 ( 4 * MATCH(a.title) AGAINST('".$args['search']."') + MATCH(c.content) AGAINST('".$args['search']."') ) / 5 * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
-                FROM ".PREFIX."wiki_articles a
-                LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+                FROM " . PREFIX . "wiki_articles a
+                LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
                 WHERE ( MATCH(a.title) AGAINST('".$args['search']."') OR MATCH(c.content) AGAINST('".$args['search']."') )";
         if ( $args['WikiWhere'] == 'contents' )
             $req = "SELECT ".
@@ -134,8 +134,8 @@ class WikiInterface extends ModuleInterface
                 a.title AS `title`,
                 MATCH(c.content) AGAINST('".$args['search']."') * " . $weight . " AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',a.encoded_title) AS `link`
-                FROM ".PREFIX."wiki_articles a
-                LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+                FROM " . PREFIX . "wiki_articles a
+                LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
                 WHERE MATCH(c.content) AGAINST('".$args['search']."')";
         else
             $req = "SELECT ".
@@ -144,7 +144,7 @@ class WikiInterface extends ModuleInterface
                 `title` AS `title`,
                 ((MATCH(title) AGAINST('".$args['search']."') )* " . $weight . ") AS `relevance`,
                 CONCAT('" . PATH_TO_ROOT . "/wiki/wiki.php?title=',encoded_title) AS `link`
-                FROM ".PREFIX."wiki_articles
+                FROM " . PREFIX . "wiki_articles
                 WHERE MATCH(title) AGAINST('".$args['search']."')";
         
         return $req;
@@ -189,8 +189,8 @@ class WikiInterface extends ModuleInterface
         
         // Last news
         $result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
-            FROM ".PREFIX."wiki_articles a
-            LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
+            FROM " . PREFIX . "wiki_articles a
+            LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
             WHERE a.redirect = 0 " . $where . "
             ORDER BY c.timestamp DESC
             " . $Sql->limit(0, 2 * 10), __LINE__, __FILE__);

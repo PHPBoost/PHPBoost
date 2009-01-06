@@ -272,7 +272,7 @@ if (empty($key))
 		}
 
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
@@ -281,7 +281,7 @@ if (empty($key))
 			$Template->assign_block_vars('miscellaneous', array(			
 			));
 			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
-			FROM ".PREFIX."member_extend_cat AS exc
+			FROM " . PREFIX . "member_extend_cat AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -367,10 +367,10 @@ elseif (!empty($key) && $User->check_level(USER_LEVEL) !== true) //Activation du
 		'C_ACTIVATION_REGISTER' => true
 	));	
 	
-	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	if ($check_mbr == '1') //Activation du compte.
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
 		$Template->assign_vars(array(
 			'L_REGISTER' => $LANG['register'],
