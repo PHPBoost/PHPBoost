@@ -60,8 +60,8 @@ class GuestbookInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, g.contents
 		FROM " . PREFIX . "guestbook g
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-		ORDER BY g.timestamp DESC 
-		" . $Sql->limit(0, 10), __LINE__, __FILE__);	
+		ORDER BY g.timestamp DESC
+		" . $Sql->limit(0, 10), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$guestbook_code .= '$_guestbook_rand_msg[] = array(\'id\' => ' . var_export($row['id'], true) . ', \'contents\' => ' . var_export(substr_html(strip_tags($row['contents']), 0, 150), true) . ', \'user_id\' => ' . var_export($row['user_id'], true) . ', \'login\' => ' . var_export($row['login'], true) . ');' . "\n";
@@ -77,7 +77,7 @@ class GuestbookInterface extends ModuleInterface
 		global $Cache;
 		
 		$Cache->Generate_module_file('guestbook');
-	}		
+	}
 }
 
 ?>

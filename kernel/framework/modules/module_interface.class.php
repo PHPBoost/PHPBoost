@@ -218,18 +218,19 @@ class ModuleInterface
         return $functionnalities === array_intersect($functionnalities, $this->functionnalities);
     }
 
-    //------------------------------------------------------------------ PRIVATE
 
-    //-------------------------------------------------------- PROTECTED METHODS
     /**
      * @desc Set the flag error.
      * @param int $error the error flag to raised
      */
-    function _set_error($error = 0)
+    function set_error($error = 0)
     {
         $this->errors |= $error;
     }
+    //------------------------------------------------------------------ PRIVATE
 
+    //-------------------------------------------------------- PROTECTED METHODS
+    
     /**
      * @desc Clear the $error error flag
      * @param int $error the error flag to clear

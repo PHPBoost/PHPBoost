@@ -126,27 +126,36 @@ class ModulesDiscoveryService
      *  Instancie et renvoie le module demandé.
      */
     {
-		if (!isset($this->loaded_modules[$module_id]))
-        {
+        $module_constructor = ucfirst($module_id.'Interface');
+        
+        $include = @include_once(PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_interface.class.php');
+        if ($include && class_exists($module_constructor))
+        {   // The Interface exists
+            $module = new $module_constructor();
+            
+    		if (isset($this->loaded_modules[$module_id]))
+    		    return $this->loaded_modules[$module_id];
+    		
             if (in_array($module_id, $this->availables_modules))
-            {
+            {   // The interface is available
                 global $User, $MODULES;
                 
-                if ($User->check_auth($MODULES[$module_id]['auth'], ACCESS_MODULE))
-                {
-                    if (@include_once(PATH_TO_ROOT . '/'.$module_id.'/'.$module_id.'_interface.class.php'))
-                    {
-                        $module_constructor = ucfirst($module_id.'Interface');
-                        $module = new $module_constructor();
-                    }
-                    else $module = new ModuleInterface($module_id, MODULE_NOT_YET_IMPLEMENTED);
+                if (!$User->check_auth($MODULES[$module_id]['auth'], ACCESS_MODULE))
+                {   // ACCESS DENIED
+                    $module->set_error(ACCES_DENIED);
                 }
-                else $module = new ModuleInterface($module_id, ACCES_DENIED);
             }
-            else $module = new ModuleInterface($module_id, MODULE_NOT_AVAILABLE);
-				
-            $this->loaded_modules[$module_id] = $module;
+            else
+            {   // NOT AVAILABLE
+                $module->set_error(MODULE_NOT_AVAILABLE);
+            }
         }
+        else
+        {   // NOT IMPLEMENTED
+            $module = new ModuleInterface($module_id, MODULE_NOT_YET_IMPLEMENTED);
+        }
+        
+        $this->loaded_modules[$module_id] = $module;
         return $this->loaded_modules[$module_id];
     }
 
