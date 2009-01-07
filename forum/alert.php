@@ -176,6 +176,7 @@ $Template->assign_vars(array(
 	'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php') . '">' . $CAT_FORUM[$topic['idcat']]['name'] . '</a>',
 	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . $topic['title'] . '</a>',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
+	'L_SUBMIT' => $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
