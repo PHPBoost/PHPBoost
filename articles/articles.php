@@ -49,14 +49,14 @@ if (!empty($idart) && isset($_GET['cat']) )
 	{
 		$java = '<script type="text/javascript">
 		<!--
-		function Confirm() {
+		function Confirm_del_article() {
 		return confirm("' . $LANG['alert_delete_article'] . '");
 		}
 		-->
 		</script>';
 		
 		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . url('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del_article();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
 		
 		$Template->assign_vars(array(
 			'JAVA' => $java,
