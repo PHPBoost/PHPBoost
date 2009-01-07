@@ -3,7 +3,7 @@
  *                               admin_pages.php
  *                            -------------------
  *   begin                : August 09, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -42,7 +42,7 @@ if (!empty($_POST['update']))  //Mise à jour
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
 	
-	$_PAGES_CONFIG['auth'] = addslashes(serialize($array_auth_all));
+	$_PAGES_CONFIG['auth'] = serialize($array_auth_all);
 	$_PAGES_CONFIG['count_hits'] = $count_hits;
 	$_PAGES_CONFIG['activ_com'] = $activ_com;
 

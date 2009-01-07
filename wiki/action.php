@@ -186,12 +186,20 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 				$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET article_id = '" . $new_id_article . "' WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
 				$Cache->Generate_module_file('wiki');
 			}
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
+    		 // Feeds Regeneration
+             import('content/syndication/feed');
+             Feed::clear_cache('wiki');
+		   redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
 		}
 		else //On met à jour l'article
 		{
-			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . url_encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
+            $Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "', encoded_title = '" . url_encode_rewrite($new_title) . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
+			
+            //Feeds Regeneration
+            import('content/syndication/feed');
+            Feed::clear_cache('wiki');
+            
+            redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
 		}
 	}
 }

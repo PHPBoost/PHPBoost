@@ -508,14 +508,14 @@ elseif ($step == 5)
 		$Cache = new Cache;
 		
 		//Installation des modules de la distribution
-		require_once('../kernel/framework/modules/packages_manager.class.php');
+			require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach ($DISTRIBUTION_MODULES as $module_name)
 		{
 			$Cache->load('modules');
 			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 		}
 		
-		$Cache->Generate_all_files();
+		$Cache->generate_all_files();
 		
 		$Sql->close();
 		
@@ -662,6 +662,8 @@ elseif ($step == 6)
 				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
 				$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
 			}
+			
+			$Cache->generate_file('stats');
 			
 			//On redirige vers l'étape suivante
 			redirect(HOST . FILE . add_lang('?step=7', true));
