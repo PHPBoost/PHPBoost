@@ -40,18 +40,21 @@ $action = retrieve(REQUEST, 'action', '');
 $action_post = retrieve(POST, 'action', '');
 
 if ($action_post == 'save')
-{   // Save a Menu (New / Edit)
+{
+    // Save a Menu (New / Edit)
     import('content/parser/parser');
     $menu = null;
+    
+    $menu_name = retrieve(POST, 'name', '', TSTRING_UNSECURE);
     
     if (!empty($id_post))
     {   // Edit the Menu
         $menu = MenuService::load($id_post);
-        $menu->set_title(retrieve(POST, 'name', ''));
+        $menu->set_title($menu_name);
     }
     else
     {   // Add the new Menu
-        $menu = new ContentMenu(retrieve(POST, 'name', ''));
+        $menu = new ContentMenu($menu_name);
     }
     
     if (!of_class($menu, CONTENT_MENU__CLASS))
