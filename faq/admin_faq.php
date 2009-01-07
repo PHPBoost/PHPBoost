@@ -87,6 +87,7 @@ if ($page > 0)
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
 		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
+		'L_ADD_QUESTION' => $FAQ_LANG['add_question'],
 		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
 	));
 	
@@ -108,6 +109,7 @@ else
 		'L_CATS_MANAGEMENT' => $FAQ_LANG['cats_management'],
 		'L_CONFIG_MANAGEMENT' => $FAQ_LANG['faq_configuration'],
 		'L_QUESTIONS_LIST' => $FAQ_LANG['faq_questions_list'],
+		'L_ADD_QUESTION' => $FAQ_LANG['add_question'],   
 		'L_ADD_CAT' => $FAQ_LANG['add_cat'],
 		'L_FAQ_NAME' => $FAQ_LANG['faq_name'],
 		'L_FAQ_NAME_EXPLAIN' => $FAQ_LANG['faq_name_explain'],

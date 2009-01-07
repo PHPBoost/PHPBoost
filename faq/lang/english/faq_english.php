@@ -79,6 +79,7 @@ $FAQ_LANG['faq_configuration'] = 'FAQ configuration';
 $FAQ_LANG['faq_questions_list'] = 'Questions list';
 $FAQ_LANG['cats_management'] = 'Categories management';
 $FAQ_LANG['add_cat'] = 'Add a category';
+$FAQ_LANG['add_question'] = 'Add a question';
 $FAQ_LANG['show_all_answers'] = 'Show all answers';
 $FAQ_LANG['hide_all_answers'] = 'Hide all answers';
 $FAQ_LANG['move'] = 'Move';
