@@ -59,7 +59,9 @@ class ContentMenu extends Menu
     function display()
     {
         $tpl = new Template('framework/menus/content/display.tpl');
-        $tpl->assign_vars(array('CONTENT' => $this->content));
+        $tpl->assign_vars(array(
+        	'CONTENT' => second_parse($this->content)
+        ));
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
