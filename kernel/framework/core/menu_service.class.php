@@ -223,12 +223,15 @@ class MenuService
     {
         global $Sql;
         
-        // Updates the previous block position counter
-        $update_query = "
-            UPDATE " . PREFIX ."menus
-            SET position=position - 1
-            WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
-        $Sql->query_inject($update_query, __LINE__, __FILE__);
+        if ($menu->id() > 0)
+        {   // Updates the previous block position counter
+            // Only for already existing menu, not for new ones
+            $update_query = "
+                UPDATE " . PREFIX ."menus
+                SET position=position - 1
+                WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
+            $Sql->query_inject($update_query, __LINE__, __FILE__);
+        }
         
         // Disables the menu if the destination block is the NOT_ENABLED block position
         $menu->enabled($block == BLOCK_POSITION__NOT_ENABLED ? MENU_NOT_ENABLED : MENU_ENABLED);
@@ -476,8 +479,7 @@ class MenuService
                 
                 $menu = new ModuleMiniMenu($module, $file[0]);
                 $menu->enabled(true);
-                $menu->set_block(MenuService::str_to_location($location));
-                MenuService::move($menu, $menu->get_block());
+                MenuService::move($menu, MenuService::str_to_location($location));
                 if ($generate_cache)
                     MenuService::generate_cache();
                 
