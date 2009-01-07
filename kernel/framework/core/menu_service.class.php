@@ -118,7 +118,7 @@ class MenuService
     function load($id)
     {
         global $Sql;
-        $result = $Sql->query_array(PREFIX . 'menus', 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
+        $result = $Sql->query_array(DB_TABLE_MENUS, 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
         
         if ($result === false)
             return null;

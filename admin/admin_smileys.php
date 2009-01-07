@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 	$url_smiley = retrieve(POST, 'url_smiley', '');
 	$code_smiley = retrieve(POST, 'code_smiley', '');
 
-	//On met à jour 
+	//On met à jour
 	if (!empty($url_smiley) && !empty($code_smiley))
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_SMILEYS . " SET url_smiley = '" . $url_smiley . "', code_smiley = '" . $code_smiley . "' WHERE idsmiley = '" . $id_post . "'", __LINE__, __FILE__);
@@ -46,28 +46,28 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		###### Régénération du cache des smileys #######
 		$Cache->Generate_file('smileys');
 		
-		redirect(HOST . SCRIPT);	
+		redirect(HOST . SCRIPT);
 	}
 	else
 		redirect(HOST . DIR . '/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
-}	
+}
 elseif (!empty($id) && $del) //Suppression.
 {
 	//On supprime le smiley de la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	
-	###### Régénération du cache des smileys #######	
+	###### Régénération du cache des smileys #######
 	$Cache->Generate_file('smileys');
 	
-	redirect(HOST . SCRIPT); 
-}	
+	redirect(HOST . SCRIPT);
+}
 elseif (!empty($id) && $edit) //Edition.
 {
 	$Template->set_filenames(array(
 		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
 	));
 
-	$row = $Sql->query_array(PREFIX . 'smileys', 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	$url_smiley = $row['url_smiley'];
 	
 	//Gestion erreur.
@@ -76,7 +76,7 @@ elseif (!empty($id) && $edit) //Edition.
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	$smiley_options = '';
-	$result = $Sql->query_while("SELECT url_smiley 
+	$result = $Sql->query_while("SELECT url_smiley
 	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -104,12 +104,12 @@ elseif (!empty($id) && $edit) //Edition.
 		'L_SMILEY_AVAILABLE' => $LANG['smiley_available'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
-	));	
+	));
 	
 	$Template->pparse('admin_smileys_management2');
-}		
+}
 else
-{			
+{
 	$Template->set_filenames(array(
 		'admin_smileys_management'=> 'admin/admin_smileys_management.tpl'
 	));
@@ -126,7 +126,7 @@ else
 		'L_DELETE' => $LANG['delete'],
 	));
 
-	$result = $Sql->query_while("SELECT * 
+	$result = $Sql->query_while("SELECT *
 	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -138,7 +138,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->pparse('admin_smileys_management'); 
+	$Template->pparse('admin_smileys_management');
 }
 
 require_once('../admin/admin_footer.php');
