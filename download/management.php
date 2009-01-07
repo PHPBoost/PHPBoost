@@ -147,6 +147,50 @@ $Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
+$Template->assign_vars(array(
+	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
+	'C_PREVIEW' => $preview,
+	'L_PAGE_TITLE' => TITLE,
+	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
+	'L_YES' => $LANG['yes'],
+	'L_NO' => $LANG['no'],
+	'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
+	'L_IGNORE_RELEASE_DATE' => $DOWNLOAD_LANG['ignore_release_date'],
+	'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
+	'L_FILE_VISIBILITY' => $DOWNLOAD_LANG['file_visibility'],
+	'L_APPROVED' => $DOWNLOAD_LANG['approved'],
+	'L_NOW' => $LANG['now'],
+	'L_HIDDEN' => $DOWNLOAD_LANG['hidden'],
+	'L_TO_DATE' => $LANG['to_date'],
+	'L_FROM_DATE' => $LANG['from_date'],
+	'L_DESC' => $LANG['description'],
+	'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
+	'L_SIZE' => $LANG['size'],
+	'L_URL' => $LANG['url'],
+	'L_FILE_IMAGE' => $DOWNLOAD_LANG['file_image'],
+	'L_TITLE' => $LANG['title'],
+	'L_CATEGORY' => $LANG['category'],
+	'L_REQUIRE' => $LANG['require'],
+	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
+	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
+	'L_UPDATE' => $LANG['update'],
+	'L_RESET' => $LANG['reset'],
+	'L_PREVIEW' => $LANG['preview'],
+	'L_UNIT_SIZE' => $LANG['unit_megabytes'],
+	'L_CONTENTS' => $DOWNLOAD_LANG['complete_contents'],
+	'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents'],
+	'L_SUBMIT' => $edit_file_id > 0 ? $DOWNLOAD_LANG['update_file'] : $DOWNLOAD_LANG['add_file'],
+	'L_WARNING_PREVIEWING' => $DOWNLOAD_LANG['warning_previewing'],
+	'L_REQUIRE_DESCRIPTION' => $DOWNLOAD_LANG['require_description'],
+	'L_REQUIRE_URL' => $DOWNLOAD_LANG['require_url'],
+	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
+	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
+	'L_REQUIRE_TITLE' => $LANG['require_title'],
+	'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
+));
+
 if ($edit_file_id > 0)
 {	
 	if ($submit)
@@ -622,50 +666,6 @@ else
 		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart')
 	));
 }
-
-$Template->assign_vars(array(
-	'KERNEL_EDITOR' => display_editor(),
-	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
-	'C_PREVIEW' => $preview,
-	'L_PAGE_TITLE' => TITLE,
-	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
-	'L_YES' => $LANG['yes'],
-	'L_NO' => $LANG['no'],
-	'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
-	'L_IGNORE_RELEASE_DATE' => $DOWNLOAD_LANG['ignore_release_date'],
-	'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
-	'L_FILE_VISIBILITY' => $DOWNLOAD_LANG['file_visibility'],
-	'L_APPROVED' => $DOWNLOAD_LANG['approved'],
-	'L_NOW' => $LANG['now'],
-	'L_HIDDEN' => $DOWNLOAD_LANG['hidden'],
-	'L_TO_DATE' => $LANG['to_date'],
-	'L_FROM_DATE' => $LANG['from_date'],
-	'L_DESC' => $LANG['description'],
-	'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
-	'L_SIZE' => $LANG['size'],
-	'L_URL' => $LANG['url'],
-	'L_FILE_IMAGE' => $DOWNLOAD_LANG['file_image'],
-	'L_TITLE' => $LANG['title'],
-	'L_CATEGORY' => $LANG['category'],
-	'L_REQUIRE' => $LANG['require'],
-	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
-	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
-	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
-	'L_UPDATE' => $LANG['update'],
-	'L_RESET' => $LANG['reset'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_UNIT_SIZE' => $LANG['unit_megabytes'],
-	'L_CONTENTS' => $DOWNLOAD_LANG['complete_contents'],
-	'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents'],
-	'L_SUBMIT' => $edit_file_id > 0 ? $DOWNLOAD_LANG['update_file'] : $DOWNLOAD_LANG['add_file'],
-	'L_WARNING_PREVIEWING' => $DOWNLOAD_LANG['warning_previewing'],
-	'L_REQUIRE_DESCRIPTION' => $DOWNLOAD_LANG['require_description'],
-	'L_REQUIRE_URL' => $DOWNLOAD_LANG['require_url'],
-	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
-	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
-));
 
 $Template->pparse('file_management');
 require_once('../kernel/footer.php');
