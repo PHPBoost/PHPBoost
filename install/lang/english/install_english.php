@@ -220,7 +220,7 @@ $LANG['end_installation'] = '<fieldset>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
 								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : TinyMCE is a <acronym title="What You See Is What You Get">WYSIWYG</acronym> editor which allows users to see their text formatting in real time.</li>
 								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Generic Syntax Highlighter used to highlight the source code of many programming languages.</li>
-								<li><a href="http://script.aculo.us/">script.aculo.us</a> : <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
+								<li><a href="http://script.aculo.us/">script.aculo.us</a> : Javascript and <acronym title="Asynchronous Javascript And XML">AJAX</acronym> Framework</li>
 							</ul>
 						</fieldset>
 						<fieldset>
