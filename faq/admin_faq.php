@@ -31,9 +31,9 @@ include_once('faq_begin.php'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-$page = !empty($_GET['p']) ? numeric($_GET['p']) : 0;
+$page = retrieve(GET, 'p', 0);
 
-if (!empty($_POST['submit']))
+if (retrieve(POST, 'submit', false))
 {
 	$FAQ_CONFIG['faq_name'] = stripslashes(retrieve(POST, 'faq_name', $FAQ_LANG['faq']));
 	$FAQ_CONFIG['num_cols'] = retrieve(POST, 'num_cols', 3);
@@ -99,7 +99,7 @@ else
 	));
 
 	$FAQ_CONFIG['global_auth'] = isset($FAQ_CONFIG['global_auth']) && is_array($FAQ_CONFIG['global_auth']) ? $FAQ_CONFIG['global_auth'] : array();
-	$FAQ_CONFIG['faq_name'] = isset($FAQ_CONFIG['faq_name']) ? $FAQ_CONFIG['faq_name'] : '';
+	$FAQ_CONFIG['faq_name'] = !empty($FAQ_CONFIG['faq_name']) ? $FAQ_CONFIG['faq_name'] : '';
 	$FAQ_CONFIG['num_cols'] = isset($FAQ_CONFIG['num_cols']) ? $FAQ_CONFIG['num_cols'] : 4;
 	$FAQ_CONFIG['display_block'] = isset($FAQ_CONFIG['display_block']) ? $FAQ_CONFIG['display_block'] : true;
 	
@@ -129,9 +129,8 @@ else
 		'SELECTED_BLOCK' => $FAQ_CONFIG['display_block'] ? ' selected="selected"' : '',
 		'SELECTED_INLINE' => !$FAQ_CONFIG['display_block'] ? ' selected="selected"' : ''
 	));
-
+	
 	$Template->pparse('admin_faq');
-
 }
 
 require_once('../admin/admin_footer.php');
