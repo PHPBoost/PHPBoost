@@ -511,11 +511,12 @@ elseif ($step == 5)
 			require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach ($DISTRIBUTION_MODULES as $module_name)
 		{
-			$Cache->load('modules');
+			$Cache->load('modules', RELOAD_CACHE);
 			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 		}
 		
 		$Cache->generate_all_files();
+		$Cache->Generate_file('css');
 		
 		$Sql->close();
 		

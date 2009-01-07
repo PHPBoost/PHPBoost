@@ -254,9 +254,9 @@ class Cache
 			global $CONFIG_UPLOADS;
 			$this->load('uploads');
 			if ($CONFIG_UPLOADS['bandwidth_protect'])
-			{
 				$htaccess_rules .= "\n\n# Bandwith protection #\nRewriteCond %{HTTP_REFERER} !^$\nRewriteCond %{HTTP_REFERER} !^" . HOST . "\nReWriteRule .*upload/.*$ - [F]";
-			}
+
+			//Protection anti-bot.
 			$htaccess_rules .= "\n\n" . '# Avoid Hacking Attempt #' . "\n" . 'RewriteCond %{HTTP_USER_AGENT} libwww [NC]' . "\n" . 'RewriteRule .* - [F,L]';
 		}
 		else

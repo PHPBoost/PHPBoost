@@ -49,11 +49,27 @@ class Uploads
 		return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "upload_cat");
 	}	
 	
-	//Suppression recursive du dossier et de son contenu.
-	function Del_folder($id_folder, $empty_folder = false)
+	//Suppression recursive des dossiers et fichiers du membre.
+	function Empty_folder_member($user_id)
 	{
 		global $Sql;
-		static $i = 0;
+		
+		//Suppression des fichiers.
+		$result = $Sql->Query_while("SELECT path
+		FROM " . DB_TABLE_UPLOAD . " 
+		WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		while( $row = $Sql->Sql_fetch_assoc($result) )
+			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
+		
+		//Suppression des entrées dans la base de données
+		$Sql->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
+		$Sql->Query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);			
+	}
+	
+	//Suppression recursive du dossier et de son contenu.
+	function Del_folder($id_folder)
+	{
+		global $Sql;
 		
 		//Suppression des fichiers.
 		$result = $Sql->query_while("SELECT path
@@ -63,10 +79,7 @@ class Uploads
 			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
-		if ($empty_folder && $i == 0) //Non suppression du dossier racine.
-			$i++;
-		else
-			$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_folder . "'", __LINE__, __FILE__);
 			
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_UPLOAD . " WHERE idcat = '" . $id_folder . "'", __LINE__, __FILE__);			
 		$result = $Sql->query_while("SELECT id 

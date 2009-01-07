@@ -180,7 +180,7 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 elseif (!empty($empty_folder) && $User->check_level(ADMIN_LEVEL)) //Vide un dossier membre.
 {
 	//Suppression de tout les dossiers enfants.
-	$Uploads->Del_folder($empty_folder, EMPTY_FOLDER);
+	$Uploads->Empty_folder_member($empty_folder);
 
 	redirect(HOST . DIR . '/member/upload.php?showm=1');
 }

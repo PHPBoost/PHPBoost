@@ -107,6 +107,7 @@ class PackagesManager
 		if ($generate_cache)
 		{
 			$Cache->Generate_file('modules');
+			$Cache->load('modules', RELOAD_CACHE);
 			$Cache->Generate_file('css');
             MenuService::generate_cache();
 		
