@@ -85,9 +85,11 @@ class TinyMCEParser extends ContentParser
 			$this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
 		
 		// Trim manuel
-		$this->content = preg_replace('`^([\s]|(?:<br />))*`i', '', $this->content);
-		$this->content = preg_replace('`([\s]|(?:<br />))*$`i', '', $this->content);
-		
+		$this->content = preg_replace('`^(\s|(?:<br />))*`i', '', $this->content);
+		$this->content = preg_replace('`(\s|(?:<br />))*$`i', '', $this->content);
+		$this->content = str_replace(array("\n", "\r"), ' ', $this->content);
+		$this->content = str_replace('<br />', "\n<br />", $this->content);
+	    
 		//On remet le code HTML mis de côté
 		if (!empty($this->array_tags['html']))
 		{
@@ -239,7 +241,7 @@ class TinyMCEParser extends ContentParser
 			), $this->content);
 		
 		$array_preg = array(
-			'`&lt;p&gt;[\s]*&nbsp;[\s]*&lt;/p&gt;[\s]*`',
+			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`',
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isU',
 			'`&lt;p&gt;(.+)&lt;/p&gt;`isU',
 			'`&lt;h5&gt;(.+)&lt;/h5&gt;`isU',
