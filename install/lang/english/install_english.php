@@ -208,7 +208,7 @@ $LANG['end_installation'] = '<fieldset>
 						<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
-							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 2.1.</p>
+							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 3.0.</p>
 							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> for the documentation writing, <strong>KONA</strong> for the graphics and <strong>Gsgsd</strong>, <strong>Alain91</strong> and <strong>akhenathon</strong> for the modules development.</p>
 							<h2>Other projects</h2>
 							<p>PHPBoost uses differents tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>

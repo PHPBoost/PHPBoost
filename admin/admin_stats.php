@@ -171,7 +171,7 @@ if (!empty($members))
 elseif ($visit || $visit_year) //Visites par jour classées par mois.
 {
 	//On affiche les visiteurs totaux et du jour
-	$compteur = $Sql->query_array(PREFIX . 'compteur', 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
+	$compteur = $Sql->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', "WHERE id = 1", __LINE__, __FILE__);
 	$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
 	$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 	

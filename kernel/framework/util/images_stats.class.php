@@ -60,7 +60,7 @@ class Stats
 				arsort($array_stats);
 					
 				//Conversion valeur vers angle.
-				$this->data_stats = array_map(array($this, 'value_to_angle'), $array_stats);
+				$this->data_stats = array_map(array($this, '_value_to_angle'), $array_stats);
 			}
 		}
 		elseif ($draw_type == 'histogram')
