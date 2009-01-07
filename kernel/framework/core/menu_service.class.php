@@ -223,7 +223,7 @@ class MenuService
     {
         global $Sql;
         
-        if ($menu->id() > 0)
+        if ($menu->get_id() > 0)
         {   // Updates the previous block position counter
             // Only for already existing menu, not for new ones
             $update_query = "
