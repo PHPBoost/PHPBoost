@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,7 +35,7 @@ class PrivateMsg
 {
 	## Public Methods ##
 	//Constructeur.
-	function PrivateMsg() 
+	function PrivateMsg()
 	{
 	}
 	
@@ -44,19 +44,19 @@ class PrivateMsg
 	{
 		global $Sql;
 		
-		$total_pm = $Sql->query("SELECT COUNT(*) 
-		FROM " . DB_TABLE_PM_TOPIC . "  
-		WHERE 
+		$total_pm = $Sql->query("SELECT COUNT(*)
+		FROM " . DB_TABLE_PM_TOPIC . "
+		WHERE
 		(
 			'" . $userid . "' IN (user_id, user_id_dest)
-		) 
-		AND 
+		)
+		AND
 		(
-			user_convers_status = 0 
-			OR 
+			user_convers_status = 0
+			OR
 			(
-				(user_id_dest = '" . $userid . "' AND user_convers_status = 1) 
-				OR 
+				(user_id_dest = '" . $userid . "' AND user_convers_status = 1)
+				OR
 				(user_id = '" . $userid . "' AND user_convers_status = 2)
 			)
 		)
@@ -71,7 +71,7 @@ class PrivateMsg
 		
 		//Message privé envoyé par le système => user_id = -1
 		if ($system_pm)
-		{	
+		{
 			$pm_from = '-1';
 			$user_convers_status = '1';
 		}
@@ -86,10 +86,10 @@ class PrivateMsg
 // 		//Insertion du message associé à la conversation.
 // 		$Sql->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 // 		$this->pm_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "pm_msg");
-// 		
+//
 // 		//MAJ de la conversation.
 // 		$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET last_msg_id = '" . $this->pm_msg_id . "' WHERE id = '" . $this->pm_convers_id . "'", __LINE__, __FILE__);
-// 		
+//
 // 		//Mise à jour du compteur de mp du destinataire.
 // 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
 	}
@@ -124,7 +124,7 @@ class PrivateMsg
 	//Suppression d'une conversation.
 	function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
-		global $CONFIG, $Sql;	
+		global $CONFIG, $Sql;
 				
 		$info_convers = $Sql->query_array(DB_TABLE_PM_TOPIC . " ", "user_view_pm", "last_user_id", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		if ($pm_update && $info_convers['last_user_id'] != $pm_userid)
@@ -142,17 +142,17 @@ class PrivateMsg
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 1 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);				
+				$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 1 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		}
 		else //Destinataire
 		{
 			if ($pm_del) //Supprimé par les deux membres => Supprime la conversation et les messages associés.
-			{				
+			{
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_PM_TOPIC . "  WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 				$Sql->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 			}
 			else //Mise à jour du statut de la conversation, afin de ne plus l'afficher au membre ayant décidé de la supprimer.
-				$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 2 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);						
+				$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET user_convers_status = 2 WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		}
 	}
 	
@@ -165,7 +165,7 @@ class PrivateMsg
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_PM_MSG . " WHERE id = '" . $pm_idmsg . "' AND idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		
 		$pm_max_id = $Sql->query("SELECT MAX(id) FROM " . DB_TABLE_PM_MSG . " WHERE idconvers = '" . $pm_idconvers . "'", __LINE__, __FILE__);
-		$pm_last_msg = $Sql->query_array(PREFIX . 'pm_msg', 'user_id', 'timestamp', "WHERE id = '" . $pm_max_id . "'", __LINE__, __FILE__);
+		$pm_last_msg = $Sql->query_array(DB_TABLE_PM_MSG, 'user_id', 'timestamp', "WHERE id = '" . $pm_max_id . "'", __LINE__, __FILE__);
 		
 		if (!empty($pm_max_id))
 		{

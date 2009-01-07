@@ -215,7 +215,7 @@ class Comments
 				if ($User->get_attribute('user_readonly') > time())
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
-				$row = $Sql->query_array(PREFIX . 'com', '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
+				$row = $Sql->query_array(DB_TABLE_COM, '*', "WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 				$row['user_id'] = (int)$row['user_id'];
 				
 				if ($this->idcom != 0 && ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))) //Modération des commentaires.
@@ -317,7 +317,7 @@ class Comments
 				
 				if ($get_quote > 0)
 				{
-					$info_com = $Sql->query_array(PREFIX . 'com', 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
+					$info_com = $Sql->query_array(DB_TABLE_COM, 'login', 'contents', "WHERE script = '" . $this->script . "' AND idprov = '" . $this->idprov . "' AND idcom = '" . $get_quote . "'", __LINE__, __FILE__);
 					$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
 				}
 
