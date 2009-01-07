@@ -66,7 +66,8 @@ class LinksMenuElement extends Menu
      */
 	function set_image($image)
 	{
-	   if (!strpos($image, '://') && !strpos($image, '/') == 0)
+        $image = str_replace(HOST . DIR, '', $image);
+	    if (!strpos($image, '://') && !strpos($image, '/') == 0)
         {   // The url is relative and we need to put it in the right format
             $this->image = '/' . preg_replace('`(^\./)`', '',
                 preg_replace('`((?=[/^]?)\.{2})/`', '', $image, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
@@ -83,6 +84,7 @@ class LinksMenuElement extends Menu
 	 */
 	function set_url($url)
 	{
+	    $url = str_replace(HOST . DIR, '', $url);
 	    if (!strpos($url, '://') && !strpos($url, '/') == 0)
 	    {   // The url is relative and we need to put it in the right format
             $this->url = '/' . preg_replace('`(^\./)`', '',

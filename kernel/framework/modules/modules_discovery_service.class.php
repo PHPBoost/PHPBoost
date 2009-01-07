@@ -81,7 +81,19 @@ class ModulesDiscoveryService
         return $results;
     }
 
-    function get_available_modules($functionnality='get_id', $modulesList = array())
+    
+    /**
+     * @desc Returns a list with all the modules in it, even with those that have
+     * no ModuleInterface.
+     * Useful to do generic operations on modules.
+     * @return ModuleInterface[] the ModuleInterface list
+     */
+    function get_all_modules()
+    {
+        return $this->get_available_modules('none', array(), true);
+    }
+    
+    function get_available_modules($functionnality='none', $modulesList = array(), $included_failure = false)
     /**
      *  Renvoie la liste des modules disposant de la fonctionnalité demandée.
      *  Si $modulesList est spécifié, alors on ne recherche que le sous ensemble de celui-ci
@@ -91,11 +103,10 @@ class ModulesDiscoveryService
         if ($modulesList === array())
         {
             global $MODULES;
-            
             foreach (array_keys($MODULES) as $module_id)
             {
 			   $module = $this->get_module($module_id);
-                if (!$module->got_error() && $module->has_functionnality($functionnality))
+                if ($included_failure || (!$module->got_error() && $module->has_functionnality($functionnality)))
                     array_push($modules, $module);
             }
         }
@@ -103,7 +114,7 @@ class ModulesDiscoveryService
         {
             foreach ($modulesList as $module)
             {
-                if (!$module->got_error() && $module->has_functionnality($functionnality))
+                if ($included_failure || (!$module->got_error() && $module->has_functionnality($functionnality)))
                     array_push($modules, $module);
             }
         }

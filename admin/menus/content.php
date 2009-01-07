@@ -64,7 +64,7 @@ if ($action_post == 'save')
     if ($menu->is_enabled())
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    $menu->set_content(!empty($_POST['contents']) ? strparse($_POST['contents'], array(), DO_NOT_ADD_SLASHES) : '');
+    $menu->set_content((string) $_POST['contents']);
     
     MenuService::save($menu);
     MenuService::generate_cache();

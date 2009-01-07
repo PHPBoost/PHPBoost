@@ -47,7 +47,7 @@ class ContentMenu extends Menu
     /**
      * @param string $content the content to set
      */
-    function set_content($content) { $this->content = $content; }
+    function set_content($content) { $this->content = strparse($content, array(), DO_NOT_ADD_SLASHES); }
     
     ## Getters ##
     /**
