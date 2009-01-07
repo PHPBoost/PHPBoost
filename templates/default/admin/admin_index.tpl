@@ -7,9 +7,9 @@
 					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="admin_menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>
+					<a href="menus/menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="" /></a>
 					<br />
-					<a href="admin_menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
+					<a href="menus/menus.php" class="quick_link">{L_MENUS_MANAGMENT}</a>
 				</li>
 				<li>
 					<a href="admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>

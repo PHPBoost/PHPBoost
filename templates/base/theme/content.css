@@ -63,27 +63,27 @@ hr {
 }
 
 div.block_title span {
-    text-transform: uppercase;
-    font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
-    font-size: 0.75em;
-    font-weight: bold;
-    color: #E53B00;
-    background: #FFFFFF;
-    border-color: #71BAF1;
-    -moz-border-radius: 12px;
-    -khtml-border-radius: 12px;
-    -webkit-border-radius: 12px;
-    border-radius: 12px;
+    text-transform:uppercase;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    font-size:0.75em;
+    font-weight:bold;
+    color:#E53B00;
+    background:#FFFFFF;
+    border-color:#71BAF1;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
 }
 
 div.block_content {
-    font-family: Verdana, 'Bitstream Vera Sans', Times, serif;
-    border-color: #71BAF1;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    border-color:#71BAF1;
     -moz-border-radius:5px;
     -khtml-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-    background: #F1F4F6;
+    background:#F1F4F6;
 }
 
 input, textarea, optgroup, select, .xmlhttprequest_preview{
