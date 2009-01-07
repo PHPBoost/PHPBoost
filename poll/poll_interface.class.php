@@ -44,7 +44,7 @@ class PollInterface extends ModuleInterface
 	
 		$code = 'global $CONFIG_POLL;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
+		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 		
@@ -62,7 +62,7 @@ class PollInterface extends ModuleInterface
 					$array_vote = explode('|', $poll['votes']);
 					
 					$total_vote = array_sum($array_vote);
-					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //EmpÃªche la division par 0.
+					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //Empêche la division par 0.
 					
 					$array_votes = array_combine($array_answer, $array_vote);
 					foreach ($array_votes as $answer => $nbrvote)
@@ -79,14 +79,14 @@ class PollInterface extends ModuleInterface
 		return $code;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalièe.
 	function on_changeday()
 	{
 		global $Sql;
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
 
-		//Publication des news en attente pour la date donnÃ©e.
+		//Publication des news en attente pour la date donnéé.
 		$result = $Sql->query_while("SELECT id, start, end
 		FROM " . PREFIX . "poll
 		WHERE visible != 0", __LINE__, __FILE__);
