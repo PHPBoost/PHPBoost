@@ -3,7 +3,7 @@
  *                              action.php
  *                            -------------------
  *   begin                : May 07, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -293,6 +293,10 @@ elseif ($del_article > 0) //Suppression d'un article
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_article . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__); 
 	
+	 // Feeds Regeneration
+     import('content/syndication/feed');
+     Feed::clear_cache('wiki');
+	
 	if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS))//Si elle  a une catégorie parente
 		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), '&'));
 	else
@@ -353,6 +357,10 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 			$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		}
 		$Cache->Generate_module_file('wiki');
+
+		// Feeds Regeneration
+        import('content/syndication/feed');
+        Feed::clear_cache('wiki');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
 		if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS) && $_WIKI_CATS[$article_infos['id_cat']]['id_parent'] > 0)
