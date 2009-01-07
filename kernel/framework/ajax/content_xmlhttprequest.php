@@ -56,7 +56,7 @@ $contents = second_parse(stripslashes($parser->get_content()));
 if (preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
 	$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
 
-echo !empty($contents) ? $contents : '';
+echo $contents;
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 
