@@ -42,7 +42,12 @@ if (!empty($_POST['valid']) && !empty($id_post))
 	if (!empty($_POST['delete'])) //Suppression du membre.
 	{
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
-	
+		
+		//Initialisation  de la class de gestion des fichiers.
+		include_once('../member/uploads.class.php');
+		$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
+		$Uploads->Empty_folder_member($id_post);
+			
 		//On régénère le cache
 		$Cache->Generate_file('stats');
 			
@@ -333,7 +338,12 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 elseif (!empty($id) && $delete) //Suppression du membre.
 {
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
+	
+	//Initialisation  de la class de gestion des fichiers.
+	include_once('../member/uploads.class.php');
+	$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
+	$Uploads->Empty_folder_member($id);
 	
 	//On régénère le cache
 	$Cache->Generate_file('stats');
