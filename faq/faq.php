@@ -58,21 +58,20 @@ if (!$auth_read)
 
 include_once('../kernel/header.php');
 
-$Template->set_filenames(array(
-	'faq'=> 'faq/faq.tpl'
-));
-$Template->assign_vars(array(
-	'THEME' => get_utheme(),
-	'MODULE_DATA_PATH' => $Template->get_module_data_path('faq')
+$template = new Template('faq/faq.tpl');
+
+$template->assign_vars(array(
+	'TITLE' => $TITLE,
+	'MODULE_DATA_PATH' => $template->get_module_data_path('faq')
 ));
 
 if (!empty($FAQ_CATS[$id_faq]['description']))
-	$Template->assign_block_vars('description', array(
+	$template->assign_block_vars('description', array(
 		'DESCRIPTION' => second_parse($FAQ_CATS[$id_faq]['description'])
 	));
 
 if ($auth_write)
-	$Template->assign_block_vars('management', array());
+	$template->assign_block_vars('management', array());
 
 //let's check if there are some subcategories
 $num_subcats = 0;
@@ -85,7 +84,7 @@ foreach ($FAQ_CATS as $id => $value)
 //listing of subcategories
 if ($num_subcats > 0)
 {	
-	$Template->assign_vars(array(
+	$template->assign_vars(array(
 		'C_FAQ_CATS' => true
 	));	
 	
@@ -96,8 +95,8 @@ if ($num_subcats > 0)
 		if ($id != 0 && $value['visible'] && $value['id_parent'] == $id_faq && (empty($value['auth']) || $User->check_auth($value['auth'], AUTH_READ)))
 		{
 			if ( $i % $FAQ_CONFIG['num_cols'] == 1 )
-				$Template->assign_block_vars('row', array());
-			$Template->assign_block_vars('row.list_cats', array(
+				$template->assign_block_vars('row', array());
+			$template->assign_block_vars('row.list_cats', array(
 				'ID' => $id,
 				'NAME' => $value['name'],
 				'WIDTH' => floor(100 / (float)$FAQ_CONFIG['num_cols']),
@@ -109,7 +108,7 @@ if ($num_subcats > 0)
 			));
 			
 			if (!empty($value['image']))
-				$Template->assign_vars(array(
+				$template->assign_vars(array(
 					'C_CAT_IMG' => true
 				));
 				
@@ -135,20 +134,20 @@ if ($num_rows > 0)
 		$faq_display_block = false;
 	
 	//Displaying administration tools
-	$Template->assign_vars(array(
+	$template->assign_vars(array(
 		'C_ADMIN_TOOLS' => $auth_write
 	));
 	
 	if (!$faq_display_block)
-		$Template->assign_block_vars('questions', array());
+		$template->assign_block_vars('questions', array());
 	else
-		$Template->assign_block_vars('questions_block', array());
+		$template->assign_block_vars('questions_block', array());
 		
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		if (!$faq_display_block)
 		{
-			$Template->assign_block_vars('questions.faq', array(
+			$template->assign_block_vars('questions.faq', array(
 				'ID_QUESTION' => $row['id'],
 				'QUESTION' => $row['question'],
 				'ANSWER' => second_parse($row['answer']),
@@ -162,17 +161,17 @@ if ($num_rows > 0)
 				'C_SHOW_ANSWER' => $row['id'] == $id_question
 			));
 			if ($row['q_order'] > 1)
-				$Template->assign_block_vars('questions.faq.up', array());
+				$template->assign_block_vars('questions.faq.up', array());
 			if ($row['q_order'] < $num_rows)
-				$Template->assign_block_vars('questions.faq.down', array());
+				$template->assign_block_vars('questions.faq.down', array());
 		}
 		else
 		{
-			$Template->assign_block_vars('questions_block.header', array(
+			$template->assign_block_vars('questions_block.header', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['id']
 			));
-			$Template->assign_block_vars('questions_block.contents', array(
+			$template->assign_block_vars('questions_block.contents', array(
 				'ANSWER' => second_parse($row['answer']),
 				'QUESTION' => $row['question'],
 				'ID' => $row['id'],
@@ -185,18 +184,18 @@ if ($num_rows > 0)
 			));
 			
 			if ($row['q_order'] > 1)
-				$Template->assign_block_vars('questions_block.contents.up', array());
+				$template->assign_block_vars('questions_block.contents.up', array());
 			if ($row['q_order'] < $num_rows)
-				$Template->assign_block_vars('questions_block.contents.down', array());
+				$template->assign_block_vars('questions_block.contents.down', array());
 		}
 	}
 }
 else
 {
-	$Template->assign_block_vars('no_question', array());
+	$template->assign_block_vars('no_question', array());
 }
 
-$Template->assign_vars(array(
+$template->assign_vars(array(
 	'L_NO_QUESTION_THIS_CATEGORY' => $FAQ_LANG['faq_no_question_here'],
 	'L_CAT_MANAGEMENT' => $FAQ_LANG['category_manage'],
 	'L_EDIT' => $FAQ_LANG['update'],
@@ -213,7 +212,7 @@ $Template->assign_vars(array(
 	'U_ADMIN_CAT' => $id_faq > 0 ? url('admin_faq_cats.php?edit=' . $id_faq) : url('admin_faq_cats.php')
 ));
 
-$Template->pparse('faq');
+$template->parse();
 
 include_once('../kernel/footer.php'); 
 

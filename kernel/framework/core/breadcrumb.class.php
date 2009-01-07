@@ -36,7 +36,7 @@ class BreadCrumb
 	{
 		if (!empty($text))
 		{
-			$this->array_links[] = array(stripslashes($text), $target);
+			$this->array_links[] = array($text, $target);
 			return true;
 		}
 		else

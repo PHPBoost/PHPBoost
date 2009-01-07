@@ -122,7 +122,7 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
     
     //Protection contre les balises html.
     if ($html_protect)
-        $var = htmlspecialchars($var, ENT_NOQUOTES);
+        $var = htmlspecialchars($var);
     
 	switch ($addslashes)
 	{
