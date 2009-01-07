@@ -87,6 +87,7 @@ class ModuleInterface
                 if (substr($method, 0, 1) != '_')
                     $this->functionnalities[] = $method;
             }
+            $this->functionnalities[] = 'none';
         }
         $this->errors = $error;
     }

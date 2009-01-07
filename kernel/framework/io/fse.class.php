@@ -43,6 +43,15 @@ class FileSystemElement
 		$this->is_open = false;
 	}
 	
+    /**
+     * @desc Returns true if the file exists, else, false
+     * @return true if the file exists, else, false
+     */
+    function exists()
+    {
+        return file_exists($this->path);
+    }
+	
 	// initialisation avant l'ouverture
 	function open()
 	{

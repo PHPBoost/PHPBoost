@@ -507,6 +507,11 @@ elseif ($step == 5)
 		include('../kernel/framework/core/cache.class.php');
 		$Cache = new Cache;
 		
+        // Ajout du menu de lien par défaut tout en haut à gauche
+		import('core/menu_service');
+        $modules_menu = new LinksMenu('PHPBoost', '/', '', VERTICAL_MENU);
+        MenuService::move($modules_menu, BLOCK_POSITION__LEFT);
+        
 		//Installation des modules de la distribution
 			require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach ($DISTRIBUTION_MODULES as $module_name)
@@ -514,6 +519,39 @@ elseif ($step == 5)
 			$Cache->load('modules', RELOAD_CACHE);
 			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
 		}
+		
+        $Cache->generate_file('modules');
+        $Cache->load('modules', RELOAD_CACHE);
+        
+		import('modules/modules_discovery_service');
+		// Création d'un menu contenant des liens vers tous les modules
+		$modules_discovery_service = new ModulesDiscoveryService();
+		// Récupère tous les modules même ceux n'ayant pas d'interface
+		$modules = $modules_discovery_service->get_all_modules();
+		foreach ($modules as $module)
+		{
+		    $infos = $module->get_infos();
+		    if (!empty($infos['infos']) && !empty($infos['infos']['starteable_page']))
+		    {
+		        $img = '';
+		        $img_url = '../' . $module->get_id() . '/' . $module->get_id();
+                import('io/file');
+		        foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
+		        {
+		            $file = new File($img_url . $extension);
+		            if ($file->exists())
+		            {
+		                $img = '/' . $module->get_id() . '/' . $file->get_name();
+		                break;
+		            }
+		        }
+		        $modules_menu->add(new LinksMenuLink($module->get_name(),
+		            '/' . $module->get_id() . '/' . $infos['infos']['starteable_page'],
+		             $img
+		        ));
+		    }
+		}
+		MenuService::save($modules_menu);
 		
 		$Cache->generate_all_files();
 		$Cache->Generate_file('css');
