@@ -3,7 +3,7 @@
  *                              poll_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class PollInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,7 +37,7 @@ class PollInterface extends ModuleInterface
         parent::ModuleInterface('poll');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
@@ -51,13 +51,13 @@ class PollInterface extends ModuleInterface
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
 
 		$_array_poll = '';
-		if (is_array($CONFIG_POLL['poll_mini']))
+		if (!empty($CONFIG_POLL['poll_mini']) && is_array($CONFIG_POLL['poll_mini']))
 		{
 			foreach ($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 			{
 				$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if (!empty($poll['id'])) //Sondage existant.
-				{	
+				{
 					$array_answer = explode('|', $poll['answers']);
 					$array_vote = explode('|', $poll['votes']);
 					
@@ -91,7 +91,7 @@ class PollInterface extends ModuleInterface
 		FROM " . PREFIX . "poll
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
-		{ 
+		{
 			if ($row['start'] <= time() && $row['start'] != 0)
 				$Sql->query_inject("UPDATE " . PREFIX . "poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
