@@ -713,15 +713,14 @@ class TinyMCEParser extends ContentParser
                 '`(\s|(?:<br />))*$`i',
                 '`<br />\s*(<h3[^>]*>.*</h3>)`iUs',
                 '`(<h3[^>]*>.*</h3>)\s*<br />`iUs',
-                '`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs',
-                
+                '`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs'
 		    ),
 		    array(
                 '',
                 '',
                 '$1',
                 "$1\n",
-                '$1$2',
+                '$1$2'
 		    ),
 		    $this->content
 	    );
