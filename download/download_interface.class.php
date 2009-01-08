@@ -39,7 +39,7 @@ class DownloadInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql, $LANG;
+		global $Sql, $LANG, $Cache;
 	
 		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			

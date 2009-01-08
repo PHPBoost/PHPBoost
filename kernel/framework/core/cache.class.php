@@ -50,7 +50,10 @@ class Cache
 		global $Errorh, $Sql;
 		
 		//On charge le fichier
-		$include = !$reload_cache ? !@include_once(PATH_TO_ROOT . '/cache/' . $file . '.php') : !@include(PATH_TO_ROOT . '/cache/' . $file . '.php');
+		if ($reload_cache)
+		    $include = !@include(PATH_TO_ROOT . '/cache/' . $file . '.php');
+	    else
+            $include = !@include_once(PATH_TO_ROOT . '/cache/' . $file . '.php');
 		if ($include)
 		{
 			if (in_array($file, $this->files))
@@ -59,7 +62,7 @@ class Cache
 				$this->generate_file($file);
 				//On inclue une nouvelle fois
 				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
-					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 			else
 			{
@@ -67,23 +70,23 @@ class Cache
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
 				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
-					$Errorh->handler('Cache -> Impossible de lire le fichier cache <strong>' . $file . '</strong>, ni de le régénérer!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
+					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
-		}
-		
-		if ($file == 'config')
-		{   // Intègre le numéro de build
-            import('io/file');
-            $file = new File(PATH_TO_ROOT . '/.build');
-            if (!empty($CONFIG['_version']))
-                $CONFIG['version'] = $CONFIG['_version'] . $file->get_contents();
-            else
-            {
-                $CONFIG['_version'] = $CONFIG['version'];
-                $CONFIG['version'] = $CONFIG['version'] . $file->get_contents();
+			
+    		if ($file == 'config')
+            {   // Intègre le numéro de build
+                import('io/file');
+                $file = new File(PATH_TO_ROOT . '/.build');
+                if (!empty($CONFIG['_version']))
+                    $CONFIG['version'] = $CONFIG['_version'] . $file->get_contents();
+                else
+                {
+                    $CONFIG['_version'] = $CONFIG['version'];
+                    $CONFIG['version'] = $CONFIG['version'] . $file->get_contents();
+                }
+                    
+                $file->close();
             }
-                
-            $file->close();
 		}
     }
     
