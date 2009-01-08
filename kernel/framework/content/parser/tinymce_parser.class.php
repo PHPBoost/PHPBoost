@@ -314,13 +314,13 @@ class TinyMCEParser extends ContentParser
 		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="color: ([^"]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="color: ?([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
 		//Background color tag
 		if (!in_array('bgcolor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="background-color: ([^"]+)"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="background-color: ?([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Align tag

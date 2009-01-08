@@ -42,7 +42,7 @@ $ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
 
 //On prend le bon parseur avec la bonne configuration
 $content_manager = new ContentManager($editor);
-$parser =& $content_manager->get_parser($editor);
+$parser = $content_manager->get_parser($editor);
 
 $parser->set_content($contents, MAGIC_QUOTES);
 if (!empty($forbidden_tags))
