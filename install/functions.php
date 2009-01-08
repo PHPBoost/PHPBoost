@@ -63,10 +63,11 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			$Sql->create_database($database_name);
 			
 			//On regarde si elle a pu être traitée
-			$table_list = $Sql->list_databases();
+			$databases_list = $Sql->list_databases();
+			
 			$Sql->close();
 			
-			if (in_array($database_name, $table_list))
+			if (in_array($database_name, $databases_list))
 				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED;
 			else
 				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED;
