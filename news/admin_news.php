@@ -27,6 +27,7 @@
 ###################################################*/
 
 require_once('../admin/admin_begin.php');
+define('ALTERNATIVE_CSS', 'news');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
@@ -263,7 +264,6 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 	
 	$Template->assign_block_vars('news', array(
 		'THEME' => get_utheme(),
-		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 		'IDNEWS' => $id_post,
 		'TITLE' => stripslashes($title),
 		'CONTENTS' => stripslashes($contents),

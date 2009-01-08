@@ -15,9 +15,6 @@
                 <div style="float:right;">{EDIT}</div>
             </div>
             <div class="news_content">
-                <img src="../templates/phpboost/news/images/phpboost_box_v2_mini.jpg" alt="PHPBoost 2.0" class="float_right" />
-                <img src="../templates/phpboost/news/images/phpboost_version.jpg" alt="PHPBoost 2.0" />
-                <br />
                 &nbsp;&nbsp;{CONTENTS}
             </div>
             

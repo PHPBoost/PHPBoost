@@ -96,8 +96,6 @@
 
 			# START news #
 
-			<link href="{news.MODULE_DATA_PATH}/news.css" rel="stylesheet" type="text/css" media="screen, handheld">
-
 			<script type="text/javascript">
 			<!--
 				var theme = '{THEME}';
