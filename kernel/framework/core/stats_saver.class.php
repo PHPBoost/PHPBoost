@@ -156,6 +156,7 @@ class StatsSaver
 			'Windows 98|Win98' => 'windows98',
 			'Win 9x 4.90|Windows Me' => 'windowsme',
 			'Win95|Win32|Windows 95' => 'windows95',
+			'Windows CE' => 'windowsce',
 			'Solaris|SunOS' => 'sunos',
 			'Nintendo Wii' => 'wii',
 			'PlayStation Portable' => 'psp',

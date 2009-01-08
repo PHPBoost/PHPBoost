@@ -133,6 +133,7 @@ $stats_array_os = array(
        'windowsme' => array('Windows Me', 'windowsold.png'),
        'windows98' => array('Windows 98', 'windowsold.png'),
        'windows95' => array('Windows 95', 'windowsold.png'),
+	   'windowsce' => array('Windows CE', 'windowsold.png'),
        'macintosh' => array('Mac OS', 'mac.png'),
        'sunos' => array('SunOS', 'sun.png'),
        'os2' => array('OS2', 'os2.png'),
