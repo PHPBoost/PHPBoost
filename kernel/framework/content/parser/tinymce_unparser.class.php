@@ -52,7 +52,7 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function unparse()
 	{
-	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
+//	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	    //Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -105,7 +105,7 @@ class TinyMCEUnparser extends ContentUnparser
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
-	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
+//	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 //        exit;
 	}
 	
