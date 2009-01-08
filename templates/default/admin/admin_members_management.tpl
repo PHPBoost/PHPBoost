@@ -34,8 +34,12 @@
 		    }
 			return true;
 		}
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_USER}");
+		function Confirm(level) {
+			ok = confirm("{L_CONFIRM_DEL_USER}");
+			if (ok && (level == 2)) {
+				return confirm("{L_CONFIRM_DEL_ADMIN}");
+			}
+			return ok;
 		}
 		-->
 		</script>
@@ -162,7 +166,7 @@
 						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #
