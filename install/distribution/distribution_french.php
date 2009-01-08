@@ -26,7 +26,7 @@
 ###################################################*/
 
 //Nom de la distribution
-define('DISTRIBUTION_NAME', 'Complet');
+define('DISTRIBUTION_NAME', 'Pack complet');
 
 //Description de la distribution
 define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
