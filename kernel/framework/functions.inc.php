@@ -432,7 +432,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 	//On utilise le gestionnaire de contenu
     $content_manager = new ContentManager();
     //On lui demande le parser adéquat
-	$parser =& $content_manager->get_parser();
+	$parser = $content_manager->get_parser();
 	
 	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
     $parser->set_content($content, MAGIC_QUOTES);

@@ -182,7 +182,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
 		
 		//Balise size
-		$this->content = preg_replace_callback('`<span style="font-size: ([0-9]+)px;">(.*)</span>`isU', create_function('$size', 'if ($size[1] >= 36) $fontsize = 7;	elseif ($size[1] <= 12) $fontsize = 1;	else $fontsize = min(($size[1] - 6)/2, 7); return \'<font size="\' . $fontsize . \'">\' . $size[2] . \'</font>\';'), $this->content);
+		$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array(&$this, '_unparse_size_tag'), $this->content);
 		
 		//Citations
 		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote>$2</blockquote>', $this->content);
@@ -384,6 +384,51 @@ class TinyMCEUnparser extends ContentUnparser
 		{
 			return $matches[2];
 		}
+	}
+	
+	/**
+	 * Processes the size tag. PHPBoost and TinyMCE don't work similary.
+	 * PHPBoost needs to have a size in pixels, whereas TinyMCE explains it differently,
+	 * with a name associated to each size (for instance xx-small, medium, x-large...).
+	 * This method converts from PHPBoost to TinyMCE.
+	 * @param string[] $matches The matched elements.
+	 * @return string The good PHPBoost syntax.
+	 */
+	function _unparse_size_tag($matches)
+	{
+		$size = 0;
+		//We retrieve the size (in pt)
+		switch ((int)$matches[1])
+		{
+			case 8:
+				$size = 'xx-small';
+				break;
+			case 10:
+				$size = 'x-small';
+				break;
+			case 12:
+				$size = 'small';
+				break;
+			case 14:
+				$size = 'medium';
+				break;
+			case 18:
+				$size = 'large';
+				break;
+			case 24:
+				$size = 'x-large';
+				break;
+			case 36:
+				$size = 'xx-large';
+				break;
+			default:
+				$size = '';
+		}
+		//If the size is known, we put the HTML code and convert the size into pixels
+		if (!empty($size))
+			return '<span style="font-size: ' . $size . ';">' . $matches[2] . '</span>';
+		else
+			return $matches[2];
 	}
 }
 

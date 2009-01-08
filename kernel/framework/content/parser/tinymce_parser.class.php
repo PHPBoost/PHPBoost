@@ -390,7 +390,13 @@ class TinyMCEParser extends ContentParser
 		//callback replacements
 		// size tag
 		if (!in_array('size', $this->forbidden_tags))
-			$this->content = preg_replace_callback('`&lt;span style="font-size: ([a-z0-9-]+);"&gt;(.+)&lt;/span&gt;`isU', array(&$this, '_parse_size_tag'), $this->content);
+		{
+		    //On doit repasser plusieurs fois pour que ça soit pris en compte (comportement un peu bizarre)
+		    //Par mesure de sécurité on s'arrête à 10
+			$nbr_size_parsing = 0;
+			while (preg_match('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', $this->content) && $nbr_size_parsing++ < 10)
+			    $this->content = preg_replace_callback('`&lt;span style="font-size: ([a-z-]+);"&gt;(.+)&lt;/span&gt;`isU', array(&$this, '_parse_size_tag'), $this->content);
+		}
 		
 		//image tag
 		if (!in_array('image', $this->forbidden_tags))
@@ -605,7 +611,7 @@ class TinyMCEParser extends ContentParser
 	 * Processes the size tag. PHPBoost and TinyMCE don't work similary.
 	 * PHPBoost needs to have a size in pixels, whereas TinyMCE explains it differently,
 	 * with a name associated to each size (for instance xx-small, medium, x-large...).
-	 * This method converts from the on to the other.
+	 * This method converts from TinyMCE to PHPBoost.
 	 * @param string[] $matches The matched elements.
 	 * @return string The good PHPBoost syntax.
 	 */
@@ -641,7 +647,7 @@ class TinyMCEParser extends ContentParser
 		}
 		//If the size is known, we put the HTML code and convert the size into pixels
 		if ($size > 0)
-			return '<span style="font-size: ' . ($size / 0.75) . 'px;">' . $matches[2] . '</span>';
+			return '<span style="font-size: ' . $size . 'px;">' . $matches[2] . '</span>';
 		else
 			return $matches[2];
 	}
