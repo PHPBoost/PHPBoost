@@ -47,7 +47,7 @@ class PollInterface extends ModuleInterface
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
-		
+
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
 
 		$_array_poll = '';
