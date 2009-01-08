@@ -54,8 +54,8 @@ elseif (!empty($_POST['previs']))
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
-	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$title = stripslashes(retrieve(POST, 'name', ''));
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
@@ -68,7 +68,7 @@ elseif (!empty($_POST['previs']))
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
-		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'PREVIEWED_CONTENTS' => second_parse(stripslashes(strparse($contents))),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
@@ -86,7 +86,7 @@ elseif (!empty($_POST['previs']))
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,
-		'CONTENTS' => $contents,
+		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNSECURE),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'COMPT' => $compt,

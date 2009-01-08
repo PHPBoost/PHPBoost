@@ -28,10 +28,13 @@
 
 define('HTML_NO_PROTECT', false);
 define('HTML_PROTECT', true);
+//Automatique : échappe seulement si le serveur n'échappe pas automatiquement
 define('ADDSLASHES_AUTO', 0);
-define('ADDSLASHES_ON', 1);
-define('ADDSLASHES_OFF', 2);
-define('MAGIC_QUOTES_UNACTIV', false);
+//Force l'échappement des caractères critique
+define('ADDSLASHES_FORCE', 1);
+//Aucun échappement
+define('ADDSLASHES_NONE', 2);
+define('MAGIC_QUOTES_DISABLED', false);
 define('NO_UPDATE_PAGES', true);
 define('NO_FATAL_ERROR', false);
 define('NO_EDITOR_UNPARSE', false);
@@ -118,7 +121,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 //Passe à la moulinette les entrées (chaînes) utilisateurs.
 function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES_AUTO)
 {
-    $var = trim($var);
+    $var = trim((string)$var);
     
     //Protection contre les balises html.
     if ($html_protect)
@@ -126,24 +129,23 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
     
 	switch ($addslashes)
 	{
-		case ADDSLASHES_ON:
-			//Si magic_quotes est activé
-			if (MAGIC_QUOTES)
+		case ADDSLASHES_FORCE:
+			//On force l'échappement de caractères
 				$var = addslashes($var);
 			break;
-		case ADDSLASHES_OFF:
-			if (MAGIC_QUOTES)
-				$var = stripslashes($var);
+		case ADDSLASHES_NONE:
+		    //On ne touche pas la chaîne
+			$var = stripslashes($var);
 			break;
 		//Mode automatique
 		case ADDSLASHES_AUTO:
 		default:
 			//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
-			if (MAGIC_QUOTES == false)
+			if (!MAGIC_QUOTES)
 				$var = addslashes($var);
 	}
 
-    return (string)$var;
+    return $var;
 }
 
 //Vérifie les entrées numeriques.

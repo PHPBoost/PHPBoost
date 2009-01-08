@@ -40,7 +40,7 @@ $Cache->load('forum');
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$CONFIG_FORUM['forum_name'] = retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum', TSTRING_UNSECURE);  
+	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum'));  
 	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
 	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
 	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;
@@ -50,9 +50,9 @@ if (!empty($_POST['valid']))
 	$CONFIG_FORUM['no_left_column'] = retrieve(POST, 'no_left_column', 0);
 	$CONFIG_FORUM['no_right_column'] = retrieve(POST, 'no_right_column', 0);
 	$CONFIG_FORUM['activ_display_msg']  = retrieve(POST, 'activ_display_msg', 0);
-	$CONFIG_FORUM['display_msg'] = retrieve(POST, 'display_msg', '', TSTRING_UNSECURE);
-	$CONFIG_FORUM['explain_display_msg'] = retrieve(POST, 'explain_display_msg', '', TSTRING_UNSECURE);	
-	$CONFIG_FORUM['explain_display_msg_bis'] = retrieve(POST, 'explain_display_msg_bis', '', TSTRING_UNSECURE);
+	$CONFIG_FORUM['display_msg'] = stripslashes(retrieve(POST, 'display_msg', ''));
+	$CONFIG_FORUM['explain_display_msg'] = stripslashes(retrieve(POST, 'explain_display_msg', ''));	
+	$CONFIG_FORUM['explain_display_msg_bis'] = stripslashes(retrieve(POST, 'explain_display_msg_bis', ''));
 	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		

@@ -62,7 +62,7 @@ if ($get_visit_month)
 	$Sql->query_close($result);
 	
 	//Nombre de jours pour chaque mois (gestion des années bissextiles)
-	$bissextile = (($year % 4) == 0) ? 29 : 28;
+	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 	//Complément des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	for ($i = 1; $i <= $array_month[$month - 1]; $i++)
@@ -137,7 +137,7 @@ elseif ($get_pages_month)
 	$Sql->query_close($result);
 	
 	//Nombre de jours pour chaque mois (gestion des années bissextiles)
-	$bissextile = (($year % 4) == 0) ? 29 : 28;
+	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 	//Complément des jours manquant.
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 	for ($i = 1; $i <= $array_month[$month - 1]; $i++)

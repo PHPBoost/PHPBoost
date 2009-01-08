@@ -48,5 +48,4 @@ INSERT INTO `phpboost_smileys` (`idsmiley`, `code_smiley`, `url_smiley`) VALUES
 (39, ':mat', 'mat.gif'),
 (40, ':miam', 'miam.gif'),
 (41, ':+1', 'plus1.gif'),
-(42, ':lu', 'lu.gif'),
-(45, ':boulet', 'boulet-repere.gif');
+(42, ':lu', 'lu.gif');

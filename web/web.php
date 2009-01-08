@@ -73,7 +73,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
-		'CONTENTS' => $web['contents'],
+		'CONTENTS' => second_parse($web['contents']),
 		'URL' => $web['url'],
 		'CAT' => $CAT_WEB[$idcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $web['timestamp']),
