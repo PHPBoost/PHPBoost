@@ -192,7 +192,7 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote>$2</blockquote>', $this->content);
 		
 		//Balise indentation
-		$this->content = preg_replace_callback('`((?:<div class="indent">)+)(.+)((?:</div>)+)`isU', array(&$this, '_unparse_indent'), $this->content);
+		$this->content = preg_replace('`<div class="indent">(.+)</div>`isU', '<p style="padding-left: 30px;">$1</p>', $this->content);
 		
 		//Police
 		$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, '_unparse_font'), $this->content );
@@ -320,47 +320,6 @@ class TinyMCEUnparser extends ContentUnparser
 		}
 		
 		return '[wikipedia' . (!empty($page_name) ? ' page="' . $page_name . '"' : '') . (!empty($lang) ? ' lang="' . $lang . '"' : '') . ']' . $matches[3] . '[/wikipedia]';
-	}
-	
-	/**
-	 * Unparses the indentation tag. TinyMCE supports it but not with a similar way,
-	 * it we nest indentation, it returns only one indentation containing directly the good margin,
-	 * whereas in BBCode we must nest the indent tags.
-	 *
-	 * @param string[] $matches The matched elements
-	 * @return string The correct TinyMCE syntax
-	 */
-	function _unparse_indent($matches)
-	{
-		//Combien de fois c'est indenté ?
-		$nbr_indent = substr_count($matches[1], '<div class="indent">');
-		
-		//Combien de fois c'est fermé ?
-		$nbr_closed_indent_tags = substr_count($matches[3], '</div>');
-		
-		//L'expression régulière ne capture que le dernier div fermant. Les autres ont à la fin du contenu central, on les traite à la main
-		while (substr($matches[2], -6) == '</div>')
-		{
-		    //On le supprime et on incrémente de 1 le nombre de div fermants
-		    $matches[2] = substr($matches[2], 0, -6);
-		    $nbr_closed_indent_tags++;
-		}
-		
-		//Si ça a été ouvert et fermé le même nombre de fois
-		if ($nbr_indent == $nbr_indent)
-		{
-			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . '</p>';
-		}
-		//Si c'est plus fermé qu'ouvert c'est que d'autres balises sont fermées, on prend en enlève $nbr_indent - 1
-		elseif ($nbr_indent < $nbr_closed_indent_tags)
-		{
-			return '<p style="padding-left: ' . (30 * $nbr_indent) . 'px;">' . $matches[2] . str_repeat('</p>', $nbr_closed_indent_tags - $nbr_indent + 1);
-		}
-		//Sinon c'est une situation anormale, on renvoie ce qu'on a reçu
-		else
-		{
-			return $matches[1] . $matches[2] . $matches[3];
-		}
 	}
 	
 	/**
