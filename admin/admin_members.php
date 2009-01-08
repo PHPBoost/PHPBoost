@@ -44,7 +44,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		//Initialisation  de la class de gestion des fichiers.
-		include_once('../member/uploads.class.php');
+		import('member/uploads');
 		$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
 		$Uploads->Empty_folder_member($id_post);
 			
@@ -140,7 +140,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_avatar = '';
 			$dir = '../images/avatars/';
 			
-			include_once('../kernel/framework/io/upload.class.php');
+			import('io/upload');
 			$Upload = new Upload($dir);
 			
 			if (is_writable($dir))
@@ -341,7 +341,7 @@ elseif (!empty($id) && $delete) //Suppression du membre.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 	
 	//Initialisation  de la class de gestion des fichiers.
-	include_once('../member/uploads.class.php');
+	import('members/uploads');
 	$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
 	$Uploads->Empty_folder_member($id);
 	
@@ -846,7 +846,7 @@ else
 
 	$nbr_membre = $Sql->count_table("member", __LINE__, __FILE__);
 	//On crée une pagination si le nombre de membre est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 	 
 	$get_sort = retrieve(GET, 'sort', '');	
@@ -884,6 +884,7 @@ else
 		'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONFIRM_DEL_USER' => $LANG['confirm_del_member'],
+		'L_CONFIRM_DEL_ADMIN' => $LANG['confirm_del_admin'],
 		'L_CONTENTS' => $LANG['contents'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
@@ -938,6 +939,7 @@ else
 			'RANK' => $rank,
 			'MAIL' => $row['user_mail'],
 			'WEB' => $user_web,
+			'LEVEL' => $row['level'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'APROB' => ($row['user_aprob'] == 0) ? $LANG['no'] : $LANG['yes']		
 		));
