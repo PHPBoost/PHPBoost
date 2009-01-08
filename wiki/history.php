@@ -131,7 +131,7 @@ else //On affiche la liste des modifications
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
 		" . $Sql->limit($Pagination->get_first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
-	while ($row = myfetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],

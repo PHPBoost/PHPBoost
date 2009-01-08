@@ -68,7 +68,7 @@
 										<p>
 											<br /><br />
 											
-											<strong>&nbsp;{web.L_DESC}:</strong> {web.CONTENTS}
+											<strong>&nbsp;{web.L_DESC}:</strong> {web.PREVIEWED_CONTENTS}
 											
 											<br /><br />
 											

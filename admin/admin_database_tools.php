@@ -120,7 +120,7 @@ if (!empty($table) && $action == 'data')
 			}
 			
 			$Template->assign_block_vars('line.field', array(
-				'FIELD' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_OFF),
+				'FIELD' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE),
 				'CLASS' => 'row1',
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
@@ -197,7 +197,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 				'FIELD_NAME' => $field_name,
 				'FIELD_TYPE' => $table_structure['fields'][$i]['type'],
 				'FIELD_NULL' => $table_structure['fields'][$i]['null'] ? $LANG['yes'] : $LANG['no'],
-				'FIELD_VALUE' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_OFF),
+				'FIELD_VALUE' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text') ? true : false
 			));
 			$i++;

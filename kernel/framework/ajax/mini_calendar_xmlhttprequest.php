@@ -54,7 +54,7 @@ if ($calendar_type == 'date')
         $day = !empty($_GET['d']) ? numeric($_GET['d']) : $day;
         if (!checkdate($month, $day, $year))
                 list($year, $month, $day) = array(gmdate_format('Y'), gmdate_format('n'), gmdate_format('j'));          
-        $bissextile = (($year % 4) == 0) ? 29 : 28;
+        $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
         $array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
         $array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 

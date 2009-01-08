@@ -330,7 +330,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 	else
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
-		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 				
 		//Mois précédent et suivant
@@ -681,7 +681,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	elseif (retrieve(GET, 'd', false))
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
-		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 		
 		//Mois précédent et suivant
@@ -760,7 +760,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 	else
 	{
 		//Nombre de jours pour chaque mois (gestion des années bissextiles)
-		$bissextile = (($year % 4) == 0) ? 29 : 28;
+		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
 				
 		//Mois précédent et suivant

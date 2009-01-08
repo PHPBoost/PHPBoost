@@ -107,7 +107,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 //On ajoute la nouvelle catégorie
 elseif (!empty($_POST['add'])) //Ajout du lien.
 {
-	$cat = retrieve(POST, 'cat', '');  
+	$cat = retrieve(POST, 'cat', '');
 	$contents = retrieve(POST, 'contents', '');
 	$icon = retrieve(POST, 'icon', ''); 
 	$icon_path = retrieve(POST, 'icon_path', ''); 
@@ -123,7 +123,7 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		$order++;
 		
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		$Sql->query_inject("INSERT INTO " . PREFIX . "web_cat (class,name,contents,icon,aprob,secure) VALUES('" . $order . "', '" . $cat . "', '" . $contents . "', '" . $icon . "', '" . $aprob . "', '" . $secure . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web_cat (class, name, contents, icon, aprob, secure) VALUES('" . $order . "', '" . $cat . "', '" . $contents . "', '" . $icon . "', '" . $aprob . "', '" . $secure . "')", __LINE__, __FILE__);	
 	
 		//Régénération du cache des catégories.
 		$Cache->Generate_module_file('web');
@@ -203,6 +203,7 @@ else
 		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$row['name'] = html_entity_decode($row['name']);
 		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
+		$name = htmlspecialchars($name);
 
 		//Activation des catégories.
 		$enabled = $row['aprob'] == '1' ? 'checked="checked"' : '';	

@@ -3,7 +3,7 @@
  *                               gallery.php
  *                            -------------------
  *   begin                : August 12, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -569,8 +569,10 @@ else
 				if ($thumbnails_before < $nbr_pics_display_before)	
 					$end_thumbnails += $nbr_pics_display_before - $thumbnails_before;				
 				if ($thumbnails_after < $nbr_pics_display_after)
-					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;	
-					
+					$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
+				
+				$html_protected_name = strprotect($info_pics['name'], HTML_PROTECT, ADDSLASHES_FORCE);	
+				
 				//Affichage de l'image et de ses informations.
 				$Template->assign_vars(array(
 					'C_GALLERY_PICS_MAX' => true,
@@ -587,8 +589,8 @@ else
 					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
 					'COLSPAN' => ($CONFIG_GALLERY['nbr_column'] + 2),	
 					'CAT' => $cat_list,	
-					'RENAME' => addslashes($info_pics['name']),
-					'RENAME_CUT' => addslashes($info_pics['name']),		
+					'RENAME' => $html_protected_name,
+					'RENAME_CUT' => $html_protected_name,
 					'IMG_APROB' => get_ulang() . '/' . (($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
 					'ARRAY_JS' => $array_js,
 					'NBR_PICS' => ($i - 1),
@@ -661,13 +663,15 @@ else
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
+			    $html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
+			    
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 				
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
-					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . $row['name'];
+					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . $html_protected_name;
 				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
 					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
@@ -687,7 +691,7 @@ else
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
-					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $row['name'] . '" class="gallery_image" />',
+					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $html_protected_name . '" class="gallery_image" />',
 					'PATH' => $row['path'],
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_link . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',	
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
@@ -695,8 +699,8 @@ else
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . com_display_link($row['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',
 					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
 					'CAT' => $cat_list,
-					'RENAME' => addslashes($row['name']),
-					'RENAME_CUT' => addslashes($row['name']),		
+					'RENAME' => $html_protected_name,
+					'RENAME_CUT' => $html_protected_name,		
 					'IMG_APROB' => get_ulang() . '/' . (($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png'),
 					'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',

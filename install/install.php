@@ -365,6 +365,7 @@ else
 				break;
 			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED:
 				$error = '<div class="error">' . $LANG['db_error_selection_not_creable'] . '</div>';
+				break;
 			case DB_UNKNOW_ERROR:
 			default:
 				$error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>';
@@ -439,8 +440,8 @@ elseif ($step == 5)
 	//Enregistrement de la réponse
 	if (retrieve(POST, 'submit', false))
 	{
-		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
-		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF), '/');
+		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE);
+		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE), '/');
 		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));

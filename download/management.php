@@ -525,7 +525,7 @@ else
 	//Previewing a file
 	elseif ($preview)
 	{
-		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE);
 		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);

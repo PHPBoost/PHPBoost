@@ -40,7 +40,7 @@ $month = retrieve(GET, 'm', $month);
 $month = empty($month) ? 0 : $month;
 $day = retrieve(GET, 'd', $day);
 $day = empty($day) ? 0 : $day;
-$bissextile = (($year % 4) == 0) ? 29 : 28;
+$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
 $get_event = retrieve(GET, 'e', '');
 $id = retrieve(GET, 'id', 0);

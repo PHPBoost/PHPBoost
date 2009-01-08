@@ -33,7 +33,8 @@
 			{	
 				document.getElementById('fi_' + id).style.display = 'none';
 				document.getElementById('fi' + id).style.display = 'inline';
-				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" />';
+				html_protected_name = previous_cut_name.replace(/\'/g, "\'").replace(/\\\'/g, "\\\'").replace(/\"/g, '\\"').split('"').join('&quot;');
+				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + html_protected_name + '\');" />';
 				document.getElementById('fiinput' + id).focus();
 			}
 		}	
@@ -42,7 +43,7 @@
 			var name = document.getElementById("fiinput" + id_file).value;
 			var regex = /\/|\\|\||\?|<|>|\"/;
 
-			if( regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
+			if( regex.test(name) ) //interdiction des caractï¿½res spï¿½ciaux dans la nom.
 			{
 				alert("{L_FILE_FORBIDDEN_CHARS}");	
 				document.getElementById('fi_' + id_file).style.display = 'inline';
@@ -96,7 +97,7 @@
 			xmlhttprequest_sender(xhr_object, data);
 		}
 		
-		var delay = 2000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+		var delay = 2000; //Dï¿½lai aprï¿½s lequel le bloc est automatiquement masquï¿½, aprï¿½s le dï¿½part de la souris.
 		var timeout;
 		var displayed = false;
 		var previous = '';
@@ -132,7 +133,7 @@
 		
 		{ARRAY_JS}
 		var start_thumb = {START_THUMB};
-		//Miniatures défilantes.
+		//Miniatures dï¿½filantes.
 		function display_thumbnails(direction)
 		{			
 			if( direction == 'left' )
