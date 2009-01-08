@@ -84,8 +84,6 @@ release({L_RELEASE_FORMAT});
 -->
 </script>
 # ENDIF #
-
-<span id="scroll_top_page"></span>
 <div id="global">
 	<div id="header_container">
 		<div id="header">
