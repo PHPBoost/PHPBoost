@@ -400,7 +400,7 @@ class Sql
 	//Création d'une base de données
 	function create_database($db_name)
 	{
-        return @mysql_query("CREATE DATABASE '" . str_replace('-', '_', url_encode_rewrite($db_name)) . "'");
+        return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
 	}
 	
 	## Private Methods ##

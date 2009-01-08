@@ -30,7 +30,7 @@ define('DISTRIBUTION_NAME', 'Full pack');
 
 //Description de la distribution
 define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt="" style="float:right;padding-right:35px"/>
-<p>You are going to install the <strong>Full</strong> distribution of PHPBoost.</p>
+<p>You are going to install the <strong>full pack</strong> distribution of PHPBoost.</p>
 <p>This distribution contains all the official modules developed by the PHPBoost team. It will enable you to make many different things thanks to the number of modules.</p>');
 
 //Thème de la distribution

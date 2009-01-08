@@ -71,12 +71,13 @@ $LANG['license'] = 'License';
 $LANG['require_license_agreement'] = 'You must accept GNU/GPL license terms to install PHPBoost.';
 $LANG['license_agreement'] = 'End-user license agreement';
 $LANG['license_terms'] = 'License terms';
-$LANG['please_agree_license'] = 'I agree to and will be bound by the terms and conditions set forth in this end-user license agreement.';
+$LANG['please_agree_license'] = 'I agree to and will be bound by the terms and conditions set forth in this end-user license agreement';
 $LANG['alert_agree_license'] = 'You have to agree to end-user license by notching the form!';
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Checking server configuration';
-$LANG['config_server_explain'] = '<p>Before to start installation stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost. Please check that every required condition is ok.</p>
+$LANG['config_server_explain'] = '<p>Before to start installation stages, the configuration of your server is going to be checked to etablish its compatibility with PHPBoost.</p>
+<div class="notice">Please check that every required condition is ok.</div>
 <p>If you have problems, ask your questions in the <a href="http://www.phpboost.net/forum/index.php">support forum</a>.</p>';
 $LANG['php_version'] = 'PHP version';
 $LANG['check_php_version'] = 'PHP upper than 4.1.0';
@@ -171,7 +172,7 @@ $LANG['admin_mail'] = 'Email address';
 $LANG['admin_mail_explain'] = 'Must exist to receive unlocking administration code.';
 $LANG['admin_require_login'] = 'You must enter a login !';
 $LANG['admin_login_too_short'] = 'Your login is too short (at least 3 characters)';
-$LANG['admin_password_too_short'] = 'Your password is too short (at least 3 characters)';
+$LANG['admin_password_too_short'] = 'Your password is too short (at least 6 characters)';
 $LANG['admin_require_password'] = ' You must enter a password !';
 $LANG['admin_require_password_repeat'] = 'You must confirm your password !';
 $LANG['admin_require_mail'] = 'You must enter an emain address !';

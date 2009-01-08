@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_poll_config.php
+ *                           admin_poll_config.php
  *                            -------------------
  *   begin                : June 21, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *

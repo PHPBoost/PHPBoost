@@ -50,7 +50,6 @@
 		</form>	
 		# ENDIF #		
 		
-		
 		# IF C_USER_CONNECTED #		
 		<div class="module_mini_container">
 			<div class="module_mini_top">

@@ -23,7 +23,7 @@
 				<label><input checked="checked" type="checkbox" name="auto" /></label>
 				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 			</form>
-				
+			
 			# IF C_USER_REGISTER #
 			<form action="{U_REGISTER}" method="post" style="display:inline;">
 				<input type="submit" name="register" value="{L_REGISTER}" class="submit" />
