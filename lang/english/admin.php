@@ -107,6 +107,7 @@ $LANG['require_file_name'] = 'Please enter a file name';
 $LANG['redirect'] = 'Redirect in progress...';
 $LANG['del_entry'] = 'Do you want to delete this entry ?';
 $LANG['confirm_del_member'] = 'Do you want to delete this member ? (final !)';
+$LANG['confirm_del_admin'] = 'Do you want to delete an admin ? (unrecoverable !)';
 $LANG['confirm_theme'] = 'Do you want to delete this theme ?';
 $LANG['confirm_del_smiley'] = 'Do you want to delete this smiley ?';
 $LANG['confirm_del_cat'] = 'Do you want to delete this category ?';

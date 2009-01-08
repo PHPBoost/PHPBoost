@@ -107,6 +107,7 @@ $LANG['require_file_name'] = 'Vous devez saisir un nom de fichier';
 $LANG['redirect'] = 'Redirection en cours...';
 $LANG['del_entry'] = 'Supprimer l\'entrée?';
 $LANG['confirm_del_member'] = 'Supprimer le membre? (définitif !)';
+$LANG['confirm_del_admin'] = 'Supprimer un admin? (irréversible !)';
 $LANG['confirm_theme'] = 'Supprimer le thème?';
 $LANG['confirm_del_smiley'] = 'Supprimer le smiley?';
 $LANG['confirm_del_cat'] = 'Supprimer cette catégorie ?';
