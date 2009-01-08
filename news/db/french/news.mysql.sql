@@ -32,13 +32,14 @@ CREATE TABLE `phpboost_news_cat` (
 ) ENGINE=MyISAM;
 
 INSERT INTO `phpboost_news_cat` (`id`, `name`, `contents`, `icon`) VALUES (1, 'Test', 'Cat&eacute;gorie de test', 'news.png');
-INSERT INTO `phpboost_news` (`id`, `idcat`, `title`, `contents`, `extend_contents`, `timestamp`, `visible`, `start`, `end`, `user_id`, `img`, `alt`, `nbr_com`, `lock_com`) VALUES (1, 1, 'Bienvenue sur PHPBoost', 'PHPBoost est un CMS français open source. La nouvelle version 3.0 que vous venez d&amp;#8217;installer est le fruit de plus d&amp;#8217;un an de développement. Elle apporte de très nombreuses nouvelles fonctions et améliorations. De nombreux tests ont été faits, ce qui vous garantit performances, robustesse et sécurité pour votre site, y compris sous de fortes charges.  &lt;br /&gt;
-&lt;br /&gt;
-PHPBoost est conçu pour gérer la plupart des sites Web : vitrines, communautés, actualités, blogs, et bien d&amp;#8217;autres. Il fournit par défaut de nombreux outils de gestion de contenu (textes, medias, html), des utilisateurs (groupes, autorisations), etc.  &lt;br /&gt;
-&lt;br /&gt;
-PHPBoost permet également grâce à son framework aux développeurs et aux webmasters expérimentés d&amp;#8217;étendre facilement les fonctions de leur site, en programmant de nouvelles applications et extensions. En choisissant PHPBoost vous vous assurez également d&amp;#8217;obtenir un suivi en cas de problème, des mises à jour régulières, l&amp;#8217;ajout d&amp;#8217;extensions et nouvelles fonctions est prévu et se fera très facilement. Une documentation complète vous aidera à aborder les différents aspects de PHPBoost. Le projet est soutenu par une communauté d&amp;#8217;utilisateurs grandissante, vous permettant d&amp;#8217;échanger des conseils, astuces et en cas de problème de rapidement trouver une solution.   &lt;br /&gt;
+INSERT INTO `phpboost_news` (`id`, `idcat`, `title`, `contents`, `extend_contents`, `timestamp`, `visible`, `start`, `end`, `user_id`, `img`, `alt`, `nbr_com`, `lock_com`) VALUES (1, 1, 'Bienvenue sur PHPBoost', 'PHPBoost est un CMS français open source. La nouvelle version 3.0 que vous venez d\'installer est le fruit de plus d\'un an de développement. Elle apporte de très nombreuses nouvelles fonctions et améliorations. De nombreux tests ont été faits, ce qui vous garantit performances, robustesse et sécurité pour votre site, y compris sous de fortes charges.  <br />
+<br />
+PHPBoost est conçu pour gérer la plupart des sites Web : vitrines, communautés, actualités, blogs, et bien d\'autres. Il fournit par défaut de nombreux outils de gestion de contenu (textes, medias, html), des utilisateurs (groupes, autorisations), etc.  <br />
+<br />
+PHPBoost permet également grâce à son framework aux développeurs et aux webmasters expérimentés d\'étendre facilement les fonctions de leur site, en programmant de nouvelles applications et extensions. En choisissant PHPBoost vous vous assurez également d\'obtenir un suivi en cas de problème, des mises à jour régulières, l\'ajout d\'extensions et nouvelles fonctions est prévu et se fera très facilement. Une documentation complète vous aidera à aborder les différents aspects de PHPBoost. Le projet est soutenu par une communauté d\'utilisateurs grandissante, vous permettant d\'échanger des conseils, astuces et en cas de problème de rapidement trouver une solution.   <br />
 
-&lt;br /&gt;
-&lt;br /&gt;
-Merci d&amp;#8217;avoir rejoint la communauté d&amp;#8217;utilisateur de PHPBoost, &lt;br /&gt;
-Pensez à venir nous visiter en cas de problème ou pour suivre les actualités du projet, sur &lt;a href="http://www.phpboost.com"&gt;http://www.phpboost.com&lt;/a&gt;', 'Suite de la news de test', unix_timestamp(current_timestamp), 1, 0, 0, 1, '../templates/base/theme/images/header.jpg', 'PHPBoost 3.0', 0, 0);
+<br />
+<br />
+Merci d\'avoir rejoint la communauté d\'utilisateur de PHPBoost, <br />
+Pensez à venir nous visiter en cas de problème ou pour suivre les actualités du projet, sur <a href="http://www.phpboost.com">http://www.phpboost.com</a>
+', 'Suite de la news de test', unix_timestamp(current_timestamp), 1, 0, 0, 1, '../templates/base/theme/images/header.jpg', 'PHPBoost 3.0', 0, 0);
