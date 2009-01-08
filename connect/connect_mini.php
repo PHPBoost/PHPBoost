@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function connect_mini()
 {
-    global $User, $CONTRIBUTION_PANEL_UNREAD, $LANG;
+    global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;
     
     $tpl = new Template('connect/connect_mini.tpl');
     if ($User->check_level(USER_LEVEL)) //Connecté.
@@ -96,7 +96,7 @@ function connect_mini()
     else
     {
     	$tpl->assign_vars(array(
-    		'C_USER_REGISTER' => $CONFIG_USER['activ_register'] ? true : false,
+    		'C_USER_REGISTER' => (bool)$CONFIG_USER['activ_register'],
     		'L_CONNECT' => $LANG['connect'],
     		'L_PSEUDO' => $LANG['pseudo'],
     		'L_PASSWORD' => $LANG['password'],

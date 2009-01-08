@@ -71,7 +71,7 @@ else
 	
 	$Cache->load('uploads');
 	
-	$CONFIG_UPLOADS['auth_extensions'] = is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
+	$CONFIG_UPLOADS['auth_extensions'] = !empty($CONFIG_UPLOADS['auth_extensions']) && is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_UPLOADS['auth_extensions'];
 	$array_extensions_type = array(
 		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),

@@ -60,7 +60,7 @@ $LANG['query_failure'] = 'Traitement échoué';
 $LANG['intro_title'] = 'Bienvenue dans l\'assistant d\'installation de PHPBoost';
 $LANG['intro_explain'] = '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
-<p>Cordialement l\'équipe PHPBoost</p>';
+<p>Cordialement, l\'équipe PHPBoost</p>';
 $LANG['intro_distribution'] = 'Distribution %s';
 $LANG['intro_distribution_intro'] = '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p>
 <p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>';
@@ -71,12 +71,13 @@ $LANG['license'] = 'Licence';
 $LANG['require_license_agreement'] = 'Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.';
 $LANG['license_agreement'] = 'Acceptation des termes de la licence';
 $LANG['license_terms'] = 'Termes de la licence';
-$LANG['please_agree_license'] = 'J\'ai pris connaissance des termes de la licence et je les accepte.';
+$LANG['please_agree_license'] = 'J\'ai pris connaissance des termes de la licence et je les accepte';
 $LANG['alert_agree_license'] = 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !';
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Vérification de la configuration du serveur';
-$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost. Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</p>
+$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
+<div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>';
 $LANG['php_version'] = 'Version de PHP';
 $LANG['check_php_version'] = 'PHP supérieur à 4.1.0';
@@ -84,7 +85,7 @@ $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.';
 $LANG['gd_library'] = 'Librairie GD';
-$LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots';
+$LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots, ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
 $LANG['url_rewriting'] = 'URL Rewriting';
 $LANG['url_rewriting_explain'] = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
 $LANG['auth_dir'] = 'Autorisations des dossiers';
@@ -99,8 +100,8 @@ $LANG['config_server_dirs_not_ok'] = 'Les répertoires ne sont pas tous existants
 
 //Base de données
 $LANG['db_title'] = 'Paramètres de connexion à la base de données';
-$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra.</p>';
-$LANG['dbms_paramters'] = 'Paramètres d\'accès au SGBD';
+$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>';
+$LANG['dbms_paramters'] = 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>';
 $LANG['db_host_name'] = 'Nom de l\'hôte';
 $LANG['db_host_name_explain'] = 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.';
 $LANG['db_login'] = 'Identifiant';
@@ -122,7 +123,7 @@ $LANG['field_password'] = 'mot de passe';
 $LANG['field_database'] = 'nom de la base de données';
 $LANG['db_error_connexion'] = 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.';
 $LANG['db_error_selection_not_creable'] = 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.';
-$LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existe pas mais a pu être créée par le système.';
+$LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existait pas mais a pu être créée par le système.';
 $LANG['db_error_tables_already_exist'] = 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.';
 $LANG['db_success'] = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
 $LANG['db_unknown_error'] = 'Une erreur inconnue a été rencontrée.';
@@ -171,7 +172,7 @@ $LANG['admin_mail'] = 'Courrier électronique';
 $LANG['admin_mail_explain'] = 'Doit être valide pour recevoir le code de déverrouillage';
 $LANG['admin_require_login'] = 'Vous devez entrer un pseudo';
 $LANG['admin_login_too_short'] = 'Votre pseudo est trop court (3 caractères minimum)';
-$LANG['admin_password_too_short'] = 'Votre mot de passe est trop court (3 caractères minimum)';
+$LANG['admin_password_too_short'] = 'Votre mot de passe est trop court (6 caractères minimum)';
 $LANG['admin_require_password'] = 'Vous devez entrer un mot de passe';
 $LANG['admin_require_password_repeat'] = 'Vous devez confirmer votre mot de passe';
 $LANG['admin_require_mail'] = 'Vous devez entrer une adresse de courier électronique';
