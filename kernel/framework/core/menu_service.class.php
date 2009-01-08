@@ -55,7 +55,7 @@ class MenuService
     {
         global $Sql;
         
-        $query = "SELECT id, object, block, position, enabled FROM " . PREFIX . "menus";
+        $query = "SELECT id, object, block, position, enabled FROM " . DB_TABLE_MENUS;
         
         $conditions = array();
         if ($class != MENU__CLASS)
@@ -92,7 +92,7 @@ class MenuService
         
         $query = "
             SELECT id, object, block, position, enabled
-            FROM " . PREFIX . "menus
+            FROM " . DB_TABLE_MENUS . "
             ORDER BY position ASC
         ;";
         $result = $Sql->query_while ($query, __LINE__, __FILE__);
@@ -171,7 +171,7 @@ class MenuService
                 );";
             $Sql->query_inject($query, __LINE__, __FILE__);
             //The object has now an id, we set it
-            $menu->id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX. "menus"));
+            $menu->id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MENUS));
         }
         
         return true;
@@ -198,7 +198,6 @@ class MenuService
      */
     function enable(&$menu)
     {
-        $menu->enabled(MENU_ENABLED);
         // Commputes the new Menu position and save it
         MenuService::move($menu, $menu->get_block());
     }
@@ -209,7 +208,6 @@ class MenuService
      */
     function disable(&$menu)
     {
-        $menu->enabled(MENU_NOT_ENABLED);
         // Commputes menus positions of the previous block and save the current menu
         MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
     }
@@ -218,16 +216,17 @@ class MenuService
      * @desc Move a menu into a block and save it. Enable or disable it according to the destination block
      * @param Menu $menu the menu to move
      * @param int $block the destination block
+     * @param bool $save if true, save also the menu
      */
-    function move(&$menu, $block)
+    function move(&$menu, $block, $save = true)
     {
         global $Sql;
         
-        if ($menu->get_id() > 0)
+        if ($menu->get_id() > 0 && $menu->is_enabled())
         {   // Updates the previous block position counter
-            // Only for already existing menu, not for new ones
+            // Only for already existing menu that are enabled, not for new ones
             $update_query = "
-                UPDATE " . PREFIX ."menus
+                UPDATE " . DB_TABLE_MENUS . "
                 SET position=position - 1
                 WHERE block='" . $menu->get_block() . "' AND position>'" . $menu->get_block_position() . "';";
             $Sql->query_inject($update_query, __LINE__, __FILE__);
@@ -242,11 +241,12 @@ class MenuService
             $menu->set_block($block);
             
             // Computes the new block position for the menu
-            $position_query = "SELECT MAX(position) + 1 FROM " . PREFIX ."menus WHERE block='" . $menu->get_block() . "' AND enabled='1';";
+            $position_query = "SELECT MAX(position) + 1 FROM " . DB_TABLE_MENUS . " WHERE block='" . $menu->get_block() . "' AND enabled='1';";
             $menu->set_block_position((int) $Sql->query($position_query, __LINE__, __FILE__));
         }
         
-        MenuService::save($menu);
+        if ($save)
+            MenuService::save($menu);
     }
     
     /**
@@ -289,7 +289,7 @@ class MenuService
                 UPDATE " . DB_TABLE_MENUS . " SET position=position + 1
                 WHERE
                     block='" . $menu->get_block() . "' AND
-                    position BETWEEN '" . ($block_position - 1) . "' AND '" . $new_block_position . "'
+                    position BETWEEN '" . $new_block_position . "' AND '" . ($block_position - 1) . "'
             ";
         }
         
@@ -552,6 +552,46 @@ class MenuService
             MenuService::generate_cache();
     }
     
+    
+    /**
+     * @desc Return a menu with links to modules
+     * @param int $menu_type the menu type
+     * @return LinksMenu the menu with links to modules
+     */
+    function website_modules($menu_type = VERTICAL_MENU)
+    {
+        import('modules/modules_discovery_service');
+        $modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
+        // Création d'un menu contenant des liens vers tous les modules
+        $modules_discovery_service = new ModulesDiscoveryService();
+        // Récupère tous les modules même ceux n'ayant pas d'interface
+        $modules = $modules_discovery_service->get_all_modules();
+        foreach ($modules as $module)
+        {
+            $infos = $module->get_infos();
+            if (!empty($infos['infos']) && !empty($infos['infos']['starteable_page']))
+            {
+                $img = '';
+                $img_url = '../' . $module->get_id() . '/' . $module->get_id();
+                import('io/file');
+                foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
+                {
+                    $file = new File($img_url . $extension);
+                    if ($file->exists())
+                    {
+                        $img = '/' . $module->get_id() . '/' . $file->get_name();
+                        break;
+                    }
+                }
+                $modules_menu->add(new LinksMenuLink($module->get_name(),
+                    '/' . $module->get_id() . '/' . $infos['infos']['starteable_page'],
+                     $img
+                ));
+            }
+        }
+        
+        return $modules_menu;
+    }
     
     ## Tools ##
     
