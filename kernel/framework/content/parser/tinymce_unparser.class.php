@@ -52,6 +52,7 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function unparse()
 	{
+	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	    //Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -83,7 +84,12 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 		
 		//Replacing <br /> by a paragraph
+		$this->content = preg_replace('`(<h3[^>]*>.*</h3>)\s*`iUs', "</p>\n$1\n<p>", $this->content);
 		$this->content = preg_replace('`\s*<br />\s*`i', "</p>\n<p>", '<p>' . $this->content . '</p>');
+		$this->content = preg_replace('`<p>\s*</p>`i', '<p>&nbsp;</p>',  $this->content);
+		$this->content = preg_replace('`\s*</p>`i', '</p>',  $this->content);
+		$this->content = preg_replace('`<p>\s*`i', '<p>',  $this->content);
+		$this->content = preg_replace('`<p>&nbsp;</p>\s*<p>(<h4[^>]*>.*</h4>)</p>\s*<p>&nbsp;</p>`iUs', "$1", $this->content);
 	    
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if (!empty($this->array_tags['html_unparse']))
@@ -99,6 +105,8 @@ class TinyMCEUnparser extends ContentUnparser
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
+	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
+//        exit;
 	}
 	
 	## Protected ##

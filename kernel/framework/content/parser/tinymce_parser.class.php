@@ -53,6 +53,7 @@ class TinyMCEParser extends ContentParser
 	{
 		global $User;
 		
+//	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
 			$this->_pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
@@ -83,13 +84,9 @@ class TinyMCEParser extends ContentParser
 		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
 		if (PATH_TO_ROOT != '..')
 			$this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
-		
-		// Trim manuel
-		$this->content = preg_replace('`^(\s|(?:<br />))*`i', '', $this->content);
-		$this->content = preg_replace('`(\s|(?:<br />))*$`i', '', $this->content);
-		$this->content = str_replace(array("\n", "\r"), ' ', $this->content);
-		$this->content = str_replace('<br />', "\n<br />", $this->content);
 	    
+		$this->_correct();
+		
 		//On remet le code HTML mis de côté
 		if (!empty($this->array_tags['html']))
 		{
@@ -111,6 +108,8 @@ class TinyMCEParser extends ContentParser
 			
 			$this->_reimplant_tag('code');
 		}
+//	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
+//	    exit;
 	}
 	
 	## Protected ##
@@ -697,6 +696,21 @@ class TinyMCEParser extends ContentParser
 		$var = str_replace('<br />', "\n", $var);
 		$var = html_entity_decode($var);
 		return $var;
+	}
+	
+	/**
+	 * @desc Correct some TinyMCE parse problems 
+	 */
+	function _correct()
+	{   
+		// Trim manuel
+		$this->content = preg_replace('`^(\s|(?:<br />))*`i', '', $this->content);
+		$this->content = preg_replace('`(\s|(?:<br />))*$`i', '', $this->content);
+		$this->content = str_replace(array("\n", "\r"), ' ', $this->content);
+		$this->content = str_replace('<br />', "\n<br />", $this->content);
+		$this->content = preg_replace('`<br />\s*(<h3[^>]*>.*</h3>)`iUs', "$1", $this->content);
+		$this->content = preg_replace('`(<h3[^>]*>.*</h3>)\s*<br />`iUs', "$1\n", $this->content);
+		$this->content = preg_replace('`(<h3[^>]*>.*)\s*<br />\s*(</h3>)`iUs', "$1$2", $this->content);
 	}
 }
 
