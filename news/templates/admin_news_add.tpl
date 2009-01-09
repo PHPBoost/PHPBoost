@@ -70,9 +70,9 @@
 								</div>												
 								<div class="news_content">
 									{news.IMG}
-									{news.CONTENTS}
-									<br /><br />	
-									{news.EXTEND_CONTENTS}	
+									{news.PREVIEWED_CONTENTS}
+									<hr />	
+									{news.PREVIEWED_EXTEND_CONTENTS}	
 								</div>								
 								<div class="news_bottom_l"></div>		
 								<div class="news_bottom_r"></div>
@@ -104,7 +104,7 @@
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
+						<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{NEWS_TITLE}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">* {L_CATEGORY}</label></dt>

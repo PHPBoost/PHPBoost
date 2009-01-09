@@ -45,7 +45,7 @@ if ($action_post == 'save')
     import('content/parser/parser');
     $menu = null;
     
-    $menu_name = retrieve(POST, 'name', '', TSTRING_UNSECURE);
+    $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
     
     if (!empty($id_post))
     {   // Edit the Menu

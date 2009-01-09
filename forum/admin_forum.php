@@ -35,7 +35,7 @@ require_once('../forum/forum_begin.php');
 
 $id = retrieve(GET, 'id', 0);
 $del = retrieve(GET, 'del', 0);
-$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
 
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']) && !empty($id))

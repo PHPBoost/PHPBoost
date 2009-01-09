@@ -167,7 +167,7 @@ class Comments
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
 				
 				if (!empty($login) && !empty($contents))
 				{
@@ -272,7 +272,7 @@ class Comments
 					}
 					elseif ($updatecom) //Mise à jour du commentaire.
 					{
-						$contents = trim(retrieve(POST, 'contents', '', TSTRING_UNSECURE));
+						$contents = trim(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
 						$login = retrieve(POST, 'login', '');
 						
 						if (!empty($contents) && !empty($login))

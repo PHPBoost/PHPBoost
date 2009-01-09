@@ -34,8 +34,8 @@ define('PATH_TO_ROOT', '../../..');
 require_once(PATH_TO_ROOT . '/kernel/constant.php');
 import('functions', LIB_IMPORT);
 
-$url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
-$content_type = retrieve(GET, 'ctype', '', TSTRING_UNSECURE);
+$url = retrieve(GET, 'url', '', TSTRING_UNCHANGE);
+$content_type = retrieve(GET, 'ctype', '', TSTRING_UNCHANGE);
 
 if ($content_type == 'iso-8859-1')
 	header('Content-type: text/html; charset=iso-8859-1');

@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 		
 $id = retrieve(GET, 'id', 0);
 $del = retrieve(GET, 'del', 0);
-$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
 $root = retrieve(GET, 'root', 0);
 
 define('READ_CAT_ARTICLES', 0x01);

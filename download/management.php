@@ -48,8 +48,8 @@ $delete_file = retrieve(GET, 'del', 0);
 //Form variables
 $file_title = retrieve(POST, 'title', '');
 $file_image = retrieve(POST, 'image', '');
-$file_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
+$file_contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_AS_RECEIVED);
 $file_url = retrieve(POST, 'url', '');
 $file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
@@ -60,16 +60,16 @@ $file_approved = retrieve(POST, 'approved', false);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 
 //Instanciations of objects required
-$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 if (!$ignore_release_date)
-	$file_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNSECURE);
+	$file_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNCHANGE);
 else
 	$file_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 //Deleting a file
 if ($delete_file > 0)
@@ -525,7 +525,7 @@ else
 	//Previewing a file
 	elseif ($preview)
 	{
-		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE);
+		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
 		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);

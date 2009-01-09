@@ -68,9 +68,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		else
 		{
 			//Vérification des password.
-			$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
+			$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 			$password_hash = !empty($password) ? strhash($password) : '';
-			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNSECURE);
+			$password_bis = retrieve(POST, 'confirm_pass', '', TSTRING_UNCHANGE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
             
 			if (!empty($password_hash) && !empty($password_bis_hash))
@@ -237,7 +237,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					WHERE display = 1", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
-						$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
+						$field = retrieve(POST, $row['field_name'], '', TSTRING_UNCHANGE);
 						if ($row['field'] == 2)
 							$field = strparse($field);
 						elseif ($row['field'] == 4)
@@ -295,8 +295,8 @@ if (!empty($_POST['valid']) && !empty($id_post))
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
 	$login = !empty($_POST['login2']) ? strprotect(substr($_POST['login2'], 0, 25)) : '';
-	$password = retrieve(POST, 'password2', '', TSTRING_UNSECURE);
-	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNSECURE);
+	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
+	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
 	$password_hash = !empty($password) ? strhash($password) : '';
 	$level = retrieve(POST, 'level2', -1);
 	$mail = strtolower(retrieve(POST, 'mail2', ''));

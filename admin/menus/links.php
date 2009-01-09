@@ -47,7 +47,7 @@ if ($action == 'save')
     {
         $menu = null;
         $menu_element_id = $elements_ids['id'];
-        $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNSECURE);
+        $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
         $menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
         $menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
         

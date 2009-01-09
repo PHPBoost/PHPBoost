@@ -46,7 +46,7 @@ function shoutbox_mini()
     			$Errorh->handler('e_readonly', E_USER_REDIRECT);
     			
     		$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-    		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
+    		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
     		if (!empty($shout_pseudo) && !empty($shout_contents))
     		{
     			//Accès pour poster.

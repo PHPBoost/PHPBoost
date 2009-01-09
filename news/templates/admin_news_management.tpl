@@ -137,7 +137,7 @@
 									<div class="news_content">
 										{news.preview.IMG}
 										{news.preview.CONTENTS}
-										<br /><br />	
+										<hr />
 										{news.preview.EXTEND_CONTENTS}	
 									</div>									
 									<div class="news_bottom_l"></div>		

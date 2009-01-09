@@ -281,10 +281,10 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 	elseif (!empty($preview_topic) && !empty($id_post_msg))
 	{
-		$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
-		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNSECURE);
-		$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-		$question = retrieve(POST, 'question', '', TSTRING_UNSECURE);
+		$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+		$subtitle = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+		$question = retrieve(POST, 'question', '', TSTRING_UNCHANGE);
 		$type = retrieve(POST, 'type', 0); 
 		
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
@@ -295,7 +295,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$nbr_poll_field = 0;
 		for ($i = 0; $i < 20; $i++)
 		{	
-			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNSECURE);
+			$answer = retrieve(POST, 'a'.$i, '', TSTRING_UNCHANGE);
 			if (!empty($answer))
 			{
 				$Template->assign_block_vars('answers_poll', array(

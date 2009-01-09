@@ -36,11 +36,9 @@ $page_path_to_root = retrieve(GET, 'path_to_root', '');
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
 $editor = retrieve(GET, 'editor', $CONFIG['editor']);
 
-$contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
+$contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 
-echo '<pre>' . htmlentities($contents) . '</pre><hr />';
-
-$ftags = retrieve(POST, 'ftags', TSTRING_UNSECURE);
+$ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
 
 //On prend le bon parseur avec la bonne configuration
 $content_manager = new ContentManager($editor);
@@ -57,7 +55,7 @@ $contents = second_parse(stripslashes($parser->get_content()));
 //Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
 if (preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
 	$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
-echo '<pre>' . htmlentities($contents) . '</pre><hr />';
+
 echo $contents;
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

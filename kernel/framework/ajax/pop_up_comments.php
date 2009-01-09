@@ -41,7 +41,7 @@ if (!empty($_GET['com']))
 	$Comments->set_arg($idcom, PATH_TO_ROOT . '/kernel/framework/ajax/pop_up_comments.php'); //On met à jour les attributs de l'objet.
 	
 	//On affiche les commentaires
-	echo $Comments->display(POP_UP_WINDOW, null, retrieve(REQUEST, 'path_to_root', TSTRING_UNSECURE));
+	echo $Comments->display(POP_UP_WINDOW, null, retrieve(REQUEST, 'path_to_root', TSTRING_UNCHANGE));
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

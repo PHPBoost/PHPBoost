@@ -440,8 +440,8 @@ elseif ($step == 5)
 	//Enregistrement de la réponse
 	if (retrieve(POST, 'submit', false))
 	{
-		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE);
-		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE), '/');
+		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
 		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
 		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
 		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
@@ -593,10 +593,10 @@ elseif ($step == 6)
 	//Validation de l'étape
 	if (retrieve(POST, 'submit', false))
 	{
-		$login = retrieve(POST, 'login', '', TSTRING_UNCHANGE);
-		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
-		$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_UNCHANGE);
-		$user_mail = retrieve(POST, 'mail', '', TSTRING_UNCHANGE);
+		$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
+		$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
+		$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
+		$user_mail = retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED);
 		$create_session = retrieve(POST, 'create_session', false);
 		$auto_connection = retrieve(POST, 'auto_connection', false);
 		

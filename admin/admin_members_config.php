@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['msg_mbr'])) //Message aux membres.
 {
 	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
-	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
+	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 	$config_member['msg_register'] = $CONFIG_USER['msg_register'];
 	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 

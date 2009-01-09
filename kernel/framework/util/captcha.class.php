@@ -101,7 +101,7 @@ class Captcha
 	{
 		global $Sql;
 		
-		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNSECURE);
+		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNCHANGE);
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
 		$code = $Sql->query("SELECT code FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		//Suppression pour éviter une réutilisation du code frauduleuse.

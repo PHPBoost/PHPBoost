@@ -38,7 +38,7 @@ if ($shoutbox && empty($shout_id)) //Insertion
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
 	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
+		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{		
 		//Accès pour poster.		
@@ -129,7 +129,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 		}
 		elseif ($update)
 		{
-			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);			
+			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shout_pseudo', '');			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{

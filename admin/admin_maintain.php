@@ -43,7 +43,7 @@ if (!empty($_POST['valid']))
 				$maintain = !empty($maintain) ? time() + $maintain : '0';	
 		break;
 		case 2:
-			$maintain = retrieve(POST, 'end', '', TSTRING_UNSECURE);
+			$maintain = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
 			$maintain = strtotimestamp($maintain, $LANG['date_format_short']);
 		break;
 		default:

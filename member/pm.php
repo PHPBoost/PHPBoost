@@ -84,7 +84,7 @@ $convers = retrieve(POST, 'convers', false);
 if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 {
 	$title = retrieve(POST, 'title', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$login = retrieve(POST, 'login', '');
 	
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
@@ -257,7 +257,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 }
 elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) //Envoi de messages.
 {
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	if (!empty($contents))
 	{
 		//user_view_pm => nombre de messages non lu par l'un des 2 participants.
@@ -465,8 +465,8 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					'L_RESET' => $LANG['reset']
 				));
 				
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-				$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 				
 				$Template->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
