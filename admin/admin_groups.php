@@ -132,6 +132,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		$y = 0;
 		if (is_dir($rep)) //Si le dossier existe
 		{
+			$fichier_array = array();
 			$dh = @opendir($rep);
 			while (!is_bool($file = readdir($dh)))
 			{
