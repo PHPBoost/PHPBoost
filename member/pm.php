@@ -657,7 +657,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if ($row['user_msg'] >= 1)
 			$user_msg = '<a href="../member/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
 		else
-			$user_msg = (!$is_guest) ? '<a href="../member/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';
+			$user_msg = '<a href="../member/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0';
 		
 		//Localisation.
 		if (!empty($row['user_local']))
