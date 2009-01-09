@@ -52,6 +52,7 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function unparse()
 	{
+	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	    //Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -117,6 +118,7 @@ class TinyMCEUnparser extends ContentUnparser
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
+		echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	}
 	
 	## Protected ##
@@ -189,10 +191,11 @@ class TinyMCEUnparser extends ContentUnparser
 		$this->content = preg_replace_callback('`<span style="font-size: ([0-9-]+)px;">(.+)</span>`isU', array(&$this, '_unparse_size_tag'), $this->content);
 		
 		//Citations
-		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', '<blockquote>$2</blockquote>', $this->content);
+		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
 		
+		echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 		//Balise indentation
-		$this->content = preg_replace('`<div class="indent">(.+)</div>`isU', '<p style="padding-left: 30px;">$1</p>', $this->content);
+		$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
 		
 		//Police
 		$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isU', array(&$this, '_unparse_font'), $this->content );
