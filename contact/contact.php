@@ -29,9 +29,9 @@ require_once('../kernel/begin.php');
 require_once('../contact/contact_begin.php');
 require_once('../kernel/header.php'); 
 
-$mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNSECURE);
-$mail_object = retrieve(POST, 'mail_object', '', TSTRING_UNSECURE);
-$mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNSECURE);
+$mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNCHANGE);
+$mail_object = retrieve(POST, 'mail_object', '', TSTRING_UNCHANGE);
+$mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNCHANGE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
 $get_error = '';
 

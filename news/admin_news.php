@@ -48,17 +48,17 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 	
 	//Gestion de la parution
 	$get_visible = retrieve(POST, 'visible', 0);
-	$start = retrieve(POST, 'start', 0, TSTRING_UNSECURE);
-	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNSECURE);
-	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNSECURE);	
-	$end = retrieve(POST, 'end', 0, TSTRING_UNSECURE);
-	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNSECURE);
-	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', 0, TSTRING_UNCHANGE);
+	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNCHANGE);
+	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);	
+	$end = retrieve(POST, 'end', 0, TSTRING_UNCHANGE);
+	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNCHANGE);
+	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNCHANGE);
 	
 	//Date de la news
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNSECURE);
-	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNSECURE);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
+	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
 	
 	//On met à jour 
 	if (!empty($idcat) && !empty($title) && !empty($contents) && isset($get_visible))
@@ -236,27 +236,27 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		'admin_news_management'=> 'news/admin_news_management.tpl'
 	));
 
-	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
+	$title = stripslashes(retrieve(POST, 'title', '', TSTRING));
 	$idcat = retrieve(POST, 'idcat', 0);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_PARSE);
 	$user_id = retrieve(POST, 'user_id', '');
-	$img = retrieve(POST, 'img', '', TSTRING_UNSECURE);
-	$alt = retrieve(POST, 'alt', '', TSTRING_UNSECURE);
+	$img = retrieve(POST, 'img', '', TSTRING_UNCHANGE);
+	$alt = retrieve(POST, 'alt', '', TSTRING_UNCHANGE);
 	
 	//Gestion de la parution
 	$get_visible = retrieve(POST, 'visible', 0);
-	$start = retrieve(POST, 'start', 0, TSTRING_UNSECURE);
-	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNSECURE);
-	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNSECURE);	
-	$end = retrieve(POST, 'end', 0, TSTRING_UNSECURE);
-	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNSECURE);
-	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNSECURE);
+	$start = retrieve(POST, 'start', 0, TSTRING_UNCHANGE);
+	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNCHANGE);
+	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);	
+	$end = retrieve(POST, 'end', 0, TSTRING_UNCHANGE);
+	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNCHANGE);
+	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNCHANGE);
 	
 	//Date de la news
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNSECURE);
-	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNSECURE);
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
+	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
 
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -265,9 +265,9 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 	$Template->assign_block_vars('news', array(
 		'THEME' => get_utheme(),
 		'IDNEWS' => $id_post,
-		'TITLE' => stripslashes($title),
-		'CONTENTS' => stripslashes($contents),
-		'EXTEND_CONTENTS' => stripslashes($extend_contents),
+		'TITLE' => $title,
+		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
+	    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
 		'USER_ID' => $user_id,
 		'IMG' => stripslashes($img),
 		'ALT' => stripslashes($alt),
@@ -313,9 +313,9 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		
 	$Template->assign_block_vars('news.preview', array(
 		'THEME' => get_utheme(),
-		'TITLE' => stripslashes($title),
-		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
-		'EXTEND_CONTENTS' => second_parse(stripslashes(strparse($extend_contents))) . '<br /><br />',
+		'TITLE' => $title,
+		'CONTENTS' => second_parse(stripslashes($contents)),
+		'EXTEND_CONTENTS' => second_parse(stripslashes($extend_contents)),
 		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
 		'USER_ID' => $user_id,
 		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />': $LANG['no_img'],

@@ -7,7 +7,7 @@ require_once('../kernel/header_no_display.php');
 
 $Cache->load('articles');
 
-$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
 $id = retrieve(GET, 'id', 0);
 $get_parent_up = retrieve(GET, 'g_up', 0);
 $get_parent_down = retrieve(GET, 'g_down', 0);

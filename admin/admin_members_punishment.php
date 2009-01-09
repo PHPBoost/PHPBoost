@@ -54,7 +54,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 {
 	$readonly = retrieve(POST, 'new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		
@@ -208,7 +208,7 @@ if ($action == 'punish') //Gestion des utilisateurs
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
 	$new_warning_level = retrieve(POST, 'new_info', 0);
-	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 	{
 		$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);		

@@ -110,9 +110,9 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 
 	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$title = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
 	$aprob = retrieve(POST, 'aprob', 0);

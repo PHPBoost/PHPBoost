@@ -43,24 +43,24 @@ $delete_news = retrieve(GET, 'del', 0);
 //Form variables
 $news_title = retrieve(POST, 'title', '');
 $news_image = retrieve(POST, 'image', '');
-$news_contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-$news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
+$news_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
 $news_timestamp = retrieve(POST, 'timestamp', 0);
 $news_cat_id = retrieve(POST, 'idcat', 0);
 $news_visibility = retrieve(POST, 'visibility', 0);		
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 
 //Instanciations of objects required
-$news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 if (!$ignore_release_date)
-	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNSECURE);
+	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNCHANGE);
 else
 	$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 //Deleting a news
 if ($delete_news > 0)

@@ -30,7 +30,7 @@ require_once('../kernel/begin.php');
 $Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 $Bread_crumb->add($LANG['moderation_panel'], url('moderation_panel.php'));
 
-$action = retrieve(GET, 'action', 'warning', TSTRING_UNSECURE);
+$action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
 $id_get = retrieve(GET, 'id', 0);
 switch ($action)
 {
@@ -74,7 +74,7 @@ switch ($action)
 	case 'punish': //Gestion des utilisateurs
 		$readonly = retrieve(POST, 'new_info', 0);
 		$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-		$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+		$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 		if (!empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
 			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
@@ -230,7 +230,7 @@ switch ($action)
 		break;
 	case 'ban': //Gestion des utilisateurs
 	default:
-		$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNSECURE);
+		$user_ban = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
 		$user_ban = $user_ban > 0 ? (time() + $user_ban) : 0;
 		if (!empty($_POST['valid_user']) && !empty($id_get)) //On banni le membre
 		{
@@ -359,7 +359,7 @@ switch ($action)
 		}
 			case 'warning': //Gestion des utilisateurs
 		$new_warning_level = retrieve(POST, 'new_info', 0);
-		$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNSECURE);
+		$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
 		if ($new_warning_level >= 0 && $new_warning_level <= 100 && isset($_POST['new_info']) && !empty($id_get) && !empty($_POST['valid_user'])) //On met à  jour le niveau d'avertissement
 		{
 			$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'user_mail', "WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);

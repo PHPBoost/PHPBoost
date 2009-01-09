@@ -37,7 +37,7 @@ $Template->set_filenames(array(
 
 $Cache->load('newsletter');
 
-$sender_mail = retrieve(POST, 'sender_mail', '', TSTRING_UNSECURE);
+$sender_mail = retrieve(POST, 'sender_mail', '', TSTRING_UNCHANGE);
 $newsletter_name = retrieve(POST, 'newsletter_name', '', TSTRING_HTML);
 
 $Template->assign_block_vars('config', array(

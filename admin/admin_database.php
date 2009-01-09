@@ -28,7 +28,7 @@
 require_once('../admin/admin_begin.php');
 
 //On regarde si on doit lire un fichier
-$read_file = retrieve(GET, 'read_file', '', TSTRING_UNSECURE);
+$read_file = retrieve(GET, 'read_file', '', TSTRING_UNCHANGE);
 if (!empty($read_file) && substr($read_file, -4) == '.sql')
 {
 	//Si le fichier existe on le lit
@@ -81,7 +81,7 @@ $Template->assign_vars(array(
 
 if (!empty($_GET['query']))
 {
-	$query = retrieve(POST, 'query', '', TSTRING_UNSECURE);
+	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
 	$Template->assign_vars(array(
 		'C_DATABASE_QUERY' => true

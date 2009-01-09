@@ -29,9 +29,9 @@ if (defined('PHPBOOST') !== true) exit;
 
 //Module de connexion
 $login = retrieve(POST, 'login', '');
-$password = retrieve(POST, 'password', '', TSTRING_UNSECURE);
+$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
 $autoconnexion = retrieve(POST, 'auto', false);
-$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNSECURE));
+$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNCHANGE));
 
 if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 {

@@ -180,19 +180,19 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
-	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
-	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
-	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
+	$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+	$icon = retrieve(POST, 'icon', '', TSTRING_UNCHANGE);
+	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNCHANGE);
 	$compt = retrieve(POST, 'views', 0);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+	$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$user_id = retrieve(POST, 'user_id', 0);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -340,11 +340,11 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	$icon_path = retrieve(POST, 'icon_path', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	if (!empty($icon_path))

@@ -32,7 +32,7 @@ define('TITLE', $LANG['newsletter']);
 require_once('../admin/admin_header.php');
 
 //On recupère les variables.
-$type = retrieve(GET, 'type', '', TSTRING_UNSECURE);
+$type = retrieve(GET, 'type', '', TSTRING_UNCHANGE);
 $send = !empty($_POST['send']) ? true : false ;
 $send_test = !empty($_POST['send_test']) ? true : false ;
 $mail_contents = retrieve(POST, 'contents', '');

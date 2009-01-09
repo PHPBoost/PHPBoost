@@ -301,7 +301,7 @@ elseif (!empty($id))
 			$title = retrieve(POST, 'title', '');
 			
 			//Cacul du timestamp à partir de la date envoyé.
-			$date = retrieve(POST, 'date', '', TSTRING_UNSECURE);
+			$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
 			$hour = retrieve(POST, 'hour', 0);
 			$min = retrieve(POST, 'min', 0);
 			
@@ -395,7 +395,7 @@ elseif ($add) //Ajout d'un évenement
 		$title = retrieve(POST, 'title', '');
 		
 		//Cacul du timestamp à partir de la date envoyé.
-		$date = retrieve(POST, 'date', '', TSTRING_UNSECURE);
+		$date = retrieve(POST, 'date', '', TSTRING_UNCHANGE);
 		$hour = retrieve(POST, 'hour', 0);
 		$min = retrieve(POST, 'min', 0);
 		

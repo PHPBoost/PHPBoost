@@ -45,7 +45,7 @@ class Sessions
 		
 		//Module de connexion.
 		$login = retrieve(POST, 'login', '');
-		$password = retrieve(POST, 'password', '', TSTRING_UNSECURE);
+		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
 		$autoconnexion = retrieve(POST, 'auto', false);
 		
 		if (retrieve(GET, 'disconnect', false)) //Déconnexion.

@@ -71,7 +71,7 @@ if (!$User->check_level(USER_LEVEL))
 				$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		}
 		
-		$get_error = retrieve(GET, 'error', '', TSTRING_UNSECURE);			
+		$get_error = retrieve(GET, 'error', '', TSTRING_UNCHANGE);			
 		$errno = E_USER_NOTICE;
 		switch ($get_error)
 		{ 

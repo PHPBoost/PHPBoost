@@ -88,7 +88,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return (int)$var;
 		case TSTRING:
 			return strprotect($var); //Chaine protégée.
-		case TSTRING_UNSECURE:
+		case TSTRING_UNCHANGE:
 			if (MAGIC_QUOTES)
 				$var = trim(stripslashes($var));
 			else
@@ -107,7 +107,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
 			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
-		case TSTRING_UNCHANGE:
+		case TSTRING_AS_RECEIVED:
 			return (string)$var;
 		case TARRAY:
 			return (array)$var;

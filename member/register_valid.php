@@ -40,9 +40,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 {
 	//Info de connexion
 	$login = substr(retrieve(POST, 'log', ''), 0, 25);
-	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
+	$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 	$password_hash = strhash($password);
-	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
+	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNCHANGE);
 	$password_bis_hash = strhash($password_bis);
 		
 	//Configuration
@@ -167,7 +167,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						WHERE display = 1", __LINE__, __FILE__);
 						while ($row = $Sql->fetch_assoc($result))
 						{
-							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
+							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNCHANGE);
 							//Validation par expressions régulières.
 							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 							{

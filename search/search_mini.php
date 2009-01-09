@@ -38,7 +38,7 @@ function search_mini()
     $tpl->assign_vars(Array(
         'TITLE_SEARCH' => TITLE,
         'SEARCH' => $LANG['title_search'],
-        'TEXT_SEARCHED' => !empty($search) ? htmlentities(retrieve(REQUEST, 'q', '', TSTRING_UNCHANGE)) : $LANG['search'] . '...',
+        'TEXT_SEARCHED' => !empty($search) ? htmlentities(retrieve(REQUEST, 'q', '', TSTRING_AS_RECEIVED)) : $LANG['search'] . '...',
         'WARNING_LENGTH_STRING_SEARCH' => addslashes($LANG['warning_length_string_searched']),
     	'L_SEARCH' => $LANG['search'],
         'U_FORM_VALID' => url(PATH_TO_ROOT . '/search/search.php#results'),

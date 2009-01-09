@@ -79,7 +79,7 @@ elseif ($id_to_update > 0)
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
-	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNSECURE);
+	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
 	$status = retrieve(POST, 'status', CONTRIBUTION_STATUS_UNREAD);
 	

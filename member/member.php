@@ -385,9 +385,9 @@ if (!empty($id_get)) //Espace membre
 		if ($check_pass && $check_pass_bis)
 		{
 			$password_old_hash = !empty($_POST['pass_old']) ? strhash($_POST['pass_old']) : '';
-			$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
+			$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 			$password_hash = !empty($password) ? strhash($password) : '';
-			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
+			$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNCHANGE);
 			$password_bis_hash = !empty($password_bis) ? strhash($password_bis) : '';
 			$password_old_bdd = $Sql->query("SELECT password FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'",  __LINE__, __FILE__);
 			
@@ -946,7 +946,7 @@ else //Show all member!
 	
 	$nbr_member = $Sql->count_table('member', __LINE__, __FILE__);
 	
-	$get_sort = retrieve(GET, 'sort', '', TSTRING_UNSECURE);
+	$get_sort = retrieve(GET, 'sort', '', TSTRING_UNCHANGE);
 	switch ($get_sort)
 	{
 		case 'time' :
@@ -965,7 +965,7 @@ else //Show all member!
 		$sort = 'timestamp';
 	}
 	
-	$get_mode = retrieve(GET, 'mode', '', TSTRING_UNSECURE);
+	$get_mode = retrieve(GET, 'mode', '', TSTRING_UNCHANGE);
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 

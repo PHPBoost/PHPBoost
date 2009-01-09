@@ -36,7 +36,7 @@ $Cache->load('guestbook');
 		
 if ($guestbook && empty($id_get)) //Enregistrement
 {
-	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
+	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Membre en lecture seule?
@@ -81,7 +81,7 @@ elseif (retrieve(POST, 'previs', false)) //Prévisualisation.
 
 	$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	
-	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
+	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_AS_RECEIVED);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 
 	//Pseudo du membre connecté.
@@ -183,7 +183,7 @@ elseif (!empty($id_get)) //Edition + suppression!
 		}
 		elseif ($update)
 		{
-			$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNSECURE);
+			$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 			$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 			if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 			{

@@ -283,7 +283,7 @@ elseif (!empty($table) && $action == 'drop')
 }
 elseif (!empty($table) && $action == 'query')
 {
-	$query = retrieve(POST, 'query', '', TSTRING_UNSECURE);
+	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
 	$Template->assign_vars(array(
 		'C_DATABASE_TABLE_QUERY' => true
