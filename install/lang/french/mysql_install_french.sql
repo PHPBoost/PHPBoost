@@ -8,17 +8,17 @@ INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES
 
 INSERT INTO `phpboost_member` (login, level, user_aprob) VALUES ('login', 2, 1);
 
-INSERT INTO `phpboost_ranks` VALUES (1, 'Administrateur', -2, 'rank_admin.gif', 1);
-INSERT INTO `phpboost_ranks` VALUES (2, 'Modérateur', -1, 'rank_modo.gif', 1);
-INSERT INTO `phpboost_ranks` VALUES (3, 'Boosteur Inactif', 0, 'rank_0.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (4, 'Booster Fronde', 1, 'rank_1.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (5, 'Booster Minigun', 25, 'rank_1.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (6, 'Booster Fuzil', 50, 'rank_2.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (7, 'Booster Bazooka', 100, 'rank_2.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (8, 'Booster Roquette', 250, 'rank_3.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (9, 'Booster Mortier', 500, 'rank_3.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (10, 'Booster Missile', 1000, 'rank_4.gif', 0);
-INSERT INTO `phpboost_ranks` VALUES (11, 'Booster Fusée', 1500, 'rank_5.gif', 0);
+INSERT INTO `phpboost_ranks` VALUES (1, 'Administrateur', -2, 'rank_admin.png', 1);
+INSERT INTO `phpboost_ranks` VALUES (2, 'Modérateur', -1, 'rank_modo.png', 1);
+INSERT INTO `phpboost_ranks` VALUES (3, 'Boosteur Inactif', 0, 'rank_0.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (4, 'Booster Fronde', 1, 'rank_0.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (5, 'Booster Minigun', 25, 'rank_1.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (6, 'Booster Fuzil', 50, 'rank_2.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (7, 'Booster Bazooka', 100, 'rank_3.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (8, 'Booster Roquette', 250, 'rank_4.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (9, 'Booster Mortier', 500, 'rank_5.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (10, 'Booster Missile', 1000, 'rank_6.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (11, 'Booster Fusée', 1500, 'rank_special.png', 0);
 
 INSERT INTO `phpboost_smileys` (`idsmiley`, `code_smiley`, `url_smiley`) VALUES 
 (9, ':|', 'waw.gif'),

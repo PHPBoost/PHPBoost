@@ -289,7 +289,7 @@ class Stats
 			$array_scale = array();
 			$this->_generate_scale($array_scale, $max_element);
 			$scale_pos = $margin;
-			$scale_iteration = _number_round(($h_histo_content+1)/15, 2);
+			$scale_iteration = $this->_number_round(($h_histo_content+1)/15, 2);
 			$j = 0;
 			for ($i = 0; $i < 16; $i++)
 			{
@@ -323,7 +323,7 @@ class Stats
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
-			$space_bar = _number_round(($w_histo_content - 4)/count($this->data_stats), 0);
+			$space_bar = $this->_number_round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
@@ -462,7 +462,7 @@ class Stats
 		$scale_iteration = $max_element/3;
 		for ($i = 0; $i < 4; $i++)
 		{	
-			$array_scale[$i] = _number_round(abs($scale), 0);
+			$array_scale[$i] = $this->_number_round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
 	}
@@ -471,7 +471,7 @@ class Stats
 	function _number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
-		$number = _number_round($number, 1) * 10;
+		$number = $this->_number_round($number, 1) * 10;
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
@@ -492,7 +492,7 @@ class Stats
 				$number = $number - $decimal + 10;
 		}
 		
-		return _number_round($number, 0);
+		return $this->_number_round($number, 0);
 	}
 	
 	//Création de l'image d'erreur

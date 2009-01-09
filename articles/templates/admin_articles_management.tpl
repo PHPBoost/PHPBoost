@@ -132,7 +132,7 @@
 			{
 				var page = prompt("{L_PAGE_PROMPT}");
 				if( page != null && page != '' )
-					insertbbcode('[page]' + page, '[/page]', '{FIELD}');
+					insertbbcode('[page]' + page, '[/page]', 'contents');
 			}
 			-->
 			</script>

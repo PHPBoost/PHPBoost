@@ -401,7 +401,7 @@ $stats_array_lang = array(
 	'zw' => array('Zimbabwe', 'zw.png'),
 	'tv' => array('Tuvalu', 'tv.png'),
 	'ws' => array('Western Samoa', 'ws.png'),
-	'other' => array('Autres', 'other.png')
+	'other' => array('Autres', '../other.png')
 );
 
 ?>

@@ -104,31 +104,31 @@ class StatsSaver
 		$array_browser = array(
 			'opera' => 'opera',
 			'firefox' => 'firefox',
-			'MSIE|internet explorer' => 'internetexplorer',
-			'chrome' => 'Chrome', 
+			'msie|internet explorer' => 'internetexplorer',
+			'chrome' => 'chrome', 
 			'safari' => 'safari',
 			'konqueror' => 'konqueror',
 			'netscape' => 'netscape',
-			'seamonkey' => 'SeaMonkey',
-			'mozilla firebird' => 'Mozilla firebird',
+			'seamonkey' => 'seamonkey',
+			'mozilla firebird' => 'mozilla firebird',
 			'mozilla' => 'mozilla', 
 			'aol' => 'aol',
 			'lynx' => 'lynx',
-			'camino' => 'Camino',
-			'links' => 'Links',
-			'galeon' => 'Galeaon',
-			'phoenix' => 'Phoenix',
-			'chimera' => 'Chimera',
-			'k-meleon' => 'K-meleon',
-			'icab' => 'Icab',
-			'ncsa mosaic'=> 'Ncsa mosaic',
-			'amaya'	=> 'Amaya',
-			'omniweb' => 'Omniweb',
-			'hotjava' => 'Hotjava',
-			'browsex' => 'Browsex',
-			'amigavoyager'=> 'Amigavoyager',
-			'amiga-aweb'=> 'Amiga-aweb',
-			'ibrowse' => 'Ibrowse'
+			'camino' => 'camino',
+			'links' => 'links',
+			'galeon' => 'galeaon',
+			'phoenix' => 'phoenix',
+			'chimera' => 'chimera',
+			'k-meleon' => 'k-meleon',
+			'icab' => 'icab',
+			'ncsa mosaic'=> 'ncsa mosaic',
+			'amaya'	=> 'amaya',
+			'omniweb' => 'omniweb',
+			'hotjava' => 'hotjava',
+			'browsex' => 'browsex',
+			'amigavoyager'=> 'amigavoyager',
+			'amiga-aweb'=> 'amiga-aweb',
+			'ibrowse' => 'ibrowse'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
@@ -146,27 +146,27 @@ class StatsSaver
 		
 		########### Détection des systèmes d'exploitation ###########
 		$array_os = array(
-			'windows NT 6.0|Vista' => 'windowsvista',
-			'Windows NT 5.1|Windows XP' => 'windowsxp',
-			'Linux' => 'linux',
-			'Macintosh|Mac|PPC|PowerPC' => 'macintosh',
-			'Windows NT 5.2|Windows Server 2003' => 'windowsserver2003',
-			'Windows NT 5.0|Windows 2000' => 'windows2000',
-			'WinNT|Windows NT|Windows NT 4.0'  => 'windowsnt',
-			'Windows 98|Win98' => 'windows98',
-			'Win 9x 4.90|Windows Me' => 'windowsme',
-			'Win95|Win32|Windows 95' => 'windows95',
-			'Windows CE' => 'windowsce',
-			'Solaris|SunOS' => 'sunos',
-			'Nintendo Wii' => 'wii',
-			'PlayStation Portable' => 'psp',
-			'PLAYSTATION 3' => 'playstation3',
-			'FreeBSD' => 'freebsd',
-			'AIX' => 'aix',
-			'IRIX' => 'irix',
-			'HP-UX' => 'hp-ux', 
-			'os2|OS/2' => 'os2',
-			'NetBSD' => 'netbsd'
+			'windows nt 6.0|vista' => 'windowsvista',
+			'windows nt 5.1|windows xp' => 'windowsxp',
+			'linux' => 'linux',
+			'macintosh|mac|ppc|powerpc|safari' => 'macintosh',
+			'windows nt 5.2|windows server 2003' => 'windowsserver2003',
+			'windows nt 5.0|windows 2000' => 'windows2000',
+			'winnt|windows nt|windows nt 4.0'  => 'windowsnt',
+			'windows 98|win98' => 'windows98',
+			'win 9x 4.90|windows me' => 'windowsme',
+			'win95|win32|windows 95|windows 3.1' => 'windows95',
+			'windows ce' => 'windowsce',
+			'solaris|sunos' => 'sunos',
+			'nintendo wii' => 'wii',
+			'playstation portable' => 'psp',
+			'playstation 3' => 'playstation3',
+			'freebsd' => 'freebsd',
+			'aix' => 'aix',
+			'irix' => 'irix',
+			'hp-ux' => 'hp-ux', 
+			'os2|os/2' => 'os2',
+			'netbsd' => 'netbsd'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
@@ -196,7 +196,9 @@ class StatsSaver
 				$wlang = 'other';
 				if (isset($stats_array_lang[$lang]))
 					$wlang = $lang;
-					
+				elseif (isset($stats_array_lang[substr($lang, 0, 2)]))
+					$wlang = substr($lang, 0, 2);
+				
 				StatsSaver::_write_stats('lang', $wlang);
 			}
 		}
