@@ -59,11 +59,11 @@
 						<dd><label><input type="text" size="40" maxlength="100" id="site_name" name="site_name" value="{SITE_NAME}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="site_desc">{L_SITE_DESC}</label></dt>
+						<dt><label for="site_desc">{L_SITE_DESC}</label><br /><span>{L_SITE_DESC_EXPLAIN}</span></dt>
 						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_desc" id="site_desc">{SITE_DESCRIPTION}</textarea></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label></dt>
+						<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
 						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_keyword" id="site_keyword">{SITE_KEYWORD}</textarea></label></dd>
 					</dl> 
 					<dl>

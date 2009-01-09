@@ -38,6 +38,8 @@ CREATE TABLE `phpboost_forum_history` (
 	`id` int(11) NOT NULL auto_increment,
 	`action` smallint(6) NOT NULL default '0',
 	`user_id` int(11) NOT NULL default '0',
+	`user_id_action` int(11) NOT NULL default '0',
+	`url` varchar(255) NOT NULL,
 	`timestamp` int(11) NOT NULL default '0',
 	PRIMARY KEY	(`id`),
 	KEY `user_id` (`user_id`)

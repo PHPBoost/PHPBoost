@@ -73,7 +73,7 @@
 						# IF C_FORUM_NO_ACTION #
 						<tr style="text-align:center;">
 							<td class="row2" colspan="4">
-								L_NO_ACTION}
+								{L_NO_ACTION}
 							</td>
 						</tr>
 						# ENDIF #
