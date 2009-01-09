@@ -314,13 +314,13 @@ class TinyMCEParser extends ContentParser
 		//Color tag
 		if (!in_array('color', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="color: ?([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="color: *([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="color:$1;">$2</span>');
 		}
 		//Background color tag
 		if (!in_array('bgcolor', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span style="background-color: ?([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
+			array_push($array_preg, '`&lt;span style="background-color: *([^;]+);"&gt;(.+)&lt;/span&gt;`isU');
 			array_push($array_preg_replace, '<span style="background-color:$1;">$2</span>');
 		}
 		//Align tag
@@ -412,7 +412,7 @@ class TinyMCEParser extends ContentParser
 		
 		//Quote tag
 		if (!in_array('quote', $this->forbidden_tags))
-			$this->content = preg_replace('`&lt;blockquote&gt;(.+)(?:<br />[\s]*)*&lt;/blockquote&gt;`isU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+			$this->content = preg_replace('`(.)(?:\s*<br />\s*)?\s*&lt;blockquote&gt;\s*(?:&lt;p&gt;)?(.+)(?:<br />[\s]*)*\s*(&lt;/p&gt;)?&lt;/blockquote&gt;`isU', '$1<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$2</div>', $this->content);
 		
 		//Font tag
 		if (!in_array('font', $this->forbidden_tags))
@@ -601,7 +601,7 @@ class TinyMCEParser extends ContentParser
 		if ((int)$matches[1] > 0)
 		{
 			$nbr_indent = (int)$matches[1] / 30;
-			return str_repeat('<div class="indent">', $nbr_indent) . $matches[2] . str_repeat('</div>', $nbr_indent);
+			return str_repeat('<div class="indent">', $nbr_indent) . $matches[2] . str_repeat('</div>', $nbr_indent) . "\n<br />";
 		}
 		else
 			return $matches[2];
