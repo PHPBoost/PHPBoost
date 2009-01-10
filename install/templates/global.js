@@ -121,3 +121,10 @@ function escape_xmlhttprequest(contents)
 	
 	return contents;
 }
+
+//Supprime les espaces en début et fin de chaîne.
+function trim(myString)
+{
+	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
+} 
+

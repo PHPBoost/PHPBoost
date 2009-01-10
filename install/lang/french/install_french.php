@@ -178,6 +178,7 @@ $LANG['admin_require_password_repeat'] = 'Vous devez confirmer votre mot de pass
 $LANG['admin_require_mail'] = 'Vous devez entrer une adresse de courier électronique';
 $LANG['admin_passwords_error'] = 'Les deux mots de passe que vous avez entrés ne correspondent pas';
 $LANG['admin_email_error'] = 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte';
+$LANG['admin_invalid_email_error'] = 'Mail invalide';
 $LANG['admin_create_session'] = 'Me connecter à la fin de l\'installation';
 $LANG['admin_auto_connection'] = 'Rester connecté systématiquement à chacune de mes visites';
 $LANG['admin_error'] = 'Erreur';

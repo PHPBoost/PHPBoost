@@ -43,45 +43,89 @@
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
 				{
-					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_AUTH}";
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_email_div').innerHTML = "{L_MAIL_AUTH}";
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('msg_email').innerHTML = '';
+				{	
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_email_div').innerHTML = "";
+				}
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
 		function check_email(value) 
 		{
-			regex=/^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+			value = trim(value);
+			regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
 			if (!regex.test(value))
-				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_INVALID}";
-			else	
+			{	
+				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
+			}
+			else
 				XMLHttpRequest_register_mail(value);	
 		}
 		function check_password(value) 
 		{
-			document.getElementById('msg_password2').innerHTML = "";
 			if (value.length<6)
-				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			{	
+				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_HOW}";
+			}
 			else
 			{
-				document.getElementById('msg_password1').innerHTML = "";
 				var password = document.getElementById('pass_bis').value;
-				if (password.length > 0 && password != value)
-					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+				if (password == value)
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
+				else if (password.length > 0)
+				{	
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_SAME}";
+				}
+				else
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+				}
 			}	
 		}
 		function check_password2(value) 
 		{
-			document.getElementById('msg_password1').innerHTML = "";
 			if (value.length<6)
-				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			{	
+				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_HOW}";
+			}
 			else
 			{
-				document.getElementById('msg_password2').innerHTML = "";
 				var password = document.getElementById('pass').value;
-				if (password.length > 0 && password != value)
-					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+				if (password == value)
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
+				else if (password.length > 0)
+				{	
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_SAME}";
+				}
+				else
+				{
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
 			}	
 		}
 		-->
@@ -107,7 +151,7 @@
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_email"></div></label></dd>
+					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_old">(*) {L_PREVIOUS_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
@@ -115,11 +159,11 @@
 				</dl>
 				<dl>
 					<dt><label for="pass">(*) {L_NEW_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password1"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_bis">(*) {L_CONFIRM_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password2"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="del_member">{L_DEL_USER}</label></dt>

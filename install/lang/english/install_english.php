@@ -178,6 +178,7 @@ $LANG['admin_require_password_repeat'] = 'You must confirm your password !';
 $LANG['admin_require_mail'] = 'You must enter an emain address !';
 $LANG['admin_passwords_error'] = 'The two passwords you entered didn\'t correspond, please correct them.';
 $LANG['admin_email_error'] = 'The email address your entered hasn\'t got a correct form.';
+$LANG['admin_invalid_email_error'] = 'Invalid email';
 $LANG['admin_create_session'] = 'Be automatically identified at the end of the installation';
 $LANG['admin_auto_connection'] = 'Remain connected systematically each time I visit my website';
 $LANG['admin_error'] = 'Error';

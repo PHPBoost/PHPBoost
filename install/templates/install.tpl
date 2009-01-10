@@ -629,7 +629,7 @@
 									alert("{L_PASSWORDS_ERROR}");
 									return false;
 								}
-								else if( !regex.test(document.getElementById("mail").value)  )
+								else if( !regex.test(trim(document.getElementById("mail").value))  )
 								{
 									alert("{L_EMAIL_ERROR}");
 									return false;
@@ -637,13 +637,101 @@
 								else
 									return true;
 							}
-							
+							function check_login(value) 
+							{
+								if (value.length<3)			
+								{	
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else	
+								{
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = '';
+								}
+							}
+							function check_mail(value) 
+							{
+								value = trim(value);
+								regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
+								if (!regex.test(value))
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
+								}
+								else
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = '';
+								}
+							}
+							function check_password(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password_repeat').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+									}
+								}	
+							}
+							function check_password2(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+								}	
+							}
 							function change_img_theme(id, value)
 							{
 								if(document.images )
 									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 							}
-							
 							var array_identifier = new Array();
 							{JS_LANG_IDENTIFIER}
 							function change_img_lang(id, lang)
@@ -667,19 +755,19 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="login">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" /></label></dd>								
+									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div style="font-weight:bold" id="msg_login_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
+									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
-									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
+									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="text" /></label></dd>								
+									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>

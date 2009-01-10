@@ -714,6 +714,7 @@ elseif ($step == 6)
 		'L_CREATE_SESSION' => $LANG['admin_create_session'],
 		'L_AUTO_CONNECTION' => $LANG['admin_auto_connection'],
 		'L_EMAIL_ERROR' => $LANG['admin_email_error'],
+		'L_MAIL_INVALID' => $LANG['admin_invalid_email_error'],
 		'LOGIN_VALUE' => !empty($error) ? $login : '',
 		'PASSWORD_VALUE' => !empty($error) ? $password : '',
 		'MAIL_VALUE' => !empty($error) ? $user_mail : '',
