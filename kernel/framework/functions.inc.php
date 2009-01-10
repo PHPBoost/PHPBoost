@@ -216,7 +216,8 @@ function display_editor($field = 'contents', $forbidden_tags = array())
 //Affichage des commentaires.
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-	include_once('../kernel/framework/content/comments.class.php');
+
+	import('content/comments');
 	$comments = new Comments($script, $idprov, $vars, $module_folder);
 	
 	return $comments->display();
