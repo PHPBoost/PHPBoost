@@ -98,9 +98,9 @@ class Sql
 	//Requête simple
 	function query($query, $errline, $errfile)
 	{
-		$result = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		$result = mysql_fetch_row($result);
-		$this->query_close($result); //Déchargement mémoire.
+		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
+		$result = mysql_fetch_row($ressource);
+		$this->query_close($ressource); //Déchargement mémoire.
 		$this->req++;
 
 		return $result[0];
@@ -132,11 +132,11 @@ class Sql
 		
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
-		$result = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
-		$result = mysql_fetch_assoc($result);
+		$ressource = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
+		$result = mysql_fetch_assoc($ressource);
 		
 		//Fermeture de la ressource
-		$this->query_close($result);
+		$this->query_close($ressource);
 		$this->req++;
 		
 		return $result;
@@ -163,8 +163,8 @@ class Sql
 	//Nombre d'entrées dans la table.
 	function count_table($table, $errline, $errfile)
 	{
-		$result = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
-		$result = mysql_fetch_assoc($result);
+		$ressource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
+		$result = mysql_fetch_assoc($ressource);
 		$this->query_close($result); //Déchargement mémoire.
 		$this->req++;
 		
@@ -401,6 +401,23 @@ class Sql
 	function create_database($db_name)
 	{
         return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
+	}
+
+	//Requête query + fetch_array
+	function query_fetch($query, $errline, $errfile, $type = MYSQL_BOTH)
+	{
+		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
+		$result = $this->fetch_array($ressource, $type);
+		$this->query_close($ressource);
+		$this->req++;
+
+		return $result;
+	}
+	
+	//Balayage du retour de la requête sous forme de tableau indexé, associatif ou les deux
+	function fetch_array($result, $type=MYSQL_BOTH)
+	{
+		return mysql_fetch_array($result, $type);
 	}
 	
 	## Private Methods ##
