@@ -123,7 +123,7 @@ function switch_pics()
 	var index;
 
 	index = Math.round(Math.random() * (array_pics_mini.length - 1));		
-	if( array_pics_mini )
+	if( array_pics_mini[index] )
 		document.getElementById('thumb_mini').innerHTML = '<a href="../gallery/gallery' + array_pics_mini[index]['link'] + '"><img src="../gallery/pics/thumbnails/' + array_pics_mini[index]['path'] + '" alt="" /></a>';
 
 	timeout = setTimeout("switch_pics()", scroll_speed);
