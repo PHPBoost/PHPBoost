@@ -62,6 +62,8 @@ define('GET', 1);
 define('POST', 2);
 define('REQUEST', 3);
 define('COOKIE', 4);
+define('FILES', 5);
+
 define('TBOOL', 'boolean');
 define('TINTEGER', 'integer');
 define('TDOUBLE', 'double');
