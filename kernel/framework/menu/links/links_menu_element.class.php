@@ -199,11 +199,12 @@ class LinksMenuElement extends Menu
     function _assign(&$template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
         $template->assign_vars(array(
-            'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
             'C_FIRST_LEVEL' => $this->depth == 1,
             'DEPTH' => $this->depth,
             'PARENT_DEPTH' => $this->depth - 1,
+            'C_URL' => !empty($this->url),
+            'C_IMG' => !empty($this->image),
             'ABSOLUTE_URL' => $this->get_url(false),
             'ABSOLUTE_IMG' => $this->get_image(false),
             'RELATIVE_URL' => $this->get_url(true),
