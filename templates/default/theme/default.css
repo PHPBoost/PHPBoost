@@ -139,6 +139,21 @@ div.block_content ul {
     width:169px;
 }
 
+.dynamic_menu li li span {
+    color:#0578CC;
+    font-size:10px;
+    text-decoration:none;
+    padding-left:32px;
+    width:133px;
+    display:block;
+    white-space:nowrap;
+    margin:auto;
+    padding-top:6px;
+    padding-bottom:6px;
+    background-repeat:no-repeat;
+    background-position:5px;
+}
+
 .dynamic_menu li li a {
     color:#0578CC;
     font-size:10px;

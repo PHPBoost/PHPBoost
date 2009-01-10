@@ -7,9 +7,14 @@
         </div>
     # ENDIF #
     # IF C_NEXT_MENU #
-        <li class="# IF C_FIRST_LEVEL #first_level# ELSE #extend# ENDIF #" onmouseover="showMenu('gmenu{ID}', {PARENT_DEPTH});" onmouseout="hideMenu({PARENT_DEPTH});">
-            # IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /> # ENDIF #<a href="{RELATIVE_URL}">{TITLE}</a>
-            # IF C_HAS_CHILD #<ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul># ENDIF #
+        <li class="# IF C_FIRST_LEVEL #first_level dynamic_menu# ELSE #extend# ENDIF #" onmouseover="showMenu('gmenu{ID}', {PARENT_DEPTH});" onmouseout="hideMenu({PARENT_DEPTH});">
+            # IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /> # ENDIF #
+            # IF C_URL #
+                <a href="{RELATIVE_URL}">{TITLE}</a>
+            # ELSE #
+                <span>{TITLE}</span>
+            # ENDIF #
+            <ul id="gmenu{ID_VAR}"># START elements #{elements.DISPLAY}# END elements #</ul>
         </li>
     # ENDIF #
 # ELSE #
