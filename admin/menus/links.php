@@ -133,6 +133,7 @@ if ($action == 'save')
     {
         if ($previous_menu != null && $menu->get_block() == $previous_menu->get_block())
         {   // Save the menu if enabled
+            $menu->set_block_position($previous_menu->get_block_position());
             MenuService::save($menu);
         }
         else
@@ -143,6 +144,12 @@ if ($action == 'save')
     else
     {   // The menu is not enabled, we only save it with its block location
         // When enabling it, the menu will be moved to this block location
+        $block = $menu->get_block();
+        // Disable the menu and move it to the disabled position computing new positions
+        MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
+        
+        // Restore its position and save it
+        $menu->set_block($block);
         MenuService::save($menu);
     }
    	MenuService::generate_cache();
