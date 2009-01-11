@@ -59,12 +59,11 @@ function guestbook_mini()
 	    	else
 	    		$guestbook_login = '<span style="font-style:italic;">' . (!empty($guestbook_rand['login']) ? wordwrap_html($guestbook_rand['login'], 13) : $LANG['guest']) . '</span>';
 	    	
-	    	$guestbook_contents = ucfirst(wordwrap_html($guestbook_rand['contents'], 22));
 	    	$tpl->assign_vars(array(
 				'C_ANY_MESSAGE_GESTBOOK' => true,
 				'L_RANDOM_GESTBOOK' => $LANG['title_guestbook'],
 	    		'RAND_MSG_ID' => $guestbook_rand['id'],
-	    		'RAND_MSG_CONTENTS' => (strlen($guestbook_contents) > 22) ? $guestbook_contents . ' <a href="' . PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : $guestbook_contents,
+	    		'RAND_MSG_CONTENTS' => (strlen($guestbook_rand['contents']) > 149) ? ucfirst($guestbook_rand['contents']) . ' <a href="' . PATH_TO_ROOT . '/guestbook/guestbook.php" class="small_link">' . $LANG['guestbook_more_contents'] . '</a>' : ucfirst($guestbook_rand['contents']),
 	    		'RAND_MSG_LOGIN' => $guestbook_login,
 	    		'L_BY' => $LANG['by']
 	    	));
