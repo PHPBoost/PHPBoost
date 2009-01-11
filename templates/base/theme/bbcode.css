@@ -7,11 +7,11 @@
 	border-collapse:collapse;
 	border-spacing:0px;
 }
-/* Curseur de la souris au passage sur les ic�nes */
+/* Curseur de la souris au passage sur les icônes */
 .bbcode_hover{
 	cursor:pointer;
 }
-/* Menu cach� du BBcode */
+/* Menu caché du BBcode */
 .bbcode_block{
 	position:absolute;
 	text-align:center;
