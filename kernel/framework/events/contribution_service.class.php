@@ -130,10 +130,17 @@ class ContributionService
 		return $array_result;
 	}
 	
-	//Creation or update of a contribution (in database)
+	/**
+     * @author Benoît Sautel <ben.popeye@phpboost.com>
+     * @desc Creation or update of a contribution (in database)
+     * @warning You must have a valid token or be in the token unsafe mode
+	 */
 	/*static*/ function save_contribution(&$contribution)
 	{
-		global $Sql, $Cache;
+		global $Sql, $Cache, $Session;
+		
+		//We check if the user really wanted to save the contribution
+		$Session->check_token();
 		
 		// If it exists already in the data base
 		if ($contribution->get_id() > 0)
@@ -160,10 +167,17 @@ class ContributionService
 		}
 	}
 	
-	//Deleting a contribution in the database
+	/**
+     * @author Benoît Sautel <ben.popeye@phpboost.com>
+     * @desc Deleting a contribution in the database
+     * @warning You must have a valid token or be in the token unsafe mode
+	 */
 	/*static*/ function delete_contribution(&$contribution)
 	{
-		global $Sql, $Cache;
+		global $Sql, $Cache, $Session;
+		
+		//We check if the user really wanted to save the contribution
+		$Session->check_token();
 		
 		//If it exists in database
 		if ($contribution->get_id() > 0)

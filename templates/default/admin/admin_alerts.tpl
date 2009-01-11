@@ -17,7 +17,7 @@
 			
 			var xhr_object = null;
 			var data = null;
-			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id;
+			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id + '&token={TOKEN}';
 
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
@@ -59,7 +59,7 @@
 			
 			var xhr_object = null;
 			var data = null;
-			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id;
+			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id + '&token={TOKEN}';
 
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();

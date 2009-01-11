@@ -591,7 +591,7 @@ class Sessions
 	 */
 	function check_token($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
-	    if (!$token_check_enabled)
+	    if (!$this->token_check_enabled)
 	       return true;
         
 	    $token = $this->get_token();
