@@ -41,8 +41,8 @@ if ($file_id > 0) //Contenu
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
 	import('util/date');
- 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
- 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
+ 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
+ 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
 	
 	//Affichage notation.
 	import('content/note');
