@@ -1,13 +1,13 @@
 <?php
-/*##################################################
+/**
  *                              mysql.class.php
  *                            -------------------
- *   begin                : March 13, 2006
- *   copyright            : (C) 2005 Régis Viarre, Loïc Rouchon
- *   email                : crowkait@phpboost.com, horn@phpboost.com
+ *   begin                March 13, 2006
+ * @author              CrowkaiT, Horn
+ *  @copyright       (C) 2005 Régis Viarre, Loïc Rouchon
+ *  @email              crowkait@phpboost.com, horn@phpboost.com
+ * @license            GPL
  *
- *
-###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ */
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
