@@ -131,7 +131,6 @@ class ContributionService
 	}
 	
 	/**
-     * @author Benoît Sautel <ben.popeye@phpboost.com>
      * @desc Creation or update of a contribution (in database)
      * @warning You must have a valid token or be in the token unsafe mode
 	 */
@@ -168,7 +167,6 @@ class ContributionService
 	}
 	
 	/**
-     * @author Benoît Sautel <ben.popeye@phpboost.com>
      * @desc Deleting a contribution in the database
      * @warning You must have a valid token or be in the token unsafe mode
 	 */

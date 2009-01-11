@@ -562,7 +562,7 @@ class Sessions
      */
     function enable_token_check()
     {
-        $token_check_enabled = true;
+        $this->token_check_enabled++;
     }
 	
 	/**
@@ -570,7 +570,7 @@ class Sessions
      */
     function disabe_token_check()
     {
-        $token_check_enabled = false;
+        $this->token_check_enabled--;
     }
 	
 	/**
@@ -591,7 +591,8 @@ class Sessions
 	 */
 	function check_token($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
-	    if (!$this->token_check_enabled)
+	    //If the token system has been disabled at least once
+	    if ($this->token_check_enabled < 0)
 	       return true;
         
 	    $token = $this->get_token();
@@ -606,7 +607,7 @@ class Sessions
 	    return $check;
 	}
 	
-	var $token_check_enabled = true;
+	var $token_check_enabled = 0;
 }
 
 ?>
