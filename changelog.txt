@@ -90,7 +90,8 @@
 [*] Déplacement du code de connexion utilisateur.
 [*] Regroupement des modules dans les templates.
 [*] Nouvelles images pour les rangs.
-[*] Ajout de Google Chrome dans les stats des navigateurs.
+[*] Amélioration dans la détection des stats des pays, navigateurs, et système d'exploitation.
+[*] Ajout de Google Chrome dans les stats des navigateurs, ajout des téléphones mobiles.
 [*] Conformation des requêtes au standard SQL.
 [*] Amélioration des taches crons.
 [*] Filtrage des bots (si url_rewriting activé).

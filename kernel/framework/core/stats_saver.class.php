@@ -128,7 +128,8 @@ class StatsSaver
 			'browsex' => 'browsex',
 			'amigavoyager'=> 'amigavoyager',
 			'amiga-aweb'=> 'amiga-aweb',
-			'ibrowse' => 'ibrowse'
+			'ibrowse' => 'ibrowse',
+			'samsung|sony|nokia' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
@@ -148,7 +149,7 @@ class StatsSaver
 		$array_os = array(
 			'windows nt 6.0|vista' => 'windowsvista',
 			'windows nt 5.1|windows xp' => 'windowsxp',
-			'linux' => 'linux',
+			'linux|x11' => 'linux',
 			'macintosh|mac|ppc|powerpc|safari' => 'macintosh',
 			'windows nt 5.2|windows server 2003' => 'windowsserver2003',
 			'windows nt 5.0|windows 2000' => 'windows2000',
@@ -166,7 +167,8 @@ class StatsSaver
 			'irix' => 'irix',
 			'hp-ux' => 'hp-ux', 
 			'os2|os/2' => 'os2',
-			'netbsd' => 'netbsd'
+			'netbsd' => 'netbsd',
+			'samsung|sony|nokia' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
