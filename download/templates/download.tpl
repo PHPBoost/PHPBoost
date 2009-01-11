@@ -93,7 +93,7 @@
 										<a href="{file.U_ADMIN_EDIT_FILE}">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 										</a>
-										<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
+										<a href="{file.U_ADMIN_DELETE_FILE}&amp;token={TOKEN}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="">
 										</a>
 									# ENDIF #
@@ -146,7 +146,7 @@
 						<a href="{U_EDIT_FILE}">
 							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT_FILE}" />
 						</a>
-						<a href="{U_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
+						<a href="{U_DELETE_FILE}&amp;token={TOKEN}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
 							<img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE_FILE}" />
 						</a>
 					# ENDIF #
