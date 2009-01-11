@@ -90,8 +90,8 @@ $User = new User($Session->data, $_array_groups_auth); //!\\Initialisation  de l
 //Définition de la constante de transmission des infos de session.
 if ($Session->session_mod)
 {
-	define('SID', '?sid=' . $User->get_attribute('session_id') . '&amp;suid=' . $User->get_attribute('user_id'));
-	define('SID2', '?sid=' . $User->get_attribute('session_id') . '&suid=' . $User->get_attribute('user_id'));
+	define('SID', 'sid=' . $User->get_attribute('session_id') . '&amp;suid=' . $User->get_attribute('user_id'));
+	define('SID2', 'sid=' . $User->get_attribute('session_id') . '&suid=' . $User->get_attribute('user_id'));
 }
 else
 {
@@ -149,6 +149,5 @@ elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'ker
 	if (!empty($array_info_module['name'])) //Module présent, et non installé.
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
-
 
 ?>

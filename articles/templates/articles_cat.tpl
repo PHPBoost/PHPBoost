@@ -4,7 +4,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+				<a href="articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
@@ -91,7 +91,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom text_strong">
-				<a href="articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+				<a href="articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 		</div>
 		

@@ -43,7 +43,7 @@
 		
 		<div id="admin_contents">
 		
-			<form action="admin_com_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_com_config.php&amp;token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_COM_CONFIG}</legend>
 					<dl> 

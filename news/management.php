@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -47,7 +47,7 @@ $news_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 $news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
 $news_timestamp = retrieve(POST, 'timestamp', 0);
 $news_cat_id = retrieve(POST, 'idcat', 0);
-$news_visibility = retrieve(POST, 'visibility', 0);		
+$news_visibility = retrieve(POST, 'visibility', 0);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 
 //Instanciations of objects required
@@ -65,7 +65,7 @@ $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date',
 //Deleting a news
 if ($delete_news > 0)
 {
-	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
 	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	
@@ -91,7 +91,7 @@ if ($delete_news > 0)
 }
 elseif ($edit_news_id > 0)
 {
-	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	define('TITLE', $NEWS_LANG['news_management']);
@@ -150,7 +150,7 @@ if ($edit_news_id > 0)
 			
 			switch ($news_visibility)
 			{
-				case 2:		
+				case 2:
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -189,11 +189,11 @@ if ($edit_news_id > 0)
 	}
 	//Previewing a news
 	elseif ($preview)
-	{		
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);		
+		$end_calendar->set_date($end_date);
 		$end_calendar->set_style('margin-left:150px;');
 
 		$Template->set_filenames(array('news' => 'news/news.tpl'));
@@ -283,7 +283,7 @@ if ($edit_news_id > 0)
 		
 		
 		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar = new MiniCalendar('end_date');
 		$end_calendar->set_style('margin-left:150px;');
 		
 		if (!empty($news_infos['start']) && !empty($news_infos['end']))
@@ -317,7 +317,7 @@ if ($edit_news_id > 0)
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_news_id)
+			'U_TARGET' => url('management.php?edit=' . $edit_news_id . '&amp;token=' . $Session->get_token())
 		));
 	}
 }
@@ -335,7 +335,7 @@ elseif ($add_news)
 			
 			switch ($news_visibility)
 			{
-				case 2:		
+				case 2:
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -376,7 +376,7 @@ elseif ($add_news)
 	}
 	//Previewing a news
 	elseif ($preview)
-	{	
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
@@ -496,7 +496,7 @@ elseif ($add_news)
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_UNAPROVED' => '',
-			'U_TARGET' => url('management.php?new=1')
+			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
 }

@@ -42,7 +42,6 @@ class Template
         if (!empty($tpl))
         {
             global $User, $Session;
-
             $this->tpl = $this->_check_file($tpl);
             $this->files[$this->tpl] = $this->tpl;
             if ($auto_load_vars)
@@ -55,7 +54,7 @@ class Template
                     'C_USER_CONNECTED' => $member_connected,
                     'C_USER_NOTCONNECTED' => !$member_connected,
                     'PATH_TO_ROOT' => PATH_TO_ROOT,
-                    'SESSION_TOKEN' => !empty($Session) ? $Session->get_token() : ''
+                    'TOKEN' => !empty($Session) ? $Session->get_token() : ''
                 ));
             }
         }
@@ -66,6 +65,11 @@ class Template
     {
         foreach ($array_tpl as $parse_name => $filename)
             $this->files[$parse_name] = $this->_check_file($filename);
+        
+        global $Session;
+        $this->assign_vars(array(
+            'TOKEN' => !empty($Session) ? $Session->get_token() : ''
+        ));
     }
     
     //Récupération du chemin des données du module.

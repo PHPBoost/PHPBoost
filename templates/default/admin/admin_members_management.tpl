@@ -73,7 +73,7 @@
 		<div id="admin_contents">
 			
 			<span id="search"></span>
-			<form action="admin_members.php#search" method="post" onsubmit="return check_form_search();" class="fieldset_content">
+			<form action="admin_members.php?token={TOKEN}#search" method="post" onsubmit="return check_form_search();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SEARCH_USER}</legend>
 					<dl>

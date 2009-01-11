@@ -10,7 +10,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_online.php" method="post" class="fieldset_content">
+			<form action="admin_online.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ONLINE_CONFIG}</legend>
 					<dl>

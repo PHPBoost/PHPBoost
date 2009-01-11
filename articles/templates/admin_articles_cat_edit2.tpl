@@ -54,7 +54,7 @@
 				<br />	
 			# ENDIF #
 				
-			<form action="admin_articles_cat.php" method="post" class="fieldset_content">
+			<form action="admin_articles_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p><strong>{L_ROOT}</strong></p>

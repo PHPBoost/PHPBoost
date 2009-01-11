@@ -23,7 +23,7 @@
 				-->
 				</script>
 				
-				<form method="post" action="alert.php{SID}" onsubmit="javascript:return check_form_alert();">
+				<form method="post" action="alert.php?{SID}" onsubmit="javascript:return check_form_alert();">
 					<table class="module_table" style="width:80%">
 						<tr>
 							<th>{L_ALERT}</th>

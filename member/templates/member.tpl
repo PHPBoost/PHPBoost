@@ -372,8 +372,8 @@
 						</td>
 						# IF C_USER_AUTH_FILES #
 						<td class="row2" style="text-align:center;">
-							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
-							<a href="upload.php{SID}">
+							<a href="upload.php?{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
+							<a href="upload.php?{SID}">
 								<img src="../templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
 						</td>				
@@ -409,7 +409,7 @@
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="../member/member.php{SID}" method="post">
+					<form action="../member/member.php?{SID}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #
@@ -423,7 +423,7 @@
 					</form>				
 				</td>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?{SID}" method="post">
 						<span style="float:left;">
 							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
@@ -634,7 +634,7 @@
 		<table class="module_table" style="width:70%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?{SID}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">  
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #
@@ -660,7 +660,7 @@
 			</tr>
 			<tr>
 				<td class="row3" colspan="3" style="text-align:left;">
-					<a href="member.php{SID}">{L_BACK}</a>
+					<a href="member.php?{SID}">{L_BACK}</a>
 				</td>
 			</tr>
 			<tr>

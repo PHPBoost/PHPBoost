@@ -103,7 +103,7 @@ function connect_mini()
     		'L_AUTOCONNECT' => $LANG['autoconnect'],
     		'L_FORGOT_PASS' => $LANG['forget_pass'],
     		'L_REGISTER' => $LANG['register'],
-    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) : '',
+    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
     		'U_REGISTER' => PATH_TO_ROOT . '/member/register.php' . SID
     	));
     }

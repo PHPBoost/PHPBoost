@@ -89,7 +89,7 @@
 			<br /><br /><br />
 			# END web #
 
-			<form action="admin_web.php" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_web.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_LINK}</legend>
 					<p>{L_REQUIRE}</p>

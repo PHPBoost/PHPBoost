@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 			# IF C_DATABASE_INDEX #
 
-			<form method="post" action="admin_database.php?action=restore" enctype="multipart/form-data" name="upload_file">
+			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 			<div class="block_container">
 				<div class="block_top" style="text-align:center;">
 					{L_DATABASE_MANAGEMENT}
@@ -217,7 +217,7 @@
 			<br /><br />
 			# ENDIF #
 			
-			<form action="admin_database.php?action=backup" method="post" name="table_list">
+			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
 				<script type="text/javascript">
 					<!--
 						function check_select_multiple(status)
@@ -297,7 +297,7 @@
 				-->	
 				</script>
 				
-				<form action="admin_database.php?query=1#executed_query" method="post" onsubmit="return check_form();">
+				<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<div class="block_container">
 					<div class="block_top">
 						{L_QUERY}

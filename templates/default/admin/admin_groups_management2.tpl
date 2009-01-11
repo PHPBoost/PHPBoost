@@ -97,7 +97,7 @@
 		
 		<div id="admin_contents">		
 			# IF C_EDIT_GROUP #					
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<dl>
@@ -149,7 +149,7 @@
 				</div>
 			# ENDIF #
 			
-			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
+			<form action="admin_groups.php?id={GROUP_ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
@@ -202,7 +202,7 @@
 			
 			
 			# IF C_ADD_GROUP #
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<dl>

@@ -10,7 +10,7 @@
     
 	<div id="footer" style="padding-right:55px;">
     		<div style=" float:left; width:300px; padding-left:60px; padding-top:20px;">
-			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
+			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?{SID}" method="post">
 				<div class="newsletter_form">
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
 					<span style="float:right;">

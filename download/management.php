@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -45,6 +45,9 @@ $submit = retrieve(POST, 'submit', false);
 $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
+if ($add_file || $submit || $delete_file)
+    $Session->check_token();
+
 //Form variables
 $file_title = retrieve(POST, 'title', '');
 $file_image = retrieve(POST, 'image', '');
@@ -74,7 +77,7 @@ $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date',
 //Deleting a file
 if ($delete_file > 0)
 {
-	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);	
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));
 	
@@ -100,7 +103,7 @@ if ($delete_file > 0)
 //Editing a page
 elseif ($edit_file_id > 0)
 {
-	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
@@ -192,7 +195,7 @@ $Template->assign_vars(array(
 ));
 
 if ($edit_file_id > 0)
-{	
+{
 	if ($submit)
 	{
 		//The form is ok
@@ -204,7 +207,7 @@ if ($edit_file_id > 0)
 			
 			switch ($file_visibility)
 			{
-				case 2:		
+				case 2:
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -223,9 +226,9 @@ if ($edit_file_id > 0)
 			
 			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
-			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', " . 
-				"size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " . 
-				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " . 
+			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', " .
+				"size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
+				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
 				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = '" . $file_approved . "' " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
@@ -276,11 +279,11 @@ if ($edit_file_id > 0)
 	}
 	//Previewing a file
 	elseif ($preview)
-	{		
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);		
+		$end_calendar->set_date($end_date);
 		$end_calendar->set_style('margin-left:150px;');
 
 		$Template->set_filenames(array('download' => 'download/download.tpl'));
@@ -372,7 +375,7 @@ if ($edit_file_id > 0)
 		
 		
 		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar = new MiniCalendar('end_date');
 		$end_calendar->set_style('margin-left:150px;');
 		
 		if (!empty($file_infos['start']) && !empty($file_infos['end']))
@@ -451,7 +454,7 @@ else
 			}
 			
 			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " . 
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " .
 				"'" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
@@ -479,7 +482,7 @@ else
 				$download_contribution->set_module('download');
 				
 				
-				//Assignation des autorisations d'écriture / Writing authorization assignation				
+				//Assignation des autorisations d'écriture / Writing authorization assignation
 				$download_contribution->set_auth(
 					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
 					//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
@@ -489,7 +492,7 @@ else
 						//We merge the whole authorizations of the branch constituted by the selected category
 						Authorizations::merge_auth(
 							$CONFIG_DOWNLOAD['global_auth'],
-							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée							
+							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
 							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY),
 							DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY
 						),
@@ -497,7 +500,7 @@ else
 					)
 				);
 
-				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved	
+				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
 				ContributionService::save_contribution($download_contribution);
 				
 				//Redirection to the contribution confirmation page
@@ -593,7 +596,7 @@ else
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $auth_write ? 
+			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
@@ -642,7 +645,7 @@ else
 			'URL' => '',
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $auth_write ? 
+			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),

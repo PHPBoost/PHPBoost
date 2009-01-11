@@ -16,7 +16,7 @@
 		-->
 		</script>
 				
-		<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();">
+		<form action="{U_CONNECT}token={TOKEN}" method="post" onsubmit="return check_connect();">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_CONNECT}</h5>

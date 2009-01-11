@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
-require_once('../calendar/calendar_begin.php'); 
-require_once('../kernel/header.php'); 
+require_once('../kernel/begin.php');
+require_once('../calendar/calendar_begin.php');
+require_once('../kernel/header.php');
 
 $time = gmdate_format('Ymd');
 $year = substr($time, 0, 4);
@@ -47,17 +47,20 @@ $id = retrieve(GET, 'id', 0);
 $add = retrieve(GET, 'add', false);
 $del = retrieve(GET, 'delete', false);
 $edit = retrieve(GET, 'edit', false);
-	
+
+if ($add || $delete || $edit)
+    $Session->check_token();
+
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)
 {
 	//Redirection vers l'évenement suivant/précédent.
 	if ($get_event == 'up')
 	{
-		$event_up = $Sql->query("SELECT timestamp 
-		FROM " . PREFIX . "calendar 
-		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year, 0) . "' 
-		ORDER BY timestamp 
+		$event_up = $Sql->query("SELECT timestamp
+		FROM " . PREFIX . "calendar
+		WHERE timestamp > '" . mktime(23, 59, 59, $month, $day, $year, 0) . "'
+		ORDER BY timestamp
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
 		if (!empty($event_up))
@@ -68,16 +71,16 @@ if ($checkdate === true && empty($id) && !$add)
 			$day = substr($time, 6, 2);
 			
 			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
-		}	
+		}
 		else
 			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
 	elseif ($get_event == 'down')
 	{
-		$event_down = $Sql->query("SELECT timestamp 
-		FROM " . PREFIX . "calendar 
-		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year, 0) . "' 
-		ORDER BY timestamp DESC 
+		$event_down = $Sql->query("SELECT timestamp
+		FROM " . PREFIX . "calendar
+		WHERE timestamp < '" . mktime(0, 0, 0, $month, $day, $year, 0) . "'
+		ORDER BY timestamp DESC
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			
 		if (!empty($event_down))
@@ -88,7 +91,7 @@ if ($checkdate === true && empty($id) && !$add)
 			$day = substr($time, 6, 2);
 			
 			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
-		}	
+		}
 		else
 			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
@@ -114,7 +117,7 @@ if ($checkdate === true && empty($id) && !$add)
 		$Errorh->handler($errstr, E_USER_NOTICE);
 		
 	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
+	$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 	$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 	$month_day = $array_month[$month - 1];
 	
@@ -138,7 +141,7 @@ if ($checkdate === true && empty($id) && !$add)
 		'L_ACTION' => $LANG['action'],
 		'L_EVENTS' => $LANG['events'],
 		'L_SUBMIT' => $LANG['submit']
-	));	
+	));
 	
 	//Génération des select.
 	for ($i = 1; $i <= 12; $i++)
@@ -147,44 +150,44 @@ if ($checkdate === true && empty($id) && !$add)
 		$Template->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . $array_l_month[$i - 1] . '</option>'
 		));
-	}			
+	}
 	for ($i = 1970; $i <= 2037; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
 		$Template->assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
 		));
-	}			
+	}
 	
-	//Récupération des actions du mois en cours.	
+	//Récupération des actions du mois en cours.
 	$result = $Sql->query_while("SELECT timestamp
-	FROM " . PREFIX . "calendar 
+	FROM " . PREFIX . "calendar
 	WHERE timestamp BETWEEN '" . mktime(0, 0, 0, $month, 1, $year, 0) . "' AND '" . mktime(23, 59, 59, $month, $month_day, $year, 0) . "'
 	ORDER BY timestamp
-	" . $Sql->limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);	
+	" . $Sql->limit(0, ($array_month[$month - 1] - 1)), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
-	{ 
+	{
 		$day_action = gmdate_format('j', $row['timestamp']);
 		$array_action[$day_action] = true;
 	}
-	$Sql->query_close($result);	
+	$Sql->query_close($result);
 	
 	//Génération des jours du calendrier.
-	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'], 
+	$array_l_days =  array($LANG['monday'], $LANG['tuesday'], $LANG['wenesday'], $LANG['thursday'], $LANG['friday'], $LANG['saturday'],
 	$LANG['sunday']);
 	foreach ($array_l_days as $l_day)
 	{
 		$Template->assign_block_vars('day', array(
 			'L_DAY' => '<td class="row3"><span class="text_small">' . $l_day . '</span></td>'
 		));
-	}	
+	}
 	
 	//Premier jour du mois.
-	$first_day = gmdate_format('w', mktime(0, 0, 0, $month, 1, $year)); 
+	$first_day = gmdate_format('w', mktime(0, 0, 0, $month, 1, $year));
 	if ($first_day == 0)
 		$first_day = 7;
 		
-	//Génération du calendrier. 
+	//Génération du calendrier.
 	$j = 1;
 	$last_day = ($month_day + $first_day);
 	for ($i = 1; $i <= 42; $i++)
@@ -208,7 +211,7 @@ if ($checkdate === true && empty($id) && !$add)
 	}
 	
 	
-	//Affichage de l'action pour la période du jour donné.	
+	//Affichage de l'action pour la période du jour donné.
 	if (!empty($day))
 	{
 		$java = '';
@@ -245,7 +248,7 @@ if ($checkdate === true && empty($id) && !$add)
 				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
 				'COM' => com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
-				'DEL' => $del,				
+				'DEL' => $del,
 				'L_ON' => $LANG['on']
 			));
 			
@@ -254,19 +257,19 @@ if ($checkdate === true && empty($id) && !$add)
 		$Sql->query_close($result);
 			
 		if (!isset($check_action))
-		{		
+		{
 			$Template->assign_block_vars('action', array(
 				'TITLE' => '&nbsp;',
 				'LOGIN' => '',
 				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $month, $day, $year, 0)),
 				'CONTENTS' => '<p style="text-align:center;">' . $LANG['no_current_action'] . '</p>'
-			));	
+			));
 		}
 		
 		$Template->assign_vars(array(
 			'JAVA' => $java,
 			'L_ON' => $LANG['on']
-		));	
+		));
 	}
 	
 	//Affichage commentaires.
@@ -275,14 +278,14 @@ if ($checkdate === true && empty($id) && !$add)
 		$Template->assign_vars(array(
 			'COMMENTS' => display_comments('calendar', $get_event, url('calendar.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $get_event . '&amp;com=%s', 'calendar-' . $day . '-' . $month . '-' . $year . '-' . $get_event . '.php?com=%s'))
 		));
-	}	
+	}
 
 	$Template->pparse('calendar');
 }
 elseif (!empty($id))
 {
 	if (!$User->check_level(ADMIN_LEVEL)) //Admins seulement autorisés à editer/supprimer!
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if ($del) //Suppression simple.
 	{
@@ -325,7 +328,7 @@ elseif (!empty($id))
 				}
 				else
 					redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
-			}	
+			}
 			else
 				redirect(HOST . SCRIPT . url('?add=1&error=invalid_date', '', '&') . '#errorh');
 		}
@@ -338,7 +341,7 @@ elseif (!empty($id))
 			//Récupération des infos
 			$row = $Sql->query_array(PREFIX . 'calendar', 'timestamp', 'title', 'contents', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			$Template->assign_vars(array(				
+			$Template->assign_vars(array(
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
 				'UPDATE' => url('?edit=1&amp;id=' . $id),
@@ -348,16 +351,16 @@ elseif (!empty($id))
 				'YEAR_DATE' => !empty($row['timestamp']) ? gmdate_format('Y', $row['timestamp']) : '',
 				'HOUR' => !empty($row['timestamp']) ? gmdate_format('h', $row['timestamp']) : '',
 				'MIN' => !empty($row['timestamp']) ? gmdate_format('i', $row['timestamp']) : '',
-				'CONTENTS' => unparse($row['contents']),					
+				'CONTENTS' => unparse($row['contents']),
 				'TITLE'	 => $row['title'],
 				'L_REQUIRE_TITLE' => $LANG['require_title'],
-				'L_REQUIRE_TEXT' => $LANG['require_text'],				
+				'L_REQUIRE_TEXT' => $LANG['require_text'],
 				'L_EDIT_EVENT' => $LANG['edit_event'],
 				'L_DATE_CALENDAR' => $LANG['date_calendar'],
 				'L_ON' => $LANG['on'],
 				'L_AT' => stripslashes($LANG['at']),
 				'L_TITLE' => $LANG['title'],
-				'L_ACTION' => $LANG['action'],						
+				'L_ACTION' => $LANG['action'],
 				'L_SUBMIT' => $LANG['update'],
 				'L_RESET' => $LANG['reset']
 			));
@@ -387,7 +390,7 @@ elseif (!empty($id))
 elseif ($add) //Ajout d'un évenement
 {
 	if (!$User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	if (!empty($_POST['valid'])) //Enregistrement
 	{
@@ -436,20 +439,20 @@ elseif ($add) //Ajout d'un évenement
 		$hour = substr($time, 8, 2);
 		$min = substr($time, 10, 2);
 
-		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'], 
+		$array_l_month = array($LANG['january'], $LANG['february'], $LANG['march'], $LANG['april'], $LANG['may'], $LANG['june'],
 		$LANG['july'], $LANG['august'], $LANG['september'], $LANG['october'], $LANG['november'], $LANG['december']);
 		
-		$Template->assign_vars(array(					
+		$Template->assign_vars(array(
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
-			'UPDATE' => url('?add=1'),			
+			'UPDATE' => url('?add=1'),
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,
 			'MONTH_DATE' => $month,
 			'YEAR_DATE' => $year,
 			'HOUR' => $hour,
 			'MIN' => $min,
-			'CONTENTS' => '',					
+			'CONTENTS' => '',
 			'TITLE'	 => '',
 			'L_REQUIRE_TITLE' => $LANG['require_title'],
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -458,7 +461,7 @@ elseif ($add) //Ajout d'un évenement
 			'L_ON' => $LANG['on'],
 			'L_AT' => stripslashes($LANG['at']),
 			'L_TITLE' => $LANG['title'],
-			'L_ACTION' => $LANG['action'],						
+			'L_ACTION' => $LANG['action'],
 			'L_SUBMIT' => $LANG['submit'],
 			'L_RESET' => $LANG['reset']
 		));
@@ -485,6 +488,6 @@ elseif ($add) //Ajout d'un évenement
 else
 	redirect(HOST . SCRIPT . url('?error=invalid_date', '', '&') . '#errorh');
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

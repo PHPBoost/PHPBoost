@@ -25,7 +25,7 @@
 		</script>
 		
 		<div id="admin_contents">
-			<form action="admin_content_config.php" method="post" class="fieldset_content">
+			<form action="admin_content_config.php&amp;token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 

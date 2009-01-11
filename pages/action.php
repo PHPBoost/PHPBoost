@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
@@ -135,7 +135,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	$sub_cats = array();
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
@@ -144,7 +144,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	$id_to_delete = implode($sub_cats, ', ');
 	
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
-	{	
+	{
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
 			redirect(HOST . DIR . '/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
@@ -155,7 +155,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 		//Suppression des pages contenues par cette catégorie
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id_cat IN (" . $id_to_delete . ")", __LINE__, __FILE__);
 		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id IN (" . $id_to_delete . ")", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov IN (" . $id_to_delete . ")", __LINE__); 
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov IN (" . $id_to_delete . ")", __LINE__);
 		$Cache->Generate_module_file('pages');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
@@ -170,8 +170,8 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
 		//Quoi qu'il arrive on supprime l'article associé
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);	
-		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);  
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "pages SET id_cat = '" . $report_cat . "' WHERE id_cat = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . PREFIX . "pages_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
@@ -210,7 +210,7 @@ if ($id_page > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))	
+	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
@@ -272,7 +272,7 @@ if ($del_cat > 0)
 		'SELECTED_CAT' => $page_infos['id_cat'],
 		'CAT_0' => ($page_infos['id_cat'] == 0 ? 'pages_selected_cat' : ''),
 		'ID_CAT' => $page_infos['id_cat']
-	));	
+	));
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
@@ -290,7 +290,7 @@ elseif ($id_rename > 0)
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php&amp;token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -310,7 +310,7 @@ elseif ($id_new > 0)
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php&amp;token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
