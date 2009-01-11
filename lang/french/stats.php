@@ -119,6 +119,7 @@ $stats_array_browsers = array(
 	'amigavoyager'=> array('Amigavoyager', ''),
 	'amiga-aweb'=> array('Amiga-aweb', ''),
 	'ibrowse' => array('Ibrowse', ''),
+	'phone' => array('Mobile', '../phone.png'),
 	'other' => array('Autres', '../other.png')
 );
 
@@ -145,6 +146,7 @@ $stats_array_os = array(
 	'wii' => array('Wii', 'wii.png'),
 	'psp' => array('Psp', 'psp.png'),
 	'playstation3' => array('Playstation 3', 'ps3.png'),
+	'phone' => array('Mobile', '../phone.png'),
 	'other' => array('Autres', '../other.png')
 );
 
