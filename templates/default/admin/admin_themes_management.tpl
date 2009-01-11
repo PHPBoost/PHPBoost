@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 		
 			# IF C_THEME_MAIN #
-			<form action="admin_themes.php?uninstall=1" method="post">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -140,7 +140,7 @@
 		
 		
 			# IF C_DEL_THEME #
-			<form action="admin_themes.php?uninstall=1" method="post" class="fieldset_content">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_THEME}</legend>
 					<dl>
@@ -159,7 +159,7 @@
 			
 			
 			# IF C_EDIT_THEME #			
-			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}" method="post" class="fieldset_content">	
+			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}&amp;token={TOKEN}" method="post" class="fieldset_content">	
 				<fieldset> 
 				<legend>{L_THEME_MANAGEMENT}</legend>
 					<p>{L_THEME} <strong>{THEME_NAME}</strong></p>

@@ -39,7 +39,7 @@
 		
 		<div id="admin_contents">
 		
-			<form action="admin_shoutbox.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_shoutbox.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SHOUTBOX_CONFIG}</legend>
 					<dl>

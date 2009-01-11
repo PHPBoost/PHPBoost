@@ -45,6 +45,7 @@ define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING'])); //Récupère la chai
 define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes.
 define('PHPBOOST', true); //Permet de s'assurer des inclusions.
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
+define('E_TOKEN', -3); // Token error
 define('E_USER_REDIRECT', -1); //Erreur avec redirection
 define('E_USER_SUCCESS', -2); //Succès.
 define('HTML_UNPROTECT', false); //Non protection de l'html.

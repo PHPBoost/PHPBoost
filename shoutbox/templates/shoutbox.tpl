@@ -14,7 +14,7 @@
 		-->
 		</script>
 
-		<form action="shoutbox.php{SID}{UPDATE}" method="post" onsubmit="return check_form();" class="fieldset_mini">
+		<form action="shoutbox.php?{SID}{UPDATE}" method="post" onsubmit="return check_form();" class="fieldset_mini">
 			<fieldset>
 				<legend>{L_ADD_MSG}{L_UPDATE_MSG}</legend>
 				<p>{L_REQUIRE}</p>

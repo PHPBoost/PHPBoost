@@ -72,22 +72,20 @@ class Cache
 				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
 					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
-			
-    		if ($file == 'config')
-            {   // Intègre le numéro de build
-                import('io/file');
-                $file = new File(PATH_TO_ROOT . '/.build');
-                if (!empty($CONFIG['_version']))
-                    $CONFIG['version'] = $CONFIG['_version'] . $file->get_contents();
-                else
-                {
-                    $CONFIG['_version'] = $CONFIG['version'];
-                    $CONFIG['version'] = $CONFIG['version'] . $file->get_contents();
-                }
-                    
-                $file->close();
-            }
 		}
+        if ($file == 'config')
+        {   // Intègre le numéro de build
+            import('io/file');
+            $file = new File(PATH_TO_ROOT . '/.build');
+            if (!empty($CONFIG['_version']))
+                $CONFIG['version'] = $CONFIG['_version'] . $file->get_contents();
+            else
+            {
+                $CONFIG['_version'] = $CONFIG['version'];
+                $CONFIG['version'] = $CONFIG['version'] . $file->get_contents();
+            }
+            $file->close();
+        }
     }
     
     //Fonction d'enregistrement du fichier.

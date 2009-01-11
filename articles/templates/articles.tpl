@@ -16,7 +16,7 @@
 			<div class="module_contents">
 				# IF PAGINATION_ARTICLES #
 				<div style="float:right;margin-right:35px;width:250px;">
-					<form action="" method="post">
+					<form action="?token={TOKEN}" method="post">
 						<p class="row2 text_strong" style="padding:2px;text-indent:4px;">{L_SUMMARY}:</p>
 						<p class="row1" style="padding:2px;padding-bottom:15px">
 							<select name="page_list" style="display:block;width:100%;margin:auto;font-size:12px;" onchange="document.location = {U_ONCHANGE_ARTICLE}">

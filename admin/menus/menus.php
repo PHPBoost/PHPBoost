@@ -58,7 +58,6 @@ function menu_admin_link(&$menu, $mode)
 
 if (!empty($id))
 {
-    $Session->check_token();
     $menu = MenuService::load($id);
     if ($menu == null)
         redirect('menus.php');

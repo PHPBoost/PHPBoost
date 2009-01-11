@@ -16,7 +16,7 @@
 	
 	<div id="admin_contents">	
 		# IF C_FIELD_MANAGEMENT #
-		<form action="admin_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+		<form action="admin_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<table class="module_table">
 				<tr> 
 					<th colspan="4">
@@ -103,7 +103,7 @@
 		</div>
 		# ENDIF #
 				
-		<form action="admin_extend_field.php?id={ID}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
+		<form action="admin_extend_field.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_EXTEND_FIELD_EDIT}</legend>
 				<dl> 

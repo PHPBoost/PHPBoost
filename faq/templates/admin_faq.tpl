@@ -38,7 +38,7 @@
 				</div>		
 			# ENDIF #
 		
-			<form action="admin_faq.php" method="post" class="fieldset_content">
+			<form action="admin_faq.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<dl>

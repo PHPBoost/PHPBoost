@@ -41,7 +41,7 @@
 		</div>		
 		
 		<div id="admin_contents">
-			<form action="admin_ranks.php" method="post" onsubmit="return check_form_rank();">
+			<form action="admin_ranks.php?token={TOKEN}" method="post" onsubmit="return check_form_rank();">
 				<fieldset>
 					<legend>{L_RANKS_MANAGEMENT}</legend>
 					<table class="module_table">

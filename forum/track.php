@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,14 +25,14 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
 $Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 $Bread_crumb->add($LANG['show_topic_track'], '');
 define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['show_topic_track']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $page = retrieve(GET, 'p', 1);
 
@@ -40,11 +40,11 @@ $page = retrieve(GET, 'p', 1);
 if (!empty($_POST['change_cat']))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
-	redirect(HOST . DIR . '/member/error.php'); 
+	redirect(HOST . DIR . '/member/error.php');
 	
 if (!empty($_POST['valid']))
 {
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
 	
 	$result = $Sql->query_while("SELECT t.id, tr.pm, tr.mail
@@ -58,10 +58,10 @@ if (!empty($_POST['valid']))
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '" . $pm . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 		$mail = (isset($_POST['m' . $row['id']]) && $_POST['m' . $row['id']] == 'on') ? 1 : 0;
 		if ($row['mail'] != $mail)
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '" . $mail . "' WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 		$del = (isset($_POST['d' . $row['id']]) && $_POST['d' . $row['id']] == 'on') ? true : false;
 		if ($del)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);	
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 	
@@ -76,7 +76,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 	));
 
 	
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	include_once('../kernel/framework/util/pagination.class.php');
 	$Pagination = new Pagination();
 
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -100,30 +100,30 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'announce';		
+		$img_announce = 'announce';
 		$new_msg = false;
 		if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
-		{		
-			$img_announce =  'new_' . $img_announce; 
+		{
+			$img_announce =  'new_' . $img_announce;
 			$new_msg = true;
 		}
 		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
-			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';			
+			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
 
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
-		if (!empty($row['last_view_id'])) 
+		if (!empty($row['last_view_id']))
 		{
-			$last_msg_id = $row['last_view_id']; 
+			$last_msg_id = $row['last_view_id'];
 			$last_page = 'idm=' . $row['last_view_id'] . '&amp;';
 			$last_page_rewrite = '-0-' . $row['last_view_id'];
 		}
 		else
 		{
-			$last_msg_id = $row['last_msg_id']; 
+			$last_msg_id = $row['last_msg_id'];
 			$last_page = ceil( $row['nbr_msg'] / $CONFIG_FORUM['pagination_msg'] );
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
@@ -135,7 +135,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 		//Affichage du dernier message posté.
 		$last_msg = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['last_timestamp']) . '<br /> ' . $LANG['by'] . ' ' . (!empty($row['last_login']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['last_user_id'], '-' . $row['last_user_id'] . '.php') . '">' . wordwrap_html($row['last_login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>');
 		
-		//Ancre ajoutée aux messages non lus.	
+		//Ancre ajoutée aux messages non lus.
 		$new_ancre = ($new_msg === true && $User->get_attribute('user_id') !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->assign_block_vars('topics', array(
@@ -149,7 +149,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 			'TRACK' => '<img src="' . $Template->get_module_data_path('forum') . '/images/favorite_mini.png" class="valign_middle" alt="" />',
 			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/msg_display_mini.png" alt="" style="vertical-align:middle;" />' : '',
 			'TYPE' => $type[$row['type']],
-			'TITLE' => ucfirst($row['title']),			
+			'TITLE' => ucfirst($row['title']),
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
 			'DESC' => $row['subtitle'],
 			'PAGINATION_TOPICS' => $Pagination->display('topic' . url('.php?id=' . $row['id'] . '&amp;pt=%d', '-' . $row['id'] . '-%d.php'), $row['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 2, 10, false),
@@ -189,50 +189,50 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 		'U_CHANGE_CAT'=> 'track.php' . SID,
 		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
 		'U_FORUM_CAT' => '<a href="../forum/track.php' . SID . '">' . $LANG['show_topic_track'] . '</a>',
-		'U_POST_NEW_SUBJECT' => '',		
-		'U_TRACK_ACTION' => url('.php?p=' . $page),
+		'U_POST_NEW_SUBJECT' => '',
+		'U_TRACK_ACTION' => url('.php?p=' . $page . '&amp;token=' . $Session->get_token()),
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_AUTHOR' => $LANG['author'],
-		'L_FORUM' => $LANG['forum'],	
-		'L_DELETE' => $LANG['delete'],	
-		'L_MAIL' => $LANG['mail'],	
+		'L_FORUM' => $LANG['forum'],
+		'L_DELETE' => $LANG['delete'],
+		'L_MAIL' => $LANG['mail'],
 		'L_PM' => $LANG['pm'],
 		'L_EXPLAIN_TRACK' => $LANG['explain_track'],
 		'L_TOPIC' => $l_topic,
 		'L_MESSAGE' => $LANG['replies'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_message'],
-		'L_SUBMIT' => $LANG['submit']	
-	));	
+		'L_SUBMIT' => $LANG['submit']
+	));
 	
 	//Listes les utilisateurs en lignes.
 	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM " . DB_TABLE_SESSIONS . " s 
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login
+	FROM " . DB_TABLE_SESSIONS . " s
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/track.php'
 	ORDER BY s.session_time DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-		{ 		
+		switch ($row['level']) //Coloration du membre suivant son level d'autorisation.
+		{
 			case -1:
 			$status = 'visiteur';
 			$total_visit++;
-			break;			
+			break;
 			case 0:
 			$status = 'member';
 			$total_member++;
-			break;			
-			case 1: 
+			break;
+			case 1:
 			$status = 'modo';
 			$total_modo++;
-			break;			
-			case 2: 
+			break;
+			case 2:
 			$status = 'admin';
 			$total_admin++;
 			break;
-		} 
+		}
 		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
 		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
 	}

@@ -55,7 +55,7 @@
 			</div>
 			# ENDIF #
 				
-			<form action="admin_gallery_cat.php?id={ID}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_gallery_cat.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>

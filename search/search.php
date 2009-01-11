@@ -148,18 +148,27 @@ if (!empty($search))
     $results = array();
     $idsSearch = array();
     
-    if ( $search_in != 'all' ) // If we are searching in only onde module
+    if ( $search_in != 'all' ) // If we are searching in only one module
     {
-        $used_modules = array($search_in => $used_modules[$search_in]);
-        $modules_args = array($search_in => $modules_args[$search_in]);
+        if (isset($used_modules[$search_in]) && isset($modules_args[$search_in]))
+        {
+            $used_modules = array($search_in => $used_modules[$search_in]);
+            $modules_args = array($search_in => $modules_args[$search_in]);
+        }
+        else
+        {
+            $used_modules = array();
+            $modules_args = array();
+        }
     }
     else
     {   // We remove modules that we're not searching in
         foreach ($modules_args as $module_id => $module_args)
         {
-            if (!in_array($module_id, $selected_modules))
+            if (!in_array($module_id, $selected_modules) || !isset($modules_args[$module_id]))
             {
                 unset($modules_args[$module_id]);
+                unset($used_modules[$module_id]);
             }
         }
     }

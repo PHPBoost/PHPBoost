@@ -220,7 +220,7 @@
 		
 		
 		# IF C_STATS_VISIT #
-		<form action="admin_stats.php#stats" method="get">
+		<form action="admin_stats.php?token={TOKEN}#stats" method="get">
 			<table class="module_table">
 				<tr>
 					<th>
@@ -627,7 +627,7 @@
 		
 		
 		# IF C_STATS_ROBOTS #
-		<form action="admin_stats.php?bot=1#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
+		<form action="admin_stats.php?bot=1&amp;token={TOKEN}#stats" name="form" method="post" style="margin:auto;" onsubmit="return check_form();">
 			<table class="module_table">
 				<tr> 
 					<th colspan="2">

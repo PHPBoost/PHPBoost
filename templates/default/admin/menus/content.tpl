@@ -1,5 +1,5 @@
 <div id="admin_contents">
-	<form action="content.php" method="post" class="fieldset_content">
+	<form action="content.php?token={TOKEN}" method="post" class="fieldset_content">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>

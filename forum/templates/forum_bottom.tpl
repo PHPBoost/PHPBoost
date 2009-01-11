@@ -1,7 +1,7 @@
 		<div class="module_position" style="margin-top:15px;">
 			<div class="forum_links" style="border-bottom:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> 
+					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a> 
 				</div>
 				<div style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
@@ -23,7 +23,7 @@
 			<div class="forum_online">
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
-					<form action="" method="post">
+					<form action="?token={TOKEN}" method="post">
 						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25" /></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30" /></label>
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" /></label>
@@ -53,7 +53,7 @@
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
-					<form action="action.php{SID}">
+					<form action="action.php?{SID}&amp;token={TOKEN}">
                         <div>
                             {L_FOR_SELECTION}: 
                             <select name="massive_action_type">
@@ -78,7 +78,7 @@
 						{L_TOTAL_POST}: <strong>{NBR_MSG}</strong> {L_MESSAGE} {L_DISTRIBUTED} <strong>{NBR_TOPIC}</strong> {L_TOPIC}
 					</span>
 					<span style="float:right;">
-						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
+						<a href="stats.php?{SID}">{L_STATS}</a> <a href="stats.php?{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
 					</span>
 					<div class="spacer"></div>
 				</div>
