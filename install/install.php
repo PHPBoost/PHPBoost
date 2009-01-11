@@ -587,6 +587,7 @@ elseif ($step == 5)
 		'L_CONFIRM_SITE_PATH' => $LANG['confirm_site_path']
 	));
 }
+//Compte administrateur
 elseif ($step == 6)
 {
 	$template->assign_block_vars('admin', array());
@@ -636,7 +637,7 @@ elseif ($step == 6)
 			$Cache->load('config');
 			
 			//On enregistre le membre (l'entrée était au préalable créée)
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1' WHERE user_id = '1'",__LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
 			
 			//Génération de la clé d'activation, en cas de verrouillage de l'administration
 			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);

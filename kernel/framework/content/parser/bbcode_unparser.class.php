@@ -134,7 +134,6 @@ class BBCodeUnparser extends ContentUnparser
 			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
 		);
 		
@@ -158,7 +157,6 @@ class BBCodeUnparser extends ContentUnparser
 			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
 			"[swf=$2,$3]$1[/swf]",
-			"[html]$1[/html]",
 			"[math]$1[/math]"
 		);	
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
