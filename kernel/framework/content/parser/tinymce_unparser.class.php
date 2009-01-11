@@ -52,7 +52,6 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function unparse()
 	{
-	    echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	    //Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
@@ -118,7 +117,6 @@ class TinyMCEUnparser extends ContentUnparser
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
 		$this->_unparse_html(REIMPLANT);
-		echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 	}
 	
 	## Protected ##
@@ -145,7 +143,6 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function _unparse_tinymce_formatting()
 	{
-//	    echo '<hr />Replacement';
 		//Preg_replace.
 		$array_preg = array(
 			'`<img src="([^"]+)" alt="" class="valign_([^"]+)?" />`i',
@@ -193,7 +190,6 @@ class TinyMCEUnparser extends ContentUnparser
 		//Citations
 		$this->_parse_imbricated('<span class="text_blockquote">', '`<span class="text_blockquote">(.*):</span><div class="blockquote">(.*)</div>`isU', "\n" . '<blockquote>$2</blockquote>', $this->content);
 		
-		echo '<hr /><pre>' . htmlentities($this->content) . '</pre>';
 		//Balise indentation
 		$this->content = preg_replace('`(?:<p>\s*</p>)?\s*<p>\s*<div class="indent">(.+)</div>\s*</p>`isU', "\n" . '<p style="padding-left: 30px;">$1</p>', $this->content);
 		
