@@ -49,6 +49,7 @@ define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 define('FILE', $server_path);
 define('DIR', str_replace('/install/install.php', '', $server_path));
+define('SID', '');
 
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
