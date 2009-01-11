@@ -185,7 +185,7 @@ if ($contribution_id > 0)
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
-		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id)
+		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . $Session->get_token())
 	));
 }
 //Modification d'une contribution
@@ -210,7 +210,7 @@ elseif ($id_update > 0)
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'U_TARGET' => url('contribution_panel.php')
+		'U_TARGET' => url('contribution_panel.php?token=' . $Session->get_token())
 	));
 }
 else

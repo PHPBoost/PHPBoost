@@ -142,10 +142,17 @@ class AdministratorAlertService
 		return $array_result;
 	}
 	
-	//Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
+	/**
+     * @author Benoît Sautel <ben.popeye@phpboost.com>
+     * @desc Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
+     * @warning You must have a valid token or be in the token unsafe mode
+	 */
 	/*static*/ function save_alert(&$alert)
 	{
-		global $Sql, $Cache;
+		global $Sql, $Cache, $Session;
+		
+		//We check if the user really wanted to save the contribution
+		$Session->check_token();
 		
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
@@ -173,10 +180,17 @@ class AdministratorAlertService
 		}
 	}
 	
-	//Function which deletes an alert from the database
+	/** 
+	 * @author Benoît Sautel <ben.popeye@phpboost.com>
+ 	 * @desc Function which deletes an alert from the database
+ 	 * @warning You must have a valid token or be in the token unsafe mode
+	 */
 	/*static*/ function delete_alert(&$alert)
 	{
-		global $Sql, $Cache;
+		global $Sql, $Cache, $Session;
+		
+		//We check if the user really wanted to save the contribution
+		$Session->check_token();
 		
 		// If it exists in the data base
 		if ($alert->get_id() > 0)
