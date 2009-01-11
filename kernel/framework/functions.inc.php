@@ -847,12 +847,36 @@ function get_feed_menu($feed_url)
     return $feedMenu->parse(TEMPLATE_STRING_MODE);
 }
 
-// Return a hash of the <$str> string using a sha256 algo
-function strhash($str)
+
+/**
+ * @desc Return a SHA256 hash of the $str string [with a salt]
+ * @param string $str the string to hash
+ * @param mixed $salt If true, add the default salt : md5($str)
+ * if a string, use this string as the salt
+ * if false, do not use any salt
+ * @return string a SHA256 hash of the $str string [with a salt]
+ */
+function strhash($str, $salt = true)
 {
-//     return hash('sha256', $str);
-    import('util/sha256');
-    return SHA256::hash(md5($str) . $str);
+    
+    if ($salt === true)
+    {   // Default salt
+        $str = md5($str) . $str;
+    }
+    elseif ($salt !== false)
+    {   // Specific salt
+        $str = $salt . $str;
+    }
+        
+    if (phpversion() >= '5.1.2')
+    {   // PHP5 Primitive
+        return hash('sha256', $str);
+    }
+    else
+    {   // With PHP4
+        import('util/sha256');
+        return SHA256::hash($str);
+    }
 }
 
 // Returns a Unique Identifier in the whole application

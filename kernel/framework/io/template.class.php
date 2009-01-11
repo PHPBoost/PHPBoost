@@ -41,7 +41,7 @@ class Template
     {
         if (!empty($tpl))
         {
-            global $User;
+            global $User, $Session;
 
             $this->tpl = $this->_check_file($tpl);
             $this->files[$this->tpl] = $this->tpl;
@@ -54,7 +54,8 @@ class Template
                     'LANG' => get_ulang(),
                     'C_USER_CONNECTED' => $member_connected,
                     'C_USER_NOTCONNECTED' => !$member_connected,
-                    'PATH_TO_ROOT' => PATH_TO_ROOT
+                    'PATH_TO_ROOT' => PATH_TO_ROOT,
+                    'SESSION_TOKEN' => !empty($Session) ? $Session->get_token() : ''
                 ));
             }
         }

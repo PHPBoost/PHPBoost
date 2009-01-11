@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 import('core/menu_service');
 
 $menu_id = retrieve(REQUEST, 'id', 0);
-$action = retrieve(REQUEST, 'action', '');
+$action = retrieve(POST, 'action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
@@ -154,13 +154,6 @@ if ($action == 'save')
     }
    	MenuService::generate_cache();
     redirect('menus.php#m' . $menu->get_id());
-}
-elseif ($action == 'delete' && !empty($menu_id))
-{   // Delete a Menu
-    MenuService::delete($menu_id);
-    MenuService::generate_cache();
-    
-    redirect('menus.php');
 }
 
 // Display the Menu administration

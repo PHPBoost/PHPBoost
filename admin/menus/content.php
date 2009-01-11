@@ -71,13 +71,6 @@ if ($action_post == 'save')
 	
 	redirect('menus.php#m' . $id_post);
 }
-elseif ($action == 'delete' && !empty($id))
-{   // Delete a Menu
-    MenuService::delete($id);
-    MenuService::generate_cache();
-	
-	redirect('menus.php');
-}
 
 // Display the Menu administration
 $edit = !empty($id);
