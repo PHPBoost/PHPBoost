@@ -4,6 +4,7 @@
  *                            -------------------
  *   begin                March 13, 2006
  * @author              CrowkaiT, Horn
+ * @package          Kernel/Db
  *  @copyright       (C) 2005 Régis Viarre, Loïc Rouchon
  *  @email              crowkait@phpboost.com, horn@phpboost.com
  * @license            GPL
@@ -40,10 +41,17 @@ define('DBTYPE', 'mysql');
 class Sql
 {
 	## Public Methods ##
-	//Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données. Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
+	/**
+	* @method Sql
+	* @desc Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données.
+	*  Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
+	*/
 	function Sql() { }
 	
-	//Connexion
+	/**
+	* @method connect
+	* @
+	*/
 	function connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
 		//Identification sur le serveur
@@ -75,7 +83,10 @@ class Sql
 		}
 	}
 	
-	//Autoconnexion (lecture du fichier de configuration)
+	/**
+	* @method auto_connect
+	* @desc Autoconnexion (lecture du fichier de configuration)
+	*/
 	function auto_connect()
 	{
 		//Lecture du fichier de configuration.
@@ -94,8 +105,10 @@ class Sql
 		
 		return $result;
 	}
-
-	//Requête simple
+	/**
+	* @method query
+	* @desc Requête simple
+	*/
 	function query($query, $errline, $errfile)
 	{
 		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
@@ -105,8 +118,11 @@ class Sql
 
 		return $result[0];
 	}
-
-	//Requête multiple.
+	
+	/**
+	* @method query_array
+	* @desc Requête multiple.
+	*/
 	function query_array()
 	{
 		$table = func_get_arg(0);
@@ -141,8 +157,11 @@ class Sql
 		
 		return $result;
 	}
-
-	//Requete d'injection (insert, update, et requêtes complexes..)
+	
+	/**
+	* @method query_inject
+	* @desc Requete d'injection (insert, update, et requêtes complexes..)
+	*/
 	function query_inject($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid inject request', $errline, $errfile);
@@ -150,8 +169,11 @@ class Sql
 		
 		return $resource;
 	}
-
-	//Requête de boucle.
+	
+	/**
+	* @method query_while
+	* @desc Requête de boucle.
+	*/
 	function query_while ($query, $errline, $errfile)
 	{
 		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
@@ -159,8 +181,11 @@ class Sql
 
 		return $result;
 	}
-	
-	//Nombre d'entrées dans la table.
+
+	/**
+	* @method count_table
+	* @desc Retourne le nombre d'entrées dans la table.
+	*/
 	function count_table($table, $errline, $errfile)
 	{
 		$ressource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
@@ -171,20 +196,29 @@ class Sql
 		return $result['total'];
 	}
 
-	//Limite des résultats de la requete sql.
+	/**
+	* @method limit
+	* @desc Contruit l'instruction SQL pour limiter des résultats de la requete
+	* @param int - start
+	* @param int - end
+	* @return string - instrcution SQL
+	*/
 	function limit($start, $end = 0)
 	{
 		return ' LIMIT ' . $start . ', ' .  $end;
 	}
-		
-    //Concatène des chaines
-    //  CONTRAT DE COHERENCE :
-    //  - les champ mysql doivent êtres passés sous forme de chaine PHP
-    //  - les chaines PHP doivent êtres passés sous forme de chaine PHP
-    //      dont le contenu est une chaine PHP délimité par de simple quotes
-    //  EXEMPLE :
-    //      - champ MySQL : $champMySQL = "id" ou $champMySQL = 'id'
-    //      - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
+	
+	/**
+	* @method Concat
+	* @desc Concatène des chaines
+	*  CONTRAT DE COHERENCE :
+	*  - les champ mysql doivent êtres passés sous forme de chaine PHP
+	*  - les chaines PHP doivent êtres passés sous forme de chaine PHP
+	*      dont le contenu est une chaine PHP délimité par de simple quotes
+	*  EXEMPLE :
+	*     - champ MySQL : $champMySQL = "id" ou $champMySQL = 'id'
+	*     - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
+	*/
     function Concat()
     {
         $nbr_args = func_num_args();
@@ -194,51 +228,93 @@ class Sql
         
         return ' ' . $concatString . ' ';
     }
-    
-	//Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
+
+	/**
+	* @method fecth_assoc
+	* @desc Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
+	* @param ressoure SQL (issue de query)
+	* @return assoc array next row in query result
+	*/
 	function fetch_assoc($result)
 	{
 		return mysql_fetch_assoc($result);
 	}
-	
-	//Balayage du retour de la requête sous forme de tableau indexé numériquement.
+
+	/**
+	* @method fecth_row
+	* @desc Balayage du retour de la requête sous forme de tableau indexé numériquement
+	* @param ressoure SQL (issue de query)
+	* @return numeric array next row in query result
+	*/
 	function fetch_row($result)
 	{
 		return mysql_fetch_row($result);
 	}
 	
-	//Lignes affectées lors de requêtes de mise à jour ou d'insertion.
+	/**
+	* @method affected_rows
+	* @desc Lignes affectées lors de requêtes de mise à jour ou d'insertion.
+	* @param ressoure SQL (issue de query)
+	* @param query  (not used)
+	* @return int number of affected rows
+	*/
 	function affected_rows($ressource, $query)
 	{
 		return mysql_affected_rows();
 	}
 	
-	//Nombres de lignes retournées.
+	/**
+	* @method num_rows
+	* @desc Retourne nombre de lignes résultat d'une requete SQL
+	* @param ressoure SQL (issue de query)
+	* @param query  (not used)
+	* @return int number of rows
+	*/
 	function num_rows($ressource, $query)
 	{
 		return mysql_num_rows($ressource);
 	}
-	
-	//Retourne l'id de la dernière insertion
+
+	/**
+	* @method insert_id
+	* @desc Retourne l'id de la dernière insertion
+	* @param ressoure SQL (issue de query)
+	* @return int last index
+	*/
 	function insert_id($query)
 	{
 		return mysql_insert_id();
 	}
-	
-	//Retourne le nombre d'année entre la date et aujourd'hui.
+
+	/**
+	* @method date_diff
+	* @desc Retourne le nombre d'année entre la date et aujourd'hui.
+	* @param date
+	* @return int différence avec année courante
+	*/
 	function date_diff($field)
 	{
 		return '(YEAR(CURRENT_DATE) - YEAR(' . $field . ')) - (RIGHT(CURRENT_DATE, 5) < RIGHT(' . $field . ', 5))';
 	}
-	
-	//Déchargement mémoire.
+
+	/**
+	* @method query_close
+	* @desc Libération mémoire des données d'une requete
+	* @param ressource (query)
+	* @return TRUE si OK FALSE sinon
+	*/
 	function query_close($result)
 	{
 		if (is_resource($result))
 			return mysql_free_result($result);
 	}
-
-	//Fermeture de la connexion mysql ouverte.
+	
+	/**
+	* @method close
+	* @desc Fermeture de la connexion mysql ouverte.
+	* @param none
+	* @return TRUE si OK FALSE sinon
+	*/
 	function close()
 	{
 		if ($this->connected) // si la connexion est établie
@@ -247,8 +323,13 @@ class Sql
 			return mysql_close($this->link); // on ferme la connexion ouverte.
 		}
 	}
-	
-	//Liste les champs d'une table.
+
+	/**
+	* @method list_fields
+	* @desc Liste les champs d'une table.
+	* @param string table name
+	* @return array of fields name or empty array
+	*/
 	function list_fields($table)
 	{
 		if (!empty($table))
@@ -263,7 +344,12 @@ class Sql
 			return array();
 	}
 	
-	//Liste les tables + infos.
+	/**
+	* @method list_tables
+	* @desc Liste les tables + infos.
+	* @param none
+	* @return array of tables name and infos
+	*/
 	function list_tables()
 	{
 		$array_tables = array();
@@ -287,8 +373,14 @@ class Sql
 		}
 		return $array_tables;
 	}
-		
-	//Parsage d'un fichier SQL => exécution des requêtes.
+
+	/**
+	* @method parse
+	* @desc Parsage d'un fichier SQL => exécution des requêtes.
+	* @param string filename
+	* @param string prefix
+	* @return void
+	*/
 	function parse($file_path, $tableprefix = '')
 	{
 		$handle_sql = @fopen($file_path, 'r');
@@ -323,13 +415,23 @@ class Sql
 		}
 	}
 	
-	//Affichage du nombre de requête sql.
+	/**
+	* @method display_request
+	* @desc Affichage du nombre de requête sql.
+	* @param none
+	* @return int number of request made
+	*/
 	function display_request()
 	{
 		return $this->req;
 	}
-	
-	//Coloration syntaxique du SQL
+
+	/**
+	* @method highlight_query
+	* @desc Coloration syntaxique du SQL
+	* @param string SQL query
+	* @return string html coded colored pattern
+	*/
 	function highlight_query($query)
 	{
 		$query = ' ' . strtolower($query) . ' ';
@@ -357,7 +459,12 @@ class Sql
 		return nl2br(trim($query));
 	}
 	
-	//Indente une requête SQL.
+	/**
+	* @method indent_query
+	* @desc Indente une requête SQL.
+	* @param string SQL query
+	* @return string indented SQL query
+	*/
 	function indent_query($query)
 	{
 		$query = ' ' . strtolower($query) . ' ';
@@ -378,13 +485,23 @@ class Sql
 		return trim($query);
 	}
 	
-	//Version du SGBD
+	/**
+	* @method get_dbms_version
+	* @desc Version du SGBD
+	* @param none
+	* @return string DBMS version prefixed by MySQL<space>
+	*/
 	function get_dbms_version()
 	{
 		return 'MySQL ' . mysql_get_server_info();
 	}
-	
-	//Listage des base de données présentes sur le SGBD courant
+
+	/**
+	* @method list_databases
+	* @desc Listage des base de données présentes sur le SGBD courant
+	* @param none
+	* @return array of database names
+	*/
 	function list_databases()
 	{
 		$db_list = mysql_list_dbs($this->link);
@@ -396,14 +513,27 @@ class Sql
 		
 		return $result;
 	}
-
-	//Création d'une base de données
+	
+	/**
+	* @method create_database
+	* @desc Création d'une base de données
+	* @param string name of database
+	* @return TRUE if OK else FALSE
+	*/
 	function create_database($db_name)
 	{
         return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
 	}
 
-	//Requête query + fetch_array
+	/**
+	* @method query_fetch
+	* @desc Requête query + fetch_array
+	* @param string SQL query
+	* @param int line in script
+	* @param string script name
+	* @param int type MYSQL_BOTH, MYSQl_ASSOC, MYSQL_INT
+	* @return array depending of $type arg
+	*/
 	function query_fetch($query, $errline, $errfile, $type = MYSQL_BOTH)
 	{
 		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
@@ -413,15 +543,29 @@ class Sql
 
 		return $result;
 	}
-	
-	//Balayage du retour de la requête sous forme de tableau indexé, associatif ou les deux
+
+	/**
+	* @method fetch_array
+	* @desc Balayage du retour de la requête sous forme de tableau indexé, associatif ou les deux
+	* @param ressource mySQL
+	* @param int type MYSQL_BOTH, MYSQl_ASSOC, MYSQL_INT
+	* @return array depending of $type arg
+	*/
 	function fetch_array($result, $type=MYSQL_BOTH)
 	{
 		return mysql_fetch_array($result, $type);
 	}
 	
 	## Private Methods ##
-	//Gestion des erreurs.
+	/**
+	* @method _error
+	* @desc Gestion des erreurs
+	* @param string SQL query
+	* @param string Error message
+	* @param int line in script
+	* @param string script name
+	* @return Don't return
+	*/
 	function _error($query, $errstr, $errline = '', $errfile = '')
 	{
 		global $Errorh;
