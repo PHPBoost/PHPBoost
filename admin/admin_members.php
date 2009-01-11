@@ -656,6 +656,8 @@ elseif (!empty($id))
 		'WEIGHT_MAX' => $CONFIG_USER['weight_max'],
 		'HEIGHT_MAX' => $CONFIG_USER['height_max'],
 		'WIDTH_MAX' => $CONFIG_USER['width_max'],
+		'USER_SIGN_EDITOR' => display_editor('user_sign'),
+		'USER_DESC_EDITOR' => display_editor('user_desc'),
 		'L_REQUIRE_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE_RANK' => $LANG['require_rank'],
 		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
