@@ -65,6 +65,8 @@ if ($guestbook && empty($id_get)) //Enregistrement
 			$Sql->query_inject("INSERT INTO " . PREFIX . "guestbook (contents,login,user_id,timestamp) VALUES('" . $guestbook_contents . "', '" . $guestbook_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . time() . "')", __LINE__, __FILE__);
 			$last_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "guestbook"); //Dernier message inséré.
 			
+			$Cache->Generate_module_file('guestbook'); //Régénération du cache du mini-module.
+			
 			redirect(HOST . SCRIPT . SID2 . '#m' . $last_msg_id);
 		}
 		else //utilisateur non autorisé!
