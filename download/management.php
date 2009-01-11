@@ -659,7 +659,7 @@ else
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_HIDDEN' => '',
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?new=1' . '&amp;token=' . $Session->get_token())
+			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
 	$Template->assign_vars(array(
