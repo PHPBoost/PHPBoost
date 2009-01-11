@@ -1,14 +1,14 @@
 <?php
-/*##################################################
- *                               admin_menus.php
+/***************************************************************************
+ *                                fatal.php
  *                            -------------------
- *   begin                : March, 05 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   begin                : April 12, 2007
+ *   copyright          : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
  *
  *
-###################################################
+ ***************************************************************************
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,24 +19,23 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+***************************************************************************/
 
-define('PATH_TO_ROOT', '../..');
-require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
-define('TITLE', $LANG['administration']);
-require_once(PATH_TO_ROOT . '/admin/admin_header.php');
+require_once('../kernel/begin.php');
+require_once('../kernel/header.php');
 
-$id = retrieve(GET, 'id', -1);
+$tpl = new Template('member/csrf-attack.tpl');
+$tpl->assign_vars(array(
+    'L_ATTACK_EXPLAIN' => $LANG['csrf_attack'],
+    'L_PREVIOUS' => $LANG['previous'],
+));
+$tpl->parse();
 
-import('core/menu_service');
+require_once('../kernel/footer.php');
 
-MenuService::delete($id);
-MenuService::generate_cache();
-
-redirect('menus.php');
 ?>

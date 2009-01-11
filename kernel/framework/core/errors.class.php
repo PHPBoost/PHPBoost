@@ -128,7 +128,10 @@ class Errors
 		{
 			switch ($errno)
 			{
-				//Message d'erreur demandant une redirection.
+                case E_TOKEN:
+                    $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+                    break;
+                //Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
     				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
     				if (!$_err_stop)

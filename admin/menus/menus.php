@@ -50,52 +50,50 @@ function menu_admin_link(&$menu, $mode)
     }
     if ($mode == 'delete')
     {
-        if (of_class($menu, LINKS_MENU__CLASS))
-            return 'delete.php?';
-        if (of_class($menu, CONTENT_MENU__CLASS))
-            return 'delete.php?';
+        global $Session;
+        return 'menus.php?action=delete&token=' . $Session->get_token() . '&';
     }
     return '';
 }
 
 if (!empty($id))
 {
+    $Session->check_token();
     $menu = MenuService::load($id);
     if ($menu == null)
         redirect('menus.php');
     
-    if ($action == 'enable')
-    {   // Enable a Menu
-        MenuService::enable($menu);
-        MenuService::generate_cache();
-    	redirect(HOST . SCRIPT . '#m' . $id);
+    switch ($action)
+    {
+        case 'enable':
+            MenuService::enable($menu);
+        	break;
+        case 'disable':
+            MenuService::disable($menu);
+            break;
+        case 'delete':
+            MenuService::delete($id);
+            break;
+        case 'up':
+        case 'down':
+            // Move up or down a Menu in a block
+        	if ($action == 'up')
+        	   MenuService::change_position($menu, MOVE_UP);
+        	else
+               MenuService::change_position($menu, MOVE_DOWN);
+            break;
+        default:
+            break;
     }
-    elseif ($action == 'disable')
-    {   // Disable a Menu
-        MenuService::disable($menu);
-        MenuService::generate_cache();
-        redirect(HOST . SCRIPT . '#m' . $id);
-    }
-    elseif (!empty($move))
+    
+    if (!empty($move))
     {   // Move a Menu
         MenuService::move($menu, $move);
-        
-        MenuService::generate_cache();
-        $Cache->Generate_file('css');
-    	
-    	redirect(HOST . SCRIPT . '#m' . $id);
     }
-    elseif ($action == 'up' || $action == 'down')
-    {   // Move up or down a Menu in a block
-    	if ($action == 'up')
-    	   MenuService::change_position($menu, MOVE_UP);
-    	else
-           MenuService::change_position($menu, MOVE_DOWN);
-        
-        MenuService::generate_cache();
-        
-        redirect(HOST . SCRIPT . '#m' . $id);
-    }
+    
+    MenuService::generate_cache();
+    $Cache->Generate_file('css');
+    redirect('menus.php#m' . $id);
 }
 
 // Try to find out new mini-modules and delete old ones
