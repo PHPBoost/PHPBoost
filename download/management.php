@@ -45,7 +45,7 @@ $submit = retrieve(POST, 'submit', false);
 $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
-if ($add_file || $submit || $delete_file)
+if ($submit || $delete_file)
     $Session->check_token();
 
 //Form variables
@@ -411,7 +411,7 @@ if ($edit_file_id > 0)
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
 			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_file_id)
+			'U_TARGET' => url('management.php?edit=' . $edit_file_id . '&amp;token=' . $Session->get_token())
 		));
 	}
 }
@@ -659,7 +659,7 @@ else
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_HIDDEN' => '',
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?new=1')
+			'U_TARGET' => url('management.php?new=1' . '&amp;token=' . $Session->get_token())
 		));
 	}
 	$Template->assign_vars(array(
