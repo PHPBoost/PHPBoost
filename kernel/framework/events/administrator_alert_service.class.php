@@ -143,7 +143,6 @@ class AdministratorAlertService
 	}
 	
 	/**
-     * @author Benoît Sautel <ben.popeye@phpboost.com>
      * @desc Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
      * @warning You must have a valid token or be in the token unsafe mode
 	 */
@@ -181,7 +180,6 @@ class AdministratorAlertService
 	}
 	
 	/** 
-	 * @author Benoît Sautel <ben.popeye@phpboost.com>
  	 * @desc Function which deletes an alert from the database
  	 * @warning You must have a valid token or be in the token unsafe mode
 	 */
