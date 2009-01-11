@@ -556,6 +556,23 @@ class Sessions
 		return false;
 	}
 	
+	
+    /**
+     * @desc Enable token checks
+     */
+    function enable_token_check()
+    {
+        $token_check_enabled = true;
+    }
+	
+	/**
+     * @desc Disable token checks
+     */
+    function disabe_token_check()
+    {
+        $token_check_enabled = false;
+    }
+	
 	/**
 	 * @desc Return the session token
 	 * @return string the session token
@@ -574,6 +591,9 @@ class Sessions
 	 */
 	function check_token($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
+	    if (!$token_check_enabled)
+	       return true;
+        
 	    $token = $this->get_token();
 	    $check = !empty($token) && retrieve(REQUEST, 'token', '') === $token;
 	    if (!$check)
@@ -585,6 +605,8 @@ class Sessions
 	    }
 	    return $check;
 	}
+	
+	var $token_check_enabled = true;
 }
 
 ?>
