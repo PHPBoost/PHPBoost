@@ -62,6 +62,7 @@ if (!empty($id))
     if ($menu == null)
         redirect('menus.php');
     
+    $Session->check_token();
     switch ($action)
     {
         case 'enable':
@@ -82,12 +83,11 @@ if (!empty($id))
                MenuService::change_position($menu, MOVE_DOWN);
             break;
         default:
+            if (!empty($move))
+            {   // Move a Menu
+                MenuService::move($menu, $move);
+            }
             break;
-    }
-    
-    if (!empty($move))
-    {   // Move a Menu
-        MenuService::move($menu, $move);
     }
     
     MenuService::generate_cache();

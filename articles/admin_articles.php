@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               admin_articles_management.php
+ *                      admin_articles_management.php
  *                            -------------------
  *   begin                : July 10, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -38,7 +38,7 @@ $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
 if ($del && !empty($id)) //Suppresion de l'article.
-{
+{    
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = " . $id, __LINE__, __FILE__);	
 	

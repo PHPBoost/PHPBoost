@@ -148,10 +148,7 @@ class AdministratorAlertService
 	 */
 	/*static*/ function save_alert(&$alert)
 	{
-		global $Sql, $Cache, $Session;
-		
-		//We check if the user really wanted to save the contribution
-		$Session->check_token();
+		global $Sql, $Cache;
 		
 		// If it exists already in the data base
 		if ($alert->get_id() > 0)
@@ -185,10 +182,7 @@ class AdministratorAlertService
 	 */
 	/*static*/ function delete_alert(&$alert)
 	{
-		global $Sql, $Cache, $Session;
-		
-		//We check if the user really wanted to save the contribution
-		$Session->check_token();
+		global $Sql, $Cache;
 		
 		// If it exists in the data base
 		if ($alert->get_id() > 0)
