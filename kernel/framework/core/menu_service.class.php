@@ -133,8 +133,7 @@ class MenuService
      */
     function save(&$menu)
     {
-        global $Sql, $Session;
-        $Session->check_token();
+        global $Sql;
         $block_position = $menu->get_block_position();
         
         if (($block = $menu->get_block()) != MENU_NOT_ENABLED && ($block_position = $menu->get_block_position()) == -1)
@@ -184,8 +183,7 @@ class MenuService
      */
     function delete(&$menu)
     {
-        global $Sql, $Session;
-        $Session->check_token();
+        global $Sql;
         $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : -1);
         if ($id_menu > 0)
             $Sql->query_inject("DELETE FROM " . DB_TABLE_MENUS . " WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
@@ -222,8 +220,7 @@ class MenuService
      */
     function move(&$menu, $block, $save = true)
     {
-        global $Sql, $Session;
-        $Session->check_token();
+        global $Sql;
         
         if ($menu->get_id() > 0 && $menu->is_enabled())
         {   // Updates the previous block position counter
@@ -259,8 +256,7 @@ class MenuService
      */
     function change_position(&$menu, $direction = MOVE_UP)
     {
-        global $Sql, $Session;
-        $Session->check_token();
+        global $Sql;
         
         $block_position = $menu->get_block_position();
         $new_block_position = $block_position;

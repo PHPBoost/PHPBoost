@@ -32,7 +32,7 @@ if (!$User->check_level(USER_LEVEL)) //Si il n'est pas member (les invités n'ont
 
 $contribution_id = retrieve(GET, 'id', 0);
 $id_to_delete = retrieve(GET, 'del', 0);
-$id_to_update = retrieve(REQUEST, 'idedit', 0);
+$id_to_update = retrieve(POST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
 import('events/contribution_service');
@@ -112,6 +112,9 @@ elseif ($id_to_update > 0)
 elseif ($id_to_delete > 0)
 {
 	global $User;
+	
+	//Vérification de la validité du jeton
+    $Session->check_token();
 	
 	$contribution = new Contribution();
 	
