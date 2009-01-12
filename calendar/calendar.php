@@ -45,7 +45,7 @@ $bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 $get_event = retrieve(GET, 'e', '');
 $id = retrieve(GET, 'id', 0);
 $add = retrieve(GET, 'add', false);
-$del = retrieve(GET, 'delete', false);
+$delete = retrieve(GET, 'delete', false);
 $edit = retrieve(GET, 'edit', false);
 
 if ($add || $delete || $edit)
@@ -287,7 +287,7 @@ elseif (!empty($id))
 	if (!$User->check_level(ADMIN_LEVEL)) //Admins seulement autorisés à editer/supprimer!
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
-	if ($del) //Suppression simple.
+	if ($delete) //Suppression simple.
 	{
 		$Sql->query_inject("DELETE FROM " . PREFIX . "calendar WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		

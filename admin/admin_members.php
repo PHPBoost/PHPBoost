@@ -193,7 +193,6 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				
                 //Si le membre n'était pas approuvé et qu'on l'approuve et qu'il existe une alerte, on la règle automatiquement
                 $member_infos = $Sql->query_array(DB_TABLE_MEMBER, "user_aprob", "level", "WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
-                
 				if ($member_infos['user_aprob'] != $user_aprob && $member_infos['user_aprob'] == 0)
 				{
 					//On recherche l'alerte
@@ -209,6 +208,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						$alert->set_status(ADMIN_ALERT_STATUS_PROCESSED);
 						AdministratorAlertService::save_alert($alert);
 					}
+
+					//Régénération du cache des stats.
+					$Cache->Generate_file('stats');
 				}
 				
                 $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);

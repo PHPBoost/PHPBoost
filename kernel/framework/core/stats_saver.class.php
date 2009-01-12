@@ -150,7 +150,7 @@ class StatsSaver
 			'windows nt 6.0|vista' => 'windowsvista',
 			'windows nt 5.1|windows xp' => 'windowsxp',
 			'linux|x11' => 'linux',
-			'macintosh|mac|ppc|powerpc|safari' => 'macintosh',
+			'macintosh|mac|ppc|powerpc' => 'macintosh',
 			'windows nt 5.2|windows server 2003' => 'windowsserver2003',
 			'windows nt 5.0|windows 2000' => 'windows2000',
 			'winnt|windows nt|windows nt 4.0'  => 'windowsnt',

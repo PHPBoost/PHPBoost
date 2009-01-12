@@ -154,7 +154,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						//Enregistrement
 						AdministratorAlertService::save_alert($alert);
 					}
-						
+					else //Régénération du cache des stats.
+						$Cache->Generate_file('stats');
+					
 					//Champs supplémentaires.
 					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 					if ($extend_field_exist > 0)
@@ -231,9 +233,6 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						else if (!empty($req_insert))
 								$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
-					
-					//On régénère le cache
-					$Cache->Generate_file('stats');
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
 					if ($CONFIG_USER['activ_mbr'] == 1)
