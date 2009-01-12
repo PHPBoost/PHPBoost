@@ -21,8 +21,7 @@
 
 ------------------------------------ MODULES -----------------------------------
 
-[-] Préparer l'insertion par défaut de contenu dans le site, création d'une page de bienvenue?
-[-] Créer un module gestion de base de données (sortir le code de l'administration et le déporter dans un module)
+[-]Remplacer les retour à la ligne par \n\r dans l'outils dbb
 
 #################################################################################
 
