@@ -189,6 +189,7 @@ class AdministratorAlertService
 		{			
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			$alert->set_id(0);
+			$Cache->generate_file('member');
 		}
 		//Else it's not present in the database, we have nothing to delete
 	}
