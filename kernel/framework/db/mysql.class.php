@@ -190,7 +190,7 @@ class Sql
 	{
 		$ressource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
 		$result = mysql_fetch_assoc($ressource);
-		$this->query_close($result); //Déchargement mémoire.
+		$this->query_close($ressource); //Déchargement mémoire.
 		$this->req++;
 		
 		return $result['total'];
