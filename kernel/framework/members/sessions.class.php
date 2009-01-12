@@ -591,6 +591,8 @@ class Sessions
 	 */
 	function check_token($redirect = SEASURF_ATTACK_ERROR_PAGE)
 	{
+	    //En attendant de valider la validité du système de protection des attaques CRSF
+	    return true;
 	    //If the token system has been disabled at least once
 	    if ($this->token_check_enabled < 0)
 	       return true;

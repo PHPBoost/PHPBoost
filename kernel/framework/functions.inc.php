@@ -454,7 +454,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 function unparse(&$content)
 {
 	$content_manager = new ContentManager();
-	$parser =& $content_manager->get_unparser();
+	$parser = $content_manager->get_unparser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
 	
@@ -466,7 +466,7 @@ function second_parse(&$content)
 {
 	$content_manager = new ContentManager();
 	
-	$parser =& $content_manager->get_second_parser();
+	$parser = $content_manager->get_second_parser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->second_parse();
 	
