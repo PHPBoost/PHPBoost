@@ -652,7 +652,7 @@ elseif ($step == 6)
 			//Configuration des membres
 			$Cache->load('member');
 			
-			$CONFIG_USER['activ_mbr'] = (int)DISTRIBUTION_ENABLE_USER;
+			$CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
 			$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
 			$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
 			
