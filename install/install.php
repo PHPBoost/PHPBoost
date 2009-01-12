@@ -452,7 +452,7 @@ elseif ($step == 5)
 		$CONFIG['server_name'] = $server_url;
 		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 		if ($server_path != '')
-			  $CONFIG['server_path'] = '/' . $server_path;
+			$CONFIG['server_path'] = '/' . $server_path;
 		else
 			$CONFIG['server_path'] = $server_path;
 		$CONFIG['site_name'] = $site_name;
@@ -511,7 +511,7 @@ elseif ($step == 5)
 		$Cache = new Cache;
 		
         //Installation des modules de la distribution
-			require_once('../kernel/framework/modules/packages_manager.class.php');
+		require_once('../kernel/framework/modules/packages_manager.class.php');
 		foreach ($DISTRIBUTION_MODULES as $module_name)
 		{
             $Cache->load('modules', RELOAD_CACHE);

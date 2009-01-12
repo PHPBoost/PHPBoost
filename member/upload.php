@@ -447,7 +447,7 @@ else
 			$bbcode = '[url=../upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
 			$link = '<a class="com" href="../upload/' . $row['path'];
 		}
-        $link .= '" title="' . $row['name'] . '">"';
+        $link .= '" title="' . $row['name'] . '">';
 		
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],

@@ -197,7 +197,7 @@ function strpos(haystack, needle)
 //Supprime les espaces en début et fin de chaîne.
 function trim(myString)
 {
-	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
+	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
 } 
 
 //Affichage/Masquage de la balise hide.

@@ -368,7 +368,7 @@ class Cache
 		global $Sql;
 		
 		$config_member = 'global $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;' . "\n";
-	
+
 		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_USER = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'member'", __LINE__, __FILE__));
 		foreach ($CONFIG_USER as $key => $value)
