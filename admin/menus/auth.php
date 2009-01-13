@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               admin_menus.php
+ *                               auth.php
  *                            -------------------
- *   begin                : March, 05 2007
- *   copyright          : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : January 2009
+ *   copyright            : (C) 2009 Loïc Rouchon
+ *   email                : horn@phpboost.com
  *
  *
  *
@@ -49,7 +49,7 @@ if ($post)
     MenuService::save($menu);
     MenuService::generate_cache();
     
-    redirect('menus.php?id=' . $id);
+    redirect('menus.php#m' . $id);
 }
 
 // Display the Menu dispositions

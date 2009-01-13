@@ -556,23 +556,6 @@ class Sessions
 		return false;
 	}
 	
-	
-    /**
-     * @desc Enable token checks
-     */
-    function enable_token_check()
-    {
-        $this->token_check_enabled++;
-    }
-	
-	/**
-     * @desc Disable token checks
-     */
-    function disabe_token_check()
-    {
-        $this->token_check_enabled--;
-    }
-	
 	/**
 	 * @desc Return the session token
 	 * @return string the session token
@@ -582,34 +565,64 @@ class Sessions
 	    return !empty($this->data['token']) ? $this->data['token'] : '';
 	}
 	
-	
 	/**
-	 * @desc Check the session token
+	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
+	 * this site.
 	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-	 * if false, do not redirect
-	 * @return true if the token is OK
+     * if false, do not redirect
+     * @return true if no csrf attack by post is detected
 	 */
-	function check_token($redirect = SEASURF_ATTACK_ERROR_PAGE)
-	{
-	    //En attendant de valider la validité du système de protection des attaques CRSF
-	    return true;
-	    //If the token system has been disabled at least once
-	    if ($this->token_check_enabled < 0)
-	       return true;
-        
-	    $token = $this->get_token();
-	    $check = !empty($token) && retrieve(REQUEST, 'token', '') === $token;
-	    if (!$check)
-	    {
-	        global $Errorh;
-	        $Errorh->handler('e_token', E_TOKEN);
-    	    if ($redirect !== false && !empty($redirect))
-    	        redirect($redirect);
-	    }
-	    return $check;
-	}
-	
-	var $token_check_enabled = 0;
+    function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+    {
+        if (!empty($_POST) && !$this->_check_referer())
+        {
+            return $this->_csrf_attack($redirect);
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
+     * this site with a correct token.
+     * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+     * if false, do not redirect
+     * @return true if no csrf attack by get is detected
+     */
+    function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
+    {
+        $token = $this->get_token();
+        if (!$this->_check_referer() || empty($token) || retrieve(GET, 'token', '') !== $token)
+        {
+            $this->_csrf_attack($redirect);
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * ]@desc check that the operation is done from this site
+     * @return true if the referer is on this site
+     */
+    function _check_referer()
+    {
+        global $CONFIG;
+        return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
+    }
+    
+    /**
+     * @desc Redirect to the $redirect error page if the token is wrong
+     * if false, do not redirect
+     * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+     * if false, do not redirect
+     */
+    function _csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
+    {
+        global $Errorh;
+        $Errorh->handler('e_token', E_TOKEN);
+        if ($redirect !== false && !empty($redirect))
+            redirect($redirect);
+    }
 }
 
 ?>

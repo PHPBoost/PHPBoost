@@ -148,4 +148,7 @@ elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'ker
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
 
+// Verify that the user really wanted to do this POST
+$Session->csrf_post_protect();
+
 ?>

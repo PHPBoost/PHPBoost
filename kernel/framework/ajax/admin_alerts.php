@@ -34,7 +34,7 @@ define('NO_SESSION_LOCATION', true);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //On vérifie la validité du jeton
-$Session->check_token();
+$Session->csrf_get_protect();
 
 if (!$User->check_level(ADMIN_LEVEL))
 	die('');

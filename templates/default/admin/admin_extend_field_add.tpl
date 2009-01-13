@@ -58,7 +58,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="admin_extend_field_add.php?token={TOKEN}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
+		<form action="admin_extend_field_add.php" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_EXTEND_FIELD_ADD}</legend>
 				<dl> 

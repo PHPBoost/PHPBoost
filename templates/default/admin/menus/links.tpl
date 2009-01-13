@@ -12,7 +12,7 @@ function createSortableMenu() {
 
 function toggleProperties(id) {
     if (document.getElementById("menu_element_" + id + "_properties").style.display == "none")
-    {   //Si les propriÃ©tÃ©s sont repliÃ©es, on les affiche
+    {   //Si les propriétés sont repliées, on les affiche
         Effect.Appear("menu_element_" + id + "_properties");
         document.getElementById("menu_element_" + id + "_more_image").src = "{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png";
     }
@@ -143,7 +143,7 @@ function deleteElement(element_id)
 
 --></script>
 <div id="admin_contents">
-	<form action="links.php?action=save&amp;token={TOKEN}" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
+	<form action="links.php?action=save" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>

@@ -339,7 +339,7 @@
 			-->	
 			</script>
 			
-			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
+			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query#executed_query" method="post" onsubmit="return check_form();">
 				<div class="block_container">
 					<div class="block_top">
 						{L_QUERY}
@@ -394,7 +394,7 @@
 			
 			# IF C_DATABASE_UPDATE_FORM #
 			<br />
-			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
+			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}#executed_query" method="post" onsubmit="return check_form();">
 				<table class="module_table">
 					<tr style="text-align:center;">			
 						<td class="row3 text_strong">

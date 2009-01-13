@@ -119,7 +119,7 @@
 			</div>
 			# ENDIF #	
 				
-			<form action="admin_articles_add.php?token={TOKEN}" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_articles_add.php" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ARTICLES_ADD}</legend>
 					<p>{L_REQUIRE}</p>

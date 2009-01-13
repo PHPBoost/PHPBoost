@@ -17,7 +17,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_maintain.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_maintain.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SET_MAINTAIN}</legend>
 					<dl class="overflow_visible">

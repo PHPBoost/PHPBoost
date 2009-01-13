@@ -31,7 +31,7 @@
     </div>
     # ENDIF #
     
-    <form action="admin_modules_update.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
+    <form action="admin_modules_update.php" method="post" enctype="multipart/form-data" class="fieldset_content">
         <fieldset>
             <legend>{L_UPLOAD_MODULE}</legend>
             <dl>
@@ -101,7 +101,7 @@
         
     <br /><br />		
     
-    <form action="admin_modules_update.php?update=1&amp;token={TOKEN}" method="post">
+    <form action="admin_modules_update.php?update=1" method="post">
         <table class="module_table">
             <tr> 
                 <th colspan="6">

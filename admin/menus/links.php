@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 import('core/menu_service');
 
 $menu_id = retrieve(REQUEST, 'id', 0);
-$action = retrieve(POST, 'action', '');
+$action = retrieve(GET, 'action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)

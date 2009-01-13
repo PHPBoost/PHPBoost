@@ -33,7 +33,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form action="admin_guestbook.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_guestbook.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GUESTBOOK_CONFIG}</legend>
 					<dl>

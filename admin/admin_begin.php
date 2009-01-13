@@ -34,7 +34,4 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 //Inclusion des langues de l'administration.
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 
-// Verify that the user really wanted to do this POST
-if (!empty($_POST))
-    $Session->check_token();
 ?>

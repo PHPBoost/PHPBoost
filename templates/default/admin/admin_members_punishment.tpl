@@ -79,7 +79,7 @@
 				-->
 			</script>
 			
-			<form action="admin_members_punishment{U_ACTION}&amp;token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_members_punishment{U_ACTION}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SEARCH_USER}</legend>
 					<dl>
@@ -149,7 +149,7 @@
 			-->
 			</script>
 			
-			<form action="admin_members_punishment{U_ACTION_INFO}&amp;token={TOKEN}" method="post">		
+			<form action="admin_members_punishment{U_ACTION_INFO}" method="post">		
 			<table class="module_table">
 				<tr>
 					<td class="row1" style="width:30%;">
@@ -195,7 +195,7 @@
 			
 			
 			# IF C_USER_BAN #
-			<form action="admin_members_punishment{U_ACTION_INFO}&amp;token={TOKEN}" method="post">		
+			<form action="admin_members_punishment{U_ACTION_INFO}" method="post">		
 			<table class="module_table">
 				<tr>
 					<td class="row1" style="width:30%;">

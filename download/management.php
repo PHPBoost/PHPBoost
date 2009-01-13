@@ -45,8 +45,8 @@ $submit = retrieve(POST, 'submit', false);
 $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
-if ($submit || $delete_file)
-    $Session->check_token();
+if ($delete_file)
+    $Session->csrf_get_protect();
 
 //Form variables
 $file_title = retrieve(POST, 'title', '');
