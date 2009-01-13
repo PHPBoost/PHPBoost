@@ -24,6 +24,14 @@
  *
 ###################################################*/
 
+
+//Javascript frame breaker necessary to the CSRF attack protection
+if (top != self)
+{
+	top.location = self.location
+}
+
+
 var menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
 var menu_previous = new Array();
