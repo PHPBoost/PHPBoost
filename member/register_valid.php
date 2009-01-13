@@ -261,7 +261,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					if ($CONFIG_USER['activ_mbr'] == 0)
 					{
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$Session->Session_begin($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
+						$Session->start($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
 					}
 					unset($password, $password_hash);
 					
