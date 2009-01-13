@@ -293,7 +293,6 @@ function parse_ini_array($links_format)
 }
 
 //Récupération du dernier champ de configuration du config.ini du module.
-// Fonction scandaleuse à refaire complètement!
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);

@@ -16,7 +16,7 @@
 			
 		<div id="admin_contents">		
 			# IF C_LANG_MAIN #
-			<form action="admin_lang.php?uninstall=1&amp;token={TOKEN}" method="post">
+			<form action="admin_lang.php?uninstall=1" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="5">
@@ -118,7 +118,7 @@
 			# ENDIF #
 			
 			# IF C_DEL_LANG #
-			<form action="admin_lang.php?uninstall=1&amp;token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_lang.php?uninstall=1" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_LANG}</legend>
 					<dl>

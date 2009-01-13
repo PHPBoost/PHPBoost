@@ -48,7 +48,7 @@ function menu_admin_link(&$menu, $mode)
             return 'content.php?';
         return 'auth.php?';
     }
-    if ($mode == 'delete')
+    if ($mode == 'delete' && (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS)))
     {
         global $Session;
         return 'menus.php?action=delete&token=' . $Session->get_token() . '&';
@@ -62,7 +62,9 @@ if (!empty($id))
     if ($menu == null)
         redirect('menus.php');
     
-    $Session->check_token();
+    // In GET mode so we check it
+    $Session->csrf_get_protect();
+        
     switch ($action)
     {
         case 'enable':
@@ -187,7 +189,7 @@ foreach ($menus_blocks as $block_id => $menus)
         $menu_tpl->assign_vars(array(
             'NAME' => $menu->get_title(),
             'IDMENU' => $id,
-            'U_ONCHANGE_ENABLED' => '\'menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '#m' . $id . '\'',
+            'U_ONCHANGE_ENABLED' => '\'menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '&amp;token=' . $Session->get_token() . '#m' . $id . '\'',
             'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
             'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
             'CONTENTS' => $menu->admin_display(),

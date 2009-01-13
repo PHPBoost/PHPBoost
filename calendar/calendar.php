@@ -49,7 +49,7 @@ $delete = retrieve(GET, 'delete', false);
 $edit = retrieve(GET, 'edit', false);
 
 if ($add || $delete || $edit)
-    $Session->check_token();
+    $Session->csrf_get_protect();
 
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
 if ($checkdate === true && empty($id) && !$add)

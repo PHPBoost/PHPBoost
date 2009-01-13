@@ -66,7 +66,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_poll_add.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_poll_add.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_POLL_ADD}</legend>
 					<p>{L_REQUIRE}</p>

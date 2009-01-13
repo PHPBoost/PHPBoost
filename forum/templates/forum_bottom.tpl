@@ -23,7 +23,7 @@
 			<div class="forum_online">
 				# IF C_FORUM_CONNEXION #
 					# IF C_USER_NOTCONNECTED #
-					<form action="?token={TOKEN}" method="post">
+					<form action="" method="post">
 						<p style="margin-bottom:8px;" class="text_small"><label>{L_PSEUDO} <input size="15" type="text" class="text" name="login" maxlength="25" /></label>
 						<label>{L_PASSWORD}	<input size="15" type="password" name="password" class="text" maxlength="30" /></label>
 						&nbsp;| <label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" /></label>
@@ -53,7 +53,7 @@
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
-					<form action="action.php?{SID}&amp;token={TOKEN}">
+					<form action="action.php?{SID}">
                         <div>
                             {L_FOR_SELECTION}: 
                             <select name="massive_action_type">

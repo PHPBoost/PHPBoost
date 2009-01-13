@@ -26,12 +26,12 @@
         <div style="width:100px;height:30px;margin:auto;">
             <div style="float:left">
                 # IF C_UP #
-                    <a href="menus.php?action=up&amp;id={IDMENU}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
+                    <a href="menus.php?action=up&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
                 # IF C_DOWN #
-                     <a href="menus.php?action=down&amp;id={IDMENU}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
+                     <a href="menus.php?action=down&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
@@ -40,14 +40,14 @@
                 <div style="position:absolute;z-index:99;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{IDMENU}">
                     <div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);">
                         <div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_HEADER}&amp;id={IDMENU}">{L_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_SUBHEADER}&amp;id={IDMENU}">{L_SUB_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_LEFT}&amp;id={IDMENU}">{L_LEFT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPCENTRAL}&amp;id={IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_BOTTOMCENTRAL}&amp;id={IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_RIGHT}&amp;id={IDMENU}">{L_RIGHT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPFOOTER}&amp;id={IDMENU}">{L_TOP_FOOTER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}">{L_FOOTER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_HEADER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_HEADER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_SUBHEADER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_SUB_HEADER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_LEFT}&amp;id={IDMENU}&amp;token={TOKEN}">{L_LEFT_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPCENTRAL}&amp;id={IDMENU}&amp;token={TOKEN}">{L_TOP_CENTRAL_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_BOTTOMCENTRAL}&amp;id={IDMENU}&amp;token={TOKEN}">{L_BOTTOM_CENTRAL_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_RIGHT}&amp;id={IDMENU}&amp;token={TOKEN}">{L_RIGHT_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPFOOTER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_TOP_FOOTER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_FOOTER}</a></div>
                     </div>
                 </div>
                 <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
@@ -90,12 +90,12 @@
         <div style="width:100px;height:30px;">
             <div style="float:left">
                 # IF C_UP #
-                    <a href="menus.php?action=up&amp;id={IDMENU}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
+                    <a href="menus.php?action=up&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
                 # IF C_DOWN #
-                     <a href="menus.php?action=down&amp;id={IDMENU}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
+                     <a href="menus.php?action=down&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
@@ -104,14 +104,14 @@
                 <div style="position:absolute;z-index:100;margin-top:155px;margin-left:-100px;float:left;display:none;" id="movemenu{IDMENU}">
                     <div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);">
                         <div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_HEADER}&amp;id={IDMENU}">{L_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_SUBHEADER}&amp;id={IDMENU}">{L_SUB_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_LEFT}&amp;id={IDMENU}">{L_LEFT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPCENTRAL}&amp;id={IDMENU}">{L_TOP_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_BOTTOMCENTRAL}&amp;id={IDMENU}">{L_BOTTOM_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_RIGHT}&amp;id={IDMENU}">{L_RIGHT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPFOOTER}&amp;id={IDMENU}">{L_TOP_FOOTER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}">{L_FOOTER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_HEADER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_HEADER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_SUBHEADER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_SUB_HEADER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_LEFT}&amp;id={IDMENU}&amp;token={TOKEN}">{L_LEFT_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPCENTRAL}&amp;id={IDMENU}&amp;token={TOKEN}">{L_TOP_CENTRAL_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_BOTTOMCENTRAL}&amp;id={IDMENU}&amp;token={TOKEN}">{L_BOTTOM_CENTRAL_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_RIGHT}&amp;id={IDMENU}&amp;token={TOKEN}">{L_RIGHT_MENU}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_TOPFOOTER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_TOP_FOOTER}</a></div>
+                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="menus.php?move={I_FOOTER}&amp;id={IDMENU}&amp;token={TOKEN}">{L_FOOTER}</a></div>
                     </div>
                 </div>
             </div>

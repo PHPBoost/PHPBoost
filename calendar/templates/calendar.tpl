@@ -3,7 +3,7 @@
 
 		# IF C_CALENDAR_DISPLAY #
 
-		<form action="calendar.php?token={TOKEN}" method="get">
+		<form action="calendar.php" method="get">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
@@ -141,7 +141,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="calendar.php{UPDATE}&amp;token={TOKEN}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
+		<form action="calendar.php{UPDATE}" method="post" onsubmit="return check_form_cl();" class="fieldset_content" style="width:70%">
 			<fieldset>
 				<legend>{L_EDIT_EVENT}</legend>
 				<dl class="overflow_visible">

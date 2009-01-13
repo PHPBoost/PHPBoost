@@ -164,7 +164,7 @@
 				</div>
 				# ENDIF #
 			
-				<form action="admin_news.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+				<form action="admin_news.php" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_ADD_NEWS}</legend>
 						<p>{L_REQUIRE}</p>

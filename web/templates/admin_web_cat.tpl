@@ -47,7 +47,7 @@
 			<br />
 			# ENDIF #
 			
-			<form action="admin_web_cat.php?token={TOKEN}" method="post">
+			<form action="admin_web_cat.php" method="post">
 				<table  class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -132,7 +132,7 @@
 				</fieldset>	
 			</form>
 
-			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset_content">
+			<form action="admin_web_cat.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<dl>

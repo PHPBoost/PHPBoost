@@ -45,8 +45,7 @@ class Comments
 	//Ajoute un commentaire et retourne l'identifiant inséré.
 	function add($contents, $login)
 	{
-		global $Sql, $User, $Session;
-		$Session->check_token();
+		global $Sql, $User;
 		
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
 		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . PREFIX . "com");
@@ -60,16 +59,14 @@ class Comments
 	//Edition d'un commentaire
 	function update($contents, $login)
 	{
-		global $Sql, $Session;
-		$Session->check_token();
+		global $Sql;
 		$Sql->query_inject("UPDATE " . DB_TABLE_COM . " SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
 	//Suppression d'un commentaire
 	function del()
 	{
-		global $Sql, $Session;
-        $Session->check_token();
+		global $Sql;
 		
 		//Sélectionne le message précédent à celui qui va être supprimé.
 		$lastid_com = $Sql->query("SELECT idcom
@@ -87,16 +84,14 @@ class Comments
 	//Supprime tous les commentaires de l'item (lié à la suppression de l'item)
 	function delete_all($idprov)
 	{
-		global $Sql, $Session;
-        $Session->check_token();
+		global $Sql;
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
 	//Verrouille les commentaires
 	function lock($lock)
 	{
-		global $Sql, $Session;
-        $Session->check_token();
+		global $Sql;
 		
 		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET lock_com = '" . $lock . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 	}

@@ -49,7 +49,7 @@
 				<br />	
 			# ENDIF #
 				
-			<form action="admin_articles_cat_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_articles_cat_add.php" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ARTICLES_CAT_ADD}</legend>
 					<p>{L_REQUIRE}</p>

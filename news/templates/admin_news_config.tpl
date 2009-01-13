@@ -38,7 +38,7 @@
 		
 		<div id="admin_contents">
 
-			<form action="admin_news_config.php?token={TOKEN}" method="post" onsubmit="return check_msg();" class="fieldset_content">
+			<form action="admin_news_config.php" method="post" onsubmit="return check_msg();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWS}</legend>
 					<p>{L_REQUIRE}</p>

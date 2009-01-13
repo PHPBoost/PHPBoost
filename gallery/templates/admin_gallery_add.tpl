@@ -90,7 +90,7 @@
 				</fieldset>	
 			</form>
 			
-			<form action="admin_gallery_add.php?token={TOKEN}" method="post">
+			<form action="admin_gallery_add.php" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="2">
