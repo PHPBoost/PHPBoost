@@ -524,37 +524,6 @@ class Sql
 	{
         return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
 	}
-
-	/**
-	* @method query_fetch
-	* @desc Requête query + fetch_array
-	* @param string SQL query
-	* @param int line in script
-	* @param string script name
-	* @param int type MYSQL_BOTH, MYSQl_ASSOC, MYSQL_INT
-	* @return array depending of $type arg
-	*/
-	function query_fetch($query, $errline, $errfile, $type = MYSQL_BOTH)
-	{
-		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		$result = $this->fetch_array($ressource, $type);
-		$this->query_close($ressource);
-		$this->req++;
-
-		return $result;
-	}
-
-	/**
-	* @method fetch_array
-	* @desc Balayage du retour de la requête sous forme de tableau indexé, associatif ou les deux
-	* @param ressource mySQL
-	* @param int type MYSQL_BOTH, MYSQl_ASSOC, MYSQL_INT
-	* @return array depending of $type arg
-	*/
-	function fetch_array($result, $type=MYSQL_BOTH)
-	{
-		return mysql_fetch_array($result, $type);
-	}
 	
 	## Private Methods ##
 	/**
