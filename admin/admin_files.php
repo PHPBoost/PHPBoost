@@ -50,7 +50,7 @@ $to = retrieve(GET, 'to', -1);
 if (isset($_GET['fup'])) //Changement de dossier
 {
 	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
-	//die('test'.$parent_folder['id_parent'] );
+	
 	if (!empty($folder_member)) 
 		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
 	elseif ($parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']))

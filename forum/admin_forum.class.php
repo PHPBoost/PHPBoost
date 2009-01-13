@@ -437,9 +437,7 @@ class Admin_forum
 		
 		$Sql->query_close($result);
 		$list_parent_cats = trim($list_parent_cats, ', ');
-		echo "SELECT id
-		FROM " . PREFIX . "forum_cats 
-		" . $clause;
+
 		return $list_parent_cats;
 	}
 	
