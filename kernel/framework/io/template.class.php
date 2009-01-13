@@ -202,8 +202,6 @@ class Template
         $file = trim(substr($filename, $i), '/');
         $folder = trim(substr($file, 0, strpos($file, '/')), '/');
         $file_name = trim(substr($filename, strrpos($filename, '/')));
-        //$file_name = substr($filename, strrpos($filename, '/') + 1);
-        //echo '<pre>'; print_r(array('filename' => $filename, 'module' => $module, 'file' => $file, 'folder' => $folder)); echo '</pre><hr />';
         
         $default_templates_folder = PATH_TO_ROOT . '/templates/default/';
         $theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';

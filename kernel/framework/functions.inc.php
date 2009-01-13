@@ -293,25 +293,28 @@ function parse_ini_array($links_format)
 }
 
 //Récupération du dernier champ de configuration du config.ini du module.
+// Fonction scandaleuse à refaire complètement!
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
-    $handle = @fopen($dir_path . $dir . '/' . $ini_name, 'r');
-   	$config = '';
-    if ($handle)
+    import('io/file');
+    
+    $module_config_file = new File($dir_path . $dir . '/config.ini', READ);
+    $module_config_file->open();
+    $module_config_text = $module_config_file->get_contents();
+    
+    //Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
+    $result = array();
+    //Si on détecte le bon motif, on le renvoie
+    if (preg_match('`;config="(.*)"$`s', $module_config_text, $result))
     {
-        while (!feof($handle))
-        {
-            $config = fgets($handle, 8192);
-            if (strpos($config, 'config="') !== false) // here
-			{
-				@fclose($handle);
-				break;
-			}
-        }
-        @fclose($handle);
+        return $result[1];
     }
-    return $config;
+    //Sinon, on renvoie une chaîne vide
+    else
+    {
+        return '';
+    }
 }
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.

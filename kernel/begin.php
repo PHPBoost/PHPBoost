@@ -113,7 +113,6 @@ $User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang));
 $LANG = array();
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'); //!\\ Langues //!\\
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion des langues des erreurs.
-
 //Chargement du cache du jour actuel.
 $Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).

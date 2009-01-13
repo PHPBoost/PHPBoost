@@ -42,7 +42,6 @@ class MiniMenu extends Menu
     {
         $this->function_name = 'menu_' . strtolower($title) . '_' . strtolower($filename);
         parent::Menu($title . '/' . $filename);
-        //echo $this->title . ' - ' . $this->function_name;
     }
     /**
      * @return string the string the string to write in the cache file

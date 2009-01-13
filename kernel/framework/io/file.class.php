@@ -116,7 +116,7 @@ class File extends FileSystemElement
 			user_error('File ' . $this->path . ' is open in read only');
 	}
 	
-	// écrit $data dans le fichier, soit en écrasant les données ( par défaut ), soit passant en troisième paramètre la constante ADD
+	// écrit $data dans le fichier, soit en écrasant les données (par défaut), soit passant en troisième paramètre la constante ADD
 	function write($data, $what = ERASE, $mode = CLOSEFILE)
 	{
 		if ($this->mode & WRITE)

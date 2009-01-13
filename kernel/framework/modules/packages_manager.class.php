@@ -72,10 +72,9 @@ class PackagesManager
 			
 		//Insertion de la configuration du module.
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
+		
 		if (!empty($config))
-		{
-			$config = trim(str_replace('config=', '', $config), '"');
-			
+		{			
 			$check_config = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . $module_identifier . "'", __LINE__, __FILE__);
 			if (empty($check_config))
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) VALUES ('" . $module_identifier . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
