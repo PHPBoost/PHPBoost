@@ -205,7 +205,7 @@ function substr_html(&$str, $start, $end = '')
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
 	$content_editor = new ContentManager();
-	$editor =& $content_editor->get_editor();
+	$editor = $content_editor->get_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 		$editor->set_forbidden_tags($forbidden_tags);
 	$editor->set_identifier($field);
