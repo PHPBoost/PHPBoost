@@ -135,7 +135,7 @@ class Errors
 				case E_USER_REDIRECT:
     				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
     				if (!$_err_stop)
-    				    redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . ' &amp;_err_stop=1;'));
+    				    redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
 				    else
 				        die($errstr);
     				break;

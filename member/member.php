@@ -662,7 +662,18 @@ if (!empty($id_get)) //Espace membre
 		$user_born = $Sql->query("SELECT " . $Sql->date_diff('user_born') . " FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
 		if (empty($row['user_id'])) //Vérification de l'existance du membre.
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		{
+			if ($User->check_level(ADMIN_LEVEL))
+			{	
+				$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
+				if ($check_member)
+					redirect(HOST . DIR . '/admin/admin_members.php?id=' . $id_get);
+				else
+					$Errorh->handler('e_auth', E_USER_REDIRECT);
+			}
+			else
+				$Errorh->handler('e_auth', E_USER_REDIRECT);
+		}
 
 		//Dernière connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
