@@ -179,7 +179,6 @@ class Errors
     				
                     if ($stop)
                     {
-//                        echo ($_err_stop == true ? 'TRUE' : 'FALSE') . '<br />';
                         if (!$_err_stop)
                         {
                             if (!empty($Session) && is_object($Session))
