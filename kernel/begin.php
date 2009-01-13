@@ -33,7 +33,6 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 import('util/bench');
 $Bench = new Bench(); //Début du benchmark
