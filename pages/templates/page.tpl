@@ -2,7 +2,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">{TITLE}</div>
-			<div class="module_contents">
+			<div class="module_contents" style="padding-bottom:65px;">
 				# START redirect #
 					<div class="row3" style="width:auto; float:left;">
 					{redirect.REDIRECTED_FROM} {redirect.DELETE_REDIRECTION}
@@ -41,10 +41,8 @@
 						</ul>
 					</div>
 				</div>				
-				<div class="spacer">&nbsp;</div>
-				
+				<div class="spacer" style="padding-bottom:15px;">&nbsp;</div>
 				{CONTENTS}
-				<br /><br />
 				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		

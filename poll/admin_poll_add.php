@@ -87,8 +87,8 @@ if (!empty($_POST['valid']))
 		{	
 			if (!empty($_POST['a'.$i]))
 			{				
-				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
-				$votes .= strprotect(str_replace('|', '', $_POST['v'.$i])) . '|';
+				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
+				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
 			}
 		}
 

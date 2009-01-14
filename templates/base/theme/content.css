@@ -546,7 +546,7 @@ a.msg_link_pseudo:hover {
 .module_mini_container { /*Placement des mini modules */
     width:180px;
     margin:0px;
-    margin-bottom:15px;
+    margin-bottom:10px;
     background-color:#ffffff;
     border:1px #cccccc solid;
     border-spacing:1px;
