@@ -32,8 +32,8 @@ $Cache->load('download');
 
 include_once('download_auth.php');
 
-include_once('../kernel/framework/util/date.class.php');
-include_once('../kernel/framework/util/mini_calendar.class.php');
+import('util/date');
+import('util/mini_calendar');
 
 include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
@@ -45,7 +45,7 @@ $submit = retrieve(POST, 'submit', false);
 $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
-if ($delete_file)
+if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
     $Session->csrf_get_protect();
 
 //Form variables
@@ -61,6 +61,7 @@ $file_cat_id = retrieve(REQUEST, 'idcat', 0);
 $file_visibility = retrieve(POST, 'visibility', 0);
 $file_approved = retrieve(POST, 'approved', false);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
+$file_download_method = retrieve(POST, 'download_method', 'redirect', TSTRING);
 
 //Instanciations of objects required
 $file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
@@ -104,6 +105,7 @@ if ($delete_file > 0)
 elseif ($edit_file_id > 0)
 {
 	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+	
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
@@ -191,7 +193,12 @@ $Template->assign_vars(array(
 	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
 	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
 	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
+	'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+    'L_NUMBER_OF_HITS' => $DOWNLOAD_LANG['number_of_hits'],
+    'L_DOWNLOAD_METHOD' => $DOWNLOAD_LANG['download_method'],
+    'L_DOWNLOAD_METHOD_EXPLAIN' => $DOWNLOAD_LANG['download_method_explain'],
+    'L_FORCE_DOWNLOAD' => $DOWNLOAD_LANG['force_download'],
+    'L_REDIRECTION' => $DOWNLOAD_LANG['redirection_up_to_file']
 ));
 
 if ($edit_file_id > 0)
@@ -227,7 +234,7 @@ if ($edit_file_id > 0)
 			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', " .
-				"size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
+				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
 				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
 				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = '" . $file_approved . "' " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
@@ -321,6 +328,8 @@ if ($edit_file_id > 0)
 			'U_IMG' => $file_image,
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
+		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
@@ -411,6 +420,8 @@ if ($edit_file_id > 0)
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
 			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
+		    'FORCE_DOWNLOAD_SELECTED' => $file_infos['force_download'] == DOWNLOAD_FORCE_DL ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_infos['force_download'] == DOWNLOAD_REDIRECT ? ' selected="selected"' : '',
 			'U_TARGET' => url('management.php?edit=' . $edit_file_id . '&amp;token=' . $Session->get_token())
 		));
 	}
@@ -453,8 +464,8 @@ else
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " .
+			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " .
 				"'" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
@@ -573,6 +584,8 @@ else
 			'LANG' => get_ulang(),
 			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
 			'CONTRIBUTION_COUNTERPART_PREVIEW' => second_parse(stripslashes($contribution_counterpart)),
+		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
@@ -659,6 +672,8 @@ else
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_HIDDEN' => '',
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
+			'FORCE_DOWNLOAD_SELECTED' => ' selected="selected"',
+			'REDIRECTION_SELECTED' => ' selected="selected"',
 			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}

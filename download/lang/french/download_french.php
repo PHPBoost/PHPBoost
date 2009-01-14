@@ -61,6 +61,11 @@ $DOWNLOAD_LANG['explain_icon_cat'] = 'Vous pouvez choisir une image du répertoir
 $DOWNLOAD_LANG['root_description'] = 'Description de la racine des téléchargements';
 $DOWNLOAD_LANG['approved'] = 'Approuvé';
 $DOWNLOAD_LANG['hidden'] = 'Caché';
+$DOWNLOAD_LANG['number_of_hits'] = 'Nombre de téléchargements';
+$DOWNLOAD_LANG['download_method'] = 'Méthode de téléchargement';
+$DOWNLOAD_LANG['download_method_explain'] = 'Choisissez de faire une redirection vers le fichier sauf si le fichier s\'affiche dans le navigateur au lieu d\'être téléchargé par le téléchargement et que ce fichier est <strong>sur votre serveur</strong>, dans ce cas, choisissez de forcer le téléchargement';
+$DOWNLOAD_LANG['force_download'] = 'Forcer le téléchargement';
+$DOWNLOAD_LANG['redirection_up_to_file'] = 'Rediriger vers le fichier';
 
 //Titre
 $DOWNLOAD_LANG['title_download'] = 'Téléchargements';
