@@ -593,6 +593,27 @@ class MenuService
         return $modules_menu;
     }
     
+    
+    /**
+     * @desc Assigns the positions conditions for different printing modes
+     * @param &Template &$template the template to use
+     * @param int $position the menu position
+     */
+    function assign_positions_conditions(&$template, $position)
+    {
+        $template->assign_vars(array(
+            'C_HEADER' => $position == BLOCK_POSITION__HEADER,
+            'C_SUBHEADER' => $position == BLOCK_POSITION__SUB_HEADER,
+            'C_TOP_CENTRAL' => $position == BLOCK_POSITION__TOP_CENTRAL,
+            'C_BOTTOM_CENTRAL' => $position == BLOCK_POSITION__BOTTOM_CENTRAL,
+            'C_TOP_FOOTER' => $position == BLOCK_POSITION__TOP_FOOTER,
+            'C_FOOTER' => $position == BLOCK_POSITION__FOOTER,
+            'C_LEFT' => $position == BLOCK_POSITION__LEFT,
+            'C_RIGHT' => $position == BLOCK_POSITION__RIGHT,
+            'C_VERTICAL' => in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT)),
+            'C_HORIZONTAL' => !in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT))
+        ));
+    }
     ## Tools ##
     
     /**

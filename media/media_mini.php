@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function media_mini()
+function media_mini($position)
 {
 	global $LANG, $Cache, $Sql, $User, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_LANG;
 
@@ -38,6 +38,8 @@ function media_mini()
     $Cache->load('media');
 
     $tpl = new Template('media/media_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $position);
 	// Building Categories to look in
 	$cats = new MediaCats();
 	$children_cats = array();

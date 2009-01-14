@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function poll_mini()
+function poll_mini($position)
 {
     global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
     $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
@@ -38,6 +38,8 @@ function poll_mini()
     	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
     	
     	$tpl = new Template('poll/poll_mini.tpl');
+        import('core/menu_service');
+        MenuService::assign_positions_conditions($tpl, $position);
     		
     	#####################Résultats######################
     	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).

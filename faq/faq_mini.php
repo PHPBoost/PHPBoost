@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function faq_mini()
+function faq_mini($position)
 {
     global $Cache, $Template, $FAQ_LANG, $RANDOM_QUESTIONS;
     
@@ -38,6 +38,8 @@ function faq_mini()
     include_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
     
     $tpl = new Template('faq/faq_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $position);
     
     $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],

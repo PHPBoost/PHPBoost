@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function shoutbox_mini()
+function shoutbox_mini($position)
 {
     global $Cache, $LANG, $User, $CONFIG_SHOUTBOX, $nbr_members, $last_member_id, $last_member_login, $Sql;
     
@@ -78,6 +78,8 @@ function shoutbox_mini()
     	
     	###########################Affichage##############################
     	$tpl = new Template('shoutbox/shoutbox_mini.tpl');
+        import('core/menu_service');
+        MenuService::assign_positions_conditions($tpl, $position);
     
     	//Pseudo du membre connecté.
     	if ($User->get_attribute('user_id') !== -1)

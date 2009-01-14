@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function stats_mini()
+function stats_mini($position)
 {
     global $LANG, $Cache, $nbr_members, $last_member_id, $last_member_login;
     //Chargement de la langue du module.
@@ -36,6 +36,8 @@ function stats_mini()
     
     #########################Stats.tpl###########################
     $tpl = new Template('stats/stats_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $position);
     
     $Cache->load('stats');
     $l_member_registered = ($nbr_members > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];
