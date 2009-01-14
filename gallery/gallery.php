@@ -63,11 +63,12 @@ if (!empty($g_del)) //Suppression d'une image.
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
+	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-					
+	
 	redirect(HOST . DIR . '/gallery/gallery' . url('.php?cat=' . $g_move, '-' . $g_move . '.php', '&'));
 }
 elseif (isset($_FILES['gallery'])) //Upload
@@ -478,7 +479,7 @@ else
 		));
 				
 		//Liste des catégories.
-		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
+		$array_cat_list = array(0 => '<option value="-1" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name
 		FROM " . PREFIX . "gallery_cats
 		WHERE aprob = 1
