@@ -29,8 +29,6 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
 require_once('media_constant.php');
 
-define('DO_NOT_GENERATE_CACHE', false);
-
 class MediaCats extends CategoriesManagement
 {
 	## Public methods ##

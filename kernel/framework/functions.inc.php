@@ -304,8 +304,9 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
     
     //Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
     $result = array();
+    
     //Si on détecte le bon motif, on le renvoie
-    if (preg_match('`;config="(.*)"$`s', $module_config_text, $result))
+    if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
     {
         return $result[1];
     }
