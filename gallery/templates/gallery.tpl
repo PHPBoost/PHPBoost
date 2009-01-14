@@ -7,14 +7,18 @@
 		function Confirm_file() {
 			return confirm("{L_CONFIRM_DEL_FILE}");
 		}			
-		var previous_path_pics = '';
-		function display_pics(id, path, type)
+		var pics_displayed = 0;
+		function display_pics(id, path)
 		{
-			document.getElementById('pics_max').innerHTML = '';					
-			if( previous_path_pics != path )
+			if( pics_displayed != id )
 			{	
-				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" /></a>';	
-				previous_path_pics = path;
+				document.getElementById('pics_max').innerHTML = '<img src="' + path + '" alt="" />';	
+				pics_displayed = id;
+			}
+			else
+			{
+				document.getElementById('pics_max').innerHTML = '';	
+				pics_displayed = 0;
 			}
 		}
 		function display_pics_popup(path, width, height)
@@ -187,7 +191,36 @@
 					}
 				}
 			}
-		}		
+		}	
+		//incrément le nombre de vues d'une image.
+		var already_view = false;
+		var incr_pics_displayed = 0;
+		function increment_view(idpics)
+		{
+			if ({DISPLAY_MODE} == 1 && incr_pics_displayed == idpics)
+				incr_pics_displayed = 0;
+			else
+			{
+				if (document.getElementById('gv' + idpics))
+				{	
+					if (already_view && ({DISPLAY_MODE} == 3 || {DISPLAY_MODE} == 1))
+					{
+						data = '';
+						var xhr_object = xmlhttprequest_init('xmlhttprequest.php?id=' + idpics + '&cat={CAT_ID}&increment_view=1');
+						xmlhttprequest_sender(xhr_object, data);
+					}
+
+					var views = 0;
+					views = document.getElementById('gv' + idpics).innerHTML;
+					views++;
+					document.getElementById('gv' + idpics).innerHTML = views;
+					document.getElementById('gvl' + idpics).innerHTML = (views > 1) ? "{L_VIEWS}" : "{L_VIEW}";
+
+					already_view = true;
+					incr_pics_displayed = idpics;
+				}
+			}
+		}	
 		-->
 		</script> 
 
@@ -322,10 +355,8 @@
 							# IF C_GALLERY_PICS_MODO #
 							<tr>										
 								<td colspan="2" class="row2 text_small" style="border:none;padding:4px;">
-									&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
-									
-									<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 
-						
+									&nbsp;&nbsp;&nbsp;<span id="fihref{ID}"><a href="javascript:display_rename_file('{ID}', '{RENAME}', '{RENAME_CUT}');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
+									<a href="gallery{U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a> 						
 									<div style="position:absolute;z-index:100;margin-top:95px;float:left;display:none;" id="move{ID}">
 										<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({ID}, 1);" onmouseout="pics_hide_block({ID}, 0);">
 											<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
@@ -381,10 +412,8 @@
 									
 								<div style="width:180px;margin:auto;">										
 									# IF C_GALLERY_MODO #
-									<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>
-									
-									<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
-									
+									<span id="fihref{pics_list.ID}"><a href="javascript:display_rename_file('{pics_list.ID}', '{pics_list.RENAME}', '{pics_list.RENAME_CUT}');" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" class="valign_middle" /></a></span>									
+									<a href="gallery{pics_list.U_DEL}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>									
 									<div style="position:relative;margin:auto;width:170px;display:none;float:right" onmouseover="pics_hide_block({pics_list.ID}, 1);" onmouseout="pics_hide_block({pics_list.ID}, 0);" id="move{pics_list.ID}">
 										<div style="position:absolute;z-index:100;margin-top:90px;">
 											<div class="bbcode_block" style="width:170px;overflow:auto;">

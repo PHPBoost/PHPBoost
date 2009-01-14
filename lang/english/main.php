@@ -127,6 +127,7 @@ $LANG['bb_swf'] = 'Insert flash [swf=width,height]url animation[/swf]';
 $LANG['bb_small'] = 'Increase the textarea';
 $LANG['bb_large'] = 'Reduce the textarea';
 $LANG['bb_title'] = 'Title [title=x]text[/title]';
+$LANG['bb_html'] = 'Html code [html]code[/html]';
 $LANG['bb_container'] = 'Container';
 $LANG['bb_block'] = 'Block';
 $LANG['bb_fieldset'] = 'Fieldset';

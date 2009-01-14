@@ -32,7 +32,30 @@ include_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
 //Notation.
-if (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur connecté.
+if (!empty($_GET['increment_view']))
+{
+	$g_idpics = retrieve(GET, 'id', 0);
+	$g_idcat = retrieve(GET, 'cat', 0);
+	if (empty($g_idpics))
+		exit;
+	elseif (!empty($g_idcat))
+	{
+		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0) 
+			exit;
+	}
+	else //Racine.
+	{
+		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['aprob'] = 1;
+	}
+	//Niveau d'autorisation de la catégorie
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
+		exit;
+		
+	//Mise à jour du nombre de vues.
+	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
+}
+elseif (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
@@ -44,8 +67,7 @@ if (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur conne
 	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
-	
-if ($User->check_level(MODO_LEVEL)) //Modo
+elseif ($User->check_level(MODO_LEVEL)) //Modo
 {	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
