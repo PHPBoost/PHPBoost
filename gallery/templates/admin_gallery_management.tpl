@@ -33,14 +33,14 @@
 			{	
 				document.getElementById('fi_' + id).style.display = 'none';
 				document.getElementById('fi' + id).style.display = 'inline';
-				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" />';
+				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name.replace(/\"/g, "&quot;") + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;") + '\');" />';
 				document.getElementById('fiinput' + id).focus();
 			}
 		}	
 		function rename_file(id_file, previous_cut_name)
 		{
 			var name = document.getElementById("fiinput" + id_file).value;
-			var regex = /\/|\\|\||\?|<|>|\"/;
+			var regex = /\/|\\|\||\?|<|>/;
 			
 			if( regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 			{
@@ -51,7 +51,7 @@
 			else
 			{
 				document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name;
+				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
 				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1');
 				xhr_object.onreadystatechange = function() 
 				{
@@ -60,7 +60,11 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fi_' + id_file).style.display = 'inline';
 						document.getElementById('fi_' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						
+						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
+						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
+						
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
