@@ -140,7 +140,7 @@ class Authorizations
         	else
         	{
 	            $selected = '';
-	            if ( !empty($array_auth['r' . $idrank]) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
+	            if ( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
 	                $selected = ' selected="selected"';
 	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 	            
@@ -173,12 +173,15 @@ class Authorizations
 		##### Génération du formulaire pour les autorisations membre par membre. #####
 		//Recherche des membres autorisé.
 		$array_auth_members = array();
-		if (!empty($array_auth) AND is_array($array_auth)) foreach ($array_auth as $type => $auth)
-		{
-			if (substr($type, 0, 1) == 'm')
+		if (is_array($array_auth)) 
+		{	
+			foreach ($array_auth as $type => $auth)
 			{
-				if (array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0)
-					$array_auth_members[$type] = $auth;
+				if (substr($type, 0, 1) == 'm')
+				{
+					if (array_key_exists($type, $array_auth) && ((int)$array_auth[$type] & (int)$auth_bit) !== 0)
+						$array_auth_members[$type] = $auth;
+				}
 			}
 		}
 		$advanced_auth = count($array_auth_members) > 0;
