@@ -401,6 +401,7 @@ $LANG['password_how'] = 'Minimal password\'s length: 6 characters';
 $LANG['confirm_register'] = 'Thank you to have been signed up %s. An e-mail will be sent to you to confirm your signing up.';
 $LANG['register_terms'] = 'Registration Agreement Terms';
 $LANG['register_accept'] = 'I accept';
+$LANG['register_have_to_accept'] = 'You have to accept the registration terms to suscribe on the website!';
 $LANG['activ_mbr_mail'] = 'You will have to activate your account in the e-mail which will be sent to you before being able to connect!';
 $LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before being able to connect you ';
 $LANG['member_registered_to_approbate'] = 'A new member has registered itself. Its account must be approved to be used.';

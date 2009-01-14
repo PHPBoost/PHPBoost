@@ -48,6 +48,7 @@ if (empty($key))
 		
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
+			'L_HAVE_TO_ACCEPT' => !empty($_POST['register']) ? $LANG['register_have_to_accept'] : '',
 			'MSG_REGISTER' => $CONFIG_USER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],

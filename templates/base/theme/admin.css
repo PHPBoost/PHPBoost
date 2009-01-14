@@ -2,6 +2,10 @@
 		admin.css
 Contient les classes supplémentaires pour l'administration.
 --------------------------------------*/ /* Entéte de la page */
+div#header_admin_container {
+}
+
+
 div#header_admin {
 }
 
@@ -38,6 +42,7 @@ div#admin_extend_link{
 div#admin_main {
 	margin:0;
 	padding:0;
+	margin-top:10px;
 }
 
 /* Conteneurs */
@@ -52,7 +57,6 @@ div#admin_contents {
     -khtml-border-radius:12px;
     -webkit-border-radius:12px;
     border-radius:12px;
-	margin-top:-5px;
 }
 
 html>body div#admin_contents {
@@ -75,7 +79,6 @@ div#admin_quick_menu {
     -khtml-border-radius:12px;
     -webkit-border-radius:12px;
     border-radius:12px;
-	margin-top:-5px;
 }
 
 div#admin_quick_menu ul {
