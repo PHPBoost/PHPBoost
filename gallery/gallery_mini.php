@@ -29,16 +29,15 @@ if (defined('PHPBOOST') !== true) exit;
 
 function gallery_mini()
 {
-    global $Cache, $CAT_GALLERY, $CONFIG_GALLERY, $LANG;
+    global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics;
     $tpl = new Template('gallery/gallery_mini.tpl');
-    
+
     //Chargement de la langue du module.
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
-     
+
     //Affichage des miniatures disponibles
     $i = 0;
-    
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
     list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
     if (isset($_array_random_pics) && $_array_random_pics !== array())
@@ -95,13 +94,13 @@ function gallery_mini()
     		$scoll_mode = 'static_scroll';
     		break;
     		case 1:
-    		$Template->assign_vars(array(
+    		$tpl->assign_vars(array(
     			'C_VERTICAL_SCROLL' => true
     		));
     		$scoll_mode = 'dynamic_scroll_v';
     		break;
     		case 2:
-    		$Template->assign_vars(array(
+    		$tpl->assign_vars(array(
     			'C_HORIZONTAL_SCROLL' => true
     		));
     		$scoll_mode = 'dynamic_scroll_h';
@@ -146,7 +145,7 @@ function gallery_mini()
     		$i++;
     	}
     }
-    
+   
     $tpl->assign_vars(array(
     	'SID' => SID,
     	'MODULE_DATA_PATH' => $tpl->get_module_data_path('gallery'),

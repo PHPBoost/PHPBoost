@@ -122,7 +122,7 @@ else
 		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),
 		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, array(), array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
