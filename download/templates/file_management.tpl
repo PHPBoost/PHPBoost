@@ -12,8 +12,7 @@
 				alert("{L_REQUIRE_TITLE}");
 				return false;
 		    }
-			reg_exp = new RegExp(".*", "g");
-			if( !document.getElementById('url').match(reg_exp) )
+			if( document.getElementById('url').value == "" )
 			{
 				alert("{L_REQUIRE_URL}");
 				return false;
@@ -103,8 +102,20 @@
 						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text" /> {L_UNIT_SIZE}</dd>
 					</dl>
 					<dl>
-						<dt><label for="count">{L_DOWNLOAD}</label></dt>
+						<dt><label for="count">{L_NUMBER_OF_HITS}</label></dt>
 						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></dd>
+					</dl>
+					<dl>					
+						<dt>
+							<label for="download_method">{L_DOWNLOAD_METHOD}</label>
+							<p>{L_DOWNLOAD_METHOD_EXPLAIN}</p>
+						</dt>
+						<dd>
+							<select name="download_method" id="download_method">
+								<option value="force_download" {FORCE_DOWNLOAD_SELECTED}>{L_FORCE_DOWNLOAD}</option>
+								<option value="redirect" {REDIRECTION_SELECTED}>{L_REDIRECTION}</option>
+							</select>
+						</dd>
 					</dl>
 					<br />
 					<label for="contents">* {L_CONTENTS}</label>

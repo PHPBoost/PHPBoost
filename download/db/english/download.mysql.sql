@@ -36,6 +36,7 @@ CREATE TABLE `phpboost_download` (
   `note` float NOT NULL default '0',
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
+  `force_download` tinyint(1) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `idcat` (`idcat`),
   FULLTEXT KEY `title` (`title`),

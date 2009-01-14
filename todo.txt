@@ -4,7 +4,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 [-] Ajout de flowplayer et dewplayer dans les remerciements de l'installateurs
-
+[-] Ajouter les autorisations aux sitemap
 ------------------------------------ MODULES -----------------------------------
 
 [-] Téléchargement : ajouter un flag de téléchargement ou redirection

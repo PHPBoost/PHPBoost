@@ -61,6 +61,11 @@ $DOWNLOAD_LANG['explain_icon_cat'] = 'You can choose a picture in the download/ 
 $DOWNLOAD_LANG['root_description'] = 'Description of the downloads root';
 $DOWNLOAD_LANG['approved'] = 'Approved';
 $DOWNLOAD_LANG['hidden'] = 'Hidden';
+$DOWNLOAD_LANG['number_of_hits'] = 'Number of hits';
+$DOWNLOAD_LANG['download_method'] = 'Download method';
+$DOWNLOAD_LANG['download_method_explain'] = 'You should choose to make a redirection up to the file, unless the file is displayed in the web browser and you want it to be downloaded, in that case you have to choose to force download but the file must be local to the server.';
+$DOWNLOAD_LANG['force_download'] = 'Force downloas';
+$DOWNLOAD_LANG['redirection_up_to_file'] = 'Redirect up to file';
 
 //Titre
 $DOWNLOAD_LANG['title_download'] = 'Downloads';
