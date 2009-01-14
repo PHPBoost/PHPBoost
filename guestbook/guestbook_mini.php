@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function guestbook_mini()
+function guestbook_mini($position)
 {
     global $LANG, $Cache, $_guestbook_rand_msg;
     
@@ -39,6 +39,8 @@ function guestbook_mini()
     	
     	###########################Affichage##############################
     	$tpl = new Template('guestbook/guestbook_mini.tpl');
+        import('core/menu_service');
+        MenuService::assign_positions_conditions($tpl, $position);
 
 		$rand = array_rand($_guestbook_rand_msg);
     	$guestbook_rand = isset($_guestbook_rand_msg[$rand]) ? $_guestbook_rand_msg[$rand] : array();

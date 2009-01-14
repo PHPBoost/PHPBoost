@@ -54,7 +54,7 @@ class ModuleMiniMenu extends Menu
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
-        $cache_str.= 'if(function_exists(\'' . $this->filename . '\')) { $__menu.=' . $this->filename . '();} $__menu.=\'';
+        $cache_str.= 'if(function_exists(\'' . $this->filename . '\')) { $__menu.=' . $this->filename . '(' . $this->position . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
     

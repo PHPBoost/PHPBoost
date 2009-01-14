@@ -28,11 +28,13 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function connect_mini()
+function connect_mini($position)
 {
     global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;
     
     $tpl = new Template('connect/connect_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $position);
     if ($User->check_level(USER_LEVEL)) //Connecté.
     {
     	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions

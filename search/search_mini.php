@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function search_mini()
+function search_mini($position)
 {
     global $LANG;
     load_module_lang('search');
@@ -35,6 +35,8 @@ function search_mini()
     $search = retrieve(REQUEST, 'q', '');
     
     $tpl = new Template('search/search_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $position);
     $tpl->assign_vars(Array(
         'TITLE_SEARCH' => TITLE,
         'SEARCH' => $LANG['title_search'],

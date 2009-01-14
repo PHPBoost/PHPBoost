@@ -49,7 +49,7 @@ class MiniMenu extends Menu
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/menus/' . strtolower($this->title) . '.php\';';
-        $cache_str.= 'if(function_exists(\'' . $this->function_name . '\')) { $__menu.=' . $this->function_name . '();} $__menu.=\'';
+        $cache_str.= 'if(function_exists(\'' . $this->function_name . '\')) { $__menu.=' . $this->function_name . '(' . $this->position . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
     var $function_name = '';

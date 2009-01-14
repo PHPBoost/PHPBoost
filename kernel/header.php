@@ -48,7 +48,7 @@ if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 	elseif ($CONFIG['maintain_display_admin']) //Affichage du message d'alerte à l'administrateur.
 	{
 		//Durée de la maintenance.
-		$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800); 
+		$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
 		$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], '6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week']);
 		//Retourne le délai de maintenance le plus proche.
 		if ($CONFIG['maintain'] != -1)
@@ -57,12 +57,12 @@ if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 			$current_time = time();
 			$array_size = count($array_time) - 1;
 			for ($i = $array_size; $i >= 1; $i--)
-			{					
+			{
 				if (($CONFIG['maintain'] - $current_time) - $array_time[$i] < 0 &&  ($CONFIG['maintain'] - $current_time) - $array_time[$i-1] > 0)
-				{	
+				{
 					$key_delay = $i-1;
 					break;
-				}	
+				}
 			}
 
 			//Calcul du format de la date
@@ -143,13 +143,13 @@ $Template->assign_vars(array(
 
 //Inclusion des blocs
 import('menu/menu');
-if (!include_once(PATH_TO_ROOT . '/cache/menus.php'))
+if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 {
 	//En cas d'échec, on régénère le cache
 	$Cache->Generate_file('menus');
 
 	//On inclut une nouvelle fois
-	if (@!include_once(PATH_TO_ROOT . '/cache/menus.php'))
+	if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 	   $Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
 $Template->assign_vars(array(
