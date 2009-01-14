@@ -32,13 +32,13 @@
 					<table class="module_table" style="width: auto;padding:5px;"> 
 						<tr>
 							<td class="row3">
-								<a href="calendar{U_PREVIOUS}" title="">�</a>
+								<a href="calendar{U_PREVIOUS}" title="">&laquo;</a>
 							</td> 
 							<td colspan="5" class="row3">
 								{DATE} 
 							</td> 
 							<td class="row3">
-								<a href="calendar{U_NEXT}" title="">�</a>
+								<a href="calendar{U_NEXT}" title="">&raquo;</a>
 							</td> 
 						</tr>
 						<tr style="text-align:center;">

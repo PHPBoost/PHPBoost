@@ -122,9 +122,7 @@ if ($checkdate === true && empty($id) && !$add)
 	$month_day = $array_month[$month - 1];
 	
 	if ($User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
-	{
 		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" /></a><br />';
-	}
 	else
 		$add_event = '';
 	
@@ -183,7 +181,7 @@ if ($checkdate === true && empty($id) && !$add)
 	}
 	
 	//Premier jour du mois.
-	$first_day = gmdate_format('w', mktime(0, 0, 0, $month, 1, $year));
+	$first_day = @gmdate_format('w', @mktime(1, 0, 0, $month, 1, $year)); 
 	if ($first_day == 0)
 		$first_day = 7;
 		
