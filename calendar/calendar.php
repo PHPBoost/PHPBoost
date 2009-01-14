@@ -48,7 +48,7 @@ $add = retrieve(GET, 'add', false);
 $delete = retrieve(GET, 'delete', false);
 $edit = retrieve(GET, 'edit', false);
 
-if ($add || $delete || $edit)
+if ($delete)
     $Session->csrf_get_protect();
 
 $checkdate = checkdate($month, $day, $year); //Validité de la date entrée.
@@ -223,7 +223,7 @@ if ($checkdate === true && empty($id) && !$add)
 			if ($User->check_level(ADMIN_LEVEL))
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {
