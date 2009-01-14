@@ -227,7 +227,7 @@ class Template
         {   // Framework - Templates priority order
             //      /templates/$theme/menus/$menu/filename.tpl
             //      /menus/$menu/default/framework/.../$file.tpl
-            $menu = substr($folder, 0, strpos('/'));
+            $menu = substr($folder, 0, strpos($folder, '/'));
             if (empty($menu))
                 $menu = $folder;
             if (file_exists($file_path = $theme_templates_folder . '/menus/' . $menu . '/' . $file_name))
