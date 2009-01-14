@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe WikiInterface qui h√©rite de la classe ModuleInterface
+// Classe WikiInterface qui hÈrite de la classe ModuleInterface
 class WikiInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,12 +37,12 @@ class WikiInterface extends ModuleInterface
         parent::ModuleInterface('wiki');
     }
     
-	//R√©cup√©ration du cache.
+	//RÈcupÈration du cache.
 	function get_cache()
 	{
 		global $Sql;
 		
-		//Cat√©gories du wiki
+		//CatÈgories du wiki
 		$config = 'global $_WIKI_CATS;' . "\n";
 		$config .= '$_WIKI_CATS = array();' . "\n";
 		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
@@ -102,7 +102,7 @@ class WikiInterface extends ModuleInterface
     
     function get_search_args()
     /**
-     *  Renvoie la liste des arguments de la m√©thode <GetSearchRequest>
+     *  Renvoie la liste des arguments de la mÈthode <GetSearchRequest>
      */
     {
         return Array('WikiWhere');
@@ -158,7 +158,7 @@ class WikiInterface extends ModuleInterface
         load_module_lang('wiki');
         $Cache->load('wiki');
         
-        if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//Cat√©gorie
+        if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//CatÈgorie
         {
             $desc = sprintf($LANG['wiki_rss_cat'], html_entity_decode($_WIKI_CATS[$idcat]['name']));
             $where = "AND a.id_cat = '" . $idcat . "'";
@@ -168,7 +168,7 @@ class WikiInterface extends ModuleInterface
             $desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']));
             $where = "";
         }
-            //On convertit les accents en entit√©es normales, puis on remplace les caract√®res non support√©s en xml.
+            //On convertit les accents en entitÈes normales, puis on remplace les caract√®res non supportÈs en xml.
 //         $contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
 //         $contents = preg_replace('`[\n\r]{1}[\-]{2,5}[\s]+(.+)[\s]+[\-]{2,5}(<br \/>|[\n\r]){1}`U', "\n" . '$1' . "\n", "\n" . $contents . "\n");
         

@@ -30,7 +30,7 @@ import('modules/module_interface');
 
 define('FAQ_MAX_SEARCH_RESULTS', 100);
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class FaqInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -39,7 +39,7 @@ class FaqInterface extends ModuleInterface
         parent::ModuleInterface('faq');
     }
     
-	//RÃ©cupÃ©ration du cache.
+	//Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;

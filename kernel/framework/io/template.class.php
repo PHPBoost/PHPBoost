@@ -336,8 +336,8 @@ class Template
         }
         else
         {
-            // Protection des injections PHP et affichages des tags XML
-            $this->template = preg_replace_callback('`\<\?(.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
+            // Protection des tags XML
+            $this->template = preg_replace_callback('`\<\?(\s.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
             
             //Remplacement des variables simples.
             $this->template = preg_replace('`{([\w]+)}`i', '<?php if (isset($this->_var[\'$1\'])) echo $this->_var[\'$1\']; ?>', $this->template);

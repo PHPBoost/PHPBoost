@@ -3,7 +3,7 @@
  *                              gallery_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class GalleryInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -39,7 +39,7 @@ class GalleryInterface extends ModuleInterface
         parent::ModuleInterface('gallery');
     }
     
-	//RÃ©cupÃ©ration du cache.
+	//Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
@@ -47,7 +47,7 @@ class GalleryInterface extends ModuleInterface
 		
 		$gallery_config = 'global $CONFIG_GALLERY;' . "\n";
 		
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
+		//Récupération du tableau linéarisé dans la bdd.
 		$CONFIG_GALLERY = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'gallery'", __LINE__, __FILE__));
 		$CONFIG_GALLERY = is_array($CONFIG_GALLERY) ? $CONFIG_GALLERY : array();
 		if (isset($CONFIG_GALLERY['auth_root']))

@@ -631,3 +631,28 @@ function HideSyndication(element) {
     feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
     clearTimeout(feed_menu_timeout_in);
 }
+
+
+//Flowplayer
+flowPlayerRequired = false;
+function flowPlayerRequire() {
+	if (!flowPlayerRequired) {
+		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.min.js"></script>');
+		flowPlayerRequired = true;
+	}
+}
+
+function flowPlayerRun(id) {
+    flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.swf', { 
+		    clip: { 
+		        url: $(id).href,
+		        autoPlay: false 
+		    }
+	    }
+    );
+}
+
+function flowPlayerShow(id) {
+	flowPlayerRequire();
+	setTimeout('flowPlayerRun(\'' + id + '\')', 100);
+}
