@@ -30,7 +30,7 @@ require_once(PATH_TO_ROOT . '/forum/forum_defines.php');
 
 $Cache->load('forum');
 
-//VÃ©rification des autorisations sur toutes les catÃ©gories.
+//Vérification des autorisations sur toutes les catégories.
 $AUTH_READ_FORUM = array();
 if (is_array($CAT_FORUM))
 {

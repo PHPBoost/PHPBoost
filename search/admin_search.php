@@ -41,7 +41,7 @@ $weighting = retrieve(GET, 'weighting', false);
 
 $Cache->load('search');
 
-//Si c'est confirmÃ© on execute
+//Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
     if (!$weighting)
@@ -66,7 +66,7 @@ if (!empty($_POST['valid']))
         $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
         $Sql->query_inject($request, __LINE__, __FILE__);
         
-        // GÃ©nÃ©ration des nouveaux fichiers de cache
+        // Génération des nouveaux fichiers de cache
         $Cache->Generate_file('config');
         $Cache->Generate_module_file('search');
 		
@@ -83,7 +83,7 @@ if (!empty($_POST['valid']))
         $request = "UPDATE " . DB_TABLE_CONFIGS . " SET value = '".$search_cfg."' WHERE name = 'search'";
         $Sql->query_inject($request, __LINE__, __FILE__);
         
-        // GÃ©nÃ©ration des nouveaux fichiers de cache
+        // Génération des nouveaux fichiers de cache
         $Cache->Generate_module_file('search');
         
         redirect(HOST . SCRIPT . '?weighting=true');

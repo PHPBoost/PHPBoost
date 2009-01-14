@@ -3,7 +3,7 @@
  *                                forget.php
  *                            -------------------
  *   begin                : August 08 2005
- *   copyright          : (C) 2005 Viarre RÃ©gis
+ *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -50,12 +50,12 @@ if (!$User->check_level(USER_LEVEL))
 			if (!empty($user_mail) && check_mail($user_mail))
 			{	
 				$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login = '" . $login . "'", __LINE__, __FILE__);
-				if (!empty($user_id)) //SuccÃ©s mail trouvÃ©, en crÃ©e un nouveau mdp, et la clÃ©e d'activ et on l'envoi au membre
+				if (!empty($user_id)) //Succés mail trouvé, en crée un nouveau mdp, et la clée d'activ et on l'envoi au membre
 				{
-					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //GÃ©nÃ©ration du nouveau mot de pass unique!
-					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //GÃ©nÃ©ration de la clÃ©e d'activation!
+					$new_pass = substr(strhash(uniqid(rand(), true)), 0, 6); //Génération du nouveau mot de pass unique!
+					$activ_pass =  substr(strhash(uniqid(rand(), true)), 0, 30); //Génération de la clée d'activation!
 					
-					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clÃ©e d'activation dans la bdd.
+					$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '" . $activ_pass . "', new_pass = '" . strhash($new_pass) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Insertion de la clée d'activation dans la bdd.
 					
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
@@ -109,10 +109,10 @@ if (!$User->check_level(USER_LEVEL))
 		$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if (!empty($user_id))
 		{
-			//Mise Ã© jour du nouveau password
+			//Mise é jour du nouveau password
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
-			//Effacement des clÃ©es d'activations.
+			//Effacement des clées d'activations.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de l'echec
