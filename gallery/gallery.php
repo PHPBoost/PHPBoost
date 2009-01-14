@@ -663,15 +663,13 @@ else
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-			    $html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
-			    
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
 				if (!file_exists('pics/thumbnails/' . $row['path']))
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 				
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
-					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . $html_protected_name;
+					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . str_replace('"', '', $row['name']);
 				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
 					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
@@ -687,11 +685,12 @@ else
 				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $is_connected );
 				if ($activ_note) //Affichage notation.
 					$Note = new Note('gallery', $row['id'], url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php'), $CONFIG_GALLERY['note_max'], '', NOTE_NODISPLAY_NBRNOTES | NOTE_DISPLAY_BLOCK);
-				
+					
+				$html_protected_name = strprotect($row['name'], HTML_PROTECT, ADDSLASHES_FORCE);
 				$Template->assign_block_vars('pics_list', array(
 					'ID' => $row['id'],
 					'APROB' => $row['aprob'],
-					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $html_protected_name . '" class="gallery_image" />',
+					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . str_replace('"', '', $row['name']) . '" class="gallery_image" />',
 					'PATH' => $row['path'],
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_link . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
