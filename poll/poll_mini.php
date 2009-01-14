@@ -87,7 +87,6 @@ function poll_mini()
     			{
     				$tpl->assign_block_vars('question.radio', array(
     					'NAME' => $z,
-    					'TYPE' => 'radio',
     					'ANSWERS' => $answer
     				));
     				$z++;
@@ -99,7 +98,6 @@ function poll_mini()
     			{
     				$tpl->assign_block_vars('question.checkbox', array(
     					'NAME' => $z,
-    					'TYPE' => 'checkbox',
     					'ANSWERS' => $answer
     				));
     				$z++;

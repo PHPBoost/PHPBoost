@@ -32,33 +32,36 @@
 	</head>
 	<body>
 
+# IF C_MAINTAIN_DELAY #
 # IF C_ALERT_MAINTAIN #
 <div style="position:absolute;top:5px;width:99%;">
-	<div style="position:relative;width:400px;margin:auto;" class="warning">
+	<div style="position:relative;width:400px;margin:auto;margin-top:30px;" class="warning">
 		{L_MAINTAIN_DELAY}
 		<br /><br />
 		<script type="text/javascript">
-			document.write('<div id="release">{L_LOADING}{PATH_TO_ROOT}.</div>');
+			document.write('<div id="release">{L_LOADING}...</div>');
 		</script>
 		<noscript>
 			<strong>{DELAY}</strong>
 		</noscript>
 	</div>
 </div>
+# ENDIF #
+
 <script type="text/javascript">
 <!--
 function release(year, month, day, hour, minute, second)
 {
-	if( document.getElementById('release') )
+	if (document.getElementById('release'))
 	{
 		var sp_day = 86400;
 		var sp_hour = 3600;
 		var sp_minute = 60;
 		
-		now = new Date();
+		now = new Date({MAINTAIN_NOW_FORMAT});
 		end = new Date(year, month, day, hour, minute, second);
+		release_time = (end.getTime() - (now.getTime() {TIMEZONE_DELAY_NOW}))/1000;
 		
-		release_time = (end.getTime() - now.getTime())/1000;
 		if( release_time <= 0 )
 		{
 			document.location.reload();
@@ -82,10 +85,17 @@ function release(year, month, day, hour, minute, second)
 		document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {L_DAYS} <strong>' + release_hours + '</strong> {L_HOURS} <strong>' + release_minutes + '</strong> {L_MIN} <strong>' + release_seconds + '</strong> {L_SEC}';
 	}
 }
-release({L_RELEASE_FORMAT});
+if ({UNSPECIFIED})
+	release({MAINTAIN_RELEASE_FORMAT});
+else
+{
+	if (document.getElementById('release'))
+		document.getElementById('release').innerHTML = '<strong>{DELAY}</strong>';
+}
 -->
 </script>
 # ENDIF #
+
 <div id="global">
 	<div id="header_container">
 		<div id="header">
