@@ -19,6 +19,7 @@ CREATE TABLE `phpboost_gallery` (
 	PRIMARY KEY	(`id`),
 	KEY `idcat` (`idcat`)
 ) ENGINE=MyISAM;
+INSERT INTO `phpboost_gallery` VALUES (1, 1, 'PHPBoost 3!', 'phpboost3.jpg', 320, 264, 15614, 1, 1, 0, unix_timestamp(current_timestamp), '', 0, 0, 0, 0);
 
 DROP TABLE IF EXISTS `phpboost_gallery_cats`;
 CREATE TABLE `phpboost_gallery_cats` (
@@ -36,3 +37,5 @@ CREATE TABLE `phpboost_gallery_cats` (
 	PRIMARY KEY	(`id`),
 	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
+
+INSERT INTO `phpboost_gallery_cats` VALUES (1, 1, 2, 0, 'Test', 'Test gallery', 1, 0, 1, 1, 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;}');
