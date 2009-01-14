@@ -9,3 +9,5 @@ CREATE TABLE `phpboost_shoutbox` (
   PRIMARY KEY  (`id`),
   KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM;
+
+INSERT INTO `phpboost_shoutbox` VALUES (1, 'Equipe PHPBoost', -1, -1, 'l''équipe de PHPBoost vous souhaite la bienvenue!', unix_timestamp(current_timestamp));

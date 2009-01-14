@@ -293,7 +293,7 @@
 				</tr>	
 				
 				<tr>	
-					<td class="row2" style="padding:10px 2px;">
+					<td class="row2" style="padding:5px 2px;">
 						# IF C_EMPTY_FOLDER #
 							<p style="text-align:center;" id="empty_folder">					
 								{EMPTY_FOLDER}					
@@ -346,8 +346,8 @@
 								</tr>
 							</table>
 						</div>	
-						# END files #				
-						
+						# END files #	
+						<div class="spacer">&nbsp;</div>						
 					</td>
 				</tr>
 				

@@ -94,7 +94,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '&error=' . $error . '#errorh' : '';
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member . $error);
+	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
@@ -114,7 +114,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	//Suppression d'un fichier.
 	$Uploads->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&fm=' . $folder_member);
+	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
@@ -244,7 +244,7 @@ else
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
 		WHERE u.user_id <> -1
 		ORDER BY name";
-	elseif (!empty($folder_member))
+	elseif (!empty($folder_member) && empty($folder))
 	{	
 		$sql_folder = "SELECT id, name, id_parent, user_id
 		FROM " . DB_TABLE_UPLOAD_CAT . " 
