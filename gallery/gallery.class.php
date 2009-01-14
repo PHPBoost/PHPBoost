@@ -360,58 +360,56 @@ class Gallery
 		global $CAT_GALLERY, $Sql;
 		
 		$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		if (empty($idcat))
+		if (!empty($id_move) && !empty($idcat))
 		{
-			$CAT_GALLERY[$idcat]['id_left'] = 0;
-			$CAT_GALLERY[$idcat]['id_right'] = 0;
-		}
-		
-		//Parent de la catégorie parente
-		$list_parent_cats = '';
-		$result = $Sql->query_while("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$list_parent_cats .= $row['id'] . ', ';
-		}
-		$Sql->query_close($result);
-		$list_parent_cats = trim($list_parent_cats, ', ');
-		
-		if (empty($list_parent_cats))
-			$clause_parent_cats = " id = '" . $idcat . "'";
-		else
-			$clause_parent_cats = " id IN (" . $list_parent_cats . ")";
-		
-		//Parent de la catégorie cible
-		$list_parent_cats_to = '';
-		$result = $Sql->query_while("SELECT id 
-		FROM " . PREFIX . "gallery_cats 
-		WHERE id_left <= '" . $CAT_GALLERY[$id_move]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$id_move]['id_right'] . "'", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$list_parent_cats_to .= $row['id'] . ', ';
-		}
-		$Sql->query_close($result);
-		$list_parent_cats_to = trim($list_parent_cats_to, ', ');
-		
-		if (empty($list_parent_cats_to))
-			$clause_parent_cats_to = " id = '" . $id_move . "'";
-		else
-			$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
+			//Parent de la catégorie parente
+			$list_parent_cats = '';
+			$result = $Sql->query_while("SELECT id 
+			FROM " . PREFIX . "gallery_cats 
+			WHERE id_left <= '" . $CAT_GALLERY[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$list_parent_cats .= $row['id'] . ', ';
+			}
+			$Sql->query_close($result);
+			$list_parent_cats = trim($list_parent_cats, ', ');
 			
-		$aprob = $Sql->query("SELECT aprob FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
+			if (empty($list_parent_cats))
+				$clause_parent_cats = " id = '" . $idcat . "'";
+			else
+				$clause_parent_cats = " id IN (" . $list_parent_cats . ")";
+			
+			//Parent de la catégorie cible
+			$list_parent_cats_to = '';
+			$result = $Sql->query_while("SELECT id 
+			FROM " . PREFIX . "gallery_cats 
+			WHERE id_left <= '" . $CAT_GALLERY[$id_move]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$id_move]['id_right'] . "'", __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$list_parent_cats_to .= $row['id'] . ', ';
+			}
+			$Sql->query_close($result);
+			$list_parent_cats_to = trim($list_parent_cats_to, ', ');
 		
-		if ($aprob)
-		{	
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+			if (empty($list_parent_cats_to))
+				$clause_parent_cats_to = " id = '" . $id_move . "'";
+			else
+				$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
+				
+			$aprob = $Sql->query("SELECT aprob FROM " . PREFIX . "gallery WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
+			
+			if ($aprob)
+			{	
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob - 1 WHERE " . $clause_parent_cats, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_aprob = nbr_pics_aprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+			}
+			else
+			{
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+			}
 		}
-		else
-		{
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob - 1 WHERE " . $clause_parent_cats, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET nbr_pics_unaprob = nbr_pics_unaprob + 1 WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
-		}
+		
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET idcat = '" . $id_move . "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
 	}
 	
