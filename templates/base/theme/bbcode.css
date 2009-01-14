@@ -1,11 +1,14 @@
 /** BBcode **/
 /* Tableau du bbcode */
-.bbcode{
+.bbcode, .bbcode2{
 	width:485px;
 	background:url(images/bb_form.png);
 	border:1px solid #71BAF1;
 	border-collapse:collapse;
 	border-spacing:0px;
+}
+.bbcode2{
+	width:486px;
 }
 /* Curseur de la souris au passage sur les icônes */
 .bbcode_hover{

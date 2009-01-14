@@ -61,6 +61,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_STRIKE' => $LANG['bb_strike'],
 			'L_BB_TITLE' => $LANG['bb_title'],
 			'L_BB_CONTAINER' => $LANG['bb_container'],
+			'L_BB_HTML' => $LANG['bb_html'],
 			'L_BB_STYLE' => $LANG['bb_style'],
 			'L_BB_URL' => $LANG['bb_link'],
 			'L_BB_IMG' => $LANG['bb_picture'],

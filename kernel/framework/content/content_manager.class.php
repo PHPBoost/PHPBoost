@@ -147,10 +147,10 @@ class ContentManager
 	/*static*/ function get_available_tags()
 	{
 		return array('b', 'i', 'u', 's', 'title', 'style', 'url', 
-				'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
-				'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block',
-				'fieldset', 'mail', 'line', 'wikipedia'
-				);
+		'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
+		'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block',
+		'fieldset', 'mail', 'line', 'wikipedia', 'html'
+		);
 	}
 	
 	## Private ##

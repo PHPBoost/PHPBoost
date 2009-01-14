@@ -127,6 +127,7 @@ $LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]
 $LANG['bb_small'] = 'Réduire le champ texte';
 $LANG['bb_large'] = 'Agrandir le champ texte';
 $LANG['bb_title'] = 'Titre [title=x]texte[/title]';
+$LANG['bb_html'] = 'Code html [html]code[/html]';
 $LANG['bb_container'] = 'Conteneur';
 $LANG['bb_block'] = 'Bloc';
 $LANG['bb_fieldset'] = 'Bloc champs';

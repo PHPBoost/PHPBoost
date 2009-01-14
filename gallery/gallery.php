@@ -339,6 +339,7 @@ else
 		'COLUMN_WIDTH_CATS' => $column_width_cats,
 		'COLUMN_WIDTH_PICS' => $column_width_pics,
 		'CAT_ID' => $g_idcat,
+		'DISPLAY_MODE' => $CONFIG_GALLERY['display_pics'],
 		'GALLERY' => !empty($g_idcat) ? $CAT_GALLERY[$g_idcat]['name'] : $LANG['gallery'],
 		'HEIGHT_MAX' => $CONFIG_GALLERY['height'],
 		'WIDTH_MAX' => $column_width_pics,
@@ -494,7 +495,7 @@ else
 		}
 		$Sql->query_close($result);
 		
-		//Affichage d'une photo demandé.
+		//Affichage d'une photo demandée.
 		if (!empty($g_idpics))
 		{
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
@@ -649,8 +650,11 @@ else
 			
 			$Template->assign_vars(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
+				
 				'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
-				'L_EDIT' => $LANG['edit']
+				'L_EDIT' => $LANG['edit'],
+				'L_VIEW' => $LANG['view'],
+				'L_VIEWS' => $LANG['views']
 			));
 			
 			include_once('../kernel/framework/content/note.class.php');
@@ -670,11 +674,11 @@ else
 				
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
-					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" title="' . str_replace('"', '', $row['name']);
+					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox[1]" onmousedown="increment_view(' . $row['id'] . ');" title="' . str_replace('"', '', $row['name']);
 				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
-					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
+					$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
-					$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
+					$display_link = 'javascript:increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\')';
 				else //Ouverture nouvelle page.
 					$display_link = url('gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], 'gallery-' . $row['idcat'] . '-' . $row['id'] . '.php') . '#pics_max';
 				
@@ -695,7 +699,7 @@ else
 					'PATH' => $row['path'],
 					'NAME' => ($CONFIG_GALLERY['activ_title'] == 1) ? '<a class="small_link" href="' . $display_link . '"><span id="fi_' . $row['id'] . '">' . wordwrap_html($row['name'], 22, ' ') . '</span></a> <span id="fi' . $row['id'] . '"></span>' : '<span id="fi_' . $row['id'] . '"></span></a> <span id="fi' . $row['id'] . '"></span>',
 					'POSTOR' => ($CONFIG_GALLERY['activ_user'] == 1) ? '<br />' . $LANG['by'] . (!empty($row['login']) ? ' <a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>' : ' ' . $LANG['guest']) : '',
-					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br />' . $row['views'] . ' ' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) : '',
+					'VIEWS' => ($CONFIG_GALLERY['activ_view'] == 1) ? '<br /><span id="gv' . $row['id'] . '">' . $row['views'] . '</span> <span id="gvl' . $row['id'] . '">' . ($row['views'] > 1 ? $LANG['views'] : $LANG['view']) . '</span>' : '',
 					'COM' => ($CONFIG_GALLERY['activ_com'] == 1) ? '<br />' . com_display_link($row['nbr_com'], '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0'), $row['id'], 'gallery') : '',
 					'KERNEL_NOTATION' => $activ_note ? $Note->display_form() : '',
 					'CAT' => $cat_list,

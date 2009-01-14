@@ -150,7 +150,7 @@
 				<td>
 					<table class="bbcode">
 						<tr>
-							<td style="padding: 2px;">
+							<td style="padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 
 								<div style="position:relative;z-index:100;margin-left:-70px;float:left;display:none;" id="bb_block1{FIELD}">
@@ -197,7 +197,7 @@
 										</select>	
 									</div>
 								</div>
-								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SUBTITLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_CONTAINER}" /></a>
+								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_CONTAINER}" /></a>
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block4{FIELD}">
 									<div style="margin-left:160px;" class="bbcode_block" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
@@ -256,7 +256,7 @@
 								<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SIZE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/size.png" {AUTH_SIZE} alt="{L_BB_SIZE}" /></a>			
 
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
-
+								&nbsp;
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest_preview', -100, 'height');" alt="{L_BB_SMALL}" title="{L_BB_SMALL}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest_preview', 100, 'height');" alt="{L_BB_LARGE}" title="{L_BB_LARGE}" />
 
@@ -264,9 +264,9 @@
 							</td>
 						</tr>	
 					</table>
-					<table class="bbcode" id="bbcode_more{FIELD}" style="display:none;margin-top:-1px;padding-right:23px;">
+					<table class="bbcode2" id="bbcode_more{FIELD}" style="display:none;margin-top:-1px;margin-left:-1px;">
 						<tr>
-							<td style="width:100%;">
+							<td style="width:100%;padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/left.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" alt="{L_BB_LEFT}" title="{L_BB_LEFT}" />
@@ -341,11 +341,12 @@
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/math.png" class="bbcode_hover" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/anchor.png" class="bbcode_hover" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/html.png" class="bbcode_hover" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');" alt="{L_BB_HTML}" title="{L_BB_HTML}" />
 							</td>
 							<td style="width:3px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 							</td>
-							<td style="padding:2px;width:22px;">
+							<td style="padding:0px 2px;width:22px;">
 								<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/help.png" alt="{L_BB_HELP}" /></a>
 							</td>
 						</tr>	
