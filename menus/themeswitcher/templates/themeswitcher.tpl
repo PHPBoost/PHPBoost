@@ -10,7 +10,7 @@
 								<option value="{themes.IDNAME}"{themes.SELECTED}>{themes.NAME}</option>
 							# END themes #
 						</select>
-						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchtheme_valid" class="submit" type="submit">
+						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchtheme_valid" class="submit" type="submit" />
 						<script type="text/javascript">
 						<!--
 						document.getElementById('switchtheme_valid').style.display = 'none';
