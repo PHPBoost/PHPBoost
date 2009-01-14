@@ -38,7 +38,7 @@ $Template->set_filenames(array(
 ));
 
 //Gestion de la maintenance du site.
-if ($CONFIG['maintain'] > time())
+if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 {
 	if (!$User->check_level(ADMIN_LEVEL)) //Non admin.
 	{
@@ -48,24 +48,23 @@ if ($CONFIG['maintain'] > time())
 	elseif ($CONFIG['maintain_display_admin']) //Affichage du message d'alerte à l'administrateur.
 	{
 		//Durée de la maintenance.
-		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
-		$array_delay = array(0 => $LANG['unspecified'], 1 => '', 2 => '1 ' . $LANG['minute'], 3 => '5 ' . $LANG['minutes'], 4 => '15 ' . $LANG['minutes'], 5 => '30 ' . $LANG['minutes'], 6 => '1 ' . $LANG['hour'], 7 => '2 ' . $LANG['hours'], 8 => '1 ' . $LANG['day'], 9 => '2 ' . $LANG['days'], 10 => '1 ' . $LANG['week']);
-
+		$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800); 
+		$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], '6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week']);
 		//Retourne le délai de maintenance le plus proche.
 		if ($CONFIG['maintain'] != -1)
 		{
-			$key = 0;
+			$key_delay = 0;
 			$current_time = time();
-			for ($i = 10; $i >= 0; $i--)
-			{
-				$delay = ($CONFIG['maintain'] - $current_time) - $array_time[$i];
-				if ($delay >= $array_time[$i])
-				{
-					$key = $i;
+			$array_size = count($array_time) - 1;
+			for ($i = $array_size; $i >= 1; $i--)
+			{					
+				if (($CONFIG['maintain'] - $current_time) - $array_time[$i] < 0 &&  ($CONFIG['maintain'] - $current_time) - $array_time[$i-1] > 0)
+				{	
+					$key_delay = $i-1;
 					break;
-				}
+				}	
 			}
-				
+
 			//Calcul du format de la date
 			$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
 			$array_release = array(
@@ -74,16 +73,20 @@ if ($CONFIG['maintain'] > time())
 		}
 		else //Délai indéterminé.
 		{
-			$key = -1;
-			$array_release = array('', '', '', '', '', '');
+			$key_delay = 0;
+			$array_release = array('0', '0', '0', '0', '0', '0');
 		}
 
+		$timezone_delay = ($CONFIG['timezone'] - number_round(date('Z')/3600, 0) - date('I')) * 3600 * 1000; // Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été, En millisecondes
 		$Template->assign_vars(array(
 			'C_ALERT_MAINTAIN' => true,
-			'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
+			'C_MAINTAIN_DELAY' => true,
+			'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
+			'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
+			'TIMEZONE_DELAY_NOW' => $timezone_delay >= 0 ? '+ ' . $timezone_delay : $timezone_delay,
+			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 			'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
 			'L_LOADING' => $LANG['loading'],
-			'L_RELEASE_FORMAT' => implode(',', $array_release),
 			'L_DAYS' => $LANG['days'],
 			'L_HOURS' => $LANG['hours'],
 			'L_MIN' => $LANG['minutes'],

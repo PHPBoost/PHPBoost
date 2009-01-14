@@ -29,7 +29,7 @@ include_once('../kernel/begin.php');
 define('TITLE', $LANG['title_maintain']);
 include_once('../kernel/header_no_display.php');
 
-if ($CONFIG['maintain'] <= time())
+if ($CONFIG['maintain'] != -1 && $CONFIG['maintain'] <= time())
 {	
 	header('location: ' . get_start_page());
 	exit;
@@ -67,7 +67,7 @@ if ($CONFIG['maintain'] != -1)
 else //Délai indéterminé.
 {	
 	$key = -1;
-	$array_release = array('', '', '', '', '', '');
+	$array_release = array('0', '0', '0', '0', '0', '0');
 }
 
 $Template->assign_vars(array(	
