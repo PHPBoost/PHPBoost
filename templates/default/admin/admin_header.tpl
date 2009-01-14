@@ -31,7 +31,7 @@
 	</head>
 	<body>
 	<div id="global">
-		<div id="header_container">
+		<div id="header_admin_container">
 			<div id="header_admin">&nbsp;</div>
 			<div id="sub_header_admin">
 				<div class="dynamic_menu">
@@ -47,4 +47,4 @@
 		</div>
 		
 		<div id="admin_main">
-			&nbsp;
+			

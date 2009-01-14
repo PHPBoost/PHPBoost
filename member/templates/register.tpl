@@ -7,12 +7,15 @@
 					</th>
 				</tr>
 				<tr>
-					<td colspan="2" class="row3" style="text-align:center;">
+					<td colspan="2" class="row3" style="text-align:center;">						
 						<span class="text_strong">{L_REGISTRATION_TERMS}</span>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="row2">
+						# IF L_HAVE_TO_ACCEPT #
+							<div class="warning" style="margin:15px auto;width:550px;">{L_HAVE_TO_ACCEPT}</div>
+						# ENDIF #
 						{MSG_REGISTER}
 					</td>
 				</tr>

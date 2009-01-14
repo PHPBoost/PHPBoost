@@ -401,6 +401,7 @@ $LANG['password_how'] = 'Longueur minimale du password : 6 caractères';
 $LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
 $LANG['register_terms'] = 'Règlement';
 $LANG['register_accept'] = 'J\'accepte';
+$LANG['register_have_to_accept'] = 'Vous devez accepter le réglement pour pouvoir vous inscrire!';
 $LANG['activ_mbr_mail'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter!';
 $LANG['activ_mbr_admin'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
 $LANG['member_registered_to_approbate'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
