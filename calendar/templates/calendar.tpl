@@ -46,8 +46,8 @@
 							{day.L_DAY}
 							# END day #
 						</tr>
-						<tr style="text-align:center;">			
-							# START calendar #					
+						<tr style="text-align:center;">
+							# START calendar #
 							{calendar.DAY}
 							{calendar.TR}
 							# END calendar #
