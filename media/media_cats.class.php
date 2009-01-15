@@ -29,6 +29,8 @@
 require_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
 require_once('media_constant.php');
 
+define('DO_NOT_GENERATE_CACHE', false);
+
 class MediaCats extends CategoriesManagement
 {
 	## Public methods ##
@@ -208,7 +210,20 @@ class MediaCats extends CategoriesManagement
 
 		if (!empty($MEDIA_CATS))
 		{
-			$num_media = array_fill_keys(array_keys($MEDIA_CATS), 0);
+			if (!function_exists('array_fill_keys'))
+			{
+				$num_media = array();
+   				$array_keys = array_keys($MEDIA_CATS);
+   				
+   				foreach ($array_keys as $idkey)
+   				{
+   					$num_media[$idkey] = 0;
+   				}
+			}
+			else
+			{
+				$num_media = array_fill_keys(array_keys($MEDIA_CATS), 0);
+			}
 		}
 
 		if (is_null($id))

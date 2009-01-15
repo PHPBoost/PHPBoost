@@ -99,7 +99,7 @@ if (!empty($_POST['submit']))
 		$media_categories = new MediaCats();
 		$media_categories->recount_media_per_cat();
 
-		redirect(url('moderation_media.php'));
+		redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['moderation_success'], TIME_REDIRECT);
 	}
 	else
 	{
@@ -130,6 +130,7 @@ else
 	$Sql->query_close($result);
 
 	$Template->assign_vars(array(
+		'C_DISPLAY' => 1,
 		'L_MODO_PANEL' => $LANG['modo_panel'],
 		'L_NAME' => $LANG['name'],
 		'L_CATEGORY' => $LANG['category'],
