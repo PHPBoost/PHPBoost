@@ -63,17 +63,22 @@ class Url
         $url = str_replace(HOST . DIR, '', $url);
         if (!strpos($url, '://'))
         {
-            if (strpos($url, '/') !== 0)
-            {   // The url is relative and we need to put it in the right format
-                $this->relative = '/' . str_replace(PATH_TO_ROOT, '', $url, 1);
+        if (substr($url, 0, 1) == '.')
+            {   // The url is relative to the website root (bad form)
+                $max = 1;
+                $this->relative = '/' . str_replace(PATH_TO_ROOT, '', $url, $max);
             }
-            elseif (strpos($url, '/' === 0))
-            {   // Relative url from the website root
+            elseif (substr($url, 0, 1) == '/')
+            {   // Relative url from the website root (good form)
                 $this->relative = $url;
+            }
+            else
+            {   // The url is relative to the current foler
+                $this->relative = '/' . $url;
             }
         }
         
-        if (!empty($this->relative()))
+        if ($this->relative() !== '')
             $this->absolute = trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/') . $this->relative;
         else
             $this->absolute = $url;
