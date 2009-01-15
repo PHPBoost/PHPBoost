@@ -649,3 +649,31 @@ function insertMoviePlayer(url, width, height) {
 	document.write('<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="' + id  + '"></a><br />');
 	setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
 }
+//Dewplayer
+playerDewplayerRequired = false;
+function insertSoundPlayer(url) {
+	if (!playerDewplayerRequired) {
+		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/dewplayer.js"></script>');
+		playerDewplayerRequired = true;
+	}
+	/*alert("<object type=\"application/x-shockwave-flash\" data=\"" + PATH_TO_ROOT + "/kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
+			"<param name=\"allowScriptAccess\" value=\"never\" />" +
+			"<param name=\"play\" value=\"true\" />" + 
+			"<param name=\"movie\" value=\"" + PATH_TO_ROOT + "../kernel/data/dewplayer.swf?son=" + url + "\" />" +
+			"<param name=\"menu\" value=\"false\" />" + 
+			"<param name=\"quality\" value=\"high\" />" +
+			"<param name=\"scalemode\" value=\"noborder\" />" +
+			"<param name=\"wmode\" value=\"transparent\" />" +
+			"<param name=\"bgcolor\" value=\"#FFFFFF\" />" + 
+			"</object>");**/
+	document.write("<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
+		"<param name=\"allowScriptAccess\" value=\"never\" />" +
+		"<param name=\"play\" value=\"true\" />" + 
+		"<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=" + url + "\" />" +
+		"<param name=\"menu\" value=\"false\" />" + 
+		"<param name=\"quality\" value=\"high\" />" +
+		"<param name=\"scalemode\" value=\"noborder\" />" +
+		"<param name=\"wmode\" value=\"transparent\" />" +
+		"<param name=\"bgcolor\" value=\"#FFFFFF\" />" + 
+		"</object>");
+}
