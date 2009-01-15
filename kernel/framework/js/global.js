@@ -24,13 +24,17 @@
  *
 ###################################################*/
 
-
 //Javascript frame breaker necessary to the CSRF attack protection
 if (top != self)
 {
 	top.location = self.location
 }
 
+__uid = 42;
+
+function getUid() {
+	return __uid++;
+}
 
 var menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
@@ -634,25 +638,14 @@ function HideSyndication(element) {
 
 
 //Flowplayer
-flowPlayerRequired = false;
-function flowPlayerRequire() {
-	if (!flowPlayerRequired) {
+playerflowPlayerRequired = false;
+function insertMoviePlayer(url, width, height) {
+	if (!playerflowPlayerRequired) {
+		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js"></script>');
 		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.min.js"></script>');
-		flowPlayerRequired = true;
+		playerflowPlayerRequired = true;
 	}
-}
-
-function flowPlayerRun(id) {
-    flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.swf', { 
-		    clip: { 
-		        url: $(id).href,
-		        autoPlay: false 
-		    }
-	    }
-    );
-}
-
-function flowPlayerShow(id) {
-	flowPlayerRequire();
-	setTimeout('flowPlayerRun(\'' + id + '\')', 100);
+	id = 'flowplayer' + getUid();
+	document.write('<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="' + id  + '"></a><br />');
+	setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
 }
