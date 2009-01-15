@@ -184,7 +184,7 @@ class BBCodeParser extends ContentParser
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isU',
 			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/swf\]`iU',
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\](((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/movie\]`iU',
-			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_%-]+\.mp3)\[/sound\]`iU',
+			'sound' => '`\[sound\]((?:(?:\.?\./)+|(?:https?|ftps?)+://([a-z0-9-]+\.)*[a-z0-9-]+(\.[a-z]{2,4})+)?(?:[a-z0-9~_-]+/)*[a-z0-9_%-]+\.mp3)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
 			'url' => '`\[url\]((?:(?:\.?\./)+|(?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,()-]*)\[/url\]`isU',
 			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,()-]*)\[/url\]`isU',
@@ -224,27 +224,8 @@ class BBCodeParser extends ContentParser
 		<param name=\"wmode\" value=\"transparent\" />
 		<param name=\"bgcolor\" value=\"#000000\" />
 		</object>",
-			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/movieplayer.swf\" width=\"$1\" height=\"$2\">
-		<param name=\"FlashVars\" value=\"flv=$3&width=$1&height=$2\" />
-		<param name=\"allowScriptAccess\" value=\"never\" />
-		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"$1\" />
-		<param name=\"menu\" value=\"false\" />
-		<param name=\"quality\" value=\"high\" />
-		<param name=\"scalemode\" value=\"noborder\" />
-		<param name=\"wmode\" value=\"transparent\" />
-		<param name=\"bgcolor\" value=\"#FFFFFF\" />
-		</object>",
-			'sound' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/dewplayer.swf?son=$1\" width=\"200\" height=\"20\">
-		<param name=\"allowScriptAccess\" value=\"never\" />
-		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=$1\" />
-		<param name=\"menu\" value=\"false\" />
-		<param name=\"quality\" value=\"high\" />
-		<param name=\"scalemode\" value=\"noborder\" />
-		<param name=\"wmode\" value=\"transparent\" />
-		<param name=\"bgcolor\" value=\"#FFFFFF\" />
-		</object>",
+			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
+			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
 			'math' => '[[MATH]]$1[[/MATH]]',
 			'url' => "<a href=\"$1\">$1</a>",
 			'url2' => "<a href=\"http://$1\">$1</a>",
