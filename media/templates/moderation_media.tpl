@@ -1,3 +1,4 @@
+		# IF C_DISPLAY #
 		<form action="moderation_media.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
@@ -84,4 +85,5 @@
 			<br />
 			<a href="admin_media_cats.php?recount=1">{L_RECOUNT_MEDIA}</a>
 		</div>
+		# ENDIF #
 		# ENDIF #

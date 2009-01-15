@@ -107,6 +107,7 @@ $MEDIA_LANG = array(
 'file_visible' => 'Fichier approuvé et visible',
 'hide_media_short' => 'Cacher',
 'legend' => 'Légende',
+'moderation_success' => 'Les actions ont été réalisées avec succès !',
 'no_media_moderate' => 'Aucun fichier multimédia à modérer !',
 'show_media_short' => 'Montrer',
 'unaprob_media' => 'Fichier désapprouvé',

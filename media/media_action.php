@@ -350,7 +350,7 @@ elseif (!empty($_POST['submit']))
 					exit;
 				}
 			}
-			elseif (($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
+			elseif (!function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
 			{
 				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $array_type))
 				{

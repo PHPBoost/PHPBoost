@@ -143,7 +143,7 @@ elseif (!empty($_POST['submit']))
 elseif (!empty($_GET['recount']))
 {
 	$media_categories->recount_media_per_cat();
-	redirect(url('moderation_media.php'));
+	redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['recount_success'], TIME_REDIRECT);
 }
 elseif ($new_cat XOR $id_edit > 0)
 {
