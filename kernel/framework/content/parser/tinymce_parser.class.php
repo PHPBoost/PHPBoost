@@ -498,27 +498,8 @@ class TinyMCEParser extends ContentParser
 			'float' => "<p class=\"float_$1\">$2</p>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
-			'movie' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/movieplayer.swf\" width=\"$1\" height=\"$2\">
-		<param name=\"FlashVars\" value=\"flv=$3&width=$1&height=$2\" />
-		<param name=\"allowScriptAccess\" value=\"never\" />
-		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"$1\" />
-		<param name=\"menu\" value=\"false\" />
-		<param name=\"quality\" value=\"high\" />
-		<param name=\"scalemode\" value=\"noborder\" />
-		<param name=\"wmode\" value=\"transparent\" />
-		<param name=\"bgcolor\" value=\"#FFFFFF\" />
-		</object>",
-			'sound' => "<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/dewplayer.swf?son=$1\" width=\"200\" height=\"20\">
-		<param name=\"allowScriptAccess\" value=\"never\" />
-		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=$1\" />
-		<param name=\"menu\" value=\"false\" />
-		<param name=\"quality\" value=\"high\" />
-		<param name=\"scalemode\" value=\"noborder\" />
-		<param name=\"wmode\" value=\"transparent\" />
-		<param name=\"bgcolor\" value=\"#FFFFFF\" />
-		</object>",
+			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
+			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
 			'math' => '[[MATH]]$1[[/MATH]]',
 			'url' => "$1<a href=\"$2\">$2</a>$3",
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",

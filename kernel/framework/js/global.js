@@ -636,8 +636,23 @@ function HideSyndication(element) {
     clearTimeout(feed_menu_timeout_in);
 }
 
+//Pour savoir si une fonction existe
+function functionExists(function_name) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: Steve Clay
+    // +   improved by: Legaev Andrey
+    // *     example 1: function_exists('isFinite');
+    // *     returns 1: true 
+    if (typeof function_name == 'string'){
+        return (typeof window[function_name] == 'function');
+    } else{
+        return (function_name instanceof Function);
+    }
+}
 
-//Flowplayer
+
+//Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
 function insertMoviePlayer(url, width, height) {
 	if (!playerflowPlayerRequired) {
@@ -649,7 +664,8 @@ function insertMoviePlayer(url, width, height) {
 	document.write('<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="' + id  + '"></a><br />');
 	setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
 }
-//Dewplayer
+
+//Affiche le lecteur audio avec l'URL du fichier audio
 playerDewplayerRequired = false;
 function insertSoundPlayer(url) {
 	if (!playerDewplayerRequired) {
