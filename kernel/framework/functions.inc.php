@@ -113,6 +113,8 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return (array)$var;
 	    case TDOUBLE:
 			return (double)$var;
+		case TNONE: // ajout par alain91
+			return $var;
 	}
 	
 	return;
