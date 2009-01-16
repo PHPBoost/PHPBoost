@@ -525,6 +525,23 @@ class Sql
         return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
 	}
 	
+	/**
+	* @method escape
+	* @desc echappement des caracteres à problème pour MySQL
+	* @param string parametre
+	* @return string parametre modifié
+	*/
+	function escape($value)
+	{
+		if (function_exists('mysql_real_escape_string') AND !empty($this->link) AND is_resource($this->link)) {
+			return mysql_real_escape_string($value, $this->link);
+		} elseif (is_string($value)) {
+			return str_replace("'", "\\'" , str_replace('\\', '\\\\', str_replace("\0", "\\\0", $value)));
+		} else {
+			return $value;
+		}
+	}
+	
 	## Private Methods ##
 	/**
 	* @method _error
