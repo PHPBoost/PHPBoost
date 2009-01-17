@@ -138,177 +138,18 @@ if (!empty($idart) && isset($_GET['cat']) )
 }
 else
 {
-	$Template->set_filenames(array(
-		'articles_cat'=> 'articles/articles_cat.tpl'
-	));	
-
-	if ($idartcat > 0)
-	{
-		if (!isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
-			$Errorh->handler('e_auth', E_USER_REDIRECT); 
-
-		$cat_links = '';
-		foreach ($CAT_ARTICLES as $id => $array_info_cat)
-		{
-			if ($CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'])
-				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
-		}
-		$clause_cat = " WHERE ac.id_left > '" . $CAT_ARTICLES[$idartcat]['id_left'] . "' AND ac.id_right < '" . $CAT_ARTICLES[$idartcat]['id_right'] . "' AND ac.level = '" . ($CAT_ARTICLES[$idartcat]['level'] + 1) . "' AND ac.aprob = 1";
+	import('modules/modules_discovery_service');
+	$modulesLoader = new ModulesDiscoveryService();
+	$module_name = 'articles';
+	$module = $modulesLoader->get_module($module_name);
+	if ($module->has_functionnality('get_home_page')) {
+		$tpl = $module->functionnality('get_home_page');
+		$tpl->parse();
+	} elseif (!$no_alert_on_error) {
+		global $Errorh;
+		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
+		exit;
 	}
-	else //Racine.
-	{
-		$cat_links = '';
-		$clause_cat = " WHERE ac.level = '0' AND ac.aprob = 1";
-	}
-
-	//Niveau d'autorisation de la catégorie
-	if (!$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES)) 
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
-	
-	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);	
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles_cats ac " . $clause_cat, __LINE__, __FILE__);	
-		
-	$rewrite_title = url_encode_rewrite($CAT_ARTICLES[$idartcat]['name']);
-	
-	//Colonnes des catégories.
-	$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
-	$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
-	$column_width_cats = floor(100/$nbr_column_cats);
-	
-	$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;	
-	$Template->assign_vars(array(
-		'COLUMN_WIDTH_CAT' => $column_width_cats,
-		'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="admin_articles_add.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
-		'L_ARTICLES' => $LANG['articles'],
-		'L_DATE' => $LANG['date'],
-		'L_VIEW' => $LANG['views'],
-		'L_NOTE' => $LANG['note'],
-		'L_COM' => $LANG['com'],
-		'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($LANG['nbr_articles_info'], $nbr_articles) : '', 
-		'L_NO_ARTICLES' => ($nbr_articles == 0) ? $LANG['none_article'] : '',
-		'L_ARTICLES_INDEX' => $LANG['title_articles'],
-		'L_CATEGORIES' => ($CAT_ARTICLES[$idartcat]['level'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],	
-		'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
-		'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
-		'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
-		'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=desc'),
-		'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=date&amp;mode=asc'),
-		'U_ARTICLES_VIEW_TOP' => url('.php?sort=view&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=desc'),
-		'U_ARTICLES_VIEW_BOTTOM' => url('.php?sort=view&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=view&amp;mode=asc'),
-		'U_ARTICLES_NOTE_TOP' => url('.php?sort=note&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=desc'),
-		'U_ARTICLES_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=asc'),
-		'U_ARTICLES_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=desc'),
-		'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc')
-	));		
-	
-	$get_sort = retrieve(GET, 'sort', '');	
-	switch ($get_sort)
-	{
-		case 'alpha' : 
-		$sort = 'title';
-		break;		
-		case 'date' : 
-		$sort = 'timestamp';
-		break;		
-		case 'view' : 
-		$sort = 'views';
-		break;		
-		case 'note' :
-		$sort = 'note/' . $CONFIG_ARTICLES['note_max'];
-		break;	
-		case 'com' :
-		$sort = 'nbr_com';
-		break;			
-		default :
-		$sort = 'timestamp';
-	}
-
-	$get_mode = retrieve(GET, 'mode', '');	
-	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';	
-	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
-
-	//On crée une pagination si le nombre de fichiers est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
-	$Pagination = new Pagination();
-
-	//Catégories non autorisées.
-	$unauth_cats_sql = array();
-	foreach ($CAT_ARTICLES as $id => $key)
-	{
-		if (!$User->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES))
-			$unauth_cats_sql[] = $id;
-	}
-	$nbr_unauth_cats = count($unauth_cats_sql);
-	$clause_unauth_cats = ($nbr_unauth_cats > 0) ? " AND ac.id NOT IN (" . implode(', ', $unauth_cats_sql) . ")" : '';
-
-	##### Catégories disponibles #####	
-	if ($total_cat > 0)
-	{
-		$Template->assign_vars(array(			
-			'C_ARTICLES_CAT' => true,
-			'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
-			'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
-		));	
-			
-		$i = 0;	
-		$result = $Sql->query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, ac.nbr_articles_visible AS nbr_articles
-		FROM " . PREFIX . "articles_cats ac
-		" . $clause_cat . $clause_unauth_cats . "
-		ORDER BY ac.id_left
-		" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$Template->assign_block_vars('cat_list', array(
-				'IDCAT' => $row['id'],
-				'CAT' => $row['name'],
-				'DESC' => $row['contents'],
-				'ICON_CAT' => !empty($row['icon']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a><br />' : '',
-				'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
-				'L_NBR_ARTICLES' => sprintf($LANG['nbr_articles_info'], $row['nbr_articles']),
-				'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
-			));
-		}
-		$Sql->query_close($result);	
-	}
-	
-	##### Affichage des articles #####	
-	if ($nbr_articles > 0)
-	{
-		$Template->assign_vars(array(		
-			'C_ARTICLES_LINK' => true,
-			'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
-			'CAT' => $CAT_ARTICLES[$idartcat]['name'],
-			'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
-		));
-
-		include_once('../kernel/framework/content/note.class.php');
-		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
-		$result = $Sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
-		FROM " . PREFIX . "articles
-		WHERE visible = 1 AND idcat = '" . $idartcat .	"' 
-		ORDER BY " . $sort . " " . $mode . 
-		$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On reccourci le lien si il est trop long.
-			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
-
-			$Template->assign_block_vars('articles', array(			
-				'NAME' => $fichier,
-				'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
-				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'COMPT' => $row['views'],
-				'NOTE' => ($row['nbrnote'] > 0) ? $Note->display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
-				'COM' => $row['nbr_com'],
-				'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php')
-			));
-
-		}
-		$Sql->query_close($result);
-	}
-	 
-	$Template->pparse('articles_cat');
 }
 			
 require_once('../kernel/footer.php'); 
