@@ -58,7 +58,8 @@ if (isset($_GET['cat']))
 else
 {
 	$Bread_crumb->add($LANG['title_articles'], '');
-	define('TITLE', $LANG['title_articles']);
+	if (!defined('TITLE'))
+		define('TITLE', $LANG['title_articles']);
 }
 
 ?>

@@ -4,7 +4,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+				<a href="../articles/articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
@@ -13,7 +13,7 @@
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">
 					{cat_list.ICON_CAT}
-					<a href="articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+					<a href="../articles/articles{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
 					<br />
 					<span class="text_small">{cat_list.DESC}</span> 
 					<br />
@@ -30,35 +30,35 @@
 				<table class="module_table">
 					<tr>
 						<th style="text-align:center;">
-							<a href="articles{U_ARTICLES_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_ARTICLES}
-							<a href="articles{U_ARTICLES_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="articles{U_ARTICLES_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_DATE}					
-							<a href="articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="articles{U_ARTICLES_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_VIEW}					
-							<a href="articles{U_ARTICLES_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="articles{U_ARTICLES_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_NOTE}					
-							<a href="articles{U_ARTICLES_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 						<th style="text-align:center;">
-							<a href="articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 							{L_COM}
-							<a href="articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+							<a href="../articles/articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
 					</tr>
 					# START articles #
 					<tr>	
 						<td class="row2" style="padding-left:25px">
-							{articles.ICON} &nbsp;&nbsp;<a href="articles{articles.U_ARTICLES_LINK}">{articles.NAME}</a>
+							{articles.ICON} &nbsp;&nbsp;<a href="../articles/articles{articles.U_ARTICLES_LINK}">{articles.NAME}</a>
 						</td>
 						<td class="row2" style="text-align: center;">
 							{articles.DATE}
@@ -91,7 +91,7 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom text_strong">
-				<a href="articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+				<a href="../articles/articles.php?{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
 			</div>
 		</div>
 		
