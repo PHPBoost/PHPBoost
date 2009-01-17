@@ -29,39 +29,29 @@ if (defined('PHPBOOST') !== true) exit;
 
 function media_mini()
 {
-	global $LANG, $Cache, $Sql, $User, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_LANG;
+	global $LANG, $Cache, $Sql, $User, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_MINI, $MEDIA_LANG;
 
 	//Chargement de la langue du module.
 	require_once('media_constant.php');
-	require_once('media_cats.class.php');
     load_module_lang('media');
-    $Cache->load('media');
+	$Cache->load('media');
 
     $tpl = new Template('media/media_mini.tpl');
-	// Building Categories to look in
-	$cats = new MediaCats();
-	$children_cats = array();
-	$cats->build_children_id_list(0, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
 
-    $i = 0;
-    $result = $Sql->query_while("SELECT id, idcat, name	FROM ".PREFIX."media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " ) ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
-
-    while ($row = $Sql->fetch_assoc($result))
-    {
-    	$tpl->assign_block_vars('last_media', array(
-			'U_MEDIA' => url('../media/media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . url_encode_rewrite($row['name']) . '.php'),
-			'U_CAT' => url('../media/media.php?cat=' . $row['idcat'], 'media-0-' . $row['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$row['idcat']]['name']) . '.php'),
-			'MEDIA' => $row['name'],
-			'CAT' => $MEDIA_CATS[$row['idcat']]['name']
-		));
-
-		$i++;
+	if (!empty($MEDIA_MINI))
+	{
+		foreach ($MEDIA_MINI as $last_files)	
+		{
+			$tpl->assign_block_vars('last_media', array(
+				'U_MEDIA' => url('../media/media.php?id=' . $last_files['id'], 'media-' . $last_files['id'] . '-' . $last_files['idcat'] . '+' . url_encode_rewrite($last_files['name']) . '.php'),
+				'U_CAT' => url('../media/media.php?cat=' . $last_files['idcat'], 'media-0-' . $last_files['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$last_files['idcat']]['name']) . '.php'),
+				'MEDIA' => $last_files['name'],
+				'CAT' => $MEDIA_CATS[$last_files['idcat']]['name']
+			));
+		}
 	}
-
-    $Sql->query_close($result);
-
-    if ($i == 0)
-    {
+	else
+	{
     	$tpl->assign_vars(array('L_NONE_MEDIA' => $MEDIA_LANG['none_mini_media']));
     }
 
