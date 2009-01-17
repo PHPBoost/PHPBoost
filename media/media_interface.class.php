@@ -44,18 +44,27 @@ class MediaInterface extends ModuleInterface
 	function get_cache()
 	{
 		global $Sql;
+		
+		require_once('media_constant.php');
 
 		//Configuration
-		$config = array();
-		$config = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'media'", __LINE__, __FILE__));
+		$i = 0;
+		$config = $auth_cats = array();
+		$config = unserialize($Sql->query("SELECT value FROM " . PREFIX . "configs WHERE name = 'media'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		unset($config['root']);
-		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = array();' . "\n\n";
+		
+		if (($root_config['auth'] & 1) !== 0)
+		{
+			$auth_cats[] = 0;
+		}
+
+		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_MINI;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = $MEDIA_MINI = array();' . "\n\n";
 		$string .= '$MEDIA_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
 		$string .= '$MEDIA_CATS[0] = ' . var_export($root_config, true) . ';' . "\n\n";
-		$result = $Sql->query_while("SELECT * FROM ".PREFIX."media_cat ORDER BY id_parent, c_order ASC", __LINE__, __FILE__);
+		$result = $Sql->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC", __LINE__, __FILE__);
 
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -69,9 +78,26 @@ class MediaInterface extends ModuleInterface
 				'num_media' => (int)$row['num_media'],
 				'mime_type' => (int)$row['mime_type'],
 				'active' => (int)$row['active'],
-				'auth' => (array)sunserialize($row['auth'])
+				'auth' => (array)($auth = sunserialize($row['auth']))
 			), true) . ';' . "\n\n";
+			
+			if (($auth['r-1'] & 1) !== 0)
+			{
+				$auth_cats[] = $row['id'];
+			}
 		}
+
+		$Sql->query_close($result);
+
+		$result1 = $Sql->query_while("SELECT id, idcat, name FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($auth_cats, ',') . ") ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
+		
+		while ($mini = $Sql->fetch_assoc($result1))
+		{	
+			$string .= '$MEDIA_MINI[' . $i . '] = ' . var_export($mini, true) . ';' . "\n\n";
+			$i++;
+		}
+		
+		$Sql->query_close($result);
 
 		return $string;
 	}
@@ -113,7 +139,7 @@ class MediaInterface extends ModuleInterface
         $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
         
         $req = "SELECT id, idcat, name, contents, timestamp
-        FROM ".PREFIX."media
+        FROM " . PREFIX . "media
         WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " )
         ORDER BY timestamp DESC" . $Sql->limit(0, $MEDIA_CONFIG['pagin']);
         $result = $Sql->query_while ($req, __LINE__, __FILE__);
