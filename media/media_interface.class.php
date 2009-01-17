@@ -54,7 +54,7 @@ class MediaInterface extends ModuleInterface
 		$root_config = $config['root'];
 		unset($config['root']);
 		
-		if (($root_config['auth'] & 1) !== 0)
+		if (!empty($root_config['auth']['r-1']) && ($root_config['auth']['r-1'] & 1))
 		{
 			$auth_cats[] = 0;
 		}
@@ -81,7 +81,7 @@ class MediaInterface extends ModuleInterface
 				'auth' => (array)($auth = sunserialize($row['auth']))
 			), true) . ';' . "\n\n";
 			
-			if (($auth['r-1'] & 1) !== 0)
+			if (!empty($auth['r-1']) && ($auth['r-1'] & 1) !== 0)
 			{
 				$auth_cats[] = $row['id'];
 			}
@@ -89,9 +89,9 @@ class MediaInterface extends ModuleInterface
 
 		$Sql->query_close($result);
 
-		$result1 = $Sql->query_while("SELECT id, idcat, name FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($auth_cats, ',') . ") ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
+		$result = $Sql->query_while("SELECT id, idcat, name FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($auth_cats, ',') . ") ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
 		
-		while ($mini = $Sql->fetch_assoc($result1))
+		while ($mini = $Sql->fetch_assoc($result))
 		{	
 			$string .= '$MEDIA_MINI[' . $i . '] = ' . var_export($mini, true) . ';' . "\n\n";
 			$i++;
