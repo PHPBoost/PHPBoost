@@ -107,7 +107,7 @@ class Url
      */
     /* static */function compress($url)
     {
-        $url = preg_replace('`([^:])?/+`', '$1/', preg_replace('`/[^/]+/\.\.`', '$1', $url));
+        $url = preg_replace('`([^:])?/+`', '$1/', preg_replace('`/?[^/]+/\.\.`', '', $url));
         if (strpos($url, '/' . PATH_TO_ROOT) === 0)
         {
             return str_replace('/' . PATH_TO_ROOT, '', $url);

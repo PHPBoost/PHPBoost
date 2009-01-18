@@ -40,20 +40,33 @@ import('core/menu_service');
 
 function menu_admin_link(&$menu, $mode)
 {
-    if ($mode == 'edit')
+    $link = '';
+    switch ($mode)
     {
-        if (of_class($menu, LINKS_MENU__CLASS))
-            return 'links.php?';
-        if (of_class($menu, CONTENT_MENU__CLASS))
-            return 'content.php?';
-        return 'auth.php?';
+        case 'edit':
+            if (of_class($menu, LINKS_MENU__CLASS))
+                $link = 'links.php?';
+            elseif (of_class($menu, CONTENT_MENU__CLASS))
+                $link = 'content.php?';
+            else
+                $link = 'auth.php?';
+            break;
+        case 'delete':
+            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS))
+                $link = 'menus.php?action=delete&amp;';
+            break;
+        case 'up':
+            $link = 'menus.php?action=up&amp;';
+            break;
+        case 'down':
+            $link = 'menus.php?action=down&amp;';
+            break;
+        case 'move':
+            $link = 'menus.php?';
+            break;
     }
-    if ($mode == 'delete' && (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS)))
-    {
-        global $Session;
-        return 'menus.php?action=delete&token=' . $Session->get_token() . '&';
-    }
-    return '';
+    global $Session;
+    return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
 }
 
 if (!empty($id))
@@ -195,12 +208,15 @@ foreach ($menus_blocks as $block_id => $menus)
             'CONTENTS' => $menu->admin_display(),
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
-            'EDIT' => $edit_link . 'id=' . $id,
-            'DEL' => $del_link . 'id=' . $id,
             'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
             'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
             'C_MINI' => in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT)),
             'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
+            'U_EDIT' => menu_admin_link($menu, 'edit'),
+            'U_DELETE' => menu_admin_link($menu, 'delete'),
+            'U_UP' => menu_admin_link($menu, 'up'),
+            'U_DOWN' => menu_admin_link($menu, 'down'),
+            'U_MOVE' => menu_admin_link($menu, 'move'),
         ));
         
         $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(TEMPLATE_STRING_MODE)));
@@ -239,148 +255,4 @@ $tpl->assign_vars(array(
 $tpl->parse();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
-    
-//	//Récupération du class le plus grand pour chaque positionnement possible.
-//	$array_max = array();
-//	$result = $Sql->query_while ("SELECT MAX(class) AS max, location
-//	FROM " . PREFIX . "menus
-//	GROUP BY location
-//	ORDER BY class", __LINE__, __FILE__);
-//
-//	while ($row = $Sql->fetch_assoc($result))
-//		$array_max[$row['location']] = $row['max'];
-//
-//	$Sql->query_close($result);
-//
-//	$i = 0;
-//	$uncheck_modules = $MODULES; //On récupère tous les modules installés.
-//	$installed_menus_perso = array(); //Menu perso dans le dossier /menus
-//	$installed_menus = array();
-//	$uninstalled_menus = array();
-//	$array_auth_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-//	$result = $Sql->query_while("SELECT id, class, name, contents, location, activ, auth, added
-//	FROM " . PREFIX . "menus
-//	ORDER BY class", __LINE__, __FILE__);
-//	while ($row = $Sql->fetch_assoc($result))
-//	{
-//		if ($row['added'] == 2) //Menu perso dans le dossier /menus
-//			$installed_menus_perso[] = $row['name'];
-//
-//		if ($row['added'] == 0) //On récupère la liste des modules installés et non installés parmis la liste des menus qui y sont ratachés.
-//		{
-//			$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
-//			if (is_array($config) && !empty($config))
-//			{
-//				unset($uncheck_modules[$row['name']]); //Module vérifié!
-//				$array_menus = parse_ini_array($config['mini_module']);
-//				foreach ($array_menus as $module_path => $location)
-//				{
-//					if (strpos($row['contents'], $module_path) !== false) //Module trouvé.
-//					{
-//						$installed_menus[$row['name']][$module_path] = $location;
-//						if (isset($uninstalled_menus[$row['name']][$module_path]))
-//							unset($uninstalled_menus[$row['name']][$module_path]);
-//					}
-//					else
-//					{
-//						$uninstalled_menus[$row['name']][$module_path] = $location;
-//						if (isset($installed_menus[$row['name']][$module_path]))
-//							unset($installed_menus[$row['name']][$module_path]);
-//					}
-//				}
-//
-//				$row['name'] = !empty($config['name']) ? $config['name'] : $row['name'];
-//			}
-//		}
-//
-//		$block_position = $row['location'];
-//		if (($row['location'] == 'left' || $row['location'] == 'right') && (!$THEME_CONFIG[get_utheme()]['right_column'] && !$THEME_CONFIG[get_utheme()]['left_column']))
-//			$block_position = 'main';
-//		elseif (($row['location'] == 'left' || (!$THEME_CONFIG[get_utheme()]['right_column'] && $row['location'] == 'right')) && $THEME_CONFIG[get_utheme()]['left_column'])
-//			$block_position = 'left'; //Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-//		elseif (($row['location'] == 'right' || (!$THEME_CONFIG[get_utheme()]['left_column'] && $row['location'] == 'left')) && $THEME_CONFIG[get_utheme()]['right_column'])
-//			$block_position = 'right';
-//
-//		if ($row['activ'] == 1 && !empty($block_position))
-//		{
-//			//Affichage réduit des différents modules.
-//			$tpl->assign_block_vars('mod_' . $block_position, array(
-//				'IDMENU' => $row['id'],
-//				'NAME' => ucfirst($row['name']),
-//				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
-//				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
-//				'ACTIV_ENABLED' => ($row['activ'] == '1') ? 'selected="selected"' : '',
-//				'ACTIV_DISABLED' => ($row['activ'] == '0') ? 'selected="selected"' : '',
-//				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
-//				'UP' => ($row['class'] > 1) ? '<a href="admin_menus.php?top=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
-//				'DOWN' => ($array_max[$row['location']] != $row['class']) ? '<a href="admin_menus.php?bot=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" /></a>' : '<div style="float:left;width:32px;">&nbsp;</div>',
-//				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;unactiv=' + this.options[this.selectedIndex].value"
-//			));
-//		}
-//		else //Affichage des menus désactivés
-//		{
-//			$tpl->assign_block_vars('mod_main', array(
-//				'IDMENU' => $row['id'],
-//				'NAME' => ucfirst($row['name']),
-//				'EDIT' => '<a href="admin_menus_add.php?edit=1&amp;id=' . $row['id'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a>',
-//				'DEL' => ($row['added'] == 1 || $row['added'] == 2) ? '<a href="admin_menus_add.php?del=1&amp;pos=' . $row['location'] . '&amp;id=' . $row['id'] . '" onclick="javascript:return Confirm_menu();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" /></a>' : '',
-//				'CONTENTS' => ($row['added'] == 1) ? '<br />' . second_parse($row['contents']) : '',
-//				'U_ONCHANGE_ACTIV' => "'admin_menus.php?id=" . $row['id'] . "&amp;pos=" . $row['location'] . "&amp;activ=' + this.options[this.selectedIndex].value"
-//			));
-//		}
-//		$i++;
-//	}
-//	$Sql->query_close($result);
-//
-//	//On vérifie pour les modules qui n'ont pas de menu associé, qu'ils n'en ont toujours pas.
-//	foreach ($uncheck_modules as $name => $auth)
-//	{
-//		$modules_config[$name] = load_ini_file('../' . $name . '/lang/', get_ulang());
-//		if (!empty($modules_config[$name]['mini_module']))
-//		{
-//			$array_menus = parse_ini_array($modules_config[$name]['mini_module']);
-//			foreach ($array_menus as $module_path => $location)
-//				$uninstalled_menus[$name][$module_path] = $location; //On ajoute le menu.
-//		}
-//	}
-//	//On liste les menus non installés.
-//	foreach ($uninstalled_menus as $name => $array_menu)
-//	{
-//		$i = 1;
-//		foreach ($array_menu as $path => $location)
-//		{
-//			if (file_exists('../' . $name . '/' . $path)) //Fichier présent.
-//			{
-//				$idmodule = $name . '+' . $i++;
-//				$tpl->assign_block_vars('mod_main_uninstalled', array(
-//					'NAME' => ucfirst($modules_config[$name]['name']),
-//					'U_INSTALL' => "admin_menus_add.php?idmodule=" . $idmodule . "&amp;install=1"
-//				));
-//			}
-//		}
-//	}
-
-	//On recupère les menus dans le dossier /menus
-//	$rep = '../menus/';
-//	if (is_dir($rep)) //Si le dossier existe
-//	{
-//		$file_array = array();
-//		$dh = @opendir($rep);
-//		while (!is_bool($file = readdir($dh)))
-//		{
-//			//Si c'est un repertoire, on affiche.
-//			if (preg_match('`[a-z0-9()_-]\.php`i', $file) && $file != 'index.php' && !in_array(str_replace('.php', '', $file), $installed_menus_perso))
-//				$file_array[] = $file; //On crée un array, avec les different dossiers.
-//		}
-//		closedir($dh); //On ferme le dossier
-//
-//		foreach ($file_array as $name)
-//		{
-//			$tpl->assign_block_vars('mod_main_uninstalled', array(
-//				'NAME' => ucfirst(str_replace('.php', '', $name)),
-//				'U_INSTALL' => "admin_menus_add.php?idmodule=" . $name . "+0&amp;install=1"
-//			));
-//		}
-//	}
-
 ?>
