@@ -223,6 +223,99 @@ class WikiInterface extends ModuleInterface
         
         return $data;
     }
+	
+	function get_home_page()
+	{
+		global $Sql, $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
+
+		load_module_lang('wiki');
+		include('../wiki/wiki_functions.php');
+		$bread_crumb_key = 'wiki';
+		require_once('../wiki/wiki_bread_crumb.php');
+		
+		unset($Template);
+		$Template = new Template();
+		$Template->set_filenames(array(
+			'wiki'=> 'wiki/wiki.tpl',
+			'index'=> 'wiki/index.tpl'
+		));
+		$Template->assign_vars(array(
+			'WIKI_PATH' => $Template->get_module_data_path('wiki')
+		));
+		
+		if ($_WIKI_CONFIG['last_articles'] > 1)
+		{
+			$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
+			FROM " . PREFIX . "wiki_articles a
+			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
+			WHERE a.redirect = 0
+			ORDER BY c.timestamp DESC
+			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);		
+			$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+			
+			$Template->assign_block_vars('last_articles', array(
+				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
+				'RSS' => $articles_number > 0 ? '<a href="syndication.php"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
+			));
+			
+			$i = 0;
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$Template->assign_block_vars('last_articles.list', array(
+					'ARTICLE' => $row['title'],
+					'TR' => ($i > 0 && ($i%2 == 0)) ? '</tr><tr>' : '',
+					'U_ARTICLE' => url('wiki.php?title=' . $row['encoded_title'], $row['encoded_title'])
+				));
+				$i++;
+			}
+			
+			if ($articles_number == 0)
+			{
+				$Template->assign_vars(array(
+					'L_NO_ARTICLE' => '<td style="text-align:center;" class="row2">' . $LANG['wiki_no_article'] . '</td>',
+				));
+			}
+		}
+		//Affichage de toutes les catégories si c'est activé
+		if ($_WIKI_CONFIG['display_cats'] != 0)
+		{
+			$Template->assign_block_vars('cat_list', array(
+				'L_CATS' => $LANG['wiki_cats_list']
+			));
+			$i = 0;
+			foreach ($_WIKI_CATS as $id => $infos)
+			{
+				//Si c'est une catégorie mère
+				if ($infos['id_parent'] == 0)
+				{
+					$Template->assign_block_vars('cat_list.list', array(
+						'CAT' => $infos['name'],
+						'U_CAT' => url('wiki.php?title=' . url_encode_rewrite($infos['name']), url_encode_rewrite($infos['name']))
+					));
+					$i++;
+				}
+			}
+			if ($i == 0)
+			$Template->assign_vars(array(
+				'L_NO_CAT' => $LANG['wiki_no_cat'],
+			));
+		}
+		
+		$Template->assign_vars(array(
+			'TITLE' => !empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki'],
+			'INDEX_TEXT' => !empty($_WIKI_CONFIG['index_text']) ? second_parse(wiki_no_rewrite($_WIKI_CONFIG['index_text'])) : $LANG['wiki_empty_index'],
+			'L_EXPLORER' => $LANG['wiki_explorer'],
+			'U_EXPLORER' => url('explorer.php'),
+			'WIKI_PATH' => $Template->get_module_data_path('wiki')
+		));
+
+		$page_type = 'index';
+		include('../wiki/wiki_tools.php');
+		
+		$tmp = $Template->pparse('wiki', TRUE);
+		return $tmp;
+	}
+	
 }
 
 ?>

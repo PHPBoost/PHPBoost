@@ -195,7 +195,7 @@ if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
 		));
 		$Template->assign_block_vars('contribution_tools', array(
 			'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
-			'U_ACTION' => $value[0],
+			'U_ACTION' => '../wiki/'.$value[0],
 			'L_ACTION' => $key,
 			'ONCLICK' => (array_key_exists($key, $confirm)) ? $confirm[$key] : ''
 			));
@@ -215,7 +215,7 @@ foreach ($other_tools as $key => $value)
 
 	$Template->assign_block_vars('other_tools', array(
 		'DM_A_CLASS' => ' style="background-image:url(' . $wiki_data_path . '/images/' . $action_pictures[$value[1]] . ');background-repeat:no-repeat;background-position:5px;"',
-		'U_ACTION' => $value[0],
+		'U_ACTION' => '../wiki/'.$value[0],
 		'L_ACTION' => $key,
 		'ONCLICK' => (array_key_exists($key, $confirm_others)) ? $confirm_others[$key] : ''
 		));
