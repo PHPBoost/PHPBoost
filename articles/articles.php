@@ -143,8 +143,7 @@ else
 	$module_name = 'articles';
 	$module = $modulesLoader->get_module($module_name);
 	if ($module->has_functionnality('get_home_page')) {
-		$tpl = $module->functionnality('get_home_page');
-		$tpl->parse();
+		echo $module->functionnality('get_home_page');
 	} elseif (!$no_alert_on_error) {
 		global $Errorh;
 		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);

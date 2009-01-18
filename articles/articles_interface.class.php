@@ -367,7 +367,7 @@ class ArticlesInterface extends ModuleInterface
 			$Sql->query_close($result);
 		}
 		 
-		return $tpl;
+		return $tpl->parse(TRUE);
 	}
 }
 
