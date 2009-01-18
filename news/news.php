@@ -40,9 +40,11 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'news';
 	$module = $modulesLoader->get_module($module_name);
-	if ($module->has_functionnality('get_home_page')) //Le module implémente bien la fonction.
-		$tpl_news = $module->functionnality('get_home_page');
-	elseif (!$no_alert_on_error) {
+	if ($module->has_functionnality('get_home_page')) {
+		echo $module->functionnality('get_home_page');
+		require_once('../kernel/footer.php');
+		exit;
+	} elseif (!$no_alert_on_error) {
 		global $Errorh;	
 		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
 		exit;
