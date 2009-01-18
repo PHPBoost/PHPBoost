@@ -155,8 +155,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
 		'L_CATEGORY' => $MEDIA_LANG['media_category'],
-		'L_WIDTH' => $MEDIA_LANG['media_width'],
-		'L_HEIGHT' => $MEDIA_LANG['media_height'],
+		'L_WIDTH' => max($MEDIA_LANG['media_width'], $MEDIA_CONFIG['width']),
+		'L_HEIGHT' => max($MEDIA_LANG['media_height'], $MEDIA_CONFIG['height']),
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
 		'L_CONTENTS' => $MEDIA_LANG['media_description'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -280,11 +280,78 @@ elseif (!empty($_POST['submit']))
 	}
 
 	require_once('../kernel/header.php');
+	
+	if (!empty($media['url']))
+	{			
+		if ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_MUSIC)
+		{
+			$mime_type = $mime_type['audio'];
+		}
+		elseif ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_VIDEO)
+		{
+			$mime_type = $mime_type['video'];
+		}
+		else
+		{
+			$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
+		}
+
+		if (($pathinfo = pathinfo($media['url'])) && !empty($pathinfo['extension']))
+		{
+			if (array_key_exists($pathinfo['extension'], $mime_type))
+			{
+				$media['mime_type'] = $mime_type[$pathinfo['extension']];
+			}
+			else
+			{
+				$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
+				exit;
+			}
+		}
+		elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
+		{
+			if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
+			{
+				$media['mime_type'] = $headers['Content-Type'];
+			}
+			elseif (is_array($headers['Content-Type']))
+			{
+				foreach ($headers['Content-Type'] as $type)
+				{
+					if (in_array($type, $mime_type))
+					{
+						$media['mime_type'] = $type;
+					}
+				}
+				
+				if (empty($media['mime_type']))
+				{
+					$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
+					exit;
+				}
+			}
+			else
+			{
+				$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
+				exit;
+			}
+		}
+		else
+		{
+			$Errorh->handler('media_unknow_mime', E_USER_REDIRECT);
+			exit;
+		}
+	}
+	else
+	{
+		$Errorh->handler('media_empty_link', E_USER_REDIRECT);
+		exit;
+	}
 
 	// Édition
 	if ($media['idedit'] && $User->check_level(MODO_LEVEL))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . MEDIA_STATUS_APROBED . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($media['approved'] ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
 		$media_categories->recount_media_per_cat($media['idcat']);
 
@@ -313,73 +380,6 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		if (!empty($media['url']))
-		{			
-			if ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_MUSIC)
-			{
-				$array_type = $mime_type['audio'];
-			}
-			elseif ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_VIDEO)
-			{
-				$array_type = $mime_type['video'];
-			}
-			else
-			{
-				$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
-			}
-
-			if (($pathinfo = pathinfo($media['url'])) && !empty($pathinfo['extension']))
-			{
-				if (array_key_exists($pathinfo['extension'], $mime_type))
-				{
-					$media['mime_type'] = $mime_type[$pathinfo['extension']];
-				}
-				else
-				{
-					$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-					exit;
-				}
-			}
-			elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
-			{
-				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
-				{
-					$media['mime_type'] = $headers['Content-Type'];
-				}
-				elseif (is_array($headers['Content-Type']))
-				{
-					foreach ($headers['Content-Type'] as $type)
-					{
-						if (in_array($type, $mime_type))
-						{
-							$media['mime_type'] = $type;
-						}
-					}
-
-					if (empty($media['mime_type']))
-					{
-						$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-						exit;
-					}
-				}
-				else
-				{
-					$Errorh->handler('e_mime_disable_media', E_USER_REDIRECT);
-					exit;
-				}
-			}
-			else
-			{
-				$Errorh->handler('media_unknow_mime', E_USER_REDIRECT);
-				exit;
-			}
-		}
-		else
-		{
-			$Errorh->handler('media_empty_link', E_USER_REDIRECT);
-			exit;
-		}
-
 		$Sql->query_inject("INSERT INTO ".PREFIX."media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."media");
