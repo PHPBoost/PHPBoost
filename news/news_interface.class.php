@@ -330,7 +330,7 @@ class NewsInterface extends ModuleInterface
 			}
 			$Sql->query_close($result);
 		}
-		return $tpl_news;
+		return $tpl_news->parse(TRUE);
 	}
 }
 
