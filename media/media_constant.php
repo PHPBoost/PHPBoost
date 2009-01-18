@@ -61,4 +61,21 @@ define('TIME_REDIRECT', 5);
 // Nombre de fichiers par page dans le panneau de modération.
 define('NUM_MODO_MEDIA', 15);
 
+// Type de fichier autorisés.
+$mime_type = array(
+	'audio' => array(
+		'mp3' => 'audio/mpeg'
+	),
+	'video' => array(
+		'flv' => 'video/x-flv',
+		'swf' => 'application/x-shockwave-flash'
+	)
+);
+
+// Fichier en fonction du mime type.
+$mime_type_tpl = array(
+	'video/x-flv' => 'format/media_flv.tpl',
+	'application/x-shockwave-flash' => 'format/media_swf.tpl'
+);
+
 ?>

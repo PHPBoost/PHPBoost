@@ -314,17 +314,7 @@ elseif (!empty($_POST['submit']))
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
 		if (!empty($media['url']))
-		{
-			$mime_type = array(
-				'audio' => array(
-					'mp3' => 'audio/mpeg'
-				),
-				'video' => array(
-					'flv' => 'video/x-flv',
-					'swf' => 'application/x-shockwave-flash'
-				)
-			);
-			
+		{			
 			if ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_MUSIC)
 			{
 				$array_type = $mime_type['audio'];
@@ -335,14 +325,14 @@ elseif (!empty($_POST['submit']))
 			}
 			else
 			{
-				array_merge($mime_type['audio'], $mime_type['video']);
+				$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
 			}
-			
+
 			if (($pathinfo = pathinfo($media['url'])) && !empty($pathinfo['extension']))
 			{
-				if (array_key_exists($pathinfo['extension'], $array_type) && !empty($array_type[$pathinfo['extension']]))
+				if (array_key_exists($pathinfo['extension'], $mime_type))
 				{
-					$media['mime_type'] = $array_type[$pathinfo['extension']];
+					$media['mime_type'] = $mime_type[$pathinfo['extension']];
 				}
 				else
 				{
@@ -350,9 +340,9 @@ elseif (!empty($_POST['submit']))
 					exit;
 				}
 			}
-			elseif (!function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
+			elseif (function_exists('get_headers') && ($headers = get_headers($media['url'], 1)) && !empty($headers['Content-Type']))
 			{
-				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $array_type))
+				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
 				{
 					$media['mime_type'] = $headers['Content-Type'];
 				}
@@ -360,7 +350,7 @@ elseif (!empty($_POST['submit']))
 				{
 					foreach ($headers['Content-Type'] as $type)
 					{
-						if (in_array($type, $array_type))
+						if (in_array($type, $mime_type))
 						{
 							$media['mime_type'] = $type;
 						}
