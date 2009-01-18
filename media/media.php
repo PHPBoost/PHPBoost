@@ -302,13 +302,7 @@ elseif ($id_media > 0)
 		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media'])
 	));
 
-	// Fichier en fonction du mime type
-	$mime_type = array(
-		'video/x-flv' => 'format/media_flv.tpl',
-		'application/x-shockwave-flash' => 'format/media_swf.tpl'
-	);
-
-	$Template->set_filenames(array('media_format' => (empty($mime_type[$media['mime_type']]) ? 'media/format/media_other.tpl' : 'media/' . $mime_type[$media['mime_type']])));
+	$Template->set_filenames(array('media_format' => (empty($mime_type_tpl[$media['mime_type']]) ? 'media/format/media_other.tpl' : 'media/' . $mime_type_tpl[$media['mime_type']])));
 
 	//Affichage commentaires.
 	if (isset($_GET['com']) && ($MEDIA_CATS[$media['idcat']]['active'] & (MEDIA_DV_COM + MEDIA_DL_COM)) !== 0)
