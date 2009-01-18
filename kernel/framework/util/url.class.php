@@ -63,25 +63,22 @@ class Url
         $url = str_replace(HOST . DIR, '', $url);
         if (!strpos($url, '://'))
         {
-        if (substr($url, 0, 1) == '.')
-            {   // The url is relative to the website root (bad form)
-                $max = 1;
-                $this->relative = '/' . str_replace(PATH_TO_ROOT, '', $url, $max);
-            }
-            elseif (substr($url, 0, 1) == '/')
+            if (substr($url, 0, 1) == '/')
             {   // Relative url from the website root (good form)
                 $this->relative = $url;
             }
             else
             {   // The url is relative to the current foler
-                $this->relative = '/' . $url;
+                $this->relative = Url::root_to_local() . $url;
             }
+            $this->relative = rtrim(Url::compress($this->relative), '/');
         }
         
-        if ($this->relative() !== '')
-            $this->absolute = trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/') . $this->relative;
+        global $CONFIG;
+        if ($this->relative !== '')
+            $this->absolute = Url::compress(trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/') . $this->relative);
         else
-            $this->absolute = $url;
+            $this->absolute = Url::compress($url);
     }
     
     /**
@@ -100,6 +97,57 @@ class Url
     function absolute()
     {
         return $this->absolute;
+    }
+    
+    
+    /**
+     * @desc Compress a url by removing all "folder/.." occurrences
+     * @param string $url the url to compress
+     * @return string the compressed url
+     */
+    /* static */function compress($url)
+    {
+        $url = preg_replace('`([^:])?/+`', '$1/', preg_replace('`/[^/]+/\.\.`', '$1', $url));
+        if (strpos($url, '/' . PATH_TO_ROOT) === 0)
+        {
+            return str_replace('/' . PATH_TO_ROOT, '', $url);
+        }
+        return $url;
+    }
+    
+    /**
+     * @desc Returns the relative path from the website root to the current path if working on a relative url
+     * @return string the relative path from the website root to the current path if working on a relative url
+     */
+    /* static */ function root_to_local()
+    {
+        // Retrieve working path
+        $a_local = explode('/', substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')));
+        $a_root = explode('/', Url::compress(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . PATH_TO_ROOT));
+        $a_local_size = count($a_local);
+        $a_root_size = count($a_root);
+        
+        // Come back to the root level
+        $a_to_local = array();
+        $separation_idx = -1;
+        for ($i = 0; $i < $a_root_size; $i++)
+        {
+            if (!isset($a_local[$i]) || $a_root[$i] != $a_local[$i])
+            {
+                $a_to_local[] = '..';
+                if ($separation_idx < 0)
+                {
+                    $separation_idx = $i;
+                }
+            }
+        }
+        
+        // descend into the local folder
+        for ($i = $separation_idx; $i < $a_local_size; $i++)
+        {
+            $a_to_local[] = $a_local[$i];
+        }
+        return '/' . implode('/', $a_to_local) . '/';
     }
     
     var $relative = '';
