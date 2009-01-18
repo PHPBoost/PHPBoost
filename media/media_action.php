@@ -155,8 +155,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'U_TARGET' => url('media_action.php'),
 		'L_TITLE' => $MEDIA_LANG['media_name'],
 		'L_CATEGORY' => $MEDIA_LANG['media_category'],
-		'L_WIDTH' => max($MEDIA_LANG['media_width'], $MEDIA_CONFIG['width']),
-		'L_HEIGHT' => max($MEDIA_LANG['media_height'], $MEDIA_CONFIG['height']),
+		'L_WIDTH' => $MEDIA_LANG['media_width'],
+		'L_HEIGHT' => $MEDIA_LANG['media_height'],
 		'L_U_MEDIA' => $MEDIA_LANG['media_url'],
 		'L_CONTENTS' => $MEDIA_LANG['media_description'],
 		'KERNEL_EDITOR' => display_editor(),
@@ -188,7 +188,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		));
 	}
 	// Ajout.
-	elseif (($write = $User->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_WRITE)) || $User->check_auth($MEDIA_CATS[0]['auth'], MEDIA_AUTH_CONTRIBUTION))
+	elseif (($write = $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
 	{
 		$Template->assign_vars(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
@@ -211,7 +211,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		exit;
 	}
 
-	$idcat = !empty($media) ? $media['idcat'] : 0;
+	$idcat = !empty($media) ? $media['idcat'] : $add;
 	$id_parent = $MEDIA_CATS[$idcat]['id_parent'];
 	$Bread_crumb->add($MEDIA_CATS[$idcat]['name'], url('media.php?cat=' . $idcat, 'media-' . $idcat . '+' . url_encode_rewrite($MEDIA_CATS[$idcat]['name']) . '.php'));
 
@@ -244,8 +244,8 @@ elseif (!empty($_POST['submit']))
 		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => retrieve(POST, 'name', '', TSTRING),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
-		'width' => retrieve(POST, 'width', $MEDIA_CONFIG['width'], TINTEGER),
-		'height' => retrieve(POST, 'height', $MEDIA_CONFIG['height'], TINTEGER),
+		'width' => min(retrieve(POST, 'width', $MEDIA_CONFIG['width'], TINTEGER), $MEDIA_CONFIG['width']),
+		'height' => min(retrieve(POST, 'height', $MEDIA_CONFIG['height'], TINTEGER), $MEDIA_CONFIG['height']),
 		'url' => retrieve(POST, 'u_media', '', TSTRING),
 		'contents' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 		'approved' => retrieve(POST, 'approved', 0, TBOOL),
@@ -351,7 +351,7 @@ elseif (!empty($_POST['submit']))
 	// Édition
 	if ($media['idedit'] && $User->check_level(MODO_LEVEL))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($media['approved'] ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
 		$media_categories->recount_media_per_cat($media['idcat']);
 
