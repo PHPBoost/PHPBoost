@@ -71,7 +71,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($show as $key)
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."media SET infos = '" . MEDIA_STATUS_APROBED . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_APROBED . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
 			}
 		}
 		
@@ -79,7 +79,7 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($hide as $key)
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $key . "'", __LINE__, __FILE__);
 			}
 		}
 
@@ -87,8 +87,8 @@ if (!empty($_POST['submit']))
 		{
 			foreach ($delete as $key)
 			{
-				$Sql->query_inject("DELETE FROM ".PREFIX."media WHERE id = '" . $key . "'", __LINE__, __FILE__);
-				$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $delete . "' AND script = 'media'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $key . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "com WHERE idprov = '" . $delete . "' AND script = 'media'", __LINE__, __FILE__);
 			}
 		}
 
@@ -106,6 +106,17 @@ if (!empty($_POST['submit']))
 		redirect(url('moderation_media.php'));
 	}
 }
+elseif (!empty($_GET['recount']))
+{
+	// Feeds Regeneration
+	import('content/syndication/feed');
+	Feed::clear_cache('media');
+	require_once('media_cats.class.php');
+	$media_categories = new MediaCats();
+	$media_categories->recount_media_per_cat();
+	
+	redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['recount_success'], TIME_REDIRECT);	
+}
 else
 {
 	//On crée une pagination si le nombre de fichier est trop important.
@@ -113,7 +124,7 @@ else
 	$Pagination = new Pagination();
 
 	$nbr_media = $Sql->count_table('media', __LINE__, __FILE__);
-	$result = $Sql->query_while("SELECT * FROM ".PREFIX."media ORDER BY infos ASC, timestamp DESC" . $Sql->limit($Pagination->get_first_msg(NUM_MODO_MEDIA, 'p'), NUM_MODO_MEDIA), __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT * FROM " . PREFIX . "media ORDER BY infos ASC, timestamp DESC" . $Sql->limit($Pagination->get_first_msg(NUM_MODO_MEDIA, 'p'), NUM_MODO_MEDIA), __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
 	{		

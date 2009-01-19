@@ -26,10 +26,10 @@
  *
 ###################################################*/
 
-require_once(PATH_TO_ROOT . '/kernel/framework/content/categories.class.php');
+import('content/categories');
 require_once('media_constant.php');
 
-define('DO_NOT_GENERATE_CACHE', false);
+// define('DO_NOT_GENERATE_CACHE', false);
 
 class MediaCats extends CategoriesManagement
 {

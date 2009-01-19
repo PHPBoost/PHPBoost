@@ -64,7 +64,8 @@ define('NUM_MODO_MEDIA', 15);
 // Type de fichier autorisés.
 $mime_type = array(
 	'audio' => array(
-		'mp3' => 'audio/mpeg'
+		'mp3' => 'audio/mpeg',
+		'swf' => 'application/x-shockwave-flash'
 	),
 	'video' => array(
 		'flv' => 'video/x-flv',
@@ -75,13 +76,21 @@ $mime_type = array(
 // Fichier en fonction du mime type.
 $mime_type_tpl = array(
 	'video/x-flv' => 'format/media_flv.tpl',
-	'application/x-shockwave-flash' => 'format/media_swf.tpl'
+	'application/x-shockwave-flash' => 'format/media_swf.tpl',
+	'audio/mpeg' => 'format/media_mp3.tpl'
 );
 
 // Host de confiance!
 $host_ok = array(
-	'www.dailymotion.com',
-	'www.youtube.com',
+	'audio' => array(
+		'www.dailymotion.com',
+		'www.youtube.com',
+		'video.google.fr',
+		'www.wat.tv'
+	),
+	'video' => array(
+		'www.deezer.com',
+	)
 );
 
 ?>

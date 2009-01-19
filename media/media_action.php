@@ -90,7 +90,7 @@ if ($visible > 0 XOR $unvisible > 0 XOR $aprob > 0)
 		$Bread_crumb->add($MEDIA_LANG['aprob_media'], url('media_action.php?aprob=' . $media['id']));
 	}
 
-	$Sql->query_inject("UPDATE ".PREFIX."media SET infos = '" . $bit . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . $bit . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	require_once('../kernel/header.php');
 
@@ -114,7 +114,7 @@ elseif ($delete > 0)
 		exit;
 	}
 
-	$Sql->query_inject("DELETE FROM ".PREFIX."media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . PREFIX . "media WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 
 	//Deleting comments if the file has
 	if ($media['nbr_com'] > 0)
@@ -196,7 +196,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
 			'IDEDIT' => 0,
 			'NAME' => '',
-			'CATEGORIES_TREE' => $media_categories->build_select_form(0, 'idcat', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'WIDTH' => '',
 			'HEIGHT' => '',
 			'U_MEDIA' => 'http://',
@@ -286,17 +286,22 @@ elseif (!empty($_POST['submit']))
 		if ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_MUSIC)
 		{
 			$mime_type = $mime_type['audio'];
+			$host_ok = $host_ok['audio'];
 		}
 		elseif ($MEDIA_CATS[$media['idcat']]['mime_type'] == MEDIA_TYPE_VIDEO)
 		{
 			$mime_type = $mime_type['video'];
+			$host_ok = $host_ok['video'];
 		}
 		else
 		{
 			$mime_type = array_merge($mime_type['audio'], $mime_type['video']);
+			$host_ok = array_merge($host_ok['audio'], $host_ok['video']);
 		}
 
-		if (($pathinfo = pathinfo($media['url'])) && !empty($pathinfo['extension']))
+		$url_media = preg_replace('`\?.*`', '', $media['url']);
+		
+		if (($pathinfo = pathinfo($url_media)) && !empty($pathinfo['extension']))
 		{
 			if (array_key_exists($pathinfo['extension'], $mime_type))
 			{
@@ -355,7 +360,7 @@ elseif (!empty($_POST['submit']))
 	// Édition
 	if ($media['idedit'] && $User->check_level(MODO_LEVEL))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "media SET idcat = '" . $media['idcat'] . "', name = '" . $media['name'] . "', url='" . $media['url'] . "', contents = '" . strparse($media['contents']) . "', infos = '" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', width = '" . $media['width'] . "', height = '" . $media['height'] . "' WHERE id = '" . $media['idedit'] . "'", __LINE__, __FILE__);
 
 		$media_categories->recount_media_per_cat($media['idcat']);
 
@@ -384,9 +389,9 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO ".PREFIX."media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
 
-		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."media");
+		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);
 		// Feeds Regeneration
 		import('content/syndication/feed');

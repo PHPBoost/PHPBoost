@@ -79,11 +79,11 @@
 		</form>
 		# IF C_ADMIN #
 		<div style="text-align:center; margin:30px 20px;" class="row1">
-			<a href="admin_media_cats.php?recount=1">
+			<a href="moderation_media.php?recount=1">
 				<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_MEDIA}" />
 			</a>
 			<br />
-			<a href="admin_media_cats.php?recount=1">{L_RECOUNT_MEDIA}</a>
+			<a href="moderation_media.php?recount=1">{L_RECOUNT_MEDIA}</a>
 		</div>
 		# ENDIF #
 		# ENDIF #
