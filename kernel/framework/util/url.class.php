@@ -76,7 +76,7 @@ class Url
         
         global $CONFIG;
         if ($this->relative !== '')
-            $this->absolute = Url::compress(trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/') . $this->relative);
+            $this->absolute = Url::compress(Url::get_absolute_root() . $this->relative);
         else
             $this->absolute = Url::compress($url);
     }
@@ -148,6 +148,16 @@ class Url
             $a_to_local[] = $a_local[$i];
         }
         return '/' . implode('/', $a_to_local) . '/';
+    }
+    
+    /**
+     * @desc Returns the absolute website root Url
+     * @return string the absolute website root Url
+     */
+    /* static */ function get_absolute_root()
+    {
+        global $CONFIG;
+        return trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/');
     }
     
     var $relative = '';

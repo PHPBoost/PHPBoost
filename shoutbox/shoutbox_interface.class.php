@@ -56,7 +56,7 @@ class ShoutboxInterface extends ModuleInterface
 		return $shoutbox_config;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	function on_changeday()
 	{
 		global $Sql, $Cache, $CONFIG_SHOUTBOX;

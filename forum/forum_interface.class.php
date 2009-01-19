@@ -342,7 +342,7 @@ class ForumInterface extends ModuleInterface
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
-    function get_feed_data_struct($idcat = 0)
+    function get_feed_data_struct($idcat = 0, $name = '')
     {
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
 		

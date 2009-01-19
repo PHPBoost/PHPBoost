@@ -53,7 +53,7 @@ class ContactInterface extends ModuleInterface
 		return $contact_config;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{
