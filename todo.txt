@@ -3,11 +3,11 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-[-] Ajout de flowplayer et dewplayer dans les remerciements de l'installateurs
+
 [-] Ajouter les autorisations aux sitemap
+
 ------------------------------------ MODULES -----------------------------------
 
-[-] Téléchargement : ajouter un flag de téléchargement ou redirection
 
 ################################################################################
 
@@ -42,7 +42,6 @@
 
 ######################################DOSSIERS##################################
 
-[+] Noix : Panneau de modération.
-[+] Loic : Recherche.
-[-] Croquette : Nouveaux minis menus indépendants des modules.
-[-] Croquette : Nouveaux placement des menus.
+[+] Noix : Panneau de contribution
+[+] Loic : Recherche
+[-] Croquette : Nouveaux placement des menus
