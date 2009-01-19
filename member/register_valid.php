@@ -138,7 +138,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MEMBER); //Id du membre qu'on vient d'enregistrer
 					
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
-					if (!$user_aprob)
+					if ($CONFIG_USER['activ_member'] == 2)
 					{
 						import('events/administrator_alert_service');
 						
