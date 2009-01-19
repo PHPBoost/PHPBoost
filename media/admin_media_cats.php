@@ -139,12 +139,6 @@ elseif (!empty($_POST['submit']))
 
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
-//Updating the number of subquestions of each category
-elseif (!empty($_GET['recount']))
-{
-	$media_categories->recount_media_per_cat();
-	redirect_confirm(url('moderation_media.php'), $MEDIA_LANG['recount_success'], TIME_REDIRECT);
-}
 elseif ($new_cat XOR $id_edit > 0)
 {
 	$Template->assign_vars(array(
