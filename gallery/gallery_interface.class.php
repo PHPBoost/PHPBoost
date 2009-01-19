@@ -106,7 +106,7 @@ class GalleryInterface extends ModuleInterface
 		return $gallery_config . "\n" . $cat_gallery . "\n" . $_array_random_pics;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	function on_changeday()
 	{
 		$this->get_cache();

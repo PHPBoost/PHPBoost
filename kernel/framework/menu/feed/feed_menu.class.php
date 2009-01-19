@@ -26,6 +26,7 @@
 ###################################################*/
 
 import('menu/menu');
+import('content/syndication/feed');
 
 define('FEED_MENU__CLASS','FeedMenu');
 
@@ -38,16 +39,22 @@ define('FEED_MENU__CLASS','FeedMenu');
 class FeedMenu extends Menu
 {
     ## Public Methods ##
-    function FeedMenu($title)
+    function FeedMenu($title, $module_id, $category = 0, $name = DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
     {
        parent::Menu($title);
+       $this->module_id = $module_id;
+       $this->category = $category;
+       $this->name = $name;
+       $this->number = $number;
+       $this->begin_at = $begin_at;
     }
     
-    ## Setters ##
-    /**
-     * @param string $content the content to set
-     */
-    function set_url($content) { $this->content = strparse($content, array(), DO_NOT_ADD_SLASHES); }
+    function get_url()
+    {
+        return Url::get_absolute_root() . '/syndication.php?m=' . $this->module_id .
+        ($this->category > 0 ? '&amp;cat=' . $this->category : '') .
+        (!empty($this->name) && $this->name != DEFAULT_FEED_NAME ? '&amp;cat=' . $this->name : '');
+    }
     
     ## Getters ##
     /**
@@ -58,18 +65,28 @@ class FeedMenu extends Menu
     
     function display()
     {
-        $tpl = new Template('framework/menus/content/display.tpl');
-        $tpl->assign_vars(array(
-            'CONTENT' => second_parse($this->content)
-        ));
-        return $tpl->parse(TEMPLATE_STRING_MODE);
+        return Feed::get_parsed($this->module_id, $this->name, $this->cat,
+            FeedMenu::get_template(), $this->number, $this->begin_at
+        );
     }
     
     function cache_export()
     {
-        return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
+        return parent::cache_export_begin() .
+            '\';import(\'content/syndicaction/feed\');$__menu=Feed::get_parsed(' .
+            var_export($this->module_id, true) . ',' . var_export($this->name, true) . ',' .
+            $this->cat . ',FeedMenu::get_template(),' . $this->number . ',' . $this->begin_at.');' .
+            parent::cache_export_end();
     }
     
+    /**
+     * @desc
+     * @return unknown_type
+     */
+    /* static */ function get_template()
+    {
+        return new Template('/framework/menus/feed/feed.tpl');
+    }
     
     ## Private Attributes
     
@@ -80,6 +97,8 @@ class FeedMenu extends Menu
     var $module_id = '';
     var $name = '';
     var $category = 0;
+    var $number = 10;
+    var $begin_at = 0;
     
 }
 

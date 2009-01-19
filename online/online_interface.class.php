@@ -53,7 +53,7 @@ class OnlineInterface extends ModuleInterface
 		return $online_config;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

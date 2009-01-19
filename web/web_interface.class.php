@@ -63,7 +63,7 @@ class WebInterface extends ModuleInterface
 		return $code;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

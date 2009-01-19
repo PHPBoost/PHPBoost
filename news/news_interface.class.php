@@ -93,7 +93,7 @@ class NewsInterface extends ModuleInterface
         return $request;
     }
     
-    function get_feed_data_struct($idcat = 0)
+    function get_feed_data_struct($idcat = 0, $name = '')
     {
         import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
@@ -169,22 +169,22 @@ class NewsInterface extends ModuleInterface
 				'TITLE' => $CONFIG_NEWS['edito_title'],
 				'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
 			));
-		}	
+		}
 
 		//On crée une pagination (si activé) si le nombre de news est trop important.
-		import('util/pagination'); 
+		import('util/pagination');
 		$Pagination = new Pagination();
 			
 		//Pagination activée, sinon affichage lien vers les archives.
 		if ($CONFIG_NEWS['activ_pagin'] == '1')
 		{
 			$show_pagin = $Pagination->display('../news/news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
-			$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
+			$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p');
 		}
 		elseif ($show_archive) //Pagination des archives.
 		{
 			$show_pagin = $Pagination->display('../news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
-			$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
+			$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p');
 			$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
 		}
 		else //Affichage du lien vers les archives.
@@ -205,7 +205,7 @@ class NewsInterface extends ModuleInterface
 		
 		//Si les news en block sont activées on recupère la page.
 		if ($CONFIG_NEWS['type'] == 1 && !$show_archive)
-		{		
+		{
 			$tpl_news->assign_vars(array(
 				'C_NEWS_BLOCK' => true
 			));
@@ -216,24 +216,24 @@ class NewsInterface extends ModuleInterface
 				$i = 0;
 				$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
 				$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
-				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
+				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);
 				
 				$tpl_news->assign_vars(array(
 					'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%">',
 					'END_TABLE_NEWS' => '</td></tr></table>'
-				));	
+				));
 			}
 			else
 				$new_row = '';
 			
 			$z = 0;
-			list($admin, $del) = array('', ''); 			
+			list($admin, $del) = array('', '');
 			$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 			FROM " . PREFIX . "news n
 			LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
-			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id		
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 			WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
-			ORDER BY n.timestamp DESC 
+			ORDER BY n.timestamp DESC
 			" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -245,8 +245,8 @@ class NewsInterface extends ModuleInterface
 				
 				//Séparation des news en colonnes si activé.
 				if ($column)
-				{	
-					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
+				{
+					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';
 					$i++;
 				}
 					
@@ -257,7 +257,7 @@ class NewsInterface extends ModuleInterface
 					'CONTENTS' => second_parse($row['contents']),
 					'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="../news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
 					'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
-					'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
+					'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',
 					'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
 					'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 					'EDIT' => $admin,
@@ -269,7 +269,7 @@ class NewsInterface extends ModuleInterface
 				));
 				$z++;
 			}
-			$Sql->query_close($result);	
+			$Sql->query_close($result);
 			
 			if ($z == 0)
 			{
@@ -287,16 +287,16 @@ class NewsInterface extends ModuleInterface
 				$i = 0;
 				$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
 				$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
-				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
+				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);
 				
 				$tpl_news->assign_vars(array(
 					'C_NEWS_LINK' => true,
 					'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
 					'END_TABLE_NEWS' => '</ul></td></tr></table>'
-				));	
+				));
 			}
 			else
-			{	
+			{
 				$tpl_news->assign_vars(array(
 					'C_NEWS_LINK' => true,
 					'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
@@ -309,14 +309,14 @@ class NewsInterface extends ModuleInterface
 			FROM " . PREFIX . "news n
 			LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
 			WHERE n.visible = 1
-			ORDER BY n.timestamp DESC 
+			ORDER BY n.timestamp DESC
 			" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
-			{ 
+			{
 				//Séparation des news en colonnes si activé.
 				if ($column)
-				{	
-					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
+				{
+					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';
 					$i++;
 				}
 				
@@ -324,7 +324,7 @@ class NewsInterface extends ModuleInterface
 					'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="../news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 					'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 					'TITLE' => $row['title'],
-					'NEW_ROW' => $new_row, 
+					'NEW_ROW' => $new_row,
 					'U_NEWS' => '../news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 				));
 			}

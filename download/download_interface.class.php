@@ -195,7 +195,7 @@ class DownloadInterface extends ModuleInterface
     
 	
     // Generate the feed data structure used by RSS, ATOM and feed informations on the website
-    function get_feed_data_struct($idcat = 0)
+    function get_feed_data_struct($idcat = 0, $name = '')
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');

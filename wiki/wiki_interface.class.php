@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -47,7 +47,7 @@ class WikiInterface extends ModuleInterface
 		$config .= '$_WIKI_CATS = array();' . "\n";
 		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
 			FROM " . PREFIX . "wiki_cats c
-			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id 
+			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 			ORDER BY a.title", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -66,7 +66,7 @@ class WikiInterface extends ModuleInterface
 		return $config . "\n\r" . $code;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{
@@ -150,7 +150,7 @@ class WikiInterface extends ModuleInterface
         return $req;
     }
     
-    function get_feed_data_struct($idcat = 0)
+    function get_feed_data_struct($idcat = 0, $name = '')
     {
         import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
@@ -168,7 +168,7 @@ class WikiInterface extends ModuleInterface
             $desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']));
             $where = "";
         }
-            //On convertit les accents en entitées normales, puis on remplace les caractÃ¨res non supportés en xml.
+            //On convertit les accents en entitées normales, puis on remplace les caractères non supportés en xml.
 //         $contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
 //         $contents = preg_replace('`[\n\r]{1}[\-]{2,5}[\s]+(.+)[\s]+[\-]{2,5}(<br \/>|[\n\r]){1}`U', "\n" . '$1' . "\n", "\n" . $contents . "\n");
         
@@ -188,7 +188,7 @@ class WikiInterface extends ModuleInterface
         $Cache->load('wiki');
         
         // Last news
-        $result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp 
+        $result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp
             FROM " . PREFIX . "wiki_articles a
             LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
             WHERE a.redirect = 0 " . $where . "
@@ -250,7 +250,7 @@ class WikiInterface extends ModuleInterface
 			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 			WHERE a.redirect = 0
 			ORDER BY c.timestamp DESC
-			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);		
+			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);
 			$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 			
 			$Template->assign_block_vars('last_articles', array(
