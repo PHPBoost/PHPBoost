@@ -299,7 +299,7 @@ elseif ($del_article > 0) //Suppression d'un article
 	//On rippe l'article
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_article = '" . $del_article . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__); 
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'wiki' AND idprov = '" . $del_article . "'", __LINE__, __FILE__); 
 	
 	 // Feeds Regeneration
      import('content/syndication/feed');
