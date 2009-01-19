@@ -39,7 +39,7 @@ $Template->set_filenames(array(
 //--------------------------------------------------------------------- Params
 // A protéger impérativement;
 $search = retrieve(REQUEST, 'q', '');
-$unsecure_search = htmlentities(retrieve(REQUEST, 'q', '', TSTRING_AS_RECEIVED));
+$unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
 $selected_modules = retrieve(POST, 'searched_modules', array());
 //--------------------------------------------------------------------- Header
