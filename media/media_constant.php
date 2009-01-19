@@ -78,4 +78,10 @@ $mime_type_tpl = array(
 	'application/x-shockwave-flash' => 'format/media_swf.tpl'
 );
 
+// Host de confiance!
+$host_ok = array(
+	'www.dailymotion.com',
+	'www.youtube.com',
+);
+
 ?>
