@@ -86,7 +86,7 @@ if ($Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 
 $Template->assign_vars(array(
 	'MAIL' => $User->get_attribute('user_mail'),
-	'CONTACT_OBJECT' => $mail_object,
+	'CONTACT_OBJECT' => stripslashes(retrieve(POST, 'mail_object', '')),
 	'CONTACT_CONTENTS' => $mail_contents,
 	'L_REQUIRE_MAIL' => $LANG['require_mail'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'] ,
