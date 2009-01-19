@@ -336,6 +336,10 @@ elseif (!empty($_POST['submit']))
 				exit;
 			}
 		}
+		elseif (($url_parsed = parse_url($media['url'])) && in_array($url_parsed['host'], $host_ok) && in_array('application/x-shockwave-flash', $mime_type))
+		{
+			$media['mime_type'] = 'application/x-shockwave-flash';
+		}
 		else
 		{
 			$Errorh->handler('media_unknow_mime', E_USER_REDIRECT);
