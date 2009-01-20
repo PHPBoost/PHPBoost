@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -172,7 +172,7 @@ $LANG['info'] = 'Informations';
 $LANG['language'] = 'Language';
 $LANG['sanction'] = 'Sanction';
 $LANG['ban'] = 'Ban';
-$LANG['theme'] = 'Theme';	
+$LANG['theme'] = 'Theme';
 $LANG['code'] = 'Code';
 $LANG['status'] = 'Status';
 $LANG['question'] = 'Question';
@@ -186,7 +186,7 @@ $LANG['show'] = 'Consult';
 $LANG['link'] = 'Link';
 $LANG['type'] = 'Type';
 $LANG['of'] = 'of';
-$LANG['autoconnect'] = 'Autoconnect';	
+$LANG['autoconnect'] = 'Autoconnect';
 $LANG['unspecified'] = 'Unspecified';
 $LANG['configuration'] = 'Configuration';
 $LANG['management'] = 'Management';
@@ -198,7 +198,7 @@ $LANG['powered_by'] = 'Boosted by';
 $LANG['release_date'] = 'Release date <span class="text_small">dd/mm/yy</span>';
 $LANG['immediate'] = 'Immediat';
 $LANG['waiting'] = 'Waiting';
-$LANG['stats'] = 'Statistics'; 
+$LANG['stats'] = 'Statistics';
 $LANG['cat_management'] = 'Category management';
 $LANG['cat_add'] = 'Add category';
 $LANG['visible'] = 'Visible';
@@ -356,8 +356,8 @@ $LANG['send_unlock_admin'] = 'Send unlock admin code';
 $LANG['unlock_title_mail'] = 'Mail to keep';
 $LANG['unlock_mail'] = 'Conserved this code (it will never be redelivered): %s
 
-This code can unlock the administration panel in case of intrusive tentative. 
-It will be asked in the direct administration formular connexion (yourserver/admin/admin_index.php) 
+This code can unlock the administration panel in case of intrusive tentative.
+It will be asked in the direct administration formular connexion (yourserver/admin/admin_index.php)
 
 ' . $CONFIG['sign'];
 
@@ -434,6 +434,7 @@ $LANG['confirm_delete_element'] = 'Delete this item?';
 $LANG['menus_management'] = 'Menus management';
 $LANG['menus_content_add'] = 'Add content menu';
 $LANG['menus_links_add'] = 'Add links menu';
+$LANG['menus_feed_add'] = 'Add feed';
 $LANG['menus_edit'] = 'Edit menu';
 $LANG['vertical_menu'] = 'Vertical menu';
 $LANG['horizontal_menu'] = 'Horizontal menu';
@@ -475,7 +476,7 @@ $LANG['smiley_code'] = 'Smiley code (ex: :D)';
 $LANG['smiley_available'] = 'Available smileys';
 $LANG['edit_smiley'] = 'Edit smileys';
 $LANG['smiley_management'] = 'Smileys management';
-$LANG['e_smiley_already_exist'] = 'This smiley already exists!';	
+$LANG['e_smiley_already_exist'] = 'This smiley already exists!';
 
 //Thèmes
 $LANG['upload_theme'] = 'Upload theme';
@@ -509,8 +510,8 @@ $LANG['del_lang_files'] = 'Delete all lang files';
 $LANG['explain_default_lang'] = 'Default lang can\'t be uninstalled, unactivated or restricted';
 
 //Comments
-$LANG['com_management'] = 'Comments management';	
-$LANG['com_config'] = 'Comments configuration';		
+$LANG['com_management'] = 'Comments management';
+$LANG['com_config'] = 'Comments configuration';
 $LANG['com_max'] = 'Maximum comments displayed';
 $LANG['rank_com_post'] = 'Rank to post comments';
 $LANG['display_topic_com'] = 'Display comments topics';
@@ -554,7 +555,7 @@ $LANG['avatar_del'] = 'Delete current avatar';
 $LANG['no_avatar'] = 'No avatar';
 $LANG['weight_max'] = 'Max weight';
 $LANG['height_max'] = 'Max height';
-$LANG['width_max'] = 'Max width';			
+$LANG['width_max'] = 'Max width';
 $LANG['sex'] = 'Sex';
 $LANG['male'] = 'Male';
 $LANG['female'] = 'Female';
@@ -597,7 +598,7 @@ $LANG['data_group_limit_explain'] = 'Set -1 for no limit';
 $LANG['img_assoc_group'] = 'Associated image to the group';
 $LANG['img_assoc_group_explain'] = 'Put in the directory images/group/';
 $LANG['add_mbr_group'] = 'Add a member to group';
-$LANG['mbrs_group'] = 'Member\'s group'; 
+$LANG['mbrs_group'] = 'Member\'s group';
 $LANG['auths'] = 'Authorisations';
 $LANG['auth_access'] = 'Auth access';
 $LANG['auth_read'] = 'Read auth';
@@ -710,7 +711,7 @@ $LANG['10_langs'] = 'See the 10 principal countries of visitors';
 $LANG['visits_year'] = 'See statistics of the year';
 $LANG['unknown'] = 'Unknown';
 $LANG['last_member'] = 'Last member registered';
-$LANG['top_10_posters'] = 'Top 10: posters'; 
+$LANG['top_10_posters'] = 'Top 10: posters';
 $LANG['version'] = 'Version';
 $LANG['colors'] = 'Colors';
 $LANG['calendar'] = 'Calendar';
