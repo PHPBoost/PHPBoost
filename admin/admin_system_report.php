@@ -38,6 +38,7 @@ $template->assign_vars(array(
 	'L_UNKNOWN' => $LANG['unknown'],
 	'L_SYSTEM_REPORT' => $LANG['system_report'],
 	'L_SERVER' => $LANG['server'],
+	'L_PHPINFO' => $LANG['phpinfo'],
 	'L_PHP_VERSION' => $LANG['php_version'],
 	'L_DBMS_VERSION' => $LANG['dbms_version'],
 	'L_GD_LIBRARY' => $LANG['dg_library'],
