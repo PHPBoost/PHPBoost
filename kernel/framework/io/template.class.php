@@ -328,6 +328,7 @@ class Template
             
             //Remplacement des blocs conditionnels.
             $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# ELSEIF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks_bis'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '\';'."\n".'} else {'."\n".'$tplString .= \'', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '\';'."\n".'}'."\n".'$tplString .= \'', $this->template);
             
@@ -349,6 +350,7 @@ class Template
             
             //Remplacement des blocs conditionnels.
             $this->template = preg_replace_callback('`# IF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks'), $this->template);
+            $this->template = preg_replace_callback('`# ELSEIF (NOT )?([\w\.]+) #`', array($this, '_parse_conditionnal_blocks_bis'), $this->template);
             $this->template = preg_replace('`# ELSE #`', '<?php } else { ?>', $this->template);
             $this->template = preg_replace('`# ENDIF #`', '<?php } ?>', $this->template);
             
@@ -432,7 +434,35 @@ class Template
         }
         return '';
     }
-    
+	
+    //Remplacement des blocs conditionnels.
+    function _parse_conditionnal_blocks_bis($blocks)
+    {
+        if (isset($blocks[2]))
+        {
+            $not = ($blocks[1] == 'NOT ' ? '!' : '');
+            if (strpos($blocks[2], '.') !== false) //Contient un bloc imbriqué.
+            {
+                $array_block = explode('.', $blocks[2]);
+                $varname = array_pop($array_block);
+                $last_block = array_pop($array_block);
+
+                if ($this->stringMode)
+                    return '\';'."\n".'} elseif (isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\']) {'."\n".'$tplString .= \'';
+                else
+                    return '<?php } elseif (isset($_tmpb_' . $last_block . '[\'' . $varname . '\']) && ' . $not . '$_tmpb_' . $last_block . '[\'' . $varname . '\']) { ?>';
+            }
+            else
+            {
+                if ($this->stringMode)
+                    return '\';'."\n".'} elseif (isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\']) {'."\n".'$tplString .= \'';
+                else
+                    return '<?php } elseif (isset($this->_var[\'' . $blocks[2] . '\']) && ' . $not . '$this->_var[\'' . $blocks[2] . '\']) { ?>';
+            }
+        }
+        return '';
+    }
+	
     //Nettoyage des commentaires, et blocs et variables non utilisés.
     function _clean()
     {

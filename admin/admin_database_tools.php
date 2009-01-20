@@ -120,7 +120,7 @@ if (!empty($table) && $action == 'data')
 			}
 			
 			$Template->assign_block_vars('line.field', array(
-				'FIELD' => strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE),
+				'FIELD' => str_replace("\n", '<br />', strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE)),
 				'CLASS' => 'row1',
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));

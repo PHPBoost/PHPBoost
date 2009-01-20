@@ -35,6 +35,7 @@ $LANG['error'] = 'Error';
 $LANG['unknow_error'] = 'Unknow error';
 $LANG['e_auth'] = 'You haven\'t the required level!';
 $LANG['e_unexist_module'] = 'The related module doesn\'t exist!';
+$LANG['e_uninstalled_module'] = 'This module isn\'t installed !';
 $LANG['e_incomplete'] = 'All the required fields must be filled!';
 $LANG['e_auth_post'] = 'You have to log in to post!';
 $LANG['e_readonly'] = 'You can\'t execute this action, because you have been set in read only status!';

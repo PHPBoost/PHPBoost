@@ -52,7 +52,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								{forums_list.subcats.ANNOUNCE}
+								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.gif" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
