@@ -37,10 +37,12 @@ if (!$CONFIG_USER['activ_register'])
 $key = retrieve(GET, 'key', '');
 $get_error = retrieve(GET, 'error', '');
 $get_erroru = retrieve(GET, 'erroru', '');
+$register_valid = retrieve(POST, 'register_valid', '');
+$register_confirm = retrieve(POST, 'confirm', '');
 
 if (empty($key))
 {
-	if (!$User->check_level(USER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru))
+	if (!$User->check_level(USER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($register_confirm) && empty($get_error) && empty($get_erroru))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -48,7 +50,7 @@ if (empty($key))
 		
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
-			'L_HAVE_TO_ACCEPT' => !empty($_POST['register']) ? $LANG['register_have_to_accept'] : '',
+			'L_HAVE_TO_ACCEPT' => !empty($register_valid) ? $LANG['register_have_to_accept'] : '',
 			'MSG_REGISTER' => $CONFIG_USER['msg_register'],
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
@@ -58,7 +60,7 @@ if (empty($key))
 		
 		$Template->pparse('register');
 	}
-	elseif ($User->check_level(USER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
+	elseif ($User->check_level(USER_LEVEL) !== true && (!empty($register_confirm) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -244,7 +246,6 @@ if (empty($key))
 			'L_HEIGHT_MAX' => $LANG['height_max'],
 			'L_WIDTH_MAX' => $LANG['width_max']
 		));		
-			
 		
 		//Gestion thème par défaut.
 		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.

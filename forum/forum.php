@@ -72,7 +72,6 @@ if (!empty($id_get))
 	
 	//Invité?	
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
-	$module_data_path = $Template->get_module_data_path('forum');
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
@@ -168,7 +167,7 @@ if (!empty($id_get))
 			$img_announce .= ($row['status'] == '0') ? '_lock' : '';
 			
 			$Template->assign_block_vars('subcats', array(					
-				'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+				'IMG_ANNOUNCE' => $img_announce,
 				'NAME' => $row['name'],
 				'DESC' => $row['subname'],
 				'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
@@ -222,16 +221,17 @@ if (!empty($id_get))
 	$Template->assign_vars(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,		
-		'MODULE_DATA_PATH' => $module_data_path,
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'PAGINATION' => $Pagination->display('forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
 		'C_MASS_MODO_CHECK' => false,
+		'C_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
 		'U_FORUM_CAT' => $forum_cats,		
-		'U_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat) ? '&raquo; <a href="post' . url('.php?new=topic&amp;id=' . $id_get, '') . '" title="' . $LANG['post_new_subject'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_subject'] . '" title="' . $LANG['post_new_subject'] . '" /></a>' : '',
+		'U_POST_NEW_SUBJECT' => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX' => $LANG['forum_index'],		
 		'L_SUBFORUMS' => $LANG['sub_forums'],
 		'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
@@ -242,6 +242,7 @@ if (!empty($id_get))
 		'L_MESSAGE' => $LANG['message_s'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_messages'],
+		'L_POST_NEW_SUBJECT' => $LANG['post_new_subject'],
 		'L_FOR_SELECTION' => $LANG['for_selection'],
 		'L_CHANGE_STATUT_TO' => sprintf($LANG['change_status_to'], $CONFIG_FORUM['display_msg']),
 		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
@@ -312,11 +313,11 @@ if (!empty($id_get))
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->assign_block_vars('topics', array(
-			'ANNOUNCE' => $img_announce,
+			'C_IMG_POLL' => !empty($row['question']),
+			'C_IMG_TRACK' => !empty($row['idtrack']),
+			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
+			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'POLL' => !empty($row['question']) ? '<img src="' . $module_data_path . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
-			'TRACK' => !empty($row['idtrack']) ? '<img src="' . $module_data_path . '/images/favorite_mini.png" class="valign_middle" alt="" />' : '',
-			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $module_data_path . '/images/msg_display_mini.png" alt="" class="valign_middle" />' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',

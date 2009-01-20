@@ -145,7 +145,7 @@ elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'ker
 {
 	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', get_ulang());
 	if (!empty($array_info_module['name'])) //Module présent, et non installé.
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
 }
 
 // Verify that the user really wanted to do this POST

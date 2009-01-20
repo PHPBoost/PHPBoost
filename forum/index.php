@@ -54,8 +54,6 @@ if (!empty($id_get))
    AND c.level = \'' . $intervall['level'] . '\' + 1';
 }
 
-$module_data_path = $Template->get_module_data_path('forum');
-
 //Vérification des autorisations.
 $unauth_cats = '';
 if (is_array($AUTH_READ_FORUM))
@@ -185,7 +183,7 @@ while ($row = $Sql->fetch_assoc($result))
 		$total_topic += $row['nbr_topic'];
 		$total_msg += $row['nbr_msg'];
 		$Template->assign_block_vars('forums_list.subcats', array(
-			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+			'IMG_ANNOUNCE' => $img_announce,
 			'NAME' => $row['name'],
 			'DESC' => $row['subname'],
 			'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
@@ -251,7 +249,7 @@ $Template->assign_vars(array(
 	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $module_data_path,
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'C_TOTAL_POST' => true,
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],

@@ -91,6 +91,7 @@
 						<dt><label for="start_page">* {L_START_PAGE}</label></dt>
 						<dd><label>
 							<select name="start_page" id="start_page" onclick="document.getElementById('start_page2').value = '';">		
+								<option value="" selected="selected" id="start_page_default">--</option>
 								{SELECT_PAGE}			
 							</select> 
 						</label>

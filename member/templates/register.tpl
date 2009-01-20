@@ -28,7 +28,7 @@
 			<br /><br />
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="submit" name="register" value="{L_SUBMIT}" class="submit" />
+				<input type="submit" name="register_valid" value="{L_SUBMIT}" class="submit" />
 			</fieldset>
 		</form>
 		# ENDIF #

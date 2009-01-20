@@ -214,34 +214,19 @@ else //Sinon on rempli le formulaire
 	$start_page = '';
 	//Pages de démarrage
 	$i = 0;
-	$root = '../';
-	if (is_dir($root)) //Si le dossier existe
+	foreach ($modules_config as $name => $array_info)
 	{
-		$dh = @opendir($root);
-		while (!is_bool($dir = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false)
-			{
-				//Désormais on vérifie que le fichier de configuration est présent.
-				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
-				{
-					$config = load_ini_file($root . $dir . '/lang/', get_ulang());
-					if (!empty($config['starteable_page'])) //Module possible comme page de démarrage.
-					{	
-						$selected = '';
-						if ('/' . $dir . '/' . $config['starteable_page'] == $CONFIG['start_page'])
-						{	
-							$selected = 'selected="selected"';
-							$start_page = $CONFIG['start_page'];
-						}						
-						$select_page .= '<option value="' . '/' . $dir . '/' . $config['starteable_page'] . '" ' . $selected . '>' . $config['name'] . '</option>';
-						$i++;					
-					}
-				}
-			}
-		}	
-		closedir($dh); //On ferme le dossier
+		if (!empty($array_info['starteable_page']))
+		{
+			$selected = '';
+			if ('/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] == $CONFIG['start_page'])
+			{	
+				$selected = 'selected="selected"';
+				$start_page = $CONFIG['start_page'];
+			}	
+			$select_page .= '<option value="' . '/' . $array_info['module_name'] . '/' . $array_info['starteable_page'] . '" ' . $selected . '>' . $name . '</option>';
+			$i++;
+		}
 	}
 	if ($i == 0)
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
@@ -251,7 +236,7 @@ else //Sinon on rempli le formulaire
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
-		'SELECT_PAGE' => empty($start_page) ? '<option value="" selected="selected" id="start_page_default">--</option>' . $select_page : $select_page, 
+		'SELECT_PAGE' => $select_page, 
 		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
 		'MAIL' => !empty($CONFIG['mail']) ? $CONFIG['mail'] : '',   
 		'SIGN' => !empty($CONFIG['sign']) ? $CONFIG['sign'] : '',
