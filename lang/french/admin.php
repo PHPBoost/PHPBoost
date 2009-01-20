@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -172,7 +172,7 @@ $LANG['info'] = 'Informations';
 $LANG['language'] = 'Langue';
 $LANG['sanction'] = 'Sanction';
 $LANG['ban'] = 'Banni';
-$LANG['theme'] = 'Thème';	
+$LANG['theme'] = 'Thème';
 $LANG['code'] = 'Code';
 $LANG['status'] = 'Statut';
 $LANG['question'] = 'Question';
@@ -186,7 +186,7 @@ $LANG['show'] = 'Consulter';
 $LANG['link'] = 'Lien';
 $LANG['type'] = 'Type';
 $LANG['of'] = 'de';
-$LANG['autoconnect'] = 'Connexion automatique';	
+$LANG['autoconnect'] = 'Connexion automatique';
 $LANG['unspecified'] = 'Non spécifié';
 $LANG['configuration'] = 'Configuration';
 $LANG['management'] = 'Gestion';
@@ -198,7 +198,7 @@ $LANG['powered_by'] = 'Boosté par';
 $LANG['release_date'] = 'Date de parution jj/mm/aa';
 $LANG['immediate'] = 'Immédiate';
 $LANG['waiting'] = 'En attente';
-$LANG['stats'] = 'Statistiques'; 
+$LANG['stats'] = 'Statistiques';
 $LANG['cat_management'] = 'Gestion des catégories';
 $LANG['cat_add'] = 'Ajouter une catégorie';
 $LANG['visible'] = 'Visible';
@@ -357,9 +357,9 @@ $LANG['unlock_title_mail'] = 'Mail à conserver';
 $LANG['unlock_mail'] = 'Code à conserver (Il ne vous sera plus délivré) : %s
 
 Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné.
-Il vous sera demandé dans le formulaire de connexion directe à l\'administration (votreserveur/admin/admin_index.php) 
+Il vous sera demandé dans le formulaire de connexion directe à l\'administration (votreserveur/admin/admin_index.php)
 
-' . $CONFIG['sign'];	
+' . $CONFIG['sign'];
 
 //Maintain
 $LANG['maintain_for'] = 'Mettre le site en maintenance';
@@ -434,7 +434,8 @@ $LANG['confirm_delete_element'] = 'Voulez vous vraiment supprimer cet élément?';
 $LANG['menus_management'] = 'Gestion des menus';
 $LANG['menus_content_add'] = 'Ajout menu de contenu';
 $LANG['menus_links_add'] = 'Ajout menu de lien';
-$LANG['menus_edit'] = 'Modifier menu';
+$LANG['menus_feed_add'] = 'Ajout de flux';
+$LANG['menus_edit'] = 'Modifier le menu';
 $LANG['vertical_menu'] = 'Menu vertical';
 $LANG['horizontal_menu'] = 'Menu horizontal';
 $LANG['tree_menu'] = 'Menu arborescent';
@@ -477,7 +478,7 @@ $LANG['smiley_code'] = 'Code du smiley (ex : :D)';
 $LANG['smiley_available'] = 'Smileys disponibles';
 $LANG['edit_smiley'] = 'Edition des smileys';
 $LANG['smiley_management'] = 'Gestion des smileys';
-$LANG['e_smiley_already_exist'] = 'Le smiley existe déjà';	
+$LANG['e_smiley_already_exist'] = 'Le smiley existe déjà';
 		
 //Thèmes
 $LANG['upload_theme'] = 'Uploader un thème';
@@ -511,8 +512,8 @@ $LANG['del_lang_files'] = 'Supprimer les fichiers de la langue';
 $LANG['explain_default_lang'] = 'La langue par défaut ne peut pas être désinstallée, désactivée ou réservée';
 	
 //Comments
-$LANG['com_management'] = 'Gestion des commentaires';		
-$LANG['com_config'] = 'Configuration des commentaires';		
+$LANG['com_management'] = 'Gestion des commentaires';
+$LANG['com_config'] = 'Configuration des commentaires';
 $LANG['com_max'] = 'Nombre de commentaires par page';
 $LANG['rank_com_post'] = 'Rang pour pouvoir poster des commentaires';
 $LANG['display_topic_com'] = 'Voir la discussion';
@@ -556,7 +557,7 @@ $LANG['avatar_del'] = 'Supprimer l\'avatar courant';
 $LANG['no_avatar'] = 'Aucun avatar';
 $LANG['weight_max'] = 'Poids maximum';
 $LANG['height_max'] = 'Hauteur maximale';
-$LANG['width_max'] = 'Largeur maximale';			
+$LANG['width_max'] = 'Largeur maximale';
 $LANG['sex'] = 'Sexe';
 $LANG['male'] = 'Homme';
 $LANG['female'] = 'Femme';

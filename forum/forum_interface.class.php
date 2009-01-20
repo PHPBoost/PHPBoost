@@ -342,6 +342,17 @@ class ForumInterface extends ModuleInterface
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
+    
+    function get_feeds_list()
+    {
+        global $LANG, $CAT_FORUM;
+        $feeds = array('name' => $LANG['root'], 'categories' => array(), 'feeds_names' => array('master'));
+        
+        
+        
+        return $feeds;
+    }
+    
     function get_feed_data_struct($idcat = 0, $name = '')
     {
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_FORUM, $CAT_FORUM, $User;
