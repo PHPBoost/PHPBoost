@@ -3,7 +3,7 @@
  *                               admin_phpinfo.php
  *                            -------------------
  *   begin                : November 06, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@gmail.com
  *
  *
@@ -30,6 +30,9 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 ob_start();
+
+$template = new Template('admin/admin_phpinfo.tpl');
+
 phpinfo();
 $phpinfo = ob_get_contents();
 $phpinfo = preg_replace('`^.*<body>`is', '', $phpinfo);
@@ -38,7 +41,15 @@ array('class="row1"', 'class="row2"', 'class="row3"', '<em class="em">', '</em>'
 ob_end_clean();
 
 ob_start();
-echo $phpinfo;
+
+$template->assign_vars(array(
+    'PHPINFO' => $phpinfo,
+	'L_SYSTEM_REPORT' => $LANG['system_report'],
+	'L_SERVER' => $LANG['server'],
+    'L_PHPINFO' => $LANG['phpinfo']
+));
+
+$template->parse();
 
 require_once('../admin/admin_footer.php');
 
