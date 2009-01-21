@@ -19,7 +19,7 @@
 		{ALTERNATIVE_CSS}
 
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
-		<link rel="alternate" href="{PATH_TO_ROOT}/news/syndication.php" type="application/rss+xml" title="RSS {SITE_NAME}" />
+		<link rel="alternate" href="{PATH_TO_ROOT}/syndication.php?m=news" type="application/rss+xml" title="RSS {SITE_NAME}" />
 		
 		<script type="text/javascript">
 		<!--

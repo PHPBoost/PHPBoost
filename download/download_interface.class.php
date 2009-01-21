@@ -211,7 +211,7 @@ class DownloadInterface extends ModuleInterface
         // Meta-informations generation
         $data->set_title($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'download/syndication.php');
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=download');
         $data->set_host(HOST);
         $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_lang($LANG['xml_lang']);

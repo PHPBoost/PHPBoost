@@ -179,7 +179,7 @@ class WikiInterface extends ModuleInterface
         
         $data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']);
         $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'wiki/syndication.php?idcat=' . $idcat);
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=wiki&amp;cat=' . $idcat);
         $data->set_host(HOST);
         $data->set_desc($desc);
         $data->set_lang($LANG['xml_lang']);
@@ -255,7 +255,7 @@ class WikiInterface extends ModuleInterface
 			
 			$Template->assign_block_vars('last_articles', array(
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
-				'RSS' => $articles_number > 0 ? '<a href="syndication.php"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
+				'RSS' => $articles_number > 0 ? '<a href="{PATH_TO_ROOT}/syndication.php?m=wiki"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 			));
 			
 			$i = 0;

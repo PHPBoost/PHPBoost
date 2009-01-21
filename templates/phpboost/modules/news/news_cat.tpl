@@ -2,7 +2,7 @@
 			<div class="news_top_l"></a></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<a href="syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /> <h3 class="title valign_middle">{L_CATEGORY} :: {CAT_NAME} {EDIT}</h3>
+				<a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /> <h3 class="title valign_middle">{L_CATEGORY} :: {CAT_NAME} {EDIT}</h3>
 			</div>	
 			<div class="news_content" style="border-bottom:none;">
 				<ul style="margin:20px;">

@@ -92,7 +92,7 @@ class MediaInterface extends ModuleInterface
 		$result = $Sql->query_while("SELECT id, idcat, name FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($auth_cats, ',') . ") ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
 		
 		while ($mini = $Sql->fetch_assoc($result))
-		{	
+		{
 			$string .= '$MEDIA_MINI[' . $i . '] = ' . var_export($mini, true) . ';' . "\n\n";
 			$i++;
 		}
@@ -127,7 +127,7 @@ class MediaInterface extends ModuleInterface
         // Meta-informations generation
         $data->set_title($MEDIA_LANG['xml_media_desc']);
         $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'media/syndication.php');
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=media');
         $data->set_host(HOST);
         $data->set_desc($MEDIA_LANG['xml_media_desc']);
         $data->set_lang($LANG['xml_lang']);

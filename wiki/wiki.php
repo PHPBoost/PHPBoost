@@ -13,7 +13,7 @@
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 load_module_lang('wiki');
 
 define('ALTERNATIVE_CSS', 'wiki');
@@ -48,7 +48,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 	LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 	LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 	WHERE a.encoded_title = '" . $encoded_title . "'
-	GROUP BY a.id", __LINE__, __FILE__);	
+	GROUP BY a.id", __LINE__, __FILE__);
 	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$article_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
@@ -64,7 +64,7 @@ if (!empty($encoded_title)) //Si on connait son titre
 		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 		LEFT JOIN " . PREFIX . "wiki_favorites f ON f.id_article = a.id
 		WHERE a.id = '" . $article_infos['redirect'] . "'
-		GROUP BY a.id", __LINE__, __FILE__);	
+		GROUP BY a.id", __LINE__, __FILE__);
 		$article_infos = $Sql->fetch_assoc($result);
 		$Sql->query_close($result);
 		$id_article = $article_infos['id'];
@@ -92,7 +92,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 $page_title = (!empty($article_infos['title']) ? $article_infos['title'] . ' - ' : '') . (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
 define('TITLE', $page_title);
 
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $Template->set_filenames(array(
 	'wiki'=> 'wiki/wiki.tpl',
@@ -104,7 +104,7 @@ $Template->assign_vars(array(
 
 //Si il s'agit d'un article
 if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
-{ 
+{
 	if ($_WIKI_CONFIG['count_hits'] != 0)//Si on prend en compte le nombre de vus
 		$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "wiki_articles SET hits = hits + 1 WHERE id = '" . $article_infos['id'] . "'", __LINE__, __FILE__);
 
@@ -176,7 +176,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 		$num_articles = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE a.id_cat = '" . $article_infos['id_cat'] . "' AND a.id <> '" . $id_article . "' AND a.redirect = 0", __LINE__, __FILE__);
 		
 		$Template->assign_block_vars('cat', array(
-			'RSS' => $num_articles > 0 ? '<a href="syndication.php?cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
+			'RSS' => $num_articles > 0 ? '<a href="{PATH_TO_ROOT}/syndication.php?m=wiki&amp;cat=' . $article_infos['id_cat'] . '"><img src="../templates/' . get_utheme() . '/images/rss.png" alt="RSS" /></a>' : ''
 		));
 
 		while ($row = $Sql->fetch_assoc($result))
@@ -212,7 +212,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 	$page_type = $article_infos['is_cat']  == 1 ? 'cat' : 'article';
 	include('../wiki/wiki_tools.php');
 	
-	$Template->pparse('wiki');	
+	$Template->pparse('wiki');
 }
 //Si l'article n'existe pas
 elseif (!empty($encoded_title) && $num_rows == 0)
@@ -229,12 +229,12 @@ else
 	if ($module->has_functionnality('get_home_page')) {
 		echo $module->functionnality('get_home_page');
 	} elseif (!$no_alert_on_error) {
-		global $Errorh;	
+		global $Errorh;
 		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
 		exit;
 	}
 }
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

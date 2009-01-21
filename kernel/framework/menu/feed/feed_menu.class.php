@@ -53,7 +53,7 @@ class FeedMenu extends Menu
     {
         return Url::get_absolute_root() . '/syndication.php?m=' . $this->module_id .
         ($this->category > 0 ? '&amp;cat=' . $this->category : '') .
-        (!empty($this->name) && $this->name != DEFAULT_FEED_NAME ? '&amp;cat=' . $this->name : '');
+        (!empty($this->name) && $this->name != DEFAULT_FEED_NAME ? '&amp;name=' . $this->name : '');
     }
     
     ## Getters ##

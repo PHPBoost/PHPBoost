@@ -29,7 +29,7 @@
             <div class="news_top_l"></div>
             <div class="news_top_r"></div>
             <div class="news_top">
-                <div style="float:left;padding-left:30px;"><a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a></div>
+                <div style="float:left;padding-left:30px;"><a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a></div>
                 <div style="float:right;"><h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
             </div>  
             <div class="news_content">
@@ -51,7 +51,7 @@
             <div class="news_top_r"></div>
             <div class="news_top">
                 <span style="float:left;padding-left:5px;">
-                    <a href="../news/syndication.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+                    <a href="../syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
                     <a class="news_title" href="../news/news{news.U_NEWS_LINK}">{news.TITLE}</a>
                 </span>
                 <span style="float:right;">{news.COM}{news.EDIT}{news.DEL}</span>
@@ -94,7 +94,7 @@
 			<div class="news_top_l"></div>			
 			<div class="news_top_r"></div>
 			<div class="news_top">
-				<div style="float:left"><a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
+				<div style="float:left"><a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	
 			<div class="news_content">

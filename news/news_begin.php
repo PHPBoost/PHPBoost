@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,12 +25,12 @@
  *
 ###################################################*/
 
-if (defined('PHPBOOST') !== true)	
+if (defined('PHPBOOST') !== true)
 	exit;
 	
 load_module_lang('news'); //Chargement de la langue du module.
 
-$idnews = retrieve(GET, 'id', 0);	
+$idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 
 if (!empty($idnews) && empty($idcat))
@@ -38,7 +38,7 @@ if (!empty($idnews) && empty($idcat))
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.archive, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
 	FROM " . PREFIX . "news n
 	LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id		
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 	WHERE n.visible = 1 AND n.id = '" . $idnews . "'", __LINE__, __FILE__);
 	$news = $Sql->fetch_assoc($result);
 	
@@ -59,6 +59,6 @@ $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 $Cache->load('news');
 //Css alternatif.
 define('ALTERNATIVE_CSS', 'news');
-define('FEED_URL', '/news/syndication.php');
+define('FEED_URL', '/syndication.php?m=news');
 
 ?>

@@ -180,9 +180,9 @@ $other_tools[$LANG['wiki_explorer_short']] = array(url('explorer.php'), 'explore
 
 //Flux RSS du wiki
 if ($page_type == 'index')
-$other_tools[$LANG['wiki_rss']] = array(url('syndication.php'), 'rss');
+    $other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki'), 'rss');
 if ($page_type == 'cat')
-$other_tools[$LANG['wiki_rss']] = array(url('syndication.php?idcat=' . $article_infos['id_cat']), 'rss');
+    $other_tools[$LANG['wiki_rss']] = array(url(PATH_TO_ROOT . '/syndication.php?m=wiki&amp;cat=' . $article_infos['id_cat']), 'rss');
 //On parse
 if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
 {
