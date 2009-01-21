@@ -131,7 +131,7 @@
 									<div class="msg_top_l"></div>			
 									<div class="msg_top_r"></div>
 									<div class="msg_top">
-										<div style="float:left"><a href="syndication.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.preview.TITLE}</h3></div>
+										<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.preview.TITLE}</h3></div>
 										<div style="float:right"></div>
 									</div>													
 									<div class="news_content">

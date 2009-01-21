@@ -150,7 +150,7 @@ class ArticlesInterface extends ModuleInterface
         
         $data->set_title($LANG['xml_articles_desc']);
         $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'articles/syndication.php?idcat=' . $idcat);
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=articles&amp;cat=' . $idcat);
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_articles_desc']);
         $data->set_lang($LANG['xml_lang']);

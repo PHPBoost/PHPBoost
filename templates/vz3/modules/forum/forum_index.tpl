@@ -30,7 +30,7 @@ countries.init()
 				<div class="module_top_r"></div>
 				<div class="module_top">
 					<span style="float:left">
-						<a href="syndication.php?idcat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+						<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;idcat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
 					<span style="float:right">

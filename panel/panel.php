@@ -3,12 +3,12 @@
  * panel.php
  *
  * @ copyright         (C) 2008 Alain GANDON
- *  @email                
+ *  @email
  * @license               GPL
  *
  */
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../panel/panel_begin.php');
 require_once('../kernel/header.php');
 
@@ -36,7 +36,7 @@ $Cache->load('panel');
 						$modulesLoader = new ModulesDiscoveryService();
 						$module_name = $v['module'];
 						$module = $modulesLoader->get_module($module_name);
-						$get_feed_menu = get_feed_menu('/'.$v['module'].'/syndication.php');						
+						$get_feed_menu = get_feed_menu('/syndication.php?m=' . $v['module']);
 						switch ($v['type']) {
 							default:
 							case 'feed':
@@ -63,6 +63,6 @@ $Cache->load('panel');
 		
 	$Template->pparse('panel');
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

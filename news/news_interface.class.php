@@ -106,7 +106,7 @@ class NewsInterface extends ModuleInterface
         
         $data->set_title($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
         $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'news/syndication.php?idcat=' . $idcat);
+        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=news&amp;cat=' . $idcat);
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
         $data->set_lang($LANG['xml_lang']);

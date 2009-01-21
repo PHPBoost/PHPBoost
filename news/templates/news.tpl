@@ -12,7 +12,7 @@
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<div style="float:left"><a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{TITLE}</h3></div>
+				<div style="float:left"><a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{TITLE}</h3></div>
 				<div style="float:right">{EDIT}</div>
 			</div>	
 			<div class="news_content">
@@ -30,7 +30,7 @@
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3>
+				<a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3>
 			</div>	
 			<div class="news_content">
 				<p class="text_strong text_center">{L_NO_NEWS_AVAILABLE}</p>
@@ -51,7 +51,7 @@
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<div style="float:left"><a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <a href="../news/news{news.U_NEWS_LINK}" class="news_title">{news.TITLE}</a></div>
+				<div style="float:left"><a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <a href="../news/news{news.U_NEWS_LINK}" class="news_title">{news.TITLE}</a></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>							
 			<div class="news_content">
@@ -83,7 +83,7 @@
 			<div class="msg_top_l"></div>			
 			<div class="msg_top_r"></div>
 			<div class="msg_top">
-				<div style="float:left"><a href="../news/syndication.php" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
+				<div style="float:left"><a href="../syndication.php?m=news" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a> <h3 class="title valign_middle">{L_LAST_NEWS}</h3></div>
 				<div style="float:right">{news.COM}{news.EDIT}{news.DEL}</div>
 			</div>	
 			<div class="news_content">
