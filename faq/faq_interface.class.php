@@ -109,7 +109,7 @@ class FaqInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
         $Cats = new FaqCats();
         $auth_cats = array();
-        $Cats->build_children_id_list(0, $list);
+        $Cats->build_children_id_list(0, $auth_cats);
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
