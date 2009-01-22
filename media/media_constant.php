@@ -90,6 +90,7 @@ $host_ok = array(
 	),
 	'video' => array(
 		'www.deezer.com',
+		'widgets.jamendo.com'
 	)
 );
 
