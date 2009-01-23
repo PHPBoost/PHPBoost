@@ -1,5 +1,5 @@
 # IF C_MINI #
-<div class="module_mini_container" style="{STYLE}">
+<div style="margin:2px;height:100px;width:150px;background-color:pink;float:left; {STYLE}" class="draggable" id="draggable_{IDMENU}">
     <div class="module_mini_top">
         <span id="m{IDMENU}"></span>
         <h5 class="sub_title">
@@ -22,45 +22,12 @@
                 <option value="1" {SELECT_ENABLED}>{L_ENABLED}</option>
                 <option value="0" {SELECT_DISABLED}>{L_DISABLED}</option>
             </select>
-        </p>                        
-        <div style="width:100px;height:30px;margin:auto;">
-            <div style="float:left">
-                # IF C_UP #
-                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
-                # ELSE #
-                    <div style="float:left;width:32px;"> </div>
-                # ENDIF #
-                # IF C_DOWN #
-                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
-                # ELSE #
-                    <div style="float:left;width:32px;"> </div>
-                # ENDIF #
-            </div>
-            <div style="position:relative;float:right">
-                <div style="position:absolute;z-index:99;margin-top:155px;margin-left:-70px;float:left;display:none;" id="movemenu{IDMENU}">
-                    <div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);">
-                        <div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_HEADER}">{L_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_SUBHEADER}">{L_SUB_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_LEFT}">{L_LEFT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_TOPCENTRAL}">{L_TOP_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_BOTTOMCENTRAL}">{L_BOTTOM_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_RIGHT}">{L_RIGHT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_TOPFOOTER}">{L_TOP_FOOTER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_FOOTER}">{L_FOOTER}</a></div>
-                    </div>
-                </div>
-                <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
-            </div>
-        </div>
-        
-        <p>{CONTENTS}</p>&nbsp;
+        </p>
     </div>
-    <div class="module_mini_bottom">
-    </div>
+    <div class="module_mini_bottom"></div>
 </div>
 # ELSE #
-<div style="margin:15px;width:auto;{ADDITIONAL_STYLE}" class="module_position">
+<div style="margin:2px;height:100px;width:150px;background-color:pink;float:left;" class="draggable" id="draggable_{IDMENU}">
     <div class="module_top_l"></div>
     <div class="module_top_r"></div>
     <div class="module_top">
@@ -87,41 +54,12 @@
                 <option value="0" {SELECT_DISABLED}>{L_DISABLED}</option>
             </select>
         </p>
-        <div style="width:100px;height:30px;">
-            <div style="float:left">
-                # IF C_UP #
-                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
-                # ELSE #
-                    <div style="float:left;width:32px;"> </div>
-                # ENDIF #
-                # IF C_DOWN #
-                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
-                # ELSE #
-                    <div style="float:left;width:32px;"> </div>
-                # ENDIF #
-            </div>
-            <div style="position:relative;float:right">
-                <div style="position:absolute;z-index:100;margin-top:155px;margin-left:-100px;float:left;display:none;" id="movemenu{IDMENU}">
-                    <div class="bbcode_block" style="width:170px;overflow:auto;" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);">
-                        <div style="margin-bottom:4px;" class="text_small"><strong>{L_MOVETO}</strong>:</div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EE713A;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_HEADER}">{L_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#CCFF99;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_SUBHEADER}">{L_SUB_HEADER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#9B8FFF;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_LEFT}">{L_LEFT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FFE25F;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_TOPCENTRAL}">{L_TOP_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#FF5F5F;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_BOTTOMCENTRAL}">{L_BOTTOM_CENTRAL_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#EA6FFF;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_RIGHT}">{L_RIGHT_MENU}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#61B85C;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_TOPFOOTER}">{L_TOP_FOOTER}</a></div>
-                        <div style="float:left;margin-left:5px;height:10px;width:10px;background:#A8D1CB;border:1px solid black"></div> <div style="clear:right"><a href="{U_MOVE}&amp;move={I_FOOTER}">{L_FOOTER}</a></div>
-                    </div>
-                </div>
-            </div>
-            <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
-        </div>
-        <p>{CONTENTS}</p>
-        <br /><br />
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>
     <div class="module_bottom"></div>
 </div>
 # ENDIF #
+<script type="text/javascript">
+new Draggable('draggable_{IDMENU}');
+</script>

@@ -28,6 +28,15 @@
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>	
+		
+<style type="text/css">
+  div.draggable {
+	z-index:500; }
+  div.droppable_hover {
+    border: 5px dashed #aaa;
+    background:#efefef; }
+</style>
+
 	</head>
 	<body>
 	<div id="global">
