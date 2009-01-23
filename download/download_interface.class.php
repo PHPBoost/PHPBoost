@@ -112,7 +112,7 @@ class DownloadInterface extends ModuleInterface
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         $cats = new DownloadCats();
         $auth_cats = array();
-        $cats->build_children_id_list(0, $list);
+        $cats->build_children_id_list(0, $auth_cats);
         
         $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         

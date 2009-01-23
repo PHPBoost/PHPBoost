@@ -171,6 +171,34 @@ class MediaInterface extends ModuleInterface
         
         return $data;
     }
+    
+    function get_search_request($args)
+    /**
+     *  Renvoie la requête de recherche
+     */
+    {
+        global $Sql, $Cache;
+		$Cache->load('media');
+		
+        $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
+        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
+        $Cats = new MediaCats();
+        $auth_cats = array();
+        $Cats->build_children_id_list(0, $auth_cats);
+        
+        $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
+        
+        $request = "SELECT " . $args['id_search'] . " AS id_search,
+            f.id AS id_content,
+            f.name AS title,
+            ( 2 * MATCH(f.name) AGAINST('" . $args['search'] . "') + MATCH(f.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
+            . $Sql->concat("'../media/media.php?id='","f.idcat","'&amp;name='","f.id","'#q'","f.id") . " AS link
+            FROM " . PREFIX . "media f
+            WHERE ( MATCH(f.name) AGAINST('" . $args['search'] . "') OR MATCH(f.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
+            . " ORDER BY relevance DESC " . $Sql->limit(0, MEDIA_MAX_SEARCH_RESULTS);
+        
+        return $request;
+    }
 }
 
 ?>
