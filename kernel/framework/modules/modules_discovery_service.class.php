@@ -127,8 +127,13 @@ class ModulesDiscoveryService
      */
     {
         $module_constructor = ucfirst($module_id.'Interface');
+		$file = PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_interface.class.php';
         
-        $include = @include_once(PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_interface.class.php');
+		if (!DEBUG) {
+			$include = @include_once($file);
+		} else {
+			$include = include_once($file);
+		}
         if ($include && class_exists($module_constructor))
         {   // The Interface exists
             $module = new $module_constructor();

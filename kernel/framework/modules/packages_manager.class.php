@@ -83,12 +83,19 @@ class PackagesManager
 		}
 		
 		//Parsage du fichier sql.
-		if (file_exists(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql'))
-			$Sql->parse(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql', PREFIX);
+		$sql_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.' . DBTYPE . '.sql';
+		if (file_exists($sql_file))
+			$Sql->parse($sql_file, PREFIX);
 		
 		//Parsage du fichier php.
-		if (file_exists(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php'))
-			@include_once(PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php');
+		$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
+		if (file_exists($php_file)) {
+			if (!DEBUG) {
+				@include_once($php_file);
+			} else {
+				include_once($php_file);				
+			}
+		}
 		
 		//Génération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
