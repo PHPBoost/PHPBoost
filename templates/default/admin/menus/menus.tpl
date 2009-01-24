@@ -110,6 +110,7 @@
 	</table>
 
 <script type="text/javascript">
+  // <![CDATA[
 var drop_array = ['droppable_available','droppable_{I_HEADER}','droppable_{I_SUBHEADER}',
 	'droppable_{I_LEFT}', 'droppable_{I_TOPCENTRAL}','droppable_{I_BOTTOMCENTRAL}','droppable_{I_RIGHT}',
 	'droppable_{I_TOPFOOTER}','droppable_{I_FOOTER}'];
@@ -129,7 +130,7 @@ for(i=0; i<drop_array.length; i++) {
 			}
 	});
 }
-
+  // ]]>
 </script>
 
 </div>
