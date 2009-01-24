@@ -131,8 +131,10 @@ class ModulesDiscoveryService
         
 		if (!DEBUG) {
 			$include = @include_once($file);
-		} else {
+		} elseif (file_exists($file)) {
 			$include = include_once($file);
+		} else {
+			$include = FALSE;
 		}
         if ($include && class_exists($module_constructor))
         {   // The Interface exists
