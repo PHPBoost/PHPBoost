@@ -574,6 +574,7 @@ class Sessions
 	 */
     function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
+		return TRUE; // alain91
         if (!empty($_POST) && !$this->_check_referer())
         {
             return $this->_csrf_attack($redirect);
@@ -591,6 +592,7 @@ class Sessions
      */
     function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
+		return TRUE; //alain91
         $token = $this->get_token();
         if (!$this->_check_referer() || empty($token) || retrieve(GET, 'token', '') !== $token)
         {
