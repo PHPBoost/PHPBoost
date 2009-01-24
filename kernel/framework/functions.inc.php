@@ -261,11 +261,7 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
 	$file = $dir_path . $require_dir . '/' . $ini_name;
-	if (!DEBUG) {
-		$result = @parse_ini_file($file);
-	} else {
-		$result = parse_ini_file($file);
-	}
+	$result = @parse_ini_file($file);
     return $result;
 }
 
