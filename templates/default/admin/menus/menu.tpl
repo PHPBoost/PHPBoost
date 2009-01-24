@@ -61,5 +61,7 @@
 </div>
 # ENDIF #
 <script type="text/javascript">
+  // <![CDATA[
 new Draggable('draggable_{IDMENU}');
+  // ]]>
 </script>
