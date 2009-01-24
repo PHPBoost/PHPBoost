@@ -230,10 +230,22 @@ function load_module_lang($module_name)
 {
     global $LANG;
 
-    if (!@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php'))
+	$file = PATH_TO_ROOT . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
+	if (!DEBUG) {
+		$result = @include_once($file);
+	} else {
+		$result = include_once($file);
+	}
+    if (!$result)
     {
         $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
-        if (!@include_once(PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'))
+		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
+		if (!DEBUG) {
+			$result2 = @include_once($file2);
+		} else {
+			$result2 = include_once($file2);
+		}
+        if (!$result2)
         {
             global $Errorh;
             
@@ -248,7 +260,13 @@ function load_module_lang($module_name)
 function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
-    return @parse_ini_file($dir_path . $require_dir . '/' . $ini_name);
+	$file = $dir_path . $require_dir . '/' . $ini_name;
+	if (!DEBUG) {
+		$result = @parse_ini_file($file);
+	} else {
+		$result = parse_ini_file($file);
+	}
+    return $result;
 }
 
 //Parcours d'une chaine sous la forme d'un simili tableau php. Retourne un tableau correctement construit.

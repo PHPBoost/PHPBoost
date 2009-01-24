@@ -50,18 +50,32 @@ class Cache
 		global $Errorh, $Sql;
 		
 		//On charge le fichier
+		$cache_file = PATH_TO_ROOT . '/cache/' . $file . '.php';
 		if ($reload_cache)
-		    $include = !@include(PATH_TO_ROOT . '/cache/' . $file . '.php');
+			if (!DEBUG) {
+				$include = @include($cache_file);
+			} else {
+				$include = include($cache_file);
+			}
 	    else
-            $include = !@include_once(PATH_TO_ROOT . '/cache/' . $file . '.php');
-		if ($include)
+			if (!DEBUG) {
+				$include = @include_once($cache_file);
+			} else {
+				$include = include_once($cache_file);
+			}
+		if (!$include)
 		{
 			if (in_array($file, $this->files))
 			{
 				//Régénération du fichier
 				$this->generate_file($file);
 				//On inclue une nouvelle fois
-				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
+				if (!DEBUG) {
+					$include2 = @include($cache_file);
+				} else {
+					$include2 = include($cache_file);
+				}				
+				if (!$include2)
 					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 			else
@@ -69,7 +83,12 @@ class Cache
 				//Régénération du fichier du module.
 				$this->generate_module_file($file);
 				//On inclue une nouvelle fois
-				if (!@include(PATH_TO_ROOT . '/cache/' . $file . '.php'))
+				if (!DEBUG) {
+					$include3 = @include($cache_file);
+				} else {
+					$include3 = include($cache_file);
+				}				
+				if (!$include3)
 					$Errorh->handler('Cache -> Can\'t generate <strong>' . $file . '</strong>, cache file!', E_USER_ERROR, __LINE__, __FILE__); //Enregistrement dans le log d'erreur.
 			}
 		}

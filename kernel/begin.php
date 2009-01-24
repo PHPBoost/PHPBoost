@@ -32,6 +32,8 @@ header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
+define('DEBUG', TRUE); // ajout par alain91 du mode DEBUG
+
 //Inclusion des fichiers
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 import('util/bench');
