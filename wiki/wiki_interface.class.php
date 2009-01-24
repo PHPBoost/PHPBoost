@@ -229,7 +229,7 @@ class WikiInterface extends ModuleInterface
 		global $Sql, $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
 
 		load_module_lang('wiki');
-		include('../wiki/wiki_functions.php');
+		include_once('../wiki/wiki_functions.php');
 		$bread_crumb_key = 'wiki';
 		require_once('../wiki/wiki_bread_crumb.php');
 		
