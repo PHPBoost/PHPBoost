@@ -25,7 +25,7 @@
 		-->
 		</script>
 		
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype-minified.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js?load=effects,dragdrop"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>	
 		
