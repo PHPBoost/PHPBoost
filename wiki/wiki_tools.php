@@ -190,7 +190,7 @@ if ($page_type == 'index' || $page_type == 'article' || $page_type = 'cat')
 	foreach ($tools as $key => $value)
 	{
 		$Template->assign_block_vars('tool', array(
-			'U_TOOL' => $value[0],
+			'U_TOOL' => '../wiki/'.$value[0],
 			'L_TOOL' => $key
 		));
 		$Template->assign_block_vars('contribution_tools', array(
@@ -207,7 +207,7 @@ $i = 1;
 foreach ($other_tools as $key => $value)
 {
 	$Template->assign_block_vars('tool', array(
-		'U_TOOL' => $value[0],
+		'U_TOOL' => '../wiki/'.$value[0],
 		'L_TOOL' => $key
 	));
 	if ($i < $nbr_values && !empty($key))
