@@ -126,7 +126,7 @@ for(i=0; i<drop_array.length; i++) {
 			var in2 = drag_elt.id;
 			var p2 = in2.indexOf("_",0);
 			var out2 = in2.substring(p1+1, in1.length); 
-			location.href = "../menus/menus.php?move=" + out1 + "&id=" + out2;
+			location.href = "../menus/menus.php?move=" + out1 + "&id=" + out2 + "&token={U_TOKEN}";
 			}
 	});
 }
