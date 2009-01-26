@@ -203,7 +203,7 @@ foreach ($menus_blocks as $block_id => $menus)
         $menu_tpl->assign_vars(array(
             'NAME' => $menu->get_title(),
             'IDMENU' => $id,
-            'U_ONCHANGE_ENABLED' => '\'../admin/menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '&amp;token=' . $Session->get_token() . '#m' . $id . '\'',
+            'U_ONCHANGE_ENABLED' => '\'menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '&amp;token=' . $Session->get_token() . '#m' . $id . '\'',
             'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
             'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
             'CONTENTS' => $menu->admin_display(),
