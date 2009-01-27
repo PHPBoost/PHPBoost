@@ -11,12 +11,57 @@
 
 
 		<script type="text/javascript">
-		<!--
-		function check_form_conf(o)
+		//<![CDATA[
+		function trim(stringToTrim) {
+			return stringToTrim.replace(/^\s+|\s+$/g,"");
+		}
+
+		function Cat(an_id,a_name) {
+			this.id=an_id;
+			this.name=a_name;
+		}
+
+		var table_cats = new Array();
+{TABLE_CATS}
+
+		function check_form_conf(f)
 		{
+			if (f.panel_module.value == "0") {
+				alert("Choisir un module SVP.");
+				f.panel_module.focus();
+				return false;			
+			}
+			var limit_max = trim(f.panel_limit_max.value);
+			if (limit_max != "") {
+				if(isNaN(limit_max) || (limit_max <= 0) ) {
+					alert("La limite maxi doit être un nombre positif.");
+					f.panel_limit_max.focus();
+					return false;
+				}
+			}
 			return true;
-		}	
-		-->
+		}
+		
+		function change_cat(o)
+		{
+			var tmp = o.options[o.options.selectedIndex].value;
+			if (tmp == 0) return;
+			
+			// effacer le contenu courant
+			var o1 = document.getElementById("panel_cat");
+			for (i=1; i<o1.length; i++) {
+				o1[i] = null;
+			}
+			// mettre les cats du module	
+			if (table_cats[tmp].length != 0) {
+				o1.length = 1 + table_cats[tmp].length;
+				for( i=0; i<table_cats[tmp].length; i++ ) {
+					o1[i+1].value = table_cats[tmp][i].id;
+					o1[i+1].text = table_cats[tmp][i].name;
+				}
+			}
+		}
+		//]]>
 		</script>
 				
 		<div id="admin_quick_menu">
@@ -31,7 +76,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_panel.php" method="post" onsubmit="return check_form_conf(this);" class="fieldset_content">
+			<form id="f_form" action="admin_panel.php" method="post" onsubmit="return check_form_conf(this);" class="fieldset_content">
 			
 			<table style="width:100%;" cellspacing="10px">
 				<tr>
@@ -86,7 +131,8 @@
 					<legend>{L_PANEL_LEGEND}</legend>
 					<dl>
 						<dt><label for="panel_module">* MODULE</label></dt>
-						<dd><select name="panel_module" id="panel_module">
+						<dd><select name="panel_module" id="panel_module" onchange="javascript:change_cat(this);" >
+							<option value="0" selected="selected">(Aucun)</option>
 							# START options_module #
 							<option value="{options_module.ID}">{options_module.NAME}</option>
 							# END options_module #
@@ -105,20 +151,17 @@
 					<dl>
 						<dt><label for="panel_cat">* CATEGORY</label></dt>
 						<dd><select name="panel_cat" id="panel_cat">
-							<option value="0">Toutes</option>
-							<option value="10">10</option>
-							<option value="20">20</option>
-							<option value="30">30</option>
-							<option value="40">40</option>
-							<option value="50">50</option>					
+							<option value="0" selected="selected">(Toutes)</option>						
 							</select>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="panel_limit_max">* LIMITE</label></dt>
-						<dd><input type="text" id="panel_limit_max" name="panel_limit_max" value="0" />
+						<dd><input type="text" id="panel_limit_max" name="panel_limit_max" value="{LIMIT}" />
 						</dd>
 					</dl>
+				</fieldset>
+				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
