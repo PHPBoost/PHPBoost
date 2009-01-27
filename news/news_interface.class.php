@@ -95,8 +95,9 @@ class NewsInterface extends ModuleInterface
     
     function get_feed_data_struct($idcat = 0, $name = '')
     {
-        import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
+		
+        import('content/syndication/feed_data');
         load_module_lang('news');
         
         $data = new FeedData();
@@ -118,8 +119,8 @@ class NewsInterface extends ModuleInterface
         $result = $Sql->query_while("SELECT id, title, contents, timestamp, img
             FROM " . PREFIX . "news
             WHERE visible = 1
-            ORDER BY timestamp DESC
-        " . $Sql->limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+            ORDER BY timestamp DESC"
+			. $Sql->limit(0, 2 * $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
         
         // Generation of the feed's items
         while ($row = $Sql->fetch_assoc($result))
@@ -150,6 +151,20 @@ class NewsInterface extends ModuleInterface
         
         return $data;
     }
+
+	function get_cat()
+	{
+		global $Sql;
+		
+		$result = $Sql->query_while("SELECT *
+	            FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
+			$data = array();
+		while ($row = $Sql->fetch_assoc($result)) {
+			$data[$row['id']] = $row['name'];
+		}
+		$Sql->query_close($result);
+		return $data;
+	}
 	
 	function get_home_page()
 	{
