@@ -169,7 +169,11 @@ class Feed
 		if (!DEBUG) {
 			$result = @include($feed_data_cache_file);
 		} else {
-			$result = include($feed_data_cache_file);
+			if (file_exists($feed_data_cache_file)) {
+				$result = include($feed_data_cache_file);
+			} else {
+				$result = FALSE;
+			}
 		}
         if ($result === false)
         {
@@ -189,7 +193,16 @@ class Feed
                 Feed::update_cache($module_id, $name, $data, $idcat);
             }
         }
-        if (($result = @include($feed_data_cache_file)) === false)
+		if (!DEBUG) {
+			$result = @include($feed_data_cache_file);
+		} else {
+			if (file_exists($feed_data_cache_file)) {
+				$result = include($feed_data_cache_file);
+			} else {
+				$result = FALSE;
+			}
+		}
+        if ( $result === false)
         {
             user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
             return '';
