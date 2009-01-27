@@ -80,10 +80,6 @@ else
 					'NAME' => $v['module']
 				));
 			}
-			$Template->assign_block_vars('options_location', array(
-				'ID' => $key,
-				'NAME' => $value
-			));
 		}
 	}
 	
@@ -95,18 +91,38 @@ else
 	$modules_feed = $modules_get_feed_data;
 	$modules_home = $modules_get_home_page;
 	
+	$table_cats = "\n";
 	foreach($modules_feed as $module) {
+		$the_id = 'feed-' . $module->id;
+		$the_name = 'feed -> '.$module->name;
+		
 		$Template->assign_block_vars('options_module', array(
-			'ID' => 'feed-' . $module->id,
-			'NAME' => 'feed -> '.$module->name
-		));
+			'ID' => $the_id,
+			'NAME' => $the_name
+			));
+		
+		if ($module->has_functionnality('get_cat')) {
+			$cats = $module->functionnality('get_cat');
+		} else {
+			$cats = array();
+		}
+		$count = count($cats);
+		$table_cats .= "table_cats[\"" . $the_id . "\"] = new Array(".$count.");\n";
+		$i = 0;
+		foreach($cats as $key => $value) {
+			$table_cats .= 'table_cats["' . $the_id . "\"][".$i."] = new Cat(" . $key . ",\"" . $value . "\");\n";
+			$i++;
+		}
 	}
 	
 	foreach($modules_home as $module) {
+		$the_id = 'home-' . $module->id;
+		$the_name = 'home -> '.$module->name;
+		
 		$Template->assign_block_vars('options_module', array(
-			'ID' => 'home-' . $module->id,
-			'NAME' => 'home -> '.$module->name
-		));
+			'ID' => $the_id,
+			'NAME' => $the_name
+			));
 	}
 	
 	foreach($locations as $k => $v) {
@@ -119,7 +135,9 @@ else
 	$Template->assign_vars(array(
 		'L_PANEL_LEGEND' => 'Configurer un bloc',
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']
+		'L_RESET' => $LANG['reset'],
+		'TABLE_CATS' => $table_cats,
+		'LIMIT' => 10
 	));
 	
 	$Template->pparse('admin_panel');

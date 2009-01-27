@@ -40,7 +40,7 @@ $Cache->load('panel');
 						switch ($v['type']) {
 							default:
 							case 'feed':
-								$get_content = Feed::get_parsed($module_name, DEFAULT_FEED_NAME, 0);
+								$get_content = Feed::get_parsed($module_name, DEFAULT_FEED_NAME, $v['cat'], FALSE, $v['limit_max'], 0);
 								break;
 							case 'home':
 								if ($module->has_functionnality('get_home_page')) {
