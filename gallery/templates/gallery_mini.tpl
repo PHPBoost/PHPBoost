@@ -2,6 +2,7 @@
 		<!--
 		var sum_height = {SUM_HEIGHT};
 		var sum_width = {SUM_WIDTH};
+		var div_width = {WIDTH_DIV};
 		var hidden_height = {HIDDEN_HEIGHT};		
 		var hidden_width = {HIDDEN_WIDTH};		
 		var scroll_speed = {SCROLL_SPEED};
@@ -42,5 +43,6 @@
 			<div class="module_mini_bottom">
 			</div>
 		</div>
+		<span id="test"></span>
 		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/scroll.js"></script>
 		

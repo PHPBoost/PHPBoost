@@ -34,6 +34,9 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
     securit_register_globals();
 }
 
+### Débuggage ###
+define('DEBUG', TRUE);
+
 ### Définition des constantes utiles. ###
 define('GUEST_LEVEL', -1); //Niveau Visiteur.
 define('USER_LEVEL', 0); //Niveau Membre.

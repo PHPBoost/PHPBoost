@@ -87,16 +87,6 @@ class PackagesManager
 		if (file_exists($sql_file))
 			$Sql->parse($sql_file, PREFIX);
 		
-		//Parsage du fichier php.
-		$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
-		if (file_exists($php_file)) {
-			if (!DEBUG) {
-				@include_once($php_file);
-			} else {
-				include_once($php_file);				
-			}
-		}
-		
 		//Génération du cache du module si il l'utilise
 		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 		
@@ -108,6 +98,16 @@ class PackagesManager
 
 		//Insertion du modules dans la bdd => module installé.
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_MODULES . " (name, version, auth, activ) VALUES ('" . $module_identifier . "', '" . addslashes($info_module['version']) . "', 'a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}', '" . ((int)$enable_module) . "')", __LINE__, __FILE__);
+		
+		//Parsage du fichier php.
+		$php_file = PATH_TO_ROOT . '/' . $module_identifier . '/db/' . $dir_db_module . '/' . $module_identifier . '.php';
+		if (file_exists($php_file)) {
+			if (!DEBUG) {
+				@include_once($php_file);
+			} else {
+				include_once($php_file);				
+			}
+		}
 		
 		//Génération du cache des modules
 		if ($generate_cache)

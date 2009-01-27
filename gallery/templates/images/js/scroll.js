@@ -64,41 +64,27 @@ function numeric(number)
 //pics_height et hidden_height, scroll_speed en global.
 function scroll_pics_v()
 {
-	var regex = /(-?[0-9]+)px/;
 	var thumb = document.getElementById('thumb_mini');
-	if( thumb )
-	{
-		var get_top = regex.exec(thumb.style.top);		
-		if( get_top[1] )
-			get_top = numeric(get_top[1]) - 1;
-		else
-			get_top = 0;	
-		thumb.style.top = get_top + 'px';	
+	var pos = parseInt(thumb.style.top);
+	thumb.style.top = pos - 3 + 'px';	
 
-		if( -get_top > sum_height )
-			restart_scroll_v();
-	}
-	timeout = setTimeout('scroll_pics_v()', scroll_speed);
+	if( -pos > sum_height )
+		restart_scroll_v();
+	
+	timeout = setTimeout('scroll_pics_v()', scroll_speed*6);
 }
 
 /* Horizontal scroll mode */
 function scroll_pics_h()
 {
-	var regex = /(-?[0-9]+)px/;
 	var thumb = document.getElementById('thumb_mini');
-	if( thumb )
-	{
-		var get_left = regex.exec(thumb.style.left);		
-		if( get_left[1] )
-			get_left = numeric(get_left[1]) - 1;
-		else
-			get_left = 0;	
-		thumb.style.left = get_left + 'px';	
-		if( -get_left > sum_width )
-			restart_scroll_h();
-	}
+	var pos = parseInt(thumb.style.left);
+	thumb.style.left = pos - 3 + 'px';
 	
-	timeout = setTimeout('scroll_pics_h()', scroll_speed);
+	if( -pos > sum_width )
+		restart_scroll_h();
+		
+	timeout = setTimeout('scroll_pics_h()', scroll_speed*6);
 }
 
 //Recommence le défilement du début.
@@ -114,7 +100,7 @@ function restart_scroll_h()
 {
 	var thumb = document.getElementById('thumb_mini');
 	if( thumb )
-		thumb.style.left = hidden_width + 'px';
+		thumb.style.left = div_width + 'px';
 }
 
 /* Switch mode */	
