@@ -31,7 +31,7 @@
 		
 <style type="text/css">
   div.draggable {
-	z-index:9; }
+	z-index:19; }
   div.droppable_hover {
     border: 5px dashed #aaa;
     background:#efefef; }
