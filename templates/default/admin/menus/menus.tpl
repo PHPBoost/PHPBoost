@@ -1,4 +1,7 @@
 <div id="admin_contents">
+	<center>
+	Glisser les vignettes (DRAG) sur la zone désirée (DROP).
+	</center>
 	<table style="background:#FFFFFF; width:99%;">
 		<tr>
 			<td colspan="{COLSPAN}" style="padding:2px;border:1px solid black;background:#EE713A">
