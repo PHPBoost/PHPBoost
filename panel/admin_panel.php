@@ -133,6 +133,8 @@ else
 	}
 	
 	$Template->assign_vars(array(
+		'L_PANEL' => 'Gestion du panel',
+		'L_PANEL_CONFIG' => 'Gérer les blocs',
 		'L_PANEL_LEGEND' => 'Configurer un bloc',
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
