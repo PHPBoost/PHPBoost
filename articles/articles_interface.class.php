@@ -194,6 +194,20 @@ class ArticlesInterface extends ModuleInterface
 		return $data;
 	}
 	
+	function get_cat()
+	{
+		global $Sql;
+		
+		$result = $Sql->query_while("SELECT *
+	            FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
+			$data = array();
+		while ($row = $Sql->fetch_assoc($result)) {
+			$data[$row['id']] = $row['name'];
+		}
+		$Sql->query_close($result);
+		return $data;
+	}
+	
 	function get_home_page()
 	{
 		global $Sql, $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $CAT_ARTICLES, $CONFIG_ARTICLES, $LANG;
