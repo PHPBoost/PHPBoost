@@ -302,6 +302,20 @@ class DownloadInterface extends ModuleInterface
             }
         }
     }
+	
+	function get_cat()
+	{
+		global $Sql;
+		
+		$result = $Sql->query_while("SELECT *
+	            FROM " . PREFIX . "download_cat", __LINE__, __FILE__);
+			$data = array();
+		while ($row = $Sql->fetch_assoc($result)) {
+			$data[$row['id']] = $row['name'];
+		}
+		$Sql->query_close($result);
+		return $data;
+	}
 }
 
 ?>
