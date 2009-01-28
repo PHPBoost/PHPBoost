@@ -147,10 +147,10 @@ $MEDIA_LANG = array(
 'media_description' => 'Description du fichier multimédia',
 'media_height' => 'Hauteur de la vidéo',
 'media_moderation' => 'Modération',
-'media_name' => 'Titre de la fichier multimédia',
+'media_name' => 'Titre du fichier multimédia',
 'media_url' => 'Lien du fichier multimédia',
 'media_width' => 'Largeur de la vidéo',
-'contribution_entitled' => '[Vidéo] %s',
+'contribution_entitled' => '[Multimédia] %s',
 
 // media_interface.class.php
 'media' => 'Fichier Multimédia',
