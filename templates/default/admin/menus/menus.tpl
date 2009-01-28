@@ -110,7 +110,7 @@
 	</table>
 
 <script type="text/javascript">
-  // <![CDATA[
+// <![CDATA[
 var drop_array = ['droppable_available','droppable_{I_HEADER}','droppable_{I_SUBHEADER}',
 	'droppable_{I_LEFT}', 'droppable_{I_TOPCENTRAL}','droppable_{I_BOTTOMCENTRAL}','droppable_{I_RIGHT}',
 	'droppable_{I_TOPFOOTER}','droppable_{I_FOOTER}'];
@@ -121,16 +121,14 @@ for(i=0; i<drop_array.length; i++) {
 		hoverclass: 'droppable_hover',
 		onDrop: function(drag_elt, drop_elt) {
 			var in1 = drop_elt.id;
-			var p1 = in1.indexOf("_",0);
-			var out1 = in1.substring(p1+1, in1.length); 
+			var out1 = in1.substring(in1.indexOf("_",0)+1, in1.length);
 			var in2 = drag_elt.id;
-			var p2 = in2.indexOf("_",0);
-			var out2 = in2.substring(p1+1, in1.length); 
+			var out2 = in2.substring(in2.indexOf("_",0)+1, in2.length);
 			location.href = "../menus/menus.php?move=" + out1 + "&id=" + out2 + "&token={U_TOKEN}";
 			}
 	});
 }
-  // ]]>
+// ]]>
 </script>
 
 </div>
