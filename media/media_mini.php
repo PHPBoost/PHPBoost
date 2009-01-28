@@ -43,7 +43,7 @@ function media_mini()
 		foreach ($MEDIA_MINI as $last_files)	
 		{
 			$tpl->assign_block_vars('last_media', array(
-				'U_MEDIA' => url('../media/media.php?id=' . $last_files['id'], 'media-' . $last_files['id'] . '-' . $last_files['idcat'] . '+' . url_encode_rewrite($last_files['name']) . '.php'),
+				'U_MEDIA' => '../media/' . url('media.php?id=' . $last_files['id'], 'media-' . $last_files['id'] . '-' . $last_files['idcat'] . '+' . url_encode_rewrite($last_files['name']) . '.php'),
 				'U_CAT' => url('../media/media.php?cat=' . $last_files['idcat'], 'media-0-' . $last_files['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$last_files['idcat']]['name']) . '.php'),
 				'MEDIA' => $last_files['name'],
 				'CAT' => $MEDIA_CATS[$last_files['idcat']]['name']
