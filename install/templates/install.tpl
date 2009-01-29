@@ -653,7 +653,7 @@
 							function check_mail(value) 
 							{
 								value = trim(value);
-								regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
+								regex = new RegExp("^[a-z0-9._-]+@([a-z0-9_-]{2,}\.)+[a-z]{2,4}$", "i");
 								if (!regex.test(value))
 								{	
 									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';

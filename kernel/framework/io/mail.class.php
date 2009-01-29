@@ -77,7 +77,7 @@ class Mail
         $array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
         $this->from = $array_mail[0];
         
-        if (!preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from))
+        if (!preg_match('`^[a-z0-9._-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $this->from))
         {
             $Errorh->handler('e_mail_format', E_USER_REDIRECT);
             return false;
