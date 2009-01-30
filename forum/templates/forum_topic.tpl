@@ -11,9 +11,6 @@
 		    }
 			return true;
 		}
-		function Confirm_msg() {
-			return confirm('{L_DELETE_MESSAGE}');
-		}
 		function XMLHttpRequest_del(idmsg)
 		{
 			if( document.getElementById('dimg' + idmsg) )
@@ -124,19 +121,19 @@
 			if( confirm('{L_DELETE_MESSAGE}') )
 				XMLHttpRequest_del(idmsg);
 		}
-		function Confirm_topic() {
+		function Confirm_del_topic() {
 			return confirm("{L_ALERT_DELETE_TOPIC}");
 		}		
-		function Confirm_lock() {
+		function Confirm_lock_topic() {
 			return confirm("{L_ALERT_LOCK_TOPIC}");
 		}		
-		function Confirm_unlock() {
+		function Confirm_unlock_topic() {
 			return confirm("{L_ALERT_UNLOCK_TOPIC}");
 		}		
-		function Confirm_move() {
+		function Confirm_move_topic() {
 			return confirm("{L_ALERT_MOVE_TOPIC}");
 		}
-		function Confirm_cut() {
+		function Confirm_cut_topic() {
 			return confirm("{L_ALERT_CUT_TOPIC}");
 		}
 		-->
@@ -151,7 +148,17 @@
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
 				<span style="float:right;">
-					{PAGINATION} {LOCK} {MOVE}
+					{PAGINATION} 
+					
+					# IF C_FORUM_MODERATOR #
+						# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ENDIF #
+					
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					# ENDIF #
 				</span>
 			</div>
 		</div>	
@@ -213,10 +220,36 @@
 				<span id="m{msg.ID}" />
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-						{msg.USER_ONLINE} {msg.USER_PSEUDO}
+						# IF msg.C_FORUM_USER_LOGIN # 
+							<img src="../templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign_middle" />
+							<a class="msg_link_pseudo" href="../member/member{msg.U_FORUM_USER_LOGIN}">{msg.FORUM_USER_LOGIN}</a>
+						# ELSE # 
+							<em>{L_GUEST}</em>
+						# ENDIF #
 					</div>
-					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {msg.DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>{msg.EDIT}{msg.DEL}{msg.CUT}&nbsp;&nbsp;<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
+					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
+					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
+					# IF msg.C_FORUM_MSG_EDIT # 
+					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>
+					# ENDIF #
+					
+					# IF msg.C_FORUM_MSG_DEL #
+					&nbsp;
+						# IF msg.C_FORUM_MSG_DEL_MSG #
+					<script type="text/javascript">
+					<!-- 
+					document.write('<img style="cursor:pointer;" onclick="del_msg(\'{msg.ID}\');" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" />'); 
+					-->
+					</script>
+					<noscript><a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /></a></noscript>
+						# ELSE #
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="" onclick="javascript:return Confirm_del_topic();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> 
+						# ENDIF #
+					# ENDIF #
+					
+					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{MODULE_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
+					
+					&nbsp;&nbsp;<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
@@ -231,8 +264,20 @@
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
-							{msg.CONTENTS}
-							{msg.USER_EDIT}
+							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text_strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+							
+							{msg.FORUM_MSG_CONTENTS}
+							
+							# IF msg.C_FORUM_USER_EDITOR # 
+							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
+							{L_EDIT_BY}
+								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
+							<a class="small_link" href="../member/member{msg.U_FORUM_USER_EDITOR_LOGIN}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+								# ELSE #
+							<em>{L_GUEST}</em>
+								# ENDIF #
+							{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
+							# ENDIF #
 						</div>
 					</div>
 				</div>
@@ -246,7 +291,12 @@
 					{msg.USER_PM} {msg.USER_MAIL} {msg.USER_MSN} {msg.USER_YAHOO} {msg.USER_WEB}
 				</span>
 				<span style="float:right;font-size:10px;">
-					{msg.WARNING} {msg.PUNISHMENT}
+					&nbsp;
+					# IF msg.C_FORUM_MODERATOR # 
+					{msg.USER_WARNING}%
+					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="../templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign_middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}"><img src="../templates/{THEME}/images/readonly.png" alt="{L_PUNISHEMENT_MANAGEMENT}" class="valign_middle" /></a>
+					# ENDIF #
 				</span>&nbsp;
 			</div>	
 		</div>	
@@ -259,7 +309,19 @@
 					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
-				<span style="float:right;">{PAGINATION} {LOCK} {MOVE}</span>&nbsp;
+				<span style="float:right;">
+					{PAGINATION}
+					
+					# IF C_FORUM_MODERATOR #
+						# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ENDIF #
+						
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					# ENDIF #
+				</span>&nbsp;
 			</div>
 		</div>
 		
