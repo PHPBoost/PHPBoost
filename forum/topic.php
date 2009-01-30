@@ -79,20 +79,25 @@ $module_data_path = $Template->get_module_data_path('forum');
 $check_group_edit_auth = $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM);
 if ($check_group_edit_auth)
 {
-	$lock_status = '';
-	if ($topic['status'] == '1') //Unlocked, affiche lien pour verrouiller.
-		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=true') . '" onclick="javascript:return Confirm_lock();" title="' . $LANG['forum_lock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/lock.png" alt="' . $LANG['forum_lock']  . '" title="' . $LANG['forum_lock']  . '" class="valign_middle" /></a>';
-	elseif ($topic['status'] == '0') //Lock, affiche lien pour déverrouiler.
-		$lock_status = '<a href="action' . url('.php?id=' . $id_get . '&amp;lock=false') . '" onclick="javascript:return Confirm_unlock();" title="' . $LANG['forum_unlock']  . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/unlock.png" alt="' . $LANG['forum_unlock']  . '" title="' . $LANG['forum_unlock']  . '" class="valign_middle" /></a>';
-	
 	$Template->assign_vars(array(
-		'MOVE' => '<a href="move' . url('.php?id=' . $id_get) . '" onclick="javascript:return Confirm_move();" title="' . $LANG['forum_move'] . '"><img src="' . $module_data_path . '/images/move.png" alt="' . $LANG['forum_move'] . '" title="' . $LANG['forum_move'] . '" class="valign_middle" /></a>',
-		'LOCK' => $lock_status,
+		'C_FORUM_MODERATOR' => true,
+		'C_FORUM_LOCK_TOPIC' => ($topic['status'] == '1') ? true : false,
+		'U_TOPIC_LOCK' => url('.php?id=' . $id_get . '&amp;lock=true'),
+		'U_TOPIC_UNLOCK' => url('.php?id=' . $id_get . '&amp;lock=false'),
+		'U_TOPIC_MOVE' => url('.php?id=' . $id_get),
+		'L_TOPIC_LOCK' => ($topic['status'] == '1') ? $LANG['forum_lock'] : $LANG['forum_unlock'],
+		'L_TOPIC_MOVE' => $LANG['forum_move'],	
 		'L_ALERT_DELETE_TOPIC' => $LANG['alert_delete_topic'],
 		'L_ALERT_LOCK_TOPIC' => $LANG['alert_lock_topic'],
 		'L_ALERT_UNLOCK_TOPIC' => $LANG['alert_unlock_topic'],
 		'L_ALERT_MOVE_TOPIC' => $LANG['alert_move_topic'],
 		'L_ALERT_CUT_TOPIC' => $LANG['alert_cut_topic']
+	));
+}
+else
+{
+	$Template->assign_vars(array(
+		'C_FORUM_MODERATOR' => false
 	));
 }
 
@@ -155,8 +160,16 @@ $Template->assign_vars(array(
 	'U_TITLE_T' => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
 	'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
+	'L_GUEST' => $LANG['guest'],
+	'L_DELETE' => $LANG['delete'],
+	'L_EDIT' => $LANG['edit'],
+	'L_CUT_TOPIC' => $LANG['cut_topic'],
+	'L_EDIT_BY' => $LANG['edit_by'],
+	'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
+	'L_WARNING_MANAGEMENT' => $LANG['warning_management'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_QUOTE' => $LANG['quote'],
+	'L_ON' => $LANG['on'],
 	'L_RESPOND' => $LANG['respond'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
@@ -190,29 +203,24 @@ while ( $row = $Sql->fetch_assoc($result) )
 	if ($is_guest)
 		$row['level'] = -1;
 		
-	list($edit, $del, $cut, $warning, $readonly) = array('', '', '', '', '');
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
+
 	//Gestion du niveau d'autorisation.
+	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
 	if ($check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message))
 	{
-		$valid = ($first_message) ? 'topic' : 'msg';
-		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" /></a>';
-		$del = (!$first_message) ? '&nbsp;&nbsp;<script type="text/javascript"><!-- 
-		document.write(\'<img style="cursor: pointer;" onclick="del_msg(\\\'' . $row['id'] . '\\\');" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" />\'); 
-		--></script><noscript><a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" id="dimg' . $row['id'] . '" /></a></noscript>'
-		: '&nbsp;&nbsp;<a href="action' . url('.php?del=1&amp;idm=' . $row['id']) . '" title="" onclick="javascript:return Confirm_' . $valid . '();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" /></a>';
+		$edit = true;
+		$del = true;
 		
-		//Fonctions réservées à ceux possédants les droits de modérateurs seulement.
-		if ($check_group_edit_auth)
+		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		{
-			$cut = (!$first_message) ? '&nbsp;&nbsp;<a href="move' . url('.php?idm=' . $row['id']) . '" title="' . $LANG['cut_topic'] . '" onclick="javascript:return Confirm_cut();"><img src="' . $module_data_path . '/images/cut.png" alt="' . $LANG['cut_topic'] .  '" /></a>' : '';
-			$warning = !$is_guest ? '&nbsp;<a href="moderation_forum' . url('.php?action=warning&amp;id=' . $row['user_id']) . '" title="' . $LANG['warning_management'] . '"><img src="../templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>' : ''; 
-			$readonly = !$is_guest ? '<a href="moderation_forum' . url('.php?action=punish&amp;id=' . $row['user_id']) . '" title="' . $LANG['punishment_management'] . '"><img src="../templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>' : ''; 
+			$cut = (!$first_message) ? true : false;
+			$moderator = (!$is_guest) ? true : false;
 		}
 	}
 	elseif ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
-		$edit = '&nbsp;&nbsp;<a href="post' . url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="'. $LANG['edit'] . '" /></a>';
-			
+		$edit = true;
+	
 	//Gestion des sondages => executé une seule fois.
 	if (!empty($row['question']) && $poll_done === false)
 	{
@@ -313,7 +321,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Image associée au rang.
 	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-				
+	
 	//Affichage des groupes du membre.		
 	if (!empty($row['user_groups']) && $_array_groups_auth) 
 	{	
@@ -347,13 +355,6 @@ while ( $row = $Sql->fetch_assoc($result) )
 	else 
 		$user_local = '';
 
-	//Reprise du dernier message de la page précédente.
-	$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text_strong">' . $LANG['forum_quote_last_msg'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
-	$i++;
-	
-	//Ajout du marqueur d'édition si activé.
-	$edit_mark = ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1') ? '<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">' . $LANG['edit_by'] . ' ' . (!empty($row['login_edit']) ? '<a class="small_link" href="../member/member' . url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php') . '">' . $row['login_edit'] . '</a>' : '<em>' . $LANG['guest'] . '</em>') . ' ' . $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp_edit']) . '</span>' : '';
-	
 	//Affichage du nombre de message.
 	if ($row['user_msg'] >= 1)
 		$user_msg = '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message_s'] . '</a>: ' . $row['user_msg'];
@@ -361,12 +362,14 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$user_msg = (!$is_guest) ? '<a href="../forum/membermsg' . url('.php?id=' . $row['user_id'], '') . '" class="small_link">' . $LANG['message'] . '</a>: 0' : $LANG['message'] . ': 0';		
 	
 	$Template->assign_block_vars('msg', array(
-		'CONTENTS' => second_parse($row['contents']),
-		'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
 		'ID' => $row['id'],
 		'CLASS_COLOR' => ($j%2 == 0) ? '' : 2,
-		'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . ((!empty($row['connect']) && !$is_guest) ? 'online' : 'offline') . '.png" alt="" class="valign_middle" />',
-		'USER_PSEUDO' => !empty($row['login']) ? '<a class="msg_link_pseudo" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . wordwrap_html($row['login'], 13) . '</a>' : '<em>' . $LANG['guest'] . '</em>',			
+		'FORUM_ONLINE_STATUT_USER' => !empty($row['connect']) ? 'online' : 'offline',
+		'FORUM_USER_LOGIN' => wordwrap_html($row['login'], 13),			
+		'FORUM_MSG_DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
+		'FORUM_MSG_CONTENTS' => second_parse($row['contents']),
+		'FORUM_USER_EDITOR_LOGIN' => $row['login_edit'],
+		'FORUM_USER_EDITOR_DATE' => gmdate_format('date_format', $row['timestamp_edit']),
 		'USER_RANK' => ($row['user_warning'] < '100' || (time() - $row['user_ban']) < 0) ? $user_rank : $LANG['banned'],
 		'USER_IMG_ASSOC' => $user_assoc_img,
 		'USER_AVATAR' => $user_avatar,			
@@ -378,14 +381,26 @@ while ( $row = $Sql->fetch_assoc($result) )
 		'USER_MAIL' => ( !empty($row['user_mail']) && ($row['user_show_mail'] == '1' ) ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
 		'USER_MSN' => (!empty($row['user_msn'])) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 		'USER_YAHOO' => (!empty($row['user_yahoo'])) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-		'USER_EDIT' => $edit_mark,
 		'USER_SIGN' => (!empty($row['user_sign'])) ? '____________________<br />' . $row['user_sign'] : '',
 		'USER_WEB' => (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_web']  . '" /></a>' : '',
-		'WARNING' => !empty($warning) ? $row['user_warning'] . '%' . $warning : '',
-		'PUNISHMENT' => $readonly,
-		'EDIT' => $edit,
-		'CUT' => $cut,
-		'DEL' => $del,'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
+		'USER_WARNING' => $row['user_warning'],
+		'L_FORUM_QUOTE_LAST_MSG' => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
+		'C_FORUM_USER_LOGIN' => !empty($row['login']) ? true : false,
+		'C_FORUM_MSG_EDIT' => $edit,
+		'C_FORUM_MSG_DEL' => $del,
+		'C_FORUM_MSG_DEL_MSG' => (!$first_message) ? true : false,
+		'C_FORUM_MSG_CUT' => $cut,
+		'C_FORUM_USER_EDITOR' => ($row['timestamp_edit'] > 0 && $CONFIG_FORUM['edit_mark'] == '1'), //Ajout du marqueur d'édition si activé.
+		'C_FORUM_USER_EDITOR_LOGIN' => !empty($row['login_edit']) ? true : false,
+		'C_FORUM_MODERATOR' => $moderator,
+		'U_FORUM_USER_LOGIN' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),			
+		'U_FORUM_MSG_EDIT' => url('.php?new=msg&amp;idm=' . $row['id'] . '&amp;id=' . $topic['idcat'] . '&amp;idt=' . $id_get),
+		'U_FORUM_USER_EDITOR_LOGIN' => url('.php?id=' . $row['user_id_edit'], '-' . $row['user_id_edit'] . '.php'),
+		'U_FORUM_MSG_DEL' => url('.php?del=1&amp;idm=' . $row['id']),
+		'U_FORUM_WARNING' => url('.php?action=warning&amp;id=' . $row['user_id']),
+		'U_FORUM_PUNISHEMENT' => url('.php?action=punish&amp;id=' . $row['user_id']),
+		'U_FORUM_MSG_CUT' => url('.php?idm=' . $row['id']),
+		'U_VARS_ANCRE' => url('.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_VARS_QUOTE' => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
 		'USER_PM' => !$is_guest ? '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="pm" /></a>' : '',
 	));
@@ -398,6 +413,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$track_mail = ($row['trackmail']) ? true : false;
 	}
 	$j++;
+	$i++;
 }
 $Sql->query_close($result);
 
