@@ -77,7 +77,7 @@ else
 			if (!empty($CONFIG_PANEL[$key])) foreach ($CONFIG_PANEL[$key] as $k => $v) {
 				$Template->assign_block_vars($value, array(
 					'LOCATION' => $key,
-					'NAME' => $v['module']
+					'NAME' => $v['type'] . '->' . $v['module']
 				));
 			}
 		}
