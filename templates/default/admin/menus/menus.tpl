@@ -131,7 +131,6 @@ function menu_hide_block(idfield, stop)
 			</td>
 		</tr>
 	</table>
-<<<<<<< .mine
 	
 	<table class="module_table">
 		<tr> 
@@ -158,30 +157,6 @@ function menu_hide_block(idfield, stop)
 			</td>
 		</tr>
 	</table>
-=======
 
-<script type="text/javascript">
-// <![CDATA[
-var drop_array = ['droppable_available','droppable_{I_HEADER}','droppable_{I_SUBHEADER}',
-	'droppable_{I_LEFT}', 'droppable_{I_TOPCENTRAL}','droppable_{I_BOTTOMCENTRAL}','droppable_{I_RIGHT}',
-	'droppable_{I_TOPFOOTER}','droppable_{I_FOOTER}'];
-
-for(i=0; i<drop_array.length; i++) {
-	Droppables.add(drop_array[i], { 
-		accept: 'draggable',
-		hoverclass: 'droppable_hover',
-		onDrop: function(drag_elt, drop_elt) {
-			var in1 = drop_elt.id;
-			var out1 = in1.substring(in1.indexOf("_",0)+1, in1.length);
-			var in2 = drag_elt.id;
-			var out2 = in2.substring(in2.indexOf("_",0)+1, in2.length);
-			location.href = "../menus/menus.php?move=" + out1 + "&id=" + out2 + "&token={U_TOKEN}";
-			}
-	});
-}
-// ]]>
-</script>
-
->>>>>>> .r1906
 </div>
 
