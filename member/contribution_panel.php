@@ -111,8 +111,6 @@ elseif ($id_to_update > 0)
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
 {
-	global $User;
-	
 	//Vérification de la validité du jeton
     $Session->csrf_get_protect();
 	

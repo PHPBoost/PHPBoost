@@ -131,7 +131,7 @@ class Comments
 	//Méthode d'affichage
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $_array_groups_auth;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $_array_groups_auth, $Session;
 		
 		if ($integrated_in_environment)
 		{
@@ -221,6 +221,7 @@ class Comments
 				{
 					if ($delcom > 0) //Suppression du commentaire.
 					{
+					    $Session->csrf_get_protect();
 						$lastid_com = $this->del();
 						$lastid_com = !empty($lastid_com) ? '#m' . $lastid_com : '';
 						
@@ -462,7 +463,7 @@ class Comments
 					if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 					{
 						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&amp;token=' . $Session->get_token() . '&amp;delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 					}
 					
 					//Pseudo.

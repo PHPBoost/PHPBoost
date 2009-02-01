@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            categories.class.php
+ *                            categories_manager.class.php
  *                            -------------------
  *   begin                : February 06, 2008
  *   copyright            : (C) 2008 Benoît Sautel
@@ -97,7 +97,7 @@ define('NEW_STATUS_UNKNOWN', 0x100);
  *  </ul>
  *  If you need more informations to use this class, we advise you to look at the wiki of PHPBoost, in which there is a tutorial explaining how to use it step by step.
  */
-class CategoriesManagement
+class CategoriesManager
 {
 	## Public methods ##
 	/**
@@ -105,7 +105,7 @@ class CategoriesManagement
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] &$cache_var Array containing the correct data, descripted in the description of the class.
 	 */
-	function CategoriesManagement($table, $cache_file_name, &$cache_var)
+	function CategoriesManager($table, $cache_file_name, &$cache_var)
 	{
 		$this->table = $table;
 		$this->cache_file_name = $cache_file_name;
@@ -669,7 +669,7 @@ class CategoriesManagement
 					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
 					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
 					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id),
-					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id . '" id="del_' . $id),
+					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
 					//We call the function for its daughter categories
 					'NEXT_CATEGORY' => $this->_create_row_interface($id, $level + 1, $ajax_mode, $reference_template)

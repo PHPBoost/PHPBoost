@@ -78,6 +78,8 @@ $end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date',
 //Deleting a file
 if ($delete_file > 0)
 {
+    //Vérification de la valiité du jeton
+    $Session->csrf_get_protect();
 	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));

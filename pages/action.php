@@ -111,6 +111,9 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 //Suppression des redirections
 elseif ($del_redirection > 0)
 {
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
+    
 	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
@@ -290,7 +293,7 @@ elseif ($id_rename > 0)
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
-		'TARGET' => url('action.php&amp;token=' . $Session->get_token()),
+		'TARGET' => url('action.php'),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -310,7 +313,7 @@ elseif ($id_new > 0)
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => url('action.php&amp;token=' . $Session->get_token()),
+		'TARGET' => url('action.php'),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -337,7 +340,7 @@ elseif ($id_redirection > 0)
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
-			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
+			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
 		));
 
 		if ($nbr_rows == 0)
@@ -377,7 +380,7 @@ else
 		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
+			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token)' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}
 	

@@ -49,7 +49,10 @@ $target = retrieve(POST, 'target', 0);
 $move_question = retrieve(POST, 'move_question', 0);
 
 if ($faq_del_id > 0)
-{
+{    
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
+
 	$faq_infos = $Sql->query_array(PREFIX . 'faq', 'idcat', 'q_order', 'question', "WHERE id = '" . $faq_del_id . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $faq_infos['idcat'];
 	include('faq_bread_crumb.php');

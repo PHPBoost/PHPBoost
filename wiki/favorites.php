@@ -59,6 +59,9 @@ if ($add_favorite > 0)//Ajout d'un favori
 }
 elseif ($remove_favorite > 0)
 {
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
+    
 	//on vérifie que l'article existe
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas

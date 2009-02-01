@@ -51,7 +51,10 @@ class Sessions
 		
 		if (retrieve(GET, 'disconnect', false)) //Déconnexion.
 		{
-			$Session->end();
+		    //vérification de la validité du jeton
+		    $this->csrf_get_protect();
+		    
+			$this->end();
 			redirect(get_start_page());
 		}
 		elseif (retrieve(POST, 'connect', false) && !empty($login) && !empty($password)) //Création de la session.
@@ -68,15 +71,15 @@ class Sessions
 					if ($delay_connect >= 600) //5 nouveau essais, 10 minutes après.
 					{
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif ($delay_connect >= 300) //2 essais 5 minutes après
 					{
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__); //Redonne 2 essais.
-						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					}
 					elseif ($info_connect['test_connect'] < 5) //Succès.
-						$error_report = $Session->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
+						$error_report = $this->start($user_id, $password, $info_connect['level'], SCRIPT, QUERY_STRING, '', $autoconnexion); //On lance la session.
 					else //plus d'essais
 						redirect(HOST . DIR . '/member/error.php?e=e_member_flood#errorh');
 				}
@@ -104,7 +107,7 @@ class Sessions
 				redirect(HOST . DIR . '/member/error.php?e=e_unexist_member#errorh');
 			
 			$query_string = QUERY_STRING;
-			$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'] : '?sid=' . $Session->data['session_id'] . '&suid=' . $Session->data['user_id'];
+			$query_string = !empty($query_string) ? '?' . QUERY_STRING . '&sid=' . $this->data['session_id'] . '&suid=' . $this->data['user_id'] : '?sid=' . $this->data['session_id'] . '&suid=' . $this->data['user_id'];
 			
 			//Redirection avec les variables de session dans l'url.
 			if (SCRIPT != DIR . '/member/error.php')

@@ -89,7 +89,7 @@ if ($page_type == 'article' || $page_type == 'cat')
 	{
 		if ($page_type == 'article')
 		{
-			$tools[$LANG['delete']] = array(url('action.php?del_article=' . $id_article), 'delete');
+			$tools[$LANG['delete']] = array(url('action.php?del_article=' . $id_article . '&amp;token=' . $Session->get_token()), 'delete');
 			//Message de confirmation de suppression (directe sinon)
 			$confirm[$LANG['delete']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_remove_article']) . '\');';
 		}
@@ -160,7 +160,7 @@ if ($User->check_level(USER_LEVEL))
 	{
 		if ($article_infos['id_favorite'] > 0)
 		{
-			$other_tools[$LANG['wiki_unwatch_this_topic']] = array(url('favorites.php?del=' . $id_article), 'follow-article');
+			$other_tools[$LANG['wiki_unwatch_this_topic']] = array(url('favorites.php?del=' . $id_article . '&amp;token=' . $Session->get_token()), 'follow-article');
 			$confirm_others[$LANG['wiki_unwatch_this_topic']] = 'return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_unwatch_this_topic']) . '\');';
 		}
 		else
