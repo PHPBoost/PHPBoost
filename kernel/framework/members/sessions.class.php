@@ -610,7 +610,7 @@ class Sessions
     function _check_referer()
     {
         global $CONFIG;
-		if (empty($_SERVER['HTTP_REFERER'])) return FALSE;
+		if (empty($_SERVER['HTTP_REFERER'])) return false;
         return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
     }
     
