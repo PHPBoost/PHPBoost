@@ -83,7 +83,7 @@
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
 							<p style="text-align:center;">Top</p>
 							# START top #
-							{top.NAME}  <a href="admin_panel.php?delete={top.LOCATION}-{top.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{top.NAME}  <a href="admin_panel.php?delete={top.LOCATION}-{top.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END top #
 					</td>
 				</tr>
@@ -91,13 +91,13 @@
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" witdh="50%">
 							<p style="text-align:center;">Above Left</p>
 							# START aboveleft #
-							{aboveleft.NAME} <a href="admin_panel.php?delete={aboveleft.LOCATION}-{aboveleft.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{aboveleft.NAME} <a href="admin_panel.php?delete={aboveleft.LOCATION}-{aboveleft.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END aboveleft #
 					</td>
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;"  width="50%">
 							<p style="text-align:center;">Above Right</p>
 							# START aboveright #
-							{aboveright.NAME} <a href="admin_panel.php?delete={aboveright.LOCATION}-{aboveright.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{aboveright.NAME} <a href="admin_panel.php?delete={aboveright.LOCATION}-{aboveright.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END aboveright #
 					</td>
 				</tr>
@@ -105,7 +105,7 @@
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
 							<p style="text-align:center;">Center</p>
 							# START center #
-							{center.NAME}  <a href="admin_panel.php?delete={center.LOCATION}-{center.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{center.NAME}  <a href="admin_panel.php?delete={center.LOCATION}-{center.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END center #
 					</td>
 				</tr>
@@ -113,13 +113,13 @@
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" width="50%">
 							<p style="text-align:center;">Below Left</p>
 							# START belowleft #
-							{belowleft.NAME}  <a href="admin_panel.php?delete={belowleft.LOCATION}-{belowleft.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{belowleft.NAME}  <a href="admin_panel.php?delete={belowleft.LOCATION}-{belowleft.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END belowleft #
 					</td>
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" width="50%">
 							<p style="text-align:center;">Below Right</p>
 							# START belowright #
-							{belowright.NAME} <a href="admin_panel.php?delete={belowright.LOCATION}-{belowright.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{belowright.NAME} <a href="admin_panel.php?delete={belowright.LOCATION}-{belowright.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END belowright #
 					</td>
 				</tr>
@@ -127,7 +127,7 @@
 					<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
 							<p style="text-align:center;">Bottom</p>
 							# START bottom #
-							{bottom.NAME}  <a href="admin_panel.php?delete={bottom.LOCATION}-{bottom.NAME}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
+							{bottom.NAME}  <a href="admin_panel.php?delete={bottom.LOCATION}-{bottom.ID}"><img border="0" src="../templates/phpboost/images/french/delete.png" alt="supprimer"/></a><br />
 							# END bottom #
 							&nbsp;
 					</td>

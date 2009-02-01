@@ -8,7 +8,11 @@
 *
 */
 ?>
-<div>
+<div class="module_position">			
+	<div class="module_top_l"></div>		
+	<div class="module_top_r"></div>
+	<div class="module_top"></div>
+	<div class="module_contents">
 		<div style="clear:both;width:100%;border:1px solid;">
 		# START top #
 		<div>
@@ -132,5 +136,8 @@
         </div>
 		<br />
 		# END bottom #
-		</div>
+	</div>
+	<div class="module_bottom_l"></div>		
+	<div class="module_bottom_r"></div>
+	<div class="module_bottom"></div>
 </div>
