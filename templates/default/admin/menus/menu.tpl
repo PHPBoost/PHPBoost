@@ -1,4 +1,4 @@
-# IF C_MINI #
+# IF C_MINI # 
 <div style="margin:2px;height:100px;width:150px;background-color:pink;float:left; {STYLE}" class="draggable" id="draggable_{IDMENU}">
     <div class="module_mini_top">
         <span id="m{IDMENU}"></span>
