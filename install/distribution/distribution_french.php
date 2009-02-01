@@ -43,6 +43,6 @@ define('DISTRIBUTION_START_PAGE', '/news/news.php');
 define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
+$DISTRIBUTION_MODULES = array('articles', 'calendar', 'contact', 'connect', 'download', 'faq', 'forum', 'gallery', 'guestbook', 'media', 'news', 'newsletter', 'online', 'pages', 'poll', 'search', 'shoutbox', 'stats', 'web', 'wiki');
 
 ?>

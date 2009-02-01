@@ -743,7 +743,7 @@ if (!empty($id_get)) //Espace membre
 			'HOBBIES' => !empty($row['user_hobbies']) ? $row['user_hobbies'] : '&nbsp;',
 			'USER_SEX' =>  $user_sex,
 			'USER_AGE' => ($row['user_born'] != '0000-00-00' && $user_born > 0 && $user_born < 125 ) ? $user_born . ' ' . $LANG['years_old'] : $LANG['unknow'],
-			'USER_DESC' => !empty($row['user_desc']) ? $row['user_desc'] : '&nbsp;',
+			'USER_DESC' => !empty($row['user_desc']) ? second_parse($row['user_desc']) : '&nbsp;',
 			'USER_MSN' => !empty($row['user_msn']) ? $row['user_msn'] : '&nbsp;',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? $row['user_yahoo'] : '&nbsp;',
 			'L_PROFIL' => $LANG['profil'],
