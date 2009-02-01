@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function connect_mini($position)
 {
-    global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS;
+    global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS, $Session;
     
     $tpl = new Template('connect/connect_mini.tpl');
     import('core/menu_service');
@@ -85,7 +85,7 @@ function connect_mini($position)
     		'IMG_PM' => $User->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
     		'U_USER_PM' => PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
     		'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', '-' . $User->get_attribute('user_id') . '.php?view=1'),
-    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
+    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . $Session->get_token(),
     		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
     		'L_PROFIL' => $LANG['profil'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],

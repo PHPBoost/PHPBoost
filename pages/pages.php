@@ -120,7 +120,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
 		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
+		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
 		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
 		$links[$LANG['pages_create']] = array(url('post.php'), $pages_data_path . '/images/create_page.png');
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
@@ -153,7 +153,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
-			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
 		));
 	}
 	

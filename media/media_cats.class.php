@@ -26,12 +26,12 @@
  *
 ###################################################*/
 
-import('content/categories');
+import('content/categories_manager');
 require_once('media_constant.php');
 
 // define('DO_NOT_GENERATE_CACHE', false);
 
-class MediaCats extends CategoriesManagement
+class MediaCats extends CategoriesManager
 {
 	## Public methods ##
 
@@ -45,7 +45,7 @@ class MediaCats extends CategoriesManagement
 			$Cache->load('media');
 		}
 
-		parent::CategoriesManagement('media_cat', 'media', $MEDIA_CATS);
+		parent::CategoriesManager('media_cat', 'media', $MEDIA_CATS);
 	}
 
 	//Method which removes all subcategories and their content

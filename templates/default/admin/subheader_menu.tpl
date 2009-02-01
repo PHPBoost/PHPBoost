@@ -4,7 +4,7 @@
 		<ul id="smenu1">
 			<li><a href="{U_INDEX_SITE}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png);">{L_INDEX_SITE}</a></li>
 			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png);">{L_INDEX_ADMIN}</a></li>
-			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png);">{L_DISCONNECT}</a></li>
+			<li><a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png);">{L_DISCONNECT}</a></li>
 		</ul>
 	</li>
 	<li onmouseover="show_menu(2, 0);" onmouseout="hide_menu(0);">

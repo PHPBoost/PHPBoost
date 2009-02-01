@@ -3,7 +3,7 @@
  *                             faq_cats.class.php
  *                            -------------------
  *   begin                : February 17, 2008
- *   copyright          : (C) 2008 Benoît Sautel
+ *   copyright            : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *   
@@ -25,11 +25,11 @@
  *
 ###################################################*/
 
-import('content/categories');
+import('content/categories_manager');
 
 define('DO_NOT_GENERATE_CACHE', false);
 
-class FaqCats extends CategoriesManagement
+class FaqCats extends CategoriesManager
 {
 	## Public methods ##
 	
@@ -40,7 +40,7 @@ class FaqCats extends CategoriesManagement
 		if (!isset($FAQ_CATS))
 			$Cache->load('faq');
 		
-		parent::CategoriesManagement('faq_cats', 'faq', $FAQ_CATS);
+		parent::CategoriesManager('faq_cats', 'faq', $FAQ_CATS);
 	}
 	
 	//Method which removes all subcategories and their content

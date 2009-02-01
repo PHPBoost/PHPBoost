@@ -240,7 +240,7 @@ else
 			$Template->assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['q_order'],
-				'U_DEL' => url('action.php?del=' . $row['id']),
+				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_DOWN' => url('action.php?down=' . $row['id']),
 				'U_UP' => url('action.php?up=' . $row['id']),
 				'U_EDIT' => url('management.php?edit=' . $row['id']),

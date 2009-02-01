@@ -266,7 +266,7 @@ elseif ($redirect > 0) //Redirections de l'article
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('redirect.list', array(
-			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id']),
+			'U_REDIRECTION_DELETE' => url('action.php?del_redirection=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 			'REDIRECTION_NAME' => $row['title'],
 		));
 	}

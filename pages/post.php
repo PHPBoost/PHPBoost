@@ -3,7 +3,7 @@
 *                               post.php
 *                            -------------------
 *   begin                : August 12, 2007
-*   copyright          : (C) 2007 Sautel Benoit
+*   copyright            : (C) 2007 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *
@@ -169,6 +169,9 @@ if (!empty($contents))
 //Suppression d'une page
 elseif ($del_article > 0)
 {
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
+    
 	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $del_article . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?

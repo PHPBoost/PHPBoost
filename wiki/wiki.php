@@ -130,7 +130,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 			{
 				$Template->assign_block_vars('redirect.remove_redirection', array(
 					'L_REMOVE_REDIRECTION' => $LANG['wiki_remove_redirection'],
-					'U_REMOVE_REDIRECTION' => url('action.php?del_redirection=' . $id_redirection),
+					'U_REMOVE_REDIRECTION' => url('action.php?del_redirection=' . $id_redirection . '&amp;token=' . $Session->get_token()),
 					'L_ALERT_REMOVE_REDIRECTION' => str_replace('\'', '\\\'', $LANG['wiki_alert_delete_redirection'])
 				));
 			}
