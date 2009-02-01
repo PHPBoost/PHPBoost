@@ -95,7 +95,7 @@ class File extends FileSystemElement
 				return substr($this->contents, $start, $len);
 		}
 		else
-			user_error('File ' . $this->path . ' is open in read only');
+			user_error('File ' . $this->path . ' is not open for read');
 	}
 	
 	// renvoie le contenu du fichier sous forme de tableau
@@ -113,7 +113,7 @@ class File extends FileSystemElement
 				return array_slice($this->lines, $start, $n);
 		}
 		else
-			user_error('File ' . $this->path . ' is open in read only');
+			user_error('File ' . $this->path . ' is not open for read');
 	}
 	
 	// écrit $data dans le fichier, soit en écrasant les données (par défaut), soit passant en troisième paramètre la constante ADD
@@ -145,7 +145,7 @@ class File extends FileSystemElement
 			return $bytes_written == $bytes_to_write;
 		}
 		else
-			user_error('File ' . $this->path . ' is open in read only mode');
+			user_error('File ' . $this->path . ' is not open for write');
 	}
 	
 	// libération les ressources inutilisés
