@@ -45,3 +45,19 @@ Filtrer les caractères dans le pseudo à l'inscription
 [+] Noix : Panneau de contribution
 [+] Loic : Recherche
 [-] Croquette : Nouveaux placement des menus
+
+
+
+###################################### PHPBoost 3.1 ##################################
+
+[Kernel]
+- Faire une interface pour gérer intégralement la page de démarrage du site.
+- Possibilité de choisir une disposition des menus par thème.
+- Interface Drag 'n Drop dans les menus.
+- Interface Drag 'n Drop dans les catégories.
+- Réaliser un éditeur d'image avec interface js pour redimensionner, faire des rotations, des mises à l'échelles, etc.
+- Possibilité de générer des formulaires personnalisé.
+- Intégrer une classe mail smtp.
+
+[Galerie]
+- Intégrer l'éditeur d'image.
