@@ -84,7 +84,7 @@ if ($add)
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
 				
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . str_replace(array("\n", "\r"), array('', ''), $shout_contents) . "';";
+			echo "array_shout[1] = '" . str_replace(array("\n", "\r"), array('', ''), ucfirst($shout_contents)) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
 		else //utilisateur non autorisé!
