@@ -87,9 +87,6 @@ class PackagesManager
 		if (file_exists($sql_file))
 			$Sql->parse($sql_file, PREFIX);
 		
-		//Génération du cache du module si il l'utilise
-		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
-		
 		$module_identifier = strprotect($module_identifier);
 		
 		//Installation du mini module s'il existe
@@ -121,6 +118,9 @@ class PackagesManager
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
 		}
+		
+		//Génération du cache du module si il l'utilise
+		$Cache->generate_module_file($module_identifier, NO_FATAL_ERROR_CACHE);
 		
 		return MODULE_INSTALLED;
 	}
