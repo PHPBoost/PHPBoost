@@ -229,7 +229,7 @@ if (!empty($id_get))
 		'C_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
-		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
+		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_FORUM_CAT' => $forum_cats,		
 		'U_POST_NEW_SUBJECT' => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX' => $LANG['forum_index'],		
@@ -383,7 +383,7 @@ if (!empty($id_get))
 		'MODO' => $total_modo,
 		'USER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => forum_list_cat($id_get, $CAT_FORUM[$id_get]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

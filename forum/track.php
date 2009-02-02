@@ -187,7 +187,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 		'LANG' => get_ulang(),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;favorite=1', '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 		'U_CHANGE_CAT'=> 'track.php' . SID,
-		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
+		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 		'U_FORUM_CAT' => '<a href="../forum/track.php' . SID . '">' . $LANG['show_topic_track'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',
 		'U_TRACK_ACTION' => url('.php?p=' . $page . '&amp;token=' . $Session->get_token()),
@@ -246,7 +246,7 @@ elseif ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du 
 		'MODO' => $total_modo,
 		'USER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

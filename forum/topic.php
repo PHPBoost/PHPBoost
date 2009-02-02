@@ -155,7 +155,7 @@ $Template->assign_vars(array(
 	'DISPLAY_MSG' => (($CONFIG_FORUM['activ_display_msg'] && $topic['display_msg']) ? $CONFIG_FORUM['display_msg'] . ' ' : '') ,
 	'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $topic['idcat'], '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
 	'U_CHANGE_CAT'=> 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_cat_title . '.php'),
-	'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",		
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),		
 	'U_FORUM_CAT' => !empty($forum_cats) ? $forum_cats . ' &raquo;' : '',
 	'U_TITLE_T' => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
 	'L_REQUIRE_MESSAGE' => $LANG['require_text'],
@@ -458,7 +458,7 @@ $Template->assign_vars(array(
 	'MODO' => $total_modo,
 	'USER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => forum_list_cat($topic['idcat'], $CAT_FORUM[$topic['idcat']]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'U_SUSCRIBE' => ($track === false) ? url('.php?t=' . $id_get) : url('.php?ut=' . $id_get),
 	'IS_TRACK' => $track ? 'true' : 'false',
 	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',

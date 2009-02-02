@@ -26,15 +26,19 @@
 ###################################################*/
 
 //Liste des catégories du forum.
-function forum_list_cat()
+function forum_list_cat($id_select, $level)
 {
 	global $Group, $CAT_FORUM, $AUTH_READ_FORUM;
 	
 	$select = '';
 	foreach ($CAT_FORUM as $idcat => $array_cat)
 	{
+		$selected = '';
+		if ($id_select == $idcat && $array_cat['level'] == $level)
+			$selected = ' selected="selected"';
+		
 		$margin = ($array_cat['level'] > 0) ? str_repeat('--------', $array_cat['level']) : '--';
-		$select .= $AUTH_READ_FORUM[$idcat] ? '<option value="' . $idcat . '">' . $margin . ' ' . str_replace('\'', '\\\'', $array_cat['name']) . '</option>' : '';
+		$select .= $AUTH_READ_FORUM[$idcat] ? '<option value="' . $idcat . '"' . $selected . '>' . $margin . ' ' . $array_cat['name'] . '</option>' : '';
 	}
 	
 	return $select;

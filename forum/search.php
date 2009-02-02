@@ -54,14 +54,14 @@ $Template->assign_vars(array(
 	'LANG' => get_ulang(),
 	'SID' => SID,
 	'SEARCH' => $search,
-	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
 	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
 	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
 	'U_CHANGE_CAT' => 'search.php' . SID,	
-	'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",	
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),	
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
