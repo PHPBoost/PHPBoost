@@ -26,6 +26,7 @@
 ###################################################*/
 
 require_once('../admin/admin_begin.php');
+load_module_lang('database'); //Chargement de la langue du module.
 define('TITLE', $LANG['database_management']);
 require_once('../admin/admin_header.php');
 
@@ -33,7 +34,7 @@ $table = retrieve(GET, 'table', '');
 $action = retrieve(GET, 'action', '');
 
 $Template->set_filenames(array(
-	'admin_database_tools'=> 'admin/admin_database_tools.tpl'
+	'admin_database_tools'=> 'database/admin_database_tools.tpl'
 ));
 
 //outils de sauvegarde de la base de données

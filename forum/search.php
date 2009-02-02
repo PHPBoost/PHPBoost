@@ -76,7 +76,7 @@ $Template->assign_vars(array(
 	'L_YEAR' => $LANG['year'],
 	'L_CATEGORY' => $LANG['category'],
 	'L_TITLE' => $LANG['title'],
-	'L_CONTENTS' => $LANG['contents'],
+	'L_CONTENTS' => $LANG['content'],
 	'L_RELEVANCE' => $LANG['relevance'],
 	'L_COLORATE_RESULT' => $LANG['colorate_result'],
 	'L_SEARCH' => $LANG['search'],

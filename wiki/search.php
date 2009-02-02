@@ -57,7 +57,7 @@ $Template->assign_vars(array(
 	'SELECTED_TITLE' => $where_search == 'title' ? 'checked="checked"' : '',
 	'SELECTED_CONTENTS' => $where_search != 'title' ? 'checked="checked"' : '',
 	'L_TITLE' => $LANG['title'],
-	'L_CONTENTS' => $LANG['contents']
+	'L_CONTENTS' => $LANG['content']
 ));
 
 if (!empty($search_string)) //recherche

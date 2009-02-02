@@ -129,7 +129,7 @@ else
 		'L_URL_DEFAUT_AVATAR_EXPLAIN' => $LANG['url_defaut_avatar_explain'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
-		'L_CONTENTS' => $LANG['contents'],
+		'L_CONTENTS' => $LANG['content'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));

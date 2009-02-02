@@ -73,7 +73,7 @@ else
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],
-		'L_CONTENTS' => $LANG['contents'],
+		'L_CONTENTS' => $LANG['content'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']
