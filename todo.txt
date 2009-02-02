@@ -19,8 +19,6 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-Possibilité de placer des modules dans les différentes catégories de l'administration.
-Création du module Gestion de la base de données.
 Filtrer les caractères dans le pseudo à l'inscription.
 
 ------------------------------------ MODULES -----------------------------------

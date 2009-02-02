@@ -32,7 +32,7 @@ class PanelInterface extends ModuleInterface
 		$panel_code = 'global $CONFIG_PANEL;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_PANEL = sunserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'panel'", __LINE__, __FILE__));
+		$CONFIG_PANEL = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'panel'", __LINE__, __FILE__));
 		$CONFIG_PANEL = is_array($CONFIG_PANEL) ? $CONFIG_PANEL : array();
 		ksort($CONFIG_PANEL);
 		
