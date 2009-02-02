@@ -95,7 +95,7 @@ elseif (!empty($id))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_UNTIL' => $LANG['until'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_UPDATE' => $LANG['update'],

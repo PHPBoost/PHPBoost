@@ -2,12 +2,12 @@
 				<ul>
 					<li class="title_menu">{L_DATABASE_MANAGEMENT}</li>
 				<li>
-					<a href="admin_database.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" alt="" /></a>
+					<a href="admin_database.php"><img src="database.png" alt="" /></a>
 					<br />
 					<a href="admin_database.php" class="quick_link">{L_DB_TOOLS}</a>
 				</li>
 				<li>
-					<a href="admin_database.php?query=1"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" alt="" /></a>
+					<a href="admin_database.php?query=1"><img src="database.png" alt="" /></a>
 					<br />
 					<a href="admin_database.php?query=1" class="quick_link">{L_QUERY}</a>
 				</li>

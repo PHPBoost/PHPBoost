@@ -78,7 +78,8 @@
 							<td class="row2">	
 								<strong>{L_AUTHOR}:</strong> {installed.AUTHOR} {installed.AUTHOR_WEBSITE}<br />
 								<strong>{L_DESC}:</strong> {installed.DESC}<br />
-								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}<br />
+								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}
+								<br /><br />
 								<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
 								<strong>{L_USE_SQL}:</strong> {installed.USE_SQL} <em>{installed.SQL_TABLE}</em><br />
 								<strong>{L_USE_CACHE}:</strong> {installed.USE_CACHE}<br />

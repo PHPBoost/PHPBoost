@@ -889,7 +889,7 @@ else
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_CONFIRM_DEL_USER' => $LANG['confirm_del_member'],
 		'L_CONFIRM_DEL_ADMIN' => $LANG['confirm_del_admin'],
-		'L_CONTENTS' => $LANG['contents'],
+		'L_CONTENTS' => $LANG['content'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_UPDATE' => $LANG['update'],
 		'L_USERS_MANAGEMENT' => $LANG['members_management'],

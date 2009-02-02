@@ -184,7 +184,7 @@ $tpl->assign_vars(array(
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
     'L_TYPE' => $LANG['type'],
-    'L_CONTENT' => $LANG['contents'],
+    'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
     'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(

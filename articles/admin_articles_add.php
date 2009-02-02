@@ -257,7 +257,7 @@ elseif (!empty($_POST['previs']))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $LANG['articles_date'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
@@ -333,7 +333,7 @@ else
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $LANG['articles_date'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']

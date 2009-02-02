@@ -2,6 +2,11 @@
 			<ul>
 				<li class="title_menu">{L_QUICK_LINKS}</li>
 				<li>
+					<a href="admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/administrator_alert.png" alt="" /></a>
+					<br />
+					<a href="admin_alerts.php" class="quick_link">{L_ADMINISTRATOR_ALERTS}</a>
+				</li>
+				<li>
 					<a href="admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" alt="" /></a>
 					<br />
 					<a href="admin_members.php" class="quick_link">{L_USERS_MANAGMENT}</a>
@@ -17,7 +22,7 @@
 					<a href="admin_modules.php" class="quick_link">{L_MODULES_MANAGMENT}</a>
 				</li>
 				<li>
-					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" alt="" /></a>
+					<a href="updates/updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
 					<br />
 					<a href="updates/updates.php" class="quick_link">{L_WEBSITE_UPDATES}</a>
 				</li>

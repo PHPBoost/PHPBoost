@@ -154,7 +154,7 @@ class ForumInterface extends ModuleInterface
             'IS_SELECTED_360' => $time == 360 ? ' selected="selected"' : '',
             'L_OPTIONS' => $LANG['options'],
             'L_TITLE' => $LANG['title'],
-            'L_CONTENTS' => $LANG['contents'],
+            'L_CONTENTS' => $LANG['content'],
             'IS_TITLE_CHECKED' => $where == 'title' ? ' checked="checked"' : '' ,
             'IS_CONTENTS_CHECKED' => $where == 'contents' ? ' checked="checked"' : '' ,
             'IS_ALL_CHECKED' => $where == 'all' ? ' checked="checked"' : '' ,

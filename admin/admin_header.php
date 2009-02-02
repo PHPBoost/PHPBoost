@@ -69,7 +69,6 @@ $Template->assign_vars(array(
 	'L_SITE_LINK' => $LANG['link_management'],
 	'L_SITE_MENU' => $LANG['menu_management'],
 	'L_MODERATION' => $LANG['moderation'],
-	'L_DATABASE_QUERY' => $LANG['db_executed_query'],
 	'L_MAINTAIN' => $LANG['maintain'],
 	'L_USER' => $LANG['member_s'],
 	'L_EXTEND_FIELD' => $LANG['extend_field'],
@@ -89,7 +88,6 @@ $Template->assign_vars(array(
 	'L_PHPINFO' => $LANG['phpinfo'],
 	'L_SYSTEM_REPORT' => $LANG['system_report'],
 	'L_COMMENTS' => $LANG['comments'],
-	'L_SITE_DATABASE' => $LANG['database'],
 	'L_UPDATER' => $LANG['updater'],
 	'L_KERNEL' => $LANG['kernel'],
 	'L_MODULES' => $LANG['modules'],
@@ -115,13 +113,21 @@ foreach ($MODULES as $name => $array)
 }
 
 ksort($modules_config);
+$array_pos = array(0, 4, 3, 3, 3, 1);
 foreach ($modules_config as $module_name => $auth)
 {
 	$name = $modules_config[$module_name]['module_name'];
 	if (is_array($modules_config[$module_name]))
 	{
-		if ($modules_config[$module_name]['admin'] == 1)
+		$menu_pos = $modules_config[$module_name]['admin'];
+		if ($menu_pos > 0) //Le module possède une administration
 		{
+			$array_pos[$menu_pos-1]++;
+			$idmenu = $array_pos[$menu_pos-1];
+			$Template->assign_vars(array(
+				'C_ADMIN_LINKS_' . $menu_pos => true
+			));
+				
 			if (!empty($modules_config[$module_name]['admin_links']))
 			{
 				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
@@ -130,7 +136,7 @@ foreach ($modules_config as $module_name => $auth)
 				{
 					if (is_array($value))
 					{
-						$links .= '<li class="extend" onmouseover="show_menu(\'7' . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu7' . $name . '">';
+						$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu' . $idmenu . $name . '">';
 						foreach ($value as $key2 => $value2)
 							$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value2 . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
 						$links .= '</ul></li>';
@@ -139,26 +145,24 @@ foreach ($modules_config as $module_name => $auth)
 						$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>';
 				}
 				
-				$Template->assign_block_vars('modules', array(
-					'C_ADVANCED_LINK' => true,
-					'C_DEFAULT_LINK' => false,
-					'ID' => $name,
-					'LINKS' => $links,
-					'DM_A_STYLE' => ' style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);"',
+				$Template->assign_block_vars('admin_links_' . $menu_pos, array(
+					'C_ADMIN_LINKS_EXTEND' => true,
+					'IDMENU' => $idmenu,
 					'NAME' => $modules_config[$module_name]['name'],
-					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
-				));
+					'LINKS' => $links,
+					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php',
+					'IMG' => PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png'
+				));	
 			}
 			else
 			{
-				$Template->assign_block_vars('modules', array(
-					'C_DEFAULT_LINK' => true,
-					'C_ADVANCED_LINK' => false,
-					'DM_A_STYLE' => ' style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);"',
+				$Template->assign_block_vars('admin_links_' . $menu_pos, array(
+					'IDMENU' => $menu_pos,
 					'NAME' => $modules_config[$module_name]['name'],
-					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php'
-				));
-			}
+					'U_ADMIN_MODULE' => PATH_TO_ROOT . '/' . $name . '/admin_' . $name . '.php',
+					'IMG' => PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png'
+				));	
+			}			
 		}
 	}
 }

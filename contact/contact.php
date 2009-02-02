@@ -96,7 +96,7 @@ $Template->assign_vars(array(
 	'L_REQUIRE' => $LANG['require'],
 	'L_VALID_MAIL' => $LANG['valid_mail'],
 	'L_OBJET' => $LANG['objet'],
-	'L_CONTENTS' => $LANG['contents'],
+	'L_CONTENTS' => $LANG['content'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
 	'U_ACTION_CONTACT' => SID

@@ -120,7 +120,7 @@ class Forum
 		
 		$last_msg_id = $this->Add_msg($last_topic_id, $idcat, $contents, $title, 0, 0, true); //Insertion du message.
 		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET first_msg_id = '" . $last_msg_id . "' WHERE id = '" . $last_topic_id . "'", __LINE__, __FILE__);
-				
+		
 		forum_generate_feeds(); //Regénération des flux flux
 		
 		return array($last_topic_id, $last_msg_id);
@@ -145,7 +145,7 @@ class Forum
 		//Insertion de l'action dans l'historique.
 		if ($User->get_attribute('user_id') != $user_id_msg && $history)
 			forum_history_collector(H_EDIT_MSG, $user_id_msg, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg);
-			
+
 		return $nbr_msg_before;
 	}
 	

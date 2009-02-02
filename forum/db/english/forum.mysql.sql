@@ -36,7 +36,7 @@ CREATE TABLE `phpboost_forum_cats` (
 DROP TABLE IF EXISTS `phpboost_forum_history`;
 CREATE TABLE `phpboost_forum_history` (
 	`id` int(11) NOT NULL auto_increment,
-	`action` smallint(6) NOT NULL default '0',
+	`action` varchar(50) NOT NULL default '',
 	`user_id` int(11) NOT NULL default '0',
 	`user_id_action` int(11) NOT NULL default '0',
 	`url` varchar(255) NOT NULL,

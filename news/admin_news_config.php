@@ -106,7 +106,7 @@ else
 		'L_CONFIG_NEWS' => $LANG['configuration_news'],
 		'L_CAT_NEWS' => $LANG['category_news'],
 		'L_TITLE' => $LANG['title'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_APROB' => $LANG['aprob'],

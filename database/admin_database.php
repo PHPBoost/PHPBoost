@@ -40,7 +40,7 @@ if (!empty($read_file) && substr($read_file, -4) == '.sql')
 	}
 	exit;
 }
-
+load_module_lang('database'); //Chargement de la langue du module.
 define('TITLE', $LANG['database_management']);
 require_once('../admin/admin_header.php');
 
@@ -57,7 +57,7 @@ if ($action == 'backup_table' && !empty($table)) //Sauvegarde pour une table uni
 }
 
 $Template->set_filenames(array(
-	'admin_database_management'=> 'admin/admin_database_management.tpl'
+	'admin_database_management'=> 'database/admin_database_management.tpl'
 ));
 
 //outils de sauvegarde de la base de données
