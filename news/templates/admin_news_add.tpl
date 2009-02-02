@@ -174,7 +174,7 @@
 					</dl>
 					<dl>
 						<dt><label for="img_field">{L_IMG_LINK}</label></dt>
-						<dd><label><input type="text" size="60" id="img_field" name="img" value="{IMG}" class="text" /></label></dd>
+						<dd><label><input type="text" size="60" id="img_field" name="img" value="{IMG}" class="text" /> &nbsp;&nbsp;<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd=img_field', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="alt">{L_IMG_DESC}</label></dt>
