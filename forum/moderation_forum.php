@@ -686,7 +686,7 @@ $Template->assign_vars(array(
 	'MODO' => $total_modo,
 	'USER' => $total_member,
 	'GUEST' => $total_visit,
-	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 	'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 	'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],
@@ -695,7 +695,7 @@ $Template->assign_vars(array(
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online']),
 	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'"
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php")
 ));
 	
 $Template->pparse('forum_moderation_panel');

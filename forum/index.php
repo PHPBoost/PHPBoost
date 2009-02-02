@@ -46,7 +46,8 @@ $Template->set_filenames(array(
 
 //Affichage des sous-catégories de la catégorie.
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
-if (!empty($id_get))
+$display_cat = !empty($id_get);
+if ($display_cat)
 {
 	$intervall = $Sql->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
@@ -104,41 +105,39 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 	else //On liste les sous-catégories
 	{
-		$subforums = '';
-		if (!empty($id_get))
+		if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 		{
 			$Template->assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 			));
-			$id_get = '';
+			$display_cat = false;
 		}
-		else //Vérirication de l'existance de sous forums.
-		{
-			$Template->assign_vars(array(
-				'C_FORUM_ROOT_CAT' => false,
-				'C_FORUM_CHILD_CAT' => true,
-				'C_END_S_CATS' => false
-			));			
-			if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
-			{		
-				foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+		
+		$subforums = '';
+		$Template->assign_vars(array(
+			'C_FORUM_ROOT_CAT' => false,
+			'C_FORUM_CHILD_CAT' => true,
+			'C_END_S_CATS' => false
+		));			
+		if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
+		{		
+			foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+			{
+				if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
 				{
-					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
+					if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
 					{
-						if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
+						if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
 						{
-							if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
-							{
-								$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
-								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
-							}	
-						}
+							$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+							$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
+						}	
 					}
-				}	
-				$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-			}
+				}
+			}	
+			$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 		}
 		
 		if (!empty($row['last_topic_id']))
@@ -250,7 +249,9 @@ $Template->assign_vars(array(
 	'GUEST' => $total_visit,
 	'SID' => SID,
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
+	'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'C_TOTAL_POST' => true,
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],
