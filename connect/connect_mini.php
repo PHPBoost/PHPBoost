@@ -99,7 +99,9 @@ function connect_mini($position)
     {
     	$tpl->assign_vars(array(
     		'C_USER_REGISTER' => (bool)$CONFIG_USER['activ_register'],
-    		'L_CONNECT' => $LANG['connect'],
+    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+			'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+			'L_CONNECT' => $LANG['connect'],
     		'L_PSEUDO' => $LANG['pseudo'],
     		'L_PASSWORD' => $LANG['password'],
     		'L_AUTOCONNECT' => $LANG['autoconnect'],

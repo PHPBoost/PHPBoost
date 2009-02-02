@@ -353,7 +353,9 @@
 					</table>
 				</td>
 				<td style="vertical-align:top;padding-left:8px;padding-top:5px;">
-					{UPLOAD_MANAGEMENT}
+					# IF C_UPLOAD_MANAGEMENT #
+					<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+					# ENDIF #
 				</td>
 			</tr>
 		</table>
