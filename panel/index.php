@@ -1,1 +1,1 @@
-<?php header('location: ./quotes.php'); ?>
+<?php header('location: ./panel.php'); ?>

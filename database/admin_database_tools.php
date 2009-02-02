@@ -152,7 +152,7 @@ elseif (!empty($table) && $action == 'delete')
 	
 	if (!empty($value) && !empty($field))
 		$Sql->query("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
-	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
+	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
@@ -171,7 +171,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		}
 		
 		$Sql->query("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
+		redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
 	{
@@ -238,7 +238,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 		}
 		
 		$Sql->query("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table . '&action=data');
+		redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	else
 	{
@@ -270,17 +270,17 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 elseif (!empty($table) && $action == 'optimize')
 {
 	$Backup->Optimize_tables(array($table));	
-	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'truncate')
 {
 	$Backup->truncate_tables(array($table));
-	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
 	$Backup->drop_tables(array($table));
-	redirect(HOST . DIR . '/admin/admin_database_tools.php?table=' . $table);
+	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'query')
 {
@@ -350,7 +350,7 @@ elseif (!empty($table))
 {
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	if (!isset($Backup->tables[$table])) //Table non existante.
-		redirect(HOST . DIR . '/admin/admin_database.php');
+		redirect(HOST . DIR . '/database/admin_database.php');
 		
 	foreach ($table_structure['fields'] as $fields_info)
 	{
@@ -436,7 +436,7 @@ elseif (!empty($table))
 	));
 }
 else
-	redirect(HOST . DIR . '/admin/admin_database.php');
+	redirect(HOST . DIR . '/database/admin_database.php');
 
 $Template->pparse('admin_database_tools');
 
