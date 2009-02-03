@@ -58,7 +58,7 @@ class SitemapSection extends SiteMapElement
         //We assign to the element its depth
         $element->set_depth($this->depth + 1);
         //We add the element to the list
-        $this->sub_sections[] = $element;
+        $this->elements[] = $element;
     }
 
     /**
@@ -91,10 +91,10 @@ class SitemapSection extends SiteMapElement
         	'C_SECTION' => true,
          ));
 
-        foreach ($this->sub_sections as $sub_section)
+        foreach ($this->elements as $element)
         {
             $template->assign_block_vars('element', array(
-				'CODE' => $sub_section->export($export_config)
+				'CODE' => $element->export($export_config)
             ));
         }
         return $template->parse(TEMPLATE_STRING_MODE);
