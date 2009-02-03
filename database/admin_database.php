@@ -3,7 +3,7 @@
  *                              admin_database.php
  *                            -------------------
  *   begin                : August 06, 2006
- *   copyright          : (C) 2006-2007 Sautel Benoit / Viarre Régis
+ *   copyright            : (C) 2006-2007 Sautel Benoit / Viarre Régis
  *   email                : ben.popeye@phpboost.com / crowkait@phpboost.com
  *
  *  
