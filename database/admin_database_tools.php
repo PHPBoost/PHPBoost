@@ -3,7 +3,7 @@
  *                              admin_database_tools.php
  *                            -------------------
  *   begin                : August 06, 2008
- *   copyright          : (C) 2008 SViarre Régis
+ *   copyright            : (C) 2008 SViarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
