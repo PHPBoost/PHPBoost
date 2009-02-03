@@ -89,18 +89,12 @@ class FaqInterface extends ModuleInterface
 		return $string;
 	}
 
-	//Changement de jour.
-	/*
-	function on_changeday()
-	{
-	
-	}
-	*/
-	
+	/**
+	 * @desc Returns the SQL query which will return the result of the researched keywords 
+	 * @param $args string[] parameters of the research
+	 * @return string The SQL query corresponding to the research.
+	 */
 	function get_search_request($args)
-    /**
-     *  Renvoie la requête de recherche
-     */
     {
         global $Sql, $Cache;
 		$Cache->load('faq');
@@ -177,14 +171,19 @@ class FaqInterface extends ModuleInterface
     }
     
     // Returns the module map objet to build the global sitemap
+    /**
+	 * @desc 
+	 * @param $auth_mode
+	 * @return unknown_type
+     */
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $Cache, $FAQ_LANG;
-		import('sitemap/modulemap');
+		import('content/sitemap/module_map');
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
 		$module_map = new ModuleMap($FAQ_LANG['faq']);
-		$module_map->push_element($this->_create_module_map_sections(0, $auth_mode));
+		$module_map->add($this->_create_module_map_sections(0, $auth_mode));
 		
 		$this->_create_module_map_sections(0, $module_map);
 		
@@ -222,7 +221,7 @@ class FaqInterface extends ModuleInterface
 			}
 			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
 			{
-				$category->push_element($this->_create_module_map_sections($id, $auth_mode));
+				$category->add($this->_create_module_map_sections($id, $auth_mode));
 				$i++;
 			}
 		}
