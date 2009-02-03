@@ -10,12 +10,13 @@ import('modules/modules_discovery_service');
 
 $site_map = new SiteMap();
 $config_xml = new SitemapExportConfig('framework/content/sitemap/site_map.xml.tpl', 'framework/content/sitemap/module_map.xml.tpl',
-	 'framework/content/sitemap/modulemapsection.xml.tpl', 'framework/content/sitemap/modulemaplink.xml.tpl');
+	 'framework/content/sitemap/site_map_section.xml.tpl', 'framework/content/sitemap/site_map_link.xml.tpl');
 
 $Modules = new ModulesDiscoveryService();
 foreach ($Modules->get_available_modules('get_module_map') as $module)
 {
 	$modulemap = $module->get_module_map(SITE_MAP_AUTH_USER);
+	print_r($modulemap);
 	$site_map->add($modulemap);
 }
 

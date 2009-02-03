@@ -154,7 +154,7 @@ class SitemapLink extends SiteMapElement
 
         $template->assign_vars(array(
 			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),
-			'TEXT' => htmlspecialchars($this->text, ENT_QUOTES),
+			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
 			'DATE' => $display_date ? $this->last_modification_date->To_date() : '',
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
