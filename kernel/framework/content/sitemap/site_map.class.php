@@ -58,7 +58,7 @@ class SiteMap
      * @desc Builds a SiteMap object with its elements 
      * @param $elements SiteMapElement[] List of the elements it contains
      */
-    function SiteMap($elements)
+    function SiteMap($elements = null)
     {
         if (is_array($elements))
         {
@@ -85,11 +85,15 @@ class SiteMap
 		//We get the stream in which we are going to write
 		$template = $export_config->get_site_map_stream();
 		
+		$template->assign_vars(array(
+		    'C_SITE_MAP' => true
+		));
+		
 		//Let's export all the element it contains
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('children', array(
-				'CHILD_CODE' => $element->export($export_config)
+			$template->assign_block_vars('element', array(
+				'CODE' => $element->export($export_config)
 				));
 		}
 		return $template->parse(TEMPLATE_STRING_MODE);
