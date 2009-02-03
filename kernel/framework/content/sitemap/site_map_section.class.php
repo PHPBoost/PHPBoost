@@ -86,11 +86,15 @@ class SitemapSection extends SiteMapElement
         'DEPTH' => $depth
         ));
         */
+        
+         $template->assign_vars(array(
+        	'C_SECTION' => true,
+         ));
 
         foreach ($this->sub_sections as $sub_section)
         {
-            $template->assign_block_vars('children', array(
-				'CHILD_CODE' => $sub_section->export($export_config)
+            $template->assign_block_vars('element', array(
+				'CODE' => $sub_section->export($export_config)
             ));
         }
         return $template->parse(TEMPLATE_STRING_MODE);

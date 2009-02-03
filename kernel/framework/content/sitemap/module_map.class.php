@@ -81,8 +81,8 @@ class ModuleMap extends SitemapSection
         //We export all the elements contained by the module map
         foreach ($this->elements as $element)
         {
-            $template->assign_block_vars('children', array(
-				'CHILD_CODE' => $element->export($export_config)
+            $template->assign_block_vars('element', array(
+				'CODE' => $element->export($export_config)
             ));
         }
         return $template->parse(TEMPLATE_STRING_MODE);
