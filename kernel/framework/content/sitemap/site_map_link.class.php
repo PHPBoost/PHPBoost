@@ -35,18 +35,38 @@ import('content/sitemap/site_map_element');
  */
 class SiteMapLink extends SiteMapElement
 {
-    function SitemapLink($name = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = NULL)
+    /**
+     * @desc Builds a SiteMapLink object
+     * @param $name string Name of the target page
+     * @param $link Url link
+     * @param $change_freq string Frequency taken into the following enum: SITEMAP_FREQ_ALWAYS, SITEMAP_FREQ_HOURLY,
+     * SITEMAP_FREQ_DAILY, SITEMAP_FREQ_WEEKLY, SITEMAP_FREQ_MONTHLY, SITEMAP_FREQ_YEARLY, SITEMAP_FREQ_NEVER,
+     * SITEMAP_FREQ_DEFAULT
+     * @param $priority string Priority taken into the following enum: SITEMAP_PRIORITY_MAX, SITEMAP_PRIORITY_HIGH,
+     * SITEMAP_PRIORITY_AVERAGE, SITEMAP_PRIORITY_LOW, SITEMAP_PRIORITY_MIN
+     * @param $last_modification_date Date Last modification date of the target page
+     */
+    function SitemapLink($name = '', $link = null, $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = null)
     {
         $this->name = $name;
-        $this->link = $link;
+        $this->set_link($link);
         $this->set_change_freq($change_freq);
         $this->set_priority($priority);
         $this->set_last_modification_date($last_modification_date);
     }
+    
+    /**
+     * @desc Return the name of the target page 
+     * @return string name
+     */
+    function get_name()
+    {
+        return $this->name;
+    }
 
     /**
      * @desc Return the URL of the link
-     * @return string The URL of the link
+     * @return Url The URL of the link
      */
     function get_link()
     {
@@ -82,9 +102,25 @@ class SiteMapLink extends SiteMapElement
     {
         return $this->last_modification_date;
     }
-        
+
     /**
-     * @desc Set the name of the element 
+     * @desc Return the URL of the link 
+     * @return string the URL
+     */
+    function get_url()
+    {
+        if (is_object($this->link))
+        {
+            return $this->link->absolute();
+        }
+        else
+        {
+            return '';
+        }
+    }
+
+    /**
+     * @desc Set the name of the element
      * @param $name string name of the element
      */
     function set_name($name)
@@ -94,11 +130,14 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the URL of the link
-     * @param $link string URL
+     * @param $link Url URL
      */
     function set_link($link)
     {
-        $this->link = $link;
+        if (is_object($link))
+        {
+            $this->link = $link;
+        }
     }
 
     /**
@@ -162,7 +201,7 @@ class SiteMapLink extends SiteMapElement
         $template = $export_config->get_link_stream();
 
         $template->assign_vars(array(
-			'LOC' => htmlspecialchars($this->link, ENT_QUOTES),
+			'LOC' => htmlspecialchars($this->get_url(), ENT_QUOTES),
 			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
 			'DATE' => $display_date ? $this->last_modification_date->To_date() : '',
@@ -180,8 +219,8 @@ class SiteMapLink extends SiteMapElement
     */
     var $name = '';
     /**
-    * @var string Url of the link
-    */
+     * @var Url Url of the link
+     */
     var $link;
     /**
      * @var string Actualization frequency of the target page, must be a member of the following enum:
