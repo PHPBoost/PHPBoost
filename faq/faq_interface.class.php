@@ -188,6 +188,7 @@ class FaqInterface extends ModuleInterface
 		$faq_link = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
 		
 		$module_map = new ModuleMap($faq_link);
+		$module_map->set_description('<em>Test</em>');
 		
 		$id_cat = 0;
 	    $keys = array_keys($FAQ_CATS);

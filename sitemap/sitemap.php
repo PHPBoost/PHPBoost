@@ -16,7 +16,6 @@ $Modules = new ModulesDiscoveryService();
 foreach ($Modules->get_available_modules('get_module_map') as $module)
 {
 	$modulemap = $module->get_module_map(SITE_MAP_AUTH_USER);
-	echo '<pre>'; print_r($modulemap); echo '</pre>';
 	$site_map->add($modulemap);
 }
 

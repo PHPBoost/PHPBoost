@@ -86,7 +86,7 @@ class ModuleMap extends SiteMapSection
 
         $template->assign_vars(array(
 			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
-			'MODULE_DESCRIPTION' => htmlspecialchars($this->description, ENT_QUOTES),
+			'MODULE_DESCRIPTION' => $this->description,
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'LINK_CODE' => is_object($this->link) ? $this->link->export($export_config) : '',
