@@ -178,7 +178,7 @@ class FaqInterface extends ModuleInterface
      */
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
-		global $Cache, $FAQ_LANG, $FAQ_CATS;
+		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG, $Cache;
 		
 		import('content/sitemap/module_map');
 		import('util/url');
@@ -188,9 +188,28 @@ class FaqInterface extends ModuleInterface
 		$faq_link = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
 		
 		$module_map = new ModuleMap($faq_link);
-		$module_map->add($this->_create_module_map_sections(0, $auth_mode));
 		
-		$this->_create_module_map_sections(0, $module_map);
+		$id_cat = 0;
+	    $keys = array_keys($FAQ_CATS);
+		$num_cats = count($FAQ_CATS);
+		$properties = array();
+		for ($j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $FAQ_CATS[$id];
+			if ($auth_mode == SITE_MAP_AUTH_GUEST)
+			{
+				$this_auth = is_array($properties['auth']) ? Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $properties['auth'], AUTH_READ) : Authorizations::check_auth(RANK_TYPE, GUEST_LEVEL, $FAQ_CONFIG['global_auth'], AUTH_READ);
+			}
+			else
+			{
+				$this_auth = is_array($properties['auth']) ? $User->check_auth($properties['auth'], AUTH_READ) : $User->check_auth($FAQ_CONFIG['global_auth'], AUTH_READ);
+			}
+			if ($this_auth && $id != 0 && $properties['visible'] && $properties['id_parent'] == $id_cat)
+			{
+				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
+			}
+		}
 		
 		return $module_map;
 	}
@@ -200,10 +219,7 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
-		if ($id_cat > 0)
-			$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
-		else
-			$this_category = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
+		$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
 			
 		$category = new SiteMapSection($this_category);
 		

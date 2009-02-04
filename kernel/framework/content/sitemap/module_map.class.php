@@ -56,22 +56,6 @@ class ModuleMap extends SiteMapSection
     }
 
     /**
-     * @desc Return the name of the menu
-     * @return string name
-     */
-    function get_name()
-    {
-        if (is_object($this->link))
-        {
-            return $this->link->get_name();
-        }
-        else
-        {
-            return '';
-        }
-    }
-
-    /**
      * @desc Set the description of the module
      * @param $description string Description of the module
      */
@@ -103,7 +87,7 @@ class ModuleMap extends SiteMapSection
         $template->assign_vars(array(
 			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
 			'MODULE_DESCRIPTION' => htmlspecialchars($this->description, ENT_QUOTES),
-            'MODULE_URL' => !empty($this->link) ? $this->link->get_link() : '',
+            'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'LINK_CODE' => is_object($this->link) ? $this->link->export($export_config) : '',
             'C_MODULE_MAP' => true
