@@ -32,8 +32,34 @@ import('content/sitemap/site_map_element');
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a section of a site map.
  */
-class SitemapSection extends SiteMapElement
+class SiteMapSection extends SiteMapElement
 {
+    /**
+     * @desc Build a SiteMapSection object 
+     * @param $link SiteMapLink The link associated to the section
+     */
+    function SiteMapSection($link)
+    {
+         $this->set_link($link);
+    }
+    
+    /**
+     * @desc Return the link associated to the section 
+     * @return SiteMapLink the link
+     */
+    function get_link()
+    {
+        return $this->link;    
+    }
+    
+    /**
+     * @desc Set the link associated to the section 
+     * @param $link SiteMapLink the link
+     */
+    function set_link($link)
+    {
+        $this->link = $link;    
+    }
     /**
      * @desc Set the depth of the element
      * @warning the description is not protected for XML displaying (but usefulless in sitemap.xml)
@@ -102,14 +128,13 @@ class SitemapSection extends SiteMapElement
 
     ## Private elements ##
     /**
+     * @var SiteMapLink Link associated to the section
+     */
+    var $link;
+    /**
     * @var SiteMapElement[] List of the elements contained by the module map
     */
     var $elements = array();
-
-    /**
-     * @var SiteMapElement link of the section
-     */
-    var $link;
 }
 
 ?>

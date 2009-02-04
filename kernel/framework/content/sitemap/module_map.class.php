@@ -34,17 +34,16 @@ import('content/sitemap/site_map_section');
  * (generally the module description) and contains some elements which can be 
  * some simple links or some sections (which can match the categories for example).
  */
-class ModuleMap extends SitemapSection
+class ModuleMap extends SiteMapSection
 {
     /**
      * @desc Build a ModuleMap object
-     * @param $name Name of the module
-     * @param $depth Depth of the module in the elements tree of the site map (default value: 1)
+     * @param $link SiteMapLink Link associated to the root of the module
      */
-    function ModuleMap($name = '', $depth = 1)
+    function ModuleMap($link)
     {
         //We build the parent object
-        parent::SiteMapSection($name, $depth);
+        parent::SiteMapSection($link);
     }
 
     /**
@@ -74,6 +73,7 @@ class ModuleMap extends SitemapSection
         $template->assign_vars(array(
 			'MODULE_NAME' => htmlspecialchars($this->name, ENT_QUOTES),
 			'MODULE_DESCRIPTION' => $this->description,
+            'MODULE_URL' => !empty($this->link) ? $this->link->get_link() : '',
 		    'DEPTH' => $this->depth,
             'C_MODULE_MAP' => true
         ));

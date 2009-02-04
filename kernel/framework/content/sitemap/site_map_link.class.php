@@ -33,7 +33,7 @@ import('content/sitemap/site_map_element');
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a link of a site map.
  */
-class SitemapLink extends SiteMapElement
+class SiteMapLink extends SiteMapElement
 {
     function SitemapLink($name = '', $link = '', $change_freq = SITEMAP_FREQ_MONTHLY, $priority = SITEMAP_PRIORITY_AVERAGE, $last_modification_date = NULL)
     {
@@ -81,6 +81,15 @@ class SitemapLink extends SiteMapElement
     function get_last_modification_date()
     {
         return $this->last_modification_date;
+    }
+        
+    /**
+     * @desc Set the name of the element 
+     * @param $name string name of the element
+     */
+    function set_name($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -166,6 +175,10 @@ class SitemapLink extends SiteMapElement
     }
 
     ## Private elements ##
+    /**
+    * @var string Name of the SiteMapElement
+    */
+    var $name = '';
     /**
     * @var string Url of the link
     */

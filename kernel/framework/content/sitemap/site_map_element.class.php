@@ -45,15 +45,6 @@ class SiteMapElement
 
         $this->set_depth($depth);
     }
-     
-    /**
-     * @desc Return the name of the element
-     * @return string name of the element
-     */
-    function get_name()
-    {
-        return $this->name;
-    }
     
     /**
      * @desc Return the depth of the element in the tree 
@@ -62,15 +53,6 @@ class SiteMapElement
     function get_depth()
     {
         return $this->depth;
-    }
-    
-    /**
-     * @desc Set the name of the element 
-     * @param $name string name of the element
-     */
-    function set_name($name)
-    {
-        $this->name = $name;
     }
 
     /**
@@ -93,11 +75,6 @@ class SiteMapElement
     }
 
     ## Private elements ##
-    /**
-    * @var string Name of the SiteMapElement
-    */
-    var $name = '';
-
     /**
      * @var int Depth of the element in the elements tree
      */
