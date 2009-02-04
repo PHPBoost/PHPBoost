@@ -74,10 +74,10 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
-	
+
 	$del_message = retrieve(GET, 'del', false);
 	$edit_message = retrieve(GET, 'edit', false);
-	$update = retrieve(GET, 'update', false);
+	$update_message = retrieve(GET, 'update', false);
 	
 	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
@@ -127,7 +127,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			$Template->pparse('shoutbox'); 
 		}
-		elseif ($update)
+		elseif ($update_message)
 		{
 			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shout_pseudo', '');			
