@@ -220,7 +220,7 @@ class FaqInterface extends ModuleInterface
 	{
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
-		$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
+		$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php')));
 			
 		$category = new SiteMapSection($this_category);
 		
