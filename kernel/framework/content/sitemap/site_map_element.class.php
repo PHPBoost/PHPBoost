@@ -30,7 +30,7 @@
  * @abstract
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This abstract is the root of every object which can be contained by a SiteMap object.
- * Some SiteMapElements objects can contain one or many SiteMapElement objects therefore the elements 
+ * Some SiteMapElements objects can contain one or many SiteMapElement objects therefore the elements
  * can be represented by a tree an each element has a depth in the tree.
  */
 class SiteMapElement
@@ -39,22 +39,20 @@ class SiteMapElement
      * @desc Build a SiteMapElement object
      * @param $name string Name of the object
      */
-    function SiteMapElement($name, $depth = 1)
+    function SiteMapElement($name)
     {
         $this->name = $name;
-
-        $this->set_depth($depth);
     }
-    
+
     /**
-     * @desc Return the depth of the element in the tree 
+     * @desc Return the depth of the element in the tree
      * @return int depth
      */
     function get_depth()
     {
         return $this->depth;
     }
-    
+
     /**
      * @desc Return the name of the menu
      * @return string name
@@ -92,8 +90,8 @@ class SiteMapElement
 
     ## Private elements ##
     /**
-     * @var int Depth of the element in the elements tree
-     */
+    * @var int Depth of the element in the elements tree
+    */
     var $depth = 1;
 }
 
