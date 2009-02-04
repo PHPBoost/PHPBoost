@@ -179,10 +179,13 @@ class FaqInterface extends ModuleInterface
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $Cache, $FAQ_LANG, $FAQ_CATS;
+		
 		import('content/sitemap/module_map');
+		import('util/url');
+		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
-		$faq_link = new SiteMapLink($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
+		$faq_link = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
 		
 		$module_map = new ModuleMap($faq_link);
 		$module_map->add($this->_create_module_map_sections(0, $auth_mode));
@@ -198,9 +201,9 @@ class FaqInterface extends ModuleInterface
 		global $FAQ_CATS, $FAQ_LANG, $LANG, $User, $FAQ_CONFIG;
 		
 		if ($id_cat > 0)
-			$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], HOST . DIR . '/faq/' . url('faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
+			$this_category = new SiteMapLink($FAQ_CATS[$id_cat]['name'], new Url('/faq/faq.php?id=' . $id_cat, 'faq-' . $id_cat . '+' . url_encode_rewrite($FAQ_CATS[$id_cat]['name']) . '.php'));
 		else
-			$this_category = new SiteMapLink($FAQ_LANG['all_cats'], HOST . DIR . '/faq/faq.php');
+			$this_category = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
 			
 		$category = new SiteMapSection($this_category);
 		

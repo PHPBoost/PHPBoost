@@ -47,7 +47,7 @@ class Url
      * @param string $url the url string relative to the current path,
      * to the website root if beginning with a "/" or an absolute url
      */
-    function url($url = '')
+    function Url($url = '')
     {
         if (!empty($url))
             $this->set_url($url);
