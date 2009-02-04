@@ -37,6 +37,7 @@
 [*] Réorganisation du système d'autorisation. 
 [*] Valeurs par défaut dans les autorisations sur les groupes.
 [*] Système de visualisation des messages du membre, possibilité de communication avec les modules pour récupérer les liens vers les messages.
+[*] Possibilité de classer les modules dans les différents onglets de l'admin.
 [*] Possibilité de désactiver les colonnes droite/gauche du thème.
 [*] Possibilité de choisir finement le temps de maintenance du site.
 [*] Possibilité de définir une limite d'upload dans le gestionnaire de fichier en fonction des groupes.
