@@ -1,5 +1,5 @@
         <div style="position:relative;bottom:0px;top:30px;margin-left:450px;">
-			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?{SID}" method="post">
+			<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
 				<div class="newsletter_form">
 					<span class="newsletter_title">{L_NEWSLETTER}</span> 
 					<span style="float:right;">
