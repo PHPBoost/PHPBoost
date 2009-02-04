@@ -96,26 +96,14 @@ class SiteMapSection extends SiteMapElement
     {
         //We get the stream in which we are going to write
         $template = $export_config->get_section_stream();
-
-        /* What to do with that ?
-
-        if (is_string($this->section_name))
-        $template->assign_vars(array(
-        'C_SECTION_NAME_IS_STRING' => !empty($this->section_name),
-        'SECTION_NAME' => $this->section_name,
-        'DEPTH' => $depth
-        ));
-        elseif (is_object($this->section_name) && strtolower(get_class($this->section_name)) == 'sitemap_link')
-        $template->assign_vars(array(
-        'C_SECTION_NAME_IS_LINK' => true,
-        'LINK_CODE' => $this->section_name->export($export_config),
-        'DEPTH' => $depth
-        ));
-        */
-        
+         
          $template->assign_vars(array(
-        	'C_SECTION' => true,
-         ));
+			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
+            'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
+		    'DEPTH' => $this->depth,
+            'LINK_CODE' => is_object($this->link) ? $this->link->export($export_config) : '',
+            'C_SECTION' => true
+        ));
 
         foreach ($this->elements as $element)
         {

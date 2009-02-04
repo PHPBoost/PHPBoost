@@ -54,6 +54,22 @@ class SiteMapElement
     {
         return $this->depth;
     }
+    
+    /**
+     * @desc Return the name of the menu
+     * @return string name
+     */
+    function get_name()
+    {
+        if (is_object($this->link))
+        {
+            return $this->link->get_name();
+        }
+        else
+        {
+            return '';
+        }
+    }
 
     /**
      * @desc Set the depth of the element

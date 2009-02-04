@@ -27,7 +27,7 @@ $sub_section_tpl->assign_vars(array(
 	'L_LEVEL' => 'de niveau'
 	));
 
-$config_html = new SitemapExportConfig('sitemap/sitemap_html.tpl', 'sitemap/sitemap_html.tpl', $sub_section_tpl, 'sitemap/modulemaplink_html.tpl');
+$config_html = new SitemapExportConfig('sitemap/site_map_html.tpl', 'sitemap/module_map_html.tpl', $sub_section_tpl, 'sitemap/modulemaplink_html.tpl');
 
 echo '<hr />' . $site_map->export($config_html);	
 
