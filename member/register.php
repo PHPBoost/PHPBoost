@@ -42,7 +42,7 @@ $register_confirm = retrieve(POST, 'confirm', '');
 
 if (empty($key))
 {
-	if (!$User->check_level(USER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($register_confirm) && empty($get_error) && empty($get_erroru))
+	if (!$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($register_confirm) && empty($get_error) && empty($get_erroru))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -60,7 +60,7 @@ if (empty($key))
 		
 		$Template->pparse('register');
 	}
-	elseif ($User->check_level(USER_LEVEL) !== true && (!empty($register_confirm) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
+	elseif ($User->check_level(MEMBER_LEVEL) !== true && (!empty($register_confirm) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -202,7 +202,7 @@ if (empty($key))
 			'L_PSEUDO_HOW' => $LANG['pseudo_how'],
 			'L_PASSWORD' => $LANG['password'],
 			'L_PASSWORD_HOW' => $LANG['password_how'],
-			'L_CONFIRM_PASSWORD' => $LANG['confirm_pass'],
+			'L_CONFIRM_PASSWORD' => $LANG['confirm_password'],
 			'L_VERIF_CODE' => $LANG['verif_code'],
 			'L_VERIF_CODE_EXPLAIN' => $LANG['verif_code_explain'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
@@ -233,10 +233,10 @@ if (empty($key))
 			'L_UPLOAD_AVATAR' => $LANG['upload_avatar'],
 			'L_UPLOAD_AVATAR_WHERE' => $LANG['upload_avatar_where'],
 			'L_SUBMIT' => $LANG['submit'],		
-			'L_PREVIOUS_PASS' => $LANG['previous_pass'],
-			'L_EDIT_JUST_IF_MODIF' => $LANG['edit_if_modif'],
-			'L_NEW_PASS' => $LANG['new_pass'],
-			'L_CONFIRM_PASS' => $LANG['confirm_pass'],
+			'L_PREVIOUS_PASS' => $LANG['previous_password'],
+			'L_EDIT_JUST_IF_MODIF' => $LANG['fill_only_if_modified'],
+			'L_NEW_PASS' => $LANG['new_password'],
+			'L_CONFIRM_PASS' => $LANG['confirm_password'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
 			'L_HIDE_MAIL' => $LANG['hide_mail'],
 			'L_HIDE_MAIL_WHO' => $LANG['hide_mail_who'],
@@ -359,7 +359,7 @@ if (empty($key))
 	else
 		redirect(get_start_page());
 }
-elseif (!empty($key) && $User->check_level(USER_LEVEL) !== true) //Activation du compte membre
+elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation du compte membre
 {
 	$Template->set_filenames(array(
 		'register' => 'member/register.tpl'

@@ -73,7 +73,7 @@ else //Affichage de l'interface de gestion.
 	$popup_noamp = '';
 }
 
-if (!$User->check_level(USER_LEVEL)) //Visiteurs interdits!
+if (!$User->check_level(MEMBER_LEVEL)) //Visiteurs interdits!
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 //Chargement de la configuration.

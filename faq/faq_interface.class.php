@@ -185,7 +185,7 @@ class FaqInterface extends ModuleInterface
 		
 		include_once(PATH_TO_ROOT . '/faq/faq_begin.php');
 		
-		$faq_link = new SiteMapLink($FAQ_LANG['all_cats'], new Url('/faq/faq.php'));
+		$faq_link = new SiteMapLink($FAQ_LANG['faq'], new Url('/faq/faq.php'), SITE_MAP_FREQ_DEFAULT, SITE_MAP_PRIORITY_MAX);
 		
 		$module_map = new ModuleMap($faq_link);
 		$module_map->set_description('<em>Test</em>');

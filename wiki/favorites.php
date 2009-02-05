@@ -35,7 +35,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php'); 
 
-if (!$User->check_level(USER_LEVEL))
+if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $add_favorite = retrieve(GET, 'add', 0);

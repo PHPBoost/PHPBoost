@@ -27,30 +27,48 @@
 ###################################################*/
 
 //Imports of every class of this package
+import('content/sitemap/module_map');
 import('content/sitemap/site_map_link');
 import('content/sitemap/site_map_section');
 import('content/sitemap/site_map_export_config');
 
-//Usefull ?
+//For who is the site map?
+/**
+ * The site map will be seen by every body, only the public elements must appear
+ */
 define('SITE_MAP_AUTH_GUEST', false);
+/**
+ * The site map is for the current user. It must contain only what the user can see, but it can be private.
+ */
 define('SITE_MAP_AUTH_USER', true);
 
+//In which context will be used the site map?
+/**
+ * It will be a page of the site containing the site map
+ */
+define('SITE_MAP_USER_MODE', true);
+/**
+ * It will be for the search engines (sitemap.xml), all the pages which don't need to be present in the search engines results
+ * can be forgotten in that case.
+ */
+define('SITE_MAP_SEARCH_ENGINE_MODE', false);
+
 //Actualization frequencies
-define('SITEMAP_FREQ_ALWAYS', 'always');
-define('SITEMAP_FREQ_HOURLY', 'hourly');
-define('SITEMAP_FREQ_DAILY', 'daily');
-define('SITEMAP_FREQ_WEEKLY', 'weekly');
-define('SITEMAP_FREQ_MONTHLY', 'monthly');
-define('SITEMAP_FREQ_YEARLY', 'yearly');
-define('SITEMAP_FREQ_NEVER', 'never');
-define('SITEMAP_FREQ_DEFAULT', SITEMAP_FREQ_MONTHLY);
+define('SITE_MAP_FREQ_ALWAYS', 'always');
+define('SITE_MAP_FREQ_HOURLY', 'hourly');
+define('SITE_MAP_FREQ_DAILY', 'daily');
+define('SITE_MAP_FREQ_WEEKLY', 'weekly');
+define('SITE_MAP_FREQ_MONTHLY', 'monthly');
+define('SITE_MAP_FREQ_YEARLY', 'yearly');
+define('SITE_MAP_FREQ_NEVER', 'never');
+define('SITE_MAP_FREQ_DEFAULT', SITE_MAP_FREQ_MONTHLY);
 
 //Link priority
-define('SITEMAP_PRIORITY_MAX', '1');
-define('SITEMAP_PRIORITY_HIGH', '0.75');
-define('SITEMAP_PRIORITY_AVERAGE', '0.5');
-define('SITEMAP_PRIORITY_LOW', '0.25');
-define('SITEMAP_PRIORITY_MIN', '0');
+define('SITE_MAP_PRIORITY_MAX', '1');
+define('SITE_MAP_PRIORITY_HIGH', '0.75');
+define('SITE_MAP_PRIORITY_AVERAGE', '0.5');
+define('SITE_MAP_PRIORITY_LOW', '0.25');
+define('SITE_MAP_PRIORITY_MIN', '0');
 
 class SiteMap
 {
@@ -97,6 +115,72 @@ class SiteMap
 				));
 		}
 		return $template->parse(TEMPLATE_STRING_MODE);
+	}
+	
+	/**
+	 * @desc Adds to the site map all maps of the installed modules 
+	 */
+	function build_modules_maps()
+	{
+	    import('modules/modules_discovery_service');
+	    
+        $Modules = new ModulesDiscoveryService();
+        foreach ($Modules->get_available_modules('get_module_map') as $module)
+        {
+        	$module_map = $module->get_module_map(SITE_MAP_AUTH_USER);
+        	$this->add($module_map);
+        }
+	}
+	
+	/**
+	 * @desc Adds to the site map all the kernel links.
+	 */
+	function build_kernel_map($mode = SITE_MAP_USER_MODE, $auth_mode = SITE_MAP_AUTH_GUEST)
+	{
+	    global $CONFIG, $LANG, $User;
+	    
+	    //We consider the kernel as a module
+	    $kernel_map = new ModuleMap(new SiteMapLink($LANG['home'], new Url($CONFIG['start_page'])));
+	    
+	    //The site description
+	    $kernel_map->set_description(nl2br($CONFIG['site_desc']));
+	    
+	    //All the links which not need to be present in the search engine results.
+	    if ($mode == SITE_MAP_USER_MODE)
+	    {
+	        $kernel_map->add(new SiteMapLink($LANG['members_list'], new Url('/member/member.php')));
+	        
+	        //Member space
+	        if ($auth_mode == SITE_MAP_AUTH_USER && $User->check_level(MEMBER_LEVEL))
+	        {
+	            //We create a section for that
+	            $member_space_section = new SiteMapSection(new SiteMapLink($LANG['my_private_profile'], 
+	                new Url('/member/' . url('member.php?id=' . $User->get_id() . '&amp;view=1', 'member-' . $User->get_id() . '.php?view=1'))));
+	            
+	            //Profile edition
+	            $member_space_section->add(new SiteMapLink($LANG['profile_edition'],
+	                 new Url('/member/' . url('member.php?id=' . $User->get_id() . '&amp;edit=1', 'member-' . $User->get_id() . '.php?edit=1'))));
+	            
+	            //Private messaging
+	            $member_space_section->add(new SiteMapLink($LANG['private_messaging'], 
+	                new Url('/member/' . url('pm.php?pm=' . $User->get_id(), 'pm-' . $User->get_id() . '.php'))));
+	            
+	            //Contribution panel
+	            $member_space_section->add(new SiteMapLink($LANG['contribution_panel'], new Url('/member/contribution_panel.php')));
+	            
+	            //Administration panel
+	            if ($User->check_level(ADMIN_LEVEL))
+	            {
+	                $member_space_section->add(new SiteMapLink($LANG['admin_panel'], new Url('/admin/admin_index.php')));
+	            }
+	            
+	            //We add it to the kernel map
+	            $kernel_map->add($member_space_section);
+	        }
+	    }
+	    
+	    //The kernel map is added to the site map
+	    $this->add($kernel_map);
 	}
 	
 	## Private elements ##

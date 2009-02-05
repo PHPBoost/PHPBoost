@@ -142,7 +142,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
-		case USER_LEVEL:
+		case MEMBER_LEVEL:
 		$class = 'member';
 		break;
 		

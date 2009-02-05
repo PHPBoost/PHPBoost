@@ -127,7 +127,7 @@ switch ($action)
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_INFO' => $LANG['user_punish_until'],
 				'L_ACTION_USER' => $LANG['punishment_management'],
-				'L_PROFILE' => $LANG['profil'],
+				'L_PROFILE' => $LANG['profile'],
 				'L_SEARCH_USER' => $LANG['search_member'],
 				'L_SEARCH' => $LANG['search'],
 				'L_REQUIRE_LOGIN' => $LANG['require_pseudo']
@@ -280,7 +280,7 @@ switch ($action)
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_INFO' => $LANG['user_ban_until'],
 				'L_ACTION_USER' => $LANG['ban_management'],
-				'L_PROFILE' => $LANG['profil'],
+				'L_PROFILE' => $LANG['profile'],
 				'L_SEARCH_USER' => $LANG['search_member'],
 				'L_SEARCH' => $LANG['search'],
 				'L_REQUIRE_LOGIN' => $LANG['require_pseudo']

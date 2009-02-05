@@ -165,8 +165,8 @@ $LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr
 $LANG['printable_version'] = 'Version imprimable';
 
 //Connexion
-$LANG['connect_private_message'] = 'Messagerie privée';
-$LANG['connect_private_profil'] = 'Mon profil';
+$LANG['private_messaging'] = 'Messagerie privée';
+$LANG['my_private_profile'] = 'Mon profil';
 
 //Maintain
 $LANG['maintain'] = 'Le site est actuellement en maintenance merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accèder.';
@@ -181,11 +181,12 @@ $LANG['guest'] = 'Visiteur';
 $LANG['guest_s'] = 'Visiteurs';
 $LANG['member'] = 'Membre';
 $LANG['member_s'] = 'Membres';
+$LANG['members_list'] = 'Liste des membres';
 $LANG['modo'] = 'Modérateur';
 $LANG['modo_s'] = 'Modérateurs';
 $LANG['admin'] = 'Administrateur';
 $LANG['admin_s'] = 'Administrateurs';
-$LANG['reception'] = 'Accueil';
+$LANG['home'] = 'Accueil';
 $LANG['date'] = 'Date';
 $LANG['today'] = 'Aujourd\'hui';
 $LANG['day'] = 'Jour';
@@ -341,12 +342,12 @@ $LANG['edit_comment'] = 'Editer commentaire';
 
 //Membres
 $LANG['member_area'] = 'Zone membre';
-$LANG['profil'] = 'Profil';
-$LANG['profil_edit'] = 'Edition du profil';
-$LANG['previous_pass'] = 'Ancien mot de passe';
-$LANG['edit_if_modif'] = 'Remplir seulement en cas de modification';
-$LANG['new_pass'] = 'Nouveau mot de passe';
-$LANG['confirm_pass'] = 'Retapez votre mot de passe';
+$LANG['profile'] = 'Profil';
+$LANG['profile_edition'] = 'Edition du profil';
+$LANG['previous_password'] = 'Ancien mot de passe';
+$LANG['fill_only_if_modified'] = 'Remplir seulement en cas de modification';
+$LANG['new_password'] = 'Nouveau mot de passe';
+$LANG['confirm_password'] = 'Retapez votre mot de passe';
 $LANG['hide_mail'] = 'Cacher votre email';
 $LANG['hide_mail_who'] = 'Aux autres utilisateurs';
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';

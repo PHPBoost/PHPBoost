@@ -37,10 +37,10 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
-if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
+if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 	
-if ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du membre.
+if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_forum'=> 'forum/forum_forum.tpl',

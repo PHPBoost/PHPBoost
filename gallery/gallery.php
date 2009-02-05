@@ -560,7 +560,7 @@ else
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
 				
-				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(USER_LEVEL) );
+				$activ_note = ($CONFIG_GALLERY['activ_note'] == 1 && $User->check_level(MEMBER_LEVEL) );
 				if ($activ_note)
 				{
 					//Affichage notation.
@@ -658,7 +658,7 @@ else
 			));
 			
 			include_once('../kernel/framework/content/note.class.php');
-			$is_connected = $User->check_level(USER_LEVEL);
+			$is_connected = $User->check_level(MEMBER_LEVEL);
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, g.user_id, g.views, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
 			FROM " . PREFIX . "gallery g

@@ -36,7 +36,6 @@ $FAQ_LANG = array();
 //Généralités
 $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'Aucune question présente dans cette catégorie';
-$FAQ_LANG['all_cats'] = 'Toutes les catégories';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Nom de la catégorie';
 $FAQ_LANG['num_questions_singular'] = '%d question';

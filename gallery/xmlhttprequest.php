@@ -55,7 +55,7 @@ if (!empty($_GET['increment_view']))
 	//Mise à jour du nombre de vues.
 	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 }
-elseif (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur connecté.
+elseif (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);

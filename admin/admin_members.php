@@ -88,7 +88,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
-			$user_level = retrieve(POST, 'level', -1);  
+			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
 			$user_aprob = retrieve(POST, 'user_aprob', 0);  
 			
 			//Informations.
@@ -213,11 +213,11 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					$Cache->Generate_file('stats');
 				}
 				
-                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $user_level . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
                 //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
-                if ($member_infos['level'] != $user_level)
-					$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET level = '" . $user_level . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                if ($member_infos['level'] != $MEMBER_LEVEL)
+					$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET level = '" . $MEMBER_LEVEL . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
 				if ($user_ban > 0)	//Suppression de la session si le membre se fait bannir.
 				{	
@@ -390,7 +390,7 @@ elseif ($add)
 		'L_USERS_PUNISHMENT' => $LANG['punishment_management'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_PASSWORD' => $LANG['password'],
-		'L_PASSWORD_CONFIRM' => $LANG['confirm_pass'],
+		'L_PASSWORD_CONFIRM' => $LANG['confirm_password'],
 		'L_MAIL' => $LANG['mail'],
 		'L_RANK' => $LANG['rank'],
 		'L_USER' => $LANG['member'],

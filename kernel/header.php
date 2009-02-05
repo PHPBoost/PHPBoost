@@ -120,7 +120,7 @@ $alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $c
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
-$member_connected = $User->check_level(USER_LEVEL);
+$member_connected = $User->check_level(MEMBER_LEVEL);
 $Template->assign_vars(array(
 	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],

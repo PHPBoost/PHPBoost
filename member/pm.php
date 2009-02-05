@@ -32,7 +32,7 @@ $Bread_crumb->add($LANG['title_pm'], url('pm.php'));
 require_once('../kernel/header.php');
 
 //Interdit aux non membres.
-if (!$User->check_level(USER_LEVEL))
+if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 include_once('../kernel/framework/members/pm.class.php');
