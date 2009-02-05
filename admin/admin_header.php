@@ -75,7 +75,7 @@ $Template->assign_vars(array(
 	'L_RANKS' => $LANG['ranks'],
 	'L_TERMS' => $LANG['terms'],
 	'L_GROUP' => $LANG['group'],
-	'L_CONTENTS' => $LANG['contents'],
+	'L_CONTENTS' => $LANG['content'],
 	'L_PAGES' => $LANG['pages'],
 	'L_FILES' => $LANG['files'],
 	'L_THEME' => $LANG['themes'],
@@ -114,13 +114,22 @@ foreach ($MODULES as $name => $array)
 
 ksort($modules_config);
 $array_pos = array(0, 4, 3, 3, 3, 1);
+$menus_numbers = array('index' => 1, 'administration' => 2, 'tools' => 3, 'members' => 4, 'content' => 5, 'modules' => 6);
 foreach ($modules_config as $module_name => $auth)
 {
 	$name = $modules_config[$module_name]['module_name'];
 	if (is_array($modules_config[$module_name]))
 	{
-		$menu_pos = $modules_config[$module_name]['admin'];
-		if ($menu_pos > 0) //Le module possède une administration
+		$menu_pos_name = $modules_config[$module_name]['admin'];
+		$menu_pos = 0;
+		
+		if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name]))
+		{
+		    $menu_pos = $menus_numbers[$menu_pos_name];
+		}
+
+		//Le module possède une administration
+		if ($menu_pos > 0)
 		{
 			$array_pos[$menu_pos-1]++;
 			$idmenu = $array_pos[$menu_pos-1];

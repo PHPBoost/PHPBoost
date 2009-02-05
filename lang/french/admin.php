@@ -37,7 +37,6 @@ $LANG['no_administration'] = 'Aucune administration associée avec ce module!';
 //Titre Modules par défauts
 $LANG['index'] = 'Index';
 $LANG['tools'] = 'Outils';
-$LANG['contents'] = 'Contenus';
 $LANG['link_management'] = 'Gestion des liens';
 $LANG['menu_management'] = 'Menus';
 $LANG['moderation'] = 'Panneau modération';
