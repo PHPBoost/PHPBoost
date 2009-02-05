@@ -44,10 +44,11 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$img = retrieve(POST, 'img', '');
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 		
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
 	$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
 	
@@ -59,13 +60,14 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 	$img = retrieve(POST, 'img', '');
 	$auth_flood = retrieve(POST, 'auth_flood', 1);
 	$pm_group_limit = retrieve(POST, 'pm_group_limit', 75);
+	$color_group = retrieve(POST, 'color_group', '');
 	$data_group_limit = isset($_POST['data_group_limit']) ? numeric($_POST['data_group_limit'], 'float') * 1024 : '5120';
 	
 	if (!empty($name))
 	{
 		//Insertion
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 		
 		$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
 		
@@ -111,7 +113,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		'admin_groups_management2'=> 'admin/admin_groups_management2.tpl'
 	));
 	
-	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+	$group = $Sql->query_array(DB_TABLE_GROUP, 'id', 'name', 'img', 'color', 'auth', 'members', "WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	if (!empty($group['id']))
 	{
 		//Gestion erreur.
@@ -165,6 +167,7 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'AUTH_FLOOD_DISABLED' => $array_group['auth_flood'] == 0 ? 'checked="checked"' : '',
 			'PM_GROUP_LIMIT' => $array_group['pm_group_limit'],
 			'DATA_GROUP_LIMIT' => number_round($array_group['data_group_limit']/1024, 2),
+			'COLOR_GROUP' => $group['color'],
 			'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 			'L_REQUIRE_LOGIN' => $LANG['require_name'],
 			'L_CONFIRM_DEL_USER_GROUP' => $LANG['confirm_del_member_group'],
@@ -179,6 +182,8 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 			'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
 			'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
 			'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
+			'L_COLOR_GROUP' => $LANG['color_group'],
+			'L_COLOR_GROUP_EXPLAIN' => $LANG['color_group_explain'],
 			'L_YES' => $LANG['yes'],
 			'L_NO' => $LANG['no'],
 			'L_ADD' => $LANG['add'],
@@ -260,12 +265,14 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_PM_GROUP_LIMIT_EXPLAIN' => $LANG['pm_group_limit_explain'],
 		'L_DATA_GROUP_LIMIT' => $LANG['data_group_limit'],
 		'L_DATA_GROUP_LIMIT_EXPLAIN' => $LANG['data_group_limit_explain'],
+		'L_COLOR_GROUP' => $LANG['color_group'],
+		'L_COLOR_GROUP_EXPLAIN' => $LANG['color_group_explain'],
 		'L_MB' => $LANG['unit_megabytes'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
 		'L_ADD' => $LANG['add']
 	));
-	
+
 	$Template->pparse('admin_groups_management2');
 }
 else //Liste des groupes.

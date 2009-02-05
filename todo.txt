@@ -4,6 +4,7 @@
 
 ------------------------------------- NOYAU ------------------------------------
 
+- Alerte lors de l'installation si PHPBoost est déjà installé sur la base de données (même préfixe).
 [-] Ajouter les autorisations aux sitemap
 
 ------------------------------------ MODULES -----------------------------------
@@ -21,6 +22,7 @@
 ------------------------------------- NOYAU ------------------------------------
 Ajouter un mail d'envoi pour les mails.
 Filtrer les caractères dans le pseudo à l'inscription.
+- Possibilité d'associer une couleur à un groupe, coloration du pseudo des membres du groupe.
 
 ------------------------------------ MODULES -----------------------------------
 Améliorer le listage des news/articles dans l'admin (merdique actuellement).
@@ -68,21 +70,10 @@ Améliorer le listage des news/articles dans l'admin (merdique actuellement).
 - [color=red]Nouveauté:[/color] Galerie d'avatar.
 - Possibilité d'envoyer des messages privés à tout les membres d'un groupe ou à tout les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
-
-
 - Outils avancés de visualisation et gestion du cache.
-- Possibilité d'associer une couleur à un groupe, coloration du pseudo des membres du groupe.
 - Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
-- Possibilité de créer la base de données lors de l'installation.
-- Alerte lors de l'installation si PHPBoost est déjà installé sur la base de données (même préfixe).
-- Mise en cache des informations de mises à jour du site et des modules.
-- Ajout de l'envoi (optionnel) d'un mail lors de la récéption d'un message privé.
-- Record du nombre de visiteurs dans la journée et dans le mois.
 - Ajout du tri sur les lettres de l'alphabet dans la liste des membres.
 - Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
-- Ajouter le nouveau système de mini calendrier partout sur le site.
-
-
 
 
 [b]Forum[/b]
