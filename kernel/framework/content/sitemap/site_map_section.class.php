@@ -88,7 +88,15 @@ class SiteMapSection extends SiteMapElement
     }
 
     /**
-     * @desc Exports the section according to the given configuration
+     * @desc Exports the section according to the given configuration. You will use the following template variables:
+     * <ul>
+     * 	<li>SECTION_NAME which contains the name of the section</li>
+     * 	<li>SECTION_URL which contains the URL of the link associated to the section</li>
+     * 	<li>DEPTH which contains the depth of the section in the site map tree (useful for CSS classes names)</li>
+     * 	<li>LINK_CODE which contains the code got by the associated link export</li>
+     * 	<li>C_SECTION, boolean meaning that it's a section (useful if you want to use a sigle template for the whole export configuration)</li>
+     * 	<li>A loop "element" containing evert element of the section (their code is available in the CODE variable of the loop)</li>
+     * </ul>
      * @param $export_config SiteMapExportConfig Export configuration
      * @return string the exported section
      */
@@ -98,8 +106,8 @@ class SiteMapSection extends SiteMapElement
         $template = $export_config->get_section_stream();
          
          $template->assign_vars(array(
-			'MODULE_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
-            'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
+			'SECTION_NAME' => htmlspecialchars($this->get_name(), ENT_QUOTES),
+            'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 		    'DEPTH' => $this->depth,
             'LINK_CODE' => is_object($this->link) ? $this->link->export($export_config) : '',
             'C_SECTION' => true

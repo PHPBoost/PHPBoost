@@ -194,7 +194,16 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Exports the section according to the given configuration
+     * @desc Exports the section according to the given configuration. You will use the following template variables:
+     * <ul>
+     * 	<li>LOC containing the URL of the link</li>
+     * 	<li>TEXT containing the name of the target page</li>
+     * 	<li>C_DISPLAY_DATE indicating if the date is not empty</li>
+     * 	<li>DATE containing the date of the last modification of the target page, formatted for the sitemap.xml file</li>
+     * 	<li>ACTUALIZATION_FREQUENCY corresponding to the code needed in the sitemap.xml file</li>
+     * 	<li>PRIORITY corresponding to the code needed in the sitemap.xml file to indicate the priority of the target page.</li>
+     * 	<li>C_LINK indicating that we are displaying a link (useful if you want to use a signe template export configuration)</li>
+     * </ul>
      * @param $export_config SiteMapExportConfig Export configuration
      * @return string the exported link
      */
@@ -209,7 +218,7 @@ class SiteMapLink extends SiteMapElement
 			'LOC' => $this->get_url(),
 			'TEXT' => htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
-			'DATE' => $display_date ? $this->last_modification_date->To_date() : '',
+			'DATE' => $display_date ? $this->last_modification_date->to_date() : '',
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
 			'PRIORITY' => $this->priority,
             'C_LINK' => true
