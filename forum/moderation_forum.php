@@ -646,39 +646,8 @@ else //Panneau de modération
 }
 
 //Listes les utilisateurs en lignes.
-list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->query_while("SELECT s.user_id, s.level, m.login
-FROM " . DB_TABLE_SESSIONS . " s
-LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
-WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/moderation_forum.php'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while ($row = $Sql->fetch_assoc($result))
-{
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation.
-	{
-		case -1:
-		$status = 'visiteur';
-		$total_visit++;
-		break;
-		case 0:
-		$status = 'member';
-		$total_member++;
-		break;
-		case 1:
-		$status = 'modo';
-		$total_modo++;
-		break;
-		case 2:
-		$status = 'admin';
-		$total_admin++;
-		break;
-	}
-	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-}
-$Sql->query_close($result);
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/moderation_forum.php'");
 
-$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,

@@ -62,6 +62,22 @@ class User
 	    return (int)$this->get_attribute('user_id');
 	}
 	
+	//Récupère la couleur associée à un des groupe du membre.
+	//static
+	function get_group_color($user_groups, $level = 0)
+	{
+		global $_array_groups_auth;
+		
+		$user_groups = explode('|', $user_groups);
+		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
+		$i = 0;
+		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
+		{
+			if ($i++ == 0)
+				return (!empty($_array_groups_auth[$idgroup]['color']) && $level == 0) ? '#' . $_array_groups_auth[$idgroup]['color'] : '';
+		}		
+	}
+	
 	//Vérifie le niveau d'autorisation.
 	function check_level($secure)
 	{
