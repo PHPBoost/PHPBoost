@@ -25,6 +25,47 @@
  *
 ###################################################*/
 
+//Listes les utilisateurs en lignes.
+function forum_list_user_online($sql_condition)
+{
+	global $Sql, $CONFIG;
+	
+	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
+	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login, m.user_groups
+	FROM " . DB_TABLE_SESSIONS . " s 
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
+	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' " . $sql_condition . "
+	ORDER BY s.session_time DESC", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$group_color = User::get_group_color($row['user_groups'], $row['level']);
+		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
+		{ 		
+			case -1:
+			$status = 'visiteur';
+			$total_visit++;
+			break;			
+			case 0:
+			$status = 'member';
+			$total_member++;
+			break;			
+			case 1: 
+			$status = 'modo';
+			$total_modo++;
+			break;			
+			case 2: 
+			$status = 'admin';
+			$total_admin++;
+			break;
+		} 
+		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
+		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['login'] . '</a>' : '';
+	}
+	$Sql->query_close($result);
+	
+	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_admin + $total_modo + $total_member + $total_visit);
+}
+
 //Liste des catégories du forum.
 function forum_list_cat($id_select, $level)
 {

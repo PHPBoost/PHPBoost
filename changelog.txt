@@ -53,6 +53,7 @@
 [*] Réorganisation du chargement de la tête de page.
 [*] Cache pour les thèmes, les langues et les css.
 [*] Amélioration de la gestion des groupes (ajout/edition/suppression). 
+[*] Possibilité d'associer une couleur à un groupe, coloration du pseudo des membres du groupe.
 [*] Nouveau système pour la barre d'arborescence (fil d'ariane).
 [*] Possibilité d'insérer plusieurs css pour les modules.
 [*] Possibilité de charger un css pour chaque mini-module.

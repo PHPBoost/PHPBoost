@@ -368,12 +368,12 @@ class Cache
 		global $Sql;
 		
 		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
-		$result = $Sql->query_while("SELECT id, name, img, auth
+		$result = $Sql->query_while("SELECT id, name, img, color, auth
 		FROM " . PREFIX . "group
 		ORDER BY id", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
+			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'color\' => ' . var_export($row['color'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
 		}
 		$Sql->query_close($result);
 		$code .= ');';

@@ -49,7 +49,7 @@ class Group
 		//On insère le groupe au champ membre.
 		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (!empty($user_groups) ? $user_groups : '') . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
 			return false;
 

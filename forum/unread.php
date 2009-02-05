@@ -119,11 +119,11 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 		$new_ancre = '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>';
 		
 		$Template->assign_block_vars('topics', array(
-			'ANNOUNCE' => $img_announce,
+			'C_IMG_POLL' => !empty($row['question']),
+			'C_IMG_TRACK' => !empty($row['idtrack']),
+			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
+			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'POLL' => !empty($row['question']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
-			'TRACK' => !empty($row['idtrack']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/favorite_mini.png" class="valign_middle" alt="" />' : '',
-			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/msg_display_mini.png" alt="" style="vertical-align:middle;" />' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
@@ -174,40 +174,9 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 		'L_LAST_MESSAGE' => $LANG['last_message']
 	));	
 
-	//Listes les utilisateurs en lignes.	
-	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM " . DB_TABLE_SESSIONS . " s 
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id 
-	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/unread.php'
-	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-		{ 		
-			case -1:
-			$status = 'visiteur';
-			$total_visit++;
-			break;			
-			case 0:
-			$status = 'member';
-			$total_member++;
-			break;			
-			case 1: 
-			$status = 'modo';
-			$total_modo++;
-			break;			
-			case 2: 
-			$status = 'admin';
-			$total_admin++;
-			break;
-		} 
-		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-	}
-	$Sql->query_close($result);
+	//Listes les utilisateurs en lignes.
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/unread.php'");
 
-	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
