@@ -1,3 +1,4 @@
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/bbcode.js"></script>
 		<script type="text/javascript">
 		<!--
 		function check_form_add_mbr(){
@@ -75,7 +76,27 @@
 				if( Pdiv.className == divID ) Pdiv.className = divID + '2';
 			}
 		}
-
+		function bbcode_color()
+		{
+			var i;
+			var br;
+			var contents;
+			var color = new Array(
+			'black', 'maroon', '#333300', '#003300', '#003366', '#000080', '#333399', '#333333',
+			'#800000', 'orange', '#808000', 'green', '#008080', 'blue', '#666699', '#808080',
+			'red', '#FF9900', '#99CC00', '#339966', '#33CCCC', '#3366FF', '#800080', '#ACA899',
+			'pink', '#FFCC00', 'yellow', '#00FF00', '#00FFFF', '#00CCFF', '#993366', '#C0C0C0',
+			'#FF99CC', '#FFCC99', '#FFFF99', '#CCFFCC', '#CCFFFF', '#CC99FF', '#CC99FF', 'white');							
+			
+			contents = '<table style="border-collapse:collapse;margin:auto;"><tr>';
+			for(i = 0; i < 40; i++)
+			{
+				br = (i+1) % 8;
+				br = (br == 0 && i != 0 && i < 39) ? '</tr><tr>' : '';
+				contents += '<td style="padding:2px;"><a onclick="insertbbcode(\'' + color[i].replace(/#/g, '')  + '\', \'\', \'color_group\');" class="bbcode_hover"><span style="background:' + color[i] + ';padding:0px 4px;border:1px solid #ACA899;">&nbsp;</span></a></td>' + br;								
+			}
+			document.getElementById("color_group_list").innerHTML = contents + '</tr></table>';
+		}	
 		-->
 		</script>
 
@@ -118,9 +139,15 @@
 						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text" /> {L_MB}</label></dd>
 					</dl>
-					<dl>
+					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" /></label></dd>
+						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
+							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
+								<div id="color_group_list" class="bbcode_block" style="background:white;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+								</div>
+							</div>
+						</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
@@ -227,9 +254,15 @@
 						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text" /> {L_MB}</label></dd>
 					</dl>
-					<dl>
+					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" /></label></dd>
+						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
+							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
+								<div id="color_group_list" class="bbcode_block" style="background:white;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+								</div>
+							</div>
+						</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
