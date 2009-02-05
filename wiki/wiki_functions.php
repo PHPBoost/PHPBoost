@@ -32,7 +32,7 @@ function wiki_parse(&$var)
 {
 	//On force le langage de formatage à BBCode
 	$content_manager = new ContentManager(BBCODE_LANGUAGE);
-	$parser =& $content_manager->get_parser();
+	$parser = $content_manager->get_parser();
     $parser->set_content($var, MAGIC_QUOTES);
     $parser->parse();
 	
@@ -48,7 +48,7 @@ function wiki_unparse($var)
 	
 	//On force le langage de formatage à BBCode
 	$content_manager = new ContentManager(BBCODE_LANGUAGE);
-	$parser =& $content_manager->get_unparser();
+	$parser = $content_manager->get_unparser();
     $parser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
 	
