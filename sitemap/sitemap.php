@@ -16,7 +16,7 @@ $site_map->build_modules_maps();
 
 echo '<pre>' . htmlentities($site_map->export($config_xml)) . '</pre>';
 	
-$sub_section_tpl = new Template('sitemap/modulemapsection_html.tpl');
+$sub_section_tpl = new Template('sitemap/site_map_section_html.tpl');
 $sub_section_tpl->assign_vars(array(
 	'L_LEVEL' => 'de niveau'
 	));

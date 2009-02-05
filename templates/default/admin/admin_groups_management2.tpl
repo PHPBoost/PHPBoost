@@ -119,6 +119,10 @@
 						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="{DATA_GROUP_LIMIT}" class="text" /> {L_MB}</label></dd>
 					</dl>
 					<dl>
+						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
+						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" /></label></dd>
+					</dl>
+					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd>
 							<label>
@@ -222,6 +226,10 @@
 					<dl>
 						<dt><label for="data_group_limit">{L_DATA_GROUP_LIMIT}</label><br /><span>{L_DATA_GROUP_LIMIT_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" name="data_group_limit" id="data_group_limit" value="5" class="text" /> {L_MB}</label></dd>
+					</dl>
+					<dl>
+						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
+						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>

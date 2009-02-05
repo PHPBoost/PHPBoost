@@ -68,6 +68,7 @@ CREATE TABLE `phpboost_group` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL default '',
   `img` varchar(255) NOT NULL default '',
+  `color` varchar(6) NOT NULL default '',
   `auth` varchar(255) NOT NULL default '0',
   `members` text NOT NULL,
   PRIMARY KEY  (`id`)
