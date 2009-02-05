@@ -75,7 +75,7 @@ class ModuleMap extends SiteMapSection
      *  It might be usefull to apply different CSS styles to each level of depth.</li>
      *  <li>LINK_CODE which contains the code of the link associated to the module root exported with the same configuration.</li>
      *  <li>C_MODULE_MAP which is a boolean whose value is true, this will enable you to use a single template for the whole export configuration</li>
-     *  <li>The loop element for which the variable CODE contains the code of each sub element of the module (for example categories)</li>
+     *  <li>The loop "element" for which the variable CODE contains the code of each sub element of the module (for example categories)</li>
      *  </ul>
      * @param $export_config SiteMapExportConfig export configuration
      */
