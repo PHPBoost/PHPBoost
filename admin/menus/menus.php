@@ -232,7 +232,7 @@ $tpl->assign_vars(array(
     'LEFT_COLUMN' => $left_column,
     'RIGHT_COLUMN' => $right_column,
     'START_PAGE' => get_start_page(),
-	'L_INDEX' => $LANG['reception'],
+	'L_INDEX' => $LANG['home'],
     'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
     'L_ACTIVATION' => $LANG['activation'],
     'L_MOVETO' => $LANG['moveto'],

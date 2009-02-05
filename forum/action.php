@@ -177,13 +177,13 @@ elseif (!empty($idt_get))
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif (!empty($track) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
-elseif (!empty($untrack) && $User->check_level(USER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	
@@ -191,7 +191,7 @@ elseif (!empty($untrack) && $User->check_level(USER_LEVEL)) //Retrait du sujet, 
 }
 elseif ($read) //Marquer comme lu.
 {
-	if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
+	if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 		redirect(HOST . DIR . '/member/error.php'); 
 			
 	//Calcul du temps de péremption, ou de dernière vue des messages.

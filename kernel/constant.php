@@ -39,7 +39,7 @@ define('DEBUG', TRUE);
 
 ### Définition des constantes utiles. ###
 define('GUEST_LEVEL', -1); //Niveau Visiteur.
-define('USER_LEVEL', 0); //Niveau Membre.
+define('MEMBER_LEVEL', 0); //Niveau Membre.
 define('MODO_LEVEL', 1); //Niveau Modo.
 define('MODERATOR_LEVEL', 1); //Niveau Modo.
 define('ADMIN_LEVEL', 2); //Niveau Admin.

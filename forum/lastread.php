@@ -39,10 +39,10 @@ require_once('../kernel/header.php');
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
 	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
-if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
+if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 	redirect(HOST . DIR . '/member/error.php'); 
 
-if ($User->check_level(USER_LEVEL)) //Affichage des message()s non lu(s) du membre.
+if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
 	$Template->set_filenames(array(
 		'forum_topics'=> 'forum/forum_forum.tpl',

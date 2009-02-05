@@ -56,6 +56,12 @@ class User
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 	
+	//Renvoie l'id de l'utilisateur
+	function get_id()
+	{
+	    return (int)$this->get_attribute('user_id');
+	}
+	
 	//Vérifie le niveau d'autorisation.
 	function check_level($secure)
 	{

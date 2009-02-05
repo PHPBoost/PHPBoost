@@ -35,7 +35,7 @@ function connect_mini($position)
     $tpl = new Template('connect/connect_mini.tpl');
     import('core/menu_service');
     MenuService::assign_positions_conditions($tpl, $position);
-    if ($User->check_level(USER_LEVEL)) //Connecté.
+    if ($User->check_level(MEMBER_LEVEL)) //Connecté.
     {
     	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
     	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
@@ -86,11 +86,11 @@ function connect_mini($position)
     		'U_USER_PM' => PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
     		'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', '-' . $User->get_attribute('user_id') . '.php?view=1'),
     		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . $Session->get_token(),
-    		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
-    		'L_PROFIL' => $LANG['profil'],
+    		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+    		'L_PROFIL' => $LANG['profile'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],
     		'L_MODO_PANEL' => $LANG['modo_panel'],
-    		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
+    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
     		'L_DISCONNECT' => $LANG['disconnect'],
     		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
     	));

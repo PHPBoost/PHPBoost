@@ -34,10 +34,10 @@ $view_get = retrieve(GET, 'view', 0);
 
 if (!empty($view_get) || !empty($edit_get))
 {
-	if ($User->check_level(USER_LEVEL))
+	if ($User->check_level(MEMBER_LEVEL))
 		$Bread_crumb->add($LANG['member_area'], url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1'));
 	
-	$title_mbr = !empty($edit_get) ? $LANG['profil_edit'] : '';
+	$title_mbr = !empty($edit_get) ? $LANG['profile_edition'] : '';
 	$Bread_crumb->add($title_mbr, '');
 }
 else
@@ -56,7 +56,7 @@ if (!empty($id_get)) //Espace membre
 		'member'=> 'member/member.tpl'
 	));
 	
-	if ($edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(USER_LEVEL))) //Edition du profil
+	if ($edit_get && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Edition du profil
 	{
 		//Update profil
 		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_lang', 'user_theme', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'user_editor', 'user_timezone', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_yahoo', "WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -117,14 +117,14 @@ if (!empty($id_get)) //Espace membre
 			'L_PASSWORD_SAME' => $LANG['e_pass_same'],
 			'L_PASSWORD_HOW' => $LANG['password_how'],
 			'L_USER_AREA' => $LANG['member_area'],
-			'L_PROFIL_EDIT' => $LANG['profil_edit'],
+			'L_PROFIL_EDIT' => $LANG['profile_edition'],
 			'L_REQUIRE' => $LANG['require'],
 			'L_MAIL' => $LANG['mail'],
 			'L_VALID' => $LANG['valid'],
-			'L_PREVIOUS_PASS' => $LANG['previous_pass'],
-			'L_EDIT_JUST_IF_MODIF' => $LANG['edit_if_modif'],
-			'L_NEW_PASS' => $LANG['new_pass'],
-			'L_CONFIRM_PASS' => $LANG['confirm_pass'],
+			'L_PREVIOUS_PASS' => $LANG['previous_password'],
+			'L_EDIT_JUST_IF_MODIF' => $LANG['fill_only_if_modified'],
+			'L_NEW_PASS' => $LANG['new_password'],
+			'L_CONFIRM_PASS' => $LANG['confirm_password'],
 			'L_DEL_USER' => $LANG['del_member'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
 			'L_OPTIONS' => $LANG['options'],
@@ -376,7 +376,7 @@ if (!empty($id_get)) //Espace membre
 		if (isset($LANG[$get_l_error]))
 			$Errorh->handler($LANG[$get_l_error], E_USER_WARNING);
 	}
-	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(USER_LEVEL))) //Update du profil
+	elseif (!empty($_POST['valid']) && ($User->get_attribute('user_id') === $id_get) && ($User->check_level(MEMBER_LEVEL))) //Update du profil
 	{
 		$check_pass = !empty($_POST['pass']) ? true : false;
 		$check_pass_bis = !empty($_POST['pass_bis']) ? true : false;
@@ -613,7 +613,7 @@ if (!empty($id_get)) //Espace membre
 		else
 			redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=invalid_mail') . '#errorh');
 	}
-	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(USER_LEVEL))) //Zone membre
+	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
 		//Info membre
 		$msg_mbr = !empty($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
@@ -639,9 +639,9 @@ if (!empty($id_get)) //Espace membre
 			'U_USER_PM' => url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 			'U_CONTRIBUTION_PANEL' => url('contribution_panel.php'),
 			'U_MODERATION_PANEL' => url('moderation_panel.php'),
-			'L_PROFIL' => $LANG['profil'],
+			'L_PROFIL' => $LANG['profile'],
 			'L_WELCOME' => $LANG['welcome'],
-			'L_PROFIL_EDIT' => $LANG['profil_edit'],
+			'L_PROFIL_EDIT' => $LANG['profile_edition'],
 			'L_FILES_MANAGEMENT' => $LANG['files_management'],
 			'L_PRIVATE_MESSAGE' => $LANG['private_message'],
 			'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel'],
@@ -746,8 +746,8 @@ if (!empty($id_get)) //Espace membre
 			'USER_DESC' => !empty($row['user_desc']) ? second_parse($row['user_desc']) : '&nbsp;',
 			'USER_MSN' => !empty($row['user_msn']) ? $row['user_msn'] : '&nbsp;',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? $row['user_yahoo'] : '&nbsp;',
-			'L_PROFIL' => $LANG['profil'],
-			'L_PROFIL_EDIT' => $LANG['profil_edit'],
+			'L_PROFIL' => $LANG['profile'],
+			'L_PROFIL_EDIT' => $LANG['profile_edition'],
 			'L_AVATAR' => $LANG['avatar'],
 			'L_PSEUDO' => $LANG['pseudo'],
 			'L_STATUT' => $LANG['status'],
@@ -927,7 +927,7 @@ else //Show all member!
 		'L_SEARCH_USER' => $LANG['search_member'],
 		'L_LIST' => $LANG['list'],
 		'L_SEARCH' => $LANG['search'],
-		'L_PROFIL' => $LANG['profil'],
+		'L_PROFIL' => $LANG['profile'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_MAIL' => $LANG['mail'],
 		'L_REGISTERED' => $LANG['registered_on'],
