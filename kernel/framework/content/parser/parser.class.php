@@ -3,7 +3,7 @@
 *                             parser.class.php
 *                            -------------------
 *   begin                : November 29, 2007
-*   copyright          : (C) 2007 Régis Viarre, Benoit Sautel, Loïc Rouchon
+*   copyright            : (C) 2007 Régis Viarre, Benoit Sautel, Loïc Rouchon
 *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com, horn@phpboost.com
 *
 *   
@@ -33,17 +33,27 @@ define('PARSER_STRIP_SLASHES', true);
 define('PICK_UP', true);
 define('REIMPLANT', false);
 
-//Classe de gestion du contenu
+/**
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
+ */
 class Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	 * @desc Build a Parser object. 
+	 */
 	function Parser()
 	{
 		$this->content = '';
 	}
 
-	//Fonction qui renvoie le contenu du parser
+	/**
+	 * @desc Return the content of the parser. If you called a method which parses the content, this content will be parsed.
+	 * @param $addslashes bool ADD_SLASHES if you want to escape the slashes in your string 
+	 * (you often save a parsed content into the database when you parse it), otherwise DO_NOT_ADD_SLASHES.
+	 * @return string The content of the parser.
+	 */
 	function get_content($addslashes = ADD_SLASHES)
 	{
 		if ($addslashes)
@@ -52,7 +62,12 @@ class Parser
 			return trim($this->content);
 	}
 	
-	//Fonction de chargement de texte
+	/**
+	 * @desc Set the content of the parser. When you will call a parse method, it will deal with this content. 
+	 * @param $content string Content
+	 * @param $stripslashes bool PARSER_DO_NOT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser, 
+	 * otherwise PARSER_DO_NOT_STRIP_SLASHES.
+	 */
 	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
 		if ($stripslashes)
@@ -62,11 +77,22 @@ class Parser
 	}
 		
 	####### Protected #######
-	//This array should be static
+	/**
+	 * @var string Content of the parser
+	 */
 	var $content = '';
+	/**
+	 * @static
+	 * @var string[] List of the tags which have been picked up by the parser
+	 */
 	var $array_tags = array();
 	
-	//Remplacement recursif des balises imbriquées.
+	/**
+	 * @desc Parse a nested tag
+	 * @param $match string The regular expression which matches the tag to replace
+	 * @param $regex string The regular expression which matches the replacement
+	 * @param $replace string The replacement syntax.
+	 */
 	function _parse_imbricated($match, $regex, $replace)
 	{
 		$nbr_match = substr_count($this->content, $match);

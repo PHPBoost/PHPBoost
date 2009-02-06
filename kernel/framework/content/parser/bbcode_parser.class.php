@@ -155,7 +155,6 @@ class BBCodeParser extends ContentParser
 		}
 	}
 	
-	//Interprétation des balises simples
 	/**
 	 * Parses all BBCode simple tags.
 	 * The simple tags are those which can be treated enough requiring many different treatments.
@@ -307,7 +306,6 @@ class BBCodeParser extends ContentParser
 		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
 	}
 	
-	//Fonction qui parse les tableaux dans l'ordre inverse à l'ordre hiérarchique
 	/**
 	 * Serializes a split content according to the table tag and generates the complete HTML code.
 	 * @param string[] $content Content of the parser split according to the table tag
