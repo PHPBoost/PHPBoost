@@ -294,6 +294,8 @@ elseif ($step == 4)
 {
 	require_once('functions.php');
 	
+	$display_message_already_installed = false;
+	
 	if (retrieve(POST, 'submit', false))
 	{
 		//Récupération de la configuration de connexion
@@ -308,12 +310,26 @@ elseif ($step == 4)
 			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
 		else
 			$result = DB_UNKNOW_ERROR;
+			
+		//If PHPBoost is already installed
+		if ($result == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST)
+		{
+		    //If the user has not said that he wants to overwrite the existing data, we show him the message
+		    if (!retrieve(POST, 'overwrite_db', false))
+		    {
+		        $display_message_already_installed = true;
+		    }
+		    //He wants to overwrite, we continue the installation
+		    else
+		    {
+		         $result = DB_CONFIG_SUCCESS;   
+		    }
+		}
 		
 		switch ($result)
 		{
 			case DB_CONFIG_SUCCESS:
 			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
-			case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
 				require_once('../kernel/framework/core/errors.class.php');
 				$Errorh = new Errors;
 				$Sql = new Sql();
@@ -361,6 +377,10 @@ else
 				
 				redirect(HOST . FILE . add_lang('?step=5', true));
 				break;
+			//This case has been treated before the switch
+			case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
+			    $error = '';
+			    break;
 			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
 				$error = '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
 				break;
@@ -372,6 +392,16 @@ else
 				$error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>';
 		}
 	}
+	//Default values for the variables
+	else
+	{
+	    $host = 'localhost';
+		$login = '';
+		$password = '';
+		$database = '';
+		$tables_prefix = 'phpboost_';
+		
+	}
     
 	$template->assign_vars(array(
 		'C_DATABASE_CONFIG' => true,
@@ -380,11 +410,11 @@ else
 		'PROGRESS' => !empty($error) ? '100' : '0',
 		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
 		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/progress.png" alt="">', 56) : '',
-		'HOST_VALUE' => !empty($error) ? $host  : 'localhost',
-		'LOGIN_VALUE' => !empty($error) ? $login  : '',
-		'PASSWORD_VALUE' => !empty($error) ? $password  : '',
-		'DB_NAME_VALUE' => !empty($error) ? $database  : '',
-		'PREFIX_VALUE' => !empty($error) ? $tables_prefix  : 'phpboost_',
+		'HOST_VALUE' => $host,
+		'LOGIN_VALUE' => $login,
+		'PASSWORD_VALUE' => $password,
+		'DB_NAME_VALUE' => $database,
+		'PREFIX_VALUE' => $tables_prefix,
 		'U_PREVIOUS_STEP' => add_lang('install.php?step=3'),
 		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
 		'DB_CONFIG_SUCCESS' => DB_CONFIG_SUCCESS,
@@ -393,6 +423,7 @@ else
 		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED,
 		'DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => DB_CONFIG_ERROR_TABLES_ALREADY_EXIST,
 		'DB_UNKNOW_ERROR' => DB_UNKNOW_ERROR,
+	    'C_ALREADY_INSTALLED'=> $display_message_already_installed,
 		'L_DB_CONFIG_SUCESS' => addslashes($LANG['db_success']),
 		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
 		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
@@ -424,7 +455,10 @@ else
 		'L_RESULT' => $LANG['db_result'],
 		'L_REQUIRE_HOSTNAME' => $LANG['require_hostname'],
 		'L_REQUIRE_LOGIN' => $LANG['require_login'],
-		'L_REQUIRE_DATABASE_NAME' => $LANG['require_db_name']
+		'L_REQUIRE_DATABASE_NAME' => $LANG['require_db_name'],
+	    'L_ALREADY_INSTALLED' => $LANG['already_installed'],
+	    'L_ALREADY_INSTALLED_EXPLAIN' => $LANG['already_installed_explain'],
+	    'L_ALREADY_INSTALLED_OVERWRITE' => $LANG['already_installed_overwrite']
 	));
 }
 // Configuration du site
