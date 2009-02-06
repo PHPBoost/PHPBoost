@@ -34,17 +34,26 @@ define('TPL_NESTED_VARIABLE_STYLE', 'color:#8F5211;');
 define('TPL_SHARP_STYLE', 'color:#9915AF; font-weight: bold;');
 define('TPL_KEYWORD_STYLE', 'color:#000066; font-weight: bold;');
 
-//Classe de gestion du contenu
+/**
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This is a syntax highlighter for the PHPBoost template syntax.
+ */
 class TemplateHighlighter extends Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	 * @desc Build a TemplateHighlighter object. 
+	 */
 	function TemplateHighlighter()
 	{
 		parent::Parser();
 	}
 
-	//Highlights the content of the parser
+	/**
+	 * @desc Highlight the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax. 
+	 * @param $line_number int GESHI_NO_LINE_NUMBERS => no line numbers, GESHI_NORMAL_LINE_NUMBERS line numbers.
+	 * @param $inline_code bool true if it's a sigle line code, otherwise false.
+	 */
 	function highlight($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.

@@ -27,114 +27,145 @@
 
 import('content/parser/parser');
 
-//Classe de gestion du contenu
+/**
+ * This class makes the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
+ * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
+ * which replaces the code by a lot of html code which formats the code.
+ * This kind of tag is treated in real time by this class.
+ * The content you put in that parser must come from a ContentParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc
+ */
 class ContentSecondParser extends Parser
 {
-	######## Public #######
-	//Constructeur
-	function ContentSecondParser()
-	{
-		parent::Parser();
-	}
+    ######## Public #######
+    /**
+    * @desc Build a ContentSecondParser object
+    */
+    function ContentSecondParser()
+    {
+        parent::Parser();
+    }
 
-	//Parse temps réel => détection des balises [code]  et remplacement, coloration si contient du code php.
-	//This function exists whatever type of content you have because it's use to finish parsing of a recorded string
-	function second_parse()
-	{
-		global $LANG;
-        
-		$this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
-        
-		//Balise code
-		if (strpos($this->content, '[[CODE') !== false)
-			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+    /**
+     * @desc Parses the content of the parser. The result will be ready to be displayed.
+     */
+    function second_parse()
+    {
+        global $LANG;
 
-		//Balise latex.
-		if (strpos($this->content, '[[MATH]]') !== false)
-		{
-		    require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php');
-			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
-		}
-	}
+        $this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
 
-	## Private ##
+        //Balise code
+        if (strpos($this->content, '[[CODE') !== false)
+        {
+            $this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+        }
 
-	//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
-	function _highlight_code($contents, $language, $line_number, $inline_code)
-	{
-		//BBCode PHPBoost
-		if (strtolower($language) == 'bbcode')
-		{
-			import('content/parser/bbcode_highlighter');
-			$bbcode_highlighter = new BBCodeHighlighter();
-			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$bbcode_highlighter->highlight($inline_code);
-			$contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
-		}
-		//Templates PHPBoost
-		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
-		{
-			import('content/parser/template_highlighter');
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-			
-			$template_highlighter = new TemplateHighlighter();
-			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-			$contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
-		}
-		elseif ($language != '')
-		{
-			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-			$Geshi =& new GeSHi($contents, $language);
-				
-			if ($line_number) //Affichage des numéros de lignes.
-				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-			
-			//No container if we are in an inline tag
-			if ($inline_code)
-				$Geshi->set_header_type(GESHI_HEADER_NONE);
+        //Balise latex.
+        if (strpos($this->content, '[[MATH]]') !== false)
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php');
+            $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
+        }
+    }
 
-			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
-		}
-		else
-		{
-			$highlight = highlight_string($contents, true);
-			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-			$contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
-		}
+    ## Private ##
 
-		return $contents;
-	}
+    /**
+     * @static
+     * @desc Highlight a content in a supported language using the appropriate syntax highlighter.
+     * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html, 
+     * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml, 
+     * PHPBoost templates and PHPBoost BBCode.
+     * @param $contents string Content to highlight
+     * @param $language string Language name
+     * @param $line_number bool Indicate wether or not the line number must be added to the code.
+     * @param $inline_code bool Indicate if the code is multi line.
+     */
+    function _highlight_code($contents, $language, $line_number, $inline_code)
+    {
+        //BBCode PHPBoost
+        if (strtolower($language) == 'bbcode')
+        {
+            import('content/parser/bbcode_highlighter');
+            $bbcode_highlighter = new BBCodeHighlighter();
+            $bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+            $bbcode_highlighter->highlight($inline_code);
+            $contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
+        }
+        //Templates PHPBoost
+        elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
+        {
+            import('content/parser/template_highlighter');
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+             
+            $template_highlighter = new TemplateHighlighter();
+            $template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+            $template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+            $contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
+        }
+        elseif ($language != '')
+        {
+            require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+            $Geshi =& new GeSHi($contents, $language);
 
-	//Fonction appliquée aux balises [code] temps réel.
-	function _callback_highlight_code($matches)
-	{
-		global $LANG;
-		
-		//Chargement de la librairie mathématique
-		require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php');
+            if ($line_number) //Affichage des numéros de lignes.
+            $Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+             
+            //No container if we are in an inline tag
+            if ($inline_code)
+            $Geshi->set_header_type(GESHI_HEADER_NONE);
 
-		$line_number = !empty($matches[2]);
-		$inline_code = !empty($matches[3]);
-		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
+            $contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
+        }
+        else
+        {
+            $highlight = highlight_string($contents, true);
+            $font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
+            $contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
+        }
 
-		if (!$inline_code && !empty($matches[1]))
-			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
-		elseif ($inline_code)
-			$contents = $contents;
-		else
-			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
-			
-		return $contents;
-	}
+        return $contents;
+    }
 
-	//Fonction appliquée aux balises [math] temps réel, formules matématiques.
-	function _math_code($matches)
-	{
-		$matches[1] = str_replace('<br />', '', $matches[1]);
-		$matches = mathfilter(html_entity_decode($matches[1]), 12);
+    /**
+     * @static
+     * @desc Handler which highlights a string matched by the preg_replace_callback function.
+     * @param $matches string[] The matched contents: 0 => the whole string, 1 => the language, 2 => number count?, 
+     * 3 => multi line?, 4 => the code to highlight.
+     * @return string the colored content
+     */
+    function _callback_highlight_code($matches)
+    {
+        global $LANG;
 
-		return $matches;
-	}
+        $line_number = !empty($matches[2]);
+        $inline_code = !empty($matches[3]);
+        $contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
+
+        if (!$inline_code && !empty($matches[1]))
+        $contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+        elseif ($inline_code)
+        $contents = $contents;
+        else
+        $contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+         
+        return $contents;
+    }
+
+    /**
+     * @static
+     * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
+     * @param $matches string[] 0 => the whole tag, 1 => the latex code to parse.
+     * @return string The code of the image containing the formula.
+     */
+    function _math_code($matches)
+    {
+        $matches[1] = str_replace('<br />', '', $matches[1]);
+        $matches = mathfilter(html_entity_decode($matches[1]), 12);
+
+        return $matches;
+    }
 }
 ?>
