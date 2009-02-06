@@ -26,16 +26,8 @@
 		</script>
 		
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype-minified.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js?load=effects,dragdrop,builder"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>	
-		
-<style type="text/css">
-  div.draggable {
-	z-index:19; }
-  div.droppable_hover {
-    border: 5px dashed #aaa;
-    background:#efefef; }
-</style>
 
 	</head>
 	<body>
