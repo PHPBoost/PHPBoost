@@ -11,7 +11,7 @@ INSERT INTO `phpboost_member` (login, level, user_aprob) VALUES ('login', 2, 1);
 INSERT INTO `phpboost_ranks` VALUES (1, 'Administrator', -2, 'rank_admin.png', 1);
 INSERT INTO `phpboost_ranks` VALUES (2, 'Moderator', -1, 'rank_modo.png', 1);
 INSERT INTO `phpboost_ranks` VALUES (3, 'Inactive booster', 0, 'rank_0.png', 0);
-INSERT INTO `phpboost_ranks` VALUES (4, 'Slingshot booster', 1,  1, 'rank_0.png', 0);
+INSERT INTO `phpboost_ranks` VALUES (4, 'Slingshot booster', 1,  'rank_0.png', 0);
 INSERT INTO `phpboost_ranks` VALUES (5, 'Minigun booster', 25, 'rank_1.png', 0);
 INSERT INTO `phpboost_ranks` VALUES (6, 'Fuzil booster', 50, 'rank_2.png', 0);
 INSERT INTO `phpboost_ranks` VALUES (7, 'Bazooka booster', 100, 'rank_3.png', 0);

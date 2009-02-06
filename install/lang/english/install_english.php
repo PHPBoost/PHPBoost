@@ -131,10 +131,14 @@ $LANG['require_hostname'] = 'You must enter database hostname!';
 $LANG['require_login'] = 'You must enter database login!';
 $LANG['require_db_name'] = 'You must enter database name!';
 $LANG['db_result'] = 'Test results';
+$LANG['already_installed'] = 'Existing installation';
+$LANG['already_installed_explain'] = '<p>The database on which you want to install PHPBoost already contains a version of PHPBoost.</p>
+<p>If you do the installation on this database with the same configuration, you will overwrite the already existing data. If you want to install two sites on the same database, use different prefixes for the two sites.</p>';
+$LANG['already_installed_overwrite'] = 'I want to overwrite the already existing data and continue the installation.';
 
 //configuraton du site
 $LANG['site_config_title'] = 'Website configuration';
-$LANG['site_config_explain'] = '<p>The basic configuration is going to be created into this step to permit PHPBoost to run. However you must know that datas you are going to enter will be editable later into administration panel, in website configuration tab. In this panel you also will manage to edit advanced configuration.</p>';
+$LANG['site_config_explain'] = '<p>The basic configuration is going to be created into this step to enable PHPBoost to run. However you must know that datas you are going to enter will be editable later into administration panel, in website configuration tab. In this panel you also will manage to edit advanced configuration.</p>';
 $LANG['your_site'] = 'Your website';
 $LANG['site_url'] = 'Website url :';
 $LANG['site_url_explain'] = 'For instance http://www.phpboost.net';

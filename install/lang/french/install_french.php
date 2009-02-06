@@ -131,6 +131,10 @@ $LANG['require_hostname'] = 'Vous devez renseigner le nom de l\'hôte !';
 $LANG['require_login'] = 'Vous devez renseigner l\'identifiant de connexion !';
 $LANG['require_db_name'] = 'Vous devez renseigner le nom de la base de données !';
 $LANG['db_result'] = 'Résultats du test';
+$LANG['already_installed'] = 'Installation existante';
+$LANG['already_installed_explain'] = '<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
+<p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>';
+$LANG['already_installed_overwrite'] = 'Je souhaite écraser l\'installation de PHPBoost déjà existante';
 
 //configuraton du site
 $LANG['site_config_title'] = 'Configuration du site';

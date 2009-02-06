@@ -468,6 +468,16 @@
 								</dl>
 							</fieldset>
 							
+							# IF C_ALREADY_INSTALLED #
+							<fieldset>
+								<legend>{L_ALREADY_INSTALLED}</legend>
+								<div class="warning">
+									{L_ALREADY_INSTALLED_EXPLAIN}
+								</div>
+								<label><input type="checkbox" name="overwrite_db" />{L_ALREADY_INSTALLED_OVERWRITE}</label>
+							</fieldset>
+							# ENDIF #
+							
 							<fieldset id="result_box">
 								<legend>
 									{L_RESULT}

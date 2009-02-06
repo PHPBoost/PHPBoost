@@ -4,8 +4,6 @@
 
 ------------------------------------- NOYAU ------------------------------------
 
-- Alerte lors de l'installation si PHPBoost est déjà installé sur la base de données (même préfixe).
-[-] Ajouter les autorisations aux sitemap
 
 ------------------------------------ MODULES -----------------------------------
 
