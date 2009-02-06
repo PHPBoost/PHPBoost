@@ -864,6 +864,7 @@ function get_feed_menu($feed_url)
     $feedMenu = new Template('framework/content/syndication/menu.tpl');
     $feedMenu->assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
+		'PATH_TO_MENU' => dirname($feedMenu->tpl),
         'THEME' => get_utheme(),
         'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . (!empty($CONFIG['server_path']) ? trim($CONFIG['server_path'], '/') . '/' : '') . trim($feed_url, '/'),
         'L_RSS' => $LANG['rss'],
