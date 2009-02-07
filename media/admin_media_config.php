@@ -47,7 +47,7 @@ if (!empty($_POST['valid']))
 		'root' => array(
 			'id_parent' => -1,
 			'auth' => Authorizations::build_auth_array_from_form(MEDIA_AUTH_READ, MEDIA_AUTH_CONTRIBUTION, MEDIA_AUTH_WRITE),
-			'name' => retrieve(POST, 'media_name', $MEDIA_CATS[0]['name']),
+			'name' => stripslashes(retrieve(POST, 'media_name', $MEDIA_CATS[0]['name'])),
 			'visible' => true,
 			'mime_type' => retrieve(POST, 'mime_type', $MEDIA_CATS[0]['mime_type'], TINTEGER),
 			'active' => $activ,

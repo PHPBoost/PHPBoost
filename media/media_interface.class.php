@@ -50,7 +50,7 @@ class MediaInterface extends ModuleInterface
 		//Configuration
 		$i = 0;
 		$config = $auth_cats = array();
-		$config = unserialize($Sql->query("SELECT value FROM " . PREFIX . "configs WHERE name = 'media'", __LINE__, __FILE__));
+		$config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		unset($config['root']);
 		
