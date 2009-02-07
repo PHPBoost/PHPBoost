@@ -1,10 +1,11 @@
 <?php
 /*##################################################
- *                              online_mini.php
+ *                              media_mini.php
  *                            -------------------
- *   begin                : July 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin               	: October 20, 2008
+ *   copyright        	: (C) 2007 Geoffrey ROGUELON
+ *   email               	: liaght@gmail.com
+ *
  *
  *
 ###################################################

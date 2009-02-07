@@ -53,7 +53,7 @@ $Template->assign_vars(array(
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'LANG' => get_ulang(),
 	'SID' => SID,
-	'SEARCH' => $search,
+	'SEARCH' => stripslashes($search),
 	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
