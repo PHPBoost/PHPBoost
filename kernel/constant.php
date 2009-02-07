@@ -34,6 +34,33 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
     securit_register_globals();
 }
 
+//Magic quotes
+if (get_magic_quotes_gpc())
+{
+    //If magic_quotes_sybase is enabled
+    if (ini_get('magic_quotes_sybase') && (strtolower(ini_get('magic_quotes_sybase')) != "off"))
+    {
+        //We consider the magic quotes as disabled
+        define('MAGIC_QUOTES', false);
+        
+        //We treat the content: it must be as if the magic_quotes option is disabled
+        foreach ($_REQUEST as $var_name => $value)
+        {
+            $_REQUEST[$var_name] = str_replace('\'\'', '\'', $value);
+        }
+    }
+    //Magic quotes GPC
+    else
+    {
+        define('MAGIC_QUOTES', true);
+    }
+}
+else
+{
+    define('MAGIC_QUOTES', false);
+}
+
+
 ### Débuggage ###
 define('DEBUG', TRUE);
 
@@ -45,7 +72,6 @@ define('MODERATOR_LEVEL', 1); //Niveau Modo.
 define('ADMIN_LEVEL', 2); //Niveau Admin.
 define('SCRIPT', $_SERVER['PHP_SELF']); //Adresse relative à la racine du script.
 define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING'])); //Récupère la chaine de variables $_GET.
-define('MAGIC_QUOTES', get_magic_quotes_gpc()); //Récupère la valeur du magic quotes.
 define('PHPBOOST', true); //Permet de s'assurer des inclusions.
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('E_TOKEN', -3); // Token error

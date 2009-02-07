@@ -616,8 +616,7 @@ if (!empty($id_get)) //Espace membre
 	elseif (!empty($view_get) && $User->get_attribute('user_id') === $id_get && ($User->check_level(MEMBER_LEVEL))) //Zone membre
 	{
 		//Info membre
-		$msg_mbr = !empty($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
-		$msg_mbr = '<br />' . $msg_mbr . '<br />';
+		$msg_mbr = !empty($CONFIG_USER['msg_mbr']) ? second_parse($CONFIG_USER['msg_mbr']) : '';
 	
 		//Chargement de la configuration.
 		$Cache->load('uploads');

@@ -92,7 +92,7 @@ class Mail
 	//Nettoie les entrées.
 	function _clean($mail_objet, $mail_contents)
 	{
-		if (get_magic_quotes_gpc())
+		if (MAGIC_QUOTES)
 		{
 			$this->objet = stripslashes($mail_objet);
 			$this->contents = stripslashes($mail_contents);

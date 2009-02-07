@@ -42,8 +42,13 @@ if (!empty($_POST['valid']) )
 	{	
 		foreach ($auth_extensions_sup as $extension)
 		{
-			if (!isset($auth_extensions[$extension]) && $extension != 'php') 
+		    //Suppression de tous les caractères interdits dans les extensions
+		    $extension = str_replace('-', '', url_encode_rewrite($extension));
+		    
+			if ($extension != '' && !isset($auth_extensions[$extension]) && $extension != 'php') 
+			{
 				array_push($auth_extensions, $extension);
+			}
 		}
 	}
 	$CONFIG_UPLOADS['auth_extensions'] = $auth_extensions;

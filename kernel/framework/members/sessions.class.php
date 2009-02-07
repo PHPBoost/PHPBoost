@@ -40,7 +40,7 @@ class Sessions
 	var $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
 	
 	## Public Methods ##
-	function action_checker()
+	function act()
 	{
 		global $Session, $Sql;
 		
