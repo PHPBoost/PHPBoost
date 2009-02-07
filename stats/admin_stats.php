@@ -31,7 +31,7 @@ require_once('../admin/admin_header.php');
 include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
 $Template->set_filenames(array(
-	'admin_stats_management'=> 'admin/admin_stats_management.tpl'
+	'admin_stats_management'=> 'stats/admin_stats_management.tpl'
 ));
 
 $visit = !empty($_GET['visit']) ? true : false;
