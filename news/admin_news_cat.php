@@ -136,9 +136,10 @@ else
 	FROM " . PREFIX . "news_cat a", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		//On reccourci le lien si il est trop long pour éviter de déformer l'administration.
+		//On raccourci le lien si il est trop long pour éviter de déformer l'administration.
 		$row['name'] = html_entity_decode($row['name']);
 		$name = strlen($row['name']) > 45 ? substr($row['name'], 0, 45) . '...' : $row['name'];
+		$name = htmlspecialchars($name);
 
 		$img_direct_path = (strpos($row['icon'], '/') !== false);
 		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';

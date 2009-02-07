@@ -3,7 +3,7 @@
  *                               newsletter.class.php
  *                            -------------------
  *   begin                : July 07, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 	
-class Newsletter_sender
+class NewsletterService
 {
 	function send_html($mail_object, $message, $email_test = '')
 	{
@@ -81,8 +81,8 @@ class Newsletter_sender
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
 		$error_mailing_list = array();
-		$message = stripslashes(strparse($message));
-		$message = str_replace('"../', '"' . HOST . DIR . '/' , $message);
+		$message = stripslashes(strparse(addslashes($message)));
+		$message = str_replace('"' . PATH_TO_ROOT . '/', '"' . HOST . DIR . '/' , $message);
 		
 		//On définit les headers
 		$headers = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n";

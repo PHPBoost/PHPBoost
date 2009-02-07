@@ -33,11 +33,11 @@ require_once('../admin/admin_header.php');
 
 //On recupère les variables.
 $type = retrieve(GET, 'type', '', TSTRING_UNCHANGE);
-$send = !empty($_POST['send']) ? true : false ;
-$send_test = !empty($_POST['send_test']) ? true : false ;
-$mail_contents = retrieve(POST, 'contents', '');
-$mail_object = trim(retrieve(POST, 'title', ''));
-$member_list = !empty($_GET['member_list']) ? true : false;
+$send = retrieve(POST, 'send', false);
+$send_test = retrieve(POST, 'send_test', false);
+$mail_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$mail_object = trim(retrieve(POST, 'title', '', TSTRING_UNCHANGE));
+$member_list = retrieve(GET, 'member_list', false);
 $del_member = retrieve(GET, 'del_member', 0);
 
 $Template->set_filenames(array(
@@ -53,7 +53,6 @@ $Template->assign_vars(array(
 
 $Cache->load('newsletter');
 include('newsletter.class.php');
-$newsletter_sender = new Newsletter_sender;
 
 //Liste des membres
 if ($member_list)
@@ -86,14 +85,14 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	switch ($type)
 	{
 		case 'html':
-			$error_mailing_list = $newsletter_sender->send_html($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_html($mail_object, $mail_contents);
 			break;
 		case 'bbcode':
-			$error_mailing_list = $newsletter_sender->send_bbcode($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_bbcode($mail_object, $mail_contents);
 			break;
 		default:
 			$type = 'text';
-			$error_mailing_list = $newsletter_sender->send_text($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_text($mail_object, $mail_contents);
 	}
 	
 	//On envoie une confirmation
@@ -155,13 +154,13 @@ elseif (!empty($type)) //Rédaction
 		switch ($type)
 		{
 			case 'html':
-				$newsletter_sender->send_html($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_html($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 				break;
 			case 'bbcode':
-				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_bbcode($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 				break;
 			default:
-				$newsletter_sender->send_text($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_text($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 			break;
 		}
 		$Errorh->handler(sprintf($LANG['newsletter_test_sent'], $User->get_attribute('user_mail')), E_USER_NOTICE);

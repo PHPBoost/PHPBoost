@@ -1,6 +1,6 @@
 <?php
 /*##################################################
-*                         content_service.class.php
+*                         content_manager.class.php
 *                            -------------------
 *   begin                : July 3 2008
 *   copyright            : (C) 2008 Benoit Sautel
