@@ -81,7 +81,7 @@ else
 	ob_start();
 
 $Session->load(); //Récupération des informations sur le membre.
-$Session->action_checker(); //Action de connexion/déconnexion.
+$Session->act(); //Action de connexion/déconnexion.
 
 $Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
 $User = new User($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
