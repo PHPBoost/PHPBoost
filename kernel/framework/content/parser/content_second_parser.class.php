@@ -78,10 +78,10 @@ class ContentSecondParser extends Parser
      * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html, 
      * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml, 
      * PHPBoost templates and PHPBoost BBCode.
-     * @param $contents string Content to highlight
-     * @param $language string Language name
-     * @param $line_number bool Indicate wether or not the line number must be added to the code.
-     * @param $inline_code bool Indicate if the code is multi line.
+     * @param string $contents Content to highlight
+     * @param string $language Language name
+     * @param bool $line_number Indicate wether or not the line number must be added to the code.
+     * @param bool $inline_code Indicate if the code is multi line.
      */
     function _highlight_code($contents, $language, $line_number, $inline_code)
     {
@@ -132,7 +132,7 @@ class ContentSecondParser extends Parser
     /**
      * @static
      * @desc Handler which highlights a string matched by the preg_replace_callback function.
-     * @param $matches string[] The matched contents: 0 => the whole string, 1 => the language, 2 => number count?, 
+     * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?, 
      * 3 => multi line?, 4 => the code to highlight.
      * @return string the colored content
      */
@@ -157,7 +157,7 @@ class ContentSecondParser extends Parser
     /**
      * @static
      * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
-     * @param $matches string[] 0 => the whole tag, 1 => the latex code to parse.
+     * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
      * @return string The code of the image containing the formula.
      */
     function _math_code($matches)

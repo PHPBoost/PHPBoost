@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            categories_manager.class.php
+ *                        categories_manager.class.php
  *                            -------------------
  *   begin                : February 06, 2008
  *   copyright            : (C) 2008 Benoît Sautel
@@ -56,7 +56,7 @@ define('NEW_STATUS_UNKNOWN', 0x100);
 
 /**
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc This class allows you to manage easily categories for your modules.
+ * @desc This class enables you to manage easily the administration of categories for your modules.
  * It's as generic as possible, if you want to complete some actions to specialize them for you module, 
  * you can create a new class inheritating of it in which you call its methods using the syntax 
  * parent::method().
@@ -101,6 +101,7 @@ class CategoriesManager
 {
 	## Public methods ##
 	/**
+     * @desc Build a CategoriesManager object
 	 * @param string $table Table name of the database which contains the require fields (explained in the class description)
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] &$cache_var Array containing the correct data, descripted in the description of the class.
@@ -114,7 +115,7 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Adds a category. We can decide if it will be visible and what its position will be
+	 * @desc Add a category. We can decide if it will be visible and what its position will be
 	 * @param int $id_parent Id of the category in which this category will be added
 	 * @param string $name Name of the category to add
 	 * @param bool $visible Is the category visible? CAT_VISIBLE if visible, CAT_UNVISIBLE else
@@ -154,7 +155,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * @desc Moves a category (makes it gone up or down)
+	 * @desc Move a category (makes it gone up or down)
 	 * @param int $id Id of the category to move
 	 * @param string $way The way according to which the category has to be moved. It must be either MOVE_CATEGORY_UP or MOVE_CATEGORY_DOWN.
 	 * @return bool true wether the category could be moved, false otherwise. If it's false, you will be able to know what was the error by using check_error method.
@@ -231,7 +232,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * @desc Moves a category into another category. You can specify its future position in its future parent category.
+	 * @desc Move a category into another category. You can specify its future position in its future parent category.
 	 * @param int $id Id of the category to move
 	 * @param int $new_id_cat Id of the parent category in which the category will be moved.
 	 * @param int $position Position (number) that the category has to take in its new parent category. If not specified, it will be placed at the end of the category. 
@@ -297,9 +298,8 @@ class CategoriesManager
 		}
 	}
 
-	//Deleting a category
 	/**
-	 * @desc Deletes a category.
+	 * @desc Delete a category.
 	 * @param int $id Id of the category to delete.
 	 * @return bool true if the category has been deleted successfully and false otherwise, and in this case you can find the error in the check_error method.
 	 * The error CATEGORY_DOES_NOT_EXIST is raised if the category to delete doesn't exist. 
@@ -331,7 +331,7 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Changes the visibility of a category
+	 * @desc Change the visibility of a category
 	 * @param int $category_id id of the category whose property must be changed
 	 * @param bool $visibility set to visible or unvisible (use constants CAT_VISIBLE and CAT_UNVISIBLE)
 	 * @param bool $generate_cache if you want that the system regenerate the cache file of the module. Use the constants LOAD_CACHE to regenerate and reload the cache or DO_NOT_LOAD_CACHE else. 

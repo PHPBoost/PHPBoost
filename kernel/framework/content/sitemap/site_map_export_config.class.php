@@ -42,9 +42,9 @@ class SitemapExportConfig
 	##  Public methods  ##
 	/**
 	 * @desc Build a SiteMapExportConfig object 
-	 * @param $module_map_file mixed The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
-	 * @param $section_file mixed The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
-	 * @param $link_file mixed The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $module_map_file The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $section_file The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $link_file The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
 	 */
 	function SitemapExportConfig($site_map_file, $module_map_file, $section_file, $link_file)
 	{
@@ -93,7 +93,7 @@ class SitemapExportConfig
 	
 	/**
 	 * @desc Set the Template object to use while exporting a Site object. 
-	 * @param $module_map_file mixed The template used to export a Site object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $module_map_file The template used to export a Site object. Can be a Template object or a string (path of the template to use).
 	 */
 	function set_site_map_stream($site_map_file)
 	{
@@ -102,7 +102,7 @@ class SitemapExportConfig
 	
 	/**
 	 * @desc Set the Template object to use while exporting a ModuleMap object. 
-	 * @param $module_map_file mixed The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $module_map_file The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
 	 */
 	function set_module_map_stream($module_map_file)
 	{
@@ -111,7 +111,7 @@ class SitemapExportConfig
 	
 	/**
 	 * @desc Set the Template object to use while exporting a SiteMapSection object. 
-	 * @param $section_file mixed The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $section_file The template used to export a SiteMapSection object. Can be a Template object or a string (path of the template to use).
 	 */
 	function set_section_stream($section_file)
 	{
@@ -120,7 +120,7 @@ class SitemapExportConfig
 	
 	/**
 	 * @desc Set the Template object to use while exporting a SiteMapLink object. 
-	 * @param $link_file mixed The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
+	 * @param mixed $link_file The template used to export a SiteMapLink object. Can be a Template object or a string (path of the template to use).
 	 */
 	function set_link_stream($link_file)
 	{
@@ -129,21 +129,21 @@ class SitemapExportConfig
 	
 	// Private elements
 	/**
-	 * @param Template object used to export the SiteMap objects
+	 * @var Template object used to export the SiteMap objects
 	 */
 	var $site_map_file;
 
 	/**
-	 * @param Template object used to export the ModuleMap objects
+	 * @var Template object used to export the ModuleMap objects
 	 */
 	var $module_map_file;
 
 	/**
-	 * @param Template object used to export the SiteMapSection objects
+	 * @var Template object used to export the SiteMapSection objects
 	 */
 	var $section_file;
 	/**
-	 * @param Template object used to export the SiteMapLink objects
+	 * @var Template object used to export the SiteMapLink objects
 	 */
 	var $link_file;
 }
