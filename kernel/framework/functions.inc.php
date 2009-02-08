@@ -206,7 +206,7 @@ function substr_html(&$str, $start, $end = '')
 //Affichage de l'éditeur de contenu.
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
-	$content_editor = new ContentManager();
+	$content_editor = new ContentFormattingFactory();
 	$editor = $content_editor->get_editor();
 	if (!empty($forbidden_tags) && is_array($forbidden_tags))
 		$editor->set_forbidden_tags($forbidden_tags);
@@ -458,7 +458,7 @@ function check_mail($mail)
 function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 {
 	//On utilise le gestionnaire de contenu
-    $content_manager = new ContentManager();
+    $content_manager = new ContentFormattingFactory();
     //On lui demande le parser adéquat
 	$parser = $content_manager->get_parser();
 	
@@ -478,7 +478,7 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 //Charge l'unparseur.
 function unparse(&$content)
 {
-	$content_manager = new ContentManager();
+	$content_manager = new ContentFormattingFactory();
 	$parser = $content_manager->get_unparser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();
@@ -489,7 +489,7 @@ function unparse(&$content)
 //Parse temps réel
 function second_parse(&$content)
 {
-	$content_manager = new ContentManager();
+	$content_manager = new ContentFormattingFactory();
 	
 	$parser = $content_manager->get_second_parser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
