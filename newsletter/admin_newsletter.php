@@ -52,7 +52,7 @@ $Template->assign_vars(array(
 ));
 
 $Cache->load('newsletter');
-include('newsletter.class.php');
+include('newsletter_service.class.php');
 
 //Liste des membres
 if ($member_list)
