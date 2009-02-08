@@ -46,7 +46,7 @@ import('members/user');
 import('members/groups');
 import('members/authorizations');
 import('core/breadcrumb');
-import('content/content_manager');
+import('content/content_formatting_factory');
 
 //Instanciation des objets indispensables au noyau.
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\

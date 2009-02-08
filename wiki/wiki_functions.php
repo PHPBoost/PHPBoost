@@ -31,7 +31,7 @@ if (defined('PHPBOOST') !== true)	exit;
 function wiki_parse(&$var)
 {
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentManager(BBCODE_LANGUAGE);
+	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
 	$parser = $content_manager->get_parser();
     $parser->set_content($var, MAGIC_QUOTES);
     $parser->parse();
@@ -47,7 +47,7 @@ function wiki_unparse($var)
 	$var = preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentManager(BBCODE_LANGUAGE);
+	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
 	$parser = $content_manager->get_unparser();
     $parser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
     $parser->unparse();

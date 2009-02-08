@@ -74,7 +74,7 @@ else
 	
 	$j = 0;
 	
-	foreach (ContentManager::get_available_tags() as $name)
+	foreach (ContentFormattingFactory::get_available_tags() as $name)
 	{	
 		$Template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
