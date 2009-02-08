@@ -662,7 +662,18 @@ function insertMoviePlayer(url, width, height) {
 	}
 	id = 'flowplayer' + getUid();
 	document.write('<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="' + id  + '"></a><br />');
-	setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
+	flowPlayerDisplay(id);
+}
+
+//Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
+function flowPlayerDisplay(id)
+{
+	if (!functionExists('flowPlayerBuild'))
+	{
+		setTimeout('flowPlayerDisplay(\'' + id + '\')', 1000);
+		return;
+	}
+	flowPlayerBuild(id);
 }
 
 //Affiche le lecteur audio avec l'URL du fichier audio

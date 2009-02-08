@@ -3,7 +3,7 @@ function flowPlayerBuild(id) {
 	//Si la fonction n'existe pas, on attend qu'elle soit interprétée
 	if (!functionExists('flowplayer'))
 	{
-		setTimeout('flowPlayerBuild(\'' + id + '\')', 1000);
+		setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
 		return;
 	}
 	
