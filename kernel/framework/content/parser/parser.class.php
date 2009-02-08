@@ -50,7 +50,7 @@ class Parser
 
 	/**
 	 * @desc Return the content of the parser. If you called a method which parses the content, this content will be parsed.
-	 * @param $addslashes bool ADD_SLASHES if you want to escape the slashes in your string 
+	 * @param bool $addslashes ADD_SLASHES if you want to escape the slashes in your string 
 	 * (you often save a parsed content into the database when you parse it), otherwise DO_NOT_ADD_SLASHES.
 	 * @return string The content of the parser.
 	 */
@@ -64,8 +64,8 @@ class Parser
 	
 	/**
 	 * @desc Set the content of the parser. When you will call a parse method, it will deal with this content. 
-	 * @param $content string Content
-	 * @param $stripslashes bool PARSER_DO_NOT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser, 
+	 * @param string $content Content
+	 * @param bool $stripslashes PARSER_DO_NOT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser, 
 	 * otherwise PARSER_DO_NOT_STRIP_SLASHES.
 	 */
 	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
@@ -89,9 +89,9 @@ class Parser
 	
 	/**
 	 * @desc Parse a nested tag
-	 * @param $match string The regular expression which matches the tag to replace
-	 * @param $regex string The regular expression which matches the replacement
-	 * @param $replace string The replacement syntax.
+	 * @param string $match The regular expression which matches the tag to replace
+	 * @param string $regex The regular expression which matches the replacement
+	 * @param string $replace The replacement syntax.
 	 */
 	function _parse_imbricated($match, $regex, $replace)
 	{

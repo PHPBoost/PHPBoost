@@ -80,7 +80,7 @@ class SiteMap
 {
     /**
      * @desc Builds a SiteMap object with its elements
-     * @param $elements SiteMapElement[] List of the elements it contains
+     * @param SiteMapElement[] $elements List of the elements it contains
      */
     function SiteMap($site_name = '', $elements = null)
     {
@@ -102,7 +102,7 @@ class SiteMap
     
     /**
      * @desc Set the name of the site. The default value is the name of the site taken from the site configuration. 
-     * @param $site_name string name of the site
+     * @param string $site_name name of the site
      */
     function set_site_name($site_name)
     {
@@ -119,7 +119,7 @@ class SiteMap
     
     /**
      * @desc Adds an element to the elements list of the SiteMap
-     * @param $element SiteMapElement The element to add
+     * @param SiteMapElement $element The element to add
      */
     function add($element)
     {
@@ -134,7 +134,7 @@ class SiteMap
      * 	<li>SITE_NAME which contains the name of the site</li>
      * 	<li>A loop "element" in which the code of each element is in the variable CODE</li>
      * </ul>
-     * @param $export_config SiteMapExportConfig Export configuration
+     * @param SiteMapExportConfig $export_config Export configuration
      * @return string The exported code of the SiteMap
      */
     function export(&$export_config)

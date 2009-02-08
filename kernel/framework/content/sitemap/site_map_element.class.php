@@ -38,7 +38,7 @@ class SiteMapElement
 {
     /**
      * @desc Build a SiteMapElement object
-     * @param $name string Name of the object
+     * @param string $name Name of the object
      */
     function SiteMapElement($name)
     {
@@ -72,7 +72,7 @@ class SiteMapElement
 
     /**
      * @desc Set the depth of the element
-     * @param $depth
+     * @param int $depth the depth of the element
      */
     function set_depth($depth)
     {
@@ -81,9 +81,9 @@ class SiteMapElement
 
     /**
      * @desc Exports the element
-     * @param $export_config SiteMapExportConfig Export configuration
-     * @param $depth int Depth of the element
-     * @return int
+     * @param SiteMapExportConfig $export_config Export configuration
+     * @param int $depth Depth of the element
+     * @return string The exported code
      */
     function export(&$export_config)
     {

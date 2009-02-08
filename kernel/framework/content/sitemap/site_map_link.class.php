@@ -39,14 +39,14 @@ class SiteMapLink extends SiteMapElement
 {
     /**
      * @desc Builds a SiteMapLink object
-     * @param $name string Name of the target page
-     * @param $link Url link
-     * @param $change_freq string Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
+     * @param string $name Name of the target page
+     * @param Url $link link
+     * @param string $change_freq Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
      * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
      * SITE_MAP_FREQ_DEFAULT
-     * @param $priority string Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
+     * @param string $priority Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
      * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
-     * @param $last_modification_date Date Last modification date of the target page
+     * @param Date $last_modification_date Last modification date of the target page
      */
     function SitemapLink($name = '', $link = null, $change_freq = SITE_MAP_FREQ_MONTHLY, $priority = SITE_MAP_PRIORITY_AVERAGE, $last_modification_date = null)
     {
@@ -123,7 +123,7 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the name of the element
-     * @param $name string name of the element
+     * @param string $name name of the element
      */
     function set_name($name)
     {
@@ -132,7 +132,7 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the URL of the link
-     * @param $link Url URL
+     * @param Url $link URL
      */
     function set_link($link)
     {
@@ -148,7 +148,7 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the change frequency
-     * @param $change_freq string Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
+     * @param string $change_freq Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
      * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
      * SITE_MAP_FREQ_DEFAULT
      */
@@ -167,7 +167,7 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the priority of the link
-     * @param $priority string Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
+     * @param string $priority Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
      * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
      */
     function set_priority($priority)
@@ -184,7 +184,7 @@ class SiteMapLink extends SiteMapElement
 
     /**
      * @desc Set the last modification date of the target page
-     * @param $date Date date
+     * @param Date $date date
      */
     function set_last_modification_date($last_modification_date)
     {
@@ -205,7 +205,7 @@ class SiteMapLink extends SiteMapElement
      * 	<li>PRIORITY corresponding to the code needed in the sitemap.xml file to indicate the priority of the target page.</li>
      * 	<li>C_LINK indicating that we are displaying a link (useful if you want to use a signe template export configuration)</li>
      * </ul>
-     * @param $export_config SiteMapExportConfig Export configuration
+     * @param SiteMapExportConfig $export_config Export configuration
      * @return string the exported link
      */
     function export(&$export_config)

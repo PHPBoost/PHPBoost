@@ -37,7 +37,7 @@ class SiteMapSection extends SiteMapElement
 {
     /**
      * @desc Build a SiteMapSection object 
-     * @param $link SiteMapLink The link associated to the section
+     * @param SiteMapLink $link The link associated to the section
      */
     function SiteMapSection($link)
     {
@@ -55,7 +55,7 @@ class SiteMapSection extends SiteMapElement
     
     /**
      * @desc Set the link associated to the section 
-     * @param $link SiteMapLink the link
+     * @param SiteMapLink $link the link
      */
     function set_link($link)
     {
@@ -64,7 +64,7 @@ class SiteMapSection extends SiteMapElement
     /**
      * @desc Set the depth of the element
      * @warning the description is not protected for XML displaying (but usefulless in sitemap.xml)
-     * @param $depth
+     * @param int $depth The depth of the element
      */
     function set_depth($depth)
     {
@@ -78,7 +78,7 @@ class SiteMapSection extends SiteMapElement
 
     /**
      * @desc Adds an elemement to the section
-     * @param $element SiteMapElement element to add
+     * @param SiteMapElement $element element to add
      */
     function add($element)
     {
@@ -98,7 +98,7 @@ class SiteMapSection extends SiteMapElement
      * 	<li>C_SECTION, boolean meaning that it's a section (useful if you want to use a sigle template for the whole export configuration)</li>
      * 	<li>A loop "element" containing evert element of the section (their code is available in the CODE variable of the loop)</li>
      * </ul>
-     * @param $export_config SiteMapExportConfig Export configuration
+     * @param SiteMapExportConfig $export_config Export configuration
      * @return string the exported section
      */
     function export(&$export_config)
@@ -129,8 +129,8 @@ class SiteMapSection extends SiteMapElement
      */
     var $link;
     /**
-    * @var SiteMapElement[] List of the elements contained by the module map
-    */
+     * @var SiteMapElement[] List of the elements contained by the module map
+     */
     var $elements = array();
 }
 

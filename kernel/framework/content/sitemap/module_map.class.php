@@ -38,7 +38,7 @@ class ModuleMap extends SiteMapSection
 {
     /**
      * @desc Build a ModuleMap object
-     * @param $link SiteMapLink Link associated to the root of the module
+     * @param SiteMapLink $link Link associated to the root of the module
      */
     function ModuleMap($link)
     {
@@ -57,7 +57,7 @@ class ModuleMap extends SiteMapSection
 
     /**
      * @desc Set the description of the module
-     * @param $description string Description of the module
+     * @param string $description Description of the module
      */
     function set_description($description)
     {
@@ -77,7 +77,7 @@ class ModuleMap extends SiteMapSection
      *  <li>C_MODULE_MAP which is a boolean whose value is true, this will enable you to use a single template for the whole export configuration</li>
      *  <li>The loop "element" for which the variable CODE contains the code of each sub element of the module (for example categories)</li>
      *  </ul>
-     * @param $export_config SiteMapExportConfig export configuration
+     * @param SiteMapExportConfig $export_config export configuration
      */
     function export(&$export_config)
     {
