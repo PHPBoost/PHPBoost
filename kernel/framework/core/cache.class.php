@@ -63,24 +63,27 @@ class Cache
 
         //On charge le fichier
         $cache_file = PATH_TO_ROOT . '/cache/' . $file . '.php';
+		$include = FALSE;
         if ($reload_cache)
-        if (!DEBUG)
-        {
-            $include = @include($cache_file);
-        }
-        else
-        {
-            $include = include($cache_file);
-        }
-        else
-        if (!DEBUG)
-        {
-            $include = @include_once($cache_file);
-        }
-        else
-        {
-            $include = include_once($cache_file);
-        }
+	        if (!DEBUG)
+	        {
+	            $include = @include($cache_file);
+	        }
+	        else
+	        {
+				if (file_exists($cache_file))
+					$include = include($cache_file);
+	        }
+		else
+	        if (!DEBUG)
+	        {
+	            $include = @include_once($cache_file);
+	        }
+	        else
+	        {
+				if (file_exists($cache_file))
+					$include = include_once($cache_file);
+	        }
         if (!$include)
         {
             if (in_array($file, $this->files))
@@ -120,6 +123,7 @@ class Cache
                 }
             }
         }
+
         if ($file == 'config')
         {   // Intègre le numéro de build
             import('io/file');
