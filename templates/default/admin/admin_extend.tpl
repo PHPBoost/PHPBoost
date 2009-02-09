@@ -33,10 +33,10 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_files.php">{L_FILES}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_database.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_database.php">{L_SITE_DATABASE}</a>		
-			</td>
+				<a href="{PATH_TO_ROOT}/admin/admin_com.php">{L_COM}</a>
+			</td>		
 		</tr>	
 		<tr style="text-align:center;">		
 			<td class="row2" style="width:20%;">
@@ -95,25 +95,18 @@
 		</tr>
 		<tr style="text-align:center;">	
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_stats.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/stats.png" /></a>		
-					<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_stats.php">{L_STATS}</a>
-			</td>		
-			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/phpinfo.png" /></a>		
 					<br />
 				<a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php">{L_PHPINFO}</a>
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_com.php">{L_COM}</a>
-			</td>					
-			
-			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" /></a>		
 				<br />
 				<a href="{PATH_TO_ROOT}/admin/admin_updates.php">{L_WEBSITE_UPDATES}</a>
+			</td>
+			<td class="row2" style="width:20%;">
+			</td>
+			<td class="row2" style="width:20%;">
 			</td>
 			<td class="row2" style="width:20%;">
 			</td>
