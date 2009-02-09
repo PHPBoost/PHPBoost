@@ -53,7 +53,6 @@ $Template->assign_vars(array(
 	'L_ROBOTS' => $LANG['robots'],	
 	'L_ERRORS' => $LANG['errors'],
 	'L_COM' => $LANG['com'],
-	'L_SITE_DATABASE' => $LANG['database'],
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
