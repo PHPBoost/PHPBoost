@@ -1,0 +1,71 @@
+/* Edito */
+
+.edito_container{
+	background:url("../../images/imgs/007.png");
+	width:626px;
+	margin:auto;
+	margin-bottom:25px;
+}
+
+.edito_top{
+	background:url("../../images/imgs/008.png");
+	width:626px;
+	height:4px;
+	font-size:12px;
+	font-weight:bold;
+	color:#E53B00;
+	
+}
+
+
+.edito_bottom{
+	background:url("../../images/imgs/006.png");
+	width:626px;
+	height:4px;
+	clear:both;
+	
+}
+
+/* News */
+/* Contenu de la news */
+.news_container{
+
+	background:url("../../images/imgs/007.png");
+	width:626px;
+	margin:auto;
+	margin-bottom:25px;
+}
+
+
+/* Barre supérieur des news */
+
+.news_top{
+	background:url("../../images/imgs/008.png");
+	width:626px;
+	height:4px;
+	font-size:12px;
+	font-weight:bold;
+	color:#E53B00;
+
+}
+/* Titre et contenu de la news */
+.news_top a.com{
+}
+a.news_title{
+	font-size:18px;
+	font-weight:bold;
+	color:#6a8237;
+}
+.news_content{
+	width:560px;
+	padding:8px;
+	text-align:justify;
+}
+/* Barre inférieure des news */
+
+.news_bottom{
+	background:url("../../images/imgs/006.png");
+	width:626px;
+	height:4px;
+	clear:both;
+}
