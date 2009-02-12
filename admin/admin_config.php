@@ -361,7 +361,7 @@ else //Sinon on rempli le formulaire
 		
 		$theme_array_bdd = array();
 		$result = $Sql->query_while("SELECT theme 
-		FROM " . PREFIX . "themes", __LINE__, __FILE__);
+		FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.

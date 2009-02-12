@@ -427,7 +427,7 @@ class Cache
 
         $code = 'global $THEME_CONFIG;' . "\n";
         $result = $Sql->query_while("SELECT theme, left_column, right_column, secure
-		FROM " . PREFIX . "themes
+		FROM " . DB_TABLE_THEMES . "
 		WHERE activ = 1", __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
         {
