@@ -3,7 +3,7 @@
  *                               admin_themes.php
  *                            -------------------
  *   begin                : June 29, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -51,7 +51,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
-	FROM " . PREFIX . "themes
+	FROM " . DB_TABLE_THEMES . "
 	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -226,7 +226,7 @@ else
 
 		$themes_bdd = array();
 		$result = $Sql->query_while("SELECT id, theme, activ, secure 
-		FROM " . PREFIX . "themes", __LINE__, __FILE__);
+		FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			//On recherche les clées correspondante à celles trouvée dans la bdd.
