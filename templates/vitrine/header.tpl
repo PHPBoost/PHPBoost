@@ -109,17 +109,16 @@ else
 	
 	# ENDIF #
 	
-	<div class="hbloc_container">
+		<div class="hbloc_container">
+			<div id="header">
+				<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
+				# IF C_MENUS_HEADER_CONTENT #
+				<div class="hbloc_content">
+				{MENUS_HEADER_CONTENT}
+				</div>
 			
-		<div id="header">
-			<h1 style="display:none;font-size:9px;">{SITE_NAME}</h1>
-			# IF C_MENUS_HEADER_CONTENT #
-			<div class="hbloc_content">
-			{MENUS_HEADER_CONTENT}
 			</div>
-		
-		</div>
-			# ENDIF #
+				# ENDIF #
 		</div>
 				
 		<div id="sub_header">
