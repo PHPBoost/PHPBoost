@@ -1,0 +1,169 @@
+/* --------------------------------------
+		design.css
+Contient les conteneur, fortement dépendant du design.
+--------------------------------------*/
+
+/* Corps du site 
+--------------------------------------*/
+*{
+	margin:0;
+	padding:0;
+	font-size:100%;
+}
+body{
+	background-color:#101A24; 
+	font-size:12px;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	color:#FFFDFD;
+	margin:0;
+	padding:0;
+}
+
+/* Conteneurs 
+--------------------------------------*/
+/* ##### Conteneur global du site ###### */
+div#global{
+	margin:auto;
+	margin-bottom:25px;
+	background:#101A24;
+}
+/* ##### Entête de la page ###### */
+div#header, div#header_admin{
+	background:url(images/header_boost.jpg) center no-repeat;
+	height:256px;
+}
+/* #####  Conteneur en dessous de l'entête ###### */
+div#sub_header, div#sub_header_admin{
+	height:66px;
+}
+div#sub_header p a{
+	color:#FFFFFF;
+}
+div#sub_header_left{
+	height:46px;
+	padding-top:200px;
+	margin:auto;
+	width:680px;
+}
+div#sub_header p a{
+	color:#FFFFFF;
+}
+/* Lien du subheader */
+div#header .dynamic_menu h5.links
+{
+	background:none;
+	border:none;
+	color:#edfff0;
+	width:134px;
+	background:url(images/button.png) no-repeat;
+	padding:5px 0px;
+	font-size:11px;
+	margin-right:1px;
+}
+div#header .dynamic_menu h5.links:hover
+{
+	color:#edfff0;
+	cursor:default;
+	background:url(images/button_click.png) no-repeat;
+}
+div#header .dynamic_menu h5 a
+{
+	color:#FFFFFF;
+	text-decoration:none;
+}
+/* ##### Compteur de visites  ###### */
+div#compteur{
+	color:#1E88D2;
+	position:absolute;
+	top:55px;
+	margin-left:895px;
+}
+/* ##### Menu de gauche ###### */
+div#left_menu{
+	float:left;
+	width:190px;
+	padding:0;
+	margin:0;
+	padding-top:10px;
+}
+/* #####  Contenu de la page ###### */
+div#main{
+	float:left;
+	width:82%;
+	padding-bottom:15px;
+	padding-right:10px;	
+	padding-left:5px;	
+}
+/* ##### Barre de lien rapide ###### */
+div#links{
+	background-color:#0A131C;
+	border:1px solid #063E59;
+	width:96%;
+	text-indent:10px;
+	margin-bottom:30px;
+}
+/* ##### Emplacement au dessus de contenu de la page ###### */
+div#top_contents{
+	margin-top:15px;
+	margin-bottom:15px;
+}
+/* ##### Emplacement en dessous de contenu de la page ###### */
+div#bottom_contents{
+	margin-top:25px;
+	padding-top:15px;
+	padding-bottom:15px;
+}
+/* ##### Menu droit ###### */
+div#right_menu{
+}
+/* ##### Bloc au dessus du pied de page ###### */
+div#top_footer{
+	clear:both;
+	padding:0.75em;
+}
+/* ##### Pied de page ###### */
+div#footer{
+	height:35px;
+	background-color:#101010;
+	text-align:center;
+	border:solid 1px #000000;
+	padding:0.65em;
+	border-top:none;
+}
+div#footer span{
+	font-size:10px;
+	color:#FFFFFF;
+}
+div#footer span a{
+	font-size:10px;
+	color:#FFFFFF;
+}
+
+.bglinks{
+	background:url(images/bgmenu_links.jpg) no-repeat bottom right;
+	margin:0px;
+	padding:0px;
+	list-style-type:none;
+	padding-bottom:7px;
+	margin-bottom:5px;
+}
+
+div#connect{
+	position:relative;
+	left:0px !important;
+	left:-5px;
+	font-size:10px;
+	text-align:center;
+	padding:4px;
+	padding-top:4px;
+	padding-left:1px;
+}
+
+div#disconnect{
+	position:relative;
+	left:0px !important;
+	left:-5px;
+	padding:4px;
+	padding-top:4px;
+	padding-left:1px;
+}

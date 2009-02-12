@@ -1,0 +1,119 @@
+/* Classe du lien du pseudo sur forum */
+a.forum_link_pseudo{
+	color:#e8eaeb; 
+	font-weight:bold;
+}
+a.forum_link_pseudo:hover { 
+	color:#f2fbff; 
+	font-weight:bold;
+}
+/* Barre du titre du forum */
+.forum_title{
+	margin:auto;
+	height:55px;
+	background:#0A131C;
+	border:2px solid #063E59;
+	border-bottom:1px solid #063E59;
+	color:#FFFFFF;
+	padding-top:5px;
+}
+.forum_title h2{ /* Titre du forum */
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+.forum_title a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+/* Barre de liens du forum */
+.forum_links{
+	background:#0A131C;
+	border:2px solid #063E59;
+	padding:6px;
+}
+.forum_links a{ /* Couleur des liens */
+	color:#FFFFFF;
+}
+/* Barre des textes relatifs aux colonnes */
+.forum_text_column {	
+	height:20px;
+	background:#101010;
+	border-top:1px solid #063E59;
+	border-bottom:1px solid #063E59;
+	font-size:10px;
+	color:#FFFFFF;	
+	text-align:center;
+	font-weight:bold;
+	padding:0px;
+}
+/* Case des liens sous-catégories */
+.forum_sous_cat{
+	background:#101010;
+	border-bottom:1px solid #063E59;
+	border-right:1px solid #063E59;
+	padding:6px;
+}
+.forum_sous_cat:hover{
+	background:#101010;
+}
+/* Case compteur message/topic */
+.forum_sous_cat_compteur{	
+	width:60px;
+	background:#101010;
+	border-bottom:1px solid #063E59;
+	border-right:1px solid #063E59;
+	color:#FFFFFF;
+	text-align:center; 
+}
+/* Case compteur dernier topic/dernier message */
+.forum_sous_cat_last{
+	width:150px;
+	background:#101010;
+	border-bottom:1px solid #063E59;
+	font-size:10px;
+	color:#FFFFFF;
+	text-align:center; 
+}
+.forum_sous_cat_last:hover{
+	background:#101010;
+}
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{
+	width:550px;
+	margin:auto;
+	background:#0A131C;
+	border:1px solid #063E59;
+	border-spacing:1px;
+	text-align:center;
+	-moz-border-radius:0.4em;
+}
+/* Liens des catégories de niveau 0 */
+a.forum_link_cat{
+	color:#FFFFFF;
+	font-weight:bold;
+}
+/* Affichage des membres en ligne */
+.forum_online{
+	background:#0A131C;
+	color:#FFFFFF;
+	border:1px solid #063E59;
+	padding:6px;
+	overflow:hidden !important;
+	height:auto !important;
+	overflow:visible;
+	height:1%;
+	clear:both;
+}
+/* Fond des catégories dans l'administration */
+.forum_cat_admin{
+	width:100%;
+	height:20px;
+	margin-bottom:2px;
+	padding:4px 0px;
+}
+/* Contenu */
+.forum_contents{
+	margin-left:10px;
+	padding-right:28px; 
+	background:url(images/sr.jpg) repeat-y right;
+}
