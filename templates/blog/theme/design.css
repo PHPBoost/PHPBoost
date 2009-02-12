@@ -1,48 +1,0 @@
-/* --------------------------------------		design.cssContient les conteneur, fortement dépendant du design.--------------------------------------*/ /* Corps du site --------------------------------------*/* {    margin:0;    padding:0;    font-size:100%;}body {    background-color:#89b825;
-    background-image:url("../images/imgs/fond.png");
-    background-repeat: repeat-x;    font-size:12px;    font-family:Arial, "Times new roman", Verdana, sans-serif;    color:#5c7018;    margin:0;    padding:0;}/* Conteneurs --------------------------------------*/    /* ##### Conteneur global du site ###### */div#global {
-	background:url("../images/imgs/001.png");	margin:auto;	width:910px;}
-
-div#corps_top{
-
-	background:url("../images/imgs/002.png");
-	width:910px;
-	height:14px;
-	margin:auto;
-	margin-top:80px;
-}
-
-div#corps{	
-	margin:auto;
-}
-
-div#corps_bas{
-
-	background:url("../images/imgs/003.png");
-	width:910px;
-	height:10px;
-	margin:auto;
-	clear:both
-
-}/* ##### Entéte de la page ###### */div#header_container,div#header_admin_container {    margin-top:15px;    border:1px #cccccc solid;        background-position:70px 10px;    -moz-border-radius:12px;    -khtml-border-radius:12px;    -webkit-border-radius:12px;    border-radius:12px;}/* ##### Entéte de la page ###### */div#header,div#header_admin {
-
-}/* #####  Conteneur en dessous de l'entéte ###### */div#sub_header,div#sub_header_admin {    height:auto;    padding:0;    padding-left:5px;}div#sub_header p a {    color:#445766;}/* Lien du subheader */div#header .dynamic_menu h5.links {         width:134px;    background:url(images/button.png) no-repeat;    padding:5px 0px;    font-size:11px;    margin-right:1px;}div#header .dynamic_menu h5.links:hover {       cursor:default;    background:url(images/button_click.png) no-repeat;}div#header .dynamic_menu h5 a {    color:#FFFFFF;    text-decoration:none;}/* ##### Compteur de visites  ###### */div#compteur {    color:#374715; 	font-size:11px;    margin-right:20px;}/* ##### Menu droit ###### */div#right_menu {    float:right;    width:230px;    margin:0;    margin-top:10px;    margin-left:10px !important;    margin-left:7px;}/* #####  Contenu de la page ###### */div#main {
-    width:auto;    min-width:450px;    overflow:hidden !important;    height:auto !important;    overflow:visible;    height:1%;    padding:0;    margin:0;    float:none;
-}/* ##### Contenu central ###### *//* ##### Barre de lien rapide ###### */div#links { /*width:96%;*/    text-indent:10px;    margin-bottom:20px;}/* ##### Emplacement au dessus de contenu de la page ###### */div#top_contents {    margin-top:15px;    margin-bottom:15px;    border-spacing:1px;    border:1px #cccccc solid;    background-color:#ffffff;    -moz-border-radius:12px;    -khtml-border-radius:12px;    -webkit-border-radius:12px;    border-radius:12px;}/* ##### Emplacement en dessous de contenu de la page ###### */div#bottom_contents {    padding-top:15px;    padding-bottom:15px;    float:left;}/* ##### Bloc au dessus du pied de page ###### */
-
-
-.ul_nav li{
-
-	display:inline;
-
-}
-
-.ul_nav a{
-
-	color:#ffffff;
-
-}/* ##### Pied de page ###### */div#footer {
-	background:url("../images/imgs/004.png") no-repeat;   	width:910px;   	height:160px;	margin:auto;	text-align:center;}
-
-div#fond_footer {	background-image:url("../images/imgs/005.png");
-   	clear:both;   	height:160px;	text-align:center;}div#footer span {    color:#445766;    font-size:10px;}div#footer span a {    color:#445766;    font-size:10px;}/* ##### Liens rapides ###### */div#links_vertical {    display:block !important;    display:none;    position:fixed;    background:url(images/vertical_menu_repeat.png) repeat-y;    top:45%;    margin-left:989px;    width:27px;    text-align:center;    padding-left:2px;}div#links_vertical_top {    width:29px;    background:url(images/vertical_menu_top.png) no-repeat;    text-align:center;    margin-left:-2px;    padding-top:8px;}div#links_vertical_central {    width:27px;    text-align:center;    margin-left:-2px;    padding:4px 0px;}div#links_vertical_bottom {    width:29px;    background:url(images/vertical_menu_bottom.png) no-repeat;    text-align:center;    height:32px;    margin-left:-2px;}.bglinks {    background:url(images/bgmenu_links.jpg) no-repeat bottom right;    margin:0px;    padding:0px;    list-style-type:none;    padding-bottom:7px;    margin-bottom:5px;}.block {    margin:10px auto;    padding:10px;    border-spacing:1px;    border:1px #cccccc solid;    background-color:#ffffff;    -moz-border-radius:12px;    -khtml-border-radius:12px;    -webkit-border-radius:12px;    border-radius:12px;}
