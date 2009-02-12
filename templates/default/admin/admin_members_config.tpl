@@ -120,7 +120,7 @@
 					</dl>
 					<dl>
 						<dt><label for="weight_max">* {L_WEIGHT_MAX_AVATAR}</label><br /><span>{L_WEIGHT_MAX_AVATAR_EXPLAIN}</span></dt></dt>
-						<dd><label><input type="text" size="3" maxlength="3" id="weight_max" name="weight_max" value="{WEIGHT_MAX}" class="text" /> {L_KB}</label></dd>
+						<dd><label><input type="text" size="3" maxlength="5" id="weight_max" name="weight_max" value="{WEIGHT_MAX}" class="text" /> {L_KB}</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="activ_avatar">{L_ACTIV_DEFAUT_AVATAR}</label><br /><span>{L_ACTIV_DEFAUT_AVATAR_EXPLAIN}</span></dt></dt>
