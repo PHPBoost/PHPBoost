@@ -343,7 +343,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 {
     //Si le dossier de langue n'existe pas on prend le suivant exisant.
-    if (!file_exists($dir_path . $require_dir))
+    if (!@file_exists($dir_path . $require_dir))
     {
         if (is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
         {

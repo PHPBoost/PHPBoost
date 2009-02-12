@@ -26,6 +26,7 @@
  *
 ###################################################*/
 
+@ini_set('open_basedir', NULL); 
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
 if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
