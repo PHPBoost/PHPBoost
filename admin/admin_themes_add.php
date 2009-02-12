@@ -166,10 +166,10 @@ else
 				$array_dir[] = $dir; //On crée un array, avec les different dossiers.
 		}	
 		@closedir($dh); //On ferme le dossier
-        
+
         // Le thème par défaut n'en fait pas partie
         $key = array_search('default', $array_dir);
-        if (!empty($key))
+        if (isset($key))
             unset($array_dir[$key]);
         
 		$result = $Sql->query_while("SELECT theme 
