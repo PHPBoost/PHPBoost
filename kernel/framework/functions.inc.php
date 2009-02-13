@@ -345,7 +345,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
     //Si le dossier de langue n'existe pas on prend le suivant exisant.
     if (!@file_exists($dir_path . $require_dir))
     {
-        if (is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
+        if (@is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
         {
             while (!is_bool($dir = readdir($dh)))
             {
