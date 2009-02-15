@@ -73,6 +73,7 @@ class TemplateHighlighter extends Parser
 		
 		//Conditionnal block
 		$this->content = preg_replace('`# IF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# ELSEIF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ELSE #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSE</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ENDIF #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ENDIF</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		
