@@ -11,6 +11,7 @@
 		<div class="spacer"></div>
 	</div>
 	# ENDIF #
+</div>
 	<div id="footer">
 		# IF C_MENUS_FOOTER_CONTENT #
 		{MENUS_FOOTER_CONTENT}
@@ -19,8 +20,8 @@
 			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
 		</span>	
 		# IF C_DISPLAY_BENCH #
-		<br />
 		<span>
+			&nbsp;|&nbsp;		
 			{L_ACHIEVED} {BENCH}{L_UNIT_SECOND} - {REQ} {L_REQ}
 		</span>	
 		# ENDIF #
@@ -30,6 +31,5 @@
 		</span>
 		# ENDIF #
 	</div>
-</div>
 	</body>
 </html>
