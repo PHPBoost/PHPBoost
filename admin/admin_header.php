@@ -51,6 +51,7 @@ $Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
+	'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
 	'L_SITE' => $LANG['site'],

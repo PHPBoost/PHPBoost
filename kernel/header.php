@@ -133,6 +133,7 @@ $Template->assign_vars(array(
 	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_USER_CONNECTED' => $member_connected,
 	'C_USER_NOTCONNECTED' => !$member_connected,
+	'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],

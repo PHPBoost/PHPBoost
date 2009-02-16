@@ -1,6 +1,10 @@
 		<script type="text/javascript">
 		<!--
 		function check_form_or(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('guestbook_contents').value == "") {
 				alert("{L_ALERT_TEXT}");
 				return false;

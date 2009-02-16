@@ -104,6 +104,10 @@
 			<script type="text/javascript">
 			<!--
 			function check_form(){
+				# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+				# ENDIF #
+			
 				if(document.getElementById('title').value == "") {
 					alert("{L_REQUIRE_TITLE}");
 					return false;

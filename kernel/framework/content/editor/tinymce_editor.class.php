@@ -47,7 +47,6 @@ class TinyMCEEditor extends ContentEditor
 		$template->assign_vars(array(
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
-			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
 			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
 			'EDITOR_NAME' => 'tinymce',
 			'FIELD' => $this->identifier,
@@ -83,9 +82,6 @@ class TinyMCEEditor extends ContentEditor
 			'THEME_ADVANCED_BUTTONS2' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons2, ',')),
 			'THEME_ADVANCED_BUTTONS3' => preg_replace('`\|(,\|)+`', '|', trim($theme_advanced_buttons3, ','))
 		));
-		
-		if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà inclus.
-			define('EDITOR_ALREADY_INCLUDED', true);
 		
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
