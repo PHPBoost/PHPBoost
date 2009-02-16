@@ -20,6 +20,7 @@
 ------------------------------------- NOYAU ------------------------------------
 Ajouter un mail d'envoi pour les mails.
 Filtrer les caractères dans le pseudo à l'inscription.
+Régler le problème du cache des css mini!
 
 ------------------------------------ MODULES -----------------------------------
 Améliorer le listage des news/articles dans l'admin (merdique actuellement).

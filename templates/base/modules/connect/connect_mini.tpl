@@ -19,7 +19,7 @@
 		<div style="float:right;margin-right:8px;">
 			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" style="text-align:right;display:inline;">
 				<label><input size="15" type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onclick="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" /></label>
-				<label><input size="15" type="password" id="password" name="password" class="connect_form" maxlength="30" /></label>
+				<label><input size="15" type="password" id="password" name="password" class="connect_form" value="******" onclick="if( this.value == '******' ) this.value = '';" maxlength="30" /></label>
 				<label><input checked="checked" type="checkbox" name="auto" /></label>
 				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 			</form>
