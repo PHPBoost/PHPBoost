@@ -43,7 +43,6 @@
 						{L_NO_UNREAD_ALERT}
 					</div>
 				# ENDIF #
-				<br />
 				<div style="text-align:center;">
 					<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
 				</div>

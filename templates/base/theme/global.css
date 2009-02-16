@@ -135,9 +135,10 @@ a.membre {
 --------------------------------------*/
 /* Lien du menu */
 .dynamic_menu h5 {
-    color:#0578CC;
+    color:#515C68;
     background:#F2F7FB;
     border:1px solid #C4CED6;
+	margin-right:2px;
 	-moz-border-radius-topleft:12px;
     -khtml-border-radius-topleft:12px;
     -webkit-border-radius-topleft:12px;
@@ -149,7 +150,7 @@ a.membre {
 
 .dynamic_menu h5:hover {
     color:#01528D;
-    background:#E4F0F9;
+    background:#eaedee;
 }
 
 /* Séparateur */

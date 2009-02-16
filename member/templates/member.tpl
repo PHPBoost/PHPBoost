@@ -306,11 +306,11 @@
 						<input type="file" name="avatars" id="avatars" size="30" class="file" />					
 						<input type="hidden" name="max_file_size" value="2000000" />
 						<br />
-						{L_WEIGHT_MAX}: {WEIGHT_MAX} ko
+						{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}
 						<br />
-						{L_HEIGHT_MAX}: {HEIGHT_MAX} pixels
+						{L_HEIGHT_MAX}: {HEIGHT_MAX} {L_UNIT_PX}
 						<br />
-						{L_WIDTH_MAX}: {WIDTH_MAX} pixels
+						{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}
 					</label></dd>
 				</dl>
 				# ENDIF #
@@ -355,7 +355,7 @@
 			<div class="module_top"><strong>{L_PROFIL}</strong></div>
 			<div class="module_contents">
 				<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
-				<table class="module_table">
+				<table class="module_table" style="width:99%">
 					<tr>
 						<td class="row2" style="text-align:center;">
 							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a>

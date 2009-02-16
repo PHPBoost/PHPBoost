@@ -18,14 +18,14 @@ div#sub_header_admin {
 div#sub_header_admin .dynamic_menu {
 	width:auto;
 	height:35px;
-	margin-top:10px;
+	margin-top:-5px;
 	padding-left:15px;
 	float:left;
 }
 div#admin_extend_link{
 	float:right;
 	margin-right:15px;
-	margin-top:10px;
+	margin-top:-5px;
 	background:#F2F7FB;
     border:1px solid #C4CED6;
     padding:4px 6px;
@@ -49,10 +49,10 @@ div#admin_main {
 div#admin_contents {
     margin:auto;
     margin-left:202px;
-    background-color:#ffffff;
     border:1px #cccccc solid;
     border-spacing:1px;
     padding:10px;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
     -moz-border-radius:12px;
     -khtml-border-radius:12px;
     -webkit-border-radius:12px;
@@ -71,10 +71,10 @@ div#admin_quick_menu {
     text-align:center;
     padding-top:5px;
     margin:auto;
-    background-color:#ffffff;
     border:1px #cccccc solid;
     border-spacing:1px;
     padding:10px;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
     -moz-border-radius:12px;
     -khtml-border-radius:12px;
     -webkit-border-radius:12px;
@@ -158,7 +158,7 @@ a.admin_extend_link {
 }
 
 /* Styles */
-.success {
+.success_test {
     text-align:center;
     width:20%;
     background:#81c3a6;
@@ -170,7 +170,7 @@ a.admin_extend_link {
     padding:1px;
 }
 
-.failure {
+.failure_test {
     text-align:center;
     width:20%;
     background:#ee8d8d;
@@ -182,7 +182,7 @@ a.admin_extend_link {
     padding:1px;
 }
 
-.unspecified {
+.unspecified_test {
     text-align:center;
     width:20%;
     background:#5189bb;

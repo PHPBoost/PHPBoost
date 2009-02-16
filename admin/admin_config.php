@@ -87,10 +87,10 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	if (function_exists('apache_get_modules'))
 	{	
 		$get_rewrite = apache_get_modules();
-		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success">' . $LANG['yes'] . '</span>' : '<span class="failure">' . $LANG['no'] . '</span>';
+		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
 	}
 	else
-		$check_rewrite = '<span class="unspecified">' . $LANG['undefined'] . '</span>';
+		$check_rewrite = '<span class="unspecified_test">' . $LANG['undefined'] . '</span>';
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');

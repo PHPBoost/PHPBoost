@@ -157,6 +157,8 @@ if (!empty($id_get)) //Espace membre
 			'L_AVATAR_LINK' => $LANG['avatar_link'],
 			'L_AVATAR_LINK_WHERE' => $LANG['avatar_link_where'],
 			'L_AVATAR_DEL' => $LANG['avatar_del'],
+			'L_UNIT_PX' => $LANG['unit_pixels'],
+			'L_UNIT_KO' => $LANG['unit_kilobytes'],
 			'L_UPDATE' => $LANG['update'],
 			'L_RESET' => $LANG['reset']
 		));

@@ -16,8 +16,8 @@
 	height:18px;
 	font-size:12px;
 	font-weight:bold;
-	color:#E53B00;
-	border-bottom:2px solid #E53B00;
+	color:#515C68;
+	border-bottom:2px solid #515C68;
 }
 /* Titre et contenu de la news */
 .news_top a.com{
@@ -25,7 +25,7 @@
 a.news_title{
 	font-size:12px;
 	font-weight:bold;
-	color:#E53B00;
+	color:#515C68;
 }
 .news_content{
 	padding:8px;
