@@ -33,6 +33,8 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$idcat = retrieve(POST, 'idcat', 0);
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -154,6 +156,7 @@ elseif (!empty($_POST['previs']))
 	
 	$Template->assign_vars(array(
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
+		'TOKEN' => $Session->get_token(),
 		'NEWS_TITLE' => $title,
 		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 	    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
@@ -226,6 +229,7 @@ else
 	));
 	
 	$Template->assign_vars(array(
+		'TOKEN' => $Session->get_token(),
 		'TITLE' => '',
 		'THEME' => get_utheme(),
 		'VISIBLE_ENABLED' => 'checked="checked"',

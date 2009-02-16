@@ -51,38 +51,37 @@
 		</div>
 		<div id="admin_contents">
 			# START news #
-
 			<table class="module_table">
-					<tr> 
-						<th colspan="2">
-							{L_PREVIEW}
-						</th>
-					</tr>
+				<tr> 
+					<th colspan="2">
+						{L_PREVIEW}
+					</th>
+				</tr>
 
-					<tr> 
-						<td class="row1">
-							<div class="news_container">
-								<div class="msg_top_l"></div>			
-								<div class="msg_top_r"></div>
-								<div class="msg_top">
-									<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
-									<div style="float:right"></div>
-								</div>												
-								<div class="news_content">
-									{news.IMG}
-									{news.PREVIEWED_CONTENTS}
-									<hr />	
-									{news.PREVIEWED_EXTEND_CONTENTS}	
-								</div>								
-								<div class="news_bottom_l"></div>		
-								<div class="news_bottom_r"></div>
-								<div class="news_bottom">
-									<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
-									<span style="float:right">{L_ON}: {news.DATE}</span>
-								</div>
-							</div>				
-						</td>
-					</tr>
+				<tr> 
+					<td class="row1">
+						<div class="news_container">
+							<div class="msg_top_l"></div>			
+							<div class="msg_top_r"></div>
+							<div class="msg_top">
+								<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
+								<div style="float:right"></div>
+							</div>												
+							<div class="news_content">
+								{news.IMG}
+								{news.PREVIEWED_CONTENTS}
+								<hr />	
+								{news.PREVIEWED_EXTEND_CONTENTS}	
+							</div>								
+							<div class="news_bottom_l"></div>		
+							<div class="news_bottom_r"></div>
+							<div class="news_bottom">
+								<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
+								<span style="float:right">{L_ON}: {news.DATE}</span>
+							</div>
+						</div>				
+					</td>
+				</tr>
 			</table>	
 
 			<br /><br /><br />
@@ -98,7 +97,7 @@
 			</div>
 			# ENDIF #	
 			
-			<form action="admin_news_add.php" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_news_add.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_NEWS}</legend>
 					<p>{L_REQUIRE}</p>

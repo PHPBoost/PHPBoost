@@ -39,6 +39,8 @@ $del = isset($_GET['delete']) ? true : false;
 
 if (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$idcat = retrieve(POST, 'idcat', 0);
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
@@ -113,6 +115,8 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 }
 elseif ($del && !empty($id)) //Suppression de la news.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "news WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
@@ -139,6 +143,7 @@ elseif (!empty($id)) //Vue de la news
 	$row = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	$Template->assign_block_vars('news', array(
+		'TOKEN' => $Session->get_token(),
 		'TITLE' => $row['title'],
 		'IDNEWS' => $row['id'],
 		'CONTENTS' => unparse($row['contents']),
@@ -325,6 +330,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 	));
 
 	$Template->assign_vars(array(		
+		'TOKEN' => $Session->get_token(),
 		'KERNEL_EDITOR' => display_editor(),
 		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
@@ -376,6 +382,7 @@ else
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(
+		'TOKEN' => $Session->get_token(),
 		'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
 		'LANG' => get_ulang(),
 		'THEME' => get_utheme(),
