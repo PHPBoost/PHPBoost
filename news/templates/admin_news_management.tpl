@@ -26,70 +26,69 @@
 		
 		<div id="admin_contents">
 			# START list #
+			<script type="text/javascript">
+			<!--
+			function Confirm() {
+				return confirm("{L_CONFIRM_DEL_NEWS}");
+			}
+			-->
+			</script>
+			<table class="module_table">
+				<tr style="text-align:center;">
+					<th>
+						{L_TITLE}
+					</th>
+					<th>
+						{L_CATEGORY}
+					</th>
+					<th>
+						{L_PSEUDO}
+					</th>
+					<th>
+						{L_DATE}
+					</th>
+					<th>
+						{L_APROB}
+					</th>
+					<th>
+						{L_UPDATE}
+					</th>
+					<th>
+						{L_DELETE}
+					</th>
+				</tr>
 				
-				<script type="text/javascript">
-				<!--
-				function Confirm() {
-					return confirm("{L_CONFIRM_DEL_NEWS}");
-				}
-				-->
-				</script>
-				<table class="module_table">
-					<tr style="text-align:center;">
-						<th>
-							{L_TITLE}
-						</th>
-						<th>
-							{L_CATEGORY}
-						</th>
-						<th>
-							{L_PSEUDO}
-						</th>
-						<th>
-							{L_DATE}
-						</th>
-						<th>
-							{L_APROB}
-						</th>
-						<th>
-							{L_UPDATE}
-						</th>
-						<th>
-							{L_DELETE}
-						</th>
-					</tr>
-					
-					# START list.news #
-					<tr style="text-align:center;"> 
-						<td class="row2"> 
-							<a href="news.php?id={list.news.IDNEWS}">{list.news.TITLE}</a>
-						</td>
-						<td class="row2"> 
-							{list.news.CATEGORY}
-						</td>
-						<td class="row2"> 
-							{list.news.PSEUDO}
-						</td>
-						<td class="row2">
-							{list.news.DATE}
-						</td>
-						<td class="row2">
-							{list.news.APROBATION} 
-							<br />
-							<span class="text_small">{list.news.VISIBLE}</span>
-						</td>
-						<td class="row2"> 
-							<a href="admin_news.php?id={list.news.IDNEWS}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-						</td>
-						<td class="row2">
-							<a href="admin_news.php?delete=true&amp;id={list.news.IDNEWS}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
-						</td>
-					</tr>
-					# END list.news #
-				</table>
+				# START list.news #
+				<tr style="text-align:center;"> 
+					<td class="row2"> 
+						<a href="news.php?id={list.news.IDNEWS}">{list.news.TITLE}</a>
+					</td>
+					<td class="row2"> 
+						{list.news.CATEGORY}
+					</td>
+					<td class="row2"> 
+						{list.news.PSEUDO}
+					</td>
+					<td class="row2">
+						{list.news.DATE}
+					</td>
+					<td class="row2">
+						{list.news.APROBATION} 
+						<br />
+						<span class="text_small">{list.news.VISIBLE}</span>
+					</td>
+					<td class="row2"> 
+						<a href="admin_news.php?id={list.news.IDNEWS}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+					</td>
+					<td class="row2">
+						<a href="admin_news.php?delete=true&amp;id={list.news.IDNEWS}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+					</td>
+				</tr>
+				# END list.news #
+			</table>
 
-				<br /><br />
-				<p style="text-align: center;">{PAGINATION}</p>	
+			<br /><br />
+			<p style="text-align: center;">{PAGINATION}</p>	
 		</div>	
 			# END list #
 
@@ -119,7 +118,7 @@
 			</script>
 
 				# START news.preview #
-				<table  class="module_table">
+				<table class="module_table">
 						<tr> 
 							<th colspan="2">
 								{L_PREVIEW}
@@ -164,7 +163,7 @@
 				</div>
 				# ENDIF #
 			
-				<form action="admin_news.php" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+				<form action="admin_news.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_ADD_NEWS}</legend>
 						<p>{L_REQUIRE}</p>

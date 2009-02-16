@@ -168,7 +168,7 @@ class NewsInterface extends ModuleInterface
 	
 	function get_home_page()
 	{
-		global $User, $Sql, $Cache, $Bread_crumb, $CONFIG_NEWS, $LANG;
+		global $User, $Sql, $Cache, $Bread_crumb, $CONFIG_NEWS, $LANG, $Session;
 		require_once('../news/news_begin.php');
 		
 		$show_archive = retrieve(GET, 'arch', false);
@@ -181,8 +181,7 @@ class NewsInterface extends ModuleInterface
 			$tpl_news->assign_vars( array(
 				'C_NEWS_EDITO' => true,
 				'CONTENTS' => second_parse($CONFIG_NEWS['edito']),
-				'TITLE' => $CONFIG_NEWS['edito_title'],
-				'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
+				'TITLE' => $CONFIG_NEWS['edito_title']
 			));
 		}
 
@@ -209,7 +208,9 @@ class NewsInterface extends ModuleInterface
 		}
 			
 		$tpl_news->assign_vars(array(
-		    'L_SYNDICATION' => $LANG['syndication'],
+			'C_IS_ADMIN' => $is_admin,
+			'C_NEWS_NAVIGATION_LINKS' => false,
+			'L_SYNDICATION' => $LANG['syndication'],
 			'PAGINATION' => $show_pagin,
 			'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 			'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
@@ -229,17 +230,14 @@ class NewsInterface extends ModuleInterface
 			if ($column)
 			{
 				$i = 0;
-				$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
 				$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);
-				
+
 				$tpl_news->assign_vars(array(
-					'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%">',
-					'END_TABLE_NEWS' => '</td></tr></table>'
+					'C_NEWS_BLOCK_COLUMN' => true,
+					'COLUMN_WIDTH' => $column_width
 				));
 			}
-			else
-				$new_row = '';
 			
 			$z = 0;
 			list($admin, $del) = array('', '');
@@ -252,31 +250,30 @@ class NewsInterface extends ModuleInterface
 			" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-				if ($is_admin)
-				{
-					$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
-					$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
-				}
-				
 				//Séparation des news en colonnes si activé.
+				$new_row = false;
 				if ($column)
 				{
-					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';
+					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0);
 					$i++;
 				}
-					
+
 				$tpl_news->assign_block_vars('news', array(
+					'C_IMG' => !empty($row['img']),
+					'C_ICON' => (!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1),
+					'C_NEWS_ROW' => $new_row,
 					'ID' => $row['id'],
-					'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="../news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="../news/' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
+					'IDCAT' => $row['idcat'],
+					'ICON' => $row['icon'],
 					'TITLE' => $row['title'],
 					'CONTENTS' => second_parse($row['contents']),
 					'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="../news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
-					'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
+					'IMG' => $row['img'],
+					'IMG_DESC' => $row['alt'],
 					'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',
 					'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
-					'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
-					'EDIT' => $admin,
-					'DEL' => $del,
+					'TOKEN' => $Session->get_token(),
+					'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 					'NEW_ROW' => $new_row,
 					'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
@@ -296,28 +293,21 @@ class NewsInterface extends ModuleInterface
 		}
 		else //News en liste
 		{
+			$tpl_news->assign_vars(array(
+				'C_NEWS_LINK' => true
+			));
+
 			$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
 			if ($column)
 			{
 				$i = 0;
-				$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
 				$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
 				$column_width = floor(100/$CONFIG_NEWS['nbr_column']);
-				
+
 				$tpl_news->assign_vars(array(
-					'C_NEWS_LINK' => true,
-					'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
-					'END_TABLE_NEWS' => '</ul></td></tr></table>'
+					'C_NEWS_LINK_COLUMN' => true,
+					'COLUMN_WIDTH' => $column_width
 				));
-			}
-			else
-			{
-				$tpl_news->assign_vars(array(
-					'C_NEWS_LINK' => true,
-					'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
-					'END_TABLE_NEWS' => '</ul>'
-				));
-				$new_row = '';
 			}
 			
 			$result = $Sql->query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
@@ -329,13 +319,15 @@ class NewsInterface extends ModuleInterface
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//Séparation des news en colonnes si activé.
+				$new_row = false;
 				if ($column)
 				{
-					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';
+					$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0);
 					$i++;
 				}
 				
 				$tpl_news->assign_block_vars('list', array(
+					'C_NEWS_ROW' => $new_row,
 					'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="../news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 					'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 					'TITLE' => $row['title'],
