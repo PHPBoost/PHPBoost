@@ -39,7 +39,6 @@
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 		
 		# IF C_BBCODE_TINYMCE_MODE #			
-		# IF C_EDITOR_NOT_ALREADY_INCLUDED # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #
 		<script language="javascript" type="text/javascript">
 		<!--
 		tinyMCE.init({

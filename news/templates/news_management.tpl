@@ -2,6 +2,10 @@
 		<!--
 		function check_form()
 		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if( document.getElementById('contents').value == "" )
 			{
 				alert("{L_REQUIRE_DESCRIPTION}");
