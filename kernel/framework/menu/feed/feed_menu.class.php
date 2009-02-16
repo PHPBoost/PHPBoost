@@ -49,19 +49,16 @@ class FeedMenu extends Menu
        $this->begin_at = $begin_at;
     }
     
+    ## Getters ##
+    /**
+     * @return unknown_type
+     */
     function get_url()
     {
         return Url::get_absolute_root() . '/syndication.php?m=' . $this->module_id .
         ($this->category > 0 ? '&amp;cat=' . $this->category : '') .
         (!empty($this->name) && $this->name != DEFAULT_FEED_NAME ? '&amp;name=' . $this->name : '');
     }
-    
-    ## Getters ##
-    /**
-     * @return string the menu content
-     */
-    function get_content() { return $this->content; }
-    
     
     function display()
     {
