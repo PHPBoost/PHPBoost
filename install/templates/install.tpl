@@ -475,7 +475,7 @@
 								<div class="warning">
 									{L_ALREADY_INSTALLED_EXPLAIN}
 								</div>
-								<label><input type="checkbox" name="overwrite_db" />{L_ALREADY_INSTALLED_OVERWRITE}</label>
+								<label><input type="checkbox" name="overwrite_db" /> {L_ALREADY_INSTALLED_OVERWRITE}</label>
 							</fieldset>
 							# ENDIF #
 							

@@ -563,6 +563,8 @@ elseif ($step == 5)
         MenuService::save($modules_menu);
         
         $Cache->generate_all_files();
+		
+		$Cache->load('themes', RELOAD_CACHE);
 		$Cache->Generate_file('css');
 		
 		$Sql->close();
