@@ -392,28 +392,27 @@ class Cache
      */
     function _get_css()
     {
-        global $MODULES, $CONFIG;
+        global $MODULES, $THEME_CONFIG, $CONFIG;
 
         $css = 'global $CSS;' . "\n";
-        $css .= '$CSS = array();' . "\n";
+        $css .= '$CSS = array();' . "\n\n";
 
         //Listing des modules disponibles:
-        $modules_config = array();
-        foreach ($MODULES as $name => $array)
-        {
-            if ($array['activ'] == '1') //module activé.
-            {
-                if (file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $name . '/' . $name . '_mini.css'))
-                {
-                    $css .= '$CSS[] = \'/templates/' . get_utheme() . '/modules/' . $name . '/' . $name . "_mini.css';\n";
-                }
-                elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css'))
-                {
-                    $css .= '$CSS[] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
-                }
-            }
-        }
-
+		foreach ($THEME_CONFIG as $theme => $infos)
+		{
+			foreach ($MODULES as $name => $array)
+			{
+				if ($array['activ'] == '1') //module activé.
+				{
+					if (file_exists(PATH_TO_ROOT . '/templates/' . $theme . '/modules/' . $name . '/' . $name . '_mini.css'))
+						$css .= '$CSS[\'' . $theme . '\'][] = \'/templates/' . $theme . '/modules/' . $name . '/' . $name . "_mini.css';\n";
+					elseif (file_exists(PATH_TO_ROOT . '/' . $name . '/templates/' . $name . '_mini.css'))
+						$css .= '$CSS[\'' . $theme . '\'][] = \'/' . $name . '/templates/' . $name . "_mini.css';\n";
+				}
+			}
+			$css .= "\n";
+		}
+		
         return $css;
     }
 
