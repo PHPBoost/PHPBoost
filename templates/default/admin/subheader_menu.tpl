@@ -83,6 +83,7 @@
 					<li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=theme" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png);">{L_THEMES}</a></li>
 				</ul>
 			</li>
+			<li><a href="{PATH_TO_ROOT}/admin/admin_maintain.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain_mini.png);">{L_MAINTAIN}</a></li>
 			<li class="extend" onmouseover="show_menu(32, 1);" onmouseout="hide_menu(1);">
 				<a href="{PATH_TO_ROOT}/admin/admin_cache.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png);">{L_CACHE}</a>
 				<ul id="ssmenu32">
