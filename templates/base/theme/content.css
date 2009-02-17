@@ -122,7 +122,6 @@ textarea {
 	-khtml-border-radius:5px;
 	-webkit-border-radius:5px;
 }
-
 input.text{
 	padding:2px;	
 	-moz-border-radius:3px;
@@ -290,7 +289,7 @@ fieldset label {
     font-size:11px;
     text-align:left;
     font-weight:bold;
-    color:#0578CC;
+    color:#1F507F;
 }
 
 dd label {

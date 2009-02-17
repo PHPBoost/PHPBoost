@@ -42,7 +42,7 @@ $LANG['page_title'] = 'Installation de PHPBoost';
 $LANG['steps_list'] = 'Liste des étapes';
 $LANG['introduction'] = 'Préambule';
 $LANG['config_server'] = 'Configuration du serveur';
-$LANG['database_config'] = 'Configuration de la base de données';
+$LANG['database_config'] = 'Configuration base de données';
 $LANG['advanced_config'] = 'Configuration du site';
 $LANG['administrator_account_creation'] = 'Compte administrateur';
 $LANG['end'] = 'Fin de l\'installation';
@@ -215,7 +215,7 @@ $LANG['end_installation'] = '<fieldset>
 							<legend>Remerciements</legend>
 							<h2>Membres de la communauté</h2>
 							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 3.0 stable et efficace.</p>
-							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.</p>
+							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong> et <strong>Alain91</strong> de l\'équipe de développement de modules.</p>
 							<h2>Projets</h2>
 							<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 							<ul>
@@ -252,5 +252,8 @@ $LANG['restart_installation'] = 'Recommencer l\'installation';
 $LANG['confirm_restart_installation'] = addslashes('Etes-vous certain de vouloir recommencer l\'installation ?');
 $LANG['change_lang'] = 'Changer de langue';
 $LANG['change'] = 'Changer';
-		
+
+$LANG['powered_by'] = 'Boosté par';
+$LANG['phpboost_right'] = '';
+
 ?>

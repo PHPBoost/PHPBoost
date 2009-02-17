@@ -17,6 +17,8 @@
 		-->
 		</script>
 	<div id="global">
+		<div id="header_container">
+		</div>
 		<div id="left_menu">
 			<table class="table_left">
 				<tr>
@@ -69,11 +71,11 @@
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<div style="margin:auto;width:235px">
-							<div style="text-align:center;margin-bottom:5px;">{L_STEP}</div>
+						<div style="margin:auto;width:200px">
+							<div style="text-align:center;margin-bottom:5px;">{L_STEP} :&nbsp;{PROGRESS_LEVEL}%</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
 								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
-							</div>&nbsp;{PROGRESS_LEVEL}%
+							</div>
 						</div>
 					</td>
 				</tr>						
@@ -105,8 +107,7 @@
 			<table class="table_contents">
 				<tr> 
 					<th colspan="2">
-						<span style="float:left;padding-left:35px;width:257px"><img src="templates/images/phpboost.jpg" alt="Logo PHPBoost" /></span>
-						<span style="float:right;padding-top:15px;padding-right:35px;">{L_STEP}</span>
+						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {L_STEP}</div>
 					</th>
 				</tr>
 				
@@ -444,15 +445,15 @@
 								<legend>{L_SGBD_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="host">* {L_HOST}</label><br /><span>{L_HOST_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="login">* {L_LOGIN}</label><br /><span>{L_LOGIN_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>	
 							
@@ -460,11 +461,11 @@
 								<legend>{L_DB_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="database">* {L_DB_NAME}</label><br /><span>{L_DB_NAME_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="tableprefix">{L_DB_PREFIX}</label><br /><span>{L_DB_PREFIX_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="phpboost_" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="phpboost_" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>
 							
@@ -557,15 +558,15 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="site_url">* {L_SITE_URL}</label><br /><span>{L_SITE_URL_EXPLAIN}</span></dt>
-									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="text" /></dd>	
+									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="small_text" /></dd>	
 								</dl>
 								<dl>
 									<dt><label for="site_path">* {L_SITE_PATH}</label><br /><span>{L_SITE_PATH_EXPLAIN}</span></dt>
-									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="text" /></dd>
+									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="small_text" /></dd>
 								</dl>
 								<dl>
 									<dt><label for="site_name">* {L_SITE_NAME}</label></dt>
-									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="text" /></dd>								
+									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="small_text" /></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_desc">{L_SITE_DESCRIPTION}</label><br /><span>{L_SITE_DESCRIPTION_EXPLAIN}</span></dt>
@@ -765,19 +766,19 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="login">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div style="font-weight:bold" id="msg_login_div"></div></label></dd>								
+									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div id="msg_login_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></label></dd>								
+									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div id="msg_password1_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
-									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></label></dd>								
+									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div id="msg_password2_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></label></dd>								
+									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="small_text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div id="msg_email_div"></div></label></dd>								
 								</dl>
 								<dl>
 									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>
@@ -827,6 +828,11 @@
 				</tr>
 			</table>		
 		</div>
+	</div>
+	<div id="footer">
+		<span>
+			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+		</span>	
 	</div>
 	</body>
 </html>
