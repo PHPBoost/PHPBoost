@@ -1,8 +1,8 @@
-<div style="padding-bottom: 4px;padding-left: 10px;" class="block">
-    <a href="{U_INDEX_SITE}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" /> {L_INDEX_SITE}</a> &bull;
-	<a href="{PATH_TO_ROOT}/admin/admin_index.php"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX_ADMIN}</a>
+<div style="padding-top:6spx;padding-left:15px;" class="block">
+    <a href="{U_INDEX_SITE}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX_SITE}</a> &bull;
+	<a href="{PATH_TO_ROOT}/admin/admin_index.php"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" /> {L_INDEX_ADMIN}</a> &bull;
+    <a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" /> {L_DISCONNECT}</a>
 </div>
-			
 
 <div class="block">
 	<table class="module_table">
@@ -18,9 +18,85 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_config.php">{L_CONFIGURATION}</a>						
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/admin_themes.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_modules.php">{L_MODULES}</a>	
+				<a href="{PATH_TO_ROOT}/admin/admin_themes.php">{L_THEME}</a>			
+			</td>
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_lang.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_lang.php">{L_LANG}</a>
+			</td>	
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" />
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php">{L_SMILEY}</a>	
+			</td>	
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/administrator_alert.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_alerts.php">{L_ADMINISTRATOR_ALERTS}</a>
+			</td>	
+		</tr>	
+		<tr style="text-align:center;">	
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/updates"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/updates">{L_WEBSITE_UPDATES}</a>
+			</td>
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_maintain.php">{L_MAINTAIN}</a>
+			</td>	
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_cache.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_cache.php">{L_CACHE}</a>				
+			</td>				
+						<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_errors.php">{L_ERRORS}</a>
+			</td>
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/server.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_system_report.php">{L_SERVER}</a>
+			</td>
+		</tr>	
+		<tr style="text-align:center;">								
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_members.php">{L_USER}</a>
+			</td>
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_groups.php">{L_GROUP}</a>
+			</td>	
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_extend_field.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_extend_field.php">{L_EXTEND_FIELD}</a>
+			</td>			
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php">{L_RANKS}</a>	
+			</td>
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/terms.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_errors.php">{L_TERMS}</a>
+			</td>			
+		</tr>	
+		<tr style="text-align:center;">		
+			<td class="row2" style="width:20%;">
+				<a href="{PATH_TO_ROOT}/admin/admin_content_config.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/content.png" /></a>		
+				<br />
+				<a href="{PATH_TO_ROOT}/admin/admin_content_config.php">{L_CONTENT_CONFIG}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" /></a>		
@@ -36,81 +112,13 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_com.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/com.png" /></a>		
 				<br />
 				<a href="{PATH_TO_ROOT}/admin/admin_com.php">{L_COM}</a>
-			</td>		
-		</tr>	
-		<tr style="text-align:center;">		
+			</td>	
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_themes.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/admin_modules.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modules.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_themes.php">{L_THEME}</a>			
+				<a href="{PATH_TO_ROOT}/admin/admin_modules.php">{L_MODULES}</a>	
 			</td>
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/languages.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_lang.php">{L_LANG}</a>
-			</td>	
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_cache.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_cache.php">{L_CACHE}</a>				
-			</td>						
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_maintain.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/maintain.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_maintain.php">{L_MAINTAIN}</a>
-			</td>	
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/smileys.png" />
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_smileys.php">{L_SMILEY}</a>	
-			</td>								
 		</tr>
-		<tr style="text-align:center;">								
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_members.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/members.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_members.php">{L_USER}</a>
-			</td>
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_groups.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/groups.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_groups.php">{L_GROUP}</a>
-			</td>	
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php">{L_RANKS}</a>	
-			</td>
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_extend_field.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/extendfield.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_extend_field.php">{L_EXTEND_FIELD}</a>
-			</td>							
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/errors.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_errors.php">{L_ERRORS}</a>
-			</td>			
-			
-		</tr>
-		<tr style="text-align:center;">	
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/phpinfo.png" /></a>		
-					<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php">{L_PHPINFO}</a>
-			</td>
-			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/updates"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" /></a>		
-				<br />
-				<a href="{PATH_TO_ROOT}/admin/updates">{L_WEBSITE_UPDATES}</a>
-			</td>
-			<td class="row2" style="width:20%;">
-			</td>
-			<td class="row2" style="width:20%;">
-			</td>
-			<td class="row2" style="width:20%;">
-			</td>
-		</tr>					
 	</table>
 
 	<table class="module_table">

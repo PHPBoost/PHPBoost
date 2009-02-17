@@ -126,9 +126,7 @@ foreach ($modules_config as $module_name => $auth)
 		$menu_pos = 0;
 		
 		if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name]))
-		{
 		    $menu_pos = $menus_numbers[$menu_pos_name];
-		}
 
 		//Le module possède une administration
 		if ($menu_pos > 0)
