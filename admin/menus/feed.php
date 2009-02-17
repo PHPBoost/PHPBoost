@@ -42,29 +42,33 @@ $action_post = retrieve(POST, 'action', '');
 if ($action_post == 'save')
 {
     // Save a Menu (New / Edit)
-    import('content/parser/parser');
     $menu = null;
     
     $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
-    
+    $menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
+    $matches = array();
+    preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
+        
     if (!empty($id_post))
     {   // Edit the Menu
         $menu = MenuService::load($id_post);
         $menu->set_title($menu_name);
+        $menu->set_module_id($matches[1]);
+        $menu->set_cat($matches[2]);
+        $menu->set_name($matches[3]);
     }
     else
     {   // Add the new Menu
-        $menu = new ContentMenu($menu_name);
+        $menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3]);
     }
     
-    if (!of_class($menu, CONTENT_MENU__CLASS))
+    if (!of_class($menu, FEED_MENU__CLASS))
         redirect('menus.php');
     
     $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
     if ($menu->is_enabled())
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    $menu->set_content((string) $_POST['contents']);
     
     MenuService::save($menu);
     MenuService::generate_cache();
@@ -81,8 +85,10 @@ lateral_menu();
 $tpl = new Template('admin/menus/feed.tpl');
 
 $tpl->assign_vars(array(
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_REQUIRE_TEXT' => $LANG['require_text'],
+	'JL_REQUIRE_TITLE' => to_js_string($LANG['require_title']),
+	'JL_REQUIRE_FEED' => to_js_string($LANG['choose_feed_in_list']),
+	'L_FEED' => $LANG['feed'],
+	'L_AVAILABLES_FEEDS' => $LANG['availables_feeds'],
 	'L_NAME' => $LANG['name'],
 	'L_STATUS' => $LANG['status'],
 	'L_AUTHS' => $LANG['auths'],
@@ -113,6 +119,7 @@ $array_location = array(
     BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
 );
 
+$feed_url = '';
 if ($edit)
 {
 	$menu = MenuService::load($id);
@@ -121,21 +128,23 @@ if ($edit)
         redirect('menus.php');
     
 	$block = $menu->get_block();
-	$feed_url = $menu->get_url();
+	$feed_url = $menu->get_url(true);
 	
 	$tpl->assign_vars(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
+   	    'C_EDIT' => true,
 	));
 }
 else
 {
-   $tpl->assign_vars(array(
-       'C_ENABLED' => true,
-       'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
-   ));
+    $tpl->assign_vars(array(
+   	    'C_NEW' => true,
+        'C_ENABLED' => true,
+        'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
+    ));
 }
 
 import('util/url');
@@ -147,16 +156,31 @@ $feeds_modules = $modules->get_available_modules('get_feeds_list');
 function build_feed_urls(&$list, $module_id, $level = 0)
 {
 	$urls = array();
+	global $edit, $feed_url;
+	static $already_selected = false;
 	
 	foreach ($list as $elt)
 	{
 		foreach ($elt['feeds_names'] as $name)
 		{
+			$url = '/syndication.php?m=' . $module_id . '&amp;cat=' . $elt['id'] . '&amp;name=' . $name;
+			
+			if (!$already_selected && $edit && $feed_url == $url)
+			{
+				$selected = true;
+				$already_selected = true;
+			}
+			else
+			{
+				$selected = false;
+			}
+			
 			$urls[] = array(
 				'name' => $elt['name'],
-				'url' => '/syndication.php?m=' . $module_id . '&amp;cat=' . $elt['id'] . '&amp;name=' . $name,
+				'url' => $url,
 				'level' => $level,
-				'feed_name' => $name
+				'feed_name' => $name,
+				'selected' => $selected
 			);
 		}
 		
@@ -178,7 +202,8 @@ foreach ($feeds_modules as $module)
 			'URL' => $url['url'],
 			'NAME' => $url['name'],
 			'SPACE' => '--' . str_repeat('------', $url['level']),
-			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null
+			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
 		));
 	}
 }

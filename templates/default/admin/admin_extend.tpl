@@ -23,9 +23,9 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_modules.php">{L_MODULES}</a>	
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_menus.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/menus/"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_menus.php">{L_SITE_MENU}</a>		
+				<a href="{PATH_TO_ROOT}/admin/menus/">{L_SITE_MENU}</a>		
 			</td>
 			<td class="row2" style="width:20%;">
 				<a href="{PATH_TO_ROOT}/admin/admin_files.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/files.png" /></a>		
@@ -100,9 +100,9 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_phpinfo.php">{L_PHPINFO}</a>
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_updates.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/updates"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_updates.php">{L_WEBSITE_UPDATES}</a>
+				<a href="{PATH_TO_ROOT}/admin/updates">{L_WEBSITE_UPDATES}</a>
 			</td>
 			<td class="row2" style="width:20%;">
 			</td>

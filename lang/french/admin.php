@@ -686,4 +686,9 @@ $LANG['download_the_complete_pack'] = 'Téléchargez le pack complet';
 $LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
 $LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 $LANG['incompatible_php_version'] = 'Version de PHP incompatible, Veuillez utiliser la version %s ou ultérieure';
+
+// Feeds menus
+$LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
+$LANG['feed'] = 'flux';
+$LANG['availables_feeds'] = 'Flux disponibles';
 ?>

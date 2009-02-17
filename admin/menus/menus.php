@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                               admin_menus.php
+ *                                 menus.php
  *                            -------------------
  *   begin                : March, 05 2007
- *   copyright          : (C) 2007 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2009 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
  *
  * 
@@ -48,11 +48,13 @@ function menu_admin_link(&$menu, $mode)
                 $link = 'links.php?';
             elseif (of_class($menu, CONTENT_MENU__CLASS))
                 $link = 'content.php?';
+            elseif (of_class($menu, FEED_MENU__CLASS))
+                $link = 'feed.php?';
             else
                 $link = 'auth.php?';
             break;
         case 'delete':
-            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS))
+            if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS) || of_class($menu, FEED_MENU__CLASS))
                 $link = 'menus.php?action=delete&amp;';
             break;
         case 'up':

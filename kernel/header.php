@@ -153,6 +153,7 @@ if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 	if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
 	   $Errorh->handler($LANG['e_cache_modules'], E_USER_ERROR, __LINE__, __FILE__);
 }
+
 $Template->assign_vars(array(
 	'C_MENUS_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__HEADER]),
     'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
