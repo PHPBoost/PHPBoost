@@ -33,6 +33,8 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']) )
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$config_shoutbox = array();
 	$config_shoutbox['shoutbox_max_msg'] = retrieve(POST, 'shoutbox_max_msg', 10);
 	$config_shoutbox['shoutbox_auth'] = retrieve(POST, 'shoutbox_auth', -1);

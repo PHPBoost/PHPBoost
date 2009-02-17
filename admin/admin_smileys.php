@@ -53,6 +53,8 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 }
 elseif (!empty($id) && $del) //Suppression.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime le smiley de la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_SMILEYS . " WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
 	

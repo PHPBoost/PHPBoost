@@ -33,6 +33,8 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']) )
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$config_guestbook = array();
 	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
