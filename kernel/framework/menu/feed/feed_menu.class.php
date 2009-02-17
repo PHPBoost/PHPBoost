@@ -51,18 +51,34 @@ class FeedMenu extends Menu
     
     ## Getters ##
     /**
-     * @return unknown_type
+     * @param bool $relative If false, compute the absolute url, else, returns the relative one 
+     * @return Return the absolute feed Url
      */
-    function get_url()
+    function get_url($relative = false)
     {
-        return Url::get_absolute_root() . '/syndication.php?m=' . $this->module_id .
-        ($this->category > 0 ? '&amp;cat=' . $this->category : '') .
-        (!empty($this->name) && $this->name != DEFAULT_FEED_NAME ? '&amp;name=' . $this->name : '');
+    	import('util/url');
+        return (!$relative ? Url::get_absolute_root() : '') . '/syndication.php?m=' . $this->module_id .
+        '&amp;cat=' . $this->category . '&amp;name=' . $this->name;
     }
+    
+    ## Setters ##
+
+    /**
+     * @param string $value the feed's module_id
+     */
+    function set_module_id($value) { $this->module_id = $value; }
+    /**
+     * @param int $value the feed's category
+     */
+    function set_cat($value) { $this->category = is_numeric($value) ? numeric($value) : 0; }
+    /**
+     * @param string $value the feed's name
+     */
+    function set_name($value) { $this->name = $value; }
     
     function display()
     {
-        return Feed::get_parsed($this->module_id, $this->name, $this->cat,
+        return Feed::get_parsed($this->module_id, $this->name, $this->category,
             FeedMenu::get_template(), $this->number, $this->begin_at
         );
     }
@@ -70,19 +86,22 @@ class FeedMenu extends Menu
     function cache_export()
     {
         return parent::cache_export_begin() .
-            '\';import(\'content/syndicaction/feed\');$__menu=Feed::get_parsed(' .
+            '\';import(\'content/syndication/feed\');$__menu=Feed::get_parsed(' .
             var_export($this->module_id, true) . ',' . var_export($this->name, true) . ',' .
-            $this->cat . ',FeedMenu::get_template(),' . $this->number . ',' . $this->begin_at.');' .
-            parent::cache_export_end();
+            $this->category . ',FeedMenu::get_template(' . var_export($this->get_title(), true) . '),' . $this->number . ',' . $this->begin_at . ');' .
+            '$__menu.=\'' . parent::cache_export_end();
     }
     
     /**
-     * @desc
-     * @return unknown_type
+     * @desc Returns the tpl to parse a feed
+     * @param string $name The feed name
+     * @return the tpl to parse a feed
      */
-    /* static */ function get_template()
+    /* static */ function get_template($name = '')
     {
-        return new Template('/framework/menus/feed/feed.tpl');
+        $tpl = new Template('/framework/menus/feed/feed.tpl');
+        $tpl->assign_vars(array('NAME' => $name, 'C_NAME' => !empty($name)));
+        return $tpl;
     }
     
     ## Private Attributes

@@ -31,6 +31,7 @@ import('menu/content/content_menu');
 import('menu/links/links_menu');
 import('menu/mini/mini_menu');
 import('menu/module_mini/module_mini_menu');
+import('menu/feed/feed_menu');
 
 define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
@@ -341,8 +342,8 @@ class MenuService
         }
         // Cache compression
         $cache_str = preg_replace(
-            array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`'),
-            array('', "\n", ' ', '> ', "\n", ''),
+            array('`\t*`', '`\s*\n\s*\n\s*`', '`[ ]{2,}`', '`>\s`', '`\n `', '`\'\.\'`', '`\$__menu\.=\'\';`'),
+            array('', "\n", ' ', '> ', "\n", '', ''),
             $cache_str
         );
         
