@@ -81,6 +81,7 @@ $Template->assign_vars(array(
 
 if (!empty($_GET['query']))
 {
+	
 	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
 
 	$Template->assign_vars(array(
@@ -89,12 +90,13 @@ if (!empty($_GET['query']))
 
 	if (!empty($query)) //On exécute une requête
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$Template->assign_vars(array(
 			'C_QUERY_RESULT' => true
 		));
 	
 		$lower_query = strtolower($query);		
-			
 		if (strtolower(substr($query, 0, 6)) == 'select') //il s'agit d'une requête de sélection
 		{
 			//On éxécute la requête
@@ -147,6 +149,8 @@ elseif ($action == 'restore')
 	//Suppression d'un fichier
 	if (!empty($_GET['del']))
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$file = strprotect($_GET['del']);
 		$file_path = '../cache/backup/' . $file;
 		//Si le fichier existe
@@ -165,6 +169,8 @@ elseif ($action == 'restore')
 	
 	if (!empty($_GET['file'])) //Restauration d'un fichier sur le ftp
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$file = strprotect($_GET['file']);
 		$file_path = '../cache/backup/' . $file;
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))

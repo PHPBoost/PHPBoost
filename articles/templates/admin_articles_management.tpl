@@ -87,7 +87,7 @@
 						<a href="admin_articles.php?id={list.articles.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_articles.php?delete=1&amp;id={list.articles.ID}&amp;idcat={list.articles.IDCAT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_articles.php?delete=1&amp;id={list.articles.ID}&amp;idcat={list.articles.IDCAT}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END list.articles #
@@ -193,7 +193,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_articles.php" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_articles.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_ARTICLE}</legend>
 					<p>{L_REQUIRE}</p>

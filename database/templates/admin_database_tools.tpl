@@ -48,10 +48,10 @@
 							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/cache_mini.png" class="valign_middle" alt="" /> <a href="admin_database.php?table={TABLE_NAME}&amp;action=backup_table">{L_BACKUP}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate">{L_TRUNCATE}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/trash_mini.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_truncate_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=truncate&amp;token={TOKEN}">{L_TRUNCATE}</a></h5>
 						</li>
 						<li>
-							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop">{L_DELETE}</a></h5>
+							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /> <a onclick="javascript:return Confirm_del_table()" style="color:red" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=drop&amp;token={TOKEN}">{L_DELETE}</a></h5>
 						</li>
 					</ul>
 				</div>
@@ -339,7 +339,7 @@
 			-->	
 			</script>
 			
-			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query#executed_query" method="post" onsubmit="return check_form();">
+			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<div class="block_container">
 					<div class="block_top">
 						{L_QUERY}
@@ -394,7 +394,7 @@
 			
 			# IF C_DATABASE_UPDATE_FORM #
 			<br />
-			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}#executed_query" method="post" onsubmit="return check_form();">
+			<form action="admin_database_tools.php?table={TABLE_NAME}&amp;field={FIELD_NAME}&amp;value={FIELD_VALUE}&amp;action={ACTION}&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<table class="module_table">
 					<tr style="text-align:center;">			
 						<td class="row3 text_strong">
