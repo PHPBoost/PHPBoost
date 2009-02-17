@@ -1,4 +1,27 @@
 		# IF C_ADD_MEDIA #
+		<script type="text/javascript">
+		<!--
+		function check_form()
+		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
+			if( document.getElementById('name').value == "" )
+			{
+				alert("{L_REQUIRE_NAME}");
+				return false;
+		    }
+			if( document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://" )
+			{
+				alert("{L_REQUIRE_URL}");
+				return false;
+		    }
+			return true;
+		}
+		-->
+		</script>
+
 		<div class="module_position">
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
@@ -14,17 +37,17 @@
 						<dd><input type="text" size="50" maxlength="100" id="name" name="name" value="{NAME}" class="text" /></dd>
 					</dl>
 					<dl>
-						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
+						<dt><label for="idcat">{L_CATEGORY}</label></dt>
 						<dd><label>
 							{CATEGORIES_TREE}
 						</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="width">* {L_WIDTH}</label></dt>
+						<dt><label for="width">{L_WIDTH}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text" /></dd>
 					</dl>
 					<dl>
-						<dt><label for="height">* {L_HEIGHT}</label></dt>
+						<dt><label for="height">{L_HEIGHT}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text" /></dd>
 					</dl>
 					<dl>
@@ -32,7 +55,7 @@
 						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text" /></dd>
 					</dl>
 					<br />
-					<label for="contents">* {L_CONTENTS}</label>
+					<label for="contents" id="preview_content">{L_CONTENTS}</label>
 					{KERNEL_EDITOR}
 					<textarea type="text" rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
 					<br />
@@ -40,7 +63,7 @@
 					<dl>
 						<dt><label>{L_APPROVED}</label></dt>
 						<dd>
-							<input type="checkbox" name="approved" id="approved" {APPROVED} />
+							<input type="checkbox" name="approved" id="approved"{APPROVED} />
 						</dd>
 					</dl>
 					# ENDIF #
@@ -66,7 +89,7 @@
 					&nbsp;&nbsp;
                     <script type="text/javascript">
                     <!--
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit" />');
                     -->
                     </script>
 					&nbsp;&nbsp;

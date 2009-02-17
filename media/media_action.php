@@ -165,6 +165,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'L_NOTICE_CONTRIBUTION' => $MEDIA_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $MEDIA_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $MEDIA_LANG['contribution_counterpart_explain'],
+		'L_REQUIRE_NAME' => $MEDIA_LANG['require_name'],
+		'L_REQUIRE_URL' => $MEDIA_LANG['require_url'],
 		'L_RESET' => $LANG['reset'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
@@ -183,7 +185,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
 			'DESCRIPTION' => unparse($media['contents']),
-			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? 'checked="checked"' : '',
+			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0
 		));
 	}
