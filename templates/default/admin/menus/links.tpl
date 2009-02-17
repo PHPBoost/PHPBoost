@@ -147,7 +147,7 @@ function deleteElement(element_id)
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
-				<dt><label for="menu_element_{ID}_name">{L_NAME}</label></dt>
+				<dt><label for="menu_element_{ID}_name">* {L_NAME}</label></dt>
 				<dd><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}" /></dd>
 			</dl>
 			<dl>
@@ -159,7 +159,7 @@ function deleteElement(element_id)
 				<dd><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}" /></dd>
 			</dl>
 			<dl>
-				<dt><label for="menu_element_{ID}_type">{L_TYPE}</label></dt>
+				<dt><label for="menu_element_{ID}_type">* {L_TYPE}</label></dt>
 				<dd>
 					<label>
 						<select name="menu_element_{ID}_type" id="menu_element_{ID}_type">
@@ -171,7 +171,7 @@ function deleteElement(element_id)
 				</dd>
 			</dl>
 			<dl>
-				<dt><label for="menu_element_{ID}_location">{L_LOCATION}</label></dt>
+				<dt><label for="menu_element_{ID}_location">* {L_LOCATION}</label></dt>
 				<dd><label>
                     <select name="menu_element_{ID}_location" id="menu_element_{ID}_location">
                         # START location #
@@ -203,7 +203,7 @@ function deleteElement(element_id)
 		</fieldset>
 		
 		<fieldset>
-			<legend>{L_CONTENT}</legend>
+			<legend>* {L_CONTENT}</legend>
 			{MENU_TREE}
 		    <script type="text/javascript">
 		    <!--

@@ -64,6 +64,7 @@ $Template->assign_vars(array(
     'L_ADD' => $LANG['add'],
     'L_ADD_CONTENT_MENU' => $LANG['menus_content_add'],
     'L_ADD_LINKS_MENU' => $LANG['menus_links_add'],
+    'L_ADD_FEED_MENU' => $LANG['menus_feed_add'],
 	'L_MANAGEMENT' => $LANG['management'],
 	'L_PUNISHEMENT' => $LANG['punishement'],
 	'L_UPDATE_MODULES' => $LANG['update_module'],

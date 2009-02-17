@@ -1,9 +1,27 @@
+<script type="text/javascript">
+<!--
+function CheckForm() {
+	window.alert('1' + document.getElementById('name').value + '1');
+	if (document.getElementById('name').value == '') {
+		document.getElementById('name').select();
+		window.alert({JL_REQUIRE_TITLE});
+		return false;
+	}
+	if (document.getElementById('contents').value == '') {
+		document.getElementById('contents').select();
+		window.alert({JL_REQUIRE_TEXT});
+		return false;
+	}
+	return true;
+}
+-->
+</script>
 <div id="admin_contents">
-	<form action="content.php" method="post" class="fieldset_content">
+	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset_content">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
-				<dt><label for="name">{L_NAME}</label></dt>
+				<dt><label for="name">* {L_NAME}</label></dt>
 				<dd><label><input type="text" size="18" name="name" id="name" class="text" value="{NAME}" /></label></dd>
 			</dl>
 			<dl>
