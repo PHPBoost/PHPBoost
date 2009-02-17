@@ -252,5 +252,8 @@ $LANG['restart_installation'] = 'Restart the installation';
 $LANG['confirm_restart_installation'] = addslashes('Are you sure you want to restart the installation ?');
 $LANG['change_lang'] = 'Change language';
 $LANG['change'] = 'Change';
-		
+
+$LANG['powered_by'] = 'Powered by';
+$LANG['phpboost_right'] = '';
+
 ?>

@@ -26,7 +26,7 @@
 ###################################################*/
 
 //A personnaliser
-define('UPDATE_VERSION', '3.0a');
+define('UPDATE_VERSION', '3.0a25');
 define('DEFAULT_LANGUAGE', 'french');
 define('STEPS_NUMBER', 7);
 
@@ -834,6 +834,9 @@ $template->assign_vars(array(
 	'L_YES' => $LANG['yes'],
 	'L_NO' => $LANG['no'],
 	'L_UNKNOWN' => $LANG['unknown'],
+	'L_POWERED_BY' => $LANG['powered_by'],
+	'PHPBOOST_VERSION' => UPDATE_VERSION,
+	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
 	'U_RESTART' => add_lang('install.php')
 ));
 
