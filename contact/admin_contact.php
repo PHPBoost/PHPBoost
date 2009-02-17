@@ -33,6 +33,8 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']) )
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$config_contact = array();
 	$config_contact['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
 	$config_contact['contact_difficulty_verifcode'] = retrieve(POST, 'contact_difficulty_verifcode', 2);
