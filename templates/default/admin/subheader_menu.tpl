@@ -176,6 +176,7 @@
 					<li><a href="{PATH_TO_ROOT}/admin/menus/menus.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_MANAGEMENT}</a></li>
                        <li><a href="{PATH_TO_ROOT}/admin/menus/links.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_ADD_LINKS_MENU}</a></li>
 					<li><a href="{PATH_TO_ROOT}/admin/menus/content.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_ADD_CONTENT_MENU}</a></li>
+					<li><a href="{PATH_TO_ROOT}/admin/menus/feed.php" style="background-image:url({PATH_TO_ROOT}/templates/{THEME}/images/admin/menus_mini.png);">{L_ADD_FEED_MENU}</a></li>
                    </ul>
 			</li>
 			<li class="extend" onmouseover="show_menu(52, 1);" onmouseout="hide_menu(1);">

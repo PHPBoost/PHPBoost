@@ -9,6 +9,7 @@
 [*] [color=red]Nouveauté :[/color] Système d'ajout de menus personnel automatisé, création pour les débutants facilité.
 [*] [color=red]Nouveauté :[/color] Détection automatisée des menus non installés, possibilité d'associer plusieurs menus à un module. 
 [*] [color=red]Nouveauté :[/color] Nouveau système de menu dynamique (déroulant), avec sous-menus infinis.
+[*] [color=red]Nouveauté :[/color] Nouveau système de menu de flux pouvant gérer les derniers ajouts sur les modules (ex: derniers sujets du forum, derniers média ajoutés, ...).
 [*] [color=red]Nouveauté :[/color] Nouvelle interface de déplacement des menus (drag 'n drop).
 [*] [color=red]Nouveauté :[/color] 5 Nouveaux placements possible des menus (Tête de page/Haut/Centre haut/Centre bas/Pied de page).
 [*] [color=red]Nouveauté :[/color] Intégration d'un nouveau colorateur syntaxique (Geshi), support de nombreux languages.
