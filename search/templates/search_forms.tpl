@@ -5,7 +5,7 @@
             var LastSpecializedFormUsed = 'all';
             
             function ChangeForm(module)
-            // Change le cadre des rï¿½sultats
+            // Change le cadre des résultats
             {
                 hide_div(FORM + LastSpecializedFormUsed);
                 show_div(FORM + module);
