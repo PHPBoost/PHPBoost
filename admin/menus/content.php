@@ -111,7 +111,7 @@ $array_location = array(
     BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
     BLOCK_POSITION__RIGHT => $LANG['menu_right'],
     BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
+    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 if ($edit)
