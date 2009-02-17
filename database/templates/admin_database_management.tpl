@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 			# IF C_DATABASE_INDEX #
 
-			<form method="post" action="admin_database.php?action=restore" enctype="multipart/form-data" name="upload_file">
+			<form method="post" action="admin_database.php?action=restore&amp;token={TOKEN}" enctype="multipart/form-data" name="upload_file">
 			<div class="block_container">
 				<div class="block_top" style="text-align:center;">
 					{L_DATABASE_MANAGEMENT}
@@ -144,7 +144,7 @@
 					<div class="block_contents1 text_center">
 						<table style="margin:auto;">
 							<tr>
-								<td><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database.png" alt="optimize" /></td>
+								<td><img src="./database.png" alt="optimize" /></td>
 								<td><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="repair" /></td>
 								<td><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
 							</tr>
@@ -297,7 +297,7 @@
 				-->	
 				</script>
 				
-				<form action="admin_database.php?query=1#executed_query" method="post" onsubmit="return check_form();">
+				<form action="admin_database.php?query=1&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
 				<div class="block_container">
 					<div class="block_top">
 						{L_QUERY}
@@ -397,7 +397,7 @@
 					# START file #
 					<tr>
 						<td class="row1" style="padding-left:20px;">
-							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
+							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
 						</td>
 						<td class="row1" style="text-align:center;width:120px;">
 							{file.WEIGHT}
@@ -406,7 +406,7 @@
 							{file.FILE_DATE}
 						</td>
 						<td class="row1" style="text-align:center;width:120px;">
-							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}" onclick="javascript:return Confirm_del()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
+							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return Confirm_del()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
 						</td>
 					</tr>
 					# END file #

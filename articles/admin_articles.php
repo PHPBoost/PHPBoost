@@ -39,6 +39,8 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if ($del && !empty($id)) //Suppresion de l'article.
 {    
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = " . $id, __LINE__, __FILE__);	
 	
@@ -335,6 +337,8 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
 	$icon_path = retrieve(POST, 'icon_path', '');

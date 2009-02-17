@@ -114,7 +114,7 @@ if (!empty($table) && $action == 'data')
 			if ($j == 0 && !empty($primary_key)) //Clée primaire détectée.
 			{
 				$Template->assign_block_vars('line.field', array(
-					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update" title="' . $LANG['update'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" alt="" /></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
+					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" alt="" /></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
 					'CLASS' => 'row2',
 					'STYLE' => ''
 				));
@@ -147,6 +147,8 @@ if (!empty($table) && $action == 'data')
 }
 elseif (!empty($table) && $action == 'delete')
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$field = retrieve(GET, 'field', '');
 	$value = retrieve(GET, 'value', '');
 	
@@ -156,6 +158,8 @@ elseif (!empty($table) && $action == 'delete')
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$value = retrieve(GET, 'value', '');
@@ -165,10 +169,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 	{
 		$request = '';
 		foreach ($table_structure['fields'] as $fields_info)
-		{
-			$field_value = retrieve(POST, $fields_info['name'], '');
-			$request .= $fields_info['name'] . " = '" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
-		}
+			$request .= $fields_info['name'] . " = '" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
 		
 		$Sql->query("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
@@ -212,6 +213,8 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		//Détection de la clée primaire.
 		$primary_key = '';
 		foreach ($table_structure['fields'] as $fields_info)
@@ -230,10 +233,9 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 		$fields = '';
 		foreach ($table_structure['fields'] as $fields_info)
 		{
-			$field_value = retrieve(POST, $fields_info['name'], '');
 			if ($fields_info['name'] == $primary_key  && empty($field_value)) //Clée primaire vide => on ignore.
 				continue;
-			$values .= "'" . strprotect($field_value, HTML_NO_PROTECT) . "', ";
+			$values .= "'" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
 			$fields .= $fields_info['name'] . ', ';
 		}
 		
@@ -274,11 +276,15 @@ elseif (!empty($table) && $action == 'optimize')
 }
 elseif (!empty($table) && $action == 'truncate')
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Backup->truncate_tables(array($table));
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Backup->drop_tables(array($table));
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
@@ -292,6 +298,8 @@ elseif (!empty($table) && $action == 'query')
 
 	if (!empty($query)) //On exécute une requête
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$Template->assign_vars(array(
 			'C_QUERY_RESULT' => true
 		));

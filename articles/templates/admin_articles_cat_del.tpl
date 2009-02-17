@@ -30,7 +30,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form method="post" action="admin_articles_cat.php?del={IDCAT}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
+			<form method="post" action="admin_articles_cat.php?del={IDCAT}&amp;token={TOKEN}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
 				# START articles #
 				<fieldset>
 					<legend>{articles.L_KEEP}</legend>

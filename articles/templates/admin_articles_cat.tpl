@@ -296,7 +296,7 @@
 											</script>										
 											<noscript><a href="admin_articles_cat.php?id={list.ID}&amp;move=down"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_articles_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_articles_cat.php?del={list.ID}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_articles_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_articles_cat.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

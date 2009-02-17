@@ -397,6 +397,9 @@ class Cache
         $css = 'global $CSS;' . "\n";
         $css .= '$CSS = array();' . "\n\n";
 
+		$THEME_CONFIG = is_array($THEME_CONFIG) ? $THEME_CONFIG : array();
+		$MODULES = is_array($MODULES) ? $MODULES : array();
+		
         //Listing des modules disponibles:
 		foreach ($THEME_CONFIG as $theme => $infos)
 		{
