@@ -78,6 +78,8 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
 	foreach ($array_members as $key => $user_id)
 		$Group->remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
@@ -90,6 +92,8 @@ elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
 }
 elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$login = retrieve(POST, 'login_mbr', '');
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
@@ -104,6 +108,8 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 }
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Group->remove_member($user_id, $idgroup);
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
 }

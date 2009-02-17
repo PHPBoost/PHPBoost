@@ -122,7 +122,7 @@
 		
 		<div id="admin_contents">		
 			# IF C_EDIT_GROUP #					
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GROUPS_MANAGEMENT}</legend>
 					<dl>
@@ -184,7 +184,7 @@
 				</div>
 			# ENDIF #
 			
-			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
+			<form action="admin_groups.php?id={GROUP_ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
@@ -226,7 +226,7 @@
 						<a href="{PATH_TO_ROOT}/member/member{member.U_USER_ID}">{member.LOGIN}</a>
 					</td>
 					<td class="row2">
-						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_groups.php?del_mbr=1&amp;id={GROUP_ID}&amp;user_id={member.USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #

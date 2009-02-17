@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 		
 			# IF C_THEME_MAIN #
-			<form action="admin_themes.php?uninstall=1" method="post">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -94,11 +94,11 @@
 						</td>
 						# IF list.C_THEME_NOT_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}'" /> {L_YES}
-							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}'" /> {L_NO}
+							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_YES}
+							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}'">'; 
+							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'">'; 
 								{list.OPTIONS}
 							</select>
 						</td>
@@ -140,7 +140,7 @@
 		
 		
 			# IF C_DEL_THEME #
-			<form action="admin_themes.php?uninstall=1" method="post" class="fieldset_content">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_THEME}</legend>
 					<dl>
@@ -159,7 +159,7 @@
 			
 			
 			# IF C_EDIT_THEME #			
-			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}" method="post" class="fieldset_content">	
+			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}&amp;token={TOKEN}" method="post" class="fieldset_content">	
 				<fieldset> 
 				<legend>{L_THEME_MANAGEMENT}</legend>
 					<p>{L_THEME} <strong>{THEME_NAME}</strong></p>

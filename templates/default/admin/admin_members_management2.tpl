@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			# ENDIF #
-			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php?add=1&amp;token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_ADD}</legend>
 					<dl>
@@ -161,7 +161,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php?token={TOKEN}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_MANAGEMENT}</legend>
 					<dl>

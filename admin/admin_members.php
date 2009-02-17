@@ -41,6 +41,8 @@ if (!empty($_POST['valid']) && !empty($id_post))
 {
 	if (!empty($_POST['delete'])) //Suppression du membre.
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		//Initialisation  de la class de gestion des fichiers.
@@ -339,6 +341,8 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 }
 elseif (!empty($id) && $delete) //Suppression du membre.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id . "'", __LINE__, __FILE__);
 	
