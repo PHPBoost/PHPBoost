@@ -255,7 +255,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
 					
-					$Mail->send($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
+					$Mail->send($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if ($CONFIG_USER['activ_mbr'] == 0)

@@ -149,6 +149,10 @@
 						{L_EMAIL_MANAGEMENT}
 					</legend>
 					<dl>
+						<dt><label for="mail_exp">* {L_EMAIL_ADMIN_EXP}</label><br /><span>{L_EMAIL_ADMIN_EXP_EXPLAIN}</span></dt>
+						<dd><label><input type="text" maxlength="255" size="40" id="mail_exp" name="mail_exp" value="{MAIL_EXP}" class="text" /></label></dd>
+					</dl>
+					<dl>
 						<dt><label for="mail">* {L_EMAIL_ADMIN}</label><br /><span>{L_EMAIL_ADMIN_EXPLAIN}</span></dt>
 						<dd><label><input type="text" maxlength="255" size="40" id="mail" name="mail" value="{MAIL}" class="text" /></label></dd>
 					</dl>
