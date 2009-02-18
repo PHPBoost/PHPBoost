@@ -86,6 +86,8 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	{
 		if ($del_message)
 		{
+			$Session->csrf_get_protect(); //Protection csrf
+			
 			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2);
@@ -109,7 +111,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				));
 			
 			$Template->assign_vars(array(
-				'UPDATE' => url('?update=1&amp;id=' . $row['id']),
+				'UPDATE' => url('?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -253,7 +255,7 @@ else //Affichage.
 		if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 		{
 			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
