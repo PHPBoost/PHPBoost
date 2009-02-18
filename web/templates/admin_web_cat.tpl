@@ -47,7 +47,7 @@
 			<br />
 			# ENDIF #
 			
-			<form action="admin_web_cat.php" method="post">
+			<form action="admin_web_cat.php?token={TOKEN}" method="post">
 				<table  class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -114,7 +114,7 @@
 									{cat.BOTTOM}
 								</td>
 								<td class="row2">
-									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 								</td>
 							</tr>
 							# END cat #							
@@ -132,7 +132,7 @@
 				</fieldset>	
 			</form>
 
-			<form action="admin_web_cat.php" method="post" class="fieldset_content">
+			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<dl>

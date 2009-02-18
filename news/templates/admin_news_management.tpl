@@ -123,35 +123,35 @@
 
 				# START news.preview #
 				<table class="module_table">
-						<tr> 
-							<th colspan="2">
-								{L_PREVIEW}
-							</th>
-						</tr>
-						<tr> 
-							<td class="row1">
-								<div class="news_container">
-									<div class="msg_top_l"></div>			
-									<div class="msg_top_r"></div>
-									<div class="msg_top">
-										<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.preview.TITLE}</h3></div>
-										<div style="float:right"></div>
-									</div>													
-									<div class="news_content">
-										{news.preview.IMG}
-										{news.preview.CONTENTS}
-										<hr />
-										{news.preview.EXTEND_CONTENTS}	
-									</div>									
-									<div class="news_bottom_l"></div>		
-									<div class="news_bottom_r"></div>
-									<div class="news_bottom">
-										<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.preview.PSEUDO}</a></span>
-										<span style="float:right">{L_ON}: {news.preview.DATE}</span>
-									</div>
-								</div>		
-							</td>
-						</tr>
+					<tr> 
+						<th colspan="2">
+							{L_PREVIEW}
+						</th>
+					</tr>
+					<tr> 
+						<td class="row1">
+							<div class="news_container">
+								<div class="msg_top_l"></div>			
+								<div class="msg_top_r"></div>
+								<div class="msg_top">
+									<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.preview.TITLE}</h3></div>
+									<div style="float:right"></div>
+								</div>													
+								<div class="news_content">
+									{news.preview.IMG}
+									{news.preview.CONTENTS}
+									<hr />
+									{news.preview.EXTEND_CONTENTS}	
+								</div>									
+								<div class="news_bottom_l"></div>		
+								<div class="news_bottom_r"></div>
+								<div class="news_bottom">
+									<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.preview.PSEUDO}</a></span>
+									<span style="float:right">{L_ON}: {news.preview.DATE}</span>
+								</div>
+							</div>		
+						</td>
+					</tr>
 				</table>	
 				<br /><br /><br />
 				# END news.preview #

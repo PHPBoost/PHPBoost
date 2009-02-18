@@ -33,8 +33,6 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);

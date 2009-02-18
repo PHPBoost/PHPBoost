@@ -39,8 +39,6 @@ $del = isset($_GET['delete']) ? true : false;
 
 if (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$idcat = retrieve(POST, 'idcat', 0);
 	$title = retrieve(POST, 'title', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);

@@ -42,8 +42,6 @@ define('EDIT_CAT_ARTICLES', 0x04);
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']) && !empty($id))
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$Cache->load('articles');
 	
 	$to = retrieve(POST, 'category', 0);
@@ -200,8 +198,6 @@ if (!empty($_POST['valid']) && !empty($id))
 }
 elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la racine.
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$Cache->load('articles');
 	
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_ARTICLES);

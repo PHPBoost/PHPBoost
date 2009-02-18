@@ -55,7 +55,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form action="admin_articles_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_articles_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ARTICLES_CONFIG}</legend>
 					<dl>

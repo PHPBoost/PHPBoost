@@ -84,7 +84,7 @@
 						<a href="admin_web.php?id={web.IDWEB}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="Supprimer" title="Supprimer" /></a>
+						<a href="admin_web.php?delete=true&amp;id={web.IDWEB}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="Supprimer" title="Supprimer" /></a>
 					</td>
 				</tr>
 				# END web #
