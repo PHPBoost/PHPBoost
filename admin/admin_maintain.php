@@ -33,7 +33,6 @@ require_once('../admin/admin_header.php');
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	
 	$maintain_check = retrieve(POST, 'maintain_check', 0);
 	switch ($maintain_check) 
 	{

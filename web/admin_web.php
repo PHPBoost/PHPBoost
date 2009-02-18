@@ -140,6 +140,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	));
 
 	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
@@ -214,6 +215,8 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 

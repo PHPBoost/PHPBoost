@@ -83,9 +83,7 @@
 											<br /><br />
 										</p>
 										<p style="text-align: center;">					
-											<img src="../templates/{THEME}/web/images/{LANG}/bouton_url.gif" alt="" title="" />
-											<br />
-											{web.URL}
+											<a href="{web.URL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
 										</p>
 								
 										<br /><br /><br />

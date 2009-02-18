@@ -337,8 +337,6 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
 	$icon_path = retrieve(POST, 'icon_path', '');

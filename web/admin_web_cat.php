@@ -66,6 +66,8 @@ if (!empty($_POST['valid']))
 }
 elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du lien.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "web_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	$Sql->query_inject("UPDATE " . PREFIX . "web SET idcat = '' WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
@@ -77,6 +79,8 @@ elseif (empty($top) && empty($bottom) && $del && !empty($id)) //Suppression du l
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	if (!empty($top))
 	{	
 		$idmoins = $top - 1;
@@ -210,9 +214,9 @@ else
 		$disabled = $row['aprob'] == '0' ? 'checked="checked"' : '';				
 		
 		//Si on atteint le premier ou le dernier id on affiche pas le lien inaproprié.
-		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		$top_link = ($min_cat != $row['class']) ? '<a href="admin_web_cat.php?top=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
 		<img src="../templates/' . get_utheme() . '/images/admin/up.png" alt="" title="" /></a>' : '';
-		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '" title="">
+		$bottom_link = ($max_cat != $row['class']) ? '<a href="admin_web_cat.php?bot=' . $row['class'] . '&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" title="">
 		<img src="../templates/' . get_utheme() . '/images/admin/down.png" alt="" title="" /></a>' : '';
 		
 		$img_direct_path = (strpos($row['icon'], '/') !== false);

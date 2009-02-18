@@ -39,8 +39,6 @@ define('EDIT_CAT_ARTICLES', 0x04);
 //Si c'est confirmé on execute
 if (!empty($_POST['add'])) //Nouvelle articles/catégorie.
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$Cache->load('articles');
 	
 	$parent_category = retrieve(POST, 'category', 0);

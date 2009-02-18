@@ -61,7 +61,6 @@
 						{L_PREVIEW}
 					</th>
 				</tr>
-
 				<tr> 
 					<td class="row1">
 						<div class="news_container">

@@ -68,7 +68,7 @@ elseif (!empty($_POST['previs']))
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
-		'PREVIEWED_CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'PREVIEWED_CONTENTS' => second_parse(stripslashes($contents)),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
@@ -83,6 +83,7 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,

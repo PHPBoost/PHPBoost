@@ -57,6 +57,8 @@ if (!empty($_POST['valid']))
 }
 elseif (!empty($_GET['del']) && !empty($id)) //Suppression de la catégorie.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Sql->query_inject("DELETE FROM " . PREFIX . "news_cat WHERE id = " . $id, __LINE__, __FILE__);
 	$Sql->query_inject("UPDATE " . PREFIX . "news SET idcat = 0 WHERE idcat = " . $id, __LINE__, __FILE__);
 		

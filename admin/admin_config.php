@@ -42,8 +42,6 @@ $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'
 //Si c'est confirmé on exécute
 if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	//Gestion de la page de démarrage.
 	if (!empty($_POST['start_page2']) )
 		$start_page = strprotect($_POST['start_page2']);
@@ -168,8 +166,6 @@ elseif ($check_advanced && empty($_POST['advanced']))
 }
 elseif (!empty($_POST['advanced']))
 {
-	$Session->csrf_get_protect(); //Protection csrf
-	
 	$CONFIG['rewrite'] = 1;
 	$CONFIG['server_name'] = trim(strprotect(retrieve(POST, 'server_name', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
 	 
