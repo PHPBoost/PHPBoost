@@ -513,6 +513,7 @@ elseif ($step == 5)
 		$CONFIG['site_cookie'] = 'session';
 		$CONFIG['site_session'] = 3600;
 		$CONFIG['site_session_invit'] = 300;
+		$CONFIG['mail_exp'] = '';
 		$CONFIG['mail'] = '';
 		$CONFIG['activ_mail'] = 0;
 		$CONFIG['sign'] = $LANG['site_config_mail_signature'];
@@ -679,6 +680,7 @@ elseif ($step == 6)
 			//Génération de la clé d'activation, en cas de verrouillage de l'administration
 			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
 			$CONFIG['unlock_admin'] = strhash($unlock_admin);
+			$CONFIG['mail_exp'] = $user_mail;
 			$CONFIG['mail'] = $user_mail;
 			
 			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -700,7 +702,7 @@ elseif ($step == 6)
 			$LANG['admin'] = '';
 			include_once('../kernel/framework/io/mail.class.php');
 			$Mail = new Mail();
-			$Mail->send($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail']);
+			$Mail->send($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail_exp']);
 			
 			//On connecte directement l'administrateur si il l'a demandé
 			if ($create_session)

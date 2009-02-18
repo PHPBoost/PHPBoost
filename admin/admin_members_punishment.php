@@ -239,7 +239,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				//Envoi du mail
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
-				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}	
 		}
 		
@@ -355,7 +355,7 @@ elseif ($action == 'ban') //Gestion des utilisateurs
 			{
 				include_once('../kernel/framework/io/mail.class.php');
 				$Mail = new Mail();
-				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail']);
+				$Mail->send($info_mbr['user_mail'], addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 			}				
 		}		
 		redirect(HOST . DIR . '/admin/admin_members_punishment.php?action=ban');

@@ -18,7 +18,6 @@ Faire une option pour désactiver la protection csrf basée sur le referer.
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-Ajouter un mail d'envoi pour les mails.
 
 ------------------------------------ MODULES -----------------------------------
 Améliorer le listage des news/articles dans l'admin (merdique actuellement).

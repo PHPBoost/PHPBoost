@@ -60,6 +60,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config['compteur'] = retrieve(POST, 'compteur', 0);
 	$config['bench'] = retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
+	$config['mail_exp'] = strprotect(retrieve(POST, 'mail_exp', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
 	$config['mail'] = strprotect(retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
 	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
 	$config['sign'] = strprotect(retrieve(POST, 'sign', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
@@ -238,6 +239,7 @@ else //Sinon on rempli le formulaire
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
 		'SELECT_PAGE' => $select_page, 
 		'START_PAGE' => empty($start_page) ? $CONFIG['start_page'] : '', 
+		'MAIL_EXP' => !empty($CONFIG['mail_exp']) ? $CONFIG['mail_exp'] : '',   
 		'MAIL' => !empty($CONFIG['mail']) ? $CONFIG['mail'] : '',   
 		'SIGN' => !empty($CONFIG['sign']) ? $CONFIG['sign'] : '',
 		'DELAY_FLOOD' => !empty($CONFIG['delay_flood']) ? $CONFIG['delay_flood'] : '7',
@@ -282,11 +284,13 @@ else //Sinon on rempli le formulaire
 		'L_ANTI_FLOOD_EXPLAIN' => $LANG['anti_flood_explain'],
 		'L_INT_FLOOD_EXPLAIN' => $LANG['int_flood_explain'],
 		'L_EMAIL_MANAGEMENT' => $LANG['email_management'],
+		'L_EMAIL_ADMIN_EXP' => $LANG['email_admin_exp'],
+		'L_EMAIL_ADMIN_EXP_EXPLAIN' => $LANG['email_admin_explain_exp'],
 		'L_EMAIL_ADMIN' => $LANG['email_admin'],
-		'L_EMAIL_ADMIN_STATUS' => $LANG['admin_admin_status'],
-		'L_EMAIL_ADMIN_SIGN' => $LANG['admin_sign'],			
 		'L_EMAIL_ADMIN_EXPLAIN' => $LANG['email_admin_explain'],
+		'L_EMAIL_ADMIN_STATUS' => $LANG['admin_admin_status'],
 		'L_EMAIL_ADMIN_STATUS_EXPLAIN' => $LANG['admin_admin_status_explain'],
+		'L_EMAIL_ADMIN_SIGN' => $LANG['admin_sign'],			
 		'L_EMAIL_ADMIN_SIGN_EXPLAIN' => $LANG['admin_sign_explain'],
 		'L_ACTIV' => $LANG['activ'],
 		'L_UNACTIVE' => $LANG['unactiv'],
@@ -402,7 +406,7 @@ if (!empty($_GET['unlock']))
 	###### Régénération du cache $CONFIG #######
 	$Cache->Generate_file('config');
 	
-	$Mail->send($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail']);	
+	$Mail->send($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
 
 	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
 }
