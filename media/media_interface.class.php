@@ -110,6 +110,39 @@ class MediaInterface extends ModuleInterface
 	}
 */
 
+	function get_feeds_list()
+    {
+        global $LANG, $CAT_FORUM;
+        $feed = array();
+        require_once PATH_TO_ROOT . '/forum/forum.class.php';
+        $forum = new Forum();
+        $categories = $forum->get_cats_tree();
+        
+        function feeds_add_category(&$current_feed_category, &$category)
+        {
+            $feed_cat = array();
+            $feed_cat['id'] = $category['this']['id'];
+            $feed_cat['name'] = $category['this']['name'];
+            $feed_cat['children'] = array();
+            $feed_cat['feeds_names'] = array('master');
+            
+            $feed_cat_children =& $feed_cat['children'];
+            foreach ($category['children'] as $category)
+            {
+                feeds_add_category($feed_cat_children, $category);
+            }
+            $current_feed_category[] = $feed_cat;
+        }
+        
+        $current_feed_category =& $feeds;
+        foreach ($categories as $category)
+        {
+            feeds_add_category($current_feed_category, $category);
+        }
+        
+        return $feeds;
+    }
+
 	// Generate the feed data structure used by RSS, ATOM and feed informations on the website
     function get_feed_data_struct($idcat = 0)
     {
