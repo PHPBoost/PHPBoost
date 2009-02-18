@@ -314,7 +314,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'U_IMG_MOVE'=> 'images/upload/' . $get_img_mimetype['img']
+			'U_IMG_MOVE'=> PATH_TO_ROOT . '/upload/' . $info_move['path']
 		));
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
@@ -458,7 +458,7 @@ else
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
 			'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
+			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
 			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup)

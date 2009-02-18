@@ -536,6 +536,7 @@ $LANG['document_type'] = 'Document %s';
 $LANG['moveto'] = 'Move to';
 $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
+$LANG['popup_insert'] = 'Insert code into the form';
 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'An error occurred, the category couldn\'t be moved';

@@ -66,8 +66,8 @@
 							# START file #							
 							<table style="border:0;width:210px;">
 								<tr>
-									<td style="width:34px;vertical-align:top;">
-										<img src="{file.U_IMG_MOVE}" alt="" />
+									<td style="width:100px;vertical-align:top;">
+										<img src="{file.U_IMG_MOVE}" alt="" style="width:100px;" />
 									</td>
 									<td style="padding-top:8px;">						
 										{file.NAME}	

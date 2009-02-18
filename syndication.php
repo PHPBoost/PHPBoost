@@ -73,7 +73,7 @@ if (!empty($module_id))
             
             echo $feed->export();
         }
-                           // Print the feed
+         // Print the feed
     }
 }
 
