@@ -31,6 +31,8 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$config_poll = array();
 	$config_poll['poll_auth'] = retrieve(POST, 'poll_auth', -1);
 	$config_poll['poll_mini'] = !empty($_POST['poll_mini']) ? $_POST['poll_mini'] : array();	
