@@ -1,7 +1,6 @@
 <script type="text/javascript">
 <!--
 function CheckForm() {
-	window.alert('1' + document.getElementById('name').value + '1');
 	if (document.getElementById('name').value == '') {
 		document.getElementById('name').select();
 		window.alert({JL_REQUIRE_TITLE});
