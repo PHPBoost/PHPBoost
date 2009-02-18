@@ -103,6 +103,7 @@
 
 [b]Forum[/b]
 [*] [color=red]Nouveauté:[/color] Réorganisation complète du code.
+[*] [color=red]Nouveauté:[/color] Possibilité d'ajouter un forum de type lien internet.
 [*] [color=red]Nouveauté:[/color] Lien précis vers l'action concernée dans l'historique du panneau de modération.
 [*] [color=red]Nouveauté:[/color] Interface pour visualiser partout sur le forum et instantanemment les messages non lus.
 [*] [color=red]Nouveauté:[/color] Affichage du nombre de messages non lus.
@@ -111,7 +112,6 @@
 [*] [color=red]Nouveauté:[/color] Coloration des résultats dans le moteur de recherche.
 [*] Nouveau formulaire de recherche.
 [*] Amélioration de l'interface d'ajout de forums.
-[*] Possibilité d'ajouter un forum de type lien internet.
 [*] Amélioration de l'interface d'alertes sur les sujets.
 [*] Amélioration de l'interface et du système de sondage.
 [*] Alerte avant de marquer les sujets comme lus.

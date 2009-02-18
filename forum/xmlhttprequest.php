@@ -108,6 +108,8 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 }
 elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
 	$Forumfct = new Forum;
@@ -189,6 +191,8 @@ elseif (!empty($untrack_mail) && $User->check_level(MEMBER_LEVEL)) //Retrait du 
 }
 elseif (!empty($msg_d))
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	$topic = $Sql->query_array(PREFIX . "forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 	if ((!empty($topic['user_id']) && $User->get_attribute('user_id') == $topic['user_id']) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
