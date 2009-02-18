@@ -419,12 +419,12 @@
 											<td style="text-align:center;">
 													{pics.list.RENAME_FILE}
 													
-													<a href="admin_gallery.php?del={pics.list.ID}&amp;cat={CAT_ID}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
+													<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
 										
 													<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
 														<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
 															<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-															<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;move=' + this.options[this.selectedIndex].value">
+															<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
 																{pics.list.CAT}
 															</select>
 															<br /><br />

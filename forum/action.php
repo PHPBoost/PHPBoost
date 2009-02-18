@@ -51,6 +51,8 @@ $Forumfct = new Forum;
 
 if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Info sur le message.	
 	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);
 	
@@ -89,6 +91,8 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 }
 elseif (!empty($idt_get))
 {		
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On va chercher les infos sur le topic	
 	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 

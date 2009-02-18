@@ -33,7 +33,8 @@ require_once('../kernel/header_no_display.php');
 if ($User->check_level(ADMIN_LEVEL)) //Admin
 {	
 	$Cache->load('gallery');
-
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$move = !empty($_GET['move']) ? trim($_GET['move']) : 0;
 	$id = !empty($_GET['id']) ? numeric($_GET['id']) : 0;
 	$get_parent_up = !empty($_GET['g_up']) ? numeric($_GET['g_up']) : 0;

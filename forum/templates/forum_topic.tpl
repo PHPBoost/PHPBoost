@@ -20,7 +20,7 @@
 			if( document.getElementById('dimg' + idmsg) )
 				document.getElementById('dimg' + idmsg).src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?del=1&idm=' + idmsg);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?del=1&idm=' + idmsg + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -42,7 +42,7 @@
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )

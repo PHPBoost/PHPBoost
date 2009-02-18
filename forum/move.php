@@ -80,11 +80,11 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$Sql->query_close($result);
 	
 	$Template->assign_vars(array(
-		'SID' => SID,
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['move_topic'],
 		'ID' => $id_get,
 		'TITLE' => $topic['title'],
+		'U_MOVE' => url('.php?token=' . $Session->get_token()),
 		'CATEGORIES' => $cat_forum,
 		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
 		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $topic['title'] . '</a>',
@@ -195,7 +195,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['cut_topic'],
 		'SID' => SID,			
 		'IDTOPIC' => 0,
-		'U_ACTION' => 'move.php',
+		'U_ACTION' => url('move.php?token=' . $Session->get_token()),
 		'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php') . '">' . ucfirst($topic['title']) . '</a>',	
 		'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php') . '">' . $cat['name'] . '</a>',
 		'L_ACTION' => $LANG['forum_cut_subject'] . ' : ' . $topic['title'],
@@ -259,7 +259,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$checked_normal = ($type == 0) ? 'checked="ckecked"' : '';
 		$checked_postit = ($type == 1) ? 'checked="ckecked"' : '';
 		$checked_annonce = ($type == 2) ? 'checked="ckecked"' : '';
-						
+
 		//Liste des choix des sondages => 20 maxi
 		$nbr_poll_field = 0;
 		for ($i = 0; $i < 20; $i++)

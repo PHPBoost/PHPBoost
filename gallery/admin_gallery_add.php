@@ -102,7 +102,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-					
+
 	redirect(HOST . DIR . '/gallery/admin_gallery_add.php');
 }
 else

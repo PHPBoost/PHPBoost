@@ -116,7 +116,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format'),
 			'CONTENTS_PREVIEW' => second_parse(stripslashes(strparse($contents))),
 			'C_FORUM_PREVIEW_MSG' => true,
-			'U_ACTION' => 'post.php' . $update,
+			'U_ACTION' => 'post.php' . $update . '&amp;token=' . $Session->get_token(),
 			'U_FORUM_CAT' => $forum_cats,
 			'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php') . '">' . ucfirst($topic['title']) . '</a>',
 			'L_REQUIRE' => $LANG['require'],
