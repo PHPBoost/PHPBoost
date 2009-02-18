@@ -58,16 +58,21 @@ class TemplateHighlighter extends Parser
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-		$Geshi =& new GeSHi($this->content, 'html');
+		
+		$geshi =& new GeSHi($this->content, 'html');
 				
 		if ($line_number) //Affichage des numéros de lignes.
-			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		{
+			$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		}
 		
 		//GeSHi must not put any div or pre tag before and after the content
 		if ($inline_code)
-			$Geshi->set_header_type(GESHI_HEADER_NONE);
+		{
+			$geshi->set_header_type(GESHI_HEADER_NONE);
+		}
 
-		$this->content = $Geshi->parse_code();
+		$this->content = $geshi->parse_code();
 		
 		//Now we highlight the specific syntax of PHPBoost templates
 		
@@ -90,7 +95,9 @@ class TemplateHighlighter extends Parser
 		$this->content = preg_replace('`{((?:[\w]+\.)+)([\w]+)}`i', '<span style="' . TPL_BRACES_STYLE . '">{</span><span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span><span style="' . TPL_BRACES_STYLE . '">}</span>', $this->content);
 		
 		if ($inline_code)
+		{
 			$this->content = '<pre style="display:inline; font-color:courier new;">' . $this->content . '</pre>';
+		}
 	}
 }
 ?>

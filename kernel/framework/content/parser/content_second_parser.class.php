@@ -96,7 +96,7 @@ class ContentSecondParser extends Parser
         }
         //Templates PHPBoost
         elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
-        {
+        {        	
             import('content/parser/template_highlighter');
             require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
              
@@ -139,17 +139,20 @@ class ContentSecondParser extends Parser
     function _callback_highlight_code($matches)
     {
         global $LANG;
-
+		
         $line_number = !empty($matches[2]);
         $inline_code = !empty($matches[3]);
+        
         $contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
 
         if (!$inline_code && !empty($matches[1]))
-        $contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
-        elseif ($inline_code)
-        $contents = $contents;
-        else
-        $contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+        {
+        	$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+        }
+        else if (!$inline_code && empty($matches[1]))
+        {
+        	$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+        }
          
         return $contents;
     }
