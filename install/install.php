@@ -507,7 +507,7 @@ elseif ($step == 5)
 		$CONFIG['rewrite'] = 0;
 		$CONFIG['com_popup'] = 0;
 		$CONFIG['compteur'] = 0;
-		$CONFIG['bench'] = 1;
+		$CONFIG['bench'] = 0;
 		$CONFIG['theme_author'] = 0;
 		$CONFIG['ob_gzhandler'] = 0;
 		$CONFIG['site_cookie'] = 'session';

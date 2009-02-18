@@ -36,6 +36,8 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if ($del && !empty($id)) //Suppresion poll
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('poll');
 	
 	//On supprime des tables config et reponses des polls.
@@ -52,6 +54,8 @@ if ($del && !empty($id)) //Suppresion poll
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('poll');
 	
 	$question = retrieve(POST, 'question', '');
