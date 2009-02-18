@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_shoutbox.php
+ *                             admin_shoutbox.php
  *                            -------------------
  *   begin                : March 12, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -97,24 +97,19 @@ else
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
-		
-	//Balises interdites
-	$i = 0;
-	foreach ($array_tags as $name => $is_selected)
-	{
-		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
-		{	
-			if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
-				$selected = 'selected="selected"';
-		}
-		else
-			$selected = ($is_selected) ? 'selected="selected"' : '';	
 			
+	//Forbidden tags
+	$i = 0;
+	foreach (ContentFormattingFactory::get_available_tags() as $name => $value)
+	{
+		$selected = '';
+		if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
+			$selected = 'selected="selected"';
+		
 		$Template->assign_block_vars('forbidden_tags', array(
-			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
+			'TAGS' => '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $value . '</option>'
 		));
-		$i++;
-	}	
+	}
 	
 	$Template->pparse('admin_shoutbox_config'); // traitement du modele	
 }

@@ -49,12 +49,13 @@ else
 	
 	$j = 0;
 	
-	foreach (ContentFormattingFactory::get_available_tags() as $name)
+	foreach (ContentFormattingFactory::get_available_tags() as $code => $name)
 	{	
 		$template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
+			'CODE' => $code,
 			'TAG_NAME' => $name,
-			'C_ENABLED' => in_array($name, $CONFIG['forbidden_tags'])
+			'C_ENABLED' => in_array($code, $CONFIG['forbidden_tags'])
 		));
 	}
 	

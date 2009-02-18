@@ -76,9 +76,9 @@
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
 								# START tag #
 									# IF tag.C_ENABLED #
-									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ELSE #
-									<option id="tag{tag.IDENTIFIER}" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ENDIF #
 								# END tags #
 								</select>

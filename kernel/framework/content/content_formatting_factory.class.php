@@ -192,14 +192,49 @@ class ContentFormattingFactory
 
     /**
      * @static
- 	 * @desc Return the list of all the formatting types supported by the PHPBoost formatting editors and parsers.
+ 	 * @desc Return the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
+ 	 * The keys of the map are the tags identifiers and the values the tags names.  
+ 	 * @return string[] The map
      */
     /*static*/ function get_available_tags()
     {
-        return array('b', 'i', 'u', 's', 'title', 'style', 'url',
-		'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
-		'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym', 'block',
-		'fieldset', 'mail', 'line', 'wikipedia', 'html'
+    	global $LANG;
+        return array(
+        	'b' => $LANG['format_bold'],
+        	'i' => $LANG['format_italic'],
+        	'u' => $LANG['format_underline'],
+        	's' => $LANG['format_strike'],
+        	'title' => $LANG['format_title'],
+        	'style' => $LANG['format_style'],
+        	'url' => $LANG['format_style'],
+        	'img' => $LANG['format_img'],
+        	'quote' => $LANG['format_quote'],
+        	'hide' => $LANG['format_hide'],
+        	'list' => $LANG['format_list'],
+        	'color' => $LANG['format_color'],
+        	'bgcolor' => $LANG['format_bgcolor'],
+        	'font' => $LANG['format_font'],
+        	'size' => $LANG['format_size'],
+        	'align' => $LANG['format_align'],
+        	'float' => $LANG['format_float'],
+        	'sup' => $LANG['format_sup'], 
+			'sub' => $LANG['format_sub'],
+        	'indent' => $LANG['format_indent'],
+        	'pre' => $LANG['format_pre'],
+        	'table' => $LANG['format_table'],
+        	'swf' => $LANG['format_flash'],
+        	'movie' => $LANG['format_movie'],
+        	'sound' => $LANG['format_sound'],
+        	'code' => $LANG['format_code'],
+        	'math' => $LANG['format_math'],
+        	'anchor' => $LANG['format_anchor'],
+        	'acronym' => $LANG['format_acronym'],
+        	'block' => $LANG['format_block'],
+			'fieldset' => $LANG['format_fieldset'],
+        	'mail' => $LANG['format_mail'],
+        	'line' => $LANG['format_line'],
+        	'wikipedia' => $LANG['format_wikipedia'],
+        	'html' => $LANG['format_html']
 		);
     }
 

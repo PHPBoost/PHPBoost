@@ -3,7 +3,7 @@
  *                               admin_com_config.php
  *                            -------------------
  *   begin                : March 13, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -74,12 +74,13 @@ else
 	
 	$j = 0;
 	
-	foreach (ContentFormattingFactory::get_available_tags() as $name)
+	foreach (ContentFormattingFactory::get_available_tags() as $identifier => $name)
 	{	
 		$Template->assign_block_vars('tag', array(
 			'IDENTIFIER' => $j++,
+			'CODE' => $identifier,
 			'TAG_NAME' => $name,
-			'C_ENABLED' => in_array($name, $CONFIG_COM['forbidden_tags'])
+			'C_ENABLED' => in_array($identifier, $CONFIG_COM['forbidden_tags'])
 		));
 	}
 	
