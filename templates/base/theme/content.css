@@ -38,7 +38,7 @@ h6.sub_title2 { /* Sous titre dans les menu */
 .block_top,th { /* Entête de conteneur et des tableaux */
     padding:5px 6px;
     color:#FFFFFF;
-    background:#3187C7 url(images/msg_top_row.png) repeat-x;
+    background:#5D7C94 url(images/msg_top_row.png) repeat-x;
     border:1px solid #325889;
     text-align:left;
     font-size:0.75em;
@@ -69,7 +69,7 @@ div.block_title span {
     font-weight:bold;
     color:#E53B00;
     background:#FFFFFF;
-    border-color:#71BAF1;
+    border-color:#CCCCCC;
     -moz-border-radius:12px;
     -khtml-border-radius:12px;
     -webkit-border-radius:12px;
@@ -78,7 +78,7 @@ div.block_title span {
 
 div.block_content {
     font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    border-color:#71BAF1;
+    border-color:#CCCCCC;
     -moz-border-radius:5px;
     -khtml-border-radius:5px;
     -webkit-border-radius:5px;
@@ -105,8 +105,8 @@ input:hover, textarea:hover{
 }
 
 input:focus, textarea:focus{
-	border:1px solid #02A3FF;
-	background-color:#EFF9FF;
+	border:1px solid #0B6ABF;
+	background-color:#f5fbff;
 }
 
 fieldset textarea.post {
@@ -329,12 +329,12 @@ a.msg_link_pseudo:hover {
 .msg_position { /* Conteneur des messages */
     width:98%;
     margin:auto;
-    background:#E3EDF5 url(images/border.gif) repeat-y left;
+    background:#E3EDF5 url(images/border.png) repeat-y left;
 }
 
 .msg_container,.msg_container2 {
     /* Case contenant l'ensemble du message */
-    background:#FFFFFF url(images/border.gif) repeat-y right;
+    background:#FFFFFF url(images/border.png) repeat-y right;
     margin-left:1px;
     overflow:hidden !important;
     height:auto !important;
@@ -345,7 +345,7 @@ a.msg_link_pseudo:hover {
 
 .msg_container2 {
     /*  Case contenant l'ensemble du message => Couleur alternative */
-    background:#F4F9FA url(images/border.gif) repeat-y right;
+    background:#F4F9FA url(images/border.png) repeat-y right;
 }
 
 /* Barre supérieur des messages */
@@ -445,7 +445,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign,.msg_sign2 { /* Signature du membre */
-    background:#FFFFFF url(images/border.gif) repeat-y right;
+    background:#FFFFFF url(images/border.png) repeat-y right;
     padding:4px;
     font-size:11px;
     margin-left:136px;
@@ -453,7 +453,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_sign2 { /* Signature du membre => Couleur alternative */
-    background:#F4F9FA url(images/border.gif) repeat-y right;
+    background:#F4F9FA url(images/border.png) repeat-y right;
 }
 
 .msg_sign_overflow { /* Signature du membre, fixe la hauteur maximale */
@@ -478,7 +478,7 @@ a.msg_link_pseudo:hover {
     background:#FFFFFF;
     padding-top:6px;
     padding-left:6px;
-    border:1px solid #71BAF1;
+    border:1px solid #CCCCCC;
     border-top:1px dotted #C4CED6;
 }
 
