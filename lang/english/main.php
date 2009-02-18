@@ -204,7 +204,7 @@ $LANG['private_messaging'] = 'Private message';
 $LANG['my_private_profile'] = 'Personnal profile';
 
 //Maintain
-$LANG['maintain'] = 'Website is in maintenance please wait, only administrators are authorized to log in.';
+$LANG['maintain'] = 'The website is under maintenance, only the administrators are authorized to log in.';
 $LANG['maintain_delay'] = 'Delay before ending:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
@@ -430,12 +430,12 @@ $LANG['date_birth_format'] = 'MM/DD/YYYY';
 $LANG['date_birth_parse'] = 'MM/DD/YYYY';
 $LANG['banned'] = 'Banned';
 $LANG['go_msg'] = 'Go to message';
-$LANG['display'] = 'Afficher';
+$LANG['display'] = 'Display';
 
 //Register
-$LANG['pseudo_how'] = 'Minimal login\'s length: 3 characters';
-$LANG['password_how'] = 'Minimal password\'s length: 6 characters';
-$LANG['confirm_register'] = 'Thank you to have been signed up %s. An e-mail will be sent to you to confirm your signing up.';
+$LANG['pseudo_how'] = 'Minimal login length: 3 characters';
+$LANG['password_how'] = 'Minimal password length: 6 characters';
+$LANG['confirm_register'] = '%s, thank you to have signed up. An e-mail will be sent to you to confirm your registration.';
 $LANG['register_terms'] = 'Registration Agreement Terms';
 $LANG['register_accept'] = 'I accept';
 $LANG['register_have_to_accept'] = 'You have to accept the registration terms to suscribe on the website!';
@@ -491,7 +491,7 @@ $LANG['forget_pass_send'] = 'Valid to receive a new password by mail, with an ac
 $LANG['forget_mail_activ_pass'] = 'Activate password';
 $LANG['forget_mail_pass'] = 'Dear %s
 
-You receive this email because you (or someone who pretend to be) ask a new password for your account on %s. If you havn\'t asked this new password, please ignore this mail. If you receive another messages, contact the website administrator.
+You have received this email because you (or someone who pretends to be you) asked a new password for your account on %s. If you have not asked this new password, please ignore this mail. If you receive another message, contact the website administrator.
 
 To use the new password, you have to confirm it. Click on the link bellow:
 
@@ -538,8 +538,8 @@ $LANG['success_upload'] = 'Your file has been uploaded successfully !';
 $LANG['upload_folder_contains_folder'] = 'You wish to put this category in its subcategory or in itself, that\'s impossible !';
 
 //gestion des catégories
-$LANG['cats_managment_could_not_be_moved'] = 'An error occured, the category couldn\'t be moved';
-$LANG['cats_managment_visibility_could_not_be_changed'] = 'An error occured, the visibility of the category couldn\'t be changed.';
+$LANG['cats_managment_could_not_be_moved'] = 'An error occurred, the category couldn\'t be moved';
+$LANG['cats_managment_visibility_could_not_be_changed'] = 'An error occurred, the visibility of the category couldn\'t be changed.';
 $LANG['cats_managment_no_category_existing'] = 'No category existing';
 $LANG['cats_management_confirm_delete'] = 'Are you sure you really want to delete this category ?';
 $LANG['cats_management_hide_cat'] = 'Make category unvisible';
@@ -548,7 +548,7 @@ $LANG['cats_management_show_cat'] = 'Make category visible';
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
-$LANG['user_alternative_pm'] = 'Private message send to the member <span class="text_small">(Leave empty for no private message)</span>. Member won\'t be able to reply to this message, won\'t know who has sent it';
+$LANG['user_alternative_pm'] = 'Private message to send to the member <span class="text_small">(Leave empty for no private message)</span>. The ùember won\'t be able to reply to this message, he won\'t know who sent it';
 
 
 //Punishment management
@@ -591,7 +591,7 @@ $LANG['ban_title_mail'] = 'Banned';
 $LANG['ban_mail'] = 'Dear member,
 
 You have been banned from : %s!
-It may be an error, if you want you could contact the administrator of the web site.
+It may be an error, if you think it is, you can contact the administrator of the web site.
 
 
 %s';
