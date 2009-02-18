@@ -62,7 +62,7 @@
 		{
 			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
 			data = "idmsg=" + idmsg;
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )

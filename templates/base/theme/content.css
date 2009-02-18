@@ -382,7 +382,7 @@ a.msg_link_pseudo:hover {
 
 .msg_pseudo_mbr { /* Pseudo du membre */
     width:127px;
-    background:#3187C7 url(images/msg_top_row.png) repeat-x;
+    background:#5D7C94 url(images/msg_top_row.png) repeat-x;
     padding:2px 4px;
     float:left;
     margin-right:0px !important;
@@ -395,7 +395,7 @@ a.msg_link_pseudo:hover {
 .msg_top_row {
     /* Case au dessus du message, indique la date et les boutons d'administration */
     height:16px;
-    background:#3187C7 url(images/msg_top_row.png) repeat-x;
+    background:#5D7C94 url(images/msg_top_row.png) repeat-x;
     font-size:11px;
     color:#e8eaeb;
     margin-right:1px;
