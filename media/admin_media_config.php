@@ -46,14 +46,15 @@ if (!empty($_POST['valid']))
 		'height' => max(1, retrieve(POST, 'height', $MEDIA_CONFIG['height'], TINTEGER)),
 		'root' => array(
 			'id_parent' => -1,
-			'auth' => Authorizations::build_auth_array_from_form(MEDIA_AUTH_READ, MEDIA_AUTH_CONTRIBUTION, MEDIA_AUTH_WRITE),
+			'order' => 1,
 			'name' => stripslashes(retrieve(POST, 'media_name', $MEDIA_CATS[0]['name'])),
+			'desc' => stripslashes(retrieve(POST, 'desc', $MEDIA_CATS[0]['desc'], TSTRING_PARSE)),
 			'visible' => true,
+			'image' => 'media.png',
+			'num_media' => $MEDIA_CATS[0]['num_media'],
 			'mime_type' => retrieve(POST, 'mime_type', $MEDIA_CATS[0]['mime_type'], TINTEGER),
 			'active' => $activ,
-			'desc' => stripslashes(retrieve(POST, 'desc', $MEDIA_CATS[0]['desc'], TSTRING_PARSE)),
-			'image' => 'media.png',
-			'num_media' => $MEDIA_CATS[0]['num_media']
+			'auth' => Authorizations::build_auth_array_from_form(MEDIA_AUTH_READ, MEDIA_AUTH_CONTRIBUTION, MEDIA_AUTH_WRITE),
 		)
 	);
 
