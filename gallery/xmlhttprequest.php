@@ -69,6 +69,8 @@ elseif (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur
 }
 elseif ($User->check_level(MODO_LEVEL)) //Modo
 {	
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		//Initialisation  de la class de gestion des fichiers.

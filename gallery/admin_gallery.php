@@ -43,15 +43,19 @@ $Cache->load('gallery');
 
 if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Gallery->Move_pics($idpics, $move);
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-					
+
 	redirect(HOST . DIR . '/gallery/admin_gallery.php?cat=' . $move);
 }
 elseif (!empty($del)) //Suppression d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Gallery->Del_pics($del);
 	
 	//Régénération du cache des photos aléatoires.
@@ -309,7 +313,7 @@ else
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
-								
+
 				//Affichage de l'image et de ses informations.
 				$Template->assign_block_vars('pics.pics_max', array(
 					'ID' => $info_pics['id'],
@@ -325,8 +329,8 @@ else
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),		
 					'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
-					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat,
-					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value',
+					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat . '&amp;token=' . $Session->get_token(),
+					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
 					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max">' . $LANG['next'] . '</a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
 					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',

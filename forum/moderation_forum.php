@@ -388,6 +388,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$select .= '<option value="' . $time . '" ' . $selected . '>' . strtolower($array_sanction[$key]) . '</option>';
 		}
 		
+		array_pop($array_sanction);
 		$Template->assign_vars(array(
 			'C_FORUM_USER_INFO' => true,
 			'KERNEL_EDITOR' => display_editor('action_contents'),
@@ -396,10 +397,11 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			'INFO' => $array_sanction[$key_sanction],
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
+			'if (replace_value != \'326592000\'){'. "\n" .
 			'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 			'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
 			'var i;
-			for (i = 0; i <= 12; i++)
+			for (i = 0; i <= 11; i++)
 			{
 				if (array_time[i] == replace_value)
 				{
@@ -413,8 +415,8 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				'document.getElementById(\'action_contents\').disabled = \'\'' . "\n" .
 			'} else' . "\n" .
 			'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
-			'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX'=> '[0-9]+ [a-zA-Z]+/',
+			'document.getElementById(\'action_info\').innerHTML = replace_value;}',
+			'REGEX'=> '/[0-9]+ [a-zA-Z]+/',
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 			'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 			'L_PM' => $LANG['user_contact_pm'],
@@ -558,7 +560,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'INFO' => $LANG['user_warning_level'] . ': ' . $member['user_warning'] . '%',
 			'SELECT' => $select,
 			'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
-			'REGEX'=> ' [0-9]+%/',
+			'REGEX'=> '/ [0-9]+%/',
 			'U_ACTION_INFO' => url('.php?action=warning&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
 			'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 			'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],

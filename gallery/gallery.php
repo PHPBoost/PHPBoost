@@ -54,6 +54,8 @@ $Gallery = new Gallery;
 
 if (!empty($g_del)) //Suppression d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Gallery->Del_pics($g_del);
 	
 	//Régénération du cache des photos aléatoires.
@@ -63,6 +65,8 @@ if (!empty($g_del)) //Suppression d'une image.
 }
 elseif (!empty($g_idpics) && $g_move) //Déplacement d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$g_move = max($g_move, 0);
 	$Gallery->Move_pics($g_idpics, $g_move);
 	
@@ -612,8 +616,8 @@ else
 					'L_EDIT' => $LANG['edit'],
 					'L_APROB_IMG' => ($info_pics['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
 					'L_THUMBNAILS' => $LANG['thumbnails'],
-					'U_DEL' => url('.php?del=' . $info_pics['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $info_pics['id']),
-					'U_MOVE' => url('.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?move=\' + this.options[this.selectedIndex].value'),
+					'U_DEL' => url('.php?del=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?token=' . $Session->get_token() . '&amp;del=' . $info_pics['id']),
+					'U_MOVE' => url('.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $info_pics['id'] . '.php?token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_previous, '-' . $g_idcat . '-' . $id_previous . '.php') . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max">' . $LANG['next'] . '</a> <a href="gallery' . url('.php?cat=' . $g_idcat . '&amp;id=' . $id_next, '-' . $g_idcat . '-' . $id_next . '.php') . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
 					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
@@ -709,8 +713,8 @@ else
 					'OPEN_TR' => is_int($j++/$nbr_column_pics) ? '<tr>' : '',
 					'CLOSE_TR' => is_int($j/$nbr_column_pics) ? '</tr>' : '',
 					'L_APROB_IMG' => ($row['aprob'] == 1) ? $LANG['unaprob'] : $LANG['aprob'],
-					'U_DEL' => url('.php?del=' . $row['id'] . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?del=' . $row['id']),
-					'U_MOVE' => url('.php?id=' . $row['id'] . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $row['id'] . '.php?move=\' + this.options[this.selectedIndex].value'),
+					'U_DEL' => url('.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token() . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '.php?token=' . $Session->get_token() . '&amp;del=' . $row['id']),
+					'U_MOVE' => url('.php?id=' . $row['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value', '-0-' . $row['id'] . '.php?token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 					'U_DISPLAY' => $display_link
 				));
 			}
