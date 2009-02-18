@@ -58,7 +58,7 @@ class Uploads
 		$result = $Sql->Query_while("SELECT path
 		FROM " . DB_TABLE_UPLOAD . " 
 		WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		while( $row = $Sql->Sql_fetch_assoc($result) )
+		while( $row = $Sql->fetch_assoc($result) )
 			delete_file(PATH_TO_ROOT . '/upload/' . $row['path']);
 		
 		//Suppression des entrées dans la base de données
