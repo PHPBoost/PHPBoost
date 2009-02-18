@@ -4,11 +4,17 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="../articles/articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} {EDIT} {ADD_ARTICLES}
+				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <a href="../articles/articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} 
+				# IF C_IS_ADMIN # <a href="admin_articles_cat.php?id={IDCAT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+				{EDIT} 
+				{ADD_ARTICLES}
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
-				<p style="text-align:center;" class="text_strong">{L_CATEGORIES} {EDIT_CAT}</p>
+				<p style="text-align:center;" class="text_strong">
+					{L_CATEGORIES}
+					# IF C_IS_ADMIN # <a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+				</p>
 				<hr style="margin-bottom:20px;" />
 				# START cat_list #
 				<div style="float:left;text-align:center;width:{COLUMN_WIDTH_CAT}%;margin-bottom:20px;">

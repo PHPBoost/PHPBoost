@@ -250,6 +250,8 @@ class ArticlesInterface extends ModuleInterface
 		
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
+			'IDCAT' => $idartcat,
+			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,
 			'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="../articles/admin_articles_add.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 			'L_ARTICLES' => $LANG['articles'],
@@ -319,8 +321,7 @@ class ArticlesInterface extends ModuleInterface
 		{
 			$tpl->assign_vars(array(
 				'C_ARTICLES_CAT' => true,
-				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3),
-				'EDIT_CAT' => $is_admin ? '<a href="admin_articles_cat.php"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)
 			));
 				
 			$i = 0;
@@ -350,8 +351,7 @@ class ArticlesInterface extends ModuleInterface
 			$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' => true,
 				'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
-				'CAT' => $CAT_ARTICLES[$idartcat]['name'],
-				'EDIT' => ($is_admin && !empty($idartcat)) ? '<a href="admin_articles_cat.php?id=' . $idartcat . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : ''
+				'CAT' => $CAT_ARTICLES[$idartcat]['name']
 			));
 
 			import('content/note');

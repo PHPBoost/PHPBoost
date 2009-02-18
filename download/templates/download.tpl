@@ -5,7 +5,7 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				{TITLE}
+				<a href="{PATH_TO_ROOT}/syndication.php?m=download&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  {TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
 					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">

@@ -42,7 +42,7 @@ if ($del && !empty($id)) //Suppresion de l'article.
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	$Cache->load('articles');
 	if (empty($idcat))//Racine.
@@ -51,7 +51,7 @@ if ($del && !empty($id)) //Suppresion de l'article.
 		$CAT_ARTICLES[0]['id_right'] = 0;
 	}
 	//Mise à jours du nombre d'articles des parents.
-	$visible = $Sql->query("SELECT visible FROM " . PREFIX . "articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$visible = $Sql->query("SELECT visible FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
 	$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 	

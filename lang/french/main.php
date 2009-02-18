@@ -536,6 +536,7 @@ $LANG['document_type'] = 'Document %s';
 $LANG['moveto'] = 'Déplacer vers';
 $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
+$LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégorie n\'a pas pu être déplacée';

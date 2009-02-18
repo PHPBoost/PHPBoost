@@ -45,25 +45,6 @@ if (!empty($idart) && isset($_GET['cat']) )
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
-	if ($User->check_level(ADMIN_LEVEL))
-	{
-		$java = '<script type="text/javascript">
-		<!--
-		function Confirm_del_article() {
-		return confirm("' . $LANG['alert_delete_article'] . '");
-		}
-		-->
-		</script>';
-		
-		$edit = '&nbsp;&nbsp;<a href="../articles/admin_articles' . url('.php?id=' . $articles['id']) . '" title="'  . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" alt="'  . $LANG['edit'] . '" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id=' . $articles['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del_article();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="' . $LANG['delete'] . '" /></a>';
-		
-		$Template->assign_vars(array(
-			'JAVA' => $java,
-			'EDIT' => $edit,
-			'DEL' => $del
-		));
-	}
 	
 	//On crée une pagination si il y plus d'une page.
 	include_once('../kernel/framework/util/pagination.class.php'); 
@@ -101,6 +82,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	$Template->assign_vars(array(
+		'C_IS_ADMIN' => ($User->check_level(ADMIN_LEVEL)),
 		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
@@ -118,12 +100,15 @@ if (!empty($idart) && isset($_GET['cat']) )
 		'KERNEL_NOTATION' => $Note->display_form(),
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . url_encode_rewrite($articles['title']) . '.php' . "'"),
+		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
+		'L_ALERT_DELETE_ARTICLE' => $LANG['alert_delete_article'],
 		'L_SUMMARY' => $LANG['summary'],
+		'L_DELETE' => $LANG['delete'],
+		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'L_PRINTABLE_VERSION' => $LANG['printable_version'],
-		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart)
 	));
 
 	//Affichage commentaires.

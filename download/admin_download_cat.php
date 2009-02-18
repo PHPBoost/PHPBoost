@@ -280,7 +280,7 @@ else
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 		'administration_file_name' => 'admin_download_cat.php',
 		'url' => array(
-			'unrewrited' => 'download.php?id=%d',
+			'unrewrited' => 'download.php?cat=%d',
 			'rewrited' => 'category-%d+%s.php'),
 		);
 		
