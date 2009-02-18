@@ -26,7 +26,7 @@
 
 		<div id="admin_contents">
 			
-			<form method="post" action="admin_forum.php?del={IDCAT}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
+			<form method="post" action="admin_forum.php?del={IDCAT}&amp;token={TOKEN}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
 				# START topics #
 				<fieldset>
 					<legend>{topics.L_KEEP}</legend>

@@ -97,6 +97,8 @@ if (!empty($_POST['valid']) && !empty($id))
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('forum');
 	$confirm_delete = false;
 	$idcat = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
@@ -208,6 +210,8 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('forum');
 	
 	//Catégorie existe?
