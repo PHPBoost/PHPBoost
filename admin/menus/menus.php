@@ -56,6 +56,8 @@ function menu_admin_link(&$menu, $mode)
         case 'delete':
             if (of_class($menu, CONTENT_MENU__CLASS) || of_class($menu, LINKS_MENU__CLASS) || of_class($menu, FEED_MENU__CLASS))
                 $link = 'menus.php?action=delete&amp;';
+            else
+            	return '';
             break;
         case 'up':
             $link = 'menus.php?action=up&amp;';
