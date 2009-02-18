@@ -60,12 +60,12 @@ else
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach (ContentFormattingFactory::get_available_tags() as $name)
+	foreach (ContentFormattingFactory::get_available_tags() as $name => $value)
 	{
 		$selected = '';
 		if (in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
 			$selected = 'selected="selected"';
-		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $name . '</option>';
+		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
 	$Template->assign_vars(array(
