@@ -45,7 +45,7 @@
     width:100px;
     overflow:auto;
     font-size:11px;
-    background:#DEF2FF;
+    background:#f5fbff;
     border:1px solid #2C5169;
     color:#061729;
     padding:2px;
@@ -56,7 +56,7 @@
     position:absolute;
     text-align:center;
     padding:6px 4px;
-    background:#AFD2E8;
+    background:#f5fbff;
     border:1px solid #2C5169;
     bottom:28px;
     width:204px;
@@ -65,7 +65,7 @@
 
 /* Déplacement des fichiers*/
 .upload_selected_cat {
-    background:#AFD2E8;
+    background:#f5fbff;
     border:1px solid #2C5169;
 }
 
@@ -91,7 +91,7 @@ a.big_link:hover {
 
 /* Liens des commentaires. */
 a.com {
-    color:#0578CC;
+    color:#515C68;
     font-size:10px;
     font-weight:bold;
 }
