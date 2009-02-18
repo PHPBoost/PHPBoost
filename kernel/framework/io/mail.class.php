@@ -39,10 +39,11 @@ class Mail
 		$this->sender = $mail_sender;
 		$this->from = $mail_from;
 		$this->to = $mail_to;
+		$this->objet = $mail_objet;
+		$this->contents = $mail_contents;
 		
 		if ($mail_sender == 'admin')
 		{
-			$this->_clean($mail_objet, $mail_contents);
 			if (empty($mail_header))
 				$this->_send_headers();
 			else
@@ -55,7 +56,6 @@ class Mail
 		{
 			if ($this->check_validity($this->from))
 			{
-				$this->_clean($mail_objet, $mail_contents);
 				if (empty($mail_header))
 					$this->_send_headers();
 				else
@@ -89,21 +89,6 @@ class Mail
     }
 	
 	## Private Methods ##
-	//Nettoie les entrées.
-	function _clean($mail_objet, $mail_contents)
-	{
-		if (MAGIC_QUOTES)
-		{
-			$this->objet = stripslashes($mail_objet);
-			$this->contents = stripslashes($mail_contents);
-		}
-		else
-		{
-			$this->objet = $mail_objet;
-			$this->contents = $mail_contents;
-		}
-	}
-	
 	//Génération des headers du mail.
 	function _send_headers()
 	{

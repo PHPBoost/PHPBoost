@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               newsletter.class.php
+ *                        newsletter_service.class.php
  *                            -------------------
  *   begin                : July 07, 2007
  *   copyright            : (C) 2007 Sautel Benoit

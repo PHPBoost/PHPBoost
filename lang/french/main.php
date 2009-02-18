@@ -145,7 +145,7 @@ $LANG['bb_sound'] = 'Son [sound]adresse du son[/sound]';
 $LANG['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
 $LANG['bb_help'] = 'Aide BBcode';
 $LANG['bb_upload'] = 'Attacher un fichier';
-$LANG['bb_url_prompt'] = 'Adresse du lien?';
+$LANG['bb_url_prompt'] = 'Adresse du lien ?';
 $LANG['bb_text'] = 'Texte';
 $LANG['bb_script'] = 'Script';
 $LANG['bb_web'] = 'Web';

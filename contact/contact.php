@@ -36,18 +36,18 @@ $mail_valid = retrieve(POST, 'mail_valid', '');
 $get_error = '';
 
 include_once('../kernel/framework/util/captcha.class.php');
-$Captcha = new Captcha();
+$captcha = new Captcha();
 
 ###########################Envoi##############################
 if (!empty($mail_valid))
 {
 	//Code de vérification si activé
-	if (!$CONFIG_CONTACT['contact_verifcode'] || $Captcha->is_valid()) //Code de vérification si activé
+	if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
 	{
 		include_once('../kernel/framework/io/mail.class.php');
-		$Mail = new Mail();
+		$mail = new Mail();
 
-		if ($Mail->send($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+		if ($mail->send($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
 			$get_error = 'success';
 		else //Erreur mail
 			$get_error = 'error';
@@ -74,13 +74,13 @@ elseif ($get_error == 'error')//Message de succès.
 	$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
 	
 //Code de vérification, anti-bots.
-if ($Captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
+if ($captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 {
-	$Captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
+	$captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
 	$Template->assign_vars(array(
 		'C_VERIF_CODE' => true,
-		'VERIF_CODE' => $Captcha->display_form(),
-		'L_REQUIRE_VERIF_CODE' => $Captcha->js_require()
+		'VERIF_CODE' => $captcha->display_form(),
+		'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
 	));		
 }
 
