@@ -666,7 +666,8 @@ $Template->assign_vars(array(
 	'L_AND' => $LANG['and'],
 	'L_ONLINE' => strtolower($LANG['online']),
 	'L_FORUM_INDEX' => $LANG['forum_index'],
-	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php")
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 ));
 	
 $Template->pparse('forum_moderation_panel');

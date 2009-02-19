@@ -162,6 +162,7 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 		'LANG' => get_ulang(),
 		'U_CHANGE_CAT'=> 'unread.php' . SID,
 		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 		'U_FORUM_CAT' => '<a href="../forum/unread.php' . SID . '">' . $LANG['show_not_reads'] . '</a>',
 		'U_POST_NEW_SUBJECT' => '',		
 		'L_FORUM_INDEX' => $LANG['forum_index'],

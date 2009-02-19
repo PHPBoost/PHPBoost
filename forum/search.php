@@ -62,6 +62,7 @@ $Template->assign_vars(array(
 	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
 	'U_CHANGE_CAT' => 'search.php' . SID,	
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),	
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
