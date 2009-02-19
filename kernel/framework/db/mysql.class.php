@@ -561,13 +561,12 @@ class Sql
 	}
 	
 	/**
-	* @method get_dbms_version
-	* @desc Version du SGBD
-	* @return string DBMS version prefixed by MySQL<space>
+	* @desc Get the version of MySQL used.
+	* @return string The version used.
 	*/
 	function get_dbms_version()
 	{
-		return 'MySQL ' . mysql_get_server_info();
+		return 'MySQL ' . mysql_get_server_info($this->link);
 	}
 
 	/**
