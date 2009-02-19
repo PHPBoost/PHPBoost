@@ -273,90 +273,89 @@ class Sql
 	{
 		return ' LIMIT ' . $start . ', ' .  $num_lines;
 	}
-	
+
 	/**
-	* @method Concat
-	* @desc Concatène des chaines
-	*  CONTRAT DE COHERENCE :
-	*  - les champ mysql doivent êtres passés sous forme de chaine PHP
-	*  - les chaines PHP doivent êtres passés sous forme de chaine PHP
-	*      dont le contenu est une chaine PHP délimité par de simple quotes
-	*  EXEMPLE :
-	*     - champ MySQL : $champMySQL = "id" ou $champMySQL = 'id'
-	*     - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
-	*/
+	 * @desc Generates the syntax to use the concatenation operator (CONCAT in MySQL).
+	 * The MySQL fields names must be in a PHP string for instance between simple quotes: 'field_name'
+	 * The PHP variables must be bordered by simple quotes, for example: '\'' . $my_var . '\''
+	 * @param string $param Element to concatenate. Repeat this argument for each element you want to
+	 * contatenate, in the same order.
+	 * @return string The MySQL syntax to use.
+	 */
     function concat()
     {
         $nbr_args = func_num_args();
-        $concatString = func_get_arg(0);
+        $concat_string = func_get_arg(0);
         for ($i = 1; $i < $nbr_args; $i++)
-            $concatString = 'CONCAT(' . $concatString . ',' . func_get_arg($i) . ')';
+        {
+            $concat_string = 'CONCAT(' . $concat_string . ',' . func_get_arg($i) . ')';
+        }
         
-        return ' ' . $concatString . ' ';
+        return ' ' . $concat_string . ' ';
     }
 
 	/**
-	* @method fecth_assoc
-	* @desc Balayage du retour de la requête sous forme de tableau indexé par le nom des champs.
-	* @param ressoure SQL (issue de query)
-	* @return assoc array next row in query result
-	*/
+	 * @desc Browse a MySQL result resource row per row.
+	 * When you call this method on a resource, you get the next row.
+	 * @param resource $result MySQL result resource to browse. The resource is provided by the query_while method.
+	 * @return string[] An associative array whose keys are the name of each column and values are the value of the field.
+	 * It returns false when you are at the end of the rows.
+	 */
 	function fetch_assoc($result)
 	{
 		return mysql_fetch_assoc($result);
 	}
 
 	/**
-	* @method fecth_row
-	* @desc Balayage du retour de la requête sous forme de tableau indexé numériquement
-	* @param ressoure SQL (issue de query)
-	* @return numeric array next row in query result
-	*/
+	 * @desc Browse a MySQL result resource row per row.
+	 * When you call this method on a resource, you get the next row.
+	 * @param resource $result MySQL result resource to browse. The resource is provided by the query_while method.
+	 * @return string[] An array whose values are the value of the field. The fields are indexed according to the order they had in the select query.
+	 * It returns false when you are at the end of the rows.
+	 */
 	function fetch_row($result)
 	{
 		return mysql_fetch_row($result);
 	}
 	
 	/**
-	* @method affected_rows
-	* @desc Lignes affectées lors de requêtes de mise à jour ou d'insertion.
-	* @param ressoure SQL (issue de query)
-	* @param query  (not used)
-	* @return int number of affected rows
-	*/
-	function affected_rows($ressource, $query)
+	 * @desc Return the number of the rows which have been affected by a request.
+	 * @param resource $ressource Resource corresponding to the request.
+	 * The resource is given by the method which execute some queries in the data base.
+	 * @param string $query Deprecated field. Don't use it. 
+	 * @return int The number of the rows affected by the specified resource.
+	 */
+	function affected_rows($ressource, $query = '')
 	{
 		return mysql_affected_rows();
 	}
 	
 	/**
-	* @method num_rows
-	* @desc Retourne nombre de lignes résultat d'une requete SQL
-	* @param ressoure SQL (issue de query)
-	* @param query  (not used)
-	* @return int number of rows
-	*/
+	 * @desc Return the number of rows got by a selection query.
+	 * @param resource $ressource Resource corresponding to the result of the query.
+	 * @param $query Deprecated field. Don't use it.
+	 * @return int The number of rows contained in the resource.
+	 */
 	function num_rows($ressource, $query)
 	{
 		return mysql_num_rows($ressource);
 	}
 
 	/**
-	* @method insert_id
-	* @desc Retourne l'id de la dernière insertion
-	* @param ressoure SQL (issue de query)
-	* @return int last index
-	*/
+	 * @desc Get the ID generated from the previous INSERT operation.
+	 * @param $query
+	 * @return int The ID generated for an AUTO_INCREMENT column by the previous 
+     * INSERT query on success, 0 if the previous query does not generate an AUTO_INCREMENT value.
+	 */
 	function insert_id($query)
 	{
 		return mysql_insert_id();
 	}
 
 	/**
-	* @method date_diff
-	* @desc Retourne le nombre d'année entre la date et aujourd'hui.
-	* @param date
-	* @return int différence avec année courante
+	* @desc Generates the MySQL syntax which enables you to compute the number of years separating a date in a data base field and today.
+	* @param string $field Name of the field against which you want to compute the number of years.
+	* @return string the syntax which will compute the number of years.
 	*/
 	function date_diff($field)
 	{
@@ -364,22 +363,19 @@ class Sql
 	}
 
 	/**
-	* @method query_close
-	* @desc Libération mémoire des données d'une requete
-	* @param ressource (query)
-	* @return TRUE si OK FALSE sinon
+	* @desc Free the memory allocated for a resource.
+	* @param resource $resource Resource you want to desallocate.
+	* @return bool true if the memory could be disallocated and false otherwise.
 	*/
-	function query_close($result)
+	function query_close($resource)
 	{
-		if (is_resource($result))
-			return mysql_free_result($result);
+		if (is_resource($resource))
+			return mysql_free_result($resource);
 	}
 	
 	/**
-	* @method close
-	* @desc Fermeture de la connexion mysql ouverte.
-	* @param none
-	* @return TRUE si OK FALSE sinon
+	* @desc Close the current MySQL connection if it is open.
+	* @return bool true if the connection could be closed, false otherwise.
 	*/
 	function close()
 	{
@@ -388,13 +384,16 @@ class Sql
 			$this->connected = false;
 			return mysql_close($this->link); // on ferme la connexion ouverte.
 		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
-	* @method list_fields
-	* @desc Liste les champs d'une table.
-	* @param string table name
-	* @return array of fields name or empty array
+	* @desc List all the columns of a table.
+	* @param string $table Name of the table.
+	* @return string[] list of the fields of the table.
 	*/
 	function list_fields($table)
 	{
@@ -403,7 +402,9 @@ class Sql
 			$array_fields_name = array();
 			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
 			while ($row = mysql_fetch_row($result))
+			{
 				$array_fields_name[] = $row[0];
+			}
 			return $array_fields_name;
 		}
 		else
@@ -411,16 +412,28 @@ class Sql
 	}
 	
 	/**
-	* @method list_tables
-	* @desc Liste les tables + infos.
-	* @param none
-	* @return array of tables name and infos
+	* @desc List the tables (name and informations relatives to each table) of the data base at which is connected this SQL object.
+	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
+	* @return string[] Map containing the following structure:
+	* for each table: table_name => array(
+	* 	'name' => name of the table,
+	* 	'engine' => storage engine of the table,
+	* 	'row_format' => row storage format,
+	* 	'rows' => number of rows,
+	* 	'data_length' => the length of the data file,
+	* 	'index_length' => the length of the index file,
+	* 	'data_free' => the number of allocated but unused bytes,
+	* 	'collation' => the table's character set and collation,
+	* 	'auto_increment' => the next AUTO_INCREMENT value,
+	* 	'create_time' => when the table was created,
+	* 	'update_time' => when the data file was last updated
+	* )  
 	*/
 	function list_tables()
 	{
 		$array_tables = array();
 		
-		$result = $this->query_while ("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
+		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
 		while ($row = mysql_fetch_row($result))
 		{
 			$array_tables[$row[0]] = array(
@@ -441,11 +454,9 @@ class Sql
 	}
 
 	/**
-	* @method parse
-	* @desc Parsage d'un fichier SQL => exécution des requêtes.
-	* @param string filename
-	* @param string prefix
-	* @return void
+	* @desc Parse a SQL file. The SQL file contains the name of the tables with the prefix phpboost_.
+	* @param string $file_path Path of the file.
+	* @param string prefix The prefix you want to work with.
 	*/
 	function parse($file_path, $tableprefix = '')
 	{
@@ -482,21 +493,19 @@ class Sql
 	}
 	
 	/**
-	* @method display_request
-	* @desc Affichage du nombre de requête sql.
-	* @param none
-	* @return int number of request made
+	* @desc Return the number of request executed by this object.
+	* @return int Number of request executed.
 	*/
-	function display_request()
+	function get_executed_requests_number()
 	{
 		return $this->req;
 	}
 
 	/**
-	* @method highlight_query
-	* @desc Coloration syntaxique du SQL
-	* @param string SQL query
-	* @return string html coded colored pattern
+	* @static
+	* @desc Highlight a SQL query to be more readable by a human.
+	* @param string $query Query to highlight
+	* @return string HTML code corresponding to the highlighted query.
 	*/
 	function highlight_query($query)
 	{
@@ -526,10 +535,10 @@ class Sql
 	}
 	
 	/**
-	* @method indent_query
-	* @desc Indente une requête SQL.
-	* @param string SQL query
-	* @return string indented SQL query
+	* @static 
+	* @desc Indent a MySQL query.
+	* @param string $query Query to indent.
+	* @return string The indented SQL query.
 	*/
 	function indent_query($query)
 	{
@@ -554,7 +563,6 @@ class Sql
 	/**
 	* @method get_dbms_version
 	* @desc Version du SGBD
-	* @param none
 	* @return string DBMS version prefixed by MySQL<space>
 	*/
 	function get_dbms_version()
@@ -563,10 +571,9 @@ class Sql
 	}
 
 	/**
-	* @method list_databases
-	* @desc Listage des base de données présentes sur le SGBD courant
-	* @param none
-	* @return array of database names
+	* @desc List the existing data bases on the DBMS at which the object is connected.
+	* Only the data bases visible for the user connected will be returned.
+	* @return string[] The list of the data bases
 	*/
 	function list_databases()
 	{
@@ -581,10 +588,9 @@ class Sql
 	}
 	
 	/**
-	* @method create_database
-	* @desc Création d'une base de données
-	* @param string name of database
-	* @return TRUE if OK else FALSE
+	* @desc Create a data base on the DBMS at which is connected the current object.
+	* @param string $db_name Name of the data base to create
+	* @return resource The resource associated to the executed request.
 	*/
 	function create_database($db_name)
 	{
@@ -592,31 +598,35 @@ class Sql
 	}
 	
 	/**
-	* @method escape
-	* @desc echappement des caracteres à problème pour MySQL
-	* @param string parametre
-	* @return string parametre modifié
+	* @desc Escapes the dangerous characters in the string you inject in your requests.
+	* @param string $value String to escape
+	* @return string The protected string
 	*/
 	function escape($value)
 	{
-		if (function_exists('mysql_real_escape_string') AND !empty($this->link) AND is_resource($this->link)) {
+		if (function_exists('mysql_real_escape_string') && !empty($this->link) && is_resource($this->link))
+		{
 			return mysql_real_escape_string($value, $this->link);
-		} elseif (is_string($value)) {
+		}
+		elseif (is_string($value))
+		{
 			return str_replace("'", "\\'" , str_replace('\\', '\\\\', str_replace("\0", "\\\0", $value)));
-		} else {
+		}
+		else
+		{
 			return $value;
 		}
 	}
 	
 	## Private Methods ##
 	/**
-	* @method _error
-	* @desc Gestion des erreurs
-	* @param string SQL query
-	* @param string Error message
-	* @param int line in script
-	* @param string script name
-	* @return Don't return
+	* @desc Manage all the errors linked to the data base. It stops the execution of the script and formats the error.
+	* @param string $query Query which failed (to help the developer to debug his script).
+	* @param string $errstr Error message returned by MySQL.
+     * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	*/
 	function _error($query, $errstr, $errline = '', $errfile = '')
 	{
@@ -630,9 +640,21 @@ class Sql
 	
 	
 	## Private attributes ##
-	var $link; //Lien avec la base de donnée.
-	var $req = 0; //Nombre de requêtes.
+	/**
+	 * @var resource Link with the data base
+	 */
+	var $link;
+	/**
+	 * @var int Number of requests executed by the object.
+	 */
+	var $req = 0;
+	/**
+	 * @var bool true if the object is connected to the data base, false otherwise.
+	 */
 	var $connected = false;
+	/**
+	 * @var string name of the data base at which is connected the object.
+	 */
 	var $sql_base = '';
 }
 ?>

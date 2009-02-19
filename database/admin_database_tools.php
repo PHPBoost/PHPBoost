@@ -133,8 +133,8 @@ if (!empty($table) && $action == 'data')
 	$Template->assign_vars(array(
 		'C_DATABASE_TABLE_DATA' => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
-		'QUERY' => $Sql->indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
+		'QUERY' => Sql::indent_query($query),
+		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'PAGINATION' => $Pagination->display('admin_database_tools.php?table=' . $table . '&amp;action=data&amp;p=%d', $nbr_lines, 'p', 30, 3),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
@@ -344,8 +344,8 @@ elseif (!empty($table) && $action == 'query')
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 		
 	$Template->assign_vars(array(
-		'QUERY' => $Sql->indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
+		'QUERY' => Sql::indent_query($query),
+		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],

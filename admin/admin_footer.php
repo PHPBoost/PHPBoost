@@ -60,7 +60,7 @@ if ($CONFIG['bench'])
 	$Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->to_string(), //Fin du benchmark
-		'REQ' => $Sql->display_request(),
+		'REQ' => $Sql->get_executed_requests_number(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],
