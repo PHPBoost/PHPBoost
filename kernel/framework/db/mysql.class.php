@@ -38,10 +38,15 @@ define('CONNECTED_TO_DATABASE', 3);
 define('DBTYPE', 'mysql');
 
 /**
- * @author Benoit
- * This class manages all the database access done by PHPBoost.
+ * @author Régis Viarre crowkait@phpboost.com, Loïc Rouchon horn@phpboost.com
+ * @desc This class manages all the database access done by PHPBoost.
  * It currently manages only one DBMS, MySQL, but we made it as generic as we could.
  * It doesn't manage ORM (Object Relationnal Mapping).
+ * On PHPBoost, all the table which are used contain a prefix which enables for example to install
+ * several instances of the software on the same data base. When you execute a query in a table, concatenate the
+ * PREFIX constant before the name of your table.
+ * Notice also that the kernel tables can have their name changed. You must not use their name directly but the 
+ * constants which are defined in the file /kernel/db/tables.php.
  */
 
 class Sql
@@ -156,8 +161,18 @@ class Sql
 	}
 	
 	/**
-	* @method query_array
-	* @desc Requête multiple.
+	* @desc This method makes automatically a query on several fields of a row.
+	* You tell it in which table you want to select, which row you want to use, and it will return you the values.
+	* It takes a variable number of parameters.
+	* @param string $table Name of the table in which you want to select the values
+	* @param string $field Name of the field for which you want to retrieve the value. If you want to work on several fields, you have to
+	* repeat this parameter for each field you want to select.
+	* @param string $clause Where clause which will enable the method to know in which row it must select the values.
+	* It must respect the MySQL syntax and start off with 'WHERE '.
+    * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	*/
 	function query_array()
 	{
@@ -195,9 +210,15 @@ class Sql
 	}
 	
 	/**
-	* @method query_inject
-	* @desc Requete d'injection (insert, update, et requêtes complexes..)
-	*/
+	 * @desc This method enables you to execute CUD (Create Update Delete) queries in the database, and more generally, 
+	 * any query which has not any return value.
+	 * @param string $query The query you want to execute 
+	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @return resource The MySQL resource corresponding to the result of the query.
+	 */
 	function query_inject($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid inject request', $errline, $errfile);
@@ -207,9 +228,14 @@ class Sql
 	}
 	
 	/**
-	* @method query_while
-	* @desc Requête de boucle.
-	*/
+	 * @desc This method enables you to execute a Retrieve query on several rows in the data base.
+	 * @param $query The query you want to execute
+     * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @return resource MySQL resource containing the results. You will browse it with the sql_fetch_assoc method.
+	 */
 	function query_while ($query, $errline, $errfile)
 	{
 		$result = mysql_query($query, $this->link) or $this->_error($query, 'invalid while request', $errline, $errfile);
@@ -219,9 +245,14 @@ class Sql
 	}
 
 	/**
-	* @method count_table
-	* @desc Retourne le nombre d'entrées dans la table.
-	*/
+	 * @desc Count the number of the row contained in a table.
+	 * @param string $table Table name
+	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @return int The rows number of the table.
+	 */
 	function count_table($table, $errline, $errfile)
 	{
 		$ressource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
@@ -233,15 +264,14 @@ class Sql
 	}
 
 	/**
-	* @method limit
-	* @desc Contruit l'instruction SQL pour limiter des résultats de la requete
-	* @param int - start
-	* @param int - end
-	* @return string - instrcution SQL
-	*/
-	function limit($start, $end = 0)
+	 * @desc Build the MySQL syntax used to impose a limit in your row selection.
+	 * @param int $start Number of the first row (0 is the first).
+	 * @param int $num_lines Number of the rows you want to retrieve.
+	 * @return string The MySQL syntax for the limit instruction.
+	 */
+	function limit($start, $num_lines = 0)
 	{
-		return ' LIMIT ' . $start . ', ' .  $end;
+		return ' LIMIT ' . $start . ', ' .  $num_lines;
 	}
 	
 	/**
@@ -255,7 +285,7 @@ class Sql
 	*     - champ MySQL : $champMySQL = "id" ou $champMySQL = 'id'
 	*     - chaine PHP  : $strPHP = "'ma chaine'" ou $strPHP='\'ma chaine\''
 	*/
-    function Concat()
+    function concat()
     {
         $nbr_args = func_num_args();
         $concatString = func_get_arg(0);
