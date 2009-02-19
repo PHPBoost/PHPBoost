@@ -41,18 +41,20 @@ define('DBTYPE', 'mysql');
  * @author Régis Viarre crowkait@phpboost.com, Loïc Rouchon horn@phpboost.com
  * @desc This class manages all the database access done by PHPBoost.
  * It currently manages only one DBMS, MySQL, but we made it as generic as we could.
- * It doesn't manage ORM (Object Relationnal Mapping).
+ * It doesn't support ORM (Object Relationnal Mapping).
  * On PHPBoost, all the table which are used contain a prefix which enables for example to install
  * several instances of the software on the same data base. When you execute a query in a table, concatenate the
  * PREFIX constant before the name of your table.
  * Notice also that the kernel tables can have their name changed. You must not use their name directly but the 
  * constants which are defined in the file /kernel/db/tables.php.
+ * 
+ * If you encounter any problem when writing queries, you should search what you need in the MySQL documentation, which is very well done: http://dev.mysql.com/doc/
  */
 
 class Sql
 {
 	/**
-	* @desc Builds a MySQL connection.
+	* @desc Build a MySQL connection.
 	*/
 	function Sql()
 	{
