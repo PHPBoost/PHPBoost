@@ -241,7 +241,7 @@ if ($menu_id > 0)
 }
 else
 {   // Create a new generic menu
-    $menu = new LinksMenu('', '', '', VERTICAL_SCROLLING_MENU);
+    $menu = new LinksMenu('', '', '', VERTICAL_MENU);
 }
 
 $block = $menu->get_block();
