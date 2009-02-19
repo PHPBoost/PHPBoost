@@ -12,7 +12,7 @@
             <div class="news_top_r"></div>
             <div class="news_top">
                 <div style="float:left;padding-left:30px;"><h3 class="title">{TITLE}</h3></div>
-                <div style="float:right;"># IF C_IS_ADMIN # <a href="../news/admin_news_config.php" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #</div>
+                <div style="float:right;"># IF C_IS_ADMIN # <a href="../news/admin_news_config.php" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a> # ENDIF #</div>
             </div>
             <div class="news_content">
                 &nbsp;&nbsp;{CONTENTS}
@@ -62,8 +62,8 @@
                 <span style="float:right;">
 					{news.U_COM}
 					# IF C_IS_ADMIN #
-					&nbsp;&nbsp;<a href="../news/admin_news.php?id={news.ID}" title="{L_EDIT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" /></a>
-					&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" /></a>
+					&nbsp;&nbsp;<a href="../news/admin_news.php?id={news.ID}" title="{L_EDIT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+					&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 					# ENDIF #
 				</span>
             </div>
