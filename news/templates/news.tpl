@@ -93,6 +93,7 @@
         </div>
         # ENDIF #
         
+		<div class="spacer"></div>
         <div class="text_center">{PAGINATION}</div>
         <div class="text_center">{ARCHIVES}</div>
 		<div class="spacer"></div>
