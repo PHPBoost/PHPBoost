@@ -64,6 +64,7 @@ if ($action_post == 'save')
     if ($menu->is_enabled())
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+    $menu->set_display_title(retrieve(POST, 'display_title', false));
     $menu->set_content((string) $_POST['contents']);
     
     MenuService::save($menu);
@@ -99,6 +100,7 @@ $tpl->assign_vars(array(
 	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
+    'L_DISPLAY_TITLE' => $LANG['display_title']
 ));
 
 //Localisation possibles.
@@ -129,7 +131,8 @@ if ($edit)
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
-		'CONTENTS' => !empty($content) ? unparse($content) : ''
+		'CONTENTS' => !empty($content) ? unparse($content) : '',
+	    'DISPLAY_TITLE_CHECKED' => $menu->get_display_title() ? 'checked="checked"' : ''
 	));
 }
 else

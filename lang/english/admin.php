@@ -456,6 +456,10 @@ $LANG['add_sub_element'] = 'Add item';
 $LANG['add_sub_menu'] = 'Add submenu';
 $LANG['add_sub_element'] = 'New item';
 $LANG['add_sub_menu'] = 'New submenu';
+$LANG['display_title'] = 'Display title';
+$LANG['choose_feed_in_list'] = 'Choose a feed in the list';
+$LANG['feed'] = 'feed';
+$LANG['availables_feeds'] = 'Availables feeds';
 
 //Gestion du contenu
 $LANG['content_config'] = 'Content';
@@ -687,8 +691,4 @@ $LANG['download_the_update_pack'] = 'Download the update pack';
 $LANG['no_availables_updates'] = 'No updates is available for the moment.';
 $LANG['incompatible_php_version'] = 'Incompatible PHP Version, please upgrade to %s or above';
 
-// Feeds menus
-$LANG['choose_feed_in_list'] = 'Choose a feed in the list';
-$LANG['feed'] = 'feed';
-$LANG['availables_feeds'] = 'Availables feeds';
 ?>
