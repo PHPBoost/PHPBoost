@@ -1,30 +1,29 @@
 <?php
-/**
+/*##################################################
  *                              mysql.class.php
  *                            -------------------
- *   begin                March 13, 2006
- * @author              CrowkaiT, Horn
- * @package          Kernel/Db
- *  @copyright       (C) 2005 Régis Viarre, Loïc Rouchon
- *  @email              crowkait@phpboost.com, horn@phpboost.com
- * @license            GPL
+ *   begin                : April 08, 2008
+ *   copyright            : (C) 2008 Régis Viarre, Loïc Rouchon
+ *   email                : crowkait@phpboost.com, horn@phpboost.com
  *
+ *
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
+ * 
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- */
+###################################################*/
 
 define('LOW_PRIORITY', 'LOW_PRIORITY');
 define('DB_NO_CONNECT', false);
@@ -38,20 +37,42 @@ define('CONNECTED_TO_DATABASE', 3);
 
 define('DBTYPE', 'mysql');
 
+/**
+ * @author Benoit
+ * This class manages all the database access done by PHPBoost.
+ * It currently manages only one DBMS, MySQL, but we made it as generic as we could.
+ * It doesn't manage ORM (Object Relationnal Mapping).
+ */
+
 class Sql
 {
-	## Public Methods ##
 	/**
-	* @method Sql
-	* @desc Constructeur de la classe Sql. Il prend en paramètre les paramètres de connexion à la base de données.
-	*  Par défaut la classe Sql gère de façon autonome les erreurs de connexion, mais on peut demander à les gérer manuellement
+	* @desc Builds a MySQL connection.
 	*/
-	function Sql() { }
+	function Sql()
+	{
+	}
 	
 	/**
-	* @method connect
-	* @
-	*/
+	 * @desc This method enables you to connect to the DBMS when you have the data base access informations.
+	 * @param string $sql_host Name or IP address of the server on which is the DBMS you want to use.
+	 * @param string $sql_login Login enabling PHPBoost to connect itselft to the DBMS (the MySQL login).
+	 * @param string $sql_pass Password enabling PHPBoost to connect itself to the DMBS.
+	 * @param $sql_base string Name of the data base PHPBoost must join an work on.
+	 * @param $errors_management bool The way according to which you want to manage the data base connection errors :
+	 * <ul>
+	 * 	<li>ERRORS_MANAGEMENT_BY_RETURN will return the error</li>
+	 * 	<li>EXPLICIT_ERRORS_MANAGEMENT will stop the script execution and display the error message</li>
+	 * </ul>
+	 * @return int If you chose to manage the errors by a return value (ERRORS_MANAGEMENT_BY_RETURN), 
+	 * it will return the state of the connection:
+	 * <ul>
+	 * 	<li>CONNECTED_TO_DATABASE if the connection succed</li>
+	 * 	<li>UNEXISTING_DATABASE if the host could be joined but the data base on which PHPBoost must work doesn't exists</li>
+	 * 	<li>CONNECTION_FAILED if the host is unreachable or the login and the password weren't correct</li>
+	 * </ul>
+	 * Otherwise, it won't return anything.
+	 */
 	function connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
 		//Identification sur le serveur
@@ -68,25 +89,35 @@ class Sql
 			{
 				//Traitement des erreurs
 				if ($errors_management)
+				{
 					$this->_error('', 'Can \'t select database!', __LINE__, __FILE__);
+				}
 				else
+				{
 					return UNEXISTING_DATABASE;
+				}
 			}
 		}
 		//La connexion a échoué
 		else
 		{
 			if ($errors_management)
+			{
 				$this->_error('', 'Can\'t connect to database!', __LINE__, __FILE__);
+			}
 			else
+			{
 				return CONNECTION_FAILED;
+			}
 		}
 	}
 	
 	/**
-	* @method auto_connect
-	* @desc Autoconnexion (lecture du fichier de configuration)
-	*/
+	 * @desc Connects automatically the application to the DBMS by reading the database configuration file 
+	 * whose path is /kernel/db/config.php.
+	 * If an error occures while connecting to the server, the script execution will be stopped and the error
+	 * will be written in the page. 
+	 */
 	function auto_connect()
 	{
 		//Lecture du fichier de configuration.
@@ -102,13 +133,18 @@ class Sql
 		//Connexion à la base de données
 		$result =  $this->connect($sql_host, $sql_login, $sql_pass, $sql_base);
 		$this->sql_base = $sql_base;
-		
-		return $result;
 	}
+	
 	/**
-	* @method query
-	* @desc Requête simple
-	*/
+	 * @desc Sends a simple selection query to the DBMS and retrieves the result.
+	 * A simple query selects only one field in one row.
+	 * @param string $query Selection query
+	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
+	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
+	 * @return string The result of your query (the value at the row and column you chose).
+	 */
 	function query($query, $errline, $errfile)
 	{
 		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);

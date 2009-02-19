@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             com.class.php
+ *                              note.class.php
  *                            -------------------
-*   begin                : April 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   begin                : April 08, 2008
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
