@@ -51,7 +51,7 @@ $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
 $LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
 $LANG['search_all'] = 'Tout';
-$LANG['search_no_options'] = 'Aucune options de recherche spécifique à ce module';
+$LANG['search_no_options'] = 'Aucune option de recherche spécifique à ce module';
 
 //Administration
 $LANG['search_management'] = 'Gestion de la recherche';

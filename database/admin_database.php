@@ -134,8 +134,8 @@ if (!empty($_GET['query']))
 	}	
 	
 	$Template->assign_vars(array(
-		'QUERY' => $Sql->indent_query($query),
-		'QUERY_HIGHLIGHT' => $Sql->highlight_query($query),
+		'QUERY' => Sql::indent_query($query),
+		'QUERY_HIGHLIGHT' => Sql::highlight_query($query),
 		'L_REQUIRE' => $LANG['require'],
 		'L_EXPLAIN_QUERY' => $LANG['db_query_explain'],
 		'L_CONFIRM_QUERY' => $LANG['db_confirm_query'],
