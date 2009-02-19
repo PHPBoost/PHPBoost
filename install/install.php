@@ -121,7 +121,7 @@ $user_groups = array();
 $User = new User($user_data, $user_groups);
 
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
-if (!is_dir('../cache') || !is_dir('../cache/tpl'))
+if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
 	
 //Reprise de l'installation depuis le début
