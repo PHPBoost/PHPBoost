@@ -201,8 +201,6 @@ $tpl->assign_vars(array(
     'JL_DELETE' => to_js_string($LANG['delete']),
     'JL_ADD_SUB_ELEMENT' => to_js_string($LANG['add_sub_element']),
     'JL_ADD_SUB_MENU' => to_js_string($LANG['add_sub_menu']),
-    'JL_NEW_SUB_ELEMENT' => to_js_string($LANG['new_sub_element']),
-    'JL_NEW_SUB_MENU' => to_js_string($LANG['new_sub_menu']),
 ));
 
 //Localisation possibles.

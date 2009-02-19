@@ -454,8 +454,10 @@ $LANG['location'] = 'Emplacement';
 $LANG['use_tpl'] = 'Utiliser la structure des templates';
 $LANG['add_sub_element'] = 'Ajouter un élément';
 $LANG['add_sub_menu'] = 'Ajouter un sous-menu';
-$LANG['new_sub_element'] = 'Nouvel élément';
-$LANG['new_sub_menu'] = 'Nouveau sous-menu';
+$LANG['display_title'] = 'Afficher le titre';
+$LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
+$LANG['feed'] = 'flux';
+$LANG['availables_feeds'] = 'Flux disponibles';
 
 
 
@@ -689,8 +691,4 @@ $LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
 $LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 $LANG['incompatible_php_version'] = 'Version de PHP incompatible, Veuillez utiliser la version %s ou ultérieure';
 
-// Feeds menus
-$LANG['choose_feed_in_list'] = 'Veuillez choisir un flux dans la liste';
-$LANG['feed'] = 'flux';
-$LANG['availables_feeds'] = 'Flux disponibles';
 ?>

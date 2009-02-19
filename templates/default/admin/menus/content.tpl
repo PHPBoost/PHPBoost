@@ -19,21 +19,25 @@ function CheckForm() {
 	<form action="content.php" method="post" onsubmit="return CheckForm();" class="fieldset_content">
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
-			<dl>
-				<dt><label for="name">* {L_NAME}</label></dt>
-				<dd><label><input type="text" size="18" name="name" id="name" class="text" value="{NAME}" /></label></dd>
-			</dl>
+            <dl>
+                <dt><label for="name">* {L_NAME}</label></dt>
+                <dd><input type="text" size="18" name="name" id="name" class="text" value="{NAME}" /></dd>
+            </dl>
+            <dl>
+                <dt><label for="name">* {L_DISPLAY_TITLE}</label></dt>
+                <dd><input type="checkbox" name="display_title[]" value="display_title" {DISPLAY_TITLE_CHECKED} /></dd>
+            </dl>
 			<dl>
 				<dt><label for="location">* {L_LOCATION}</label></dt>
-				<dd><label><select name="location" id="location">{LOCATIONS}</select></label></dd>
+				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
 			</dl>
 			<label>
 				{KERNEL_EDITOR}
-				<textarea type="text" rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
+				<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
 			</label>
 			<dl>
 				<dt><label for="activ">{L_STATUS}</label></dt>
-				<dd><label>
+				<dd>
 					<select name="activ" id="activ">
 					   # IF C_ENABLED #
 							<option value="1" selected="selected">{L_ENABLED}</option>
@@ -43,11 +47,11 @@ function CheckForm() {
                             <option value="0" selected="selected">{L_DISABLED}</option>
 						# ENDIF #					
 					</select>
-				</label></dd>
+				</dd>
 			</dl>
 			<dl>
-				<dt><label for="auth">{L_AUTHS}</label></dt>
-				<dd><label>{AUTH_MENUS}</label></dd>
+				<dt><label>{L_AUTHS}</label></dt>
+				<dd>{AUTH_MENUS}</dd>
 			</dl>
 		</fieldset>		
 	
