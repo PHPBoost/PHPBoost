@@ -324,7 +324,7 @@
 			<td class="row2" style="padding:10px 2px;">
 				<div style="height:260px;overflow:auto;">
 					# IF C_EMPTY_FOLDER #
-						<p style="text-align:center;" id="empty_folder">					
+						<p style="text-align:center;padding-top:25px;" id="empty_folder">					
 							{L_EMPTY_FOLDER}					
 						</p>
 					# ENDIF #
