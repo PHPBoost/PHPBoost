@@ -88,7 +88,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a parser object which will work in the language you chose.
+     * @desc Return a parser which will work in the language you chose.
      * @return ContentParser The parser to use to parse you formatting
      */
     function get_parser()
@@ -117,7 +117,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a unparser object which will work in the language you chose.
+     * @desc Return a unparser which will work in the language you chose.
      * @return ContentUnparser The unparser to use to unparse you formatting
      */
     function get_unparser()
@@ -146,7 +146,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a second parser object which will work in the language you chose.
+     * @desc Return a second parser which will work in the language you chose.
      * @return ContentSecondParser The second parser to use just before displaying you formatted text
      */
     function get_second_parser()
@@ -155,7 +155,10 @@ class ContentFormattingFactory
         return new ContentSecondParser();
     }
 
-    //Function which builds an object editor and returns it
+    /**
+     * @desc Return an editor object which will display the editor corresponding to the language you chose.
+     * @return ContentParser The editor to use.
+     */
     function get_editor()
     {
         switch ($this->language_type)
@@ -181,8 +184,8 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return an editor object which will display the editor corresponding to the language you chose.
-     * @return ContentParser The editor to use.
+     * @desc Return the name of the editor of the current user (chosen in its profile).
+     * @return string The editor used by the current user.
      */
     function get_user_editor()
     {
