@@ -208,7 +208,7 @@ if (!empty($id_get))
 	foreach ($Bread_crumb->array_links as $key => $array)
 	{
 		if ($i == 2)
-			$forum_cats .= '<a href="' . $array[1] . '">' . $array[0] . '</a>';
+			$forum_cats .= '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $array[0] . '</a>';
 		elseif ($i > 2)		
 			$forum_cats .= ' &raquo; <a href="' . $array[1] . '">' . $array[0] . '</a>';
 		$i++;
