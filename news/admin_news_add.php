@@ -91,6 +91,8 @@ if (!empty($_POST['valid']))
 		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM " . PREFIX . "news WHERE visible = 1", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_NEWS)) . "' WHERE name = 'news'", __LINE__, __FILE__);
 			
+		$Cache->Generate_module_file('news');
+			
 		redirect(HOST . DIR . '/news/admin_news.php');
 	}
 	else
