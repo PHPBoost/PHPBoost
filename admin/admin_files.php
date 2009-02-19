@@ -100,7 +100,11 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 {
 	//Suppression du dossier et de tout le contenu	
 	$Uploads->Del_folder($del_folder);
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
+	
+	if (!empty($folder_member))
+		redirect(HOST . DIR . '/admin/admin_files.php?fm=' . $folder_member);
+	else
+		redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
 }
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
@@ -349,9 +353,8 @@ else
 		'TOTAL_FILES' => $total_files
 	));
 
-
 	if ($total_directories == 0 && $total_files == 0 && (!empty($folder) || !empty($show_member)))
-		$Template->assign_block_vars('empty_folder', array(
+		$Template->assign_vars(array(
 			'C_EMPTY_FOLDER' => true,
 			'L_EMPTY_FOLDER' => $LANG['empty_folder']
 		));

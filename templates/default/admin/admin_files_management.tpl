@@ -295,8 +295,8 @@
 				<tr>	
 					<td class="row2" style="padding:5px 2px;">
 						# IF C_EMPTY_FOLDER #
-							<p style="text-align:center;" id="empty_folder">					
-								{EMPTY_FOLDER}					
+							<p style="text-align:center;padding-top:15px;" id="empty_folder">					
+								{L_EMPTY_FOLDER}					
 							</p>
 						# ENDIF #
 						
@@ -310,7 +310,7 @@
 									<td style="padding-top:8px;">						
 										<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span>
 										<div style="padding-top:5px;">
-											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}" onclick="javascript:return Confirm_{folder.ALERT_DEL}();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}{FOLDERM_ID}" onclick="javascript:return Confirm_{folder.ALERT_DEL}();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
 											
 											<a style="display:none" href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
 											<span id="img{folder.ID}"></span>
