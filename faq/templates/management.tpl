@@ -86,7 +86,7 @@
 								<span class="text_small">{L_DISPLAY_EXPLAIN}</span>
 							</dt>
 							<dd>
-								<select name="display_mode">
+								<select name="display_mode" id="display_mode">
 									<option value="0" {AUTO_SELECTED}>{L_DISPLAY_AUTO}</option>
 									<option value="1" {INLINE_SELECTED}>{L_DISPLAY_INLINE}</option>
 									<option value="2" {BLOCK_SELECTED}>{L_DISPLAY_BLOCK}</option>

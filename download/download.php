@@ -108,7 +108,7 @@ else
 		'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents']),
 		'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
 		'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
-		'U_ADD_FILE' => url('management.php?new=1&idcat=' . $category_id)
+		'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
 	));
 	
 	//let's check if there are some subcategories
