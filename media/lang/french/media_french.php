@@ -75,7 +75,7 @@ $MEDIA_LANG = array(
 // admin_media_config.php
 'config_auth' => 'Autorisations générales',
 'config_auth_explain' => 'Configurez ici les autorisations générales de lecture et d\'écriture du module MULTIMEDIA. Vous pourrez ensuite pour chaque catégorie appliquer des autorisations particulières.',
-'config_display' => 'Configuraion de l\'affichage',
+'config_display' => 'Configuration de l\'affichage',
 'config_general' => 'Configuration générale',
 'mime_type' => 'Types de fichiers autorisés',
 'module_desc' => 'Description du module',
@@ -152,7 +152,7 @@ $MEDIA_LANG = array(
 'media_width' => 'Largeur de la vidéo',
 'notice_contribution' => 'Vous n\'êtes pas autorisé à ajouter un fichier multimédia, cependant vous pouvez proposer un fichier multimédia. Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 'require_name' => 'Vous devez donnez un titre à ce fichier multimédia !',
-'require_url' => 'Vous devez renseignez l\'URL de votre fichier multimédia !',
+'require_url' => 'Vous devez renseigner le lien de votre fichier multimédia !',
 
 // media_interface.class.php
 'media' => 'Fichier Multimédia',
@@ -167,7 +167,7 @@ $MEDIA_LANG = array(
 
 $LANG['e_mime_disable_media'] = 'Le type du fichier multimédia que vous souhaitez proposer est désactivé !';
 $LANG['e_mime_unknow_media'] = 'Impossible de déterminer le mime type de ce fichier !';
-$LANG['e_link_empty_media'] = 'Veuillez reseigner le lien de votre fichier multimédia !';
+$LANG['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier multimédia !';
 $LANG['e_unexist_media'] = 'Le fichier multimédia demandée n\'existe pas !';
 
 ?>
