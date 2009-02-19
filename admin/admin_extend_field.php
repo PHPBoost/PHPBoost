@@ -240,8 +240,8 @@ else
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	
 	$result = $Sql->query_while("SELECT id, class, name
 	FROM " . PREFIX . "member_extend_cat
