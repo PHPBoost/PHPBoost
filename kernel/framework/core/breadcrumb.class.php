@@ -42,7 +42,7 @@ class BreadCrumb
     }
 
     /**
-     * @desc Add a link in the bread crumb. This link will be put at the end of the list.
+     * @desc Adds a link in the bread crumb. This link will be put at the end of the list.
      * @param string $text Name of the page
      * @param string $target Link whose target is the page
      */
@@ -60,7 +60,7 @@ class BreadCrumb
     }
 
     /**
-     * @desc Reverse the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
+     * @desc Reverses the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
      * end, you only need to reverse the list and it will be ok.
      */
     function reverse()
@@ -69,7 +69,7 @@ class BreadCrumb
     }
 
     /**
-     * @desc Remove the last link of the list
+     * @desc Removes the last link of the list
      */
     function remove_last()
     {
@@ -77,7 +77,7 @@ class BreadCrumb
     }
 
     /**
-     * @desc Display the bread crumb.
+     * @desc Displays the bread crumb.
      */
     function display()
     {
@@ -103,7 +103,7 @@ class BreadCrumb
     }
 
     /**
-     * @desc Remove all the existing links.
+     * @desc Removes all the existing links.
      */
     function clean()
     {

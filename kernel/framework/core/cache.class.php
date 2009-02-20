@@ -38,7 +38,7 @@ define('NO_FATAL_ERROR_CACHE', true);
 class Cache
 {
     /**
-     * @desc Build a Cache object. Check if the directory in which the cache is written is writable.
+     * @desc Builds a Cache object. Check if the directory in which the cache is written is writable.
      */
     function Cache()
     {
@@ -52,7 +52,7 @@ class Cache
     }
 
     /**
-     * @desc Load a file file.
+     * @desc Loads a file file.
      * @param string $file Identifier of the cache file (for example the name of your module).
      * @param bool $reload_cache If the cache file may have been already loaded, RELOAD_CACHE force it to be reloaded, for example if the file
      * has been updated since the first loading.
@@ -142,7 +142,7 @@ class Cache
     }
 
     /**
-     * @desc Generate a file according to the specified method.
+     * @desc Generates a file according to the specified method.
      * @param string $file The name of the file to generate.
      */
     function generate_file($file)
@@ -151,7 +151,7 @@ class Cache
     }
 
     /**
-     * @desc Generate a module file
+     * @desc Generates a module file
      * @param string $module_name Name of the module for which you want to generate the cache.
      * @param bool $no_alert_on_error true if you want to display the generation error, false otherwise.
      */
@@ -174,7 +174,7 @@ class Cache
     }
 
     /**
-     * @desc Regenerate all the cache files managed by the PHPBoost cache manager. This method needs a lot of resource, call it only when you are sure you need it.
+     * @desc Regenerates all the cache files managed by the PHPBoost cache manager. This method needs a lot of resource, call it only when you are sure you need it.
      */
     function generate_all_files()
     {
@@ -188,7 +188,7 @@ class Cache
     }
 
     /**
-     * @desc Generate all the module cache files.
+     * @desc Generates all the module cache files.
      */
     function generate_all_modules()
     {
@@ -207,7 +207,7 @@ class Cache
     }
 
     /**
-     * @desc Delete a cache file.
+     * @desc Deletes a cache file.
      * @param string $file Name of the file to delete.
      * @return true if the file could be deleted, false otherwise.
      */
@@ -224,7 +224,7 @@ class Cache
     }
 
     /**
-     * @desc Write a cache file.
+     * @desc Writes a cache file.
      * @param string $module_name Name of the file to write
      * @param string $cache_string Content of the file to write
      */

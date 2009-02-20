@@ -36,7 +36,7 @@ import('content/sitemap/site_map_element');
 class SiteMapSection extends SiteMapElement
 {
     /**
-     * @desc Build a SiteMapSection object 
+     * @desc Builds a SiteMapSection object 
      * @param SiteMapLink $link The link associated to the section
      */
     function SiteMapSection($link)
@@ -45,7 +45,7 @@ class SiteMapSection extends SiteMapElement
     }
     
     /**
-     * @desc Return the link associated to the section 
+     * @desc Returns the link associated to the section 
      * @return SiteMapLink the link
      */
     function get_link()
@@ -54,7 +54,7 @@ class SiteMapSection extends SiteMapElement
     }
     
     /**
-     * @desc Set the link associated to the section 
+     * @desc Sets the link associated to the section 
      * @param SiteMapLink $link the link
      */
     function set_link($link)
@@ -62,7 +62,7 @@ class SiteMapSection extends SiteMapElement
         $this->link = $link;    
     }
     /**
-     * @desc Set the depth of the element
+     * @desc Sets the depth of the element
      * @warning the description is not protected for XML displaying (but usefulless in sitemap.xml)
      * @param int $depth The depth of the element
      */

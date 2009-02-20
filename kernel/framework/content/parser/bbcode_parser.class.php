@@ -30,14 +30,14 @@ import('content/parser/content_parser');
 /**
  * @package parser
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- * Converts the PHPBoost BBCode language to the XHTML language which is stocked in
+ * @desc Converts the PHPBoost BBCode language to the XHTML language which is stocked in
  * the database and can be displayed nearly directly.
  * It parses only the authorized tags (defined in the parent class which is ContentParser).
  */
 class BBCodeParser extends ContentParser
 {
 	/**
-	 * Builds a BBCodeParser object
+	 * @desc Builds a BBCodeParser object
 	 */
 	function BBCodeParser()
 	{
@@ -45,7 +45,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Parses the parser content from BBCode to XHTML.
+	 * @desc Parses the parser content from BBCode to XHTML.
 	 * @return void You will find the result by using the get_content method
 	 */
 	function parse()
@@ -106,7 +106,7 @@ class BBCodeParser extends ContentParser
 	
 	## Private ##
 	/**
-	 * Protects the incoming content:
+	 * @desc Protects the incoming content:
 	 * <ul>
 	 * 	<li>Breaks all HTML tags and javascript code</li>
 	 * 	<li>Accepts only the special character's entitites</li>
@@ -138,7 +138,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Replaces the smiley's code by the corresponding HTML image tag 
+	 * @desc Replaces the smiley's code by the corresponding HTML image tag 
 	 */
 	function _parse_smilies()
 	{
@@ -156,7 +156,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Parses all BBCode simple tags.
+	 * @desc Parses all BBCode simple tags.
 	 * The simple tags are those which can be treated enough requiring many different treatments.
 	 * The not simple tags are [code], [html], [table] and its content [row] [col] [head], [list].
 	 */
@@ -307,7 +307,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Serializes a split content according to the table tag and generates the complete HTML code.
+	 * @desc Serializes a split content according to the table tag and generates the complete HTML code.
 	 * @param string[] $content Content of the parser split according to the table tag
 	 */
 	function _parse_imbricated_table(&$content)
@@ -362,7 +362,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Parses the table tag in the content of the parser
+	 * @desc Parses the table tag in the content of the parser
 	 */
 	function _parse_table()
 	{
@@ -374,7 +374,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Serializes a split content according to the list tag
+	 * @descSerializes a split content according to the list tag
 	 * Generates the HTML code
 	 * @param string[] $content Content split according to the list tag
 	 */
@@ -420,7 +420,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Parses the list tag of the content of the parser.
+	 * @desc Parses the list tag of the content of the parser.
 	 */
 	function _parse_list()
 	{
@@ -434,7 +434,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Callback treating the title tag
+	 * @desc Callback treating the title tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the title tag are parsed
 	 */
@@ -448,7 +448,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Callback which parses the wikipedia tag
+	 * @desc Callback which parses the wikipedia tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
@@ -467,7 +467,7 @@ class BBCodeParser extends ContentParser
 	}
 	
 	/**
-	 * Callback which clears the new line tag in the HTML generated code
+	 * @desc Callback which clears the new line tag in the HTML generated code
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the new line tag are cleared
 	 */

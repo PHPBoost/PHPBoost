@@ -6,7 +6,7 @@
  *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
- *   SitemapLink
+ *
  *
  ###################################################
  *
@@ -58,7 +58,7 @@ class SiteMapLink extends SiteMapElement
     }
     
     /**
-     * @desc Return the name of the target page 
+     * @desc Returns the name of the target page 
      * @return string name
      */
     function get_name()
@@ -67,7 +67,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Return the URL of the link
+     * @desc Returns the URL of the link
      * @return Url The URL of the link
      */
     function get_link()
@@ -76,7 +76,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Get the change frequency (how often the target page is actualized)
+     * @desc Gets the change frequency (how often the target page is actualized)
      * @return string Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
      * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
      * SITE_MAP_FREQ_DEFAULT
@@ -87,7 +87,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Get the priority of the link
+     * @desc Gets the priority of the link
      * @return string Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
      * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
      */
@@ -106,7 +106,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Return the URL of the link 
+     * @desc Returns the URL of the link 
      * @return string the URL
      */
     function get_url()
@@ -122,7 +122,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Set the name of the element
+     * @desc Sets the name of the element
      * @param string $name name of the element
      */
     function set_name($name)
@@ -131,7 +131,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Set the URL of the link
+     * @desc Sets the URL of the link
      * @param Url $link URL
      */
     function set_link($link)
@@ -147,7 +147,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Set the change frequency
+     * @desc Sets the change frequency
      * @param string $change_freq Frequency taken into the following enum: SITE_MAP_FREQ_ALWAYS, SITE_MAP_FREQ_HOURLY,
      * SITE_MAP_FREQ_DAILY, SITE_MAP_FREQ_WEEKLY, SITE_MAP_FREQ_MONTHLY, SITE_MAP_FREQ_YEARLY, SITE_MAP_FREQ_NEVER,
      * SITE_MAP_FREQ_DEFAULT
@@ -166,7 +166,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Set the priority of the link
+     * @desc Sets the priority of the link
      * @param string $priority Priority taken into the following enum: SITE_MAP_PRIORITY_MAX, SITE_MAP_PRIORITY_HIGH,
      * SITE_MAP_PRIORITY_AVERAGE, SITE_MAP_PRIORITY_LOW, SITE_MAP_PRIORITY_MIN
      */
@@ -183,7 +183,7 @@ class SiteMapLink extends SiteMapElement
     }
 
     /**
-     * @desc Set the last modification date of the target page
+     * @desc Sets the last modification date of the target page
      * @param Date $date date
      */
     function set_last_modification_date($last_modification_date)

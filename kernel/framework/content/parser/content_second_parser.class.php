@@ -28,19 +28,18 @@
 import('content/parser/parser');
 
 /**
- * This class makes the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
+ * @desc This class makes the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
  * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
  * which replaces the code by a lot of html code which formats the code.
  * This kind of tag is treated in real time by this class.
  * The content you put in that parser must come from a ContentParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * @desc
  */
 class ContentSecondParser extends Parser
 {
     ######## Public #######
     /**
-    * @desc Build a ContentSecondParser object
+    * @desc Builds a ContentSecondParser object
     */
     function ContentSecondParser()
     {
@@ -74,7 +73,7 @@ class ContentSecondParser extends Parser
 
     /**
      * @static
-     * @desc Highlight a content in a supported language using the appropriate syntax highlighter.
+     * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
      * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html, 
      * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml, 
      * PHPBoost templates and PHPBoost BBCode.

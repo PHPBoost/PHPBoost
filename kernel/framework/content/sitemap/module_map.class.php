@@ -37,7 +37,7 @@ import('content/sitemap/site_map_section');
 class ModuleMap extends SiteMapSection
 {
     /**
-     * @desc Build a ModuleMap object
+     * @desc Builds a ModuleMap object
      * @param SiteMapLink $link Link associated to the root of the module
      */
     function ModuleMap($link)
@@ -56,7 +56,7 @@ class ModuleMap extends SiteMapSection
     }
 
     /**
-     * @desc Set the description of the module
+     * @desc Sets the description of the module
      * @param string $description Description of the module
      */
     function set_description($description)

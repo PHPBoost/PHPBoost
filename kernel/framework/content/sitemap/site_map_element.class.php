@@ -37,7 +37,7 @@
 class SiteMapElement
 {
     /**
-     * @desc Build a SiteMapElement object
+     * @desc Builds a SiteMapElement object
      * @param string $name Name of the object
      */
     function SiteMapElement($name)
@@ -46,7 +46,7 @@ class SiteMapElement
     }
 
     /**
-     * @desc Return the depth of the element in the tree
+     * @desc Returns the depth of the element in the tree
      * @return int depth
      */
     function get_depth()
@@ -55,7 +55,7 @@ class SiteMapElement
     }
 
     /**
-     * @desc Return the name of the menu
+     * @desc Returns the name of the menu
      * @return string name
      */
     function get_name()
@@ -71,7 +71,7 @@ class SiteMapElement
     }
 
     /**
-     * @desc Set the depth of the element
+     * @desc Sets the depth of the element
      * @param int $depth the depth of the element
      */
     function set_depth($depth)
