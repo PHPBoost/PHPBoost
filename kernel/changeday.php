@@ -55,7 +55,7 @@ if ($check_update == 0)
     $Sql->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'", __LINE__, __FILE__);
 
 	//Suppression des sessions périmées
-	$Session->_garbage_collector();
+	$Session->garbage_collector();
 
 	//Suppression des images du cache des formules mathématiques, supprimé chaque semaine.
 	$rep = PATH_TO_ROOT . '/images/maths/';
@@ -107,10 +107,5 @@ if ($check_update == 0)
     // Check kernel's, modules' or themes' availability
     import('core/updates');
     new Updates();
-
-    //Optimisations des tables
-    $array_tables = $Sql->list_tables();
-    foreach ($array_tables as $key => $table)
-        $Sql->query_inject("OPTIMIZE TABLE ".PREFIX . $table, __LINE__, __FILE__);
 }
 ?>
