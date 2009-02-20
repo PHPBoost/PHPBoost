@@ -59,18 +59,16 @@ if ($check_update == 0)
 
 	//Suppression des images du cache des formules mathématiques, supprimé chaque semaine.
 	import('io/filesystem/folder');
-	$rep = PATH_TO_ROOT . '/images/maths/';
-	$dh = @opendir($rep);
 	$week = 3600*24*7;
-	while (!is_bool($fichier = readdir($dh)))
+	$cache_image_folder_path = new Folder(PATH_TO_ROOT . '/images/maths/');
+	foreach ($cache_image_folder_path->get_files('`\.png$`') as $image)
 	{
-		if (preg_match('`\.png$`', $fichier))
+		//On supprime toutes les images datant de plus d'une semaine
+		if ((time() - $image->get_last_modification_date()) > $week)
 		{
-			if ((time() - filemtime($rep . $fichier)) > $week) //Une semaine avant péremption
-				@unlink($rep . $fichier);
+			$image->delete();
 		}
 	}
-	@closedir($dh); //On ferme le dossier
     
     //Check for availables updates
     import('core/updates');
@@ -90,15 +88,6 @@ if ($check_update == 0)
 	$CONFIG_USER['delay_unactiv_max'] = ($CONFIG_USER['delay_unactiv_max'] * 3600 * 24); //On passe en secondes.
 	if (!empty($CONFIG_USER['delay_unactiv_max']) && $CONFIG_USER['activ_mbr'] != 2)
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE timestamp < '" . (time() - $CONFIG_USER['delay_unactiv_max']) . "' AND user_aprob = 0", __LINE__, __FILE__);
-    
-    $rep = PATH_TO_ROOT . '/cache/';
-    $dh = @opendir($rep);
-    while (!is_bool($fichier = readdir($dh)))
-    {
-        if (preg_match('`\.png$`', $fichier))
-            @unlink($rep . $fichier);
-    }
-    @closedir($dh); //On ferme le dossier
     
 	//Vidage des entrées des inscriptions
 	if ($CONFIG_USER['verif_code'] == '1')
