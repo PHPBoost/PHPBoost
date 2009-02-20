@@ -57,7 +57,7 @@ class BBCodeParser extends ContentParser
 			$this->_pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
-		if ($User->check_auth($this->html_auth, 1))
+		if (!in_array('html', $this->forbidden_tags) && $User->check_auth($this->html_auth, 1))
 			$this->_pick_up_tag('html');
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
