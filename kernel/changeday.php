@@ -58,6 +58,7 @@ if ($check_update == 0)
 	$Session->garbage_collector();
 
 	//Suppression des images du cache des formules mathématiques, supprimé chaque semaine.
+	import('io/filesystem/folder');
 	$rep = PATH_TO_ROOT . '/images/maths/';
 	$dh = @opendir($rep);
 	$week = 3600*24*7;
@@ -77,11 +78,11 @@ if ($check_update == 0)
     
 	//Parcours des modules afin d'executer les actions journalières.
 	import('modules/modules_discovery_service');
-	$modulesLoader = new ModulesDiscoveryService();
-	$modules = $modulesLoader->get_available_modules('on_changeday');
+	$modules_loader = new ModulesDiscoveryService();
+	$modules = $modules_loader->get_available_modules('on_changeday');
 	foreach ($modules as $module)
 	{
-		if ($MODULES[strtolower($module->id)]['activ'] == '1') //Module activé
+		if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé
 			$module->functionnality('on_changeday');
 	}
 

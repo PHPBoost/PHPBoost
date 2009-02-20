@@ -130,7 +130,7 @@ class Feed
     // clear the cache
     /*static*/ function clear_cache($module_id = false)
     {
-        import('io/folder');
+        import('io/filesystem/folder');
         $folder = new Folder(FEEDS_PATH, OPEN_NOW);
        
         $files = null;
@@ -145,7 +145,7 @@ class Feed
 
     /*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
     {
-        import('io/file');
+        import('io/filesystem/file');
         $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
         $file->write('<?php $feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
         $file->close();

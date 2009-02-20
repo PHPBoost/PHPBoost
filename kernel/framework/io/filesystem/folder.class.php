@@ -25,8 +25,8 @@
  *
 ###################################################*/
 
-import('io/file_system_element');
-import('io/file');
+import('io/filesystem/file_system_element');
+import('io/filesystem/file');
 
 //Dossier
 class Folder extends FileSystemElement

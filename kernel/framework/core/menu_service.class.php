@@ -408,7 +408,7 @@ class MenuService
     {
         global $Sql;
         
-        import('io/folder');
+        import('io/filesystem/folder');
         $m_menus_directory = new Folder(PATH_TO_ROOT . '/menus');
         $m_menus_list = $m_menus_directory->get_folders();
         
@@ -574,7 +574,7 @@ class MenuService
             {
                 $img = '';
                 $img_url = '../' . $module->get_id() . '/' . $module->get_id();
-                import('io/file');
+                import('io/filesystem/file');
                 foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
                 {
                     $file = new File($img_url . $extension);
