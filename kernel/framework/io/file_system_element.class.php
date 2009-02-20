@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             fse.class.php
+ *                      file_system_element.class.php
  *                            -------------------
  *   begin                : July 06, 2008
- *   copyright          : (C) 2008 Nicolas Duhamel
+ *   copyright            : (C) 2008 Nicolas Duhamel
  *   email                : akhenathon2@gmail.com
  *
  *

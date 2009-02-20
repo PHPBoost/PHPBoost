@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('io/fse');
+import('io/file_system_element');
 import('io/file');
 
 //Dossier
