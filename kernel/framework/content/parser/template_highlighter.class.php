@@ -50,7 +50,7 @@ class TemplateHighlighter extends Parser
 	}
 
 	/**
-	 * @desc Highlight the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax. 
+	 * @desc Highlights the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax. 
 	 * @param int $line_number GESHI_NO_LINE_NUMBERS => no line numbers, GESHI_NORMAL_LINE_NUMBERS line numbers.
 	 * @param bool $inline_code true if it's a sigle line code, otherwise false.
 	 */

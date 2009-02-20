@@ -101,7 +101,7 @@ class CategoriesManager
 {
 	## Public methods ##
 	/**
-     * @desc Build a CategoriesManager object
+     * @desc Builds a CategoriesManager object
 	 * @param string $table Table name of the database which contains the require fields (explained in the class description)
 	 * @param string $cache_file_name Name of the cache file (usefull to regenerate the cache after a modification of the categories tree)
 	 * @param &array[] &$cache_var Array containing the correct data, descripted in the description of the class.
@@ -115,7 +115,7 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Add a category. We can decide if it will be visible and what its position will be
+	 * @desc Adds a category. We can decide if it will be visible and what its position will be
 	 * @param int $id_parent Id of the category in which this category will be added
 	 * @param string $name Name of the category to add
 	 * @param bool $visible Is the category visible? CAT_VISIBLE if visible, CAT_UNVISIBLE else
@@ -155,7 +155,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * @desc Move a category (makes it gone up or down)
+	 * @desc Moves a category (makes it gone up or down)
 	 * @param int $id Id of the category to move
 	 * @param string $way The way according to which the category has to be moved. It must be either MOVE_CATEGORY_UP or MOVE_CATEGORY_DOWN.
 	 * @return bool true wether the category could be moved, false otherwise. If it's false, you will be able to know what was the error by using check_error method.
@@ -232,7 +232,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * @desc Move a category into another category. You can specify its future position in its future parent category.
+	 * @desc Moves a category into another category. You can specify its future position in its future parent category.
 	 * @param int $id Id of the category to move
 	 * @param int $new_id_cat Id of the parent category in which the category will be moved.
 	 * @param int $position Position (number) that the category has to take in its new parent category. If not specified, it will be placed at the end of the category. 
@@ -299,7 +299,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * @desc Delete a category.
+	 * @desc Deletes a category.
 	 * @param int $id Id of the category to delete.
 	 * @return bool true if the category has been deleted successfully and false otherwise, and in this case you can find the error in the check_error method.
 	 * The error CATEGORY_DOES_NOT_EXIST is raised if the category to delete doesn't exist. 
@@ -331,7 +331,7 @@ class CategoriesManager
 	}
 	
 	/**
-	 * @desc Change the visibility of a category
+	 * @desc Changes the visibility of a category
 	 * @param int $category_id id of the category whose property must be changed
 	 * @param bool $visibility set to visible or unvisible (use constants CAT_VISIBLE and CAT_UNVISIBLE)
 	 * @param bool $generate_cache if you want that the system regenerate the cache file of the module. Use the constants LOAD_CACHE to regenerate and reload the cache or DO_NOT_LOAD_CACHE else. 
@@ -390,8 +390,12 @@ class CategoriesManager
 		
 		return $this->check_display_config();
 	}
-
-	//Method which checks if display configuration is good
+ 
+	/**
+	 * @desc Checks if display configuration is good
+	 * @param bool $debug DEBUG_MODE if you want to display the errors, or PRODUCTION_MODE to return false if it fails.
+	 * @return bool true if the configuration is correct, false otherwise.
+	 */
 	function check_display_config($debug = PRODUCTION_MODE)
 	{
 		if (!empty($this->display_config))
@@ -468,7 +472,6 @@ class CategoriesManager
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
-	//Method which builds a select form to choose a category
 	/**
 	 * @desc Builds a formulary which allows user to choose a category in a select form.
 	 * @param int $selected_id Current category id (the id of the category selected in default displaying).
@@ -505,7 +508,6 @@ class CategoriesManager
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
-	//Recursive method which builds the list of all chlidren of one category
 	/**
 	 * @desc Builds the list of all the children of a category
 	 * @param int $category_id Id of the category for which we want to know the children
@@ -546,7 +548,6 @@ class CategoriesManager
 		}
 	}
 	
-	//Method which builds the list of all parents of one category
 	/**
 	 * @desc Builds the list of the parent categories of a category
 	 * @param int $category_id Id of the category of which you want the list of parents categories.
@@ -570,7 +571,6 @@ class CategoriesManager
 			return array();
 	}
 	
-	//Method for users who want to know what was the error
 	/**
 	 * @desc Checks if an error has been raised on the last reported error.
 	 * At each call of a method of this class which can raise an error, the last error is erased.
@@ -582,7 +582,6 @@ class CategoriesManager
 		return (bool)($this->errors ^ $error);
 	}
 	
-	//Compute the final authorisation level
 	/**
 	 * @desc Computes the global authorization level of the whole parent categories. The result corresponds to all the category's parents merged.
 	 * @param int $category_id Id of the category for which you want to know what is the global authorization

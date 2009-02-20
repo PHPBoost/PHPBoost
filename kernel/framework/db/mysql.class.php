@@ -54,7 +54,7 @@ define('DBTYPE', 'mysql');
 class Sql
 {
 	/**
-	* @desc Build a MySQL connection.
+	* @desc Builds a MySQL connection.
 	*/
 	function Sql()
 	{
@@ -247,7 +247,7 @@ class Sql
 	}
 
 	/**
-	 * @desc Count the number of the row contained in a table.
+	 * @desc Counts the number of the row contained in a table.
 	 * @param string $table Table name
 	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
@@ -266,7 +266,7 @@ class Sql
 	}
 
 	/**
-	 * @desc Build the MySQL syntax used to impose a limit in your row selection.
+	 * @desc Builds the MySQL syntax used to impose a limit in your row selection.
 	 * @param int $start Number of the first row (0 is the first).
 	 * @param int $num_lines Number of the rows you want to retrieve.
 	 * @return string The MySQL syntax for the limit instruction.
@@ -297,7 +297,7 @@ class Sql
     }
 
 	/**
-	 * @desc Browse a MySQL result resource row per row.
+	 * @desc Browses a MySQL result resource row per row.
 	 * When you call this method on a resource, you get the next row.
 	 * @param resource $result MySQL result resource to browse. The resource is provided by the query_while method.
 	 * @return string[] An associative array whose keys are the name of each column and values are the value of the field.
@@ -309,7 +309,7 @@ class Sql
 	}
 
 	/**
-	 * @desc Browse a MySQL result resource row per row.
+	 * @desc Browses a MySQL result resource row per row.
 	 * When you call this method on a resource, you get the next row.
 	 * @param resource $result MySQL result resource to browse. The resource is provided by the query_while method.
 	 * @return string[] An array whose values are the value of the field. The fields are indexed according to the order they had in the select query.
@@ -321,7 +321,7 @@ class Sql
 	}
 	
 	/**
-	 * @desc Return the number of the rows which have been affected by a request.
+	 * @desc Returns the number of the rows which have been affected by a request.
 	 * @param resource $ressource Resource corresponding to the request.
 	 * The resource is given by the method which execute some queries in the data base.
 	 * @param string $query Deprecated field. Don't use it. 
@@ -333,7 +333,7 @@ class Sql
 	}
 	
 	/**
-	 * @desc Return the number of rows got by a selection query.
+	 * @desc Returns the number of rows got by a selection query.
 	 * @param resource $ressource Resource corresponding to the result of the query.
 	 * @param $query Deprecated field. Don't use it.
 	 * @return int The number of rows contained in the resource.
@@ -344,7 +344,7 @@ class Sql
 	}
 
 	/**
-	 * @desc Get the ID generated from the previous INSERT operation.
+	 * @desc Gets the ID generated from the previous INSERT operation.
 	 * @param $query
 	 * @return int The ID generated for an AUTO_INCREMENT column by the previous 
      * INSERT query on success, 0 if the previous query does not generate an AUTO_INCREMENT value.
@@ -365,7 +365,7 @@ class Sql
 	}
 
 	/**
-	* @desc Free the memory allocated for a resource.
+	* @desc Frees the memory allocated for a resource.
 	* @param resource $resource Resource you want to desallocate.
 	* @return bool true if the memory could be disallocated and false otherwise.
 	*/
@@ -376,7 +376,7 @@ class Sql
 	}
 	
 	/**
-	* @desc Close the current MySQL connection if it is open.
+	* @desc Closes the current MySQL connection if it is open.
 	* @return bool true if the connection could be closed, false otherwise.
 	*/
 	function close()
@@ -393,7 +393,7 @@ class Sql
 	}
 
 	/**
-	* @desc List all the columns of a table.
+	* @desc Lists all the columns of a table.
 	* @param string $table Name of the table.
 	* @return string[] list of the fields of the table.
 	*/
@@ -414,7 +414,7 @@ class Sql
 	}
 	
 	/**
-	* @desc List the tables (name and informations relatives to each table) of the data base at which is connected this SQL object.
+	* @desc Lists the tables (name and informations relatives to each table) of the data base at which is connected this SQL object.
 	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
 	* @return string[] Map containing the following structure:
 	* for each table: table_name => array(
@@ -456,7 +456,7 @@ class Sql
 	}
 
 	/**
-	* @desc Parse a SQL file. The SQL file contains the name of the tables with the prefix phpboost_.
+	* @desc Parses a SQL file. The SQL file contains the name of the tables with the prefix phpboost_.
 	* @param string $file_path Path of the file.
 	* @param string prefix The prefix you want to work with.
 	*/
@@ -495,7 +495,7 @@ class Sql
 	}
 	
 	/**
-	* @desc Return the number of request executed by this object.
+	* @desc Returns the number of request executed by this object.
 	* @return int Number of request executed.
 	*/
 	function get_executed_requests_number()
@@ -505,7 +505,7 @@ class Sql
 
 	/**
 	* @static
-	* @desc Highlight a SQL query to be more readable by a human.
+	* @desc Highlights a SQL query to be more readable by a human.
 	* @param string $query Query to highlight
 	* @return string HTML code corresponding to the highlighted query.
 	*/
@@ -538,7 +538,7 @@ class Sql
 	
 	/**
 	* @static 
-	* @desc Indent a MySQL query.
+	* @desc Indents a MySQL query.
 	* @param string $query Query to indent.
 	* @return string The indented SQL query.
 	*/
@@ -563,7 +563,7 @@ class Sql
 	}
 	
 	/**
-	* @desc Get the version of MySQL used.
+	* @desc Gets the version of MySQL used.
 	* @return string The version used.
 	*/
 	function get_dbms_version()
@@ -572,7 +572,7 @@ class Sql
 	}
 
 	/**
-	* @desc List the existing data bases on the DBMS at which the object is connected.
+	* @desc Lists the existing data bases on the DBMS at which the object is connected.
 	* Only the data bases visible for the user connected will be returned.
 	* @return string[] The list of the data bases
 	*/
@@ -589,7 +589,7 @@ class Sql
 	}
 	
 	/**
-	* @desc Create a data base on the DBMS at which is connected the current object.
+	* @desc Creates a data base on the DBMS at which is connected the current object.
 	* @param string $db_name Name of the data base to create
 	* @return resource The resource associated to the executed request.
 	*/
@@ -621,7 +621,7 @@ class Sql
 	
 	## Private Methods ##
 	/**
-	* @desc Manage all the errors linked to the data base. It stops the execution of the script and formats the error.
+	* @desc Manages all the errors linked to the data base. It stops the execution of the script and formats the error.
 	* @param string $query Query which failed (to help the developer to debug his script).
 	* @param string $errstr Error message returned by MySQL.
      * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.

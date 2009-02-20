@@ -36,7 +36,7 @@ class ContentParser extends Parser
 {
     ######## Public #######
     /**
-    * @desc Contructor of a ContentParser object.
+    * @desc Buils a ContentParser object.
     */
     function ContentParser()
     {
@@ -49,12 +49,12 @@ class ContentParser extends Parser
 
     /**
      * @abstract
-     * @desc Method which parses the content of the parser
+     * @desc Parses the content of the parser
      */
     function parse() {}
 
     /**
-     * @desc Function which sets the tags which mustn't be parsed.
+     * @desc Sets the tags which mustn't be parsed.
      * @param string[] $forbidden_tags list of the name of the tags which mustn't be parsed.
      */
     function set_forbidden_tags($forbidden_tags)
@@ -67,7 +67,6 @@ class ContentParser extends Parser
 
     /**
      * @desc Gets the forbidden tags.
-     *
      * @return string[] List of the forbidden tags
      */
     function get_forbidden_tags()
@@ -198,7 +197,7 @@ class ContentParser extends Parser
     }
 
     /**
-     * @desc Index the position of all the tags in the document. Returns the list of the positions of each tag. 
+     * @desc Indexes the position of all the tags in the document. Returns the list of the positions of each tag. 
      * @param $content string Content into which index the positions.
      * @param $tag string tag name
      * @param $attributes The regular expression matching the parameters of the tag (see the _preg_split_safe_recurse method).
@@ -231,7 +230,7 @@ class ContentParser extends Parser
     }
 
     /**
-     * @desc Remove the content of the tag $tag and replaces them by an identifying code. They will be reinserted in the content by the _reimplant_tags method.
+     * @desc Removes the content of the tag $tag and replaces them by an identifying code. They will be reinserted in the content by the _reimplant_tags method.
      * It enables you to treat the whole string enough affecting the interior of some tags. 
      * Example: $my_parser contains this content: 'test1[tag=1]test2[/tag]test3'
      * $my_parser->_pick_up_tag('tag', '[0-9]'); will replace the content of the parser by 'test1[CODE_TAG_1]test3' 

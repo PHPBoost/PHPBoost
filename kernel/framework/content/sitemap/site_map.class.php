@@ -92,7 +92,7 @@ class SiteMap
     }
 
     /**
-     * @desc Return the name of the site 
+     * @desc Returns the name of the site 
      * @return string name
      */
     function get_site_name()
@@ -101,7 +101,7 @@ class SiteMap
     }
     
     /**
-     * @desc Set the name of the site. The default value is the name of the site taken from the site configuration. 
+     * @desc Sets the name of the site. The default value is the name of the site taken from the site configuration. 
      * @param string $site_name name of the site
      */
     function set_site_name($site_name)

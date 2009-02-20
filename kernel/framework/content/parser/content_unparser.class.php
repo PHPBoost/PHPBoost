@@ -35,7 +35,7 @@ class ContentUnparser extends Parser
 {
 	######## Public #######
 	/**
-	 * @desc Constructor of a ContentUnparser class. 
+	 * @desc Builds a ContentUnparser class. 
 	 */
 	function ContentUnparser()
 	{
@@ -44,13 +44,13 @@ class ContentUnparser extends Parser
 
 	/**
 	 * @abstract
- 	 * @desc Unparse the content of the parser.
+ 	 * @desc Unparses the content of the parser.
 	 */
 	/*abstract*/ function unparse() {}
 	
 	## Private ##
 	/**
-	 * @desc Unparse the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it. 
+	 * @desc Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it. 
 	 * @param bool $action PICK_UP if you want to pick up the html tag and REIMPLANT to reimplant it.
 	 */
 	function _unparse_html($action)
@@ -107,7 +107,7 @@ class ContentUnparser extends Parser
 	}
 	
 	/**
-	 * @desc Unparse the code tag. In a first time, you pick it up and you reimplant it.
+	 * @desc Unparses the code tag. In a first time, you pick it up and you reimplant it.
 	 * @param bool $action PICK_UP to pick the code tag up, REIMPLANT to reinsert them. 
 	 */
 	function _unparse_code($action)

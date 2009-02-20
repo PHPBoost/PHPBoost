@@ -44,14 +44,14 @@ define('BBCODE_HIGHLIGHTER_BLOCK_CODE', false);
 /**
  * @package parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * This class is a highlighter for the PHPBoost BBCode language.
+ * @desc This class is a highlighter for the PHPBoost BBCode language.
  * It supplies the highlighted code written in XHTML.
  */
 class BBCodeHighlighter extends Parser
 {
 	######## Public #######
 	/**
-	 * Builds a BBCodeHighlighter objet
+	 * @desc Builds a BBCodeHighlighter objet
 	 */
 	function BBCodeHighlighter()
 	{
@@ -60,7 +60,7 @@ class BBCodeHighlighter extends Parser
 	}
 	
 	/**
-	 * Highlights the content of the parser.
+	 * @desc Highlights the content of the parser.
 	 * @param bool $inline_code If you want that the code make a new HTML paragraph, use BBCODE_HIGHLIGHTER_BLOCK_CODE
 	 * (default parameter) and if you want that it would be integrated in a line, use BBCODE_HIGHLIGHTER_INLINE_CODE
 	 * @return void You can get the result by calling the get_content method
@@ -100,7 +100,7 @@ class BBCodeHighlighter extends Parser
 
 	## Private ##
 	/**
-	 * Callback which highlights the parameters of a complex tag
+	 * @desc Callback which highlights the parameters of a complex tag
 	 * @param string[] $matches elements matched by the regular expression 
 	 * @return string The complex tag highlighted
 	 */

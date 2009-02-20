@@ -38,7 +38,7 @@ define('DEFAULT_LANGUAGE', 'default');
 class ContentFormattingFactory
 {
     /**
-     * @desc Build a ContentFormattingFactoryy object
+     * @desc Builds a ContentFormattingFactoryy object
      * @param string $language_type The language in which must work the factory. One of the following elements:
      * <ul>
      * 	<li>BBCODE_LANGUAGE if you want to force the BBCode language</li>
@@ -56,7 +56,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Change the language of the factory
+     * @desc Changes the language of the factory
      * @param string $language_type The language in which must work the factory. One of the following elements:
      * <ul>
      * 	<li>BBCODE_LANGUAGE if you want to force the BBCode language</li>
@@ -79,7 +79,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return the language of the factory
+     * @desc Returns the language of the factory
      * @return string Language (BBCODE_LANGUAGE, TINYMCE_LANGUAGE or DEFAULT_LANGUAGE)
      */
     function get_language()
@@ -88,7 +88,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a parser which will work in the language you chose.
+     * @desc Returns a parser which will work in the language you chose.
      * @return ContentParser The parser to use to parse you formatting
      */
     function get_parser()
@@ -117,7 +117,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a unparser which will work in the language you chose.
+     * @desc Returns a unparser which will work in the language you chose.
      * @return ContentUnparser The unparser to use to unparse you formatting
      */
     function get_unparser()
@@ -146,7 +146,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return a second parser which will work in the language you chose.
+     * @desc Returns a second parser which will work in the language you chose.
      * @return ContentSecondParser The second parser to use just before displaying you formatted text
      */
     function get_second_parser()
@@ -156,7 +156,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return an editor object which will display the editor corresponding to the language you chose.
+     * @desc Returns an editor object which will display the editor corresponding to the language you chose.
      * @return ContentParser The editor to use.
      */
     function get_editor()
@@ -184,7 +184,7 @@ class ContentFormattingFactory
     }
 
     /**
-     * @desc Return the name of the editor of the current user (chosen in its profile).
+     * @desc Returns the name of the editor of the current user (chosen in its profile).
      * @return string The editor used by the current user.
      */
     function get_user_editor()
@@ -195,7 +195,7 @@ class ContentFormattingFactory
 
     /**
      * @static
- 	 * @desc Return the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
+ 	 * @desc Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
  	 * The keys of the map are the tags identifiers and the values the tags names.  
  	 * @return string[] The map
      */
