@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('io/fse');
+import('io/file_system_element');
 
 define('ERASE', false);
 define('ADD', true);
@@ -39,13 +39,7 @@ define('NOTCLOSEFILE', 0x2);
 
 // fonction de gestion des fichiers
 class File extends FileSystemElement
-{
-	## Private Attributes ##
-	var $lines = array();
-	var $contents;
-	var $mode;
-	var $fd;
-	
+{	
 	## Public Methods ##
 	// Constructeur
 	function File($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
@@ -194,7 +188,7 @@ class File extends FileSystemElement
 	
 	
 	/**
-     * @desc Include the file
+     * @desc Includes the file
      * @param bool $once include once if true
      * @return true if the file has been successfully included
      */
@@ -206,7 +200,7 @@ class File extends FileSystemElement
     }
     
     /**
-     * @desc Require the file
+     * @desc Requires the file
      * @param bool $once require once if true
      * @return true if the file has been successfully included
      */
@@ -216,7 +210,30 @@ class File extends FileSystemElement
            return require_once $this->path;
         return require $this->path;
     }
-	## Private Methods ##
+    
+    /**
+     * @desc Returns the date of the last modification of the file.
+     * @return int The UNIX timestamp corresponding to the last modification date.
+     */
+    function get_last_modification_date()
+    {
+    	return filemtime($this->path);
+    }
+    
+    /**
+     * @desc Returns the last access date of the file.
+     * @return int The UNIX timestamp corresponding to the last access date of the file.
+     */
+    function get_last_access_date()
+    {
+    	return filectime($this->path);
+    }
+    
+    ## Private Attributes ##
+	var $lines = array();
+	var $contents;
+	var $mode;
+	var $fd;
 }
 
 ?>

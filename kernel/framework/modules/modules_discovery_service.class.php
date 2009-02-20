@@ -68,15 +68,15 @@ class ModulesDiscoveryService
      */
     {
         $results = array();
-        foreach ($modules as $moduleName => $args)
+        foreach ($modules as $module_name => $args)
         {
             // Instanciation de l'objet $module
-            $module = $this->get_module($moduleName);
+            $module = $this->get_module($module_name);
             // Si le module à déjà été appelé et a déjà eu une erreur,
             // On nettoie le bit d'erreur correspondant.
             $module->clear_functionnality_error();
             if ($module->has_functionnality($functionnality) == true)
-                $results[$moduleName] = $module->functionnality($functionnality, $args);
+                $results[$module_name] = $module->functionnality($functionnality, $args);
         }
         return $results;
     }
@@ -182,8 +182,8 @@ class ModulesDiscoveryService
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
-    var $loadedModules;
-    var $availablesModules;
+    var $loaded_modules;
+    var $available_modules;
 }
 
 ?>
