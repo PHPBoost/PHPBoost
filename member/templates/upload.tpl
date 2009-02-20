@@ -315,7 +315,6 @@
 				</div>
 				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
 						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> {U_ROOT}{URL}
-					</div>
 				</div>
 			</td>
 		</tr>	
@@ -361,7 +360,7 @@
 									{files.IMG}
 								</td>
 								<td style="padding-top:8px;">	
-									{files.URL}<span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+									{files.URL}<span id="fi1{files.ID}">{files.NAME}</span><span id="fi{files.ID}"></span><br />
 									{files.BBCODE}<br />							
 									<span class="text_small">{files.FILETYPE}</span><br />
 									<span class="text_small">{files.SIZE}</span><br />

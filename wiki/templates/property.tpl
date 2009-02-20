@@ -253,7 +253,7 @@
 			# START redirect.list #
 			<tr>
 				<td class="row1">
-					{redirect.list.REDIRECTION_NAME}</a>
+					{redirect.list.REDIRECTION_NAME}
 				</td>
 				<td class="row2" style="text-align:center;">
 					<a href="{redirect.list.U_REDIRECTION_DELETE}" title="{REDIRECTION_DELETE}" onclick='javascript:return confirm("{L_ALERT_DELETE_REDIRECTION}");'><img src="{WIKI_PATH}/images/delete_article.png" alt="{REDIRECTION_DELETE}" /></a>

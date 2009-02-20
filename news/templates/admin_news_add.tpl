@@ -119,12 +119,12 @@
 						</label></dd>
 					</dl>
 					<br />
-					<label for="contents">* {L_TEXT}</label></dt>
+					<label for="contents">* {L_TEXT}</label>
 					{KERNEL_EDITOR}
 					<label><textarea type="text" rows="25" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<br />
 					<br />
-					<label for="extend_contents">{L_EXTENDED_NEWS}</label></dt>
+					<label for="extend_contents">{L_EXTENDED_NEWS}</label>
 					{KERNEL_EDITOR_EXTEND}
 					<label><textarea type="text" rows="25" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
 					<br />

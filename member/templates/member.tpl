@@ -269,7 +269,7 @@
 						<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 					</label></dd>
 				</dl>
-				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p></dt>
+				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p>
                 <p>
                     {USER_SIGN_EDITOR}
                     <textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
@@ -289,7 +289,7 @@
 				</dl>
 				<dl>
 					<dt><label for="user_yahoo">Yahoo</label></dt>
-					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{USER_YAHOO}" maxlength="50" /></label></dd>
+					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{USER_YAHOO}" maxlength="50" /></dd>
 				</dl>
 			</fieldset>	
 				
@@ -297,7 +297,7 @@
 				<legend>{L_AVATAR_MANAGEMENT}</legend>
 				<dl>
 					<dt><label>{L_CURRENT_AVATAR}</label></dt>
-					<dd>{USER_AVATAR}</label></dd>
+					<dd>{USER_AVATAR}</dd>
 				</dl>	
 				# IF C_UPLOAD_AVATAR #
 				<dl>

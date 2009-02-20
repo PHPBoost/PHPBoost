@@ -94,7 +94,6 @@
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
-			</table>
 			</form>
 		</div>
 		
