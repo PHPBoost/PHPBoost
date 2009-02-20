@@ -63,7 +63,7 @@ class PackagesManager
 		$dir = PATH_TO_ROOT . '/' . $module_identifier . '/db';
 		if (!is_dir($dir . '/' . $dir_db_module))
 		{
-			import('io/folder');
+			import('io/filesystem/folder');
 			$db_scripts_folder = new Folder($dir);
 			
 			$existing_db_files = $db_scripts_folder->get_folders('`[a-z_-]+`i');

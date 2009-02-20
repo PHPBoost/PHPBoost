@@ -71,7 +71,7 @@ if (is_file('distribution/distribution_' . $lang . '.php'))
 }
 else
 {
-	import('io/folder');
+	import('io/filesystem/folder');
 	$distribution_folder = new Folder('distribution');
 	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
 	if (count($distribution_files) > 0)

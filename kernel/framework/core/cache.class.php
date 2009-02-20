@@ -126,7 +126,7 @@ class Cache
 
         if ($file == 'config')
         {   // Intègre le numéro de build
-            import('io/file');
+            import('io/filesystem/file');
             $file = new File(PATH_TO_ROOT . '/.build');
             if (!empty($CONFIG['_version']))
             {
@@ -232,7 +232,7 @@ class Cache
     {
         $file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
 
-        import('io/file');
+        import('io/filesystem/file');
         $cache_file = new File($file_path, WRITE);
 
         //Suppression du fichier (si il existe)
@@ -372,7 +372,7 @@ class Cache
         }
 
         //Ecriture du fichier .htaccess
-        import('io/file');
+        import('io/filesystem/file');
         $file = new File(PATH_TO_ROOT . '/.htaccess');
 
         //We delete the existing file

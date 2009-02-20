@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-import('io/file_system_element');
+import('io/filesystem/file_system_element');
 
 define('ERASE', false);
 define('ADD', true);
