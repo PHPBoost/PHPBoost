@@ -16,8 +16,7 @@
 		</script>
 
 		<p style="text-align:center;">
-			{ERROR}
-				
+			{ERROR}				
 			<form action="forget.php" method="post" onsubmit="return check_form_forget();">
 				<table class="module_table">
 					<tr>

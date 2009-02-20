@@ -37,7 +37,7 @@
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				# IF C_HIDDEN_SHOUT #
-					<input size="16" maxlength="25" type="hidden" class="text" name="shout_pseudo" value="{SHOUTBOX_PSEUDO}" /></label>
+					<input size="16" maxlength="25" type="hidden" class="text" name="shout_pseudo" value="{SHOUTBOX_PSEUDO}" />
 				# ENDIF #
 				
 				<input type="hidden" name="shout_contents_ftags" id="shout_contents_ftags" value="{FORBIDDEN_TAGS}" />

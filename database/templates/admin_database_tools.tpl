@@ -211,6 +211,7 @@
 							{TABLE_ROWS}
 						</td>
 					</tr>
+					<tr>
 						<td class="row1">
 							{L_TABLE_ENGINE}
 						</td>

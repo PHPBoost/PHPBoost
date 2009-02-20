@@ -132,7 +132,6 @@
 				</tr>		
 				# ENDIF #
 			</table>
-			</form>
 			# ENDIF #
 
 

@@ -115,15 +115,15 @@
 						<dd><label><input type="text" size="3" maxlength="3" id="width_max" name="width_max" value="{WIDTH_MAX}" class="text" /> {L_PX}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="height_max">* {L_HEIGHT_MAX_AVATAR}</label><br /><span>{L_HEIGHT_MAX_AVATAR_EXPLAIN}</span></dt></dt>
+						<dt><label for="height_max">* {L_HEIGHT_MAX_AVATAR}</label><br /><span>{L_HEIGHT_MAX_AVATAR_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" maxlength="3" id="height_max" name="height_max" value="{HEIGHT_MAX}" class="text" /> {L_PX}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="weight_max">* {L_WEIGHT_MAX_AVATAR}</label><br /><span>{L_WEIGHT_MAX_AVATAR_EXPLAIN}</span></dt></dt>
+						<dt><label for="weight_max">* {L_WEIGHT_MAX_AVATAR}</label><br /><span>{L_WEIGHT_MAX_AVATAR_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="3" maxlength="5" id="weight_max" name="weight_max" value="{WEIGHT_MAX}" class="text" /> {L_KB}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_avatar">{L_ACTIV_DEFAUT_AVATAR}</label><br /><span>{L_ACTIV_DEFAUT_AVATAR_EXPLAIN}</span></dt></dt>
+						<dt><label for="activ_avatar">{L_ACTIV_DEFAUT_AVATAR}</label><br /><span>{L_ACTIV_DEFAUT_AVATAR_EXPLAIN}</span></dt>
 						<dd>
 							<label><input type="radio" {AVATAR_ENABLED} name="activ_avatar" id="activ_avatar" value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
@@ -131,7 +131,7 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt><label for="avatar_url">{L_URL_DEFAUT_AVATAR}</label><br /><span>{L_URL_DEFAUT_AVATAR_EXPLAIN}</span></dt></dt>
+						<dt><label for="avatar_url">{L_URL_DEFAUT_AVATAR}</label><br /><span>{L_URL_DEFAUT_AVATAR_EXPLAIN}</span></dt>
 						<dd><label>
 							<input type="text" maxlength="50" size="25" id="avatar_url" name="avatar_url" value="{AVATAR_URL}" class="text" />
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{AVATAR_URL}" alt="" style="vertical-align:top" />

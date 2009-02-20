@@ -108,7 +108,7 @@
 				<legend>{L_EXTEND_FIELD_EDIT}</legend>
 				<dl> 
 					<dt><label for="name">* {L_NAME}</label></dt>
-					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" value="{NAME}" class="text" /></select></label></dd>
+					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" value="{NAME}" class="text" /></label></dd>
 				<dl>
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>

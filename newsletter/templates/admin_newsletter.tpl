@@ -109,7 +109,7 @@
 					{KERNEL_EDITOR}
 					<label><textarea rows="25" cols="40" id="contents" name="contents">{write.MESSAGE}</textarea></label>
 					<br /><br />
-					<p>{write.SUBSCRIBE_LINK}</label></p>
+					<p>{write.SUBSCRIBE_LINK}</p>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
