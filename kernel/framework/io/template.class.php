@@ -145,7 +145,7 @@ class Template
             //Parse
             $this->_parse($parse_name, $stringMode);
             $this->_clean(); //On nettoie avant d'envoyer le flux.
-            $this->_save($file_cache_path, $stringMode); //Enregistrement du fichier de cache.
+            $this->_save($file_cache_path); //Enregistrement du fichier de cache.
         }
         
         include($file_cache_path);
@@ -487,18 +487,16 @@ class Template
     }
     
     //Enregistrement du fichier de cache, avec pose préalable d'un verrou.
-    function _save($file_cache_path, $stringMode = false)
+    function _save($file_cache_path)
     {
-        if ($file = @fopen($file_cache_path, 'wb'))
-        {
-            @flock($file, LOCK_EX);
-            
-            @fwrite($file, $this->template);
-            @flock($file, LOCK_UN);
-            @fclose;
-            
-            @chmod($file_cache_path, 0666);
-        }
+    	import('io/filesystem/file');
+    	$file = new File($file_cache_path);
+    	$file->open(WRITE);
+    	$file->lock();
+    	$file->write($this->template);
+    	$file->unlock();
+    	$file->close();
+    	$file->change_chmod(0666);
     }
     
 
