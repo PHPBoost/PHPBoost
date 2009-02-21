@@ -137,9 +137,7 @@ class Updates
             
             //Save
             global $Session;
-            $Session->disabe_token_check();
             AdministratorAlertService::save_alert($alert);
-            $Session->enabe_token_check();
         }
     }
     
