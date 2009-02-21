@@ -65,7 +65,7 @@ class Sql
 	 * @param string $sql_host Name or IP address of the server on which is the DBMS you want to use.
 	 * @param string $sql_login Login enabling PHPBoost to connect itselft to the DBMS (the MySQL login).
 	 * @param string $sql_pass Password enabling PHPBoost to connect itself to the DMBS.
-	 * @param $sql_base string Name of the data base PHPBoost must join an work on.
+	 * @param $base_name string Name of the data base PHPBoost must join an work on.
 	 * @param $errors_management bool The way according to which you want to manage the data base connection errors :
 	 * <ul>
 	 * 	<li>ERRORS_MANAGEMENT_BY_RETURN will return the error</li>
@@ -80,16 +80,16 @@ class Sql
 	 * </ul>
 	 * Otherwise, it won't return anything.
 	 */
-	function connect($sql_host, $sql_login, $sql_pass, $sql_base, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
+	function connect($sql_host, $sql_login, $sql_pass, $base_name, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
 	{
 		//Identification sur le serveur
 		if ($this->link = @mysql_connect($sql_host, $sql_login, $sql_pass))
 		{
 			//Sélection de la base de données
-			if (@mysql_select_db($sql_base, $this->link))
+			if (@mysql_select_db($base_name, $this->link))
 			{
 				$this->connected = true;
-				$this->sql_base = $sql_base;
+				$this->base_name = $base_name;
 				return CONNECTED_TO_DATABASE;
 			}
 			else
@@ -139,7 +139,7 @@ class Sql
 
 		//Connexion à la base de données
 		$result =  $this->connect($sql_host, $sql_login, $sql_pass, $sql_base);
-		$this->sql_base = $sql_base;
+		$this->base_name = $sql_base;
 	}
 	
 	/**
@@ -402,7 +402,7 @@ class Sql
 		if (!empty($table))
 		{
 			$array_fields_name = array();
-			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->sql_base . "`", __LINE__, __FILE__);
+			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->base_name . "`", __LINE__, __FILE__);
 			while ($row = mysql_fetch_row($result))
 			{
 				$array_fields_name[] = $row[0];
@@ -435,7 +435,7 @@ class Sql
 	{
 		$array_tables = array();
 		
-		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->sql_base . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
+		$result = $this->query_while("SHOW TABLE STATUS FROM `" . $this->base_name . "` LIKE '" . PREFIX . "%'", __LINE__, __FILE__);
 		while ($row = mysql_fetch_row($result))
 		{
 			$array_tables[$row[0]] = array(
@@ -570,6 +570,15 @@ class Sql
 	{
 		return 'MySQL ' . mysql_get_server_info($this->link);
 	}
+	
+	/**
+	 * @desc Returns the name of the data base which with the object is connected.
+	 * @return string the base name
+	 */
+	function get_data_base_name()
+	{
+		return $this->base_name;
+	}
 
 	/**
 	* @desc Lists the existing data bases on the DBMS at which the object is connected.
@@ -619,6 +628,50 @@ class Sql
 		}
 	}
 	
+	/**
+	 * @desc Optimizes some tables in the data base.
+	 * @param string[] $table_array List of the tables to optimize.
+	 */
+	function optimize_tables($table_array) 
+	{		
+		global $Sql;
+		
+		if (count($table_array) != 0)
+			$Sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+	}
+	
+	/**
+	 * @desc Repairs some tables in the data base.
+	 * @param string[] $table_array List of the tables to repair.
+	 */
+	function repair_tables($table_array)
+	{		
+		if (count($table_array) != 0)
+		{
+			$this->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+		}
+	}
+	
+	/**
+	 * @desc Trucates some tables in the data base.
+	 * @param string[] $table_array List of the tables to truncate.
+	 */
+	function truncate_tables($table_array)
+	{		
+		if (count($table_array) != 0)
+			$this->query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+	}
+	
+	/**
+	 * @desc Drops some tables in the data base.
+	 * @param string[] $table_array List of the tables to drop.
+	 */
+	function drop_tables($table_array)
+	{		
+		if (count($table_array) != 0)
+			$this->query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
+	}
+	
 	## Private Methods ##
 	/**
 	* @desc Manages all the errors linked to the data base. It stops the execution of the script and formats the error.
@@ -656,6 +709,6 @@ class Sql
 	/**
 	 * @var string name of the data base at which is connected the object.
 	 */
-	var $sql_base = '';
+	var $base_name = '';
 }
 ?>
