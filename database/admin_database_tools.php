@@ -39,7 +39,7 @@ $Template->set_filenames(array(
 
 //outils de sauvegarde de la base de données
 include_once('../kernel/framework/db/backup.class.php');
-$Backup = new Backup($Sql->sql_base);
+$backup = new Backup();
 
 $Template->assign_vars(array(
 	'TABLE_NAME' => $table,
@@ -63,7 +63,7 @@ if (!empty($table) && $action == 'data')
 	include_once('../kernel/framework/util/pagination.class.php'); 
 	$Pagination = new Pagination();
 	
-	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	//Détection de la clée primaire.
 	$primary_key = '';
@@ -160,7 +160,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$value = retrieve(GET, 'value', '');
 	$field = retrieve(GET, 'field', '');
@@ -208,7 +208,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 }
 elseif (!empty($table) && $action == 'insert') //Mise à jour.
 {
-	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
 	
 	$submit = retrieve(POST, 'submit', '');
 	if (!empty($submit)) //On exécute une requête
@@ -271,21 +271,21 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 }
 elseif (!empty($table) && $action == 'optimize')
 {
-	$Backup->Optimize_tables(array($table));	
+	$Sql->optimize_tables(array($table));	
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'truncate')
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Backup->truncate_tables(array($table));
+	$Sql->truncate_tables(array($table));
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'drop')
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Backup->drop_tables(array($table));
+	$Sql->drop_tables(array($table));
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table);
 }
 elseif (!empty($table) && $action == 'query')
@@ -356,8 +356,8 @@ elseif (!empty($table) && $action == 'query')
 }
 elseif (!empty($table))
 {
-	$table_structure = $Backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
-	if (!isset($Backup->tables[$table])) //Table non existante.
+	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	if (!isset($backup->tables[$table])) //Table non existante.
 		redirect(HOST . DIR . '/database/admin_database.php');
 		
 	foreach ($table_structure['fields'] as $fields_info)
@@ -394,9 +394,9 @@ elseif (!empty($table))
 	}
 	
 	//Infos sur la table.
-	$free = number_round($Backup->tables[$table]['data_free']/1024, 1);
-	$data = number_round($Backup->tables[$table]['data_length']/1024, 1);
-	$index = number_round($Backup->tables[$table]['index_lenght']/1024, 1);
+	$free = number_round($backup->tables[$table]['data_free']/1024, 1);
+	$data = number_round($backup->tables[$table]['data_length']/1024, 1);
+	$index = number_round($backup->tables[$table]['index_lenght']/1024, 1);
 	$total = ($index + $data);
 	$l_total = ($total > 1024) ? number_round($total/1024, 1) . ' MB' : $total . ' kB';
 	$free = ($free > 1024) ? number_round($free/1024, 1) . ' MB' : $free . ' kB';
@@ -406,18 +406,18 @@ elseif (!empty($table))
 	$Template->assign_vars(array(
 		'C_DATABASE_TABLE_STRUCTURE' => true,
 		'C_DATABASE_TABLE_DATA' => false,
-		'C_AUTOINDEX' => !empty($Backup->tables[$table]['auto_increment']) ? true : false,
-		'TABLE_ENGINE' => $Backup->tables[$table]['engine'],
-		'TABLE_ROW_FORMAT' => $Backup->tables[$table]['row_format'],
-		'TABLE_ROWS' => $Backup->tables[$table]['rows'],
+		'C_AUTOINDEX' => !empty($backup->tables[$table]['auto_increment']) ? true : false,
+		'TABLE_ENGINE' => $backup->tables[$table]['engine'],
+		'TABLE_ROW_FORMAT' => $backup->tables[$table]['row_format'],
+		'TABLE_ROWS' => $backup->tables[$table]['rows'],
 		'TABLE_DATA' => $data != 0 ? $data : '-',
 		'TABLE_INDEX' => $index != 0 ? $index : '-',
 		'TABLE_TOTAL_SIZE' => $total != 0 ? $l_total : '-',
 		'TABLE_FREE' => $free != 0 ? '<span style="color:red">' . $free . '</span>' : '-',
-		'TABLE_COLLATION' => $Backup->tables[$table]['collation'],
-		'TABLE_AUTOINCREMENT' => $Backup->tables[$table]['auto_increment'],
-		'TABLE_CREATION_DATE' => gmdate_format('date_format_long', strtotime($Backup->tables[$table]['create_time'])),
-		'TABLE_LAST_UPDATE' => gmdate_format('date_format_long', strtotime($Backup->tables[$table]['update_time'])),
+		'TABLE_COLLATION' => $backup->tables[$table]['collation'],
+		'TABLE_AUTOINCREMENT' => $backup->tables[$table]['auto_increment'],
+		'TABLE_CREATION_DATE' => gmdate_format('date_format_long', strtotime($backup->tables[$table]['create_time'])),
+		'TABLE_LAST_UPDATE' => gmdate_format('date_format_long', strtotime($backup->tables[$table]['update_time'])),
 		'L_TABLE_FIELD' => $LANG['db_table_field'],
 		'L_TABLE_TYPE' => $LANG['type'],
 		'L_TABLE_ATTRIBUTE' => $LANG['db_table_attribute'],

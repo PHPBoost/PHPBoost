@@ -62,7 +62,7 @@ $Template->set_filenames(array(
 
 //outils de sauvegarde de la base de données
 include_once('../kernel/framework/db/backup.class.php');
-$Backup = new Backup();
+$backup = new Backup();
 
 $Template->assign_vars(array(
 	'TABLE_NAME' => $table,
@@ -176,15 +176,13 @@ elseif ($action == 'restore')
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
 			$Sql->parse($file_path);
-			$Backup->tables = array();
-			$Backup->List_table();
 			//on liste les tables
 			$tables = array();
-			foreach ($Backup->tables as $id => $infos)
+			foreach ($backup->get_tables_list() as $id => $infos)
 				$tables[] = $infos['name'];
-			$Backup->Optimize_tables($tables);
-			$Backup->Repair_tables($tables);
-			$Cache->Generate_all_files();
+			$Sql->optimize_tables($tables);
+			$Sql->repair_tables($tables);
+			$Cache->generate_all_files();
 			
 			redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 		}
@@ -198,15 +196,14 @@ elseif ($action == 'restore')
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
 				$Sql->parse($file_path);
-				$Backup->tables = array();
-				$Backup->List_table();
+				$backup->list_db_tables();
 				//on liste les tables
 				$tables = array();
-				foreach ($Backup->tables as $id => $infos)
+				foreach ($backup->get_tables_list() as $id => $infos)
 					$tables[] = $infos['name'];
-				$Backup->Optimize_tables($tables);
-				$Backup->Repair_tables($tables);
-				$Cache->Generate_all_files();
+				$Sql->optimize_tables($tables);
+				$Sql->repair_tables($tables);
+				$Cache->generate_all_files();
 				
 				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
 			}
@@ -304,29 +301,29 @@ else
 		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
 			redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
-		foreach ($Backup->tables as $table => $properties)
+		foreach ($backup->get_tables_list() as $table => $properties)
 		{
 			if (in_array($properties['name'], $_POST['table_list']))
 				$selected_tables[] = $properties['name'];
 		}
 
-		if (count($selected_tables) == count($Backup->tables)) //On doit tout sauvegarder
+		if (count($selected_tables) == $backup->get_tables_number()) //On doit tout sauvegarder
 		{
 			//Structure, données ?
 			if ($backup_type != 2)
 			{
 				//Suppression éventuelle des tables
-				$Backup->drop_tables_exists();
-				$Backup->save .= "\n\n";
+				$backup->generate_drop_table_query();
+				$backup->concatenate_to_query("\n\n");
 				//Création de la structure des tables
-				$Backup->Create_tables();
-				$Backup->save .= "\n\n";
+				$backup->generate_create_table_query();
+				$backup->concatenate_to_query("\n\n");
 			}
 
 			if ($backup_type != 3)
 			{
 				//Insertion des données dans les tables
-				$Backup->Insert_values();
+				$backup->generate_insert_values_query();
 			}
 		}
 		else //Sauvegarde des tables sélectionnées
@@ -335,24 +332,24 @@ else
 			if ($backup_type != 2)
 			{
 				//Suppression éventuelle des tables
-				$Backup->drop_tables_exists($selected_tables);
-				$Backup->save .= "\n\n";
+				$backup->generate_drop_table_query($selected_tables);
+				$backup->concatenate_to_query("\n\n");
 				//Création de la structure des tables
-				$Backup->Create_tables($selected_tables);
-				$Backup->save .= "\n\n";
+				$backup->generate_create_table_query($selected_tables);
+				$backup->concatenate_to_query("\n\n");
 			}
 
 			if ($backup_type != 3)
 			{
 				//Insertion des données dans les tables
-				$Backup->Insert_values($selected_tables);
+				$backup->generate_insert_values_query($selected_tables);
 			}
 		}
 		
-		$file_name = 'backup_' . $Sql->sql_base . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
-		$file_path = '../cache/backup/' . $file_name;
+		$file_name = 'backup_' . $Sql->get_data_base_name() . '_' . str_replace('/', '-', gmdate_format('y-m-d-H-i-s')) . '.sql';
+		$file_path = PATH_TO_ROOT . '/cache/backup/' . $file_name;
 
-		$Backup->Export_file($file_path); //Exportation de la bdd.
+		$backup->export_file($file_path); //Exportation de la bdd.
 		
 		redirect(HOST . DIR . url('/database/admin_database.php?error=backup_success&file=' . $file_name));
 	}
@@ -361,7 +358,7 @@ else
 	{	
 		$Template->assign_vars(array(
 			'C_DATABASE_BACKUP' => true,
-			'NBR_TABLES' => count($Backup->tables),
+			'NBR_TABLES' => $backup->get_tables_number(),
 			'TARGET' => url('admin_database.php'),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
@@ -376,7 +373,7 @@ else
 		
 		$selected_tables = array();
 		$i = 0;
-		foreach ($Backup->tables as $table => $properties)
+		foreach ($backup->get_tables_list() as $table => $properties)
 		{
 			if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
 				$selected_tables[] = $properties['name'];
@@ -395,19 +392,19 @@ else
 		if ($repair || $optimize)
 		{
 			$selected_tables = array();
-			foreach ($Backup->tables as $table => $properties)
+			foreach ($backup->get_tables_list() as $table => $properties)
 			{
 				if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
 					$selected_tables[] = $properties['name'];
 			}
 			if ($repair)
 			{
-				$Backup->Repair_tables($selected_tables);
+				$Sql->repair_tables($selected_tables);
 				$Errorh->handler(sprintf($LANG['db_succes_repair_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}
 			else
 			{
-				$Backup->Optimize_tables($selected_tables);
+				$Sql->optimize_tables($selected_tables);
 				$Errorh->handler(sprintf($LANG['db_succes_optimize_tables'], implode(', ', $selected_tables)), E_USER_NOTICE);
 			}	
 		}
@@ -422,7 +419,7 @@ else
 		$i = 0;
 		
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
-		foreach ($Backup->tables as $key => $table_info)
+		foreach ($backup->get_tables_list() as $key => $table_info)
 		{	
 			$free = number_round($table_info['data_free']/1024, 1);
 			$data = number_round(($table_info['data_length'] + $table_info['index_lenght'])/1024, 1);
@@ -453,7 +450,7 @@ else
 		$Template->assign_vars(array(
 			'C_DATABASE_INDEX' => true,
 			'TARGET' => url('admin_database.php'),
-			'NBR_TABLES' => count($Backup->tables),
+			'NBR_TABLES' => $backup->get_tables_number(),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,
 			'NBR_FREE' => $nbr_free,

@@ -766,27 +766,27 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="login">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div id="msg_login_div"></div></label></dd>								
+									<dd><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div id="msg_login_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div id="msg_password1_div"></div></label></dd>								
+									<dd><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div id="msg_password1_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
-									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div id="msg_password2_div"></div></label></dd>								
+									<dd><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div id="msg_password2_div"></div></dd>
 								</dl>
 								<dl>
 									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="small_text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div id="msg_email_div"></div></label></dd>								
+									<dd><input type="text" size="25" maxlength="50" id="mail" name="mail" value="{MAIL_VALUE}" class="small_text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div id="msg_email_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>
-									<dd><label><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></label></dd>								
+									<dd><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></dd>								
 								</dl>
 								<dl>
 									<dt><label for="auto_connection">{L_AUTO_CONNECTION}</label></dt>
-									<dd><label><input type="checkbox" name="auto_connection" id="auto_connection" {CHECKED_AUTO_CONNECTION} /></label></dd>								
+									<dd><input type="checkbox" name="auto_connection" id="auto_connection" {CHECKED_AUTO_CONNECTION} /></dd>								
 								</dl>
 							</fieldset>
 							
