@@ -176,12 +176,10 @@ elseif ($action == 'restore')
 		if (preg_match('`[^/]+\.sql$`', $file) && is_file($file_path))
 		{
 			$Sql->parse($file_path);
-			//on liste les tables
-			$tables = array();
-			foreach ($backup->get_tables_list() as $id => $infos)
-				$tables[] = $infos['name'];
-			$Sql->optimize_tables($tables);
-			$Sql->repair_tables($tables);
+			//On optimise et répare les tables
+			$tables_list = $backup->get_tables_list();
+			$Sql->optimize_tables($tables_list);
+			$Sql->repair_tables($tables_list);
 			$Cache->generate_all_files();
 			
 			redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
@@ -196,13 +194,10 @@ elseif ($action == 'restore')
 			if (!is_file($file_path) && move_uploaded_file($post_file['tmp_name'], $file_path))
 			{
 				$Sql->parse($file_path);
-				$backup->list_db_tables();
-				//on liste les tables
-				$tables = array();
-				foreach ($backup->get_tables_list() as $id => $infos)
-					$tables[] = $infos['name'];
-				$Sql->optimize_tables($tables);
-				$Sql->repair_tables($tables);
+				
+				$tables_list = $backup->get_tables_list();
+				$Sql->optimize_tables($tables_list);
+				$Sql->repair_tables($tables_list);
 				$Cache->generate_all_files();
 				
 				redirect(HOST . DIR . url('/database/admin_database.php?action=restore&error=success', '', '&'));
@@ -301,7 +296,7 @@ else
 		if (!isset($_POST['table_list']) || count($_POST['table_list']) == 0)
 			redirect(HOST . DIR . url('/database/admin_database.php?error=empty_list'));
 
-		foreach ($backup->get_tables_list() as $table => $properties)
+		foreach ($backup->get_tables_properties_list() as $table => $properties)
 		{
 			if (in_array($properties['name'], $_POST['table_list']))
 				$selected_tables[] = $properties['name'];
@@ -373,7 +368,7 @@ else
 		
 		$selected_tables = array();
 		$i = 0;
-		foreach ($backup->get_tables_list() as $table => $properties)
+		foreach ($backup->get_tables_properties_list() as $table => $properties)
 		{
 			if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
 				$selected_tables[] = $properties['name'];
@@ -392,10 +387,10 @@ else
 		if ($repair || $optimize)
 		{
 			$selected_tables = array();
-			foreach ($backup->get_tables_list() as $table => $properties)
+			foreach ($backup->get_tables_list()as $table_name)
 			{
-				if (!empty($_POST['table_' . $properties['name']]) && $_POST['table_' . $properties['name']] == 'on')
-					$selected_tables[] = $properties['name'];
+				if (!empty($_POST['table_' . $table_name]) && $_POST['table_' . $table_name] == 'on')
+					$selected_tables[] = $table_name;
 			}
 			if ($repair)
 			{
@@ -419,7 +414,7 @@ else
 		$i = 0;
 		
 		list($nbr_rows, $nbr_data, $nbr_free) = array(0, 0, 0);
-		foreach ($backup->get_tables_list() as $key => $table_info)
+		foreach ($backup->get_tables_properties_list() as $key => $table_info)
 		{	
 			$free = number_round($table_info['data_free']/1024, 1);
 			$data = number_round(($table_info['data_length'] + $table_info['index_lenght'])/1024, 1);

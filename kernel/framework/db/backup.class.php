@@ -166,16 +166,37 @@ class Backup
 	}
 	
 	/**
-	 * @desc Returns the list of the tables used by PHPBoost.
-	 * @return string[] The list of the table names
+	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
+	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
+	* @return string[] Map containing the following structure:
+	* for each table: table_name => array(
+	* 	'name' => name of the table,
+	* 	'engine' => storage engine of the table,
+	* 	'row_format' => row storage format,
+	* 	'rows' => number of rows,
+	* 	'data_length' => the length of the data file,
+	* 	'index_length' => the length of the index file,
+	* 	'data_free' => the number of allocated but unused bytes,
+	* 	'collation' => the table's character set and collation,
+	* 	'auto_increment' => the next AUTO_INCREMENT value,
+	* 	'create_time' => when the table was created,
+	* 	'update_time' => when the data file was last updated
+	* )  
+	*/
+	function get_tables_properties_list()
+	{
+		$this->list_db_tables();
+		return $this->tables;
+	}
+	
+	/**
+	 * @desc Retrieves the list of the tables used by PHPBoost.
+	 * @return string[] The list of the table names.
 	 */
 	function get_tables_list()
 	{
-		if (empty($this->tables))
-		{
-			$this->list_db_tables();
-		}
-		return $this->tables;
+		$this->list_db_tables();
+		return array_keys($this->tables);
 	}
 	
 	/**
@@ -184,10 +205,7 @@ class Backup
 	 */
 	function get_tables_number()
 	{
-		if (empty($this->tables))
-		{
-			$this->list_db_tables();
-		}
+		$this->list_db_tables();
 		return count($this->tables);
 	}
 	

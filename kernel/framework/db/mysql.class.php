@@ -414,7 +414,7 @@ class Sql
 	}
 	
 	/**
-	* @desc Lists the tables (name and informations relatives to each table) of the data base at which is connected this SQL object.
+	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
 	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
 	* @return string[] Map containing the following structure:
 	* for each table: table_name => array(
