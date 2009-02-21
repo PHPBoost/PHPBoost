@@ -577,11 +577,24 @@ class Sessions
 	 */
     function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
-        if (!empty($_POST) && !$this->_check_referer())
-        {
-            return $this->_csrf_attack($redirect);
-            return false;
-        }
+        if (!preg_match('`.*/admin_config\.php\?adv=1(&.+)?$`', $_SERVER['REQUEST_URI']))
+		{   // Verify that the user really wanted to do this POST
+		    if (!empty($_POST) && !$this->_check_referer())
+	        {
+	            return $this->_csrf_attack($redirect);
+	            return false;
+	        }
+		}
+		elseif (!empty($_POST))
+		{   // Check the token if changing the host in the admin
+		    $token = $this->get_token();
+	        if (empty($token) || retrieve(GET, 'token', '') !== $token)
+	        {
+	            $this->_csrf_attack($redirect);
+	            return false;
+	        }
+		}
+        
         return true;
     }
     
@@ -610,8 +623,9 @@ class Sessions
     function _check_referer()
     {
         global $CONFIG;
-		if (empty($_SERVER['HTTP_REFERER'])) return false;
-        return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
+        if (empty($_SERVER['HTTP_REFERER']))
+		    return false;
+	    return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
     }
     
     /**
