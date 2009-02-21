@@ -59,20 +59,20 @@ $LANG['query_failure'] = 'An error occured during query processing';
 //Introduction
 $LANG['intro_title'] = 'Welcome in PHPBoost installation wizard';
 $LANG['intro_explain'] = '<p>Thank you to have trusted PHPBoost to build your website.</p>
-<p>To install PHPBoost you need to have some informations about your hosting which must be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow above to start the installation process.</p>
+<p>To install PHPBoost you need to have some informations about your hosting which must be provided by your hoster. The installation is absolutely automatic, it should take only a few minutes. Click on the right arrow above to start the installation process.</p>
 <p>Cordially, the PHPBoost Team.</p>';
 $LANG['intro_distribution'] = '%s distribution';
-$LANG['intro_distribution_intro'] = '<p>It exists differents distributions of PHPBoost which enables user to configure his site according to his objective. A distribution contains some modules as well as a kernel configuration.</p>
+$LANG['intro_distribution_intro'] = '<p>It exists differents distributions of PHPBoost which enable the users to configure their website according to their objectives. A distribution contains some modules and also a kernel configuration.</p>
 <p>PHPBoost is going to install itself according to the configuration of this distribution. You will manage to change configuration and add or remove modules after, when using PHPBoost.</p>';
 $LANG['start_install'] = 'Start installation';
 
 //licence
 $LANG['license'] = 'License';
-$LANG['require_license_agreement'] = 'You must accept GNU/GPL license terms to install PHPBoost.';
+$LANG['require_license_agreement'] = 'You must accept the GNU/GPL license terms to install PHPBoost.';
 $LANG['license_agreement'] = 'End-user license agreement';
 $LANG['license_terms'] = 'License terms';
 $LANG['please_agree_license'] = 'I agree to and will be bound by the terms and conditions set forth in this end-user license agreement';
-$LANG['alert_agree_license'] = 'You have to agree to end-user license by notching the form!';
+$LANG['alert_agree_license'] = 'You have to agree to end-user license by checking the form off!';
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Checking server configuration';

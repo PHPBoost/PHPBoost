@@ -785,7 +785,7 @@ $steps = array(
 	array($LANG['introduction'], 'intro.png', 0),
 	array($LANG['license'], 'license.png', 10),
 	array($LANG['config_server'], 'config.png', 30),
-	array($LANG['database_config'], 'database.png', 70),
+	array($LANG['database_config'], 'database.png', 40),
 	array($LANG['advanced_config'], 'advanced_config.png', 80),
 	array($LANG['administrator_account_creation'], 'admin.png', 90),
 	array($LANG['end'], 'end.png', 100)
