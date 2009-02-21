@@ -51,19 +51,19 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$start_page = '';
 		
 	$config = $CONFIG;	 
-	$config['site_name'] = strprotect(retrieve(POST, 'site_name', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);	
-	$config['site_desc'] = strprotect(retrieve(POST, 'site_desc', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-	$config['site_keyword'] = strprotect(retrieve(POST, 'site_keyword', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-	$config['lang'] = strprotect(retrieve(POST, 'lang', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-	$config['theme'] = strprotect(retrieve(POST, 'theme', 'main', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE); //main par defaut. 
+	$config['site_name'] = stripslashes(retrieve(POST, 'site_name', ''));	
+	$config['site_desc'] = stripslashes(retrieve(POST, 'site_desc', ''));
+	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
+	$config['lang'] = stripslashes(retrieve(POST, 'lang', ''));
+	$config['theme'] = stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
 	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
 	$config['compteur'] = retrieve(POST, 'compteur', 0);
 	$config['bench'] = retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['mail_exp'] = strprotect(retrieve(POST, 'mail_exp', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
-	$config['mail'] = strprotect(retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
+	$config['mail_exp'] = stripslashes(retrieve(POST, 'mail_exp', ''));  
+	$config['mail'] = stripslashes(retrieve(POST, 'mail', ''));  
 	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
-	$config['sign'] = strprotect(retrieve(POST, 'sign', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);  
+	$config['sign'] = stripslashes(retrieve(POST, 'sign', ''));  
 	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
 	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
 	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
