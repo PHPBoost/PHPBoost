@@ -794,7 +794,7 @@ $steps = array(
 $step_name = $steps[$step - 1][0];
 
 
-require_once('../kernel/framework/io/folder.class.php');
+import('io/filesystem/folder');
 
 $lang_dir = new Folder('../lang');
 

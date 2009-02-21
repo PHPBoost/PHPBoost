@@ -48,7 +48,7 @@ class Comments
 		global $Sql, $User;
 		
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_COM . " (idprov, login, user_id, contents, timestamp, script, path, user_ip) VALUES('" . $this->idprov . "', '" . $login . "', '" . $User->get_attribute('user_id') . "', '" . $contents . "', '" . time() . "', '" . $this->script . "', '.." . strprotect(str_replace(DIR, '', SCRIPT) . '?' . QUERY_STRING) . "', '" . USER_IP . "')", __LINE__, __FILE__);
-		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . PREFIX . "com");
+		$idcom = $Sql->insert_id("SELECT MAX(idcom) FROM " . DB_TABLE_COM);
 		
 		//Incrémente le nombre de commentaire dans la table du script concerné.
 		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com = nbr_com + 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
@@ -166,7 +166,7 @@ class Comments
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
 				$login = retrieve(POST, 'login', ''); //Pseudo posté.
-				$contents = addslashes(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
+				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 				
 				if (!empty($login) && !empty($contents))
 				{
@@ -272,8 +272,7 @@ class Comments
 					}
 					elseif ($updatecom) //Mise à jour du commentaire.
 					{
-						$contents = trim(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
-						$contents = addslashes($contents);
+						$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 						$login = retrieve(POST, 'login', '');
 						
 						if (!empty($contents) && !empty($login))
