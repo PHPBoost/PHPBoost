@@ -39,7 +39,7 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
+import('functions', LIB_IMPORT); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 import('io/template');
 
@@ -330,14 +330,14 @@ elseif ($step == 4)
 		{
 			case DB_CONFIG_SUCCESS:
 			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
-				require_once('../kernel/framework/core/errors.class.php');
+				import('core/errors');
 				$Errorh = new Errors;
 				$Sql = new Sql();
 	            //Connexion
 				$Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
 					
 				//Création du fichier de configuration
-				require_once('../kernel/framework/io/file.class.php');
+				import('io/filesystem/file');
 				
 				$file_path = '../kernel/db/config.php';
 				
@@ -546,7 +546,7 @@ elseif ($step == 5)
 		$Cache = new Cache;
 		
         //Installation des modules de la distribution
-		require_once('../kernel/framework/modules/packages_manager.class.php');
+		import('modules/packages_manager');
 		foreach ($DISTRIBUTION_MODULES as $module_name)
 		{
             $Cache->load('modules', RELOAD_CACHE);
@@ -767,7 +767,7 @@ elseif ($step == 7)
 	require_once('functions.php');
 	load_db_connection();
 	
-	require_once('../kernel/framework/core/cache.class.php');
+	import('core/cache');
 	$Cache = new Cache;
 	$Cache->load('config');
 	
