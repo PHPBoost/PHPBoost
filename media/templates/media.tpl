@@ -84,15 +84,9 @@
 								<div>
 									# IF C_MODO #
 									<div style="float:right;">
-										# IF U_ADMIN_VISIBLE_MEDIA #
-										<a href="{file.U_ADMIN_VISIBLE_MEDIA}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-										</a>
-										# ELSE #
 										<a href="{file.U_ADMIN_UNVISIBLE_MEDIA}">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/visible.png" alt="">
 										</a>
-										# ENDIF #
 										<a href="{file.U_ADMIN_EDIT_MEDIA}">
 											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 										</a>
@@ -172,15 +166,9 @@
 				<div style="float:right">
 					# IF A_COM #{U_COM}# ENDIF #
 					# IF C_MODO #
-						# IF U_VISIBLE_MEDIA #
 						<a href="{U_UNVISIBLE_MEDIA}">
 							<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/visible.png" alt="">
 						</a>
-						# ELSE #
-						<a href="{U_VISIBLE_MEDIA}">
-							<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/unvisible.png" alt="">
-						</a>
-						# ENDIF #
 						<a href="{U_EDIT_MEDIA}">
 							<img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" />
 						</a>

@@ -1,64 +1,49 @@
 		<script type="text/javascript">
 		<!--
-		function check_form_conf()
+		function check_form()
 		{
-			if(document.getElementById('nbr_web_max').value == "") {
-				alert("{L_REQUIRE}");
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
+			if(document.getElementById('media_name').value == "") {
+				new Effect.ScrollTo('media_name',{duration:1.2});
+				alert("{L_REQUIRE}{L_MODULE_NAME}");
 				return false;
 			}
-			if(document.getElementById('nbr_cat_max').value == "") {
-				alert("{L_REQUIRE}");
+			if(document.getElementById('num_cols').value == "") {
+				new Effect.ScrollTo('num_cols',{duration:1.2});
+				alert("{L_REQUIRE}{L_NBR_COLS}");
 				return false;
 			}
-			if(document.getElementById('nbr_column').value == "") {
-				alert("{L_REQUIRE}");
+			if(document.getElementById('pagin').value == "") {
+				new Effect.ScrollTo('pagin',{duration:1.2});
+				alert("{L_REQUIRE}{L_PAGINATION}");
 				return false;
 			}
-			if(document.getElementById('note_max').value == "") {
-				alert("{L_REQUIRE}");
+			if(document.getElementById('note').value == "") {
+				new Effect.ScrollTo('note',{duration:1.2});
+				alert("{L_REQUIRE}{L_NOTE}");
+				return false;
+			}
+			if(document.getElementById('width').value == "") {
+				new Effect.ScrollTo('width',{duration:1.2});
+				alert("{L_REQUIRE}{L_WIDTH_MAX}");
+				return false;
+			}
+			if(document.getElementById('height').value == "") {
+				new Effect.ScrollTo('height',{duration:1.2});
+				alert("{L_REQUIRE}{L_HEIGHT_MAX}");
 				return false;
 			}
 			return true;
-		}
-
-		var displayedcontents = false;
-		function XMLHttpRequest_preview()
-		{
-			var contents = document.getElementById('contents').value;
-
-			if( contents != "" )
-			{
-				if( !displayedcontents )
-					Effect.BlindDown('xmlhttprequest_previewcontents', { duration: 0.5 });
-
-				if( document.getElementById('loading_previewcontents') )
-					document.getElementById('loading_previewcontents').style.display = 'block';
-				displayedcontents = true;
-
-				contents = escape_xmlhttprequest(contents);
-				data = "contents=" + contents + "&ftags=swf";
-
-				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/content_xmlhttprequest.php?preview=1&PATH_TO_ROOT=..');
-				xhr_object.onreadystatechange = function()
-				{
-					if( xhr_object.readyState == 4 )
-					{
-						document.getElementById('xmlhttprequest_previewcontents').innerHTML = xhr_object.responseText;
-						if( document.getElementById('loading_previewcontents') )
-							document.getElementById('loading_previewcontents').style.display = 'none';
-					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
-			}
-			else
-				alert("Veuillez entrer un texte !");
 		}
 		-->
 		</script>
 
 		# INCLUDE admin_media_menu #
 		<div id="admin_contents">
-			<form action="admin_media_config.php" method="post" class="fieldset_content" id="top_config">
+			<form action="admin_media_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_CONFIG_GENERAL}</legend>
 						<dl>
@@ -72,7 +57,7 @@
 							</dd>
 						</dl>
 						<br />
-						<label for="contents">{L_MODULE_DESC}</label>
+						<label for="contents" id="preview_description">{L_MODULE_DESC}</label>
 						<label>
 							{KERNEL_EDITOR}
 							<textarea type="text" rows="10" cols="90" id="contents" name="desc">{CONTENTS}</textarea>
@@ -195,7 +180,7 @@
 						<legend>{L_UPDATE}</legend>
 						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" type="button" name="valid" class="submit" onclick="XMLHttpRequest_preview(this.form); new Effect.ScrollTo('top_config',{duration:1.2}); return false;" />
+						<input value="{L_PREVIEW}" type="button" name="valid" class="submit" onclick="XMLHttpRequest_preview(this.form); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;" />
 						&nbsp;&nbsp;
 						<input type="reset" value="{L_RESET}" class="reset" />
 					</fieldset>

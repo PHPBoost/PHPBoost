@@ -33,6 +33,8 @@ require_once('media_begin.php');
 
 if (!empty($_POST['valid']))
 {
+	$Session->csrf_get_protect();
+
 	// Paramètre afichage.
 	$display_array = retrieve(POST, 'activ', 0, TARRAY);
 	$activ = is_array($display_array) ? array_sum($display_array) : 0;
@@ -128,6 +130,7 @@ else
 		'AUTH_CONTRIBUTE' => Authorizations::generate_select(MEDIA_AUTH_CONTRIBUTION, $MEDIA_CATS[0]['auth']),
 		'L_AUTH_WRITE' => $MEDIA_LANG['auth_write'],
 		'AUTH_WRITE' => Authorizations::generate_select(MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth']),
+		'L_REQUIRE' => $MEDIA_LANG['require'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']

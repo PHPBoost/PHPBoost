@@ -84,6 +84,7 @@ $MEDIA_LANG = array(
 'nbr_cols' => 'Nombre de catégories par colonne',
 'note' => 'Échelle de notation',
 'pagination' => 'Nombre de fichiers multimédia affichés par page',
+'require' => 'Veuillez compléter le champ : ',
 'type_both' => 'Musique & Vidéo',
 'type_music' => 'Musique',
 'type_video' => 'Vidéo',

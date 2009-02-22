@@ -46,6 +46,8 @@ require_once('../kernel/header.php');
 
 if (!empty($_POST['submit']))
 {
+	$Session->csrf_get_protect();
+
 	$action = retrieve(POST, 'action', array(), TARRAY);
 	$show = $hide = $delete = array();
 
