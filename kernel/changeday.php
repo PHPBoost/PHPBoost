@@ -69,11 +69,7 @@ if ($check_update == 0)
 			$image->delete();
 		}
 	}
-    
-    //Check for availables updates
-    import('core/updates');
-    $updates = new Updates();
-    
+	
 	//Parcours des modules afin d'executer les actions journalières.
 	import('modules/modules_discovery_service');
 	$modules_loader = new ModulesDiscoveryService();
@@ -93,7 +89,6 @@ if ($check_update == 0)
 	if ($CONFIG_USER['verif_code'] == '1')
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE timestamp < '" . (time() - (3600 * 24)) . "'", __LINE__, __FILE__);
 
-    
     // Check kernel's, modules' or themes' availability
     import('core/updates');
     new Updates();

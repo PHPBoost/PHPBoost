@@ -58,16 +58,17 @@ class Updates
                 $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
-            if ($checks & CHECK_KERNEL)
+            if ($checks & CHECK_MODULES)
             {
                 global $MODULES;
                 // Add Modules
                 $kModules = array_keys($MODULES);
                 foreach ($kModules as $module)
                 {
-                    $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+                    $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+                    $repository = !empty($infos['repository']) ? $infos['repository'] : PHPBOOST_OFFICIAL_REPOSITORY;
                     if (!empty($infos['repository']))
-                        $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
+                        $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $repository);
                 }
             }
             
@@ -136,7 +137,6 @@ class Updates
             $alert->set_identifier($identifier);
             
             //Save
-            global $Session;
             AdministratorAlertService::save_alert($alert);
         }
     }
