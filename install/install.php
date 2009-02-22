@@ -62,7 +62,7 @@ if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
 	include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
 	$lang = DEFAULT_LANGUAGE;
 }
-
+@include_once('../lang/' . $lang . '/errors.php'); //Inclusion fichier d'erreur.
 
 //Chargement de la configuration de la distribution
 if (is_file('distribution/distribution_' . $lang . '.php'))
