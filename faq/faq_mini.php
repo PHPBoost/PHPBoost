@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function faq_mini($position)
+function faq_mini($position, $block)
 {
     global $Cache, $Template, $FAQ_LANG, $RANDOM_QUESTIONS;
     

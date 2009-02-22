@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function poll_mini($position)
+function poll_mini($position, $block)
 {
     global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
     $Cache->load('poll'); //Mini sondages en cache => $_array_poll.

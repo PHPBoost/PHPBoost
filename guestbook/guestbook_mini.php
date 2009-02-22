@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function guestbook_mini($position)
+function guestbook_mini($position, $block)
 {
     global $LANG, $Cache, $_guestbook_rand_msg;
     

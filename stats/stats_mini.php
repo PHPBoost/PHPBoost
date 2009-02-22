@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function stats_mini($position)
+function stats_mini($position, $block)
 {
     global $LANG, $Cache, $nbr_members, $last_member_id, $last_member_login;
     //Chargement de la langue du module.
