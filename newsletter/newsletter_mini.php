@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-function newsletter_mini($position)
+function newsletter_mini($position, $block)
 {
     global  $LANG, $User;
     //Chargement de la langue du module.

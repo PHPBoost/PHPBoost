@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function gallery_mini($position)
+function gallery_mini($position, $block)
 {
     global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics;
     $tpl = new Template('gallery/gallery_mini.tpl');

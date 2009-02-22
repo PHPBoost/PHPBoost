@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function media_mini()
+function media_mini($position, $block)
 {
 	global $LANG, $Cache, $Sql, $User, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_MINI, $MEDIA_LANG;
 

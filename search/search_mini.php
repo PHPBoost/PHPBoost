@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function search_mini($position)
+function search_mini($position, $block)
 {
     global $LANG;
     load_module_lang('search');

@@ -28,7 +28,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function connect_mini($position)
+function connect_mini($position, $block)
 {
     global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS, $Session;
     

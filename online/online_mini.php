@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-function online_mini($position)
+function online_mini($position, $block)
 {
     if (strpos(SCRIPT, '/online/online.php') === false)
     {
