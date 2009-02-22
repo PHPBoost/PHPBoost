@@ -176,7 +176,7 @@ function sunserialize($content)
 function get_utheme()
 {
     global $User;
-	return !empty($User) != null ? $User->get_attribute('user_theme') : 'default';
+	return !empty($User) ? $User->get_attribute('user_theme') : 'default';
 }
 
 //Récupère le thème utilisateur
