@@ -146,7 +146,12 @@ $Template->assign_vars(array(
 
 //Inclusion des blocs
 import('menu/menu');
-if (!@include_once(PATH_TO_ROOT . '/cache/menus.php'))
+if (!DEBUG) {
+	$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');
+} else {
+	$result = include_once(PATH_TO_ROOT . '/cache/menus.php');
+}
+if (!$result)
 {
 	//En cas d'échec, on régénère le cache
 	$Cache->Generate_file('menus');
