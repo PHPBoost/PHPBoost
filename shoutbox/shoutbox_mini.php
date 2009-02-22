@@ -92,10 +92,11 @@ function shoutbox_mini($position)
     			'SHOUTBOX_PSEUDO' => $LANG['guest'],
     			'C_VISIBLE_SHOUT' => true
     		));
-    		
+    	
+		$refresh_delay = empty($CONFIG_SHOUTBOX['shoutbox_refresh_delay']) ? 60 : $CONFIG_SHOUTBOX['shoutbox_refresh_delay'];
     	$tpl->assign_vars(array(
     		'SID' => SID,
-    		'SHOUT_REFRESH_DELAY' => (int)max($CONFIG_SHOUTBOX['shoutbox_refresh_delay'], 0),
+    		'SHOUT_REFRESH_DELAY' => (int)max($refresh_delay, 0),
     		'L_ALERT_TEXT' => $LANG['require_text'],
     		'L_ALERT_UNAUTH_POST' => $LANG['e_unauthorized'],
     		'L_ALERT_FLOOD' => $LANG['e_flood'],
