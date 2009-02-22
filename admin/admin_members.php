@@ -300,7 +300,7 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 	$password = retrieve(POST, 'password2', '', TSTRING_UNCHANGE);
 	$password_bis = retrieve(POST, 'password2_bis', '', TSTRING_UNCHANGE);
 	$password_hash = !empty($password) ? strhash($password) : '';
-	$level = retrieve(POST, 'level2', -1);
+	$level = retrieve(POST, 'level2', 0);
 	$mail = strtolower(retrieve(POST, 'mail2', ''));
 	
 	if (check_mail($mail))
