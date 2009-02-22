@@ -45,16 +45,7 @@ if (empty($id_media) && $id_cat >= 0)
 		exit;
 	}
 
-	$id_parent = $MEDIA_CATS[$id_cat]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$id_cat]['name'], url('media.php?cat=' . $id_cat, 'media-0-' . $id_cat . '+' . url_encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php'));
-
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-0-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
-
-	$Bread_crumb->reverse();
+	bread_crumb($id_cat);
 
 	define('TITLE', $MEDIA_CATS[$id_cat]['name']);
 
@@ -202,8 +193,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
 				'NOTE' => $row['nbrnote'] ? $Note->display_img((int)$row['note'], $MEDIA_CONFIG['note_max'], $MEDIA_CONFIG['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php'),
-				'U_ADMIN_VISIBLE_MEDIA' => ($row['infos'] & MEDIA_STATUS_APROBED) === MEDIA_STATUS_APROBED ? url('media_action.php?visible=' . $row['id']) : 0,
-				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id']),
+				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id']),
 				'U_COM_LINK' => com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
@@ -238,16 +228,7 @@ elseif ($id_media > 0)
 		exit;
 	}
 
-	$id_parent = $MEDIA_CATS[$media['idcat']]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$media['idcat']]['name'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
-
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-0-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
-
-	$Bread_crumb->reverse();
+	bread_crumb($media['idcat']);
 	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
 
 	define('TITLE', $media['name']);
@@ -287,8 +268,7 @@ elseif ($id_media > 0)
 		'L_BY' => $LANG['by'],
 		'BY' => !empty($media['login']) ? sprintf($MEDIA_LANG['media_added'], $media['login'], '../member/member' . url('.php?id=' . $media['iduser'], '-' . $media['iduser'] . '.php'), $level[$media['level']]) : $LANG['guest'],
 		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
-		'U_VISIBLE_MEDIA' => ($media['infos'] & MEDIA_STATUS_APROBED) === MEDIA_STATUS_APROBED ? url('media_action.php?visible=' . $id_media) : 0,
-		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media),
+		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
 		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media),
 		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),

@@ -1,5 +1,5 @@
 		# IF C_DISPLAY #
-		<form action="moderation_media.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset_content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
 				<table class="module_table">

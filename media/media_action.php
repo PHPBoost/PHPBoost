@@ -33,18 +33,17 @@ $media_categories = new MediaCats();
 
 $Template->set_filenames(array('media_action' => 'media/media_action.tpl'));
 
-$aprob = retrieve(GET, 'aprob', 0, TINTEGER);
-$visible = retrieve(GET, 'visible', 0, TINTEGER);
 $unvisible = retrieve(GET, 'unvisible', 0, TINTEGER);
 $add = retrieve(GET, 'add', 0, TINTEGER);
 $edit = retrieve(GET, 'edit', 0, TINTEGER);
 $delete = retrieve(GET, 'del', 0, TINTEGER);
 
 // Modification du statut du fichier.
-if ($visible > 0 XOR $unvisible > 0 XOR $aprob > 0)
+if ($unvisible > 0)
 {
-	$id = ($visible > 0 ? $visible : ($unvisible > 0 ? $unvisible : $aprob));
-	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Session->csrf_get_protect();
+
+	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
 
 	// Gestion des erreurs.
 	if (empty($media))
@@ -58,49 +57,25 @@ if ($visible > 0 XOR $unvisible > 0 XOR $aprob > 0)
 		exit;
 	}
 
-	$id_parent = $MEDIA_CATS[$media['idcat']]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$media['idcat']]['name'], url('media.php?cat=' . $media['idcat'], 'media-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
+	bread_crumb($media['idcat']);
+	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . $Session->get_token()));
 
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
+	define('TITLE', $MEDIA_LANG['media_moderation']);
 
-	$Bread_crumb->reverse();
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '+' . url_encode_rewrite($media['name']) . '.php'));
-
-	// Détermination du bit, du nom de la page et de la Breadcrum.
-	if ($visible > 0)
-	{
-		$bit = ($media['infos'] & ~MEDIA_STATUS_UNVISIBLE);
-		define('TITLE', $MEDIA_LANG['media_moderation']);
-		$Bread_crumb->add($MEDIA_LANG['show_media'], url('media_action.php?visible=' . $media['id']));
-	}
-	elseif ($unvisible > 0)
-	{
-		$bit = ($media['infos'] | MEDIA_STATUS_UNVISIBLE);
-		define('TITLE', $MEDIA_LANG['media_moderation']);
-		$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id']));
-	}
-	else
-	{
-		$bit = ($media['infos'] | MEDIA_STATUS_APROBED);
-		define('TITLE', $MEDIA_LANG['media_aprob']);
-		$Bread_crumb->add($MEDIA_LANG['aprob_media'], url('media_action.php?aprob=' . $media['id']));
-	}
-
-	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . $bit . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . ($media['infos'] | MEDIA_STATUS_UNVISIBLE) . "' WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
 
 	require_once('../kernel/header.php');
 
 	$media_categories->recount_media_per_cat($media['idcat']);
 
-	redirect_confirm('media' . url('.php?cat=' . $media['idcat'], '-' . $media['idcat'] . '.php'), $MEDIA_LANG['action_success'], TIME_REDIRECT);
+	redirect_confirm('media' . url('.php?cat=' . $media['idcat'], '-0-' . $media['idcat'] . '.php'), $MEDIA_LANG['action_success'], TIME_REDIRECT);
 }
 // Suppression d'un fichier.
 elseif ($delete > 0)
 {
+	$Session->csrf_get_protect();
+
 	$media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $delete. "'", __LINE__, __FILE__);
 
 	if (empty($media))
@@ -130,17 +105,8 @@ elseif ($delete > 0)
 
 	$media_categories->recount_media_per_cat($media['idcat']);
 
-	$id_parent = $MEDIA_CATS[$media['idcat']]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$media['idcat']]['name'], url('media.php?cat=' . $media['idcat'], 'media-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
-
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
-
-	$Bread_crumb->reverse();
-	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat']));
+	bread_crumb($media['idcat']);
+	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
 
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
@@ -214,20 +180,11 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	}
 
 	$idcat = !empty($media) ? $media['idcat'] : $add;
-	$id_parent = $MEDIA_CATS[$idcat]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$idcat]['name'], url('media.php?cat=' . $idcat, 'media-' . $idcat . '+' . url_encode_rewrite($MEDIA_CATS[$idcat]['name']) . '.php'));
-
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
-
-	$Bread_crumb->reverse();
+	bread_crumb($idcat);
 
 	if (!empty($media))
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $idcat . '+' . url_encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['id']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -242,6 +199,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 // Traitement du formulaire.
 elseif (!empty($_POST['submit']))
 {
+	$Session->csrf_get_protect();
+
 	$media = array(
 		'idedit' => retrieve(POST, 'idedit', 0, TINTEGER),
 		'name' => retrieve(POST, 'name', '', TSTRING),
@@ -258,20 +217,11 @@ elseif (!empty($_POST['submit']))
 	$auth_cat = !empty($MEDIA_CATS[$media['idcat']]['auth']) ? $MEDIA_CATS[$media['idcat']]['auth'] : $MEDIA_CATS[0]['auth'];
 	$media['idcat'] = !empty($MEDIA_CATS[$media['idcat']]) ? $media['idcat'] : 0;
 
-	$id_parent = $MEDIA_CATS[$media['idcat']]['id_parent'];
-	$Bread_crumb->add($MEDIA_CATS[$media['idcat']]['name'], url('media.php?cat=' . $media['idcat'], 'media-' . $media['idcat'] . '+' . url_encode_rewrite($MEDIA_CATS[$media['idcat']]['name']) . '.php'));
-
-	while ($id_parent >= 0)
-	{
-		$Bread_crumb->add($MEDIA_CATS[$id_parent]['name'], url('media.php?cat=' . $id_parent, 'media-' . $id_parent . '+' . url_encode_rewrite($MEDIA_CATS[$id_parent]['name']) . '.php'));
-		$id_parent = $MEDIA_CATS[$id_parent]['id_parent'];
-	}
-
-	$Bread_crumb->reverse();
+	bread_crumb($media['idcat']);
 
 	if ($media['idedit'])
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '+' . url_encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['idedit']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}

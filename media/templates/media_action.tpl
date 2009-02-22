@@ -29,7 +29,7 @@
 				{L_PAGE_TITLE}
 			</div>
 			<div class="module_contents">
-			<form action="media_action.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="media_action.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_PAGE_TITLE}</legend>
 					<dl>

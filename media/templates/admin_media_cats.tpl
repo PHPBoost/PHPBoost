@@ -34,7 +34,7 @@
 			# END categories_management #
 
 			# START removing_interface #
-			<form action="admin_media_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_media_cats.php" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
@@ -62,17 +62,20 @@
 			<script type="text/javascript">
 			<!--
 			function check_form(){
+				# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+				# ENDIF #
+			
 				if(document.getElementById('name').value == "")
 				{
 					alert("{L_REQUIRE_TITLE}");
 					return false;
 			    }
-
 				return true;
 			}
 			-->
 			</script>
-			<form action="admin_media_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content" id="top_cats">
+			<form action="admin_media_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
@@ -106,7 +109,7 @@
 							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" />
 						</dd>
 					</dl>
-					<label for="description">
+					<label for="description" id="preview_description">
 						{L_CAT_DESCRIPTION}
 					</label>
 					{KERNEL_EDITOR}
@@ -213,7 +216,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form); new Effect.ScrollTo('top_cats',{duration:1.2}); return false;"" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"" class="submit" />
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
