@@ -141,9 +141,9 @@ if (isset($MODULES[MODULE_NAME]) )
 	if ($MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 }
-elseif (MODULE_NAME != 'member' && MODULE_NAME != 'admin' && MODULE_NAME != 'kernel') //Empêche l'exécution d'un module non installé.
+elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel', ''))) //Empêche l'exécution d'un module non installé.
 {
-	$array_info_module = load_ini_file('../' . MODULE_NAME . '/lang/', get_ulang());
+	$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME . '/lang/', get_ulang());
 	if (!empty($array_info_module['name'])) //Module présent, et non installé.
 		$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
 }

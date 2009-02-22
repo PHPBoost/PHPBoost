@@ -70,10 +70,14 @@ if (!empty($module_id))
         {
             $feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
             $feed->cache();
-            
+
+            // Print the feed            
             echo $feed->export();
         }
-         // Print the feed
+        else
+        {
+            redirect('member/error.php?e=e_uninstalled_module');
+        }
     }
 }
 

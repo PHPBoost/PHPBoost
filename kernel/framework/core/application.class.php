@@ -58,7 +58,7 @@ class Application
         $this->language = Application::_get_attribute($xml_desc, 'language');
         
         $language = Application::_get_attribute($xml_desc, 'localized_language');
-        $this->localized_language = !empty($language) ? $language : $this->language;
+        $this->localized_language = !empty($language) ? utf8_decode($language) : $this->language;
         
         $this->version = Application::_get_attribute($xml_desc, 'num');
         
@@ -97,7 +97,10 @@ class Application
         $authors_elts = $xml_desc->xpath('authors/author');
         foreach ($authors_elts as $author)
         {
-            $this->authors[] = array('name' => Application::_get_attribute($author, 'name'), 'email' => Application::_get_attribute($author, 'email'));
+            $this->authors[] = array(
+                'name' => Application::_get_attribute($author, 'name'),
+                'email' => Application::_get_attribute($author, 'email')
+            );
         }
         
         $this->description = $xml_desc->xpath('description');
@@ -112,20 +115,20 @@ class Application
         foreach ($novelties  as $novelty )
         {
             $attributes = $novelty->attributes();
-            $type = isset($attributes['type']) ? utf8_decode($attributes['type']) : 'feature';
+            $type = isset($attributes['type']) ? $attributes['type'] : 'feature';
             switch ($type)
             {
                 case 'improvment':
-                    $this->improvments[] = (string) $novelty;
+                    $this->improvments[] = utf8_decode((string) $novelty);
                     break;
                 case 'bug':
-                    $this->bug_corrections[] = (string) $novelty;
+                    $this->bug_corrections[] = utf8_decode((string) $novelty);
                     break;
                 case 'security':
-                    $this->security_improvments[] = (string) $novelty;
+                    $this->security_improvments[] = utf8_decode((string) $novelty);
                     break;
                 default:
-                    $this->new_features[] = (string) $novelty;
+                    $this->new_features[] = utf8_decode((string) $novelty);
                     break;
             }
         }
@@ -146,10 +149,13 @@ class Application
     function check_compatibility()
     {
         global $CONFIG;
-        return ($this->get_version() > $this->_get_installed_version()) &&
-            ($CONFIG['version'] >= $this->compatibility_min) && 
-            ($CONFIG['version'] <= $this->compatibility_max) &&
-            ($this->compatibility_max >= $this->compatibility_min);
+        return (($CONFIG['version'] >= $this->compatibility_min) && (
+	            $this->compatibility_max == null || (
+	               $CONFIG['version'] <= $this->compatibility_max &&
+	               $this->compatibility_max >= $this->compatibility_min
+	           )
+	        )
+        );
     }
     
     ## PUBLIC ACCESSORS ##
