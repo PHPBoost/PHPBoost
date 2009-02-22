@@ -414,7 +414,7 @@ if (!empty($id_get)) //Espace membre
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
 			//Initialisation  de la class de gestion des fichiers.
-			include_once('../member/uploads.class.php');
+			import('members/uploads');
 			$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
 			$Uploads->Empty_folder_member($User->get_attribute('user_id'));
 

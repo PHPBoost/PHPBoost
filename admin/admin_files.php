@@ -30,7 +30,7 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../member/uploads.class.php');
+import('members/uploads');
 $Uploads = new Uploads; 
 
 $folder = retrieve(GET, 'f', 0);

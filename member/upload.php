@@ -84,7 +84,7 @@ if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 //Initialisation  de la class de gestion des fichiers.
-include_once('../member/uploads.class.php');
+import('members/uploads');
 $Uploads = new Uploads;
 
 $folder = retrieve(GET, 'f', 0);
