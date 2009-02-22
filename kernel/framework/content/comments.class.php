@@ -85,6 +85,7 @@ class Comments
 	function delete_all($idprov)
 	{
 		global $Sql;
+		
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
@@ -92,7 +93,7 @@ class Comments
 	function lock($lock)
 	{
 		global $Sql;
-		
+
 		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET lock_com = '" . $lock . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 	}
 	
@@ -302,6 +303,8 @@ class Comments
 			}
 			elseif (isset($_GET['lock']) && $User->check_level(MODO_LEVEL)) //Verrouillage des commentaires.
 			{
+				$Session->csrf_get_protect();
+				
 				if ($User->check_level(MODO_LEVEL))
 				{
 					$lock = retrieve(GET, 'lock', 0);
@@ -337,7 +340,7 @@ class Comments
 						'COM_LOCK' => true,
 						'IMG' => ($this->lock_com >= 1) ? 'unlock' : 'lock',
 						'L_LOCK' => ($this->lock_com >= 1) ? $LANG['unlock'] : $LANG['lock'],
-						'U_LOCK' => $this->path . (($this->lock_com >= 1) ? $vars_simple . '&amp;lock=0' : $vars_simple . '&amp;lock=1') . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')
+						'U_LOCK' => $this->path . (($this->lock_com >= 1) ? $vars_simple . '&amp;lock=0&amp;token=' . $Session->get_token() : $vars_simple . '&amp;lock=1&amp;token=' . $Session->get_token()) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')
 					));
 				}
 				
