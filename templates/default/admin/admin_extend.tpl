@@ -87,9 +87,9 @@
 				<a href="{PATH_TO_ROOT}/admin/admin_ranks.php">{L_RANKS}</a>	
 			</td>
 			<td class="row2" style="width:20%;">
-				<a href="{PATH_TO_ROOT}/admin/admin_errors.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/terms.png" /></a>		
+				<a href="{PATH_TO_ROOT}/admin/admin_terms.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/terms.png" /></a>		
 				<br />
-				<a href="{PATH_TO_ROOT}/admin/admin_errors.php">{L_TERMS}</a>
+				<a href="{PATH_TO_ROOT}/admin/admin_terms.php">{L_TERMS}</a>
 			</td>			
 		</tr>	
 		<tr style="text-align:center;">		
