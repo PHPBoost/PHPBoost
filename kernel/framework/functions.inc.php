@@ -48,25 +48,25 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 	switch ($var_type)
 	{
         case GET:
-            if (!empty($_GET[$var_name]))
+            if (isset($_GET[$var_name]))
                 $var = $_GET[$var_name];
             else
                 return $default_value;
             break;
         case POST:
-            if (!empty($_POST[$var_name]))
+            if (isset($_POST[$var_name]))
                 $var = $_POST[$var_name];
             else
                 return $default_value;
             break;
 		case REQUEST:
-            if (!empty($_REQUEST[$var_name]))
+            if (isset($_REQUEST[$var_name]))
                 $var = $_REQUEST[$var_name];
             else
                 return $default_value;
             break;
         case COOKIE:
-            if (!empty($_COOKIE[$var_name]))
+            if (isset($_COOKIE[$var_name]))
                 $var = $_COOKIE[$var_name];
             else
                 return $default_value;
