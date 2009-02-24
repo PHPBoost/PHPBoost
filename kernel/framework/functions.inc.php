@@ -43,42 +43,49 @@ define('TIMEZONE_SYSTEM', 2);
 define('TIMEZONE_USER', 3);
 
 //Récupère les superglobales
-function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
+function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $flags = 0)
 {
+    $var = null;
 	switch ($var_type)
 	{
         case GET:
             if (isset($_GET[$var_name]))
+            {
                 $var = $_GET[$var_name];
-            else
-                return $default_value;
+            }
             break;
         case POST:
             if (isset($_POST[$var_name]))
+            {
                 $var = $_POST[$var_name];
-            else
-                return $default_value;
+            }
             break;
 		case REQUEST:
             if (isset($_REQUEST[$var_name]))
+            {
                 $var = $_REQUEST[$var_name];
-            else
-                return $default_value;
+            }
             break;
         case COOKIE:
             if (isset($_COOKIE[$var_name]))
+            {
                 $var = $_COOKIE[$var_name];
-            else
-                return $default_value;
+            }
             break;
         case FILES:
             if (isset($_FILES[$var_name]))
+            {
                 $var = $_FILES[$var_name];
-            else
-                return $default_value;
+            }
             break;
         default:
-            return;
+            break;
+	}
+	
+	//If $var is not set or an empty value is retrieved with the USE_DEFAULT_IF_EMPTY flag, we return the default value
+	if ($var === null || (($flags & USE_DEFAULT_IF_EMPTY != 0) && empty($var)))
+	{
+	    return $default_value;
 	}
 	
 	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
@@ -90,9 +97,13 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return strprotect($var); //Chaine protégée.
 		case TSTRING_UNCHANGE:
 			if (MAGIC_QUOTES)
+			{
 				$var = trim(stripslashes($var));
+			}
 			else
+			{
 				$var = trim($var);
+			}
 			return (string)$var; //Chaine non protégée.
 		case TSTRING_PARSE:
 			return strparse($var); //Chaine parsée.
@@ -112,11 +123,11 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL)
 			return (array)$var;
 	    case TDOUBLE:
 			return (double)$var;
-		case TNONE: // ajout par alain91
+		case TNONE:
 			return $var;
+		default:
+		    return $default_value;
 	}
-	
-	return;
 }
 
 //Passe à la moulinette les entrées (chaînes) utilisateurs.

@@ -108,7 +108,9 @@ define('TARRAY', 'array');
 define('TUNSIGNED_INT', 'uint');
 define('TUNSIGNED_DOUBLE', 'udouble');
 define('TUNSIGNED_FLOAT', 'udouble');
-define('TNONE', 'none'); // ajout par alain91
+define('TNONE', 'none');
+
+define('USE_DEFAULT_IF_EMPTY', 1);
 
 //Récupération de l'ip, essaye de récupérer la véritable ip avec un proxy.
 if ($_SERVER)
