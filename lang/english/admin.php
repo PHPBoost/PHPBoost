@@ -690,5 +690,8 @@ $LANG['download_the_complete_pack'] = 'Download the complete pack';
 $LANG['download_the_update_pack'] = 'Download the update pack';
 $LANG['no_availables_updates'] = 'No updates is available for the moment.';
 $LANG['incompatible_php_version'] = 'Incompatible PHP Version, please upgrade to %s or above';
+$LANG['incompatible_php_version'] = 'Can\'t check for updates.
+Please upgrade to PHP version %s or above.<br />If you can\'t use PHP5,
+check for updates on our <a href="http://www.phpboost.com">official website</a>.';
 
 ?>
