@@ -224,7 +224,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					$Sql->query_inject("DELETE FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
-					$Mail->send($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST), $CONFIG['mail_exp']);
+					$Mail->send($user_mail, addslashes($LANG['ban_title_mail']), sprintf(addslashes($LANG['ban_mail']), HOST, addslashes($CONFIG['sign'])), $CONFIG['mail_exp']);
 				}
 				
 				//Champs supplémentaires.
