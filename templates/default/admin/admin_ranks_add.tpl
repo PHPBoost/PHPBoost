@@ -15,8 +15,13 @@
 
 			function img_change(id, url)
 			{
-				if( document.images )
+				if( document.images && url != '' )
+				{	
+					document.images[id].style.display = 'inline';
 					document.images[id].src = "{PATH_TO_ROOT}/templates/{THEME}/images/ranks/" + url;
+				}
+				else
+					document.images[id].style.display = 'none';
 			}
 		-->
 		</script>
@@ -83,8 +88,7 @@
 							<select name="icon" id="icon" onChange="img_change('icon', this.options[selectedIndex].value)">
 								{RANK_OPTIONS}
 							</select>
-							<br />
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" style="display:none;" />
 						</label></dd>
 					</dl>
 				</fieldset>
