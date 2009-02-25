@@ -26,10 +26,10 @@
 
 <div id="admin_contents">
     # IF C_INCOMPATIBLE_PHP_VERSION #
-        &nbsp;<div class="warning" style="width:300px;margin:auto;margin-top:100px;">{L_INCOMPATIBLE_PHP_VERSION}</div>
+        &nbsp;<div class="warning" style="width:450px;margin:auto;margin-top:100px;">{L_INCOMPATIBLE_PHP_VERSION}</div>
     # ELSE #
         # IF C_UPDATES #
-            <div class="warning" style="width:300px;margin:auto;">{L_UPDATES_ARE_AVAILABLE}</div>
+            <div class="warning" style="width:450px;margin:auto;">{L_UPDATES_ARE_AVAILABLE}</div>
             
             <table class="module_table">
                 <tr><th colspan="5">{L_AVAILABLES_UPDATES}</th></tr>

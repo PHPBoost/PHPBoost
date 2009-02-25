@@ -22,10 +22,13 @@
 		}
 		function img_change(url)
 		{
-			if (document.images)
-			{
+			if( document.images && url != '' )
+			{	
+				document.images['img_group'].style.display = 'inline';
 				document.images['img_group'].src = "{PATH_TO_ROOT}/images/group/" + url;
 			}
+			else
+				document.images['img_group'].style.display = 'none';
 		}
 		function XMLHttpRequest_search()
 		{
@@ -34,7 +37,7 @@
 			{
 				if( document.getElementById('loading_groups') )
 					document.getElementById('loading_groups').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-							
+				
 				data = 'login=' + login;
 				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?insert_member=1');
 				xhr_object.onreadystatechange = function() 
@@ -148,7 +151,7 @@
 						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
-								<div id="color_group_list" class="bbcode_block" style="background:white;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
 						</label></dd>
@@ -159,8 +162,8 @@
 							<label>
 								<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
-								</select>				
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" class="valign_middle" />
+								</select>
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" class="valign_middle" style="display:none" />
 							</label>
 						</dd>
 					</dl>
@@ -263,7 +266,7 @@
 						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
 							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
-								<div id="color_group_list" class="bbcode_block" style="background:white;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
+								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
 						</label></dd>
@@ -274,7 +277,7 @@
 							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
 							</select>				
-							<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" />
+							<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" style="display:none" />
 						</label></dd>
 					</dl>				
 				</fieldset>

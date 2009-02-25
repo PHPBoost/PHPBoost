@@ -191,7 +191,7 @@
 				<div class="dynamic_menu" style="z-index:0;float:none">
 					<ul>
 						<li>
-							<h5 class="links" style=""><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{L_TABLE_STRUCTURE}</a></h5>
+							<h5 class="links" style=""><img src="./database_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{L_TABLE_STRUCTURE}</a></h5>
 						</li>
 						<li>
 							<h5 class="links"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/themes_mini.png" class="valign_middle" alt="" /> <a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=data">{L_TABLE_DISPLAY}</a></h5>
@@ -305,7 +305,7 @@
 					<div class="block_contents2">
 						<span id="errorh"></span>
 						<div class="warning">
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/warning.png" alt="" style="float:left;padding-right:6px;" /> {L_EXPLAIN_QUERY}
+							{L_EXPLAIN_QUERY}
 						</div>
 					</div>
 					<div class="block_top">
