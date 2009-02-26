@@ -53,7 +53,6 @@ class Repository
                 $rep_app = clone($app);
                 $rep_app->load($versions[$i]);
                 
-                echo $rep_app->get_version() . ' - ' . $app->get_version();
                 if ($rep_app->get_version() > $app->get_version())
                 {
                     if ($rep_app->check_compatibility())
