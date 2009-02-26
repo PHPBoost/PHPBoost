@@ -58,7 +58,7 @@ class Application
         $this->language = Application::_get_attribute($xml_desc, 'language');
         
         $language = Application::_get_attribute($xml_desc, 'localized_language');
-        $this->localized_language = !empty($language) ? utf8_decode($language) : $this->language;
+        $this->localized_language = !empty($language) ? ($language) : $this->language;
         
         $this->version = Application::_get_attribute($xml_desc, 'num');
         
