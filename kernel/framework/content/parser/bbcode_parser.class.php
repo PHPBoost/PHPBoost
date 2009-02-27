@@ -120,7 +120,7 @@ class BBCodeParser extends ContentParser
 		$this->content = strip_tags($this->content);
 		
 		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
-		$this->content = preg_replace('`&amp;((?:#[0-9]{2,4})|(?:[a-z0-9]{2,6}));`i', "&$1;", $this->content);
+		$this->content = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $this->content);
 		
 		//Treatment of the Word pasted characters
 		$array_str = array( 

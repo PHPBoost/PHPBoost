@@ -14,21 +14,21 @@
 				if( document.getElementById('loading_preview{FIELD}') )
 					document.getElementById('loading_preview{FIELD}').style.display = 'block';
 				displayed{FIELD} = true;			
-			
-				contents = escape_xmlhttprequest(contents);
-				data = "contents=" + contents + "&ftags={FORBIDDEN_TAGS}";			
-			  
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}');
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 ) 
-					{	
-						document.getElementById('xmlhttprequest_preview{FIELD}').innerHTML = xhr_object.responseText;
-						if( document.getElementById('loading_preview{FIELD}') )
-							document.getElementById('loading_preview{FIELD}').style.display = 'none';
+
+				new Ajax.Request(
+					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}',
+					{
+						method: 'post',
+						parameters: {contents: contents, ftags: '{FORBIDDEN_TAGS}'},
+						onSuccess: function(response)
+						{
+							document.getElementById('xmlhttprequest_preview{FIELD}').innerHTML = response.responseText;
+							if( document.getElementById('loading_preview{FIELD}') )
+								document.getElementById('loading_preview{FIELD}').style.display = 'none';
+						},
+						encoding: 'iso-8859-1'
 					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
+				);
 			}	
 			else
 				alert("{L_REQUIRE_TEXT}");
