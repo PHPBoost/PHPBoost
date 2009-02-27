@@ -351,28 +351,33 @@ class ForumInterface extends ModuleInterface
         $forum = new Forum();
         $categories = $forum->get_cats_tree();
         
-        function feeds_add_category(&$current_feed_category, &$category)
+        import('content/syndication/feeds_list');
+        import('content/syndication/feeds_cat');
+        
+        $cat_tree = new FeedsCat('forum', 0, $LANG['root']);
+        
+        function _feeds_add_category(&$cat_tree, &$category)
         {
-            $feed_cat = array();
-            $feed_cat['id'] = $category['this']['id'];
-            $feed_cat['name'] = $category['this']['name'];
-            $feed_cat['children'] = array();
-            $feed_cat['feeds_names'] = array('master');
-            
-            $feed_cat_children =& $feed_cat['children'];
-            foreach ($category['children'] as $category)
+            echo '<pre>'; print_r($category); echo '</pre><hr />';
+            echo (string) $category['this']['id'] . ' - ';
+            $child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
+            foreach ($category['children'] as $sub_category)
             {
-                feeds_add_category($feed_cat_children, $category);
+                _feeds_add_category($child, $sub_category);
             }
-            $current_feed_category[] = $feed_cat;
+            $cat_tree->add_child($child);
         }
         
-        $current_feed_category =& $feeds;
-        foreach ($categories as $category)
+        $nb_cats = count($categories);
+        for ($i = 0; $i < $nb_cats; $i++)
         {
-            feeds_add_category($current_feed_category, $category);
+            echo '<pre>'; print_r($categories[$i]); echo '</pre><hr />';
+            _feeds_add_category($cat_tree, $categories[$i]);
         }
         
+        $feeds = new FeedsList();
+        $feeds->add_feed($cat_tree, DEFAULT_FEED_NAME);
+//        echo '<pre>'; print_r($feeds); echo '</pre>';
         return $feeds;
     }
     
@@ -383,7 +388,7 @@ class ForumInterface extends ModuleInterface
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
         import('content/syndication/feed_data');
-        $idcat = $_idcat;   // Because <$idcat> is overwrite in /forum/forum_init_auth_cats.php
+        $idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
         
         $data = new FeedData();
         

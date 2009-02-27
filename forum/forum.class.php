@@ -543,7 +543,7 @@ class Forum
             $parent[] = $cat;
             $level = $cat['this']['level'];
         }
-	    return $cats_tree;
+	    return $cats_tree[0];
 	}
 	
 	## Private Method ##

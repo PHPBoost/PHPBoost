@@ -42,7 +42,7 @@ class FeedsList
      */
     function add_feed($cat_tree, $feed_type)
     {
-        $list[$feed_type] = $cat_tree;  
+        $this->list[$feed_type] = $cat_tree;  
     }
     
     /**
@@ -51,7 +51,7 @@ class FeedsList
      */
     function get_feeds_list()
     {
-        return $list;
+        return $this->list;
     }
     
     /**
