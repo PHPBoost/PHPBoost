@@ -18,9 +18,13 @@ Faire une option pour désactiver la protection csrf basée sur le referer.
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
+Bug BBcode code sur ie7.
+Possibilité d'uploader des images dans images/groups
+Possibilité d'uploader des images dans images/ranks
+Possibilité de définir des champs d'insctiption obligatoires.
+
 
 ------------------------------------ MODULES -----------------------------------
-Améliorer le listage des news/articles dans l'admin (merdique actuellement).
 
 #################################################################################
 
