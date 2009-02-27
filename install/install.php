@@ -303,7 +303,7 @@ elseif ($step == 4)
 		$login = retrieve(POST, 'login', '');
 		$password = retrieve(POST, 'password', '');
 		$database = retrieve(POST, 'database', '');
-		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_'));
+		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
 		
 		include_once('functions.php');
 		if (!empty($host) && !empty($login) && !empty($database))

@@ -34,11 +34,10 @@ import('util/url');
 class FeedsCat
 {
     /**
-     * @desc 
-     * @param $module_id
-     * @param $category_id
-     * @param $category_name
-     * @return unknown_type
+     * @desc Builds a FeedsCat Object
+     * @param string $module_id the feed module id
+     * @param int $category_id the category id
+     * @param string $category_name the category name
      */
     function FeedsCat($module_id, $category_id, $category_name)
     {
@@ -54,7 +53,8 @@ class FeedsCat
      */
     function get_url($feed_type = '')
     {
-        return new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . (!empty($feed_category) ? '&amp;name=' . $feed_category : ''));
+        $url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . (!empty($feed_category) ? '&amp;name=' . $feed_category : ''));
+        return $url->absolute();
     }
     
     /**

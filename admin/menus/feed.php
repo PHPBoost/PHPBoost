@@ -153,58 +153,64 @@ import('modules/modules_discovery_service');
 $modules = new ModulesDiscoveryService();
 $feeds_modules = $modules->get_available_modules('get_feeds_list');
 
-function build_feed_urls(&$list, $module_id, $level = 0)
+function build_feed_urls($elts, $module_id, &$feed_type, $level = 0)
 {
 	$urls = array();
 	global $edit, $feed_url;
 	static $already_selected = false;
 	
-	foreach ($list as $elt)
+	foreach ($elts as $elt)
 	{
-		foreach ($elt['feeds_names'] as $name)
-		{
-			$url = '/syndication.php?m=' . $module_id . '&amp;cat=' . $elt['id'] . '&amp;name=' . $name;
-			
-			if (!$already_selected && $edit && $feed_url == $url)
-			{
-				$selected = true;
-				$already_selected = true;
-			}
-			else
-			{
-				$selected = false;
-			}
-			
-			$urls[] = array(
-				'name' => $elt['name'],
-				'url' => $url,
-				'level' => $level,
-				'feed_name' => $name,
-				'selected' => $selected
-			);
-		}
-		
-		$urls = array_merge($urls, build_feed_urls($elt['children'], $module_id, ++$level));
+    	$url = $elt->get_url($feed_type);
+    	
+    	if (!$already_selected && $edit && $feed_url == $url)
+    	{
+    		$selected = true;
+    		$already_selected = true;
+    	}
+    	else
+    	{
+    		$selected = false;
+    	}
+    	
+    	$urls[] = array(
+    		'name' => $elt->get_category_name(),
+    		'url' => $url,
+    		'level' => $level,
+    		'feed_name' => $feed_type,
+    		'selected' => $selected
+    	);
+    	
+    	$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, ++$level));
 	}
-	
 	return $urls;
 }
 
 foreach ($feeds_modules as $module)
 {
 	$list = $module->functionnality('get_feeds_list');
-	$urls = build_feed_urls($list, $module->get_id());
-	$root_feed_url = new Url($urls[0]['url']);
-	$tpl->assign_block_vars('modules', array('NAME' => $module->get_id(), 'URL' => $root_feed_url->absolute()));
-	foreach ($urls as $url)
+	$list = $list->get_feeds_list();
+	$urls = array();
+	foreach ($list as $feed_type => $elt)
 	{
-		$tpl->assign_block_vars('modules.feeds_urls', array(
-			'URL' => $url['url'],
-			'NAME' => $url['name'],
-			'SPACE' => '--' . str_repeat('------', $url['level']),
-			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
-			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-		));
+//	    echo '<pre>'; print_r($elt); echo '</pre>';
+	    $urls[] = build_feed_urls(array($elt), $module->get_id(), $feed_type);
+	}
+
+	$root_feed_url = new Url($urls[0][0]['url']);
+	$tpl->assign_block_vars('modules', array('NAME' => $module->get_id(), 'URL' => $root_feed_url->absolute()));
+	foreach ($urls as $url_type)
+	{
+	    foreach ($url_type as $url)
+	    {
+	        $tpl->assign_block_vars('modules.feeds_urls', array(
+    			'URL' => $url['url'],
+    			'NAME' => $url['name'],
+    			'SPACE' => '--' . str_repeat('------', $url['level']),
+    			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
+    			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
+    		));
+	    }
 	}
 }
 
