@@ -102,65 +102,26 @@ class MediaInterface extends ModuleInterface
 		return $string;
 	}
 
-/*
-	//Changement de jour.
-	function on_changeday()
-	{
-
-	}
-*/
-
-//	function get_feeds_list()
-//    {
-//        global $LANG, $CAT_FORUM;
-//        $feed = array();
-//        require_once PATH_TO_ROOT . '/forum/forum.class.php';
-//        $forum = new Forum();
-//        $categories = $forum->get_cats_tree();
-//        
-//        function feeds_add_category(&$current_feed_category, &$category)
-//        {
-//            $feed_cat = array();
-//            $feed_cat['id'] = $category['this']['id'];
-//            $feed_cat['name'] = $category['this']['name'];
-//            $feed_cat['children'] = array();
-//            $feed_cat['feeds_names'] = array('master');
-//            
-//            $feed_cat_children =& $feed_cat['children'];
-//            foreach ($category['children'] as $category)
-//            {
-//                feeds_add_category($feed_cat_children, $category);
-//            }
-//            $current_feed_category[] = $feed_cat;
-//        }
-//        
-//        $current_feed_category =& $feeds;
-//        foreach ($categories as $category)
-//        {
-//            feeds_add_category($current_feed_category, $category);
-//        }
-//        
-//        return $feeds;
-//    }
-
 	// Generate the feed data structure used by RSS, ATOM and feed informations on the website
     function get_feed_data_struct($idcat = 0)
     {
-        require_once(PATH_TO_ROOT . '/media/media_constant.php');
-        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
-        import('util/date');
-        import('content/syndication/feed_data');
+    	global $Cache, $Sql, $LANG, $MEDIA_LANG, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS;
         
-        global $Cache, $Sql, $LANG, $MEDIA_LANG, $CONFIG, $MEDIA_CONFIG, $MEDIA_CATS;
         $Cache->load('media');
 		load_module_lang('media');
+
+        require_once(PATH_TO_ROOT . '/media/media_constant.php');
+        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
+		import('content/syndication/feed_data');
+		import('util/date');
+		import('util/url');
+        
         $data = new FeedData();
-        $date = new Date();
         
         // Meta-informations generation
         $data->set_title($MEDIA_LANG['xml_media_desc']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=media');
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=media&amp;cat=' . $idcat));
         $data->set_host(HOST);
         $data->set_desc($MEDIA_LANG['xml_media_desc']);
         $data->set_lang($LANG['xml_lang']);
@@ -170,36 +131,33 @@ class MediaInterface extends ModuleInterface
         $cats = new MediaCats();
         $children_cats = array();
         $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
-        
-        $req = "SELECT id, idcat, name, contents, timestamp
-        FROM " . PREFIX . "media
-        WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " )
-        ORDER BY timestamp DESC" . $Sql->limit(0, $MEDIA_CONFIG['pagin']);
-        $result = $Sql->query_while ($req, __LINE__, __FILE__);
+
+        $result = $Sql->query_while ("SELECT id, idcat, name, contents, timestamp FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " ) ORDER BY timestamp DESC" . $Sql->limit(0, $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
         
         // Generation of the feed's items
         while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
             
             // Rewriting
-            $link = HOST . DIR . '/media/media' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['name']) . '.php');
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+            $link = new Url('/media/media' . url(
+                '.php?id=' . $row['id'],
+                '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php'
+            ));
             
             // Adding item's informations
-            $item->set_title(htmlspecialchars(html_entity_decode($row['name'])));
+            $item->set_title($row['name']);
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date);
+            $item->set_desc(second_parse($row['contents']));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($MEDIA_CATS[$row['idcat']]['image']);
             $item->set_auth($cats->compute_heritated_auth($row['idcat'], MEDIA_AUTH_READ, AUTH_PARENT_PRIORITY));
             
             // Adding the item to the list
             $data->add_item($item);
         }
+
         $Sql->query_close($result);
         
         return $data;
