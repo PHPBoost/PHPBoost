@@ -65,7 +65,7 @@ class Feed
                     'TITLE' => $this->data->get_title(),
                     'U_LINK' => $this->data->get_link(),
                     'HOST' => $this->data->get_host(),
-                    'DESC' => $this->data->get_desc(),
+                    'DESC' => htmlspecialchars($this->data->get_desc()),
                     'LANG' => $this->data->get_lang()
                 ));
 
@@ -76,7 +76,7 @@ class Feed
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => $item->get_desc(),
+                        'DESC' => htmlspecialchars($item->get_desc()),
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
                         'DATE_RFC3339' => $item->get_date_rfc3339(),

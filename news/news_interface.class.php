@@ -98,16 +98,16 @@ class NewsInterface extends ModuleInterface
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;
 		
         import('content/syndication/feed_data');
+        import('util/date');
+        import('util/url');
+        
         load_module_lang('news');
         
         $data = new FeedData();
         
-        import('util/date');
-        $date = new Date();
-        
         $data->set_title($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=news&amp;cat=' . $idcat);
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=news&amp;cat=' . $idcat));
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_news_desc'] . ' ' . $CONFIG['server_name']);
         $data->set_lang($LANG['xml_lang']);
@@ -126,23 +126,14 @@ class NewsInterface extends ModuleInterface
         while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
+            
+            $item->set_title($row['title']);
             // Rewriting
-            $link = HOST . DIR . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
-            
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-            
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-            
-            $maxlength = 300;
-            $length = strlen($contents) > $maxlength ?  $maxlength + strpos(substr($contents, $maxlength), ' ') : 0;
-            $length = $length > ($maxlength * 1.1) ? $maxlength : $length;
-            
-            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc($length > 0 ? substr($contents, 0, $length) . ' <a href="' . $link . '" title="' . $LANG['next'] . '">...</a>' : $contents);
-            $item->set_date($date);
+            $item->set_desc(second_parse($row['contents']));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($row['img']);
             
             $data->add_item($item);
