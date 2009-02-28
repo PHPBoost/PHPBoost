@@ -25,8 +25,7 @@
 							document.getElementById('xmlhttprequest_preview{FIELD}').innerHTML = response.responseText;
 							if( document.getElementById('loading_preview{FIELD}') )
 								document.getElementById('loading_preview{FIELD}').style.display = 'none';
-						},
-						encoding: 'iso-8859-1'
+						}
 					}
 				);
 			}	

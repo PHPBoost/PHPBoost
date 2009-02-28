@@ -252,6 +252,17 @@ class DownloadInterface extends ModuleInterface
         return $data;
     }
     
+    /**
+     * @desc Return the list of the feeds available for this module. 
+     * @return FeedsList The list
+     */
+    function get_feeds_list()
+	{
+        require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
+        $dl_cats = new DownloadCats();
+        return $dl_cats->get_feeds_list();	    
+	}
+    
     ## Private ##
     function _check_cats_auth($id_cat, &$list)
     {

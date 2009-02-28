@@ -190,6 +190,17 @@ class MediaInterface extends ModuleInterface
         
         return $request;
     }
+    
+	/**
+     * @desc Return the list of the feeds available for this module. 
+     * @return FeedsList The list
+     */
+    function get_feeds_list()
+	{
+        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
+        $media_cats = new MediaCats();
+        return $media_cats->get_feeds_list();	    
+	}
 }
 
 ?>

@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function faq_mini($position, $block)
 {
-    global $Cache, $Template, $FAQ_LANG, $RANDOM_QUESTIONS;
+    global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
     
     load_module_lang('faq');
     $Cache->load('faq'); //Chargement du cache

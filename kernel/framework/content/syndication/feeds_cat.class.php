@@ -29,7 +29,7 @@ import('util/url');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
- * @desc Describe a feeds by building a category tree
+ * @desc Describes a feed by building a category tree
  */
 class FeedsCat
 {
