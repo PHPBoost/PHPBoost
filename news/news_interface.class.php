@@ -93,6 +93,26 @@ class NewsInterface extends ModuleInterface
         return $request;
     }
     
+    function get_feeds_list()
+    {
+    	global $LANG, $Sql;
+    	
+    	import('content/syndication/feeds_list');
+    	$feeds = new FeedsList();
+    	
+    	$cats_tree = new FeedsCat('news', 0, $LANG['root']);
+    	
+    	$result = $Sql->query_while("SELECT id, name FROM " . PREFIX . "news_cat ORDER BY name ASC", __LINE__, __FILE__);
+    	while ($row = $Sql->fetch_assoc($result))
+    	{
+    		$cats_tree->add_child(new FeedsCat('news', $row['id'], $row['name']));
+    	}
+    	$Sql->query_close($result);
+    	$feeds->add_feed($cats_tree, DEFAULT_FEED_NAME);
+    	
+    	return $feeds;
+    }
+    
     function get_feed_data_struct($idcat = 0, $name = '')
     {
         global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_NEWS;

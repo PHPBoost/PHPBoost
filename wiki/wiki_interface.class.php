@@ -150,6 +150,11 @@ class WikiInterface extends ModuleInterface
         return $req;
     }
     
+//    function get_feeds_list()
+//    {
+//    	
+//    }
+    
     function get_feed_data_struct($idcat = 0, $name = '')
     {
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
