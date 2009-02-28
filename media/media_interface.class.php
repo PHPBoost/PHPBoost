@@ -49,15 +49,10 @@ class MediaInterface extends ModuleInterface
 
 		//Configuration
 		$i = 0;
-		$config = $auth_cats = array();
+		$config = array();
 		$config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		unset($config['root']);
-		
-		if (!empty($root_config['auth']['r-1']) && ($root_config['auth']['r-1'] & 1))
-		{
-			$auth_cats[] = 0;
-		}
 
 		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_MINI;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = $MEDIA_MINI = array();' . "\n\n";
 		$string .= '$MEDIA_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
@@ -78,25 +73,10 @@ class MediaInterface extends ModuleInterface
 				'num_media' => (int)$row['num_media'],
 				'mime_type' => (int)$row['mime_type'],
 				'active' => (int)$row['active'],
-				'auth' => (array)($auth = sunserialize($row['auth']))
+				'auth' => (array)sunserialize($row['auth'])
 			), true) . ';' . "\n\n";
-			
-			if (!empty($auth['r-1']) && ($auth['r-1'] & 1) !== 0)
-			{
-				$auth_cats[] = $row['id'];
-			}
 		}
 
-		$Sql->query_close($result);
-
-		$result = $Sql->query_while("SELECT id, idcat, name FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($auth_cats, ',') . ") ORDER BY timestamp DESC" . $Sql->limit(0, NUM_MEDIA), __LINE__, __FILE__);
-		
-		while ($mini = $Sql->fetch_assoc($result))
-		{
-			$string .= '$MEDIA_MINI[' . $i . '] = ' . var_export($mini, true) . ';' . "\n\n";
-			$i++;
-		}
-		
 		$Sql->query_close($result);
 
 		return $string;

@@ -158,12 +158,7 @@ $MEDIA_LANG = array(
 // media_interface.class.php
 'media' => 'Fichier Multimédia',
 'all_cats' => 'Toutes les catégories',
-'xml_media_desc' => 'Derniers médias',
-
-// media_mini.php
-'in' => 'dans',
-'none_mini_media' => 'Aucun fichier multimedia'
-
+'xml_media_desc' => 'Derniers médias'
 );
 
 $LANG['e_mime_disable_media'] = 'Le type du fichier multimédia que vous souhaitez proposer est désactivé !';
