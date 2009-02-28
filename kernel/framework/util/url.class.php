@@ -167,7 +167,7 @@ class Url
      */
     /* static */ function convert_html_relative_urls_to_absolute($html_text)
     {
-    	return preg_replace_callback('`(src|data|value|href|son|flv)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
+        return preg_replace_callback('`(src|data|value|href|son|flv)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
     }
     
     /**
