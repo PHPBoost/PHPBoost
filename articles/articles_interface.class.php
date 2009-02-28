@@ -145,7 +145,12 @@ class ArticlesInterface extends ModuleInterface
 		global $LANG, $CAT_ARTICLES;
 		Cache::load('articles');
 
-		$ordered_cats = array();
+		if (!(isset($CAT_ARTICLES) && is_array($CAT_ARTICLES)))
+		{
+			$CAT_ARTICLES = array();
+		}
+		
+        $ordered_cats = array();
 		foreach ($CAT_ARTICLES as $id => $cat)
 		{   // Sort by id_left
 			$cat['id'] = $id;
