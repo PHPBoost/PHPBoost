@@ -57,8 +57,12 @@ class FeedMenu extends Menu
     function get_url($relative = false)
     {
     	import('util/url');
-        return (!$relative ? Url::get_absolute_root() : '') . '/syndication.php?m=' . $this->module_id .
-        '&amp;cat=' . $this->category . '&amp;name=' . $this->name;
+    	$url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->category . '&amp;name=' . $this->name);
+    	if ($relative)
+    	{
+            return $url->relative();
+    	}
+    	return $url->absolute();
     }
     
     ## Setters ##
@@ -79,7 +83,7 @@ class FeedMenu extends Menu
     function display()
     {
         return Feed::get_parsed($this->module_id, $this->name, $this->category,
-            FeedMenu::get_template(), $this->number, $this->begin_at
+            FeedMenu::get_template($this->get_title()), $this->number, $this->begin_at
         );
     }
     

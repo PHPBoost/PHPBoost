@@ -48,7 +48,7 @@ if ($action_post == 'save')
     $menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
     $matches = array();
     preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
-        
+    
     if (!empty($id_post))
     {   // Edit the Menu
         $menu = MenuService::load($id_post);

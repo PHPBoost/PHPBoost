@@ -25,6 +25,7 @@
  *
 ###################################################*/
 
+import('content/syndication/feed');
 import('content/syndication/feeds_cat');
 
 /**
