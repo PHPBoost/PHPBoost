@@ -358,8 +358,6 @@ class ForumInterface extends ModuleInterface
         
         function _feeds_add_category(&$cat_tree, &$category)
         {
-            echo '<pre>'; print_r($category); echo '</pre><hr />';
-            echo (string) $category['this']['id'] . ' - ';
             $child = new FeedsCat('forum', $category['this']['id'], $category['this']['name']);
             foreach ($category['children'] as $sub_category)
             {
@@ -367,17 +365,14 @@ class ForumInterface extends ModuleInterface
             }
             $cat_tree->add_child($child);
         }
+        _feeds_add_category($cat_tree, $categories);
         
-        $nb_cats = count($categories);
-        for ($i = 0; $i < $nb_cats; $i++)
-        {
-            echo '<pre>'; print_r($categories[$i]); echo '</pre><hr />';
-            _feeds_add_category($cat_tree, $categories[$i]);
-        }
-        
+        $children = $cat_tree->get_children();
         $feeds = new FeedsList();
-        $feeds->add_feed($cat_tree, DEFAULT_FEED_NAME);
-//        echo '<pre>'; print_r($feeds); echo '</pre>';
+        if (count($children) > 0)
+        {
+            $feeds->add_feed($children[0], DEFAULT_FEED_NAME);
+        }
         return $feeds;
     }
     

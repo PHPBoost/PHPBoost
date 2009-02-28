@@ -181,7 +181,7 @@ function build_feed_urls($elts, $module_id, &$feed_type, $level = 0)
     		'selected' => $selected
     	);
     	
-    	$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, ++$level));
+    	$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, $level + 1));
 	}
 	return $urls;
 }
@@ -193,12 +193,11 @@ foreach ($feeds_modules as $module)
 	$urls = array();
 	foreach ($list as $feed_type => $elt)
 	{
-//	    echo '<pre>'; print_r($elt); echo '</pre>';
 	    $urls[] = build_feed_urls(array($elt), $module->get_id(), $feed_type);
 	}
 
-	$root_feed_url = new Url($urls[0][0]['url']);
-	$tpl->assign_block_vars('modules', array('NAME' => $module->get_id(), 'URL' => $root_feed_url->absolute()));
+	$root_feed_url = $urls[0][0]['url'];
+	$tpl->assign_block_vars('modules', array('NAME' => $module->get_id(), 'URL' => $root_feed_url));
 	foreach ($urls as $url_type)
 	{
 	    foreach ($url_type as $url)
