@@ -186,7 +186,15 @@ function build_feed_urls($elts, $module_id, &$feed_type, $level = 0)
 	return $urls;
 }
 
+// Sort by modules names
+$sorted_modules = array();
 foreach ($feeds_modules as $module)
+{
+	$sorted_modules[$module->get_name()] = $module;
+}
+ksort($sorted_modules);
+
+foreach ($sorted_modules as $module)
 {
 	$list = $module->functionnality('get_feeds_list');
 	$list = $list->get_feeds_list();
@@ -197,7 +205,7 @@ foreach ($feeds_modules as $module)
 	}
 
 	$root_feed_url = $urls[0][0]['url'];
-	$tpl->assign_block_vars('modules', array('NAME' => $module->get_id(), 'URL' => $root_feed_url));
+	$tpl->assign_block_vars('modules', array('NAME' => $module->get_name(), 'URL' => $root_feed_url));
 	foreach ($urls as $url_type)
 	{
 	    foreach ($url_type as $url)
