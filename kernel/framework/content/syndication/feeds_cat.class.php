@@ -53,7 +53,7 @@ class FeedsCat
      */
     function get_url($feed_type = '')
     {
-        $url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . (!empty($feed_category) ? '&amp;name=' . $feed_category : ''));
+        $url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->id . '&amp;name=' . $feed_type);
         return $url->absolute();
     }
     
