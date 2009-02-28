@@ -137,7 +137,11 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
     
     //Protection contre les balises html.
     if ($html_protect)
+    {
         $var = htmlspecialchars($var);
+        //While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
+        $var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
+    }
     
 	switch ($addslashes)
 	{
