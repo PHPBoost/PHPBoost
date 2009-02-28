@@ -54,8 +54,6 @@ define('MEDIA_DV_DATE', 512); // Affiche au niveau de la vidéo l'affichage de la
 define('MEDIA_DL_DESC', 1024); // Affiche au niveau de la liste des vidéos l'affichage de la description de la vidéo.
 define('MEDIA_DV_DESC', 2048); // Affiche au niveau de la vidéo l'affichage de la date de la description de la vidéo.
 
-// Paramètre pour le mini module.
-define('NUM_MEDIA', 5);
 // Paramètre de redirection en seconde.
 define('TIME_REDIRECT', 5);
 // Nombre de fichiers par page dans le panneau de modération.
