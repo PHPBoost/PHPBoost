@@ -165,9 +165,9 @@ class Url
      * @param string $html_text The HTML text in which we gonna search for relatives urls to convert into absolutes ones.
      * @return string The HTML text with only absolute urls
      */
-    /* static */ function convert_urls_to_absolutes($html_text)
+    /* static */ function convert_html_relative_urls_to_absolute($html_text)
     {
-    	return preg_replace_callback('`(src|data|value|href)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
+    	return preg_replace_callback('`(src|data|value|href|son|flv)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
     }
     
     /**

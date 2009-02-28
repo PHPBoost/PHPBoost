@@ -68,6 +68,47 @@ class ContentSecondParser extends Parser
             $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
         }
     }
+    
+    /**
+     * @desc Transforms a PHPBoost HTML content to make it exportable and usable every where in the web. 
+     * @param string $html Content to transform
+     * @return string The exportable content
+     */
+    function export_html_text($html_content)
+    {
+        import('util/url');
+        
+        //Balise vidéo
+        $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertMoviePlayer\("([^"]+)", ([0-9]+), ([0-9]+)\);\s+--></script>`isU',
+            '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/movieplayer.swf" width="$2" height="$3">
+            	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
+            	<param name="allowScriptAccess" value="never" />
+                <param name="play" value="true" />
+                <param name="movie" value="$1" />
+                <param name="menu" value="false" />
+                <param name="quality" value="high" />
+                <param name="scalemode" value="noborder" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+            </object>',
+            $html_content);
+            
+        //Balise son
+        $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertSoundPlayer\("([^"]+)\);\s+--></script>`isU',
+        	'<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf\?son=$1" width="200" height="20">
+         		<param name="allowScriptAccess" value="never" />
+                <param name="play" value="true" />
+                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=$1" />
+                <param name="menu" value="false" />
+                <param name="quality" value="high" />
+                <param name="scalemode" value="noborder" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+            </object>',
+            $html_content);
+            
+        return Url::convert_html_relative_urls_to_absolute($html_content);
+    }
 
     ## Private ##
 
