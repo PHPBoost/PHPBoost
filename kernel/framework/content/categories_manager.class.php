@@ -607,6 +607,27 @@ class CategoriesManager
 		return $result;
 	}
 	
+	/**
+	 * @desc Computes the list of the feeds corresponding to each category of the category tree.
+	 * @return FeedsList The list.
+	 */
+	function get_feeds_list()
+	{
+	    global $LANG;
+	    import('content/syndication/feeds_list');
+	    import('content/syndication/feeds_cat');
+	    
+	    $list = new FeedsList();
+	    //Catégorie racine
+	    $cats_tree = new FeedsCat($this->cache_file_name, 0, $LANG['root']);
+	    //Liste de toutes les catégories (parcours récursif)
+	    $this->_build_feeds_sub_list($cats_tree, 0);
+	    //On ajoute la racine et ce qu'elle contient à la liste
+	    $list->add_feed($cats_tree, DEFAULT_FEED_NAME);
+	    
+	    return $list;
+	}
+	
 	## Private methods ##	
 	/**
 	 * @desc Recursive method allowing to display the administration panel of a category and its daughters
@@ -789,6 +810,32 @@ class CategoriesManager
 			$this->errors = 0;
 		}
 	}
+	
+	/**
+	 * @desc Builds the list of the feeds contained in the category whose number is $parent_id. 
+	 * @param FeedsCat $tree The tree in which we must add the list.
+	 * @param int $parent_id Id of the category to build
+	 */
+	function _build_feeds_sub_list(&$tree, $parent_id)
+	{
+		$id_categories = array_keys($this->cache_var);
+		$num_cats =	count($id_categories);
+		
+		// Browsing categories
+		for ($i = 0; $i < $num_cats; $i++)
+		{
+			$id = $id_categories[$i];
+			$value =& $this->cache_var[$id];
+			if ($id != 0 && $value['id_parent'] == $parent_id)
+			{
+			    $sub_tree = new FeedsCat($this->cache_file_name, $id, $value['name']);
+			    //On construit l'éventuel sous arbre
+			    $this->_build_feeds_sub_list($sub_tree, $id);
+			    //On ajoute l'arbre au père
+			    $tree->add_child($sub_tree);
+			}
+		}
+	}	
 
 	## Private attributes ##
 	/**
