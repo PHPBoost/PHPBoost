@@ -172,14 +172,15 @@ class WikiInterface extends ModuleInterface
 //         $contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
 //         $contents = preg_replace('`[\n\r]{1}[\-]{2,5}[\s]+(.+)[\s]+[\-]{2,5}(<br \/>|[\n\r]){1}`U', "\n" . '$1' . "\n", "\n" . $contents . "\n");
         
-        $data = new FeedData();
         
         import('util/date');
-        $date = new Date();
+        import('util/url');
+        
+        $data = new FeedData();
         
         $data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=wiki&amp;cat=' . $idcat);
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=wiki&amp;cat=' . $idcat));
         $data->set_host(HOST);
         $data->set_desc($desc);
         $data->set_lang($LANG['xml_lang']);
@@ -199,23 +200,13 @@ class WikiInterface extends ModuleInterface
         while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
-            // Rewriting
-            if ( $CONFIG['rewrite'] == 1 )
-                $rewrited_title = url_encode_rewrite($row['title']);
-            else
-                $rewrited_title = 'wiki.php?title=' . url_encode_rewrite($row['title']);
-            $link = HOST . DIR . '/wiki/' . $rewrited_title;
-            
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
-            
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
             
             $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $link = new Url('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($row['title']), url_encode_rewrite($row['title'])));
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date);
+            $item->set_desc($row['content']);
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             
             $data->add_item($item);
         }

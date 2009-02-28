@@ -25,19 +25,41 @@
  *
 ###################################################*/
 
+import('util/url');
+
 class FeedItem
 {
     ## Public Methods ##
     function FeedItem() {}
 
     ## Setters ##
-    function set_title($value) { $this->title = $value; }
-    function set_link($value) { $this->link = $value; }
-    function set_guid($value) { $this->guid = $value; }
+    function set_title($value) { $this->title = htmlspecialchars(strip_tags($value)); }
     function set_date($value) { $this->date = $value; }
     function set_desc($value) { $this->desc = $value; }
     function set_image_url($value) { $this->image_url = $value; }
     function set_auth($auth) { $this->auth = $auth; }
+    function set_link($value)
+    {
+        if (of_class($value, URL__CLASS))
+        {
+            $this->link = $value->absolute();
+        }
+        else
+        {
+            $this->link = $value;
+        }
+    }
+    function set_guid($value)
+    {
+        if (of_class($value, URL__CLASS))
+        {
+            $this->guid = $value->absolute();
+        }
+        else
+        {
+            $this->guid = $value;
+        }
+    }
     
     ## Getters ##
     function get_title() { return $this->title; }

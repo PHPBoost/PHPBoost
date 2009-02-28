@@ -27,6 +27,7 @@
 
 import('content/syndication/feed_item');
 import('util/date');
+import('util/url');
 
 class FeedData
 {
@@ -46,13 +47,23 @@ class FeedData
 	}
     
     ## Setters ##
-    function set_title($value) { $this->title = $value; }
-    function set_link($value) { $this->link = $value; }
+    function set_title($value) { $this->title = htmlspecialchars(strip_tags($value)); }
     function set_date($value) { $this->date = $value; }
     function set_desc($value) { $this->desc = $value; }
     function set_lang($value) { $this->lang = $value; }
     function set_host($value) { $this->host = $value; }
     function set_auth_bit($value) { $this->auth_bit = $value; }
+    function set_link($value)
+    {
+        if (of_class($value, URL__CLASS))
+        {
+            $this->link = $value->absolute();
+        }
+        else
+        {
+            $this->link = $value;
+        }
+    }
     
     function add_item($item) { array_push($this->items, $item); }
     
