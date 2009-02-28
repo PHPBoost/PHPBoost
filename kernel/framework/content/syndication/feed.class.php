@@ -48,6 +48,8 @@ class Feed
     // Export the feed as a string parsed by the <$tpl> template
     function export($template = false, $number = 10, $begin_at = 0)
     {
+        import('content/parser/content_second_parser');
+        
         if ($template === false)    // A specific template is used
             $tpl = $this->tpl->copy();
         else
@@ -76,7 +78,7 @@ class Feed
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => htmlspecialchars($item->get_desc()),
+                        'DESC' => htmlspecialchars(ContentSecondParser::export_html_text($item->get_desc())),
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
                         'DATE_RFC3339' => $item->get_date_rfc3339(),
