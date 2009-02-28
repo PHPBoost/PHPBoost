@@ -145,22 +145,22 @@ $blocks = array(
    BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
 
-if (!$right_column)
-{
-    foreach ($menus_blocks[BLOCK_POSITION__RIGHT] as $menu)
-    {
-        $menu->enabled(false);
-        MenuService::save($menu);
-    }
-}
-elseif (!$left_column)
-{
-    foreach ($menus_blocks[BLOCK_POSITION__LEFT] as $menu)
-    {
-        $menu->enabled(false);
-        MenuService::save($menu);
-    }
-}
+//if (!$right_column)
+//{
+//    foreach ($menus_blocks[BLOCK_POSITION__RIGHT] as $menu)
+//    {
+//        $menu->enabled(false);
+//        MenuService::save($menu);
+//    }
+//}
+//elseif (!$left_column)
+//{
+//    foreach ($menus_blocks[BLOCK_POSITION__LEFT] as $menu)
+//    {
+//        $menu->enabled(false);
+//        MenuService::save($menu);
+//    }
+//}
 
 $menu_template = new Template('admin/menus/menu.tpl');
 $menu_template->assign_vars(array(

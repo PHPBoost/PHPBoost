@@ -58,7 +58,8 @@ function menu_hide_block(idfield, stop)
 			<td style="width:18%;vertical-align:top;padding:4px;border:1px solid black;background:#9B8FFF">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_LEFT_MENU}</p>
 				<div class="module_mini_container" style="background:none;padding:0;margin:auto;float:none;border:none;">
-				# START mod_left #{mod_left.MENU}# END mod_left #				
+				# START mod_left #{mod_left.MENU}# END mod_left #
+                # IF NOT RIGHT_COLUMN #<hr /><br /># START mod_right #{mod_right.MENU}# END mod_right ## END IF #   			
 				</div>
 			</td>
 			# ENDIF #
@@ -114,7 +115,8 @@ function menu_hide_block(idfield, stop)
 			# IF RIGHT_COLUMN #
 			<td style="width:18%;vertical-align:top;padding:4px;border:1px solid black;background:#EA6FFF">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_RIGHT_MENU}</p>
-				# START mod_right #{mod_right.MENU}# END mod_right #				
+				# START mod_right #{mod_right.MENU}# END mod_right #
+                # IF NOT LEFT_COLUMN #<hr /><br /># START mod_left #{mod_left.MENU}# END mod_left ## END IF #			
 			</td>
 			# ENDIF #
 		</tr>
