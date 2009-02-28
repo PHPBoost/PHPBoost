@@ -431,10 +431,40 @@ class Forum
 	//Ajoute une alerte sur un sujet.
 	function Alert_topic($alert_post, $alert_title, $alert_contents)
 	{
-		global $Sql, $User;
+		global $Sql, $User, $CAT_FORUM, $LANG;
 		
-		$idcat = $Sql->query("SELECT idcat FROM " . PREFIX . "forum_topics WHERE id = '" . $alert_post . "'", __LINE__, __FILE__);
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $idcat . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . $User->get_attribute('user_id') . "', 0, 0, '" . time() . "')", __LINE__, __FILE__);
+		$topic_infos = $Sql->query_array(PREFIX . "forum_topics", "idcat", "title", "WHERE id = '" . $alert_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $topic_infos['idcat'] . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . $User->get_attribute('user_id') . "', 0, 0, '" . time() . "')", __LINE__, __FILE__);
+
+		//Importing the contribution classes
+		import('events/contribution');
+		import('events/contribution_service');
+		
+		$contribution = new Contribution();
+		
+		//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
+		$contribution->set_id_in_module($alert_post);
+		//The entitled of the contribution
+		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], $topic_infos['title']));
+		//The URL where a validator can treat the contribution (in the file edition panel)
+		$contribution->set_fixing_url('/forum/' . url('topic.php?id=' . $alert_post, 'topic-' . $alert_post . '+' . url_encode_rewrite($topic_infos['title']) . '.php'));
+		//Who is the contributor?
+		$contribution->set_poster_id($User->get_attribute('user_id'));
+		//The module
+		$contribution->set_module('forum');
+		
+		//Assignation des autorisations d'écriture / Writing authorization assignation
+		$contribution->set_auth(
+			//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
+			//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
+			Authorizations::capture_and_shift_bit_auth(
+				$CAT_FORUM[$alert_post]['auth'],
+				EDIT_CAT_FORUM, CONTRIBUTION_AUTH_BIT
+			)
+		);
+
+		//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
+		ContributionService::save_contribution($contribution);
 	}
 	
 	//Passe en résolu une alerte sur un sujet.

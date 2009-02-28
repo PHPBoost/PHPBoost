@@ -102,6 +102,7 @@ $LANG['alert_move_topic'] = 'Move this Topic ?';
 $LANG['alert_warning'] = 'Warning this member?';
 $LANG['alert_history'] = 'Delete history?';
 $LANG['confirm_mark_as_read'] = 'Mark all topics as read?';
+$LANG['contribution_alert_moderators_for_topics'] = 'Topic not complying with the forum rules: %s';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
