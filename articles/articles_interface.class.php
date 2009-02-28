@@ -143,14 +143,14 @@ class ArticlesInterface extends ModuleInterface
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 		import('content/syndication/feed_data');
+        import('util/date');
+        import('util/url');
+        
 		$data = new FeedData();
-
-		import('util/date');
-        $date = new Date();
         
         $data->set_title($LANG['xml_articles_desc']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=articles&amp;cat=' . $idcat);
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=articles&amp;cat=' . $idcat));
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_articles_desc']);
         $data->set_lang($LANG['xml_lang']);
@@ -167,23 +167,17 @@ class ArticlesInterface extends ModuleInterface
         while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
-            // Rewriting
-            if ( $CONFIG['rewrite'] == 1 )
-            $rewrited_title = '-' . $row['idcat'] . '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php';
-            else
-            $rewrited_title = '.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'];
-            $link = HOST . DIR . '/articles/articles' . $rewrited_title;
             
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
+            $link = new Url('/articles/articles' . url(
+                '.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'],
+                '-' . $row['idcat'] . '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'
+            ));
             
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
-            
-            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_title($row['title']);
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date);
+            $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', second_parse($row['contents'])));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($row['icon']);
             $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth_root'] : unserialize($row['auth']));
             

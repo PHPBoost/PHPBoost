@@ -199,19 +199,19 @@ class DownloadInterface extends ModuleInterface
     {
         require_once(PATH_TO_ROOT . '/download/download_auth.php');
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
-        import('util/date');
         import('content/syndication/feed_data');
+        import('util/date');
+        import('util/url');
         
         global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');
         $Cache->load('download');
         $data = new FeedData();
-        $date = new Date();
         
         // Meta-informations generation
         $data->set_title($DOWNLOAD_LANG['xml_download_desc']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=download');
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=download&amp;cat=' . $idcat));
         $data->set_host(HOST);
         $data->set_desc($DOWNLOAD_LANG['xml_download_desc']);
         $data->set_lang($LANG['xml_lang']);
@@ -233,19 +233,14 @@ class DownloadInterface extends ModuleInterface
         while ($row = $Sql->fetch_assoc($result))
         {
             $item = new FeedItem();
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']);
             
-            // Rewriting
-            $link = HOST . DIR . '/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php');
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-            
+            $link = new Url('/download/download' . url('.php?id=' . $row['id'], '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
             // Adding item's informations
-            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_title($row['title']);
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date);
+            $item->set_desc(second_parse($row['contents']));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($row['image']);
             $item->set_auth($cats->compute_heritated_auth($row['idcat'], DOWNLOAD_READ_CAT_AUTH_BIT, AUTH_PARENT_PRIORITY));
             
