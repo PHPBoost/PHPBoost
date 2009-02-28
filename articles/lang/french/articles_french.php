@@ -72,7 +72,7 @@ $LANG['title_articles'] = 'Articles';
 
 //Articles
 $LANG['articles'] = 'Articles';
-$LANG['alert_delete_article'] = 'Supprimer cet Article ?';
+$LANG['alert_delete_article'] = 'Supprimer cet article ?';
 $LANG['propose_article'] = 'Proposer un article';
 $LANG['none_article'] = 'Aucun article dans cette catégorie';
 $LANG['xml_articles_desc'] = 'Derniers articles';
