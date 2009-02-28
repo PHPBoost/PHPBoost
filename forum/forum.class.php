@@ -435,6 +435,8 @@ class Forum
 		
 		$topic_infos = $Sql->query_array(PREFIX . "forum_topics", "idcat", "title", "WHERE id = '" . $alert_post . "'", __LINE__, __FILE__);
 		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_alerts (idcat, idtopic, title, contents, user_id, status, idmodo, timestamp) VALUES ('" . $topic_infos['idcat'] . "', '" . $alert_post . "', '" . $alert_title . "', '" . $alert_contents . "', '" . $User->get_attribute('user_id') . "', 0, 0, '" . time() . "')", __LINE__, __FILE__);
+		
+		$alert_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "forum_alerts");
 
 		//Importing the contribution classes
 		import('events/contribution');
@@ -443,15 +445,19 @@ class Forum
 		$contribution = new Contribution();
 		
 		//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
-		$contribution->set_id_in_module($alert_post);
+		$contribution->set_id_in_module($alert_id);
 		//The entitled of the contribution
-		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], $topic_infos['title']));
+		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], $alert_title));
 		//The URL where a validator can treat the contribution (in the file edition panel)
-		$contribution->set_fixing_url('/forum/' . url('topic.php?id=' . $alert_post, 'topic-' . $alert_post . '+' . url_encode_rewrite($topic_infos['title']) . '.php'));
+		$contribution->set_fixing_url('/forum/moderation_forum.php?action=alert&id=' . $alert_id);
+		//Description
+		$contribution->set_description($alert_contents);
 		//Who is the contributor?
 		$contribution->set_poster_id($User->get_attribute('user_id'));
 		//The module
 		$contribution->set_module('forum');
+		//It's an alert, we will be able to manage other kinds of contributions in the module if we choose to use a type.
+		$contribution->set_type('alert');
 		
 		//Assignation des autorisations d'écriture / Writing authorization assignation
 		$contribution->set_auth(
@@ -476,6 +482,21 @@ class Forum
 		
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
+		
+		//Si la contribution associée n'est pas réglée, on la règle
+	    import('events/contribution');
+    	import('events/contribution_service');
+    	
+    	$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
+    	if (count($corresponding_contributions) > 0)
+    	{
+    		$file_contribution = $corresponding_contributions[0];
+    		//The contribution is now processed
+    		$file_contribution->set_status(CONTRIBUTION_STATUS_PROCESSED);
+    		
+    		//We save the contribution
+    		ContributionService::save_contribution($file_contribution);
+    	}
 	}
 	
 	//Passe en attente une alerte sur un sujet.
