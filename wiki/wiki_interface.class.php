@@ -150,10 +150,55 @@ class WikiInterface extends ModuleInterface
         return $req;
     }
     
-//    function get_feeds_list()
-//    {
-//    	
-//    }
+    function get_feeds_list()
+    {
+    	global $LANG, $Sql;
+        
+        import('content/syndication/feeds_list');
+        $cats_tree = new FeedsCat('news', 0, $LANG['root']);
+        
+        function build_children(&$cats_tree, $cats, $id_parent = 0)
+        {
+        	$i = 0;
+            $nb_cats = count($cats);
+            $children = array();
+            while ($i < $nb_cats)
+            {
+                if ($cats[$i]['id_parent'] == $id_parent)
+                {
+                	$id = $cats[$i]['id'];
+                	$feeds_cat = new FeedsCat('wiki', $id, $cats[$i]['title']);
+                	
+                	// Decrease the complexity
+                	unset($cats[$i]);
+                    $cats = array_merge($cats); // re-index the array
+                	$nb_cats = count($cats);
+                    
+                    build_children($feeds_cat, $cats, $id);
+                    $cats_tree->add_child($feeds_cat);
+                }
+                else
+                {
+                    $i++;
+                }
+            }
+        }
+        $result = $Sql->query_while("SELECT c.id, c.id_parent, a.title
+            FROM " . PREFIX . "wiki_cats c, " . PREFIX . "wiki_articles a
+            WHERE c.article_id = a.id", __LINE__, __FILE__
+        );
+        $results = array();
+        while ($row = $Sql->fetch_assoc($result))
+        {
+            $results[] = $row;
+        }
+        $Sql->query_close($result);
+        
+        build_children($cats_tree, $results);
+        $feeds = new FeedsList();
+        $feeds->add_feed($cats_tree, DEFAULT_FEED_NAME);
+        return $feeds;
+    }
     
     function get_feed_data_struct($idcat = 0, $name = '')
     {
