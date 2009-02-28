@@ -95,13 +95,14 @@ $LANG['e_unable_cut_forum'] = 'Vous ne pouvez pas scinder le sujet à partir de c
 $LANG['e_cat_write'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
 
 //Alertes
-$LANG['alert_delete_topic'] = 'Supprimer ce Sujet ?';
-$LANG['alert_lock_topic'] = 'Verrouiller ce Sujet ?';
-$LANG['alert_unlock_topic'] = 'Déverrouiller ce Sujet ?';
-$LANG['alert_move_topic'] = 'Déplacer ce Sujet ?';
-$LANG['alert_warning'] = 'Avertir ce membre?';
-$LANG['alert_history'] = 'Supprimer l\'historique?';
-$LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus?';
+$LANG['alert_delete_topic'] = 'Supprimer ce sujet ?';
+$LANG['alert_lock_topic'] = 'Verrouiller ce sujet ?';
+$LANG['alert_unlock_topic'] = 'Déverrouiller ce sujet ?';
+$LANG['alert_move_topic'] = 'Déplacer ce sujet ?';
+$LANG['alert_warning'] = 'Avertir ce membre ?';
+$LANG['alert_history'] = 'Supprimer l\'historique ?';
+$LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus ?';
+$LANG['contribution_alert_moderators_for_topics'] = 'Sujet non conforme : %s';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
