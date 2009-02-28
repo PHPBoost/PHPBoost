@@ -152,7 +152,6 @@ class WikiInterface extends ModuleInterface
     
     function get_feed_data_struct($idcat = 0, $name = '')
     {
-        import('content/syndication/feed_data');
         global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
         
         load_module_lang('wiki');
@@ -160,25 +159,22 @@ class WikiInterface extends ModuleInterface
         
         if (($idcat > 0) && array_key_exists($idcat, $_WIKI_CATS))//Catégorie
         {
-            $desc = sprintf($LANG['wiki_rss_cat'], html_entity_decode($_WIKI_CATS[$idcat]['name']));
+            $desc = sprintf($LANG['wiki_rss_cat'], $_WIKI_CATS[$idcat]['name']);
             $where = "AND a.id_cat = '" . $idcat . "'";
         }
         else //Sinon derniers messages
         {
-            $desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']));
+            $desc = sprintf($LANG['wiki_rss_last_articles'], (!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']));
             $where = "";
         }
-            //On convertit les accents en entitées normales, puis on remplace les caractères non supportés en xml.
-//         $contents = htmlspecialchars(html_entity_decode(strip_tags($row['content'])));
-//         $contents = preg_replace('`[\n\r]{1}[\-]{2,5}[\s]+(.+)[\s]+[\-]{2,5}(<br \/>|[\n\r]){1}`U', "\n" . '$1' . "\n", "\n" . $contents . "\n");
         
-        
+        import('content/syndication/feed_data');
         import('util/date');
         import('util/url');
         
         $data = new FeedData();
         
-        $data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? html_entity_decode($_WIKI_CONFIG['wiki_name']) : $LANG['wiki']);
+        $data->set_title(!empty($_WIKI_CONFIG['wiki_name']) ? $_WIKI_CONFIG['wiki_name'] : $LANG['wiki']);
         $data->set_date(new Date());
         $data->set_link(new Url('/syndication.php?m=wiki&amp;cat=' . $idcat));
         $data->set_host(HOST);
@@ -201,11 +197,11 @@ class WikiInterface extends ModuleInterface
         {
             $item = new FeedItem();
             
-            $item->set_title(htmlspecialchars(html_entity_decode($row['title'])));
+            $item->set_title($row['title']);
             $link = new Url('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($row['title']), url_encode_rewrite($row['title'])));
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc($row['content']);
+            $item->set_desc(second_parse($row['content']));
             $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             
             $data->add_item($item);

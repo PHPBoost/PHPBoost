@@ -382,17 +382,17 @@ class ForumInterface extends ModuleInterface
 		
         $_idcat = $idcat;
         require_once(PATH_TO_ROOT . '/forum/forum_init_auth_cats.php');
-        import('content/syndication/feed_data');
         $idcat = $_idcat;   // Because <$idcat> is overwritten in /forum/forum_init_auth_cats.php
         
         $data = new FeedData();
         
+        import('content/syndication/feed_data');
         import('util/date');
-        $date = new Date();
+        import('util/url');
         
         $data->set_title($LANG['xml_forum_desc']);
-        $data->set_date($date);
-        $data->set_link(trim(HOST, '/') . '/' . trim($CONFIG['server_path'], '/') . '/' . 'syndication.php?m=forum&amp;cat=' . $_idcat);
+        $data->set_date(new Date());
+        $data->set_link(new Url('/syndication.php?m=forum&amp;cat=' . $_idcat));
         $data->set_host(HOST);
         $data->set_desc($LANG['xml_forum_desc']);
         $data->set_lang($LANG['xml_lang']);
@@ -418,21 +418,20 @@ class ForumInterface extends ModuleInterface
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 				
-			$link = ($CONFIG['rewrite'] == 1) ? '-' . $row['id'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php' : '.php?' . $last_page .  'id=' . $row['id'];
-            $link = HOST . DIR . '/forum/topic' . $link . '#m' .  $row['last_msg_id'];
+			$link = new Url('/forum/topic' . url(
+			        '.php?' . $last_page .  'id=' . $row['id'],
+                    '-' . $row['id'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php'
+			    ) . '#m' .  $row['last_msg_id']
+		    );
             
-            // XML text's protection
-            $contents = htmlspecialchars(html_entity_decode(strip_tags($row['contents'])));
-            
-            $date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']);
-            
-			$last_topic_title = (($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '') . ' ' . ucfirst($row['title']);
-			
-            $item->set_title(htmlspecialchars(html_entity_decode($last_topic_title)));
+            $item->set_title(
+                ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '' .
+                ' ' . ucfirst($row['title'])
+            );
             $item->set_link($link);
             $item->set_guid($link);
-            $item->set_desc(( strlen($contents) > 500 ) ?  substr($contents, 0, 500) . '...[' . $LANG['next'] . ']' : $contents);
-            $item->set_date($date);
+            $item->set_desc(second_parse($row['contents']));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
             $item->set_auth(unserialize($row['auth']));
             
             $data->add_item($item);
