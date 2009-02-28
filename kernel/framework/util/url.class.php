@@ -143,7 +143,7 @@ class Url
         }
         
         // descend into the local folder
-        for ($i = $separation_idx; $i < $a_local_size; $i++)
+        for ($i = max(0, $separation_idx); $i < $a_local_size; $i++)
         {
             $a_to_local[] = $a_local[$i];
         }
@@ -158,6 +158,27 @@ class Url
     {
         global $CONFIG;
         return trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/');
+    }
+    
+    /**
+     * @desc Returns the HTML text with only absolute urls
+     * @param string $html_text The HTML text in which we gonna search for relatives urls to convert into absolutes ones.
+     * @return string The HTML text with only absolute urls
+     */
+    /* static */ function convert_urls_to_absolutes($html_text)
+    {
+    	return preg_replace_callback('`(src|data|value|href)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
+    }
+    
+    /**
+     * @desc replace a relative url by the corresponding absolute one
+     * @param string[] $url_params Array containing the attributes containing the url and the url
+     * @return string the replaced url
+     */
+    /* static */ function _convert_url_to_absolute($url_params)
+    {
+    	$url = new Url($url_params[2]);
+    	return $url_params[1] . '="' . $url->absolute() . '"';
     }
     
     var $relative = '';
