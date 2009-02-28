@@ -54,7 +54,7 @@ class MediaInterface extends ModuleInterface
 		$root_config = $config['root'];
 		unset($config['root']);
 
-		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS, $MEDIA_MINI;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = $MEDIA_MINI = array();' . "\n\n";
+		$string = 'global $MEDIA_CONFIG, $MEDIA_CATS;' . "\n\n" . '$MEDIA_CONFIG = $MEDIA_CATS = array();' . "\n\n";
 		$string .= '$MEDIA_CONFIG = ' . var_export($config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
