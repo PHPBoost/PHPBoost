@@ -31,12 +31,12 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
+//Initialisation  de la class de gestion des fichiers.
+import('members/uploads');
+$Uploads = new Uploads; 
+	
 if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichiers.
 {
-	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
-	$Uploads = new Uploads; 
-	
 	$id_parent = !empty($_POST['id_parent']) ? numeric($_POST['id_parent']) : '0';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
@@ -53,10 +53,6 @@ if (!empty($_GET['new_folder'])) //Ajout d'un dossier dans la gestion des fichie
 }
 elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des fichiers.
 {
-	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
-	$Uploads = new Uploads; 
-	
 	$id_folder = !empty($_POST['id_folder']) ? numeric($_POST['id_folder']) : '0';
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
@@ -79,10 +75,6 @@ elseif (!empty($_GET['rename_folder'])) //Renomme un dossier dans la gestion des
 }
 elseif (!empty($_GET['rename_file'])) //Renomme un fichier d'un dossier dans la gestion des fichiers.
 {
-	//Initialisation  de la class de gestion des fichiers.
-	include_once(PATH_TO_ROOT . '/member/uploads.class.php');
-	$Uploads = new Uploads; 
-	
 	$id_file = !empty($_POST['id_file']) ? numeric($_POST['id_file']) : '0';
 	$user_id = !empty($_POST['user_id']) ? numeric($_POST['user_id']) : $User->get_attribute('user_id');
 	$name = !empty($_POST['name']) ? strprotect(utf8_decode($_POST['name'])) : '';
