@@ -278,7 +278,7 @@ class Feed
         }
         
         $feed = new Feed($module_id, $name);
-        $feed->load_data($feed_object);
+        $feed->load_data($__feed_object);
         return $feed->export($template, $number, $begin_at);
     }
 }
