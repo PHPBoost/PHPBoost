@@ -43,7 +43,7 @@ $FAQ_LANG['num_questions_plural'] = '%d questions';
 $FAQ_LANG['url_of_question'] = 'Question URL';
 
 //Gestion
-$FAQ_LANG['cat_properties'] = 'Properties of the category';
+$FAQ_LANG['cat_properties'] = 'Category properties';
 $FAQ_LANG['cat_description'] = 'Description';
 $FAQ_LANG['go_back_to_cat'] = 'Come back to the category';
 $FAQ_LANG['display_mode'] = 'Display mode';
@@ -97,7 +97,7 @@ $FAQ_LANG['category_name'] = 'Name of the category';
 $FAQ_LANG['category_location'] = 'Location of the category';
 $FAQ_LANG['category_image'] = 'Category picture';
 $FAQ_LANG['removing_category'] = 'Delete a category';
-$FAQ_LANG['explain_removing_category'] = 'You will delete this category. You have two solutions. You can move all its contents (questions and subcategories) in another category, or delete all the category.<strong>Be careful, this action is irreversible!</strong>';
+$FAQ_LANG['explain_removing_category'] = 'You will delete this category. You have two solutions. You can move all its contents (questions and subcategories) in another category, or delete all the category.<strong>Be careful, this action is final !</strong>';
 $FAQ_LANG['delete_category_and_its_content'] = 'Delete the category and its contents';
 $FAQ_LANG['move_category_content'] = 'Move its content in :';
 $FAQ_LANG['faq_name'] = 'FAQ name';
