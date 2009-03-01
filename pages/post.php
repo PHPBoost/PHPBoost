@@ -311,7 +311,7 @@ $Template->assign_vars(array(
 	'L_PREVIEWING' => $LANG['pages_previewing'],
 	'L_CONTENTS_PART' => $LANG['pages_contents_part'],
 	'L_SUBMIT' => $id_edit > 0 ? $LANG['update'] : $LANG['submit'],
-	'TARGET' => url('post.php')
+	'TARGET' => url('post.php?token=' . $Session->get_token())
 ));
 
 $Template->pparse('post');

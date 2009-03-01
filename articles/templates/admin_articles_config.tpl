@@ -83,7 +83,7 @@
 				</fieldset>	
 			</form>
 
-			<form action="admin_articles_config.php" name="form" method="post" class="fieldset_content">
+			<form action="admin_articles_config.php?token={TOKEN}" name="form" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_RECOUNT}</legend>
 					<img src="../templates/{THEME}/images/admin/maintain.png" alt="" class="valign_middle" />

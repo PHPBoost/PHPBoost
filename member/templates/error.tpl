@@ -33,7 +33,10 @@
 					<p style="margin:2px;"><label>{L_PSEUDO} <input size="15" type="text" class="text" id="login_error" name="login" maxlength="25" /></label></p>
 					<p style="margin:2px;"><label>{L_PASSWORD}	<input size="15" type="password" name="password" id="password_error" class="text" maxlength="30" /></label></p>
 					<p style="margin:2px;"><label>{L_AUTOCONNECT} <input type="checkbox" name="auto" checked="checked" /></label></p>
-					<p style="margin:5px;"><input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
+					<p style="margin:5px;">
+						<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+						<input type="hidden" name="token" value="{TOKEN}" />
+					</p>
 					
 					<br />
 					{U_REGISTER}

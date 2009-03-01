@@ -217,7 +217,7 @@
 			<br /><br />
 			# ENDIF #
 			
-			<form action="admin_database.php?action=backup" method="post" name="table_list">
+			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
 				<script type="text/javascript">
 					<!--
 						function check_select_multiple(status)

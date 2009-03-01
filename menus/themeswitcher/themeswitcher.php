@@ -27,11 +27,13 @@
 
 function menu_themeswitcher_themeswitcher($position)
 {
-   global $CONFIG, $THEME_CONFIG, $User, $LANG;
+   global $CONFIG, $THEME_CONFIG, $User, $LANG, $Session;
 
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
+        $Session->csrf_get_protect();
+        
     	if (preg_match('`[ a-z0-9_-]{3,20}`i', $switchtheme) && strpos($switchtheme, '\'') === false)
     	{
     		$User->update_user_theme($switchtheme); //Mise à jour du thème du membre.

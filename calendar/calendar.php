@@ -342,7 +342,7 @@ elseif (!empty($id))
 			$Template->assign_vars(array(
 				'C_CALENDAR_FORM' => true,
 				'KERNEL_EDITOR' => display_editor(),
-				'UPDATE' => url('?edit=1&amp;id=' . $id),
+				'UPDATE' => url('?edit=1&amp;id=' . $id . '&amp;token=' . $Session->get_token()),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 				'DAY_DATE' => !empty($row['timestamp']) ? gmdate_format('d', $row['timestamp']) : '',
 				'MONTH_DATE' => !empty($row['timestamp']) ? gmdate_format('m', $row['timestamp']) : '',
@@ -443,7 +443,7 @@ elseif ($add) //Ajout d'un évenement
 		$Template->assign_vars(array(
 			'C_CALENDAR_FORM' => true,
 			'KERNEL_EDITOR' => display_editor(),
-			'UPDATE' => url('?add=1'),
+			'UPDATE' => url('?add=1&amp;token=' . $Session->get_token()),
 			'DATE' => gmdate_format('date_format_short'),
 			'DAY_DATE' => $day,
 			'MONTH_DATE' => $month,

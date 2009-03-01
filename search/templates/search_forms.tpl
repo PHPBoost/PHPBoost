@@ -5,7 +5,7 @@
             var LastSpecializedFormUsed = 'all';
             
             function ChangeForm(module)
-            // Change le cadre des résultats
+            // Change le cadre des rï¿½sultats
             {
                 hide_div(FORM + LastSpecializedFormUsed);
                 show_div(FORM + module);
@@ -81,6 +81,7 @@
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all" />
                         <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit" />
+                        <input type="hidden" name="token" value="{TOKEN}" />
                     </fieldset>
                 </form>
             </div>

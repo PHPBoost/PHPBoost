@@ -23,7 +23,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_wiki_groups.php" method="post">
+			<form action="admin_wiki_groups.php?token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr>			
 						<th colspan="2">

@@ -1,5 +1,5 @@
 		# START auth #
-		<form action="action.php" method="post" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{auth.L_TITLE}</legend>
 				<p style="text-align:center">
@@ -75,7 +75,7 @@
 				if( document.getElementById('radio_undefined').checked )
 					change_type(-1);
 					
-				//Si il s'agit d'un statut prédéfini
+				//Si il s'agit d'un statut prï¿½dï¿½fini
 				if( document.getElementById('id_status').value > 0 && status[document.getElementById('id_status').value] != "" )
 				{
 					document.getElementById('current_status').innerHTML = status[parseInt(document.getElementById('id_status').value)];
@@ -109,7 +109,7 @@
 		-->
 		</script>
 
-		<form action="action.php" method="post" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" class="fieldset_content">					
 			<fieldset>
 				<legend>{status.L_TITLE}</legend>				
 				<p style="text-align:center" class="text_strong">{L_CURRENT_STATUS}</p>
@@ -161,7 +161,7 @@
 			</div>		
 		# ENDIF #
 		
-		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{move.L_TITLE}</legend>	
 				<dl>
@@ -209,7 +209,7 @@
 			</div>
 		# ENDIF #
 		
-		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{rename.L_TITLE}</legend>				
 				<p style="text-align:center;">
@@ -301,7 +301,7 @@
 			</div>
 		# ENDIF #
 		
-		<form action="action.php" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return check_form_post();" class="fieldset_content">					
 			<fieldset>
 				<legend>{create.L_TITLE}</legend>				
 				<dl>
@@ -334,7 +334,7 @@
 			</div>
 		# ENDIF #
 				
-		<form action="action.php" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
+		<form action="action.php?token={TOKEN}" method="post" onsubmit="return confirm('{L_ALERT_REMOVING_CAT}');" class="fieldset_content">					
 			<fieldset>
 				<legend>{remove.L_TITLE}</legend>				
 				<dl>
