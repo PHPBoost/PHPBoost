@@ -145,7 +145,7 @@ $Template->assign_vars(array(
 ));
 
 //Inclusion des blocs
-import('menu/menu');
+import('core/menu_service');
 if (!DEBUG) {
 	$result = @include_once(PATH_TO_ROOT . '/cache/menus.php');
 } else {
