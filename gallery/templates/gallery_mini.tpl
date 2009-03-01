@@ -16,16 +16,28 @@
 				<h5 class="sub_title">{L_RANDOM_PICS}</h5>
 			</div>
 			<div class="module_mini_contents">
-				<div style="width:{WIDTH_DIV}px;margin:auto;">	
-					<div style="position:relative;width:{WIDTH_DIV}px;height:{HEIGHT_DIV}px;overflow:hidden;">	
+				<div style="width:{WIDTH_DIV}px;margin:auto;" id="scrolling_images">
+					# IF C_VERTICAL_SCROLL #	
+					<script src="{PATH_TO_ROOT}/gallery/js/marquee.js" type="text/javascript"></script>
+					<script type="text/javascript">
+					<!--
+					    new Marquee({
+					    element: "scrolling_images",
+					    animIn: Marquee.blindIn,
+					    animOut: Marquee.blindOut,
+					    data: [
+						# START pics_mini #
+						{ message: '<a href="{vertical_scroll.pics_mini.U_PICS}#pics_max"><img src="{vertical_scroll.pics_mini.PICS}" alt="{vertical_scroll.pics_mini.NAME}" width="{vertical_scroll.pics_mini.WIDTH}px" height="{vertical_scroll.pics_mini.HEIGHT}px" /></a>' },
+						# END pics_mini #
+					    ]
+					    });
+					-->
+					</script>
+					# ENDIF #
+					# IF C_HORIZONTAL_SCROLL #
+					<div style="position:relative;width:{WIDTH_DIV}px;height:{HEIGHT_DIV}px;overflow:hidden;">
 						<div id="thumb_mini" style="left:0px;top:0px;position:relative;margin-top:5px;" onmouseover="temporize_scroll()" onmouseout="temporize_scroll();">
-							# IF C_VERTICAL_SCROLL #	
-								# START pics_mini #
-							<a href="{vertical_scroll.pics_mini.U_PICS}#pics_max"><img src="{vertical_scroll.pics_mini.PICS}" alt="{vertical_scroll.pics_mini.NAME}" width="{vertical_scroll.pics_mini.WIDTH}px" height="{vertical_scroll.pics_mini.HEIGHT}px" /></a>
-								# END pics_mini #
-							# ENDIF #
 							
-							# IF C_HORIZONTAL_SCROLL #
 							<table>
 								<tr>
 									# START pics_mini #
@@ -33,10 +45,10 @@
 									# END pics_mini #
 								</tr>
 							</table>
-							# ENDIF #
 							{L_NO_RANDOM_PICS}
 						</div>
 					</div>
+					# ENDIF #
 				</div>
 				<a class="small_link" href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a>
 			</div>
