@@ -16,7 +16,7 @@
 				<h5 class="sub_title">{L_RANDOM_PICS}</h5>
 			</div>
 			<div class="module_mini_contents">
-				<div style="width:{WIDTH_DIV}px;margin:auto;" id="scrolling_images">
+				<div style="width:{WIDTH_DIV}px;height:{HEIGHT_DIV}px;margin:auto;" id="scrolling_images">
 					# IF C_VERTICAL_SCROLL #	
 					<script src="{PATH_TO_ROOT}/gallery/js/marquee.js" type="text/javascript"></script>
 					<script type="text/javascript">
