@@ -32,8 +32,8 @@ define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc A Simple menu link
- * @package Menu
- * @subpackage LinksMenu
+ * @package menu
+ * @subpackage linksmenu
  */
 class LinksMenuLink extends LinksMenuElement
 {

@@ -33,8 +33,8 @@ define('FEED_MENU__CLASS','FeedMenu');
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc
- * @package Menu
- * @subpackage FeedMenu
+ * @package menu
+ * @subpackage feedmenu
  */
 class FeedMenu extends Menu
 {
@@ -51,7 +51,7 @@ class FeedMenu extends Menu
     
     ## Getters ##
     /**
-     * @param bool $relative If false, compute the absolute url, else, returns the relative one 
+     * @param bool $relative If false, compute the absolute url, else, returns the relative one
      * @return Return the absolute feed Url
      */
     function get_url($relative = false)
