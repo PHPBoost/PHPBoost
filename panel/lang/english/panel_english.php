@@ -23,11 +23,11 @@ $LANG['title_panel']	= 'Panel';
 $LANG['panel_all']			= '(All)';
 $LANG['panel_none']			= '(None)';
 $LANG['panel_top']			= 'Top';
-$LANG['panel_above_left']	= 'Above left';
-$LANG['panel_above_right']	= 'Above right';
+$LANG['panel_aboveleft']	= 'Above left';
+$LANG['panel_aboveright']	= 'Above right';
 $LANG['panel_center']		= 'Center';
-$LANG['panel_below_left']	= 'Below left';
-$LANG['panel_below_right']	= 'Below right';
+$LANG['panel_belowleft']	= 'Below left';
+$LANG['panel_belowright']	= 'Below right';
 $LANG['panel_bottom']		= 'Bottom';
 
 $LANG['panel_module']		= 'Module';
