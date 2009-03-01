@@ -20,11 +20,11 @@ $LANG['title_panel']	= 'Panel';
 $LANG['panel_all']			= '(Toutes)';
 $LANG['panel_none']			= '(Aucun)';
 $LANG['panel_top']			= 'Haut';
-$LANG['panel_above_left']	= 'Dessus gauche';
-$LANG['panel_above_right']	= 'Dessus droite';
+$LANG['panel_aboveleft']	= 'Dessus gauche';
+$LANG['panel_aboveright']	= 'Dessus droite';
 $LANG['panel_center']		= 'Centre';
-$LANG['panel_below_left']	= 'Dessous gauche';
-$LANG['panel_below_right']	= 'Dessous droite';
+$LANG['panel_belowleft']	= 'Dessous gauche';
+$LANG['panel_belowright']	= 'Dessous droite';
 $LANG['panel_bottom']		= 'Bas';
 
 $LANG['panel_module']		= 'Module';

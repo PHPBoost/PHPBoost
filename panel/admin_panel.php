@@ -9,20 +9,17 @@
 */
 
 require_once('../admin/admin_begin.php');
-load_module_lang('panel'); //Chargement de la langue du module.
-define('TITLE', $LANG['administration']);
+require_once('../panel/panel_begin.php');
 require_once('../kernel/modules.inc.php');
 require_once('../admin/admin_header.php');
 
-$locations = array (10 => 'top', 20 => 'aboveleft', 30 => 'aboveright', 40 => 'center', 50 => 'belowleft', 60 => 'belowright', 70 => 'bottom');
-
 if( !empty($_POST['valid'])  )
 {
-	$config_panel = sunserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'panel'", __LINE__, __FILE__));
+	$config_panel = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'panel'", __LINE__, __FILE__));
 	$config_panel = empty($config_panel) ? array() : $config_panel;
 	
 	$location 		= retrieve(POST, 'panel_location', 0, TINTEGER);
-	$panel_module 	= retrieve(POST, 'panel_module', '', TNONE);
+	$panel_module 	= _clean_data(retrieve(POST, 'panel_module', '', TNONE));
 	$tmp 			= explode( '-', $panel_module);
 	if (empty($tmp[0])) $tmp[0] = 'feed';
 	if (empty($tmp[1])) $tmp[1] = 'news';
@@ -132,8 +129,8 @@ else
 	foreach($locations as $k => $v) {
 		$Template->assign_block_vars('options_location', array(
 			'ID' 	=> $k,
-			'NAME' 	=> $v
-		));
+			'NAME' 	=> Lang::get('panel_'.$v)
+			));
 	}
 	
 	$Template->assign_vars(array(
@@ -147,17 +144,17 @@ else
 		'L_NONE'			=> Lang::get('panel_none'),
 		'L_ALL'				=> lang::get('panel_all'),
 		'L_TOP'				=> Lang::get('panel_top'),
-		'L_ABOVE_LEFT'		=> Lang::get('panel_above_left'),
-		'L_ABOVE_RIGHT'		=> Lang::get('panel_above_right'),
+		'L_ABOVE_LEFT'		=> Lang::get('panel_aboveleft'),
+		'L_ABOVE_RIGHT'		=> Lang::get('panel_aboveright'),
 		'L_CENTER'			=> Lang::get('panel_center'),
-		'L_BELOW_LEFT'		=> Lang::get('panel_below_left'),
-		'L_BELOW_RIGHT'		=> Lang::get('panel_below_right'),
+		'L_BELOW_LEFT'		=> Lang::get('panel_belowleft'),
+		'L_BELOW_RIGHT'		=> Lang::get('panel_belowright'),
 		'L_BOTTOM'			=> Lang::get('panel_bottom'),
 		'L_MODULE'			=> Lang::get('panel_module'),
 		'L_LOCATION'		=> Lang::get('panel_location'),
 		'L_CATEGORY'		=> Lang::get('panel_category'),
 		'L_LIMIT'			=> Lang::get('panel_limit')	
-	));
+		));
 	
 	$Template->pparse('admin_panel');
 }
