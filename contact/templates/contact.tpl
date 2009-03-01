@@ -53,6 +53,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="submit" name="mail_valid" value="{L_SUBMIT}" class="submit" />
 				&nbsp;
-				<input type="reset" value="{L_RESET}" class="reset" />			
+				<input type="reset" value="{L_RESET}" class="reset" />
+				<input type="hidden" name="token" value="{TOKEN}" />			
 			</fieldset>
 		</form>

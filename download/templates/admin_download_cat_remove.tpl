@@ -20,7 +20,8 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					<input type="hidden" name="token" value="{TOKEN}" />	
 				</fieldset>
 			</form>
 		</div>

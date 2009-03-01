@@ -114,7 +114,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_web_add.php" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_web_add.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_WEB_ADD}</legend>
 					<p>{L_REQUIRE}</p>

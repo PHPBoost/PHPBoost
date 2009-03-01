@@ -34,7 +34,7 @@
 			# END categories_management #
 
 			# START removing_interface #
-			<form action="admin_media_cats.php" method="post" class="fieldset_content">
+			<form action="admin_media_cats.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
@@ -75,7 +75,7 @@
 			}
 			-->
 			</script>
-			<form action="admin_media_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_media_cats.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>

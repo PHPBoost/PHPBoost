@@ -13,6 +13,7 @@
 					<label><input type="radio" name="subscribe" value="unsubscribe" /> {UNSUBSCRIBE}</label>
 				</p>
 				<p>
+					<input type="hidden" name="token" value="{TOKEN}" />
 					<input type="submit" value="{L_SUBMIT}" class="submit" />	
 				</p>
 				<p style="margin:0;margin-top:10px;">

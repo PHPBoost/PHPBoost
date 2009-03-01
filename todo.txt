@@ -3,7 +3,7 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-Faire une option pour désactiver la protection csrf basée sur le referer.
+Mettre le jeton du CSRF dans l'ensemble des formulaires et vérifier directement le jeton puis le referer au cas où il n'y soit pas.
 
 ------------------------------------ MODULES -----------------------------------
 

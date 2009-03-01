@@ -570,32 +570,41 @@ class Sessions
 	
 	/**
 	 * @desc Check the session against CSRF attacks by POST. Checks that POSTs are done from
-	 * this site.
+	 * this site. 2 different cases are accepted but the first is safer:
+	 * <ul>
+	 * 	<li>The request contains a parameter whose name is token and value is the value of the token of the current session.</li>
+	 * 	<li>If the token isn't in the request, we analyse the HTTP referer to be sure that the request comes from the current site and not from another which can be suspect</li>
+	 * </ul>
+	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
 	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
      * if false, do not redirect
-     * @return true if no csrf attack by post is detected
+     * @return bool true if no csrf attack by post is detected
 	 */
     function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
-        if (!preg_match('`.*/admin_config\.php\?adv=1(&.+)?$`', $_SERVER['REQUEST_URI']))
-		{   // Verify that the user really wanted to do this POST
-		    if (!empty($_POST) && !$this->_check_referer())
+        //The user sent a POST request
+        if (!empty($_POST))
+        {
+            //First verification: does the token exist?
+            $token = $this->get_token();
+	        if (!empty($token) && retrieve(REQUEST, 'token', '') === $token)
 	        {
-	            return $this->_csrf_attack($redirect);
-	            return false;
+	            return true;
 	        }
+	        //Second chance: the referer is correct
+    	    if ($this->_check_referer())
+            {
+                return true;
+            }
+            //If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
+            $this->_csrf_attack($redirect);
+	        return false;
 		}
-		elseif (!empty($_POST))
-		{   // Check the token if changing the host in the admin
-		    $token = $this->get_token();
-	        if (empty($token) || retrieve(GET, 'token', '') !== $token)
-	        {
-	            $this->_csrf_attack($redirect);
-	            return false;
-	        }
+		//It's not a POST request, there is no problem.
+		else
+		{        
+            return true;
 		}
-        
-        return true;
     }
     
     /**
@@ -617,7 +626,7 @@ class Sessions
     }
     
     /**
-     * ]@desc check that the operation is done from this site
+     * @desc check that the operation is done from this site
      * @return true if the referer is on this site
      */
     function _check_referer()

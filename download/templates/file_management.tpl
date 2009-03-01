@@ -206,7 +206,8 @@
 					&nbsp;&nbsp; 
 					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>
 			</form>
 			</div>

@@ -354,7 +354,7 @@ else
 		$Template->assign_vars(array(
 			'C_DATABASE_BACKUP' => true,
 			'NBR_TABLES' => $backup->get_tables_number(),
-			'TARGET' => url('admin_database.php'),
+			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
 			'SELECT_ALL' => $LANG['select_all'],
 			'SELECT_NONE' => $LANG['select_none'],
 			'L_BACKUP_DATABASE' => $LANG['db_backup_database'],
@@ -444,7 +444,7 @@ else
 		
 		$Template->assign_vars(array(
 			'C_DATABASE_INDEX' => true,
-			'TARGET' => url('admin_database.php'),
+			'TARGET' => url('admin_database.php?token=' . $Session->get_token()),
 			'NBR_TABLES' => $backup->get_tables_number(),
 			'NBR_ROWS' => $nbr_rows,
 			'NBR_DATA' => $nbr_data,
