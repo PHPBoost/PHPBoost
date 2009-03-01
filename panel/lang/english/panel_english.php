@@ -1,23 +1,38 @@
 <?php
 /**
- *  panel_french.php
+ *  panel_english.php
  *
- *  @author Alain Gandon
- *  @copyright (C) 2008 Gandon Alain
- *  @license GPL
+ *  @author		alain91
+ *  @copyright	(C) 2008-2009 Alain Gandon
+ *  @license		GPL
  *
 */
 
 
 ####################################################
-#                                                          French                                                                        #
+#                                                          English	                                                                              #
 ####################################################
 
 //Admin
-$LANG['panel_config'] = 'Configuration du panel';
-$LANG['rank_post'] = 'Niveau pour pouvoir poster';
+$LANG['panel_config']	= 'Panel configuration';
+$LANG['panel_legend']	= 'Configure a panel element';
 
-//Titre
-$LANG['title_panel'] = 'Panel';
+//Title
+$LANG['title_panel']	= 'Panel';
+
+$LANG['panel_all']			= '(All)';
+$LANG['panel_none']			= '(None)';
+$LANG['panel_top']			= 'Top';
+$LANG['panel_above_left']	= 'Above left';
+$LANG['panel_above_right']	= 'Above right';
+$LANG['panel_center']		= 'Center';
+$LANG['panel_below_left']	= 'Below left';
+$LANG['panel_below_right']	= 'Below right';
+$LANG['panel_bottom']		= 'Bottom';
+
+$LANG['panel_module']		= 'Module';
+$LANG['panel_location']		= 'Location';
+$LANG['panel_category']		= 'Category';
+$LANG['panel_limit']		= 'Limit';
 
 ?>
