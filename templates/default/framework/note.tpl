@@ -26,6 +26,7 @@
 			<select id="note_select{ID}" name="note">
 				{SELECT}
 			</select>
+			<input type="hidden" name="token" value="{TOKEN}" />
 			<input type="submit" name="valid_note" id="valid_note{ID}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
 			<script type="text/javascript">
 			<!--				

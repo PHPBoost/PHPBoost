@@ -268,7 +268,7 @@ class Comments
 							'L_PREVIEW' => $LANG['preview'],
 							'L_PREVIEW' => $LANG['preview'],
 							'L_SUBMIT' => $LANG['update'],
-							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '')
+							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;token=' . $Session->get_token() . '&amp;updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')
 						));
 					}
 					elseif ($updatecom) //Mise à jour du commentaire.
@@ -429,7 +429,7 @@ class Comments
 					'L_RESET' => $LANG['reset'],
 					'L_PREVIEW' => $LANG['preview'],
 					'L_SUBMIT' => $LANG['submit'],
-					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&path_to_root=' . $page_path_to_root : '')
+					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token()
 				));
 				
 				//Création du tableau des rangs.
