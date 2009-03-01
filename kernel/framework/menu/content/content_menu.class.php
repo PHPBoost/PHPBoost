@@ -32,8 +32,8 @@ define('CONTENT_MENU__CLASS','ContentMenu');
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc
- * @package Menu
- * @subpackage ContentMenu
+ * @package menu
+ * @subpackage contentmenu
  */
 class ContentMenu extends Menu
 {

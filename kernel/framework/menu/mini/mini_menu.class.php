@@ -32,8 +32,8 @@ define('MINI_MENU__CLASS','MiniMenu');
 /**
  * @author Loïc Rouchon horn@phpboost.com
  * @desc
- * @package Menu
- * @subpackage MiniMenu
+ * @package menu
+ * @subpackage minimenu
  */
 class MiniMenu extends Menu
 {

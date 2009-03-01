@@ -32,9 +32,23 @@ define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndic
 import('functions', LIB_IMPORT);
 import('content/syndication/feed_data');
 
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc This class could be used to export feeds
+ * @abstract  Do not use this class, but one of its children like RSS or ATOM
+ * @package content
+ * @subpackage syndication
+ */
 class Feed
 {
     ## Public Methods ##
+    
+    /**
+     * @desc Builds a new feed object
+     * @param string $module_id its module_id
+     * @param string $name the feeds name / type. default is DEFAULT_FEED_NAME
+     * @param int $id_cat the feed category id
+     */
     function Feed($module_id, $name = DEFAULT_FEED_NAME, $id_cat = 0)
     {
         $this->module_id = $module_id;
@@ -42,10 +56,26 @@ class Feed
         $this->id_cat = $id_cat;
     }
 
+    /**
+     * @desc Loads a FeedData element
+     * @param FeedData $data the element to load
+     */
     function load_data($data) { $this->data = $data; }
+    /**
+     * @desc Loads a feed by its url
+     * @param string $url the feed url
+     */
     function load_file($url) { }
 
-    // Export the feed as a string parsed by the <$tpl> template
+    /**
+     * @desc Exports the feed as a string parsed by the <$tpl> template
+     * @param mixed $template If false, uses de default tpl. If an associative array,
+     * uses the default tpl but assigns it the array vars first.
+     * It could also be a Template object
+     * @param int $number the number of item to display
+     * @param int $begin_at the first item to display
+     * @return string The exported feed
+     */
     function export($template = false, $number = 10, $begin_at = 0)
     {
         import('content/parser/content_second_parser');
@@ -91,37 +121,48 @@ class Feed
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
 
+    /**
+     * @desc Loads the feed data in cache and export it
+     * @return string the exported feed
+     */
     function read()
     {
         if ($this->is_in_cache())
         {
-			if (!DEBUG) {
-				$include = @include($this->get_cache_file_name());
-			} else {
-				$include = include($this->get_cache_file_name());
-			}
-            if ($include)
+			$include = @include($this->get_cache_file_name());
+			if ($include)
             {
-                $this->data = $feed_object;
+                $this->data = $__feed_object;
                 return $this->export();
             }
         }
         return '';
     }
 
+    /**
+     * @desc Send the feed data in the cache
+     */
     function cache()
     {
         FEED::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
     }
 
+    /**
+     * @desc Returns true if the feed data are in the cache
+     * @return bool true if the feed data are in the cache
+     */
     function is_in_cache() { return file_exists($this->get_cache_file_name()); }
    
+    /**
+     * @desc Returns the feed data cache filename
+     * @return string the feed data cache filename
+     */
     function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
    
     ## Private Methods ##
     ## Private attributes ##
     var $module_id = '';        // Module ID
-    var $id_cat = 0;        // ID cat
+    var $id_cat = 0;            // ID cat
     var $name = '';             // Feed Name
     var $str = '';              // The feed as a string
     var $tpl = null;            // The feed Template to use
@@ -130,6 +171,12 @@ class Feed
     ## Statics Methods ##
 
     // clear the cache
+    
+    /**
+     * @desc Clear the cache of the specified module_id.
+     * @param mixed $module_id the module module_id or false. If false,
+     * Clear all feeds data from the cache
+     */
     /*static*/ function clear_cache($module_id = false)
     {
         import('io/filesystem/folder');
@@ -145,14 +192,34 @@ class Feed
             $file->delete();
     }
 
+    
+    /**
+     * @desc Update the cache of the $module_id, $name, $idcat feed with $data
+     * @param string $module_id the module id
+     * @param string $name the feed name / type
+     * @param &FeedData $data the data to put in the cache
+     * @param int $idcat the feed data category
+     */
     /*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
     {
         import('io/filesystem/file');
         $file = new File(FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php', WRITE);
-        $file->write('<?php $feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
+        $file->write('<?php $__feed_object = unserialize(' . var_export($data->serialize(), true) . '); ?>');
         $file->close();
     }
 
+    /**
+     * @desc Export a feed
+     * @param string $module_id the module id
+     * @param string $name the feed name / type
+     * @param int $idcat the feed data category
+     * @param mixed $tpl If false, uses de default tpl. If an associative array,
+     * uses the default tpl but assigns it the array vars first.
+     * It could also be a Template object
+     * @param int $number the number of item to display
+     * @param int $begin_at the first item to display
+     * @return string The exported feed
+     */
     /*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
     {
         // Choose the correct template
