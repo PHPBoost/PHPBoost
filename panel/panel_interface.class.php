@@ -2,9 +2,9 @@
 /**
  *   panel_interface.class.php
  *
- *  @copyright (C) 2008 Alain GANDON
- *  @email  alain091@gmail.com 
- * @license GPL
+ *  @copyright	(C) 2008-2009 Alain Gandon
+ *  @email  		alain091@gmail.fr
+ * @license 		GPL
  *
  */
 
@@ -42,5 +42,3 @@ class PanelInterface extends ModuleInterface
 	}
 
 }
-
-?>
