@@ -38,10 +38,17 @@ define('CONTRIBUTION_STATUS_UNREAD', EVENT_STATUS_UNREAD);
 define('CONTRIBUTION_STATUS_BEING_PROCESSED', EVENT_STATUS_BEING_PROCESSED);
 define('CONTRIBUTION_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
 
-//Contribution class
+/**
+ * @package events
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This class represents a contribution made by a user to complete the content of the website.
+ * All the contributions are managed in the contribution panel.
+ */
 class Contribution extends Event
 {
-	## Public ##
+	/**
+	 * @desc Builds a Contribution object.
+	 */
 	function Contribution()
 	{
 		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
@@ -51,7 +58,24 @@ class Contribution extends Event
 			$this->module = MODULE_NAME;
 	}
 	
-	//Constructor with all parameters of a contribution
+	/**
+	 * @desc Builds a contribution object from its whole parameters.
+	 * @param int $id Contribution id.
+	 * @param string $entitled Contribution entitled.
+	 * @param string $fixing_url URL associated to the event.
+	 * @param string $module Module identifier at which the contribution is attached.
+	 * @param int status Contribution status.
+	 * @param Date $creation_date Contribution creation date.
+	 * @param Date $fixing_date Contribution fixing date.
+	 * @param mixed[] $auth Auth array determining the people who can treat the contribution.
+	 * @param int $poster_id Contribution creator id.
+	 * @param int $fixer_id Contribution fixer id.
+	 * @param int $id_in_module Id of the element associated to the contribution.
+	 * @param string $identifier Contribution identifier.
+	 * @param string $type Contribution type.
+	 * @param string $poster_login Login of the poster of the contribution.
+	 * @param string $fixer_login Login of the fixer of the contribution.
+	 */
 	function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '')
 	{
 		//Building parent class
@@ -71,20 +95,34 @@ class Contribution extends Event
 		$this->must_regenerate_cache = false;
 	}
 	
-	//Module setter
+	/**
+	 * @desc Sets the module in which the contribution is used. 
+	 * @param string $module Module identifier (for example the name of the module folder). 
+	 */
 	function set_module($module)
 	{
 		$this->module = $module;
 	}
 	
-	//Fixing date setter
+	/**
+	 * @desc Sets the fixing date. 
+	 * @param Date $date Date
+	 */
 	function set_fixing_date($date)
 	{
 		if (is_object($date) && strtolower(get_class($date)) == 'date')
 			$this->fixing_date = $date;
 	}
 	
-	// current_status setter
+    /**
+     * @desc Set the status of the contribution.
+     * @param int $new_current_status One of those elements:
+     * <ul>
+     * 	<li>EVENT_STATUS_UNREAD if it's not read.</li>
+     * 	<li>EVENT_STATUS_BEING_PROCESSED if the event is beeing processed</li>
+     * 	<li>EVENT_STATUS_PROCESSED if the event is processed.
+     * </ul>
+     */
 	function set_status($new_current_status)
 	{
 		global $User;
@@ -108,14 +146,20 @@ class Contribution extends Event
 		$this->must_regenerate_cache = true;
 	}
 	
-	//Authorization array setter
+	/**
+	 * @desc Sets the authorization of the contribution. It will determine who will be able to treat the contribution. 
+	 * @param mixed[] $auth Auth array.
+	 */
 	function set_auth($auth)
 	{
 		if (is_array($auth))
 			$this->auth = $auth;
 	}
 	
-	//Poster id setter
+	/**
+	 * @desc Sets the id of the poster. 
+	 * @param int $poster_id Id.
+	 */
 	function set_poster_id($poster_id)
 	{
 		global $Sql;
@@ -127,7 +171,10 @@ class Contribution extends Event
 		}
 	}
 
-	//Fixer id setter
+	/**
+	 * @desc Sets the id of the fixer. 
+	 * @param int $fixer_id Id.
+	 */
 	function set_fixer_id($fixer_id)
 	{
 		global $Sql;
@@ -139,24 +186,92 @@ class Contribution extends Event
 		}
 	}	
 	
-	//Description setter
+	/**
+	 * @desc Sets the description of the contribution. 
+	 * @param string $description Description (can be some HTML content).
+	 */
 	function set_description($description)
 	{
 		if (is_string($description))
 			$this->description = $description;
 	}
 	
-	// Getters
-	function get_description() { return $this->description; }
-	function get_module() { return $this->module; }
-	function get_fixing_date() { return $this->fixing_date; }
-	function get_auth() { return $this->auth; }
-	function get_poster_id() { return $this->poster_id; }
-	function get_fixer_id() { return $this->fixer_id; }
-	function get_poster_login() { return $this->poster_login; }
-	function get_fixer_login() { return $this->fixer_login; }
+	/**
+	 * @desc Gets the description of the contribution. 
+	 * @return string the description
+	 */
+	function get_description() 
+	{
+	    return $this->description; 
+	}
 	
-	//Status name getter
+	/**
+	 * @desc Gets the module in which the contribution is used. 
+	 * @return string The module identifier (for example the name of its folder).
+	 */
+	function get_module() 
+	{ 
+	    return $this->module; 
+	}
+	
+	/**
+	 * @desc Gets the contribution fixing date. 
+	 * @return The date at which the contribution has been treated.
+	 */
+	function get_fixing_date()
+	{
+	    return $this->fixing_date; 
+	}
+	
+	/**
+	 * @desc Gets the authorization of treatment of this contribution.
+	 * @return mixed[] The authorization array.
+	 */
+	function get_auth()
+	{ 
+	    return $this->auth;
+	}
+	
+	/**
+	 * @desc Gets the identifier of the poster. 
+	 * @return int Its id.
+	 */
+	function get_poster_id()
+	{ 
+	    return $this->poster_id; 
+	}
+	
+	/**
+	 * @desc Gets the identifier of the fixer.
+	 * @return int Its id.
+	 */
+	function get_fixer_id() 
+	{ 
+	    return $this->fixer_id; 
+	}
+	
+	/**
+	 * @desc Gets the poster login. 
+	 * @return string The poster login.
+	 */
+	function get_poster_login()
+	{
+	    return $this->poster_login; 
+	}
+	
+	/**
+	 * @desc Gets the fixer login. 
+	 * @return string The fixer login.
+	 */
+	function get_fixer_login() 
+	{ 
+	    return $this->fixer_login; 
+	}
+	
+    /**
+     * @desc Gets the contribution status name. It's automatically translated in the user language, ready to be displayed.
+	 * @return string The status name.
+     */
 	function get_status_name()
 	{
 		global $LANG;
@@ -172,7 +287,10 @@ class Contribution extends Event
 		}
 	}
 	
-	//Module name getter
+	/**
+	 * @desc Gets the name of the module in which the contribution is used. 
+	 * @return string The module name.
+	 */
 	function get_module_name()
 	{
 		global $CONFIG;
@@ -187,21 +305,52 @@ class Contribution extends Event
 	}
 	
 	## Protected ##
-	//Description of the contribution (for instance to justify a contribution)
+	/**
+	 * @access protected
+	 * @var string Description of the contribution (for instance to justify a contribution).
+	 */
 	var $description;
-	//String containing the identifier of the module corresponding to the contribution (ex: forum)
+	
+	/**
+	 * @access protected 
+	 * @var string String containing the identifier of the module corresponding to the contribution (ex: forum).
+	 */
 	var $module = '';
-	//Date at which the contribution has been processed (if it is obviously). Default value: date at which is created the contribution
+	
+	/**
+	 * @access protected
+	 * @var Date Date at which the contribution has been processed (if it is obviously). Default value: date at which is created the contribution.
+	 */
 	var $fixing_date;
-	//Authorization array containing the people who can treat the contribution
+	
+	/**
+	 * @access protected
+	 * @var array Authorization array containing the people who can treat the contribution.
+	 */
 	var $auth = array();
-	//Identifier of the member who has posted the contribution
+	
+	/**
+	 * @access protected
+	 * @var int Identifier of the member who has posted the contribution.
+	 */
 	var $poster_id = 0;
-	//Identifier of the member who has fixed the contribution
+	
+	/**
+	 * @access protected
+	 * @var int Identifier of the member who has fixed the contribution.
+	 */
 	var $fixer_id = 0;
-	//Login of the member who has posted the contribution
+	
+	/**
+	 * @access protected
+	 * @var string Login of the member who has posted the contribution.
+	 */
 	var $poster_login = '';
-	//Login of the member who has fixed the contribution
+	
+    /**
+     * @access protected
+	 * @var string Login of the member who has fixed the contribution.
+     */
 	var $fixer_login = '';
 }
 

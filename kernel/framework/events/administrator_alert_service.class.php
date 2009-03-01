@@ -30,11 +30,21 @@ import('events/administrator_alert');
 //Flag which distinguishes an alert and a contribution in the database
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
-//This is a static class, it must not be instantiated.
+/**
+ * @static
+ * @package events
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This static class allows you to handler easily the administrator alerts which can be made in PHPBoost.
+ */
 class AdministratorAlertService
 {
-	//Function which builds an alert knowing its id. If it's not found, it returns null
-	/*static*/ function find_by_id($alert_id)
+	/**
+	 * @static
+	 * @desc Builds an alert knowing its id.
+	 * @param int $alert_id Id of the alert.
+	 * @return AdministratorAlert The wanted alert. If it's not found, it returns null.
+	 */
+	function find_by_id($alert_id)
 	{
 		global $Sql;
 		
@@ -54,23 +64,39 @@ class AdministratorAlertService
 			return $alert;
 		}
 		else
+		{
 			return null;
+		}
 	}
 	
-	//Function which builds a list of alerts matching the required criteria(s)
-	/*static*/ function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
+	/**
+	 * @static
+	 * @desc Builds a list of alerts matching the required criteria(s). You can specify many criterias. When you use several of them, it's a AND condition.
+	 * It will only return the alert which match all the criterias.
+	 * @param int $id_in_module Id in the module. 
+	 * @param string $type Alert type.
+	 * @param string $identifier Alert identifier.
+	 * @return AdministratorAlert[] The list of the matching alerts.
+	 */
+	function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
 	{
 		global $Sql;
 		$criterias = array();
 	
 		if ($id_in_module != null)
+		{
 			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
+		}
 		
 		if ($type != null)
-			$criterias[] = "type = '" . strprotect($type) . "'";
+		{
+		    $criterias[] = "type = '" . strprotect($type) . "'";
+		}
 			
 		if ($identifier != null)
+		{
 			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+		}
 		
 		//Restrictive criteria
 		if (!empty($criterias))
@@ -92,10 +118,19 @@ class AdministratorAlertService
 		}
 		//There is no criteria, we return all alerts
 		else
+		{
 			return AdministratorAlertService::get_all_alerts();
+		}
 	}
 	
- 	/*static*/ function find_by_identifier($identifier, $type = '')
+ 	/**
+ 	 * @static
+	 * @desc Finds an alert knowing its identifier and maybe its type.
+	 * @param string $identifier The identifier of the alerts you look for.
+	 * @param string $type The type of the alert you look for.
+	 * @return AdministratorAlert[] The list of the matching alerts.
+ 	 */
+	function find_by_identifier($identifier, $type = '')
 	{
         global $Sql;
         
@@ -117,8 +152,17 @@ class AdministratorAlertService
         return null;
 	}
 	
-	//Function which returns all the alerts of the table
-	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
+	/**
+	 * @static
+	 * @desc Lists all the alerts of the site. You can order them. You can also choose how much alerts you want.
+	 * @param string $criteria The criteria according to which you want to order. It can be id, entitled, fixing_url, 
+	 * current_status, creation_date, identifier, id_in_module, type, priority, description.
+	 * @param string $order asc or desc.
+	 * @param int $begin You want all the alert from the ($begin+1)(th).
+	 * @param int $number The number of alerts you want.
+	 * @return AdministratorAlerts[] The list of the alerts.
+	 */
+	function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
 	{
 		global $Sql;
 		
@@ -143,10 +187,11 @@ class AdministratorAlertService
 	}
 	
 	/**
-     * @desc Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
-     * @warning You must have a valid token or be in the token unsafe mode
+	 * @static
+     * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
+     * @param AdministratorAlert $alert The alert to create or update.
 	 */
-	/*static*/ function save_alert(&$alert)
+    function save_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
@@ -177,10 +222,10 @@ class AdministratorAlertService
 	}
 	
 	/** 
- 	 * @desc Function which deletes an alert from the database
- 	 * @warning You must have a valid token or be in the token unsafe mode
+ 	 * @desc Deletes an alert from the database.
+ 	 * @param AdministratorAlert $alert The alert to delete.
 	 */
-	/*static*/ function delete_alert(&$alert)
+	function delete_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
@@ -194,8 +239,16 @@ class AdministratorAlertService
 		//Else it's not present in the database, we have nothing to delete
 	}
 	
-	//Counts the number of unread alerts
-	/*static*/ function compute_number_unread_alerts()
+	/**
+	 * @static
+	 * @desc Counts the number of unread alerts.
+	 * @return int[] An associative map:
+	 * <ul>	
+	 * 	<li>unread => the number of the unread alerts</li>
+	 * 	<li>all => the number of all the alerts of the site</li>
+	 * </ul>
+	 */
+	function compute_number_unread_alerts()
 	{
 		global $Sql;
 		
@@ -204,15 +257,23 @@ class AdministratorAlertService
 			);
 	}
 	
-	//Returns the number of unread alerts
-	/*static*/ function get_number_unread_alerts()
+	/**
+	 * @static
+	 * @desc Returns the number of unread alerts.
+	 * @return int The number of unread alerts.
+	 */
+	function get_number_unread_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['unread'];
 	}
 	
-	//Returns the number of alerts
-	/*static*/ function get_number_alerts()
+	/**
+	 * @static
+	 * @desc Returns the number of alerts.
+	 * @return int The number of alerts.
+	 */
+	function get_number_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['all'];

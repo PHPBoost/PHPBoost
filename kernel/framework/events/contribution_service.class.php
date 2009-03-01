@@ -30,11 +30,21 @@ import('events/contribution');
 //Flag which distinguishes a contribution from an alert
 define('CONTRIBUTION_TYPE', 0);
 
-//This is a static class, it must not be instantiated.
+/**
+ * @static
+ * @package events
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This service allows developers to manage their contributions.
+ */
 class ContributionService
 {
-	//Method returning the contribution when we know its integer identifier
-	/*static*/ function find_by_id($id_contrib)
+	/**
+	 * @static
+     * @desc Finds a contribution with its identifier.
+     * @param int $id_contrib Id of the contribution.
+     * @return Contribution The contribution you wanted. If it doesn't exist, it will return null.
+	 */
+    function find_by_id($id_contrib)
 	{
 		global $Sql;
 		
@@ -57,8 +67,16 @@ class ContributionService
 			return null;
 	}
 	
-	//Function which returns all the contributions of the table (we can force it to be ordered)
-	/*static*/ function get_all_contributions($criteria = 'creation_date', $order = 'desc')
+	/**
+	 * @static
+	 * @desc Gets all the contributions of the table. You can sort the list.
+	 * @param string $criteria Criteria according to which they are ordered. 
+	 * It can be id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, 
+	 * poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description.
+	 * @param string $order desc or asc.
+	 * @return Contribution[] The list of the contributions.
+	 */
+	function get_all_contributions($criteria = 'creation_date', $order = 'desc')
 	{
 		global $Sql;
 		
@@ -84,8 +102,19 @@ class ContributionService
 		return $array_result;
 	}
 	
-	//Function which builds a list of the contributions matching the required criteria(s)
-	/*static*/ function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
+	/**
+	 * @static
+	 * @desc Builds a list of the contributions matching the required criteria(s). All the parameters represent the criterias you can use.
+	 * If you don't want to use a criteria, let the null value. The returned contribution match all the criterias (it's a AND condition).
+	 * @param string $module The module identifier.
+	 * @param int $id_in_module The id in module field.
+	 * @param string $type The contribution type.
+	 * @param string $identifier The contribution identifier.
+	 * @param int $poster_id The poster.
+	 * @param int $fixer_id The fixer.
+	 * @return Contribution[] The list of the contributions matching all the criterias.
+	 */
+	function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
 	{
 		global $Sql;
 		$criterias = array();
@@ -131,9 +160,11 @@ class ContributionService
 	}
 	
 	/**
-     * @desc Creation or update of a contribution (in database)
+	 * @static
+     * @desc Create or update a contribution in the database.
+     * @param Contribution $contribution The contribution to synchronize with the data base.
 	 */
-	/*static*/ function save_contribution(&$contribution)
+	function save_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -163,9 +194,10 @@ class ContributionService
 	}
 	
 	/**
-     * @desc Deleting a contribution in the database
+     * @desc Deletes a contribution in the database.
+     * @param Contribution $contribution The contribution to delete in the data base.
 	 */
-	/*static*/ function delete_contribution(&$contribution)
+	function delete_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -181,13 +213,30 @@ class ContributionService
 		}
 	}
 	
-	/*static*/ function generate_cache()
+	/**
+	 * @static
+	 * @desc Generates the contribution cache file.
+	 */
+	function generate_cache()
 	{
 		global $Cache;
 		$Cache->generate_file('member');
 	}
 	
-	/*static*/ function compute_number_contrib_for_each_profile()
+	/**
+	 * @static 
+	 * @desc Computes the number of contributions available for each profile.
+	 * It will count the contributions for the administrator, the moderators, the members, for each group and for each member who can have some special authorizations.
+	 * @return int[] A map containing the values for each profile:
+	 * <ul>
+	 * 	<li>r2 => for the administrator</li>
+	 * 	<li>r1 => for the moderators</li>
+	 * 	<li>r0 => for the members</li>
+	 * 	<li>gi => for the group whose id is i</li>
+	 * 	<li>mi => for the member whose id is i</li>
+	 * </ul>
+	 */
+	function compute_number_contrib_for_each_profile()
 	{
 		global $Sql;
 		
