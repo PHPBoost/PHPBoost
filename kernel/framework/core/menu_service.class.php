@@ -567,7 +567,15 @@ class MenuService
         $modules_discovery_service = new ModulesDiscoveryService();
         // Récupère tous les modules même ceux n'ayant pas d'interface
         $modules = $modules_discovery_service->get_all_modules();
+        
+        // Sorts by localized name
+        $sorted_modules = array();
         foreach ($modules as $module)
+        {
+        	$sorted_modules[$module->get_name()] = $module;
+        }
+        ksort($sorted_modules);
+        foreach ($sorted_modules as $module)
         {
             $infos = $module->get_infos();
             if (!empty($infos['infos']) && !empty($infos['infos']['starteable_page']))
