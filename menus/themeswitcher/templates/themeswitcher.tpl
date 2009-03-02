@@ -5,7 +5,7 @@
 			<form action="" method="get">
 				<div class="module_mini_contents">
 					<p style="padding-top: 5px;">
-						<select name="switchtheme" onchange="document.location = '?token={TOKEN}&amp;switchtheme=' + this.options[this.selectedIndex].value;">
+						<select name="switchtheme" onchange="document.location = '?token={TOKEN}&switchtheme=' + this.options[this.selectedIndex].value;">
 							# START themes #
 								<option value="{themes.IDNAME}"{themes.SELECTED}>{themes.NAME}</option>
 							# END themes #
