@@ -809,7 +809,7 @@ foreach ($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 			'SELECTED' => $folder->get_name() == $lang ? 'selected="selected"' : ''
 		));
 		
-		if (	$folder->get_name() == $lang)
+		if ($folder->get_name() == $lang)
 		{
 			$template->assign_vars(array(
 				'LANG_IDENTIFIER' => $info_lang['identifier']

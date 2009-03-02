@@ -58,14 +58,14 @@ class Menu
      */
     function Menu($title)
     {
-       $this->title = htmlentities($title);
+       $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
     }
     
     ## Setters ##
     /**
      * @param string $image the value to set
      */
-    function set_title($title) { $this->title = htmlentities($title); }
+    function set_title($title) { $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE); }
     /**
      * @param array $url the authorisation array to set
      */
