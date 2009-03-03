@@ -1,7 +1,37 @@
 /* --------------------------------------
 		content.css
 Contient les formulaires, les modules (et modules minis), et messages.
---------------------------------------*/ /* Titres */
+--------------------------------------*/ 
+
+/* Conteneur */
+div.block_title span {
+    text-transform:uppercase;
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    font-size:0.75em;
+    font-weight:bold;
+    color:#E53B00;
+    background:#FFFFFF;
+    border-color:#CCCCCC;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+}
+div.block_content {
+    width:auto;
+	margin:10px auto;
+    padding:10px;
+    border-spacing:1px;
+    border:1px #cccccc solid;
+    background-color:#ffffff;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
+}
+
+/* Titres */
 h1 {
     color:#5C5C5C;
     font-size:18px;
@@ -60,30 +90,6 @@ hr {
     width:540px;
     margin:auto;
     margin-top:20px;
-}
-
-div.block_title span {
-    text-transform:uppercase;
-    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    font-size:0.75em;
-    font-weight:bold;
-    color:#E53B00;
-    background:#FFFFFF;
-    border-color:#CCCCCC;
-    -moz-border-radius:12px;
-    -khtml-border-radius:12px;
-    -webkit-border-radius:12px;
-    border-radius:12px;
-}
-
-div.block_content {
-    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
-    border-color:#CCCCCC;
-    -moz-border-radius:5px;
-    -khtml-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
-    background:#F1F4F6;
 }
 
 input, textarea, optgroup, select, .xmlhttprequest_preview{

@@ -49,8 +49,6 @@ div.block_title span {
 }
 
 div.block_title {
-    position: relative;
-    top: -1.2em;
 }
 
 div.block_content {
@@ -59,7 +57,6 @@ div.block_content {
     margin: 20px auto;
     padding: 6px;
     border: 1px solid;
-    position: relative;
 }
 
 div.block_content ul {
