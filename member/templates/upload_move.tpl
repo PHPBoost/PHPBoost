@@ -17,8 +17,8 @@
 		</tr>							
 		<tr> 
 			<td class="row2">
-				<a href="upload.php?root=1&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
-				<a href="upload.php?root=1&amp;{POPUP}">{L_ROOT}</a>
+				<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+				<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 			</td>
 		</tr>							
 		<tr> 
