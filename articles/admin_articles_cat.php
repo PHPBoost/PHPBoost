@@ -889,8 +889,7 @@ else
 		$Template->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'DESC' => $row['contents'],
+			'NAME' => (strlen($row['name']) > 60) ? (substr($row['name'], 0, 60) . '...') : $row['name'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
 			'U_ARTICLES_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));
