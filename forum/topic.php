@@ -144,7 +144,7 @@ $Template->assign_vars(array(
 	'SID' => SID,		
 	'MODULE_DATA_PATH' => $module_data_path,
 	'DESC' => !empty($topic['subtitle']) ? $topic['subtitle'] : '',
-	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
+	'PAGINATION' => $Pagination->display('topic' . url('.php?id=' . $id_get . '&amp;pt=%d', '-' . $id_get . '-%d' . $rewrited_title . '.php'), $topic['nbr_msg'], 'pt', $CONFIG_FORUM['pagination_msg'], 3),
 	'THEME' => get_utheme(),
 	'LANG' => get_ulang(),
 	'USER_ID' => $topic['user_id'],
@@ -228,8 +228,8 @@ while ( $row = $Sql->fetch_assoc($result) )
 		$Template->assign_vars(array(				
 			'C_POLL_EXIST' => true,
 			'QUESTION' => $row['question'],				
-			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1'),
-			'U_POLL_ACTION' => url('.php?id=' . $id_get),
+			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
+			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
 			'L_POLL' => $LANG['poll'], 
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_RESULT' => $LANG['poll_result']
