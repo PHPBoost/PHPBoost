@@ -4,9 +4,7 @@
 			<div class="module_mini_top">
 				<h3 class="menu_vertical_{DEPTH} menu_vertical">
 					# IF RELATIVE_URL #
-	                	# IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
-	                	<a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
-                	# ELSE #
+	                	# IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #	                	<a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>                	# ELSE #
                 		{TITLE}
 	                # ENDIF #
 	            </h3>
@@ -22,9 +20,7 @@
         <li>
             <h3 class="menu_vertical_{DEPTH} menu_vertical">
 				# IF RELATIVE_URL #
-                	# IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
-                	<a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
-                # ELSE #
+                	# IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #                	<a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>                # ELSE #
                 	<span>{TITLE}</span>
                 # ENDIF #
             </h3>
@@ -32,6 +28,4 @@
         </li>
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-    <li># IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
-    <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a></li>
-# ENDIF #
+    <li># IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #    <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a></li># ENDIF #
