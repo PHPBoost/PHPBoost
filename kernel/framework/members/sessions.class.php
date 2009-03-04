@@ -617,7 +617,7 @@ class Sessions
     function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
         $token = $this->get_token();
-        if (!$this->_check_referer() || empty($token) || retrieve(GET, 'token', '') !== $token)
+        if (empty($token) || retrieve(GET, 'token', '') !== $token)
         {
             $this->_csrf_attack($redirect);
             return false;
