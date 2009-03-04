@@ -122,7 +122,7 @@
 				<div>
 				# ENDIF #
 					<ul style="margin:0;padding:0;list-style-type:none;">
-							<li><img src="../templates/{THEME}/images/li.png" alt="" /> {list.ICON} <span class="text_small">{list.DATE} :</span> <a href="{list.U_NEWS}" class="small_link">{list.TITLE}</a></li>
+						<li><img src="../templates/{THEME}/images/li.png" alt="" /> {list.ICON} <span class="text_small">{list.DATE} :</span> <a href="{list.U_NEWS}">{list.TITLE}</a></li>
 					</ul>
 				</div>
 			# END list #

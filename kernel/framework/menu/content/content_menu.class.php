@@ -70,9 +70,10 @@ class ContentMenu extends Menu
     
     function display()
     {
-        $tpl = new Template('framework/menus/content/display.tpl');
+		$tpl = new Template('framework/menus/content/display.tpl');
         $tpl->assign_vars(array(
             'C_DISPLAY_TITLE' => $this->display_title,
+			'C_VERTICAL_BLOCK' => ($this->get_block() == BLOCK_POSITION__LEFT || $this->get_block() == BLOCK_POSITION__RIGHT),
             'TITLE' => $this->title,
         	'CONTENT' => second_parse($this->content)
         ));
