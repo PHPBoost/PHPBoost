@@ -4,7 +4,8 @@
             <ul class="menu_horizontal">
                 <li>
                     # IF RELATIVE_URL #
-		                <a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a>
+		                # IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
+		                <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
 		            # ELSE #
 		                <span>{TITLE}</span>
 		            # ENDIF #
@@ -16,7 +17,8 @@
     # IF C_NEXT_MENU # <!-- Children -->
         <li>
             # IF RELATIVE_URL #
-                <a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a>
+                # IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
+                <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
             # ELSE #
                 <span>{TITLE}</span>
             # ENDIF #
@@ -24,5 +26,6 @@
         # START elements #{elements.DISPLAY}# END elements #
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
-    <li><a href="{RELATIVE_URL}" title="{TITLE}"># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #{TITLE}</a></li>
+    <li># IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /> # ENDIF #
+    <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a></li>
 # ENDIF #
