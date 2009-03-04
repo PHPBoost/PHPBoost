@@ -258,10 +258,10 @@
 				# ENDIF #
 				
 				<tr>
-					<td style="padding-left:20px;" class="row2">
+					<td class="row2">
 						<span id="display"></span>
 						<br />
-						<div style="width:80%;margin:auto;">						
+						<div style="width:98%;margin:auto;">						
 							<div>
 								<div class="row3 articles_cat_admin">
 									<span style="float:left;">
@@ -278,7 +278,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 articles_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="articles{list.U_ARTICLES_VARS}" class="articles_link_cat">{list.NAME}</a> &nbsp;<span class="text_small">{list.DESC}</span>
+											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="articles{list.U_ARTICLES_VARS}" class="articles_link_cat">{list.NAME}</a>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 

@@ -369,8 +369,7 @@ else
 		$Template->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'DESC' => $row['subname'],
+			'NAME' => (strlen($row['name']) > 60) ? (substr($row['name'], 0, 60) . '...') : $row['name'],
 			'INDENT' => $row['level'] * 75, //Indentation des sous catégories.
 			'LOCK' => ($row['status'] == 0) ? '<img class="valign_middle" src="../templates/' . get_utheme() . '/images/readonly.png" alt="" title="' . $LANG['lock'] . '" />' : '',
 			'URL' => !empty($row['url']) ? '<a href="' . $row['url'] . '"><img src="./forum_mini.png" alt="" class="valign_middle" /></a> ' : '',
