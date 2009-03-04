@@ -6,7 +6,7 @@ function show_cat_contents(id_cat, display_select_link)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = "xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1" : "");
+	var filename = PATH_TO_ROOT + "/member/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1" : "");
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
@@ -62,7 +62,7 @@ function select_cat(id_cat)
 {
 	var xhr_object = null;
 	var data = null;
-	var filename = "xmlhttprequest.php?select_cat=1";
+	var filename = PATH_TO_ROOT + "/member/xmlhttprequest.php?select_cat=1";
 	
 	if(window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();

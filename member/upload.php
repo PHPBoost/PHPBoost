@@ -58,8 +58,8 @@ if (!empty($popup)) //Popup.
 		</fieldset>
 	</body>
 </html>';
-	$popup = 'popup=1&amp;fd=' . $field;
-	$popup_noamp = 'popup=1&fd=' . $field;
+	$popup = '&amp;popup=1&amp;fd=' . $field;
+	$popup_noamp = '&popup=1&fd=' . $field;
 }
 else //Affichage de l'interface de gestion.
 {
@@ -91,7 +91,6 @@ $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);
 $home_folder = retrieve(GET, 'root', false);
 $del_folder = retrieve(GET, 'delf', 0);
-$empty_folder = retrieve(GET, 'eptf', 0);
 $del_file = retrieve(GET, 'del', 0);
 $get_error = retrieve(GET, 'error', '');
 $get_l_error = retrieve(GET, 'erroru', '');
@@ -163,6 +162,8 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	if ($User->check_level(ADMIN_LEVEL))
 		$Uploads->Del_folder($del_folder);
 	else
@@ -177,15 +178,10 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 	
 	redirect(HOST . DIR . url('/member/upload.php?f=' . $folder . '&' . $popup_noamp, '', '&'));
 }
-elseif (!empty($empty_folder) && $User->check_level(ADMIN_LEVEL)) //Vide un dossier membre.
-{
-	//Suppression de tout les dossiers enfants.
-	$Uploads->Empty_folder_member($empty_folder);
-
-	redirect(HOST . DIR . '/member/upload.php?showm=1');
-}
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	if ($User->check_level(ADMIN_LEVEL))
 		$Uploads->Del_file($del_file, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
@@ -199,6 +195,8 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$folder_owner = $Sql->query("SELECT user_id FROM ".DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	
 	if ($folder_owner == $User->get_attribute('user_id'))
@@ -225,6 +223,8 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$file_infos = $Sql->query_array(PREFIX . "upload", "idcat", "user_id", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 	$id_cat = $file_infos['idcat'];
 	$file_owner = $file_infos['user_id'];
@@ -259,13 +259,13 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'URL'=> '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
 		'L_URL' => $LANG['url'],
 		'L_SUBMIT' => $LANG['submit'],
-		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $User->get_attribute('login') . '</a>'
+		'U_ROOT' => '<a href="upload.php?' . $popup . '">' . $User->get_attribute('login') . '</a>/'
 	));
 	
 	if ($get_error == 'folder_contains_folder')
@@ -288,7 +288,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $id_cat,
 			'ID_FILE' => $move_folder,
-			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;' . $popup)
+			'TARGET' => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
 		));
 		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $User->get_attribute('user_id'));
 	}
@@ -318,7 +318,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		));
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
-			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;' . $popup)
+			'TARGET' => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token() . $popup)
 		));
 	}
 	
@@ -400,7 +400,7 @@ else
 			'RENAME_FOLDER' => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'DEL_TYPE_IMG' => '<img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
 			'MOVE' => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . get_utheme() . '/images/upload/move.png" alt="" class="valign_middle" /></a>',
-			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup),
+			'U_MOVE' => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder']
 		));
 		$total_directories++;
@@ -461,7 +461,7 @@ else
 			'INSERT' => !empty($popup) ? '<a href="javascript:insert_popup(\'' . addslashes($bbcode) . '\')" title="' . $LANG['popup_insert'] . '"><img src="../templates/' . get_utheme() . '/images/upload/insert.png" alt="" class="valign_middle" /></a>' : '',
 			'DATE' => gmdate_format('date_format', $row['timestamp']),
 			'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
-			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;' . $popup)
+			'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
 		));
 		
 		$total_folder_size += $row['size'];

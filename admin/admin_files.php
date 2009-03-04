@@ -43,9 +43,9 @@ $del_file = retrieve(GET, 'del', 0);
 $get_error = retrieve(GET, 'error', '');
 $get_l_error = retrieve(GET, 'erroru', '');
 $show_member = !empty($_GET['showm']) ? true : false;
-$move_folder = retrieve(GET, 'movef', 0);
+$move_folder = retrieve(GET, 'movefd', 0);
 $move_file = retrieve(GET, 'movefi', 0);
-$to = retrieve(GET, 'to', -1);
+$to = retrieve(POST, 'new_cat', -1);
 
 if (isset($_GET['fup'])) //Changement de dossier
 {
@@ -98,6 +98,8 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Suppression du dossier et de tout le contenu	
 	$Uploads->Del_folder($del_folder);
 	
@@ -108,6 +110,8 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 }
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
+	$Session->csrf_get_protect(); //Protection csrf.
+	
 	//Suppression de tout les dossiers enfants.
 	$Uploads->Empty_folder_member($empty_folder);
 
@@ -115,6 +119,8 @@ elseif (!empty($empty_folder)) //Vide un dossier membre.
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Suppression d'un fichier.
 	$Uploads->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
@@ -122,6 +128,8 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
@@ -142,9 +150,117 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Uploads->Move_file($move_file, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
+}
+elseif (!empty($move_folder) || !empty($move_file))
+{
+	$Template->set_filenames(array(
+		'admin_files_move'=> 'admin/admin_files_move.tpl'
+	));
+	
+		$sql_request = !empty($folder_member) 
+	? 	("SELECT uc.user_id, m.login
+		FROM " . DB_TABLE_UPLOAD_CAT . " uc
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+		WHERE uc.user_id = '" . $folder_member . "'
+		UNION
+		SELECT u.user_id, m.login
+		FROM " . DB_TABLE_UPLOAD . " u
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
+		WHERE u.user_id = '" . $folder_member . "'")
+	: 	("SELECT uc.user_id, m.login
+		FROM " . DB_TABLE_UPLOAD_CAT . " uc
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
+		WHERE uc.id = '" . $folder . "'");
+
+	$result = $Sql->query_while ($sql_request, __LINE__, __FILE__);
+	$folder_info = $Sql->fetch_assoc($result);
+	
+	if ($show_member)
+		$url = $Uploads->get_admin_url($folder, '/<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>');
+	elseif (!empty($folder_member) || !empty($folder_info['user_id']))
+		$url = $Uploads->get_admin_url($folder, '', '<a href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>/<a href="admin_files.php?fm=' . $folder_info['user_id'] . '">' . $folder_info['login'] . '</a>/');
+	elseif (empty($folder))
+		$url = '/';	
+	else
+		$url = $Uploads->get_admin_url($folder, '');
+		
+	$Template->assign_vars(array(
+		'FOLDER_ID' => !empty($folder) ? $folder : '0',
+		'URL' => $url,
+		'L_FILES_MANAGEMENT' => $LANG['files_management'],
+		'L_FILES_ACTION' => $LANG['files_management'],
+		'L_CONFIG_FILES' => $LANG['files_config'],
+		'L_MOVE_TO' => $LANG['moveto'],
+		'L_ROOT' => $LANG['root'],
+		'L_URL' => $LANG['url'],
+		'L_SUBMIT' => $LANG['submit']
+	));
+	
+	if ($get_error == 'folder_contains_folder')
+		$Errorh->handler($LANG['upload_folder_contains_folder'], E_USER_WARNING);
+	
+	//liste des fichiers disponibles
+	include_once('../member/upload_functions.php');
+	$cats = array();
+	
+	$is_folder = !empty($move_folder);
+	//Affichage du dossier/fichier à déplacer
+	if ($is_folder)
+	{
+		$folder_info = $Sql->query_array(PREFIX . "upload_cat", "name", "id_parent", "WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
+		$name = $folder_info['name'];
+		$id_cat = $folder_info['id_parent'];
+		$Template->assign_block_vars('folder', array(
+			'NAME' => $name
+		));
+		$Template->assign_vars(array(
+			'SELECTED_CAT' => $id_cat,
+			'ID_FILE' => $move_folder,
+			'TARGET' => url('admin_files.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . $Session->get_token())
+		));
+		$cat_explorer = display_cat_explorer($id_cat, $cats, 1, $folder_member);
+	}
+	else
+	{
+		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
+		$get_img_mimetype = $Uploads->get_img_mimetype($info_move['type']);
+		$size_img = '';
+		switch ($info_move['type'])
+		{
+			//Images
+			case 'jpg':
+			case 'png':
+			case 'gif':
+			case 'bmp':
+			list($width_source, $height_source) = @getimagesize('../upload/' . $info_move['path']);
+			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+		}
+		
+		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
+		
+		$Template->assign_block_vars('file', array(
+			'NAME' => $info_move['name'],
+			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
+			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
+			'U_IMG_MOVE'=> PATH_TO_ROOT . '/upload/' . $info_move['path']
+		));
+		$Template->assign_vars(array(
+			'SELECTED_CAT' => $info_move['idcat'],
+			'TARGET' => url('admin_files.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . $Session->get_token())
+		));
+	}
+	
+	$Template->assign_vars(array(
+		'FOLDERS' => $cat_explorer,
+		'ID_FILE' => $move_file
+	));
+	
+	$Template->pparse('admin_files_move');
 }
 else
 {
@@ -277,13 +393,14 @@ else
 			'IMG_FOLDER' => $show_member ? 'member_max.png' : 'folder_max.png',
 			'RENAME_FOLDER' => !$show_member ? '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" style="vertical-align:middle;" /></a></span>' : '',
 			'DEL_TYPE' => $show_member ? 'eptf' : 'delf',
+			'C_TYPEFOLDER' => !$show_member,
 			'DEL_TYPE_IMG' => $show_member ? '<img src="../templates/' . get_utheme() . '/images/upload/trash_mini.png" alt="" class="valign_middle" />' : '<img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" />',
 			'ALERT_DEL' => $show_member ? 'member' : 'folder',
 			'MOVE' => !$show_member ? '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="bbcode_hover" title="' . $LANG['moveto'] . '"><img src="../templates/' . get_utheme() . '/images/upload/move.png" alt="" style="vertical-align:middle;" /></a>' : '',
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
 			'L_TYPE_DEL_FOLDER' => $LANG['del_folder'],
 			'U_FOLDER' => '?' . ($show_member ? 'fm=' . $row['user_id'] : 'f=' . $row['id']),
-			'U_MOVE' => '.php?movefd=' . $row['id']
+			'U_MOVE' => '.php?movefd=' . $row['id'] . '&amp;f=' . $folder . ($row['user_id'] > 0 ? '&amp;fm=' . $row['user_id'] : '')
 		));
 		$total_directories++;
 	}	
@@ -334,7 +451,7 @@ else
 				'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
-				'U_MOVE' => '.php?movefi=' . $row['id']
+				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 				
 			));
 			
