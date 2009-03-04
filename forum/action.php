@@ -40,6 +40,7 @@ $alert = retrieve(GET, 'a', '');
 $read = retrieve(GET, 'read', false);
 $msg_d = retrieve(GET, 'msg_d', false);
 $lock_get = retrieve(GET, 'lock', '');
+$page_get = retrieve(GET, 'p', 1);
 
 //Variable $_POST
 $poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
@@ -147,7 +148,7 @@ elseif (!empty($idt_get))
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		
-		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
+		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
 	}
 	elseif (!empty($lock_get))
 	{
