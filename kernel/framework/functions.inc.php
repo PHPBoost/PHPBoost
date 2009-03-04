@@ -42,7 +42,33 @@ define('TIMEZONE_SITE', 1);
 define('TIMEZONE_SYSTEM', 2);
 define('TIMEZONE_USER', 3);
 
-//Récupère les superglobales
+/**
+ * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
+ * @param int $var_type The origin of the variable: GET if it's a parameter in the request URL, POST if the variable was in a formulary, 
+ * COOKIE if the variables comes from a cookie and FILES if it's a file.
+ * @param string $var_name Name of a HTTP variable you want to retrieve.
+ * @param mixed $default_value The value you want the variable you retrieve has if the HTTP parameter doesn't exist.
+ * @param string $force_type Type of the variable you want to retrieve. If you don't use this parameter, the returned variable will have the same type as the default value you imposed.
+ * When you force the variable type, a cast operation will be made from string (it's a string in the HTTP request) to the type you choosed.
+ * The types you can use are numerous:
+ * <ul>
+ * 	<li>TINTEGER to retrieve an integer value.</li>
+ * 	<li>TSTRING to retrieve a string. The HTML code in this string is protected (XSS protection) and the dangerous MySQL characters are escaped. You can use this variable directly in a MySQL query. 
+ * It you want to use it now without inserting it in a data base, use the stripslashes PHP function.</li>
+ * 	<li>TSTRING_UNCHANGE if you want to retrieve the value of a string without any processing (no quotes escaping and no HTML protection).</li>
+ * 	<li>TSTRING_PARSE if you want to parse the value you retrieved. The HTML code is protected, it parses with the user parser and the quotes are escaped. Ready to be inserted in a MySQL query !</li>
+ * 	<li>TBOOL to retrieve a boolean value.</li>
+ * 	<li>TUNSIGNED_INT if you expect an unsigned integer.</li>
+ * 	<li>TUNSIGNED_DOUBLE to retrieve an unsigned double value.</li>
+ * 	<li>TSTRING_HTML if you don't want to protect the HTML code of the content but you want to escape the quotes.</li>
+ * 	<li>TSTRING_AS_RECEIVED if you want to retrieve the string variable as it was in the HTTP request. Be careful, if the magic_quotes are enabled (use the MAGIC_QUOTES constant to know it), the quotes are escaped, otherwise they aren't.</li>
+ * 	<li>TARRAY to retrieve an array. The values it contains aren't processed.</li>
+ * 	<li>TDOUBLE to retrieve a double value</li>
+ * 	<li>TNONE if it has no type</li>
+ * </ul>
+ * @param int $flags You can change the behaviour of this method: USE_DEFAULT_IF_EMPTY will allow you to retrieve the default value even if the parameter exists but its value is empty (to know if the var is empty, we use the empty() PHP function).
+ * @return mixed The value of the variable you wanted to retrieve. Its type is either the same as the default value or the type you forced. 
+ */
 function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $flags = 0)
 {
     $var = null;
@@ -130,7 +156,15 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 	}
 }
 
-//Passe à la moulinette les entrées (chaînes) utilisateurs.
+/**
+ * @desc Protects an input variable. Never trust user input!
+ * @param string $var Variable to protect.
+ * @param bool $html_protect HTML_PROTECT if you don't accept the HTML code (it will be transformed
+ *  by the corresponding HTML entities and won't be considerer by the web browsers). HTML_UNPROTECT if you want to let them.
+ * @param int $addslashes If you want to escape the quotes in the string, use ADDSLASHES_FORCE, if you don't want, use the ADDSLASHES_NONE constant.
+ * If you want to escape them only if they have not been escaped automatically by the magic quotes option, use the ADDSLASHES_AUTO constant.
+ * @return string The protected string.
+ */
 function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES_AUTO)
 {
     $var = trim((string)$var);
@@ -158,7 +192,9 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
 		default:
 			//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
 			if (!MAGIC_QUOTES)
-				$var = addslashes($var);
+			{
+			    $var = addslashes($var);
+			}
 	}
 
     return $var;
