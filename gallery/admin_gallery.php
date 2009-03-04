@@ -101,7 +101,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -209,7 +209,7 @@ else
 		));	
 			
 		//On crée une pagination si le nombre de photos est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 			
 		$Template->assign_vars(array(

@@ -47,7 +47,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 	
 	
 	//On crée une pagination si il y plus d'une page.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	//Si l'article ne commence pas par une page on l'ajoute.
@@ -78,7 +78,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	
 	//Affichage notation
-	include_once('../kernel/framework/content/note.class.php'); 
+	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	$Template->assign_vars(array(

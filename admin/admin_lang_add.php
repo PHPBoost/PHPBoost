@@ -73,7 +73,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 		$check_lang = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_LANG . " WHERE lang = '" . strprotect($_FILES['upload_lang']['name']) . "'", __LINE__, __FILE__);
 		if (empty($check_lang))
 		{
-			include_once('../kernel/framework/io/upload.class.php');
+			import('io/upload');
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_lang', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -81,13 +81,13 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 				//Place à la décompression.
 				if ($Upload->extension['upload_lang'] == 'gzip')
 				{
-					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
+					import('lib/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->filename['upload_lang'], '../lang/'))
 						$error = $Upload->error;
 				}
 				elseif ($Upload->extension['upload_lang'] == 'zip')
 				{
-					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
+					import('lib/pcl/pcltar', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;

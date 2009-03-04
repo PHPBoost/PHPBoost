@@ -35,7 +35,7 @@ $mail_contents = retrieve(POST, 'mail_contents', '', TSTRING_UNCHANGE);
 $mail_valid = retrieve(POST, 'mail_valid', '');
 $get_error = '';
 
-include_once('../kernel/framework/util/captcha.class.php');
+import('util/captcha');
 $captcha = new Captcha();
 
 ###########################Envoi##############################
@@ -44,7 +44,7 @@ if (!empty($mail_valid))
 	//Code de vérification si activé
 	if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
 	{
-		include_once('../kernel/framework/io/mail.class.php');
+		import('io/mail');
 		$mail = new Mail();
 
 		if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail

@@ -225,11 +225,11 @@ else
 		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 		
 		//Notes
-		include_once('../kernel/framework/content/note.class.php');
+		import('content/note');
 		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 		
 		$Template->assign_vars(array(

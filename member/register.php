@@ -118,7 +118,7 @@ if (empty($key))
 		}
 		
 		//Code de vérification, anti-bots.
-		include_once('../kernel/framework/util/captcha.class.php');
+		import('util/captcha');
 		$Captcha = new Captcha();
 		if ($Captcha->gd_loaded() && $CONFIG_USER['verif_code'] == '1')
 		{

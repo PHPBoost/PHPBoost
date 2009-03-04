@@ -83,7 +83,7 @@ if (!empty($search_string)) //recherche
 	
 	$num_rows = $Sql->num_rows($result, $query_rows, __LINE__, __FILE__);
 	
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 	$pages_links = $Pagination->display('search' . url('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	

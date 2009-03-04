@@ -86,7 +86,7 @@ else
 {
 	$Template->assign_block_vars('arch_title', array());
 	
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 	
 	$i = 0;	

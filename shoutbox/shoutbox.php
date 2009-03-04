@@ -215,7 +215,7 @@ else //Affichage.
 	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de messages est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(

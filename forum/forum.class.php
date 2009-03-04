@@ -81,9 +81,9 @@ class Forum
 			$next_pm = '[url=' . HOST . DIR . '/forum/topic.php?id=' . $idtopic . $last_page . '#m' . $previous_msg_id . '][' . $LANG['next'] . '][/url]';
 			$preview_contents = substr($contents, 0, 300);
 
-			include_once('../kernel/framework/io/mail.class.php');
+			import('io/mail');
 			$Mail = new Mail();
-			include_once('../kernel/framework/members/pm.class.php');
+			import('members/pm');
 			$Privatemsg = new PrivateMsg();
 
 			//Récupération des membres suivant le sujet.

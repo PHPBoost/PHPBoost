@@ -37,7 +37,7 @@ $width = retrieve(GET, 'width', 160);
 $height = retrieve(GET, 'height', 50);
 $font = retrieve(GET, 'font', PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf');
 
-include_once('../kernel/framework/util/captcha.class.php');
+import('util/captcha');
 $Captcha = new Captcha();
 
 $Captcha->set_instance($instance);

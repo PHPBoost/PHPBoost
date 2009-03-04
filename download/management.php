@@ -90,7 +90,7 @@ if ($delete_file > 0)
 		//Deleting comments if the file has
 		if ($file_infos['nbr_com'] > 0)
 		{
-			include_once('../kernel/framework/content/comments.class.php');
+			import('content/comments');
 			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}

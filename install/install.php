@@ -670,7 +670,7 @@ elseif ($step == 6)
 			load_db_connection();
 			
 			//On crée le code de déverrouillage
-			include_once('../kernel/framework/core/cache.class.php');
+			import('core/cache');
 			$Cache = new Cache;
 			$Cache->load('config');
 			
@@ -700,14 +700,22 @@ elseif ($step == 6)
 			
 			//On envoie un mail à l'administrateur
 			$LANG['admin'] = '';
-			include_once('../kernel/framework/io/mail.class.php');
-			$Mail = new Mail();
-			$Mail->send_from_properties($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail_exp']);
+			import('io/mail');
+			$mail = new Mail();
+			
+			//Paramètres du mail
+			$mail->set_sender($CONFIG['mail_exp']);
+			$mail->set_recipients($user_mail);
+			$mail->set_object($LANG['admin_mail_object']);
+			$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
+			
+			//On envoie le mail
+			$mail->send();
 			
 			//On connecte directement l'administrateur si il l'a demandé
 			if ($create_session)
 			{
-				include('../kernel/framework/members/sessions.class.php');
+				import('members/sessions');
 				$Session = new Sessions;
 				
 				//Remise à zéro du compteur d'essais.
