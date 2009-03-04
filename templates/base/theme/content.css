@@ -31,6 +31,12 @@ div.block_content {
     background:#F7F8F5 url(images/contentbg.png) repeat-x;
 }
 
+ul.list {
+	text-align:left;
+	margin-left:20px;
+	list-style-image: url(images/li.png)
+}
+
 /* Titres */
 h1 {
     color:#5C5C5C;

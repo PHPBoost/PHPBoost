@@ -22,6 +22,8 @@ Possibilité d'uploader des images dans images/groups
 Possibilité d'uploader des images dans images/ranks
 Possibilité de définir des champs d'insctiption obligatoires.
 Csrf dans les fichiers.
+- Ajouter les derniers commentaires 
+- Arrondir les tableaux.
 
 ------------------------------------ MODULES -----------------------------------
 
