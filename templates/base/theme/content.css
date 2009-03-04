@@ -214,9 +214,6 @@ legend {
 	-khtml-border-radius:3px;
 	-webkit-border-radius:3px;
 }
-legend{ 
-	top:-1.2em; 
-}
 * html legend {
     margin:0 0 -10px -7px;
     line-height:1em;
