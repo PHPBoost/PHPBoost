@@ -30,32 +30,54 @@
 		</div>
 		
 		<div id="admin_contents">
-			<fieldset style="width:90%; margin:auto;">
-				<legend>
-					{L_ADMIN_ALERTS}
-				</legend>
-				# IF C_UNREAD_ALERTS #
-					<div class="warning">
-						{L_UNREAD_ALERT}
-					</div>
-				# ELSE #
-					<div class="success">
-						{L_NO_UNREAD_ALERT}
-					</div>
-				# ENDIF #
-				<div style="text-align:center;">
-					<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
-				</div>
-			</fieldset>
+			<div style="width:49%;float:left">
+				<table class="module_table">
+					<tr> 
+						<th colspan="4">
+							{L_ADMIN_ALERTS}
+						</th>
+					</tr>
+					<tr> 
+						<td class="row2">
+							# IF C_UNREAD_ALERTS #
+								<div class="warning">
+									{L_UNREAD_ALERT}
+								</div>
+							# ELSE #
+								<div class="success">
+									{L_NO_UNREAD_ALERT}
+								</div>
+							# ENDIF #
+							<div style="text-align:center;">
+								<a href="admin_alerts.php">{L_DISPLAY_ALL_ALERTS}</a>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width:49%;float:right">
+				<table class="module_table">
+					<tr> 
+						<th colspan="4">
+							Dernier commentaires
+						</th>
+					</tr>
+					<tr> 
+						<td class="row2">
+							<span class="text_small">Par Monsieur PHPBoost, sur Bonjour tout le monde !</span>
+							<br />
+							Bonjour, ceci est un commentaire. Pour supprimer un commentaire, connectez-vous, et affichez les commentaires de cet article. Vous pourrez alors ...
+						</td>
+					</tr>
+				</table>
+			</div>
 			
-			<br />
-			
-			<table class="module_table">
+			<table class="module_table" style="margin-top:30px;">
 				<tr> 
 					<th colspan="4">
 						{L_USER_ONLINE}
 					</th>
-				</tr>	
+				</tr>
 				<tr> 
 					<td class="row2" style="text-align:center;">
 						{L_USER_ONLINE}
