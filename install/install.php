@@ -702,7 +702,7 @@ elseif ($step == 6)
 			$LANG['admin'] = '';
 			include_once('../kernel/framework/io/mail.class.php');
 			$Mail = new Mail();
-			$Mail->send($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail_exp']);
+			$Mail->send_from_properties($user_mail, $LANG['admin_mail_object'], sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR), $CONFIG['mail_exp']);
 			
 			//On connecte directement l'administrateur si il l'a demandé
 			if ($create_session)

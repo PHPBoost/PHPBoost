@@ -59,7 +59,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 					
 					include_once('../kernel/framework/io/mail.class.php');
 					$Mail = new Mail();
-					$Mail->send($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail_exp']);
+					$Mail->send_from_properties($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail_exp']);
 
 					//Affichage de la confirmation.
 					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');

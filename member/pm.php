@@ -282,7 +282,7 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 				
 			//Envoi du message privé.
-			$Privatemsg->send($user_id_dest, $pm_id_get, $contents, $User->get_attribute('user_id'), $status);
+			$Privatemsg->send_from_properties($user_id_dest, $pm_id_get, $contents, $User->get_attribute('user_id'), $status);
 
 			//Calcul de la page vers laquelle on redirige.
 			$last_page = ceil( ($convers['nbr_msg'] + 1) / 25);
