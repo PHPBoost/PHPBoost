@@ -67,7 +67,10 @@ class ContentMenu extends Menu
      */
     function get_content() { return $this->content; }
     
-    
+	/**
+     * @desc Display the content menu.
+     * @return a string of the parsed template ready to be displayed
+     */
     function display()
     {
 		$tpl = new Template('framework/menus/content/display.tpl');

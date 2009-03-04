@@ -74,13 +74,26 @@ h6.sub_title2 { /* Sous titre dans les menu */
 .block_top,th { /* Entête de conteneur et des tableaux */
     padding:5px 6px;
     color:#FFFFFF;
-    background:#5D7C94 url(images/msg_top_row.png) repeat-x;
-    border:1px solid #325889;
+    background:url(images/msg_top_row.png) repeat-x;
     text-align:left;
     font-size:0.75em;
     font-weight:bold;
-    text-transform:uppercase;
+    text-transform:uppercase;	
+	-moz-border-radius:4px 4px 0px 0px;
+	-khtml-border-radius:4px 4px 0px 0px;
+	-webkit-border-radius:4px 4px 0px 0px;
+    border-radius:4px;
 }
+
+.block_bottom,th.bottom_cell { /* Pied de conteneur et des tableaux */
+	padding:0px;
+	background:#F1F4F6;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius:0px 0px 5px 5px;
+    border-radius:5px;
+}
+
 
 hr {
     background:#C4CED6;
@@ -541,12 +554,18 @@ a.msg_link_pseudo:hover {
     font-size:12px;
 }
 
+
 .module_table,.block_container {
     /* Tableau global, utilisé dans les différents modules */
     width:98%;
     margin:auto;
-    border-spacing:0px;
-    border-collapse:collapse;
+	border-spacing:0px;
+	padding:0px;
+	border:1px solid #CCCCCC;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 /* Modules minis

@@ -31,6 +31,7 @@
 [*] [color=red]Nouveauté :[/color] Amélioration du système des sessions, les modules gèrent les sessions pour les invités.
 [*] [color=red]Nouveauté :[/color] Nouvelle vérifications interactive (ajax) dans l'inscription et dans le profil, permet de signaler instantanément les erreurs dans le formulaire.
 [*] [color=red]Nouveauté :[/color] Nouvel installateur.
+[*] [color=red]Nouveauté :[/color] Déplacement des fichiers/dossier dans l'administration.
 [*] Système de cache amélioré.
 [*] Système de cache, et de changement de jour pour les modules intégrés à l'interface de communication noyau/module.
 [*] Gestion des mots de passe avec l'algorithme de cryptage sha256 en lieu et place du md5

@@ -6,36 +6,45 @@
     /* Case générale des tableaux du site*/
 .row1,.block_contents1 {
     background:#F1F4F6;
-    border:1px solid #C4CED6;
-    padding:6px;
-    margin-bottom:-1px;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius:0px 0px 5px 5px;
+    border-radius:5px;
 }
 
 .block_contents1 {
-    padding:20px 6px;
+    padding:20px 6px;	
 }
 
 .row2,.block_contents2 {
     background:#F2F8F8;
-    border:1px solid #C4CED6;
-    padding:6px;
-    margin-bottom:-1px;
+	padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius:0px 0px 5px 5px;
+    border-radius:5px;
 }
 
 .block_contents2 {
-    padding:20px 6px;
-    margin-bottom:-1px;
+    padding:20px 6px;	
 }
 
 .row3,.block_contents3 {
     background:#F2F7FB;
-    border:1px solid #C4CED6;
-    padding:6px;
-    margin-bottom:-1px;
+    border-color:#C4CED6;
+    padding:8px 6px;
+	border-top:1px solid #CCCCCC;
+	-moz-border-radius:0px 0px 5px 5px;
+	-khtml-border-radius:0px 0px 5px 5px;
+	-webkit-border-radius:0px 0px 5px 5px;
+    border-radius:5px;
 }
 
 .block_contents3 {
-    padding:20px 6px;
+    padding:20px 6px;	
 }
 
 /* Case résultat recherche membre AJAX */
