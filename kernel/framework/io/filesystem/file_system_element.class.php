@@ -31,7 +31,7 @@ define('OPEN_AFTER', false);
 /**
  * @package filesystem
  * @abstract
- * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class represents any file system element.
  */
 class FileSystemElement
