@@ -109,8 +109,8 @@ else
 		<div id="sub_header">
 			# IF C_MENUS_SUB_HEADER_CONTENT #
 			{MENUS_SUB_HEADER_CONTENT}
-			<div class="spacer" style="padding:2px;"></div>
 			# ENDIF #
+			<div class="spacer"></div>
 		</div>
 	</div>
 	

@@ -11,14 +11,14 @@ div#header_admin {
 
 /* Menu de lien horizontal */
 div#sub_header_admin {
-    
+    height:35px;
 }
 
 /* Lien du subheader */
 div#sub_header_admin .dynamic_menu {
 	width:auto;
 	height:35px;
-	margin-top:-5px;
+	margin-top:-3px;
 	padding-left:15px;
 	float:left;
 }
