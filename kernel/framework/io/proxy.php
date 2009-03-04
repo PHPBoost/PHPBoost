@@ -3,7 +3,7 @@
  *                               proxy.php
  *                            -------------------
  *   begin                : June 18, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *

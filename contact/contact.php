@@ -47,7 +47,7 @@ if (!empty($mail_valid))
 		include_once('../kernel/framework/io/mail.class.php');
 		$mail = new Mail();
 
-		if ($mail->send($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+		if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
 			$get_error = 'success';
 		else //Erreur mail
 			$get_error = 'error';
