@@ -68,7 +68,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Code de vérification si activé
-	include_once('../kernel/framework/util/captcha.class.php');
+	import('util/captcha');
 	$Captcha = new Captcha();
 	
 	if (!($CONFIG_USER['verif_code'] == '1') || $Captcha->is_valid()) //Code de vérification si activé
@@ -81,7 +81,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$user_avatar = '';
 				//Gestion upload d'avatar.
 				$dir = '../images/avatars/';
-				include_once('../kernel/framework/io/upload.class.php');
+				import('io/upload');
 				$Upload = new Upload($dir);
 				
 				if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
@@ -252,7 +252,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					include_once('../kernel/framework/io/mail.class.php');
+					import('io/mail');
 					$Mail = new Mail();
 					
 					$Mail->send_from_properties($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);

@@ -39,7 +39,7 @@ $Template->set_filenames(array(
 $nbr_dl = $Sql->count_table('download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
-include_once('../kernel/framework/util/pagination.class.php');
+import('util/pagination');
 $Pagination = new Pagination();
 
 $Template->assign_vars(array(

@@ -137,7 +137,7 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	{
 		if (!is_dir('../' . $_FILES['upload_module']['name']))
 		{
-			include_once('../kernel/framework/io/upload.class.php');
+			import('io/upload');
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -145,13 +145,13 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				//Place à la décompression.
 				if ($Upload->extension['upload_module'] == 'gzip')
 				{
-					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
+					import('lib/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->filename['upload_module'], '../'))
 						$error = $Upload->error;
 				}
 				elseif ($Upload->extension['upload_module'] == 'zip')
 				{
-					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
+					import('lib/pcl/pcltar', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
@@ -182,7 +182,7 @@ else
 	));
 
     {   // Intégration du système d'updates des modules avec celui du site
-        require_once('../kernel/framework/core/updates.class.php');
+        import('core/updates');
         $updates_availables = 0;
 
         if (phpversion() > PHP_MIN_VERSION_UPDATES)

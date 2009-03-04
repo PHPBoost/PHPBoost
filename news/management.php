@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 $Cache->load('news');
 
-include_once('../kernel/framework/util/date.class.php');
-include_once('../kernel/framework/util/mini_calendar.class.php');
+import('util/date');
+import('util/mini_calendar');
 
 $edit_news_id = retrieve(GET, 'edit', 0);
 $add_news = retrieve(GET, 'new', false);
@@ -75,7 +75,7 @@ if ($delete_news > 0)
 		//Deleting comments if the news has
 		if ($news_infos['nbr_com'] > 0)
 		{
-			include_once('../kernel/framework/content/comments.class.php');
+			import('content/comments');
 			$Comments = new Comments('news', $delete_news, url('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
 			//$Comments->set_arg($news_id);
 			$Comments->delete_all($delete_news);

@@ -63,7 +63,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload et décompression de l'
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		include_once('../kernel/framework/io/upload.class.php');
+		import('io/upload');
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;

@@ -123,7 +123,7 @@ if (!empty($idm))
 }	
 	
 //On crée une pagination si le nombre de msg est trop important.
-include_once('../kernel/framework/util/pagination.class.php'); 
+import('util/pagination'); 
 $Pagination = new Pagination();	
 
 //Affichage de l'arborescence des catégories.

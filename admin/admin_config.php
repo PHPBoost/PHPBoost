@@ -394,7 +394,7 @@ else //Sinon on rempli le formulaire
 //Renvoi du code de déblocage.
 if (!empty($_GET['unlock']))
 {
-	include_once('../kernel/framework/io/mail.class.php');
+	import('io/mail');
 	$Mail = new Mail();
 	
 	$unlock_admin_clean = substr(strhash(uniqid(mt_rand(), true)), 0, 18); //Génération de la clée d'activation, en cas de verrouillage de l'administration.;

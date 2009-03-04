@@ -40,62 +40,6 @@ class Mail
     }
 
     /**
-     * @desc Sends the mail.
-     * @param string $mail_to The mail recipients' address.
-     * @param string $mail_objet The mail object.
-     * @param string $mail_content content of the mail
-     * @param string $mail_from The mail sender's address.
-     * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
-     * @param string $mail_sender The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
-     * @return bool True if the mail could be sent, false otherwise.
-     */
-    function send_from_properties($mail_to, $mail_objet, $mail_content, $mail_from, $mail_header = '', $mail_sender = 'admin')
-    {
-        //Initialization of the mail properties
-        if (!$this->set_recipients($mail_to) || !$this->set_sender($mail_from, $mail_sender))
-        {
-            return false;
-        }
-         
-        $this->set_object($mail_objet);
-        $this->set_content($mail_content);
-
-        $this->set_headers($mail_header);
-
-        //Let's send the mail
-        return $this->send();
-    }
-
-    function send()
-    {
-        if (empty($this->headers))
-        {
-            $this->_generate_headers();
-        }
-         
-        $recipients = trim(implode('; ', $this->recipients), '; ');
-         
-        return @mail($this->recipients, $this->objet, $this->content, $this->headers);
-    }
-
-    /**
-     * @static
-     * @desc Checks that an email address has a correct form.
-     * @return bool True if it's valid, false otherwise.
-     */
-    function check_validity($mail_address)
-    {
-        if (!preg_match('`^[a-z0-9._-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /**
      * @desc Sets the mail sender.
      * @param string $sender The mail sender address.
      * @param string $sender_name 'admin' if the mail is sent by the administrator, 'user' otherwise.
@@ -228,6 +172,66 @@ class Mail
     function get_headers()
     {
         return $this->headers;
+    }
+    
+    /**
+     * @desc Sends the mail.
+     * @param string $mail_to The mail recipients' address.
+     * @param string $mail_objet The mail object.
+     * @param string $mail_content content of the mail
+     * @param string $mail_from The mail sender's address.
+     * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
+     * @param string $mail_sender The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
+     * @return bool True if the mail could be sent, false otherwise.
+     */
+    function send_from_properties($mail_to, $mail_objet, $mail_content, $mail_from, $mail_header = '', $mail_sender = 'admin')
+    {
+        //Initialization of the mail properties
+        if (!$this->set_recipients($mail_to) || !$this->set_sender($mail_from, $mail_sender))
+        {
+            return false;
+        }
+         
+        $this->set_object($mail_objet);
+        $this->set_content($mail_content);
+
+        $this->set_headers($mail_header);
+
+        //Let's send the mail
+        return $this->send();
+    }
+
+    /** 
+     * @desc Sends the mail. 
+     * @return bool True if the mail could be sent, false otherwise.
+     */
+    function send()
+    {
+        if (empty($this->headers))
+        {
+            $this->_generate_headers();
+        }
+         
+        $recipients = trim(implode('; ', $this->recipients), '; ');
+         
+        return @mail($this->recipients, $this->objet, $this->content, $this->headers);
+    }
+    
+    /**
+     * @static
+     * @desc Checks that an email address has a correct form.
+     * @return bool True if it's valid, false otherwise.
+     */
+    function check_validity($mail_address)
+    {
+        if (!preg_match('`^[a-z0-9._-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     ## Protected Methods ##

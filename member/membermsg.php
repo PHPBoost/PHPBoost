@@ -40,7 +40,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		'membermsg'=> 'member/membermsg.tpl',
 	));
 	
-	require_once('../kernel/framework/modules/modules_discovery_service.class.php');
+	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach ($modules as $module)
@@ -67,7 +67,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	if (!empty($script))
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 
 		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);

@@ -42,8 +42,8 @@ define('DB_UNKNOW_ERROR', -1);
 //Function which returns a result code
 function check_database_config($host, $login, $password, $database_name, $tables_prefix)
 {
-	require_once('../kernel/framework/db/mysql.class.php');
-	require_once('../kernel/framework/core/errors.class.php');
+	import('db/mysql');
+	import('core/errors');
 	
 	//Lancement de la classe d'erreur (nécessaire pour lancer la gestion de base de données)
 	$Errorh = new Errors;
@@ -92,9 +92,9 @@ function load_db_connection()
 {
 	global $Sql, $Errorh;
 	
-	require_once('../kernel/framework/core/errors.class.php');
+	import('core/errors');
 	$Errorh = new Errors;
-	include_once('../kernel/framework/db/mysql.class.php');
+	import('db/mysql');
 	$Sql = new Sql;
 	$Sql->auto_connect();
 }
