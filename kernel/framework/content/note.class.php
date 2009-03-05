@@ -75,7 +75,7 @@ class Note
 	//Affiche la notation
 	function display_form($template = false)
 	{
-		global $CONFIG, $Sql, $LANG;
+		global $CONFIG, $Sql, $LANG, $Session;
 		
 		$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
 		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
@@ -127,7 +127,7 @@ class Note
 						else
 							$star_img = 'stars3.png';
 					}			
-					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
+					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ', \'' . $Session->get_token() . '\'" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
 				}
 				if (($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0) //Affichage du nombre de votant.
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
