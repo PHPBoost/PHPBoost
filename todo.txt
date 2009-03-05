@@ -22,8 +22,6 @@ Possibilité d'uploader des images dans images/groups
 Possibilité d'uploader des images dans images/ranks
 Possibilité de définir des champs d'insctiption obligatoires.
 
-- Ajouter les derniers commentaires 
--Bloc note dans l'admin
 ------------------------------------ MODULES -----------------------------------
 
 #################################################################################

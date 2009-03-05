@@ -1,10 +1,10 @@
-<div class="block_content">
+<div class="block_container" style="padding:8px;">
     <a href="{U_INDEX_SITE}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/admin_mini.png" alt="" /> {L_INDEX_SITE}</a> &bull;
 	<a href="{PATH_TO_ROOT}/admin/admin_index.php"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" /> {L_INDEX_ADMIN}</a> &bull;
     <a href="{PATH_TO_ROOT}/admin/admin_index.php?disconnect=true&amp;token={TOKEN}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" /> {L_DISCONNECT}</a>
 </div>
 
-<div class="block_content">
+<div class="block_container">
 	<table class="module_table">
 		<tr>
 			<th colspan="5">
