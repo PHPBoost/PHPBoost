@@ -60,6 +60,10 @@
             &nbsp;<div class="question" style="width:300px;margin:auto;margin-top:100px;">{L_NO_AVAILABLES_UPDATES}</div>
         # END IF #
         <div class="spacer">&nbsp;</div>
-        <div class="center"><a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a></div>
+        <p class="center" style="margin-top:10px;">
+			<a href="{U_CHECK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
+			<br />
+			<a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
+		</p>
     # END IF #
 </div>
