@@ -365,7 +365,7 @@
 			</script>
 			&bull;
 			# ENDIF #
-			<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /> {L_ALERT}</a>
+			<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
 			<br />
 			
 			<span id="forum_track">
