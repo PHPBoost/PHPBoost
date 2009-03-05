@@ -696,5 +696,6 @@ $LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'i
 $LANG['incompatible_php_version'] = 'Impossible de vérifier la présence de mise à jour.
 Veuillez utiliser la version %s ou ultérieure de PHP.<br />Si vous ne pouvez utiliser PHP5,
 veuillez vérifier la présence de ces mises à jour sur notre <a href="http://www.phpboost.com">site officiel</a>.';
+$LANG['check_for_updates_now'] = 'Vérifier la présence de mises à jour';
 
 ?>
