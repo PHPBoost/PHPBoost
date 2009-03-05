@@ -268,7 +268,11 @@ $LANG['last_update'] = 'Last update';
 $LANG['quick_links'] = 'Quick links';
 $LANG['members_managment'] = 'Members managment';
 $LANG['menus_managment'] = 'Menus managment';
-$LANG['modules_managment'] = 'Mdules managment';
+$LANG['modules_managment'] = 'Modules managment';
+$LANG['last_comments'] = 'Last comments';
+$LANG['view_all_comments'] = 'View all comments';
+$LANG['writing_pad'] = 'Writing pad';
+$LANG['writing_pad_explain'] = 'This form is provided to enter your personal notes.';
 
 //Alertes administrateur
 $LANG['administrator_alerts'] = 'Alerts';

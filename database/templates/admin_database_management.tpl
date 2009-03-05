@@ -68,46 +68,46 @@
 						<td class="row3" style="width:140px;">
 							{L_SELECTED_TABLES} <br />(<input type="checkbox" onclick="check_all(this.checked, 'id');" class="valign_middle" /> {L_ALL})
 						</td>
-						<td class="row3">
+						<td class="row2">
 							{L_TABLE_NAME}
 						</td>
-						<td class="row3" style="width:70px;">
+						<td class="row2" style="width:70px;">
 							{L_TABLE_ROWS}
 						</td>
-						<td class="row3" style="width:100px;">
+						<td class="row2" style="width:100px;">
 							{L_TABLE_ENGINE}
 						</td>
-						<td class="row3" style="width:150px;">
+						<td class="row2" style="width:150px;">
 							{L_TABLE_COLLATION}
 						</td>
-						<td class="row3" style="width:70px;">
+						<td class="row2" style="width:70px;">
 							{L_TABLE_DATA}
 						</td>
-						<td class="row3" style="width:70px;">
+						<td class="row2" style="width:70px;">
 							{L_TABLE_FREE}
 						</td>
 					</tr>
 					# START table_list #
 					<tr>			
-						<td class="row1" style="text-align:center;">
+						<td class="row2" style="text-align:center;">
 							<input type="checkbox" id="id{table_list.I}" name="table_{table_list.TABLE_NAME}" />
 						</td>
-						<td class="row1">
+						<td class="row2">
 							<a href="admin_database_tools.php?table={table_list.TABLE_NAME}">{table_list.TABLE_NAME}</a>
 						</td>			
-						<td class="row1" style="text-align:right;">
+						<td class="row2" style="text-align:right;">
 							{table_list.TABLE_ROWS}
 						</td>
-						<td class="row1" style="text-align:center;">
+						<td class="row2" style="text-align:center;">
 							{table_list.TABLE_ENGINE}
 						</td>
-						<td class="row1" style="text-align:center;">
+						<td class="row2" style="text-align:center;">
 							{table_list.TABLE_COLLATION}
 						</td>
-						<td class="row1" style="text-align:right;">
+						<td class="row2" style="text-align:right;">
 							{table_list.TABLE_DATA}
 						</td>
-						<td class="row1" style="text-align:right;">
+						<td class="row2" style="text-align:right;">
 							{table_list.TABLE_FREE}
 						</td>
 					</tr>
@@ -145,13 +145,13 @@
 						<table style="margin:auto;">
 							<tr>
 								<td><img src="./database.png" alt="optimize" /></td>
-								<td><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="repair" /></td>
-								<td><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
+								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/configuration.png" alt="repair" /></td>
+								<td>&nbsp;&nbsp;<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="optimize" class="valign_middle" /></td>
 							</tr>
 							<tr>
 								<td><input type="submit" name="optimize" value="{L_OPTIMIZE}" class="submit" /></td>
-								<td><input type="submit" name="repair" value="{L_REPAIR}" class="submit" /></td>
-								<td><input type="submit" name="backup" value="{L_BACKUP}" class="submit" /></td>
+								<td>&nbsp;&nbsp;<input type="submit" name="repair" value="{L_REPAIR}" class="submit" /></td>
+								<td>&nbsp;&nbsp;<input type="submit" name="backup" value="{L_BACKUP}" class="submit" /></td>
 							</tr>
 						</table>
 					</div>
@@ -396,16 +396,16 @@
 					</tr>
 					# START file #
 					<tr>
-						<td class="row1" style="padding-left:20px;">
+						<td class="row2" style="padding-left:20px;">
 							<a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');"><img src="./database_mini.png" alt="" style="vertical-align:middle" /></a> <a href="admin_database.php?action=restore&amp;file={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return confirm('{L_CONFIRM_RESTORE}');">{file.FILE_NAME}</a>
 						</td>
-						<td class="row1" style="text-align:center;width:120px;">
+						<td class="row2" style="text-align:center;width:120px;">
 							{file.WEIGHT}
 						</td>
-						<td class="row1" style="text-align:center;width:120px;">
+						<td class="row2" style="text-align:center;width:120px;">
 							{file.FILE_DATE}
 						</td>
-						<td class="row1" style="text-align:center;width:120px;">
+						<td class="row2" style="text-align:center;width:120px;">
 							<a href="admin_database.php?action=restore&amp;del={file.FILE_NAME}&amp;token={TOKEN}" onclick="javascript:return Confirm_del()"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="del" /></a>
 						</td>
 					</tr>

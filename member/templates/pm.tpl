@@ -125,13 +125,13 @@
 					<br />
 					<table class="module_table">
 						<tr> 		
-							<td style="width:33%;text-align:center"> 
+							<td style="width:33%;text-align:center" class="row2"> 
 								<img class="valign_middle" src="../templates/{THEME}/images/announce.gif" alt="" /> {L_READ} 
 							</td>
-							<td style="width:34%;text-align:center"> 
+							<td style="width:34%;text-align:center" class="row2">  
 								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.gif" alt="" /> {L_TRACK}		
 							</td>
-							<td style="width:33%;text-align:center"> 
+							<td style="width:33%;text-align:center" class="row2">  
 								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.gif" alt="" /> {L_NOT_READ}		
 							</td>
 						</tr>

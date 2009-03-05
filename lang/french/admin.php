@@ -269,6 +269,10 @@ $LANG['quick_links'] = 'Liens rapides';
 $LANG['members_managment'] = 'Gestion des membres';
 $LANG['menus_managment'] = 'Gestion des menus';
 $LANG['modules_managment'] = 'Gestion des modules';
+$LANG['last_comments'] = 'Derniers commentaires';
+$LANG['view_all_comments'] = 'Voir tous les commentaires';
+$LANG['writing_pad'] = 'Bloc-notes';
+$LANG['writing_pad_explain'] = 'Cet emplacement est réservé pour y saisir vos notes personnelles.';
 
 //Alertes administrateur
 $LANG['administrator_alerts'] = 'Alertes';

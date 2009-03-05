@@ -3,15 +3,11 @@
  Contient les classes globales au site, peuvent être utilisées partout.
 --------------------------------------*/ /* Classes générales
 --------------------------------------*/
-    /* Case générale des tableaux du site*/
+/* Case générale des tableaux du site*/
 .row1,.block_contents1 {
-    background:#F1F4F6;
+    background:#E0E9EF;
 	padding:8px 6px;
 	border-top:1px solid #CCCCCC;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius:0px 0px 5px 5px;
-    border-radius:5px;
 }
 
 .block_contents1 {
@@ -19,12 +15,14 @@
 }
 
 .row2,.block_contents2 {
-    background:#F2F8F8;
+    background:#F9F9F9;
 	padding:8px 6px;
 	border-top:1px solid #CCCCCC;
 	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius:0px 0px 5px 5px;
+	-khtml-border-bottom-right-radius:5px;
+	-khtml-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
     border-radius:5px;
 }
 
@@ -38,8 +36,10 @@
     padding:8px 6px;
 	border-top:1px solid #CCCCCC;
 	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius:0px 0px 5px 5px;
+	-khtml-border-bottom-right-radius:5px;
+	-khtml-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
     border-radius:5px;
 }
 

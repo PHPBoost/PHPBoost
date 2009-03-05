@@ -66,43 +66,43 @@
 					</th>
 				</tr>
 				<tr style="text-align:center;">			
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_FIELD}
 					</td>
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_TYPE}
 					</td>
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_ATTRIBUTE}
 					</td>
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_NULL}
 					</td>
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_DEFAULT}
 					</td>
-					<td class="row3">
+					<td class="row1">
 						{L_TABLE_EXTRA}
 					</td>
 				</tr>
 				# START field #
 				<tr>			
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_NAME}
 					</td>			
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_TYPE}
 					</td>
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_ATTRIBUTE}
 					</td>
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_NULL}
 					</td>
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_DEFAULT}
 					</td>
-					<td class="row1">
+					<td class="row2">
 						{field.FIELD_EXTRA}
 					</td>
 				</tr>
@@ -117,25 +117,25 @@
 						</th>
 					</tr>
 					<tr style="text-align:center;">			
-						<td class="row3">
+						<td class="row1">
 							{L_INDEX_NAME}
 						</td>
-						<td class="row3">
+						<td class="row1">
 							{L_TABLE_TYPE}
 						</td>
-						<td class="row3">
+						<td class="row1">
 							{L_TABLE_FIELD}
 						</td>
 					</tr>
 					# START index #
 					<tr>			
-						<td class="row1">
+						<td class="row2">
 							{index.INDEX_NAME}
 						</td>			
-						<td class="row1">
+						<td class="row2">
 							{index.INDEX_TYPE}
 						</td>
-						<td class="row1">
+						<td class="row2">
 							{index.INDEX_FIELDS}
 						</td>
 					</tr>

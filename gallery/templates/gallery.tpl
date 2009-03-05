@@ -275,28 +275,30 @@
 				</div>
 				
 				# IF C_GALLERY_CATS #
-				<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
-				<div class="row1" style="margin-bottom:25px;border-top:none;">
-					<table style="width:100%">
-						# START cat_list #
-						{cat_list.OPEN_TR}								
-						<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
-							<a href="gallery{cat_list.U_CAT}">{cat_list.IMG}</a>
-							<br />
-							<a href="gallery{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
-							<br />
-							<span class="text_small">{cat_list.DESC}</span> 
-							<br />
-							{cat_list.LOCK} <span class="text_small">{cat_list.L_NBR_PICS}</span>
-						</td>	
-						{cat_list.CLOSE_TR}
-						# END cat_list #
-					
-						# START end_table_cats #
-							{end_table_cats.TD_END}
-						{end_table_cats.TR_END}
-						# END end_table_cats #
-					</table>
+				<div class="block_content" style="padding:0px;">
+					<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
+					<div class="row1" style="margin-bottom:25px;border-top:none;">
+						<table style="width:100%">
+							# START cat_list #
+							{cat_list.OPEN_TR}								
+							<td style="vertical-align:bottom;text-align:center;width:{COLUMN_WIDTH_CATS}%;margin:15px 0px;">
+								<a href="gallery{cat_list.U_CAT}">{cat_list.IMG}</a>
+								<br />
+								<a href="gallery{cat_list.U_CAT}">{cat_list.CAT}</a> {cat_list.EDIT}
+								<br />
+								<span class="text_small">{cat_list.DESC}</span> 
+								<br />
+								{cat_list.LOCK} <span class="text_small">{cat_list.L_NBR_PICS}</span>
+							</td>	
+							{cat_list.CLOSE_TR}
+							# END cat_list #
+						
+							# START end_table_cats #
+								{end_table_cats.TD_END}
+							{end_table_cats.TR_END}
+							# END end_table_cats #
+						</table>
+					</div>
 				</div>
 				# ENDIF #
 				
