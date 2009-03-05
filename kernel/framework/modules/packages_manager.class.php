@@ -156,23 +156,18 @@ class PackagesManager
             import('core/menu_service');
             MenuService::delete_mini_module($module_name);
             	
-			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			$dir_db_module = get_ulang();
 			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
-			if (!is_dir($dir . '/' . $dir_db_module))
-			{
-				$dh = @opendir($dir);
-				while (!is_bool($dir_db = @readdir($dh)))
-				{
-					if (strpos($dir_db, '.') === false)
-					{
-						$dir_db_module = $dir_db;
-						break;
-					}
-				}
-				@closedir($dh);
-			}
 
+			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
+			import('io/filesystem/folder');
+			$folder_path = new Folder($dir . '/' . $dir_db_module);
+			foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $dir)
+			{	
+				$dir_db_module = $dir->get_name();
+				break;
+			}
+		
 			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql')) //Parsage du fichier sql de désinstallation.
 				$Sql->parse(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
 			

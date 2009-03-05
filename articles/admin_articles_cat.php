@@ -699,7 +699,7 @@ elseif (!empty($id)) //Edition des catégories.
 	$Template->set_filenames(array(
 		'admin_articles_cat_edit'=> 'articles/admin_articles_cat_edit.tpl'
 	));
-			
+	
 	$articles_info = $Sql->query_array(PREFIX . "articles_cats", "id_left", "id_right", "level", "name", "contents", "icon", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (!isset($CAT_ARTICLES[$id]))
@@ -721,24 +721,15 @@ elseif (!empty($id)) //Edition des catégories.
 
 	//Images disponibles
 	$img_direct_path = (strpos($articles_info['icon'], '/') !== false);
-	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
-		}
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-		{
-			$selected = $img_path == $articles_info['icon'] ? ' selected="selected"' : '';
-			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
-		}
+		$image = $images->get_name();
+		$selected = $image == $articles_info['icon'] ? ' selected="selected"' : '';
+		$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 	}
 	
 	//Gestion erreur.

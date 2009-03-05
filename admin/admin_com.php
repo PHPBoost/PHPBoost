@@ -73,34 +73,27 @@ $Template->assign_vars(array(
 ));
 
 //Modules disponibles
-$root = '../';
-$i = 0;
-if (is_dir($root)) //Si le dossier existe
+import('io/filesystem/folder');
+$folder_path = new Folder('../');
+foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $modules)
 {
-	$dh = @opendir($root);
-	while (!is_bool($dir = readdir($dh)))
-	{	
-		//Si c'est un repertoire, on affiche.
-		if (strpos($dir, '.') === false)
+	$modulef = $modules->get_name();
+	//Désormais on vérifie que le fichier de configuration est présent.
+	if (@file_exists('../' . $modulef . '/lang/' . get_ulang() . '/config.ini'))
+	{
+		//Récupération des infos de config.
+		$info_module = load_ini_file('../' . $modulef . '/lang/', get_ulang());
+		if (isset($info_module['info']) && !empty($info_module['com']))
 		{
-			//Désormais on vérifie que le fichier de configuration est présent.
-			if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
-			{
-				//Récupération des infos de config.
-				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-				if (isset($info_module['info']) && !empty($info_module['com']))
-				{
-					$Template->assign_block_vars('modules_com', array(
-						'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
-						'U_MODULES' => $info_module['com']
-					));
-				}
-			}
+			$Template->assign_block_vars('modules_com', array(
+				'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
+				'U_MODULES' => $info_module['com']
+			));
 		}
 	}
 }
 
-//Gestion des rangs.	
+//Gestion des rangs.
 $Cache->load('ranks');
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';

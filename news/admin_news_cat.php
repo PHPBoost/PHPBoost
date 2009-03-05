@@ -93,23 +93,17 @@ else
 	));
 	
 	//Images disponibles
-	$rep = './';
-	if (is_dir($rep)) //Si le dossier existe
-	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = @readdir($dh)))
-		{	
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		@closedir($dh); //On ferme le dossier
-	}
-	
+	import('io/filesystem/folder');
+	$img_array = array();
 	$image_list = '<option value="">--</option>';
-	foreach ($img_array as $key => $img_path)
-		$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
-	
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
+	{
+		$image = $images->get_name();
+		$img_array[] = $image;
+		$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+	}
+
 	$Template->assign_vars(array(
 		'THEME' => get_utheme(),	
 		'IMG_LIST' => $image_list,

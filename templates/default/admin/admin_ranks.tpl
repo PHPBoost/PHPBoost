@@ -72,7 +72,7 @@
 									{rank.RANK_OPTIONS}
 								</select>
 								<br />
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" />
+								# IF rank.IMG_RANK # <img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/{rank.IMG_RANK}" name="icon{rank.ID}" alt="" /> # ENDIF #
 							</td>
 							<td class="row2" style="text-align:center;">
 								{rank.DELETE}

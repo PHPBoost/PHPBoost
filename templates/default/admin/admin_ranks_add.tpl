@@ -18,7 +18,7 @@
 				if( document.images && url != '' )
 				{	
 					document.images[id].style.display = 'inline';
-					document.images[id].src = "{PATH_TO_ROOT}/templates/{THEME}/images/ranks/" + url;
+					document.images[id].src = url;
 				}
 				else
 					document.images[id].style.display = 'none';

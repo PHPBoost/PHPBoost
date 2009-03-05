@@ -217,70 +217,48 @@ else
 		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	 
 	
-	//On recupère les dossier des thèmes contenu dans le dossier templates	
+	//On listes les thèmes.
+	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$z = 0;
-	$rep = '../templates/';
-	if (is_dir($rep)) //Si le dossier existe
+	$result = $Sql->query_while("SELECT id, theme, activ, secure 
+	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		$dir_array = array();
-		$dh = @opendir( $rep);
-		while (!is_bool($dir = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false)
-				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
-		}	
-		closedir($dh); //On ferme le dossier		
-
-		$themes_bdd = array();
-		$result = $Sql->query_while("SELECT id, theme, activ, secure 
-		FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if (array_search($row['theme'], $dir_array) !== false)
-				$themes_bdd[] = array('id' => $row['id'], 'name' => $row['theme'], 'activ' => $row['activ'], 'secure' => $row['secure']); 		}
-		$Sql->query_close($result);
+		//On selectionne le theme suivant les valeurs du tableau. 
+		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
 		
-		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach ($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
+		$options = '';
+		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 		{
-			//On selectionne le theme suivant les valeurs du tableau. 
-			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', get_ulang());
-			
-			$options = '';
-			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-			{
-				$selected = ($i == $theme['secure']) ? 'selected="selected"' : '';
-				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-			}	
-			
-			$default_theme = ($theme['name'] == $CONFIG['theme']);
-			$Template->assign_block_vars('list', array(
-				'C_THEME_DEFAULT' => $default_theme ? true : false,
-				'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
-				'IDTHEME' =>  $theme['id'],		
-				'THEME' =>  $info_theme['name'],				
-				'ICON' => $theme['name'],
-				'VERSION' => $info_theme['version'],
-				'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-				'DESC' => $info_theme['info'],
-				'COMPAT' => $info_theme['compatibility'],
-				'HTML_VERSION' => $info_theme['html_version'],
-				'CSS_VERSION' => $info_theme['css_version'],
-				'MAIN_COLOR' => $info_theme['main_color'],
-				'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
-				'WIDTH' => $info_theme['width'],
-				'OPTIONS' => $options,
-				'THEME_ACTIV' => ($theme['activ'] == 1) ? 'checked="checked"' : '',
-				'THEME_UNACTIV' => ($theme['activ'] == 0) ? 'checked="checked"' : ''
-			));
-			$z++;
-		}
-	}	
+			$selected = ($i == $row['secure']) ? 'selected="selected"' : '';
+			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+		}	
+		
+		$default_theme = ($row['theme'] == $CONFIG['theme']);
+		$Template->assign_block_vars('list', array(
+			'C_THEME_DEFAULT' => $default_theme ? true : false,
+			'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
+			'IDTHEME' =>  $row['id'],		
+			'THEME' =>  $info_theme['name'],				
+			'ICON' => $row['theme'],
+			'VERSION' => $info_theme['version'],
+			'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
+			'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'DESC' => $info_theme['info'],
+			'COMPAT' => $info_theme['compatibility'],
+			'HTML_VERSION' => $info_theme['html_version'],
+			'CSS_VERSION' => $info_theme['css_version'],
+			'MAIN_COLOR' => $info_theme['main_color'],
+			'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
+			'WIDTH' => $info_theme['width'],
+			'OPTIONS' => $options,
+			'THEME_ACTIV' => ($row['activ'] == 1) ? 'checked="checked"' : '',
+			'THEME_UNACTIV' => ($row['activ'] == 0) ? 'checked="checked"' : ''
+		));
+		$z++;
+	}
+	$Sql->query_close($result);
 	
 	if ($z != 0)
 		$Template->assign_vars(array(		

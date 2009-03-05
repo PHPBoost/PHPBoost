@@ -172,11 +172,13 @@ else
 	$i = 0;
 	if (is_dir($root)) //Si le dossier existe
 	{
-		$dh = @opendir($root);
-		while (!is_bool($dir = readdir($dh)))
+		import('io/filesystem/folder');
+		$dir_array = array();
+		$lang_folder_path = new Folder($root);
+		foreach ($lang_folder_path->get_folders() as $odir)
 		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false && !in_array($dir, $installed_modules))
+			$dir = $odir->get_name();
+			if (!in_array($dir, $installed_modules))
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
 				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
@@ -208,7 +210,6 @@ else
 				}				
 			}
 		}	
-		closedir($dh); //On ferme le dossier
 	}
 	
 	if ($i == 0)
