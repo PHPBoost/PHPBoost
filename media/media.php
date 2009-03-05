@@ -251,7 +251,7 @@ elseif ($id_media > 0)
 		'COUNT' => $media['counter'],
 		'THEME' => $CONFIG['theme'],
 		'KERNEL_NOTATION' => $Note->display_form(),
-		'HITS' => (int)$media['counter'] > 1 ? sprintf($MEDIA_LANG['n_times'], (int)$media['counter']) : sprintf($MEDIA_LANG['n_time'], (int)$media['counter']),
+		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$media['nbrnote'] > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$media['nbrnote']) : sprintf($MEDIA_LANG['num_note'], (int)$media['nbrnote']),
 		'LANG' => $CONFIG['lang'],
 		'U_COM' => com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),

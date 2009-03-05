@@ -136,7 +136,9 @@ else
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
 			'CAT' => !empty($MEDIA_CATS[$row['idcat']]) ? $MEDIA_CATS[$row['idcat']]['name'] : $LANG['unknow'],
 			'U_CAT' => url('media.php?cat=' . $row['idcat']),
-			'COLOR' => ($row['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0 ? '#FFEE99' : (($row['infos'] & MEDIA_STATUS_APROBED) !== 0 ? '#CCFFCC' : '#FFCCCC')
+			'COLOR' => ($row['infos'] & MEDIA_STATUS_UNVISIBLE) !== 0 ? '#FFEE99' : (($row['infos'] & MEDIA_STATUS_APROBED) !== 0 ? '#CCFFCC' : '#FFCCCC'),
+			'SHOW' => ($row['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' disabled="disabled"' : '',
+			'HIDE' => ($row['infos'] & MEDIA_STATUS_APROBED) === 0 ? ' disabled="disabled"' : '',
 		));
 	}
 
