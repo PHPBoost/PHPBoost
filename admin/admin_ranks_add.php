@@ -51,11 +51,11 @@ if (!empty($_POST['add']))
 	else
 		redirect(HOST . DIR . '/admin/admin_ranks_add.php?error=incomplete#errorh');
 }
-elseif (!empty($_FILES['upload_ranks']['name'])) //Upload et décompression de l'archive Zip/Tar
+elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '/images/ranks/';
+	$dir = '../images/ranks/';
 	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	

@@ -113,6 +113,29 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membr
 	$Group->remove_member($user_id, $idgroup);
 	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
+elseif (!empty($_FILES['upload_groups']['name'])) //Upload
+{
+	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	@clearstatcache();
+	$dir = '../images/group/';
+	if (!is_writable($dir))
+		$is_writable = (@chmod($dir, 0777)) ? true : false;
+	
+	@clearstatcache();
+	$error = '';
+	if (is_writable($dir)) //Dossier en écriture, upload possible
+	{
+		import('io/upload');
+		$Upload = new Upload($dir);
+		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+			$error = $Upload->error;
+	}
+	else
+		$error = 'e_upload_failed_unwritable';
+	
+	$error = !empty($error) ? '&error=' . $error : '';
+	redirect(HOST . SCRIPT . '?add=1' . $error);	
+}
 elseif (!empty($idgroup)) //Interface d'édition du groupe.
 {
 	$Template->set_filenames(array(
@@ -263,6 +286,9 @@ elseif ($add) //Interface d'ajout du groupe.
 		'L_GROUPS_MANAGEMENT' => $LANG['groups_management'],
 		'L_ADD_GROUPS' => $LANG['groups_add'],
 		'L_REQUIRE' => $LANG['require'],
+		'L_UPLOAD_GROUPS' => $LANG['upload_group'],
+		'L_UPLOAD_FORMAT' => $LANG['upload_rank_format'],
+		'L_UPLOAD' => $LANG['upload'],
 		'L_NAME' => $LANG['name'],
 		'L_IMG_ASSOC_GROUP' => $LANG['img_assoc_group'],
 		'L_IMG_ASSOC_GROUP_EXPLAIN' => $LANG['img_assoc_group_explain'],

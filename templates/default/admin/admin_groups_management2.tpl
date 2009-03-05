@@ -240,6 +240,24 @@
 			
 			
 			# IF C_ADD_GROUP #
+			<form action="admin_groups.php?add=1" method="post" action="" enctype="multipart/form-data" class="fieldset_content">				
+				<fieldset>
+				<legend>{L_UPLOAD_GROUPS}</legend>						
+					<dl>
+						<dt><label for="upload_groups">{L_UPLOAD_GROUPS}</label><br />{L_UPLOAD_FORMAT}</dt>
+						<dd><label>
+							<input type="hidden" name="max_file_size" value="2000000" />
+							<input type="file" id="upload_groups" name="upload_groups" size="30" class="file" />
+						</label></dd>
+					</dl>
+				</fieldset>
+				<fieldset class="fieldset_submit">
+					<legend>{L_UPLOAD}</legend>
+					<input type="submit" value="{L_UPLOAD}" class="submit" />
+				</fieldset>
+			</form>
+			
+			
 			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
