@@ -180,61 +180,62 @@
 			</div>
 			<div class="module_contents">
 				# IF A_DESC #
-				<p class="text_justify" style="margin-top:10px 5px 20px">
+				<p class="text_justify" style="margin-top:15px">
 					{CONTENTS}
 				</p>
 				# ENDIF #
-				<div style="margin: auto; text-align: center;">
+				<p class="text_center" style="margin-top:25px;margin-bottom:25px;">
 					# INCLUDE media_format #
-				</div>
+				</p>
 				# IF C_DISPLAY #
-					<table style="width:430px;margin:0 auto;" class="module_table text_small">
-						<tr>
-							<th colspan="2">
-								{L_MEDIA_INFOS}
-							</th>
-						</tr>
-						# IF A_DATE #
-						<tr>
-							<td class="row1" style="padding:3px">
-								{L_DATE}
-							</td>
-							<td class="row2" style="padding:3px">
-								{DATE}
-							</td>
-						</tr>
-						# ENDIF #
-						# IF A_USER #
-						<tr>
-							<td class="row1" style="padding:3px">
-								{L_BY}
-							</td>
-							<td class="row2" style="padding:3px">
-								{BY}
-							</td>
-						</tr>
-						# ENDIF #
-						# IF A_COUNTER #
-						<tr>
-							<td class="row1" style="padding:3px">
-								{L_VIEWED}
-							</td>
-							<td class="row2" style="padding:3px">
-								{HITS}
-							</td>
-						</tr>
-						# ENDIF #
-						# IF A_NOTE #
-						<tr>
-							<td class="row1" style="padding:3px">
-								{L_NOTE} <em><span id="nbrnote{ID_MEDIA}">({NUM_NOTES})</span></em>
-							</td>
-							<td class="row2" style="padding:1px">
-								{KERNEL_NOTATION}
-							</td>
-						</tr>
-						# ENDIF #
-					</table>
+				<table style="width:430px;float:right;margin-top:40px;" class="module_table text_small">
+					<tr>
+						<th colspan="2">
+							{L_MEDIA_INFOS}
+						</th>
+					</tr>
+					# IF A_DATE #
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_DATE}
+						</td>
+						<td class="row2" style="padding:3px">
+							{DATE}
+						</td>
+					</tr>
+					# ENDIF #
+					# IF A_USER #
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_BY}
+						</td>
+						<td class="row2" style="padding:3px">
+							{BY}
+						</td>
+					</tr>
+					# ENDIF #
+					# IF A_COUNTER #
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_VIEWED}
+						</td>
+						<td class="row2" style="padding:3px">
+							{HITS}
+						</td>
+					</tr>
+					# ENDIF #
+					# IF A_NOTE #
+					<tr>
+						<td class="row1" style="padding:3px">
+							{L_NOTE} <em><span id="nbrnote{ID_MEDIA}">({NUM_NOTES})</span></em>
+						</td>
+						<td class="row2" style="padding:1px">
+							{KERNEL_NOTATION}
+						</td>
+					</tr>
+					# ENDIF #
+				</table>
+				<div class="spacer"></div>
 				# ENDIF #
 			</div>
 			<div class="module_bottom_l"></div>
