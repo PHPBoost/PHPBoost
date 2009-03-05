@@ -76,8 +76,8 @@
 					<div class="spacer">&nbsp;</div>
 					
 					# START file #
-						<div class="block_position" style="margin-bottom:20px;">
-							<div class="row1 block_contents">
+						<div class="block_container" style="margin-bottom:20px;">
+							<div class="block_contents">
 								# IF file.C_IMG #
 									<div class="float_right">
 										<a href="{file.U_DOWNLOAD_LINK}">

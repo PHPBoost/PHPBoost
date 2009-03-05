@@ -275,9 +275,9 @@
 				</div>
 				
 				# IF C_GALLERY_CATS #
-				<div class="block_content" style="padding:0px;">
+				<div class="block_container">
 					<div class="block_top">{L_CATEGORIES} {EDIT_CAT}</div>
-					<div class="row1" style="margin-bottom:25px;border-top:none;">
+					<div class="block_contents">
 						<table style="width:100%">
 							# START cat_list #
 							{cat_list.OPEN_TR}								
