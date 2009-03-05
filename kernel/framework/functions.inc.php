@@ -201,7 +201,7 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
 }
 
 /**
- * @desc Converts a string to a numerie value.
+ * @desc Converts a string to a numeric value.
  * @param string $var The value you want to convert.
  * @param string $type 'int' if you want to convert to an integer value, 'float' if you want a floating value.
  * @return mixed The integer or floating value (according to the type you chose).

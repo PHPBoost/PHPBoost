@@ -74,6 +74,7 @@ div#admin_quick_menu {
     border:1px #cccccc solid;
     border-spacing:1px;
     padding:10px;
+    padding-bottom:20px;
     background:#F7F8F5 url(images/contentbg.png) repeat-x;
     -moz-border-radius:12px;
     -khtml-border-radius:12px;
@@ -98,14 +99,15 @@ div#admin_quick_menu li.title_menu {
     text-transform:uppercase;
     font-weight:bold;
     font-size:0.75em;
-    background:#3286C6;
-    border:1px solid #18415B;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
     color:#FFFFFF;
     padding:3px 0px;
-    -moz-border-radius:5px;
-    -khtml-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+	margin-bottom:20px;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
 }
 
 div#admin_quick_menu li a.quick_link {
@@ -114,8 +116,8 @@ div#admin_quick_menu li a.quick_link {
     font-weight:bold;
     font-size:0.75em;
     color:#FFFFFF;
-    background:#56A7E6;
-    border:1px solid #18415B;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
     padding:3px 8px;
     text-decoration:none;
     line-height:2.2em;
