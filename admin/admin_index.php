@@ -58,7 +58,7 @@ FROM " . DB_TABLE_COM . " c
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
-" . $Sql->limit(0, 5), __LINE__, __FILE__);
+" . $Sql->limit(0, 8), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	$row['user_id'] = (int)$row['user_id'];

@@ -62,18 +62,18 @@
 					</tr>
 					<tr> 
 						<td class="row2">
-							<div style="height:130px;overflow:auto;">
+							<div style="height:140px;overflow:auto;">
 								# START com_list #	
-								<div class="block_contents">
+								<div style="margin-bottom:10px;">
 									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
 									<p class="text_small">{com_list.CONTENTS}</p>
 								</div>	
 								# END com_list #
 								# IF C_NO_COM #
-									<p style="text-align:center;margin:0;">{L_NO_COMMENT}</p>
+								<p style="text-align:center;margin:0px;margin-top:50px;"><em>{L_NO_COMMENT}</em></p>
 								# ENDIF #
 							</div>
-							<p style="text-align:center;margin:0;"><a class="small_link" href="admin_com.php">{L_VIEW_ALL_COMMENTS}</a></p>
+							<p style="text-align:center;margin:0;margin-top:9px;"><a class="small_link" href="admin_com.php">{L_VIEW_ALL_COMMENTS}</a></p>
 						</td>
 					</tr>
 				</table>
@@ -103,7 +103,8 @@
 			</div>
 			
 			<div style="clear:right;"></div>
-			<table class="module_table" style="margin-top:30px;margin-bottom:15px;">
+			
+			<table class="module_table" style="margin-top:25px;margin-bottom:15px;">
 				<tr> 
 					<th colspan="4">
 						{L_USER_ONLINE}
