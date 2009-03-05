@@ -151,7 +151,7 @@ else
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
 		'AUTH_EXTENSION' => 'JPEG, GIF, PNG',
 		'CATEGORIES' => $cat_list,
-		'IMG_HEIGHT_MAX' => $CONFIG_GALLERY['height'],
+		'IMG_HEIGHT_MAX' => $CONFIG_GALLERY['height']+10,
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'], 
@@ -183,8 +183,8 @@ else
 		import('io/filesystem/folder');
 
 		$array_pics = array();
-		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
-		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
+		$image_folder_path = new Folder('./pics/');
+		foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
 			$array_pics[] = $image->get_name();
 		
 		if (is_array($array_pics))
