@@ -777,7 +777,9 @@ elseif ($step == 7)
 	
 	import('core/cache');
 	$Cache = new Cache;
-	$Cache->load('config');
+    $Cache->load('config');
+    $Cache->load('modules');
+    $Cache->load('themes');
 	
 	$template->assign_vars(array(
 		'C_END' => true,
@@ -787,6 +789,10 @@ elseif ($step == 7)
 		'U_ADMIN_INDEX' => '../admin/admin_index.php',
 		'U_INDEX' => '..' . $CONFIG['start_page']
 	));
+	
+	import('core/updates');
+	new Updates();
+	$Sql->close();
 }
 
 $steps = array(

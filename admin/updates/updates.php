@@ -32,11 +32,19 @@ define('TITLE', $LANG['administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 import('core/updates');
-
+$check_updates = retrieve(GET, 'check', false);
 $update_type = retrieve(GET, 'type', '');
-if ($update_type != '' && $update_type != 'kernel' && $update_type != 'module' && $update_type != 'theme')
+if (!in_array($update_type, array('', 'kernel', 'module', 'theme')))
+{    
     $update_type = '';
+}
 
+if ($check_updates === true)
+{
+	$Session->csrf_get_protect();
+	new Updates();
+	redirect('updates.php' . (!empty($update_type) ? '?type=' . $update_type : ''));
+}
 $tpl = new Template('admin/updates/updates.tpl');
 $updates_availables = 0;
 
@@ -54,9 +62,13 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
         if ($update_type == '' || $update->get_type() == $update_type)
         {
             if ($update->check_compatibility())
+            {
                 $updates[] = $update;
+            }
             else
+            {
                 AdministratorAlertService::delete_alert($update_alert);
+            }
         }
     }
 
@@ -133,7 +145,9 @@ $tpl->assign_vars(array(
     'L_KERNEL' => $LANG['kernel'],
     'L_MODULES' => $LANG['modules'],
     'L_THEMES' => $LANG['themes'],
-    'C_UPDATES' => $updates_availables
+    'C_UPDATES' => $updates_availables,
+    'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . $Session->get_token(),
+    'L_CHECK_FOR_UPDATES_NOW' => $LANG['check_for_updates_now']
 ));
 
 $tpl->parse();
