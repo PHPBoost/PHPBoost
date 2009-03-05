@@ -36,6 +36,8 @@ load_module_lang('media');
 
 require_once('media_constant.php');
 
+define('FEED_URL', '/syndication.php?m=media');
+
 function bread_crumb($id)
 {
 	global $Bread_crumb, $MEDIA_CATS;

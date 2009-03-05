@@ -37,10 +37,10 @@
 							<a href="{files.U_CAT}">{files.CAT}</a>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="visible" />
+							<input type="radio" name="action[{files.ID}]" value="visible"{files.SHOW} />
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="unvisible" />
+							<input type="radio" name="action[{files.ID}]" value="unvisible"{files.HIDE} />
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
 							<input type="radio" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');" />
@@ -52,7 +52,7 @@
 					# END files #
 					# ENDIF #
 				</table>
-				<table class="module_table">
+				<table class="module_table" style="margin-top: 5px;">
 					<tr>
 						<th colspan="3" style="text-align:center;">{L_LEGEND}</th>
 					</tr>
@@ -78,7 +78,7 @@
 			</fieldset>
 		</form>
 		# IF C_ADMIN #
-		<div style="text-align:center; margin:30px 20px;" class="row1">
+		<div style="text-align:center; margin:20px 20px;" class="row1">
 			<a href="moderation_media.php?recount=1">
 				<img src="../templates/{THEME}/images/admin/refresh.png" alt="{L_RECOUNT_MEDIA}" />
 			</a>
