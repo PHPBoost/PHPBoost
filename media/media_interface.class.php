@@ -73,7 +73,7 @@ class MediaInterface extends ModuleInterface
 				'num_media' => (int)$row['num_media'],
 				'mime_type' => (int)$row['mime_type'],
 				'active' => (int)$row['active'],
-				'auth' => (array)sunserialize($row['auth'])
+				'auth' => (array)unserialize($row['auth'])
 			), true) . ';' . "\n\n";
 		}
 
