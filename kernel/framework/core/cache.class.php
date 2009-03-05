@@ -123,22 +123,6 @@ class Cache
                 }
             }
         }
-
-        if ($file == 'config')
-        {   // Intègre le numéro de build
-            import('io/filesystem/file');
-            $file = new File(PATH_TO_ROOT . '/.build');
-            if (!empty($CONFIG['_version']))
-            {
-                $CONFIG['version'] = $CONFIG['_version'] . $file->get_contents();
-            }
-            else
-            {
-                $CONFIG['_version'] = $CONFIG['version'];
-                $CONFIG['version'] = $CONFIG['version'] . $file->get_contents();
-            }
-            $file->close();
-        }
     }
 
     /**

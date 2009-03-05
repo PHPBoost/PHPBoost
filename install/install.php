@@ -26,7 +26,7 @@
 ###################################################*/
 
 //A personnaliser
-define('UPDATE_VERSION', '3.0a');
+define('UPDATE_VERSION', '3.0b');
 define('DEFAULT_LANGUAGE', 'french');
 define('STEPS_NUMBER', 7);
 
