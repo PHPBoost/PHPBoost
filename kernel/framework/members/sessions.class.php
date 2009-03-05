@@ -390,7 +390,7 @@ class Sessions
 				$query_string = preg_replace('`&?sid=(.*)&suid=(.*)`', '', QUERY_STRING);
 				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));
 			}
-			$session_data = unserialize($_COOKIE[$CONFIG['site_cookie'].'_data']);
+			$session_data = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_data', '', TSTRING_UNCHANGE));
 			
 			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
