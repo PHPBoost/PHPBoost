@@ -23,6 +23,7 @@ div.block_contents {
     width:auto;
     padding:10px;
 	border:none;
+	text-align:justify;
 } 
 /* Entête de conteneur et des tableaux */
 div.block_top, th {
