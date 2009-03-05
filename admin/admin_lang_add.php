@@ -144,54 +144,46 @@ else
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier templates.
-	$z = 0;
-	$rep = '../lang/';
-	if (is_dir($rep)) //Si le dossier existe
-	{
-		$array_file = array();
-		$dh = @opendir($rep);
-		while (!is_bool($dir = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false)
-				$array_file[] = $dir; //On crée un array, avec les different dossiers.
-		}	
-		closedir($dh); //On ferme le dossier
+	import('io/filesystem/folder');
+	$dir_array = array();
+	$lang_folder_path = new Folder('../lang/');
+	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+		$dir_array[] = $lang->get_name();
 	
-		$result = $Sql->query_while("SELECT lang 
-		FROM " . PREFIX . "lang", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+	$result = $Sql->query_while("SELECT lang 
+	FROM " . PREFIX . "lang", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		//On recherche les clées correspondante à celles trouvée dans la bdd.
+		$key = array_search($row['lang'], $dir_array);
+		if ($key !== false)
+			unset($dir_array[$key]); //On supprime ces clées du tableau.
+	}
+	$Sql->query_close($result);
+	
+	$z = 0;
+	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	foreach ($dir_array as $lang_array => $value_array) //On effectue la recherche dans le tableau.
+	{
+		$options = '';
+		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			$key = array_search($row['lang'], $array_file);
-			if ($key !== false)
-				unset($array_file[$key]); //On supprime ces clées du tableau.
+			$selected = ($i == -1) ? 'selected="selected"' : '';
+			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
-		$Sql->query_close($result);
 		
-		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach ($array_file as $lang_array => $value_array) //On effectue la recherche dans le tableau.
-		{
-			$options = '';
-			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-			{
-				$selected = ($i == -1) ? 'selected="selected"' : '';
-				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-			}
-			
-			$info_lang = load_ini_file('../lang/', $value_array);
-			$Template->assign_block_vars('list', array(
-				'IDLANG' =>  $value_array,		
-				'LANG' =>  $info_lang['name'],	
-				'IDENTIFIER' =>  $info_lang['identifier'],
-				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-				'COMPAT' => $info_lang['compatibility'],
-				'OPTIONS' => $options
-			));
-			$z++;
-		}
-	}	
+		$info_lang = load_ini_file('../lang/', $value_array);
+		$Template->assign_block_vars('list', array(
+			'IDLANG' =>  $value_array,		
+			'LANG' =>  $info_lang['name'],	
+			'IDENTIFIER' =>  $info_lang['identifier'],
+			'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
+			'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'COMPAT' => $info_lang['compatibility'],
+			'OPTIONS' => $options
+		));
+		$z++;
+	}
 
 	if ($z != 0)
 		$Template->assign_vars(array(		

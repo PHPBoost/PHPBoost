@@ -190,24 +190,15 @@ elseif (!empty($_POST['previs']))
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
-	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{	
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-		{	
-			$selected = $img_path == $icon ? ' selected="selected"' : '';
-			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
-		}
+		$image = $images->get_name();
+		$selected = $image == $icon ? ' selected="selected"' : '';
+		$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 	}
 	
 	$Template->assign_vars(array(
@@ -288,21 +279,14 @@ else
 	$Sql->query_close($result);
 	
 	//Images disponibles
-	$rep = './';
 	$image_list = '<option value="" selected="selected">--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{	
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
+		$image = $images->get_name();
+		$image_list .= '<option value="' . $image . '">' . $image . '</option>';
 	}
 	
 	$Template->assign_vars(array(

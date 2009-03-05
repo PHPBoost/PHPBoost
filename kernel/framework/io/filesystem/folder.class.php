@@ -116,7 +116,7 @@ class Folder extends FileSystemElement
             $ret = array();
             foreach ($this->files as $file)
             {
-                if (preg_match($regex, $file->path))
+                if (preg_match($regex, $file->get_name()))
                 {
                     $ret[] = $file;
                 }
@@ -133,7 +133,6 @@ class Folder extends FileSystemElement
     function get_folders($regex = '')
     {
         parent::get();
-
         if (empty($regex))
         {
             $ret = array();
@@ -148,7 +147,7 @@ class Folder extends FileSystemElement
             $ret = array();
             foreach ($this->folders as $folder)
             {
-                if (preg_match($regex, $folder->path))
+                if (preg_match($regex, $folder->get_name()))
                 {
                     $ret[] = $folder;
                 }

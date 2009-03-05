@@ -571,23 +571,11 @@ class Gallery
 	//Vidange des miniatures du FTP et de la bdd => régénérée plus tard lors des affichages..
 	function Clear_cache()
 	{
-		$dir = 'pics/thumbnails/';
-		if (is_dir($dir)) //Si le dossier existe
-		{		
-			$j = 0;
-			$array_pics = array();
-			$dh = @opendir($dir);
-			while (!is_bool($pics = readdir($dh)))
-			{	
-				if ($j > 1 && $pics != 'index.php' && $pics != 'Thumbs.db')
-					$array_pics[] = $pics; //On crée un array, avec les different fichiers.
-				$j++;
-			}	
-			@closedir($dh); //On ferme le dossier
-			
-			foreach ($array_pics as  $key => $pics)
-				$this->delete_file($dir . $pics);
-		}
+		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
+		import('io/filesystem/folder');
+		$thumb_folder_path = new Folder('./pics/thumbnails/');
+		foreach ($thumb_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $thumbs)
+			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
 	
 	## Private Methods ##

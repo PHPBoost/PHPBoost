@@ -156,27 +156,20 @@ elseif ($new_cat XOR $id_edit > 0)
 	));
 	
 	//Images disponibles
-	$rep = './';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$img_str = '<option value="">--</option>';
+	$in_dir_icon = false;
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_str = '<option value="">--</option>';
-		$dh = @opendir( $rep);
-		$in_dir_icon = false;
-		while (!is_bool($image_name = @readdir($dh)))
+		$image = $images->get_name();
+		if ($id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image)
 		{
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $image_name))
-			{
-				if ($id_edit > 0 && $DOWNLOAD_CATS[$id_edit]['icon'] == $image_name)
-				{
-					$img_str .= '<option selected="selected" value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image sélectionnée
-					$in_dir_icon = true;
-				}
-				else
-					$img_str .= '<option value="' . $image_name . '">' . $image_name . '</option>'; //On ajoute l'image non sélectionnée
-				
-			}
+			$img_str .= '<option selected="selected" value="' . $image . '">' . $image . '</option>'; //On ajoute l'image sélectionnée
+			$in_dir_icon = true;
 		}
-		@closedir($dh); //On ferme le dossier
+		else
+			$img_str .= '<option value="' . $image . '">' . $image . '</option>'; //On ajoute l'image non sélectionnée
 	}
 	
 	$Template->assign_vars(array(

@@ -36,6 +36,7 @@ if (!empty($_POST['add']))
 	$name = retrieve(POST, 'name', '');
 	$msg = retrieve(POST, 'msg', 0);    
 	$icon = retrieve(POST, 'icon', ''); 
+	$icon = retrieve(POST, 'icon', ''); 
 	
 	if (!empty($name) && $msg >= 0)
 	{	
@@ -55,7 +56,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
 	@clearstatcache();
-	$dir = '../images/ranks/';
+	$dir = PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/';
 	if (!is_writable($dir))
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
 	
@@ -91,21 +92,13 @@ else //Sinon on rempli le formulaire
 	//On recupère les images des groupes
 	$rank_options = '<option value="">--</option>';
 	
-	$rep = '../templates/' . get_utheme()  . '/images/ranks';
-	$j = 0;
-	$array_files = array();
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
-		$array_file = array();
-		$dh = @opendir($rep);
-		while (!is_bool($file = readdir($dh)))
-		{	
-			if ($j > 1 && $file != 'index.php' && $file != 'Thumbs.db')
-				$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
-			$j++;
-		}	
-		closedir($dh); //On ferme le dossier
-	}	
+		$file = $image->get_name();
+		$rank_options .= '<option value="' . PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks/' . $file . '">' . $file . '</option>';
+	}
 	
 	$Template->assign_vars(array(
 		'RANK_OPTIONS' => $rank_options,

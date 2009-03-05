@@ -157,31 +157,18 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		import('util/pagination');
 		$Pagination = new Pagination();
 		
-		//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
-		$img_groups = '<option value="" selected="selected">--</option>';
-		$rep = '../images/group';
-		$y = 0;
-		if (is_dir($rep)) //Si le dossier existe
-		{
-			$fichier_array = array();
-			$dh = @opendir($rep);
-			while (!is_bool($file = readdir($dh)))
-			{
-				if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
-					$fichier_array[] = $file; //On crée un array, avec les different fichiers.
-			}
-			closedir($dh); //On ferme le dossier
+		//On recupère les dossier des images des groupes.
+		import('io/filesystem/folder');
 
-			if (is_array($fichier_array))
-			{
-				foreach ($fichier_array as $img_group)
-				{
-					$selected = ($img_group == $group['img']) ? ' selected="selected"' : '';
-					$img_groups .= '<option value="' . $img_group . '"' . $selected . '>' . $img_group . '</option>';
-				}
-			}
+		$img_groups = '<option value="">--</option>';
+		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
+		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
+		{
+			$file = $image->get_name();
+			$selected = ($file == $group['img']) ? ' selected="selected"' : '';
+			$img_groups .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 		}
-		
+	
 		$array_group = unserialize($group['auth']);
 		$Template->assign_vars(array(
 			'NAME' => $group['name'],
@@ -255,24 +242,14 @@ elseif ($add) //Interface d'ajout du groupe.
 	
 	//On recupère les dossier des images des groupes contenu dans le dossier /images/group.
 	$img_groups = '<option value="" selected="selected">--</option>';
-	$rep = '../images/group';
-	$y = 0;
-	if (is_dir($rep)) //Si le dossier existe
-	{
-		$fichier_array = array();
-		$dh = @opendir($rep);
-		while (!is_bool($file = readdir($dh)))
-		{
-			if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
-				$fichier_array[] = $file; //On crée un array, avec les different fichiers.
-		}
-		closedir($dh); //On ferme le dossier
+	import('io/filesystem/folder');
 
-		if (is_array($fichier_array))
-		{
-			foreach ($fichier_array as $img_group)
-				$img_groups .= '<option value="' . $img_group . '">' . $img_group . '</option>';
-		}
+	$img_groups = '<option value="">--</option>';
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
+	{
+		$file = $image->get_name();
+		$img_groups .= '<option value="' . $file . '">' . $file . '</option>';
 	}
 		
 	$Template->assign_vars(array(
@@ -332,6 +309,7 @@ else //Liste des groupes.
 		'L_DELETE' => $LANG['delete']
 	));
 	  
+  
 	$result = $Sql->query_while("SELECT id, name, img
 	FROM " . DB_TABLE_GROUP . "
 	ORDER BY name

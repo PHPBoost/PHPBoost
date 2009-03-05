@@ -180,14 +180,12 @@ else
 	$dir = 'pics/';
 	if (is_dir($dir)) //Si le dossier existe
 	{		
+		import('io/filesystem/folder');
+
 		$array_pics = array();
-		$dh = @opendir($dir);
-		while (!is_bool($pics = readdir($dh)))
-		{	
-			if ($pics != '.' && $pics != '..' && $pics != 'index.php' && $pics != 'Thumbs.db' && $pics != 'thumbnails')
-				$array_pics[] = $pics; //On crée un array, avec les different fichiers.
-		}	
-		@closedir($dh); //On ferme le dossier
+		$image_folder_path = new Folder(PATH_TO_ROOT . '/images/group');
+		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
+			$array_pics[] = $image->get_name();
 		
 		if (is_array($array_pics))
 		{

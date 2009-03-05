@@ -299,92 +299,76 @@ else //Sinon on rempli le formulaire
 	));
 
 	//Gestion langue par défaut.
-	$rep = '../lang/';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$lang_array = array();
+	$lang_folder_path = new Folder('../lang/');
+	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+		$lang_array[] = $lang->get_name();
+	
+	$lang_array_bdd = array();
+	$result = $Sql->query_while("SELECT lang 
+	FROM " . PREFIX . "lang", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		$lang_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{	
-			if (strpos($lang, '.') === false)
-				$lang_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		closedir($dh); //On ferme le dossier
-		
-		$lang_array_bdd = array();
-		$result = $Sql->query_while("SELECT lang 
-		FROM " . PREFIX . "lang", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if (array_search($row['lang'], $lang_array) !== false)
-				$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
-		}
-		$Sql->query_close($result);
-		
-		$array_identifier = '';
-		$lang_identifier = '../images/stats/other.png';
-		foreach ($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
-		{
-			$lang_info = load_ini_file('../lang/', $lang_value);
-			if ($lang_info)
-			{
-				$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang_value;
-				
-				$array_identifier .= 'array_identifier[\'' . $lang_value . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
-				$selected = '';
-				if ($lang_value == $CONFIG['lang'])
-				{
-					$selected = 'selected="selected"';
-					$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
-				}
-				$Template->assign_block_vars('select_lang', array(
-					'LANG' => '<option value="' . $lang_value . '" ' . $selected . '>' . $lang_name . '</option>'
-				));
-			}
-		}
-		$Template->assign_vars(array(
-			'JS_LANG_IDENTIFIER' => $array_identifier,
-			'IMG_LANG_IDENTIFIER' => $lang_identifier
-		));
+		//On recherche les clées correspondante à celles trouvée dans la bdd.
+		if (array_search($row['lang'], $lang_array) !== false)
+			$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
 	}
+	$Sql->query_close($result);
+	
+	$array_identifier = '';
+	$lang_identifier = '../images/stats/other.png';
+	foreach ($lang_array_bdd as $lang_key => $lang_value) //On effectue la recherche dans le tableau.
+	{
+		$lang_info = load_ini_file('../lang/', $lang_value);
+		if ($lang_info)
+		{
+			$lang_name = !empty($lang_info['name']) ? $lang_info['name'] : $lang_value;
+			
+			$array_identifier .= 'array_identifier[\'' . $lang_value . '\'] = \'' . $lang_info['identifier'] . '\';' . "\n";
+			$selected = '';
+			if ($lang_value == $CONFIG['lang'])
+			{
+				$selected = 'selected="selected"';
+				$lang_identifier = '../images/stats/countries/' . $lang_info['identifier'] . '.png';
+			}
+			$Template->assign_block_vars('select_lang', array(
+				'LANG' => '<option value="' . $lang_value . '" ' . $selected . '>' . $lang_name . '</option>'
+			));
+		}
+	}
+	$Template->assign_vars(array(
+		'JS_LANG_IDENTIFIER' => $array_identifier,
+		'IMG_LANG_IDENTIFIER' => $lang_identifier
+	));
 	
 	//On recupère les dossier des thèmes contents dans le dossier templates.
-	$rep = '../templates/';
-	if (is_dir($rep)) //Si le dossier existe
+	$tpl_array = array();
+	$lang_folder_path = new Folder('../templates/');
+	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+		$tpl_array[] = $lang->get_name();
+		
+	$theme_array_bdd = array();
+	$result = $Sql->query_while("SELECT theme 
+	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		$fichier_array = array();
-		$dh = @opendir( $rep);
-		while (!is_bool($theme = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($theme, '.') === false)
-				$fichier_array[] = $theme; //On crée un array, avec les different dossiers.
-		}	
-		closedir($dh); //On ferme le dossier
-		
-		$theme_array_bdd = array();
-		$result = $Sql->query_while("SELECT theme 
-		FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		//On recherche les clées correspondante à celles trouvée dans la bdd.
+		if (array_search($row['theme'], $tpl_array) !== false)
+			$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
+	}
+	$Sql->query_close($result);
+	
+	foreach ($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
+	{
+		$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
+		if ($theme_info)
 		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if (array_search($row['theme'], $fichier_array) !== false)
-				$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
-		}
-		$Sql->query_close($result);
-		
-		foreach ($theme_array_bdd as $theme_array => $theme_value) //On effectue la recherche dans le tableau.
-		{
-			$theme_info = load_ini_file('../templates/' . $theme_value . '/config/', get_ulang());
-			if ($theme_info)
-			{
-				$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
-				$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
-				$Template->assign_block_vars('select', array(
-					'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
-				));
-			}
+			$theme_name = !empty($theme_info['name']) ? $theme_info['name'] : $theme_value;
+			$selected = $theme_value == $CONFIG['theme'] ? 'selected="selected"' : '';
+			$Template->assign_block_vars('select', array(
+				'THEME' => '<option value="' . $theme_value . '" ' . $selected . '>' . $theme_name . '</option>'
+			));
 		}
 	}
 	

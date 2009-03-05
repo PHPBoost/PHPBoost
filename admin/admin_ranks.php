@@ -88,19 +88,13 @@ else //Sinon on rempli le formulaire
 	));
 
 	//On recupère les images des groupes
-	$rep = '../templates/' . get_utheme()  . '/images/ranks';
-	$j = 0;
-	$array_files = array();
-	if ( is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$rank_options_array = array();
+	$image_folder_path = new Folder(PATH_TO_ROOT . '/templates/' . get_utheme()  . '/images/ranks');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $image)
 	{
-		$dh = @opendir( $rep);
-		while (!is_bool($fichier = readdir($dh)))
-		{	
-			if ($j > 1 && $fichier != 'index.php' && $fichier != 'Thumbs.db')
-				$array_files[] = $fichier; //On crée un array, avec les different fichiers.
-			$j++;
-		}	
-		closedir($dh); //On ferme le dossier
+		$file = $image->get_name();
+		$rank_options_array[] = $file;
 	}	
 	
 	$result = $Sql->query_while("SELECT id, name, msg, icon, special
@@ -114,7 +108,7 @@ else //Sinon on rempli le formulaire
 			$del = $LANG['special_rank'];
 
 		$rank_options = '<option value="">--</option>';
-		foreach ($array_files as $icon)
+		foreach ($rank_options_array as $icon)
 		{			
 			$selected = ($icon == $row['icon']) ? ' selected="selected"' : '';
 			$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
