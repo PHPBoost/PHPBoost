@@ -613,6 +613,7 @@ $LANG['auth_access'] = 'Auth access';
 $LANG['auth_read'] = 'Read auth';
 $LANG['auth_write'] = 'Write auth';
 $LANG['auth_edit'] = 'Moderate auth';
+$LANG['upload_group'] = 'Upload icon group';
 
 //Robots
 $LANG['robot'] = 'Robot';
