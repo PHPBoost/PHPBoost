@@ -24,7 +24,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<div class="block_container" style="width:98%">
+			<div class="block_container" style="width:98%;">
 				<div class="block_top">
 					{L_COM_MANAGEMENT}
 				</div>					
@@ -46,7 +46,7 @@
 
 				# START com #	
 				<div class="msg_position">
-					<div class="msg_container">
+					<div class="msg_container" style="clear:right;">
 						<div class="msg_top_row">
 							<div class="msg_pseudo_mbr">{com.USER_ONLINE} {com.USER_PSEUDO}</div>
 							<span style="float:left;">&nbsp;&nbsp;<a href="{com.U_PROV}#anchor_{com.COM_SCRIPT}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/ancre.png" alt="{com.ID}" /></a> {com.DATE}</span>

@@ -186,13 +186,13 @@
 				</th>
 			</tr>
 			<tr>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					N&deg;
 				</td>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					{L_PSEUDO}
 				</td>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					{L_MSG}
 				</td>
 			</tr>			
@@ -299,12 +299,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row2" style="text-align:center;" colspan="{COLSPAN}">
+					<td class="row3" style="text-align:center;" colspan="{COLSPAN}">
 						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 					</td>
 				</tr>
 				<tr>
-					<td class="row2" style="text-align:center;">
+					<td class="row3" style="text-align:center;">
 						{U_VISITS_MORE}
 					</td>
 				</tr>

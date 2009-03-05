@@ -16,7 +16,7 @@
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>			
 							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
 							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
@@ -29,7 +29,7 @@
 			# START subcats #			
 			<div class="module_position">
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
@@ -91,7 +91,7 @@
 				</span>
 			</div>
 			<div class="module_contents forum_contents">
-				<table class="module_table" style="width:100%">
+				<table class="module_table forum_table">
 					<tr>			
 						<td class="forum_text_column" style="min-width:175px;">{L_TOPIC}</td>
 						<td class="forum_text_column" style="width:100px;">{L_AUTHOR}</td>
@@ -104,7 +104,7 @@
 		</div>	
 		<div class="module_position">
 			<div class="module_contents forum_contents">
-				<table class="module_table" style="width:100%">
+				<table class="module_table forum_table">
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
 						<td class="forum_sous_cat" style="text-align:center;">

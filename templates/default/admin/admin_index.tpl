@@ -103,7 +103,7 @@
 			</div>
 			
 			<div style="clear:right;"></div>
-			<table class="module_table" style="margin-top:30px;">
+			<table class="module_table" style="margin-top:30px;margin-bottom:15px;">
 				<tr> 
 					<th colspan="4">
 						{L_USER_ONLINE}

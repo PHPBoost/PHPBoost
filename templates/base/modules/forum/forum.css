@@ -1,8 +1,9 @@
-.module_table {
+.forum_table {
+	width:100%;
 	border-collapse:collapse;
 	border:none;
 }
-
+ 
 /* Classe du lien du pseudo sur forum */
 a.forum_link_pseudo{
 	color:#e8eaeb; 
