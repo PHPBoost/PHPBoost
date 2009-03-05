@@ -324,6 +324,7 @@ $LANG['code_tag'] = 'Code :';
 $LANG['code_langage'] = 'Code %s :';
 $LANG['com'] = 'Comment';
 $LANG['com_s'] = 'Comments';
+$LANG['no_comment'] = 'No comment';
 $LANG['post_com'] = 'Post a comment';
 $LANG['com_locked'] = 'Comments are locked for this element';
 $LANG['add_msg'] = 'Add a message';

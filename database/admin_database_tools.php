@@ -93,7 +93,7 @@ if (!empty($table) && $action == 'data')
 		{
 			$Template->assign_block_vars('line.field', array(
 				'FIELD' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-				'CLASS' => 'row2',
+				'CLASS' => 'row1',
 				'STYLE' => ''
 			));
 				
@@ -101,7 +101,7 @@ if (!empty($table) && $action == 'data')
 			{
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => '<strong>' . $field_name . '</strong>',
-					'CLASS' => 'row3'
+					'CLASS' => 'row1'
 				));
 			}
 			$Template->assign_block_vars('line', array());
@@ -115,14 +115,14 @@ if (!empty($table) && $action == 'data')
 			{
 				$Template->assign_block_vars('line.field', array(
 					'FIELD' => '<a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . $Session->get_token() . '" title="' . $LANG['update'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" alt="" /></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=delete&amp;token=' . $Session->get_token() . '" onclick="javascript:return Confirm_del_entry()" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" class="valign_middle" alt="" /></a>',
-					'CLASS' => 'row2',
+					'CLASS' => 'row1',
 					'STYLE' => ''
 				));
 			}
 			
 			$Template->assign_block_vars('line.field', array(
 				'FIELD' => str_replace("\n", '<br />', strprotect($field_value, HTML_PROTECT, ADDSLASHES_NONE)),
-				'CLASS' => 'row1',
+				'CLASS' => 'row2',
 				'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
 			));
 			$j++;

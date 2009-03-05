@@ -153,7 +153,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	//Image associée au rang.
 	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-				
+	
 	//Affichage des groupes du membre.		
 	if (!empty($row['user_groups']) && $_array_groups_auth) 
 	{	

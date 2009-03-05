@@ -3,6 +3,11 @@
 Contient les formulaires, les modules (et modules minis), et messages.
 --------------------------------------*/ 
 
+table {
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+
 /* Conteneur */
 div.block_title span {
     text-transform:uppercase;
@@ -71,29 +76,34 @@ h6.sub_title2 { /* Sous titre dans les menu */
     color:#515C68;
 }
 
-.block_top,th { /* Entête de conteneur et des tableaux */
+ /* Entête de conteneur et des tableaux */
+.block_top {
+	-moz-border-radius:4px 4px 0px 0px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+    border-radius:5px;
+}
+.block_top,th {
     padding:5px 6px;
     color:#FFFFFF;
-    background:url(images/msg_top_row.png) repeat-x;
+    background:#5D7C94 url(images/msg_top_row.png) repeat-x;
     text-align:left;
     font-size:0.75em;
     font-weight:bold;
     text-transform:uppercase;	
-	-moz-border-radius:4px 4px 0px 0px;
-	-khtml-border-radius:4px 4px 0px 0px;
-	-webkit-border-radius:4px 4px 0px 0px;
-    border-radius:4px;
 }
-
-.block_bottom,th.bottom_cell { /* Pied de conteneur et des tableaux */
-	padding:0px;
-	background:#F1F4F6;
-	-moz-border-radius:0px 0px 5px 5px;
-	-khtml-border-radius:0px 0px 5px 5px;
-	-webkit-border-radius:0px 0px 5px 5px;
+table th:first-child{
+	-moz-border-radius-topleft:4px;
+	-khtml-border-radius-topleft:5px;
+	-webkit-border-top-left-radius:5px;
     border-radius:5px;
 }
-
+table th:last-child{
+	-moz-border-radius-topright:4px;
+	-khtml-border-radius-topright:5px;
+	-webkit-border-top-right-radius:5px;
+    border-radius:5px;
+}
 
 hr {
     background:#C4CED6;
@@ -162,7 +172,11 @@ input.submit{
 	color:#515C68;	
 	font-weight:bold;
 	font-size:10px;
-	background:#A9CEE9 url(images/form.png) repeat-x;
+	background:#A9CEE9 url(images/form.png) repeat-x;	
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 input.file{
@@ -172,7 +186,6 @@ input.file{
 	padding:1px;
 	font-weight:bold;
 	font-size:10px;
-	background:#A9CEE9 url(images/form.png) repeat-x;
 }
 
 input.reset{
@@ -184,6 +197,10 @@ input.reset{
 	font-weight:bold;
 	font-size:10px;
 	background:url(images/form.png) repeat-x;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+    border-radius:5px;
 }
 
 input.reset:hover, input.submit:hover{
@@ -524,8 +541,8 @@ a.msg_link_pseudo:hover {
     text-indent:10px;
     font-size:12px;
     font-weight:bold;
-    color:#E53B00;
-    border-bottom:2px solid #E53B00;
+    color:#515C68;
+    border-bottom:2px solid #515C68;
 }
 
 .module_top a {
@@ -555,17 +572,21 @@ a.msg_link_pseudo:hover {
 }
 
 
+/* Tableau global, utilisé dans les différents modules */
 .module_table,.block_container {
-    /* Tableau global, utilisé dans les différents modules */
     width:98%;
     margin:auto;
 	border-spacing:0px;
+	border-collapse:separate;
 	padding:0px;
 	border:1px solid #CCCCCC;
 	-moz-border-radius:5px;
 	-khtml-border-radius:5px;
 	-webkit-border-radius:5px;
     border-radius:5px;
+}
+*+html .module_table { /* Hack ie7 */
+	border-collapse:collapse;
 }
 
 /* Modules minis

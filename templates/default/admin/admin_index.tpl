@@ -30,7 +30,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<div style="width:49%;float:left">
+			<div style="width:49%;float:left;">
 				<table class="module_table">
 					<tr> 
 						<th colspan="4">
@@ -54,24 +54,55 @@
 						</td>
 					</tr>
 				</table>
-			</div>
-			<div style="width:49%;float:right">
 				<table class="module_table">
 					<tr> 
 						<th colspan="4">
-							Dernier commentaires
+							{L_LAST_COMMENTS}
 						</th>
 					</tr>
 					<tr> 
 						<td class="row2">
-							<span class="text_small">Par Monsieur PHPBoost, sur Bonjour tout le monde !</span>
-							<br />
-							Bonjour, ceci est un commentaire. Pour supprimer un commentaire, connectez-vous, et affichez les commentaires de cet article. Vous pourrez alors ...
+							<div style="height:130px;overflow:auto;">
+								# START com_list #	
+								<div class="block_contents">
+									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
+									<p class="text_small">{com_list.CONTENTS}</p>
+								</div>	
+								# END com_list #
+								# IF C_NO_COM #
+									<p style="text-align:center;margin:0;">{L_NO_COMMENT}</p>
+								# ENDIF #
+							</div>
+							<p style="text-align:center;margin:0;"><a class="small_link" href="admin_com.php">{L_VIEW_ALL_COMMENTS}</a></p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="float:right;width:50%;">
+				<table class="module_table">
+					<tr> 
+						<th colspan="4">
+							{L_WRITING_PAD}
+						</th>
+					</tr>
+					<tr> 
+						<td class="row2">
+							<div class="block_contents">
+								<form action="admin_index.php" method="post" style="margin-top:6px;margin-bottom:1px;">
+									<label><textarea type="text" id="writing_pad_content" name="writing_pad_content" style="height:237px">{WRITING_PAD_CONTENT}</textarea></label> 
+									<p style="text-align:center;margin:0;margin-top:8px;">
+										<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit" />
+										&nbsp;&nbsp; 
+										<input type="reset" value="{L_RESET}" class="reset" />
+									</p>	
+								</form>
+							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
 			
+			<div style="clear:right;"></div>
 			<table class="module_table" style="margin-top:30px;">
 				<tr> 
 					<th colspan="4">
@@ -79,31 +110,31 @@
 					</th>
 				</tr>
 				<tr> 
-					<td class="row2" style="text-align:center;">
+					<td class="row1" style="text-align:center;">
 						{L_USER_ONLINE}
 					</td>
-					<td  class="row2" style="text-align:center;">
+					<td  class="row1" style="text-align:center;">
 						{L_USER_IP}
 					</td>
-					<td  class="row2" style="text-align:center;">
+					<td  class="row1" style="text-align:center;">
 						{L_LOCALISATION}
 					</td>
-					<td  class="row2" style="text-align:center;">
+					<td  class="row1" style="text-align:center;">
 						{L_LAST_UPDATE}
 					</td>
 				</tr>				
 				# START user #
 				<tr> 
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{user.USER}
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{user.USER_IP}
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{user.WHERE}
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{user.TIME}
 					</td>					
 				</tr>
