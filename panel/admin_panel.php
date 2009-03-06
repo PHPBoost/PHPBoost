@@ -10,7 +10,7 @@
 
 require_once('../admin/admin_begin.php');
 require_once('../panel/panel_begin.php');
-require_once('../kernel/modules.inc.php');
+require_once('../panel/panel.inc.php');
 require_once('../admin/admin_header.php');
 
 if( !empty($_POST['valid'])  )
