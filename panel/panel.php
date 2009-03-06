@@ -10,7 +10,7 @@
 
 require_once('../kernel/begin.php');
 require_once('../panel/panel_begin.php');
-require_once('../kernel/modules.inc.php');
+require_once('../panel/panel.inc.php');
 define('ALTERNATIVE_CSS', serialize(array(
 	'news' => 'news'
 	)));
