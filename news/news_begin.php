@@ -58,7 +58,7 @@ $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 //Chargement du cache
 $Cache->load('news');
 //Css alternatif.
-define('ALTERNATIVE_CSS', 'news');
+defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
 define('FEED_URL', '/syndication.php?m=news');
 
 ?>
