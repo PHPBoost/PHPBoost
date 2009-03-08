@@ -213,8 +213,7 @@ class Mail
         }
          
         $recipients = trim(implode('; ', $this->recipients), '; ');
-         
-        return @mail($this->recipients, $this->objet, $this->content, $this->headers);
+        return @mail($recipients, $this->objet, $this->content, $this->headers);
     }
     
     /**

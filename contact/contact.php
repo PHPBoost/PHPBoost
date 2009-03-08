@@ -7,13 +7,13 @@
  *   email                : crowkait@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,11 +23,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../kernel/begin.php');
 require_once('../contact/contact_begin.php');
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $mail_from = retrieve(POST, 'mail_email', '', TSTRING_UNCHANGE);
 $mail_object = retrieve(POST, 'mail_object', '', TSTRING_UNCHANGE);
@@ -41,23 +41,31 @@ $captcha = new Captcha();
 ###########################Envoi##############################
 if (!empty($mail_valid))
 {
-	//Code de vérification si activé
-	if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
-	{
-		import('io/mail');
-		$mail = new Mail();
+    //Code de vérification si activé
+    if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
+    {
+        import('io/mail');
+        $mail = new Mail();
 
-		if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
-			$get_error = 'success';
-		else //Erreur mail
-			$get_error = 'error';
-	}
-	else //Champs incomplet!
-		$get_error = 'verif';
+        if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+        {
+            $get_error = 'success';
+        }
+        else //Erreur mail
+        {
+            $get_error = 'error';
+        }
+    }
+    else //Champs incomplet!
+    {
+        $get_error = 'verif';
+    }
 }
 elseif (!empty($_POST['mail_valid']) && ( empty($mail_email) || empty($mail_contents) )) //Champs incomplet!
-	$get_error = 'incomplete';
-	
+{
+    $get_error = 'incomplete';
+}
+
 ###########################Affichage##############################
 $Template->set_filenames(array(
 	'contact'=> 'contact/contact.tpl'
@@ -65,23 +73,31 @@ $Template->set_filenames(array(
 
 //Gestion erreur.
 if ($get_error == 'incomplete')
-	$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+{
+    $Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+}
 elseif ($get_error == 'verif')
-	$Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
+{
+    $Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
+}
 elseif ($get_error == 'success')//Message de succès.
-	$Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
+{
+    $Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
+}
 elseif ($get_error == 'error')//Message de succès.
-	$Errorh->handler($LANG['error_mail'], E_USER_WARNING);
-	
+{
+    $Errorh->handler($LANG['error_mail'], E_USER_WARNING);
+}
+
 //Code de vérification, anti-bots.
 if ($captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 {
-	$captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
-	$Template->assign_vars(array(
+    $captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
+    $Template->assign_vars(array(
 		'C_VERIF_CODE' => true,
 		'VERIF_CODE' => $captcha->display_form(),
 		'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
-	));		
+    ));
 }
 
 $Template->assign_vars(array(
@@ -102,8 +118,8 @@ $Template->assign_vars(array(
 	'U_ACTION_CONTACT' => SID
 ));
 
-$Template->pparse('contact'); 
+$Template->pparse('contact');
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

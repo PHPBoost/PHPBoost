@@ -45,7 +45,7 @@ define('TIMEZONE_USER', 3);
 /**
  * @desc Retrieves an input variable. You can retrieve any parameter of the HTTP request which launched the execution of this page.
  * @param int $var_type The origin of the variable: GET if it's a parameter in the request URL, POST if the variable was in a formulary,
- * COOKIE if the variables comes from a cookie and FILES if it's a file.
+ * COOKIE if the variables come from a cookie and FILES if it's a file.
  * @param string $var_name Name of a HTTP variable you want to retrieve.
  * @param mixed $default_value The value you want the variable you retrieve has if the HTTP parameter doesn't exist.
  * @param string $force_type Type of the variable you want to retrieve. If you don't use this parameter, the returned variable will have the same type as the default value you imposed.
@@ -1124,7 +1124,8 @@ define('LIB_IMPORT', '.lib.php');
  * @param string $path the class or lib path and its name withour .class.php or
  * .inc.php extensionlike content/bbcode_parser
  * @param string $import_type the import type. Default is CLASS_IMPORT,
- * but you could also import a library by using INC_IMPORT
+ * but you could also import a library by using LIB_IMPORT (file whose extension is .inc.php)
+ * or INC_IMPORT to include a .inc.php file (for example the current file, functions.inc.php).
  */
 function import($path, $import_type = CLASS_IMPORT)
 {

@@ -153,7 +153,7 @@ class NewsletterService
 			 
 			foreach ($mailing_list as $array_mail)
 			{
-				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/membre/newsletter.php?id=' . $array_mail[0];			
+				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0];			
 				if (!@mail($array_mail[1], $mail_object, $mail_contents, $header))
 					$error_mailing_list[] = $array_mail[1];
 			}
