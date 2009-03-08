@@ -31,7 +31,7 @@ set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe le
 //Si register_globals activé, suppression des variables qui trainent.
 if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
 {
-    import('util/unusual_functions', LIB_IMPORT);
+    import('util/unusual_functions', INC_IMPORT);
     securit_register_globals();
 }
 
