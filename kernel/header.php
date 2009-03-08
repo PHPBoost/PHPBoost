@@ -157,7 +157,8 @@ $Template->assign_vars(array(
 	'L_TODAY' 					=> $LANG['today'],
 	'PATH_TO_ROOT' 				=> PATH_TO_ROOT,
 	'L_REQUIRE_PSEUDO' 			=> $LANG['require_pseudo'],
-	'L_REQUIRE_PASSWORD' 		=> $LANG['require_password']
+	'L_REQUIRE_PASSWORD' 		=> $LANG['require_password'],
+    'BASE_URI'					=> HOST . SCRIPT
 ));
 
 //Inclusion des blocs

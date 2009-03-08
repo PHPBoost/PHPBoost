@@ -302,7 +302,7 @@ elseif ($step == 4)
 		$host = retrieve(POST, 'host', 'localhost');
 		$login = retrieve(POST, 'login', '');
 		$password = retrieve(POST, 'password', '');
-		$database = retrieve(POST, 'database', '');
+		$database = str_replace('.', '_', retrieve(POST, 'database', ''));
 		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
 		
 		include_once('functions.php');
