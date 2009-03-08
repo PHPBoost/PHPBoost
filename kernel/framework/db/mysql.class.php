@@ -133,7 +133,7 @@ class Sql
 		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
-		    import('util/unusual_functions', LIB_IMPORT);
+		    import('util/unusual_functions', INC_IMPORT);
 		    redirect(get_server_url_page('install/install.php'));
 		}
 

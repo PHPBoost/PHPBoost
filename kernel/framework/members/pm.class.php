@@ -3,7 +3,7 @@
  *                             pm.class.php
  *                            -------------------
  *   begin                : April 02, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -82,7 +82,7 @@ class PrivateMsg
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_PM_TOPIC . "  (title, user_id, user_id_dest, user_convers_status, user_view_pm, nbr_msg, last_user_id, last_msg_id, last_timestamp) VALUES ('" . $pm_objet . "', '" . $pm_from . "', '" . $pm_to . "', '" . $user_convers_status . "', 1, 1, '" . $pm_from . "', 0, '" . time() . "')", __LINE__, __FILE__);
 		$this->pm_convers_id = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_PM_TOPIC . " ");
         
-        $this->send_from_properties($pm_to, $this->pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
+        $this->send($pm_to, $this->pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
 // 		//Insertion du message associé à la conversation.
 // 		$Sql->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
 // 		$this->pm_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "pm_msg");

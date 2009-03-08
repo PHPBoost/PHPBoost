@@ -29,7 +29,7 @@ define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('DEFAULT_FEED_NAME', 'master');
 define('ERROR_GETTING_CACHE', 'Error regenerating and / or retrieving the syndication cache of the %s (%s)');
 
-import('functions', LIB_IMPORT);
+import('functions', INC_IMPORT);
 import('content/syndication/feed_data');
 
 /**

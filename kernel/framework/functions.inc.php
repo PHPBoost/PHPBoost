@@ -64,7 +64,7 @@ define('TIMEZONE_USER', 3);
  * 	<li>TSTRING_AS_RECEIVED if you want to retrieve the string variable as it was in the HTTP request. Be careful, if the magic_quotes are enabled (use the MAGIC_QUOTES constant to know it), the quotes are escaped, otherwise they aren't.</li>
  * 	<li>TARRAY to retrieve an array. The values it contains aren't processed.</li>
  * 	<li>TDOUBLE to retrieve a double value</li>
- * 	<li>TNONE if it has no type</li>
+ * 	<li>TNONE if you want to get the input variable as it has been recieved (the return value will be a string because HTTP parameters are all strings).</li>
  * </ul>
  * @param int $flags You can change the behaviour of this method: USE_DEFAULT_IF_EMPTY will allow you to retrieve the default value even if the parameter exists but its value is empty (to know if the var is empty, we use the empty() PHP function).
  * @return mixed The value of the variable you wanted to retrieve. Its type is either the same as the default value or the type you forced.
@@ -1116,14 +1116,15 @@ function get_html_uid($prefix = 'html_uid_')
 }
 
 define('CLASS_IMPORT', '.class.php');
-define('LIB_IMPORT', '.inc.php');
+define('INC_IMPORT', '.inc.php');
+define('LIB_IMPORT', '.lib.php');
 
 /**
  * @desc import a class or a lib from the framework
  * @param string $path the class or lib path and its name withour .class.php or
  * .inc.php extensionlike content/bbcode_parser
  * @param string $import_type the import type. Default is CLASS_IMPORT,
- * but you could also import a library by using LIB_IMPORT
+ * but you could also import a library by using INC_IMPORT
  */
 function import($path, $import_type = CLASS_IMPORT)
 {

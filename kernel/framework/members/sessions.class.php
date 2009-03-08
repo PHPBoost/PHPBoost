@@ -391,6 +391,10 @@ class Sessions
 				redirect(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : ''));
 			}
 			$session_data = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_data', '', TSTRING_UNCHANGE));
+			if ($session_data === false)
+			{
+			    $session_data = array();
+			}
 			
 			$this->data['session_id'] = isset($session_data['session_id']) ? strprotect($session_data['session_id']) : ''; //Validité du session id.
 			$this->data['user_id'] = isset($session_data['user_id']) ? numeric($session_data['user_id']) : ''; //Validité user id?
@@ -412,7 +416,11 @@ class Sessions
 		########Cookie Existe?########
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']))
 		{
-			$session_autoconnect = isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) ? unserialize($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']) : array();
+			$session_data = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_data', '', TSTRING_UNCHANGE));
+			if ($session_data === false)
+			{
+			    $session_data = array();
+			}
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
