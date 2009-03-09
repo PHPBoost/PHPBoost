@@ -75,8 +75,12 @@ class Comments
 		ORDER BY idcom DESC
 		" . $Sql->limit(0, 1), __LINE__, __FILE__);
 		
-		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idcom = '" . $this->idcom . "' AND script = '" . $this->script . "' AND idprov = '" . $this->idprov . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com= nbr_com - 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		$resource = $Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idcom = '" . $this->idcom . "' AND script = '" . $this->script . "' AND idprov = '" . $this->idprov . "'", __LINE__, __FILE__);
+		//Si la suppression a été effective
+		if ($Sql->affected_rows($resource) > 0)
+		{
+		    $Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET nbr_com= nbr_com - 1 WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+		}
 		
 		return $lastid_com;
 	}

@@ -154,9 +154,9 @@ class Sql
 	 */
 	function query($query, $errline, $errfile)
 	{
-		$ressource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		$result = mysql_fetch_row($ressource);
-		$this->query_close($ressource); //Déchargement mémoire.
+		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
+		$result = mysql_fetch_row($resource);
+		$this->query_close($resource); //Déchargement mémoire.
 		$this->req++;
 
 		return $result[0];
@@ -201,11 +201,11 @@ class Sql
 		
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
-		$ressource = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
-		$result = mysql_fetch_assoc($ressource);
+		$resource = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
+		$result = mysql_fetch_assoc($resource);
 		
 		//Fermeture de la ressource
-		$this->query_close($ressource);
+		$this->query_close($resource);
 		$this->req++;
 		
 		return $result;
@@ -257,9 +257,9 @@ class Sql
 	 */
 	function count_table($table, $errline, $errfile)
 	{
-		$ressource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
-		$result = mysql_fetch_assoc($ressource);
-		$this->query_close($ressource); //Déchargement mémoire.
+		$resource = mysql_query('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, $this->link) or $this->_error('SELECT COUNT(*) AS total FROM ' . PREFIX . $table, 'Invalid count request', $errline, $errfile);
+		$result = mysql_fetch_assoc($resource);
+		$this->query_close($resource); //Déchargement mémoire.
 		$this->req++;
 		
 		return $result['total'];
@@ -322,25 +322,25 @@ class Sql
 	
 	/**
 	 * @desc Returns the number of the rows which have been affected by a request.
-	 * @param resource $ressource Resource corresponding to the request.
+	 * @param resource $resource Resource corresponding to the request.
 	 * The resource is given by the method which execute some queries in the data base.
 	 * @param string $query Deprecated field. Don't use it. 
 	 * @return int The number of the rows affected by the specified resource.
 	 */
-	function affected_rows($ressource, $query = '')
+	function affected_rows($resource, $query = '')
 	{
 		return mysql_affected_rows();
 	}
 	
 	/**
 	 * @desc Returns the number of rows got by a selection query.
-	 * @param resource $ressource Resource corresponding to the result of the query.
+	 * @param resource $resource Resource corresponding to the result of the query.
 	 * @param $query Deprecated field. Don't use it.
 	 * @return int The number of rows contained in the resource.
 	 */
-	function num_rows($ressource, $query)
+	function num_rows($resource, $query)
 	{
-		return mysql_num_rows($ressource);
+		return mysql_num_rows($resource);
 	}
 
 	/**
