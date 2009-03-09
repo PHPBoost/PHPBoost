@@ -68,7 +68,7 @@ $LANG['start_install'] = 'Commencer l\'installation';
 
 //licence
 $LANG['license'] = 'Licence';
-$LANG['require_license_agreement'] = 'Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.';
+$LANG['require_license_agreement'] = '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>';
 $LANG['license_agreement'] = 'Acceptation des termes de la licence';
 $LANG['license_terms'] = 'Termes de la licence';
 $LANG['please_agree_license'] = 'J\'ai pris connaissance des termes de la licence et je les accepte';
