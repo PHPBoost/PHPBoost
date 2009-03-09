@@ -109,23 +109,23 @@ $LANG['alert_delete_file'] = 'Delete this file?';
 
 //BBcode
 $LANG['bb_smileys'] = 'Smilies';
-$LANG['bb_bold'] = 'Text in bold: [b]text[/b]';
-$LANG['bb_italic'] = 'Text in italic: [i]text[/i]';
-$LANG['bb_underline'] = 'Underlined text: [u]text[/u]';
-$LANG['bb_strike'] = 'Strike text: [s]text[/s]';
+$LANG['bb_bold'] = 'Bold: [b]text[/b]';
+$LANG['bb_italic'] = 'Italic: [i]text[/i]';
+$LANG['bb_underline'] = 'Underlined: [u]text[/u]';
+$LANG['bb_strike'] = 'Strike: [s]text[/s]';
 $LANG['bb_link'] = 'Add a weblink: [url]link[/url], or [url=link]name of the link[/url]';
 $LANG['bb_picture'] = 'Add a picture: [img]url picture[/img]';
-$LANG['bb_size'] = 'Size of the text (X between 0 - 49): [size=X]text on size X[/size]';
+$LANG['bb_size'] = 'Text size (X between 0 - 49): [size=X]text on size X[/size]';
 $LANG['bb_color'] = 'Text color: [color=X]text on X color[/color]';
-$LANG['bb_quote'] = 'Make a quote [quote=pseudo]text[/quote]';
-$LANG['bb_left'] = 'Align on left: [align=left]object on left[/align]';
+$LANG['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
+$LANG['bb_left'] = 'Align left: [align=left]object on left[/align]';
 $LANG['bb_center'] = 'Center : [align=center]center object[/align]';
-$LANG['bb_right'] = 'Align on right: [align=right]object on right[/align]';
+$LANG['bb_right'] = 'Align right: [align=right]object on right[/align]';
 $LANG['bb_code'] = 'Insert code [code]text[/code]';
 $LANG['bb_math'] = 'Insert mathematics code [math]text[/math]';
 $LANG['bb_swf'] = 'Insert flash [swf=width,height]url animation[/swf]';
-$LANG['bb_small'] = 'Increase the textarea';
-$LANG['bb_large'] = 'Reduce the textarea';
+$LANG['bb_small'] = 'Reduce text area';
+$LANG['bb_large'] = 'Expand text area';
 $LANG['bb_title'] = 'Title [title=x]text[/title]';
 $LANG['bb_html'] = 'Html code [html]code[/html]';
 $LANG['bb_container'] = 'Container';
@@ -348,8 +348,8 @@ $LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make mult
 $LANG['advanced_authorization'] = 'Advanced authorizations';
 $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
-$LANG['add_member'] = 'Add member';
-$LANG['alert_member_already_auth'] = 'Member is already in the list';
+$LANG['add_member'] = 'Add a member';
+$LANG['alert_member_already_auth'] = 'The member is already in the list';
 
 //Calendar
 $LANG['january'] = 'January';
@@ -374,12 +374,12 @@ $LANG['sunday'] = 'Sun';
 
 //Comments
 $LANG['add_comment'] = 'Add a comment';
-$LANG['edit_comment'] = 'Edit comment';
+$LANG['edit_comment'] = 'Edit the comment';
 
 //Members
 $LANG['member_area'] = 'Member Area';
 $LANG['profile'] = 'Profile';
-$LANG['profile_edition'] = 'Edit profile';
+$LANG['profile_edition'] = 'Edit the profile';
 $LANG['previous_password'] = 'Previous password';
 $LANG['fill_only_if_modified'] = 'Fill only in case of modification';
 $LANG['new_password'] = 'New password';

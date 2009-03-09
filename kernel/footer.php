@@ -3,11 +3,11 @@
  *                               footer.php
  *                            -------------------
  *   begin                : June 25, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,9 +23,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
-if (defined('PHPBOOST') !== true) exit;
+if (defined('PHPBOOST') !== true)
+{
+    exit;
+}
 
 $Sql->close(); //Fermeture de mysql
 
@@ -59,15 +62,15 @@ pages_displayed();
 
 if ($CONFIG['bench'])
 {
-	$Bench->stop(); //On arrête le bench.
-	$Template->assign_vars(array(
+    $Bench->stop(); //On arrête le bench.
+    $Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->to_string(), //Fin du benchmark
 		'REQ' => $Sql->get_executed_requests_number(),
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],
 		'L_UNIT_SECOND' => $LANG['unit_seconds_short']
-	));
+    ));
 }
 
 $Template->pparse('footer');
