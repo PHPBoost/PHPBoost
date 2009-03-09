@@ -8,7 +8,7 @@
  *
  *   Constantes utiles
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
-@ini_set('open_basedir', NULL); 
+@ini_set('open_basedir', NULL);
 set_magic_quotes_runtime(0); //Désactivation du magic_quotes_runtime (échappe les guillemets des sources externes).
 //Si register_globals activé, suppression des variables qui trainent.
 if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
@@ -43,7 +43,7 @@ if (get_magic_quotes_gpc())
     {
         //We consider the magic quotes as disabled
         define('MAGIC_QUOTES', false);
-        
+
         //We treat the content: it must be as if the magic_quotes option is disabled
         foreach ($_REQUEST as $var_name => $value)
         {
@@ -116,20 +116,32 @@ define('USE_DEFAULT_IF_EMPTY', 1);
 if ($_SERVER)
 {
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
     elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-		$ip = $_SERVER['HTTP_CLIENT_IP'];
+    {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }
     else
-		$ip = $_SERVER['REMOTE_ADDR'];
+    {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
 }
 else
 {
     if (getenv('HTTP_X_FORWARDED_FOR'))
-		$ip = getenv('HTTP_X_FORWARDED_FOR');
+    {
+        $ip = getenv('HTTP_X_FORWARDED_FOR');
+    }
     elseif (getenv('HTTP_CLIENT_IP'))
-		$ip = getenv('HTTP_CLIENT_IP');
+    {
+        $ip = getenv('HTTP_CLIENT_IP');
+    }
     else
-		$ip = getenv('REMOTE_ADDR');
+    {
+        $ip = getenv('REMOTE_ADDR');
+    }
 }
 define('USER_IP', addslashes($ip));
 
