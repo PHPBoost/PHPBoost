@@ -29,7 +29,7 @@
 		function add_poll_field(nbr_field)
 		{
 			if ( typeof this.max_field_p == 'undefined' )
-				this.max_field_p = nbr_field;
+				this.max_field_p = (nbr_field == 0) ? 5 : nbr_field;
 			else
 				this.max_field_p++;
 			

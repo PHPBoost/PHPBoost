@@ -170,14 +170,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
-		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+		$auth_cats = !empty($auth_cats) ? "AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 	}
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats 
-	" . $auth_cats . "
+	WHERE url = '' " . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{	
@@ -229,6 +229,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 				'ID' => $i,
 				'ANSWER' => ''
 			));
+			$nbr_poll_field++;
 		}
 		
 		$Template->assign_vars(array(
@@ -239,7 +240,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'CHECKED_NORMAL' => 'checked="checked"',
 			'SELECTED_SIMPLE' => 'checked="checked"',
 			'NO_DISPLAY_POLL' => 'true',
-			'NBR_POLL_FIELD' => 0,
+			'NBR_POLL_FIELD' => $nbr_poll_field,
 			'L_TYPE' => '* ' . $LANG['type'],
 			'L_DEFAULT' => $LANG['default'],
 			'L_POST_IT' => $LANG['forum_postit'],
@@ -279,6 +280,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 					'ID' => $i,
 					'ANSWER' => ''
 				));
+				$nbr_poll_field++;
 			}			
 		}
 		
