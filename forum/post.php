@@ -256,6 +256,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'ID' => $i,
 					'ANSWER' => ''
 				));
+				$nbr_poll_field++;
 			}
 				
 			//Type de réponses du sondage.
@@ -337,6 +338,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'ID' => $i,
 					'ANSWER' => ''
 				));
+				$nbr_poll_field++;
 			}
 			
 			$Template->assign_vars(array(
@@ -349,7 +351,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'IDTOPIC' => 0,
 				'KERNEL_EDITOR' => display_editor(),
 				'NO_DISPLAY_POLL' => 'true',
-				'NBR_POLL_FIELD' => 0,
+				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
 				'U_FORUM_CAT' => $forum_cats,
@@ -555,6 +557,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						'ID' => $i,
 						'ANSWER' => ''
 					));
+					$nbr_poll_field++;
 				}
 				
 				//Type de réponses du sondage.
@@ -617,7 +620,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				));
 				
 				$contents = $Sql->query("SELECT contents FROM " . PREFIX . "forum_msg WHERE id = '" . $id_first . "'", __LINE__, __FILE__);
-							
+				
 				//Gestion des erreurs à l'édition.
 				$get_error_e = retrieve(GET, 'errore', '');
 				if ($get_error_e == 'incomplete_t')
@@ -681,6 +684,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						'ID' => $i,
 						'ANSWER' => ''
 					));
+					$nbr_poll_field++;
 				}
 
 				$Template->assign_vars(array(
@@ -919,6 +923,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					'ID' => $i,
 					'ANSWER' => ''
 				));
+				$nbr_poll_field++;
 			}
 				
 			$Template->assign_vars(array(
@@ -930,7 +935,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				'IDTOPIC' => 0,
 				'KERNEL_EDITOR' => display_editor(),
 				'NO_DISPLAY_POLL' => 'true',
-				'NBR_POLL_FIELD' => 0,
+				'NBR_POLL_FIELD' => $nbr_poll_field,
 				'C_ADD_POLL_FIELD' => true,
 				'U_ACTION' => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
 				'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $CAT_FORUM[$id_get]['name'] . '</a>',
