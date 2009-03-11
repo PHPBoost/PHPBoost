@@ -88,7 +88,7 @@
 					<tr> 
 						<td class="row2">
 							<div class="block_contents">
-								<form action="admin_index.php" method="post" style="margin-top:6px;margin-bottom:1px;">
+								<form action="admin_index.php?token={TOKEN}" method="post" style="margin-top:6px;margin-bottom:1px;">
 									<label><textarea type="text" id="writing_pad_content" name="writing_pad_content" style="height:237px">{WRITING_PAD_CONTENT}</textarea></label> 
 									<p style="text-align:center;margin:0;margin-top:8px;">
 										<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit" />

@@ -24,7 +24,7 @@
 		</div>
 		
 		<div id="admin_contents">			
-			<form action="admin_terms.php" method="post" class="fieldset_content">
+			<form action="admin_terms.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_TERMS}</legend>
 					<p>{L_EXPLAIN_TERMS}</p>
