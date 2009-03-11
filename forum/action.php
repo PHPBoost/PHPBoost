@@ -127,10 +127,10 @@ elseif (!empty($idt_get))
 			//On concatène avec les votans existants.
 			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $User->get_attribute('user_id') . "'),"; 
 			$array_votes = explode('|', $info_poll['votes']);
-				
+			
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = retrieve(POST, 'forumpoll', -1); 
+				$id_answer = retrieve(POST, 'forumpoll', 0); 
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}

@@ -264,7 +264,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 				foreach ($array_answer as $answer)
 				{						
 					$Template->assign_block_vars('poll_radio', array(
-						'NAME' => 'forumpoll' . $z,
+						'NAME' => $z,
 						'TYPE' => 'radio',
 						'ANSWERS' => $answer
 					));
