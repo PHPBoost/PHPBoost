@@ -258,7 +258,7 @@
 			</form>
 			
 			
-			<form action="admin_groups.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_groups.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_GROUPS}</legend>
 					<dl>

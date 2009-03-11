@@ -74,7 +74,7 @@
 	</div>
 
 	<div id="admin_contents">
-		<form id="f_form" action="admin_panel.php" method="post" onsubmit="return check_form_conf(this);" class="fieldset_content">
+		<form id="f_form" action="admin_panel.php?token={TOKEN}" method="post" onsubmit="return check_form_conf(this);" class="fieldset_content">
 		
 		<table style="width:100%;" cellspacing="10px">
 			<tr>
