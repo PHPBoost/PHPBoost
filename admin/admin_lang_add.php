@@ -87,7 +87,7 @@ elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'a
 				}
 				elseif ($Upload->extension['upload_lang'] == 'zip')
 				{
-					import('lib/pcl/pcltar', LIB_IMPORT);
+					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../lang/', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
