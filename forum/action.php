@@ -130,7 +130,7 @@ elseif (!empty($idt_get))
 				
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = retrieve(POST, 'radio', -1); 
+				$id_answer = retrieve(POST, 'forumpoll', -1); 
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
@@ -140,11 +140,10 @@ elseif (!empty($idt_get))
 				$nbr_answer = count($array_votes);
 				for ($i = 0; $i < $nbr_answer; $i++)
 				{
-					if (retrieve(POST, $i, false)) 
+					if (retrieve(POST, 'forumpoll' . $i, false)) 
 						$array_votes[$i]++;
 				}
 			}
-
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		
