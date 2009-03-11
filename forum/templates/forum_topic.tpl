@@ -178,7 +178,7 @@
 						# START poll_radio #
 						<tr>
 							<td class="row2" style="font-size:10px;">
-								<label><input type="{poll_radio.TYPE}" name="radio" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
+								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
 							</td>
 						</tr>
 						# END poll_radio #
