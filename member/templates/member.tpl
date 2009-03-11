@@ -277,8 +277,9 @@
 				<p><label for="user_desc">{L_BIOGRAPHY}</label></p>
                 <p>
                     {USER_DESC_EDITOR}
-					<textarea class="post" rows="15" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
+					<textarea class="post" rows="10" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
 				</p>
+				<div class="spacer">&nbsp;</div>
 			</fieldset>
 				
 			<fieldset>
