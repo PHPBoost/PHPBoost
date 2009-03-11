@@ -29,7 +29,18 @@
 					<dt><label for="guestbook_pseudo">* {L_PSEUDO}</label></dt>
 					<dd><label><input type="text" size="25" maxlength="25" name="guestbook_pseudo" id="guestbook_pseudo" value="{PSEUDO}" class="text" /></label></dd>
 				</dl>
-				# ENDIF #			
+				# ENDIF #	
+				
+				# IF C_VERIF_CODE #
+				<dl>
+					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
+				</dl>
+				# ENDIF #
 				
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
 				<div class="fieldset_mini">{KERNEL_EDITOR}</div>

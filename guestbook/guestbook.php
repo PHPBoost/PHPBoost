@@ -33,12 +33,15 @@ $id_get = retrieve(GET, 'id', 0);
 $guestbook = retrieve(POST, 'guestbook', false);
 //Chargement du cache
 $Cache->load('guestbook');
-		
+
+import('util/captcha');
+$captcha = new Captcha();
+
 if ($guestbook && empty($id_get)) //Enregistrement
 {
 	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
-
+	
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time())
 		$Errorh->handler('e_readonly', E_USER_REDIRECT);
@@ -48,6 +51,9 @@ if ($guestbook && empty($id_get)) //Enregistrement
 		//Accès pour poster.
 		if ($User->check_level($CONFIG_GUESTBOOK['guestbook_auth']))
 		{
+			if (!$captcha->is_valid())
+				redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
+				
 			//Mod anti-flood
 			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "guestbook WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if (!empty($check_time))
@@ -240,6 +246,9 @@ else //Affichage.
 		case 'flood':
 		$errstr = $LANG['e_flood'];
 		break;
+		case 'captcha':
+		$errstr = $LANG['e_incorrect_verif_code'];
+		break;
 		case 'l_flood':
 		$errstr = sprintf($LANG['e_l_flood'], $CONFIG_GUESTBOOK['guestbook_max_link']);
 		break;
@@ -255,6 +264,17 @@ else //Affichage.
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
+	//Code de vérification, anti-bots.
+	if ($captcha->gd_loaded() && $CONFIG_GUESTBOOK['contact_verifcode'])
+	{
+		$captcha->set_difficulty($CONFIG_GUESTBOOK['contact_difficulty_verifcode']);
+		$Template->assign_vars(array(
+			'C_VERIF_CODE' => true,
+			'VERIF_CODE' => $captcha->display_form(),
+			'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
+		));
+	}
+
 	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
 	//On crée une pagination si le nombre de msg est trop important.
 	import('util/pagination');
@@ -269,6 +289,7 @@ else //Affichage.
 		'L_ADD_MSG' => $LANG['add_msg'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_MESSAGE' => $LANG['message'],
+		'L_VERIF_CODE' => $LANG['verif_code'],
 		'L_PSEUDO' => $LANG['pseudo'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
