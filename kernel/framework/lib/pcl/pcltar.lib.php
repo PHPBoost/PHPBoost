@@ -34,7 +34,7 @@ if (!defined("PCL_TAR"))
   // ----- Configuration variable
   // Theses values may be changed by the user of PclTar library
   if (!isset($g_pcltar_lib_dir))
-    $g_pcltar_lib_dir = "includes";
+    $g_pcltar_lib_dir = PATH_TO_ROOT . '/kernel/framework/lib/pcl';
 
   // ----- Error codes
   //   -1 : Unable to open file in binary write mode
@@ -60,7 +60,7 @@ if (!defined("PCL_TAR"))
   $g_pcltar_version = "1.3.1";
 
   // ----- Extract extension type (.php3/.php/...)
-  $g_pcltar_extension = substr(strrchr(basename($PATH_TRANSLATED), '.'), 1);
+  $g_pcltar_extension = 'php';
 
   // ----- Include other libraries
   // This library should be called by each script before the include of PhpZip

@@ -1129,7 +1129,7 @@ define('LIB_IMPORT', '.lib.php');
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
-    require_once(PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type);
+	require_once(PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type);
 }
 
 /**
