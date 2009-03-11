@@ -63,14 +63,14 @@ if (!empty($id_get)) //Déplacement du sujet.
 			if (!$User->check_auth($CAT_FORUM[$idcat]['auth'], READ_CAT_FORUM))
 				$auth_cats .= $idcat . ',';
 		}
-		$auth_cats = !empty($auth_cats) ? "WHERE id NOT IN (" . trim($auth_cats, ',') . ")" : '';
+		$auth_cats = !empty($auth_cats) ? "AND id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 	}
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$cat_forum = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "forum_cats 
-	" . $auth_cats . "
+	WHERE url = '' " . $auth_cats . "
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{	

@@ -53,7 +53,7 @@ $Template->set_filenames(array(
 //Affichage des derniers commentaires
 $i = 0;
 $array_class = array('member', 'modo', 'admin');
-$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_groups, c.contents
+$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.timestamp, c.script, c.path, m.user_id, m.login as mlogin, m.level, m.user_groups, c.contents
 FROM " . DB_TABLE_COM . " c
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 GROUP BY c.idcom
@@ -61,9 +61,7 @@ ORDER BY c.timestamp DESC
 " . $Sql->limit(0, 8), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
-	$row['user_id'] = (int)$row['user_id'];
-	$is_guest = ($row['user_id'] === -1);
-
+	$is_guest = empty($row['user_id']);
 	$group_color = User::get_group_color($row['user_groups'], $row['level']);
 	
 	//Pseudo.

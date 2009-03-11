@@ -282,7 +282,7 @@ else //Affichage.
 	//Gestion des rangs.
 	$Cache->load('ranks');
 	$j = 0;
-	$result = $Sql->query_while("SELECT g.id, g.login, g.user_id, g.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
+	$result = $Sql->query_while("SELECT g.id, g.login, g.timestamp, m.user_id, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, g.contents
 	FROM " . PREFIX . "guestbook g
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = g.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
@@ -291,11 +291,10 @@ else //Affichage.
 	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$row['user_id'] = (int)$row['user_id'];
 		$edit = '';
 		$del = '';
 		
-		$is_guest = ($row['user_id'] === -1);
+		$is_guest = empty($row['user_id']);
 		$is_modo = $User->check_level(MODO_LEVEL);
 		$warning = '';
 		$readonly = '';

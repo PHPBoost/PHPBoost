@@ -33,6 +33,7 @@
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
 						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{topics.L_EXPLAIN_CAT}
 						<br />	
+						<br />	
 					</div>
 					<br />	
 					<dl>
@@ -51,6 +52,7 @@
 					<legend>{subforums.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
 						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{subforums.L_EXPLAIN_CAT}
+						<br />	
 						<br />	
 					</div>
 					<br />	

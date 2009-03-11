@@ -133,7 +133,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					$forums = '';
 					$result = $Sql->query_while("SELECT id, name, level
 					FROM " . PREFIX . "forum_cats
-					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
+					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "' AND url = ''
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
@@ -147,7 +147,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_topic'],
 						'L_MOVE_TOPICS' => $LANG['move_topics_to'],
-						'L_EXPLAIN_CAT' => sprintf($LANG['error_warning'], sprintf((($check_topic > 1) ? $LANG['explain_topics'] : $LANG['explain_topic']), $check_topic), '', '')
+						'L_EXPLAIN_CAT' => sprintf((($check_topic > 1) ? $LANG['explain_topics'] : $LANG['explain_topic']), $check_topic)
 					));
 				}
 				if ($nbr_sub_cat > 0) //Concerne uniquement les sous-forums.
@@ -156,7 +156,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 					$forums = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
 					FROM " . PREFIX . "forum_cats
-					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'
+					WHERE id_left NOT BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "' AND url = ''
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
@@ -169,7 +169,7 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 						'FORUMS' => $forums,
 						'L_KEEP' => $LANG['keep_subforum'],
 						'L_MOVE_FORUMS' => $LANG['move_sub_forums_to'],
-						'L_EXPLAIN_CAT' => sprintf($LANG['error_warning'], sprintf((($nbr_sub_cat > 1) ? $LANG['explain_subcats'] : $LANG['explain_subcat']), $nbr_sub_cat), '', '')
+						'L_EXPLAIN_CAT' => sprintf((($nbr_sub_cat > 1) ? $LANG['explain_subcats'] : $LANG['explain_subcat']), $nbr_sub_cat)
 					));
 				}
 		
