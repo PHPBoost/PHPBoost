@@ -34,7 +34,7 @@ $id_get = retrieve(GET, 'id', 0);
 $new_status = retrieve(GET, 'new_status', '');
 $get_del = retrieve(GET, 'del', '');
 
-$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'moderation_forum.php' . SID);
+$Bread_crumb->add($CONFIG_FORUM['forum_name'], 'index.php' . SID);
 if ($action == 'alert')
 	$Bread_crumb->add($LANG['alert_management'], url('moderation_forum.php?action=alert'));
 elseif ($action == 'users')
