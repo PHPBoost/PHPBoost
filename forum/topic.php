@@ -186,7 +186,7 @@ $page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre
 $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur une page > 1, afin de récupérer le dernier msg de la page précédente.
 $i = 0;	
 $j = 0;	
-$result = $Sql->query_while("SELECT msg.id, msg.user_id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
+$result = $Sql->query_while("SELECT msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, m.user_id, m.user_groups, p.question, p.answers, p.voter_id, p.votes, p.type, m.login, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_readonly, m.user_ban, m2.login as login_edit, s.user_id AS connect, tr.id AS trackid, tr.pm as trackpm, tr.track AS track, tr.mail AS trackmail, msg.contents
 FROM " . PREFIX . "forum_msg msg
 LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = '" . $id_get . "'
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
@@ -198,12 +198,8 @@ ORDER BY msg.timestamp
 " . $Sql->limit(($Pagination->get_first_msg($CONFIG_FORUM['pagination_msg'], 'pt') - $quote_last_msg), ($CONFIG_FORUM['pagination_msg'] + $quote_last_msg)), __LINE__, __FILE__);
 while ( $row = $Sql->fetch_assoc($result) )
 {
-	$row['user_id'] = (int)$row['user_id'];
 	//Invité?
-	$is_guest = ($row['user_id'] === -1);
-	if ($is_guest)
-		$row['level'] = -1;
-		
+	$is_guest = empty($row['user_id']);
 	$first_message = ($row['id'] == $topic['first_msg_id']) ? true : false;
 
 	//Gestion du niveau d'autorisation.
