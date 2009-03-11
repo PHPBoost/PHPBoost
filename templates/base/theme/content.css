@@ -26,7 +26,7 @@ div.block_contents {
 	text-align:justify;
 } 
 /* Entête de conteneur et des tableaux */
-div.block_top, th {
+div.block_top, table tr:first-child th {
     padding:5px 6px;
     color:#FFFFFF;
     background:#5D7C94 url(images/msg_top_row.png) repeat-x;
