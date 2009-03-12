@@ -46,7 +46,7 @@ $cat_name = retrieve(POST, 'cat_name', '');
 $description = retrieve(POST, 'description', '', TSTRING_PARSE);
 
 $target = retrieve(POST, 'target', 0);
-$move_question = retrieve(POST, 'move_question', 0);
+$move_question = retrieve(POST, 'move_question', false);
 
 if ($faq_del_id > 0)
 {    
