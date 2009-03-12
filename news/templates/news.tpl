@@ -62,8 +62,8 @@
                 <span style="float:right;">
 					{news.U_COM}
 					# IF C_IS_ADMIN #
-					&nbsp;&nbsp;<a href="../news/admin_news.php?id={news.ID}" title="{L_EDIT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
-					&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
+					<a href="../news/admin_news.php?id={news.ID}" title="{L_EDIT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
+					<a href="../news/admin_news.php?delete=1&amp;id={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 					# ENDIF #
 				</span>
             </div>
@@ -126,7 +126,8 @@
 					</ul>
 				</div>
 			# END list #
-				
+			
+				<div class="spacer">&nbsp;</div>
 				<div class="text_center">{PAGINATION}</div>
 				<div class="text_center">{ARCHIVES}</div>				
 			</div>

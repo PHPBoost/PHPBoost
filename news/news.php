@@ -29,9 +29,7 @@ require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
 require_once('../kernel/header.php');
 
-$idnews = retrieve(GET, 'id', 0);	
-$idcat = retrieve(GET, 'cat', 0);
-$show_archive = retrieve(GET, 'arch', false);
+//$idnews, $idcat, $show_archive définies dans news_begin.php
 
 $is_admin = $User->check_level(ADMIN_LEVEL);
 if (empty($idnews) && empty($idcat)) // Accueil du module de news

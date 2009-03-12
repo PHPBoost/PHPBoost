@@ -122,7 +122,7 @@
 					<label for="contents">{L_TEXT}</label>
 					<label>
 						{KERNEL_EDITOR}
-						<textarea type="text" rows="30" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
+						<textarea type="text" rows="20" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
 					</label>
 					<br />
 				</fieldset>	
