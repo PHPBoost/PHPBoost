@@ -38,7 +38,7 @@ if (!defined('TITLE'))
 $Session->check(TITLE); //Vérification de la session.
 
 $Template->set_filenames(array(
-	'header'=> 'header.tpl'
+	'header' => 'header.tpl'
 ));
 
 //Gestion de la maintenance du site.
@@ -85,18 +85,18 @@ if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 
         $timezone_delay = ($CONFIG['timezone'] - number_round(date('Z')/3600, 0) - date('I')) * 3600 * 1000; // Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été, En millisecondes
         $Template->assign_vars(array(
-			'C_ALERT_MAINTAIN' 		=> true,
-			'C_MAINTAIN_DELAY' 		=> true,
-			'UNSPECIFIED' 			=> $CONFIG['maintain'] != -1 ? 1 : 0,
-			'DELAY' 				=> isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
-			'TIMEZONE_DELAY_NOW' 	=> $timezone_delay >= 0 ? '+ ' . $timezone_delay : $timezone_delay,
+			'C_ALERT_MAINTAIN' => true,
+			'C_MAINTAIN_DELAY' => true,
+			'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
+			'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
+			'TIMEZONE_DELAY_NOW' => $timezone_delay >= 0 ? '+ ' . $timezone_delay : $timezone_delay,
 			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-			'L_MAINTAIN_DELAY' 		=> $LANG['maintain_delay'],
-			'L_LOADING' 			=> $LANG['loading'],
-			'L_DAYS' 				=> $LANG['days'],
-			'L_HOURS' 				=> $LANG['hours'],
-			'L_MIN' 				=> $LANG['minutes'],
-			'L_SEC' 				=> $LANG['seconds'],
+			'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
+			'L_LOADING' => $LANG['loading'],
+			'L_DAYS' => $LANG['days'],
+			'L_HOURS' => $LANG['hours'],
+			'L_MIN' => $LANG['minutes'],
+			'L_SEC' => $LANG['seconds'],
         ));
     }
 }
@@ -159,25 +159,25 @@ $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/',
 
 $member_connected = $User->check_level(MEMBER_LEVEL);
 $Template->assign_vars(array(
-	'SID' 						=> SID,
-	'SERVER_NAME' 				=> $CONFIG['site_name'],
-	'SITE_NAME' 				=> $CONFIG['site_name'],
-	'TITLE' 					=> stripslashes(TITLE),
-	'SITE_DESCRIPTION' 			=> $CONFIG['site_desc'],
-	'SITE_KEYWORD' 				=> $CONFIG['site_keyword'],
-	'THEME' 					=> get_utheme(),
-	'LANG' 						=> get_ulang(),
-	'ALTERNATIVE_CSS' 			=> $alternative_css,
-	'C_USER_CONNECTED' 			=> $member_connected,
-	'C_USER_NOTCONNECTED' 		=> !$member_connected,
-	'C_BBCODE_TINYMCE_MODE' 	=> $User->get_attribute('user_editor') == 'tinymce',
-	'L_XML_LANGUAGE' 			=> $LANG['xml_lang'],
-	'L_VISIT' 					=> $LANG['guest_s'],
-	'L_TODAY' 					=> $LANG['today'],
-	'PATH_TO_ROOT' 				=> PATH_TO_ROOT,
-	'L_REQUIRE_PSEUDO' 			=> $LANG['require_pseudo'],
-	'L_REQUIRE_PASSWORD' 		=> $LANG['require_password'],
-    'BASE_URI'					=> HOST . SCRIPT
+	'SID' => SID,
+	'SERVER_NAME' => $CONFIG['site_name'],
+	'SITE_NAME' => $CONFIG['site_name'],
+	'TITLE' => stripslashes(TITLE),
+	'SITE_DESCRIPTION' => $CONFIG['site_desc'],
+	'SITE_KEYWORD' => $CONFIG['site_keyword'],
+	'THEME' => get_utheme(),
+	'LANG' => get_ulang(),
+	'ALTERNATIVE_CSS' => $alternative_css,
+	'C_USER_CONNECTED' => $member_connected,
+	'C_USER_NOTCONNECTED' => !$member_connected,
+	'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
+	'L_XML_LANGUAGE' => $LANG['xml_lang'],
+	'L_VISIT' => $LANG['guest_s'],
+	'L_TODAY' => $LANG['today'],
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
+	'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+	'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+    'BASE_URI' => HOST . SCRIPT
 ));
 
 //Inclusion des blocs
@@ -203,10 +203,10 @@ if (!$result)
 }
 
 $Template->assign_vars(array(
-	'C_MENUS_HEADER_CONTENT' 		=> !empty($MENUS[BLOCK_POSITION__HEADER]),
-    'MENUS_HEADER_CONTENT' 			=> $MENUS[BLOCK_POSITION__HEADER],
-	'C_MENUS_SUB_HEADER_CONTENT' 	=> !empty($MENUS[BLOCK_POSITION__SUB_HEADER]),
-	'MENUS_SUB_HEADER_CONTENT' 		=> $MENUS[BLOCK_POSITION__SUB_HEADER]
+	'C_MENUS_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__HEADER]),
+    'MENUS_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__HEADER],
+	'C_MENUS_SUB_HEADER_CONTENT' => !empty($MENUS[BLOCK_POSITION__SUB_HEADER]),
+	'MENUS_SUB_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__SUB_HEADER]
 ));
 
 //Si le compteur de visites est activé, on affiche le tout.
@@ -217,9 +217,9 @@ if ($CONFIG['compteur'] == 1)
     $compteur_day 	= !empty($compteur['total']) ? $compteur['total'] : '1';
 
     $Template->assign_vars(array(
-		'C_COMPTEUR' 		=> true,
-		'COMPTEUR_TOTAL' 	=> $compteur_total,
-		'COMPTEUR_DAY' 		=> $compteur_day
+		'C_COMPTEUR' => true,
+		'COMPTEUR_TOTAL' => $compteur_total,
+		'COMPTEUR_DAY' => $compteur_day
     ));
 }
 
@@ -242,8 +242,8 @@ if ($left_column) //Gestion des blocs de gauche.
     // Affichage des modules droits à gauche sur les thèmes à une colonne (gauche).
     $left_column_content = $MENUS[BLOCK_POSITION__LEFT] . (!$right_column ? $MENUS[BLOCK_POSITION__RIGHT] : '');
     $Template->assign_vars(array(
-		'C_MENUS_LEFT_CONTENT' 	=> !empty($left_column_content),
-		'MENUS_LEFT_CONTENT'	=> $left_column_content
+		'C_MENUS_LEFT_CONTENT' => !empty($left_column_content),
+		'MENUS_LEFT_CONTENT' => $left_column_content
     ));
 }
 if ($right_column)  //Gestion des blocs de droite.
@@ -252,7 +252,7 @@ if ($right_column)  //Gestion des blocs de droite.
     $right_column_content = $MENUS[BLOCK_POSITION__RIGHT] . (!$left_column ? $MENUS[BLOCK_POSITION__LEFT] : '');
     $Template->assign_vars(array(
 		'C_MENUS_RIGHT_CONTENT' => !empty($right_column_content),
-		'MENUS_RIGHT_CONTENT' 	=> $right_column_content
+		'MENUS_RIGHT_CONTENT' => $right_column_content
     ));
 }
 
@@ -261,7 +261,7 @@ $Bread_crumb->display();
 
 $Template->assign_vars(array(
 	'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[BLOCK_POSITION__TOP_CENTRAL]),
-	'MENUS_TOPCENTRAL_CONTENT'   => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
+	'MENUS_TOPCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
 ));
 
 $Template->pparse('header');
