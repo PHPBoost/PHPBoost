@@ -63,8 +63,8 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 	//On met à jour 
 	if (!empty($idcat) && !empty($title) && !empty($contents) && isset($get_visible))
 	{
-		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60);
-		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']) + ($end_hour * 3600) + ($end_min * 60);
+		$start_timestamp = !empty($start) ? strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60) : 0;
+		$end_timestamp = !empty($end) ? strtotimestamp($end, $LANG['date_format_short']) + ($end_hour * 3600) + ($end_min * 60) : 0;
 		
 		$visible = 1;		
 		if ($get_visible == 2)
@@ -79,7 +79,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 			list($start_timestamp, $end_timestamp) = array(0, 0);
 		else
 			list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
-
+			
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if ($timestamp > 0)
 		{
@@ -89,10 +89,9 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 		}
 		else //Ajout des heures et minutes
 			$timestamp = ' , timestamp = \'' . time() . '\'';
-			
+
 		$Sql->query_inject("UPDATE " . PREFIX . "news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
-        
         
         // Feeds Regeneration
         import('content/syndication/feed');

@@ -32,6 +32,7 @@ load_module_lang('news'); //Chargement de la langue du module.
 
 $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
+$show_archive = retrieve(GET, 'arch', false);
 
 if (!empty($idnews) && empty($idcat))
 {
@@ -52,6 +53,7 @@ else
 
 $news_title = !empty($idnews) ? $news['title'] : '';
 $Bread_crumb->add($LANG['title_news'], url('news.php'));
+$show_archive ? $Bread_crumb->add($LANG['archive'], url('news.php?arch=1')) : '';
 $Bread_crumb->add($news_title, (!empty($_GET['i']) ? url('news.php?id=' . $idnews) : ''));
 $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 

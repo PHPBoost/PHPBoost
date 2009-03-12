@@ -242,7 +242,7 @@ if (!empty($id_get)) //Espace membre
 		$Template->assign_block_vars('select_timezone', array(
 			'SELECT_TIMEZONE' => $select_timezone
 		));
-					
+		
 		//Sex par défaut
 		$array_sex = array('--', $LANG['male'], $LANG['female']);
 		$i = 0;
@@ -536,7 +536,7 @@ if (!empty($id_get)) //Espace membre
 					WHERE display = 1", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
-						$field = isset($_POST[$row['field_name']]) ? trim($_POST[$row['field_name']]) : '';
+						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
 						//Validation par expressions régulières.
 						if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 						{
