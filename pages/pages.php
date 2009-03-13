@@ -34,6 +34,8 @@ $error = retrieve(GET, 'error', '');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
+$Template->assign_vars(array('C_MODO' => $User->check_level(MODO_LEVEL)));
+
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
