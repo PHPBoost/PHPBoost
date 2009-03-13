@@ -47,18 +47,18 @@
 						</label></dd>
 					</dl>	
 					<dl>
-						<dt><label for="contact_verifcode">{L_CONTACT_VERIFCODE}</label><br /><span>{L_CONTACT_VERIFCODE_EXPLAIN}</span></dt>
+						<dt><label for="contact_verifcode">{L_GUESTBOOK_VERIFCODE}</label><br /><span>{L_GUESTBOOK_VERIFCODE_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="radio" {CONTACT_VERIFCODE_ENABLED} name="contact_verifcode" id="contact_verifcode" value="1" />	{L_YES}</label>
+							<label><input type="radio" {GUESTBOOK_VERIFCODE_ENABLED} name="guestbook_verifcode" id="guestbook_verifcode" value="1" />	{L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {CONTACT_VERIFCODE_DISABLED} name="contact_verifcode" value="0" /> {L_NO}</label>
+							<label><input type="radio" {GUESTBOOK_VERIFCODE_DISABLED} name="guestbook_verifcode" value="0" /> {L_NO}</label>
 						</dd>
 					</dl>	
 					<dl>
-						<dt><label for="contact_difficulty_verifcode">{L_CAPTCHA_DIFFICULTY}</label></dt>
+						<dt><label for="guestbook_difficulty_verifcode">{L_CAPTCHA_DIFFICULTY}</label></dt>
 						<dd>
 							<label>
-								<select name="contact_difficulty_verifcode" id="contact_difficulty_verifcode">
+								<select name="guestbook_difficulty_verifcode" id="guestbook_difficulty_verifcode">
 									# START difficulty #
 									<option value="{difficulty.VALUE}" {difficulty.SELECTED}>{difficulty.VALUE}</option>
 									# END difficulty #

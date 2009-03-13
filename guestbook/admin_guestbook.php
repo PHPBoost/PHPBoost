@@ -37,8 +37,8 @@ if (!empty($_POST['valid']) )
 	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
 	$config_guestbook['guestbook_max_link'] = retrieve(POST, 'guestbook_max_link', -1);
-	$config_guestbook['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
-	$config_guestbook['contact_difficulty_verifcode'] = retrieve(POST, 'contact_difficulty_verifcode', 2);
+	$config_guestbook['guestbook_verifcode'] = retrieve(POST, 'guestbook_verifcode', 1);
+	$config_guestbook['guestbook_difficulty_verifcode'] = retrieve(POST, 'guestbook_difficulty_verifcode', 2);
 	
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	
@@ -68,20 +68,20 @@ else
 		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $value . '</option>';
 	}
 	
-	$CONFIG_GUESTBOOK['contact_verifcode'] = isset($CONFIG_GUESTBOOK['contact_verifcode']) ? $CONFIG_GUESTBOOK['contact_verifcode'] : 0;
-	$CONFIG_GUESTBOOK['contact_difficulty_verifcode'] = isset($CONFIG_GUESTBOOK['contact_difficulty_verifcode']) ? $CONFIG_GUESTBOOK['contact_difficulty_verifcode'] : 2;
+	$CONFIG_GUESTBOOK['guestbook_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_verifcode'] : 0;
+	$CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] : 2;
 	
 	$Template->assign_vars(array(
 		'TAGS' => $tags,
 		'NBR_TAGS' => $i,
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
-		'CONTACT_VERIFCODE_ENABLED' => ($CONFIG_GUESTBOOK['contact_verifcode'] == '1') ? 'checked="checked"' : '',
-		'CONTACT_VERIFCODE_DISABLED' => ($CONFIG_GUESTBOOK['contact_verifcode'] == '0') ? 'checked="checked"' : '',
+		'GUESTBOOK_VERIFCODE_ENABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '1') ? 'checked="checked"' : '',
+		'GUESTBOOK_VERIFCODE_DISABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_GUESTBOOK' => $LANG['title_guestbook'],
 		'L_GUESTBOOK_CONFIG' => $LANG['guestbook_config'],
-		'L_CONTACT_VERIFCODE' => $LANG['verif_code'],
-		'L_CONTACT_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
+		'L_GUESTBOOK_VERIFCODE' => $LANG['verif_code'],
+		'L_GUESTBOOK_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
 		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_RANK' => $LANG['rank_post'],
 		'L_UPDATE' => $LANG['update'],
@@ -100,7 +100,7 @@ else
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
-			'SELECTED' => ($CONFIG_GUESTBOOK['contact_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
+			'SELECTED' => ($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
