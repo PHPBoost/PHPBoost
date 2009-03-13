@@ -85,7 +85,8 @@ $Template->assign_vars(array(
 	'L_MIN' => $LANG['minutes'],
 	'L_SEC' => $LANG['seconds'],
 	'L_POWERED_BY' => $LANG['powered_by'],
-	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right']
+	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
+	'PHPBOOST_VERSION' => $CONFIG['version']
 ));
 
 if ($CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1)

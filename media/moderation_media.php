@@ -129,7 +129,7 @@ else
 	$result = $Sql->query_while("SELECT * FROM " . PREFIX . "media ORDER BY infos ASC, timestamp DESC" . $Sql->limit($Pagination->get_first_msg(NUM_MODO_MEDIA, 'p'), NUM_MODO_MEDIA), __LINE__, __FILE__);
 
 	while ($row = $Sql->fetch_assoc($result))
-	{		
+	{
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
