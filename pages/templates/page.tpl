@@ -21,7 +21,7 @@
 						<br />
 					</div>
 				</noscript>
-				# IF C_MODO #
+
 				<div style="margin-bottom:10px;">
 					<div class="dynamic_menu" style="float:right;margin-right:85px;">
 						<ul>
@@ -40,8 +40,7 @@
 							</li>
 						</ul>
 					</div>
-				</div>
-				# ENDIF #			
+				</div>		
 				<div class="spacer" style="padding-bottom:15px;">&nbsp;</div>
 				{CONTENTS}
 				<div class="spacer">&nbsp;</div>
