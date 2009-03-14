@@ -447,11 +447,11 @@ class Forum
 		//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
 		$contribution->set_id_in_module($alert_id);
 		//The entitled of the contribution
-		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], $alert_title));
+		$contribution->set_entitled(sprintf($LANG['contribution_alert_moderators_for_topics'], stripslashes($alert_title)));
 		//The URL where a validator can treat the contribution (in the file edition panel)
 		$contribution->set_fixing_url('/forum/moderation_forum.php?action=alert&id=' . $alert_id);
 		//Description
-		$contribution->set_description($alert_contents);
+		$contribution->set_description(stripslashes($alert_contents));
 		//Who is the contributor?
 		$contribution->set_poster_id($User->get_attribute('user_id'));
 		//The module
@@ -516,6 +516,19 @@ class Forum
 		global $Sql;
 
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_alerts WHERE id = '" . $id_alert . "'", __LINE__, __FILE__);
+		
+		//Si la contribution associée n'est pas réglée, on la règle
+		import('events/contribution');
+		import('events/contribution_service');
+		 
+		$corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
+		if (count($corresponding_contributions) > 0)
+		{
+			$file_contribution = $corresponding_contributions[0];
+
+			//We delete the contribution
+			ContributionService::delete_contribution($file_contribution);
+		}
 
 		//Insertion de l'action dans l'historique.
 		forum_history_collector(H_DEL_ALERT);

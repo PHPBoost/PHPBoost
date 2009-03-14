@@ -75,7 +75,11 @@ else
 	$distribution_folder = new Folder('distribution');
 	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
 	if (count($distribution_files) > 0)
-		include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
+	{
+		{
+			include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
+		}
+	}
 	else
 	{
 		//Distribution par défaut
@@ -122,11 +126,15 @@ $User = new User($user_data, $user_groups);
 
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
+{
 	die($LANG['cache_tpl_must_exist_and_be_writable']);
+}
 	
 //Reprise de l'installation depuis le début
 if (retrieve(GET, 'restart', false))
+{
 	redirect(HOST . add_lang(FILE, true));
+}
 
 //Template d'installation
 $template = new Template('install/install.tpl', DO_NOT_AUTO_LOAD_FREQUENT_VARS);
@@ -143,10 +151,14 @@ function add_lang($url, $header_location = false)
 			return $url . $ampersand . 'lang=' . $lang;
 		}
 		else
+		{
 			return $url . '?' . 'lang=' . $lang;
+		}
 	}
 	else
+	{
 		return $url;
+	}
 }
 
 //Changement de langue
@@ -178,7 +190,9 @@ elseif ($step == 2)
 	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
 	//On vérifie l'étape et si elle est validée on passe à la suivante
 	if ($submit && $license_agreement)
+	{
 		redirect(HOST . FILE . add_lang('?step=3', true));
+	}
 		
 	$template->assign_vars(array(
 		'C_LICENSE' => true,
@@ -204,7 +218,9 @@ elseif ($step == 3)
 		$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
 	}
 	else
+	{
 		$check_rewrite = -1;
+	}
 	
 	$template->assign_vars(array(
 		'C_SERVER_CONFIG' => true,
@@ -230,10 +246,14 @@ elseif ($step == 3)
 		{
 			//Si il n'est pas inscriptible, on demande à Apache de le rendre inscriptible en espérant qu'il soit configurer pour accepter de telles requêtes
 			if (!is_writable($dir))
+			{
 				$is_writable = (@chmod($dir, 0777)) ? true : false;
+			}
 		}
 		else
+		{
 			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
+		}
 			
 		$template->assign_block_vars('chmod', array(
 			'TITLE'	=> str_replace('..' , '', $dir),
@@ -242,19 +262,25 @@ elseif ($step == 3)
 		));
 		
 		if ($all_dirs_ok && (!$is_dir || !$is_writable))
+		{
 			$all_dirs_ok = false;
+		}
 	}
 	
 	//On empêche de passer à l'étape suivant si cette étape n'est pas validée
 	if (retrieve(POST, 'submit', false))
 	{
 		if (!$all_dirs_ok)
+		{
 			$template->assign_vars(array(
 				'C_ERROR' => true,
 				'L_ERROR' => $LANG['config_server_dirs_not_ok']
 			));
+		}
 		else
+		{
 			redirect(HOST . FILE . add_lang('?step=4', true));
+		}
 	}
 	
 	$template->assign_vars(array(
@@ -307,9 +333,13 @@ elseif ($step == 4)
 		
 		include_once('functions.php');
 		if (!empty($host) && !empty($login) && !empty($database))
+		{
 			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
+		}
 		else
+		{
 			$result = DB_UNKNOW_ERROR;
+		}
 			
 		//If PHPBoost is already installed
 		if ($result == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST)
@@ -400,7 +430,6 @@ else
 		$password = '';
 		$database = '';
 		$tables_prefix = 'phpboost_';
-		
 	}
     
 	$template->assign_vars(array(
@@ -467,7 +496,9 @@ elseif ($step == 5)
 	//Variables serveur.
 	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 	if (!$server_path)
+	{
 		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+	}
 	$server_path = trim(str_replace('/install', '', dirname($server_path)));
 	$server_path = ($server_path == '/') ? '' : $server_path;
 	$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
@@ -486,9 +517,13 @@ elseif ($step == 5)
 		$CONFIG['server_name'] = $server_url;
 		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 		if ($server_path != '')
+		{
 			$CONFIG['server_path'] = '/' . $server_path;
+		}
 		else
+		{
 			$CONFIG['server_path'] = $server_path;
+		}
 		$CONFIG['site_name'] = $site_name;
 		$CONFIG['site_desc'] = $site_desc;
 		$CONFIG['site_keyword'] = $site_keyword;
@@ -586,11 +621,17 @@ elseif ($step == 5)
 	{
 		$timezone_name = '';
 		if ($i === 0)
+		{
 			$timezone_name = 'GMT';
+		}
 		elseif ($i > 0)
+		{
 			$timezone_name = 'GMT + ' . $i;
+		}
 		else
+		{
 			$timezone_name = 'GMT - ' . (-$i);
+		}
 		
 		$template->assign_block_vars('timezone', array(
 			'NAME' => $timezone_name,
@@ -643,23 +684,41 @@ elseif ($step == 6)
 		{
 			global $LANG;
 			if (empty($login))
+			{
 				return $LANG['admin_require_login'];
+			}
 			elseif (strlen($login) < 3)
+			{
 				return $LANG['admin_login_too_short'];
+			}
 			elseif (empty($password))
+			{
 				return $LANG['admin_require_password'];
+			}
 			elseif (empty($password_repeat))
+			{
 				return $LANG['admin_require_password_repeat'];
+			}
 			elseif (strlen($password) < 6)
+			{
 				return $LANG['admin_password_too_short'];
+			}
 			elseif (empty($user_mail))
+			{
 				return $LANG['admin_require_mail'];
+			}
 			elseif ($password != $password_repeat)
+			{
 				return $LANG['admin_passwords_error'];
+			}
 			elseif (!preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail) )
+			{
 				return $LANG['admin_email_error'];
+			}
 			else
+			{
 				return '';
+			}
 		}
 		$error = check_admin_account($login, $password, $password_repeat, $user_mail);
 
@@ -730,9 +789,11 @@ elseif ($step == 6)
 			redirect(HOST . FILE . add_lang('?step=7', true));
 		}
 		else
+		{
 			$template->assign_block_vars('error', array(
 				'ERROR' => '<div class="warning">' . $error . '</div>'
 			));
+		}
 	}
 	
 	$template->assign_vars(array(
@@ -860,21 +921,33 @@ $template->assign_vars(array(
 
 //Images de la barre de progression
 for ($i = 1; $i <= floor($steps[$step - 1][2] * 24 / 100); $i++)
+{
 	$template->assign_block_vars('progress_bar', array());
+}
 
 //Etapes de l'installation
 for ($i = 1; $i <= STEPS_NUMBER; $i++)
 {
 	if ($i < $step)
+	{
 		$row_class = 'row_success';
+	}
 	elseif ($i == $step && $i == STEPS_NUMBER)
+	{
 		$row_class = 'row_current row_final';
+	}
 	elseif ($i == $step)
+	{
 		$row_class = 'row_current';
+	}
 	elseif ($i == STEPS_NUMBER)
+	{
 		$row_class = 'row_next row_final';
+	}
 	else
+	{
 		$row_class = 'row_next';
+	}
 	
 	$template->assign_block_vars('link_menu', array(
 		'CLASS' => $row_class,

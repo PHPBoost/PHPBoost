@@ -160,7 +160,10 @@ elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel', ''))) //Empêch
     }
 }
 
-// Verify that the user really wanted to do this POST
-$Session->csrf_post_protect();
+// Verify that the user really wanted to do this POST (only for the registered ones)
+if ($User->check_level(MEMBER_LEVEL))
+{
+	$Session->csrf_post_protect();
+}
 
 ?>
