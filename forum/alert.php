@@ -3,7 +3,7 @@
  *                                alert.php
  *                            -------------------
  *   begin                : August 7, 2006
- *   copyright          : (C) 2006 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2006 Viarre Régis / Sautel Benoît
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *  
