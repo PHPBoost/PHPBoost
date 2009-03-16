@@ -78,7 +78,7 @@ function poll_mini($position, $block)
     		));
     		
     		$tpl->assign_block_vars('question', array(
-    			'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
+    			'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll_mini['id'] . '.php?token=' . $Session->get_token()),
     			'QUESTION' => $poll_mini['question']
     		));
     			
