@@ -181,12 +181,15 @@ class Feed
     {
         import('io/filesystem/folder');
         $folder = new Folder(FEEDS_PATH, OPEN_NOW);
-       
         $files = null;
-        if ($module_id !== false)  // Clear only this module cache
-            $files = $folder->get_files('`.+/' . $module_id . '_.*`');
-        else                        // Clear the whole cache
+        if ($module_id !== false)
+        {   // Clear only this module cache
+            $files = $folder->get_files('`' . $module_id . '_.*`');
+        }
+        else
+        {   // Clear the whole cache
             $files = $folder->get_files();
+        }
        
         foreach ($files as $file)
             $file->delete();

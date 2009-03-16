@@ -3,7 +3,7 @@
  *                               poll_mini.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
   *
@@ -35,14 +35,14 @@ function poll_mini($position, $block)
     {
     	//Chargement de la langue du module.
     	load_module_lang('poll');
-    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
+    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage alï¿½atoire.
     	
     	$tpl = new Template('poll/poll_mini.tpl');
         import('core/menu_service');
         MenuService::assign_positions_conditions($tpl, $position);
     		
-    	#####################Résultats######################
-    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
+    	#####################Rï¿½sultats######################
+    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vï¿½rification par ip plus tard).
     	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
     	if (in_array($poll_mini['id'], $array_cookie))
     	{
@@ -77,6 +77,7 @@ function poll_mini($position, $block)
     			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
     		));
     		
+    		global $Session;
     		$tpl->assign_block_vars('question', array(
     			'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll_mini['id'] . '.php?token=' . $Session->get_token()),
     			'QUESTION' => $poll_mini['question']

@@ -102,18 +102,16 @@ class Folder extends FileSystemElement
     {
         parent::get();
 
+        $ret = array();
         if (empty($regex))
         {
-            $ret = array();
             foreach ($this->files as $file)
             {
                 $ret[] = $file;
             }
-            return $ret;
         }
         else
         {
-            $ret = array();
             foreach ($this->files as $file)
             {
                 if (preg_match($regex, $file->get_name()))
@@ -121,8 +119,8 @@ class Folder extends FileSystemElement
                     $ret[] = $file;
                 }
             }
-            return $ret;
         }
+        return $ret;
     }
 
     /**
