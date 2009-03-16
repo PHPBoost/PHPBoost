@@ -32,8 +32,21 @@ define('APPLICATION_TYPE__TEMPLATE', 'template');
 import('util/date');
 import('events/administrator_alert');
 
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc 
+ * @package core
+ */
 class Application
 {
+    /**
+	* @desc constructor of the class
+	* @param $id
+	* @param $language
+	* @param $type  see APPLICATION_TYPE_xxx constants
+	* @param $version
+	* @param $repository
+	*/
     function Application($id, $language, $type = APPLICATION_TYPE__MODULE , $version = 0, $repository = '')
     {
         $this->id = $id;
@@ -47,7 +60,10 @@ class Application
         
         $this->pubdate = new Date();
     }
-    
+      /**
+	* @desc Load an XML description
+	* @param $xml_desc reference to xml description
+	*/  
     function load(&$xml_desc)
     {
         $attributes = $xml_desc->attributes();
@@ -140,12 +156,18 @@ class Application
             $this->warning = utf8_decode((string) $this->warning[0]);
         }
     }
-    
+	/**
+	* @desc Get an identifier of the application
+	* @return string identifier
+	*/    
     function get_identifier()
     {
         return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
     }
-    
+	/**
+	* @desc Check compatibility with limits
+	* @return boolean TRUE if compatible FALSE if not
+	*/  
     function check_compatibility()
     {
         global $CONFIG;
@@ -159,38 +181,103 @@ class Application
     }
     
     ## PUBLIC ACCESSORS ##
-    
+	/**
+	* @desc Accessor of id
+	*/      
     function get_id() { return $this->id; }
+	/**
+	* @desc Accessor of name
+	*/ 
     function get_name() { return $this->name; }
+	/**
+	* @desc Accessor of Language
+	*/ 
     function get_language() { return $this->language; }
+	/**
+	* @desc Accessor of Localized language
+	*/ 
     function get_localized_language() { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
+	/**
+	* @desc Accessor of Type
+	*/ 
     function get_type() { return $this->type; }
-    
+	/**
+	* @desc Accessor of Repository
+	*/     
     function get_repository() { return $this->repository; }
-    
+	/**
+	* @desc Accessor of Version
+	*/     
     function get_version() { return $this->version; }
+	/**
+	* @desc Accessor of Compatibility min value
+	*/ 
     function get_compatibility_min() { return $this->compatibility_min; }
+	/**
+	* @desc Accessor of Compatibility Max value
+	*/ 
     function get_compatibility_max() { return $this->compatibility_max; }
+	/**
+	* @desc Accessor of Publication Date
+	*/ 
     function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(DATE_FORMAT_SHORT, TIMEZONE_USER) : ''; }
+	/**
+	* @desc Accessor of Priority
+	*/ 
     function get_priority() { return $this->priority; }
+	/**
+	* @desc Accessor of Security Update
+	*/ 
     function get_security_update() { return $this->security_update; }
-    
+	/**
+	* @desc Accessor of Download URL
+	*/     
     function get_download_url() { return $this->download_url; }
+	/**
+	* @desc Accessor of Update URL
+	*/ 
     function get_update_url() { return $this->update_url; }
-    
+	/**
+	* @desc Accessor of Authors
+	*/     
     function get_authors() { return $this->authors; }
-    
+	/**
+	* @desc Accessor of Description Text
+	*/     
     function get_description() { return $this->description; }
+	/**
+	* @desc Accessor of New Features Text
+	*/ 
     function get_new_features() { return $this->new_features; }
+	/**
+	* @desc Accessor of Improvments Text
+	*/ 
     function get_improvments() { return $this->improvments; }
+	/**
+	* @desc Accessor of Bug Corrections Text
+	*/ 
     function get_bug_corrections() { return $this->bug_corrections; }
+	/**
+	* @desc Accessor of Security Improvments
+	*/ 
     function get_security_improvments() { return $this->security_improvments; }
-    
+	/**
+	* @desc Accessor of Warning level
+	*/    
     function get_warning_level() { return $this->warning_level; }
+	/**
+	* @desc Accessor of Warning
+	*/ 
     function get_warning() { return $this->warning; }
     
     ## PRIVATE METHODS ##
-    
+	/**
+	* @desc Get attribute of xml token
+	* @param xdoc reference to xml document
+	* @param attibute_name name of the attribute
+	* @param xpath_query
+	* @return string attrbute value
+	*/     
     function _get_attribute(&$xdoc, $attibute_name, $xpath_query = '.')
     {
         $elements = $xdoc->xpath($xpath_query);
@@ -201,7 +288,10 @@ class Application
         }
         return null;
     }
-    
+	/**
+	* @desc Get the number of the installed version
+	* @return string version
+	*/     
     function _get_installed_version()
     {
         global $CONFIG;
