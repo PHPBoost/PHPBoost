@@ -34,10 +34,18 @@ define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
+/**
+ * @author Viarre Régis crowkait@phpboost.com
+ * @desc 
+ * @package core
+ */
 class Errors
 {
 	## Public Methods ##
-	//Constructeur
+    /**
+	* @desc constructor
+	* @param boolean $archive_all TRUE archive all events FALSE if not
+	*/
 	function Errors($archive_all = false)
 	{
 		$this->archive_all = $archive_all;
@@ -57,7 +65,13 @@ class Errors
 		set_error_handler(array($this, 'handler_php'));
 	}
 	
-	//Gestionnaire d'erreur.
+	/**
+	* @desc PHP exceptions handler
+	* @param $errno error number
+	* @param $errstr error label
+	* @param $errfile file name
+	* @param  $errline line number
+	*/
 	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
@@ -117,7 +131,16 @@ class Errors
 		return true;
 	}
 	
-	//Gestionnaire d'erreurs controlées par le développeur.
+    /**
+	* @desc Exception handler for developper
+	* @param $errstr
+	* @param $errno
+	* @param $errline
+	* @param $errfile
+	* @param $tpl_cond
+	* @param $archive
+	* @param $stop
+	*/
 	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
 		global $LANG, $Template;
@@ -201,7 +224,9 @@ class Errors
 		return false;
 	}
 	
-	//Récupération des informations de la dernière erreur.
+    /**
+	* @desc Get last error informations
+	*/
 	function get_last__error_log()
 	{
 		$errinfo = '';
@@ -230,7 +255,9 @@ class Errors
 		return $errinfo;
 	}
 	
-	//Récupération du type de l'erreur.
+    /**
+	* @desc Get Error type
+	*/
 	function get_errno_class($errno)
 	{
 		switch ($errno)
@@ -263,7 +290,9 @@ class Errors
 	
 	
 	## Private Methods ##
-	//Enregistre l'erreur dans le fichier de log.
+    /**
+	* @desc Save error in log file
+	*/
 	function _error_log($errfile, $errline, $errno, $errstr, $archive)
 	{
 		if ($archive || $this->archive_all)
@@ -285,7 +314,9 @@ class Errors
 		return false;
 	}
 	
-	//Nettoie la chaine d'erreur pour compresser le fichier.
+    /**
+	* @desc Clean Error String
+	*/
 	function _clean_error_string($errstr)
 	{
 		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
