@@ -37,16 +37,28 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 import('core/application');
 import('core/repository');
 
-
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc 
+ * @package core
+ */
 class Updates
 {
+    /**
+	* @desc constructor of the class
+	* @param $checks
+	*/
     function Updates($checks = CHECK_ALL_UPDATES)
     {
         $this->_load_apps($checks);
         $this->_load_repositories();
         $this->_check_repositories();
     }
-    
+	
+    /**
+	* @desc Load Application Classes
+	* @param $checks
+	*/    
     function _load_apps($checks = CHECK_ALL_UPDATES)
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -86,7 +98,10 @@ class Updates
             }
         }
     }
-    
+	
+    /**
+	* @desc Load Repository Classes
+	*/
     function _load_repositories()
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -99,7 +114,10 @@ class Updates
             }
         }
     }
-    
+
+    /**
+	* @desc Check Repository for Update Notification
+	*/    
     function _check_repositories()
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -114,7 +132,10 @@ class Updates
             }
         }
     }
-    
+	
+    /**
+	* @desc Save an alert for Update Notification
+	*/
     function _add_update_alert(&$app)
     {
         import('events/administrator_alert_service');
