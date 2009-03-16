@@ -110,7 +110,7 @@ if (!empty($id_get)) //Espace membre
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;token=' . $Session->get_token(), '-' . $User->get_attribute('user_id') . '.php?&amp;token=' . $Session->get_token()),
+			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;token=' . $Session->get_token(), '-' . $User->get_attribute('user_id') . '.php?token=' . $Session->get_token()),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
 			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
