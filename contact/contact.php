@@ -3,7 +3,7 @@
  *                               contact.php
  *                            -------------------
  *   begin                : July 29, 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -41,13 +41,13 @@ $captcha = new Captcha();
 ###########################Envoi##############################
 if (!empty($mail_valid))
 {
-    //Code de vérification si activé
-    if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vérification si activé
+    //Code de vï¿½rification si activï¿½
+    if (!$CONFIG_CONTACT['contact_verifcode'] || $captcha->is_valid()) //Code de vï¿½rification si activï¿½
     {
         import('io/mail');
         $mail = new Mail();
 
-        if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succès mail
+        if ($mail->send_from_properties($CONFIG['mail'], $mail_object, $mail_contents, $mail_from, '', 'user')) //Succï¿½s mail
         {
             $get_error = 'success';
         }
@@ -80,16 +80,16 @@ elseif ($get_error == 'verif')
 {
     $Errorh->handler($LANG['e_incorrect_verif_code'], E_USER_WARNING);
 }
-elseif ($get_error == 'success')//Message de succès.
+elseif ($get_error == 'success')//Message de succï¿½s.
 {
     $Errorh->handler($LANG['success_mail'], E_USER_SUCCESS);
 }
-elseif ($get_error == 'error')//Message de succès.
+elseif ($get_error == 'error')//Message de succï¿½s.
 {
     $Errorh->handler($LANG['error_mail'], E_USER_WARNING);
 }
 
-//Code de vérification, anti-bots.
+//Code de vï¿½rification, anti-bots.
 if ($captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 {
     $captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);

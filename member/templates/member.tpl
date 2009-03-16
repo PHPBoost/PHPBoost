@@ -429,7 +429,7 @@
 					</form>				
 				</td>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?token={TOKEN}" method="post">
 						<span style="float:left;">
 							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
@@ -640,7 +640,7 @@
 		<table class="module_table" style="width:70%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?token={TOKEN}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">  
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #
