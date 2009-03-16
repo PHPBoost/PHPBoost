@@ -3,7 +3,7 @@
  *                                member.php
  *                            -------------------
  *   begin                : August 04 2005
- *   copyright            : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -110,7 +110,7 @@ if (!empty($id_get)) //Espace membre
 			'USER_DESC_EDITOR' => display_editor('user_desc'),
 			'USER_MSN' => $row['user_msn'],
 			'USER_YAHOO' => $row['user_yahoo'],
-			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+			'U_USER_ACTION_UPDATE' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;token=' . $Session->get_token(), '-' . $User->get_attribute('user_id') . '.php?&amp;token=' . $Session->get_token()),
 			'L_REQUIRE_MAIL' => $LANG['require_mail'],
 			'L_MAIL_INVALID' => $LANG['e_mail_invalid'],
 			'L_MAIL_AUTH' => $LANG['e_mail_auth'],
@@ -163,7 +163,7 @@ if (!empty($id_get)) //Espace membre
 			'L_RESET' => $LANG['reset']
 		));
 		
-		//Gestion langue par défaut.
+		//Gestion langue par dï¿½faut.
 		$array_identifier = '';
 		$lang_identifier = '../images/stats/other.png';
 		$ulang = get_ulang();
@@ -192,8 +192,8 @@ if (!empty($id_get)) //Espace membre
 			'IMG_LANG_IDENTIFIER' => $lang_identifier
 		));
 		
-		//Gestion thème par défaut.
-		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
+		//Gestion thï¿½me par dï¿½faut.
+		if ($CONFIG_USER['force_theme'] == 0) //Thï¿½mes aux membres autorisï¿½s.
 		{
 			$utheme = get_utheme();
 			foreach($THEME_CONFIG as $theme => $array_info)
@@ -210,7 +210,7 @@ if (!empty($id_get)) //Espace membre
 				}
 			}
 		}
-		else //Thème par défaut forcé.
+		else //Thï¿½me par dï¿½faut forcï¿½.
 		{
 			$theme_info = load_ini_file('/config/', get_ulang());
 			$Template->assign_block_vars('select_theme', array(
@@ -219,7 +219,7 @@ if (!empty($id_get)) //Espace membre
 			));
 		}
 		
-		//Editeur texte par défaut.
+		//Editeur texte par dï¿½faut.
 		$editors = array('bbcode' => 'BBCode', 'tinymce' => 'Tinymce');
 		$select_editors = '';
 		foreach ($editors as $code => $name)
@@ -231,7 +231,7 @@ if (!empty($id_get)) //Espace membre
 			'SELECT_EDITORS' => $select_editors
 		));
 		
-		//Gestion fuseau horaire par défaut.
+		//Gestion fuseau horaire par dï¿½faut.
 		$select_timezone = '';
 		for ($i = -12; $i <= 14; $i++)
 		{
@@ -243,7 +243,7 @@ if (!empty($id_get)) //Espace membre
 			'SELECT_TIMEZONE' => $select_timezone
 		));
 		
-		//Sex par défaut
+		//Sex par dï¿½faut
 		$array_sex = array('--', $LANG['male'], $LANG['female']);
 		$i = 0;
 		foreach ($array_sex as $value_sex)
@@ -268,7 +268,7 @@ if (!empty($id_get)) //Espace membre
 			));
 		}
 		
-		//Champs supplémentaires.
+		//Champs supplï¿½mentaires.
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
@@ -284,7 +284,7 @@ if (!empty($id_get)) //Espace membre
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
+				// field: 0 => base de donnï¿½es, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
 				$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
 				switch ($row['field'])
@@ -418,11 +418,11 @@ if (!empty($id_get)) //Espace membre
 			$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
 			$Uploads->Empty_folder_member($User->get_attribute('user_id'));
 
-			//On régénère le cache
+			//On rï¿½gï¿½nï¿½re le cache
 			$Cache->Generate_file('stats');
 		}
 		
-		//Mise à jour du reste de la config.
+		//Mise ï¿½ jour du reste de la config.
 		$user_mail = strtolower($_POST['mail']); //Mail en minuscule.
 		if (check_mail($user_mail))
 		{
@@ -469,13 +469,13 @@ if (!empty($id_get)) //Espace membre
 				if ($_FILES['avatars']['size'] > 0)
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
-					if (!empty($Upload->error)) //Erreur, on arrête ici
+					if (!empty($Upload->error)) //Erreur, on arrï¿½te ici
 						redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
 						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
-						if (!empty($error)) //Erreur, on arrête ici
+						if (!empty($error)) //Erreur, on arrï¿½te ici
 							redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 						else
 						{
@@ -486,7 +486,7 @@ if (!empty($id_get)) //Espace membre
 								if (is_file($user_avatar_path) && isset($match[1]))
 									@unlink('../images/avatars/' . $match[1]);
 							}
-							$user_avatar = $path; //Avatar uploadé et validé.
+							$user_avatar = $path; //Avatar uploadï¿½ et validï¿½.
 						}
 					}
 				}
@@ -496,10 +496,10 @@ if (!empty($id_get)) //Espace membre
 			{
 				$path = strprotect($_POST['avatar']);
 				$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
-				if (!empty($error)) //Erreur, on arrête ici
+				if (!empty($error)) //Erreur, on arrï¿½te ici
 					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&erroru=' . $error) . '#errorh');
 				else
-					$user_avatar = $path; //Avatar posté et validé.
+					$user_avatar = $path; //Avatar postï¿½ et validï¿½.
 			}
 			$user_avatar = !empty($user_avatar) ? " user_avatar = '" . $user_avatar . "', " : '';
 			
@@ -507,10 +507,10 @@ if (!empty($id_get)) //Espace membre
 			{
 				$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "' AND login <> '" . addslashes($User->get_attribute('login')) . "'", __LINE__, __FILE__);
 				$user_mail = "user_mail = '" . $user_mail . "', ";
-				if ($check_mail >= 1) //Autre utilisateur avec le même mail!
+				if ($check_mail >= 1) //Autre utilisateur avec le mï¿½me mail!
 					redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=auth_mail') . '#errorh');
 				
-				//Suppression des images des stats concernant les membres, si l'info à été modifiée.
+				//Suppression des images des stats concernant les membres, si l'info ï¿½ ï¿½tï¿½ modifiï¿½e.
 				$info_mbr = $Sql->query_array(DB_TABLE_MEMBER, "user_theme", "user_sex", "WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				if ($info_mbr['user_sex'] != $user_sex)
 					@unlink('../cache/sex.png');
@@ -524,7 +524,7 @@ if (!empty($id_get)) //Espace membre
 				user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "',
 				user_sign = '" . $user_sign . "' WHERE user_id = '" . numeric($User->get_attribute('user_id')) . "'", __LINE__, __FILE__);
 				
-				//Champs supplémentaires.
+				//Champs supplï¿½mentaires.
 				$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 				if ($extend_field_exist > 0)
 				{
@@ -537,7 +537,7 @@ if (!empty($id_get)) //Espace membre
 					while ($row = $Sql->fetch_assoc($result))
 					{
 						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
-						//Validation par expressions régulières.
+						//Validation par expressions rï¿½guliï¿½res.
 						if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 						{
 							$array_regex = array(
@@ -584,7 +584,7 @@ if (!empty($id_get)) //Espace membre
 							
 						if (!empty($field))
 						{
-							if ($valid_field) //Validation par expression régulière si présente.
+							if ($valid_field) //Validation par expression rï¿½guliï¿½re si prï¿½sente.
 							{
 								$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
 								$req_field .= $row['field_name'] . ', ';
@@ -623,7 +623,7 @@ if (!empty($id_get)) //Espace membre
 		//Chargement de la configuration.
 		$Cache->load('uploads');
 
-		//Droit d'accès?.
+		//Droit d'accï¿½s?.
 		$is_auth_files = $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES);
 	
 		$Template->assign_vars(array(
@@ -662,7 +662,7 @@ if (!empty($id_get)) //Espace membre
 		$row = $Sql->query_array(DB_TABLE_MEMBER, 'user_id', 'level', 'login', 'user_groups', 'user_mail', 'user_local', 'user_web', 'user_occupation', 'user_hobbies', 'user_avatar', 'user_show_mail', 'timestamp', 'user_sex', 'user_born', 'user_sign', 'user_desc', 'user_msn', 'user_msg', 'user_yahoo', 'last_connect', 'user_ban', 'user_warning', "WHERE user_id = '" . $id_get . "' AND user_aprob = 1", __LINE__, __FILE__);
 		$user_born = $Sql->query("SELECT " . $Sql->date_diff('user_born') . " FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_get . "'", __LINE__, __FILE__);
 		
-		if (empty($row['user_id'])) //Vérification de l'existance du membre.
+		if (empty($row['user_id'])) //Vï¿½rification de l'existance du membre.
 		{
 			if ($User->check_level(ADMIN_LEVEL))
 			{	
@@ -676,7 +676,7 @@ if (!empty($id_get)) //Espace membre
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
 		}
 
-		//Dernière connexion, si vide => date d'enregistrement du membre.
+		//Derniï¿½re connexion, si vide => date d'enregistrement du membre.
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
 	
 		$user_mail = ($row['user_show_mail'] == 1) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
@@ -724,7 +724,7 @@ if (!empty($id_get)) //Espace membre
 		}
 		$user_group_list = !empty($user_group_list) ? '<ul style="list-style-type:none;">' . $user_group_list . '</ul>' : $LANG['member'];
 		
-		//Droit d'édition du profil, au membre en question et à l'admin uniquement	.
+		//Droit d'ï¿½dition du profil, au membre en question et ï¿½ l'admin uniquement	.
 		$Template->assign_vars(array(
 			'C_USER_PROFIL_EDIT' => ($User->get_attribute('user_id') === $id_get || $User->check_level(ADMIN_LEVEL)) ? true : false,
 			'C_PROFIL_USER_VIEW' => true,
@@ -772,7 +772,7 @@ if (!empty($id_get)) //Espace membre
 			'U_USER_PM' => url('.php?pm=' . $id_get, '-' . $id_get . '.php')
 		));
 				
-		//Champs supplémentaires.
+		//Champs supplï¿½mentaires.
 		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
@@ -788,7 +788,7 @@ if (!empty($id_get)) //Espace membre
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
-				// field: 0 => base de données, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
+				// field: 0 => base de donnï¿½es, 1 => text, 2 => textarea, 3 => select, 4 => select multiple, 5=> radio, 6 => checkbox
 				$field = '';
 				$row[$row['field_name']] = !empty($row[$row['field_name']]) ? $row[$row['field_name']] : $row['default_values'];
 				switch ($row['field'])
@@ -906,7 +906,7 @@ else //Show all member!
 		'member'=> 'member/member.tpl'
 	));
 	
-	//Recherche d'un member si javascript bloqué.
+	//Recherche d'un member si javascript bloquï¿½.
 	$login = '';
 	if (!empty($_POST['search_member']))
 	{
@@ -981,7 +981,7 @@ else //Show all member!
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
-	//On crée une pagination si le nombre de membre est trop important.
+	//On crï¿½e une pagination si le nombre de membre est trop important.
 	import('util/pagination');
 	$Pagination = new Pagination();
 		
