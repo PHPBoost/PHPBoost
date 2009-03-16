@@ -27,8 +27,17 @@
 
 import('core/application');
 
+/**
+ * @author Loïc Rouchon horn@phpboost.com
+ * @desc 
+ * @package core
+ */
 class Repository
 {
+    /**
+	* @desc constructor of the class
+	* @param $url
+	*/
     function Repository($url)
     {
         $this->url = $url;
@@ -36,7 +45,11 @@ class Repository
         if ($this->xml == false)
             $this->xml = null;
     }
-    
+
+    /**
+	* @desc Check Application
+	* @param $app
+	*/    
     function check($app)
     {
         global $CONFIG;
@@ -72,7 +85,10 @@ class Repository
         }
         return null;
     }
-    
+
+    /**
+	* @desc Accessor of url
+	*/	
     function get_url() { return $this->url; }
     
     var $url = '';
