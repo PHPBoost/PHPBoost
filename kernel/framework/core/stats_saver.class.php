@@ -28,11 +28,18 @@
 global $CONFIG;
 include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
 
+/**
+ * @author Viarre Régis crowkait@phpboost.com
+ * @desc 
+ * @package core
+ */
 class StatsSaver
 {
 	## Public Methods ##
-	//Sites référents.
-	/*static*/ function compute_referer()
+    /**
+	* @desc Compute Stats of Site Referers
+	*/
+	function compute_referer()
 	{
 		global $Sql;
 		
@@ -87,7 +94,10 @@ class StatsSaver
 		}
 	}
 	
-	/*static*/ function compute_users()
+    /**
+	* @desc Compute Stats of Site Users
+	*/
+	function compute_users()
 	{
 		global $stats_array_lang;
 		
@@ -209,7 +219,9 @@ class StatsSaver
 	}
 
 	## Private Methods ##
-	//Enregistrement	
+    /**
+	* @desc Save stats to file
+	*/
 	function _write_stats($file_path, $stats_item)
 	{
 		$file_path = PATH_TO_ROOT . '/cache/' . $file_path . '.txt';
