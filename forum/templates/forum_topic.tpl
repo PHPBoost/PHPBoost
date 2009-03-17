@@ -253,7 +253,7 @@
 					
 					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{MODULE_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
 					
-					&nbsp;&nbsp;<img onclick="new Effect.ScrollTo('go_top',{duration:1.2});" style="cursor:pointer" src="../templates/{THEME}/images/top.png" alt="" /> <img onclick="new Effect.ScrollTo('go_bottom',{duration:1.2});" style="cursor:pointer" src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
+					&nbsp;&nbsp;<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
