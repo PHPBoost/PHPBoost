@@ -73,8 +73,7 @@ class PollInterface extends ModuleInterface
 			}
 		}
 		
-		if (!empty($_array_poll))
-			$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
+		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 
 		return $code;
 	}
