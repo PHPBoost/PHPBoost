@@ -239,7 +239,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					WHERE display = 1", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
-						$field = retrieve(POST, $row['field_name'], '', TSTRING_UNCHANGE);
+						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
 						if ($row['field'] == 2)
 							$field = strparse($field);
 						elseif ($row['field'] == 4)
@@ -247,7 +247,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$array_field = is_array($field) ? $field : array();
 							$field = '';
 							foreach ($array_field as $value)
-								$field .= addslashes($value) . '|';
+								$field .= strprotect($value) . '|';
 						}
 						elseif ($row['field'] == 6)
 						{
@@ -256,7 +256,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$array_possible_values = explode('|', $row['possible_values']);
 							foreach ($array_possible_values as $value)
 							{
-								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($value) . '|' : '';
+								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($value) . '|' : '';
 								$i++;
 							}
 						}

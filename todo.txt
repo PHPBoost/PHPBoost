@@ -75,6 +75,8 @@ Champs obligatoires à l'inscription
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
 - [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
 - [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
+
 
 [b]Galerie:[/b]
 - [color=red]Nouveauté:[/color] Gestion des catégories infinies, droits de lecture/ecriture sur les catégories.
