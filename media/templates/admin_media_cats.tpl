@@ -110,7 +110,7 @@
 						</dd>
 					</dl>
 					<label for="description" id="preview_description">
-						{L_CAT_DESCRIPTION}
+						* {L_CAT_DESCRIPTION}
 					</label>
 					{KERNEL_EDITOR}
 					<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
