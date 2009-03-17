@@ -364,7 +364,7 @@
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
 							<br />
-							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a>
+							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a> <br /><br />
 						</td>
 						<td class="row2" style="text-align:center;">
 							<a href="pm{U_USER_PM}">

@@ -234,6 +234,7 @@ $LANG['open_menu_poll'] = 'Open poll menu';
 $LANG['simple_answer'] = 'Single answer';
 $LANG['multiple_answer'] = 'Multiple answer';
 $LANG['delete_poll'] = 'Delete poll';
+$LANG['require_title_poll'] = 'Please set a title for the poll!';
 
 //Post
 $LANG['next'] = 'Next';

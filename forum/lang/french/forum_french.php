@@ -234,6 +234,7 @@ $LANG['open_menu_poll'] = 'Ouvrir le menu sondage';
 $LANG['simple_answer'] = 'Simple réponse';
 $LANG['multiple_answer'] = 'Multiple réponses';
 $LANG['delete_poll'] = 'Supprimer le sondage';
+$LANG['require_title_poll'] = 'Veuillez entrer un titre pour le sondage!';
 
 //Post
 $LANG['next'] = 'Suite';

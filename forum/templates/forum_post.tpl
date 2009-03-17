@@ -15,15 +15,23 @@
 				alert("{L_REQUIRE_TITLE}");
 				return false;
 		    }
+			if(!poll_hidded && document.getElementById('question').value == "") {
+				alert("{L_REQUIRE_TITLE_POLL}");
+				return false;
+		    }
 			return true;
 		}
+		var poll_hidded = true;
 		function hide_poll(divID)
 		{
 			if( document.getElementById(divID) )
 			{
 				document.getElementById(divID).style.display = 'block';
 				if( document.getElementById('hidepoll_link') )
+				{	
 					document.getElementById('hidepoll_link').style.display = 'none';
+					poll_hidded = false;
+				}
 			}
 		}
 		function add_poll_field(nbr_field)

@@ -442,7 +442,7 @@ class ArticlesInterface extends ModuleInterface
 				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
 
 				$tpl->assign_block_vars('articles', array(
-					'NAME' => $fichier,
+					'NAME' => $row['title'],
 					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
 					'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 					'DATE' => gmdate_format('date_format_short', $row['timestamp']),

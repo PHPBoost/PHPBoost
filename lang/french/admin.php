@@ -414,7 +414,7 @@ $LANG['system_report_summerization_explain'] = 'Ceci est le récapitulatif du rap
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'L\'image uploadée doit être au format jpg, gif, png ou bmp';
-$LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip ou tar';
+$LANG['explain_archive_upload'] = 'L\'archive uploadée doit être au format zip ou gzip';
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Autorisation requise pour l\'activation de l\'interface de fichiers';

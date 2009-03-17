@@ -419,6 +419,7 @@ class Comments
 					'UPDATE' => ($integrated_in_environment == true) ? SID : '',
 					'VAR' => $vars_simple,
 					'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
+					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 					'THEME' => get_utheme(),

@@ -240,18 +240,17 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$sum_vote = array_sum($array_vote);	
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
-			$array_poll = array_combine($array_answer, $array_vote);
-			foreach ($array_poll as $answer => $nbrvote)
+			foreach ($array_answer as $key => $answer)
 			{
 				$Template->assign_block_vars('poll_result', array(
 					'ANSWERS' => $answer, 
-					'NBRVOTE' => $nbrvote,
-					'WIDTH' => number_round(($nbrvote * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
-					'PERCENT' => number_round(($nbrvote * 100 / $sum_vote), 1)
+					'NBRVOTE' => $array_vote[$key],
+					'WIDTH' => number_round(($array_vote[$key] * 100 / $sum_vote), 1) * 4, //x 4 Pour agrandir la barre de vote.					
+					'PERCENT' => number_round(($array_vote[$key] * 100 / $sum_vote), 1)
 				));
 			}
 		}
-		else //Affichage des formulaires (radio/checkbox)  pour voter.
+		else //Affichage des formulaires (radio/checkbox) pour voter.
 		{
 			$Template->assign_vars(array(
 				'C_POLL_QUESTION' => true
