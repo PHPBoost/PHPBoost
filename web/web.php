@@ -113,6 +113,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	
 	$Template->assign_vars(array(
 		'C_WEB_LINK' => true,
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $CONFIG_WEB['note_max'],
@@ -202,10 +203,6 @@ else
 	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
-	$edit = '';
-	if ($User->check_level(ADMIN_LEVEL))
-		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-
 	//On crée une pagination si le nombre de catégories est trop important.
 	import('util/pagination'); 
 	$Pagination = new Pagination();
@@ -215,8 +212,8 @@ else
 	
 	$Template->assign_vars(array(
 		'C_WEB_CAT' => true,
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
-		'EDIT' => $edit,
 		'TOTAL_FILE' => $total_link,
 		'L_CATEGORIES' => $LANG['categories'],
 		'L_PROPOSE_LINK' => $LANG['propose_link'],

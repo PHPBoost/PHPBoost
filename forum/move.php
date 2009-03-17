@@ -202,6 +202,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_REQUIRE' => $LANG['require'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'L_REQUIRE_TITLE_POLL' => $LANG['require_title_poll'],
 		'L_FORUM_INDEX' => $LANG['forum_index'],
 		'L_CAT' => $LANG['category'],
 		'L_TITLE' => $LANG['title'],

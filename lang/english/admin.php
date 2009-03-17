@@ -414,7 +414,7 @@ $LANG['system_report_summerization_explain'] = 'This is a summerization of the r
 
 //Gestion de l'upload
 $LANG['explain_upload_img'] = 'Image format must be jpg, gif, png or bmp';
-$LANG['explain_archive_upload'] = 'Archive file must be zip or tar format';
+$LANG['explain_archive_upload'] = 'Archive file must be zip or gzip format';
 
 //Gestion des fichiers
 $LANG['auth_files'] = 'Required authorization for files interface activation';
