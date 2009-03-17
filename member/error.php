@@ -31,7 +31,7 @@ require_once('../kernel/header.php');
 
 $id_error = retrieve(GET, 'e', '');
 	
-$array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');
+$array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood', 'e_forget_confirm_change');
 if (in_array($id_error, $array_error))
 {
 	if ($User->get_attribute('user_id') === -1)
@@ -87,6 +87,9 @@ if (in_array($id_error, $array_error))
 			break;
 			case 'e_unactiv_member':
 				$errstr = $LANG['e_unactiv_member'];
+			break;
+			case 'e_forget_confirm_change':
+				$errstr = $LANG['e_forget_confirm_change'];
 			break;
 			case 'e_member_flood':
 				$flood = retrieve(GET, 'flood', 0);

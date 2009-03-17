@@ -356,9 +356,12 @@
 				function change_textarea_level(replace_value, regex)
 				{
 					var contents = document.getElementById('action_contents').innerHTML;
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
 					{REPLACE_VALUE}		
 					
-					document.getElementById('action_contents').innerHTML = contents;	
+					document.getElementById('action_contents').innerHTML = contents;
+					
+					# IF C_BBCODE_TINYMCE_MODE # tinyMCE.activeEditor.load(); # ENDIF #	
 				}
 				-->
 				</script>

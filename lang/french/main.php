@@ -460,7 +460,7 @@ $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoi
 $LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site.
+Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
 En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
@@ -468,7 +468,7 @@ Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de pa
 Nous vous rappelons vos identifiants.
 
 Identifiant : %s
-Password : %s
+Mot de passe : %s
 
 %s
 
@@ -492,7 +492,7 @@ $LANG['forget_pass_send'] = 'Validez pour recevoir un nouveau mot de passe par m
 $LANG['forget_mail_activ_pass'] = 'Activation du mot de passe';
 $LANG['forget_mail_pass'] = 'Cher %s
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le reçevoir, veuillez contacter l\'administrateur du site.
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
 
 Pour utiliser le nouveau mot de passe, vous avez besoin de le confirmer. Pour le faire, cliquez sur le lien fourni ci-dessous.
 
