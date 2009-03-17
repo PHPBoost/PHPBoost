@@ -109,19 +109,19 @@ if (!$User->check_level(MEMBER_LEVEL))
 		$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_get . "' AND activ_pass = '" . $activ_get . "'", __LINE__, __FILE__);
 		if (!empty($user_id))
 		{
-			//Mise é jour du nouveau password
+			//Mise é jour du nouveau password.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = new_pass WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Effacement des clées d'activations.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
-			//Affichage de l'echec
-			redirect(HOST . DIR . '/member/forget.php?error=forget_confirm_change');
+			//Affichage de la confirmation de réussite.
+			redirect(HOST . DIR . '/member/error.php?e=e_forget_confirm_change');
 		}
-		else //Affichage de l'echec
+		else //Affichage de l'echec.
 			redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
 	}	
-	else //Affichage de l'echec
+	else //Affichage de l'echec.
 		redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
 }
 else
