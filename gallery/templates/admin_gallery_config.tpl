@@ -97,7 +97,7 @@
 		</div>
 						 
 		<div id="admin_contents">
-			<form action="admin_gallery_config.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_gallery_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_CONFIG}</legend>
 					<p>{L_REQUIRE}</p>
@@ -275,7 +275,7 @@
 				</fieldset>
 			</form>
 
-			<form action="admin_gallery_config.php" name="form" method="post" class="fieldset_content">
+			<form action="admin_gallery_config.php?token={TOKEN}" name="form" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<img src="../templates/{THEME}/images/admin/cache.png" alt="" style="float:left;padding:6px;" />

@@ -104,7 +104,7 @@
 						</div>
 					</div>
 					<div style="float:right;text-align:right">
-						<form action="search.php{SID}" method="post">
+						<form action="search.php?token={TOKEN}" method="post">
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />

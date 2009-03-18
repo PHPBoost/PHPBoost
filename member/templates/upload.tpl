@@ -394,7 +394,7 @@
 		# ENDIF #
 		<tr>				
 			<td class="row3" id="new_file">							
-				<form action="upload.php?f={FOLDER_ID}{POPUP}" enctype="multipart/form-data" method="post">
+				<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
 					<span style="float:left">						
 						<strong>{L_ADD_FILES}</strong>
 						<br />

@@ -18,7 +18,7 @@
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 			<div class="module_contents">
-				<form action="search.php{SID}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
+				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
 						<dl>

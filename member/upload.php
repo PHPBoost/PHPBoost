@@ -47,6 +47,12 @@ if (!empty($popup)) //Popup.
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/content.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/generic.css" type="text/css" media="screen, print, handheld" />
 <link rel="stylesheet" href="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/theme/bbcode.css" type="text/css" media="screen, print, handheld" />
+<script type="text/javascript">
+<!--
+	var PATH_TO_ROOT = "' . PATH_TO_ROOT . '";
+	var TOKEN = "' . $Session->get_token() . '";
+-->
+</script>
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/global.js"></script>
 <script type="text/javascript" src="' . PATH_TO_ROOT . '/kernel/framework/js/bbcode.js"></script>
 </head>

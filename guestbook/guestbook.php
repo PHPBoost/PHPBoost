@@ -51,7 +51,7 @@ if ($guestbook && empty($id_get)) //Enregistrement
 		//Accès pour poster.
 		if ($User->check_level($CONFIG_GUESTBOOK['guestbook_auth']))
 		{
-			if (!$captcha->is_valid())
+			if ($CONFIG_GUESTBOOK['guestbook_verifcode'] && !$captcha->is_valid())
 				redirect(HOST . SCRIPT . url('?error=captcha', '', '&') . '#errorh');
 				
 			//Mod anti-flood
