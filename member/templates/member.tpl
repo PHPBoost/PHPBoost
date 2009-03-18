@@ -415,7 +415,7 @@
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="../member/member.php{SID}" method="post">
+					<form action="../member/member.php?token={TOKEN}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #

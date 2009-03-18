@@ -3,7 +3,7 @@
 
 		# IF C_CALENDAR_DISPLAY #
 
-		<form action="calendar.php" method="get">
+		<form action="calendar.php?token={TOKEN}" method="get">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>

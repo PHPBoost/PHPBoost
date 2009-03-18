@@ -286,7 +286,7 @@ $Template->assign_vars(array(
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
-	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat&amp;token=' . $Session->get_token() : '?token=' . $Session->get_token())),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],

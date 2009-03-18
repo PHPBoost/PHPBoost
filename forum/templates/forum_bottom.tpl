@@ -53,7 +53,7 @@
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
-					<form action="action.php{SID}">
+					<form action="action.php?token={TOKEN}">
                         <div>
                             {L_FOR_SELECTION}: 
                             <select name="massive_action_type">

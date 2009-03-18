@@ -107,7 +107,7 @@ switch ($action)
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['punishment_management'],
 			'U_XMLHTTPREQUEST' => 'punish_user',
-			'U_ACTION' => '.php?action=punish'
+			'U_ACTION' => '.php?action=punish&amp;token=' . $Session->get_token()
 		));
 		
 		if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -220,7 +220,7 @@ switch ($action)
 				'document.getElementById(\'action_info\').innerHTML = replace_value;}',
 				'REGEX'=> '/[0-9]+ [a-zA-Z]+/',
 				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
-				'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get,
+				'U_ACTION_INFO' => '.php?action=punish&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 				'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 				'L_INFO_EXPLAIN' => $LANG['user_readonly_explain'],
 				'L_PM' => $LANG['user_contact_pm'],
@@ -262,7 +262,7 @@ switch ($action)
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['ban_management'],
 			'U_XMLHTTPREQUEST' => 'ban_user',
-			'U_ACTION' => '.php?action=ban'
+			'U_ACTION' => '.php?action=ban&amp;token=' . $Session->get_token()
 		));
 		
 		if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -321,7 +321,7 @@ switch ($action)
 				'KERNEL_EDITOR' => display_editor('action_contents'),
 				'LOGIN' => '<a href="../member/member' . url('.php?id=' . $id_get, '-' . $id_get . '.php') . '">' . $mbr['login'] . '</a>',
 				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
-				'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get,
+				'U_ACTION_INFO' => '.php?action=ban&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 				'L_PM' => $LANG['user_contact_pm'],
 				'L_LOGIN' => $LANG['pseudo'],
 				'L_BAN' => $LANG['ban_user'],
@@ -407,7 +407,7 @@ switch ($action)
 			'L_LOGIN' => $LANG['pseudo'],
 			'L_INFO_MANAGEMENT' => $LANG['warning_management'],
 			'U_XMLHTTPREQUEST' => 'warning_user',		
-			'U_ACTION' => '.php?action=warning'
+			'U_ACTION' => '.php?action=warning&amp;token=' . $Session->get_token()
 		));
 		
 		if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
@@ -481,7 +481,7 @@ switch ($action)
 				'SELECT' => $select,
 				'REPLACE_VALUE' => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($LANG['user_warning_level']) . ': \' + replace_value + \'%\';',
 				'REGEX'=> '/ [0-9]+%/',
-				'U_ACTION_INFO' => '.php?action=warning&amp;id=' . $id_get,
+				'U_ACTION_INFO' => '.php?action=warning&amp;id=' . $id_get . '&amp;token=' . $Session->get_token(),
 				'U_PM' => url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 				'L_ALTERNATIVE_PM' => $LANG['user_alternative_pm'],
 				'L_INFO_EXPLAIN' => $LANG['user_warning_explain'],

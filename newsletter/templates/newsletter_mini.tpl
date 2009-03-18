@@ -1,4 +1,4 @@
-		<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
+		<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?token={TOKEN}" method="post">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_NEWSLETTER}</h5>

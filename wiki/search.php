@@ -49,7 +49,7 @@ $Template->set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
 $Template->assign_vars(array(
 	'L_SEARCH' => $LANG['wiki_search'],
 	'L_KEY_WORDS' => $LANG['wiki_search_key_words'],
-	'TARGET' => url('search.php'),
+	'TARGET' => url('search.php?token=' . $Session->get_token()),
 	'KEY_WORDS' => $search_string,
 	'L_SEARCH_RESULT' => $LANG['wiki_search_result'],
 	'ARTICLE_TITLE' => $LANG['title'],

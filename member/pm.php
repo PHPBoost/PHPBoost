@@ -250,7 +250,7 @@ elseif (!empty($_POST['prw']) && empty($pm_edit) && empty($pm_del)) //Prévisuali
 	
 	$Template->assign_block_vars('post_pm', array(
 		'CONTENTS' => !empty($_POST['contents']) ? stripslashes($_POST['contents']) : '',
-		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get)
+		'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . $Session->get_token())
 	));
 	
 	$Template->pparse('pm');
@@ -774,7 +774,7 @@ else //Liste des conversation, dans la boite du membre.
 		'PM_POURCENT' => '<strong>' . $nbr_pm . '</strong> / <strong>' . $pm_max . '</strong>',
 		'PAGINATION' => $Pagination->display('pm' . url('.php?p=%d', '-0-0-%d.php'), $nbr_pm, 'p', $pagination_pm, 3),
 		'U_MARK_AS_READ' => '<a href="pm.php?read=1" class="small_link">' . $LANG['mark_pm_as_read'] . '</a>',
-		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page),
+		'U_USER_ACTION_PM' => url('.php?del_convers=1&amp;p=' . $page . '&amp;token=' . $Session->get_token()),
 		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_POST_NEW_CONVERS' => '<a href="pm' . url('.php?post=1', '') . '" title="' . $LANG['post_new_convers'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_convers'] . '" title="' . $LANG['post_new_convers'] . '" class="valign_middle" /></a>'
@@ -899,7 +899,7 @@ else //Liste des conversation, dans la boite du membre.
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
-			'U_CONVERS'	=> url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php'),
+			'U_CONVERS'	=> url('.php?id=' . $row['id'] . '&amp;token=' . $Session->get_token(), '-0-' . $row['id'] . '.php?token=' . $Session->get_token()),
 			'U_AUTHOR' => $LANG['by'] . ' ' . $author,
 			'U_LAST_MSG' => $last_msg
 		));

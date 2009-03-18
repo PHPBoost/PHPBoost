@@ -73,7 +73,7 @@ elseif ($cat_to_del > 0)
 		'L_DELETE_CATEGORY_AND_CONTENT' => $DOWNLOAD_LANG['delete_category_and_its_content'],
 		'L_MOVE_CONTENT' => $DOWNLOAD_LANG['move_category_content'],
 		'L_SUBMIT' => $LANG['delete'],
-		'U_FORM_TARGET' => HOST . DIR . url('/download/admin_download_cat.php')
+		'U_FORM_TARGET' => HOST . DIR . url('/download/admin_download_cat.php?token=' . $Session->get_token())
 	));
 	
 	include_once('admin_download_menu.php');
