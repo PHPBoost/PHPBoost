@@ -137,7 +137,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('us
 	$login = !empty($pm_get) ? $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $pm_get . "'", __LINE__, __FILE__) : '';
 	
 	$Template->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php'),
+		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => $login
@@ -202,7 +202,7 @@ elseif (!empty($_POST['prw_convers']) && empty($mp_edit)) //Prévisualisation de 
 	));
 	
 	$Template->assign_block_vars('post_convers', array(
-		'U_ACTION_CONVERS' => url('.php'),
+		'U_ACTION_CONVERS' => url('.php?token=' . $Session->get_token()),
 		'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 		'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>',
 		'LOGIN' => !empty($_POST['login']) ? stripslashes($_POST['login']) : '',
@@ -470,7 +470,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 				
 				$Template->assign_block_vars('edit_pm', array(
 					'CONTENTS' => (!empty($_POST['prw_convers']) XOR !empty($_POST['prw'])) ? $contents : unparse($pm['contents']),
-					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit),
+					'U_ACTION_EDIT' => url('.php?edit=' . $pm_edit . '&amp;token=' . $Session->get_token()),
 					'U_PM_BOX' => '<a href="pm.php' . SID . '">' . $LANG['pm_box'] . '</a>',
 					'U_USER_VIEW' => '<a href="' . url('member.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', 'member-' . $User->get_attribute('user_id') . '.php?view=1') . '">' . $LANG['member_area'] . '</a>'
 				));

@@ -33,7 +33,7 @@
 			</script>
             # ENDIF #
             
-            <form action="admin_cache.php?cache=syndication" method="post" class="fieldset_content">
+            <form action="admin_cache.php?cache=syndication&amp;token={TOKEN}" method="post" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SYNDICATION}</legend>
                     <p>

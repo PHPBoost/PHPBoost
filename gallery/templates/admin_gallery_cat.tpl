@@ -13,7 +13,7 @@
 		{
 			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?g_' + direction + '=' + divid + '&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -26,7 +26,7 @@
 		
 		function XMLHttpRequest_gallery_cats_move(change_cat, divid, direction)
 		{
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?id=' + divid + '&move=' + direction + '&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&id=' + divid + '&move=' + direction + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

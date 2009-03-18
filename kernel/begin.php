@@ -27,7 +27,7 @@
 
 if (!defined('PATH_TO_ROOT')) //Chemin vers la racine.
 define('PATH_TO_ROOT', '..');
-
+$_SERVER['HTTP_REFERER']='';
 header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');

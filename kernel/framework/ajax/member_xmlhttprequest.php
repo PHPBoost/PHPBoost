@@ -48,7 +48,7 @@ if (!empty($_GET['member']) || !empty($_GET['insert_member']) || !empty($_GET['a
             }
             elseif (!empty($_GET['insert_member']))
             {
-                echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\'">' . addslashes($row['login']) . '</a><br />';
+                echo '<a href="#" onclick="document.getElementById(\'login\').value = \'' . addslashes($row['login']) .'\';return false">' . addslashes($row['login']) . '</a><br />';
             }
             elseif (!empty($_GET['add_member_auth']))
             {

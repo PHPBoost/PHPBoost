@@ -261,7 +261,7 @@
 							if( document.getElementById('search_img') )
 								document.getElementById('search_img').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							data = 'login=' + login;
-							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 

@@ -25,7 +25,7 @@ div.block_contents {
 	border:none;
 	text-align:justify;
 } 
-/* EntÃªte de conteneur et des tableaux */
+/* Entête de conteneur et des tableaux */
 div.block_top, table tr:first-child th {
     padding:5px 6px;
     color:#FFFFFF;
@@ -167,6 +167,10 @@ input.submit{
 	-khtml-border-radius:5px;
 	-webkit-border-radius:5px;
     border-radius:5px;
+}
+
+input[type=checkbox] { 
+	border: none;
 }
 
 input.file{
@@ -341,7 +345,7 @@ fieldset dl dd label:hover {
     color:#183A4F;
 }
 
-/* Messages postÃ©s par les membres (messages privÃ©s, commentaires, etc...) 
+/* Messages postés par les membres (messages privés, commentaires, etc...) 
 --------------------------------------*/
     /* Classe du lien du pseudo des messages */
 a.msg_link_pseudo {
@@ -377,7 +381,7 @@ a.msg_link_pseudo:hover {
     background:#F4F9FA url(images/border.png) repeat-y right;
 }
 
-/* Barre supÃ©rieur des messages */
+/* Barre supérieur des messages */
 .msg_top_l{
 	margin-right:0px !important;
 	margin-right:-3px;
@@ -465,7 +469,7 @@ a.msg_link_pseudo:hover {
 }
 
 .msg_contents_overflow {
-    /* Case du contents du message, Ã©vite que les images trop grandes dÃ©forme */
+    /* Case du contents du message, évite que les images trop grandes déforme */
     width:99%;
     height:auto;
     min-height:80px;
@@ -494,7 +498,7 @@ a.msg_link_pseudo:hover {
     overflow:hidden;
 }
 
-.msg_bottom_l { /* Barre infÃ©rieure des messages */
+.msg_bottom_l { /* Barre inférieure des messages */
     
 }
 
@@ -518,7 +522,7 @@ a.msg_link_pseudo:hover {
     margin:auto;
 }
 
-.module_top_l { /* Barre supÃ©rieur des modules */
+.module_top_l { /* Barre supérieure des modules */
     
 }
 
@@ -546,7 +550,7 @@ a.msg_link_pseudo:hover {
     text-align:justify;
 }
 
-.module_bottom_l { /* Barre infÃ©rieure des modules */
+.module_bottom_l { /* Barre inférieure des modules */
     
 }
 
@@ -562,7 +566,7 @@ a.msg_link_pseudo:hover {
 }
 
 
-/* Tableau global, utilisÃ© dans les diffÃ©rents modules */
+/* Tableau global, utilisé dans les différents modules */
 .module_table {
     width:98%;
     margin:auto;
@@ -610,7 +614,7 @@ a.msg_link_pseudo:hover {
     padding-bottom:0px;
 }
 
-.module_mini_bottom { /* Bordure infÃ©rieur des modules minis */
+.module_mini_bottom { /* Bordure inférieure des modules minis */
     height:15px;
 }
 
