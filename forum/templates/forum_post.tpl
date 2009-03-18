@@ -57,7 +57,7 @@
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )

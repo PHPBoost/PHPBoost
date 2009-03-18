@@ -38,7 +38,7 @@
 		{
 			document.getElementById('msg_email').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" />';
 			data = "mail=" + value + "&login=" + "{USER_LOGIN}";
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php?token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )

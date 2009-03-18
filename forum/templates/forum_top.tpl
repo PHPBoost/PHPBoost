@@ -10,7 +10,7 @@
 			if( document.getElementById('refresh_unread' + divID) )
 				document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
 				
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?refresh_unread=1');
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

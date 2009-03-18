@@ -57,7 +57,7 @@
 				document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
-				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1&token={TOKEN}');
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '0' )
@@ -83,7 +83,7 @@
 			document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 			data = 'id_file=' + id_file;
-			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?aprob_pics=1&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -206,7 +206,7 @@
 					if (already_view && ({DISPLAY_MODE} == 3 || {DISPLAY_MODE} == 1))
 					{
 						data = '';
-						var xhr_object = xmlhttprequest_init('xmlhttprequest.php?id=' + idpics + '&cat={CAT_ID}&increment_view=1');
+						var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&id=' + idpics + '&cat={CAT_ID}&increment_view=1');
 						xmlhttprequest_sender(xhr_object, data);
 					}
 

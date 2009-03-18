@@ -553,7 +553,7 @@
 			else
 			{
 				document.getElementById('load' + divid).innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?stats_keyword=1&id=' + divid);
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

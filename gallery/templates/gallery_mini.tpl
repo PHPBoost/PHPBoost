@@ -48,6 +48,7 @@
 							{L_NO_RANDOM_PICS}
 						</div>
 					</div>
+					<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/scroll.js"></script>
 					# ENDIF #
 				</div>
 				<a class="small_link" href="{PATH_TO_ROOT}/gallery/gallery.php{SID}">{L_GALLERY}</a>
@@ -56,5 +57,4 @@
 			</div>
 		</div>
 		<span id="test"></span>
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/scroll.js"></script>
 		

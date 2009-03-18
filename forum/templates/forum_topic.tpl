@@ -20,7 +20,7 @@
 			if( document.getElementById('dimg' + idmsg) )
 				document.getElementById('dimg' + idmsg).src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?del=1&idm=' + idmsg + '&token={TOKEN}');
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&del=1&idm=' + idmsg + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -64,7 +64,7 @@
 			if( document.getElementById('forum_track_img') )
 				document.getElementById('forum_track_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track ? 'ut' : 't') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track ? 'ut' : 't') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -85,7 +85,7 @@
 			if( document.getElementById('forum_track_pm_img') )
 				document.getElementById('forum_track_pm_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -106,7 +106,7 @@
 			if( document.getElementById('forum_track_mail_img') )
 				document.getElementById('forum_track_mail_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )

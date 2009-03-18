@@ -30,9 +30,7 @@ var timeout;
 //Démarrage du défilement, dépendant du mode.
 function scroll_start()
 {
-	if( scroll_mode == 'dynamic_scroll_v' )
-		scroll_pics_v();
-	else if( scroll_mode == 'dynamic_scroll_h' )
+	if( scroll_mode == 'dynamic_scroll_h' )
 		scroll_pics_h();
 	else
 		switch_pics();

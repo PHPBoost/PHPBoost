@@ -17,7 +17,7 @@
 		-->	
 		</script>
 		<div id="admin_contents">
-			<form action="admin_errors.php" name="form" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
+			<form action="admin_errors.php?token={TOKEN}" name="form" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<dl>
