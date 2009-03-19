@@ -178,6 +178,9 @@ class PackagesManager
 			$Cache->Generate_file('css');
             MenuService::generate_cache();
 
+			import('content/syndication/feed'); //Régénération des feeds.
+			Feed::clear_cache();
+		
 			//Mise à jour du .htaccess pour le mod rewrite, si il est actif et que le module le supporte
 			if ($CONFIG['rewrite'] == 1 && !empty($info_module['url_rewrite']))
 				$Cache->Generate_file('htaccess'); //Régénération du htaccess.
