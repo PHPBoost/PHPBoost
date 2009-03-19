@@ -141,17 +141,19 @@ foreach ($modules_config as $module_name => $auth)
 			{
 				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
 				$links = '';
+				$i = 0;
 				foreach ($admin_links as $key => $value)
 				{
 					if (is_array($value))
 					{
-						$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu' . $idmenu . $name . '">';
+						$links .= '<li class="extend" onmouseover="show_menu(\'' . $idmenu . $i . $name . '\', 2);" onmouseout="hide_menu(2);"><a href="#" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);cursor:default;">' . $key . '</a><ul id="sssmenu' . $idmenu . $i . $name . '">' . "\n";
 						foreach ($value as $key2 => $value2)
-							$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value2 . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>';
-						$links .= '</ul></li>';
+							$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value2 . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key2 . '</a></li>' . "\n";
+						$links .= '</ul></li>' . "\n";
+						$i++;
 					}
 					else
-						$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>';
+						$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>' . "\n";
 				}
 				
 				$Template->assign_block_vars('admin_links_' . $menu_pos, array(
