@@ -355,13 +355,13 @@
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
-					var contents = document.getElementById('action_contents').innerHTML;
 					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
-					{REPLACE_VALUE}		
 					
-					document.getElementById('action_contents').innerHTML = contents;
+					var contents = document.getElementById('action_contents').value;
+					{REPLACE_VALUE}	
+					document.getElementById('action_contents').value = contents;
 					
-					# IF C_BBCODE_TINYMCE_MODE # tinyMCE.activeEditor.load(); # ENDIF #	
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.getInstanceById('action_contents').getBody().innerHTML = contents;  # ENDIF #
 				}
 				-->
 				</script>
