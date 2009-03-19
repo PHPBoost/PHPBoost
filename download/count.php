@@ -25,9 +25,9 @@
  *
 ###################################################*/
 
-require_once '../kernel/begin.php';
+require_once('../kernel/begin.php');
 
-require_once 'download_auth.php';
+require_once('download_auth.php');
 
 $idurl = retrieve(GET, 'id', 0);
 

@@ -55,10 +55,10 @@ class FaqInterface extends ModuleInterface
 		//List of categories and their own properties
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
+		$string .= '$FAQ_CATS[0][\'name\'] = \'\';' . "\n";
 		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
-		
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' .

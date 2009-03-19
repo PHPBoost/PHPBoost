@@ -24,8 +24,8 @@
 					{
 						if( document.getElementById("id_faq").value > 0 && document.getElementById("cat_name").value == "" )
 						{
-								alert("{L_REQUIRE_CAT_NAME}");
-								return false;
+							alert("{L_REQUIRE_CAT_NAME}");
+							return false;
 						}
 						else
 							return true;
@@ -195,6 +195,10 @@
 		<!--
 		function check_form_faq()
 		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if( document.getElementById("entitled").value == '' )
 			{
 				alert("{L_REQUIRE_ENTITLED}");
