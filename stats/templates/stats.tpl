@@ -337,7 +337,7 @@
 		# IF C_STATS_BROWSERS #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_BROWSERS}
 				</th>
 			</tr>
@@ -370,7 +370,7 @@
 		# IF C_STATS_OS #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_OS}
 				</th>
 			</tr>
@@ -403,7 +403,7 @@
 		# IF C_STATS_LANG #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_LANG}
 				</th>
 			</tr>
@@ -430,7 +430,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="row2" colspan="3" style="text-align:center;">
+				<td class="row2" colspan="2" style="text-align:center;">
 					{L_LANG_ALL}
 				</td>
 			</tr>
