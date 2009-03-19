@@ -174,7 +174,7 @@ class TinyMCEParser extends ContentParser
 		}
 		
 		//Style ?
-		if (preg_match('`style="([^"])"`iU', $table_properties, $temp_array))
+		if (preg_match('`style="([^"]+)"`iU', $table_properties, $temp_array))
 		{
 				$style_properties .= $temp_array[1];
 		}
@@ -216,7 +216,7 @@ class TinyMCEParser extends ContentParser
 		}
 		
 		//Style ?
-		if (preg_match('`style="([^"])"`iU', $col_properties, $temp_array))
+		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
 		{			
 			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
 		}
@@ -420,7 +420,7 @@ class TinyMCEParser extends ContentParser
 		//image tag
 		if (!in_array('image', $this->forbidden_tags))
 		{
-		    $this->content = preg_replace_callback('`&lt;img src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? /&gt;`is', create_function('$img', '$align = \'\'; if (!empty($img[2])) $align = \'=\' . $img[2]; return \'<img src="\' . $img[1] . \'" alt="" class="valign_"\' . $align . \' />\';'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="[^"]+")? src="([^"]+)"(?: border="[^"]*")? alt="[^"]*"(?: hspace="[^"]*")?(?: vspace="[^"]*")?(?: width="[^"]*")?(?: height="[^"]*")?(?: align="(top|middle|bottom)")? /&gt;`is', create_function('$img', '$align = \'\'; if (!empty($img[2])) $align = \'=\' . $img[2]; return \'<img src="\' . $img[1] . \'" alt="" class="valign_"\' . $align . \' />\';'), $this->content);
 		}
 		
 		//indent tag
@@ -470,7 +470,7 @@ class TinyMCEParser extends ContentParser
 		
 		if ($content_contains_table)
 		{
-			$this->content = preg_replace('`&lt;tr&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->content);
+			$this->content = preg_replace('`&lt;tr(?:[^&]*)&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->content);
 			
 			//Rows
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
