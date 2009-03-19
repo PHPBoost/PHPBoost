@@ -29,7 +29,7 @@
 					
 					<br /><br />
 					<span id="act"></span>
-					<table class="module_table" style="width: auto;padding:5px;"> 
+					<table class="module_table" style="border-spacing:1px;border-collapse:separate">
 						<tr>
 							<td class="row3">
 								<a href="calendar{U_PREVIOUS}" title="">&laquo;</a>
@@ -53,13 +53,13 @@
 							# END calendar #
 						</tr>
 						<tr>
-							<td style="width:16px;" class="row3">
+							<td class="row3">
 								{U_PREVIOUS_EVENT}
 							</td>
 							<td  colspan="5" class="row3">
 								{L_EVENTS} 
 							</td>
-							<td style="width:16px;" class="row3">
+							<td class="row3">
 								{U_NEXT_EVENT}
 							</td> 
 						</tr>

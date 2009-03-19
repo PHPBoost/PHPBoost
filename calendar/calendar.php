@@ -192,15 +192,22 @@ if ($checkdate === true && empty($id) && !$add)
 	{
 		if ($i >= $first_day && $i < $last_day)
 		{
-			$action = !empty($array_action[$j]) ? '<a href="calendar' . url('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>' : $j;
-			$class = ($day == $j) ? ' style="padding:0px;" class="row2"' : ' style="padding:0px;" class="row3"';
-			$style = ($day == $j) ? 'border: 1px inset black;' : 'border: 1px outset black;';
+			$action = $j;
+			if ( !empty($array_action[$j]) )
+			{
+				$action = '<a href="calendar' . url('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
+				$class = 'calendar_event';
+			}
+			elseif ($day == $j)
+				$class = 'calendar_today';
+			else
+				$class = 'calendar_other';
 			
-			$contents = '<td' . $class . '><div style="' . $style . 'padding:2px;">' . $action . '</div></td>';
+			$contents = '<td class="' . $class . '">' . $action . '</td>';
 			$j++;
 		}
 		else
-			$contents = '<td style="padding:0px;height:21px;" class="row3">&nbsp;</td>';
+			$contents = '<td class="calendar_none">&nbsp;</td>';
 
 		$Template->assign_block_vars('calendar', array(
 			'DAY' => $contents,
