@@ -183,6 +183,37 @@ class TinyMCEParser extends ContentParser
 	}
 	
 	/**
+	 * Parses the rows (which corresponds to the tr HTML tags)
+	 * @param string[] $matches The matched elements
+	 * @return string The cell correctly formatted.
+	 */
+	function _parse_row_tag($matches)
+	{
+		$col_properties = $matches[1];
+		$col_new_properties = '';
+		$col_style = '';
+		
+		$temp_array = array();
+		//Alignment
+		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
+		{			
+			$col_style .= 'text-align:' . $temp_array[1] . ';';
+		}
+		
+		//Style ?
+		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
+		{			
+			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
+		}
+		elseif (!empty($col_style))
+		{
+		    $col_style = ' style="' . $col_style . '"';
+		}
+		
+		return '<tr class="bb_table_row"' . $col_new_properties . $col_style . '>' . $matches[2] . '</tr>';
+	}
+	
+	/**
 	 * Parses the col/head (which corresponds to the td and th HTML tags)
 	 * @param string[] $matches The matched elements
 	 * @return string The cell correctly formatted.
@@ -470,9 +501,14 @@ class TinyMCEParser extends ContentParser
 		
 		if ($content_contains_table)
 		{
-			$this->content = preg_replace('`&lt;tr(?:[^&]*)&gt;(.*)&lt;/tr&gt;`isU', '<tr class="bb_table_row">$1</tr>', $this->content);
-			
 			//Rows
+			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`is', $this->content))
+			{
+				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isU', array(&$this, '_parse_row_tag'), $this->content);
+				$content_contains_table = true;
+			}
+			
+			//Cols
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`is', $this->content))
 			{
 				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array(&$this, '_parse_col_tag'), $this->content);

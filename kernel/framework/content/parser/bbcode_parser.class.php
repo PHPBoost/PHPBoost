@@ -324,12 +324,12 @@ class BBCodeParser extends ContentParser
 					//On parse d'abord les sous tableaux éventuels
 					$this->_parse_imbricated_table($content[$i]);
 					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
-					if (preg_match('`^(?:\s|<br />)*\[row\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]))
+					if (preg_match('`^(?:\s|<br />)*\[row(?: style="[^"]+")?\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]))
 					{						
 						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
-						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row\]`U', array(&$this, 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row.*\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', array(&$this, 'clear_html_br'), $content[$i]);
-						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row\]`U', array(&$this, 'clear_html_br'), $content[$i]);
+						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+\[row.*\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[col.*\]`Us', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[row\](\s|<br />)+\[head[^]]*\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[col.*\]`Us', array(&$this, 'clear_html_br'), $content[$i]);
@@ -339,7 +339,7 @@ class BBCodeParser extends ContentParser
 						$content[$i] = preg_replace_callback('`\[/head\](\s|<br />)+\[/row\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/col\](\s|<br />)+\[/row\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						//Parsage de row, col et head
-						$content[$i] = preg_replace('`\[row\](.*)\[/row\]`sU', '<tr class="bb_table_row">$1</tr>', $content[$i]);
+						$content[$i] = preg_replace('`\[row( style="[^"]+")?\](.*)\[/row\]`sU', '<tr class="bb_table_row"$1>$2</tr>', $content[$i]);
 						$content[$i] = preg_replace('`\[col((?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/col\]`sU', '<td class="bb_table_col"$1>$2</td>', $content[$i]);
 						$content[$i] = preg_replace('`\[head((?: colspan="[0-9]+")?(?: style="[^"]+")?)?\](.*)\[/head\]`sU', '<th class="bb_table_head"$1>$2</th>', $content[$i]);
 						//parsage réussi (tableau valide), on rajoute le tableau devant
