@@ -35,14 +35,14 @@ function poll_mini($position, $block)
     {
     	//Chargement de la langue du module.
     	load_module_lang('poll');
-    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage al�atoire.
+    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
     	
     	$tpl = new Template('poll/poll_mini.tpl');
         import('core/menu_service');
         MenuService::assign_positions_conditions($tpl, $position);
     		
     	#####################R�sultats######################
-    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (v�rification par ip plus tard).
+    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
     	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
     	if (in_array($poll_mini['id'], $array_cookie))
     	{
