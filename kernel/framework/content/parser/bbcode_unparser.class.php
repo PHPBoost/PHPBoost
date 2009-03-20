@@ -195,7 +195,7 @@ class BBCodeUnparser extends ContentUnparser
 		while (strpos($this->content, '<table class="bb_table"') !== false)
 			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		while (strpos($this->content, '<tr class="bb_table_row"') !== false)
-			$this->content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="bb_table_row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
 		while (strpos($this->content, '<th class="bb_table_head"') !== false)
 			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		while (strpos($this->content, '<td class="bb_table_col"') !== false)
