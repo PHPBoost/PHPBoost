@@ -8,9 +8,7 @@ require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 
 @error_reporting(ERROR_REPORTING);
 
-$lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';
-if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
-	include_once('lang/french/install_french.php');
+include_once('lang/french/update_french.php');
 $chmod = retrieve(GET, 'chmod', false);
 $db = retrieve(GET, 'db', false);
 
