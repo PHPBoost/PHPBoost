@@ -15,7 +15,7 @@
 		function Confirm() {
 		return confirm("{L_DELETE_MSG}");
 		}
-					
+		
 		-->
 		</script>
 
