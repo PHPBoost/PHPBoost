@@ -156,7 +156,7 @@ if (isset($CSS[get_utheme()]))
 
 //Détermination du thème contenant le dossier framework.
 $framework_theme = 'default';
-if (is_dir(PATH_TO_ROOT . '/templates/' . get_utheme() . '/framework'))
+if (file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/framework/content/syndication/syndication.css'))
 	$framework_theme = get_utheme();
 
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
