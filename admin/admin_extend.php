@@ -68,17 +68,14 @@ foreach ($modules_config as $module_name => $auth)
 	$name = $modules_config[$module_name]['module_name'];
 	if (is_array($modules_config[$module_name]))
 	{
-		if ($modules_config[$module_name]['admin'] == 'modules')
-		{
-			$Template->assign_block_vars('modules_extend', array(
-				'NAME' => $module_name,
-				'IMG' => '../' . $name . '/' . $name . '.png',
-				'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
-				'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-				'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
-			));			
-			$i++;
-		}
+		$Template->assign_block_vars('modules_extend', array(
+			'NAME' => $module_name,
+			'IMG' => '../' . $name . '/' . $name . '.png',
+			'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
+			'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
+			'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
+		));			
+		$i++;
 	}
 }
 //Complétion éventuelle des cases du tableaux.
