@@ -23,8 +23,8 @@
 					<!--
 					    new Marquee({
 					    element: "scrolling_images",
-					    animIn: Marquee.blindIn,
-					    animOut: Marquee.blindOut,
+					    animIn: Marquee.fadeIn,
+					    animOut: Marquee.fadeOut,
 					    data: [
 						# START pics_mini #
 						{ message: '<a href="{vertical_scroll.pics_mini.U_PICS}#pics_max"><img src="{vertical_scroll.pics_mini.PICS}" alt="{vertical_scroll.pics_mini.NAME}" width="{vertical_scroll.pics_mini.WIDTH}px" height="{vertical_scroll.pics_mini.HEIGHT}px" /></a>' },
