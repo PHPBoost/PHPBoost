@@ -204,7 +204,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 
 	//Gestion du niveau d'autorisation.
 	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
-	if ($check_group_edit_auth || ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && !$first_message))
+	if ($check_group_edit_auth || ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && !$first_message))
 	{
 		$edit = true;
 		$del = true;
@@ -215,7 +215,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 			$moderator = (!$is_guest) ? true : false;
 		}
 	}
-	elseif ($User->get_attribute('user_id') === $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
+	elseif ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && $first_message) //Premier msg du topic => suppression du topic non autorisé au membre auteur du message.
 		$edit = true;
 	
 	//Gestion des sondages => executé une seule fois.
