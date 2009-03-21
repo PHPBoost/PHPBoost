@@ -138,7 +138,7 @@ elseif (!empty($id))
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
-		'CONTENTS' => $extend_field['contents'],
+		'CONTENTS' => unparse($extend_field['contents']),
 		'POSSIBLE_VALUES' => $extend_field['possible_values'],
 		'DEFAULT_VALUES' => $extend_field['default_values'],
 		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
