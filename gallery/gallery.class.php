@@ -310,7 +310,7 @@ class Gallery
 		global $Sql;
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET name = '" . $name . "' WHERE id = '" . $id_pics . "'", __LINE__, __FILE__);
-		return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . '...' : $name);
+		return stripslashes((strlen(html_entity_decode($name)) > 22) ? htmlentities(substr(html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 	
 	//Approuve une image.
@@ -588,7 +588,7 @@ class Gallery
 		$width = ($width == 0) ? $CONFIG_GALLERY['width'] : $width;
 		$height = ($height == 0) ? $CONFIG_GALLERY['height'] : $height;
 			
-		$font = '../kernel/data/fonts/impact.ttf';		
+		$font = PATH_TO_ROOT . '/kernel/data/fonts/impact.ttf';		
 		$font_size = 12;
 
 		$thumbnail = @imagecreate($width, $height);
