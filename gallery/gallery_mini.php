@@ -109,18 +109,18 @@ function gallery_mini($position, $block)
     		break;
     	}
     	
-    	include_once('../gallery/gallery.class.php');
+    	include_once(PATH_TO_ROOT . '/gallery/gallery.class.php');
     	$Gallery = new Gallery;
     	
     	foreach ($gallery_mini as $key => $row)
     	{
     		//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-    		if (!is_file('../gallery/pics/thumbnails/' . $row['path']))
-    			$Gallery->Resize_pics('../gallery/pics/' . $row['path']); //Redimensionnement + création miniature
+    		if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
+    			$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
     		
     		// On recupère la hauteur et la largeur de l'image.
     		if ($row['width'] == 0 || $row['height'] == 0)
-    			list($row['width'], $row['height']) = @getimagesize('../gallery/pics/thumbnails/' . $row['path']);
+    			list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
     		if ($row['width'] == 0 || $row['height'] == 0)
     			list($row['width'], $row['height']) = array(142, 142);
     			
@@ -128,11 +128,11 @@ function gallery_mini($position, $block)
     		{
     			$tpl->assign_block_vars('pics_mini', array(
     				'ID' => $i,
-    				'PICS' => '../gallery/pics/thumbnails/' . $row['path'],
+    				'PICS' => PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
     				'NAME' => $row['name'],
     				'HEIGHT' => $row['height'],
     				'WIDTH' => $row['width'],
-    				'U_PICS' => '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
+    				'U_PICS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
     			));
     		}
     		else
