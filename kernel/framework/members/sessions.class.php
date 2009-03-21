@@ -577,7 +577,7 @@ class Sessions
         {   // if the token is empty (already connected while updating the website from 2.0 version to 3.0)
             $this->data['token'] = strhash(uniqid(mt_rand(), true), false);
             global $Sql;
-            $Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET token='" . $this->data['token'] . "'", __LINE__, __FILE__);
+            $Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET token='" . $this->data['token'] . "' WHERE session_id='" . $this->data['session_id']. "'", __LINE__, __FILE__);
             
         }
 	    return $this->data['token'];
