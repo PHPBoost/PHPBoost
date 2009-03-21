@@ -140,7 +140,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 	else
 		redirect(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
-elseif (!empty($poll['id']) && !$archives)
+elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {
 	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
@@ -203,7 +203,6 @@ elseif (!empty($poll['id']) && !$archives)
 		$array_vote = explode('|', $poll['votes']);
 		
 		$sum_vote = array_sum($array_vote);
-		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 		
 		$Template->assign_vars(array(
 			'C_POLL_VIEW' => true,
@@ -220,6 +219,7 @@ elseif (!empty($poll['id']) && !$archives)
 			'L_ON' => $LANG['on']
 		));
 		
+		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 		$array_poll = array_combine($array_answer, $array_vote);
 		foreach ($array_poll as $answer => $nbrvote)
 		{

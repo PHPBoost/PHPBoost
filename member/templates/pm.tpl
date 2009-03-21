@@ -409,7 +409,7 @@
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
 							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
-							<br /><a href="#" onclick="document.getElementById('login').value = 'teston';return false">teston</a>
+							<br />
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">
