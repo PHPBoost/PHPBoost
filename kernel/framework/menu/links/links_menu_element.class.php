@@ -125,10 +125,13 @@ class LinksMenuElement extends Menu
             if ($compute_relative_url)
             {
                 global $CONFIG;
-                return url(strpos($this->url, '://') > 0 ? $this->url :
-                    trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->url);
+                import('util/url');
+                return url(strpos($this->url, '://') > 0 ? $this->url : Url::compress($CONFIG['server_name'] . '/' . $CONFIG['server_path'] . '/' . $this->url));
             }
-            return url($this->url);
+            else
+            {
+                return url($this->url);
+            }
         }
         return '';
     }
