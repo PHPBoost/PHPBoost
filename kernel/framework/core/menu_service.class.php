@@ -657,7 +657,7 @@ class MenuService
     
     
     ## Private ##
-    
+        
     /**
      * @access private
      * @return array[] initialize the menus map structure
