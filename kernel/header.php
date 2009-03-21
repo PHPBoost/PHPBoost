@@ -174,6 +174,8 @@ $Template->assign_vars(array(
 	'FRAMEWORK_THEME' => $framework_theme,
 	'LANG' => get_ulang(),
 	'ALTERNATIVE_CSS' => $alternative_css,
+	'C_ADMIN_AUTH' => $User->check_level(ADMIN_LEVEL),
+	'C_MODERATOR_AUTH' => $User->check_level(MODERATOR_LEVEL),
 	'C_USER_CONNECTED' => $member_connected,
 	'C_USER_NOTCONNECTED' => !$member_connected,
 	'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
