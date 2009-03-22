@@ -102,6 +102,8 @@ class TinyMCEUnparser extends ContentUnparser
     		),
     		'<p>' . $this->content . '</p>'
 		);
+		
+		$this->content = htmlspecialchars($this->content);
 	    
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if (!empty($this->array_tags['html_unparse']))

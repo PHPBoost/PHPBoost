@@ -144,6 +144,8 @@ elseif ($uninstall) //Désinstallation.
 			if (!delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme))
 				$error = 'files_del_failed';
 		}
+		
+		$Cache->generate_file('themes');
 	
 		$error = !empty($error) ? '?error=' . $error : '';
 		redirect(HOST . SCRIPT . $error);

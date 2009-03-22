@@ -1055,16 +1055,21 @@ if (!function_exists('array_combine'))
 function get_feed_menu($feed_url)
 {
     global $LANG, $CONFIG;
-    import('io/template');
+    
     $feedMenu = new Template('framework/content/syndication/menu.tpl');
+    
+    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
+    
     $feedMenu->assign_vars(array(
         'PATH_TO_ROOT' => PATH_TO_ROOT,
 		'PATH_TO_MENU' => dirname($feedMenu->tpl),
         'THEME' => get_utheme(),
-        'U_FEED' => trim($CONFIG['server_name'], '/') . '/' . (!empty($CONFIG['server_path']) ? trim($CONFIG['server_path'], '/') . '/' : '') . trim($feed_url, '/'),
+        'U_FEED' => $feed_absolut_url,
+        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
         'L_RSS' => $LANG['rss'],
         'L_ATOM' => $LANG['atom']
     ));
+    
     return $feedMenu->parse(TEMPLATE_STRING_MODE);
 }
 
