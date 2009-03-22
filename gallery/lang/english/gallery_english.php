@@ -2,18 +2,18 @@
 /*##################################################
  *                              gallery_english.php
  *                            -------------------
- *   begin                : July 27, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin               : July 27, 2005
+ *   copyright           : (C) 2005 Viarre Régis
+ *   email               : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,10 +27,10 @@
 
 
 ####################################################
-#                                                           English                                                                             #
+#                     English                      #
 ####################################################
 
-//Admin	
+//Admin
 $LANG['upload_pics'] = 'Upload pictures';
 $LANG['gallery_management'] = 'Gallery management';
 $LANG['gallery_cats_management'] = 'Categories management';
@@ -76,8 +76,8 @@ $LANG['note_max_explain'] = '5 by default';
 $LANG['img_protect'] = 'Pictures protection';
 $LANG['activ_logo'] = 'Activate logo';
 $LANG['activ_logo_explain'] = 'Encrustation on the picture';
-$LANG['logo_url'] = 'Logo url'; 
-$LANG['logo_url_explain'] = 'Put into /gallery'; 
+$LANG['logo_url'] = 'Logo url';
+$LANG['logo_url_explain'] = 'Put into /gallery';
 $LANG['logo_trans'] = 'Logo transparency';
 $LANG['logo_trans_explain'] = '40% by default';
 $LANG['width_bottom_right'] = 'Horizontal distance';
@@ -93,10 +93,10 @@ $LANG['nbr_img_modo_explain'] = 'Moderator';
 $LANG['explain_gallery_cache'] = 'Regeneration of the thumbnails<br/>Empties the cache in case of thumbnails configuration modification, and recount number of pictures in each categories.';
 $LANG['gallery_lock'] = 'Lock';
 $LANG['gallery_unlock'] = 'Unlock';
-$LANG['explain_pic'] = 'The gallery you wish delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or delete this picture ?';
-$LANG['explain_pics'] = 'The gallery you wish delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or delete all pictures ?';
-$LANG['explain_subgallery'] = 'The gallery you wish delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or delete it and its contents ?';
-$LANG['explain_subgalleries'] = 'The gallery you wish delete contains <strong>%d</strong> subgalleries, do you want to preserve them by transferring in another gallery, or delete all these subgalleries and their contents ?';
+$LANG['explain_pic'] = 'The gallery you wish delete contains <strong>1</strong> picture, do you want to preserve it by transferring it in another gallery, or delete this picture?';
+$LANG['explain_pics'] = 'The gallery you wish delete contains <strong>%d</strong> pictures, do you want to preserve them by transferring them in another gallery, or delete all pictures?';
+$LANG['explain_subgallery'] = 'The gallery you wish delete contains <strong>1</strong> subgallery, do you want to preserve it by transferring it in another gallery, or delete it and its contents?';
+$LANG['explain_subgalleries'] = 'The gallery you wish delete contains <strong>%d</strong> subgalleries, do you want to preserve them by transferring in another gallery, or delete all these subgalleries and their contents?';
 $LANG['keep_pics'] = 'Keep picture(s)';
 $LANG['keep_subgallery'] = 'Keep subgalleries';
 $LANG['move_pics_to'] = 'Move picture(s) to';
@@ -133,14 +133,14 @@ $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scrolling';
 $LANG['column'] = 'Columns';
 
 //Require
-$LANG['require_height'] = 'Please enter maximum height for the thumbnails !';
-$LANG['require_height_max'] = 'Please enter maximum height for the pictures !';
-$LANG['require_width_max'] = 'Please enter maximum width for the pictures !';
-$LANG['require_width'] = 'Please enter maximum width for the thumbnails !'; 
-$LANG['require_weight_max'] = 'Please enter maximum weight for the pictures !'; 
-$LANG['require_row'] = 'Please enter the number of columns for the gallery !'; 
-$LANG['require_img_p'] = 'Please enter the number of pictures per page !'; 
-$LANG['require_quality'] = 'Please enter the quality for thumbtails !';
+$LANG['require_height'] = 'Please enter maximum height for the thumbnails!';
+$LANG['require_height_max'] = 'Please enter maximum height for the pictures!';
+$LANG['require_width_max'] = 'Please enter maximum width for the pictures!';
+$LANG['require_width'] = 'Please enter maximum width for the thumbnails!';
+$LANG['require_weight_max'] = 'Please enter maximum weight for the pictures!';
+$LANG['require_row'] = 'Please enter the number of columns for the gallery!';
+$LANG['require_img_p'] = 'Please enter the number of pictures per page!';
+$LANG['require_quality'] = 'Please enter the quality for thumbtails!';
 
 //Errors
 $LANG['e_no_gd'] = 'Gallery -> Gd Library not loaded';
@@ -166,7 +166,7 @@ $LANG['how_photo'] = 'Photo(s) in the database!';
 $LANG['actual_note'] = 'Current note';
 $LANG['give_note'] = 'Give a note';
 $LANG['no_note'] = 'No note';
-$LANG['img_success'] = 'The picture was successfully uploaded !';
+$LANG['img_success'] = 'The picture was successfully uploaded!';
 $LANG['img_format'] = 'Granted image\'s formats';
 $LANG['img_delete'] = 'Delete this picture';
 $LANG['random_img'] = 'Random picture';
@@ -181,9 +181,9 @@ $LANG['upload_limit'] = 'Pictures uploading limit reached';
 $LANG['alert_action_delete'] = 'Thumbnails suppression impossible. You must remove them manually throw the ftp!';
 $LANG['alert_info_delete'] = 'Incomplete information to remove the picture!';
 $LANG['alert_max_gallery'] = 'The file exceeds the specified maximum width and height!';
-$LANG['alert_error_gallery'] = 'Uploading error !';
-$LANG['alert_noname_gallery'] = 'No name specified !';
-$LANG['alert_weight_gallery'] = 'Too much heavy file !';
+$LANG['alert_error_gallery'] = 'Uploading error!';
+$LANG['alert_noname_gallery'] = 'No name specified!';
+$LANG['alert_weight_gallery'] = 'Too much heavy file!';
 $LANG['alert_type_gallery'] = 'Picture isn\'t valid: .jpg, .png, or .gif only!';
 $LANG['alert_upload_gallery'] = 'You exceeded the number of files you can upload on the server';
 
