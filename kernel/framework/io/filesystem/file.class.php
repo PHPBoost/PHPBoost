@@ -222,7 +222,7 @@ class File extends FileSystemElement
             $this->write('');
         }
         // Clear file stats (@see http://fr3.php.net/clearstatcache for futher informations)
-        clearstatcache($this->path);
+        clearstatcache(true, $this->path);
     }
 
     /**
