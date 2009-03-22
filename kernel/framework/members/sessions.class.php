@@ -377,10 +377,8 @@ class Sessions
 		$this->autoconnect['user_id'] = -1;
 		
 		$this->session_mod = 0;
-
 		$sid = retrieve(GET, 'sid', '');
 		$suid = retrieve(GET, 'suid', 0);
-		
 		########Cookie Existe?########
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
 		{
@@ -416,15 +414,14 @@ class Sessions
 		########Cookie Existe?########
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']))
 		{
-			$session_data = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_data', '', TSTRING_UNCHANGE));
-			if ($session_data === false)
+			$session_autoconnect = unserialize(retrieve(COOKIE, $CONFIG['site_cookie'].'_autoconnect', '', TSTRING_UNCHANGE));
+			if ($session_autoconnect === false)
 			{
-			    $session_data = array();
+			    $session_autoconnect = array();
 			}
 			$session_autoconnect['user_id'] = !empty($session_autoconnect['user_id']) ? numeric($session_autoconnect['user_id']) : ''; //Validité user id?.
 			$session_autoconnect['pwd'] = !empty($session_autoconnect['pwd']) ? strprotect($session_autoconnect['pwd']) : ''; //Validité password.
 			$level = $Sql->query("SELECT level FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $session_autoconnect['user_id'] . "' AND password = '" . $session_autoconnect['pwd'] . "'", __LINE__, __FILE__);
-			
 			if (!empty($session_autoconnect['user_id']) && !empty($session_autoconnect['pwd']) && $level != '')
 			{
 				$error_report = $this->start($session_autoconnect['user_id'], $session_autoconnect['pwd'], $level, $session_script, $session_script_get, $session_script_title, true, ALREADY_HASHED); //Lancement d'une session utilisateur.
