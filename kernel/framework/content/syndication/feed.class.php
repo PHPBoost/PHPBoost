@@ -7,7 +7,7 @@
  *   email                : horn@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
 define('DEFAULT_FEED_NAME', 'master');
@@ -42,7 +42,7 @@ import('content/syndication/feed_data');
 class Feed
 {
     ## Public Methods ##
-    
+
     /**
      * @desc Builds a new feed object
      * @param string $module_id its module_id
@@ -79,12 +79,12 @@ class Feed
     function export($template = false, $number = 10, $begin_at = 0)
     {
         import('content/parser/content_second_parser');
-        
+
         if ($template === false)    // A specific template is used
-            $tpl = $this->tpl->copy();
+        $tpl = $this->tpl->copy();
         else
-            $tpl = $template->copy();
-        
+        $tpl = $template->copy();
+
         global $User, $MODULES;
         if ($User->check_auth($MODULES[$this->module_id]['auth'], ACCESS_MODULE))
         {
@@ -129,8 +129,8 @@ class Feed
     {
         if ($this->is_in_cache())
         {
-			$include = @include($this->get_cache_file_name());
-			if ($include)
+            $include = @include($this->get_cache_file_name());
+            if ($include)
             {
                 $this->data = $__feed_object;
                 return $this->export();
@@ -152,13 +152,13 @@ class Feed
      * @return bool true if the feed data are in the cache
      */
     function is_in_cache() { return file_exists($this->get_cache_file_name()); }
-   
+     
     /**
      * @desc Returns the feed data cache filename
      * @return string the feed data cache filename
      */
     function get_cache_file_name() { return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php'; }
-   
+     
     ## Private Methods ##
     ## Private attributes ##
     var $module_id = '';        // Module ID
@@ -171,7 +171,7 @@ class Feed
     ## Statics Methods ##
 
     // clear the cache
-    
+
     /**
      * @desc Clear the cache of the specified module_id.
      * @param mixed $module_id the module module_id or false. If false,
@@ -190,12 +190,12 @@ class Feed
         {   // Clear the whole cache
             $files = $folder->get_files();
         }
-       
+         
         foreach ($files as $file)
-            $file->delete();
+        $file->delete();
     }
 
-    
+
     /**
      * @desc Update the cache of the $module_id, $name, $idcat feed with $data
      * @param string $module_id the module id
@@ -227,59 +227,51 @@ class Feed
     {
         // Choose the correct template
         if (is_object($tpl) and strtolower(get_class($tpl)) == 'template')
-            $template = $tpl->copy();
+        $template = $tpl->copy();
         else
         {
             import('io/template');
             $template = new Template($module_id . '/framework/content/syndication/feed.tpl');
             if (gettype($tpl) == 'array')
-                $template->assign_vars($tpl);
+            $template->assign_vars($tpl);
         }
-       
+         
         // Get the cache content or recreate it if not existing
-		$feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
-		if (!DEBUG) {
-			$result = @include($feed_data_cache_file);
-		} else {
-			if (file_exists($feed_data_cache_file)) {
-				$result = include($feed_data_cache_file);
-			} else {
-				$result = FALSE;
-			}
-		}
+        $feed_data_cache_file = FEEDS_PATH . $module_id . '_' . $name . '_' . $idcat . '.php';
+        $result = @include($feed_data_cache_file);
         if ($result === false)
         {
             import('modules/modules_discovery_service');
             $modules = new ModulesDiscoveryService();
             $module = $modules->get_module($module_id);
-            
+
             if ( $module->got_error() || !$module->has_functionnality('get_feed_data_struct') )
             {   // If the module is not installed or doesn't have the get_feed_data_struct
                 // functionnality we break
                 return '';
             }
-            
+
             $data = $module->functionnality('get_feed_data_struct', $idcat);
             if (!$module->got_error())
             {
                 Feed::update_cache($module_id, $name, $data, $idcat);
             }
         }
-		if (!DEBUG) {
-			$result = @include($feed_data_cache_file);
-		} else {
-			if (file_exists($feed_data_cache_file)) {
-				$result = include($feed_data_cache_file);
-			} else {
-				$result = FALSE;
-			}
-		}
+        if (!DEBUG) {
+            $result = @include($feed_data_cache_file);
+        } else {
+            if (file_exists($feed_data_cache_file)) {
+                $result = include($feed_data_cache_file);
+            } else {
+                $result = FALSE;
+            }
+        }
         if ( $result === false)
         {
             user_error(sprintf(ERROR_GETTING_CACHE, $module_id, $idcat), E_USER_WARNING);
             return '';
         }
-        
+
         $feed = new Feed($module_id, $name);
         $feed->load_data($__feed_object);
         return $feed->export($template, $number, $begin_at);
