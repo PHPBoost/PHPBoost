@@ -5,7 +5,7 @@
             var LastSpecializedFormUsed = 'all';
             
             function ChangeForm(module)
-            // Change le cadre des r�sultats
+            // Change le cadre des résultats
             {
                 hide_div(FORM + LastSpecializedFormUsed);
                 show_div(FORM + module);
@@ -20,7 +20,7 @@
             }
             
             function check_search_form_post()
-            // V�rifie la validit� du formulaire
+            // V�rifie la validité du formulaire
             {
                 var textSearched = document.getElementById("TxTsearched").value;
                 

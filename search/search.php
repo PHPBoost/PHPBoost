@@ -62,7 +62,7 @@ $Template->assign_vars(Array(
     'L_FORMS' => $LANG['forms'],
     'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
     'L_SIMPLE_SEARCH' => $LANG['simple_search'],
-    'U_FORM_VALID' => url('../search/search.php?token=' . $Session->get_token() .'#results'),
+    'U_FORM_VALID' => url('../search/search.php#results'),
     'C_SIMPLE_SEARCH' => $search_in == 'all' ? true : false,
     'SEARCH_MODE_MODULE' => $search_in
 ));
