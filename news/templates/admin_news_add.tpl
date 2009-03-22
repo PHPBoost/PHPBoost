@@ -133,7 +133,6 @@
 						<dd>
 							<div onclick="document.getElementById('start_end_date').checked = true;">
 								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} /></label>
-								<input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} /></label> 							
 								<input type="text" size="7" maxlength="8" id="start" name="start" value="{START}" class="text" /> 				
 								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 									<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
