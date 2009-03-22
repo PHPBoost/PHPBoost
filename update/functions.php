@@ -57,7 +57,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			return DB_CONFIG_ERROR_CONNECTION_TO_DBMS;
 		//La base de données n'existe pas
 		case UNEXISTING_DATABASE:
-				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED;
+				return DB_CONFIG_ERROR_DATABASE_NOT_FOUND;
 		//Connexion réussie
 		case CONNECTED_TO_DATABASE:
 			//Est-ce qu'une installation de PHPBoost n'existe déjà pas à sur cette base avec le même préfixe ?
@@ -69,9 +69,9 @@ function check_database_config($host, $login, $password, $database_name, $tables
 
 			//On fait le test sur quelques tables du noyau
 			if (!empty($tables_list[$tables_prefix . 'member']) || !empty($tables_list[$tables_prefix . 'configs']))
-				return DB_CONFIG_TABLES_DONT_EXIST;
+				return DB_CONFIG_SUCCESS;
 			
-			return DB_CONFIG_SUCCESS;
+			return DB_CONFIG_TABLES_DONT_EXIST;
 	}
 }
 
