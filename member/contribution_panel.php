@@ -196,7 +196,7 @@ elseif ($id_update > 0)
 		'C_EDIT_CONTRIBUTION' => true,
 		'EDITOR' => display_editor(),
 		'ENTITLED' => $contribution->get_entitled(),
-		'DESCRIPTION' => $contribution->get_description(),
+		'DESCRIPTION' => unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
 		'CONTRIBUTION_STATUS_UNREAD_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_UNREAD ? ' selected="selected"' : '',
 		'CONTRIBUTION_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
