@@ -114,7 +114,7 @@ class DownloadInterface extends ModuleInterface
         $auth_cats = array();
         $cats->build_children_id_list(0, $auth_cats);
         
-        $auth_cats = !empty($auth_cats) ? " AND f.idcat IN (" . implode($auth_cats, ',') . ") " : '';
+        $auth_cats = !empty($auth_cats) ? " AND d.idcat IN (" . implode($auth_cats, ',') . ") " : '';
         
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             d.id AS id_content,
@@ -253,14 +253,14 @@ class DownloadInterface extends ModuleInterface
     }
     
     /**
-     * @desc Return the list of the feeds available for this module. 
+     * @desc Return the list of the feeds available for this module.
      * @return FeedsList The list
      */
     function get_feeds_list()
 	{
         require_once(PATH_TO_ROOT . '/download/download_cats.class.php');
         $dl_cats = new DownloadCats();
-        return $dl_cats->get_feeds_list();	    
+        return $dl_cats->get_feeds_list();
 	}
     
     ## Private ##
