@@ -44,7 +44,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		//Initialisation  de la class de gestion des fichiers.
-		import('member/uploads');
+		import('members/uploads');
 		$Uploads = new Uploads; //Suppression de tout les fichiers et dossiers du membre.
 		$Uploads->Empty_folder_member($id_post);
 			
