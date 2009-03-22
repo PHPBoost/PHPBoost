@@ -3,7 +3,7 @@
  *                             menu.class.php
  *                            -------------------
  *   begin                : November 15, 2008
- *   copyright            : (C) 2008 Loïc Rouchon
+ *   copyright            : (C) 2008 Loï¿½c Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -43,7 +43,7 @@ define('BLOCK_POSITION__RIGHT',             8);
 define('BLOCK_POSITION__ALL',               9);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loï¿½c Rouchon horn@phpboost.com
  * @desc This class represents a menu element and is used to build any kind of menu
  * @abstract
  * @package menu
@@ -143,7 +143,7 @@ class Menu
     function cache_export_begin()
     {
         if (is_array($this->auth))
-            return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if (empty($__auth)||$User->check_auth($__auth,1)){$__menu.=\'';
+            return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if ($User->check_auth($__auth,1)){$__menu.=\'';
         return '';
     }
     
@@ -187,7 +187,7 @@ class Menu
      * @access protected
      * @var int[string] Represents the Menu authorisations array
      */
-    var $auth = array();
+    var $auth = null;
     /**
      * @access protected
      * @var bool true if the Menu is used
