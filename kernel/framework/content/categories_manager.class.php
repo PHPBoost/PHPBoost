@@ -563,12 +563,11 @@ class CategoriesManager
 		if ($category_id > 0)
 		{
 			while ((int)$this->cache_var[$category_id]['id_parent'] != 0)
-				$list[] = $category_id = (int)$this->cache_var[$category_id]['id_parent'];
-			
-			return $list;
+			{
+			    $list[] = $category_id = (int)$this->cache_var[$category_id]['id_parent'];
+			}
 		}
-		else
-			return array();
+		return $list;
 	}
 	
 	/**
@@ -598,7 +597,7 @@ class CategoriesManager
 		
 		if (count($ids) > 0)
 		{
-			$this->cache_var[$ids[0]]['auth'];
+			$result = $this->cache_var[$ids[0]]['auth'];
 		
 			for ($i = 1; $i < $length; $i++)
 				$result = Authorizations::merge_auth($result, $this->cache_var[$ids[$i]]['auth'], $bit, $mode);
