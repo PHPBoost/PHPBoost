@@ -230,10 +230,11 @@ elseif ($step == 3)
         {
             $result = DB_UNKNOW_ERROR;
         }
-
+        
         switch ($result)
         {
             case DB_CONFIG_SUCCESS:
+                die('correct :)');
                 import('core/errors');
                 $Errorh = new Errors;
                 $Sql = new Sql();
@@ -279,11 +280,12 @@ else
             case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
                 $error = '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
                 break;
-            case DB_CONFIG_TABLES_DONT_EXIST:
+            case DB_CONFIG_ERROR_DATABASE_NOT_FOUND:
                 $error = '<div class="error">La base de données que vous avez choisie n\'existe pas.</div>';
                 break;
             case DB_CONFIG_TABLES_DONT_EXIST:
-                $error = '<div class="error">La base de données que vous avez choisie ne semble pas contenir d\'installation de PHPBoost 2.0</div>';
+                $error = '<div class="error">La base de données que vous avez choisie ne semble pas contenir d\'installation de PHPBoost 2.0. Choisissez une base de données contenant une installation de PHPBoost 2.0. Modifiez au besoin le préfixe des tables.</div>';
+                break;
             case DB_UNKNOW_ERROR:
             default:
                 $error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>';
@@ -321,7 +323,7 @@ else
         'L_DB_CONFIG_SUCESS' => addslashes($LANG['db_success']),
         'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
         'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND' => addslashes($LANG['db_error_selection']),
-        'L_DB_CONFIG_TABLES_DONT_EXIST' => 'La base de données que vous avez choisie ne semble pas contenir d\\\'installation de PHPBoost 2.0',
+        'L_DB_CONFIG_TABLES_DONT_EXIST' => 'La base de données que vous avez choisie ne semble pas contenir d\\\'installation de PHPBoost 2.0. Choisissez une base de données contenant une installation de PHPBoost 2.0. Modifiez au besoin le préfixe des tables.',
         'L_UNKNOWN_ERROR' => $LANG['db_unknown_error'],
         'L_DB_EXPLAIN' => $LANG['db_explain'],
         'L_DB_TITLE' => $LANG['db_title'],

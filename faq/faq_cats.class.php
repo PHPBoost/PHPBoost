@@ -44,10 +44,10 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Method which removes all subcategories and their content
-	function Delete_category_recursively($id)
+	function delete_category_recursively($id)
 	{
 		//We delete the category
-		$this->delete_category_with_content($id);
+		$this->_delete_category_with_content($id);
 		//Then its content
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
@@ -59,7 +59,7 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Method which deletes a category and move its content in another category
-	function Delete_category_and_move_content($id_category, $new_id_cat_content)
+	function delete_category_and_move_content($id_category, $new_id_cat_content)
 	{
 		global $Sql;
 		
@@ -101,7 +101,7 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Function which updates a category
-	function Update_category($id_cat, $id_parent, $name, $description, $image)
+	function update_category($id_cat, $id_parent, $name, $description, $image)
 	{
 		global $Sql, $Cache;
 		if (array_key_exists($id_cat, $this->cache_var))
@@ -166,10 +166,10 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
-	function Recount_subquestions($generate_cache = true)
+	function recount_subquestions($generate_cache = true)
 	{
 		global $Cache, $FAQ_CATS;
-		$this->recount_cat_subquestions($FAQ_CATS, 0);
+		$this->_recount_cat_subquestions($FAQ_CATS, 0);
 
 		if ($generate_cache)
 			$Cache->Generate_module_file('faq');
@@ -179,7 +179,7 @@ class FaqCats extends CategoriesManager
 	## Private methods ##
 	
 	//method which deletes a category and its content (not recursive)
-	function delete_category_with_content($id)
+	function _delete_category_with_content($id)
 	{
 		global $Sql;
 		
@@ -195,7 +195,7 @@ class FaqCats extends CategoriesManager
 	}
 	
 	//Recursive function which counts for each category
-	function recount_cat_subquestions($FAQ_CATS, $cat_id)
+	function _recount_cat_subquestions($FAQ_CATS, $cat_id)
 	{
 		global $Sql;
 		
@@ -204,7 +204,7 @@ class FaqCats extends CategoriesManager
 		foreach ($FAQ_CATS as $id => $value)
 		{
 			if ($id != 0 && $value['id_parent'] == $cat_id)
-				$num_subquestions += $this->recount_cat_subquestions($FAQ_CATS, $id);
+				$num_subquestions += $this->_recount_cat_subquestions($FAQ_CATS, $id);
 		}
 		
 		//If its not the root we save it into the database
