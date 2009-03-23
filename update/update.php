@@ -35,6 +35,8 @@ define('STEP_EXPLAINATION', 2);
 define('STEP_SERVER_CONFIG', 3);
 define('STEP_DB_CONFIG', 4);
 
+defined('DEBUG', false);
+
 ob_start();
 
 define('PATH_TO_ROOT', '..');
@@ -413,6 +415,7 @@ switch($step)
             $CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
             $CONFIG['htaccess_manual_content'] = '';
             $CONFIG['rewrite'] = 0;
+            $CONFIG['debug'] = 0;
             $CONFIG['com_popup'] = 0;
             $CONFIG['compteur'] = 0;
             $CONFIG['bench'] = 0;
