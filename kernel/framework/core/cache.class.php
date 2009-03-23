@@ -302,6 +302,17 @@ class Cache
 
         return $config;
     }
+    
+    /**
+     * @desc Method which is called to generate the debug file cache (it cannot be in the configuration file because it must be loaded before the PHPBoost environment).
+     * @return The content of the debug file cache.
+     */
+    function _get_debug()
+    {
+        $this->load('config');
+        global $CONFIG;
+        return 'global $DEBUG;' . "\n" . '$DEBUG[\'debug_mode\'] = ' . (int)$CONFIG['debug_mode'] . ';';        
+    }
 
     /**
      * @desc Method which is called to generate the htaccess file cache.
@@ -639,7 +650,7 @@ class Cache
      * @static
      * @var string[] List of all the cache files of the kernel.
      */
-    var $files = array('config', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
+    var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
 }
 
 ?>

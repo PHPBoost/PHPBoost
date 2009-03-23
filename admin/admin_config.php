@@ -73,9 +73,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
 		
-		$str = 'define(\'DEBUG\', ' . retrieve(POST, 'debug', 0) . ');';
-		$Cache->write('debug', $str);
-		
 		redirect(HOST . SCRIPT);
 	}
 	else
@@ -125,7 +122,9 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
 		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
 		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
-		'SITE_SESSION_VISIT' => !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',	
+		'SITE_SESSION_VISIT'=> !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',
+	    'DEBUG_ENABLED'     => (DEBUG == 1) ? 'checked="checked"' : '',
+        'DEBUG_DISABLED'    => (DEBUG == 0) ? 'checked="checked"' : '',
 		'L_SECONDS' 		=> $LANG['unit_seconds'],
 		'L_REQUIRE_SERV' 	=> $LANG['require_serv'],
 		'L_REQUIRE_NAME' 	=> $LANG['require_name'],
@@ -147,6 +146,8 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		'L_HTACCESS_MANUAL_CONTENT_EXPLAIN' => $LANG['htaccess_manual_content_explain'],
 		'L_TIMEZONE_CHOOSE' => $LANG['timezone_choose'],
 		'L_TIMEZONE_CHOOSE_EXPLAIN' => $LANG['timezone_choose_explain'],
+	    'L_DEBUG' => $LANG['debug_mode'],
+        'L_DEBUG_EXPLAIN' => $LANG['debug_mode_explain'],
 		'L_ACTIV' 			=> $LANG['activ'],
 		'L_UNACTIVE' 		=> $LANG['unactiv'],
 		'L_USER_CONNEXION' 	=> $LANG['user_connexion'],
@@ -184,6 +185,7 @@ elseif (!empty($_POST['advanced']))
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
 	$CONFIG['htaccess_manual_content'] = strprotect(retrieve(POST, 'htaccess_manual_content', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+	$CONFIG['debug_mode'] = retrieve(POST, 'debug', 0);
 	
 	if (!empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
@@ -194,6 +196,7 @@ elseif (!empty($_POST['advanced']))
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
 		$Cache->generate_file('config');
+		$Cache->generate_file('debug');
 		
 		//Régénération du htaccess.
 		$Cache->Generate_file('htaccess'); //Régénération du htaccess.	
@@ -254,8 +257,6 @@ else //Sinon on rempli le formulaire
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
-		'DEBUG_ENABLED' => (DEBUG == 1) ? 'checked="checked"' : '',
-		'DEBUG_DISABLED' => (DEBUG == 0) ? 'checked="checked"' : '',
 		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
 		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
 		'MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '','MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '',
@@ -279,8 +280,6 @@ else //Sinon on rempli le formulaire
 		'L_BENCH_EXPLAIN' => $LANG['bench_explain'],
 		'L_THEME_AUTHOR' => $LANG['theme_author'],
 		'L_THEME_AUTHOR_EXPLAIN' => $LANG['theme_author_explain'],
-		'L_DEBUG' => $LANG['debug'],
-		'L_DEBUG_EXPLAIN' => $LANG['debug_explain'],
 		'L_REWRITE' => $LANG['rewrite'],
 		'L_POST_MANAGEMENT' => $LANG['post_management'],
 		'L_PM_MAX' => $LANG['pm_max'],
