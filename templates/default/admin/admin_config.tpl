@@ -124,14 +124,6 @@
 							<label><input type="radio" {THEME_AUTHOR_DISABLED} name="theme_author" value="0" /> {L_UNACTIVE}</label>
 						</dd>
 					</dl>
-					<dl>
-						<dt><label for="debug">{L_DEBUG}</label><br /><span>{L_DEBUG_EXPLAIN}</span></dt>
-						<dd>
-							<label><input type="radio" {DEBUG_ENABLED} name="debug" id="debug" value="1" /> {L_ACTIV}</label>
-							&nbsp;&nbsp;
-							<label><input type="radio" {DEBUG_DISABLED} name="debug" value="0" /> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
 				</fieldset> 
 				<fieldset>  
 					<legend>{L_POST_MANAGEMENT}</legend> 

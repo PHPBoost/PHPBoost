@@ -146,6 +146,14 @@
 					<dt><label for="sign">{L_UNLOCK_ADMIN}</label><br /><span>{L_UNLOCK_ADMIN_EXPLAIN}</span></dt>
 					<dd><label><a href="admin_config.php?unlock=1" onclick="javascript:return Confirm_unlock();">{L_UNLOCK_LINK}</a></label></dd>
 				</dl>
+	            <dl>
+                        <dt><label for="debug">{L_DEBUG}</label><br /><span>{L_DEBUG_EXPLAIN}</span></dt>
+                        <dd>
+                            <label><input type="radio" {DEBUG_ENABLED} name="debug" id="debug" value="1" /> {L_ACTIV}</label>
+                            &nbsp;&nbsp;
+                            <label><input type="radio" {DEBUG_DISABLED} name="debug" value="0" /> {L_UNACTIVE}</label>
+                        </dd>
+                    </dl>
 			</fieldset> 
 			
 			<fieldset class="fieldset_submit">
