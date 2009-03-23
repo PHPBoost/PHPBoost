@@ -217,7 +217,7 @@ switch($step)
     		'L_LICENSE_TERMS' => file_get_contents_emulate('license.txt')
     	));
     	break;
-//Configuration du serveur
+    //Configuration du serveur
     case STEP_SERVER_CONFIG:
     	//Url rewriting
     	if (function_exists('apache_get_modules'))
@@ -323,7 +323,7 @@ switch($step)
     		'U_NEXT_STEP' => add_lang('install.php?step=' . (STEP_SERVER_CONFIG + 1))
     	));
         break;
-//Mise en place de la base de données
+    //Mise en place de la base de données
     case STEP_DB_CONFIG:
 
     	require_once('functions.php');
