@@ -86,7 +86,7 @@ if (!empty($id_get)) //Espace membre
 		
 		$user_sex = '';
 		if (!empty($row['user_sex']))
-			$user_sex = ($row['user_sex'] == 1) ? '/images/man.png' : '/images/woman.png';
+			$user_sex = ($row['user_sex'] == 1) ? 'man.png' : 'woman.png';
 	
 		$Template->assign_vars(array(
 			'C_USER_UPDATE_PROFIL' => true,
@@ -103,7 +103,7 @@ if (!empty($id_get)) //Espace membre
 			'BORN_DAY' => $born_day,
 			'BORN_MONTH' => $born_month,
 			'BORN_YEAR' => $born_year,
-			'USER_SEX' => !empty($user_sex) ? '<img src="' . $user_sex . '" alt="" />' : '',
+			'USER_SEX' => !empty($user_sex) ? '<img src="../templates/' . get_utheme() . '/images/' . $user_sex . '" alt="" />' : '',
 			'USER_SIGN' => unparse($row['user_sign']),
 			'USER_SIGN_EDITOR' => display_editor('user_sign'),
 			'USER_DESC' => unparse($row['user_desc']),
