@@ -6,9 +6,7 @@ var EmotionsDialog = {
 	},
 
 	insert : function(file, title) {
-		var ed = tinyMCEPopup.editor;
-
-		tinyMCEPopup.execCommand('mceInsertContent', false, '<img src="../images/smileys/' + file + '" alt="' + title + '" class="smiley" />');
+		tinyMCEPopup.execCommand('mceInsertContent', false, '<img src="../images/smileys/' + file + '" alt="' + title + '" class="smiley" style="vertical-align:middle" />');
 
 		tinyMCEPopup.close();
 	}

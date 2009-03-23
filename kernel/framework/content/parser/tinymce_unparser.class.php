@@ -127,17 +127,8 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function _unparse_smilies()
 	{
-		/*@include(PATH_TO_ROOT . '/cache/smileys.php');
-		if (!empty($_array_smiley_code))
-		{
-			//Création du tableau de remplacement
-			foreach ($_array_smiley_code as $code => $img)
-			{
-				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
-				$smiley_code[] = $code;
-			}
-			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
-		}*/
+		$this->content = preg_replace('`<img src="\.\./images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`i', 
+		'<img class="smiley" style="vertical-align:middle" src="../images/smileys/$1" alt="$2" />', $this->content);
 	}
 	
 	/**
