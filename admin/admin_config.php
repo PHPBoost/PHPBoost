@@ -60,7 +60,6 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['debug'] 		= retrieve(POST, 'debug', 0);
 	$config['mail_exp'] 	= stripslashes(retrieve(POST, 'mail_exp', ''));  
 	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));  
 	$config['activ_mail'] 	= retrieve(POST, 'activ_mail', 1); //activé par defaut. 
