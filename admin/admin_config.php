@@ -51,27 +51,31 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		$start_page = '';
 		
 	$config = $CONFIG;	 
-	$config['site_name'] = stripslashes(retrieve(POST, 'site_name', ''));	
-	$config['site_desc'] = stripslashes(retrieve(POST, 'site_desc', ''));
+	$config['site_name'] 	= stripslashes(retrieve(POST, 'site_name', ''));	
+	$config['site_desc'] 	= stripslashes(retrieve(POST, 'site_desc', ''));
 	$config['site_keyword'] = stripslashes(retrieve(POST, 'site_keyword', ''));
-	$config['lang'] = stripslashes(retrieve(POST, 'lang', ''));
-	$config['theme'] = stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
-	$config['start_page'] = !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
-	$config['compteur'] = retrieve(POST, 'compteur', 0);
-	$config['bench'] = retrieve(POST, 'bench', 0);
+	$config['lang'] 		= stripslashes(retrieve(POST, 'lang', ''));
+	$config['theme'] 		= stripslashes(retrieve(POST, 'theme', 'base')); //main par defaut. 
+	$config['start_page'] 	= !empty($start_page) ? stripslashes($start_page) : '/member/member.php';
+	$config['compteur'] 	= retrieve(POST, 'compteur', 0);
+	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
-	$config['mail_exp'] = stripslashes(retrieve(POST, 'mail_exp', ''));  
-	$config['mail'] = stripslashes(retrieve(POST, 'mail', ''));  
-	$config['activ_mail'] = retrieve(POST, 'activ_mail', 1); //activé par defaut. 
-	$config['sign'] = stripslashes(retrieve(POST, 'sign', ''));  
-	$config['anti_flood'] = retrieve(POST, 'anti_flood', 0);
-	$config['delay_flood'] = retrieve(POST, 'delay_flood', 0);
-	$config['pm_max'] = retrieve(POST, 'pm_max', 25);
+	$config['debug'] 		= retrieve(POST, 'debug', 0);
+	$config['mail_exp'] 	= stripslashes(retrieve(POST, 'mail_exp', ''));  
+	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));  
+	$config['activ_mail'] 	= retrieve(POST, 'activ_mail', 1); //activé par defaut. 
+	$config['sign'] 		= stripslashes(retrieve(POST, 'sign', ''));  
+	$config['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
+	$config['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
+	$config['pm_max'] 		= retrieve(POST, 'pm_max', 25);
 
 	if (!empty($config['theme']) && !empty($config['lang'])) //Nom de serveur obligatoire
 	{
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		$Cache->Generate_file('config');
+		
+		$str = 'define(\'DEBUG\', ' . retrieve(POST, 'debug', 0) . ');';
+		$Cache->write('debug', $str);
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -110,57 +114,57 @@ elseif ($check_advanced && empty($_POST['advanced']))
 	}
 	
 	$Template->assign_vars(array(
-		'SERVER_NAME' => !empty($CONFIG['server_name']) ? $CONFIG['server_name'] : $server_name,
-		'SERVER_PATH' => isset($CONFIG['server_path']) ? $CONFIG['server_path'] : $server_path,
-		'SELECT_TIMEZONE' => $select_timezone,
-		'CHECKED' => ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
-		'UNCHECKED' => ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
-		'CHECK_REWRITE' => $check_rewrite,
+		'SERVER_NAME' 		=> !empty($CONFIG['server_name']) ? $CONFIG['server_name'] : $server_name,
+		'SERVER_PATH' 		=> isset($CONFIG['server_path']) ? $CONFIG['server_path'] : $server_path,
+		'SELECT_TIMEZONE' 	=> $select_timezone,
+		'CHECKED' 			=> ($CONFIG['rewrite'] == '1') ? 'checked="checked"' : '',
+		'UNCHECKED' 		=> ($CONFIG['rewrite'] == '0') ? 'checked="checked"' : '',
+		'CHECK_REWRITE' 	=> $check_rewrite,
 		'HTACCESS_MANUAL_CONTENT' => !empty($CONFIG['htaccess_manual_content']) ? $CONFIG['htaccess_manual_content'] : '',
-		'GZ_DISABLED' => ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
+		'GZ_DISABLED' 		=> ((!function_exists('ob_gzhandler') || !@extension_loaded('zlib')) ? 'disabled="disabled"' : ''),
 		'GZHANDLER_ENABLED' => ($CONFIG['ob_gzhandler'] == 1 && (function_exists('ob_gzhandler') && @extension_loaded('zlib'))) ? 'checked="checked"' : '',
 		'GZHANDLER_DISABLED' => ($CONFIG['ob_gzhandler'] == 0) ? 'checked="checked"' : '',
-		'SITE_COOKIE' => !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
-		'SITE_SESSION' => !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
+		'SITE_COOKIE' 		=> !empty($CONFIG['site_cookie']) ? $CONFIG['site_cookie'] : 'session',
+		'SITE_SESSION' 		=> !empty($CONFIG['site_session']) ? $CONFIG['site_session'] : '3600',
 		'SITE_SESSION_VISIT' => !empty($CONFIG['site_session_invit']) ? $CONFIG['site_session_invit'] : '300',	
-		'L_SECONDS' => $LANG['unit_seconds'],
-		'L_REQUIRE_SERV' => $LANG['require_serv'],
-		'L_REQUIRE_NAME' => $LANG['require_name'],
-		'L_REQUIRE_COOKIE_NAME' => $LANG['require_cookie_name'],
-		'L_REQUIRE_SESSION_TIME' => $LANG['require_session_time'],
-		'L_REQUIRE_SESSION_INVIT' => $LANG['require_session_invit'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_SERV_NAME' => $LANG['serv_name'],
-		'L_SERV_NAME_EXPLAIN' => $LANG['serv_name_explain'],
-		'L_SERV_PATH' => $LANG['serv_path'],
-		'L_SERV_PATH_EXPLAIN' => $LANG['serv_path_explain'],
-		'L_CONFIG' => $LANG['configuration'],
-		'L_CONFIG_MAIN' => $LANG['config_main'],
+		'L_SECONDS' 		=> $LANG['unit_seconds'],
+		'L_REQUIRE_SERV' 	=> $LANG['require_serv'],
+		'L_REQUIRE_NAME' 	=> $LANG['require_name'],
+		'L_REQUIRE_COOKIE_NAME' 	=> $LANG['require_cookie_name'],
+		'L_REQUIRE_SESSION_TIME' 	=> $LANG['require_session_time'],
+		'L_REQUIRE_SESSION_INVIT' 	=> $LANG['require_session_invit'],
+		'L_REQUIRE' 		=> $LANG['require'],
+		'L_SERV_NAME' 		=> $LANG['serv_name'],
+		'L_SERV_NAME_EXPLAIN' 	=> $LANG['serv_name_explain'],
+		'L_SERV_PATH' 			=> $LANG['serv_path'],
+		'L_SERV_PATH_EXPLAIN' 	=> $LANG['serv_path_explain'],
+		'L_CONFIG' 			=> $LANG['configuration'],
+		'L_CONFIG_MAIN' 	=> $LANG['config_main'],
 		'L_CONFIG_ADVANCED' => $LANG['config_advanced'],
-		'L_REWRITE' => $LANG['rewrite'],
+		'L_REWRITE' 		=> $LANG['rewrite'],
 		'L_EXPLAIN_REWRITE' => $LANG['explain_rewrite'], 
-		'L_REWRITE_SERVER' => $LANG['server_rewrite'],
-		'L_HTACCESS_MANUAL_CONTENT' => $LANG['htaccess_manual_content'],
+		'L_REWRITE_SERVER' 	=> $LANG['server_rewrite'],
+		'L_HTACCESS_MANUAL_CONTENT' 		=> $LANG['htaccess_manual_content'],
 		'L_HTACCESS_MANUAL_CONTENT_EXPLAIN' => $LANG['htaccess_manual_content_explain'],
 		'L_TIMEZONE_CHOOSE' => $LANG['timezone_choose'],
 		'L_TIMEZONE_CHOOSE_EXPLAIN' => $LANG['timezone_choose_explain'],
-		'L_ACTIV' => $LANG['activ'],
-		'L_UNACTIVE' => $LANG['unactiv'],
-		'L_USER_CONNEXION' => $LANG['user_connexion'],
-		'L_COOKIE_NAME' => $LANG['cookie_name'],
-		'L_SESSION_TIME' => $LANG['session_time'],
+		'L_ACTIV' 			=> $LANG['activ'],
+		'L_UNACTIVE' 		=> $LANG['unactiv'],
+		'L_USER_CONNEXION' 	=> $LANG['user_connexion'],
+		'L_COOKIE_NAME' 	=> $LANG['cookie_name'],
+		'L_SESSION_TIME' 	=> $LANG['session_time'],
 		'L_SESSION_TIME_EXPLAIN' => $LANG['session_time_explain'],
-		'L_SESSION_INVIT' => $LANG['session invit'],
+		'L_SESSION_INVIT' 	=> $LANG['session invit'],
 		'L_SESSION_INVIT_EXPLAIN' => $LANG['session invit_explain'],
-		'L_MISC' => $LANG['miscellaneous'],	
+		'L_MISC' 			=> $LANG['miscellaneous'],	
 		'L_ACTIV_GZHANDLER' => $LANG['activ_gzhandler'],
 		'L_ACTIV_GZHANDLER_EXPLAIN' => $LANG['activ_gzhandler_explain'],
-		'L_CONFIRM_UNLOCK_ADMIN' => $LANG['confirm_unlock_admin'],
-		'L_UNLOCK_ADMIN' => $LANG['unlock_admin'],
-		'L_UNLOCK_ADMIN_EXPLAIN' => $LANG['unlock_admin_explain'],
+		'L_CONFIRM_UNLOCK_ADMIN' 	=> $LANG['confirm_unlock_admin'],
+		'L_UNLOCK_ADMIN' 	=> $LANG['unlock_admin'],
+		'L_UNLOCK_ADMIN_EXPLAIN' 	=> $LANG['unlock_admin_explain'],
 		'L_UNLOCK_LINK' => $LANG['send_unlock_admin'],
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']	
+		'L_UPDATE' 		=> $LANG['update'],
+		'L_RESET' 		=> $LANG['reset']	
 	));
 	
 	$Template->pparse('admin_config2');
@@ -251,6 +255,8 @@ else //Sinon on rempli le formulaire
 		'BENCH_DISABLED' => ($CONFIG['bench'] == 0) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_ENABLED' => ($CONFIG['theme_author'] == 1) ? 'checked="checked"' : '',
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
+		'DEBUG_ENABLED' => (DEBUG == 1) ? 'checked="checked"' : '',
+		'DEBUG_DISABLED' => (DEBUG == 0) ? 'checked="checked"' : '',
 		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
 		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
 		'MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '','MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '',
@@ -274,6 +280,8 @@ else //Sinon on rempli le formulaire
 		'L_BENCH_EXPLAIN' => $LANG['bench_explain'],
 		'L_THEME_AUTHOR' => $LANG['theme_author'],
 		'L_THEME_AUTHOR_EXPLAIN' => $LANG['theme_author_explain'],
+		'L_DEBUG' => $LANG['debug'],
+		'L_DEBUG_EXPLAIN' => $LANG['debug_explain'],
 		'L_REWRITE' => $LANG['rewrite'],
 		'L_POST_MANAGEMENT' => $LANG['post_management'],
 		'L_PM_MAX' => $LANG['pm_max'],

@@ -28,6 +28,10 @@
 if (!defined('PATH_TO_ROOT')) //Chemin vers la racine.
 define('PATH_TO_ROOT', '..');
 
+// gestion mode DEBUG
+@include PATH_TO_ROOT . '/cache/debug.php';
+defined('DEBUG') OR define ('DEBUG',1);
+
 header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
