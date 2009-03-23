@@ -524,7 +524,7 @@ class TinyMCEParser extends ContentParser
 	 */
 	function _parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img class="smiley" src="\.\./images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i', 
+		$this->content = preg_replace('`&lt;img class="smiley" style="vertical-align:middle" src="\.\./images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i', 
 		'<img src="../images/smileys/$1" alt="$2" class="smiley" />', $this->content);
 		
 		//Smilies
