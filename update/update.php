@@ -31,11 +31,10 @@ define('DEFAULT_LANGUAGE', 'french');
 define('DEFAULT_THEME', 'base');
 define('STEPS_NUMBER', 6);
 define('STEP_INTRODUCTION', 1);
-define('STEP_EXPLAINATION', 2);
-define('STEP_SERVER_CONFIG', 3);
-define('STEP_DB_CONFIG', 4);
+define('STEP_SERVER_CONFIG', 2);
+define('STEP_DB_CONFIG', 3);
 
-defined('DEBUG', false);
+define('DEBUG', false);
 
 ob_start();
 
