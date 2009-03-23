@@ -127,7 +127,7 @@ class TinyMCEUnparser extends ContentUnparser
 	 */
 	function _unparse_smilies()
 	{
-		@include(PATH_TO_ROOT . '/cache/smileys.php');
+		/*@include(PATH_TO_ROOT . '/cache/smileys.php');
 		if (!empty($_array_smiley_code))
 		{
 			//Création du tableau de remplacement
@@ -137,7 +137,7 @@ class TinyMCEUnparser extends ContentUnparser
 				$smiley_code[] = $code;
 			}
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
-		}
+		}*/
 	}
 	
 	/**

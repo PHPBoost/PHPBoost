@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-define('PATH_TO_ROOT', '../../../../');
+define('PATH_TO_ROOT', '../../../..');
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 define('TITLE', $LANG['all_smiley']);
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
