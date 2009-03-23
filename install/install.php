@@ -29,6 +29,13 @@
 define('UPDATE_VERSION', '3.0b');
 define('DEFAULT_LANGUAGE', 'french');
 define('STEPS_NUMBER', 7);
+define('STEP_INTRO', 1);
+define('STEP_LICENSE', 2);
+define('STEP_SERVER_CONFIG', 3);
+define('STEP_DB_CONFIG', 4);
+define('STEP_SITE_CONFIG', 5);
+define('STEP_ADMIN_ACCOUNT', 6);
+define('STEP_END', 7);
 
 ob_start();
 
@@ -169,691 +176,689 @@ if (!empty($new_language) && is_file('lang/' . $new_language . '/install_' . $ne
 	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
-//Préambule
-if ($step == 1)
+switch($step)
 {
-	$template->assign_vars(array(
-		'C_INTRO' => true,
-		'L_INTRO_TITLE' => $LANG['intro_title'],
-		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
-		'DISTRIBUTION' => sprintf($LANG['intro_distribution'], DISTRIBUTION_NAME),
-		'L_DISTRIBUTION_EXPLAIN' => $LANG['intro_distribution_intro'],
-		'DISTRIBUTION_DESCRIPTION' => DISTRIBUTION_DESCRIPTION,
-		'L_NEXT_STEP' => add_lang('install.php?step=2'),
-		'L_START_INSTALL' => $LANG['start_install']
-	));
-}
-//Licence
-elseif ($step == 2)
-{
-	$submit = !empty($_POST['submit']) ? true : false;
-	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
-	//On vérifie l'étape et si elle est validée on passe à la suivante
-	if ($submit && $license_agreement)
-	{
-		redirect(HOST . FILE . add_lang('?step=3', true));
-	}
-		
-	$template->assign_vars(array(
-		'C_LICENSE' => true,
-		'TARGET' => add_lang('install.php?step=2'),
-		'U_PREVIOUS_PAGE' => add_lang('install.php?step=1'),
-		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
-		'L_ALERT_PLEASE_AGREE_LICENSE' => $LANG['alert_agree_license'],
-		'L_QUERY_TERMS' => $LANG['license_terms'],
-		'L_REQUIRE_LICENSE' => $LANG['license_agreement'],
-		'L_PLEASE_AGREE' => $LANG['please_agree_license'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_LICENSE_TERMS' => file_get_contents_emulate('license.txt')
-	));
-}
+    //Préambule
+    case STEP_INTRO:
+    	$template->assign_vars(array(
+    		'C_INTRO' => true,
+    		'L_INTRO_TITLE' => $LANG['intro_title'],
+    		'L_INTRO_EXPLAIN' => $LANG['intro_explain'],
+    		'DISTRIBUTION' => sprintf($LANG['intro_distribution'], DISTRIBUTION_NAME),
+    		'L_DISTRIBUTION_EXPLAIN' => $LANG['intro_distribution_intro'],
+    		'DISTRIBUTION_DESCRIPTION' => DISTRIBUTION_DESCRIPTION,
+    		'L_NEXT_STEP' => add_lang('install.php?step=' . (STEP_INTRO + 1)),
+    		'L_START_INSTALL' => $LANG['start_install']
+    	));
+        break;
+    //Licence
+    case STEP_LICENSE:
+    	$submit = !empty($_POST['submit']) ? true : false;
+    	$license_agreement = !empty($_POST['license_agreement']) ? true : false;
+    	//On vérifie l'étape et si elle est validée on passe à la suivante
+    	if ($submit && $license_agreement)
+    	{
+    		redirect(HOST . FILE . add_lang('?step=' . (STEP_LICENSE + 1), true));
+    	}
+    		
+    	$template->assign_vars(array(
+    		'C_LICENSE' => true,
+    		'TARGET' => add_lang('install.php?step=' . STEP_LICENSE),
+    		'U_PREVIOUS_PAGE' => add_lang('install.php?step=' . (STEP_LICENSE - 1)),
+    		'L_REQUIRE_LICENSE_AGREEMENT' => ($submit && !$license_agreement) ? '<div class="warning">' . $LANG['require_license_agreement'] . '</div>' : $LANG['require_license_agreement'],
+    		'L_ALERT_PLEASE_AGREE_LICENSE' => $LANG['alert_agree_license'],
+    		'L_QUERY_TERMS' => $LANG['license_terms'],
+    		'L_REQUIRE_LICENSE' => $LANG['license_agreement'],
+    		'L_PLEASE_AGREE' => $LANG['please_agree_license'],
+    		'L_NEXT_STEP' => $LANG['next_step'],
+    		'L_PREVIOUS_STEP' => $LANG['previous_step'],
+    		'L_LICENSE_TERMS' => file_get_contents_emulate('license.txt')
+    	));
+    	break;
 //Configuration du serveur
-elseif ($step == 3)
-{
-	//Url rewriting
-	if (function_exists('apache_get_modules'))
-	{
-		$get_rewrite = apache_get_modules();
-		$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
-	}
-	else
-	{
-		$check_rewrite = -1;
-	}
-	
-	$template->assign_vars(array(
-		'C_SERVER_CONFIG' => true,
-		'C_PHP_VERSION_OK' => phpversion() >= '4.1.0',
-		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
-		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
-		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
-	));
-	
-	//Mise à jour du cache de Apache à propos du système de fichiers
-	@clearstatcache();
-	
-	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/db', '../lang', '../menus', '../templates', '../upload');
-	
-	$all_dirs_ok = true;
-	
-	//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
-	foreach ($chmod_dir as $dir)
-	{
-		$is_writable = $is_dir = true;
-		//If the file exists and is a directory
-		if (file_exists($dir) && is_dir($dir))
-		{
-			//Si il n'est pas inscriptible, on demande à Apache de le rendre inscriptible en espérant qu'il soit configurer pour accepter de telles requêtes
-			if (!is_writable($dir))
-			{
-				$is_writable = (@chmod($dir, 0777)) ? true : false;
-			}
-		}
-		else
-		{
-			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
-		}
-			
-		$template->assign_block_vars('chmod', array(
-			'TITLE'	=> str_replace('..' , '', $dir),
-			'C_EXISTING_DIR' => $is_dir,
-			'C_WRITIBLE_DIR' => $is_writable
-		));
-		
-		if ($all_dirs_ok && (!$is_dir || !$is_writable))
-		{
-			$all_dirs_ok = false;
-		}
-	}
-	
-	//On empêche de passer à l'étape suivant si cette étape n'est pas validée
-	if (retrieve(POST, 'submit', false))
-	{
-		if (!$all_dirs_ok)
-		{
-			$template->assign_vars(array(
-				'C_ERROR' => true,
-				'L_ERROR' => $LANG['config_server_dirs_not_ok']
-			));
-		}
-		else
-		{
-			redirect(HOST . FILE . add_lang('?step=4', true));
-		}
-	}
-	
-	$template->assign_vars(array(
-		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
-		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
-		'L_PHP_VERSION' => $LANG['php_version'],
-		'L_CHECK_PHP_VERSION' => $LANG['check_php_version'],
-		'L_CHECK_PHP_VERSION_EXPLAIN' => $LANG['check_php_version_explain'],
-		'L_EXTENSIONS' => $LANG['extensions'],
-		'L_CHECK_EXTENSIONS' => $LANG['check_extensions'],
-		'L_GD_LIBRARY' => $LANG['gd_library'],
-		'L_GD_LIBRARY_EXPLAIN' => $LANG['gd_library_explain'],
-		'L_URL_REWRITING' => $LANG['url_rewriting'],
-		'L_URL_REWRITING_EXPLAIN' => $LANG['url_rewriting_explain'],
-		'L_AUTH_DIR' => $LANG['auth_dir'],
-		'L_CHECK_AUTH_DIR' => $LANG['check_auth_dir'],
-		'L_EXISTING' => $LANG['existing'],
-		'L_NOT_EXISTING' => $LANG['unexisting'],
-		'L_WRITABLE' => $LANG['writable'],
-		'L_NOT_WRITABLE' => $LANG['unwritable'],
-		'L_REFRESH' => $LANG['refresh_chmod'],
-		'L_RESULT' => $LANG['result'],
-		'L_QUERY_LOADING' => $LANG['query_loading'],
-		'L_QUERY_SENT' => $LANG['query_sent'],
-		'L_QUERY_PROCESSING' => $LANG['query_processing'],
-		'L_QUERY_SUCCESS' => $LANG['query_success'],
-		'L_QUERY_FAILURE' => $LANG['query_failure'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=2'),
-		'U_CURRENT_STEP' => add_lang('install.php?step=3'),
-		'U_NEXT_STEP' => add_lang('install.php?step=4')
-	));
-}
+    case STEP_SERVER_CONFIG:
+    	//Url rewriting
+    	if (function_exists('apache_get_modules'))
+    	{
+    		$get_rewrite = apache_get_modules();
+    		$check_rewrite = (!empty($get_rewrite[5])) ? 1 : 0;
+    	}
+    	else
+    	{
+    		$check_rewrite = -1;
+    	}
+    	
+    	$template->assign_vars(array(
+    		'C_SERVER_CONFIG' => true,
+    		'C_PHP_VERSION_OK' => phpversion() >= '4.1.0',
+    		'C_GD_LIBRAIRY_ENABLED' => @extension_loaded('gd'),
+    		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
+    		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
+    	));
+    	
+    	//Mise à jour du cache de Apache à propos du système de fichiers
+    	@clearstatcache();
+    	
+    	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/db', '../lang', '../menus', '../templates', '../upload');
+    	
+    	$all_dirs_ok = true;
+    	
+    	//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
+    	foreach ($chmod_dir as $dir)
+    	{
+    		$is_writable = $is_dir = true;
+    		//If the file exists and is a directory
+    		if (file_exists($dir) && is_dir($dir))
+    		{
+    			//Si il n'est pas inscriptible, on demande à Apache de le rendre inscriptible en espérant qu'il soit configurer pour accepter de telles requêtes
+    			if (!is_writable($dir))
+    			{
+    				$is_writable = (@chmod($dir, 0777)) ? true : false;
+    			}
+    		}
+    		else
+    		{
+    			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
+    		}
+    			
+    		$template->assign_block_vars('chmod', array(
+    			'TITLE'	=> str_replace('..' , '', $dir),
+    			'C_EXISTING_DIR' => $is_dir,
+    			'C_WRITIBLE_DIR' => $is_writable
+    		));
+    		
+    		if ($all_dirs_ok && (!$is_dir || !$is_writable))
+    		{
+    			$all_dirs_ok = false;
+    		}
+    	}
+    	
+    	//On empêche de passer à l'étape suivant si cette étape n'est pas validée
+    	if (retrieve(POST, 'submit', false))
+    	{
+    		if (!$all_dirs_ok)
+    		{
+    			$template->assign_vars(array(
+    				'C_ERROR' => true,
+    				'L_ERROR' => $LANG['config_server_dirs_not_ok']
+    			));
+    		}
+    		else
+    		{
+    			redirect(HOST . FILE . add_lang('?step=' . (STEP_SERVER_CONFIG + 1), true));
+    		}
+    	}
+    	
+    	$template->assign_vars(array(
+    		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
+    		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
+    		'L_PHP_VERSION' => $LANG['php_version'],
+    		'L_CHECK_PHP_VERSION' => $LANG['check_php_version'],
+    		'L_CHECK_PHP_VERSION_EXPLAIN' => $LANG['check_php_version_explain'],
+    		'L_EXTENSIONS' => $LANG['extensions'],
+    		'L_CHECK_EXTENSIONS' => $LANG['check_extensions'],
+    		'L_GD_LIBRARY' => $LANG['gd_library'],
+    		'L_GD_LIBRARY_EXPLAIN' => $LANG['gd_library_explain'],
+    		'L_URL_REWRITING' => $LANG['url_rewriting'],
+    		'L_URL_REWRITING_EXPLAIN' => $LANG['url_rewriting_explain'],
+    		'L_AUTH_DIR' => $LANG['auth_dir'],
+    		'L_CHECK_AUTH_DIR' => $LANG['check_auth_dir'],
+    		'L_EXISTING' => $LANG['existing'],
+    		'L_NOT_EXISTING' => $LANG['unexisting'],
+    		'L_WRITABLE' => $LANG['writable'],
+    		'L_NOT_WRITABLE' => $LANG['unwritable'],
+    		'L_REFRESH' => $LANG['refresh_chmod'],
+    		'L_RESULT' => $LANG['result'],
+    		'L_QUERY_LOADING' => $LANG['query_loading'],
+    		'L_QUERY_SENT' => $LANG['query_sent'],
+    		'L_QUERY_PROCESSING' => $LANG['query_processing'],
+    		'L_QUERY_SUCCESS' => $LANG['query_success'],
+    		'L_QUERY_FAILURE' => $LANG['query_failure'],
+    		'L_NEXT_STEP' => $LANG['next_step'],
+    		'L_PREVIOUS_STEP' => $LANG['previous_step'],
+    		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_SERVER_CONFIG - 1)),
+    		'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_SERVER_CONFIG),
+    		'U_NEXT_STEP' => add_lang('install.php?step=' . (STEP_SERVER_CONFIG + 1))
+    	));
+        break;
 //Mise en place de la base de données
-elseif ($step == 4)
-{
-	require_once('functions.php');
-	
-	$display_message_already_installed = false;
-	
-	if (retrieve(POST, 'submit', false))
-	{
-		//Récupération de la configuration de connexion
-		$host = retrieve(POST, 'host', 'localhost');
-		$login = retrieve(POST, 'login', '');
-		$password = retrieve(POST, 'password', '');
-		$database = str_replace('.', '_', retrieve(POST, 'database', ''));
-		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
-		
-		include_once('functions.php');
-		if (!empty($host) && !empty($login) && !empty($database))
-		{
-			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
-		}
-		else
-		{
-			$result = DB_UNKNOW_ERROR;
-		}
-			
-		//If PHPBoost is already installed
-		if ($result == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST)
-		{
-		    //If the user has not said that he wants to overwrite the existing data, we show him the message
-		    if (!retrieve(POST, 'overwrite_db', false))
-		    {
-		        $display_message_already_installed = true;
-		    }
-		    //He wants to overwrite, we continue the installation
-		    else
-		    {
-		         $result = DB_CONFIG_SUCCESS;   
-		    }
-		}
-		
-		switch ($result)
-		{
-			case DB_CONFIG_SUCCESS:
-			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
-				import('core/errors');
-				$Errorh = new Errors;
-				$Sql = new Sql();
-	            //Connexion
-				$Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
-					
-				//Création du fichier de configuration
-				import('io/filesystem/file');
-				
-				$file_path = '../kernel/db/config.php';
-				
-				$db_config_content = '<?php
-if (!defined(\'DBSECURE\'))
-{
-    $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address
-    $sql_login = "' . $login . '"; //Login
-    $sql_pass = "' . $password . '"; //Mot de passe - Password
-    $sql_base = "' . $database . '"; //Nom de la base de données - Database name
-    define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix
-    define(\'DBSECURE\', true);
-    define(\'PHPBOOST_INSTALLED\', true);
-    
-    require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';
-}
-else
-{
-    exit;
-}
-?>';
-				
-				//Ouverture du fichier kernel/db/config.php
-				$db_config_file = new File($file_path);
-				//Ecriture de son contenu (les variables de configuration)
-				$db_config_file->write($db_config_content);
-				//Fermeture du fichier dont on n'a plus besoin
-				$db_config_file->close();
-	
-				//On crée la structure de la base de données et on y insère la configuration de base
-				$Sql->parse('db/mysql.sql', $tables_prefix);
-				//Insertion des données variables selon la langue
-				$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
-				
-				//Fermeture de la connexion BDD
-				$Sql->close();
-				
-				redirect(HOST . FILE . add_lang('?step=5', true));
-				break;
-			//This case has been treated before the switch
-			case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
-			    $error = '';
-			    break;
-			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
-				$error = '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
-				break;
-			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED:
-				$error = '<div class="error">' . $LANG['db_error_selection_not_creable'] . '</div>';
-				break;
-			case DB_UNKNOW_ERROR:
-			default:
-				$error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>';
-		}
-	}
-	//Default values for the variables
-	else
-	{
-	    $host = 'localhost';
-		$login = '';
-		$password = '';
-		$database = '';
-		$tables_prefix = 'phpboost_';
-	}
-    
-	$template->assign_vars(array(
-		'C_DATABASE_CONFIG' => true,
-		'C_DISPLAY_RESULT' => !empty($error),
-		'ERROR' => !empty($error) ? $error : '',
-		'PROGRESS' => !empty($error) ? '100' : '0',
-		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
-		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/progress.png" alt="">', 56) : '',
-		'HOST_VALUE' => $host,
-		'LOGIN_VALUE' => $login,
-		'PASSWORD_VALUE' => $password,
-		'DB_NAME_VALUE' => $database,
-		'PREFIX_VALUE' => $tables_prefix,
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=3'),
-		'U_CURRENT_STEP' => add_lang('install.php?step=4'),
-		'DB_CONFIG_SUCCESS' => DB_CONFIG_SUCCESS,
-		'DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => DB_CONFIG_ERROR_CONNECTION_TO_DBMS,
-		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED,
-		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED,
-		'DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => DB_CONFIG_ERROR_TABLES_ALREADY_EXIST,
-		'DB_UNKNOW_ERROR' => DB_UNKNOW_ERROR,
-	    'C_ALREADY_INSTALLED'=> $display_message_already_installed,
-		'L_DB_CONFIG_SUCESS' => addslashes($LANG['db_success']),
-		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
-		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
-		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => addslashes($LANG['db_error_selection_not_creable']),
-		'L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => $LANG['db_error_tables_already_exist'],
-		'L_UNKNOWN_ERROR' => $LANG['db_unknown_error'],
-		'L_DB_EXPLAIN' => $LANG['db_explain'],
-		'L_DB_TITLE' => $LANG['db_title'],
-		'L_SGBD_PARAMETERS' => $LANG['dbms_paramters'],
-		'L_DB_PARAMETERS' => $LANG['db_properties'],
-		'L_HOST' => $LANG['db_host_name'],
-		'L_HOST_EXPLAIN' => $LANG['db_host_name_explain'],
-		'L_LOGIN' => $LANG['db_login'],
-		'L_LOGIN_EXPLAIN' => $LANG['db_login_explain'],
-		'L_PASSWORD' => $LANG['db_password'],
-		'L_PASSWORD_EXPLAIN' => $LANG['db_password_explain'],
-		'L_DB_NAME' => $LANG['db_name'],
-		'L_DB_NAME_EXPLAIN' => $LANG['db_name_explain'],
-		'L_DB_PREFIX' => $LANG['db_prefix'],
-		'L_DB_PREFIX_EXPLAIN' => $LANG['db_prefix_explain'],
-		'L_TEST_DB_CONFIG' => $LANG['test_db_config'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_QUERY_LOADING' => $LANG['query_loading'],
-		'L_QUERY_SENT' => $LANG['query_sent'],
-		'L_QUERY_PROCESSING' => $LANG['query_processing'],
-		'L_QUERY_SUCCESS' => $LANG['query_success'],
-		'L_QUERY_FAILURE' => $LANG['query_failure'],
-		'L_RESULT' => $LANG['db_result'],
-		'L_REQUIRE_HOSTNAME' => $LANG['require_hostname'],
-		'L_REQUIRE_LOGIN' => $LANG['require_login'],
-		'L_REQUIRE_DATABASE_NAME' => $LANG['require_db_name'],
-	    'L_ALREADY_INSTALLED' => $LANG['already_installed'],
-	    'L_ALREADY_INSTALLED_EXPLAIN' => $LANG['already_installed_explain'],
-	    'L_ALREADY_INSTALLED_OVERWRITE' => $LANG['already_installed_overwrite']
-	));
-}
-// Configuration du site
-elseif ($step == 5)
-{
-	//Variables serveur.
-	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-	if (!$server_path)
-	{
-		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
-	}
-	$server_path = trim(str_replace('/install', '', dirname($server_path)));
-	$server_path = ($server_path == '/') ? '' : $server_path;
-	$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
-	
-	//Enregistrement de la réponse
-	if (retrieve(POST, 'submit', false))
-	{
-		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
-		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
-		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
-		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
-		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
-		$site_timezone = retrieve(POST, 'site_timezone', (int)date('I'));
+    case STEP_DB_CONFIG:
+
+    	require_once('functions.php');
+    	
+    	$display_message_already_installed = false;
+    	
+    	if (retrieve(POST, 'submit', false))
+    	{
+    		//Récupération de la configuration de connexion
+    		$host = retrieve(POST, 'host', 'localhost');
+    		$login = retrieve(POST, 'login', '');
+    		$password = retrieve(POST, 'password', '');
+    		$database = str_replace('.', '_', retrieve(POST, 'database', ''));
+    		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
+    		
+    		include_once('functions.php');
+    		if (!empty($host) && !empty($login) && !empty($database))
+    		{
+    			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
+    		}
+    		else
+    		{
+    			$result = DB_UNKNOW_ERROR;
+    		}
+    			
+    		//If PHPBoost is already installed
+    		if ($result == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST)
+    		{
+    		    //If the user has not said that he wants to overwrite the existing data, we show him the message
+    		    if (!retrieve(POST, 'overwrite_db', false))
+    		    {
+    		        $display_message_already_installed = true;
+    		    }
+    		    //He wants to overwrite, we continue the installation
+    		    else
+    		    {
+    		         $result = DB_CONFIG_SUCCESS;   
+    		    }
+    		}
+    		
+    		switch ($result)
+    		{
+    			case DB_CONFIG_SUCCESS:
+    			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED:
+    				import('core/errors');
+    				$Errorh = new Errors;
+    				$Sql = new Sql();
+    	            //Connexion
+    				$Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
+    					
+    				//Création du fichier de configuration
+    				import('io/filesystem/file');
+    				
+    				$file_path = '../kernel/db/config.php';
+    				
+    				$db_config_content = '<?php' . "\n" . 
+                        'if (!defined(\'DBSECURE\'))'  . "\n" .
+                        '{' . "\n" .
+                        '   $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address' . "\n" .
+                        '   $sql_login = "' . $login . '"; //Login' . "\n" .
+                        '   $sql_pass = "' . $password . '"; //Mot de passe - Password' . "\n" .
+                        '   $sql_base = "' . $database . '"; //Nom de la base de données - Database name' . "\n" .
+                        '   define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix' . "\n" .
+                        '   define(\'DBSECURE\', true);' . "\n" .
+                        '   define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
+                        '   ' . "\n" .        
+                        '   require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
+                        '}' . "\n" .
+                        'else' . "\n" .
+                        '{' . "\n" .
+                        '   exit;' . "\n" .
+                        '}' . "\n" .
+                        '?>';
+    				
+    				//Ouverture du fichier kernel/db/config.php
+    				$db_config_file = new File($file_path);
+    				//Ecriture de son contenu (les variables de configuration)
+    				$db_config_file->write($db_config_content);
+    				//Fermeture du fichier dont on n'a plus besoin
+    				$db_config_file->close();
+    	
+    				//On crée la structure de la base de données et on y insère la configuration de base
+    				$Sql->parse('db/mysql.sql', $tables_prefix);
+    				//Insertion des données variables selon la langue
+    				$Sql->parse('lang/' . $lang . '/mysql_install_' . $lang . '.sql', $tables_prefix);
+    				
+    				//Fermeture de la connexion BDD
+    				$Sql->close();
+    				
+    				redirect(HOST . FILE . add_lang('?step=' . (STEP_DB_CONFIG + 1), true));
+    				break;
+    			//This case has been treated before the switch
+    			case DB_CONFIG_ERROR_TABLES_ALREADY_EXIST:
+    			    $error = '';
+    			    break;
+    			case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
+    				$error = '<div class="error">' . $LANG['db_error_connexion'] . '</div>';
+    				break;
+    			case DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED:
+    				$error = '<div class="error">' . $LANG['db_error_selection_not_creable'] . '</div>';
+    				break;
+    			case DB_UNKNOW_ERROR:
+    			default:
+    				$error = '<div class="error">' . $LANG['db_unknown_error'] . '</div>';
+    		}
+    	}
+    	//Default values for the variables
+    	else
+    	{
+    	    $host = 'localhost';
+    		$login = '';
+    		$password = '';
+    		$database = '';
+    		$tables_prefix = 'phpboost_';
+    	}
         
-		$CONFIG = array();
-		$CONFIG['server_name'] = $server_url;
-		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
-		if ($server_path != '')
-		{
-			$CONFIG['server_path'] = '/' . $server_path;
-		}
-		else
-		{
-			$CONFIG['server_path'] = $server_path;
-		}
-		$CONFIG['site_name'] = $site_name;
-		$CONFIG['site_desc'] = $site_desc;
-		$CONFIG['site_keyword'] = $site_keyword;
-		$CONFIG['start'] = time();
-		$CONFIG['version'] = UPDATE_VERSION;
-		$CONFIG['lang'] = $lang;
-		$CONFIG['theme'] = DISTRIBUTION_THEME;
-		$CONFIG['editor'] = 'bbcode';
-		$CONFIG['timezone'] = $site_timezone;
-		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
-		$CONFIG['maintain'] = 0;
-		$CONFIG['maintain_delay'] = 1;
-		$CONFIG['maintain_display_admin'] = 1;
-		$CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
-		$CONFIG['htaccess_manual_content'] = '';
-		$CONFIG['rewrite'] = 0;
-		$CONFIG['com_popup'] = 0;
-		$CONFIG['compteur'] = 0;
-		$CONFIG['bench'] = 0;
-		$CONFIG['theme_author'] = 0;
-		$CONFIG['ob_gzhandler'] = 0;
-		$CONFIG['site_cookie'] = 'session';
-		$CONFIG['site_session'] = 3600;
-		$CONFIG['site_session_invit'] = 300;
-		$CONFIG['mail_exp'] = '';
-		$CONFIG['mail'] = '';
-		$CONFIG['activ_mail'] = 0;
-		$CONFIG['sign'] = $LANG['site_config_mail_signature'];
-		$CONFIG['anti_flood'] = 0;
-		$CONFIG['delay_flood'] = 7;
-		$CONFIG['unlock_admin'] = '';
-		$CONFIG['pm_max'] = 50;
-		$CONFIG['search_cache_time'] = 30;
-		$CONFIG['search_max_use'] = 100;
-		$CONFIG['html_auth'] = array ('r2' => 1);
-		$CONFIG['forbidden_tags'] = array ();
-		
-        //Connexion à la base de données
-        require_once('functions.php');
-		load_db_connection();
-		
-		//On insère dans la base de données
-        $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-        
-		//On installe la langue
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
-		
-		//On installe le thème
-		$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', get_ulang());
-		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
-		
-		//On génère le cache
-		include '../kernel/framework/core/cache.class.php';
-		include '../lang/' . $lang . '/main.php';
-		$Cache = new Cache;
-		
-        //Installation des modules de la distribution
-		import('modules/packages_manager');
-		foreach ($DISTRIBUTION_MODULES as $module_name)
-		{
+    	$template->assign_vars(array(
+    		'C_DATABASE_CONFIG' => true,
+    		'C_DISPLAY_RESULT' => !empty($error),
+    		'ERROR' => !empty($error) ? $error : '',
+    		'PROGRESS' => !empty($error) ? '100' : '0',
+    		'PROGRESS_STATUS' => !empty($error) ? $LANG['query_success'] : '',
+    		'PROGRESS_BAR' => !empty($error) ? str_repeat('<img src="templates/images/progress.png" alt="">', 56) : '',
+    		'HOST_VALUE' => $host,
+    		'LOGIN_VALUE' => $login,
+    		'PASSWORD_VALUE' => $password,
+    		'DB_NAME_VALUE' => $database,
+    		'PREFIX_VALUE' => $tables_prefix,
+    		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_DB_CONFIG - 1)),
+    		'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_DB_CONFIG),
+    		'DB_CONFIG_SUCCESS' => DB_CONFIG_SUCCESS,
+    		'DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => DB_CONFIG_ERROR_CONNECTION_TO_DBMS,
+    		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED,
+    		'DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED,
+    		'DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => DB_CONFIG_ERROR_TABLES_ALREADY_EXIST,
+    		'DB_UNKNOW_ERROR' => DB_UNKNOW_ERROR,
+    	    'C_ALREADY_INSTALLED'=> $display_message_already_installed,
+    		'L_DB_CONFIG_SUCESS' => addslashes($LANG['db_success']),
+    		'L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS' => addslashes($LANG['db_error_connexion']),
+    		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED' => addslashes($LANG['db_error_selection_but_created']),
+    		'L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED' => addslashes($LANG['db_error_selection_not_creable']),
+    		'L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST' => $LANG['db_error_tables_already_exist'],
+    		'L_UNKNOWN_ERROR' => $LANG['db_unknown_error'],
+    		'L_DB_EXPLAIN' => $LANG['db_explain'],
+    		'L_DB_TITLE' => $LANG['db_title'],
+    		'L_SGBD_PARAMETERS' => $LANG['dbms_paramters'],
+    		'L_DB_PARAMETERS' => $LANG['db_properties'],
+    		'L_HOST' => $LANG['db_host_name'],
+    		'L_HOST_EXPLAIN' => $LANG['db_host_name_explain'],
+    		'L_LOGIN' => $LANG['db_login'],
+    		'L_LOGIN_EXPLAIN' => $LANG['db_login_explain'],
+    		'L_PASSWORD' => $LANG['db_password'],
+    		'L_PASSWORD_EXPLAIN' => $LANG['db_password_explain'],
+    		'L_DB_NAME' => $LANG['db_name'],
+    		'L_DB_NAME_EXPLAIN' => $LANG['db_name_explain'],
+    		'L_DB_PREFIX' => $LANG['db_prefix'],
+    		'L_DB_PREFIX_EXPLAIN' => $LANG['db_prefix_explain'],
+    		'L_TEST_DB_CONFIG' => $LANG['test_db_config'],
+    		'L_PREVIOUS_STEP' => $LANG['previous_step'],
+    		'L_NEXT_STEP' => $LANG['next_step'],
+    		'L_QUERY_LOADING' => $LANG['query_loading'],
+    		'L_QUERY_SENT' => $LANG['query_sent'],
+    		'L_QUERY_PROCESSING' => $LANG['query_processing'],
+    		'L_QUERY_SUCCESS' => $LANG['query_success'],
+    		'L_QUERY_FAILURE' => $LANG['query_failure'],
+    		'L_RESULT' => $LANG['db_result'],
+    		'L_REQUIRE_HOSTNAME' => $LANG['require_hostname'],
+    		'L_REQUIRE_LOGIN' => $LANG['require_login'],
+    		'L_REQUIRE_DATABASE_NAME' => $LANG['require_db_name'],
+    	    'L_ALREADY_INSTALLED' => $LANG['already_installed'],
+    	    'L_ALREADY_INSTALLED_EXPLAIN' => $LANG['already_installed_explain'],
+    	    'L_ALREADY_INSTALLED_OVERWRITE' => $LANG['already_installed_overwrite']
+    	));
+    	break;
+    // Configuration du site
+    case STEP_SITE_CONFIG:
+    	//Variables serveur.
+    	$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
+    	if (!$server_path)
+    	{
+    		$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+    	}
+    	$server_path = trim(str_replace('/install', '', dirname($server_path)));
+    	$server_path = ($server_path == '/') ? '' : $server_path;
+    	$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
+    	
+    	//Enregistrement de la réponse
+    	if (retrieve(POST, 'submit', false))
+    	{
+    		$server_url = strprotect(retrieve(POST, 'site_url', $server_name, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+    		$server_path = trim(strprotect(retrieve(POST, 'site_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
+    		$site_name = stripslashes(retrieve(POST, 'site_name', ''));
+    		$site_desc = stripslashes(retrieve(POST, 'site_desc', ''));
+    		$site_keyword = stripslashes(retrieve(POST, 'site_keyword', ''));
+    		$site_timezone = retrieve(POST, 'site_timezone', (int)date('I'));
+            
+    		$CONFIG = array();
+    		$CONFIG['server_name'] = $server_url;
+    		//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
+    		if ($server_path != '')
+    		{
+    			$CONFIG['server_path'] = '/' . $server_path;
+    		}
+    		else
+    		{
+    			$CONFIG['server_path'] = $server_path;
+    		}
+    		$CONFIG['site_name'] = $site_name;
+    		$CONFIG['site_desc'] = $site_desc;
+    		$CONFIG['site_keyword'] = $site_keyword;
+    		$CONFIG['start'] = time();
+    		$CONFIG['version'] = UPDATE_VERSION;
+    		$CONFIG['lang'] = $lang;
+    		$CONFIG['theme'] = DISTRIBUTION_THEME;
+    		$CONFIG['editor'] = 'bbcode';
+    		$CONFIG['timezone'] = $site_timezone;
+    		$CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
+    		$CONFIG['maintain'] = 0;
+    		$CONFIG['maintain_delay'] = 1;
+    		$CONFIG['maintain_display_admin'] = 1;
+    		$CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
+    		$CONFIG['htaccess_manual_content'] = '';
+    		$CONFIG['rewrite'] = 0;
+    		$CONFIG['com_popup'] = 0;
+    		$CONFIG['compteur'] = 0;
+    		$CONFIG['bench'] = 0;
+    		$CONFIG['theme_author'] = 0;
+    		$CONFIG['ob_gzhandler'] = 0;
+    		$CONFIG['site_cookie'] = 'session';
+    		$CONFIG['site_session'] = 3600;
+    		$CONFIG['site_session_invit'] = 300;
+    		$CONFIG['mail_exp'] = '';
+    		$CONFIG['mail'] = '';
+    		$CONFIG['activ_mail'] = 0;
+    		$CONFIG['sign'] = $LANG['site_config_mail_signature'];
+    		$CONFIG['anti_flood'] = 0;
+    		$CONFIG['delay_flood'] = 7;
+    		$CONFIG['unlock_admin'] = '';
+    		$CONFIG['pm_max'] = 50;
+    		$CONFIG['search_cache_time'] = 30;
+    		$CONFIG['search_max_use'] = 100;
+    		$CONFIG['html_auth'] = array ('r2' => 1);
+    		$CONFIG['forbidden_tags'] = array ();
+    		
+            //Connexion à la base de données
+            require_once('functions.php');
+    		load_db_connection();
+    		
+    		//On insère dans la base de données
+            $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+            
+    		//On installe la langue
+    		$Sql->query_inject("INSERT INTO " . DB_TABLE_LANG . " (lang, activ, secure) VALUES ('" . strprotect($CONFIG['lang']) . "', 1, -1)", __LINE__, __FILE__);
+    		
+    		//On installe le thème
+    		$info_theme = load_ini_file('../templates/' . $CONFIG['theme'] . '/config/', get_ulang());
+    		$Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
+    		
+    		//On génère le cache
+    		include '../kernel/framework/core/cache.class.php';
+    		include '../lang/' . $lang . '/main.php';
+    		$Cache = new Cache;
+    		
+            //Installation des modules de la distribution
+    		import('modules/packages_manager');
+    		foreach ($DISTRIBUTION_MODULES as $module_name)
+    		{
+                $Cache->load('modules', RELOAD_CACHE);
+    			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+    		}
+    		
+            $Cache->generate_file('modules');
             $Cache->load('modules', RELOAD_CACHE);
-			PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
-		}
-		
-        $Cache->generate_file('modules');
-        $Cache->load('modules', RELOAD_CACHE);
-        
-        // Ajout du menu de lien par défaut tout en haut à gauche
-        import('core/menu_service');
-        $modules_menu = MenuService::website_modules(VERTICAL_MENU);
-        MenuService::move($modules_menu, BLOCK_POSITION__LEFT, false);
-        MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
-        MenuService::save($modules_menu);
-        
-        $Cache->generate_all_files();
-		
-		$Cache->load('themes', RELOAD_CACHE);
-		$Cache->Generate_file('css');
-		
-		$Sql->close();
-		
-		redirect(HOST . FILE . add_lang('?step=6', true));
-	}
-		
-	//Interface configuration du site
-	$template->assign_vars(array(
-		'C_SITE_CONFIG' => true,
-		'SITE_URL' => $server_name,
-		'SITE_PATH' => $server_path
-	));
-
-	//Balayage des fuseaux horaires
-	$site_timezone = number_round(date('Z')/3600, 0) - (int)date('I');
-	for ($i = -12; $i <= 14; $i++)
-	{
-		$timezone_name = '';
-		if ($i === 0)
-		{
-			$timezone_name = 'GMT';
-		}
-		elseif ($i > 0)
-		{
-			$timezone_name = 'GMT + ' . $i;
-		}
-		else
-		{
-			$timezone_name = 'GMT - ' . (-$i);
-		}
-		
-		$template->assign_block_vars('timezone', array(
-			'NAME' => $timezone_name,
-			'VALUE' => $i,
-			'SELECTED' => $i === $site_timezone ? 'selected="selected"' : ''
-		));
-	}
-		
-	$template->assign_vars(array(
-		'IMG_THEME' => DISTRIBUTION_THEME,
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=4'),
-		'U_CURRENT_STEP' => add_lang('install.php?step=5'),
-		'L_SITE_CONFIG' => $LANG['site_config_title'],
-		'L_SITE_CONFIG_EXPLAIN' => $LANG['site_config_explain'],
-		'L_YOUR_SITE' => $LANG['your_site'],
-		'L_SITE_URL' => $LANG['site_url'],
-		'L_SITE_URL_EXPLAIN' => $LANG['site_url_explain'],
-		'L_SITE_PATH' => $LANG['site_path'],
-		'L_SITE_PATH_EXPLAIN' => $LANG['site_path_explain'],
-		'L_SITE_NAME' => $LANG['site_name'],
-		'L_SITE_TIMEZONE' => $LANG['site_timezone'],
-		'L_SITE_TIMEZONE_EXPLAIN' => $LANG['site_timezone_explain'],
-		'L_SITE_DESCRIPTION' => $LANG['site_description'],
-		'L_SITE_DESCRIPTION_EXPLAIN' => $LANG['site_description_explain'],
-		'L_SITE_KEYWORDS' => $LANG['site_keywords'],
-		'L_SITE_KEYWORDS_EXPLAIN' => $LANG['site_keywords_explain'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_REQUIRE_SITE_URL' => $LANG['require_site_url'],
-		'L_REQUIRE_SITE_NAME' => $LANG['require_site_name'],
-		'L_CONFIRM_SITE_URL' => $LANG['confirm_site_url'],
-		'L_CONFIRM_SITE_PATH' => $LANG['confirm_site_path']
-	));
-}
-//Compte administrateur
-elseif ($step == 6)
-{
-	$template->assign_block_vars('admin', array());
-	//Validation de l'étape
-	if (retrieve(POST, 'submit', false))
-	{
-		$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
-		$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
-		$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
-		$user_mail = retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED);
-		$create_session = retrieve(POST, 'create_session', false);
-		$auto_connection = retrieve(POST, 'auto_connection', false);
-		
-		function check_admin_account($login, $password, $password_repeat, $user_mail)
-		{
-			global $LANG;
-			if (empty($login))
-			{
-				return $LANG['admin_require_login'];
-			}
-			elseif (strlen($login) < 3)
-			{
-				return $LANG['admin_login_too_short'];
-			}
-			elseif (empty($password))
-			{
-				return $LANG['admin_require_password'];
-			}
-			elseif (empty($password_repeat))
-			{
-				return $LANG['admin_require_password_repeat'];
-			}
-			elseif (strlen($password) < 6)
-			{
-				return $LANG['admin_password_too_short'];
-			}
-			elseif (empty($user_mail))
-			{
-				return $LANG['admin_require_mail'];
-			}
-			elseif ($password != $password_repeat)
-			{
-				return $LANG['admin_passwords_error'];
-			}
-			elseif (!preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail) )
-			{
-				return $LANG['admin_email_error'];
-			}
-			else
-			{
-				return '';
-			}
-		}
-		$error = check_admin_account($login, $password, $password_repeat, $user_mail);
-
-		//Si il n'y a pas d'erreur on enregistre dans la table
-		if (empty($error))
-		{
-			require_once('functions.php');
-			load_db_connection();
-			
-			//On crée le code de déverrouillage
-			import('core/cache');
-			$Cache = new Cache;
-			$Cache->load('config');
-			
-			//On enregistre le membre (l'entrée était au préalable créée)
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
-			
-			//Génération de la clé d'activation, en cas de verrouillage de l'administration
-			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
-			$CONFIG['unlock_admin'] = strhash($unlock_admin);
-			$CONFIG['mail_exp'] = $user_mail;
-			$CONFIG['mail'] = $user_mail;
-			
-			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-			
-			$Cache->Generate_file('config');
-			
-			//Configuration des membres
-			$Cache->load('member');
-			
-			$CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
-			$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
-			$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
-			
-			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
-			
-			$Cache->generate_file('member');
-			
-			//On envoie un mail à l'administrateur
-			$LANG['admin'] = '';
-			import('io/mail');
-			$mail = new Mail();
-			
-			//Paramètres du mail
-			$mail->set_sender($CONFIG['mail_exp']);
-			$mail->set_recipients($user_mail);
-			$mail->set_object($LANG['admin_mail_object']);
-			$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
-			
-			//On envoie le mail
-			$mail->send();
-			
-			//On connecte directement l'administrateur si il l'a demandé
-			if ($create_session)
-			{
-				import('members/sessions');
-				$Session = new Sessions;
-				
-				//Remise à zéro du compteur d'essais.
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
-				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
-				$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
-			}
-			
-			$Cache->generate_file('stats');
-			
-			//On redirige vers l'étape suivante
-			redirect(HOST . FILE . add_lang('?step=7', true));
-		}
-		else
-		{
-			$template->assign_block_vars('error', array(
-				'ERROR' => '<div class="warning">' . $error . '</div>'
-			));
-		}
-	}
-	
-	$template->assign_vars(array(
-		'C_ADMIN_ACCOUNT' => true,
-		'U_PREVIOUS_STEP' => add_lang('install.php?step=5'),
-		'U_CURRENT_STEP' => add_lang('install.php?step=6'),
-		'L_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation'],
-		'L_EXPLAIN_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation_explain'],
-		'L_ADMIN_ACCOUNT' => $LANG['admin_account'],
-		'L_PSEUDO' => $LANG['admin_pseudo'],
-		'L_PSEUDO_EXPLAIN' => $LANG['admin_pseudo_explain'],
-		'L_PASSWORD' => $LANG['admin_password'],
-		'L_PASSWORD_EXPLAIN' => $LANG['admin_password_explain'],
-		'L_PASSWORD_REPEAT' => $LANG['admin_password_repeat'],
-		'L_MAIL' => $LANG['admin_mail'],
-		'L_MAIL_EXPLAIN' => $LANG['admin_mail_explain'],
-		'L_PREVIOUS_STEP' => $LANG['previous_step'],
-		'L_NEXT_STEP' => $LANG['next_step'],
-		'L_ERROR' => $LANG['admin_error'],
-		'L_REQUIRE_LOGIN' => $LANG['admin_require_login'],
-		'L_LOGIN_TOO_SHORT' => $LANG['admin_login_too_short'],
-		'L_PASSWORD_TOO_SHORT' => $LANG['admin_password_too_short'],
-		'L_REQUIRE_PASSWORD' => $LANG['admin_require_password'],
-		'L_REQUIRE_PASSWORD_REPEAT' => $LANG['admin_require_password_repeat'],
-		'L_REQUIRE_MAIL' => $LANG['admin_require_mail'],
-		'L_PASSWORDS_ERROR' => $LANG['admin_passwords_error'],
-		'L_CREATE_SESSION' => $LANG['admin_create_session'],
-		'L_AUTO_CONNECTION' => $LANG['admin_auto_connection'],
-		'L_EMAIL_ERROR' => $LANG['admin_email_error'],
-		'L_MAIL_INVALID' => $LANG['admin_invalid_email_error'],
-		'LOGIN_VALUE' => !empty($error) ? $login : '',
-		'PASSWORD_VALUE' => !empty($error) ? $password : '',
-		'MAIL_VALUE' => !empty($error) ? $user_mail : '',
-		'CHECKED_AUTO_CONNECTION' => !empty($error) ? ($auto_connection ? 'checked="checked"' : '') : 'checked="checked"',
-		'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
-	));
-}
-elseif ($step == 7)
-{
-	require_once('functions.php');
-	load_db_connection();
-	
-	import('core/cache');
-	$Cache = new Cache;
-    $Cache->load('config');
-    $Cache->load('modules');
-    $Cache->load('themes');
-	
-	$template->assign_vars(array(
-		'C_END' => true,
-		'CONTENTS' => sprintf($LANG['end_installation']),
-		'L_ADMIN_INDEX' => $LANG['admin_index'],
-		'L_SITE_INDEX' => $LANG['site_index'],
-		'U_ADMIN_INDEX' => '../admin/admin_index.php',
-		'U_INDEX' => '..' . $CONFIG['start_page']
-	));
-	
-	import('core/updates');
-	new Updates();
-	$Sql->close();
+            
+            // Ajout du menu de lien par défaut tout en haut à gauche
+            import('core/menu_service');
+            $modules_menu = MenuService::website_modules(VERTICAL_MENU);
+            MenuService::move($modules_menu, BLOCK_POSITION__LEFT, false);
+            MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
+            MenuService::save($modules_menu);
+            
+            $Cache->generate_all_files();
+    		
+    		$Cache->load('themes', RELOAD_CACHE);
+    		$Cache->Generate_file('css');
+    		
+    		$Sql->close();
+    		
+    		redirect(HOST . FILE . add_lang('?step=' . (STEP_SITE_CONFIG + 1), true));
+    	}
+    		
+    	//Interface configuration du site
+    	$template->assign_vars(array(
+    		'C_SITE_CONFIG' => true,
+    		'SITE_URL' => $server_name,
+    		'SITE_PATH' => $server_path
+    	));
+    
+    	//Balayage des fuseaux horaires
+    	$site_timezone = number_round(date('Z')/3600, 0) - (int)date('I');
+    	for ($i = -12; $i <= 14; $i++)
+    	{
+    		$timezone_name = '';
+    		if ($i === 0)
+    		{
+    			$timezone_name = 'GMT';
+    		}
+    		elseif ($i > 0)
+    		{
+    			$timezone_name = 'GMT + ' . $i;
+    		}
+    		else
+    		{
+    			$timezone_name = 'GMT - ' . (-$i);
+    		}
+    		
+    		$template->assign_block_vars('timezone', array(
+    			'NAME' => $timezone_name,
+    			'VALUE' => $i,
+    			'SELECTED' => $i === $site_timezone ? 'selected="selected"' : ''
+    		));
+    	}
+    		
+    	$template->assign_vars(array(
+    		'IMG_THEME' => DISTRIBUTION_THEME,
+    		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_SITE_CONFIG - 1)),
+    		'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_SITE_CONFIG),
+    		'L_SITE_CONFIG' => $LANG['site_config_title'],
+    		'L_SITE_CONFIG_EXPLAIN' => $LANG['site_config_explain'],
+    		'L_YOUR_SITE' => $LANG['your_site'],
+    		'L_SITE_URL' => $LANG['site_url'],
+    		'L_SITE_URL_EXPLAIN' => $LANG['site_url_explain'],
+    		'L_SITE_PATH' => $LANG['site_path'],
+    		'L_SITE_PATH_EXPLAIN' => $LANG['site_path_explain'],
+    		'L_SITE_NAME' => $LANG['site_name'],
+    		'L_SITE_TIMEZONE' => $LANG['site_timezone'],
+    		'L_SITE_TIMEZONE_EXPLAIN' => $LANG['site_timezone_explain'],
+    		'L_SITE_DESCRIPTION' => $LANG['site_description'],
+    		'L_SITE_DESCRIPTION_EXPLAIN' => $LANG['site_description_explain'],
+    		'L_SITE_KEYWORDS' => $LANG['site_keywords'],
+    		'L_SITE_KEYWORDS_EXPLAIN' => $LANG['site_keywords_explain'],
+    		'L_PREVIOUS_STEP' => $LANG['previous_step'],
+    		'L_NEXT_STEP' => $LANG['next_step'],
+    		'L_REQUIRE_SITE_URL' => $LANG['require_site_url'],
+    		'L_REQUIRE_SITE_NAME' => $LANG['require_site_name'],
+    		'L_CONFIRM_SITE_URL' => $LANG['confirm_site_url'],
+    		'L_CONFIRM_SITE_PATH' => $LANG['confirm_site_path']
+    	));
+        break;
+    //Compte administrateur
+    case STEP_ADMIN_ACCOUNT:
+    	$template->assign_block_vars('admin', array());
+    	//Validation de l'étape
+    	if (retrieve(POST, 'submit', false))
+    	{
+    		$login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
+    		$password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
+    		$password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
+    		$user_mail = retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED);
+    		$create_session = retrieve(POST, 'create_session', false);
+    		$auto_connection = retrieve(POST, 'auto_connection', false);
+    		
+    		function check_admin_account($login, $password, $password_repeat, $user_mail)
+    		{
+    			global $LANG;
+    			if (empty($login))
+    			{
+    				return $LANG['admin_require_login'];
+    			}
+    			elseif (strlen($login) < 3)
+    			{
+    				return $LANG['admin_login_too_short'];
+    			}
+    			elseif (empty($password))
+    			{
+    				return $LANG['admin_require_password'];
+    			}
+    			elseif (empty($password_repeat))
+    			{
+    				return $LANG['admin_require_password_repeat'];
+    			}
+    			elseif (strlen($password) < 6)
+    			{
+    				return $LANG['admin_password_too_short'];
+    			}
+    			elseif (empty($user_mail))
+    			{
+    				return $LANG['admin_require_mail'];
+    			}
+    			elseif ($password != $password_repeat)
+    			{
+    				return $LANG['admin_passwords_error'];
+    			}
+    			elseif (!preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail) )
+    			{
+    				return $LANG['admin_email_error'];
+    			}
+    			else
+    			{
+    				return '';
+    			}
+    		}
+    		$error = check_admin_account($login, $password, $password_repeat, $user_mail);
+    
+    		//Si il n'y a pas d'erreur on enregistre dans la table
+    		if (empty($error))
+    		{
+    			require_once('functions.php');
+    			load_db_connection();
+    			
+    			//On crée le code de déverrouillage
+    			import('core/cache');
+    			$Cache = new Cache;
+    			$Cache->load('config');
+    			
+    			//On enregistre le membre (l'entrée était au préalable créée)
+    			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
+    			
+    			//Génération de la clé d'activation, en cas de verrouillage de l'administration
+    			$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
+    			$CONFIG['unlock_admin'] = strhash($unlock_admin);
+    			$CONFIG['mail_exp'] = $user_mail;
+    			$CONFIG['mail'] = $user_mail;
+    			
+    			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
+    			
+    			$Cache->Generate_file('config');
+    			
+    			//Configuration des membres
+    			$Cache->load('member');
+    			
+    			$CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
+    			$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
+    			$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
+    			
+    			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
+    			
+    			$Cache->generate_file('member');
+    			
+    			//On envoie un mail à l'administrateur
+    			$LANG['admin'] = '';
+    			import('io/mail');
+    			$mail = new Mail();
+    			
+    			//Paramètres du mail
+    			$mail->set_sender($CONFIG['mail_exp']);
+    			$mail->set_recipients($user_mail);
+    			$mail->set_object($LANG['admin_mail_object']);
+    			$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
+    			
+    			//On envoie le mail
+    			$mail->send();
+    			
+    			//On connecte directement l'administrateur si il l'a demandé
+    			if ($create_session)
+    			{
+    				import('members/sessions');
+    				$Session = new Sessions;
+    				
+    				//Remise à zéro du compteur d'essais.
+    				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
+    				//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
+    				$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
+    			}
+    			
+    			$Cache->generate_file('stats');
+    			
+    			//On redirige vers l'étape suivante
+    			redirect(HOST . FILE . add_lang('?step=' . (STEP_ADMIN_ACCOUNT + 1), true));
+    		}
+    		else
+    		{
+    			$template->assign_block_vars('error', array(
+    				'ERROR' => '<div class="warning">' . $error . '</div>'
+    			));
+    		}
+    	}
+    	
+    	$template->assign_vars(array(
+    		'C_ADMIN_ACCOUNT' => true,
+    		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_ADMIN_ACCOUNT - 1)),
+    		'U_CURRENT_STEP' => add_lang('install.php?step=' . STEP_ADMIN_ACCOUNT),
+    		'L_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation'],
+    		'L_EXPLAIN_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation_explain'],
+    		'L_ADMIN_ACCOUNT' => $LANG['admin_account'],
+    		'L_PSEUDO' => $LANG['admin_pseudo'],
+    		'L_PSEUDO_EXPLAIN' => $LANG['admin_pseudo_explain'],
+    		'L_PASSWORD' => $LANG['admin_password'],
+    		'L_PASSWORD_EXPLAIN' => $LANG['admin_password_explain'],
+    		'L_PASSWORD_REPEAT' => $LANG['admin_password_repeat'],
+    		'L_MAIL' => $LANG['admin_mail'],
+    		'L_MAIL_EXPLAIN' => $LANG['admin_mail_explain'],
+    		'L_PREVIOUS_STEP' => $LANG['previous_step'],
+    		'L_NEXT_STEP' => $LANG['next_step'],
+    		'L_ERROR' => $LANG['admin_error'],
+    		'L_REQUIRE_LOGIN' => $LANG['admin_require_login'],
+    		'L_LOGIN_TOO_SHORT' => $LANG['admin_login_too_short'],
+    		'L_PASSWORD_TOO_SHORT' => $LANG['admin_password_too_short'],
+    		'L_REQUIRE_PASSWORD' => $LANG['admin_require_password'],
+    		'L_REQUIRE_PASSWORD_REPEAT' => $LANG['admin_require_password_repeat'],
+    		'L_REQUIRE_MAIL' => $LANG['admin_require_mail'],
+    		'L_PASSWORDS_ERROR' => $LANG['admin_passwords_error'],
+    		'L_CREATE_SESSION' => $LANG['admin_create_session'],
+    		'L_AUTO_CONNECTION' => $LANG['admin_auto_connection'],
+    		'L_EMAIL_ERROR' => $LANG['admin_email_error'],
+    		'L_MAIL_INVALID' => $LANG['admin_invalid_email_error'],
+    		'LOGIN_VALUE' => !empty($error) ? $login : '',
+    		'PASSWORD_VALUE' => !empty($error) ? $password : '',
+    		'MAIL_VALUE' => !empty($error) ? $user_mail : '',
+    		'CHECKED_AUTO_CONNECTION' => !empty($error) ? ($auto_connection ? 'checked="checked"' : '') : 'checked="checked"',
+    		'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
+    	));
+        break;
+    //Fin
+    case STEP_END:
+    	require_once('functions.php');
+    	load_db_connection();
+    	
+    	import('core/cache');
+    	$Cache = new Cache;
+        $Cache->load('config');
+        $Cache->load('modules');
+        $Cache->load('themes');
+    	
+    	$template->assign_vars(array(
+    		'C_END' => true,
+    		'CONTENTS' => sprintf($LANG['end_installation']),
+    		'L_ADMIN_INDEX' => $LANG['admin_index'],
+    		'L_SITE_INDEX' => $LANG['site_index'],
+    		'U_ADMIN_INDEX' => '../admin/admin_index.php',
+    		'U_INDEX' => '..' . $CONFIG['start_page']
+    	));
+    	
+    	import('core/updates');
+    	new Updates();
+    	$Sql->close();
+    	break;
 }
 
 $steps = array(
