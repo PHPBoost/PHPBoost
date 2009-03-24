@@ -27,6 +27,7 @@
 
 define('MENU__CLASS','Menu');
 
+define('MENU_AUTH_BIT', 1);
 define('MENU_ENABLE_OR_NOT', 42);
 define('MENU_ENABLED', true);
 define('MENU_NOT_ENABLED', false);
@@ -43,7 +44,7 @@ define('BLOCK_POSITION__RIGHT',             8);
 define('BLOCK_POSITION__ALL',               9);
 
 /**
- * @author Loï¿½c Rouchon horn@phpboost.com
+ * @author Loïc Rouchon horn@phpboost.com
  * @desc This class represents a menu element and is used to build any kind of menu
  * @abstract
  * @package menu
@@ -169,7 +170,7 @@ class Menu
     function _check_auth()
     {
         global $User;
-        return empty($this->auth) || $User->check_auth($this->auth, 1);
+        return empty($this->auth) || $User->check_auth($this->auth, MENU_AUTH_BIT);
     }
     
     ## Private Attributes ##

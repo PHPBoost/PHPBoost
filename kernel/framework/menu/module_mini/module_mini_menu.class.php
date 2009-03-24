@@ -44,8 +44,8 @@ class ModuleMiniMenu extends Menu
      */
     function ModuleMiniMenu($module, $filename)
     {
-       parent::Menu($module);
-       $this->filename = strprotect($filename);
+        parent::Menu($module);
+        $this->filename = strprotect($filename);
     }
     
     /**
