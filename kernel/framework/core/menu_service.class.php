@@ -100,9 +100,13 @@ class MenuService
         while ($row = $Sql->fetch_assoc($result))
         {
             if ($row['enabled'] != MENU_ENABLED)
+            {
                 $menus[BLOCK_POSITION__NOT_ENABLED][] = MenuService::_load($row);
+            }
             else
+            {
                 $menus[$row['block']][] = MenuService::_load($row);
+            }
         }
         $Sql->query_close($result);
         
@@ -122,7 +126,9 @@ class MenuService
         $result = $Sql->query_array(DB_TABLE_MENUS, 'id', 'object', 'block', 'position', 'enabled', "WHERE id='" . $id . "'", __LINE__, __FILE__);
         
         if ($result === false)
+        {
             return null;
+        }
         
         return MenuService::_load($result);
     }
@@ -185,9 +191,12 @@ class MenuService
     function delete(&$menu)
     {
         global $Sql;
-        $id_menu = is_numeric($menu) ? $menu : (is_object($menu) ? $menu->get_id() : -1);
-        if ($id_menu > 0)
-            $Sql->query_inject("DELETE FROM " . DB_TABLE_MENUS . " WHERE id='" . $id_menu . "';" , __LINE__, __FILE__);
+        if (!is_object($menu))
+        {
+            $menu = MenuService::load($menu);
+        }
+        MenuService::disable($menu);
+        $Sql->query_inject("DELETE FROM " . DB_TABLE_MENUS . " WHERE id='" . $menu->get_id() . "';" , __LINE__, __FILE__);
     }
 
     
@@ -247,7 +256,9 @@ class MenuService
         }
         
         if ($save)
+        {
             MenuService::save($menu);
+        }
     }
     
     /**
@@ -376,8 +387,9 @@ class MenuService
             if (in_array($menu_name . '/' . $file_name, $installed_menus_names) ||
                 !$file->finclude() ||
                 !function_exists('menu_' . $menu_name . '_' . $file_name))
+            {
                  continue;
-            
+            }
             $menu = new MiniMenu($menu_name, $file_name);
             MenuService::save($menu);
              
@@ -394,10 +406,14 @@ class MenuService
     function delete_mini_menu($menu)
     {
         global $Sql;
-        $query = "DELETE FROM " . DB_TABLE_MENUS . " WHERE
+        $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($menu))  . "/%';";
-        $Sql->query_inject($query, __LINE__, __FILE__);
+        $result = $Sql->query_while($query, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($result))
+        {
+            MenuService::delete(MenuService::_load($row));
+        }
     }
     
     /**
@@ -471,16 +487,22 @@ class MenuService
             {
                 $file = split('\.', $filename, 2);
                 if (!is_array($file) || count($file) < 1)
+                {
                     continue;
+                }
                 
                 // Check the mini module function
                 include_once PATH_TO_ROOT . '/' . $module . '/' . $filename;
                 if (!function_exists($file[0]))
+                {
                     continue;
+                }
                 
                 $menu = new ModuleMiniMenu($module, $file[0]);
-                $menu->enabled(true);
-                MenuService::move($menu, MenuService::str_to_location($location));
+                $menu->enabled(false);
+                $menu->set_auth(array('r1' => MENU_AUTH_BIT, 'r0' => MENU_AUTH_BIT, 'r-1' => MENU_AUTH_BIT));
+                $menu->set_block($location);
+                MenuService::save($menu);
                 if ($generate_cache)
                     MenuService::generate_cache();
                 
@@ -497,10 +519,14 @@ class MenuService
     function delete_mini_module($module)
     {
         global $Sql;
-        $query = "DELETE FROM " . DB_TABLE_MENUS . " WHERE
+        $query = "SELECT id, object, enabled, block, position FROM " . DB_TABLE_MENUS . " WHERE
             class='" . strtolower(MODULE_MINI_MENU__CLASS) . "' AND
             title LIKE '" . strtolower(strprotect($module))  . "/%';";
-        $Sql->query_inject($query, __LINE__, __FILE__);
+        $result = $Sql->query_while($query, __LINE__, __FILE__);
+        while ($row = $Sql->fetch_assoc($result))
+        {
+            MenuService::delete(MenuService::_load($row));
+        }
     }
     
     /**
@@ -529,7 +555,9 @@ class MenuService
             // Build the module name from the mini module file_path
             $title = split('/', strtolower($row['title']) , 2);
             if (!is_array($title) || count($title) < 1)
+            {
                 continue;
+            }
             
             $module = $title[0];
             if (in_array($module, $modules))
@@ -694,7 +722,9 @@ class MenuService
         $menu->set_block_position($db_result['position']);
         
         if (of_class($menu, LINKS_MENU__CLASS) || of_class($menu, LINKS_MENU_LINK__CLASS))
+        {
             $menu->update_uid();
+        }
         
         return $menu;
     }

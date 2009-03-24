@@ -25,6 +25,8 @@
  *
 ###################################################*/
 
+define('DOWNLOAD_MAX_SEARCH_RESULTS', 100);
+
 import('modules/module_interface');
 // Class DownloadInterface
 //  Provides download module services to the kernel and extern modules
@@ -123,7 +125,7 @@ class DownloadInterface extends ModuleInterface
             . $Sql->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
             FROM " . PREFIX . "download d
             WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY relevance DESC " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $Sql->limit(0, DOWNLOAD_MAX_SEARCH_RESULTS);
         
         return $request;
 

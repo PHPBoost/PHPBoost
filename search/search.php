@@ -84,7 +84,7 @@ $search_module = $modules->get_available_modules('get_search_request');
 // Génération des formulaires précomplétés et passage aux templates
 foreach ($search_module as $module)
 {
-	if (in_array($module->get_id(), $SEARCH_CONFIG['authorized_modules']))
+	if (!in_array($module->get_id(), $SEARCH_CONFIG['unauthorized_modules']))
 	{
 	    // Ajout du paramètre search à tous les modules
 	    $modules_args[$module->get_id()]['search'] = $search;

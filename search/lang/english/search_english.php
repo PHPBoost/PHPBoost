@@ -66,8 +66,8 @@ $LANG['nb_results_per_page'] = 'Results number to print per page';
 $LANG['max_use'] = 'Maximum number of utilisation of the cache';
 $LANG['max_use_explain'] = 'This number represent the time the cahce\'s results will be used before calculating them again';
 $LANG['clear_out_cache'] = 'Clear out the cache content';
-$LANG['authorized_modules'] = 'Authorised modules';
-$LANG['authorized_modules_explain'] = 'Select modules that you wanted to allow search in';
+$LANG['unauthorized_modules'] = 'Forbidden modules';
+$LANG['unauthorized_modules_explain'] = 'Select modules in which you wanted to forbid research';
 $LANG['update'] = 'Update';
 $LANG['reset'] = 'Reset';
 

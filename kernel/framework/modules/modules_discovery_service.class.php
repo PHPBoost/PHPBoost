@@ -55,7 +55,9 @@ class ModulesDiscoveryService
         foreach ($MODULES as $module_id => $module)
         {
             if (!empty($module['activ']) && $module['activ'] == true)
+            {
                 $this->availables_modules[] = $module_id;
+            }
         }
     }
     
@@ -76,7 +78,9 @@ class ModulesDiscoveryService
             // On nettoie le bit d'erreur correspondant.
             $module->clear_functionnality_error();
             if ($module->has_functionnality($functionnality) == true)
+            {
                 $results[$module_name] = $module->functionnality($functionnality, $args);
+            }
         }
         return $results;
     }
@@ -107,7 +111,9 @@ class ModulesDiscoveryService
             {
 			   $module = $this->get_module($module_id);
                 if ($included_failure || (!$module->got_error() && $module->has_functionnality($functionnality)))
-                    array_push($modules, $module);
+                {
+                    $modules[$module->get_id()] = $module;
+                }
             }
         }
         else
@@ -115,7 +121,9 @@ class ModulesDiscoveryService
             foreach ($modulesList as $module)
             {
                 if ($included_failure || (!$module->got_error() && $module->has_functionnality($functionnality)))
-                    array_push($modules, $module);
+                {
+                    $modules[$module->get_id()] = $module;
+                }
             }
         }
         return $modules;
