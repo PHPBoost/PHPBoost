@@ -75,10 +75,14 @@ class Url
         }
         
         global $CONFIG;
-        if ($this->relative !== '')
-            $this->absolute = Url::compress(Url::get_absolute_root() . $this->relative);
+        if (!empty($this->relative))
+        {
+            $this->absolute = Url::compress(Url::get_absolute_root() . ltrim($this->relative, '/'));
+        }
         else
+        {
             $this->absolute = Url::compress($url);
+        }
     }
     
     /**
@@ -121,11 +125,15 @@ class Url
      */
     /* static */ function root_to_local()
     {
+//        echo '<pre>';
         // Retrieve working path
-        $a_local = explode('/', substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')));
-        $a_root = explode('/', Url::compress(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . PATH_TO_ROOT));
+        $a_local = explode('/', trim(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')), '/'));
+        $a_root = explode('/', trim(Url::compress(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . PATH_TO_ROOT), '/'));
         $a_local_size = count($a_local);
         $a_root_size = count($a_root);
+        
+        print_r($a_local);
+        print_r($a_root);
         
         // Come back to the root level
         $a_to_local = array();
@@ -137,16 +145,21 @@ class Url
                 $a_to_local[] = '..';
                 if ($separation_idx < 0)
                 {
-                    $separation_idx = $i;
+                    $separation_idx = $i + 1;
                 }
             }
         }
+        if ($separation_idx < 0)
+        {
+            $separation_idx = $a_root_size;
+        }
         
         // descend into the local folder
-        for ($i = max(0, $separation_idx); $i < $a_local_size; $i++)
+        for ($i = $separation_idx; $i < $a_local_size; $i++)
         {
             $a_to_local[] = $a_local[$i];
         }
+//        echo '</pre>';
         return '/' . implode('/', $a_to_local) . '/';
     }
     
@@ -157,7 +170,7 @@ class Url
     /* static */ function get_absolute_root()
     {
         global $CONFIG;
-        return trim($CONFIG['server_name']) . '/' . trim($CONFIG['server_path'], '/');
+        return trim(trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/'), '/') . '/';
     }
     
     /**
