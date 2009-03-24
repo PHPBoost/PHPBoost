@@ -103,18 +103,22 @@ class TinyMCEUnparser extends ContentUnparser
     		'<p>' . $this->content . '</p>'
 		);
 		
-		$this->content = htmlspecialchars($this->content);
+		//Unparsing tags supported by TinyMCE
+        $this->_unparse_tinymce_formatting();
+        //Unparsing tags unsupported by TinyMCE, those are in BBCode
+        $this->_unparse_bbcode_tags();
+        
+        $this->content = htmlspecialchars($this->content);
 	    
 		//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
 		if (!empty($this->array_tags['html_unparse']))
-			$this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['html_unparse']);
+		{
+		    $this->array_tags['html_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['html_unparse']);
+		}
 		if (!empty($this->array_tags['code_unparse']))
-			$this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['code_unparse']);
-		
-		//Unparsing tags supported by TinyMCE
-		$this->_unparse_tinymce_formatting();
-		//Unparsing tags unsupported by TinyMCE, those are in BBCode
-		$this->_unparse_bbcode_tags();
+		{
+		    $this->array_tags['code_unparse'] = array_map(array('TinyMCEUnparser', '_clear_html_and_code_tag'), $this->array_tags['code_unparse']);
+		}
 		
 		//Reimplanting html and code tags
 		$this->_unparse_code(REIMPLANT);
