@@ -46,7 +46,7 @@ class Url
      * @desc Build a Url object
      * @param string $url the url string relative to the current path,
      * to the website root if beginning with a "/" or an absolute url
-     * @param string $path_to_root url context
+     * @param string $path_to_root url context. default is PATH_TO_ROOT
      */
     function Url($url = '', $path_to_root = PATH_TO_ROOT)
     {
@@ -75,7 +75,7 @@ class Url
             {   // The url is relative to the current foler
                 $this->relative = $this->root_to_local() . $url;
             }
-            $this->relative = rtrim(Url::compress($this->relative), '/');
+            $this->relative = Url::compress($this->relative);
         }
 
         global $CONFIG;
@@ -90,12 +90,27 @@ class Url
     }
 
     /**
+     * @return bool true if the url is a relative one
+     */
+    function is_relative()
+    {
+        return !empty($this->relative);
+    }
+
+    /**
      * @desc Returns the relative url if defined, else the empty string
      * @return string the relative url if defined, else the empty string
      */
     function relative()
     {
-        return $this->relative;
+        if ($this->is_relative())
+        {
+            return $this->relative;
+        }
+        else
+        {
+            return $this->absolute;
+        }
     }
 
     /**
@@ -113,13 +128,16 @@ class Url
      * @param string $url the url to compress
      * @return string the compressed url
      */
-    /* static */function compress($url)
+    /* static */ function compress($url)
     {
-        $url = preg_replace('`([^:])?/+`', '$1/', preg_replace('`/?[^/]+/\.\.`', '', $url));
-        if (strpos($url, '/' . PATH_TO_ROOT) === 0)
+        $url = preg_replace('`([^:]|^)/+`', '$1/', $url);
+
+        do
         {
-            return str_replace('/' . PATH_TO_ROOT, '', $url);
+            $url = preg_replace('`/?[^/]+/\.\.`', '', $url);
+
         }
+        while (preg_match('`/?[^/]+/\.\.`', $url) > 0);
         return $url;
     }
 
@@ -129,45 +147,17 @@ class Url
      */
     /* static */ function root_to_local()
     {
-        //        echo '<pre>';
-        $path_to_root = (!empty($this->path_to_root) ? $this->path_to_root : PATH_TO_ROOT);
-        // Retrieve working path
-        $a_local = explode('/', trim(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')), '/'));
-        $a_root = explode('/', trim(Url::compress(
-        substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . $path_to_root), '/'
-        ));
-        $a_local_size = count($a_local);
-        $a_root_size = count($a_root);
+        global $CONFIG;
 
-        print_r($a_local);
-        print_r($a_root);
-
-        // Come back to the root level
-        $a_to_local = array();
-        $separation_idx = -1;
-        for ($i = 0; $i < $a_root_size; $i++)
+        $local_path = $_SERVER['PHP_SELF'];
+        $local_path = substr(trim($local_path, '/'), strlen(trim($CONFIG['server_path'], '/')));
+        $file_begun = strrpos($local_path, '/');
+        if ($file_begun >= 0)
         {
-            if (!isset($a_local[$i]) || $a_root[$i] != $a_local[$i])
-            {
-                $a_to_local[] = '..';
-                if ($separation_idx < 0)
-                {
-                    $separation_idx = $i + 1;
-                }
-            }
-        }
-        if ($separation_idx < 0)
-        {
-            $separation_idx = $a_root_size;
+            $local_path = substr($local_path, 0, $file_begun) . '/';
         }
 
-        // descend into the local folder
-        for ($i = $separation_idx; $i < $a_local_size; $i++)
-        {
-            $a_to_local[] = $a_local[$i];
-        }
-        //        echo '</pre>';
-        return '/' . implode('/', $a_to_local) . '/';
+        return $local_path;
     }
 
     /**
@@ -199,6 +189,16 @@ class Url
     {
         $url = new Url($url_params[2]);
         return $url_params[1] . '="' . $url->absolute() . '"';
+    }
+
+    /**
+     * @param string $url the url to "relativize"
+     * @return string the relative url of the $url parameter
+     */
+    /* static */ function get_relative($url)
+    {
+        $o_url = new Url($url);
+        return $o_url->relative();
     }
 
     var $relative = '';
