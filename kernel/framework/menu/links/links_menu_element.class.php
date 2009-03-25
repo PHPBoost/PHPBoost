@@ -30,6 +30,7 @@
 //      use, on of these
 
 import('menu/menu');
+import('util/url');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
 define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
@@ -66,36 +67,14 @@ class LinksMenuElement extends Menu
      */
 	function set_image($image)
 	{
-        $image = str_replace(HOST . DIR, '', $image);
-	    if (!strpos($image, '://') && !strpos($image, '/') == 0)
-        {   // The url is relative and we need to put it in the right format
-            $this->image = '/' . preg_replace('`(^\./)`', '',
-                preg_replace('`((?=[/^]?)\.{2})/`', '', $image, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
-            );
-        }
-        else
-        {  // Absolute url (http or from the website root),
-           // we do not need to do anything
-           $this->image = $image;
-        }
+        $this->image = Url::get_relative($image);
 	}
 	/**
 	 * @param string $url the value to set
 	 */
 	function set_url($url)
 	{
-	    $url = str_replace(HOST . DIR, '', $url);
-	    if (!strpos($url, '://') && !strpos($url, '/') == 0)
-	    {   // The url is relative and we need to put it in the right format
-            $this->url = '/' . preg_replace('`(^\./)`', '',
-                preg_replace('`((?=[/^]?)\.{2})/`', '', $url, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
-            );
-	    }
-	    else
-	    {  // Absolute url (http or from the website root),
-	       // we do not need to do anything
-	       $this->url = $url;
-	    }
+        $this->url = Url::get_relative($url);
 	}
      
 	## Getters ##
