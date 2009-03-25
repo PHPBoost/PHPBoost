@@ -37,7 +37,7 @@ define('STEP_SITE_CONFIG', 5);
 define('STEP_ADMIN_ACCOUNT', 6);
 define('STEP_END', 7);
 
-defined('DEBUG', false);
+define('DEBUG', false);
 
 ob_start();
 
