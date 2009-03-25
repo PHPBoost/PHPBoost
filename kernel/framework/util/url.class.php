@@ -7,7 +7,7 @@
  *   email                : horn@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 define('URL__CLASS','url');
 
@@ -46,13 +46,17 @@ class Url
      * @desc Build a Url object
      * @param string $url the url string relative to the current path,
      * to the website root if beginning with a "/" or an absolute url
+     * @param string $path_to_root url context
      */
-    function Url($url = '')
+    function Url($url = '', $path_to_root = PATH_TO_ROOT)
     {
         if (!empty($url))
+        {
             $this->set_url($url);
+        }
+        $this->path_to_root = $path_to_root;
     }
-    
+
     /**
      * @desc Set the url
      * @param string $url the url string relative to the current path,
@@ -69,22 +73,22 @@ class Url
             }
             else
             {   // The url is relative to the current foler
-                $this->relative = Url::root_to_local() . $url;
+                $this->relative = $this->root_to_local() . $url;
             }
             $this->relative = rtrim(Url::compress($this->relative), '/');
         }
-        
+
         global $CONFIG;
         if (!empty($this->relative))
         {
-            $this->absolute = Url::compress(Url::get_absolute_root() . ltrim($this->relative, '/'));
+            $this->absolute = Url::compress(Url::get_absolute_root() . $this->relative);
         }
         else
         {
             $this->absolute = Url::compress($url);
         }
     }
-    
+
     /**
      * @desc Returns the relative url if defined, else the empty string
      * @return string the relative url if defined, else the empty string
@@ -93,7 +97,7 @@ class Url
     {
         return $this->relative;
     }
-    
+
     /**
      * @desc Returns the absolute url
      * @return string the absolute url
@@ -102,8 +106,8 @@ class Url
     {
         return $this->absolute;
     }
-    
-    
+
+
     /**
      * @desc Compress a url by removing all "folder/.." occurrences
      * @param string $url the url to compress
@@ -118,23 +122,26 @@ class Url
         }
         return $url;
     }
-    
+
     /**
      * @desc Returns the relative path from the website root to the current path if working on a relative url
      * @return string the relative path from the website root to the current path if working on a relative url
      */
     /* static */ function root_to_local()
     {
-//        echo '<pre>';
+        //        echo '<pre>';
+        $path_to_root = (!empty($this->path_to_root) ? $this->path_to_root : PATH_TO_ROOT);
         // Retrieve working path
         $a_local = explode('/', trim(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')), '/'));
-        $a_root = explode('/', trim(Url::compress(substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . PATH_TO_ROOT), '/'));
+        $a_root = explode('/', trim(Url::compress(
+        substr($_SERVER['PHP_SELF'], 0 , strrpos($_SERVER['PHP_SELF'], '/')) . '/' . $path_to_root), '/'
+        ));
         $a_local_size = count($a_local);
         $a_root_size = count($a_root);
-        
+
         print_r($a_local);
         print_r($a_root);
-        
+
         // Come back to the root level
         $a_to_local = array();
         $separation_idx = -1;
@@ -153,16 +160,16 @@ class Url
         {
             $separation_idx = $a_root_size;
         }
-        
+
         // descend into the local folder
         for ($i = $separation_idx; $i < $a_local_size; $i++)
         {
             $a_to_local[] = $a_local[$i];
         }
-//        echo '</pre>';
+        //        echo '</pre>';
         return '/' . implode('/', $a_to_local) . '/';
     }
-    
+
     /**
      * @desc Returns the absolute website root Url
      * @return string the absolute website root Url
@@ -170,9 +177,9 @@ class Url
     /* static */ function get_absolute_root()
     {
         global $CONFIG;
-        return trim(trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/'), '/') . '/';
+        return trim(trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/'), '/');
     }
-    
+
     /**
      * @desc Returns the HTML text with only absolute urls
      * @param string $html_text The HTML text in which we gonna search for relatives urls to convert into absolutes ones.
@@ -182,7 +189,7 @@ class Url
     {
         return preg_replace_callback('`(src|data|value|href|son|flv)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
     }
-    
+
     /**
      * @desc replace a relative url by the corresponding absolute one
      * @param string[] $url_params Array containing the attributes containing the url and the url
@@ -190,11 +197,12 @@ class Url
      */
     /* static */ function _convert_url_to_absolute($url_params)
     {
-    	$url = new Url($url_params[2]);
-    	return $url_params[1] . '="' . $url->absolute() . '"';
+        $url = new Url($url_params[2]);
+        return $url_params[1] . '="' . $url->absolute() . '"';
     }
-    
+
     var $relative = '';
     var $absolute = '';
+    var $path_to_root = '';
 }
 ?>
