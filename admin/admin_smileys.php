@@ -69,8 +69,8 @@ elseif (!empty($id) && $edit) //Edition.
 		'admin_smileys_management2'=> 'admin/admin_smileys_management2.tpl'
 	));
 
-	$row = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
-	$url_smiley = $row['url_smiley'];
+	$info_smiley = $Sql->query_array(DB_TABLE_SMILEYS, 'idsmiley', 'code_smiley', 'url_smiley', "WHERE idsmiley = '" . $id . "'", __LINE__, __FILE__);
+	$url_smiley = $info_smiley['url_smiley'];
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -89,12 +89,12 @@ elseif (!empty($id) && $edit) //Edition.
 		$smiley_options .= '<option value="' . $row['url_smiley'] . '" ' . $selected . '>' . $row['url_smiley'] . '</option>';
 	}
 	$Sql->query_close($result);
-	
+
 	$Template->assign_vars(array(
-		'IDSMILEY' => $row['idsmiley'],
+		'IDSMILEY' => $info_smiley['idsmiley'],
 		'URL_SMILEY' => $url_smiley,
-		'CODE_SMILEY' => $row['code_smiley'],
-		'IMG_SMILEY' => !empty($row['url_smiley']) ? '<img src="../images/smileys/' . $row['url_smiley'] . '" alt="" />' : '',
+		'CODE_SMILEY' => $info_smiley['code_smiley'],
+		'IMG_SMILEY' => !empty($info_smiley['url_smiley']) ? '<img src="../images/smileys/' . $info_smiley['url_smiley'] . '" alt="" />' : '',
 		'SMILEY_OPTIONS' => $smiley_options,
 		'L_REQUIRE_CODE' => $LANG['require_code'],
 		'L_REQUIRE_URL' => $LANG['require_url'],
