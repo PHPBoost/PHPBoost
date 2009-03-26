@@ -154,11 +154,6 @@ if (isset($CSS[get_utheme()]))
     }
 }
 
-//Détermination du thème contenant le dossier framework.
-$framework_theme = 'default';
-if (file_exists(PATH_TO_ROOT . '/templates/' . get_utheme() . '/framework/content/syndication/syndication.css'))
-	$framework_theme = get_utheme();
-
 //On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
@@ -171,7 +166,6 @@ $Template->assign_vars(array(
 	'SITE_DESCRIPTION' => $CONFIG['site_desc'],
 	'SITE_KEYWORD' => $CONFIG['site_keyword'],
 	'THEME' => get_utheme(),
-	'FRAMEWORK_THEME' => $framework_theme,
 	'LANG' => get_ulang(),
 	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_ADMIN_AUTH' => $User->check_level(ADMIN_LEVEL),
