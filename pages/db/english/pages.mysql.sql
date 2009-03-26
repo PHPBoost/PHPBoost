@@ -11,6 +11,7 @@ CREATE TABLE `phpboost_pages` (
   `count_hits` tinyint(1) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
+  `activ_com` tinyint(1) NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
   `nbr_com` int(11) NOT NULL default '0',
   `redirect` int(11) NOT NULL default '0',

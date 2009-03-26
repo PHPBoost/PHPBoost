@@ -726,7 +726,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		$Template->assign_block_vars('post_pm', array(
 			'CONTENTS' => $contents,
-			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get, '-0-' . $pm_id_get . '.php')
+			'U_PM_ACTION_POST' => url('.php?id=' . $pm_id_get . '&amp;token=' . $Session->get_token(), '-0-' . $pm_id_get . '.php?token=' . $Session->get_token())
 		));
 		
 		//Gestion des erreurs
