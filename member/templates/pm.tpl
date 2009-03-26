@@ -172,7 +172,16 @@
 					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="../member/member{pm.msg.U_USER_ID}">{pm.msg.USER_PSEUDO}</a>
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{pm.msg.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{pm.msg.ID}" /></a> {pm.msg.DATE}</div>
-					<div style="float:right;">{pm.msg.U_QUOTE}&nbsp; {pm.msg.EDIT}{pm.msg.DEL}&nbsp;&nbsp;</div>
+					<div style="float:right;">
+						{pm.msg.U_QUOTE}
+						&nbsp; 						
+						# IF pm.msg.C_MODERATION_TOOLS #
+						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
+						&nbsp;&nbsp;
+						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}"  onclick="javascript:return Confirm_pm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+						&nbsp;&nbsp;
+						# ENDIF #
+					</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">

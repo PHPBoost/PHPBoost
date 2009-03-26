@@ -299,6 +299,8 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	import('util/pagination');
 	$Pagination = new Pagination();
 	$pagination_pm = 25;
@@ -353,6 +355,8 @@ elseif ($pm_del_convers) //Suppression de conversation.
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$pm = $Sql->query_array(DB_TABLE_PM_MSG, 'idconvers', 'contents', 'view_status', "WHERE id = '" . $pm_del . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	
 	if (!empty($pm['idconvers'])) //Permet de vérifier si le message appartient bien au membre.
@@ -549,6 +553,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		'L_RESPOND' => $LANG['respond'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
+		'L_EDIT' => $LANG['edit'],
+		'L_DELETE' => $LANG['delete'],
 		'L_RESET' => $LANG['reset']
 	));
 	
@@ -558,6 +564,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	//Création du tableau des rangs.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	
+	$is_guest_in_convers = false;
 	//Gestion des rangs.
 	$Cache->load('ranks');
 	$page = retrieve(GET, 'pt', 0); //Redéfinition de la variable $page pour prendre en compte les redirections.
@@ -578,17 +585,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		if ($is_admin)
 			$row['level'] = 2;
 		
-		$edit = '';
-		$del = '';
-		//Dernier mp éditable.
-		if ($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id'])
-		{
-			if ($row['view_status'] === '0') //Si le destinataire ne la pas encore lu
-			{
-				$edit = '<a href="pm' . url('.php?edit=' . $row['id']) . '" title="'. $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" /></a>';
-				$del = '&nbsp;&nbsp;<a href="pm' . url('.php?del=' . $row['id']) . '" title="'. $LANG['delete'] . '"  onclick="javascript:return Confirm_pm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="" /></a>';
-			}
-		}
+		if( !$is_guest_in_convers )
+			$is_guest_in_convers = empty($row['login']);
 		
 		//Rang de l'utilisateur.
 		$user_rank = ($row['level'] === '0') ? $LANG['member'] : $LANG['guest'];
@@ -621,7 +619,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		
 		//Image associée au rang.
 		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-					
+		
 		//Affichage des groupes du membre.
 		if (!empty($row['user_groups']) && $_array_groups_auth)
 		{
@@ -635,7 +633,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		}
 		else
 			$user_groups = $LANG['group'] . ': ' . $user_group;
-		
+			
 		//Membre en ligne?
 		$user_online = !empty($row['connect']) ? 'online' : 'offline';
 		
@@ -644,14 +642,14 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
 		else
 			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
-		
+			
 		//Affichage du sexe et du statut (connecté/déconnecté).
 		$user_sex = '';
 		if ($row['user_sex'] == 1)
 			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/man.png" alt="" /><br />';
 		elseif ($row['user_sex'] == 2)
 			$user_sex = $LANG['sex'] . ': <img src="../templates/' . get_utheme() . '/images/woman.png" alt="" /><br />';
-				
+		
 		//Nombre de message.
 		//Affichage du nombre de message.
 		if ($row['user_msg'] >= 1)
@@ -672,6 +670,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$i++;
 		
 		$Template->assign_block_vars('pm.msg', array(
+			'C_MODERATION_TOOLS' => (($User->get_attribute('user_id') === $row['user_id'] && $row['id'] === $convers['last_msg_id']) && ($row['view_status'] === '0')), //Dernier mp éditable. et si le destinataire ne la pas encore lu
 			'ID' => $row['id'],
 			'CONTENTS' => second_parse($row['contents']),
 			'DATE' => $LANG['on'] . ' ' . gmdate_format('date_format', $row['timestamp']),
@@ -692,8 +691,6 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 			'USER_SIGN' => ($is_admin) ? '' : (!empty($row['user_sign'])) ? '____________________<br />' . second_parse($row['user_sign']) : '',
 			'USER_WEB' => ($is_admin) ? '' : (!empty($row['user_web'])) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => ($is_admin) ? '' : $row['user_warning'] . '%',
-			'EDIT' => $edit,
-			'DEL' => $del,
 			'U_USER_ID' => ($is_admin) ? '' : url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'U_ANCHOR' => 'pm' . url('.php?id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '') . '.php') . '#m' . $row['id'],
 			'U_QUOTE' => ($is_admin) ? '' : ('<a href="pm' . url('.php?quote=' . $row['id'] . '&amp;id=' . $pm_id_get . (!empty($page) ? '&amp;p=' . $page : ''), '-0-' . $pm_id_get . (!empty($page) ? '-' . $page : '-0') . '-' . $row['id'] . '.php') . '#quote" title="' . $LANG['quote'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/quote.png" alt="" /></a>'),
@@ -717,8 +714,8 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	}
 	else
 		$contents = '';
-	
-	if ($convers['user_id'] != -1)
+
+	if ($convers['user_id'] > 0 && !$is_guest_in_convers)
 	{
 		$Template->assign_vars(array(
 			'KERNEL_EDITOR' => display_editor(),
@@ -882,9 +879,9 @@ else //Liste des conversation, dans la boite du membre.
 		elseif (!empty($row['login']))
 			$author = '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>';
 		else
-			$author = $LANG['guest'];
+			$author = '<strike>' . $LANG['guest'] . '</strike>';
 			
-		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $row['login'];
+		$participants = ($row['login_dest'] != $User->get_attribute('login')) ? $row['login_dest'] : $author;
 		$user_id_dest = $row['user_id_dest'] != $User->get_attribute('user_id') ? $row['user_id_dest'] : $row['user_id'];
 		$participants = !empty($participants) ? '<a href="../member/member' . url('.php?id=' . $user_id_dest, '-' . $user_id_dest . '.php') . '">' . $participants . '</a>' : '<strike>' . $LANG['admin']. '</strike>';
 		

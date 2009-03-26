@@ -145,21 +145,7 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	$Template->set_filenames(array(
 		'poll'=> 'poll/poll.tpl'
 	));
-	list($java, $edit, $del) = array('','','');	
-	if ($User->check_level(ADMIN_LEVEL))
-	{
-		$java = "<script type='text/javascript'>
-		<!--
-		function Confirm() {
-		return confirm('" . $LANG['alert_delete_poll'] . "');
-		}
-		-->
-		</script>";
-		
-		$edit = '<a href="../poll/admin_poll' . url('.php?id=' . $poll['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $poll['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
-	}
-		
+
 	//Résultats
 	$check_bdd = false;
 	if ($CONFIG_POLL['poll_auth'] == -1) //Autorisé aux visiteurs, on filtre par ip => fiabilité moyenne.
@@ -194,29 +180,30 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 	}
 	if (!empty($errstr))
 		$Errorh->handler($errstr, $type);
-			
+	
 	//Si le cookie existe, ou l'ip est connue on redirige vers les resulats, sinon on prend en compte le vote.
 	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
-	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd)
+	if ($show_result || in_array($poll['id'], $array_cookie) === true || $check_bdd) //Résultats
 	{		
 		$array_answer = explode('|', $poll['answers']);
 		$array_vote = explode('|', $poll['votes']);
 		
 		$sum_vote = array_sum($array_vote);
-		
 		$Template->assign_vars(array(
 			'C_POLL_VIEW' => true,
-			'JAVA' => $java,
-			'EDIT' => $edit,
-			'DEL' => $del,
+			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
 			'VOTES' => $sum_vote,
 			'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
+			'L_DELETE_POLL' => $LANG['alert_delete_poll'],
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => (($sum_vote > 1 ) ? $LANG['poll_vote_s'] : $LANG['poll_vote']),
-			'L_ON' => $LANG['on']
+			'L_ON' => $LANG['on'],
+			'L_EDIT' => $LANG['edit'],
+			'L_DELETE' => $LANG['delete']
 		));
 		
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
@@ -238,21 +225,23 @@ elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 		$Template->assign_vars(array(
 			'C_POLL_VIEW' => true,
 			'C_POLL_QUESTION' => true,
+			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'IDPOLL' => $poll['id'],
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short'),
 			'VOTES' => 0,
 			'ID_R' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
 			'QUESTION' => $poll['question'],
 			'DATE' => gmdate_format('date_format_short', $poll['timestamp']),
-			'JAVA' => $java,
-			'EDIT' => $edit,
-			'DEL' => $del,
 			'U_POLL_ACTION' => url('.php?id=' . $poll['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll['id'] . '.php?token=' . $Session->get_token()),
 			'U_POLL_RESULT' => url('.php?id=' . $poll['id'] . '&amp;r=1', '-' . $poll['id'] . '-1.php'),
+			'L_DELETE_POLL' => $LANG['alert_delete_poll'],
 			'L_POLL' => $LANG['poll'],
 			'L_BACK_POLL' => $LANG['poll_back'],
 			'L_VOTE' => $LANG['poll_vote'],
 			'L_RESULT' => $LANG['poll_result'],
+			'L_EDIT' => $LANG['edit'],
+			'L_DELETE' => $LANG['delete'],
 			'L_ON' => $LANG['on']
 		));
 	
@@ -337,12 +326,15 @@ elseif ($archives) //Archives.
 		'C_POLL_ARCHIVES' => true,
 		'SID' => SID,
 		'THEME' => get_utheme(),		
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('poll' . url('.php?p=%d', '-0-0-%d.php'), $nbrarchives, 'p', 10, 3),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('poll'),
 		'L_ALERT_DELETE_POLL' => $LANG['alert_delete_poll'],
 		'L_ARCHIVE' => $LANG['archives'],
 		'L_BACK_POLL' => $LANG['poll_back'],		
-		'L_ON' => $LANG['on']
+		'L_ON' => $LANG['on'],
+		'L_EDIT' => $LANG['edit'],
+		'L_DELETE' => $LANG['delete']
 	));	
 	
 	//On recupère les sondages archivés.
@@ -360,6 +352,7 @@ elseif ($archives) //Archives.
 		$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
 		$Template->assign_block_vars('list', array(
+			'ID' => $row['id'],
 			'QUESTION' => $row['question'],
 			'EDIT' => '<a href="../poll/admin_poll' . url('.php?id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>',
 			'DEL' => '&nbsp;&nbsp;<a href="../poll/admin_poll' . url('.php?delete=1&amp;id=' . $row['id']) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>',
