@@ -81,6 +81,7 @@
 							<div class="row2">
 								<span class="text_small" style="float:left;">{VOTES} {L_VOTE}</span>
 								<span class="text_small" style="float:right;">{L_ON}:&nbsp;&nbsp;{DATE}&nbsp;&nbsp;</span>
+								&nbsp;
 							</div>
 						</div>
 					</div>
@@ -128,6 +129,7 @@
 						<div class="row2">
 							<span class="text_small" style="float:left;">{list.VOTE} {list.L_VOTE}</span>
 							<span class="text_small" style="float: right;">{L_ON}:&nbsp;&nbsp;{list.DATE}&nbsp;&nbsp;</span>
+							&nbsp;
 						</div>
 					</div>
 				</div>
