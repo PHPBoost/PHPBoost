@@ -148,7 +148,7 @@ class ContentSecondParser extends Parser
         elseif ($language != '')
         {
             require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-            $Geshi =& new GeSHi($contents, $language);
+            $Geshi = new GeSHi($contents, $language);
 
             if ($line_number) //Affichage des numéros de lignes.
             $Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
