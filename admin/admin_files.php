@@ -341,6 +341,7 @@ else
 	{	
 		$Template->assign_block_vars('folder', array(
 			'NAME' => '<a class="com" href="admin_files.php?showm=1">' . $LANG['member_s'] . '</a>',
+			'U_FOLDER' => '?showm=1',
 			'IMG_FOLDER' => 'member_max.png',
 			'L_TYPE_DEL_FOLDER' => $LANG['empty_member_folder']
 		));
