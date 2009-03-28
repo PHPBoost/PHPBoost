@@ -199,7 +199,7 @@ class LinksMenuElement extends Menu
   		if ($mode)
   		{
   			$template->assign_vars(array(
-  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->auth, array(), 'menu_element_' . $this->uid . '_auth')
+  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
   			));
 		}
     }

@@ -141,7 +141,9 @@ class Authorizations
         	{
 	            $selected = '';
 	            if ( array_key_exists('r' . $idrank, $array_auth) && ((int)$array_auth['r' . $idrank] & (int)$auth_bit) !== 0 && empty($disabled))
+	            {
 	                $selected = ' selected="selected"';
+	            }
 	            $selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 	            
 				$Template->assign_block_vars('ranks_list', array(
@@ -160,7 +162,9 @@ class Authorizations
         {
             $selected = '';
             if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))
+            {
                 $selected = ' selected="selected"';
+            }
 
             $Template->assign_block_vars('groups_list', array(
 				'IDGROUP' => $idgroup,
@@ -173,8 +177,8 @@ class Authorizations
 		##### Génération du formulaire pour les autorisations membre par membre. #####
 		//Recherche des membres autorisé.
 		$array_auth_members = array();
-		if (is_array($array_auth)) 
-		{	
+		if (is_array($array_auth))
+		{
 			foreach ($array_auth as $type => $auth)
 			{
 				if (substr($type, 0, 1) == 'm')

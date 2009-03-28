@@ -107,7 +107,9 @@ class LinksMenu extends LinksMenuElement
     {
         // Stop if the user isn't authorised
         if (!$this->_check_auth())
+        {
             return '';
+        }
         
         // Get the good Template object
         if (!is_object($template) || strtolower(get_class($template)) != 'template')
