@@ -310,7 +310,7 @@ if (!defined("PCL_TAR"))
   //    filename, size, mode, uid, gid, mtime, typeflag, status
   //  Exemple : $v_list = PclTarList("my.tar");
   //            for ($i=0; $i<sizeof($v_list); $i++)
-  //              echo "Filename :'".$v_list[$i][filename]."'<br>";
+  //              echo "Filename :'".$v_list[$i][filename]."'<br />";
   // --------------------------------------------------------------------------------
   function PclTarList($p_tarname, $p_mode="")
   {

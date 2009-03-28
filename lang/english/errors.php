@@ -84,7 +84,7 @@ $LANG['e_already_group'] = 'Member already in group';
 //Forget
 $LANG['e_mail_forget'] = 'The mail entered not corresponds with user\'s mail !';
 $LANG['e_forget_mail_send'] = 'An e-mail had just been sent to you, with an activation key to confirm the change!';
-$LANG['e_forget_confirm_change'] = 'Password changed successfully!<br/> You can connect with the new password which was transmitted to you by email.';
+$LANG['e_forget_confirm_change'] = 'Password changed successfully!<br /> You can connect with the new password which was transmitted to you by email.';
 $LANG['e_forget_echec_change'] = 'Failure: password can\'t be changed';
 
 //Register
