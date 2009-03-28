@@ -360,7 +360,7 @@ switch($step)
     		    //He wants to overwrite, we continue the installation
     		    else
     		    {
-    		         $result = DB_CONFIG_SUCCESS;   
+    		         $result = DB_CONFIG_SUCCESS;
     		    }
     		}
     		
@@ -379,7 +379,7 @@ switch($step)
     				
     				$file_path = '../kernel/db/config.php';
     				
-    				$db_config_content = '<?php' . "\n" . 
+    				$db_config_content = '<?php' . "\n" .
                         'if (!defined(\'DBSECURE\'))'  . "\n" .
                         '{' . "\n" .
                         '   $sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address' . "\n" .
@@ -389,7 +389,7 @@ switch($step)
                         '   define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix' . "\n" .
                         '   define(\'DBSECURE\', true);' . "\n" .
                         '   define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
-                        '   ' . "\n" .        
+                        '   ' . "\n" .
                         '   require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
                         '}' . "\n" .
                         'else' . "\n" .
@@ -601,6 +601,8 @@ switch($step)
             
             // Ajout du menu de lien par défaut tout en haut à gauche
             import('core/menu_service');
+            MenuService::enable_all(true);
+            
             $modules_menu = MenuService::website_modules(VERTICAL_MENU);
             MenuService::move($modules_menu, BLOCK_POSITION__LEFT, false);
             MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
