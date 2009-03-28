@@ -51,6 +51,9 @@ if ($install) //Installation du module
 		case MODULE_ALREADY_INSTALLED:
 			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
 			break;
+		case PHP_VERSION_CONFLICT:
+			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_php_version_conflict#errorh');
+			break;
 		case MODULE_INSTALLED:
 		default:
 			redirect(HOST . DIR . '/admin/admin_modules.php');
@@ -149,7 +152,7 @@ else
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict', 'e_php_version_conflict');
 	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	if ($get_error == 'incomplete')
