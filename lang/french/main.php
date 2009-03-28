@@ -51,11 +51,11 @@ $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
 $LANG['error'] = 'Erreur';
-$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_warning_tiny'] = '<strong>Attention :</strong> %s %s %s';
-$LANG['error_warning'] = '<strong>Attention :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_warning'] = '<strong>Attention :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_notice_tiny'] = '<strong>Remarque :</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Remarque :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_notice'] = '<strong>Remarque :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_success'] = '<strong>Succès :</strong> %s %s %s';
 $LANG['error_unknow'] = '<strong>Erreur :</strong> Cause inconnue %s %s %s';
 

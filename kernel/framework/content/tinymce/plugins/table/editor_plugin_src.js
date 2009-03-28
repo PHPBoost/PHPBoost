@@ -1079,7 +1079,7 @@
 									var html = rows[y][x].innerHTML;
 									var chk = html.replace(/[ \t\r\n]/g, "");
 
-									if (chk != "<br/>" && chk != "<br>" && chk != '<br mce_bogus="1"/>' && (x+y > 0))
+									if (chk != "<br />" && chk != "<br />" && chk != '<br mce_bogus="1"/>' && (x+y > 0))
 										tdElm.innerHTML += html;
 
 									// Not current cell
