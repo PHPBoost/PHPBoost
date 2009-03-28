@@ -27,15 +27,16 @@
 ###################################################*/
 
 //Constants
-define('MODULE_INSTALLED', 0);
-define('MODULE_UNINSTALLED', 0);
-define('UNEXISTING_MODULE', 1);
-define('MODULE_ALREADY_INSTALLED', 2);
-define('CONFIG_CONFLICT', 3);
-define('NOT_INSTALLED_MODULE', 4);
-define('MODULE_FILES_COULD_NOT_BE_DROPPED', 5);
+define('MODULE_INSTALLED', 					0);
+define('MODULE_UNINSTALLED', 				0);
+define('UNEXISTING_MODULE', 				1);
+define('MODULE_ALREADY_INSTALLED', 			2);
+define('CONFIG_CONFLICT', 					3);
+define('NOT_INSTALLED_MODULE', 				4);
+define('MODULE_FILES_COULD_NOT_BE_DROPPED',	5);
+define('PHP_VERSION_CONFLICT', 				6);
 
-define('GENERATE_CACHE_AFTER_THE_OPERATION', true);
+define('GENERATE_CACHE_AFTER_THE_OPERATION',		true);
 define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
 
 //Class
@@ -57,6 +58,16 @@ class PackagesManager
 		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang());
 		if (empty($info_module))
 			return UNEXISTING_MODULE;
+			
+		if (!empty($info_module['php_version'])) {
+			$phpversion = phpversion();
+			if (strpos(phpversion(), '-') !== FALSE) {
+				$phpversion = substr($phpversion, 0, strpos(phpversion(), '-'));
+			}
+			if (version_compare($phpversion, $info_module['php_version'], 'lt')) {
+				return PHP_VERSION_CONFLICT;
+			}
+		}
 		
 		//Si le dossier de base de données de la langue n'existe pas on prend le suivant existant.
 		$dir_db_module = get_ulang();

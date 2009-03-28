@@ -48,6 +48,7 @@ $LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
 $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
+$LANG['e_php_version_conflict'] = 'Version PHP inadaptée';
 
 //Cache
 $LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échoué !';
