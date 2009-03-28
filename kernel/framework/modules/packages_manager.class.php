@@ -59,12 +59,15 @@ class PackagesManager
 		if (empty($info_module))
 			return UNEXISTING_MODULE;
 			
-		if (!empty($info_module['php_version'])) {
+		if (!empty($info_module['php_version']))
+		{
 			$phpversion = phpversion();
-			if (strpos(phpversion(), '-') !== FALSE) {
+			if (strpos(phpversion(), '-') !== FALSE)
+			{
 				$phpversion = substr($phpversion, 0, strpos(phpversion(), '-'));
 			}
-			if (version_compare($phpversion, $info_module['php_version'], 'lt')) {
+			if (version_compare($phpversion, $info_module['php_version'], 'lt'))
+			{
 				return PHP_VERSION_CONFLICT;
 			}
 		}
@@ -85,12 +88,16 @@ class PackagesManager
 		$config = get_ini_config(PATH_TO_ROOT . '/' . $module_identifier . '/lang/', get_ulang()); //Récupération des infos de config.
 		
 		if (!empty($config))
-		{			
+		{
 			$check_config = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS . " WHERE name = '" . $module_identifier . "'", __LINE__, __FILE__);
 			if (empty($check_config))
+			{
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) VALUES ('" . $module_identifier . "', '" . addslashes($config) . "');", __LINE__, __FILE__);
+			}
 			else
+			{
 				return CONFIG_CONFLICT;
+			}
 		}
 		
 		//Parsage du fichier sql.
@@ -113,7 +120,7 @@ class PackagesManager
 			if (!DEBUG) {
 				@include_once($php_file);
 			} else {
-				include_once($php_file);				
+				include_once($php_file);
 			}
 		}
 		
@@ -178,7 +185,7 @@ class PackagesManager
 			import('io/filesystem/folder');
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
 			foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $dir)
-			{	
+			{
 				$dir_db_module = $dir->get_name();
 				break;
 			}

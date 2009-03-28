@@ -316,6 +316,27 @@ class MenuService
     }
     
     
+    /**
+     * @desc Enables or disables all menus
+     * @param bool $enable if true enables all menus otherwise, disables them
+     */
+    function enable_all($enable = true)
+    {
+        global $Sql;
+        $menus = MenuService::get_menu_list();
+        foreach($menus as $menu)
+        {
+            if ($enable === true)
+            {
+                MenuService::enable($menu);
+            }
+            else
+            {
+                MenuService::disable($menu);
+            }
+        }
+    }
+    
     ## Cache ##
     
     /**
@@ -476,7 +497,9 @@ class MenuService
         // Break if no mini module config
         $mini_modules_menus = parse_ini_array($info_module['mini_module']);
         if (empty($mini_modules_menus))
+        {
             return false;
+        }
 
         $installed = false;
         foreach ($mini_modules_menus as $filename => $location)
@@ -501,7 +524,7 @@ class MenuService
                 $menu = new ModuleMiniMenu($module, $file[0]);
                 $menu->enabled(false);
                 $menu->set_auth(array('r1' => MENU_AUTH_BIT, 'r0' => MENU_AUTH_BIT, 'r-1' => MENU_AUTH_BIT));
-                $menu->set_block($location);
+                $menu->set_block(MenuService::str_to_location($location));
                 MenuService::save($menu);
                 if ($generate_cache)
                     MenuService::generate_cache();
