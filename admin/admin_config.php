@@ -240,7 +240,7 @@ else //Sinon on rempli le formulaire
 
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
-		'THEME_CONFIG' => $CONFIG['theme'],
+		'THEME_DEFAULT' => $CONFIG['theme'],
 		'SITE_NAME' => !empty($CONFIG['site_name']) ? $CONFIG['site_name'] : '',
 		'SITE_DESCRIPTION' => !empty($CONFIG['site_desc']) ? $CONFIG['site_desc'] : '',
 		'SITE_KEYWORD' => !empty($CONFIG['site_keyword']) ? $CONFIG['site_keyword'] : '',		
