@@ -92,7 +92,7 @@ class Menu
     /**
      * @return array the authorization array $auth
      */
-    function get_auth() { return is_array($this->auth) ? $this->auth : array(); }
+    function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' => AUTH_MENUS); }
     /**
      * @return int the $id of the menu in the database
      */
