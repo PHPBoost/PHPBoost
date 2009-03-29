@@ -18,7 +18,8 @@ TinyMCE : gérer les tableaux et les listes imbriquées (while preg_match list) re
 
 ------------------------------------- NOYAU ------------------------------------
 Bug BBcode code sur ie7.
-Champs obligatoires à l'inscription
+Ajouter les boutons d'activation des colonnes droite/gauche dans l'admin des menus.
+Ajouter un avertissement lors du déplacement dans une colonne désactivée.
 
 ------------------------------------ MODULES -----------------------------------
 
@@ -62,6 +63,7 @@ Champs obligatoires à l'inscription
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
+- [color=red]Nouveauté:[/color] Possibilité de mettre les champs à l'inscription en obligatoire.
 - [color=red]Nouveauté:[/color] Galerie d'avatar.
 - Possibilité d'envoyer des messages privés à tout les membres d'un groupe ou à tout les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.

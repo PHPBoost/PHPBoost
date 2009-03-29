@@ -99,7 +99,6 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_timezone = retrieve(POST, 'user_timezone', 0);
 			
 			$user_local = retrieve(POST, 'user_local', '');
-			$user_web = retrieve(POST, 'user_web', '');
 			$user_occupation = retrieve(POST, 'user_occupation', '');
 			$user_hobbies = retrieve(POST, 'user_hobbies', '');
 			$user_desc = retrieve(POST, 'user_desc', '', TSTRING_PARSE);
@@ -113,6 +112,10 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_readonly = ($user_readonly > 0) ? (time() + $user_readonly) : 0; //Lecture seule!
 			$user_ban = retrieve(POST, 'user_ban', 0);
 			$user_ban = ($user_ban > 0) ? (time() + $user_ban) : 0; //Bannissement!
+			
+			$user_web = retrieve(POST, 'user_web', '');
+			if ( substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
+				$user_web = 'http://' . $user_web;
 			
 			//Gestion des groupes.				
 			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : array();
