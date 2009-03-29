@@ -550,7 +550,7 @@ switch($step)
     		$CONFIG['maintain_text'] = $LANG['site_config_maintain_text'];
     		$CONFIG['htaccess_manual_content'] = '';
     		$CONFIG['rewrite'] = 0;
-    		$CONFIG['debug'] = 0;
+    		$CONFIG['debug_mode'] = 0;
     		$CONFIG['com_popup'] = 0;
     		$CONFIG['compteur'] = 0;
     		$CONFIG['bench'] = 0;
