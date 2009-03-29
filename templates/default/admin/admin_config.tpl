@@ -84,7 +84,7 @@
 								{select.THEME}				
 							# END select #				
 							</select>
-							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{THEME_CONFIG}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
 					<dl>
