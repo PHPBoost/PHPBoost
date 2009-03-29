@@ -308,7 +308,7 @@ else //Sinon on rempli le formulaire
 	import('io/filesystem/folder');
 	$lang_array = array();
 	$lang_folder_path = new Folder('../lang/');
-	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
 		$lang_array[] = $lang->get_name();
 	
 	$lang_array_bdd = array();
@@ -351,7 +351,7 @@ else //Sinon on rempli le formulaire
 	//On recupère les dossier des thèmes contents dans le dossier templates.
 	$tpl_array = array();
 	$lang_folder_path = new Folder('../templates/');
-	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
 		$tpl_array[] = $lang->get_name();
 		
 	$theme_array_bdd = array();

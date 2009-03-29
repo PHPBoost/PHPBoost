@@ -50,9 +50,12 @@ header('Pragma: no-cache');
 //Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+import('core/errors');
 import('io/template');
 
 @error_reporting(ERROR_REPORTING);
+
+$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
 
 define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');

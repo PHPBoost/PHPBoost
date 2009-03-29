@@ -75,7 +75,7 @@ $Template->assign_vars(array(
 //Modules disponibles
 import('io/filesystem/folder');
 $folder_path = new Folder('../');
-foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $modules)
+foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 {
 	$modulef = $modules->get_name();
 	//Désormais on vérifie que le fichier de configuration est présent.

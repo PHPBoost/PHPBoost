@@ -58,7 +58,7 @@ if ($update) //Mise à jour du module
 		
 		import('io/filesystem/folder');
 		$folder_path = new Folder($dir . '/' . $dir_db_module);
-		foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $dir)
+		foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 		{	
 			$dir_db_module = $dir->get_name();
 			break;

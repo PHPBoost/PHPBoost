@@ -68,7 +68,7 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 	{
 		import('io/upload');
 		$Upload = new Upload($dir);
-		if (!$Upload->file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+		if (!$Upload->file('upload_smiley', '`[a-z0-9_ -]+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;
 	}
 	else
