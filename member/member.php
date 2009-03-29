@@ -440,8 +440,11 @@ if (!empty($id_get)) //Espace membre
 			$user_sign = retrieve(POST, 'user_sign', '', TSTRING_PARSE);
 			$user_msn = retrieve(POST, 'user_msn', '');
 			$user_yahoo = retrieve(POST, 'user_yahoo', '');
-			$user_web = retrieve(POST, 'user_web', '');
 			
+			$user_web = retrieve(POST, 'user_web', '');
+			if ( substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
+				$user_web = 'http://' . $user_web;
+				
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
 		
