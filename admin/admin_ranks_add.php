@@ -66,7 +66,7 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 	{
 		import('io/upload');
 		$Upload = new Upload($dir);
-		if (!$Upload->file('upload_ranks', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+		if (!$Upload->file('upload_ranks', '`([a-z0-9_ -])+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;
 	}
 	else

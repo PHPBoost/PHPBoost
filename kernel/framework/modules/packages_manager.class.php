@@ -184,7 +184,7 @@ class PackagesManager
 			//Si le dossier de base de données de la LANG n'existe pas on prend le suivant exisant.
 			import('io/filesystem/folder');
 			$folder_path = new Folder($dir . '/' . $dir_db_module);
-			foreach ($folder_path->get_folders('`^[a-z_]+$`i') as $dir)
+			foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $dir)
 			{
 				$dir_db_module = $dir->get_name();
 				break;

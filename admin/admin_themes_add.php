@@ -157,7 +157,7 @@ else
 	import('io/filesystem/folder');
 	$tpl_array = array();
 	$lang_folder_path = new Folder('../templates/');
-	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
 		$tpl_array[] = $lang->get_name();
 	
 	// Le thème par défaut n'en fait pas partie

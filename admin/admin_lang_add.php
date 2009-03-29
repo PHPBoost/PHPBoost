@@ -147,7 +147,7 @@ else
 	import('io/filesystem/folder');
 	$dir_array = array();
 	$lang_folder_path = new Folder('../lang/');
-	foreach ($lang_folder_path->get_folders('`^[a-z_]+$`i') as $lang)
+	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
 		$dir_array[] = $lang->get_name();
 	
 	$result = $Sql->query_while("SELECT lang 
