@@ -68,10 +68,10 @@ if (!empty($id_article))
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
 		$Template->assign_block_vars('article.list', array(
