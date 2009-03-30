@@ -76,54 +76,54 @@
 	<div id="admin_contents">
 		<form id="f_form" action="admin_panel.php?token={TOKEN}" method="post" onsubmit="return check_form_conf(this);" class="fieldset_content">
 		
-		<table style="width:100%;" cellspacing="10px">
+		<table style="width:100%;border:1px solid black" cellspacing="10px">
 			<tr>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
-					<p style="text-align:center;">{L_TOP}</p>
+				<td style="background-color:#EE713A; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" colspan="2">
+					<p class="text_center text_strong">{L_TOP}</p>
 					# START top #
 					{top.NAME}  <a href="admin_panel.php?delete={top.LOCATION}-{top.ID}"><img border="0" src="{top.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END top #
 				</td>
 			</tr>
 			<tr>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" witdh="50%">
-					<p style="text-align:center;">{L_ABOVE_LEFT}</p>
+				<td style="background-color:#CCFF99; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" witdh="50%">
+					<p class="text_center text_strong">{L_ABOVE_LEFT}</p>
 					# START aboveleft #
 					{aboveleft.NAME} <a href="admin_panel.php?delete={aboveleft.LOCATION}-{aboveleft.ID}"><img border="0" src="{aboveleft.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END aboveleft #
 				</td>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;"  width="50%">
-					<p style="text-align:center;">{L_ABOVE_RIGHT}</p>
+				<td style="background-color:#9B8FFF; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;"  width="50%">
+					<p class="text_center text_strong">{L_ABOVE_RIGHT}</p>
 					# START aboveright #
 					{aboveright.NAME} <a href="admin_panel.php?delete={aboveright.LOCATION}-{aboveright.ID}"><img border="0" src="{aboveright.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END aboveright #
 				</td>
 			</tr>
 			<tr>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
-					<p style="text-align:center;">{L_CENTER}</p>
+				<td style="background-color:#FFE25F; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" colspan="2">
+					<p class="text_center text_strong">{L_CENTER}</p>
 					# START center #
 					{center.NAME}  <a href="admin_panel.php?delete={center.LOCATION}-{center.ID}"><img border="0" src="{center.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END center #
 				</td>
 			</tr>
 			<tr>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" width="50%">
-					<p style="text-align:center;">{L_BELOW_LEFT}</p>
+				<td style="background-color:#FF5F5F; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" width="50%">
+					<p class="text_center text_strong">{L_BELOW_LEFT}</p>
 					# START belowleft #
 					{belowleft.NAME}  <a href="admin_panel.php?delete={belowleft.LOCATION}-{belowleft.ID}"><img border="0" src="{belowleft.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END belowleft #
 				</td>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" width="50%">
-					<p style="text-align:center;">{L_BELOW_RIGHT}</p>
+				<td style="background-color:#61B85C; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" width="50%">
+					<p class="text_center text_strong">{L_BELOW_RIGHT}</p>
 					# START belowright #
 					{belowright.NAME} <a href="admin_panel.php?delete={belowright.LOCATION}-{belowright.ID}"><img border="0" src="{belowright.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END belowright #
 				</td>
 			</tr>
 			<tr>
-				<td style="background-color:#99CCFF; vertical-align:top; height:20px; min-height:20px;" colspan="2">
-					<p style="text-align:center;">{L_BOTTOM}</p>
+				<td style="background-color:#EA6FFF; vertical-align:top; height:20px; min-height:20px; border:1px solid black; padding:6px;" colspan="2">
+					<p class="text_center text_strong">{L_BOTTOM}</p>
 					# START bottom #
 					{bottom.NAME}  <a href="admin_panel.php?delete={bottom.LOCATION}-{bottom.ID}"><img border="0" src="{bottom.U_DELETE_IMG}" alt="supprimer"/></a><br />
 					# END bottom #
