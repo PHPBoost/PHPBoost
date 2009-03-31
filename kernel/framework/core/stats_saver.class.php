@@ -49,16 +49,19 @@ class StatsSaver
 			########### Détection des mots clés ###########
 			$is_search_engine = false;
 			$search_engine = '';
-			$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
-			foreach ($array_search as $search_engine_check)
-			{	
-				if (strpos($referer['host'], $search_engine_check) !== false)
-				{
-					$is_search_engine = true;
-					$search_engine = $search_engine_check;
-					break;
-				}
-			}	
+			if (!empty($referer['host']))
+			{
+				$array_search = array('google', 'search.live', 'search.msn', 'yahoo', 'exalead', 'altavista', 'lycos', 'ke.voila', 'recherche.aol');
+				foreach ($array_search as $search_engine_check)
+				{	
+					if (strpos($referer['host'], $search_engine_check) !== false)
+					{
+						$is_search_engine = true;
+						$search_engine = $search_engine_check;
+						break;
+					}
+				}	
+			}
 
 			if ($is_search_engine)
 			{
