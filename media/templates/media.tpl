@@ -43,9 +43,11 @@
 									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
 								</a>
 								# ENDIF #
+								# IF row.list_cats.NUM_MEDIA #
 								<div class="text_small">
 									{row.list_cats.NUM_MEDIA}
 								</div>
+								# ENDIF #
 							</div>
 						# END row.list_cats #
 						<div class="spacer">&nbsp;</div>

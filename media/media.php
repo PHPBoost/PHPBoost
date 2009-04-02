@@ -68,7 +68,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'WIDTH' => floor(100 / (float)$MEDIA_CONFIG['nbr_column']),
 				'SRC' => !empty($array['image']) ? $array['image'] : 'media_mini.png',
 				'IMG_NAME' => addslashes($array['name']),
-				'NUM_MEDIA' => sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']),
+				'NUM_MEDIA' => ($array['active'] & MEDIA_NBR) !== 0 ? sprintf(($array['num_media'] > 1 ? $MEDIA_LANG['num_medias'] : $MEDIA_LANG['num_media']), $array['num_media']) : '',
 				'U_CAT' => url('media.php?cat=' . $id, 'media-0-' . $id . '+' . url_encode_rewrite($array['name']) . '.php'),
 				'U_ADMIN_CAT' => url('admin_media_cats.php?edit=' . $id)
 			));

@@ -176,6 +176,12 @@
 							<label><input type="checkbox" name="activ[]" value="2048" {edition_interface.DESC_MEDIA} /> {L_IN_MEDIA}</label>
 						</dd>
 					</dl>
+					<dl>
+						<dt><label for="activ_nbr">{L_DISPLAY_NBR}</label></dt>
+						<dd>
+							<label><input type="checkbox" name="activ[]" value="4096" {edition_interface.NBR} /></label>
+						</dd>
+					</dl>
 				</fieldset>
 				<fieldset>
 					<legend>{L_SPECIAL_AUTH}</legend>
