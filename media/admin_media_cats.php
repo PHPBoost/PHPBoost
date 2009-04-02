@@ -166,6 +166,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_DISPLAY_COUNTER' => $MEDIA_LANG['display_view'],
 		'L_DISPLAY_DATE' => $MEDIA_LANG['display_date'],
 		'L_DISPLAY_DESC' => $MEDIA_LANG['display_desc'],
+		'L_DISPLAY_NBR' => $MEDIA_LANG['display_nbr'],
 		'L_SPECIAL_AUTH' => $MEDIA_LANG['special_auth'],
 		'L_READ_AUTH' => $MEDIA_LANG['auth_read'],
 		'L_CONTRIBUTE_AUTH' => $MEDIA_LANG['auth_contrib'],
@@ -197,6 +198,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'DATE_MEDIA' => ($MEDIA_CATS[$id_edit]['active'] & MEDIA_DV_DATE) !== 0 ? 'checked="checked"' : '',
 			'DESC_LIST' => ($MEDIA_CATS[$id_edit]['active'] & MEDIA_DL_DESC) !== 0 ? 'checked="checked"' : '',
 			'DESC_MEDIA' => ($MEDIA_CATS[$id_edit]['active'] & MEDIA_DV_DESC) !== 0 ? 'checked="checked"' : '',
+			'NBR' => ($MEDIA_CATS[$id_edit]['active'] & MEDIA_NBR) !== 0 ? 'checked="checked"' : '',
 			'READ_AUTH' => Authorizations::generate_select(MEDIA_AUTH_READ, $default_auth),
 			'CONTRIBUTE_AUTH' => Authorizations::generate_select(MEDIA_AUTH_CONTRIBUTION, $default_auth),
 			'WRITE_AUTH' => Authorizations::generate_select(MEDIA_AUTH_WRITE, $default_auth)
@@ -225,6 +227,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'DATE_MEDIA' => ($MEDIA_CATS[0]['active'] & MEDIA_DV_DATE) !== 0 ? 'checked="checked"' : '',
 			'DESC_LIST' => ($MEDIA_CATS[0]['active'] & MEDIA_DL_DESC) !== 0 ? 'checked="checked"' : '',
 			'DESC_MEDIA' => ($MEDIA_CATS[0]['active'] & MEDIA_DV_DESC) !== 0 ? 'checked="checked"' : '',
+			'NBR' => 'checked="checked"',
 			'READ_AUTH' => Authorizations::generate_select(MEDIA_AUTH_READ, $MEDIA_CATS[0]['auth']),
 			'CONTRIBUTE_AUTH' => Authorizations::generate_select(MEDIA_AUTH_CONTRIBUTION, $MEDIA_CATS[0]['auth']),
 			'WRITE_AUTH' => Authorizations::generate_select(MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth'])

@@ -56,6 +56,7 @@ $MEDIA_LANG = array(
 'display_desc' => 'Afficher la description du fichier multimédia',
 'display_in_list' => 'Liste',
 'display_in_media' => 'Fichier',
+'display_nbr' => 'Afficher le nombre de fichier dans la catégorie',
 'display_note' => 'Afficher la note du fichier multimédia',
 'display_poster' => 'Afficher le posteur du fichier multimédia',
 'display_view' => 'Afficher le nombre de consultation du fichier multimédia',
