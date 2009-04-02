@@ -88,15 +88,19 @@ class BreadCrumb
             $this->add(stripslashes(TITLE), HOST . SCRIPT . SID);
         }
 
+		$start_page = '';
+		if (!empty($CONFIG['server_name'])) $start_page .= $CONFIG['server_name'];
+		if (!empty($CONFIG['server_path'])) $start_page .= $CONFIG['server_path'];
+		
         $Template->assign_vars(array(
-			'START_PAGE' 	=> get_start_page(),
-			'L_INDEX' 		=> $LANG['home']	
+			'START_PAGE' => $start_page,
+			'L_INDEX' 	 => $LANG['home']
         ));
-
+        
         foreach ($this->array_links as $key => $array)
         {
             $Template->assign_block_vars('link_bread_crumb', array(
-				'URL' => $array[1],
+				'URL' 	=> $array[1],
 				'TITLE' => $array[0]
             ));
         }
@@ -112,7 +116,7 @@ class BreadCrumb
 
     ## Attributs protégés #
     /**
-     * @var string[][] List of the links
+     * @var string List of the links
      */
     var $array_links = array();
 }
