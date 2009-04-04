@@ -40,8 +40,9 @@ $Template->set_filenames(array(
 //Inscription ou désinscription
 if (!empty($mail_newsletter))
 {
+	import('io/mail');
 	//Vérification de la validité du mail proposé
-	if (preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $mail_newsletter))
+	if (Mail::check_validity($mail_newsletter))
 	{
 		//Inscription ou désincription?
 		$subscribe = ($subscribe == 'subscribe') ? 1 : 0;
