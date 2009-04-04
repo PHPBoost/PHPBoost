@@ -46,6 +46,7 @@ class Parser
 	function Parser()
 	{
 		$this->content = '';
+		$this->page_path = $_SERVER['PHP_SELF'];
 	}
 
 	/**
@@ -70,7 +71,7 @@ class Parser
 	 * @desc Sets the content of the parser. When you will call a parse method, it will deal with this content. 
 	 * @param string $content Content
 	 * @param bool $stripslashes PARSER_DO_NOT_STRIP_SLASHES if you don't want to strip slashes before adding it to the parser, 
-	 * otherwise PARSER_DO_NOT_STRIP_SLASHES.
+	 * otherwise PARSER_STRIP_SLASHES.
 	 */
 	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
@@ -82,6 +83,42 @@ class Parser
 		{
 			$this->content = $content;
 		}
+	}
+	
+	/**
+	 * Sets the reference path for relative URL
+	 * @param string $path Path 
+	 */
+	function set_path_to_root($path)
+	{
+		$this->path_to_root = $path;	
+	}
+	
+	/**
+	 * Returns the path to root attribute.
+	 * @return string The path
+	 */
+	function get_path_to_root()
+	{
+		return $this->path_to_root;
+	}
+	
+	/**
+	 * Sets the page path
+	 * @param string $page_path Page path
+	 */
+	function set_page_path($page_path)
+	{
+		$this->page_path = $page_path;
+	}
+	
+	/**
+	 * Returns the page path
+	 * @return string path
+	 */
+	function get_page_path()
+	{
+		return $this->page_path;
 	}
 		
 	####### Protected #######
@@ -107,6 +144,16 @@ class Parser
 		for ($i = 0; $i <= $nbr_match; $i++)
 			$this->content = preg_replace($regex, $replace, $this->content); 
 	}
+	
+	/**
+	 * @var string Path to root of the page in which has been written the content to parse.
+	 */
+	var $path_to_root = PATH_TO_ROOT;
+	
+	/**
+	 * @var string Path of the page in which has been written the content to parse.
+	 */
+	var $page_path = '';
 }
 
 ?>

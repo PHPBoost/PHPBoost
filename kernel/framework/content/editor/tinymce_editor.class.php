@@ -45,6 +45,7 @@ class TinyMCEEditor extends ContentEditor
         $Cache->load('uploads');
 
         $template->assign_vars(array(
+        	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_NORMAL_MODE' => false,
 			'C_BBCODE_TINYMCE_MODE' => true,
 			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),

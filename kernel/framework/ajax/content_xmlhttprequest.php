@@ -32,6 +32,7 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $page_path_to_root = retrieve(GET, 'path_to_root', '');
+$page_path = retrieve(GET, 'page_path', '');
 
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
 $editor = retrieve(GET, 'editor', $CONFIG['editor']);
@@ -45,6 +46,8 @@ $content_manager = new ContentFormattingFactory($editor);
 $parser = $content_manager->get_parser($editor);
 
 $parser->set_content($contents, MAGIC_QUOTES);
+$parser->set_path_to_root($page_path_to_root);
+$parser->set_page_path($page_path);
 
 if (!empty($forbidden_tags))
 {
@@ -54,13 +57,14 @@ if (!empty($forbidden_tags))
 $parser->parse();
 
 //On parse la deuxième couche (code, math etc) pour afficher
-$contents = second_parse(stripslashes($parser->get_content()));
+$second_parser = $content_manager->get_second_parser();
+$second_parser->set_content($parser->get_content(DO_NOT_ADD_SLASHES), PARSER_DO_NOT_STRIP_SLASHES);
+$second_parser->set_path_to_root($page_path_to_root);
+$second_parser->set_page_path($page_path);
 
-//Remplacement du path to root si ce n'est pas le même (cas peu fréquent)
-if (preg_match('`^[./]+$`U', $page_path_to_root) && PATH_TO_ROOT != '..')
-{
-    $contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
-}
+$second_parser->second_parse();
+
+$contents = $second_parser->get_content(DO_NOT_ADD_SLASHES);
 
 echo $contents;
 
