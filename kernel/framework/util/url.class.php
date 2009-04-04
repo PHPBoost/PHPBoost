@@ -196,8 +196,9 @@ class Url
      * @param string[] $url_params Array containing the attributes containing the url and the url
      * @return string the replaced url
      */
-    /* static */ function _convert_url_to_absolute($url_params)
+    /* static */ function _convert_url_to_absolute($url_params, $path_to_root = PATH_TO_ROOT)
     {
+        Url::path_to_root($path_to_root);
         $url = new Url($url_params[3]);
         return $url_params[1] . ' ' . $url_params[2] . '="' . $url->absolute() . '"' . $url_params[4];
     }
@@ -207,8 +208,9 @@ class Url
      * @param string[] $url_params Array containing the attributes containing the url and the url
      * @return string the replaced url
      */
-    /* static */ function _convert_url_to_relative($url_params)
+    /* static */ function _convert_url_to_relative($url_params, $path_to_root = PATH_TO_ROOT)
     {
+    	Url::path_to_root($path_to_root);
         $url = new Url($url_params[3]);
         return $url_params[1] . ' ' . $url_params[2] . '="' . $url->relative() . '"' . $url_params[4];
     }
