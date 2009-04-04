@@ -423,18 +423,18 @@ class ForumInterface extends ModuleInterface
                     '-' . $row['id'] . $last_page_rewrite . '+' . url_encode_rewrite($row['title'])  . '.php'
                     ) . '#m' .  $row['last_msg_id']
                     );
+            $item->set_title(
+            	(($CONFIG_FORUM['activ_display_msg'] && !empty($row['display_msg'])) ?
+            	html_entity_decode($CONFIG_FORUM['display_msg'], ENT_NOQUOTES) . ' ' : '') .
+                ucfirst($row['title'])
+            );
+            $item->set_link($link);
+            $item->set_guid($link);
+            $item->set_desc(second_parse($row['contents']));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
+            $item->set_auth(unserialize($row['auth']));
 
-                    $item->set_title(
-                    ($CONFIG_FORUM['activ_display_msg'] && $row['display_msg']) ? $CONFIG_FORUM['display_msg'] : '' .
-                ' ' . ucfirst($row['title'])
-                    );
-                    $item->set_link($link);
-                    $item->set_guid($link);
-                    $item->set_desc(second_parse($row['contents']));
-                    $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['last_timestamp']));
-                    $item->set_auth(unserialize($row['auth']));
-
-                    $data->add_item($item);
+            $data->add_item($item);
 		}
 		$Sql->query_close($result);
 

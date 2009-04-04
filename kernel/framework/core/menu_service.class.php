@@ -606,6 +606,22 @@ class MenuService
     
     
     /**
+     * @desc Delete all the feeds menus with the this module id
+     * @param string $module_id the module id
+     */
+    function delete_module_feeds_menus($module_id)
+    {
+    	$feeds_menus = MenuService::get_menu_list(FEED_MENU__CLASS);
+    	foreach($feeds_menus as $feed_menu)
+    	{
+    		if ($module_id == $feed_menu->get_module_id())
+    		{
+    		    MenuService::delete($feed_menu);
+    		}    		
+    	}
+    }
+    
+    /**
      * @desc Return a menu with links to modules
      * @param int $menu_type the menu type
      * @return LinksMenu the menu with links to modules
@@ -661,6 +677,7 @@ class MenuService
      */
     function assign_positions_conditions(&$template, $position)
     {
+    	$vertical_position = in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT));
         $template->assign_vars(array(
             'C_HEADER' => $position == BLOCK_POSITION__HEADER,
             'C_SUBHEADER' => $position == BLOCK_POSITION__SUB_HEADER,
@@ -670,8 +687,8 @@ class MenuService
             'C_FOOTER' => $position == BLOCK_POSITION__FOOTER,
             'C_LEFT' => $position == BLOCK_POSITION__LEFT,
             'C_RIGHT' => $position == BLOCK_POSITION__RIGHT,
-            'C_VERTICAL' => in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT)),
-            'C_HORIZONTAL' => !in_array($position, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__RIGHT))
+            'C_VERTICAL' => $vertical_position,
+            'C_HORIZONTAL' => !$vertical_position
         ));
     }
     ## Tools ##

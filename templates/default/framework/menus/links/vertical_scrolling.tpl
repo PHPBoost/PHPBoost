@@ -17,7 +17,9 @@
 				</li>
 	        </ul>
 	    </div>
-	    <div class="spacer"></div>
+	    # IF C_VERTICAL #
+	    	<div class="spacer"></div>
+	    # ENDIF #
 	# ENDIF #
 	# IF C_NEXT_MENU # <!-- Children -->
 		<li class="extend" onmouseover="showMenu('gmenu{ID}', {DEPTH});" onmouseout="hideMenu({DEPTH});">

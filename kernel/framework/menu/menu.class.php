@@ -121,6 +121,7 @@ class Menu
     {
         return '';
     }
+
     
     /**
      * @desc Display the menu admin gui
@@ -162,7 +163,20 @@ class Menu
      * @param int $id Set the Menu database id
      */
     function id($id) { $this->id = $id; }
+    
+    
     ## Private Methodss ##
+    /**
+     * @desc Assign tpl vars
+     * @access protected
+     * @param Template $template the template on which we gonna assign vars
+     */
+    function _assign(&$template)
+    {
+    	import('core/menu_service');
+    	MenuService::assign_positions_conditions($template, $this->get_block());
+    }
+    
     /**
      * @desc Check the user authorization to see the LinksMenuElement
      * @return bool true if the user is authorised, false otherwise

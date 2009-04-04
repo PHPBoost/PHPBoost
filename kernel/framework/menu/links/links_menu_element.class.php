@@ -177,9 +177,13 @@ class LinksMenuElement extends Menu
      * @desc Assign tpl vars
      * @access protected
      * @param Template $template the template on which we gonna assign vars
+     * @param int $mode in LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
+     * displayed. With the LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
+     * also shown.
      */
     function _assign(&$template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
+    	parent::_assign($template);
         $template->assign_vars(array(
             'TITLE' => $this->title,
             'C_FIRST_LEVEL' => $this->depth == 1,
