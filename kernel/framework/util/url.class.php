@@ -54,7 +54,7 @@ class Url
         {
             $this->set_url($url);
         }
-        $this->path_to_root = $path_to_root;
+        $this->path_to_root = Url::path_to_root();
     }
 
     /**
@@ -223,6 +223,22 @@ class Url
         return $o_url->relative();
     }
 
+    /**
+     * @desc override the used PATH_TO_ROOT. if the argument is null, the value is only returned.
+     * Please note this is a PHP4 hack to allow a Class variable.
+     * @param string $path the new PATH_TO_ROOT to use
+     * @return string the used PATH_TO_ROOT
+     */
+    function path_to_root($path = null)
+    {
+    	static $path_to_root = PATH_TO_ROOT;
+    	if ($path != null)
+    	{
+    		$path_to_root = $path;
+    	}
+    	return $path_to_root;
+    }
+    
     var $relative = '';
     var $absolute = '';
     var $path_to_root = '';
