@@ -26,6 +26,7 @@
  ###################################################*/
 
 define('URL__CLASS','url');
+define('SERVER_URL', $_SERVER['PHP_SELF']);
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -149,7 +150,7 @@ class Url
     {
         global $CONFIG;
 
-        $local_path = $_SERVER['PHP_SELF'];
+        $local_path = Url::server_url();
         $local_path = substr(trim($local_path, '/'), strlen(trim($CONFIG['server_path'], '/')));
         $file_begun = strrpos($local_path, '/');
         if ($file_begun >= 0)
@@ -176,8 +177,10 @@ class Url
      * root relatives urls (only those beginning by '/') to convert into absolutes ones.
      * @return string The HTML text with only absolutes urls
      */
-    /* static */ function html_convert_root_relatives2absolutes($html_text)
+    /* static */ function html_convert_root_relatives2absolutes($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
     {
+        Url::path_to_root($path_to_root);
+        Url::server_url($server_url);
         return preg_replace_callback('`(<[^>]+) (src|data|value|href|son|flv)="(/[^"]+)"([^<]*>)`', array('Url', '_convert_url_to_absolute'), $html_text);
     }
 
@@ -186,8 +189,10 @@ class Url
      * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
      * @return string The HTML text with only absolutes urls
      */
-    /* static */ function html_convert_absolutes2relatives($html_text)
+    /* static */ function html_convert_absolutes2relatives($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
     {
+        Url::path_to_root($path_to_root);
+        Url::server_url($server_url);
         return preg_replace_callback('`(<[^>]+) (src|data|value|href|son|flv)="([^"]+)"([^<]*>)`', array('Url', '_convert_url_to_relative'), $html_text);
     }
     
@@ -196,9 +201,8 @@ class Url
      * @param string[] $url_params Array containing the attributes containing the url and the url
      * @return string the replaced url
      */
-    /* static */ function _convert_url_to_absolute($url_params, $path_to_root = PATH_TO_ROOT)
+    /* static */ function _convert_url_to_absolute($url_params)
     {
-        Url::path_to_root($path_to_root);
         $url = new Url($url_params[3]);
         return $url_params[1] . ' ' . $url_params[2] . '="' . $url->absolute() . '"' . $url_params[4];
     }
@@ -208,9 +212,8 @@ class Url
      * @param string[] $url_params Array containing the attributes containing the url and the url
      * @return string the replaced url
      */
-    /* static */ function _convert_url_to_relative($url_params, $path_to_root = PATH_TO_ROOT)
+    /* static */ function _convert_url_to_relative($url_params)
     {
-    	Url::path_to_root($path_to_root);
         $url = new Url($url_params[3]);
         return $url_params[1] . ' ' . $url_params[2] . '="' . $url->relative() . '"' . $url_params[4];
     }
@@ -233,12 +236,28 @@ class Url
      */
     function path_to_root($path = null)
     {
-    	static $path_to_root = PATH_TO_ROOT;
-    	if ($path != null)
-    	{
-    		$path_to_root = $path;
-    	}
-    	return $path_to_root;
+        static $path_to_root = PATH_TO_ROOT;
+        if ($path != null)
+        {
+            $path_to_root = $path;
+        }
+        return $path_to_root;
+    }
+    
+    /**
+     * @desc override the used SERVER URL. if the argument is null, the value is only returned.
+     * Please note this is a PHP4 hack to allow a Class variable.
+     * @param string $path the new SERVER URL to use
+     * @return string the used SERVER URL
+     */
+    function server_url($url = null)
+    {
+        static $server_url = SERVER_URL;
+        if ($url != null)
+        {
+            $server_url = $url;
+        }
+        return $server_url;
     }
     
     var $relative = '';
