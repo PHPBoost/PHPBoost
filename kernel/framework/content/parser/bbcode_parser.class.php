@@ -54,11 +54,15 @@ class BBCodeParser extends ContentParser
 		
 		//On supprime d'abord toutes les occurences de balises CODE que nous réinjecterons à la fin pour ne pas y toucher
 		if (!in_array('code', $this->forbidden_tags))
+		{
 			$this->_pick_up_tag('code', '=[A-Za-z0-9#+-]+(?:,[01]){0,2}');
+		}
 		
 		//On prélève tout le code HTML afin de ne pas l'altérer
 		if (!in_array('html', $this->forbidden_tags) && $User->check_auth($this->html_auth, 1))
+		{
 			$this->_pick_up_tag('html');
+		}
 		
 		//Ajout des espaces pour éviter l'absence de parsage lorsqu'un séparateur de mot est éxigé
 		$this->content = ' ' . $this->content . ' ';
@@ -77,18 +81,17 @@ class BBCodeParser extends ContentParser
 		
 		//Tableaux
 		if (strpos($this->content, '[table') !== false)
+		{
 			$this->_parse_table();
+		}
 		
 		//Listes
 		if (strpos($this->content, '[list') !== false)
-			$this->_parse_list();
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if (PATH_TO_ROOT != '..')
 		{
-			$this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
+			$this->_parse_list();
 		}
 		
+
 		//On remet le code HTML mis de côté
 		if (!empty($this->array_tags['html']))
 		{

@@ -58,11 +58,15 @@ if ($action_post == 'save')
     }
     
     if (!of_class($menu, CONTENT_MENU__CLASS))
+    {
         redirect('menus.php');
+    }
     
     $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
     if ($menu->is_enabled())
+    {
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
+    }
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
     $menu->set_display_title(retrieve(POST, 'display_title', false));
     $menu->set_content((string) $_POST['contents']);
