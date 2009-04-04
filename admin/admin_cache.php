@@ -80,7 +80,9 @@ else    // Génération du cache des rss
         //Gestion erreur.
         $get_error = retrieve(GET, 's', 0);
         if ($get_error == 1)
+        {
             $Errorh->handler($LANG['cache_success'], E_USER_SUCCESS);
+        }
         
         $Template->assign_vars(array(
             'L_CACHE' => $LANG['cache'],

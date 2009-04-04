@@ -112,8 +112,8 @@ else
 			# IF C_MENUS_SUB_HEADER_CONTENT #
 			{MENUS_SUB_HEADER_CONTENT}
 			# ENDIF #
-			<div class="spacer"></div>
 		</div>
+		<div class="spacer"></div>
 	</div>
 	
 	# IF C_COMPTEUR #

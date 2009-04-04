@@ -227,7 +227,9 @@ class Feed
     {
         // Choose the correct template
         if (is_object($tpl) and strtolower(get_class($tpl)) == 'template')
+        {
         $template = $tpl->copy();
+        }
         else
         {
             import('io/template');
@@ -257,12 +259,17 @@ class Feed
                 Feed::update_cache($module_id, $name, $data, $idcat);
             }
         }
-        if (!DEBUG) {
+        if (!DEBUG)
+        {
             $result = @include($feed_data_cache_file);
-        } else {
-            if (file_exists($feed_data_cache_file)) {
+        }
+        else
+        {
+            if (file_exists($feed_data_cache_file))
+            {
                 $result = include($feed_data_cache_file);
-            } else {
+            } else
+            {
                 $result = FALSE;
             }
         }

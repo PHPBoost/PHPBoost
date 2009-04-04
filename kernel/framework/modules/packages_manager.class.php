@@ -177,6 +177,7 @@ class PackagesManager
 			//Suppression du module mini.
             import('core/menu_service');
             MenuService::delete_mini_module($module_name);
+            MenuService::delete_module_feeds_menus($module_name);
             	
 			$dir_db_module = get_ulang();
 			$dir = PATH_TO_ROOT . '/' . $module_name . '/db';
@@ -190,11 +191,15 @@ class PackagesManager
 				break;
 			}
 		
-			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql')) //Parsage du fichier sql de désinstallation.
+			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql'))
+			{   //Parsage du fichier sql de désinstallation.
 				$Sql->parse(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.' . DBTYPE . '.sql', PREFIX);
+			}
 			
-			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php')) //Parsage fichier php de désinstallation.
+			if (file_exists(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php'))
+			{   //Parsage fichier php de désinstallation.
 				@include_once(PATH_TO_ROOT . '/' . $module_name . '/db/' . $dir_db_module . '/uninstall_' . $module_name . '.php');
+			}
 			
 			$Cache->Generate_file('modules');
 			$Cache->Generate_file('css');
