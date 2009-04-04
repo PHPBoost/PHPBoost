@@ -67,6 +67,9 @@ class ContentSecondParser extends Parser
             require_once(PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php');
             $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
         }
+        
+        import('util/url');
+        $this->content = Url::html_convert_root_relatives2absolutes($this->content); 
     }
     
     /**
@@ -106,8 +109,10 @@ class ContentSecondParser extends Parser
                 <param name="bgcolor" value="#FFFFFF" />
             </object>',
             $html_content);
-            
-        return Url::convert_html_relative_urls_to_absolute($html_content);
+        
+        echo Url::html_convert_root_relatives2absolutes($html_content);
+        exit;
+        return Url::html_convert_root_relatives2absolutes($html_content);
     }
 
     ## Private ##

@@ -171,15 +171,26 @@ class Url
     }
 
     /**
-     * @desc Returns the HTML text with only absolute urls
-     * @param string $html_text The HTML text in which we gonna search for relatives urls to convert into absolutes ones.
-     * @return string The HTML text with only absolute urls
+     * @desc Returns the HTML text with only absolutes urls
+     * @param string $html_text The HTML text in which we gonna search for
+     * root relatives urls (only those beginning by '/') to convert into absolutes ones.
+     * @return string The HTML text with only absolutes urls
      */
-    /* static */ function convert_html_relative_urls_to_absolute($html_text)
+    /* static */ function html_convert_root_relatives2absolutes($html_text)
     {
-        return preg_replace_callback('`(src|data|value|href|son|flv)="([^"]+)"`', array('Url', '_convert_url_to_absolute'), $html_text);
+        return preg_replace_callback('`(<[^>]+) (src|data|value|href|son|flv)="(/[^"]+)"([^<]*>)`', array('Url', '_convert_url_to_absolute'), $html_text);
     }
 
+    /**
+     * @desc Returns the HTML text with only relatives urls
+     * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
+     * @return string The HTML text with only absolutes urls
+     */
+    /* static */ function html_convert_absolutes2relatives($html_text)
+    {
+        return preg_replace_callback('`(<[^>]+) (src|data|value|href|son|flv)="([^"]+)"([^<]*>)`', array('Url', '_convert_url_to_relative'), $html_text);
+    }
+    
     /**
      * @desc replace a relative url by the corresponding absolute one
      * @param string[] $url_params Array containing the attributes containing the url and the url
@@ -187,10 +198,21 @@ class Url
      */
     /* static */ function _convert_url_to_absolute($url_params)
     {
-        $url = new Url($url_params[2]);
-        return $url_params[1] . '="' . $url->absolute() . '"';
+        $url = new Url($url_params[3]);
+        return $url_params[1] . ' ' . $url_params[2] . '="' . $url->absolute() . '"' . $url_params[4];
     }
 
+    /**
+     * @desc replace an absolute url by the corresponding relatvie one if possible
+     * @param string[] $url_params Array containing the attributes containing the url and the url
+     * @return string the replaced url
+     */
+    /* static */ function _convert_url_to_relative($url_params)
+    {
+        $url = new Url($url_params[3]);
+        return $url_params[1] . ' ' . $url_params[2] . '="' . $url->relative() . '"' . $url_params[4];
+    }
+    
     /**
      * @param string $url the url to "relativize"
      * @return string the relative url of the $url parameter
