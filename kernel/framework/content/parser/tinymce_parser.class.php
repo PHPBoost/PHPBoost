@@ -112,6 +112,8 @@ class TinyMCEParser extends ContentParser
 			
 			$this->_reimplant_tag('code');
 		}
+		
+        parent::parse();
 	}
 	
 	## Protected ##

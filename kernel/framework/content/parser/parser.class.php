@@ -57,9 +57,13 @@ class Parser
 	function get_content($addslashes = ADD_SLASHES)
 	{
 		if ($addslashes)
+		{
 			return addslashes(trim($this->content));
+		}
 		else
+		{
 			return trim($this->content);
+		}
 	}
 	
 	/**
@@ -71,9 +75,13 @@ class Parser
 	function set_content($content, $stripslashes = PARSER_DO_NOT_STRIP_SLASHES)
 	{
 		if ($stripslashes)
+		{
 			$this->content = stripslashes($content);
+		}
 		else
+		{
 			$this->content = $content;
+		}
 	}
 		
 	####### Protected #######

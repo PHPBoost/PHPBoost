@@ -48,10 +48,14 @@ class ContentParser extends Parser
     }
 
     /**
-     * @abstract
      * @desc Parses the content of the parser
+     * @return void You will find the result by using the get_content method
      */
-    function parse() {}
+    function parse()
+    {
+        import('util/url');
+        $this->content = Url::html_convert_absolutes2relatives($this->content); 
+    }
 
     /**
      * @desc Sets the tags which mustn't be parsed.
