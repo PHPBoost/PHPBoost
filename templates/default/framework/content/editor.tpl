@@ -16,7 +16,7 @@
 				displayed{FIELD} = true;			
 
 				new Ajax.Request(
-					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?token={TOKEN}&path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}',
+					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?token={TOKEN}&path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}&page_path={PAGE_PATH}',
 					{
 						method: 'post',
 						parameters: {contents: contents, ftags: '{FORBIDDEN_TAGS}'},

@@ -46,6 +46,7 @@ class BBCodeEditor extends ContentEditor
         $Cache->load('smileys');
 
         $template->assign_vars(array(
+        	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
