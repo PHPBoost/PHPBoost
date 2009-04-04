@@ -130,8 +130,8 @@ class Url
      */
     /* static */ function compress($url)
     {
-        $url = preg_replace('`([^:]|^)/+`', '$1/', $url);
-
+        $url = preg_replace(array('`([^:]|^)/+`', '`(?<!\.)\./`'), array('$1/', ''), $url);
+        
         do
         {
             $url = preg_replace('`/?[^/]+/\.\.`', '', $url);
