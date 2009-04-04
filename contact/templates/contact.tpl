@@ -23,7 +23,7 @@
 		</div>
 		# ENDIF #
 				
-		<form action="contact.php{U_ACTION_CONTACT}" method="post" onsubmit="return check_form_mail();" class="fieldset_mini">
+		<form action="{U_ACTION_CONTACT}" method="post" onsubmit="return check_form_mail();" class="fieldset_mini">
 			<fieldset>
 				<legend>{L_CONTACT_MAIL}</legend>
 				<p>{L_REQUIRE}</p>

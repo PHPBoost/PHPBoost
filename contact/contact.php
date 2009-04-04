@@ -115,7 +115,7 @@ $Template->assign_vars(array(
 	'L_CONTENTS' => $LANG['content'],
 	'L_SUBMIT' => $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
-	'U_ACTION_CONTACT' => SID . '&amp;token=' . $Session->get_token()
+	'U_ACTION_CONTACT' => url('contact.php?token=' . $Session->get_token())
 ));
 
 $Template->pparse('contact');

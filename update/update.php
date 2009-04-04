@@ -546,6 +546,7 @@ switch($step)
         //Validation de l'étape
         if (retrieve(POST, 'submit', false))
         {
+        	import('io/mail');
             $login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
             $password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
             $password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
@@ -584,7 +585,7 @@ switch($step)
                 {
                     return $LANG['admin_passwords_error'];
                 }
-                elseif (!preg_match('`^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$`i', $user_mail) )
+                elseif (!Mail::check_validity($user_mail))
                 {
                     return $LANG['admin_email_error'];
                 }

@@ -4,6 +4,8 @@
 
 ------------------------------------- NOYAU ------------------------------------
 TinyMCE : gérer les tableaux et les listes imbriquées (while preg_match list) remplacer
+BBCode : accepter les URL absolues par rapport à la racine du site
+Javascript : remplacer toutes les regex de vérification des mails par une qui sera dans global.js et qui soit conforeme à la RFC
 ------------------------------------ MODULES -----------------------------------
 
 

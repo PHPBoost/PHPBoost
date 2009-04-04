@@ -223,14 +223,7 @@ class Mail
      */
     function check_validity($mail_address)
     {
-        if (!preg_match('`^[a-z0-9._-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return preg_match('`^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address))
     }
 
     ## Protected Methods ##

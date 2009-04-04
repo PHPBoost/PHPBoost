@@ -586,7 +586,8 @@ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 //Vérifie la validité du mail
 function check_mail($mail)
 {
-    return preg_match('`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i', $mail);
+	import('io/mail');
+	return Mail::check_validity($mail);
 }
 
 //Charge le parseur.
