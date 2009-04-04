@@ -53,7 +53,7 @@ class ContentSecondParser extends Parser
     {
         global $LANG;
 
-        $this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
+//        $this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
 
         //Balise code
         if (strpos($this->content, '[[CODE') !== false)
