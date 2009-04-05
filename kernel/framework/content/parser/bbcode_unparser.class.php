@@ -92,7 +92,7 @@ class BBCodeUnparser extends ContentUnparser
 			//Création du tableau de remplacement
 			foreach ($_array_smiley_code as $code => $img)
 			{	
-				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
+				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}	
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
