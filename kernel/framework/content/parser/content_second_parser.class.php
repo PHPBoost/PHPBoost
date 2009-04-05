@@ -49,11 +49,9 @@ class ContentSecondParser extends Parser
     /**
      * @desc Parses the content of the parser. The result will be ready to be displayed.
      */
-    function second_parse()
+    function parse()
     {
         global $LANG;
-
-//        $this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
 
         //Balise code
         if (strpos($this->content, '[[CODE') !== false)
@@ -83,7 +81,7 @@ class ContentSecondParser extends Parser
         
         //Balise vidéo
         $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertMoviePlayer\("([^"]+)", ([0-9]+), ([0-9]+)\);\s+--></script>`isU',
-            '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/movieplayer.swf" width="$2" height="$3">
+            '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
@@ -98,10 +96,10 @@ class ContentSecondParser extends Parser
             
         //Balise son
         $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertSoundPlayer\("([^"]+)\);\s+--></script>`isU',
-        	'<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf\?son=$1" width="200" height="20">
+        	'<object type="application/x-shockwave-flash" data="/kernel/data/dewplayer.swf\?son=$1" width="200" height="20">
          		<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
-                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=$1" />
+                <param name="movie" value="/kernel/data/dewplayer.swf?son=$1" />
                 <param name="menu" value="false" />
                 <param name="quality" value="high" />
                 <param name="scalemode" value="noborder" />

@@ -54,7 +54,7 @@ function mathimage($text, $size)
 	//On passe à la moulinette le texte alternatif pour éviter des failles xss.
 	$text = htmlentities(strip_tags($text));
 	
-	return '<img src="'. DIR_IMG . '/math_' . $v . '_' . $nameimg . '" style="vertical-align:' . $valign . 'px;display:inline-block;background-color:#FFFFFF;" alt="' . $text . '" title="' . $text . '"/>';
+	return '<img src="/images/maths/math_' . $v . '_' . $nameimg . '" style="vertical-align:' . $valign . 'px;display:inline-block;background-color:#FFFFFF;" alt="' . $text . '" title="' . $text . '"/>';
 }
 
 function mathfilter($text, $size) 
