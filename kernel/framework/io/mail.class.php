@@ -3,8 +3,8 @@
  *                              mail.class.php
  *                            -------------------
  *   begin                : March 11, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2009 Viarre Régis, Benoit Sautel
+ *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -99,7 +99,7 @@ class Mail
      */
     function set_object($object)
     {
-        $this->objet = $object;
+        $this->object = $object;
     }
 
     /**
@@ -153,7 +153,7 @@ class Mail
      */
     function get_object()
     {
-        return $this->objet;
+        return $this->object;
     }
 
     /**
@@ -177,14 +177,14 @@ class Mail
     /**
      * @desc Sends the mail.
      * @param string $mail_to The mail recipients' address.
-     * @param string $mail_objet The mail object.
+     * @param string $mail_object The mail object.
      * @param string $mail_content content of the mail
      * @param string $mail_from The mail sender's address.
      * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
      * @param string $mail_sender The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
      * @return bool True if the mail could be sent, false otherwise.
      */
-    function send_from_properties($mail_to, $mail_objet, $mail_content, $mail_from, $mail_header = '', $mail_sender = 'admin')
+    function send_from_properties($mail_to, $mail_object, $mail_content, $mail_from, $mail_header = '', $mail_sender = 'admin')
     {
         //Initialization of the mail properties
         if (!$this->set_recipients($mail_to) || !$this->set_sender($mail_from, $mail_sender))
@@ -192,7 +192,7 @@ class Mail
             return false;
         }
          
-        $this->set_object($mail_objet);
+        $this->set_object($mail_object);
         $this->set_content($mail_content);
 
         $this->set_headers($mail_header);
@@ -213,7 +213,7 @@ class Mail
         }
          
         $recipients = trim(implode('; ', $this->recipients), '; ');
-        return @mail($recipients, $this->objet, $this->content, $this->headers);
+        return @mail($recipients, $this->object, $this->content, $this->headers);
     }
     
     /**
@@ -236,40 +236,46 @@ class Mail
         global $LANG;
 
         //Sender
-        $this->headers .= 'From: "' . $this->sender_name . ' ' . HOST . '" <' . $this->sender_mail . ">\n";
+        $this->headers .= 'From: ' . $this->sender_name . ' ' . HOST . ' <' . $this->sender_mail . '>' . "\n";
 
         //Recipients
+        $this->headers .= 'To: ';
         foreach ($this->recipients as $recipient)
         {
-            $this->headers .= 'cc: ' . $recipient . "\n";
+            $this->headers .= $recipient . '<' . $recipient . '>, ';
         }
+        $this->headers .= "\n";
+        
+        //Subject
+        $this->headers .= 'Subject: ' . $this->object . "\n";
+        $this->headers .= 'Content-type: text/plain; charset=ISO-8859-1' . "\n";
     }
 
     ## Private Attributes ##
     /**
     * @var sting object of the mail
     */
-    var $objet;
+    var $object = '';
 
     /**
      * @var string content of the mail
      */
-    var $content;
+    var $content = '';
 
     /**
      * @var string Address of the mail sender.
      */
-    var $sender_mail;
+    var $sender_mail = '';
 
     /**
      * @var string The mail sender name.
      */
-    var $sender_name;
+    var $sender_name = '';
 
     /**
      * @var The mail headers.
      */
-    var $headers;
+    var $headers = '';
 
     /**
      * @var string[] Recipients of the mail. If they are more than one, a comma separates their addresses.
