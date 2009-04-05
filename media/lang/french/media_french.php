@@ -103,19 +103,6 @@ $MEDIA_LANG = array(
 'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 'contribution_success' => 'Votre contribution a bien été enregistrée.',
 
-// moderation_media.php
-'file_unaprobed' => 'Fichier désapprouvé',
-'file_unvisible' => 'Fichier invisible',
-'file_visible' => 'Fichier approuvé et visible',
-'hide_media_short' => 'Cacher',
-'legend' => 'Légende',
-'moderation_success' => 'Les actions ont été réalisées avec succès !',
-'no_media_moderate' => 'Aucun fichier multimédia à modérer !',
-'show_media_short' => 'Montrer',
-'unaprob_media' => 'Fichier désapprouvé',
-'unvisible_media' => 'Fichier invisible',
-'wait' => 'Aucune action',
-
 // media.php
 'add_on_date' => 'Ajouté le %s',
 'n_time' => '%d fois',
@@ -159,7 +146,28 @@ $MEDIA_LANG = array(
 // media_interface.class.php
 'media' => 'Fichier Multimédia',
 'all_cats' => 'Toutes les catégories',
-'xml_media_desc' => 'Derniers médias'
+'xml_media_desc' => 'Derniers médias',
+
+// moderation_media.php
+'all_file' => 'Tous les fichiers',
+'display_file' => 'Afficher les fichiers',
+'file_unaprobed' => 'Fichier désapprouvé',
+'file_unvisible' => 'Fichier invisible',
+'file_visible' => 'Fichier approuvé et visible',
+'filter' => 'Filtre',
+'from_cats' => 'de la catégorie',
+'hide_media_short' => 'Cacher',
+'include_sub_cats' => ', inclure les sous-catégories :',
+'legend' => 'Légende',
+'moderation_success' => 'Les actions ont été réalisées avec succès !',
+'no_media_moderate' => 'Aucun fichier multimédia à modérer !',
+'show_media_short' => 'Montrer',
+'unaprobed' => 'Désapprouvés',
+'unvisible' => 'Invisibles',
+'unaprob_media' => 'Fichier désapprouvé',
+'unaprobed_media_short' => 'Désapprouver',
+'unvisible_media' => 'Fichier invisible',
+'visible' => 'Approuvés',
 );
 
 $LANG['e_mime_disable_media'] = 'Le type du fichier multimédia que vous souhaitez proposer est désactivé !';

@@ -3,6 +3,7 @@
 			<div class="module_top_l"></div>
 			<div class="module_top_r"></div>
 			<div class="module_top">
+				<a href="../syndication.php?m=media" title="Syndication"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Syndication" title="Syndication" /></a>
 				{TITLE}
 				# IF C_ADMIN #
 				<a href="{U_ADMIN_CAT}">
