@@ -465,7 +465,7 @@
 								</dl>
 								<dl>
 									<dt><label for="tableprefix">{L_DB_PREFIX}</label><br /><span>{L_DB_PREFIX_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="phpboost_" class="small_text" /></label></dd>
+									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="{PREFIX_VALUE}" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>
 							
