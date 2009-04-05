@@ -22,6 +22,28 @@
 				</div>
 			</fieldset>
 		</form>
+
+		<script type="text/javascript">
+			<!--
+			function check_all(id)
+			{
+				var item = new Array({JS_ARRAY});
+				
+				if (type == "delete")
+				{
+					alert('{L_CONFIRM_DELETE_ALL}');
+					alert('{L_CONFIRM_DELETE_ALL_AGAIN}');
+				}
+
+				for(var i=0; i < item.length; i++)
+					document.getElementById(id + item[i]).checked = 'checked';
+			}
+			function pointer(id)
+			{
+				document.getElementById(id).style.cursor = 'pointer';
+			}
+			-->
+		</script>
 		<form action="moderation_media.php?token={TOKEN}" method="post" class="fieldset_content">
 			<fieldset>
 				<legend>{L_MODO_PANEL}</legend>
@@ -34,16 +56,16 @@
 						<th style="width:20%">
 							{L_CATEGORY}
 						</th>
-						<th style="width:10%">
+						<th style="width:10%" onclick="check_all('visible');" onmouseover="pointer('visible')" id="visible">
 							{L_VISIBLE}
 						</th>
-						<th style="width:10%">
+						<th style="width:10%" onclick="check_all('unvisible');" onmouseover="pointer('unvisible');" id="unvisible">
 							{L_UNVISIBLE}
 						</th>
 						<th style="width:10%">
 							{L_UNAPROBED}
 						</th>
-						<th style="width:10%">
+						<th style="width:10%" onclick="check_all('delete');" onmouseover="pointer('delete');" id="delete">
 							{L_DELETE}
 						</th>
 					</tr>
@@ -64,16 +86,16 @@
 							<a href="{files.U_CAT}">{files.CAT}</a>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="visible"{files.SHOW} />
+							<input type="radio" id="visible{files.ID}" name="action[{files.ID}]" value="visible"{files.SHOW} />
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="unvisible"{files.HIDE} />
+							<input type="radio" id="unvisible{files.ID}" name="action[{files.ID}]" value="unvisible"{files.HIDE} />
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
 							<input type="radio" name="action[{files.ID}]" value="unaprobed"{files.UNAPROBED} # IF NOT files.UNAPROBED #disabled="disabled" # ENDIF #/>
 						</td>
 						<td class="row2" style="background:{files.COLOR};padding:5px 0;">
-							<input type="radio" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');" />
+							<input type="radio" id="delete{files.ID}" name="action[{files.ID}]" value="delete" onclick="return confirm('{L_CONFIRM_DELETE}');" />
 						</td>
 					</tr>
 					# END files #
