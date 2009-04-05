@@ -155,11 +155,14 @@ class Sql
 	function query($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		$result = mysql_fetch_row($resource);
-		$this->query_close($resource); //Déchargement mémoire.
-		$this->req++;
-
-		return $result[0];
+		if ($resource) {
+			$result = mysql_fetch_row($resource);
+			$this->query_close($resource); //Déchargement mémoire.
+			$this->req++;
+			return $result[0];
+		} else {
+			return FALSE;
+		}
 	}
 	
 	/**
@@ -202,13 +205,16 @@ class Sql
 		$error_line = func_get_arg($nbr_arg - 2);
 		$error_file = func_get_arg($nbr_arg - 1);
 		$resource = mysql_query('SELECT ' . $field . ' FROM ' . $table . $end_req, $this->link) or $this->_error('SELECT ' . $field . ' FROM ' . $table . '' . $end_req, 'Invalid SQL request', $error_line, $error_file);
-		$result = mysql_fetch_assoc($resource);
-		
-		//Fermeture de la ressource
-		$this->query_close($resource);
-		$this->req++;
-		
-		return $result;
+		if ($resource) {
+			$result = mysql_fetch_assoc($resource);
+			//Fermeture de la ressource
+			$this->query_close($resource);
+			$this->req++;
+			return $result;
+		} else {
+			return FALSE;
+		}
+			
 	}
 	
 	/**
@@ -403,6 +409,7 @@ class Sql
 		{
 			$array_fields_name = array();
 			$result = $this->query_while ("SHOW COLUMNS FROM " . $table . " FROM `" . $this->base_name . "`", __LINE__, __FILE__);
+			if (!$result) return array();
 			while ($row = mysql_fetch_row($result))
 			{
 				$array_fields_name[] = $row[0];
