@@ -342,7 +342,7 @@ switch($step)
     		$database = str_replace('.', '_', retrieve(POST, 'database', ''));
     		$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
     		
-    		include_once('functions.php');
+    		include_once 'functions.php';
     		if (!empty($host) && !empty($login) && !empty($database))
     		{
     			$result = check_database_config($host, $login, $password, $database, $tables_prefix);
