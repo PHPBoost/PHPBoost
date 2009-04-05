@@ -63,7 +63,7 @@ if (!empty($idart) && isset($_GET['cat']) )
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
-	$i = 1;
+	$i = 2;
 	foreach ($array_page[1] as $page_name)
 	{
 		if ($page_name != '&nbsp;')
