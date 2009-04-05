@@ -62,7 +62,7 @@ $second_parser->set_content($parser->get_content(DO_NOT_ADD_SLASHES), PARSER_DO_
 $second_parser->set_path_to_root($page_path_to_root);
 $second_parser->set_page_path($page_path);
 
-$second_parser->second_parse();
+$second_parser->parse();
 
 $contents = $second_parser->get_content(DO_NOT_ADD_SLASHES);
 

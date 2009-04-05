@@ -631,7 +631,7 @@ function second_parse(&$content)
 
     $parser = $content_manager->get_second_parser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
-    $parser->second_parse();
+    $parser->parse();
 
     return $parser->get_content(DO_NOT_ADD_SLASHES);
 }

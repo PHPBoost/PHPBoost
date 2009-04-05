@@ -54,12 +54,6 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
 		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if (PATH_TO_ROOT != '..')
-		{
-			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
-		}
-		
 		//Smilies
 		$this->_unparse_smilies();
 		
@@ -131,9 +125,9 @@ class BBCodeUnparser extends ContentUnparser
 			'`<h4 class="stitle1">(.*)</h4>`isU',
 			'`<h4 class="stitle2">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
 		    '`<script type="text/javascript"><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
-			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
 			'`<script type="text/javascript"><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'

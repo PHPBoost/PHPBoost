@@ -82,12 +82,6 @@ class TinyMCEParser extends ContentParser
 		
 		//Parse the tags which are not supported by TinyMCE but expected in BBCode
 		$this->_parse_bbcode_tags();
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if (PATH_TO_ROOT != '..')
-		{
-		    $this->content = str_replace('"../', '"' . PATH_TO_ROOT . '/', $this->content);
-		}
 	    
 		$this->_correct();
 		
