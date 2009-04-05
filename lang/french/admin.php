@@ -505,6 +505,7 @@ $LANG['del_theme_files'] = 'Supprimer tous les fichiers du thème';
 $LANG['explain_default_theme'] = 'Le thème par défaut ne peut pas être désinstallé, désactivé, ou réservé';
 $LANG['activ_left_column'] = 'Activer la colonne de gauche';
 $LANG['activ_right_column'] = 'Activer la colonne de droite';
+$LANG['manage_theme_columns'] = 'Gérer les colonnes du thème';
 		
 //Langues
 $LANG['upload_lang'] = 'Uploader une langue';

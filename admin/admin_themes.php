@@ -24,9 +24,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
+require_once '../admin/admin_begin.php';
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+require_once '../admin/admin_header.php';
 	
 $uninstall = isset($_GET['uninstall']) ? true : false;	
 $edit = isset($_GET['edit']) ? true : false;	
@@ -64,7 +64,9 @@ elseif (isset($_POST['valid'])) //Modification de tout les thèmes.
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
+		{
 			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
 	}
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
@@ -142,7 +144,9 @@ elseif ($uninstall) //Désinstallation.
 		if ($drop_files && !empty($previous_theme))
 		{
 			if (!delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme))
+			{
 				$error = 'files_del_failed';
+			}
 		}
 		
 		$Cache->generate_file('themes');
@@ -155,8 +159,12 @@ elseif ($uninstall) //Désinstallation.
 		//Récupération de l'identifiant du thème.
 		$idtheme = '';
 		foreach ($_POST as $key => $value)
+		{
 			if ($value == $LANG['uninstall'])
+			{
 				$idtheme = $key;
+			}
+		}
 				
 		$Template->set_filenames(array(
 			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
@@ -216,9 +224,13 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
+	}
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
+	{
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+	}
 	
 	//On listes les thèmes.
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
@@ -263,17 +275,21 @@ else
 	$Sql->query_close($result);
 	
 	if ($z != 0)
-		$Template->assign_vars(array(		
+	{
+		$Template->assign_vars(array(
 			'C_THEME_PRESENT' => true
 		));
+	}
 	else
+	{
 		$Template->assign_vars(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
+	}
 		
 	$Template->pparse('admin_themes_management'); 
 }
 
-require_once('../admin/admin_footer.php');
+require_once '../admin/admin_footer.php';
 
 ?>
