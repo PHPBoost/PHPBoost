@@ -37,6 +37,7 @@ define('MEDIA_TYPE_MUSIC', 1);
 define('MEDIA_TYPE_VIDEO', 2);
 
 // Informtations sur les fichiers.
+define('MEDIA_STATUS_UNAPROBED', 0);
 define('MEDIA_STATUS_UNVISIBLE', 1);
 define('MEDIA_STATUS_APROBED', 2);
 
@@ -58,7 +59,7 @@ define('MEDIA_NBR', 4096); // Affiche le nombre de fichier dans la catégorie lor
 // Paramètre de redirection en seconde.
 define('TIME_REDIRECT', 5);
 // Nombre de fichiers par page dans le panneau de modération.
-define('NUM_MODO_MEDIA', 15);
+define('NUM_MODO_MEDIA', 25);
 
 // Type de fichier autorisés.
 $mime_type = array(

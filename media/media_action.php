@@ -63,7 +63,7 @@ if ($unvisible > 0)
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
 
-	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . ($media['infos'] | MEDIA_STATUS_UNVISIBLE) . "' WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . PREFIX . "media SET infos = '" . MEDIA_STATUS_UNVISIBLE . "' WHERE id = '" . $unvisible . "'", __LINE__, __FILE__);
 
 	require_once('../kernel/header.php');
 
