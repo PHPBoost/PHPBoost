@@ -31,6 +31,7 @@ require_once '../admin/admin_header.php';
 $uninstall = isset($_GET['uninstall']) ? true : false;	
 $edit = isset($_GET['edit']) ? true : false;	
 $id = retrieve(GET, 'id', 0);
+$name = retrieve(GET, 'name', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
@@ -73,8 +74,12 @@ elseif (isset($_POST['valid'])) //Modification de tout les thèmes.
 		
 	redirect(HOST . SCRIPT);	
 }
-elseif ($edit && !empty($id)) //Edition
+elseif ($edit && (!empty($id) || !empty($name))) //Edition
 {
+	if (!empty($name))
+	{
+        $id = (int) $Sql->query("SELECT id FROM " . DB_TABLE_THEMES . " WHERE theme='" . $name . "'", __LINE__, __FILE__);
+	}
 	if (isset($_POST['valid_edit'])) //Modication de la configuration du thème.
 	{
 		$Session->csrf_get_protect(); //Protection csrf
