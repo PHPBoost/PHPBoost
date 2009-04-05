@@ -154,7 +154,7 @@ class BBCodeParser extends ContentParser
 			foreach ($_array_smiley_code as $code => $img)
 			{
 				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
-				$smiley_img_url[] = '<img src="../images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
+				$smiley_img_url[] = '<img src="/images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
 		}
