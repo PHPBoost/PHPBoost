@@ -132,7 +132,7 @@ elseif (!empty($_GET['recount']))
 else
 {
 	// Filtre pour le panneau de modération.
-	$array_cats = array();
+	$array_cats = $js_array = array();
 
 	if (!empty($_POST['filter']))
 	{
@@ -178,6 +178,9 @@ else
 
 	while ($row = $Sql->fetch_assoc($result))
 	{
+		$nbr_media++;
+		$js_array[] = $row['id'];
+
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
@@ -190,8 +193,6 @@ else
 			'HIDE' => $row['infos'] == MEDIA_STATUS_UNVISIBLE ? ' checked="checked"' : '',
 			'UNAPROBED' => $row['infos'] == MEDIA_STATUS_UNAPROBED ? ' checked="checked"' : '',
 		));
-		
-		$nbr_media++;
 	}
 
 	$Sql->query_close($result);
@@ -222,6 +223,8 @@ else
 		'C_NO_MODERATION' => $nbr_media > 0 ? 0 : 1,
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
+		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
+		'L_CONFIRM_DELETE_ALL_AGAIN' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all_again']),
 		'L_LEGEND' => $MEDIA_LANG['legend'],
 		'L_FILE_UNAPROBED' => $MEDIA_LANG['file_unaprobed'],
 		'L_FILE_UNVISIBLE' => $MEDIA_LANG['file_unvisible'],
@@ -230,7 +233,8 @@ else
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
 		'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
-		'L_RECOUNT_MEDIA' => $MEDIA_LANG['recount_per_cat']
+		'L_RECOUNT_MEDIA' => $MEDIA_LANG['recount_per_cat'],
+		'JS_ARRAY' => '"' . implode('", "', $js_array) . '"'
 	));
 }
 
