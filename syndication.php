@@ -7,7 +7,7 @@
  *   email                : horn@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 define('PATH_TO_ROOT', '.');
 //Header's generation
@@ -38,47 +38,47 @@ import('content/syndication/feed');
 $module_id = retrieve(GET, 'm', '');
 if (!empty($module_id))
 {
-    $feed_name = retrieve(GET, 'name', DEFAULT_FEED_NAME);
-    $category_id = retrieve(GET, 'cat', 0);
-    
-    $feed = null;
-    
-    switch (retrieve(GET, 'feed', 'rss'))
-    {
-        case 'atom':    // ATOM
-            import('content/syndication/atom');
-            $feed= new ATOM($module_id, $feed_name, $category_id);
-            break;
-        default:        // RSS
-            import('content/syndication/rss');
-            $feed= new RSS($module_id, $feed_name, $category_id);
-            break;
-    }
-    
-    if ($feed != null && $feed->is_in_cache())
-    {   // If the file exist, we print it
-        echo $feed->read();
-    }
-    else
-    {   // Otherwise, we regenerate it before printing it
-        // Feeds Regeneration
-        import('modules/modules_discovery_service');
-        $modules_discovery_service = new ModulesDiscoveryService();
-        $module = $modules_discovery_service->get_module($module_id);
-        
-        if (is_object($module) && $module->got_error() == 0 && $module->has_functionnality('get_feed_data_struct'))
-        {
-            $feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
-            $feed->cache();
+	$feed_name = retrieve(GET, 'name', DEFAULT_FEED_NAME);
+	$category_id = retrieve(GET, 'cat', 0);
 
-            // Print the feed            
-            echo $feed->export();
-        }
-        else
-        {
-            redirect('member/error.php?e=e_uninstalled_module');
-        }
-    }
+	$feed = null;
+
+	switch (retrieve(GET, 'feed', 'rss'))
+	{
+		case 'atom':    // ATOM
+			import('content/syndication/atom');
+			$feed= new ATOM($module_id, $feed_name, $category_id);
+			break;
+		default:        // RSS
+			import('content/syndication/rss');
+			$feed= new RSS($module_id, $feed_name, $category_id);
+			break;
+	}
+
+	if ($feed != null && $feed->is_in_cache())
+	{   // If the file exist, we print it
+		echo $feed->read();
+	}
+	else
+	{   // Otherwise, we regenerate it before printing it
+		// Feeds Regeneration
+		import('modules/modules_discovery_service');
+		$modules_discovery_service = new ModulesDiscoveryService();
+		$module = $modules_discovery_service->get_module($module_id);
+
+		if (is_object($module) && $module->got_error() == 0 && $module->has_functionnality('get_feed_data_struct'))
+		{
+			$feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
+			$feed->cache();
+
+			// Print the feed
+			echo $feed->export();
+		}
+		else
+		{
+			redirect('member/error.php?e=e_uninstalled_module');
+		}
+	}
 }
 
 require_once PATH_TO_ROOT . '/kernel/footer_no_display.php';
