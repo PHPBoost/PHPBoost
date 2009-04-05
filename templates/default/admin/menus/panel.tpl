@@ -17,5 +17,9 @@
             <a href="feed.php"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="{L_ADD_FEED_MENUS}" /></a><br />
             <a href="feed.php" class="quick_link">{L_ADD_FEED_MENUS}</a>
         </li>
+        <li>
+            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&id={THEME_ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="{L_MANAGE_THEME_COLUMNS}" /></a><br />
+            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&id={THEME_ID}" class="quick_link">{L_MANAGE_THEME_COLUMNS}</a>
+        </li>
     </ul>
 </div>

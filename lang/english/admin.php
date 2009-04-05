@@ -505,6 +505,7 @@ $LANG['del_theme_files'] = 'Delete all theme files';
 $LANG['explain_default_theme'] = 'Default theme can\'t be uninstalled, unactivated or restricted';
 $LANG['activ_left_column'] = 'Activate left column';
 $LANG['activ_right_column'] = 'Activate right column';
+$LANG['manage_theme_columns'] = 'Manage theme columns';
 
 //Langues
 $LANG['upload_lang'] = 'Upload lang';
