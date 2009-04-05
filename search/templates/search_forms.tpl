@@ -46,7 +46,7 @@
                 <div class="spacer">&nbsp;</div>
                 <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></div>
-                    <br />
+                    <div class="spacer">&nbsp;</div>
                     <div style="text-align:center;">
                         <p id="forms_selection">
                             <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small_link">{L_SEARCH_ALL}</a>
@@ -76,7 +76,7 @@
                         </fieldset>
                     </div>
                     # END forms #
-                    <br />
+                    <div class="spacer">&nbsp;</div>
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all" />
