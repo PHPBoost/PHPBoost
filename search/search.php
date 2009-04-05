@@ -42,6 +42,7 @@ $search = retrieve(REQUEST, 'q', '');
 $unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
 $search_in = retrieve(POST, 'search_in', 'all');
 $selected_modules = retrieve(POST, 'searched_modules', array());
+$query_mode = retrieve(POST, 'query_mode', true);
 //--------------------------------------------------------------------- Header
 
 define('TITLE', $LANG['title_search']);
@@ -98,10 +99,14 @@ foreach ($search_module as $module)
 	        {
 	            foreach ($form_module_args as $arg)
 	            {
-	                if ( $arg == 'search' ) // 'search' non sécurisé
+	                if ($arg == 'search')
+	                {   // 'search' non sécurisé
 	                    $modules_args[$module->get_id()]['search'] = $search;
-	                elseif ( isset($_POST[$arg]) )  // Argument non sécurisé (sécurisé par le module en question)
+	                }
+	                elseif (isset($_POST[$arg]))
+	                {   // Argument non sécurisé (sécurisé par le module en question)
 	                    $modules_args[$module->get_id()][$arg] = $_POST[$arg];
+	                }
 	            }
 	        }
 	        
@@ -129,7 +134,10 @@ foreach ($search_module as $module)
 	        $selected = ' selected="selected"';
 	        $used_modules[$module->get_id()] = $module; // Ajout du module à traiter
 	    }
-	    else $selected = '';
+	    else
+	    {
+	    	$selected = '';
+	    }
 	    
 	    $Template->assign_block_vars('searched_modules', array(
 	        'MODULE' => $module->get_id(),
@@ -137,7 +145,10 @@ foreach ($search_module as $module)
 	        'SELECTED' => $selected
 	    ));
 	}
-	else unset($module);
+	else
+	{
+		unset($module);
+	}
 }
 
 // parsage des formulaires de recherches
@@ -165,14 +176,13 @@ if (!empty($search))
     {   // We remove modules that we're not searching in
         foreach ($modules_args as $module_id => $module_args)
         {
-            if (!in_array($module_id, $selected_modules) || !isset($modules_args[$module_id]))
+            if (!$query_mode && (!in_array($module_id, $selected_modules) || !isset($modules_args[$module_id])))
             {
                 unset($modules_args[$module_id]);
                 unset($used_modules[$module_id]);
             }
         }
     }
-    
     // Génération des résultats et passage aux templates
     $nbResults = get_search_results($search, $used_modules, $modules_args, $results, $idsSearch);
     
