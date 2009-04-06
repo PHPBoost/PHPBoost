@@ -84,7 +84,6 @@ else
 		));
 	}
 	
-	
 	$Template->assign_vars(array(
 		'NBR_TAGS' => $j,
 		'OPTIONS_RANK' =>  $options,

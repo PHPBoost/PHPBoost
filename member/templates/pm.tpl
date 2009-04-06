@@ -93,7 +93,7 @@
 								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
 							</td>
 							<td class="text_small" style="width:40px;text-align:center;">
-								{convers.list.ANNOUNCE}
+								<img src="{convers.list.ANNOUNCE}.png" alt="" />
 							</td>
 							<td style="padding:4px;">
 								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="text_small">[{convers.list.U_AUTHOR}]</span>
@@ -130,13 +130,13 @@
 					<table class="module_table">
 						<tr> 		
 							<td style="width:33%;text-align:center" class="row2"> 
-								<img class="valign_middle" src="../templates/{THEME}/images/announce.gif" alt="" /> {L_READ} 
+								<img class="valign_middle" src="../templates/{THEME}/images/announce.png" alt="" /> {L_READ} 
 							</td>
 							<td style="width:34%;text-align:center" class="row2">  
-								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.gif" alt="" /> {L_TRACK}		
+								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.png" alt="" /> {L_TRACK}		
 							</td>
 							<td style="width:33%;text-align:center" class="row2">  
-								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.gif" alt="" /> {L_NOT_READ}		
+								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.png" alt="" /> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>

@@ -42,7 +42,7 @@
 							</td>	
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{subcats.IMG_ANNOUNCE}.gif" alt="" />
+								<img src="{MODULE_DATA_PATH}/images/{subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
@@ -121,7 +121,7 @@
 						</td>
 						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.gif" alt="" />
+							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
 							# IF topics.C_DISPLAY_MSG # <img src="{MODULE_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF # 

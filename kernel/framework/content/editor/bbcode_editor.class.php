@@ -119,10 +119,13 @@ class BBCodeEditor extends ContentEditor
 
         foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
         {
-            $template->assign_vars(array(
+            if ($forbidden_tag == 'fieldset')
+            	$forbidden_tag = 'block';
+            	
+        	$template->assign_vars(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
-				));
+			));
         }
 
         //Inclusion du cache des smileys pour éviter une requête inutile.
@@ -148,7 +151,7 @@ class BBCodeEditor extends ContentEditor
             $height_source = 18;
              
             // On recupère la hauteur et la largeur de l'image.
-            list($width_source, $height_source) = @getimagesize('/images/smileys/' . $url_smile);
+            list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
             if ($width_source > $width_max || $height_source > $height_max)
             {
                 if ($width_source > $height_source)
@@ -170,7 +173,7 @@ class BBCodeEditor extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+            $img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 
             $template->assign_block_vars('smiley', array(
 				'IMG' => $img,

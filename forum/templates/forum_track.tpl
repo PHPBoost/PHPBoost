@@ -50,7 +50,7 @@
 						# START topics #		
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.gif" alt="" />
+								<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">
 								{topics.DISPLAY_MSG} {topics.TRACK} {topics.POLL}

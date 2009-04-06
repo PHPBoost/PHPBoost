@@ -130,12 +130,12 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
 	$Session->csrf_get_protect(); //Protection csrf
 
+	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $move_folder . "'", __LINE__, __FILE__);
 	$move_list_parent = array();
 	$result = $Sql->query_while("SELECT id, id_parent, name
 	FROM " . PREFIX . "upload_cat
-	WHERE user_id = '" . $User->get_attribute('user_id') . "'
+	WHERE user_id = '" . $user_id . "'
 	ORDER BY id", __LINE__, __FILE__);
-	
 	while ($row = $Sql->fetch_assoc($result))
 		$move_list_parent[$row['id']] = $row['id_parent'];
 	
@@ -143,9 +143,12 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 
 	$array_child_folder = array();
 	$Uploads->Find_subfolder($move_list_parent, $move_folder, $array_child_folder);
+	$array_child_folder[] = $move_folder;
 	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
 		$Uploads->Move_folder($move_folder, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
-	
+	else
+		redirect(HOST . DIR . '/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
+			
 	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
@@ -162,7 +165,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'admin_files_move'=> 'admin/admin_files_move.tpl'
 	));
 	
-		$sql_request = !empty($folder_member) 
+	$sql_request = !empty($folder_member) 
 	? 	("SELECT uc.user_id, m.login
 		FROM " . DB_TABLE_UPLOAD_CAT . " uc
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
@@ -207,6 +210,9 @@ elseif (!empty($move_folder) || !empty($move_file))
 	//liste des fichiers disponibles
 	include_once('../member/upload_functions.php');
 	$cats = array();
+	
+	if (empty($folder_member))
+		$folder_member = -1;
 	
 	$is_folder = !empty($move_folder);
 	//Affichage du dossier/fichier à déplacer

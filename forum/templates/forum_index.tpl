@@ -16,7 +16,7 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<span style="float:left">
+					<span class="forum_cat_title">
 						<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
@@ -52,7 +52,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.gif" alt="" />
+								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>
