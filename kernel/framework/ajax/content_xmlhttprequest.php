@@ -40,6 +40,7 @@ $editor = retrieve(GET, 'editor', $CONFIG['editor']);
 $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 
 $ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
+$forbidden_tags = explode(',', $ftags);
 
 //On prend le bon parseur avec la bonne configuration
 $content_manager = new ContentFormattingFactory($editor);

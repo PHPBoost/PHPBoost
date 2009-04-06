@@ -35,26 +35,36 @@ class Bench
     /**
      * @desc starts the bench now
      */
-    function Bench() { $this->start = $this->_get_microtime(); }
+    function Bench()
+    {
+    	$this->start = Bench::get_microtime();
+    }
     /**
      * @desc stops the bench now
      */
-    function stop() { $this->duration = $this->_get_microtime() - $this->start; }
+    function stop()
+    {
+    	$this->duration = $this->_get_microtime() - $this->start; 
+    }
     
     /**
      * @desc returns the number formatted with $digits floating numbers
      * @param int $digits the desired display precision
      * @return string the formatted duration
      */
-    function to_string($digits = 3) { $this->stop(); return number_round($this->duration, $digits); }
+    function to_string($digits = 3) 
+    {
+    	$this->stop(); return number_round($this->duration, $digits); 
+    }
     
     ## Private Methods ##
     /**
+     * @static
      * @desc computes the time with a microsecond precision
      * @access protected
      * @return float
      */
-    function _get_microtime()
+    function get_microtime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
