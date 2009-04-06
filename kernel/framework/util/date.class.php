@@ -43,9 +43,27 @@ define('DATE_RFC3339_FORMAT', 'Y-m-d\TH:i:s');
 
 define('TIMEZONE_AUTO', TIMEZONE_USER);
 
+/**
+ * @desc This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
+ * It supports the most common formats and manages timezones. Here are the definitions of the 3 existing timezones:
+ * <ul>
+ * 	<li>Server timezone: it's the timezone of the server, configured by the hoster. For instance, if your server is in France, it should be GMT+1.</li>
+ * 	<li>Site timezone: it's the timezone of the central place of the site. For example, if your site deals with the italian soccer championship, it will be GMT+1.</li>
+ * 	<li>User timezone :  each registered user can specify its timezone. It's particulary useful for people who visit some sites from a foreign country.</li>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ */
 class Date
 {
-	// Constructeur selon différents formats
+	/**
+	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
+	 * The first parameter determines how to initialize the date:
+	 * <ul>
+	 * 	<li>DATE_NOW will initialize the date to the current time</li>
+	 * 	<li>DATE_YEAR_MONTH_DAY
+	 * Here are the rules:
+	 * 
+	 * @return unknown_type
+	 */
 	function Date()
 	{
 		global $CONFIG;
