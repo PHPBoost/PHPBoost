@@ -347,6 +347,8 @@
 						
 						function display_result_text(return_code)
 						{
+							alert(return_code);
+							return;
 							switch(return_code)
 							{
 								case '{DB_CONFIG_SUCCESS}':
@@ -377,7 +379,7 @@
 								return;
 							
 							load_progress_bar(20, '');
-							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
+							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value + "&prefix=" + document.getElementById("tableprefix").value;
 
 							if( !display_result )
 								Effect.Appear('result_box');

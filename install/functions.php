@@ -77,7 +77,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 			}
 		//Connexion réussie
 		case CONNECTED_TO_DATABASE:
-			//Est-ce qu'une installation de PHPBoost n'existe déjà pas à sur cette base avec le même préfixe ?
+			//Est-ce qu'une installation de PHPBoost n'existe déjà pas sur cette base avec le même préfixe ?
 			define('PREFIX', $tables_prefix);
 			$tables_list = $Sql->list_tables();
 			
