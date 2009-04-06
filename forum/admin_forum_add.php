@@ -44,12 +44,38 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 	
 	$parent_category = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
-	$subname = retrieve(POST, 'desc', '');
 	$url = retrieve(POST, 'url', '');
 	$type = retrieve(POST, 'type', '');
 	$aprob = retrieve(POST, 'aprob', 0);
 	$status = retrieve(POST, 'status', 0);
 
+	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+	$subname = strparse($subname, array(
+	    4 => 'title',
+	    5 => 'style',
+	    8 => 'quote',
+	    9 => 'hide',
+	    10 => 'list',
+	    15 => 'align',
+	    16 => 'float',
+	    19 => 'indent',
+	    20 => 'pre',
+	    21 => 'table',
+	    22 => 'swf',
+	    23 => 'movie',
+	    24 => 'sound',
+	    25 => 'code',
+	    26 => 'math',
+	    27 => 'anchor',
+	    28 => 'acronym',
+	    29 => 'block',
+	    30 => 'fieldset',
+	    31 => 'mail',
+	    32 => 'line',
+	    33 => 'wikipedia',
+	    34 => 'html'
+    ));
+	
 	if ($type == 1)
 	{
 		$url = '';
