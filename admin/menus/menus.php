@@ -194,6 +194,7 @@ foreach ($menus_blocks as $block_id => $menus)
             'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
             'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
             'CONTENTS' => $menu->admin_display(),
+           'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
             'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,

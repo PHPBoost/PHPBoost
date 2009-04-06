@@ -36,7 +36,7 @@ function lateral_menu()
         'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
         'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
         'L_MANAGE_THEME_COLUMNS' => $LANG['manage_theme_columns'],
-        'THEME_NAME' => $CONFIG['theme']
+        'THEME_NAME' => get_utheme()
     ));
     $tpl->parse();
 }
