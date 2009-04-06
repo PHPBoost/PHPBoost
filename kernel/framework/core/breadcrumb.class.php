@@ -90,7 +90,7 @@ class BreadCrumb
 
 		$start_page = '';
 		if (!empty($CONFIG['server_name'])) $start_page .= $CONFIG['server_name'];
-		if (!empty($CONFIG['server_path'])) $start_page .= $CONFIG['server_path'];
+		if (!empty($CONFIG['server_path'])) $start_page .= $CONFIG['server_path'] . '/';
 		
         $Template->assign_vars(array(
 			'START_PAGE' => $start_page,
