@@ -41,8 +41,7 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 			$cats[] = $id_cat;
 		}	
 		while ($id_cat > 0);
-	}
-	
+	}	
 
 	//Maintenant qu'on connait l'arborescence on part du début
 	$cats_list = '<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">' . show_cat_contents(0, $cats, $id, $display_select_link, $user_id) . '</ul>';
