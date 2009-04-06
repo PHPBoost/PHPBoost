@@ -195,7 +195,7 @@
 										</select>	
 									</div>
 								</div>
-								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_CONTAINER}" /></a>
+								<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_BLOCK} alt="{L_BB_CONTAINER}" /></a>
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block4{FIELD}">
 									<div style="margin-left:160px;" class="bbcode_block" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">

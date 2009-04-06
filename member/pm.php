@@ -892,7 +892,7 @@ else //Liste des conversation, dans la boite du membre.
 		$Template->assign_block_vars('convers.list', array(
 			'INCR' => $i,
 			'ID' => $row['id'],
-			'ANNOUNCE' => '<img src="../templates/' . get_utheme() . '/images/' . $img_announce . '.gif" alt="" />',
+			'ANNOUNCE' => '../templates/' . get_utheme() . '/images/' . $img_announce,
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),

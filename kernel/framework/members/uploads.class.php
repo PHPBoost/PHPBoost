@@ -182,7 +182,10 @@ class Uploads
 		{
 			//Changement de propriètaire du fichier.
 			$change_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
+			if (empty($change_user_id))
+				$change_user_id = -1;
+			if ($to != $move)
+				$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD_CAT . " SET id_parent = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			return '';
 		}
 		else
@@ -216,6 +219,8 @@ class Uploads
 		{
 			//Changement de propriètaire du fichier.
 			$change_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $to . "'", __LINE__, __FILE__);	
+			if (empty($change_user_id))
+				$change_user_id = -1;
 			$Sql->query_inject("UPDATE " . DB_TABLE_UPLOAD . " SET idcat = '" . $to . "', user_id = '" . $change_user_id . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			return '';
 		}

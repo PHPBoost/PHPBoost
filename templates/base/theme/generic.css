@@ -2,21 +2,6 @@
 		generic.css
  Contient les classes génériques, ne devant pas être modifiée pour chaque thème.
 --------------------------------------*/ /* Balises */
-a {
-	color:#445766;
-    text-decoration:none;
-    font-size:11px;
-    font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-}
-
-a:hover {
-    color:#2F404D;
-    text-decoration:underline;
-    font-weight:bold;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-}
-
 img {
     border:none;
 }

@@ -209,7 +209,7 @@ class ContentFormattingFactory
         	's' => $LANG['format_strike'],
         	'title' => $LANG['format_title'],
         	'style' => $LANG['format_style'],
-        	'url' => $LANG['format_style'],
+        	'url' => $LANG['format_url'],
         	'img' => $LANG['format_img'],
         	'quote' => $LANG['format_quote'],
         	'hide' => $LANG['format_hide'],
