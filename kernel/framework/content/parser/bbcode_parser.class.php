@@ -80,13 +80,13 @@ class BBCodeParser extends ContentParser
 		$this->_parse_simple_tags();
 		
 		//Tableaux
-		if (strpos($this->content, '[table') !== false)
+		if (!in_array('table', $this->forbidden_tags) && strpos($this->content, '[table') !== false)
 		{
 			$this->_parse_table();
 		}
 		
 		//Listes
-		if (strpos($this->content, '[list') !== false)
+		if (!in_array('list', $this->forbidden_tags)&& strpos($this->content, '[list') !== false)
 		{
 			$this->_parse_list();
 		}
@@ -256,18 +256,13 @@ class BBCodeParser extends ContentParser
 				$this->forbidden_tags[] = 'url6';
 			}
 			if (in_array('mail', $this->forbidden_tags))
+			{
 				$this->forbidden_tags[] = 'mail2';
+			}
 			
-			$other_tags = array('table', 'quote', 'hide', 'indent', 'list'); 
 			foreach ($this->forbidden_tags as $key => $tag)
 			{
-				//Balise interdite : on la supprime
-				if (in_array($tag, $other_tags))
-				{
-					$array_preg[$tag] = '`\[' . $tag . '.*\](.+)\[/' . $tag . '\]`isU';
-					$array_preg_replace[$tag] = "$1";
-				}
-				elseif ($tag == 'line')
+				if ($tag == 'line')
 				{
 					$parse_line = false;
 				}
@@ -286,29 +281,50 @@ class BBCodeParser extends ContentParser
 		if ($parse_line)
 			$this->content = str_replace('[line]', '<hr class="bb_hr" />', $this->content);
 			
-		//Titres
-		$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, '_parse_title'), $this->content);
+		//Title tag
+		if (!in_array('title', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[title=([1-4])\](.+)\[/title\]`iU', array(&$this, '_parse_title'), $this->content);
+		}
 		
-		//Liens vers des articles de Wikipédia
-		$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->content);
+		//Wikipedia tag
+		if (!in_array('wikipedia', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->content);
+		}
 		
 		##Parsage des balises imbriquées.
-		//Citations
-		$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
-		$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
+		//Quote tag
+		if (!in_array('quote', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
+		}
 		
-		//Texte caché
-		$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+		//Hide tag
+		if (!in_array('hide', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+		}
 		
-		//Texte indenté
-		$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
+		//Indent tag
+		if (!in_array('indent', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`sU', '<div class="indent">$1</div>', $this->content);
+		}
 		
-		//Bloc HTML
-		$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->content);
-		$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->content);
+		//Block tag
+		if (!in_array('block', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`sU', '<div class="bb_block">$1</div>', $this->content);
+			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`sU', '<div class="bb_block" style="$1">$2</div>', $this->content);
+		}
 		
-		//Bloc de formulaire
-		$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
+		//Fieldset tag
+		if (!in_array('fieldset', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`sU', '<fieldset class="bb_fieldset" style="$2"><legend>$1</legend>$3</fieldset>', $this->content);
+		}
 	}
 	
 	/**
