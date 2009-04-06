@@ -46,10 +46,36 @@ if (!empty($_POST['valid']) && !empty($id))
 	$name = retrieve(POST, 'name', '');
 	$url = retrieve(POST, 'url', '');
 	$type = retrieve(POST, 'type', '');
-	$subname = retrieve(POST, 'desc', '');
+	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
 	$status = retrieve(POST, 'status', 1);
 	$aprob = retrieve(POST, 'aprob', 0);
 
+	$subname = strparse($subname, array(
+	    4 => 'title',
+	    5 => 'style',
+	    8 => 'quote',
+	    9 => 'hide',
+	    10 => 'list',
+	    15 => 'align',
+	    16 => 'float',
+	    19 => 'indent',
+	    20 => 'pre',
+	    21 => 'table',
+	    22 => 'swf',
+	    23 => 'movie',
+	    24 => 'sound',
+	    25 => 'code',
+	    26 => 'math',
+	    27 => 'anchor',
+	    28 => 'acronym',
+	    29 => 'block',
+	    30 => 'fieldset',
+	    31 => 'mail',
+	    32 => 'line',
+	    33 => 'wikipedia',
+	    34 => 'html'
+    ));
+	
 	if ($type == 1)
 	{
 		$url = '';
