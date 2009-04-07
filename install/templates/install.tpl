@@ -604,45 +604,43 @@
 						<script type="text/javascript">
 						<!--
 							function check_form_admin()
-							{
-								regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
-								
-								if( document.getElementById("login").value == "" )
+							{								
+								if (document.getElementById("login").value == "")
 								{
 									alert("{L_REQUIRE_LOGIN}");
 									return false;
 								}
-								else if( document.getElementById("login").value.length < 3 )
+								else if (document.getElementById("login").value.length < 3)
 								{
 									alert("{L_LOGIN_TOO_SHORT}");
 									return false;
 								}
-								else if( document.getElementById("password").value == "" )
+								else if (document.getElementById("password").value == "")
 								{
 									alert("{L_REQUIRE_PASSWORD}");
 									return false;
 								}
-								else if( document.getElementById("password_repeat").value == "" )
+								else if (document.getElementById("password_repeat").value == "")
 								{
 									alert("{L_REQUIRE_PASSWORD_REPEAT}");
 									return false;
 								}
-								else if( document.getElementById("password").value.length < 6 )
+								else if (document.getElementById("password").value.length < 6)
 								{
 									alert("{L_PASSWORD_TOO_SHORT}");
 									return false;
 								}
-								else if( document.getElementById("mail").value == "" )
-								{
+								else if (document.getElementById("mail").value == "")
+								{ 
 									alert("{L_REQUIRE_MAIL}");
 									return false;
 								}	
-								else if( document.getElementById("password").value != document.getElementById("password_repeat").value )
+								else if (document.getElementById("password").value != document.getElementById("password_repeat").value)
 								{
 									alert("{L_PASSWORDS_ERROR}");
 									return false;
 								}
-								else if( !regex.test(trim(document.getElementById("mail").value))  )
+								else if (!check_mail_validity(document.getElementById("mail").value))
 								{
 									alert("{L_EMAIL_ERROR}");
 									return false;

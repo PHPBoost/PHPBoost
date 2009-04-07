@@ -64,16 +64,15 @@ $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 $file_download_method = retrieve(POST, 'download_method', 'redirect', TSTRING);
 
 //Instanciations of objects required
-$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+$file_creation_date = MiniCalendar::retrieve_date('creation');
 
 if (!$ignore_release_date)
-	$file_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNCHANGE);
+	$file_release_date = MiniCalendar::retrieve_date('release_date');
 else
 	$file_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+$begining_date = MiniCalendar::retrieve_date('begining_date');
+$end_date = MiniCalendar::retrieve_date('end_date');
 
 //Deleting a file
 if ($delete_file > 0)
