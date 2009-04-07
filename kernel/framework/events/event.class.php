@@ -97,7 +97,7 @@ class Event
      */
     function set_status($new_current_status)
     {
-        if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)))
+        if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED), TRUE))
         {
             $this->current_status = $new_current_status;
         }
@@ -254,11 +254,11 @@ class Event
 
         switch ($this->current_status)
         {
-            case CONTRIBUTION_STATUS_UNREAD:
+            case EVENT_STATUS_UNREAD:
                 return $LANG['contribution_status_unread'];
-            case CONTRIBUTION_STATUS_BEING_PROCESSED:
+            case EVENT_STATUS_BEING_PROCESSED:
                 return $LANG['contribution_status_being_processed'];
-            case CONTRIBUTION_STATUS_PROCESSED:
+            case EVENT_STATUS_PROCESSED:
                 return $LANG['contribution_status_processed'];
         }
     }
