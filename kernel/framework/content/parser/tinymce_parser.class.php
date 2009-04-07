@@ -300,7 +300,7 @@ class TinyMCEParser extends ContentParser
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
-        //On supprime tous les retours ï¿½ la ligne ajoutï¿½s par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
+        //On supprime tous les retours à la ligne ajoutï¿½s par TinyMCE (seuls les nouveaux paragraphes (<p>) compteront)
 		$this->content = str_replace('\r\n', '\n', $this->content);
 		$this->content = preg_replace('`\s*\n+\s*`isU', "\n", $this->content);
 		
@@ -381,16 +381,6 @@ class TinyMCEParser extends ContentParser
 			array_push($array_preg, '`&lt;a(?: class="[^"]+")?(?: title="[^"]+" )? name="([^"]+)"&gt;(.*)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<span id="$1">$2</span>');
 		}
-		//List tag
-		if (!in_array('list', $this->forbidden_tags))
-		{
-			array_push($array_preg, '`&lt;ul&gt;(.+)&lt;/ul&gt;`isU');
-			array_push($array_preg_replace, '<ul class="bb_ul">' . "\n" .'$1</ul>');
-			array_push($array_preg, '`&lt;ol&gt;(.+)&lt;/ol&gt;`isU');
-			array_push($array_preg_replace, '<ol class="bb_ol">' . "\n" .'$1</ol>');
-			array_push($array_preg, '`&lt;li&gt;(.*)&lt;/li&gt;`isU');
-			array_push($array_preg_replace, '<li class="bb_li">$1</li>' . "\n");
-		}
 		//Title tag
 		if (!in_array('title', $this->forbidden_tags))
 		{
@@ -426,9 +416,20 @@ class TinyMCEParser extends ContentParser
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
+		//List tag
+		if (!in_array('list', $this->forbidden_tags))
+		{
+			while (preg_match('`&lt;o|ul&gt;(.+)&lt;/o|ul&gt;`isU', $this->content))
+			{
+				$this->content = preg_replace('`&lt;ul&gt;(.+)&lt;/ul&gt;`isU', '<ul class="bb_ul">' . "\n" .'$1</ul>', $this->content);
+				$this->content = preg_replace('`&lt;ol&gt;(.+)&lt;/ol&gt;`isU', '<ol class="bb_ol">' . "\n" .'$1</ol>', $this->content);
+				$this->content = preg_replace('`&lt;li&gt;(.*)&lt;/li&gt;`isU', '<li class="bb_li">$1</li>' . "\n", $this->content);
+			}
+		}
+		
 		//Tags which are useless
 		$array_str = array(
-			'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;'
+			'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;', '&lt;thead&gt;', '&lt;/thead&gt;'
 		);
 		
 		$this->content = str_replace($array_str, '', $this->content);
@@ -489,7 +490,6 @@ class TinyMCEParser extends ContentParser
 	 */
 	function _parse_tables()
 	{
-		//Tables
 		$content_contains_table = false;
 		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`is', $this->content))
 		{
@@ -503,7 +503,6 @@ class TinyMCEParser extends ContentParser
 			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`is', $this->content))
 			{
 				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isU', array(&$this, '_parse_row_tag'), $this->content);
-				$content_contains_table = true;
 			}
 			
 			//Cols
@@ -511,7 +510,6 @@ class TinyMCEParser extends ContentParser
 			{
 				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)&lt;/td&gt;`isU', array(&$this, '_parse_col_tag'), $this->content);
 				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)&lt;/th&gt;`isU', array(&$this, '_parse_col_tag'), $this->content);
-				$content_contains_table = true;
 			}
 		}
 	}

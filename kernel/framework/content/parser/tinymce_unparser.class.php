@@ -137,13 +137,8 @@ class TinyMCEUnparser extends ContentUnparser
 		//Preg_replace.
 		$array_preg = array(
 			'`<img src="([^"]+)" alt="" class="valign_([^"]+)?" />`i',
-			'`<table class="bb_table"( style="([^"]+)")?>`i',
-			'`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i',
-			'`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i',
 			'`<p style="text-align:(left|center|right|justify)">(.*)</p>`isU',
 			'`<span id="([a-z0-9_-]+)">(.*)</span>`isU',
-			'`<ul( style="[^"]+")? class="bb_ul">`i',
-			'`<ol( style="[^"]+")? class="bb_ol">`i',
 			"`<h3 class=\"title1\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
 			"`<h3 class=\"title2\">(.*)</h3>(?:[\s]*<br />){0,}`isU",
 			"`<br /><h4 class=\"stitle1\">(.*)</h4><br />\s*`isU",
@@ -154,13 +149,8 @@ class TinyMCEUnparser extends ContentUnparser
 		);
 		$array_preg_replace = array(
 			"<img src=\"$1\" alt=\"\" align=\"$2\" />",
-			"<table border=\"0\"$1><tbody>",
-			"<td$1$2$3>",
-			"<th$1$2$3>",
 			"<p style=\"text-align: $1;\">$2</p>",
 			"<a title=\"$1\" name=\"$1\">$2</a>",
-			"<ul$1>",
-			"<ol$1>",
 			"<h1>$1</h1>",
 			"<h2>$1</h2>",
 			"<h3>$1</h3>",
@@ -171,6 +161,21 @@ class TinyMCEUnparser extends ContentUnparser
 		);
 		
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		
+		//Tableaux
+		while (preg_match('`<table class="bb_table"( style="([^"]+)")?>`i', $this->content))
+		{
+			$this->content = preg_replace('`<table class="bb_table"( style="([^"]+)")?>`i', "<table border=\"0\"$1><tbody>", $this->content);
+			$this->content = preg_replace('`<td class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<td$1$2$3>", $this->content);
+			$this->content = preg_replace('`<th class="bb_table_col"( colspan="[^"]+")?( rowspan="[^"]+")?( style="[^"]+")?>`i', "<th$1$2$3>", $this->content);
+		}
+		
+		//Listes
+		while (preg_match('`<ul( style="[^"]+")? class="bb_ul">`i', $this->content))
+		{
+			$this->content = preg_replace('`<ul( style="[^"]+")? class="bb_ul">`i', "<ul$1>", $this->content);
+			$this->content = preg_replace('`<ol( style="[^"]+")? class="bb_ol">`i', "<ol$1>", $this->content);
+		}
 		
 		//Trait horizontal
 		$this->content = str_replace('<hr class="bb_hr" />', '<hr />', $this->content);
