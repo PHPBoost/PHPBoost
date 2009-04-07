@@ -3,9 +3,8 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-TinyMCE : gérer les tableaux et les listes imbriquées (while preg_match list) remplacer
 Javascript : remplacer toutes les regex de vérification des mails par une qui sera dans global.js et qui soit conforeme à la RFC
-Changer tous les chemins des smilies, lecteurs vidéo/audion et compagnie
+Changer tous les chemins des smilies, lecteurs vidéo/audio et compagnie
 ------------------------------------ MODULES -----------------------------------
 
 
