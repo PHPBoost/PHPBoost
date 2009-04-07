@@ -3,7 +3,7 @@
  *                                mini_calendar.class.php
  *                            -------------------
  *   begin                : June 3rd, 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *   Mini_calendar 1.0
@@ -108,6 +108,18 @@ class MiniCalendar
 		$js_inclusion_already_done = true;
 		
 		return $template->parse(TEMPLATE_STRING_MODE);
+	}
+	
+	/**
+	 * @static
+	 * @desc Retrieves a date entered in a mini calendar.
+	 * @param string $calendar_name Name of the calendar (HTML identifier).
+	 * @return Date The date of the calendar.
+	 */
+	function retrieve_date($calendar_name)
+	{
+		global $LANG;
+		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 	}
 	
 	# Private #	
