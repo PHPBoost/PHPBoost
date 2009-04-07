@@ -25,7 +25,7 @@
 
 		<script type="text/javascript">
 			<!--
-			function check_all(id)
+			function check_all(type)
 			{
 				var item = new Array({JS_ARRAY});
 				
@@ -36,7 +36,7 @@
 				}
 
 				for(var i=0; i < item.length; i++)
-					document.getElementById(id + item[i]).checked = 'checked';
+					document.getElementById(type + item[i]).checked = 'checked';
 			}
 			function pointer(id)
 			{
@@ -56,7 +56,7 @@
 						<th style="width:20%">
 							{L_CATEGORY}
 						</th>
-						<th style="width:10%" onclick="check_all('visible');" onmouseover="pointer('visible')" id="visible">
+						<th style="width:10%" onclick="check_all('visible');" onmouseover="pointer('visible');" id="visible">
 							{L_VISIBLE}
 						</th>
 						<th style="width:10%" onclick="check_all('unvisible');" onmouseover="pointer('unvisible');" id="unvisible">
