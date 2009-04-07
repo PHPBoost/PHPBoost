@@ -27,7 +27,7 @@
 //Javascript frame breaker necessary to the CSRF attack protection
 if (top != self)
 {
-	top.location = self.location
+	top.location = self.location;
 }
 
 __uid = 42;
@@ -211,6 +211,13 @@ function trim(myString)
 {
 	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
 } 
+
+//Vérifie une adresse email
+function check_mail_validity(mail)
+{
+	regex = new RegExp("^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$", "i");
+	return regex.test(trim(mail));
+}
 
 //Affichage/Masquage de la balise hide.
 function bb_hide(div2)
