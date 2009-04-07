@@ -226,6 +226,7 @@ class Admin_forum
 			{
 				$list_sub_cats = $this->get_child_list($idcat, FORUM_CAT_NO_INCLUDED); //Sous forums du forum.
 				$list_parent_cats = $this->get_parent_list($idcat);  //Forums parent du forum.
+				$list_parent_cats_to = $this->get_parent_list($f_to, FORUM_CAT_INCLUDED);  //Forums parents du forum cible.
 				
 				//Précaution pour éviter erreur fatale, cas impossible si cohérence de l'arbre respectée.
 				if (empty($list_sub_cats))
@@ -248,12 +249,11 @@ class Admin_forum
 				########## Ajout ##########
 				if (!empty($f_to)) //Forum cible différent de la racine.
 				{
-					$list_parent_cats_to = $this->get_parent_list($f_to, FORUM_CAT_INCLUDED);  //Forums parents du forum cible.
 					if (empty($list_parent_cats_to))
 						$clause_parent_cats_to = " id = '" . $f_to . "'";
 					else
 						$clause_parent_cats_to = " id IN (" . $list_parent_cats_to . ")";
-						
+					
 					//On modifie les bornes droites des parents de la cible.
 					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 					
@@ -482,7 +482,8 @@ class Admin_forum
 				$list_cats .= $row['id'] . ', ';
 			
 			$Sql->query_close($result);
-			$clause = "idcat IN (" . trim($list_cats, ', ') . ")";			
+
+			$clause = !empty($list_cats) ? "idcat IN (" . trim($list_cats, ', ') . ")" : "1";
 		}
 		
 		//Récupération du timestamp du dernier message de la catégorie.		
