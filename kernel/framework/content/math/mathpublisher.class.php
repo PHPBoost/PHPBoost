@@ -11,6 +11,7 @@
 *                                                                         *
 ***************************************************************************/
 
+global $symboles;
 $symboles = array(
 '~'=>' ',
 'alpha'=>'&#174;',
@@ -146,6 +147,8 @@ $symboles = array(
 'inf'=>'inf',
 'tanh'=>'tanh'
 );
+
+global $fontesmath;
 $fontesmath = array(
 '~'=>'FreeSerif',
 'alpha'=>'cmmi10',
@@ -1646,8 +1649,13 @@ class expression_math extends  expression
 		if ($this->noeuds[1]->texte=="&$") $imggauche=parenthese($hauteurexp, $this->noeuds[1]->noeuds[0]->texte);
 		else $imggauche=parenthese($hauteurexp, $this->noeuds[1]->texte);
 		$basegauche=imagesy($imggauche)/2;
+		
+		if( !isset($this->noeuds[3]->noeuds[0]->texte) )
+			$this->noeuds[3]->noeuds[0]->texte = '';
+		
 		if ($this->noeuds[3]->texte=="&$") $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte);
 		else $imgdroit=parenthese($hauteurexp, $this->noeuds[3]->texte);
+		
 		$basedroit=imagesy($imgdroit)/2;
 		$this->image=alignement3($imggauche, $basegauche, $imgexp, $baseexp, $imgdroit, $basedroit);
 		$this->base_verticale=max($basegauche, $baseexp, $basedroit);
