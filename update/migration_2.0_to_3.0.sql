@@ -133,7 +133,7 @@ ALTER TABLE `phpboost_forum_msg` ADD `user_ip` varchar(50) NOT NULL DEFAULT '' A
 ALTER TABLE `phpboost_forum_topics` CHANGE `nbr_vus` `nbr_views`  mediumint(9) NOT NULL DEFAULT '0';
 
 ALTER TABLE `phpboost_forum_track` ADD `track` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id` ;
-
+UPDATE `phpboost_forum_track` SET `track` = 1;
 
 ALTER TABLE `phpboost_gallery` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
 
