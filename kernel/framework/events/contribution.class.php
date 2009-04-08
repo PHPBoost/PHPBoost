@@ -34,9 +34,9 @@ import('events/event');
 define('CONTRIBUTION_AUTH_BIT', 1);
 
 //Contribution status
-define('CONTRIBUTION_STATUS_UNREAD', EVENT_STATUS_UNREAD);
-define('CONTRIBUTION_STATUS_BEING_PROCESSED', EVENT_STATUS_BEING_PROCESSED);
-define('CONTRIBUTION_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
+define('CONTRIBUTION_STATUS_UNREAD', 			EVENT_STATUS_UNREAD);
+define('CONTRIBUTION_STATUS_BEING_PROCESSED', 	EVENT_STATUS_BEING_PROCESSED);
+define('CONTRIBUTION_STATUS_PROCESSED', 		EVENT_STATUS_PROCESSED);
 
 /**
  * @package events
@@ -54,7 +54,7 @@ class Contribution extends Event
 		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
-		if (defined(MODULE_NAME))
+		if (defined('MODULE_NAME'))
 			$this->module = MODULE_NAME;
 	}
 	
@@ -82,14 +82,14 @@ class Contribution extends Event
 		parent::build($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
 		
 		//Setting its whole parameters
-		$this->description = $description;
-		$this->module = $module;
-		$this->fixing_date = $fixing_date;
-		$this->auth = $auth;
-		$this->poster_id = $poster_id;
-		$this->fixer_id = $fixer_id;
+		$this->description 	= $description;
+		$this->module 		= $module;
+		$this->fixing_date 	= $fixing_date;
+		$this->auth 		= $auth;
+		$this->poster_id 	= $poster_id;
+		$this->fixer_id 	= $fixer_id;
 		$this->poster_login = $poster_login;
-		$this->fixer_login = $fixer_login;
+		$this->fixer_login 	= $fixer_login;
 		
 		//Setting the modification flag to false, it just comes to be loaded
 		$this->must_regenerate_cache = false;
@@ -126,7 +126,8 @@ class Contribution extends Event
 	function set_status($new_current_status)
 	{
 		global $User;
-		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED)))
+		
+		if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED), TRUE))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
 			if ($this->current_status != EVENT_STATUS_PROCESSED && $new_current_status == EVENT_STATUS_PROCESSED)
@@ -163,6 +164,7 @@ class Contribution extends Event
 	function set_poster_id($poster_id)
 	{
 		global $Sql;
+		
 		if ($poster_id  > 0)
 		{
 			$this->poster_id = $poster_id;
@@ -178,6 +180,7 @@ class Contribution extends Event
 	function set_fixer_id($fixer_id)
 	{
 		global $Sql;
+		
 		if ($fixer_id  > 0)
 		{
 			$this->fixer_id = $fixer_id;
@@ -294,11 +297,12 @@ class Contribution extends Event
 	function get_module_name()
 	{
 		global $CONFIG;
+		
 		if (!empty($this->module))
 		{
 			$module_ini = load_ini_file(PATH_TO_ROOT . '/' . $this->module . '/lang/', get_ulang());
 			
-			return $module_ini['name'];
+			return isset($module_ini['name']) ? $module_ini['name'] : '';
 		}
 		else
 			return '';
