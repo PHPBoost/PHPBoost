@@ -33,7 +33,7 @@ define('DOWNLOAD_WRITE_CAT_AUTH_BIT', 0x02);
 define('DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT', 0x04);
 
 //Flag used in the database to know if we must force the file download or redirect the user up tu the file by a HTTP redirection
-define('DOWNLOAD_FORCE_DL', 0);
-define('DOWNLOAD_REDIRECT', 1);
+define('DOWNLOAD_FORCE_DL', 1);
+define('DOWNLOAD_REDIRECT', 0);
 
 ?>

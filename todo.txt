@@ -3,7 +3,6 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-Javascript : remplacer toutes les regex de vérification des mails par une qui sera dans global.js et qui soit conforeme à la RFC
 ------------------------------------ MODULES -----------------------------------
 
 

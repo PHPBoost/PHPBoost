@@ -82,7 +82,8 @@ class NewsletterService
 		
 		$error_mailing_list = array();
 		$message = stripslashes(strparse(addslashes($message)));
-		$message = str_replace('"' . PATH_TO_ROOT . '/', '"' . HOST . DIR . '/' , $message);
+
+		$message = ContentSecondParser::export_html_text($message);
 		
 		//On définit les headers
 		$headers = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n";

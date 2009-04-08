@@ -192,10 +192,6 @@ class Comments
 						
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
-						//Correction des chemins du BBCode
-						if (!$integrated_in_environment && !empty($page_path_to_root))
-							$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
-							
 						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
 							redirect($path_redirect . '&errorh=l_pseudo#errorh');
 						if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
@@ -283,10 +279,6 @@ class Comments
 						if (!empty($contents) && !empty($login))
 						{
 							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
-							
-							//Correction des chemins du BBCode
-							if (!$integrated_in_environment && !empty($page_path_to_root))
-								$contents = str_replace('"' . PATH_TO_ROOT . '/', '"' . $page_path_to_root . '/', $contents);
 							
 							if (!check_nbr_links($contents, $CONFIG_COM['max_link'])) //Nombre de liens max dans le message.
 								redirect($path_redirect . '&errorh=l_flood#errorh');

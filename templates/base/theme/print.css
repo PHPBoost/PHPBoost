@@ -9,3 +9,17 @@ body{
 h1{
 	border-bottom:1px solid black;
 }
+table
+{
+	border-collapse: collapse;
+}
+
+td, th
+{
+	border:1px solid black;
+}
+
+th
+{
+	font-weight: bold;
+}

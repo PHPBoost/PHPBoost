@@ -312,7 +312,6 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-
     import('content/comments');
     $comments = new Comments($script, $idprov, $vars, $module_folder);
 
@@ -341,15 +340,16 @@ function load_module_lang($module_name)
     {
         $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
         $file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
-        if (!DEBUG) {
-            {
-                $result2 = @include_once($file2);
-            }
+        
+        if (!DEBUG)
+        {
+			$result2 = @include_once($file2);
         }
         else
         {
             $result2 = include_once($file2);
         }
+        
         if (!$result2)
         {
             global $Errorh;
