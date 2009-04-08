@@ -1,24 +1,58 @@
 		# IF C_ADD_MEDIA #
 		<script type="text/javascript">
 		<!--
-		function check_form()
+		function check_form ()
 		{
 			# IF C_BBCODE_TINYMCE_MODE #
 				tinyMCE.triggerSave();
 			# ENDIF #
 			
-			if( document.getElementById('name').value == "" )
+			if (document.getElementById('name').value == "")
 			{
-				alert("{L_REQUIRE_NAME}");
+				alert ("{L_REQUIRE_NAME}");
 				return false;
 		    }
-			if( document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://" )
+			if (document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://")
 			{
-				alert("{L_REQUIRE_URL}");
+				alert ("{L_REQUIRE_URL}");
 				return false;
 		    }
 			return true;
 		}
+	
+		function in_array (needle, haystack)
+		{
+			for (var i=0; i < haystack.length; i++)	
+				if (haystack[i] == needle)
+					return true;
+
+			return false;
+		}
+		
+		function hide_width_height ()
+		{
+			var id_music = new Array({JS_ID_MUSIC});
+			var execut = {JS_HIDE};
+
+			if (execut && id_music.length > 0)
+				if (in_array (document.getElementById('idcat').selectedIndex, id_music))
+				{
+					document.getElementById('width_dl').style.display = 'none';
+					document.getElementById('height_dl').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('width_dl').style.display = 'block';
+					document.getElementById('height_dl').style.display = 'block';
+				}
+		}
+
+		window.onload = function () {
+			if ({JS_HIDE})
+			{
+				hide_width_height ();
+			}
+		};
 		-->
 		</script>
 
@@ -42,14 +76,16 @@
 							{CATEGORIES_TREE}
 						</label></dd>
 					</dl>
-					<dl>
+					# IF WIDTH_HEIGHT #
+					<dl id="width_dl">
 						<dt><label for="width">{L_WIDTH}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text" /></dd>
 					</dl>
-					<dl>
+					<dl id="height_dl">
 						<dt><label for="height">{L_HEIGHT}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text" /></dd>
 					</dl>
+					# ENDIF #
 					<dl>
 						<dt><label for="u_media">* {L_U_MEDIA}</label></dt>
 						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text" /></dd>
