@@ -85,17 +85,17 @@ $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
 $LANG['forget_pass'] = 'Password forgotten';
 
-$LANG['require'] = 'The * marked fields are obligatory!';
+$LANG['require'] = 'The * marked fields are obligatory !';
 
 //Alert Form
 $LANG['require_title'] = 'Please enter a title !';
-$LANG['require_text'] = 'Please enter a text!';
-$LANG['require_pseudo'] = 'Please enter a nickname!';
-$LANG['require_mail'] = 'Please enter an e-mail address!';
-$LANG['require_subcat'] = 'Please select a subcategory!';
-$LANG['require_url'] = 'Please enter a valid URL!';
-$LANG['require_password'] = 'Please enter a password!';
-$LANG['require_recipient'] = 'Please enter the recipient!';
+$LANG['require_text'] = 'Please enter a text !';
+$LANG['require_pseudo'] = 'Please enter a nickname !';
+$LANG['require_mail'] = 'Please enter an e-mail address !';
+$LANG['require_subcat'] = 'Please select a subcategory !';
+$LANG['require_url'] = 'Please enter a valid URL !';
+$LANG['require_password'] = 'Please enter a password !';
+$LANG['require_recipient'] = 'Please enter the recipient !';
 
 //Action
 $LANG['redirect'] = 'Redirection in progress';
@@ -104,8 +104,8 @@ $LANG['edit'] = 'Edit';
 $LANG['register'] = 'Sign up';
 
 //Alerts
-$LANG['alert_delete_msg'] = 'Delete this message?';
-$LANG['alert_delete_file'] = 'Delete this file?';
+$LANG['alert_delete_msg'] = 'Delete this message ?';
+$LANG['alert_delete_file'] = 'Delete this file ?';
 
 //BBcode
 $LANG['bb_smileys'] = 'Smilies';
@@ -159,7 +159,7 @@ $LANG['ordered_list'] = 'Ordered list';
 $LANG['insert_list'] = 'Insert list';
 $LANG['forbidden_tags'] = 'Forbidden formatting types';
 $LANG['phpboost_languages'] = 'PHPBoost';
-$LANG['wikipedia_subdomain'] = 'en'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
+$LANG['wikipedia_subdomain'] = 'en'; //Sub-domain on wikipedia (--> http://EN.wikipedia.com/)
 $LANG['format_bold'] = 'Bold';
 $LANG['format_italic'] = 'Italic';
 $LANG['format_underline'] = 'Underline';
@@ -592,7 +592,7 @@ $LANG['user_ban_delay'] = 'Ban delay';
 $LANG['ban_title_mail'] = 'Banned';
 $LANG['ban_mail'] = 'Dear member,
 
-You have been banned from : %s!
+You have been banned from : %s !
 It may be an error, if you think it is, you can contact the administrator of the web site.
 
 

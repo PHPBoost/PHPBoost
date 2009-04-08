@@ -51,7 +51,7 @@ $LANG['generated_by'] = 'Powered by %s';
 $LANG['previous_step'] = 'Previous step';
 $LANG['next_step'] = 'Next step';
 $LANG['query_loading'] = 'Sending query to the server';
-$LANG['query_sent'] = 'Query sent, waiting for the response';
+$LANG['query_sent'] = 'Query sent, waiting for response';
 $LANG['query_processing'] = 'Query processing';
 $LANG['query_success'] = 'The process has been done successfully';
 $LANG['query_failure'] = 'An error occured during query processing';
@@ -59,11 +59,11 @@ $LANG['query_failure'] = 'An error occured during query processing';
 //Introduction
 $LANG['intro_title'] = 'Welcome in PHPBoost installation wizard';
 $LANG['intro_explain'] = '<p>Thank you to have trusted PHPBoost to build your website.</p>
-<p>To install PHPBoost you need to have some informations about your hosting which must be provided by your hoster. The installation is absolutely automatic, it should take only a few minutes. Click on the right arrow above to start the installation process.</p>
+<p>To install PHPBoost you need to have some informations about your server which must be provided by your hoster. The installation is absolutely automatic, it should take only a few minutes. Click on the right arrow above to start the installation process.</p>
 <p>Cordially, the PHPBoost Team.</p>';
 $LANG['intro_distribution'] = '%s distribution';
 $LANG['intro_distribution_intro'] = '<p>It exists differents distributions of PHPBoost which enable the users to configure their website according to their objectives. A distribution contains some modules and also a kernel configuration.</p>
-<p>PHPBoost is going to install itself according to the configuration of this distribution. You will manage to change configuration and add or remove modules after, when using PHPBoost.</p>';
+<p>PHPBoost is going to install itself according to the configuration of this distribution. You will be able to change the configuration, add or remove modules later, when using PHPBoost.</p>';
 $LANG['start_install'] = 'Start installation';
 
 //licence
@@ -72,7 +72,7 @@ $LANG['require_license_agreement'] = 'You must accept the GNU/GPL license terms 
 $LANG['license_agreement'] = 'End-user license agreement';
 $LANG['license_terms'] = 'License terms';
 $LANG['please_agree_license'] = 'I agree to and will be bound by the terms and conditions set forth in this end-user license agreement';
-$LANG['alert_agree_license'] = 'You have to agree to end-user license by checking the form off!';
+$LANG['alert_agree_license'] = 'You have to agree to end-user license by checking the form off !';
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Checking server configuration';
@@ -81,7 +81,7 @@ $LANG['config_server_explain'] = '<p>Before to start installation stages, the co
 <p>If you have problems, ask your questions in the <a href="http://www.phpboost.net/forum/index.php">support forum</a>.</p>';
 $LANG['php_version'] = 'PHP version';
 $LANG['check_php_version'] = 'PHP upper than 4.1.0';
-$LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Compulsory:</span> To run PHPBoost correctly, your server must have a PHP version younger than PHP 4.1.0. Enough that, you might have problems with some modules. We advise you to contact your hoster or migrate to a younger server.';
+$LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Compulsory:</span> To run PHPBoost correctly, your server must have a more recent PHP version than PHP 4.1.0. Enough that, you might have problems with some modules. We advise you to contact your hoster or migrate to a younger server.';
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = 'Optional: If those extensions are enabled, you will benefit from additionnal features.';
 $LANG['gd_library'] = 'GD library';
@@ -215,7 +215,7 @@ $LANG['end_installation'] = '<fieldset>
 							<legend>Thanks</legend>
 							<h2>Members</h2>
 							<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful version 3.0.</p>
-							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> and <strong>giliam</strong> for the documentation writing, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> for the graphics, <strong>Gsgsd</strong>, <strong>Alain91</strong> and <strong>Crunchfamily</strong> for the modules development, <strong>PiJean</strong> and <strong>Beowulf</strong> for the english translation and <strong>Shadow</strong> and <strong>Kak Miortvi Pengvin</strong> for the moderation of the community.</p>
+							<p>Thanks to the members of our teams and particulary to <strong>Ptithom</strong> and <strong>giliam</strong> for the documentation writing, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> for the graphics, <strong>Gsgsd</strong>, <strong>Alain91</strong> and <strong>Crunchfamily</strong> for the modules development, <strong>PiJean</strong> and <strong>Beowulf</strong> for the English translation and <strong>Shadow</strong> and <strong>Kak Miortvi Pengvin</strong> for the moderation of the community.</p>
 							<h2>Other projects</h2>
 							<p>PHPBoost uses differents tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools are under GNU/GPL license.</p>
 							<ul>
