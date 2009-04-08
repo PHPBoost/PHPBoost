@@ -81,7 +81,7 @@ elseif ($id_to_update > 0)
 	//Récupération des éléments de la contribution
 	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
-	$status = retrieve(POST, 'status', CONTRIBUTION_STATUS_UNREAD);
+	$status = retrieve(POST, 'status', EVENT_STATUS_UNREAD);
 	
 	//Si le titre n'est pas vide
 	if (!empty($entitled))
@@ -91,7 +91,7 @@ elseif ($id_to_update > 0)
 		$contribution->set_description($description);
 		
 		//Changement de statut ? On regarde si la contribution a été réglée
-		if ($status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED)
+		if ($status == EVENT_STATUS_PROCESSED && $contribution->get_status() != EVENT_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id($User->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
@@ -150,7 +150,7 @@ if ($contribution_id > 0)
 	
 	$template->assign_vars(array(
 		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
-		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED,
+		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != EVENT_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
@@ -163,7 +163,7 @@ if ($contribution_id > 0)
 	));
 	
 	//Si la contribution a été traitée
-	if ($contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED)
+	if ($contribution->get_status() == EVENT_STATUS_PROCESSED)
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
 			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
@@ -198,12 +198,12 @@ elseif ($id_update > 0)
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
-		'CONTRIBUTION_STATUS_UNREAD_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_UNREAD ? ' selected="selected"' : '',
-		'CONTRIBUTION_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
-		'CONTRIBUTION_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
+		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
 		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
 		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
-		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
+		'L_EVENT_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
 		'L_CONTRIBUTION' => $LANG['contribution'],
 		'L_DESCRIPTION' => $LANG['contribution_description'],
 		'L_STATUS' => $LANG['contribution_status'],
@@ -261,8 +261,8 @@ else
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
-					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED,
-					'C_PROCESSING' => $this_contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED
+					'C_FIXED' => $this_contribution->get_status() == EVENT_STATUS_PROCESSED,
+					'C_PROCESSING' => $this_contribution->get_status() == EVENT_STATUS_BEING_PROCESSED
 				));
 			
 			$num_contributions++;

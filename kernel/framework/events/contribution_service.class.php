@@ -242,7 +242,7 @@ class ContributionService
 		
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = $Sql->query_while ("SELECT auth FROM " . DB_TABLE_EVENTS  . " WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT auth FROM " . DB_TABLE_EVENTS  . " WHERE current_status = '" . EVENT_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if (!($this_auth = @unserialize($row['auth'])))

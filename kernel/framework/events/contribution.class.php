@@ -33,11 +33,6 @@ import('events/event');
 //Bit on which are checked the authorizations
 define('CONTRIBUTION_AUTH_BIT', 1);
 
-//Contribution status
-define('CONTRIBUTION_STATUS_UNREAD', 			EVENT_STATUS_UNREAD);
-define('CONTRIBUTION_STATUS_BEING_PROCESSED', 	EVENT_STATUS_BEING_PROCESSED);
-define('CONTRIBUTION_STATUS_PROCESSED', 		EVENT_STATUS_PROCESSED);
-
 /**
  * @package events
  * @author Benoît Sautel <ben.popeye@phpboost.com>
@@ -51,7 +46,7 @@ class Contribution extends Event
 	 */
 	function Contribution()
 	{
-		$this->current_status = CONTRIBUTION_STATUS_UNREAD;
+		$this->current_status = EVENT_STATUS_UNREAD;
 		$this->creation_date = new Date();
 		$this->fixing_date = new Date();
 		if (defined('MODULE_NAME'))
@@ -281,11 +276,11 @@ class Contribution extends Event
 		
 		switch ($this->current_status)
 		{
-			case CONTRIBUTION_STATUS_UNREAD:
+			case EVENT_STATUS_UNREAD:
 				return $LANG['contribution_status_unread'];
-			case CONTRIBUTION_STATUS_BEING_PROCESSED:
+			case EVENT_STATUS_BEING_PROCESSED:
 				return $LANG['contribution_status_being_processed'];
-			case CONTRIBUTION_STATUS_PROCESSED:
+			case EVENT_STATUS_PROCESSED:
 				return $LANG['contribution_status_processed'];
 		}
 	}
