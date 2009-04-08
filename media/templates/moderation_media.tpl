@@ -25,20 +25,18 @@
 
 		<script type="text/javascript">
 			<!--
-			function check_all(type)
+			function check_all (type)
 			{
 				var item = new Array({JS_ARRAY});
 				
 				if (type == "delete")
-				{
-					alert('{L_CONFIRM_DELETE_ALL}');
-					alert('{L_CONFIRM_DELETE_ALL_AGAIN}');
-				}
+					confirm ('{L_CONFIRM_DELETE_ALL}');
 
-				for(var i=0; i < item.length; i++)
+				for (var i=0; i < item.length; i++)
 					document.getElementById(type + item[i]).checked = 'checked';
 			}
-			function pointer(id)
+			
+			function pointer (id)
 			{
 				document.getElementById(id).style.cursor = 'pointer';
 			}

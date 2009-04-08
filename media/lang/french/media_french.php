@@ -151,7 +151,6 @@ $MEDIA_LANG = array(
 // moderation_media.php
 'all_file' => 'Tous les fichiers',
 'confirm_delete_media_all' => 'Cette action supprimera DÉFINITIVEMENT tous les fichiers sélectionnés !',
-'confirm_delete_media_all_again' => 'Êtes-vous certain de vouloir supprimer les fichiers sélectionnés ?',
 'display_file' => 'Afficher les fichiers',
 'file_unaprobed' => 'Fichier désapprouvé',
 'file_unvisible' => 'Fichier invisible',
