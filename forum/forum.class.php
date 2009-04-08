@@ -492,7 +492,7 @@ class Forum
 		{
 			$file_contribution = $corresponding_contributions[0];
 			//The contribution is now processed
-			$file_contribution->set_status(CONTRIBUTION_STATUS_PROCESSED);
+			$file_contribution->set_status(EVENT_STATUS_PROCESSED);
 
 			//We save the contribution
 			ContributionService::save_contribution($file_contribution);

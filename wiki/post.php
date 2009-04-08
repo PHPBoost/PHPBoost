@@ -75,9 +75,11 @@ if (!empty($contents)) //On enregistre un article
 			'TITLE' => stripslashes($title)
 		));
 		if (!empty($menu))
+		{
 			$Template->assign_block_vars('preview.menu', array(
 				'MENU' => $menu
 			));
+		}
 	}
 	else //Sinon on poste
 	{

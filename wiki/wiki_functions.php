@@ -91,7 +91,7 @@ function wiki_explode_menu(&$content)
 				$max_level_expected = $level + 1;
 				
 				//Réinsertion
-				$lines[$i] = '<div class="wiki_paragraph' .  $level . '" id="paragraph_' . url_encode_rewrite($matches[1]) . '">' . $matches[1] .'</div><br />' . "\n";
+				$lines[$i] = '<div class="wiki_paragraph' .  ($level - 1) . '" id="paragraph_' . url_encode_rewrite($matches[1]) . '">' . $matches[1] .'</div><br />' . "\n";
 			}
 		}
 		$i++;
@@ -117,17 +117,24 @@ function wiki_display_menu($menu_list)
 	{
 		$current_level = $title[0];
 		
+		$title_name = strip_tags(html_entity_decode($title[1]));		
+		$title_link = '<a href="#paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
+		
 		if ($current_level > $last_level)
 		{
-			$menu .= '<ol class="wiki_list_' . $current_level . '"><li>' . $title[1];
+			$menu .= '<ol class="wiki_list_' . $current_level . '"><li>' . $title_link;
 		}
 		elseif ($current_level == $last_level)
 		{
-			$menu .= '</li><li>' . $title[1];
+			$menu .= '</li><li>' . $title_link;
 		}
 		else
 		{
-			$menu .= '</li>' . str_repeat('</ol>', $last_level - $current_level) . '<li>' . $title[1] . '</li><li>';
+			if (substr($menu, strlen($menu) - 4, 4) == '<li>')
+			{
+				$menu = substr($menu, 0, strlen($menu) - 4);
+			}
+			$menu .= str_repeat('</ol>', $last_level - $current_level) . '<li>' . $title_link . '</li><li>';
 		}
 		$last_level = $title[0];
 	}
