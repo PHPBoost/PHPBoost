@@ -168,8 +168,9 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
+	//Notes
 	import('content/note');
-	$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
+
 	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
 	FROM " . PREFIX . "web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
@@ -185,7 +186,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => ($row['nbrnote'] > 0) ? $Note->display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+			'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 			'COM' => $row['nbr_com'],
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));

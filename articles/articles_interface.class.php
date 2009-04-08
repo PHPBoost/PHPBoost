@@ -430,7 +430,6 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			import('content/note');
-			$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
 			$result = $Sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
 			FROM " . PREFIX . "articles
 			WHERE visible = 1 AND idcat = '" . $idartcat .	"'
@@ -447,7 +446,7 @@ class ArticlesInterface extends ModuleInterface
 					'CAT' => $CAT_ARTICLES[$idartcat]['name'],
 					'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 					'COMPT' => $row['views'],
-					'NOTE' => ($row['nbrnote'] > 0) ? $Note->display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+					'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 					'COM' => $row['nbr_com'],
 					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php')
 				));
