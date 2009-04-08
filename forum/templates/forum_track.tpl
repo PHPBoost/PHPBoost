@@ -50,7 +50,11 @@
 						# START topics #		
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.png" alt="" />
+								# IF NOT topics.C_HOT_TOPIC # 
+								<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
+								# ELSE #
+								<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+								# ENDIF #
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">
 								{topics.DISPLAY_MSG} {topics.TRACK} {topics.POLL}
