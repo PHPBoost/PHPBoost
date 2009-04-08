@@ -32,11 +32,11 @@
 
 //Admin
 $LANG['guestbook_config'] = 'Guestbook configuration';
-$LANG['rank_post'] = 'Rank to post';
+$LANG['rank_post'] = 'Rank to be allowed to post';
 
 //Title
 $LANG['title_guestbook'] = 'Guest Book';
 $LANG['guestbook_more_contents'] = '[More...]';
-$LANG['no_message_guestbook'] = 'No messages';
+$LANG['no_message_guestbook'] = 'No message';
 
 ?>
