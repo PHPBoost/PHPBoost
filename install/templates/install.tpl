@@ -663,9 +663,7 @@
 							}
 							function check_mail(value) 
 							{
-								value = trim(value);
-								regex = new RegExp("^[a-z0-9._-]+@([a-z0-9_-]{2,}\.)+[a-z]{2,4}$", "i");
-								if (!regex.test(value))
+								if (!check_mail_validity(value))
 								{	
 									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
 									document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
