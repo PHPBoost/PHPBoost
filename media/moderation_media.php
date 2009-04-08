@@ -224,7 +224,6 @@ else
 		'L_NO_MODERATION' => $MEDIA_LANG['no_media_moderate'],
 		'L_CONFIRM_DELETE' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'L_CONFIRM_DELETE_ALL' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all']),
-		'L_CONFIRM_DELETE_ALL_AGAIN' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media_all_again']),
 		'L_LEGEND' => $MEDIA_LANG['legend'],
 		'L_FILE_UNAPROBED' => $MEDIA_LANG['file_unaprobed'],
 		'L_FILE_UNVISIBLE' => $MEDIA_LANG['file_unvisible'],
