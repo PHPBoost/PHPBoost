@@ -138,21 +138,58 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
 	));
 
+	// Permet de cacher ou pas les champs width et height.
+	$js_id_music = array();
+	foreach ($MEDIA_CATS as $key => $value)
+	{
+		if ($value['mime_type'] == MEDIA_TYPE_MUSIC)
+		{
+			$js_id_music[] = $key;
+		}
+	}
+
 	// Édition.
 	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && $User->check_level(MODO_LEVEL))
 	{
+		// Gère le type du fichier pour ne proposer que les catégories du même type.
+		unset($media_categories);
+		$categories = array();
+		
+		if (in_array($media['mime_type'], $mime_type['video']))
+		{
+			$auth = MEDIA_TYPE_VIDEO;
+		}
+		else
+		{
+			$auth = MEDIA_TYPE_MUSIC;
+		}
+		
+		// Construction du tableau javascript pour les caégories étant seulement pour les vidéos.
+		foreach ($MEDIA_CATS as $key => $value)
+		{
+			if ($value['mime_type'] == $auth || $value['mime_type'] == 0)
+			{
+				$categories[$key] = $value;
+			}
+		}
+
+		$media_categories = new MediaCats($categories);
+
 		$Template->assign_vars(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
 			'C_CONTRIBUTION' => 0,
 			'IDEDIT' => $media['id'],
 			'NAME' => $media['name'],
-			'CATEGORIES_TREE' => $media_categories->build_select_form($media['idcat'], 'idcat', 'idcat', 0, MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $media_categories->build_select_form($media['idcat'], 'idcat" onchange="hide_width_height ();', 'idcat', 0, MEDIA_AUTH_WRITE, $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'WIDTH' => $media['width'],
 			'HEIGHT' => $media['height'],
 			'U_MEDIA' => $media['url'],
 			'DESCRIPTION' => unparse($media['contents']),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
-			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0
+			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
+			'WIDTH_HEIGHT' => $auth == MEDIA_TYPE_VIDEO ? true :false,
+			'JS_HIDE' => 'false',
+			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"'
 		));
 	}
 	// Ajout.
@@ -164,13 +201,16 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
 			'IDEDIT' => 0,
 			'NAME' => '',
-			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
+			'CATEGORIES_TREE' => $media_categories->build_select_form($add, 'idcat" onchange="hide_width_height ();', 'idcat', 0, ($write ? MEDIA_AUTH_WRITE : MEDIA_AUTH_CONTRIBUTION), $MEDIA_CATS[0]['auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'WIDTH' => '',
 			'HEIGHT' => '',
 			'U_MEDIA' => 'http://',
 			'DESCRIPTION' => '',
 			'APPROVED' => 'checked="checked"',
-			'C_APROB' => false
+			'C_APROB' => false,
+			'WIDTH_HEIGHT' => true,
+			'JS_HIDE' => 'true',
+			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"'
 		));
 	}
 	else

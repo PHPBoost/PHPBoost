@@ -36,16 +36,16 @@ class MediaCats extends CategoriesManager
 	## Public methods ##
 
 	//Constructor
-	function MediaCats()
+	function MediaCats($categories = array())
 	{
 		global $Cache, $MEDIA_CATS;
 
-		if (!isset($MEDIA_CATS))
+		if (!isset($MEDIA_CATS) && empty($categories))
 		{
 			$Cache->load('media');
 		}
-
-		parent::CategoriesManager('media_cat', 'media', $MEDIA_CATS);
+		$cats = empty($categories) ? $MEDIA_CATS : $categories;
+		parent::CategoriesManager('media_cat', 'media', $cats);
 	}
 
 	//Method which removes all subcategories and their content
