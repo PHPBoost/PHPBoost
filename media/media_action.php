@@ -138,7 +138,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		'L_SUBMIT' => $edit > 0 ? $LANG['update'] : $LANG['submit']
 	));
 
-	// Permet de cacher ou pas les champs width et height.
+	// Construction du tableau des catégories musicales.
 	$js_id_music = array();
 	foreach ($MEDIA_CATS as $key => $value)
 	{
