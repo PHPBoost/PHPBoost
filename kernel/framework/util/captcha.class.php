@@ -32,10 +32,15 @@ define('CAPTCHA_NORMAL', 2);
 define('CAPTCHA_HARD', 3);
 define('CAPTCHA_VERY_HARD', 4);
 
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class provide you an easy way to prevent spam by bot in public formular.
+ */
 class Captcha
 {
-	## Public Methods ##
-	//Lancement du bench.
+	/**
+	 * @desc Captcha constructor. It allow you to create multiple instance of captcha, and check if GD is loaded.
+	 */
 	function Captcha()
 	{
 		Captcha::update_instance(); //Mise à jour de l'instance.
@@ -43,7 +48,11 @@ class Captcha
 			$this->gd_loaded = true;
 	}
 	
-	//Chargement de la librairie GD?
+	## Public Methods ##
+	/**
+	 * @desc Check if GD library is loaded.
+	 * @return boolean true if is loaded, false otherwise
+	 */
 	function gd_loaded()
 	{
 		if ($this->gd_loaded)
@@ -51,7 +60,9 @@ class Captcha
 		return false;
 	}
 	
-	//Mise à jour de l'instance.	
+	/**
+	 * @desc Update the object instance.
+	 */
 	function update_instance()
 	{
 		static $instance = 0;
@@ -59,11 +70,19 @@ class Captcha
 		$this->instance = ++$instance;
 	}
 		
-	//Gère le niveau de difficulté du captcha.
+	/**
+	 * @desc Modify the level of difficulty to decrypt the code on the captcha image.
+	 * @param int $difficulty The difficulty :
+	 *  0: Dictionnary words, regular background, horizontal text.
+	 *	1: blended word, regular background.
+	 *	2: blended word + figures, irregular background.
+	 *	3: blended word + figures, shadows.
+	 *	4: blended word + figures, shadows.
+	 */
 	function set_difficulty($difficulty)
 	{
-		/*
-		0: Mot du dictionnaire, fond uni, texte à l'horinzontal.
+		/* 
+		0: Mot du dictionnaire, fond uni, texte à l'horizontal.
 		1: Mot mélangé, fond uni.
 		2: Mot mélangé + chiffres, fond brouillé.
 		3: Mot mélangé + chiffres, identification par contour, faible ombrage.
@@ -72,31 +91,46 @@ class Captcha
 		$this->difficulty = max(0, $difficulty);		
 	}
 	
-	//Largeur de l'image.
+	/**
+	 * @desc Modify instance number.
+	 * @param int $instance
+	 */
 	function set_instance($instance)
 	{
 		$this->instance = $instance;
 	}
 	
-	//Largeur de l'image.
+	/**
+	 * @desc Modify width of the image.
+	 * @param float $width Width of the image.
+	 */
 	function set_width($width)
 	{
 		$this->width = $width;
 	}
 	
-	//Hauteur de l'image.
+	/**
+	 * @desc Modify height of the image.
+	 * @param float $height Height of the image.
+	 */
 	function set_height($height)
 	{
 		$this->height = $height;
 	}
 	
-	//Police.
+	/**
+	 * @desc Modify font used for the text on the image.
+	 * @param string $font Font used for the text on the image.
+	 */
 	function set_font($font)
 	{
 		$this->font = $font;
 	}
 	
-	//Validation du code.
+	/**
+	 * @desc Check if the code is valid, then delete it in the database to avoid multiple attempts.
+	 * @return boolean true if is valid, false otherwise.
+	 */
 	function is_valid()
 	{
 		global $Sql;
@@ -114,6 +148,9 @@ class Captcha
 	}
 	
 	//Alerte javascript
+	/**
+	 * @desc Javascript alert if the formular of the captcha code is empty.
+	 */
 	function js_require()
 	{
 		global $LANG;
@@ -124,7 +161,11 @@ class Captcha
 		}' : '';
 	}
 	
-	//Affichage du formulaire.
+	/**
+	 * @desc Display captcha formular.
+	 * @param object $Template (optional) The template used to create and display the captcha formular.
+	 * @return string The parsed template.
+	 */
 	function display_form($Template = false)
 	{
 		global $CONFIG;
@@ -146,7 +187,9 @@ class Captcha
 		return '';
 	}
 	
-	//Affichage de l'image.
+	/**
+	 * @desc Display the captcha image to the user, and set the code to decrypt in the database.
+	 */
 	function display()
 	{
 		global $LANG;
@@ -282,7 +325,14 @@ class Captcha
 	}
 	
 	## Private Methods ##
-	//Calcul de la version sombre de la couleur. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
+	/**
+	 * @desc Return the darker version of a color passed in argument.
+	 * 3D effect, mask_color: 0 for the darkest, 255 for the brightest; similar_color: between 0.40 very different to 0.99 very close.
+	 * @param $array_color
+	 * @param $mask_color
+	 * @param $similar_color
+	 * @return array The new darker color.
+	 */
 	function __image_color_allocate_dark($array_color, $mask_color = 0, $similar_color = 0.40)
 	{
 		list($r, $g, $b) = $array_color;
@@ -293,7 +343,10 @@ class Captcha
 		return array($rd, $gd, $bd);
 	}
 	
-	//Enregistrement du code pour l'utilisateur dans la base de données;
+	/**
+	 * @desc Set the captcha code in the database.
+	 * @param string $code The captcha code to decrypt.
+	 */
 	function _save_user($code)
 	{
 		global $Sql;
