@@ -137,6 +137,12 @@ a.forum_link_cat{
 	padding:0px;
 	margin:0px;
 }
+.forum_cat_title{
+	float:left;
+	padding:0px 5px;
+}
+.forum_cat_title a{
+}
 
 .module_top_l{ /* Barre supérieur des modules */
 	margin-right:0px !important;

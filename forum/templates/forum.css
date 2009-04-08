@@ -114,3 +114,9 @@ a.forum_link_cat{
 	padding-right:2px;
 	background:none;
 }
+.forum_cat_title{
+	float:left;
+	padding:0px 5px;
+}
+.forum_cat_title a{
+}
