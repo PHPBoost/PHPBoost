@@ -258,7 +258,8 @@ class Admin_forum
 					$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 					
 					//On augmente la taille de l'arbre du nombre de forum supprimé à partir de la position du forum cible.
-					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$f_to]['id_left']) //Direction forum source -> forum cible.
+					$array_parents_cats = explode(', ', $list_parent_cats);
+					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$f_to]['id_left'] && !in_array($f_to, $array_parents_cats)) //Direction forum source -> forum cible, et source non incluse dans la cible.
 					{	
 						$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_FORUM[$f_to]['id_right'] . "'", __LINE__, __FILE__);						
 						$limit = $CAT_FORUM[$f_to]['id_right'];
@@ -359,7 +360,6 @@ class Admin_forum
 			else
 			{	
 				$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_FORUM[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
-				
 				$limit = $CAT_FORUM[$to]['id_right'] - ($nbr_cat*2);
 				$end = $limit + ($nbr_cat*2) - 1;
 			}	
