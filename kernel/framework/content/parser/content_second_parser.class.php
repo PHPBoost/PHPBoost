@@ -108,8 +108,6 @@ class ContentSecondParser extends Parser
             </object>',
             $html_content);
         
-        echo Url::html_convert_root_relatives2absolutes($html_content);
-        exit;
         return Url::html_convert_root_relatives2absolutes($html_content);
     }
 

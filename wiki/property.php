@@ -39,7 +39,7 @@ $move = retrieve(GET, 'move', 0);
 $rename = retrieve(GET, 'rename', 0);
 $redirect = retrieve(GET, 'redirect', 0);
 $create_redirection = retrieve(GET, 'create_redirection', 0);
-$idcom = retrieve(GET, 'com', 0);
+$idcom = retrieve(GET, 'idcom', 0);
 $del_article = retrieve(GET, 'del', 0);
 
 if ($id_auth > 0) //Autorisations de l'article
@@ -97,7 +97,7 @@ elseif ($redirect > 0 || $create_redirection > 0)//Redirection
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_REDIRECT)) && ($general_auth || $User->check_auth($article_auth , WIKI_REDIRECT))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif (isset($_GET['i']) && $idcom > 0)
+elseif (isset($_GET['com']) && $idcom > 0)
 {
 	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $idcom . "'", __LINE__, __FILE__);	
 	define('TITLE', $LANG['wiki_article_com']);
@@ -308,7 +308,7 @@ elseif (isset($_GET['com']) && $idcom > 0) //Affichage des commentaires
 {
 	$Template->assign_vars(array(
 		'C_COMMENTS' => true,
-		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?com=' . $idcom . '&amp;com=%s', ''), 'wiki')
+		'COMMENTS' => display_comments('wiki_articles', $idcom, url('property.php?idcom=' . $idcom . '&amp;com=%s'), 'wiki')
 	));
 }
 elseif ($del_article > 0) //Suppression d'un article ou d'une catégorie

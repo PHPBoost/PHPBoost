@@ -171,7 +171,7 @@ if ($User->check_level(MEMBER_LEVEL))
 if (($page_type == 'article' || $page_type == 'cat') && (!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_COM)) && ($general_auth || $User->check_auth($article_auth , WIKI_COM)))
 $Template->assign_vars(array(
 		'C_ACTIV_COM' => true,
-		'U_COM' => url('property.php?com=' . $id_article . '&amp;i=0'),
+		'U_COM' => url('property.php?idcom=' . $id_article . '&amp;com=0'),
 		'L_COM' => $LANG['wiki_article_com_article'] . ($article_infos['nbr_com'] > 0 ? ' (' . $article_infos['nbr_com'] . ')' : '')
 ));
 

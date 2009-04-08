@@ -526,10 +526,7 @@ else
 			}
 			
 			//Updating the number of subfiles in each category
-			if ($file_cat_id != $file_infos['idcat'])
-			{
-				$download_categories->Recount_sub_files();
-			}
+			$download_categories->Recount_sub_files();
             
             // Feeds Regeneration
             import('content/syndication/feed');

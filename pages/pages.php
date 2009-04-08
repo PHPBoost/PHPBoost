@@ -201,7 +201,7 @@ elseif ($id_com > 0)
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	
 	$Template->assign_vars(array(
-		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s', ''))
+		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s'))
 	));
 	
 	$Template->pparse('com');
