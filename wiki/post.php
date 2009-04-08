@@ -64,20 +64,10 @@ if (!empty($contents)) //On enregistre un article
 	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
 	if (preg_match('`[\-]{2,6}`isU', $contents))
 	{
-		$menu_to_make = html_entity_decode($contents);		
-		wiki_explode_menu($menu_to_make, 1); //On éclate le menu en tableaux
-		wiki_display_menu($menu_to_make, $menu, 1); //On affiche le menu
-		
-		 //On insère les paragraphes dans la page
-		for ($i = 1; $i <= 5; $i++)
-		{
-			$contents = preg_replace('`[\n\r]{1}[\-]{' . ($i + 1) . '}[\s]+(.+)[\s]+[\-]{' . ($i + 1) . '}(<br \/>|[\n\r]){1}`U', "\n" . '<div class="wiki_paragraph' .  $i . '" id="$1">$1</div><br />' . "\n", "\n" . $contents . "\n");
-			$contents = preg_replace_callback('`id="(.+)">`isU', 'wiki_make_anchors', $contents);
-		}
+		$menu_list = wiki_explode_menu($contents); //On éclate le menu en tableaux
+		$menu = wiki_display_menu($menu_list); //On affiche le menu
 	}
-	//On supprime les \n rajoutés en début et en fin
-	$contents = trim($contents);
-
+	
 	if ($preview)//Prévisualisation
 	{
 		$Template->assign_block_vars('preview', array(
@@ -86,7 +76,7 @@ if (!empty($contents)) //On enregistre un article
 		));
 		if (!empty($menu))
 			$Template->assign_block_vars('preview.menu', array(
-				'MENU' => stripslashes($menu)
+				'MENU' => $menu
 			));
 	}
 	else //Sinon on poste
@@ -104,7 +94,7 @@ if (!empty($contents)) //On enregistre un article
 			//On met à jour l'ancien contenu (comme archive)
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
 			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
             

@@ -347,8 +347,6 @@
 						
 						function display_result_text(return_code)
 						{
-							alert(return_code);
-							return;
 							switch(return_code)
 							{
 								case '{DB_CONFIG_SUCCESS}':
