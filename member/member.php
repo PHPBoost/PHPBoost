@@ -442,7 +442,7 @@ if (!empty($id_get)) //Espace membre
 			$user_yahoo = retrieve(POST, 'user_yahoo', '');
 			
 			$user_web = retrieve(POST, 'user_web', '');
-			if ( substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
+			if (!empty($user_web) && substr($user_web, 0, 7) != 'http://' && substr($user_web, 0, 6) != 'ftp://' && substr($user_web, 0, 8) != 'https://')
 				$user_web = 'http://' . $user_web;
 				
 			//Gestion de la date de naissance.
