@@ -134,7 +134,7 @@ function wiki_display_menu($menu_list)
 			{
 				$menu = substr($menu, 0, strlen($menu) - 4);
 			}
-			$menu .= str_repeat('</ol>', $last_level - $current_level) . '<li>' . $title_link . '</li><li>';
+			$menu .= str_repeat('</li></ol>', $last_level - $current_level) . '</li><li>' . $title_link;
 		}
 		$last_level = $title[0];
 	}
@@ -144,7 +144,7 @@ function wiki_display_menu($menu_list)
 	{
 		$menu = substr($menu, 0, strlen($menu) - 4);
 	}
-	$menu .= str_repeat('</ol>', $last_level);
+	$menu .= str_repeat('</li></ol>', $last_level);
 	
 	return $menu;
 }
