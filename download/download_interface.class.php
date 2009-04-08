@@ -178,8 +178,8 @@ class DownloadInterface extends ModuleInterface
         
         import('util/date');
         $date = new Date(DATE_TIMESTAMP, TIMEZONE_USER, $result_data['timestamp']);
-        import('content/note');
-        $Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
+        import('content/note'); //Notes
+        
         $tpl->assign_vars(array(
             'L_ADDED_ON' => sprintf($DOWNLOAD_LANG['add_on_date'], $date->format(DATE_FORMAT_TINY, TIMEZONE_USER)),
             'U_LINK' => url(PATH_TO_ROOT . '/download/download.php?id=' . $result_data['id']),
@@ -189,7 +189,7 @@ class DownloadInterface extends ModuleInterface
             'SHORT_DESCRIPTION' => second_parse($result_data['short_contents']),
             'L_NB_DOWNLOADS' => $DOWNLOAD_LANG['downloaded'] . ' ' . sprintf($DOWNLOAD_LANG['n_times'], $result_data['count']),
             'L_NB_COMMENTS' => $result_data['nbr_com'] > 1 ? sprintf($DOWNLOAD_LANG['num_com'], $result_data['nbr_com']) : sprintf($DOWNLOAD_LANG['num_coms'], $result_data['nbr_com']),
-            'L_MARK' => $result_data['note'] > 0 ? $Note->display_img((int)$result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
+            'L_MARK' => $result_data['note'] > 0 ? Note::display_img((int)$result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
         
         return $tpl->parse(TEMPLATE_STRING_MODE);
