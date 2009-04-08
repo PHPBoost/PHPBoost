@@ -30,10 +30,18 @@ define('GROUP_DEFAULT_IDSELECT', '');
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
 define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations avancées.
 
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com>
+ * @desc This class provide methods to manage user in groups.
+ * @package members
+ */
 class Group
 {
 	## Public methods ##
-	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
+	/**
+	 * @desc Constructor. Load informations groups.
+	 * @param array $groups_info Informations of all groups.
+	 */
 	function Group(&$groups_info)
 	{
 		$this->groups_name = array();
@@ -41,7 +49,12 @@ class Group
 			$this->groups_name[$idgroup] = $array_group_info['name'];
 	}
 
-	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
+	/**
+	 * @desc Add a member in a group
+	 * @param int $user_id User id
+	 * @param int $idgroup Group id
+	 * @return boolean True if the member has been succefully added.
+	 */
 	function add_member($user_id, $idgroup)
 	{
 		global $Sql;
@@ -63,7 +76,11 @@ class Group
 		return true;
 	}
  
-	//Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
+	/**
+	 * @desc Edit the user groups, compute difference between previous and new groups.
+	 * @param int $user_id The user id
+	 * @param array $array_user_groups The new array of groups.
+	 */
 	function edit_member($user_id, $array_user_groups)
 	{
 		global $Sql;
@@ -89,13 +106,20 @@ class Group
 		}
 	}
 	
-	//Retourne le tableau des groupes (id => nom)
+	/**
+	 * @desc Return the array of user groups (id => name)
+	 * @return array The array groups
+	 */
 	function get_groups_array()
 	{
 		return $this->groups_name;
 	}
  
-	//Suppression d'un membre du groupe.
+	/**
+	 * @desc Remove a member in a group.
+	 * @param int $user_id The user id
+	 * @param int $idgroup The id group.
+	 */
 	function remove_member($user_id, $idgroup)
 	{
 		global $Sql;

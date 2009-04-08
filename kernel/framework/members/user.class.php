@@ -29,11 +29,18 @@ define('RANK_TYPE', 1);
 define('GROUP_TYPE', 2);
 define('USER_TYPE', 3);
 
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com>
+ * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations  
+ * @package members
+ */
 class User
 {
-	## Public methods ##
-	
-	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
+	/**
+	 * @desc Set global authorizations which are given by all the user groups authorizations. 
+	 * @param $session_data
+	 * @param $groups_info
+	 */
 	function User($session_data, &$groups_info)
 	{
 		$this->user_data = $session_data; //Informations sur le membre.
@@ -50,21 +57,33 @@ class User
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
 	
-	//Récupère les attributs de la session.
+	## Public methods ##
+	/**
+	 * @desc Accessor
+	 * @param string $attribute The attribute name. 
+	 * @return unknown_type
+	 */
 	function get_attribute($attribute)
 	{
 		return isset($this->user_data[$attribute]) ? $this->user_data[$attribute] : '';
 	}
 	
-	//Renvoie l'id de l'utilisateur
+	/**
+	 * @desc Get the user id
+	 * @return int The user id.
+	 */
 	function get_id()
 	{
 	    return (int)$this->get_attribute('user_id');
 	}
 	
-	//Récupère la couleur associée à un des groupe du membre.
-	//static
-	function get_group_color($user_groups, $level = 0)
+	/**
+	 * @desc Get the user group associated color.
+	 * @param string $user_groups The list of user groups separated by pipe.
+	 * @param int $level The user level. Only member have special color.
+	 * @return string The group color (hexadecimal format)
+	 */
+	/* static */ function get_group_color($user_groups, $level = 0)
 	{
 		global $_array_groups_auth;
 		
@@ -78,7 +97,11 @@ class User
 		}		
 	}
 	
-	//Vérifie le niveau d'autorisation.
+	/**
+	 * @desc Check the authorization level
+	 * @param $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @return boolean True if authorized, false otherwise.
+	 */
 	function check_level($secure)
 	{
 		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure) 
@@ -86,7 +109,14 @@ class User
 		return false;
 	}
 	
-	//Cherche les autorisations maximum parmi les différents groupes dont le membre fait partie, puis fait la comparaisons sur le droit demandé.
+	/**
+	 * @desc Get the authorizations given by all the user groups. Then check the authorization.
+	 * @param array $array_auth_groups The array passed to check the authorization.
+	 * @param int $authorization_bit Value of position bit to check the authorization.
+	 * This value has to be a multiple of two. You can use this simplified scripture :
+	 * 0x01, 0x02, 0x04, 0x08 to set a new position bit to check.
+	 * @return boolean True if authorized, false otherwise.
+	 */
 	function check_auth($array_auth_groups, $authorization_bit)
 	{
 		//Si il s'agit d'un administrateur, étant donné qu'il a tous les droits, on renvoie systématiquement vrai
@@ -101,7 +131,12 @@ class User
 		return (bool)($this->_sum_auth_groups($array_auth_groups) & (int)$authorization_bit);
 	}
 	
-	//Cherche les valeurs maximum parmis les différents groupes dont le membre fait partie.
+	/**
+	 * @desc Get the maximum value of authorization in all user groups.
+	 * @param int $key_auth
+	 * @param int $max_value_compare Maximal value to compare
+	 * @return unknown_type
+	 */
 	function check_max_value($key_auth, $max_value_compare = 0)
 	{
 		if (!is_array($this->groups_auth))
@@ -121,19 +156,28 @@ class User
 		return $max_auth;
 	}
 	
-	//Fonction qui renvoie les groupes auxquels appartient l'utilisateur
+	/**
+	 * @desc Get all user groups
+	 * @return string The user groups
+	 */
 	function get_groups()
 	{
 		return $this->user_groups;
 	}
 	
-	//Modifie le thème membre.
+	/**
+	 * @desc Modify the user theme.
+	 * @param string $user_theme The new theme. 
+	 */
 	function set_user_theme($user_theme)
 	{
 		$this->user_data['user_theme'] = $user_theme;
 	}
 	
-	//Met à jour le thème visiteur.
+	/**
+	 * @desc Modify the theme for guest in the database (sessions table).
+	 * @param $user_theme The new theme
+	 */
 	function update_user_theme($user_theme)
 	{
 		global $Sql, $CONFIG_USER;
@@ -147,13 +191,19 @@ class User
 		}
 	}
 	
-	//Modifie le thème membre.
+	/**
+	 * @desc Modify the user lang.
+	 * @param $user_lang The new lang
+	 */
 	function set_user_lang($user_lang)
 	{
 		$this->user_data['user_lang'] = $user_lang;
 	}
 	
-	//Met à jour le thème visiteur.
+	/**
+	 * @desc Modify the lang for guest in the database (sessions table).
+	 * @param $user_theme The new lang
+	 */
 	function update_user_lang($user_lang)
 	{
 		global $Sql;
@@ -166,7 +216,11 @@ class User
 	
 	
 	## Private methods ##
-	//Retourne l'autorisation maximale donnée par chacun des groupes dont le membre fait partie.
+	/**
+	 * @desc Return the maximal authorization given by the user groups
+	 * @param array $array_auth_groups
+	 * @return string binary authorizations
+	 */
 	function _sum_auth_groups($array_auth_groups)
 	{
 		//Récupère les autorisations de tout les groupes dont le membre fait partie.
@@ -178,7 +232,11 @@ class User
 		return $max_auth;
 	}
 	
-	//Calcul de l'intersection des groupes du membre avec les groupes du tableau en argument.
+	/**
+	 * @desc Compute the group <strong>intersection</strong> between the user groups and the group array in argument 
+	 * @param array $array_auth_groups Array of groups id
+	 * @return array The new array computed.
+	 */
 	function _array_group_intersect($array_auth_groups)
 	{		
 		global $User;
