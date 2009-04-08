@@ -28,12 +28,30 @@
 define('NO_PREVIOUS_NEXT_LINKS', false); //Lien précédent/suivant.
 define('LINK_START_PAGE', false); //Lien sur la première page.
 
+/**
+ * @package util
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class manage the pagination system. It can display a list of links between pages and provide you a simple method to manage easily the pagination with SQL queries.
+ */
 class Pagination
 {
 	## Public Methods ##
     function Pagination() { }
     
-	//Renvoie la chaîne de liens formatée.
+	/**
+	 * @desc Return a list of links between pages.
+	 * @param string $path Adress with the url() function which permit the management of url rewritting in pagination links.
+	 * You have to specify where the value of page will be placed in the adresse with %d (it will be replaced automatically)
+	 * Example: url('page.php?p=%d', 'page-%d.php') //p is the variable name passed by the arguement $var_page.
+	 * @param string $total_msg The total number of items. 
+	 * @param string $var_page The variable name used to get the page in the adress (in most case "p" is used). 
+	 * @param string $nbr_msg_page The number of items per page. 
+	 * @param string $nbr_max_link The maximum number of links displayed.
+	 * @param string $font_size Links font size.
+	 * @param string $previous_next Display links before and after pagination links, to go to the next/previous page.
+	 * @param string $link_start_page Underline link to the current page.
+	 * @return string Pagination links.
+	*/
 	function display($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if ($total_msg > $nbr_msg_page)
@@ -87,7 +105,16 @@ class Pagination
 			return '';		
 	}
 	
-	//Calcule le numéro du premier message de la page actuelle.
+	/**
+	 * @desc Return the first message of the current page displayed.
+	 * It usually used in SQL queries. Example :
+	 * $Sql->query_while("SELECT n.contents FROM " . PREFIX . "news n
+	 *	" . $Sql->limit($Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'), $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
+	 * For further informations, refer to the db package documentation.
+	 * @param int $nbr_msg_page Number of message per page.
+	 * @param string $var_page The variable name used to get the page in the adress (in most case "p" is used). 
+	 * @return int the first message of the current page displayed.
+	*/
 	function get_first_msg($nbr_msg_page, $var_page)
 	{
 		$page = !empty($_GET[$var_page]) ? numeric($_GET[$var_page]) : 1;	
@@ -95,13 +122,17 @@ class Pagination
 		return (($page - 1) * $nbr_msg_page); 
 	}
 	
-	//Fonction qui renvoie la page courante
+	/**
+	 * @return int Return the current page
+	 */
 	function get_current_page()
 	{
 		return $this->_get_var_page($this->var_page);
 	}
 	
-	//Fonction qui renvoie la page courante
+	/**
+	 * @desc Set the var name used to get the page in the adress (in most case "p" is used).
+	 */
 	function set_var_name_current_page($var_name)
 	{
 		$this->var_page = $var_name;
@@ -109,7 +140,10 @@ class Pagination
 	
 	
 	## Private Methods ##
-	//Récupère la valeur de la page courante.
+	/**
+	 * @param $var_page The var name used to get the page in the adress (in most case "p" is used). 
+	 * @return int Return the value of the var page
+	 */
 	function _get_var_page($var_page)
 	{
 		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
@@ -119,7 +153,11 @@ class Pagination
 			return 1;
 	}
 		
-	//Vérifie si la page sur laquelle on se trouve est valide, sinon renvoi sur une page d'erreur.
+	/**
+	 * @desc Check the validity of the page required, otherwise redirect to an error page.
+	 * @param $nbr_page Number total of page.
+	 * @return int Return current page if exist, otherwise redirect to an error page.
+	 */
 	function _check_page($nbr_page)
 	{		
 		global $Errorh;
