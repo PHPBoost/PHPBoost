@@ -26,11 +26,11 @@
 ###################################################*/
 
 //Constantes de base.
-define('DELETE_ON_ERROR', true);
-define('NO_DELETE_ON_ERROR', false);
-define('UNIQ_NAME', true);
-define('CHECK_EXIST', true);
-define('NO_UNIQ_NAME', false);
+define('DELETE_ON_ERROR', 		true);
+define('NO_DELETE_ON_ERROR', 	false);
+define('UNIQ_NAME', 			true);
+define('CHECK_EXIST', 			true);
+define('NO_UNIQ_NAME', 			false);
 
 class Upload
 {
@@ -130,24 +130,32 @@ class Upload
 	function _generate_file_info($filename, $filepostname, $uniq_name)
 	{
 		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
-		
-		$filename = substr($filename, 0, strrpos($filename, '.'));
+		if (strrpos($filename, '.') !== FALSE)
+		{
+			$filename = substr($filename, 0, strrpos($filename, '.'));
+		}
 		$filename = str_replace('.', '_', $filename);
 		$filename = $this->_clean_filename($filename);
 
 		if ($uniq_name)
 		{
 			$filename_tmp = $filename;
-			while (file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]))
+			if (!empty($this->extension[$filepostname]))
+				$filename_tmp .= '.' . $this->extension[$filepostname];
+			$filename1 = $filename;
+			while (file_exists($this->base_directory . $filename_tmp))
 			{
-				$filename_tmp = $filename;
-				$filename_tmp .= '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
+				$filename1 = $filename . '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
+				$filename_tmp = $filename1;
+				if (!empty($this->extension[$filepostname]))
+					$filename_tmp .= '.' . $this->extension[$filepostname];
 			}
-			$filename = $filename_tmp;
+			$filename = $filename1;
 		}
-			
-		$filename .= '.' . $this->extension[$filepostname];		
-		$this->filename[$filepostname] = $filename;	
+
+		if (!empty($this->extension[$filepostname]))
+			$filename .= '.' . $this->extension[$filepostname];
+		$this->filename[$filepostname] = $filename;
 	}
 	
 	//Gestion des erreurs d'upload.
