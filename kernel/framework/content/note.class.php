@@ -46,7 +46,7 @@ class Note
 	 * @param string $module_folder (optional) The folder where the module is located. It allow you to specify a different module location
 	 * @param int $options
 	 */
-	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '') 
+	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0) 
 	{
 		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 		$this->options = (int)$options;
