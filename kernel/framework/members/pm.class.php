@@ -31,15 +31,19 @@ define('SYSTEM_PM', true); //Message privé envoyé par le système.
 define('DEL_PM_CONVERS', true); //Suppression de la conversation complète.
 define('UPDATE_MBR_PM', true); //Met à jour le nombre de mp du membre.
 
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com>
+ * @desc This class provides methods to manage private message.
+ * @package members
+ */
 class PrivateMsg
 {
 	## Public Methods ##
-	//Constructeur.
-	function PrivateMsg()
-	{
-	}
-	
-	//Récupération du nombre total de conversations dans la boite du membre.
+	/**
+	 * @desc Count the user's number of conversation.
+	 * @param int $userid The user id.
+	 * @return int number of user conversation.
+	 */
 	function count_conversations($userid)
 	{
 		global $Sql;
@@ -65,6 +69,14 @@ class PrivateMsg
 	}
 	
 	//Envoi d'une conversation + le message privé associé.
+	/**
+	 * @desc Start a conversation with another member.
+	 * @param int $pm_to The member's user id destination.
+	 * @param string $pm_objet The object of the conversation.
+	 * @param string $pm_contents The content of the conversation.
+	 * @param int $pm_from The member's user id author.
+	 * @param boolean $system_pm If true, the conversation has been started by the system, and not by the private message interface.
+	 */
 	function start_conversation($pm_to, $pm_objet, $pm_contents, $pm_from, $system_pm = false)
 	{
 		global $CONFIG, $Sql;
@@ -83,24 +95,24 @@ class PrivateMsg
 		$this->pm_convers_id = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_PM_TOPIC . " ");
         
         $this->send($pm_to, $this->pm_convers_id, $pm_contents, $pm_from, $user_convers_status, false);
-// 		//Insertion du message associé à la conversation.
-// 		$Sql->query_inject("INSERT INTO " . DB_TABLE_PM_MSG . " (idconvers,user_id,contents,timestamp,view_status) VALUES('" . $this->pm_convers_id . "', '" . $pm_from . "', '" . strparse($pm_contents) . "', '" . time() . "', 0)", __LINE__, __FILE__);
-// 		$this->pm_msg_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "pm_msg");
-//
-// 		//MAJ de la conversation.
-// 		$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET last_msg_id = '" . $this->pm_msg_id . "' WHERE id = '" . $this->pm_convers_id . "'", __LINE__, __FILE__);
-//
-// 		//Mise à jour du compteur de mp du destinataire.
-// 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
 	}
 	
-	//Réponse à une conversation
-	function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_mp_before_send = true)
+	/**
+	 * @desc Answer to a conversation
+	 * @param int $pm_to The member's user id destination.
+	 * @param int $pm_idconvers
+	 * @param string $pm_contents The content of the answer. 
+	 * @param int $pm_from The member's user id author.
+	 * @param int $pm_status 
+	 * @param boolean $check_pm_before_send
+	 * @return unknown_type
+	 */
+	function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_pm_before_send = true)
 	{
 		global $Sql;
 		
 		//On vérifie qu'un message n'a pas été posté entre temps.
-        if ($check_mp_before_send)
+        if ($check_pm_before_send)
         {
             $info_convers =	$Sql->query_array(DB_TABLE_PM_TOPIC . " ", "last_user_id", "user_view_pm", "WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
             if ($info_convers['last_user_id'] != $pm_from && $info_convers['user_view_pm'] > 0) //Nouveau message
@@ -121,7 +133,14 @@ class PrivateMsg
 		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm + 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
 	}
 	
-	//Suppression d'une conversation.
+	/**
+	 * @desc Delete a conversation.
+	 * @param int $pm_userid
+	 * @param int $pm_idconvers
+	 * @param int $pm_expd
+	 * @param $pm_del
+	 * @param $pm_update
+	 */
 	function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
 		global $CONFIG, $Sql;
@@ -156,7 +175,13 @@ class PrivateMsg
 		}
 	}
 	
-	//Suppression d'un message privé, tant que le destinataire ne l'a pas lu.
+	/**
+	 * @desc Delete a private message, until the recipient has not read it. 
+	 * @param $pm_to
+	 * @param $pm_idmsg
+	 * @param $pm_idconvers
+	 * @return int The previous message id.
+	 */
 	function delete($pm_to, $pm_idmsg, $pm_idconvers)
 	{
 		global $Sql;

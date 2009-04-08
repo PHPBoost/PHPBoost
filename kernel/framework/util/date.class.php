@@ -51,6 +51,7 @@ define('TIMEZONE_AUTO', TIMEZONE_USER);
  * 	<li>Site timezone: it's the timezone of the central place of the site. For example, if your site deals with the italian soccer championship, it will be GMT+1.</li>
  * 	<li>User timezone :  each registered user can specify its timezone. It's particulary useful for people who visit some sites from a foreign country.</li>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package util
  */
 class Date
 {

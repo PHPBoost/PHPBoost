@@ -187,7 +187,7 @@ class Note
 	 * @param int $num_stars_display Number of image to display.
 	 * @return string The notation with images.
 	 */
-	function display_img($note, $notation_scale, $num_stars_display = 0)
+	/* static */ function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;
 		

@@ -28,11 +28,19 @@
 define('AUTH_PARENT_PRIORITY', 0x01);	// Generally read mode
 define('AUTH_CHILD_PRIORITY', 0x02);	// Generally write mode
 
-//This class contains only static methods, it souldn't be instantiated.
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com> / Sautel Benoit <ben.popeye@phpboost.com>
+ * @desc This class contains only static methods, it souldn't be instantiated.
+ * @package members
+ */
 class Authorizations
 {
 	## Public methods ##
-	//Retourne le tableau avec les droits issus des tableaux passés en argument. Tableau destiné à être serialisé.
+	/**
+	 * @desc Return an array with the authorizations given by variable number of arrays passed in argument. 
+	 * This returned array is used to be serialized.
+     * @return array The array of authorizations.
+     */
 	/*static*/ function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
@@ -65,7 +73,13 @@ class Authorizations
 		return $array_auth_all;
 	}
 	
-	//Retourne le tableau avec les droits issus du tableau passé en argument. Tableau destiné à être serialisé.
+	/**
+	* @desc Return an array with the authorizations given by variable number of arrays passed in argument. 
+	 * @param $bit_value
+	 * @param $idselect
+	 * @param $admin_auth_default
+	 * @return unknown_type
+	 */
 	/*static*/ function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
@@ -83,7 +97,17 @@ class Authorizations
 	}
 	
 	//Génération d'une liste à sélection multiple des rangs, groupes et membres
-    /*static*/ function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+    /*static*/ 
+	/**
+	 * @param $auth_bit
+	 * @param $array_auth
+	 * @param $array_ranks_default
+	 * @param $idselect
+	 * @param $disabled
+	 * @param $disabled_advanced_auth
+	 * @return unknown_type
+	 */
+	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
@@ -214,6 +238,14 @@ class Authorizations
     }
 	
 	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
+    /**
+     * @desc
+     * @param $type
+     * @param $value
+     * @param $array_auth
+     * @param $bit
+     * @return unknown_type
+     */
 	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
 	{
 		if (!is_int($value))
@@ -243,7 +275,14 @@ class Authorizations
 	
 	//Fusion de deux tableaux d'autorisations
 	// le premier est le parent, le deuxième, le fils qui hérite du parent
-	/*static*/ function merge_auth($parent, $child, $auth_bit, $mode)
+	/**
+	 * @param $parent
+	 * @param $child
+	 * @param $auth_bit
+	 * @param $mode
+	 * @return unknown_type
+	 */
+	/*static*/  function merge_auth($parent, $child, $auth_bit, $mode)
 	{
 		//Parcours des différents types d'utilisateur
 		$merged = array();

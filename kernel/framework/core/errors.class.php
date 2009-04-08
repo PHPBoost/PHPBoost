@@ -36,7 +36,7 @@ define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur coura
 
 /**
  * @author Viarre Régis crowkait@phpboost.com
- * @desc 
+ * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
  * @package core
  */
 class Errors
@@ -132,14 +132,14 @@ class Errors
 	}
 	
     /**
-	* @desc Exception handler for developper
-	* @param $errstr
-	* @param $errno
-	* @param $errline
-	* @param $errfile
-	* @param $tpl_cond
-	* @param $archive
-	* @param $stop
+	* @desc Exception handler for developper.
+	* @param string $errstr The text which explain the error.
+	* @param int $errno The error type (use the PHP errors constants).
+	* @param string $errline The error line (use the constant __LINE__).
+	* @param string $errfile The file where the error is located (use the constant __FILE__).
+	* @param $tpl_cond (optional) This argument allow you to display error in a template condition.
+	* @param boolean $archive (optional) Backup the error in the error.log file
+	* @param boolean $stop Avoid redirect loop.
 	*/
 	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
