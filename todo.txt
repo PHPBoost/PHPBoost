@@ -18,7 +18,6 @@ Javascript : remplacer toutes les regex de vérification des mails par une qui se
 
 ------------------------------------- NOYAU ------------------------------------
 Bug BBcode code sur ie7.
-Ajouter les boutons d'activation des colonnes droite/gauche dans l'admin des menus.
 Ajouter un avertissement lors du déplacement dans une colonne désactivée.
 
 ------------------------------------ MODULES -----------------------------------
