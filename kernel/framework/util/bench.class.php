@@ -44,7 +44,7 @@ class Bench
      */
     function stop()
     {
-    	$this->duration = $this->_get_microtime() - $this->start; 
+    	$this->duration = Bench::get_microtime() - $this->start; 
     }
     
     /**
