@@ -64,7 +64,7 @@ class FeedData
      * @desc Sets the feed title
      * @param string $value The title
      */
-    function set_title($value) { $this->title = htmlspecialchars(strip_tags($value)); }
+    function set_title($value) { $this->title = strip_tags($value); }
     /**
      * @desc Sets the feed data date
      * @param Date $value a date object representing the feed date
