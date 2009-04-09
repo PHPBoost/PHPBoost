@@ -138,7 +138,6 @@ UPDATE `phpboost_forum_track` SET `track` = 1;
 ALTER TABLE `phpboost_gallery` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
 
 
-
 ALTER TABLE `phpboost_group` ADD `color` varchar(6) NOT NULL DEFAULT '' AFTER `img` ;
 ALTER TABLE `phpboost_group` DROP `auth`;
 ALTER TABLE `phpboost_group` ADD `auth` varchar(255) NOT NULL DEFAULT '0' AFTER `color` ;
@@ -158,6 +157,8 @@ CREATE TABLE IF NOT EXISTS `phpboost_member_extend` (
   `last_view_forum` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+ ALTER TABLE `phpboost_member_extend_cat` CHANGE `require` `required` TINYINT( 1 ) NOT NULL DEFAULT '0';
 
 
 CREATE TABLE IF NOT EXISTS `phpboost_menus` (

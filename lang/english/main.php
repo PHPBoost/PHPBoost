@@ -86,6 +86,7 @@ $LANG['message_s'] = 'Messages';
 $LANG['forget_pass'] = 'Password forgotten';
 
 $LANG['require'] = 'The * marked fields are obligatory !';
+$LANG['required_field'] = 'The field \"%s\" is required !';
 
 //Alert Form
 $LANG['require_title'] = 'Please enter a title !';

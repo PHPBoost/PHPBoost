@@ -277,7 +277,7 @@ if (!empty($id_get)) //Espace membre
 				'L_MISCELLANEOUS' => $LANG['miscellaneous']
 			));
 
-			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
+			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, ex.*
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id_get . "'
 			WHERE exc.display = 1
@@ -341,8 +341,16 @@ if (!empty($id_get)) //Espace membre
 					break;
 				}
 				
+				if ($row['required'])
+				{	
+					$Template->assign_block_vars('miscellaneous_js_list', array(
+						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($row['name'])),
+						'ID' => $row['field_name']
+					));
+				}
+				
 				$Template->assign_block_vars('miscellaneous_list', array(
-					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
+					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 					'FIELD' => $field
@@ -534,12 +542,16 @@ if (!empty($id_get)) //Espace membre
 					$req_update = '';
 					$req_field = '';
 					$req_insert = '';
-					$result = $Sql->query_while("SELECT field_name, field, possible_values, regex
+					$result = $Sql->query_while("SELECT field_name, field, possible_values, regex, required
 					FROM " . PREFIX . "member_extend_cat
 					WHERE display = 1", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
 						$field = isset($_POST[$row['field_name']]) ? $_POST[$row['field_name']] : '';
+						//Champs requis, si vide redirection.
+						if ($row['required'] && $row['field'] != 6 && empty($field))
+							redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
+				
 						//Validation par expressions régulières.
 						if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 						{
@@ -581,6 +593,8 @@ if (!empty($id_get)) //Espace membre
 								$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? strprotect($value) . '|' : '';
 								$i++;
 							}
+							if ($row['required'] && empty($field))
+								redirect(HOST . DIR . '/member/member' . url('.php?id=' .  $id_get . '&edit=1&error=incomplete') . '#errorh');
 						}
 						else
 							$field = strprotect($field);

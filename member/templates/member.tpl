@@ -7,6 +7,15 @@
 				alert("{L_REQUIRE_MAIL}");
 				return false;
 		    }
+			# IF C_PROFIL_MISCELLANEOUS #
+				# START miscellaneous_js_list #
+				if(document.getElementById('{miscellaneous_js_list.ID}') && document.getElementById('{miscellaneous_js_list.ID}').value == "") {
+					alert("{miscellaneous_js_list.L_REQUIRED}");
+					return false;
+				}
+				# END miscellaneous_js_list #	
+			# ENDIF #
+			
 			return true;
 		}
 		function img_sex(url)
