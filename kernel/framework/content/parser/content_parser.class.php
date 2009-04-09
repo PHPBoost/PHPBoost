@@ -169,7 +169,7 @@ class ContentParser extends Parser
             }
 
             // Mise en place de l'éclatement de la sous-chaine
-            $mask = '`\[' . $tag . '(' . $attributes . ')?\](.+)\[/' . $tag . '\](.+)?`s';
+            $mask = '`\[' . $tag . '(' . $attributes . ')?\](.*)\[/' . $tag . '\](.+)?`s';
             $local_parsed = preg_split($mask, $sub_str, -1, PREG_SPLIT_DELIM_CAPTURE);
 
             if (count($local_parsed) == 1)
@@ -192,8 +192,8 @@ class ContentParser extends Parser
                 $end_pos = $_index_tags[$i + 1] - ($current_index + $current_tag_len);
                 array_push($parsed, substr($local_parsed[3], 0, $end_pos ));
             }
-            elseif (isset($local_parsed[3])) // c'est la fin, il n'y a pas d'autre tag ouvrant après
-            {
+            elseif (isset($local_parsed[3]))
+            {   // c'est la fin, il n'y a pas d'autre tag ouvrant après
                 array_push($parsed, $local_parsed[3]);
             }
         }
@@ -201,7 +201,7 @@ class ContentParser extends Parser
     }
 
     /**
-     * @desc Indexes the position of all the tags in the document. Returns the list of the positions of each tag. 
+     * @desc Indexes the position of all the tags in the document. Returns the list of the positions of each tag.
      * @param $content string Content into which index the positions.
      * @param $tag string tag name
      * @param $attributes The regular expression matching the parameters of the tag (see the _preg_split_safe_recurse method).
@@ -235,9 +235,9 @@ class ContentParser extends Parser
 
     /**
      * @desc Removes the content of the tag $tag and replaces them by an identifying code. They will be reinserted in the content by the _reimplant_tags method.
-     * It enables you to treat the whole string enough affecting the interior of some tags. 
+     * It enables you to treat the whole string enough affecting the interior of some tags.
      * Example: $my_parser contains this content: 'test1[tag=1]test2[/tag]test3'
-     * $my_parser->_pick_up_tag('tag', '[0-9]'); will replace the content of the parser by 'test1[CODE_TAG_1]test3' 
+     * $my_parser->_pick_up_tag('tag', '[0-9]'); will replace the content of the parser by 'test1[CODE_TAG_1]test3'
      * @param $tag string The tag to isolate
      * @param $arguments string The regular expression matching the arguments syntax.
      */
@@ -306,7 +306,7 @@ class ContentParser extends Parser
     @var string[] List of the BBCode supported tags
     */
     var $tag = array('b', 'i', 'u', 's', 'title', 'stitle', 'style', 'url',
-    'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup', 
+    'img', 'quote', 'hide', 'list', 'color', 'bgcolor', 'font', 'size', 'align', 'float', 'sup',
     'sub', 'indent', 'pre', 'table', 'swf', 'movie', 'sound', 'code', 'math', 'anchor', 'acronym');
     /**
      * @var string[] Authorization of the HTML BBCode tag.
