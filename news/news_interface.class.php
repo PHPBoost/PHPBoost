@@ -196,6 +196,8 @@ class NewsInterface extends ModuleInterface
 			));
 		}
 
+		import('content/comments');
+		
 		//On crée une pagination (si activé) si le nombre de news est trop important.
 		import('util/pagination');
 		$Pagination = new Pagination();
@@ -284,7 +286,7 @@ class NewsInterface extends ModuleInterface
 					'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',
 					'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
 					'TOKEN' => $Session->get_token(),
-					'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
+					'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 					'NEW_ROW' => $new_row,
 					'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
