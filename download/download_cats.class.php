@@ -56,7 +56,7 @@ class DownloadCats extends CategoriesManager
 				$this->Delete_category_recursively($id_cat);
 		}
 		
-		$Cache->Generate_module_file('download', RELOAD_FILE);
+		$Cache->Generate_module_file('download', RELOAD_CACHE);
 		
 		$this->Recount_sub_files();
 	}
@@ -118,7 +118,7 @@ class DownloadCats extends CategoriesManager
 				}
 				else
 				{
-					$Cache->load('download', RELOAD_FILE);
+					$Cache->load('download', RELOAD_CACHE);
 					$this->Recount_sub_files(NOT_CACHE_GENERATION);
 				}
 			}

@@ -148,7 +148,7 @@ class MediaCats extends CategoriesManager
 				}
 				else
 				{
-					$Cache->load('media', RELOAD_FILE);
+					$Cache->load('media', RELOAD_CACHE);
 					$this->recount_media_per_cat(NOT_CACHE_GENERATION);
 				}
 			}
