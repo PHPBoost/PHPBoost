@@ -648,7 +648,7 @@ $LANG['disabled'] = 'Disabled';
 //Dictionnaire pour le captcha.
 $LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'genre', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
 
-$LANG['csrf_attack'] = '<p>You have potentially been the target of a <acronum title="Cross-Site Request Forgery">CSRF</acronym> attack which has been blocked by PHPBoost.</p>
+$LANG['csrf_attack'] = '<p>You have potentially been the target of a <acronym title="Cross-Site Request Forgery">CSRF</acronym> attack which has been blocked by PHPBoost.</p>
 <p>For futher informations, see <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" title="CSRF Attacks" class="wikipedia_link">Wikipedia</a></p>';
 
 ?>
