@@ -85,13 +85,15 @@ function wiki_explode_menu(&$content)
 			//If the line contains a title
 			if (preg_match('`^\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $lines[$i], $matches))
 			{
+				$title_name = strip_tags(html_entity_decode($matches[1]));
+				
 				//We add it to the list
-				$list[] = array($level - 1, $matches[1]);
+				$list[] = array($level - 1, $title_name);
 				//Now we wait one of its children or its brother
 				$max_level_expected = $level + 1;
 				
 				//Réinsertion
-				$lines[$i] = '<div class="wiki_paragraph' .  ($level - 1) . '" id="paragraph_' . url_encode_rewrite($matches[1]) . '">' . $matches[1] .'</div><br />' . "\n";
+				$lines[$i] = '<div class="wiki_paragraph' .  ($level - 1) . '" id="paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</div><br />' . "\n";
 			}
 		}
 		$i++;
@@ -117,7 +119,7 @@ function wiki_display_menu($menu_list)
 	{
 		$current_level = $title[0];
 		
-		$title_name = strip_tags(html_entity_decode($title[1]));		
+		$title_name = $title[1];		
 		$title_link = '<a href="#paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
