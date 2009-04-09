@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   Sessions v4.0.0 
+ *   Session v4.0.0 
  *
 ###################################################
  *
@@ -32,7 +32,7 @@ define('NO_AUTOCONNECT', false);
 define('ALREADY_HASHED', true);
 define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 
-class Sessions
+class Session
 {
 	## Public Attribute ##
 	var $data = array(); //Tableau contenant les informations de session.
@@ -132,7 +132,7 @@ class Sessions
 		
 		########Insertion dans le compteur si l'ip est inconnue.########
 		$check_ip = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
-		$_include_once = empty($check_ip) && ($this->_check_bot(USER_IP) === false);
+		$_include_once = empty($check_ip) && (Session::_check_bot(USER_IP) === false);
 		if ($_include_once)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
@@ -157,7 +157,7 @@ class Sessions
         $this->data['token'] = strhash(uniqid(mt_rand(), true), false);
 		
 		########Session existe t-elle?#########
-		$this->garbage_collector(); //On nettoie avant les sessions périmées.
+		Session::garbage_collector(); //On nettoie avant les sessions périmées.
 
 		if ($user_id !== '-1')
 		{
@@ -343,7 +343,7 @@ class Sessions
 		if (isset($_COOKIE[$CONFIG['site_cookie'].'_autoconnect']))
 			setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 		
-		$this->garbage_collector();
+		Session::garbage_collector();
 	}
 	
 	//Récupère les paramtères de la sessions.
@@ -461,7 +461,11 @@ class Sessions
 		return false;
 	}
 	
-	//Suppression des sessions expirées par le garbage collector.
+	/**
+	 * @static
+	 * @desc Deletes all the existing sessions
+	 * @return unknown_type
+	 */
 	function garbage_collector()
 	{
 		global $CONFIG, $Sql;
@@ -473,6 +477,11 @@ class Sessions
 	}
 	
 	//Détecte les principaux robots par plage ip, retourne leurs noms, et enregistre le nombre et l'heure de passages dans un fichier texte.
+	/**
+	 * @static
+	 * @param $user_ip
+	 * @return unknown_type
+	 */
 	function _check_bot($user_ip)
 	{
 		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
@@ -604,12 +613,12 @@ class Sessions
 	            return true;
 	        }
 	        //Second chance: the referer is correct
-    	    if ($this->_check_referer())
+    	    if (Session::_check_referer())
             {
                 return true;
             }
             //If those two lines are executed, none of the two cases has been matched. Thow it's a potential attack.
-            $this->_csrf_attack($redirect);
+            Session::_csrf_attack($redirect);
 	        return false;
 		}
 		//It's not a POST request, there is no problem.
@@ -631,13 +640,14 @@ class Sessions
         $token = $this->get_token();
         if (empty($token) || retrieve(GET, 'token', '') !== $token)
         {
-            $this->_csrf_attack($redirect);
+            Session::_csrf_attack($redirect);
             return false;
         }
         return true;
     }
     
     /**
+     * @static
      * @desc check that the operation is done from this site
      * @return true if the referer is on this site
      */
@@ -650,6 +660,7 @@ class Sessions
     }
     
     /**
+     * @static
      * @desc Redirect to the $redirect error page if the token is wrong
      * if false, do not redirect
      * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong

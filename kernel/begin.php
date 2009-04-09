@@ -51,7 +51,7 @@ import('core/errors');
 import('io/template');
 import('db/mysql');
 import('core/cache');
-import('members/sessions');
+import('members/session');
 import('members/user');
 import('members/groups');
 import('members/authorizations');
@@ -82,7 +82,7 @@ $Cache->load('langs'); //Récupération de la configuration des thèmes.
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
 
-$Session = new Sessions(); //!\\Initialisation  de la class des sessions//!\\
+$Session = new Session(); //!\\Initialisation  de la class des sessions//!\\
 
 //Activation de la bufférisation de sortie
 if ($CONFIG['ob_gzhandler'] == 1)

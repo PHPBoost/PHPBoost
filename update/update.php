@@ -648,8 +648,8 @@ switch($step)
                 //On connecte directement l'administrateur si il l'a demandé
                 if ($create_session)
                 {
-                    import('members/sessions');
-                    $Session = new Sessions;
+                    import('members/session');
+                    $Session = new Session;
                     
                     //Remise à zéro du compteur d'essais.
                     $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
