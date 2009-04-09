@@ -53,6 +53,8 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 	if (empty($news['id']))
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 
+	import('content/comments');
+	
 	$tpl_news = new Template('news/news.tpl');
 	
 	$next_news = $Sql->query_array(PREFIX . "news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
@@ -89,7 +91,7 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $CONFIG_NEWS['display_author'] ? $news['login'] : '',				
 		'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $news['timestamp']) : '',
-		'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
+		'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'U_USER_ID' => url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 		'U_NEWS_LINK' => url('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 	    'FEED_MENU' => get_feed_menu(FEED_URL)

@@ -246,12 +246,14 @@ if ($checkdate === true && empty($id) && !$add)
 				$java = '';
 			}
 			
+			import('content/comments');
+			
 			$Template->assign_block_vars('action', array(
 				'DATE' => gmdate_format('date_format', $row['timestamp']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
 				'LOGIN' => '<a class="com" href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '">' . $row['login'] . '</a>',
-				'COM' => com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
+				'COM' => Comments::com_display_link($row['nbr_com'], '../calendar/calendar' . url('.php?d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year . '&amp;e=' . $row['id'] . '&amp;com=0', '-' . $day . '-' . $month . '-' . $year . '-' . $row['id'] . '.php?com=0'), $row['id'], 'calendar'),
 				'EDIT' => $edit,
 				'DEL' => $del,
 				'L_ON' => $LANG['on']

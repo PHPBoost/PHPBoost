@@ -166,6 +166,7 @@ if (empty($id_media) && $id_cat >= 0)
 
 		//Notes
 		import('content/note');
+		import('content/comments');
 
 		$Template->assign_vars(array(
 			'PAGINATION' => $Pagination->display(url('media.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $id_cat . '&amp;p=%d', 'media-0-' . $id_cat . '-%d' . '+' . url_encode_rewrite($MEDIA_CATS[$id_cat]['name']) . '.php' . $unget), $MEDIA_CATS[$id_cat]['num_media'], 'p', $MEDIA_CONFIG['pagin'], 3),
@@ -195,7 +196,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id']),
-				'U_COM_LINK' => com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
+				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
 			));
 		}
 
@@ -240,6 +241,8 @@ elseif ($id_media > 0)
 	import('content/note');
 	$Note = new Note('media', $id_media, url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'), $MEDIA_CONFIG['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
+	import('content/comments');
+	
 	$Template->assign_vars(array(
 		'C_DISPLAY_MEDIA' => true,
 		'C_MODO' => $User->check_level(MODO_LEVEL),
@@ -253,7 +256,7 @@ elseif ($id_media > 0)
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
 		'NUM_NOTES' => (int)$media['nbrnote'] > 1 ? sprintf($MEDIA_LANG['num_notes'], (int)$media['nbrnote']) : sprintf($MEDIA_LANG['num_note'], (int)$media['nbrnote']),
 		'LANG' => $CONFIG['lang'],
-		'U_COM' => com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
+		'U_COM' => Comments::com_display_link($media['nbr_com'], '../media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php?com=0'), $id_media, 'media'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_MEDIA_INFOS' => $MEDIA_LANG['media_infos'],

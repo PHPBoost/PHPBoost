@@ -388,7 +388,13 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
     return $result;
 }
 
-//Parcours d'une chaine sous la forme d'un simili tableau php. Retourne un tableau correctement construit.
+/**
+ * @desc Parses a table written in a special syntax which is user-friendly and can be inserted in a ini file (PHP serialized arrays cannot be inserted because they contain the " character).
+ * The syntax is very easy, it really looks like the PHP array declaration: key => value, key2 => value2
+ * You can nest some elements: key => (key1 => value1, key2 => value2), key2 => value2
+ * @param string $links_format Serialized array
+ * @return string[] The unserialized array.
+ */
 function parse_ini_array($links_format)
 {
     $links_format = preg_replace('` ?=> ?`', '=', $links_format);
@@ -443,7 +449,15 @@ function parse_ini_array($links_format)
     return $admin_links;
 }
 
-//Récupération du dernier champ de configuration du config.ini du module.
+/**
+ * @desc Returns the config field of a module configuration file.
+ * In fact, this field contains the default module configuration in which we can find some " characters. To solve the problem, 
+ * this field is considered as a comment and when we want to retrieve its value, we have to call this method which returns its value. 
+ * @param string $dir_path Path in which is the file (stop just before the lang folder)
+ * @param string $require_dir Lang folder in which must be the file
+ * @param string $ini_name Config file name
+ * @return string The config field value.
+ */
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
@@ -469,6 +483,15 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 }
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
+/**
+ * @desc Finds a folder according to the user language. You find the file in a folder in which there is one folder per lang.
+ * If it doesn't exist, you want to choose the file in another language.
+ * This function returns the path of an existing file (if the required lang exists, it will be it, otherwise it will be one of the existing files).
+ * @param string $dir_path Path of the folder in which you want to search
+ * @param string $require_dir Default folder
+ * @param string $fatal_error true if you want to throw a fatal error if no file could be found, false otherwise.
+ * @return string The path of the folder you search.
+ */
 function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 {
     //Si le dossier de langue n'existe pas on prend le suivant exisant.
@@ -488,7 +511,9 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
         }
     }
     else
-    return $require_dir;
+    {
+    	return $require_dir;
+    }
 
     if ($fatal_error)
     {
@@ -500,16 +525,22 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
     }
 }
 
-//Récupère le dossier du module.
+/**
+ * @desc Retrieves the identifier (name of the folder) of the module which is currently executed.
+ * @return string The module identifier.
+ */
 function get_module_name()
 {
-    $module_name = explode('/', SCRIPT);
-    array_pop($module_name);
-
-    return array_pop($module_name);
+	$path = str_replace(DIR, '', SCRIPT);
+	$module_name = explode('/', $path);
+	
+	return $module_name[0];
 }
 
-//Redirection.
+/**
+ * @desc Redirects the user to the URL and stops purely the script execution (database deconnexion...).
+ * @param string $url URL at which you want to redirect the user.
+ */
 function redirect($url)
 {
     global $Sql;
@@ -523,7 +554,12 @@ function redirect($url)
     exit;
 }
 
-//Redirection.
+/**
+ * @desc Displays a confirmation message during a defined delay and then redirects the user.
+ * @param string $url_error Url at which you want to redirect him.
+ * @param string $l_error The message to show him
+ * @param int $delay_redirect Number of seconds after which you want him to be redirected.
+ */
 function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 {
     global $LANG;
@@ -537,10 +573,13 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 		'L_REDIRECT' => $LANG['redirect']
     ));
 
-    return $template->parse();
+    $template->parse();
 }
 
-//Récupération de la page de démarrage du site.
+/**
+ * @desc Retrieve the site start page. 
+ * @return The absolute start page URL.
+ */
 function get_start_page()
 {
     global $CONFIG;
@@ -549,7 +588,12 @@ function get_start_page()
     return $start_page;
 }
 
-//Vérifie que le message ne contient pas plus de x liens
+/**
+ * @desc Checks if a string contains less than a defined number of links (used to prevent SPAM).
+ * @param string $contents String in which you want to count the number of links
+ * @param int $max_nbr Maximum number of links accepted.
+ * @return bool true if there are no too much links, false otherwise.
+ */
 function check_nbr_links($contents, $max_nbr)
 {
     if ($max_nbr == -1)
@@ -566,31 +610,27 @@ function check_nbr_links($contents, $max_nbr)
     return true;
 }
 
-//This will be a static method of the class when we will be only in PHP 5 :)
-function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
-{
-    global $CONFIG, $LANG;
-
-    $link = '';
-    $l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
-    $l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
-
-    $link_pop = "javascript:popup('" . HOST . DIR . url('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "')";
-    $link_current = $path . '#anchor_' . $script;
-
-    $link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
-
-    return $link;
-}
-
-//Vérifie la validité du mail
+/**
+ * @deprecated
+ * @desc Checks if a string could match an email address form.
+ * @param string $mail String to check
+ * @return bool true if the form is correct, false otherwhise.
+ * @see Mail::check_validity
+ */
 function check_mail($mail)
 {
 	import('io/mail');
 	return Mail::check_validity($mail);
 }
 
-//Charge le parseur.
+/**
+ * @desc Parses a string with several default parameters. This methods exists to lighten the number of lines written.
+ * @param string $content Content to parse
+ * @param string[] $forbidden_tags List of the forbidden formatting tags
+ * @param bool $addslashes if true, the parsed string will be escaped.
+ * @return string The parsed string.
+ * @see ContentParser
+ */
 function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 {
     //On utilise le gestionnaire de contenu
@@ -613,7 +653,14 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
     return $parser->get_content($addslashes);
 }
 
-//Charge l'unparseur.
+/**
+ * @desc Unparses a string with several default parameters. This methods exists to lighten the number of lines written.
+ * @param string $content Content to unparse
+ * @param string[] $forbidden_tags List of the forbidden formatting tags
+ * @param bool $addslashes if true, the unparsed string will be escaped.
+ * @return string The unparsed string.
+ * @see ContentUnparser
+ */
 function unparse(&$content)
 {
     $content_manager = new ContentFormattingFactory();
@@ -624,7 +671,14 @@ function unparse(&$content)
     return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
-//Parse temps réel
+/**
+ * @desc Second parses a string with several default parameters. This methods exists to lighten the number of lines written.
+ * @param string $content Content to second parse
+ * @param string[] $forbidden_tags List of the forbidden formatting tags
+ * @param bool $addslashes if true, the second parsed string will be escaped.
+ * @return string The second parsed string.
+ * @see ContentSecondParser
+ */
 function second_parse(&$content)
 {
     $content_manager = new ContentFormattingFactory();
@@ -636,7 +690,14 @@ function second_parse(&$content)
     return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
-//Transmet le session_id et le user_id à traver l'url pour les connexions sans cookies. Permet le support de l'url rewritting!
+/**
+ * @desc Adds the session ID to an URL if the user doesn't accepts cookies.
+ * This functions allows you to generate an URL according to the site configuration concerning the URL rewriting.
+ * @param string $url URL if the URL rewriting is disabled
+ * @param string $mod_rewrite URL if the URL rewriting is enabled
+ * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
+ * @return string The URL to use.
+ */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
     global $CONFIG, $Session;
@@ -667,7 +728,11 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
     }
 }
 
-//Nettoie l'url de tous les caractères spéciaux, accents, etc....
+/**
+ * @desc Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
+ * @param string $string String to encode.
+ * @return string The encoded string.
+ */
 function url_encode_rewrite($string)
 {
     $string = strtolower(html_entity_decode($string));

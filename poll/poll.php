@@ -128,7 +128,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		{
 			$Sql->query_inject("UPDATE " . PREFIX . "poll SET votes = '" . implode('|', $array_votes) . "' WHERE id = '" . $poll['id'] . "'", __LINE__, __FILE__);
 			
-			//Tout c'est bien déroulé, on redirige vers la page des resultats.
+			//Tout s'est bien déroulé, on redirige vers la page des resultats.
 			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['confirm_vote'], 2);
 			
 			if (in_array($poll['id'], $CONFIG_POLL['poll_mini']) ) //Vote effectué du mini poll => mise à jour du cache du mini poll.

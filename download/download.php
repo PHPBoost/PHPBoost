@@ -48,6 +48,8 @@ if ($file_id > 0) //Contenu
 	import('content/note');
 	$Note = new Note('download', $file_id, url('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
 	
+	import('content/comments');
+	
 	$Template->assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
 		'C_IMG' => !empty($download_info['image']),
@@ -67,7 +69,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
+		'U_COM' => Comments::com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -230,6 +232,7 @@ else
 		
 		//Notes
 		import('content/note');
+		import('content/comments');
 		
 		$Template->assign_vars(array(
 			'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
@@ -258,7 +261,7 @@ else
 				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
 				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'U_COM_LINK' => com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
+				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
 			));
 		}
 		$Sql->query_close($result);
