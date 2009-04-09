@@ -125,7 +125,7 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 }
 elseif (!empty($id))
 {	
-	$extend_field = $Sql->query_array(PREFIX . "member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "required", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$extend_field = $Sql->query_array(DB_TABLE_MEMBER_EXTEND_CAT, "id", "name", "contents", "field", "possible_values", "default_values", "required", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$regex_checked = 2;
 	$predef_regex = false;

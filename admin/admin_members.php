@@ -238,7 +238,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					$req_field = '';
 					$req_insert = '';
 					$result = $Sql->query_while("SELECT field_name, field, possible_values
-					FROM " . PREFIX . "member_extend_cat
+					FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
 					WHERE display = 1", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 					{
@@ -274,7 +274,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						}
 					}
 					$Sql->query_close($result);	
-										
+					
 					$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 					if ($check_member)
 					{	
@@ -742,7 +742,7 @@ elseif (!empty($id))
 			'L_MISCELLANEOUS' => $LANG['miscellaneous']
 		));
 
-		$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values, ex.*
+		$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values, ex.*
 		FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " exc
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTEND . " ex ON ex.user_id = '" . $id . "'
 		WHERE exc.display = 1
@@ -807,7 +807,7 @@ elseif (!empty($id))
 			}				
 			
 			$Template->assign_block_vars('list', array(
-				'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
+				'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 				'ID' => $row['field_name'],
 				'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 				'FIELD' => $field

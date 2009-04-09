@@ -165,7 +165,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$req_field = '';
 						$req_insert = '';
 						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex, required
-						FROM " . PREFIX . "member_extend_cat
+						FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
 						WHERE display = 1", __LINE__, __FILE__);
 						while ($row = $Sql->fetch_assoc($result))
 						{
