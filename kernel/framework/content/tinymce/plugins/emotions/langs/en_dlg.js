@@ -1,9 +1,9 @@
-tinyMCE.addI18n('fr.emotions_dlg',{
-title:"Insert smileys",
+tinyMCE.addI18n('en.emotions_dlg',{
+title:"Insert a smiley",
 desc:"Smileys",
 cool:"Cool",
-cry:"Pleure",
-embarassed:"Embarassé",
+cry:"Cry",
+embarassed:"Embarassed",
 foot_in_mouth:"Foot in mouth",
 frown:"Frown",
 innocent:"Innocent",
