@@ -236,6 +236,10 @@ $LANG['admin'] = 'Administrateur';
 //Champs supplémentaires
 $LANG['extend_field_management'] = 'Gestion des champs membres';
 $LANG['extend_field_add'] = 'Ajouter un champ membre';
+$LANG['required_field'] = 'Champ requis';
+$LANG['required_field_explain'] = 'Obligatoire dans le profil du membre et à son inscription.';
+$LANG['required'] = 'Requis';
+$LANG['not_required'] = 'Non requis';
 $LANG['regex'] = 'Regex';
 $LANG['regex_explain'] = 'Permet de contrôler de façon sûre l\'entrée utilisateur';
 $LANG['possible_values'] = 'Valeurs possibles';

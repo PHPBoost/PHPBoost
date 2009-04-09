@@ -19,7 +19,7 @@
 		<form action="admin_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<table class="module_table">
 				<tr> 
-					<th colspan="4">
+					<th colspan="5">
 						{L_EXTEND_FIELD_MANAGEMENT}
 					</th>
 				</tr>
@@ -29,6 +29,9 @@
 					</td>
 					<td class="row1" style="width:180px">
 						{L_POSITION}
+					</td>
+					<td class="row1" style="width:180px">
+						{L_REQUIRED}
 					</td>
 					<td class="row1" style="width:180px">
 						{L_UPDATE}
@@ -47,6 +50,9 @@
 					<td class="row2">
 						{field.TOP}
 						{field.BOTTOM}
+					</td>
+					<td class="row2">
+						{field.L_REQUIRED}
 					</td>
 					<td class="row2"> 
 						<a href="admin_extend_field.php?id={field.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
@@ -113,6 +119,13 @@
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>
 					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents">{CONTENTS}</textarea> </label></dd>
+				</dl>
+				<dl> 
+					<dt><label for="required_field">* {L_REQUIRED_FIELD}</label><br /><span>{L_REQUIRED_FIELD_EXPLAIN}</span></dt>
+					<dd><label>
+						<label><input type="radio" name="required" id="required_field" value="1" {REQUIRED_FIELD_ENABLE} /> {L_REQUIRED}</label>
+						<label><input type="radio" name="required" id="required_field2" value="0" {REQUIRED_FIELD_DISABLE} /> {L_NOT_REQUIRED}</label>
+					</label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="field">* {L_TYPE}</label></dt>

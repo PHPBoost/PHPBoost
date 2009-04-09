@@ -164,12 +164,17 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$req_update = '';
 						$req_field = '';
 						$req_insert = '';
-						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex
+						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex, required
 						FROM " . PREFIX . "member_extend_cat
 						WHERE display = 1", __LINE__, __FILE__);
 						while ($row = $Sql->fetch_assoc($result))
 						{
 							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNCHANGE);
+							
+							//Champs requis, si vide redirection.
+							if ($row['required'] && $row['field'] != 6 && empty($field))
+								redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
+							
 							//Validation par expressions régulières.
 							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 							{
@@ -211,6 +216,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($value) . '|' : '';
 									$i++;
 								}
+								if ($row['required'] && empty($field))
+									redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
 							}
 							else
 								$field = strprotect($field);

@@ -35,6 +35,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 	$name = retrieve(POST, 'name', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$field = retrieve(POST, 'field', 0);
+	$required = retrieve(POST, 'required', 0);
 	$possible_values = retrieve(POST, 'possible_values', '');
 	$default_values = retrieve(POST, 'default_values', '');
 	
@@ -67,7 +68,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 		if (empty($check_name)) 
 		{
 			$class = $Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', '" . $required . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
 			//Alteration de la table pour prendre en compte le nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
 			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
@@ -102,7 +103,11 @@ else
 		'L_REQUIRE' => $LANG['require'],
 		'L_NAME' => $LANG['name'],
 		'L_TYPE' => $LANG['type'],
-		'L_DESC' => $LANG['description'],		
+		'L_DESC' => $LANG['description'],
+		'L_REQUIRED_FIELD' => $LANG['required_field'],
+		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
+		'L_REQUIRED' => $LANG['required'],
+		'L_NOT_REQUIRED' => $LANG['not_required'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
 		'L_LONG_TEXT' => $LANG['long_text'],
 		'L_SEL_UNIQ' => $LANG['sel_uniq'],

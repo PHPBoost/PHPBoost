@@ -282,7 +282,7 @@ if (empty($key))
 			));
 			$Template->assign_block_vars('miscellaneous', array(			
 			));
-			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
+			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values
 			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
@@ -344,8 +344,16 @@ if (empty($key))
 					break;
 				}				
 				
+				if ($row['required'])
+				{	
+					$Template->assign_block_vars('miscellaneous_js_list', array(
+						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($row['name'])),
+						'ID' => $row['field_name']
+					));
+				}
+				
 				$Template->assign_block_vars('miscellaneous.list', array(
-					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
+					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 					'FIELD' => $field

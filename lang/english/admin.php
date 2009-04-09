@@ -236,6 +236,10 @@ $LANG['admin'] = 'Administrator';
 //Extend fields
 $LANG['extend_field_management'] = 'Member field management';
 $LANG['extend_field_add'] = 'Add member field';
+$LANG['required_field'] = 'Required field';
+$LANG['required_field_explain'] = 'Required on the member profil and registration area';
+$LANG['required'] = 'Required';
+$LANG['not_required'] = 'Not Required';
 $LANG['regex'] = 'Regex';
 $LANG['regex_explain'] = 'Control user input';
 $LANG['possible_values'] = 'Possible values';
