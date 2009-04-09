@@ -46,7 +46,7 @@ class FeedItem
      * @desc Sets the feed item title
      * @param string $value The title
      */
-    function set_title($value) { $this->title = $value; }
+    function set_title($value) { $this->title = strip_tags($value); }
     /**
      * @desc Sets the feed item date
      * @param Date $value a date object representing the item date

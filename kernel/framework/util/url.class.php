@@ -99,8 +99,8 @@ class Url
 	}
 
 	/**
-	 * @desc Returns the relative url if defined, else the empty string
-	 * @return string the relative url if defined, else the empty string
+	 * @desc Returns the relative url if defined, else the absolute one
+	 * @return string the relative url if defined, else the absolute one
 	 */
 	function relative()
 	{
