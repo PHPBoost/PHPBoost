@@ -142,7 +142,7 @@ CREATE TABLE `phpboost_member_extend_cat` (
   `field` tinyint(1) NOT NULL default '0',
   `possible_values` text NOT NULL,
   `default_values` text NOT NULL,
-  `required` tinyint(1) NOT NULL default '0',
+  `require` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) NOT NULL default '0',
   `regex` varchar(255) NOT NULL default '',
   UNIQUE KEY `id` (`id`)
