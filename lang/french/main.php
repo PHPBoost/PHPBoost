@@ -649,6 +649,6 @@ $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 
 'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 
-$LANG['csrf_attack'] = '<p>Vous avez été victime d\'une attaque de type <acronym title="Cross-Site Request Forgery">CSRF</acronym>. PHPBoost a bloqué cette attaque.</p>
+$LANG['csrf_attack'] = '<p>Vous avez été potentiellement victime d\'une attaque de type <acronym title="Cross-Site Request Forgery">CSRF</acronym> que PHPBoost a bloquée.</p>
 <p>Pour plus d\'informations, visitez <a href="http://fr.wikipedia.org/wiki/Cross-Site_Request_Forgeries" title="Attaques CSRF" class="wikipedia_link">wikipedia</a></p>';
 ?>
