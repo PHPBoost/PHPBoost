@@ -35,7 +35,9 @@ $check_advanced = !empty($_GET['adv']);
 //Variables serveur.
 $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
 if (!$server_path)
-	$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+{
+$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+}
 $server_path = trim(str_replace('/admin', '', dirname($server_path)));
 $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
 
@@ -44,11 +46,17 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 {
 	//Gestion de la page de démarrage.
 	if (!empty($_POST['start_page2']) )
+	{
 		$start_page = strprotect($_POST['start_page2']);
+	}
 	elseif (!empty($_POST['start_page']))
+	{
 		$start_page = strprotect($_POST['start_page']);
+	}
 	else
+	{
 		$start_page = '';
+	}
 		
 	$config = $CONFIG;	 
 	$config['site_name'] 	= stripslashes(retrieve(POST, 'site_name', ''));	
@@ -76,7 +84,9 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 		redirect(HOST . SCRIPT);
 	}
 	else
+	{
 		redirect(HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
+	}
 }
 elseif ($check_advanced && empty($_POST['advanced']))
 {
@@ -91,14 +101,20 @@ elseif ($check_advanced && empty($_POST['advanced']))
 		$check_rewrite = (!empty($get_rewrite[5])) ? '<span class="success_test">' . $LANG['yes'] . '</span>' : '<span class="failure_test">' . $LANG['no'] . '</span>';
 	}
 	else
+	{
 		$check_rewrite = '<span class="unspecified_test">' . $LANG['undefined'] . '</span>';
+	}
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
 	elseif (isset($_GET['mail']))
+	{
 		$Errorh->handler($LANG['unlock_admin_confirm'], E_USER_NOTICE);
+	}
 	
 	//Gestion fuseau horaire par défaut.
 	$select_timezone = '';
@@ -177,21 +193,25 @@ elseif (!empty($_POST['advanced']))
 	$CONFIG['server_path'] = trim(strprotect(retrieve(POST, 'server_path', $server_path, TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE), '/');
 	//Si le chemin de PHPBoost n'est pas vide, on y ajoute un / devant
 	if ($CONFIG['server_path'] != '')
-		  $CONFIG['server_path'] = '/' . $CONFIG['server_path'];
+	{
+		$CONFIG['server_path'] = '/' . $CONFIG['server_path'];
+	}
 		  
 	$CONFIG['timezone'] = retrieve(POST, 'timezone', 0);  
 	$CONFIG['ob_gzhandler'] = (!empty($_POST['ob_gzhandler'])&& function_exists('ob_gzhandler') && @extension_loaded('zlib')) ? 1 : 0;
-	$CONFIG['site_cookie'] = strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE); //Session par defaut.
+	$CONFIG['site_cookie'] = strprotect(retrieve(POST, 'site_cookie', 'session', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_NONE); //Session par defaut.
 	$CONFIG['site_session'] = retrieve(POST, 'site_session', 3600); //Valeur par defaut à 3600.					
 	$CONFIG['site_session_invit'] = retrieve(POST, 'site_session_invit', 300); //Durée compteur 5min par defaut.
-	$CONFIG['htaccess_manual_content'] = strprotect(retrieve(POST, 'htaccess_manual_content', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+	$CONFIG['htaccess_manual_content'] = retrieve(POST, 'htaccess_manual_content', '', TSTRING_UNCHANGE);
 	$CONFIG['debug_mode'] = retrieve(POST, 'debug', 0);
 	
 	if (!empty($CONFIG['server_name']) && !empty($CONFIG['site_cookie']) && !empty($CONFIG['site_session']) && !empty($CONFIG['site_session_invit']) ) //Nom de serveur obligatoire
 	{
 		list($host, $dir) = array($CONFIG['server_name'], $CONFIG['server_path']); //Réassignation pour la redirection.
 		if (empty($_POST['rewrite_engine']) || strpos($_SERVER['SERVER_NAME'], 'free.fr')) //Désactivation de l'url rewriting.
+		{
 			$CONFIG['rewrite'] = 0;
+		}
 			
 		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
 		###### Régénération du cache $CONFIG #######
@@ -204,7 +224,9 @@ elseif (!empty($_POST['advanced']))
 		redirect($host . $dir . '/admin/admin_config.php?adv=1');
 	}
 	else
+	{
 		redirect(HOST . DIR . '/admin/admin_config.php?adv=1&error=incomplete#errorh');
+	}
 }
 else //Sinon on rempli le formulaire	 
 {		
@@ -215,7 +237,9 @@ else //Sinon on rempli le formulaire
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
+	{
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
 	
 	$select_page = '';
 	$start_page = '';
@@ -236,7 +260,9 @@ else //Sinon on rempli le formulaire
 		}
 	}
 	if ($i == 0)
+	{
 		$select_page = '<option value="" selected="selected">' . $LANG['no_module_starteable'] . '</option>';
+	}
 
 	$Template->assign_vars(array(		
 		'THEME' => get_utheme(),
@@ -310,7 +336,9 @@ else //Sinon on rempli le formulaire
 	$lang_array = array();
 	$lang_folder_path = new Folder('../lang/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
+	{
 		$lang_array[] = $lang->get_name();
+	}
 	
 	$lang_array_bdd = array();
 	$result = $Sql->query_while("SELECT lang 
@@ -319,7 +347,9 @@ else //Sinon on rempli le formulaire
 	{
 		//On recherche les clées correspondante à celles trouvée dans la bdd.
 		if (array_search($row['lang'], $lang_array) !== false)
+		{
 			$lang_array_bdd[] = $row['lang']; //On insère ces clées dans le tableau.
+		}
 	}
 	$Sql->query_close($result);
 	
@@ -353,7 +383,9 @@ else //Sinon on rempli le formulaire
 	$tpl_array = array();
 	$lang_folder_path = new Folder('../templates/');
 	foreach ($lang_folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $lang)
+	{
 		$tpl_array[] = $lang->get_name();
+	}
 		
 	$theme_array_bdd = array();
 	$result = $Sql->query_while("SELECT theme 
@@ -362,7 +394,9 @@ else //Sinon on rempli le formulaire
 	{
 		//On recherche les clées correspondante à celles trouvée dans la bdd.
 		if (array_search($row['theme'], $tpl_array) !== false)
+		{
 			$theme_array_bdd[] = $row['theme']; //On insère ces clées dans le tableau.
+		}
 	}
 	$Sql->query_close($result);
 	
