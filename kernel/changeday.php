@@ -55,7 +55,7 @@ if ($check_update == 0)
     $Sql->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit . "', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'", __LINE__, __FILE__);
 
     //Suppression des sessions périmées
-    $Session->garbage_collector();
+    Session::garbage_collector();
 
     //Suppression des images du cache des formules mathématiques, supprimé chaque semaine.
     import('io/filesystem/folder');
