@@ -65,7 +65,7 @@ class Url
 	 */
 	function set_url($url)
 	{
-		$url = str_replace(HOST . DIR, '', $url);
+		$url = str_replace(HOST . DIR . '/', '/', $url);
 		if (!strpos($url, '://'))
 		{
 			if (substr($url, 0, 1) == '/')
