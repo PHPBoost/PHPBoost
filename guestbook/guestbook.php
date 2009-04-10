@@ -369,7 +369,7 @@ else //Affichage.
 		
 		//Image associée au rang.
 		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-					
+		
 		//Affichage des groupes du membre.
 		if (!empty($row['user_groups']) && $_array_groups_auth)
 		{
@@ -391,7 +391,7 @@ else //Affichage.
 		if (empty($row['user_avatar']))
 			$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="../templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
 		else
-			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
+			$user_avatar = '<img src="' . $row['user_avatar'] . '" alt="" />';
 		
 		//Affichage du sexe et du statut (connecté/déconnecté).
 		$user_sex = '';

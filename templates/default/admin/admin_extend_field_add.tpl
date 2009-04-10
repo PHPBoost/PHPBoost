@@ -70,9 +70,9 @@
 					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents" id="contents"></textarea></label></dd>
 				</dl>
 				<dl> 
-					<dt><label for="required_field">* {L_REQUIRED_FIELD}</label><br /><span>{L_REQUIRED_FIELD_EXPLAIN}</span></dt>
+					<dt><label>* {L_REQUIRED_FIELD}</label><br /><span>{L_REQUIRED_FIELD_EXPLAIN}</span></dt>
 					<dd><label>
-						<label><input type="radio" name="required" id="required_field" value="1" /> {L_REQUIRED}</label>
+						<label><input type="radio" name="required" id="required_field1" value="1" /> {L_REQUIRED}</label>
 						<label><input type="radio" name="required" id="required_field2" value="0" checked="checked" /> {L_NOT_REQUIRED}</label>
 					</label></dd>
 				</dl>
