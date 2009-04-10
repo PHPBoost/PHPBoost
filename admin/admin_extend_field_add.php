@@ -3,7 +3,7 @@
  *                               admin_extend_field_add.php
  *                            -------------------
  *   begin                : June 16, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -33,7 +33,7 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
 	$name = retrieve(POST, 'name', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
 	$field = retrieve(POST, 'field', 0);
 	$required = retrieve(POST, 'required', 0);
 	$possible_values = retrieve(POST, 'possible_values', '');
