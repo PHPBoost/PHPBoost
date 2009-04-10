@@ -26,22 +26,22 @@
  *
 ###################################################*/
 
-define('DATE_TIMESTAMP', 0);
-define('DATE_NOW', 1);
-define('DATE_YEAR_MONTH_DAY', 2);
+define('DATE_TIMESTAMP', 		0);
+define('DATE_NOW', 				1);
+define('DATE_YEAR_MONTH_DAY', 	2);
 define('DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND', 3);
-define('DATE_FROM_STRING', 4);
-define('DATE_FORMAT_TINY', 1);
-define('DATE_FORMAT_SHORT', 2);
-define('DATE_FORMAT', 3);
-define('DATE_FORMAT_LONG', 4);
-define('DATE_RFC822_F', 5);
-define('DATE_RFC3339_F', 6);
+define('DATE_FROM_STRING', 		4);
+define('DATE_FORMAT_TINY', 		1);
+define('DATE_FORMAT_SHORT', 	2);
+define('DATE_FORMAT', 			3);
+define('DATE_FORMAT_LONG', 		4);
+define('DATE_RFC822_F', 		5);
+define('DATE_RFC3339_F', 		6);
 
-define('DATE_RFC822_FORMAT', 'D, d M Y H:i:s O');
-define('DATE_RFC3339_FORMAT', 'Y-m-d\TH:i:s');
+define('DATE_RFC822_FORMAT', 	'D, d M Y H:i:s O');
+define('DATE_RFC3339_FORMAT', 	'Y-m-d\TH:i:s');
 
-define('TIMEZONE_AUTO', TIMEZONE_USER);
+define('TIMEZONE_AUTO', 		TIMEZONE_USER);
 
 /**
  * @desc This class allows you to handle easily some dates. A date is a day and an hour (year, month, day, hour, minutes, seconds).
@@ -51,7 +51,6 @@ define('TIMEZONE_AUTO', TIMEZONE_USER);
  * 	<li>Site timezone: it's the timezone of the central place of the site. For example, if your site deals with the italian soccer championship, it will be GMT+1.</li>
  * 	<li>User timezone :  each registered user can specify its timezone. It's particulary useful for people who visit some sites from a foreign country.</li>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- * @package util
  */
 class Date
 {
@@ -110,7 +109,7 @@ class Date
 		if ($format != DATE_NOW)
 		{
 			// Fuseau horaire
-			if (func_get_arg(1) !== false)
+			if ($num_args >= 2)
 				$referencial_timezone = func_get_arg(1);
 			else
 				$referencial_timezone = TIMEZONE_USER;
@@ -128,10 +127,14 @@ class Date
 			case DATE_YEAR_MONTH_DAY:
 				if ($num_args >= 5)
 				{
-					$year = func_get_arg(3);
-					$month = func_get_arg(4);
-					$day = func_get_arg(2);
+					$year 	= func_get_arg(2);
+					$month 	= func_get_arg(3);
+					$day 	= func_get_arg(4);
 					$this->timestamp = mktime(0, 0, 0, $year, $month, $day) - $time_difference * 3600;
+				}
+				else
+				{
+					$this->timestamp = 0;
 				}
 				break;
 				
@@ -139,21 +142,33 @@ class Date
 			case DATE_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND:
 				if ($num_args >= 7)
 				{
-					$hour = func_get_arg(5);
-					$minute = func_get_arg(6);
-					$seconds = func_get_arg(7);
-					$month = func_get_arg(3);
-					$day = func_get_arg(4);
-					$year = func_get_arg(2);
+					$year 		= func_get_arg(2);
+					$month 		= func_get_arg(3);
+					$day 		= func_get_arg(4);
+					$hour 		= func_get_arg(5);
+					$minute 	= func_get_arg(6);
+					$seconds 	= func_get_arg(7);
 					$this->timestamp = mktime($hour, $minute, $seconds, $month, $day, $year) - $time_difference * 3600;
+				}
+				else
+				{
+					$this->timestamp = 0;
 				}
 				break;
 				
 			case DATE_TIMESTAMP:
-				$this->timestamp = func_get_arg(2) - $time_difference * 3600;
+				if ($num_args >= 3)
+					$this->timestamp = func_get_arg(2) - $time_difference * 3600;
+				else
+					$this->timestamp = 0;
 				break;
 				
 			case DATE_FROM_STRING:
+				if ($num_args < 4)
+				{
+					$this->timestamp = 0;
+					break;
+				}
 				list($month, $day, $year) = array(0, 0, 0);
 				$str = func_get_arg(2);
 				$date_format = func_get_arg(3);
@@ -164,16 +179,16 @@ class Date
 			        switch ($array_date[$i])
 			        {
 			            case 'd':
-			            $day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-			            break;
+							$day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+							break;
 						
 			            case 'm':
-			            $month = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-			            break;
+							$month = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+							break;
 						
 			            case 'y':
-			            $year = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-			            break;
+							$year = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+							break;
 			        }
 			    }
 
@@ -377,6 +392,4 @@ class Date
 	 */
 	var $timestamp = 0;
 }
-
-
 ?>
