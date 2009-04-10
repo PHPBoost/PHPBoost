@@ -3,7 +3,7 @@
  *                               admin_extend_field.php
  *                            -------------------
  *   begin                : June 16, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -51,7 +51,7 @@ if ($del && !empty($id))
 elseif (!empty($_POST['valid']))
 {
 	$name = retrieve(POST, 'name', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
 	$field = retrieve(POST, 'field', 0);
 	$required = retrieve(POST, 'required', 0);
 	$possible_values = retrieve(POST, 'possible_values', '');
@@ -139,7 +139,7 @@ elseif (!empty($id))
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
-		'CONTENTS' => unparse($extend_field['contents']),
+		'CONTENTS' => str_replace('<br />', '', $extend_field['contents']),
 		'POSSIBLE_VALUES' => $extend_field['possible_values'],
 		'DEFAULT_VALUES' => $extend_field['default_values'],
 		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
