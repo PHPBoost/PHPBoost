@@ -38,7 +38,6 @@ define('NUM_ALERTS_PER_PAGE', 20);
 import('util/pagination');
 
 $pagination = new Pagination();
-$pagination->set_var_name_current_page('p');
 
 //Gestion des critères de tri
 $criteria = retrieve(GET, 'criteria', 'current_status');
