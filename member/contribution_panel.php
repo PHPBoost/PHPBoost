@@ -219,7 +219,6 @@ else
 	import('util/pagination');
 	
 	$pagination = new Pagination();
-	$pagination->set_var_name_current_page('p');
 	
 	$template->assign_vars(array(
 		'C_CONTRIBUTION_LIST' => true
