@@ -43,20 +43,21 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
  */
 class Url
 {
-	/**
-	 * @desc Build a Url object
-	 * @param string $url the url string relative to the current path,
-	 * to the website root if beginning with a "/" or an absolute url
-	 * @param string $path_to_root url context. default is PATH_TO_ROOT
-	 */
-	function Url($url = '', $path_to_root = PATH_TO_ROOT)
-	{
-		if (!empty($url))
-		{
-			$this->set_url($url);
-		}
-		$this->path_to_root = Url::path_to_root();
-	}
+
+    /**
+     * @desc Build a Url object
+     * @param string $url the url string relative to the current path,
+     * to the website root if beginning with a "/" or an absolute url
+     * @param string $path_to_root url context. default is PATH_TO_ROOT
+     */
+    function Url($url = '', $path_to_root = PATH_TO_ROOT)
+    {
+        if (!empty($url))
+        {
+            $this->set_url($url);
+        }
+        $this->path_to_root = Url::path_to_root($path_to_root);
+    }
 
 	/**
 	 * @desc Set the url
