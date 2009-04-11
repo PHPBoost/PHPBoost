@@ -128,8 +128,8 @@ class Sql
 	function auto_connect()
 	{
 		//Lecture du fichier de configuration.
-		@require_once(PATH_TO_ROOT . '/kernel/db/config.php');
-		
+		@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
+
 		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
 		if (!defined('PHPBOOST_INSTALLED'))
 		{
