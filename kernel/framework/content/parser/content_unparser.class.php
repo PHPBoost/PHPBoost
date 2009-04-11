@@ -41,12 +41,6 @@ class ContentUnparser extends Parser
 	{
 		parent::Parser();
 	}
-
-	/**
-	 * @abstract
- 	 * @desc Unparses the content of the parser.
-	 */
-	/*abstract*/ function unparse() {}
 	
 	## Private ##
 	/**

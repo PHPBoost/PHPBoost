@@ -48,7 +48,7 @@ class BBCodeUnparser extends ContentUnparser
 	 * @desc Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
-	function unparse()
+	function parse()
 	{
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->_unparse_html(PICK_UP);
