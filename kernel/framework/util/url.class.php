@@ -50,13 +50,21 @@ class Url
      * to the website root if beginning with a "/" or an absolute url
      * @param string $path_to_root url context. default is PATH_TO_ROOT
      */
-    function Url($url = '', $path_to_root = PATH_TO_ROOT)
+    function Url($url = '', $path_to_root = null)
     {
         if (!empty($url))
         {
             $this->set_url($url);
         }
-        $this->path_to_root = Url::path_to_root();
+        
+        if ($path_to_root !== null)
+        {
+            $this->path_to_root = Url::path_to_root($path_to_root);
+        }
+        else
+        {
+            $this->path_to_root = Url::path_to_root();
+        }
     }
 
 	/**
