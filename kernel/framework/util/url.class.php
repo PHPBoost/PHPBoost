@@ -234,7 +234,7 @@ class Url
 	}
 
 	/**
-	 * @desc replace an absolute url by the corresponding relatvie one if possible
+	 * @desc replace an absolute url by the corresponding relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */

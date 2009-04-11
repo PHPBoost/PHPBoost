@@ -666,7 +666,7 @@ function unparse(&$content)
     $content_manager = new ContentFormattingFactory();
     $parser = $content_manager->get_unparser();
     $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
-    $parser->unparse();
+    $parser->parse();
 
     return $parser->get_content(DO_NOT_ADD_SLASHES);
 }

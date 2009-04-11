@@ -50,8 +50,12 @@ class TinyMCEUnparser extends ContentUnparser
 	 * @desc Unparses the content of the parser. It goes from the PHPBoost reference formatting syntax
 	 * to the TinyMCE one.
 	 */
-	function unparse()
+	function parse()
 	{
+		//The URL must be absolutes otherwise TinyMCE won't be able to display  images for instance.	
+		import('util/url');
+        $this->content = Url::html_convert_root_relatives2absolutes($this->content, $this->path_to_root, $this->page_path);
+        
 	    //Extracting HTML and code tags
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
