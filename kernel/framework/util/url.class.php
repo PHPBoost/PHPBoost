@@ -56,7 +56,7 @@ class Url
         {
             $this->set_url($url);
         }
-        $this->path_to_root = Url::path_to_root($path_to_root);
+        $this->path_to_root = Url::path_to_root();
     }
 
 	/**
