@@ -1,6 +1,4 @@
 		<link href="{MODULE_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/prototype.js"></script>
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/scriptaculous.js?load=effects"></script>
 		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--

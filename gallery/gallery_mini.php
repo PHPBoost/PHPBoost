@@ -93,19 +93,19 @@ function gallery_mini($position, $block)
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
     		case 0:
-    		$scoll_mode = 'static_scroll';
+        	$tpl->assign_vars(array(
+    			'C_FADE' => true
+    		));
     		break;
     		case 1:
     		$tpl->assign_vars(array(
     			'C_VERTICAL_SCROLL' => true
     		));
-    		$scoll_mode = 'dynamic_scroll_v';
     		break;
     		case 2:
     		$tpl->assign_vars(array(
     			'C_HORIZONTAL_SCROLL' => true
     		));
-    		$scoll_mode = 'dynamic_scroll_h';
     		break;
     	}
     	
@@ -124,24 +124,15 @@ function gallery_mini($position, $block)
     		if ($row['width'] == 0 || $row['height'] == 0)
     			list($row['width'], $row['height']) = array(142, 142);
     			
-    		if ($CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2)
-    		{
-    			$tpl->assign_block_vars('pics_mini', array(
-    				'ID' => $i,
-    				'PICS' => PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
-    				'NAME' => $row['name'],
-    				'HEIGHT' => $row['height'],
-    				'WIDTH' => $row['width'],
-    				'U_PICS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
-    			));
-    		}
-    		else
-    		{
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '] = new Array();' . "\n";
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'link\'] = \'' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '\';' . "\n";
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'path\'] = \'' . $row['path'] . '\';' . "\n";
-    		}
-    		
+    		$tpl->assign_block_vars('pics_mini', array(
+    			'ID' => $i,
+    			'PICS' => PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
+    			'NAME' => $row['name'],
+    			'HEIGHT' => $row['height'],
+    			'WIDTH' => $row['width'],
+    			'U_PICS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
+    		));
+
     		$sum_height += $row['height'] + 5;
     		$sum_width += $row['width'] + 5;
     		$i++;
@@ -158,8 +149,7 @@ function gallery_mini($position, $block)
     	'WIDTH_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 2) ? ($CONFIG_GALLERY['width'] * (($CONFIG_GALLERY['nbr_pics_mini'] <= 3) ? $CONFIG_GALLERY['nbr_pics_mini'] : 3)) : $CONFIG_GALLERY['width'],
     	'SUM_WIDTH' => $sum_width + 30,
     	'HIDDEN_WIDTH' => ($CONFIG_GALLERY['width'] * 3) + 30,
-    	'SCROLL_SPEED' => ($CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2) ? $CONFIG_GALLERY['speed_mini_pics']*10 : $CONFIG_GALLERY['speed_mini_pics']*500,
-    	'SCROLL_MODE' => $scoll_mode,
+    	'SCROLL_DELAY' => 0.2 * (11 - $CONFIG_GALLERY['speed_mini_pics']),
     	'L_RANDOM_PICS' => $LANG['random_img'],
     	'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
     	'L_GALLERY' => $LANG['gallery']
