@@ -520,8 +520,8 @@ class TinyMCEParser extends ContentParser
 	 */
 	function _parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img class="smiley" style="vertical-align:middle" src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" /&gt;`i', 
-		'<img src="/images/smileys/$1" alt="$2" class="smiley" />', $this->content);
+		$this->content = preg_replace('`&lt;img class="smiley" (?:style="vertical-align:middle" )?src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" [^/]*/&gt;`i', 
+			'<img src="/images/smileys/$1" alt="$2" class="smiley" />', $this->content);
 		
 		//Smilies
 		@include(PATH_TO_ROOT . '/cache/smileys.php');
@@ -809,6 +809,19 @@ class TinyMCEParser extends ContentParser
            array(' ', ' ', "\n<br />"),
            $this->content
        );
+       
+       //We delete all remaining HTML tags which are not recognized by the parser
+       	$this->content = preg_replace(
+		    array(
+		        '`&lt;(?:p|span|div)[^&]*&gt;`is',
+                '`&lt;/(?:p|span|div)*&gt;`is'
+		    ),
+		    array(
+                '',
+                ''
+		    ),
+		    $this->content
+	    );
 	}
 }
 
