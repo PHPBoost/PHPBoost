@@ -181,7 +181,7 @@ if ($id_edit > 0)//On édite
 		for ($i = 1; $i <= 5; $i++)
 		{
 			$string_regex .= '-';
-			$contents = preg_replace('`[\r\n]+<div class="wiki_paragraph' .  $i . '" id=".+">(.+)</div><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
+			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
 		}
 		$contents = trim($contents);
 	}

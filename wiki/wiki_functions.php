@@ -27,6 +27,8 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
+define('WIKI_MENU_MAX_DEPTH', 5);
+
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse(&$var)
 {
@@ -90,10 +92,11 @@ function wiki_explode_menu(&$content)
 				//We add it to the list
 				$list[] = array($level - 1, $title_name);
 				//Now we wait one of its children or its brother
-				$max_level_expected = $level + 1;
+				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
 				
 				//Réinsertion
-				$lines[$i] = '<div class="wiki_paragraph' .  ($level - 1) . '" id="paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</div><br />' . "\n";
+				$class_level = $level - 1;
+				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
 			}
 		}
 		$i++;
@@ -119,7 +122,7 @@ function wiki_display_menu($menu_list)
 	{
 		$current_level = $title[0];
 		
-		$title_name = $title[1];		
+		$title_name = stripslashes($title[1]);		
 		$title_link = '<a href="#paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
 		
 		if ($current_level > $last_level)
@@ -149,11 +152,6 @@ function wiki_display_menu($menu_list)
 	$menu .= str_repeat('</li></ol>', $last_level);
 	
 	return $menu;
-}
-
-function wiki_make_anchors($array) //Fonction qui crée les ancres
-{
-	return 'id=\"' . url_encode_rewrite($array[1]) . '\">';
 }
 
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
