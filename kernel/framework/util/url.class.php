@@ -189,9 +189,11 @@ class Url
 	 * @desc Returns the HTML text with only absolutes urls
 	 * @param string $html_text The HTML text in which we gonna search for
 	 * root relatives urls (only those beginning by '/') to convert into absolutes ones.
+	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
+	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The HTML text with only absolutes urls
 	 */
-	/* static */ function html_convert_root_relatives2absolutes($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	/* static */ function html_convert_root_relative2absolute($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
@@ -210,9 +212,11 @@ class Url
 	 * @static
 	 * @desc Returns the HTML text with only relatives urls
 	 * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
+	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
+	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The HTML text with only absolutes urls
 	 */
-	/* static */ function html_convert_absolutes2relatives($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	/* static */ function html_convert_absolute2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
@@ -225,6 +229,21 @@ class Url
                 $html_text
             )
         );
+	}
+	
+	/**
+	 * @static
+	 * @desc Transforms the relative URL whose base is the site root (for instance /images/mypic.png) to the real relative path fited to the current page.
+	 * @param string $html_text The HTML text in which you want to replace the paths
+	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
+	 * @return string The transformed string
+	 */
+	/* static */ function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT)
+	{
+		return  preg_replace(
+	            '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))(/[^"]+)("(?:[^<]*>))`',
+                '$1' . $path_to_root . '$2$3',
+                $html_text);
 	}
 
 	/**
@@ -266,7 +285,7 @@ class Url
 
 	/**
 	 * @static
-	 * @desc override the used PATH_TO_ROOT. if the argument is null, the value is only returned.
+	 * @desc Overrides the used PATH_TO_ROOT. if the argument is null, the value is only returned.
 	 * Please note this is a PHP4 hack to allow a Class variable.
 	 * @param string $path the new PATH_TO_ROOT to use
 	 * @return string the used PATH_TO_ROOT
@@ -283,7 +302,7 @@ class Url
 
 	/**
 	 * @static
-	 * @desc override the used SERVER URL. if the argument is null, the value is only returned.
+	 * @desc Overrides the used SERVER URL. if the argument is null, the value is only returned.
 	 * Please note this is a PHP4 hack to allow a Class variable.
 	 * @param string $path the new SERVER URL to use
 	 * @return string the used SERVER URL

@@ -67,7 +67,7 @@ class ContentSecondParser extends Parser
         }
         
         import('util/url');
-        $this->content = Url::html_convert_root_relatives2absolutes($this->content, $this->path_to_root, $this->page_path); 
+        $this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path); 
     }
     
     /**
@@ -108,7 +108,7 @@ class ContentSecondParser extends Parser
             </object>',
             $html_content);
         
-        return Url::html_convert_root_relatives2absolutes($html_content);
+        return Url::html_convert_root_relative2absolute($html_content);
     }
 
     ## Private ##
