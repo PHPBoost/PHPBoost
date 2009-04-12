@@ -27,6 +27,7 @@
 
 define('URL__CLASS','url');
 define('SERVER_URL', $_SERVER['PHP_SELF']);
+define('URL_TAGS', 'src|data|value|href|son|flv');
 
 /**
  * @author Loïc Rouchon horn@phpboost.com
@@ -134,6 +135,7 @@ class Url
 
 
 	/**
+	 * @static
 	 * @desc Compress a url by removing all "folder/.." occurrences
 	 * @param string $url the url to compress
 	 * @return string the compressed url
@@ -152,6 +154,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc Returns the relative path from the website root to the current path if working on a relative url
 	 * @return string the relative path from the website root to the current path if working on a relative url
 	 */
@@ -171,6 +174,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc Returns the absolute website root Url
 	 * @return string the absolute website root Url
 	 */
@@ -181,6 +185,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc Returns the HTML text with only absolutes urls
 	 * @param string $html_text The HTML text in which we gonna search for
 	 * root relatives urls (only those beginning by '/') to convert into absolutes ones.
@@ -194,7 +199,7 @@ class Url
             '`(<script type="text/javascript">.*insert(?:Sound|Movie)Player\(")(/[^"]+)(".*</script>)`sU',
             array('Url', '_convert_url_to_absolute'),
             preg_replace_callback(
-		        '`((?:<[^>]+) (?:src|data|value|href|son|flv)=")(/[^"]+)("(?:[^<]*>))`',
+		        '`((?:<[^>]+) (?:' . URL_TAGS . ')=")(/[^"]+)("(?:[^<]*>))`',
 		        array('Url', '_convert_url_to_absolute'),
 		        $html_text
             )
@@ -202,6 +207,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc Returns the HTML text with only relatives urls
 	 * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
 	 * @return string The HTML text with only absolutes urls
@@ -214,7 +220,7 @@ class Url
             '`(<script type="text/javascript">.*insert(?:Sound|Movie)Player\(")([^"]+)(".*</script>)`sU',
             array('Url', '_convert_url_to_relative'),
             preg_replace_callback(
-	            '`((?:<[^>]+) (?:src|data|value|href|son|flv)(?:="))([^"]+)("(?:[^<]*>))`',
+	            '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))([^"]+)("(?:[^<]*>))`',
                 array('Url', '_convert_url_to_relative'),
                 $html_text
             )
@@ -222,6 +228,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc replace a relative url by the corresponding absolute one
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
@@ -234,6 +241,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc replace an absolute url by the corresponding relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
@@ -246,6 +254,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @param string $url the url to "relativize"
 	 * @return string the relative url of the $url parameter
 	 */
@@ -256,6 +265,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc override the used PATH_TO_ROOT. if the argument is null, the value is only returned.
 	 * Please note this is a PHP4 hack to allow a Class variable.
 	 * @param string $path the new PATH_TO_ROOT to use
@@ -272,6 +282,7 @@ class Url
 	}
 
 	/**
+	 * @static
 	 * @desc override the used SERVER URL. if the argument is null, the value is only returned.
 	 * Please note this is a PHP4 hack to allow a Class variable.
 	 * @param string $path the new SERVER URL to use
