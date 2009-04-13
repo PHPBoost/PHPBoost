@@ -187,7 +187,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'DESCRIPTION' => unparse($media['contents']),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
-			'WIDTH_HEIGHT' => $auth == MEDIA_TYPE_VIDEO ? true :false,
+			'WIDTH_HEIGHT' => $auth == MEDIA_TYPE_VIDEO ? true : false,
 			'JS_HIDE' => 'false',
 			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"'
 		));
