@@ -82,7 +82,7 @@
 					<div class="spacer">&nbsp;</div>
 
 					# START file #
-						<div class="block_container" style="margin-bottom:20px;">
+						<div class="block_container">
 							<div class="block_contents">
 								<div>
 									# IF C_MODO #
