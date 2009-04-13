@@ -35,7 +35,7 @@ function newsletter_mini($position, $block)
     
     $tpl = new Template('newsletter/newsletter_mini.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $tpl->assign_vars(array(
     	'SUBSCRIBE' => $LANG['subscribe'],

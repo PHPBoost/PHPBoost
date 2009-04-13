@@ -39,7 +39,7 @@ function online_mini($position, $block)
     	
     	$tpl = new Template('online/online_mini.tpl');
         import('core/menu_service');
-        MenuService::assign_positions_conditions($tpl, $position);
+        MenuService::assign_positions_conditions($tpl, $block);
     
     	//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
     	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);

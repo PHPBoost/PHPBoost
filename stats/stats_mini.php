@@ -37,7 +37,7 @@ function stats_mini($position, $block)
     #########################Stats.tpl###########################
     $tpl = new Template('stats/stats_mini.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $Cache->load('stats');
     $l_member_registered = ($nbr_members > 1) ? $LANG['member_registered_s'] : $LANG['member_registered'];

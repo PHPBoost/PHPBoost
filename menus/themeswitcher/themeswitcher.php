@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-function menu_themeswitcher_themeswitcher($position)
+function menu_themeswitcher_themeswitcher($position, $block)
 {
    global $CONFIG, $THEME_CONFIG, $User, $LANG, $Session;
 
@@ -49,7 +49,7 @@ function menu_themeswitcher_themeswitcher($position)
     
     $tpl = new Template('menus/themeswitcher/themeswitcher.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $utheme = get_utheme();
     foreach($THEME_CONFIG as $theme => $array_info)
