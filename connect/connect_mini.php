@@ -34,7 +34,7 @@ function connect_mini($position, $block)
     
     $tpl = new Template('connect/connect_mini.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     if ($User->check_level(MEMBER_LEVEL)) //Connecté.
     {
     	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions

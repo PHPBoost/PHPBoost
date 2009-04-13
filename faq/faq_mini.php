@@ -39,7 +39,7 @@ function faq_mini($position, $block)
     
     $tpl = new Template('faq/faq_mini.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],

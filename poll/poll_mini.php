@@ -39,7 +39,7 @@ function poll_mini($position, $block)
     	
     	$tpl = new Template('poll/poll_mini.tpl');
         import('core/menu_service');
-        MenuService::assign_positions_conditions($tpl, $position);
+        MenuService::assign_positions_conditions($tpl, $block);
     		
     	#####################R�sultats######################
     	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).

@@ -36,7 +36,7 @@ function search_mini($position, $block)
     
     $tpl = new Template('search/search_mini.tpl');
     import('core/menu_service');
-    MenuService::assign_positions_conditions($tpl, $position);
+    MenuService::assign_positions_conditions($tpl, $block);
     $tpl->assign_vars(Array(
         'TITLE_SEARCH' => TITLE,
         'SEARCH' => $LANG['title_search'],
