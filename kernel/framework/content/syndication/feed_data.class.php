@@ -96,14 +96,11 @@ class FeedData
      */
     function set_link($value)
     {
-        if (of_class($value, URL__CLASS))
+        if (!of_class($value, URL__CLASS))
         {
-            $this->link = $value->absolute();
+            $value = new Url($value);
         }
-        else
-        {
-            $this->link = $value;
-        }
+        $this->link = $value->absolute();
     }
     
     function add_item($item) { array_push($this->items, $item); }
