@@ -343,7 +343,7 @@ function load_module_lang($module_name)
         
         if (!DEBUG)
         {
-			$result2 = @include_once($file2);
+            $result2 = @include_once($file2);
         }
         else
         {
@@ -359,6 +359,16 @@ function load_module_lang($module_name)
             exit;
         }
     }
+}
+
+/**
+ * @desc Loads a menu lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
+ * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this menu.
+ * @param string $menu_name The identifier of the menu for which you want to load the lang file.
+ */
+function load_menu_lang($menu_name)
+{
+    load_module_lang('menu/' . $menu_name);
 }
 
 /**
@@ -451,8 +461,8 @@ function parse_ini_array($links_format)
 
 /**
  * @desc Returns the config field of a module configuration file.
- * In fact, this field contains the default module configuration in which we can find some " characters. To solve the problem, 
- * this field is considered as a comment and when we want to retrieve its value, we have to call this method which returns its value. 
+ * In fact, this field contains the default module configuration in which we can find some " characters. To solve the problem,
+ * this field is considered as a comment and when we want to retrieve its value, we have to call this method which returns its value.
  * @param string $dir_path Path in which is the file (stop just before the lang folder)
  * @param string $require_dir Lang folder in which must be the file
  * @param string $ini_name Config file name
@@ -578,7 +588,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 }
 
 /**
- * @desc Retrieve the site start page. 
+ * @desc Retrieve the site start page.
  * @return The absolute start page URL.
  */
 function get_start_page()
