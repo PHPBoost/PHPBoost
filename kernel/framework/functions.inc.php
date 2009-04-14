@@ -532,6 +532,7 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 function get_module_name()
 {
 	$path = str_replace(DIR, '', SCRIPT);
+	$path = trim($path, '/');
 	$module_name = explode('/', $path);
 	
 	return $module_name[0];
