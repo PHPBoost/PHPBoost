@@ -254,15 +254,15 @@ class ArticlesInterface extends ModuleInterface
                 '-' . $row['idcat'] . '-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'
                 ));
 
-                $item->set_title($row['title']);
-                $item->set_link($link);
-                $item->set_guid($link);
-                $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', second_parse($row['contents'])));
-                $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-                $item->set_image_url($row['icon']);
-                $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth_root'] : unserialize($row['auth']));
+            $item->set_title($row['title']);
+            $item->set_link($link);
+            $item->set_guid($link);
+            $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', second_parse($row['contents'])));
+            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
+            $item->set_image_url($row['icon']);
+            $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth_root'] : unserialize($row['auth']));
 
-                $data->add_item($item);
+            $data->add_item($item);
 		}
 		$Sql->query_close($result);
 

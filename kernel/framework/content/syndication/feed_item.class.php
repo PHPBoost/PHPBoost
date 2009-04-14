@@ -73,14 +73,11 @@ class FeedItem
      */
     function set_link($value)
     {
-        if (of_class($value, URL__CLASS))
+        if (!of_class($value, URL__CLASS))
         {
-            $this->link = $value->absolute();
+            $value = new Url($value);
         }
-        else
-        {
-            $this->link = $value;
-        }
+        $this->link = $value->absolute();
     }
     /**
      * @desc Sets the feed item guid
