@@ -148,7 +148,7 @@ class Feed
 	 */
 	function cache()
 	{
-		FEED::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
+		Feed::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
 	}
 
 	/**
@@ -230,7 +230,7 @@ class Feed
 	/*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
 	{
 		// Choose the correct template
-		if (is_object($tpl) and strtolower(get_class($tpl)) == 'template')
+		if (of_class($tpl, 'template'))
 		{
 			$template = $tpl->copy();
 		}
@@ -272,7 +272,8 @@ class Feed
 			if (file_exists($feed_data_cache_file))
 			{
 				$result = include($feed_data_cache_file);
-			} else
+			}
+			else
 			{
 				$result = FALSE;
 			}
@@ -286,6 +287,33 @@ class Feed
 		$feed = new Feed($module_id, $name);
 		$feed->load_data($__feed_object);
 		return $feed->export($template, $number, $begin_at);
+	}
+	
+	/**
+	 * @static
+	 * @desc Generates the code which shows all the feeds formats.
+	 * @param string $feed_url Feed URL
+	 * @return string The HTML code to display.
+	 */
+	function get_feed_menu($feed_url)
+	{
+	    global $LANG, $CONFIG;
+	    
+	    $feed_menu = new Template('framework/content/syndication/menu.tpl');
+	    
+	    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
+	    
+	    $feed_menu->assign_vars(array(
+	        'PATH_TO_ROOT' => PATH_TO_ROOT,
+			'PATH_TO_MENU' => dirname($feed_menu->tpl),
+	        'THEME' => get_utheme(),
+	        'U_FEED' => $feed_absolut_url,
+	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
+	        'L_RSS' => $LANG['rss'],
+	        'L_ATOM' => $LANG['atom']
+	    ));
+	    
+	    return $feed_menu->parse(TEMPLATE_STRING_MODE);
 	}
 }
 ?>
