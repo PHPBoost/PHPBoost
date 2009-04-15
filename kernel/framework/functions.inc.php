@@ -322,12 +322,13 @@ function display_comments($script, $idprov, $vars, $module_folder = '')
  * @desc Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
  * @param string $module_name The identifier of the module for which you want to load the lang file.
+ * @param string Path of the folder in which is the file. This path mustn't finish by the / character.
  */
-function load_module_lang($module_name)
+function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
     global $LANG;
 
-    $file = PATH_TO_ROOT . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
+    $file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
     if (!DEBUG) {
         $result = @include_once($file);
     }
@@ -368,7 +369,7 @@ function load_module_lang($module_name)
  */
 function load_menu_lang($menu_name)
 {
-    load_module_lang('menu/' . $menu_name);
+    load_module_lang($menu_name, PATH_TO_ROOT . '/menus');
 }
 
 /**
@@ -588,7 +589,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 }
 
 /**
- * @desc Retrieve the site start page.
+ * @desc Retrieves the site start page. 
  * @return The absolute start page URL.
  */
 function get_start_page()
