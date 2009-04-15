@@ -197,6 +197,7 @@ class NewsInterface extends ModuleInterface
 		}
 
 		import('content/comments');
+		import('content/syndication/feed');
 		
 		//On crée une pagination (si activé) si le nombre de news est trop important.
 		import('util/pagination');
@@ -229,7 +230,7 @@ class NewsInterface extends ModuleInterface
 			'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
 	        'PATH_TO_ROOT' => PATH_TO_ROOT,
 	        'THEME' => get_utheme(),
-		    'FEED_MENU' => get_feed_menu(FEED_URL)
+		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 		));
 		
 		//Si les news en block sont activées on recupère la page.
@@ -290,7 +291,7 @@ class NewsInterface extends ModuleInterface
 					'NEW_ROW' => $new_row,
 					'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-	                'FEED_MENU' => get_feed_menu(FEED_URL)
+	                'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 				));
 				$z++;
 			}

@@ -756,7 +756,15 @@ function url_encode_rewrite($string)
     return $string;
 }
 
-//Formate la date au format GMT, suivant la configuration du fuseau horaire du serveur.
+/**
+ * @deprecated
+ * @desc Formats a date according to a specific form.
+ * @param string $format Formatting name (date_format, date_format_tiny, date_format_short, date_format_long)
+ * @param int $timestamp Time to format (UNIX timestamp)
+ * @param int $timezone_system Time zone (1 for the site time zone, 2 for the server time zone and 0 for the user timezone)
+ * @return string The formatted date
+ * @see Date::format()
+ */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
     global $User, $CONFIG, $LANG;
@@ -815,7 +823,14 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
     return date($format, $timestamp);
 }
 
-//Convertit une chaîne au format $LANG['date_format'] (ex:d/m/y) en timestamp, si la date saisie est valide sinon retourne 0.
+/**
+ * @deprecated
+ * @desc Parses a formatted date 
+ * @param string $str String to parse
+ * @param string $date_format Formatting pattern (d for day, m for month and y for year, for instance m/d/y)
+ * @return int The timestamp corresponding to the parsed date or 0 if it couldn't be parsed. 
+ * @see Date::Date()
+ */
 function strtotimestamp($str, $date_format)
 {
     global $CONFIG, $User;
@@ -860,6 +875,13 @@ function strtotimestamp($str, $date_format)
 }
 
 //Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
+/**
+ * @deprecated 
+ * @desc Converts a formatted date to the SQL date format.
+ * @param string $str Formatted date
+ * @param string $date_format Formatting pattern (DD for the day, MM for the month and YYYY for the year separated only by / characters).
+ * @return string The formatted date
+ */
 function strtodate($str, $date_format)
 {
     list($month, $day, $year) = array(0, 0, 0);
@@ -894,7 +916,12 @@ function strtodate($str, $date_format)
     return $date;
 }
 
-//Suppression d'un fichier avec gestion des erreurs.
+/**
+ * @deprecated
+ * @desc Deletes a file
+ * @param string $file Path of the file to delete
+ * @return bool true if the file could be deleted, false if an error occured.
+ */
 function delete_file($file)
 {
     global $LANG;
@@ -912,7 +939,14 @@ function delete_file($file)
     }
 }
 
-//Fonction récursive de suppression de dossier.
+/**
+ * @deprecated
+ * @desc Deletes a directory and all its content from the file system.
+ * @param string $dir_path Path of the directory to delete
+ * @param string $path ??? I don't know and the code is not commented
+ * @return bool true if the directory could be deleted, false otherwise.
+ * @see Folder::delete()
+ */
 function delete_directory($dir_path, $path)
 {
     $dir = dir($path);
@@ -956,13 +990,17 @@ function delete_directory($dir_path, $path)
     return false;
 }
 
-//Compte le nombre de page vues.
+/**
+ * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour. 
+ * @param bool $no_update True if you just want to read the number of pages viewed, false if you want to increment it.
+ * @return int[] Map associating the hour to the number of seen pages. For instance 14 => 56 means that at between 14:00 and 15:00 56 pages were generated.
+ */
 function pages_displayed($no_update = false)
 {
     if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+'))
     {
         $hour = gmdate_format('G');
-        $data = unserialize(fgets($file, 4096)); //Renvoi la première ligne du fichier (le array précédement crée).
+        $data = unserialize(fgets($file, 4096)); //Renvoie la première ligne du fichier (le array précédement crée).
         if (!$no_update)
         {
             if (isset($data[$hour])) //Robo repasse.
@@ -976,7 +1014,7 @@ function pages_displayed($no_update = false)
         }
 
         rewind($file);
-        fwrite($file, serialize($data)); //On stock le tableau dans le fichier de données
+        fwrite($file, serialize($data)); //On stocke le tableau dans le fichier de données
         fclose($file);
     }
     else if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'w+')) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
@@ -989,13 +1027,24 @@ function pages_displayed($no_update = false)
     return $data;
 }
 
-//Arrondi nbr au nbr de décimal voulu
+/**
+ * @desc Rounds a number
+ * @param mixed $number Number to round
+ * @param int $dec The number of decilam points
+ * @return string The rounded number.
+ */
 function number_round($number, $dec)
 {
     return trim(number_format($number, $dec, '.', ''));
 }
 
-//Remplacement de la fonction file_get_contents.
+/**
+ * @desc Emulates the PHP file_get_contents_emulate.
+ * @param string $filename File to read.
+ * @param $incpath See the PHP documentation
+ * @param $resource_context See the PHP documentation
+ * @return string The file contents.
+ */
 function file_get_contents_emulate($filename, $incpath = false, $resource_context = null)
 {
     if (false === ($fh = @fopen($filename, 'rb', $incpath)))
@@ -1021,7 +1070,7 @@ function file_get_contents_emulate($filename, $incpath = false, $resource_contex
     return $data;
 }
 
-//Emulation de la fonction PHP5 html_entity_decode().
+//Emulates the PHP5 html_entity_decode function
 if (!function_exists('html_entity_decode'))
 {
     function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
@@ -1047,7 +1096,7 @@ if (!function_exists('html_entity_decode'))
     }
 }
 
-//Emulation de la fonction PHP5 htmlspecialchars_decode().
+//Emulates the PHP5 htmlspecialchars_decode function
 if (!function_exists('htmlspecialchars_decode'))
 {
     function htmlspecialchars_decode($string, $quote_style = null)
@@ -1084,7 +1133,7 @@ if (!function_exists('htmlspecialchars_decode'))
     }
 }
 
-//Emulation de la fonction PHP5 array_combine
+//Emulates the PHP5 array_combine function
 if (!function_exists('array_combine'))
 {
     function array_combine($keys, $values)
@@ -1129,29 +1178,6 @@ if (!function_exists('array_combine'))
     }
 }
 
-// Return the html string that print the menu to choose the wanted feed's type
-function get_feed_menu($feed_url)
-{
-    global $LANG, $CONFIG;
-    
-    $feedMenu = new Template('framework/content/syndication/menu.tpl');
-    
-    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
-    
-    $feedMenu->assign_vars(array(
-        'PATH_TO_ROOT' => PATH_TO_ROOT,
-		'PATH_TO_MENU' => dirname($feedMenu->tpl),
-        'THEME' => get_utheme(),
-        'U_FEED' => $feed_absolut_url,
-        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
-        'L_RSS' => $LANG['rss'],
-        'L_ATOM' => $LANG['atom']
-    ));
-    
-    return $feedMenu->parse(TEMPLATE_STRING_MODE);
-}
-
-
 /**
  * @desc Return a SHA256 hash of the $str string [with a salt]
  * @param string $str the string to hash
@@ -1183,19 +1209,14 @@ function strhash($str, $salt = true)
     }
 }
 
-// Returns a Unique Identifier in the whole application
+/**
+ * @desc Returns a unique identifier (useful for example to generate some javascript ids)
+ * @return int Id
+ */
 function get_uid()
 {
     static $uid = 1764;
     return $uid++;
-}
-
-// Returns a HTML unique Identifier.
-// You could use it to define all your block's id
-// and use it with no issues in javascript
-function get_html_uid($prefix = 'html_uid_')
-{
-    return $prefix . get_uid();
 }
 
 define('CLASS_IMPORT', '.class.php');
@@ -1203,9 +1224,8 @@ define('INC_IMPORT', '.inc.php');
 define('LIB_IMPORT', '.lib.php');
 
 /**
- * @desc import a class or a lib from the framework
- * @param string $path the class or lib path and its name withour .class.php or
- * .inc.php extensionlike content/bbcode_parser
+ * @desc Umports a class or a lib from the framework
+ * @param string $path Path of the file to load without .class.php or .inc.php extension (for instance util/date)
  * @param string $import_type the import type. Default is CLASS_IMPORT,
  * but you could also import a library by using LIB_IMPORT (file whose extension is .inc.php)
  * or INC_IMPORT to include a .inc.php file (for example the current file, functions.inc.php).
@@ -1216,7 +1236,7 @@ function import($path, $import_type = CLASS_IMPORT)
 }
 
 /**
- * @desc Require a file
+ * @desc Requires a file
  * @param string $file the file to require with an absolute path from the website root
  * @param bool $once if false use require instead of require_once
  */
@@ -1233,7 +1253,7 @@ function req($file, $once = true)
 }
 
 /**
- * @desc Include a file
+ * @desc Includes a file
  * @param string $file the file to include with an absolute path from the website root
  * @param bool $once if false use include instead of include_once
  * @return bool true if the file have been included with success else, false
@@ -1259,6 +1279,7 @@ function of_class(&$object, $classname)
 }
 
 /**
+ * @Exports a variable to be used in a javascript script.
  * @param string $string A PHP string to convert to a JS one
  * @return string The js equivalent string
  */
