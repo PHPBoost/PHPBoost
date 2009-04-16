@@ -63,6 +63,9 @@ class Errors
 		
 		//On utilise notre propre handler pour la gestion des erreurs php
 		set_error_handler(array($this, 'handler_php'));
+		
+		//On met le template à utiliser par défaut.
+		$this->set_default_template();
 	}
 	
 	/**
@@ -123,7 +126,7 @@ class Errors
 		//Et on l'archive
 		$this->_error_log($errfile, $errline, $errno, $errstr, true);
 		
-		//Dans le cas d'un E_USER_ERROR on arrête l'execution
+		//Dans le cas d'un E_USER_ERROR on arrête l'exécution
 		if ($errno == E_USER_ERROR)
 			exit;
 		
@@ -143,7 +146,7 @@ class Errors
 	*/
 	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
-		global $LANG, $Template;
+		global $LANG;
 		$_err_stop = retrieve(GET, '_err_stop', false);
 		
 		//Parsage du bloc seulement si une erreur à afficher.
@@ -165,7 +168,7 @@ class Errors
 				//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
     				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-    				$Template->assign_vars(array(
+    				$this->template->assign_vars(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'success',
     					'ERRORH_CLASS' => 'error_success',
@@ -176,7 +179,7 @@ class Errors
 				case E_USER_NOTICE:
 				case E_NOTICE:
     				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
-    				$Template->assign_vars(array(
+    				$this->template->assign_vars(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'notice',
     					'ERRORH_CLASS' => 'error_notice',
@@ -187,7 +190,7 @@ class Errors
 				case E_USER_WARNING:
 				case E_WARNING:
     				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
-    				$Template->assign_vars(array(
+    				$this->template->assign_vars(array(
     					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
     					'ERRORH_IMG' => 'important',
     					'ERRORH_CLASS' => 'error_warning',
@@ -216,12 +219,27 @@ class Errors
                     }
 			}
 		
+			//On remet le template par défaut.
+			$this->set_default_template();
+			
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
 				return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
 		return false;
+	}
+	
+	function set_template(&$template)
+	{
+		$this->template = $template;
+	}
+	
+	function set_default_template()
+	{
+		global $Template;
+		
+		$this->template = &$Template;
 	}
 	
     /**
@@ -328,6 +346,7 @@ class Errors
 	## Private Attribute ##
 	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
 	var $redirect;
+	var $template; //Template used by the error handler.
 }
 
 ?>
