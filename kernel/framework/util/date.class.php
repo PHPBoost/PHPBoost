@@ -170,10 +170,10 @@ class Date
 					break;
 				}
 				list($month, $day, $year) = array(0, 0, 0);
-				$str = func_get_arg(2);
-				$date_format = func_get_arg(3);
-			    $array_timestamp = explode('/', $str);
-			    $array_date = explode('/', $date_format);
+				$str 				= func_get_arg(2);
+				$date_format 		= func_get_arg(3);
+			    $array_timestamp 	= explode('/', $str);
+			    $array_date 	 	= explode('/', $date_format);
 			    for ($i = 0; $i < 3; $i++)
 			    {
 			        switch ($array_date[$i])
@@ -363,7 +363,7 @@ class Date
 		global $CONFIG, $User;
 		
 		// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
-	    $server_hour = number_round(date('Z')/3600, 0) - date('I');
+	    $server_hour = intval(date('Z')/3600) - intval(date('I'));
 	    
 		switch ($referencial_timezone)
 		{
