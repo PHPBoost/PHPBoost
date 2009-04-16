@@ -364,10 +364,12 @@ class Comments
 					default:
 						$errstr = '';
 				}
-				
+
+				$Errorh->set_template($Template); //On spécifie le template utilisé.
 				if (!empty($errstr))
+				{	
 					$Errorh->handler($errstr, E_USER_NOTICE);
-				
+				}
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
