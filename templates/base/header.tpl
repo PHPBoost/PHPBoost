@@ -53,6 +53,7 @@
 
 <script type="text/javascript">
 <!--
+var release_timeout_seconds = 0;
 function release(year, month, day, hour, minute, second)
 {
 	if (document.getElementById('release'))
@@ -61,9 +62,9 @@ function release(year, month, day, hour, minute, second)
 		var sp_hour = 3600;
 		var sp_minute = 60;
 		
-		now = new Date({MAINTAIN_NOW_FORMAT});
+		now = new Date({MAINTAIN_NOW_FORMAT}+release_timeout_seconds++);
 		end = new Date(year, month, day, hour, minute, second);
-		release_time = (end.getTime() - (now.getTime() {TIMEZONE_DELAY_NOW}))/1000;
+		release_time = (end.getTime() - now.getTime())/1000;
 		
 		if( release_time <= 0 )
 		{

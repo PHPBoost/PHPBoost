@@ -158,7 +158,7 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	 
