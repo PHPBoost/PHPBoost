@@ -15,7 +15,7 @@
 		-->
 		</script>
 
-		<p style="text-align:center;">
+		<div style="text-align:center;">
 			{ERROR}				
 			<form action="forget.php?token={TOKEN}" method="post" onsubmit="return check_form_forget();">
 				<table class="module_table">
@@ -56,4 +56,4 @@
 					<input type="submit" name="forget" value="{L_SUBMIT}" class="submit" />
 				</fieldset>	
 			</form>	
-		</p>
+		</div>
