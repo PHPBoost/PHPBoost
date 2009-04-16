@@ -10,7 +10,11 @@
 				<script type='text/javascript'>
 				<!--
 				function check_form_alert(){
-						if(document.getElementById('contents').value == "") {
+					# IF C_BBCODE_TINYMCE_MODE #
+					tinyMCE.triggerSave();
+					# ENDIF #
+
+					if(document.getElementById('contents').value == "") {
 						alert("{L_REQUIRE_TEXT}");
 						return false;
 					}

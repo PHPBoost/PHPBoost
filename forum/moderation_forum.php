@@ -224,6 +224,17 @@ if ($action == 'alert') //Gestion des alertes
 		$row = $Sql->fetch_assoc($result);
 		if (!empty($row))
 		{
+			//Le sujet n'existe plus, on vire l'alerte.
+			if (empty($row['idcat']))
+			{
+				//Instanciation de la class du forum.
+				include_once('../forum/forum.class.php');
+				$Forumfct = new Forum;
+			
+				$Forumfct->Del_alert_topic($id_get);
+				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=alert', '', '&'));
+			}
+		
 			if ($row['status'] == 0)
 				$status = $LANG['alert_not_solved'];
 			else
