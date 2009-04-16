@@ -183,6 +183,7 @@ class Folder extends FileSystemElement
 
     /**
      * @desc Deletes the folder and all what it contains.
+     * @return True if deleted successfully.
      */
     function delete()
     {
@@ -195,7 +196,11 @@ class Folder extends FileSystemElement
             $fse->delete();
         }
         	
-        rmdir($this->path);
+        if (!@rmdir($this->path))
+        {
+        	return false;
+        }
+        return true;
     }
 
     ## Private Attributes ##

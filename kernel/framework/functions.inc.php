@@ -940,57 +940,6 @@ function delete_file($file)
 }
 
 /**
- * @deprecated
- * @desc Deletes a directory and all its content from the file system.
- * @param string $dir_path Path of the directory to delete
- * @param string $path ??? I don't know and the code is not commented
- * @return bool true if the directory could be deleted, false otherwise.
- * @see Folder::delete()
- */
-function delete_directory($dir_path, $path)
-{
-    $dir = dir($path);
-    if (!is_object($dir))
-    {
-        return false;
-    }
-
-    while ($file = $dir->read())
-    {
-        if ($file != '.' && $file != '..')
-        {
-            $path_file = $path . '/' . $file;
-            if (is_file($path_file))
-            {
-                if (!@unlink($path_file))
-                {
-                    return false;
-                }
-            }
-            elseif (is_dir($path_file))
-            {
-                delete_directory($dir_path, $path_file);
-                if (!@rmdir($path_file))
-                {
-                    return false;
-                }
-            }
-        }
-    }
-
-    //Fermeture du dossier et suppression de celui-ci.
-    if (!$file)
-    {
-        $dir->close();
-        if (@rmdir($dir_path))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-/**
  * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour. 
  * @param bool $no_update True if you just want to read the number of pages viewed, false if you want to increment it.
  * @return int[] Map associating the hour to the number of seen pages. For instance 14 => 56 means that at between 14:00 and 15:00 56 pages were generated.

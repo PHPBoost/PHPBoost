@@ -148,7 +148,8 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))
 		{
-			if (!delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme))
+			import('io/filesystem/folder');
+			if (!Folder::delete('../templates/' . $previous_theme))
 			{
 				$error = 'files_del_failed';
 			}
