@@ -247,12 +247,15 @@ class Forum
 		//Topic supprimé, on supprime les marqueurs de messages lus pour ce topic.
 		$Sql->query_inject("DELETE FROM " . PREFIX . "forum_view WHERE idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 
+		//On supprime l'alerte.
+		$this->Del_alert_topic($idtopic);
+		
 		//Insertion de l'action dans l'historique.
 		if ($topic['user_id'] != $User->get_attribute('user_id'))
-		forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
+			forum_history_collector(H_DELETE_TOPIC, $topic['user_id'], 'forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php', '&'));
 
 		if ($generate_rss)
-		forum_generate_feeds(); //Regénération des flux flux
+			forum_generate_feeds(); //Regénération des flux flux
 	}
 
 	//Suivi d'un sujet.
