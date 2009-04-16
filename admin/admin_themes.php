@@ -149,7 +149,8 @@ elseif ($uninstall) //Désinstallation.
 		if ($drop_files && !empty($previous_theme))
 		{
 			import('io/filesystem/folder');
-			if (!Folder::delete('../templates/' . $previous_theme))
+			$folder = new Folder('../templates/' . $previous_theme);
+			if (!$folder->delete())
 			{
 				$error = 'files_del_failed';
 			}

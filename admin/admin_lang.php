@@ -91,7 +91,8 @@ elseif ($uninstall) //Désinstallation.
 		if ($drop_files && !empty($previous_lang))
 		{
 			import('io/filesystem/folder');
-			if (!Folder::delete('../lang/' . $previous_lang))
+			$folder = new Folder('../lang/' . $previous_lang);
+			if (!$folder->delete())
 				$error = 'files_del_failed';
 		}
 	

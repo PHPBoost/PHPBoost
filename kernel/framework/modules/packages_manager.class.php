@@ -215,7 +215,8 @@ class PackagesManager
 			//Suppression des fichiers du module
 			if ($drop_files)
 			{
-				if (!Folder::delete(PATH_TO_ROOT . '/' . $module_name))
+				$folder = new Folder(PATH_TO_ROOT . '/' . $module_name);
+				if (!$folder->delete())
 					return MODULE_FILES_COULD_NOT_BE_DROPPED;
 			}
 			
