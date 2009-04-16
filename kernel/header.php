@@ -76,21 +76,26 @@ if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
             $array_release = array(
             gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE),
             gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+
+            $seconds = gmdate_format('s', time(), TIMEZONE_SITE);
+            $array_now = array(
+            gmdate_format('Y', time(), TIMEZONE_SITE), (gmdate_format('n', time(), TIMEZONE_SITE) - 1), gmdate_format('j', time(), TIMEZONE_SITE),
+            gmdate_format('G', time(), TIMEZONE_SITE), gmdate_format('i', time(), TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
         }
         else //Délai indéterminé.
         {
             $key_delay = 0;
             $array_release = array('0', '0', '0', '0', '0', '0');
+            $array_now = array('0', '0', '0', '0', '0', '0');
         }
 
-        $timezone_delay = ($CONFIG['timezone'] - number_round(date('Z')/3600, 0) - date('I')) * 3600 * 1000; // Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été, En millisecondes
         $Template->assign_vars(array(
 			'C_ALERT_MAINTAIN' => true,
 			'C_MAINTAIN_DELAY' => true,
 			'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
 			'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
-			'TIMEZONE_DELAY_NOW' => $timezone_delay >= 0 ? '+ ' . $timezone_delay : $timezone_delay,
 			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
+			'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 			'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
 			'L_LOADING' => $LANG['loading'],
 			'L_DAYS' => $LANG['days'],

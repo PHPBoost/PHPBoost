@@ -50,7 +50,8 @@
 				</div>
 				
 				<script type="text/javascript">
-				<!--		
+				<!--
+				var release_timeout_seconds = 0;	
 				function release(year, month, day, hour, minute, second)
 				{
 					if( document.getElementById('release') )
@@ -59,7 +60,7 @@
 						var sp_hour = 3600;
 						var sp_minute = 60;
 						
-						now = new Date();
+						now = new Date({MAINTAIN_NOW_FORMAT}+release_timeout_seconds++);
 						end = new Date(year, month, day, hour, minute, second);
 						
 						release_time = (end.getTime() - now.getTime())/1000;
@@ -86,7 +87,7 @@
 						document.getElementById('release').innerHTML = '<strong>' + release_days + '</strong> {L_DAYS} <strong>' + release_hours + '</strong> {L_HOURS} <strong>' + release_minutes + '</strong> {L_MIN} <strong>' + release_seconds + '</strong> {L_SEC}';
 					}
 				}
-				release({L_RELEASE_FORMAT});
+				release({MAINTAIN_RELEASE_FORMAT});
 				-->
 				</script>
 				# ENDIF #	
