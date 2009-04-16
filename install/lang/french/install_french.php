@@ -96,7 +96,7 @@ $LANG['unexisting'] = 'Inexistant';
 $LANG['writable'] = 'Inscriptible';
 $LANG['unwritable'] = 'Non inscriptible';
 $LANG['unknown'] = 'Indéterminable';
-$LANG['config_server_dirs_not_ok'] = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour de pouvoir continuer.';
+$LANG['config_server_dirs_not_ok'] = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.';
 
 //Base de données
 $LANG['db_title'] = 'Paramètres de connexion à la base de données';
