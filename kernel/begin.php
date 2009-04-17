@@ -131,11 +131,10 @@ if (!isset($LANGS_CONFIG[$user_lang]['secure']) || !$User->check_level($LANGS_CO
 $User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang));
 
 $LANG = array();
-require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'); //!\\ Langues //!\\
-require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion des langues des erreurs.
+require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'; //!\\ Langues //!\\
+require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'; //Inclusion des langues des erreurs.
 //Chargement du cache du jour actuel.
 $Cache->load('day');
-echo file_get_contents_emulate(PATH_TO_ROOT . '/cache/day.php') . '<hr />';
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
 if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day))
 {
@@ -159,7 +158,7 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
                 stats_day = '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__) == 0
 		)
 		{
-            // 'CHANGE DAY PROCESSING<hr />';
+			// 'CHANGE DAY PROCESSING<hr />';
 			//Inscription du nouveau jour dans le fichier en cache.
 			$Cache->generate_file('day');
 
