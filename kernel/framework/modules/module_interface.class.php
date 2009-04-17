@@ -58,17 +58,20 @@ class ModuleInterface
         /**
          * @global  CONFIG
          */
-        global $CONFIG;
+        global $CONFIG, $MODULES;
         $this->id = $moduleId;
         $this->name = $this->id;
         $this->attributes =array();
         $this->infos = array();
         $this->functionnalities = array();
+        $this->enabled = ($MODULES[strtolower($this->get_id())]['activ'] == '1');
 
         // Get the config.ini informations
         $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
-        if ( isset($this->infos['name']) )
-            $this->name = $this->infos['name'];
+        if (isset($this->infos['name']))
+        {
+        	$this->name = $this->infos['name'];
+        }
 
         if ($error == 0)
         {
@@ -85,7 +88,9 @@ class ModuleInterface
             foreach ($methods_diff as $method)
             {
                 if (substr($method, 0, 1) != '_')
-                    $this->functionnalities[] = $method;
+                {
+                	$this->functionnalities[] = $method;
+                }
             }
             $this->functionnalities[] = 'none';
         }
@@ -101,6 +106,14 @@ class ModuleInterface
         return $this->id;
     }
 
+    /**
+     * @return bool Return the true if the module is enabled
+     */
+    function is_enabled()
+    {
+        return $this->enabled;
+    }
+    
     /**
      * @return string Return the name of the module
      */
@@ -272,7 +285,7 @@ class ModuleInterface
      */
     var $attributes;
 
-
+    var $enabled = false;
 
 
 }
