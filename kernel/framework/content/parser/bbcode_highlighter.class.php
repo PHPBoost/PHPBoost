@@ -66,11 +66,9 @@ class BBCodeHighlighter extends Parser
 	 * @return void You can get the result by calling the get_content method
 	 */
 	function parse($inline_code = BBCODE_HIGHLIGHTER_BLOCK_CODE)
-	{
-		$count_replacements = 0;
-		
+	{		
 		//Protection of html code
-		$this->parsed_content = htmlspecialchars($this->content, ENT_NOQUOTES);
+		$this->content = htmlspecialchars($this->content);
 
 		//Line tag
 		$this->content = str_replace('[line]', '<span style="color:' . BBCODE_TAG_COLOR . ';">[line]</span>', $this->content);
