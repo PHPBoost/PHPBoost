@@ -65,8 +65,10 @@ class BBCodeHighlighter extends Parser
 	 * (default parameter) and if you want that it would be integrated in a line, use BBCODE_HIGHLIGHTER_INLINE_CODE
 	 * @return void You can get the result by calling the get_content method
 	 */
-	function highlight($inline_code = BBCODE_HIGHLIGHTER_BLOCK_CODE)
+	function parse($inline_code = BBCODE_HIGHLIGHTER_BLOCK_CODE)
 	{
+		$count_replacements = 0;
+		
 		//Protection of html code
 		$this->parsed_content = htmlspecialchars($this->content, ENT_NOQUOTES);
 
@@ -79,7 +81,10 @@ class BBCodeHighlighter extends Parser
 
 		foreach ($simple_tags as $tag)
 		{
-			$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . ']</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $this->content);
+			while (preg_match('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', $this->content))
+			{
+				$this->content = preg_replace('`\[' . $tag . '\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">/[/' . $tag . '/]/</span>$1<span style="color:' . BBCODE_TAG_COLOR . ';">/[//' . $tag . '/]/</span>', $this->content);
+			}
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
@@ -87,7 +92,10 @@ class BBCodeHighlighter extends Parser
 
 		foreach ($tags_with_simple_property as $tag)
 		{
-			$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">[' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">]</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">[/' . $tag . ']</span>', $this->content);
+			while (preg_match('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', $this->content))
+			{
+				$this->content = preg_replace('`\[' . $tag . '=([^\]]+)\](.*)\[/' . $tag . '\]`isU', '<span style="color:' . BBCODE_TAG_COLOR . ';">/[/' . $tag . '</span>=<span style="color:' . BBCODE_PARAM_COLOR . ';">$1</span><span style="color:' . BBCODE_TAG_COLOR . ';">/]/</span>$2<span style="color:' . BBCODE_TAG_COLOR . ';">/[//' . $tag . '/]/</span>', $this->content);
+			}
 		}
 
 		//Tags which take several parameters. The syntax is the same as XML parameters
@@ -95,7 +103,10 @@ class BBCodeHighlighter extends Parser
 
 		foreach ($tags_with_many_parameters as $tag)
 		{
-			$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array(&$this, '_highlight_bbcode_tag_with_many_parameters'), $this->content);
+			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', $this->content))
+			{
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isU', array(&$this, '_highlight_bbcode_tag_with_many_parameters'), $this->content);
+			}
 		}
 		
 		if (!$inline_code)
@@ -106,6 +117,9 @@ class BBCodeHighlighter extends Parser
 		{
 			$this->content = '<pre style="display:inline;">' . $this->content . '</pre>';
 		}
+		
+		//Te be able to handle the nested tags, we replaced [ by /[/, we do the reverse replacement now		
+		$this->content = str_replace(array('/[/', '/]/'), array('[', ']'), $this->content);
 	}
 
 	## Private ##
@@ -121,7 +135,7 @@ class BBCodeHighlighter extends Parser
 
 		$matches[2] = preg_replace('`([a-z]+)="([^"]*)"`isU', '<span style="color:' . BBCODE_PARAM_NAME_COLOR . '">$1</span>=<span style="color:' . BBCODE_PARAM_COLOR . '">"$2"</span>', $matches[2]);
 
-		return '<span style="color:' . BBCODE_TAG_COLOR . '">[' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . BBCODE_TAG_COLOR . '">]</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">[/' . $tag_name . ']</span>';
+		return '<span style="color:' . BBCODE_TAG_COLOR . '">/[/' . $tag_name . '</span>' .$matches[2] . '<span style="color:' . BBCODE_TAG_COLOR . '">/]/</span>' . $content . '<span style="color:' . BBCODE_TAG_COLOR . '">/[//' . $tag_name . '/]/</span>';
 	}
 }
 ?>
