@@ -54,7 +54,7 @@ class TemplateHighlighter extends Parser
 	 * @param int $line_number GESHI_NO_LINE_NUMBERS => no line numbers, GESHI_NORMAL_LINE_NUMBERS line numbers.
 	 * @param bool $inline_code true if it's a sigle line code, otherwise false.
 	 */
-	function highlight($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
+	function parse($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');

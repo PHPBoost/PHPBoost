@@ -132,7 +132,7 @@ class ContentSecondParser extends Parser
             import('content/parser/bbcode_highlighter');
             $bbcode_highlighter = new BBCodeHighlighter();
             $bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-            $bbcode_highlighter->highlight($inline_code);
+            $bbcode_highlighter->parse($inline_code);
             $contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
         }
         //Templates PHPBoost
@@ -143,7 +143,7 @@ class ContentSecondParser extends Parser
              
             $template_highlighter = new TemplateHighlighter();
             $template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-            $template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+            $template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
             $contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
         }
         elseif ($language != '')
