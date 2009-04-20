@@ -51,7 +51,7 @@ class FeedMenu extends Menu
 
 	## Getters ##
 	/**
-	 * @return string the feed menu module id 
+	 * @return string the feed menu module id
 	 */
 	function get_module_id() { return $this->module_id; }
 	
@@ -106,14 +106,15 @@ class FeedMenu extends Menu
 	 * @param string $name The feed name
 	 * @param string $block_position The indentifier block position defined in the inherit class menu
 	 * @return the tpl to parse a feed
+     * @static
 	 */
 	/* static */ function get_template($name = '', $block_position = BLOCK_POSITION__LEFT)
 	{
 		$tpl = new Template('/framework/menus/feed/feed.tpl');
 
 		$tpl->assign_vars(array(
-			'NAME' => $name, 
-			'C_NAME' => !empty($name), 
+			'NAME' => $name,
+			'C_NAME' => !empty($name),
 			'C_VERTICAL_BLOCK' => ($block_position == BLOCK_POSITION__LEFT || $block_position == BLOCK_POSITION__RIGHT)
 		));
 			

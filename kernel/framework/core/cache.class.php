@@ -147,9 +147,9 @@ class Cache
         $modulesLoader = new ModulesDiscoveryService();
         $module = $modulesLoader->get_module($module_name);
 
-        if ((!$module->get_errors() || $module->got_error(ACCES_DENIED)) && $module->has_functionnality('get_cache')) //Le module implémente bien la fonction.
+        if ((!$module->get_errors() || $module->got_error(ACCES_DENIED)) && $module->has_functionality('get_cache')) //Le module implémente bien la fonction.
         {
-            $this->write($module_name, $module->functionnality('get_cache'));
+            $this->write($module_name, $module->functionality('get_cache'));
         }
         elseif (!$no_alert_on_error)
         {
@@ -185,7 +185,7 @@ class Cache
         {
             if ($MODULES[strtolower($module->id)]['activ'] == '1') //Module activé
             {
-                $this->write(strtolower($module->id), $module->functionnality('get_cache'));
+                $this->write(strtolower($module->id), $module->functionality('get_cache'));
             }
         }
     }
