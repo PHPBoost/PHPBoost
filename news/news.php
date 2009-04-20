@@ -38,8 +38,8 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'news';
 	$module = $modulesLoader->get_module($module_name);
-	if ($module->has_functionnality('get_home_page')) {
-		echo $module->functionnality('get_home_page');
+	if ($module->has_functionality('get_home_page')) {
+		echo $module->functionality('get_home_page');
 		require_once('../kernel/footer.php');
 		exit;
 	} elseif (!$no_alert_on_error) {

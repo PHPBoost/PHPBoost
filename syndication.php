@@ -66,7 +66,7 @@ if (!empty($module_id))
 		$modules_discovery_service = new ModulesDiscoveryService();
 		$module = $modules_discovery_service->get_module($module_id);
 
-		if (is_object($module) && $module->got_error() == 0 && $module->has_functionnality('get_feed_data_struct'))
+		if (is_object($module) && $module->got_error() == 0 && $module->has_functionality('get_feed_data_struct'))
 		{
 			$feed->load_data($module->get_feed_data_struct($category_id, $feed_name));
 			$feed->cache();

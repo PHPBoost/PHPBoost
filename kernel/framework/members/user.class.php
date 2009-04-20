@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,13 +31,13 @@ define('USER_TYPE', 3);
 
 /**
  * @author Régis VIARRE <crowkait@phpboost.com>
- * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations  
+ * @desc This class manage user, it provide you methods to get or modify user informations, moreover methods allow you to control user authorizations
  * @package members
  */
 class User
 {
 	/**
-	 * @desc Set global authorizations which are given by all the user groups authorizations. 
+	 * @desc Set global authorizations which are given by all the user groups authorizations.
 	 * @param $session_data
 	 * @param $groups_info
 	 */
@@ -52,7 +52,7 @@ class User
 		$this->groups_auth = $groups_auth;
 		
 		//Groupes du membre.
-		$this->user_groups = explode('|', $session_data['user_groups']);		
+		$this->user_groups = explode('|', $session_data['user_groups']);
 		array_unshift($this->user_groups, 'r' . $session_data['level']); //Ajoute le groupe associé au rang du membre.
 		array_pop($this->user_groups); //Supprime l'élément vide en fin de tableau.
 	}
@@ -60,7 +60,7 @@ class User
 	## Public methods ##
 	/**
 	 * @desc Accessor
-	 * @param string $attribute The attribute name. 
+	 * @param string $attribute The attribute name.
 	 * @return unknown_type
 	 */
 	function get_attribute($attribute)
@@ -82,6 +82,7 @@ class User
 	 * @param string $user_groups The list of user groups separated by pipe.
 	 * @param int $level The user level. Only member have special color.
 	 * @return string The group color (hexadecimal format)
+     * @static
 	 */
 	/* static */ function get_group_color($user_groups, $level = 0)
 	{
@@ -94,7 +95,7 @@ class User
 		{
 			if ($i++ == 0)
 				return (!empty($_array_groups_auth[$idgroup]['color']) && $level == 0) ? '#' . $_array_groups_auth[$idgroup]['color'] : '';
-		}		
+		}
 	}
 	
 	/**
@@ -104,7 +105,7 @@ class User
 	 */
 	function check_level($secure)
 	{
-		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure) 
+		if (isset($this->user_data['level']) && $this->user_data['level'] >= $secure)
 			return true;
 		return false;
 	}
@@ -146,7 +147,7 @@ class User
 		$array_user_auth_groups = $this->_array_group_intersect($this->groups_auth);
 		$max_auth = $max_value_compare;
 		foreach ($array_user_auth_groups as $idgroup => $group_auth)
-		{	
+		{
 			if ($group_auth[$key_auth] == -1)
 				return -1;
 			else
@@ -167,7 +168,7 @@ class User
 	
 	/**
 	 * @desc Modify the user theme.
-	 * @param string $user_theme The new theme. 
+	 * @param string $user_theme The new theme.
 	 */
 	function set_user_theme($user_theme)
 	{
@@ -185,9 +186,9 @@ class User
 		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
 			if ($this->user_data['level'] > -1)
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
+				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . strprotect($user_theme) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
 			else
-				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
+				$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_theme = '" . strprotect($user_theme) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
 		}
 	}
 	
@@ -209,9 +210,9 @@ class User
 		global $Sql;
 		
 		if ($this->user_data['level'] > -1)
-			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);		
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . strprotect($user_lang) . "' WHERE user_id = '" . $this->user_data['user_id'] . "'", __LINE__, __FILE__);
 		else
-			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_lang = '" . strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);		
+			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET user_lang = '" . strprotect($user_lang) . "' WHERE level = -1 AND session_id = '" . $this->user_data['session_id'] . "'", __LINE__, __FILE__);
 	}
 	
 	
@@ -233,12 +234,12 @@ class User
 	}
 	
 	/**
-	 * @desc Compute the group <strong>intersection</strong> between the user groups and the group array in argument 
+	 * @desc Compute the group <strong>intersection</strong> between the user groups and the group array in argument
 	 * @param array $array_auth_groups Array of groups id
 	 * @return array The new array computed.
 	 */
 	function _array_group_intersect($array_auth_groups)
-	{		
+	{
 		global $User;
 		
 		$array_user_auth_groups = array();

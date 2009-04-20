@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ class Note
 	## Public Methods ##
 	/**
 	 * @desc Create an new object Note.
-	 * @param string $script The module name in which the pagination is used. 
+	 * @param string $script The module name in which the pagination is used.
 	 * <strong>Warning</strong>The sql table name has to be the same name, otherwise you has to specify the sql table name in $script and module name in $module_folder argument
 	 * @param int $idprov The id of the item in the module.
 	 * @param string $script_path The script path. Example : url('file.php?id=' . $idart, 'file-' . $idart . '.php')
@@ -46,7 +46,7 @@ class Note
 	 * @param string $module_folder (optional) The folder where the module is located. It allow you to specify a different module location
 	 * @param int $options
 	 */
-	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0) 
+	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0)
 	{
 		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 		$this->options = (int)$options;
@@ -65,7 +65,7 @@ class Note
 		
 		if ($User->check_level(MEMBER_LEVEL))
 		{
-			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.			
+			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.
 			$row_note = $Sql->query_array(PREFIX . $this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 			$user_id = $User->get_attribute('user_id');
 			$array_users_note = explode('/', $row_note['users_note']);
@@ -133,7 +133,7 @@ class Note
 				{
 					$star_img = 'stars.png';
 					if ($row_note['note'] < $i)
-					{							
+					{
 						$decimal = $i - $row_note['note'];
 						if ($decimal >= 1)
 							$star_img = 'stars0.png';
@@ -143,7 +143,7 @@ class Note
 							$star_img = 'stars2.png';
 						else
 							$star_img = 'stars3.png';
-					}			
+					}
 					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ', \'' . $Session->get_token() . '\')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
 				}
 				if (($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0) //Affichage du nombre de votant.
@@ -186,6 +186,7 @@ class Note
 	 * @param int $notation_scale Notation scale
 	 * @param int $num_stars_display Number of image to display.
 	 * @return string The notation with images.
+	 * @static
 	 */
 	/* static */ function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
@@ -204,7 +205,7 @@ class Note
 		{
 			$star_img = 'stars.png';
 			if ($note < $i)
-			{							
+			{
 				$decimal = $i - $note;
 				if ($decimal >= 1)
 					$star_img = 'stars0.png';
@@ -214,7 +215,7 @@ class Note
 					$star_img = 'stars2.png';
 				else
 					$star_img = 'stars3.png';
-			}			
+			}
 			$display_note .= '<img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" />';
 		}
 		
@@ -247,8 +248,8 @@ class Note
 	}
 	
 	/**
-	 * @desc Get the sql table of the associated module 
-	 * @return string The sql table of the associated module 
+	 * @desc Get the sql table of the associated module
+	 * @return string The sql table of the associated module
 	 */
 	function _get_table_module()
 	{

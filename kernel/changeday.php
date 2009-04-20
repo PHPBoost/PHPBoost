@@ -81,7 +81,7 @@ function change_day()
 	{
 		if ($module->is_enabled())
 		{
-			$module->functionnality('on_changeday');
+			$module->functionality('on_changeday');
 		}
 	}
 

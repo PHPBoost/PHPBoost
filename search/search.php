@@ -89,10 +89,10 @@ foreach ($search_module as $module)
 	{
 	    // Ajout du paramètre search à tous les modules
 	    $modules_args[$module->get_id()]['search'] = $search;
-	    if ($module->has_functionnality('get_search_args'))
+	    if ($module->has_functionality('get_search_args'))
 	    {
 	        // Récupération de la liste des paramètres
-	        $form_module_args = $module->functionnality('get_search_args');
+	        $form_module_args = $module->functionality('get_search_args');
 	        // Ajout des paramètres optionnels sans les sécuriser.
 	        // Ils sont sécurisés à l'intérieur de chaque module.
 	        if ($search_in == 'all')
@@ -114,7 +114,7 @@ foreach ($search_module as $module)
 	            'MODULE_NAME' => $module->get_id(),
 	            'L_MODULE_NAME' => ucfirst($module->get_name()),
 	            'C_SEARCH_FORM' => true,
-	            'SEARCH_FORM' => $module->functionnality('get_search_form', $modules_args[$module->get_id()])
+	            'SEARCH_FORM' => $module->functionality('get_search_form', $modules_args[$module->get_id()])
 	        ));
 	    }
 	    else

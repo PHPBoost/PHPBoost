@@ -180,6 +180,7 @@ class Feed
 	 * @desc Clear the cache of the specified module_id.
 	 * @param mixed $module_id the module module_id or false. If false,
 	 * Clear all feeds data from the cache
+	 * @static
 	 */
 	/*static*/ function clear_cache($module_id = false)
 	{
@@ -206,6 +207,7 @@ class Feed
 	 * @param string $name the feed name / type
 	 * @param &FeedData $data the data to put in the cache
 	 * @param int $idcat the feed data category
+	 * @static
 	 */
 	/*static*/ function update_cache($module_id, $name, &$data, $idcat = 0)
 	{
@@ -226,6 +228,7 @@ class Feed
 	 * @param int $number the number of item to display
 	 * @param int $begin_at the first item to display
 	 * @return string The exported feed
+	 * @static
 	 */
 	/*static*/ function get_parsed($module_id, $name = DEFAULT_FEED_NAME, $idcat = 0, $tpl = false, $number = 10, $begin_at = 0)
 	{
@@ -251,13 +254,13 @@ class Feed
 			$modules = new ModulesDiscoveryService();
 			$module = $modules->get_module($module_id);
 
-			if ( $module->got_error() || !$module->has_functionnality('get_feed_data_struct') )
+			if ( $module->got_error() || !$module->has_functionality('get_feed_data_struct') )
 			{   // If the module is not installed or doesn't have the get_feed_data_struct
-				// functionnality we break
+				// functionality we break
 				return '';
 			}
 
-			$data = $module->functionnality('get_feed_data_struct', $idcat);
+			$data = $module->functionality('get_feed_data_struct', $idcat);
 			if (!$module->got_error())
 			{
 				Feed::update_cache($module_id, $name, $data, $idcat);

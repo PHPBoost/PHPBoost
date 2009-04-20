@@ -63,7 +63,7 @@ class ModuleInterface
         $this->name = $this->id;
         $this->attributes =array();
         $this->infos = array();
-        $this->functionnalities = array();
+        $this->functionalities = array();
         $this->enabled = ($MODULES[strtolower($this->get_id())]['activ'] == '1');
 
         // Get the config.ini informations
@@ -84,15 +84,15 @@ class ModuleInterface
             
             $methods_diff = array_diff($module_methods, $generics_methods);
             
-            // keep only public methods from the functionnalities list
+            // keep only public methods from the functionalities list
             foreach ($methods_diff as $method)
             {
                 if (substr($method, 0, 1) != '_')
                 {
-                	$this->functionnalities[] = $method;
+                	$this->functionalities[] = $method;
                 }
             }
-            $this->functionnalities[] = 'none';
+            $this->functionalities[] = 'none';
         }
         $this->errors = $error;
     }
@@ -123,14 +123,14 @@ class ModuleInterface
     }
 
     /**
-     * @return mixed[] All informations that you could find in the .ini file of the module,  his functionnalities and his name
+     * @return mixed[] All informations that you could find in the .ini file of the module,  his functionalities and his name
      */
     function get_infos()
     {
         return array(
             'name' => $this->name,
             'infos' => $this->infos,
-            'functionnalities' => $this->functionnalities,
+            'functionalities' => $this->functionalities,
         );
     }
 
@@ -193,42 +193,42 @@ class ModuleInterface
     }
 
     /**
-     * @desc Check the existance of the functionnality and if exists call it.
+     * @desc Check the existance of the functionality and if exists call it.
      *  If she's not available, the FUNCTIONNALITY_NOT_IMPLEMENTED flag is raised.
-     * @param string $functionnality the name of the method you want to call
-     * @param mixed $args the args you want to pass to the $functionnality method
-     * @return mixed the $functionnality returns or if non-existing, false
+     * @param string $functionality the name of the method you want to call
+     * @param mixed $args the args you want to pass to the $functionality method
+     * @return mixed the $functionality returns or if non-existing, false
      */
-    function functionnality($functionnality, $args = null)
+    function functionality($functionality, $args = null)
     {
         $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
-        if ($this->has_functionnality($functionnality))
-            return $this->$functionnality($args);
+        if ($this->has_functionality($functionality))
+            return $this->$functionality($args);
         $this->_set_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         return false;
     }
 
     /**
-     * @desc Check the availability of the functionnality (hook)
-     * @param string $functionnality the name of the method you want to check the availability
-     * @return bool true if the functionnality exists, false otherwise
+     * @desc Check the availability of the functionality (hook)
+     * @param string $functionality the name of the method you want to check the availability
+     * @return bool true if the functionality exists, false otherwise
      */
-    function has_functionnality($functionnality)
+    function has_functionality($functionality)
     {
-        return in_array(strtolower($functionnality), $this->functionnalities);
+        return in_array(strtolower($functionality), $this->functionalities);
     }
 
     /**
-     * @desc Check the availability of the functionnalities (hook)
-     * @param string[] $functionnalities the names of the methods you want to check the availability
-     * @return bool true if all functionnalities exist, false otherwise
+     * @desc Check the availability of the functionalities (hook)
+     * @param string[] $functionalities the names of the methods you want to check the availability
+     * @return bool true if all functionalities exist, false otherwise
      */
-    function has_functionnalities($functionnalities)
+    function has_functionalities($functionalities)
     {
-        $nbFunctionnalities = count($functionnalities);
+        $nbFunctionnalities = count($functionalities);
         for ( $i = 0; $i < $nbFunctionnalities; $i++ )
-            $functionnalities[$i] = strtolower($functionnalities[$i]);
-        return $functionnalities === array_intersect($functionnalities, $this->functionnalities);
+            $functionalities[$i] = strtolower($functionalities[$i]);
+        return $functionalities === array_intersect($functionalities, $this->functionalities);
     }
 
 
@@ -271,9 +271,9 @@ class ModuleInterface
     var $infos;
     /**
      * @access protected
-     * @var string[] list of the functionnalities provided
+     * @var string[] list of the functionalities provided
      */
-    var $functionnalities;
+    var $functionalities;
     /**
      * @access protected
      * @var int error flag
