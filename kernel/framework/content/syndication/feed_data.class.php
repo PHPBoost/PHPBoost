@@ -32,7 +32,7 @@ import('util/url');
 define('FEED_DATA__CLASS', 'FeedData');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc Contains meta-informations about a feed with its entries
  * @package content
  * @subpackage syndication

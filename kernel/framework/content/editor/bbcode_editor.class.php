@@ -27,6 +27,13 @@
 
 import('content/editor/editor');
 
+/**
+ * @package content
+ * @subpackage editor
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc
+ */
+
 class BBCodeEditor extends ContentEditor
 {
     function BBCodeEditor()

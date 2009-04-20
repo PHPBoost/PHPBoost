@@ -33,7 +33,7 @@ import('functions', INC_IMPORT);
 import('content/syndication/feed_data');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class could be used to export feeds
  * @abstract  Do not use this class, but one of its children like RSS or ATOM
  * @package content

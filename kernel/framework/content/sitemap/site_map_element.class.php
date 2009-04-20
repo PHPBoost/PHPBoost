@@ -28,7 +28,8 @@
 
 /**
  * @abstract
- * @package sitemap
+ * @package content
+ * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This abstract is the root of every object which can be contained by a SiteMap object.
  * Some SiteMapElements objects can contain one or many SiteMapElement objects therefore the elements

@@ -28,7 +28,9 @@
 import('content/parser/parser');
 
 /**
- * @desc This class makes the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
+ * @package content
+ * @subpackage parser
+ * @desc This class ensures the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
  * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
  * which replaces the code by a lot of html code which formats the code.
  * This kind of tag is treated in real time by this class.

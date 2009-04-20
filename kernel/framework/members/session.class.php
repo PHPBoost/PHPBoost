@@ -32,6 +32,10 @@ define('NO_AUTOCONNECT', false);
 define('ALREADY_HASHED', true);
 define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 
+/**
+ * @package members
+ */
+
 class Session
 {
 	## Public Attribute ##

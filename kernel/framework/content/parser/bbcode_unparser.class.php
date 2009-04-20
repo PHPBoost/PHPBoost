@@ -28,7 +28,8 @@
 import('content/parser/content_unparser');
 
 /**
- * @package parser
+ * @package content
+ * @subpackage parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.

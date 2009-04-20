@@ -33,7 +33,7 @@ import('io/template');
 import('content/syndication/feed');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class could load a feed by its url or by a FeedData element and
  * export it to the ATOM format
  * @package content

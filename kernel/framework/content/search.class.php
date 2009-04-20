@@ -31,9 +31,8 @@ global $CONFIG;
 define('CACHE_TIME', $CONFIG['search_cache_time']);
 define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 
-
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  * @package content
  */

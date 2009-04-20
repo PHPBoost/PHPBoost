@@ -29,7 +29,8 @@
 import('content/sitemap/site_map_element');
 
 /**
- * @package sitemap
+ * @package content
+ * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class represents a section of a site map.
  */

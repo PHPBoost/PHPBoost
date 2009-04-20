@@ -28,6 +28,8 @@
 import('content/parser/parser');
 
 /**
+ * @package content
+ * @subpackage parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
  */

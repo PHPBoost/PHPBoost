@@ -31,7 +31,7 @@ import('content/syndication/feed');
 define('FEED_MENU__CLASS','FeedMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  * @package menu
  * @subpackage feedmenu

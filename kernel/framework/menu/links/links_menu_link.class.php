@@ -30,7 +30,7 @@ import('menu/links/links_menu_element');
 define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc A Simple menu link
  * @package menu
  * @subpackage linksmenu

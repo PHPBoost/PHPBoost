@@ -38,7 +38,7 @@ import('core/application');
 import('core/repository');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc 
  * @package core
  */

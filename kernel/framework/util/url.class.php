@@ -30,7 +30,7 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
 define('URL_TAGS', 'src|data|value|href|son|flv');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class offers a simple way to transform an absolute or relative link
  * to a relative one to the website root.
  * It can also deals with absolute url and will convert only those from this

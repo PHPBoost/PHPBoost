@@ -38,7 +38,7 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 
 
 /**
-* @author Loïc Rouchon horn@phpboost.com
+* @author Loïc Rouchon <horn@phpboost.com>
 * @desc Create a Menu with children.
 * Children could be Menu or LinksMenuLink objects
 * @package menu

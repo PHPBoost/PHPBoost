@@ -27,7 +27,8 @@
 ###################################################*/
 
 /**
- * @package sitemap
+ * @package content
+ * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc Configuration used to export a SiteMap. It contains some Template objects
  * which are used to export each kind of elements of a sitemap.

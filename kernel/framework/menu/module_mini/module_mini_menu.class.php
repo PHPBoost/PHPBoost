@@ -30,7 +30,7 @@ import('menu/menu');
 define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  * @package menu
  * @subpackage modulesminimenu

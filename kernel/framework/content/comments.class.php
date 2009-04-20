@@ -29,6 +29,11 @@ define('INTEGRATED_IN_ENVIRONMENT', true);
 define('POP_UP_WINDOW', false);
 define('KERNEL_SCRIPT', true);
 
+/**
+ * @package content
+ * @author Révis Viarre <crowkait@phpboost.com>
+ * @desc
+ */
 class Comments
 {
 	## Public Methods ##
