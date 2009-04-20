@@ -34,6 +34,8 @@ define('PICK_UP', true);
 define('REIMPLANT', false);
 
 /**
+ * @package content
+ * @subpackage parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This class is the basis of all the formatting processings that exist in PHPBoost.
  */

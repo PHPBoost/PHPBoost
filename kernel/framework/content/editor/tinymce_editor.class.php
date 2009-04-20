@@ -27,6 +27,13 @@
 
 import('content/editor/editor');
 
+/**
+ * @package content
+ * @subpackage editor
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc
+ */
+
 class TinyMCEEditor extends ContentEditor
 {
     function TinyMCEEditor()

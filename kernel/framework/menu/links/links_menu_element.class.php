@@ -37,7 +37,7 @@ define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
 define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
  * @package menu

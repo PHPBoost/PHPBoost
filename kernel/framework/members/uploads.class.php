@@ -28,6 +28,11 @@
 define('EMPTY_FOLDER', true);
 define('ADMIN_NO_CHECK', true);
 
+/**
+ * @package members
+ *
+ */
+
 class Uploads
 {
 	## Public Attributes ##

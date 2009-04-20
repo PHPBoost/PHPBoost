@@ -33,7 +33,7 @@ import('util/date');
 import('events/administrator_alert');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc 
  * @package core
  */

@@ -29,6 +29,8 @@
 import('content/sitemap/site_map_section');
 
 /**
+ * @package content
+ * @subpackage sitemap
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc The ModuleMap class represents the map of a module. It has a description
  * (generally the module description) and contains some elements which can be

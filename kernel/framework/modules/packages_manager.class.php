@@ -39,7 +39,11 @@ define('PHP_VERSION_CONFLICT', 				6);
 define('GENERATE_CACHE_AFTER_THE_OPERATION',		true);
 define('DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION', false);
 
-//Class
+/**
+ * @package modules
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 class PackagesManager
 {
 	/*static*/ function install_module($module_identifier, $enable_module = true, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)

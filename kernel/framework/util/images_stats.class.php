@@ -34,6 +34,11 @@ define('DRAW_VALUES', true);
 
 define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
 
+/**
+ * @package util
+ * @author 
+ *
+ */
 class Stats
 {		
 	## Public Methods ##

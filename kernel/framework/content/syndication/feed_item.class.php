@@ -28,7 +28,7 @@
 import('util/url');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc Contains meta-informations and informations about a feed entry / item
  * @package content
  * @subpackage syndication

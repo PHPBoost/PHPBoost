@@ -37,7 +37,7 @@ define('MOVE_UP',   -1);
 define('MOVE_DOWN',  1);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This service manage kernel menus by adding the persistance to menus objects.
  * It also provides all moving and disabling methods to change the website appearance.
  * @static

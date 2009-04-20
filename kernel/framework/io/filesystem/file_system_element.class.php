@@ -29,7 +29,8 @@ define('OPEN_NOW', true);
 define('OPEN_AFTER', false);
 
 /**
- * @package filesystem
+ * @package io
+ * @subpackage filesystem 
  * @abstract
  * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class represents any file system element.

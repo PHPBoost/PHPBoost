@@ -30,7 +30,7 @@ import('menu/menu');
 define('CONTENT_MENU__CLASS','ContentMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  * @package menu
  * @subpackage contentmenu

@@ -29,6 +29,8 @@ import('io/filesystem/file_system_element');
 import('io/filesystem/file');
 
 /**
+ * @package io
+ * @subpackage filesystem
  * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class allows you to handle very easily a folder on the serveur.
  */

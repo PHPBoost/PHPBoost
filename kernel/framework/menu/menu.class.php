@@ -44,7 +44,7 @@ define('BLOCK_POSITION__RIGHT',             8);
 define('BLOCK_POSITION__ALL',               9);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class represents a menu element and is used to build any kind of menu
  * @abstract
  * @package menu

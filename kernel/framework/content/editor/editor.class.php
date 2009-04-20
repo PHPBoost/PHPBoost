@@ -25,6 +25,13 @@
  *
  ###################################################*/
 
+/**
+ * @package content
+ * @subpackage editor
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc
+ */
+
 class ContentEditor
 {
     function ContentEditor($language_type = null)
