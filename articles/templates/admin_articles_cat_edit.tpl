@@ -94,7 +94,7 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '');change_icon(this.value)" /></label>
+							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '');change_icon(this.value)" onclick="document.getElementById('img_default_select').selected = 'selected';" /></label>
 						</dd>
 					</dl>
 					<dl>

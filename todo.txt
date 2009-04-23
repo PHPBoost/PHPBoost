@@ -74,6 +74,7 @@ Commenter PackageManager
 - [color=red]Nouveauté:[/color] Nouveaux droits globaux aux groupes dans le forum, suppression/édition des messages/sujets appartenant au membre.
 - [color=red]Nouveauté:[/color] Possibilité de créer des messages semi-automatiques pour les modérateurs.
 - [color=red]Nouveauté:[/color] Possibilité de délestage automatique des sujets (configuration).
+- [color=red]Nouveauté:[/color] Possibilité de définir des mots interdits (remplacés par des étoiles).
 - Possibilité de mettre un pseudo lorsque l'on poste en visiteur.
 
 

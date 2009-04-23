@@ -101,7 +101,7 @@ else
 	));
 			
 	//Listing des catégories disponibles		
-	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
+	$galleries = '<option value="0" id="img_default_select" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
 	FROM " . PREFIX . "articles_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
