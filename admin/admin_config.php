@@ -69,8 +69,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	$config['bench'] 		= retrieve(POST, 'bench', 0);
 	$config['theme_author'] = retrieve(POST, 'theme_author', 0);
 	$config['mail_exp'] 	= stripslashes(retrieve(POST, 'mail_exp', ''));  
-	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));  
-	$config['activ_mail'] 	= retrieve(POST, 'activ_mail', 1); //activé par defaut. 
+	$config['mail'] 		= stripslashes(retrieve(POST, 'mail', ''));
 	$config['sign'] 		= stripslashes(retrieve(POST, 'sign', ''));  
 	$config['anti_flood'] 	= retrieve(POST, 'anti_flood', 0);
 	$config['delay_flood'] 	= retrieve(POST, 'delay_flood', 0);
@@ -286,8 +285,6 @@ else //Sinon on rempli le formulaire
 		'THEME_AUTHOR_DISABLED' => ($CONFIG['theme_author'] == 0) ? 'checked="checked"' : '',
 		'FLOOD_ENABLED' => ($CONFIG['anti_flood'] == 1) ? 'checked="checked"' : '',
 		'FLOOD_DISABLED' => ($CONFIG['anti_flood'] == 0) ? 'checked="checked"' : '',
-		'MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '','MAIL_ENABLED' => ($CONFIG['activ_mail'] == 1) ? 'checked="checked"' : '',
-		'MAIL_DISABLED' => ($CONFIG['activ_mail'] == 0) ? 'checked="checked"' : '',
 		'L_REQUIRE_VALID_MAIL' => $LANG['require_mail'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_CONFIG' => $LANG['configuration'],
@@ -321,8 +318,6 @@ else //Sinon on rempli le formulaire
 		'L_EMAIL_ADMIN_EXP_EXPLAIN' => $LANG['email_admin_explain_exp'],
 		'L_EMAIL_ADMIN' => $LANG['email_admin'],
 		'L_EMAIL_ADMIN_EXPLAIN' => $LANG['email_admin_explain'],
-		'L_EMAIL_ADMIN_STATUS' => $LANG['admin_admin_status'],
-		'L_EMAIL_ADMIN_STATUS_EXPLAIN' => $LANG['admin_admin_status_explain'],
 		'L_EMAIL_ADMIN_SIGN' => $LANG['admin_sign'],			
 		'L_EMAIL_ADMIN_SIGN_EXPLAIN' => $LANG['admin_sign_explain'],
 		'L_ACTIV' => $LANG['activ'],

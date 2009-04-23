@@ -561,7 +561,6 @@ switch($step)
     		$CONFIG['site_session_invit'] = 300;
     		$CONFIG['mail_exp'] = '';
     		$CONFIG['mail'] = '';
-    		$CONFIG['activ_mail'] = 0;
     		$CONFIG['sign'] = $LANG['site_config_mail_signature'];
     		$CONFIG['anti_flood'] = 0;
     		$CONFIG['delay_flood'] = 7;
