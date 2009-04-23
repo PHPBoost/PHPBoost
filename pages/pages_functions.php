@@ -115,7 +115,7 @@ function pages_find_subcats(&$array, $id_cat)
 function pages_parse($contents)
 {
 	$contents = strparse($contents);
-	$contents = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $contents);
+	$contents = preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/pages/$1">$2</a>', $contents);
 	
 	return (string) $contents;
 }
@@ -144,7 +144,7 @@ function pages_second_parse($contents)
 function link_unparse($contents)
 {
 	$contents = is_array($contents) ? $contents[0] : $contents;
-	return preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
+	return preg_replace('`<a href="(?:/pages/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $contents);
 }
 
 ?>

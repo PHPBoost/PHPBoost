@@ -39,14 +39,14 @@ function wiki_parse(&$var)
     $parser->parse();
 	
     //Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $parser->get_content());
+	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $parser->get_content());
 }
 
 //Retour au BBCode en tenant compte de [link]
 function wiki_unparse($var)
 {
 	//Unparse de la balise link
-	$var = preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
+	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
 	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);

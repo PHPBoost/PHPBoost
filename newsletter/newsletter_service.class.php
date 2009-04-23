@@ -26,6 +26,8 @@
 ###################################################*/
 
 if (defined('PHPBOOST') !== true)	exit;
+
+import('content/content_second_parser');
 	
 class NewsletterService
 {
@@ -37,13 +39,9 @@ class NewsletterService
 		$message = stripslashes($message);
 		$message = str_replace('"../', '"' . HOST . DIR . '/' , $message);
 		$message = NewsletterService::clean_html($message);
-		
-		//On défini les headers
-		$headers = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n";
-		$headers .= 'Reply-To: ' . $_NEWSLETTER_CONFIG['sender_mail'] . "\r\n";
-		$headers .= "MIME-Version: 1.0\n";
-		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-		$headers .= "\r\n";
+		$message = ContentSecondParser::export_html_text($message);
+				
+		import('io/mail');
 		
 		if ($email_test == '') // envoi définitif
 		{
@@ -60,18 +58,33 @@ class NewsletterService
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
+			
+			$mail_sender = new Mail();
+			$mail_sender->set_mime(MIME_FORMAT_HTML);
+			$mail_sender->set_object($mail_object);
 			 
 			foreach ($mailing_list as $array_mail)
 			{
-				if (!@mail($array_mail[1], $mail_object, str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message), $headers))
-					$error_mailing_list[] = $array_mail[1];
+			    $mail_sender->set_recipients($array_mail[1]);
+                $mail_sender->set_content(str_replace('[UNSUBSCRIBE_LINK]', '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a><br /><br />', $message));
+
+                if (!$mail_sender->send())
+                {
+                    $error_mailing_list[] = $array_mail[1];
+                }
 			}
 
 			return $error_mailing_list;
 		}
 		else
 		{
-			@mail($email_test, $mail_object, $message, $headers);
+		    $mail_sender = new Mail();
+		    $mail_sender->set_mime(MIME_FORMAT_HTML);
+		    $mail_sender->set_recipients($email_test);
+		    $mail_sender->set_content($message);
+		    $mail_sender->set_object($mail_object);
+		    
+		    $mail_sender->send();
 			return true;
 		}		
 	}
@@ -80,16 +93,12 @@ class NewsletterService
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
 		
+		import('io/mail');
+		
 		$error_mailing_list = array();
 		$message = stripslashes(strparse(addslashes($message)));
 
 		$message = ContentSecondParser::export_html_text($message);
-		
-		//On définit les headers
-		$headers = 'From: ' . $_NEWSLETTER_CONFIG['newsletter_name'] . ' <' . $_NEWSLETTER_CONFIG['sender_mail'] . '>' . "\r\n";
-		$headers .= 'Reply-To: ' . $_NEWSLETTER_CONFIG['sender_mail'] . "\r\n";
-		$headers .= "MIME-Version: 1.0\n";
-		$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 		
 		$mail_contents = '<html>
 <head><title>' . $mail_object . '</title></head><body>';
@@ -110,21 +119,35 @@ class NewsletterService
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
-			 
-			foreach ($mailing_list as $array_mail)
-			{
-				$mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
-				if (!@mail($array_mail[1], $mail_object, $mail_contents . $mail_contents_end, $headers))
-					$error_mailing_list[] = $array_mail[1];
-			}
+			
+			$mail_sender = new Mail();
+			$mail_sender->set_mime(MIME_FORMAT_HTML);
+            $mail_sender->set_object($mail_object);
+           
+            foreach ($mailing_list as $array_mail)
+            {
+    	        $mail_sender->set_recipients($array_mail[1]);
+    	        $mail_contents_end = '<br /><br /><a href="' . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0] . '">' . $LANG['newsletter_unscubscribe_text'] . '</a></body></html>';
+                $mail_sender->set_content($mail_contents . $mail_contents_end);
+    
+                if (!$mail_sender->send())
+                {
+                    $error_mailing_list[] = $array_mail[1];
+                }
+            }
 			
 			return $error_mailing_list;
 		}
 		else
-		{
-			$mail_contents_end = '</body></html>';
-			@mail($email_test, $mail_object, $mail_contents . $mail_contents_end, $headers);
-			return true;
+		{;
+		    $mail_sender = new Mail();
+		    $mail_sender->set_mime(MIME_FORMAT_HTML);
+            $mail_sender->set_recipients($email_test);
+            $mail_sender->set_content($mail_contents . '</body></html>');
+            $mail_sender->set_object($mail_object);
+            
+            $mail_sender->send();
+            return true;
 		}
 	}
 	
@@ -151,20 +174,34 @@ class NewsletterService
 				$mailing_list[] = array($row['id'], $row['mail']);
 			}
 			$Sql->query_close($result);
-			 
-			foreach ($mailing_list as $array_mail)
-			{
-				$mail_contents = $message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0];			
-				if (!@mail($array_mail[1], $mail_object, $mail_contents, $header))
-					$error_mailing_list[] = $array_mail[1];
-			}
+			
+		    $mail_sender = new Mail();
+            $mail_sender->set_mime(MIME_FORMAT_TEXT);
+            $mail_sender->set_object($mail_object);
+           
+            foreach ($mailing_list as $array_mail)
+            {
+                $mail_sender->set_recipients($array_mail[1]);
+                $mail_sender->set_content($message . "\n\n" . $LANG['newsletter_unscubscribe_text'] . HOST . DIR . '/newsletter/newsletter.php?id=' . $array_mail[0]);
+    
+                if (!$mail_sender->send())
+                {
+                    $error_mailing_list[] = $array_mail[1];
+                }
+            }
 			
 			return $error_mailing_list;
 		}
 		else
 		{
-			@mail($email_test, $mail_object, $message, $header);
-			return true;
+            $mail_sender = new Mail();
+            $mail_sender->set_mime(MIME_FORMAT_HTML);
+            $mail_sender->set_recipients($email_test);
+            $mail_sender->set_content($mail_contents);
+            $mail_sender->set_object($mail_object);
+            
+            $mail_sender->send();
+            return true;
 		}
 	}
 	

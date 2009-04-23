@@ -186,10 +186,10 @@ $LANG['admin_invalid_email_error'] = 'Mail invalide';
 $LANG['admin_create_session'] = 'Me connecter à la fin de l\'installation';
 $LANG['admin_auto_connection'] = 'Rester connecté systématiquement à chacune de mes visites';
 $LANG['admin_error'] = 'Erreur';
-$LANG['admin_mail_object'] = 'PHPBoost : message à conserver';
+$LANG['admin_mail_object'] = 'Identifiants de votre site créé avec PHPBoost (message à conserver)';
 $LANG['admin_mail_unlock_code'] = 'Cher %s,
 
-Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il repondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/index.php
+Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il répondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/index.php
 
 Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
 
@@ -198,7 +198,7 @@ Password: %s
 
 A conserver ce code (Il ne vous sera plus délivré) : %s
 
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin.php) 
+Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php) 
 
 Cordialement l\'équipe PHPBoost.';
 
