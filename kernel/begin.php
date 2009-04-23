@@ -26,10 +26,10 @@
  ###################################################*/
 
 if (!defined('PATH_TO_ROOT')) //Chemin vers la racine.
-define('PATH_TO_ROOT', '..');
+	define('PATH_TO_ROOT', '..');
 
 //Gestion du mode debug
-if( @include PATH_TO_ROOT . '/cache/debug.php')
+if (@include(PATH_TO_ROOT . '/cache/debug.php'))
 {
 	define('DEBUG', (bool)$DEBUG['debug_mode']);
 }
@@ -43,8 +43,8 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once PATH_TO_ROOT . '/kernel/constant.php'; //Constante utiles.
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
+require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 
 import('util/bench');
 $Bench = new Bench(); //Début du benchmark
@@ -131,8 +131,8 @@ if (!isset($LANGS_CONFIG[$user_lang]['secure']) || !$User->check_level($LANGS_CO
 $User->set_user_lang(find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang));
 
 $LANG = array();
-require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'; //!\\ Langues //!\\
-require_once PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'; //Inclusion des langues des erreurs.
+require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/main.php'); //!\\ Langues //!\\
+require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php'); //Inclusion des langues des erreurs.
 //Chargement du cache du jour actuel.
 $Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
@@ -162,7 +162,7 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 			//Inscription du nouveau jour dans le fichier en cache.
 			$Cache->generate_file('day');
 
-			require_once PATH_TO_ROOT . '/kernel/changeday.php';
+			require_once(PATH_TO_ROOT . '/kernel/changeday.php');
 			change_day();
 			// echo 'CHANGE DAY DONE<hr />';
 		}

@@ -718,7 +718,7 @@ elseif (!empty($id)) //Edition des catégories.
 	$img_direct_path = (strpos($articles_info['icon'], '/') !== false);
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 	import('io/filesystem/folder');
-	$image_list = '<option value="">--</option>';
+	$image_list = '<option value="" id="img_default_select">--</option>';
 	$image_folder_path = new Folder('./');
 	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
