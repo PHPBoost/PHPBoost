@@ -159,7 +159,7 @@ class CategoriesManager
 	 * @desc Moves a category (makes it gone up or down)
 	 * @param int $id Id of the category to move
 	 * @param string $way The way according to which the category has to be moved. It must be either MOVE_CATEGORY_UP or MOVE_CATEGORY_DOWN.
-	 * @return bool true wether the category could be moved, false otherwise. If it's false, you will be able to know what was the error by using check_error method.
+	 * @return bool true whether the category could be moved, false otherwise. If it's false, you will be able to know what was the error by using check_error method.
 	 * The error will be:
 	 * <ul>
 	 *		<li>CATEGORY_DOES_NOT_EXIST when the category to move doesn't exist</li>
@@ -481,7 +481,7 @@ class CategoriesManager
 	 * @param int $current_id_cat This parameter is to use when for instance you want to move a category in another, it will not display the children categories of the current category because you cannot move it into one of its subcategories.
 	 * @param int $num_auth If you don't want to display the categories which can not be chosen by the user, you can supply an authorization number which will be used on the $array_auth parameter
 	 * @param mixed[] $array_auth Authorization array which is used if a category hasn't special authorizations 
-	 * @param bool $recursion_mode Sets wether you want to display only the current category or its whole subcategories. Use the constant RECURSIVE_EXPLORATION if you want to explore the whole tree, NOT_RECURSIVE_EXPLORATION otherwise.
+	 * @param bool $recursion_mode Sets whether you want to display only the current category or its whole subcategories. Use the constant RECURSIVE_EXPLORATION if you want to explore the whole tree, NOT_RECURSIVE_EXPLORATION otherwise.
 	 * @param Template $template If you want to customize the displaying, you can give the method a template objet in which variables will be assigned. The default template is framework/content/categories_select_form.tpl.
 	 * @return string The HTML code which displays the select form.
 	 */

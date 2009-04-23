@@ -141,7 +141,7 @@ class FileSystemElement
     var $path;
 
     /**
-     * @var bool Indicates wether the file system element is open or closed.
+     * @var bool Indicates whether the file system element is open or closed.
      */
     var $is_open;
 

@@ -342,7 +342,7 @@ class Date
 	# This should be static#
 	/**
 	 * @static
-	 * @desc Determines wether a date is correct. For example the february 31st is not correct.
+	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
 	 * @param int $day The day
 	 * @param int $year The year
