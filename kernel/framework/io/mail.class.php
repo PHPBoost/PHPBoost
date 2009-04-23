@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+define('MIME_FORMAT_TEXT', 'text/plain');
+define('MIME_FORMAT_HTML', 'text/html');
+
 /**
  * @package io
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -176,6 +179,24 @@ class Mail
     }
     
     /**
+     * Sets the MIME type of the mail content
+     * @param string $mime MIME_FORMAT_TEXT or MIME_FORMAT_HTML
+     */
+    function set_mime($mime)
+    {
+        $this->format = $mime;
+    }
+    
+    /**
+     * Returns the MIME type of the mail content
+     * @return string the MIME type
+     */
+    function get_mime()
+    {
+        return $this->format();
+    }
+    
+    /**
      * @desc Sends the mail.
      * @param string $mail_to The mail recipients' address.
      * @param string $mail_object The mail object.
@@ -226,6 +247,7 @@ class Mail
     {
         return preg_match('`^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address);
     }
+    
 
     ## Protected Methods ##
     /**
@@ -249,7 +271,8 @@ class Mail
         
         //Subject
         $this->headers .= 'Subject: ' . $this->object . "\n";
-        $this->headers .= 'Content-type: text/plain; charset=ISO-8859-1' . "\n";
+        $this->headers .= "MIME-Version: 1.0\n";
+        $this->headers .= 'Content-type: ' . $this->format . '; charset=ISO-8859-1' . "\n";
     }
 
     ## Private Attributes ##
@@ -282,6 +305,11 @@ class Mail
      * @var string[] Recipients of the mail. If they are more than one, a comma separates their addresses.
      */
     var $recipients = array();
+    
+    /**
+     * @var string MIME of the mail content
+     */
+    var $format = MIME_FORMAT_TEXT; 
 }
 
 ?>

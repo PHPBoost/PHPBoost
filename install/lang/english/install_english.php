@@ -198,7 +198,7 @@ Password: %s
 
 Please preserve this code (il won\'t be delivered to you anymore) : %s
 
-This code permits you to unlock administration panel if your website undergoes a hacking attempt, I will be asked to you into the direct connexion form (%s/admin/admin.php) 
+This code permits you to unlock administration panel if your website undergoes a hacking attempt, I will be asked to you into the direct connexion form (%s/admin/admin_index.php) 
 
 Cordialy, the PHPBoost Team.';
 
