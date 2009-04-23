@@ -123,7 +123,7 @@ class ContentSecondParser extends Parser
      * PHPBoost templates and PHPBoost BBCode.
      * @param string $contents Content to highlight
      * @param string $language Language name
-     * @param bool $line_number Indicate wether or not the line number must be added to the code.
+     * @param bool $line_number Indicate whether or not the line number must be added to the code.
      * @param bool $inline_code Indicate if the code is multi line.
      */
     function _highlight_code($contents, $language, $line_number, $inline_code)
