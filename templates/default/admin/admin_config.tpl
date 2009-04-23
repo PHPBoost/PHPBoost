@@ -157,13 +157,6 @@
 						<dd><label><input type="text" maxlength="255" size="40" id="mail" name="mail" value="{MAIL}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_mail">{L_EMAIL_ADMIN_STATUS}</label><br /><span>{L_EMAIL_ADMIN_STATUS_EXPLAIN}</span></dt>
-						<dd>
-							<label><input type="radio" {MAIL_ENABLED} name="activ_mail" id="activ_mail" value="1" /> {L_ACTIV}&nbsp;&nbsp;</label>
-							<label><input type="radio" {MAIL_DISABLED} name="activ_mail" value="0" /> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
-					<dl>
 						<dt><label for="sign">{L_EMAIL_ADMIN_SIGN}</label><br /><span>{L_EMAIL_ADMIN_SIGN_EXPLAIN}</span></dt>
 						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="sign" id="sign">{SIGN}</textarea></label></dd>
 					</dl>
