@@ -43,11 +43,11 @@ header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 header('Pragma: no-cache');
 
 //Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
-
-import('util/bench');
+require_once PATH_TO_ROOT . '/kernel/framework/util/bench.class.php';
 $Bench = new Bench(); //Début du benchmark
+
+require_once PATH_TO_ROOT . '/kernel/constant.php'; //Constante utiles.
+require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
 import('core/errors');
 import('io/template');
