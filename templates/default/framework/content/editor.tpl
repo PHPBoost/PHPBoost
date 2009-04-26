@@ -151,7 +151,7 @@
 							<td style="padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 
-								<div style="position:relative;z-index:100;margin-left:-70px;float:left;display:none;" id="bb_block1{FIELD}">
+								<div style="position:relative;z-index:100;margin-left:-50px;float:left;display:none;" id="bb_block1{FIELD}">
 									<div class="bbcode_block" style="width:130px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 										# START smiley #
 										<a onclick="insertbbcode('{smiley.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{smiley.CODE}">{smiley.IMG}</a>{smiley.END_LINE}

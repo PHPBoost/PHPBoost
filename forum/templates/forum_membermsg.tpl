@@ -6,10 +6,10 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<span style="float:left;">
+				<span class="forum_cat_title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
+				<span style="float:right;">{PAGINATION}</span>
 			</div>
 		</div>	
 
