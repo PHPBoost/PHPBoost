@@ -924,10 +924,9 @@ else //Show all member!
 	));
 	
 	//Recherche d'un member si javascript bloqué.
-	$login = '';
-	if (!empty($_POST['search_member']))
+	$login = retrieve(POST, 'login', '');
+	if (!empty($_POST['search_member']) && !empty($login))
 	{
-		$login = retrieve(POST, 'login', '');
 		$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 		if (!empty($user_id))
 			redirect(HOST . DIR . '/member/member' . url('.php?id=' . $user_id, '-' . $user_id . '.php', '&'));
