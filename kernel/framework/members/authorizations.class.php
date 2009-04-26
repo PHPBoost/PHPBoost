@@ -37,12 +37,12 @@ class Authorizations
 {
 	## Public methods ##
 	/**
-	 * @desc Return an array with the authorizations given by variable number of arrays passed in argument.
+	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * This returned array is used to be serialized.
      * @return array The array of authorizations.
      * @static
      */
-	/*static*/ function build_auth_array_from_form()
+	function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -75,14 +75,14 @@ class Authorizations
 	}
 	
 	/**
-	 * @desc Return an array with the authorizations given by variable number of arrays passed in argument.
+	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * @param $bit_value
 	 * @param $idselect
 	 * @param $admin_auth_default
 	 * @return unknown_type
      * @static
 	 */
-	/*static*/ function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
+	function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;

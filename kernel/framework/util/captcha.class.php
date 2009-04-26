@@ -40,7 +40,7 @@ define('CAPTCHA_VERY_HARD', 4);
 class Captcha
 {
 	/**
-	 * @desc Captcha constructor. It allow you to create multiple instance of captcha, and check if GD is loaded.
+	 * @desc Captcha constructor. It allows you to create multiple instance of captcha, and check if GD is loaded.
 	 */
 	function Captcha()
 	{
@@ -51,7 +51,7 @@ class Captcha
 	
 	## Public Methods ##
 	/**
-	 * @desc Check if GD library is loaded.
+	 * @desc Checks if GD library is loaded.
 	 * @return boolean true if is loaded, false otherwise
 	 */
 	function gd_loaded()
@@ -62,7 +62,7 @@ class Captcha
 	}
 	
 	/**
-	 * @desc Update the object instance.
+	 * @desc Updates the object instance.
 	 */
 	function update_instance()
 	{
@@ -72,7 +72,7 @@ class Captcha
 	}
 		
 	/**
-	 * @desc Modify the level of difficulty to decrypt the code on the captcha image.
+	 * @desc Modifies the level of difficulty to decrypt the code on the captcha image.
 	 * @param int $difficulty The difficulty :
 	 *  0: Dictionnary words, regular background, horizontal text.
 	 *	1: blended word, regular background.

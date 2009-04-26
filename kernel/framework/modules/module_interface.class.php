@@ -6,10 +6,7 @@
  *   begin                : January 15, 2008
  *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
- *
- * @author      Loïc Rouchon
- * @copyright   ( C) 2008 Loïc Rouchon - horn@phpboost.com
- * @license     http://opensource.org/licenses/gpl-license.php GNU Public License
+ *   
  *
  *###################################################
  *

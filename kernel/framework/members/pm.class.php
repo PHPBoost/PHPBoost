@@ -40,7 +40,7 @@ class PrivateMsg
 {
 	## Public Methods ##
 	/**
-	 * @desc Count the user's number of conversation.
+	 * @desc Counts the user's number of conversation.
 	 * @param int $userid The user id.
 	 * @return int number of user conversation.
 	 */
@@ -70,7 +70,7 @@ class PrivateMsg
 	
 	//Envoi d'une conversation + le message privé associé.
 	/**
-	 * @desc Start a conversation with another member.
+	 * @desc Starts a conversation with another member.
 	 * @param int $pm_to The member's user id destination.
 	 * @param string $pm_objet The object of the conversation.
 	 * @param string $pm_contents The content of the conversation.
@@ -98,7 +98,7 @@ class PrivateMsg
 	}
 	
 	/**
-	 * @desc Answer to a conversation
+	 * @desc Answers to a conversation
 	 * @param int $pm_to The member's user id destination.
 	 * @param int $pm_idconvers
 	 * @param string $pm_contents The content of the answer. 
@@ -134,7 +134,7 @@ class PrivateMsg
 	}
 	
 	/**
-	 * @desc Delete a conversation.
+	 * @desc Deletes a conversation.
 	 * @param int $pm_userid
 	 * @param int $pm_idconvers
 	 * @param int $pm_expd
@@ -176,7 +176,7 @@ class PrivateMsg
 	}
 	
 	/**
-	 * @desc Delete a private message, until the recipient has not read it. 
+	 * @desc Deletes a private message, until the recipient has not read it. 
 	 * @param $pm_to
 	 * @param $pm_idmsg
 	 * @param $pm_idconvers

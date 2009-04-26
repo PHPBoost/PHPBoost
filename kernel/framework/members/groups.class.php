@@ -32,14 +32,14 @@ define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations 
 
 /**
  * @author Régis VIARRE <crowkait@phpboost.com>
- * @desc This class provide methods to manage user in groups.
+ * @desc This class provides methods to manage user in groups.
  * @package members
  */
 class Group
 {
 	## Public methods ##
 	/**
-	 * @desc Constructor. Load informations groups.
+	 * @desc Constructor. Loads informations groups.
 	 * @param array $groups_info Informations of all groups.
 	 */
 	function Group(&$groups_info)
@@ -50,7 +50,7 @@ class Group
 	}
 
 	/**
-	 * @desc Add a member in a group
+	 * @desc Adds a member in a group
 	 * @param int $user_id User id
 	 * @param int $idgroup Group id
 	 * @return boolean True if the member has been succefully added.
@@ -77,7 +77,7 @@ class Group
 	}
  
 	/**
-	 * @desc Edit the user groups, compute difference between previous and new groups.
+	 * @desc Edits the user groups, compute difference between previous and new groups.
 	 * @param int $user_id The user id
 	 * @param array $array_user_groups The new array of groups.
 	 */
@@ -107,7 +107,7 @@ class Group
 	}
 	
 	/**
-	 * @desc Return the array of user groups (id => name)
+	 * @desc Returns the array of user groups (id => name)
 	 * @return array The array groups
 	 */
 	function get_groups_array()
@@ -116,7 +116,7 @@ class Group
 	}
  
 	/**
-	 * @desc Remove a member in a group.
+	 * @desc Removes a member in a group.
 	 * @param int $user_id The user id
 	 * @param int $idgroup The id group.
 	 */
