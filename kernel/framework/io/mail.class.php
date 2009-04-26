@@ -51,9 +51,9 @@ class Mail
      */
     function set_sender($sender, $sender_name = 'admin')
     {
-        global $LANG;
+        global $LANG, $CONFIG;
 
-        $this->sender_name = ($sender_name == 'admin') ? $LANG['admin'] : $LANG['user'];
+        $this->sender_name = $CONFIG['site_name'] . ' - ' . ($sender_name == 'admin' ? $LANG['admin'] : $LANG['user']);
 
         if (Mail::check_validity($sender))
         {
@@ -233,7 +233,7 @@ class Mail
         {
             $this->_generate_headers();
         }
-         
+        
         $recipients = trim(implode('; ', $this->recipients), '; ');
         return @mail($recipients, $this->object, $this->content, $this->headers);
     }
