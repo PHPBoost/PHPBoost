@@ -67,7 +67,6 @@ class Forum
 
 			$title_subject = html_entity_decode($title);
 			$title_subject_pm = '[url=' . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id . ']' . $title_subject . '[/url]';
-			$title_subject_mail = "\n" . HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			if ($User->get_attribute('user_id') > 0)
 			{
 				$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
@@ -78,7 +77,7 @@ class Forum
 				$pseudo = $LANG['guest'];
 				$pseudo_pm = $LANG['guest'];
 			}
-			$next_pm = '[url=' . HOST . DIR . '/forum/topic.php?id=' . $idtopic . $last_page . '#m' . $previous_msg_id . '][' . $LANG['next'] . '][/url]';
+			$next_msg_link = HOST . DIR . '/forum/topic' . url('.php?id=' . $idtopic . $last_page, '-' . $idtopic . $last_page_rewrite . '.php') . '#m' . $previous_msg_id;
 			$preview_contents = substr($contents, 0, 300);
 
 			import('io/mail');
@@ -97,11 +96,11 @@ class Forum
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
-				$Mail->send_from_properties($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $title_subject, $pseudo, $preview_contents, $title_subject_mail, $idtopic), $CONFIG['mail_exp']);
+					$Mail->send_from_properties($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $User->get_attribute('login'), $title_subject, $pseudo, $preview_contents, $next_msg_link, $idtopic, 1), $CONFIG['mail_exp']);
 					
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
-				$Privatemsg->start_conversation($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $title_subject_pm, $pseudo_pm, $preview_contents, $next_pm, $idtopic), '-1', SYSTEM_PM);
+					$Privatemsg->start_conversation($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $User->get_attribute('login'), $title_subject_pm, $pseudo_pm, $preview_contents, '[url]' . $next_msg_link . '[/url]', $idtopic, 2), '-1', SYSTEM_PM);
 			}
 				
 			forum_generate_feeds(); //Regénération du flux rss.
@@ -265,21 +264,21 @@ class Forum
 
 		list($mail, $pm, $track) = array(0, 0, 0);
 		if ($tracking_type == 0) //Suivi par email.
-		$track = '1';
+			$track = '1';
 		elseif ($tracking_type == 1) //Suivi par email.
-		$mail = '1';
+			$mail = '1';
 		elseif ($tracking_type == 2) //Suivi par email.
-		$pm = '1';
+			$pm = '1';
 			
 		$exist = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_track WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 		if ($exist == 0)
-		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "forum_track (idtopic, user_id, track, pm, mail) VALUES('" . $idtopic . "', '" . $User->get_attribute('user_id') . "', '" . $track . "', '" . $pm . "', '" . $mail . "')", __LINE__, __FILE__);
 		elseif ($tracking_type == 0)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		elseif ($tracking_type == 1)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		elseif ($tracking_type == 2)
-		$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '1' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			
 		//Limite de sujets suivis?
 		if (!$User->check_auth($CONFIG_FORUM['auth'], TRACK_TOPIC_FORUM))
@@ -301,29 +300,29 @@ class Forum
 	{
 		global $Sql, $User;
 
-		if ($tracking_type == 1)
+		if ($tracking_type == 1) //Par mail
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "pm", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['track'] == 0 && $info['pm'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET mail = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
-		elseif ($tracking_type == 2)
+		elseif ($tracking_type == 2) //Par mp
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "track", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['mail'] == 0 && $info['track'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET pm = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
-		else
+		else //Suivi
 		{
 			$info = $Sql->query_array(PREFIX . "forum_track", "mail", "pm", "WHERE user_id = '" . $User->get_attribute('user_id') . "' AND idtopic = '" . $idtopic . "'", __LINE__, __FILE__);
 			if ($info['mail'] == 0 && $info['pm'] == 0)
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("DELETE FROM " . PREFIX . "forum_track WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 			else
-			$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "forum_track SET track = '0' WHERE idtopic = '" . $idtopic . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		}
 	}
 
