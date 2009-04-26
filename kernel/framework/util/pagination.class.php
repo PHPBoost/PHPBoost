@@ -190,6 +190,7 @@ class Pagination
 	var $page; //Valeur courante de la page.
 	var $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
 	var $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.
+	var $var_page;
 }
 
 ?>
