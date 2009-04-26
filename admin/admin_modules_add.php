@@ -184,7 +184,7 @@ else
 			if (!in_array($dir, $installed_modules))
 			{
 				//Désormais on vérifie que le fichier de configuration est présent.
-				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
+				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') && !file_exists($root . $dir . '/syndication.php'))
 				{
 					//Récupération des infos de config.
 					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
