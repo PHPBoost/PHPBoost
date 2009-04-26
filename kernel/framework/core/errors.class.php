@@ -220,7 +220,8 @@ class Errors
 			}
 		
 			//On remet le template par défaut.
-			$this->set_default_template();
+			if ($this->personal_tpl)
+				$this->set_default_template();
 			
 			//Enregistrement de l'erreur si demandé.
 			if ($archive)
@@ -232,7 +233,8 @@ class Errors
 	
 	function set_template(&$template)
 	{
-		$this->template = $template;
+		$this->template = &$template;
+		$this->personal_tpl = true;
 	}
 	
 	function set_default_template()
@@ -240,6 +242,7 @@ class Errors
 		global $Template;
 		
 		$this->template = &$Template;
+		$this->personal_tpl = false;
 	}
 	
     /**
@@ -347,6 +350,7 @@ class Errors
 	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
 	var $redirect;
 	var $template; //Template used by the error handler.
+	var $personal_tpl = false; //Template used by the error handler.
 }
 
 ?>
