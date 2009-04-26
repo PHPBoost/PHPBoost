@@ -27,7 +27,8 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-import('content/content_second_parser');
+import('content/parser/content_second_parser');
+import('io/mail');
 	
 class NewsletterService
 {
@@ -41,8 +42,6 @@ class NewsletterService
 		$message = NewsletterService::clean_html($message);
 		$message = ContentSecondParser::export_html_text($message);
 				
-		import('io/mail');
-		
 		if ($email_test == '') // envoi définitif
 		{
 			$nbr = $Sql->count_table('newsletter', __LINE__, __FILE__);
@@ -60,6 +59,7 @@ class NewsletterService
 			$Sql->query_close($result);
 			
 			$mail_sender = new Mail();
+			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
 			$mail_sender->set_mime(MIME_FORMAT_HTML);
 			$mail_sender->set_object($mail_object);
 			 
@@ -79,6 +79,7 @@ class NewsletterService
 		else
 		{
 		    $mail_sender = new Mail();
+		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
 		    $mail_sender->set_mime(MIME_FORMAT_HTML);
 		    $mail_sender->set_recipients($email_test);
 		    $mail_sender->set_content($message);
@@ -92,8 +93,6 @@ class NewsletterService
 	function send_bbcode($mail_object, $message, $email_test = '')
 	{
 		global $_NEWSLETTER_CONFIG, $LANG, $Sql;
-		
-		import('io/mail');
 		
 		$error_mailing_list = array();
 		$message = stripslashes(strparse(addslashes($message)));
@@ -121,6 +120,7 @@ class NewsletterService
 			$Sql->query_close($result);
 			
 			$mail_sender = new Mail();
+			$mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
 			$mail_sender->set_mime(MIME_FORMAT_HTML);
             $mail_sender->set_object($mail_object);
            
@@ -139,8 +139,9 @@ class NewsletterService
 			return $error_mailing_list;
 		}
 		else
-		{;
+		{
 		    $mail_sender = new Mail();
+		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
 		    $mail_sender->set_mime(MIME_FORMAT_HTML);
             $mail_sender->set_recipients($email_test);
             $mail_sender->set_content($mail_contents . '</body></html>');
@@ -176,6 +177,7 @@ class NewsletterService
 			$Sql->query_close($result);
 			
 		    $mail_sender = new Mail();
+		    $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
             $mail_sender->set_mime(MIME_FORMAT_TEXT);
             $mail_sender->set_object($mail_object);
            
@@ -195,9 +197,10 @@ class NewsletterService
 		else
 		{
             $mail_sender = new Mail();
+            $mail_sender->set_sender($_NEWSLETTER_CONFIG['sender_mail']);
             $mail_sender->set_mime(MIME_FORMAT_HTML);
             $mail_sender->set_recipients($email_test);
-            $mail_sender->set_content($mail_contents);
+            $mail_sender->set_content($message);
             $mail_sender->set_object($mail_object);
             
             $mail_sender->send();
