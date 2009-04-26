@@ -237,20 +237,23 @@ $LANG['delete_poll'] = 'Delete poll';
 $LANG['require_title_poll'] = 'Please set a title for the poll!';
 
 //Post
-$LANG['next'] = 'Next';
 $LANG['forum_mail_title_new_post'] = 'New post on the forum';
-$LANG['forum_mail_new_post'] = 'You track the thread: %s 
+$LANG['forum_mail_new_post'] = 'Dear %s
+
+You track the thread: %s 
 
 You asked a notify in case of answer on it.
 
 %s has reply: 
-%s... %s
+%s
+
+[Rest of the message : %s]
 
 
 
 
 If you do not wish any more to be informed answers of this thread, click on the link below:
-' . HOST . DIR . '/forum/action.php?ut=%d
+' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
 
 ' . $CONFIG['sign'];
 

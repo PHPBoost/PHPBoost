@@ -237,20 +237,23 @@ $LANG['delete_poll'] = 'Supprimer le sondage';
 $LANG['require_title_poll'] = 'Veuillez entrer un titre pour le sondage!';
 
 //Post
-$LANG['next'] = 'Suite';
 $LANG['forum_mail_title_new_post'] = 'Nouveau message sur le forum';
-$LANG['forum_mail_new_post'] = 'Vous suivez le sujet: %s
+$LANG['forum_mail_new_post'] = 'Cher %s
+
+Vous suivez le sujet: %s
  
 Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 
 %s a répondu sur le sujet: 
-%s... %s
+%s
+
+[Suite du message : %s]
 
 
 
 
 Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
-' . HOST . DIR . '/forum/action.php?ut=%d
+' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
 
 ' . $CONFIG['sign'];
 

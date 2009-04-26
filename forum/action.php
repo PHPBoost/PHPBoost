@@ -189,7 +189,8 @@ elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux
 }
 elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
-	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
+	$tracking_type = retrieve(GET, 'trt', 0);
+	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
 }
