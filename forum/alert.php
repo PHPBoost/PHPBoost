@@ -60,7 +60,7 @@ $Template->set_filenames(array(
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$Template->assign_vars(array(
@@ -103,7 +103,7 @@ if (!empty($alert_post))
 	));
 	
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');
