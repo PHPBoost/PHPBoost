@@ -369,7 +369,7 @@ class Comments
 					default:
 						$errstr = '';
 				}
-
+				
 				$Errorh->set_template($Template); //On spécifie le template utilisé.
 				if (!empty($errstr))
 				{	
@@ -399,7 +399,7 @@ class Comments
 				}
 				else
 					$Errorh->handler($LANG['com_locked'], E_USER_NOTICE);
-				
+					
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 				
 				if ($get_pos)
@@ -509,7 +509,7 @@ class Comments
 					
 					//Image associée au rang.
 					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-								
+					
 					//Affichage des groupes du membre.
 					if (!empty($row['user_groups']) && $_array_groups_auth)
 					{
@@ -532,7 +532,7 @@ class Comments
 						$user_avatar = ($CONFIG_USER['activ_avatar'] == '1' && !empty($CONFIG_USER['avatar_url'])) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url'] . '" alt="" />' : '';
 					else
 						$user_avatar = '<img src="' . $row['user_avatar'] . '" alt=""	/>';
-					
+						
 					//Affichage du sexe et du statut (connecté/déconnecté).
 					$user_sex = '';
 					if ($row['user_sex'] == 1)
@@ -542,7 +542,7 @@ class Comments
 							
 					//Nombre de message.
 					$user_msg = ($row['user_msg'] > 1) ? $LANG['message_s'] . ': ' . $row['user_msg'] : $LANG['message'] . ': ' . $row['user_msg'];
-					
+						
 					//Localisation.
 					if (!empty($row['user_local']))
 					{
@@ -550,13 +550,13 @@ class Comments
 						$user_local = $user_local > 15 ? substr_html($user_local, 0, 15) . '...<br />' : $user_local . '<br />';
 					}
 					else $user_local = '';
-					
+						
 					$contents = ucfirst(second_parse($row['contents']));
-					
+						
 					//Correction des chemins du BBCode
 					if (!$integrated_in_environment && !empty($page_path_to_root))
 						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
-					
+						
 					$Template->assign_block_vars('com_list', array(
 						'ID' => $row['idcom'],
 						'CONTENTS' => $contents,

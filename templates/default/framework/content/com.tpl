@@ -6,7 +6,7 @@
 				alert("{L_REQUIRE_LOGIN}");
 				return false;
 			}
-			if(document.getElementById('contents').value == "") {
+			if(document.getElementById('{SCRIPT}contents').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
 			}
@@ -33,12 +33,12 @@
 				<br />
 				<label for="contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
-				<label><textarea rows="10" cols="40" id="contents" name="contents">{CONTENTS}</textarea> </label>
+				<label><textarea rows="10" cols="40" id="{SCRIPT}contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				# IF C_HIDDEN_COM #
-				<input type="hidden" maxlength="25" size="25" name="login" value="{LOGIN}" class="text" />
+				<input type="hidden" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" />
 				# ENDIF #
 				<input type="hidden" name="contents_ftags" id="contents_ftags" value="{FORBIDDEN_TAGS}" />
 				<input type="hidden" name="idprov" value="{IDPROV}" />
