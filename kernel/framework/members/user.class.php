@@ -37,7 +37,7 @@ define('USER_TYPE', 3);
 class User
 {
 	/**
-	 * @desc Set global authorizations which are given by all the user groups authorizations.
+	 * @desc Sets global authorizations which are given by all the user groups authorizations.
 	 * @param $session_data
 	 * @param $groups_info
 	 */

@@ -54,7 +54,8 @@ class Bench
      */
     function to_string($digits = 3) 
     {
-    	$this->stop(); return number_round($this->duration, $digits); 
+    	$this->stop();
+    	return number_round($this->duration, $digits); 
     }
     
     ## Private Methods ##

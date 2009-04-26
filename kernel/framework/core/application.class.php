@@ -61,7 +61,7 @@ class Application
         $this->pubdate = new Date();
     }
       /**
-	* @desc Load an XML description
+	* @desc Loads an XML description
 	* @param $xml_desc reference to xml description
 	*/  
     function load(&$xml_desc)
@@ -157,7 +157,7 @@ class Application
         }
     }
 	/**
-	* @desc Get an identifier of the application
+	* @desc Gets an identifier of the application
 	* @return string identifier
 	*/    
     function get_identifier()
@@ -165,7 +165,7 @@ class Application
         return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
     }
 	/**
-	* @desc Check compatibility with limits
+	* @desc Checks compatibility with limits
 	* @return boolean TRUE if compatible FALSE if not
 	*/  
     function check_compatibility()

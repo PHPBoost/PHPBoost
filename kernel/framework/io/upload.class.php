@@ -53,10 +53,9 @@ class Upload
 		$this->base_directory = $base_directory;
 	}
 	
-	//Upload d'un fichier
 	/**
-	 * @desc Upload a file to the ftp.
-	 * @param $filepostname Name in the input file formular.
+	 * @desc Uploads a file.
+	 * @param $filepostname Name in the input file formulary.
 	 * @param $regexp Regular expression to specify file format.
 	 * @param boolean $uniq_name If true assign a new name if a file with same name already exist. Otherwise previous file is overwrite.
 	 * @param int $weight_max The maximum file size.
@@ -103,7 +102,7 @@ class Upload
 	}
 		
 	/**
-	 * @desc Check if an image is compliant to an maximum width and height, otherwise is $delete value is true delete it. 
+	 * @desc Checks whether an image is compliant to an maximum width and height, otherwise is $delete value is true delete it. 
 	 * @param string $filepath Path to the image.
 	 * @param int $width_max Max width
 	 * @param int $height_max Max height
@@ -126,7 +125,7 @@ class Upload
 	
 	## Private Methods ##	
 	/**
-	 * @desc Check the validity of a file with regular expression.
+	 * @desc Checks the validity of a file with regular expression.
 	 * @param string $filename The file name
 	 * @param string $regexp Regular expression
 	 * @return boolean The result of the regular expression test.
@@ -159,7 +158,7 @@ class Upload
 	}
 	
 	/**
-	 * @desc Generate uniq file name. Complete informations on the file.
+	 * @desc Generates a unique file name. Completes informations on the file.
 	 * @param string $filename The filename
 	 * @param string $filepostname The filename in the input file formular
 	 * @param boolean $uniq_name
@@ -196,7 +195,7 @@ class Upload
 	}
 	
 	/**
-	 * @desc Manage error code during upload.
+	 * @desc Manages error code during upload.
 	 * @param string $error
 	 * @return string Error code.
 	 */
