@@ -172,7 +172,7 @@ class MenuService
                     '" . addslashes($menu->get_title()) . "',
                     '" . addslashes(serialize($menu)) . "',
                     '" . strtolower(get_class($menu)) . "',
-                    '" . $menu->is_enabled() . "',
+                    '" . (int)$menu->is_enabled() . "',
                     '" . $block . "',
                     '" . $block_position . "'
                 );";

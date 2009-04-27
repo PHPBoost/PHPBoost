@@ -33,7 +33,7 @@ function change_day()
 	$yesterday_timestamp = time() - 86400;
 
 	//Pose d'un verrou supplémentaire
-	$Sql->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '', '', '')", __LINE__, __FILE__);
+	$Sql->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "', 0, 0, '')", __LINE__, __FILE__);
 	$last_stats = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats"); //Récupération de la dernière insertion.
 
 	#######Statistiques#######

@@ -9,7 +9,7 @@ Merci, l''équipe du site.";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:21:"verif
 (4, 'com', 'a:4:{s:8:"com_auth";i:-1;s:7:"com_max";i:10;s:14:"forbidden_tags";a:0:{}s:8:"max_link";i:2;}'),
 (5, 'writingpad', '');
 
-INSERT INTO `phpboost_member` (login, level, user_aprob) VALUES ('login', 2, 1);
+INSERT INTO `phpboost_member` (login, level, user_aprob, user_groups, user_desc, user_sign) VALUES ('login', 2, 1, '', '', '');
 
 INSERT INTO `phpboost_ranks` VALUES (1, 'Administrateur', -2, 'rank_admin.png', 1);
 INSERT INTO `phpboost_ranks` VALUES (2, 'Modérateur', -1, 'rank_modo.png', 1);
