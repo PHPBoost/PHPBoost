@@ -312,7 +312,9 @@ class Cache
     {
         $this->load('config');
         global $CONFIG;
-        return 'global $DEBUG;' . "\n" . '$DEBUG[\'debug_mode\'] = ' . (int)$CONFIG['debug_mode'] . ';';        
+		
+		$debug_mode = empty($CONFIG['debug_mode']) ? 0 : (int)$CONFIG['debug_mode'];
+        return 'global $DEBUG;' . "\n" . '$DEBUG[\'debug_mode\'] = ' . $debug_mode . ';';        
     }
 
     /**
