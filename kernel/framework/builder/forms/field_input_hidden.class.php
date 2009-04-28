@@ -33,17 +33,17 @@ import('builder/forms/form_fields');
  */
 class FormInputHidden extends FormFields
 {
-	function FormInputHidden($fieldName, $fieldOptions)
+	function FormInputHidden($field_name, $field_options)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($field_name, $field_options);
 	}
 	
 	function display()
 	{
 		$field = '<input type="hidden" ';
-		$field .= !empty($this->fieldName) ? 'name="' . $this->fieldName . '" ' : '';
-		$field .= !empty($this->fieldId) ? 'id="' . $this->fieldId . '" ' : '';
-		$field .= !empty($this->fieldValue) ? 'value="' . $this->fieldValue . '" ' : '';
+		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
+		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
+		$field .= !empty($this->field_value) ? 'value="' . $this->field_value . '" ' : '';
 		$field .= '/>';
 		
 		return $field;

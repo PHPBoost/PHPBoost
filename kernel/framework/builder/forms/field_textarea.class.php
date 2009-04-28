@@ -42,16 +42,16 @@ class FormTextarea extends FormFields
 			switch ($attribute)
 			{
 				case 'rows' :
-					$this->fieldRows = $value;
+					$this->field_rows = $value;
 				break;
 				case 'cols' :
-					$this->fieldCols = $value;
+					$this->field_cols = $value;
 				break;
 				case 'editor' :
-					$this->fieldEditor = $value;
+					$this->field_editor = $value;
 				break;
 				case 'forbiddentags' :
-					$this->fieldForbiddenTags = $value;
+					$this->field_forbidden_tags = $value;
 				break;
 			}
 		}
@@ -62,33 +62,33 @@ class FormTextarea extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/helper/forms/fields_extended.tpl');
+		$Template = new Template('framework/builder/forms/fields_extended.tpl');
 			
 		$field = '<textarea type="text" ';
-		$field .= !empty($this->fieldRows) ? 'rows="' . $this->fieldRows . '" ' : '';
-		$field .= !empty($this->fieldCols) ? 'cols="' . $this->fieldCols . '" ' : '';
-		$field .= !empty($this->fieldName) ? 'name="' . $this->fieldName . '" ' : '';
-		$field .= !empty($this->fieldId) ? 'id="' . $this->fieldId . '" ' : '';
-		$field .= !empty($this->fieldCssClass) ? 'class="' . $this->fieldCssClass . '"> ' : '>';
-		$field .= !empty($this->fieldValue) ? $this->fieldValue : '';
+		$field .= !empty($this->field_rows) ? 'rows="' . $this->field_rows . '" ' : '';
+		$field .= !empty($this->field_cols) ? 'cols="' . $this->field_cols . '" ' : '';
+		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
+		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
+		$field .= !empty($this->field_css_class) ? 'class="' . $this->field_css_class . '"> ' : '>';
+		$field .= !empty($this->field_value) ? $this->field_value : '';
 		$field .= '</textarea>';
 		
 		$Template->assign_vars(array(
-			'ID' => $this->fieldId,
+			'ID' => $this->field_id,
 			'FIELD' => $field,
-			'KERNEL_EDITOR' => $this->fieldEditor ? display_editor($this->fieldId, $this->fieldForbiddenTags) : '',
-			'L_FIELD_NAME' => $this->fieldTitle,
-			'L_EXPLAIN' => $this->fieldSubTitle,
-			'L_REQUIRE' => $this->fieldRequired ? '* ' : ''
+			'KERNEL_EDITOR' => $this->field_editor ? display_editor($this->field_id, $this->field_forbidden_tags) : '',
+			'L_FIELD_NAME' => $this->field_title,
+			'L_EXPLAIN' => $this->field_sub_title,
+			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $fieldRows = ''; //Rows for the textarea.
-	var $fieldCols = ''; //Cols for the textarea.
-	var $fieldEditor = true; //Allow to hide the editor.
-	var $fieldForbiddenTags = array(); //Forbiddend tags in the content.
+	var $field_rows = ''; //Rows for the textarea.
+	var $field_cols = ''; //Cols for the textarea.
+	var $field_editor = true; //Allow to hide the editor.
+	var $field_forbidden_tags = array(); //Forbiddend tags in the content.
 }
 
 ?>

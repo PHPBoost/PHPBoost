@@ -25,7 +25,7 @@
 ###################################################*/
 
 /**
- * @author Régis
+ * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class which manage Fields.
  * You can specify several option with the argument $fieldOptions :
  * <ul>
@@ -48,8 +48,8 @@ class FormFields
 	 */
 	function FormFields($fieldName, $fieldOptions)
 	{
-		$this->fieldName = $fieldName;
-		$this->fieldId = $fieldName;
+		$this->field_name = $fieldName;
+		$this->field_id = $fieldName;
 		
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -57,38 +57,38 @@ class FormFields
 			switch ($attribute)
 			{
 				case 'title' :
-					$this->fieldTitle = $value;
+					$this->field_title = $value;
 				break;
 				case 'subtitle' :
-					$this->fieldSubTitle = $value;
+					$this->field_sub_title = $value;
 				break;
 				case 'value' :
-					$this->fieldValue = $value;
+					$this->field_value = $value;
 				break;
 				case 'id' :
-					$this->fieldId = $value;
+					$this->field_id = $value;
 				break;
 				case 'class' :
-					$this->fieldCssClass = $value;
+					$this->field_css_class = $value;
 				break;
 				case 'required' :
-					$this->fieldRequired = $value;
+					$this->field_required = $value;
 				break;
 				case 'onblur' :
-					$this->fieldMaxlength = $value;
+					$this->field_maxlength = $value;
 				break;
 			}
 		}
 	}
 	
-	var $fieldTitle = '';
-	var $fieldSubTitle = '';
-	var $fieldName = '';
-	var $fieldValue = '';
-	var $fieldId = '';
-	var $fieldCssClass = '';
-	var $fieldRequired = '';
-	var $fieldOnBlur = '';
+	var $field_title = '';
+	var $field_sub_title = '';
+	var $field_name = '';
+	var $field_value = '';
+	var $field_id = '';
+	var $field_css_class = '';
+	var $field_required = '';
+	var $field_on_blur = '';
 }
 
 ?>

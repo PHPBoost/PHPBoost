@@ -38,20 +38,20 @@ import('builder/forms/form_fields');
  */
 class FormInputText extends FormFields
 {
-	function FormInputText($fieldName, $fieldOptions)
+	function FormInputText($field_name, $field_options)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($field_name, $field_options);
 		
-		foreach($fieldOptions as $attribute => $value)
+		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'size' :
-					$this->fieldSize = $value;
+					$this->field_size = $value;
 				break;
 				case 'maxlength' :
-					$this->fieldMaxlength = $value;
+					$this->field_maxlength = $value;
 				break;
 			}
 		}
@@ -62,31 +62,31 @@ class FormInputText extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/helper/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/fields.tpl');
 			
 		$field = '<input type="text" ';
-		$field .= !empty($this->fieldSize) ? 'size="' . $this->fieldSize . '" ' : '';
-		$field .= !empty($this->fieldMaxlength) ? 'maxlength="' . $this->fieldMaxlength . '" ' : '';
-		$field .= !empty($this->fieldName) ? 'name="' . $this->fieldName . '" ' : '';
-		$field .= !empty($this->fieldId) ? 'id="' . $this->fieldId . '" ' : '';
-		$field .= !empty($this->fieldValue) ? 'value="' . $this->fieldValue . '" ' : '';
-		$field .= !empty($this->fieldCssClass) ? 'class="' . $this->fieldCssClass . '" ' : '';
-		$field .= !empty($this->fieldOnBlur) ? 'onblur="' . $this->fieldOnBlur . '" ' : '';
+		$field .= !empty($this->field_size) ? 'size="' . $this->field_size . '" ' : '';
+		$field .= !empty($this->field_maxlength) ? 'maxlength="' . $this->field_maxlength . '" ' : '';
+		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
+		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
+		$field .= !empty($this->field_value) ? 'value="' . $this->field_value . '" ' : '';
+		$field .= !empty($this->field_css_class) ? 'class="' . $this->field_css_class . '" ' : '';
+		$field .= !empty($this->field_on_blur) ? 'onblur="' . $this->field_on_blur . '" ' : '';
 		$field .= '/>';
 		
 		$Template->assign_vars(array(
-			'ID' => $this->fieldId,
+			'ID' => $this->field_id,
 			'FIELD' => $field,
-			'L_FIELD_NAME' => $this->fieldTitle,
-			'L_EXPLAIN' => $this->fieldSubTitle,
-			'L_REQUIRE' => $this->fieldRequired ? '* ' : ''
+			'L_FIELD_NAME' => $this->field_title,
+			'L_EXPLAIN' => $this->field_sub_title,
+			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $fieldSize = '';
-	var $fieldMaxlength = '';
+	var $field_size = '';
+	var $field_maxlength = '';
 }
 
 ?>

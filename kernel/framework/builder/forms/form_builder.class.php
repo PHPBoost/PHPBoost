@@ -25,32 +25,32 @@
 ###################################################*/
 
 /**
- * @author Régis
+ * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class allow you to manage easily the formulars in your modules. 
  * A lot a sort of field and options are supported, for further details refer to each field type classes.
  * 
  * Example of use :
- * import('builder/forms/form_builer');
-	$form = new FormHelper('test', 'Test formular');
-	$form->addField('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
+ * import('builder/forms/form_builder');
+	$form = new FormBuilder('test', 'Test formular');
+	$form->add_field('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
 	//Textarea field
-	$form->addField('contents', 'textarea', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true));
-	$form->addField('comments', 'textarea', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false));
+	$form->add_field('contents', 'textarea', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true));
+	$form->add_field('comments', 'textarea', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false));
 	$form->displayPreview('contents'); //Display a preview button for the textarea field(ajax).
 	//Radio button field
-	$form->addField('choice', 'radio', array('title' => 'Answer', 'optiontitle' => 'Choix1', 'value' => 1, 'checked' => 0));
-	$form->addField('choice', 'radio', array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => 1));
+	$form->add_field('choice', 'radio', array('title' => 'Answer', 'optiontitle' => 'Choix1', 'value' => 1, 'checked' => 0));
+	$form->add_field('choice', 'radio', array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => 1));
 	//Checkbox button field
-	$form->addField('multiplechoice', 'checkbox', array('title' => 'Answer2', 'optiontitle' => 'Choix3', 'value' => 1));
-	$form->addField('multiplechoice', 'checkbox', array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => 1));
+	$form->add_field('multiplechoice', 'checkbox', array('title' => 'Answer2', 'optiontitle' => 'Choix3', 'value' => 1));
+	$form->add_field('multiplechoice', 'checkbox', array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => 1));
 	//Select field
-	$form->addField('sex', 'select', array('title' => 'Sex', 'optiontitle' => 'Men', 'value' => 1));
-	$form->addField('sex', 'select', array('optiontitle' => 'Women', 'value' => 1));
-	$form->addField('sex', 'select', array('optiontitle' => '?', 'value' => -1, 'selected' => 1));
+	$form->add_field('sex', 'select', array('title' => 'Sex', 'optiontitle' => 'Men', 'value' => 1));
+	$form->add_field('sex', 'select', array('optiontitle' => 'Women', 'value' => 1));
+	$form->add_field('sex', 'select', array('optiontitle' => '?', 'value' => -1, 'selected' => 1));
 	//File field
-	$form->addField('avatar', 'file', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true));
+	$form->add_field('avatar', 'file', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true));
 	//Radio button field
-	$form->addField('test', 'hidden', array('value' => 1));
+	$form->add_field('test', 'hidden', array('value' => 1));
 	
 	echo $form->display();
  * @package builder
@@ -64,88 +64,88 @@ define('FIELD_INPUT__FILE', 'file');
 define('FIELD__TEXTAREA', 'textarea');
 define('FIELD__SELECT', 'select');
 
-class FormHelper
+class FormBuilder
 {
 	/**
 	 * @desc constructor
-	 * @param $formName The name of the formular.
-	 * @param $formTitle The tite displayed for the formular.
-	 * @param $formAction The url where the formular send the data.
+	 * @param $form_name The name of the formular.
+	 * @param $form_title The tite displayed for the formular.
+	 * @param $form_action The url where the formular send the data.
 	 */
-	function FormHelper($formName, $formTitle = '', $formAction = '')
+	function FormBuilder($form_name, $form_title = '', $form_action = '')
 	{
 		global $LANG;
 		
-		$this->formName = $formName;
-		$this->formTitle = $formTitle;
-		$this->formAction = $formAction;
-		$this->formSubmit = $LANG['submit'];
+		$this->form_name = $form_name;
+		$this->form_title = $form_title;
+		$this->form_action = $form_action;
+		$this->form_submit = $LANG['submit'];
 	}
 	
 	/**
 	 * @desc Constuct the fields objects and store them in the formular.
-	 * @param $fieldName
+	 * @param $field_name
 	 * @param $fieldType
 	 * @param $arrayOptions
 	 * @return unknown_type
 	 */
-	function addField($fieldName, $fieldType, $arrayOptions = array())
+	function add_field($field_name, $fieldType, $arrayOptions = array())
 	{
 		switch ($fieldType)
 		{
 			case FIELD_INPUT__TEXT :
 				import('builder/forms/field_input_text');
-				$this->formFields[$fieldName] = new FormInputText($fieldName, $arrayOptions);
+				$this->form_fields[$field_name] = new FormInputText($field_name, $arrayOptions);
 			break;
 			case FIELD_INPUT__HIDDEN :
 				import('builder/forms/field_input_hidden');
-				$this->formFields[$fieldName] = new FormInputHidden($fieldName, $arrayOptions);
+				$this->form_fields[$field_name] = new FormInputHidden($field_name, $arrayOptions);
 			break;
 			case FIELD_INPUT__FILE :
 				import('builder/forms/field_input_file');
-				$this->formFields[$fieldName] = new FormInputFile($fieldName, $arrayOptions);
+				$this->form_fields[$field_name] = new FormInputFile($field_name, $arrayOptions);
 			break;
 			case FIELD__TEXTAREA :
 				import('builder/forms/field_textarea');
-				$this->formFields[$fieldName] = new FormTextarea($fieldName, $arrayOptions);
+				$this->form_fields[$field_name] = new FormTextarea($field_name, $arrayOptions);
 			break;
 			case FIELD_INPUT__RADIO :
 				import('builder/forms/field_input_radio');
-				if (isset($this->formFields[$fieldName]))
+				if (isset($this->form_fields[$field_name]))
 				{	
-					$tmpField = new FormInputRadio($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($tmpField);
+					$tmpField = new FormInputRadio($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($tmpField);
 				}
 				else
 				{
-					$this->formFields[$fieldName] = new FormInputRadio($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($this->formFields[$fieldName]);
+					$this->form_fields[$field_name] = new FormInputRadio($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
 				}
 			break;
 			case FIELD_INPUT__CHECKBOX :
 				import('builder/forms/field_input_checkbox');
-				if (isset($this->formFields[$fieldName]))
+				if (isset($this->form_fields[$field_name]))
 				{	
-					$tmpField = new FormInputCheckbox($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($tmpField);
+					$tmpField = new FormInputCheckbox($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($tmpField);
 				}
 				else
 				{
-					$this->formFields[$fieldName] = new FormInputCheckbox($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($this->formFields[$fieldName]);
+					$this->form_fields[$field_name] = new FormInputCheckbox($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
 				}
 			break;
 			case FIELD__SELECT :
 				import('builder/forms/field_select');
-				if (isset($this->formFields[$fieldName]))
+				if (isset($this->form_fields[$field_name]))
 				{	
-					$tmpField = new FormSelect($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($tmpField);
+					$tmpField = new FormSelect($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($tmpField);
 				}
 				else
 				{
-					$this->formFields[$fieldName] = new FormSelect($fieldName, $arrayOptions);
-					$this->formFields[$fieldName]->addOption($this->formFields[$fieldName]);
+					$this->form_fields[$field_name] = new FormSelect($field_name, $arrayOptions);
+					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
 				}
 			break;
 		}
@@ -161,24 +161,24 @@ class FormHelper
 		global $LANG;
 		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
-			$Template = new Template('framework/helper/forms/forms.tpl');
+			$Template = new Template('framework/builder/forms/forms.tpl');
 			
 		$Template->assign_vars(array(
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
 			'C_DISPLAY_RESET' => $this->display_reset, 
-			'FORMONSUBMIT' => $this->formOnSubmit,
-			'FORMCLASS' => $this->formClass,
-			'U_FORMACTION' => $this->formAction,
-			'L_FORMTITLE' => $this->formTitle,
-			'L_FORMNAME' => $this->formName,
-			'L_FIELD_CONTENT_PREVIEW' => $this->fieldContentPreview,
+			'FORMONSUBMIT' => $this->form_on_submit,
+			'FORMCLASS' => $this->form_class,
+			'U_FORMACTION' => $this->form_action,
+			'L_FORMTITLE' => $this->form_title,
+			'L_FORMNAME' => $this->form_name,
+			'L_FIELD_CONTENT_PREVIEW' => $this->field_content_preview,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-			'L_SUBMIT' => $this->formSubmit,
+			'L_SUBMIT' => $this->form_submit,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
 		));	
 		
-		foreach($this->formFields as $Field)
+		foreach($this->form_fields as $Field)
 		{
 			$Template->assign_block_vars('fields', array(
 				'FIELD' => $Field->display(),
@@ -190,12 +190,12 @@ class FormHelper
 	
 	/**
 	 * @desc Display the preview button for textarea fields.
-	 * @param $fieldContentPreview The identifier of the textarea.
+	 * @param $field_content_preview The identifier of the textarea.
 	 * @param $value True to display, false to hide.
 	 */
-	function displayPreview($fieldContentPreview, $value = true)
+	function displayPreview($field_content_preview, $value = true)
 	{
-		$this->fieldContentPreview = $fieldContentPreview;
+		$this->field_content_preview = $field_content_preview;
 		$this->display_preview = true;
 	}
 	/**
@@ -208,29 +208,29 @@ class FormHelper
 	}
 	
 	//Setteurs
-	function setFormTitle($formTitle) { $this->formTitle = $formTitle; }
-	function setFormName($formName) { $this->formName = $formName; }
-	function setFormSubmit($formSubmit) { $this->formSubmit = $formSubmit; }
-	function setFormAction($formAction) { $this->formAction = $formAction; }
-	function setFormOnSubmit($formOnSubmit) { $this->formOnSubmit = $formOnSubmit; }
-	function setFormClass($formClass) { $this->formClass = $formClass; }
+	function set_form_title($form_title) { $this->form_title = $form_title; }
+	function set_form_name($form_name) { $this->form_name = $form_name; }
+	function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
+	function set_form_action($form_action) { $this->form_action = $form_action; }
+	function set_form_onsubmit($form_on_submit) { $this->form_on_submit = $form_on_submit; }
+	function set_form_class($form_class) { $this->form_class = $form_class; }
 	
 	//Getteurs
-	function getFormTitle() { return $this->formTitle; }
-	function getFormName() { return $this->formName; }
-	function getFormSubmit() { return $this->formSubmit; }
-	function getFormAction() { return $this->formAction; }
-	function getFormOnSubmit() { return $this->formOnSubmit; }
-	function getFormClass() { return $this->formClass; }
+	function get_form_title() { return $this->form_title; }
+	function get_form_name() { return $this->form_name; }
+	function get_form_submit() { return $this->form_submit; }
+	function get_form_action() { return $this->form_action; }
+	function get_form_onsubmit() { return $this->form_on_submit; }
+	function get_form_class() { return $this->form_class; }
 	
-	var $formFields = array(); //Fields stored
-	var $formName = '';
-	var $formTitle = '';
-	var $formSubmit = '';
-	var $formAction = '';
-	var $formOnSubmit = ''; //Action performed on submit (javascript).
-	var $formClass = 'fieldset_mini';
-	var $fieldContentPreview = 'contents'; //Field identifier of textarea for preview.
+	var $form_fields = array(); //Fields stored
+	var $form_name = '';
+	var $form_title = '';
+	var $form_submit = '';
+	var $form_action = '';
+	var $form_on_submit = ''; //Action performed on submit (javascript).
+	var $form_class = 'fieldset_mini';
+	var $field_content_preview = 'contents'; //Field identifier of textarea for preview.
 
 	var $display_preview = false;
 	var $display_reset = true;
