@@ -76,7 +76,7 @@
 						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 						<br />
 						<div style="text-align:center;">
-							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
 						</div>
 						<br />
 						<dl>
@@ -238,7 +238,7 @@
 						<legend>{L_SUBMIT}</legend>
 						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
 						&nbsp;&nbsp;
 						<input type="reset" value="{L_RESET}" class="reset" />
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />

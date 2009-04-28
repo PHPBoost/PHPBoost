@@ -48,7 +48,7 @@
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
 				-->
 				</script>						
 				<input type="reset" value="{L_RESET}" class="reset" />
@@ -210,7 +210,7 @@
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
 				-->
 				</script>						
 				<input type="reset" value="{L_RESET}" class="reset" />

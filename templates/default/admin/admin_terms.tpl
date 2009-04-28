@@ -38,7 +38,7 @@
 					<input type="submit" name="msg_register" value="{L_UPDATE}" class="submit" />
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>
 					&nbsp;&nbsp; 

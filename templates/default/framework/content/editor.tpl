@@ -1,19 +1,23 @@
 		<script type="text/javascript">
 		<!--
-		var displayed{FIELD} = false;
-		function XMLHttpRequest_preview()
+		var displayed = new Array();
+		displayed[{FIELD}] = false;
+		function XMLHttpRequest_preview(field)
 		{
+			if( XMLHttpRequest_preview.arguments.length == 0 )
+ 			    field = '{FIELD}';
+
 			{TINYMCE_TRIGGER}
-			var contents = document.getElementById('{FIELD}').value;
+			var contents = document.getElementById(field).value;
 			
 			if( contents != "" )
 			{
-				if( !displayed{FIELD} ) 
-					Effect.BlindDown('xmlhttprequest_preview{FIELD}', { duration: 0.5 });
+				if( !displayed[field] ) 
+					Effect.BlindDown('xmlhttprequest_preview' + field, { duration: 0.5 });
 					
-				if( document.getElementById('loading_preview{FIELD}') )
-					document.getElementById('loading_preview{FIELD}').style.display = 'block';
-				displayed{FIELD} = true;			
+				if( document.getElementById('loading_preview' + field) )
+					document.getElementById('loading_preview' + field).style.display = 'block';
+				displayed[field] = true;			
 
 				new Ajax.Request(
 					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?token={TOKEN}&path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}&page_path={PAGE_PATH}',
@@ -22,9 +26,9 @@
 						parameters: {contents: contents, ftags: '{FORBIDDEN_TAGS}'},
 						onSuccess: function(response)
 						{
-							document.getElementById('xmlhttprequest_preview{FIELD}').innerHTML = response.responseText;
-							if( document.getElementById('loading_preview{FIELD}') )
-								document.getElementById('loading_preview{FIELD}').style.display = 'none';
+							document.getElementById('xmlhttprequest_preview' + field).innerHTML = response.responseText;
+							if( document.getElementById('loading_preview' + field) )
+								document.getElementById('loading_preview' + field).style.display = 'none';
 						}
 					}
 				);

@@ -125,7 +125,7 @@
 					&nbsp;&nbsp;
                     <script type="text/javascript">
                     <!--
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit" />');
+                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();new Effect.ScrollTo(\'preview_content\',{duration:1.2});return false;" type="button" class="submit" />');
                     -->
                     </script>
 					&nbsp;&nbsp;

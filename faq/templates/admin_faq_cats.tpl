@@ -159,7 +159,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>

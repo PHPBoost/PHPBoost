@@ -132,7 +132,7 @@
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />					
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />&nbsp;&nbsp;');
+					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />&nbsp;&nbsp;');
 					-->
 					</script>
 					&nbsp;&nbsp; 

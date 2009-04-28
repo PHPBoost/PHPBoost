@@ -137,7 +137,7 @@
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" name="id_change_status" value="{status.ID_ARTICLE}" />
 				<input type="submit" class="submit" value="{L_SUBMIT}" />
-				<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);hide_div('xmlhttprequest_result')" class="submit" type="button" />
+				<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div('xmlhttprequest_result')" class="submit" type="button" />
 				<input value="{L_RESET}" class="reset" type="reset">
 			</fieldset>
 		</form>
