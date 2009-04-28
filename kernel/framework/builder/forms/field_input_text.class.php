@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('helpers/forms/form_fields');
+import('builder/forms/form_fields');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -34,7 +34,7 @@ import('helpers/forms/form_fields');
  * 	<li>size : The maximum size for the field</li>
  * 	<li>maxlength : The maximum length for the field</li>
  * </ul>
- * @package helpers
+ * @package builder
  */
 class FormInputText extends FormFields
 {

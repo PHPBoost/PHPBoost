@@ -30,7 +30,7 @@
  * A lot a sort of field and options are supported, for further details refer to each field type classes.
  * 
  * Example of use :
- * import('helpers/forms/form_helper');
+ * import('builder/forms/form_helper');
 	$form = new FormHelper('test', 'Test formular');
 	$form->addField('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
 	//Textarea field
@@ -53,7 +53,7 @@
 	$form->addField('test', 'hidden', array('value' => 1));
 	
 	echo $form->display();
- * @package helpers
+ * @package builder
  */ 
 
 define('FIELD_INPUT__TEXT', 'text');
@@ -94,23 +94,23 @@ class FormHelper
 		switch ($fieldType)
 		{
 			case FIELD_INPUT__TEXT :
-				import('helpers/forms/field_input_text');
+				import('builder/forms/field_input_text');
 				$this->formFields[$fieldName] = new FormInputText($fieldName, $arrayOptions);
 			break;
 			case FIELD_INPUT__HIDDEN :
-				import('helpers/forms/field_input_hidden');
+				import('builder/forms/field_input_hidden');
 				$this->formFields[$fieldName] = new FormInputHidden($fieldName, $arrayOptions);
 			break;
 			case FIELD_INPUT__FILE :
-				import('helpers/forms/field_input_file');
+				import('builder/forms/field_input_file');
 				$this->formFields[$fieldName] = new FormInputFile($fieldName, $arrayOptions);
 			break;
 			case FIELD__TEXTAREA :
-				import('helpers/forms/field_textarea');
+				import('builder/forms/field_textarea');
 				$this->formFields[$fieldName] = new FormTextarea($fieldName, $arrayOptions);
 			break;
 			case FIELD_INPUT__RADIO :
-				import('helpers/forms/field_input_radio');
+				import('builder/forms/field_input_radio');
 				if (isset($this->formFields[$fieldName]))
 				{	
 					$tmpField = new FormInputRadio($fieldName, $arrayOptions);
@@ -123,7 +123,7 @@ class FormHelper
 				}
 			break;
 			case FIELD_INPUT__CHECKBOX :
-				import('helpers/forms/field_input_checkbox');
+				import('builder/forms/field_input_checkbox');
 				if (isset($this->formFields[$fieldName]))
 				{	
 					$tmpField = new FormInputCheckbox($fieldName, $arrayOptions);
@@ -136,7 +136,7 @@ class FormHelper
 				}
 			break;
 			case FIELD__SELECT :
-				import('helpers/forms/field_select');
+				import('builder/forms/field_select');
 				if (isset($this->formFields[$fieldName]))
 				{	
 					$tmpField = new FormSelect($fieldName, $arrayOptions);

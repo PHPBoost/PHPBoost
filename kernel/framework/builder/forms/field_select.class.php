@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_file.class.php
+ *                             field_select.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,20 +24,16 @@
  *
 ###################################################*/
 
-import('helpers/forms/form_fields');
+import('builder/forms/form_fields');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage file input fields.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>size : The size for the field</li>
- * </ul>
- * @package helpers
+ * @desc This class manage select fields.
+ * @package builder
  */
-class FormInputFile extends FormFields
+class FormSelect extends FormFields
 {
-	function FormInputFile($fieldName, $fieldOptions)
+	function FormSelect($fieldName, $fieldOptions)
 	{
 		parent::FormFields($fieldName, $fieldOptions);
 		
@@ -46,28 +42,39 @@ class FormInputFile extends FormFields
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'size' :
-					$this->fieldSize = $value;
+				case 'optiontitle' :
+					$this->fieldOptionTitle = $value;
+				break;
+				case 'selected' :
+					$this->fieldSelected = $value;
+				break;
+				case 'multiple' :
+					$this->fieldMultiple = $value;
 				break;
 			}
 		}
 	}
 	
+	function addOption(&$option)
+	{
+		$this->fieldOptions .= '<option ';
+		$this->fieldOptions .= !empty($option->fieldValue) ? 'value="' . $option->fieldValue . '" ' : '';
+		$this->fieldOptions .= !empty($option->fieldSelected) ? 'selected="selected" ' : '';
+		$this->fieldOptions .= '> ' . $option->fieldOptionTitle . '</option>' . "\n";
+	}
+	
 	/**
-	 * @return string The html code for the file input.
+	 * @return string The html code for the select.
 	 */
 	function display()
 	{
 		$Template = new Template('framework/helper/forms/fields.tpl');
-			
-		$field = '<input type="file" ';
-		$field .= !empty($this->fieldSize) ? 'size="' . $this->fieldSize . '" ' : '';
-		$field .= !empty($this->fieldName) ? 'name="' . $this->fieldName . '" ' : '';
-		$field .= !empty($this->fieldId) ? 'id="' . $this->fieldId . '" ' : '';
-		$field .= !empty($this->fieldCssClass) ? 'class="' . $this->fieldCssClass . '" ' : '';
-		$field .= '/>
-		<input name="max_file_size" value="2000000" type="hidden">';
 		
+		if ($this->fieldMultiple)
+			$field = '<select name="' . $this->fieldName . '[]" multiple="multiple">' . $this->fieldOptions . '</select>';
+		else
+			$field = '<select name="' . $this->fieldName . '">' . $this->fieldOptions . '</select>';
+			
 		$Template->assign_vars(array(
 			'ID' => $this->fieldId,
 			'FIELD' => $field,
@@ -79,7 +86,10 @@ class FormInputFile extends FormFields
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $fieldSize = '';
+	var $fieldOptions = '';
+	var $fieldSelected = '';
+	var $fieldOptionTitle = '';
+	var $fieldMultiple = '';
 }
 
 ?>

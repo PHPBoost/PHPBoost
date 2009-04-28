@@ -24,12 +24,12 @@
  *
 ###################################################*/
 
-import('helpers/forms/form_fields');
+import('builder/forms/form_fields');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage textarea fields.
- * @package helpers
+ * @package builder
  */
 class FormTextarea extends FormFields
 {
