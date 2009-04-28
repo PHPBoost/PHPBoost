@@ -37,7 +37,7 @@
  * 	<li>required : Specify if the field is required.</li>
  * 	<li>onblur : Action performed when cursor is clicked outside the field area. (javascript)</li>
  * </ul>
- * @package helpers
+ * @package builder
  */
 class FormFields
 {

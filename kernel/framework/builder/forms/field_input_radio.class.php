@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_checkbox.class.php
+ *                             field_input_radio.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,23 +24,23 @@
  *
 ###################################################*/
 
-import('helpers/forms/form_fields');
+import('builder/forms/form_fields');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage checkbox input fields.
+ * @desc This class manage radio input fields.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>optiontitle : The option title</li>
  * 	<li>checked : Specify if the option has to be checked.</li>
  * </ul>
- * @package helpers
+ * @package builder
  */
-class FormInputCheckbox extends FormFields
+class FormInputRadio extends FormFields
 {
-	function FormInputCheckbox($fieldName, $fieldOptions)
+	function FormInputRadio($fieldName, $fieldOptions)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($fieldName, $fieldOptions);		
 		
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -57,13 +57,13 @@ class FormInputCheckbox extends FormFields
 		}
 	}
 	
-		/**
+	/**
 	 * @desc Add an option for the radio field.
 	 * @param object $option The new option. 
 	 */
 	function addOption(&$option)
 	{
-		$this->fieldOptions .= '<label><input type="checkbox" ';
+		$this->fieldOptions .= '<label><input type="radio" ';
 		$this->fieldOptions .= !empty($option->fieldName) ? 'name="' . $option->fieldName . '" ' : '';
 		$this->fieldOptions .= !empty($option->fieldValue) ? 'value="' . $option->fieldValue . '" ' : '';
 		$this->fieldOptions .= !empty($option->fieldChecked) ? 'checked="checked" ' : '';
@@ -71,7 +71,7 @@ class FormInputCheckbox extends FormFields
 	}
 	
 	/**
-	 * @return string The html code for the checkbox input.
+	 * @return string The html code for the radio input.
 	 */
 	function display()
 	{
