@@ -121,6 +121,7 @@ CREATE TABLE `phpboost_member` (
   `user_ban` int(11) NOT NULL default '0',
   `user_aprob` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`user_id`),
+  UNIQUE KEY `login` (`login`),
   KEY `user_id` (`login`,`password`,`level`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
