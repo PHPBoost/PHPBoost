@@ -26,12 +26,12 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class allow you to manage easily the formulars in your modules. 
+ * @desc This class allow you to manage easily the forms in your modules. 
  * A lot a sort of field and options are supported, for further details refer to each field type classes.
  * 
  * Example of use :
  * import('builder/forms/form_builder');
-	$form = new FormBuilder('test', 'Test formular');
+	$form = new FormBuilder('test', 'Test form');
 	$form->add_field('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
 	//Textarea field
 	$form->add_field('contents', 'textarea', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true));
@@ -68,9 +68,9 @@ class FormBuilder
 {
 	/**
 	 * @desc constructor
-	 * @param $form_name The name of the formular.
-	 * @param $form_title The tite displayed for the formular.
-	 * @param $form_action The url where the formular send the data.
+	 * @param $form_name The name of the form.
+	 * @param $form_title The tite displayed for the form.
+	 * @param $form_action The url where the form send the data.
 	 */
 	function FormBuilder($form_name, $form_title = '', $form_action = '')
 	{
@@ -83,7 +83,7 @@ class FormBuilder
 	}
 	
 	/**
-	 * @desc Constuct the fields objects and store them in the formular.
+	 * @desc Constuct the fields objects and store them in the form.
 	 * @param $field_name
 	 * @param $fieldType
 	 * @param $arrayOptions
@@ -152,7 +152,7 @@ class FormBuilder
 	}
 
 	/**
-	 * @desc Return the formular
+	 * @desc Return the form
 	 * @param $Template Optionnal template
 	 * @return string
 	 */
@@ -199,7 +199,7 @@ class FormBuilder
 		$this->display_preview = true;
 	}
 	/**
-	 * @desc Display a reset button for the formular.
+	 * @desc Display a reset button for the form.
 	 * @param $value True to display, false to hide.
 	 */
 	function displayReset($value)
