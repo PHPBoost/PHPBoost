@@ -349,10 +349,10 @@ if ($edit_file_id > 0)
 
 		$Template->assign_vars(array(
 			'C_CONTRIBUTION' => false,
-			'TITLE' => $file_title,
+			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => $file_contents,
-			'SHORT_DESCRIPTION' => $file_short_contents,
+			'DESCRIPTION' => stripslashes($file_contents),
+			'SHORT_DESCRIPTION' => stripslashes($file_short_contents),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
