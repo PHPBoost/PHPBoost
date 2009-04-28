@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             form_helper.class.php
+ *                             form_builer.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -30,7 +30,7 @@
  * A lot a sort of field and options are supported, for further details refer to each field type classes.
  * 
  * Example of use :
- * import('builder/forms/form_helper');
+ * import('builder/forms/form_builer');
 	$form = new FormHelper('test', 'Test formular');
 	$form->addField('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
 	//Textarea field
