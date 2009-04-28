@@ -33,34 +33,34 @@ import('builder/forms/form_fields');
  */
 class FormSelect extends FormFields
 {
-	function FormSelect($fieldName, $fieldOptions)
+	function FormSelect($field_name, $field_options)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($field_name, $field_options);
 		
-		foreach($fieldOptions as $attribute => $value)
+		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'optiontitle' :
-					$this->fieldOptionTitle = $value;
+					$this->field_option_title = $value;
 				break;
 				case 'selected' :
-					$this->fieldSelected = $value;
+					$this->field_selected = $value;
 				break;
 				case 'multiple' :
-					$this->fieldMultiple = $value;
+					$this->field_multiple = $value;
 				break;
 			}
 		}
 	}
 	
-	function addOption(&$option)
+	function add_option(&$option)
 	{
-		$this->fieldOptions .= '<option ';
-		$this->fieldOptions .= !empty($option->fieldValue) ? 'value="' . $option->fieldValue . '" ' : '';
-		$this->fieldOptions .= !empty($option->fieldSelected) ? 'selected="selected" ' : '';
-		$this->fieldOptions .= '> ' . $option->fieldOptionTitle . '</option>' . "\n";
+		$this->field_options .= '<option ';
+		$this->field_options .= !empty($option->field_value) ? 'value="' . $option->field_value . '" ' : '';
+		$this->field_options .= !empty($option->field_selected) ? 'selected="selected" ' : '';
+		$this->field_options .= '> ' . $option->field_option_title . '</option>' . "\n";
 	}
 	
 	/**
@@ -68,28 +68,28 @@ class FormSelect extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/helper/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/fields.tpl');
 		
-		if ($this->fieldMultiple)
-			$field = '<select name="' . $this->fieldName . '[]" multiple="multiple">' . $this->fieldOptions . '</select>';
+		if ($this->field_multiple)
+			$field = '<select name="' . $this->field_name . '[]" multiple="multiple">' . $this->field_options . '</select>';
 		else
-			$field = '<select name="' . $this->fieldName . '">' . $this->fieldOptions . '</select>';
+			$field = '<select name="' . $this->field_name . '">' . $this->field_options . '</select>';
 			
 		$Template->assign_vars(array(
-			'ID' => $this->fieldId,
+			'ID' => $this->field_id,
 			'FIELD' => $field,
-			'L_FIELD_NAME' => $this->fieldTitle,
-			'L_EXPLAIN' => $this->fieldSubTitle,
-			'L_REQUIRE' => $this->fieldRequired ? '* ' : ''
+			'L_FIELD_NAME' => $this->field_title,
+			'L_EXPLAIN' => $this->field_sub_title,
+			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $fieldOptions = '';
-	var $fieldSelected = '';
-	var $fieldOptionTitle = '';
-	var $fieldMultiple = '';
+	var $field_options = '';
+	var $field_selected = '';
+	var $field_option_title = '';
+	var $field_multiple = '';
 }
 
 ?>

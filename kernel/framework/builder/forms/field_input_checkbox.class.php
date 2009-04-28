@@ -38,20 +38,20 @@ import('builder/forms/form_fields');
  */
 class FormInputCheckbox extends FormFields
 {
-	function FormInputCheckbox($fieldName, $fieldOptions)
+	function FormInputCheckbox($field_name, $field_options)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($field_name, $field_options);
 		
-		foreach($fieldOptions as $attribute => $value)
+		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'optiontitle' :
-					$this->fieldOptionTitle = $value;
+					$this->field_option_title = $value;
 				break;
 				case 'checked' :
-					$this->fieldChecked = $value;
+					$this->field_checked = $value;
 				break;
 			}
 		}
@@ -61,13 +61,13 @@ class FormInputCheckbox extends FormFields
 	 * @desc Add an option for the radio field.
 	 * @param object $option The new option. 
 	 */
-	function addOption(&$option)
+	function add_option(&$option)
 	{
-		$this->fieldOptions .= '<label><input type="checkbox" ';
-		$this->fieldOptions .= !empty($option->fieldName) ? 'name="' . $option->fieldName . '" ' : '';
-		$this->fieldOptions .= !empty($option->fieldValue) ? 'value="' . $option->fieldValue . '" ' : '';
-		$this->fieldOptions .= !empty($option->fieldChecked) ? 'checked="checked" ' : '';
-		$this->fieldOptions .= '/> ' . $option->fieldOptionTitle . '</label><br />' . "\n";
+		$this->field_options .= '<label><input type="checkbox" ';
+		$this->field_options .= !empty($option->field_name) ? 'name="' . $option->field_name . '" ' : '';
+		$this->field_options .= !empty($option->field_value) ? 'value="' . $option->field_value . '" ' : '';
+		$this->field_options .= !empty($option->field_checked) ? 'checked="checked" ' : '';
+		$this->field_options .= '/> ' . $option->field_option_title . '</label><br />' . "\n";
 	}
 	
 	/**
@@ -75,22 +75,22 @@ class FormInputCheckbox extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/helper/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/fields.tpl');
 			
 		$Template->assign_vars(array(
-			'ID' => $this->fieldId,
-			'FIELD' => $this->fieldOptions,
-			'L_FIELD_NAME' => $this->fieldTitle,
-			'L_EXPLAIN' => $this->fieldSubTitle,
-			'L_REQUIRE' => $this->fieldRequired ? '* ' : ''
+			'ID' => $this->field_id,
+			'FIELD' => $this->field_options,
+			'L_FIELD_NAME' => $this->field_title,
+			'L_EXPLAIN' => $this->field_sub_title,
+			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $fieldOptions = '';
-	var $fieldChecked = '';
-	var $fieldOptionTitle = '';
+	var $field_options = '';
+	var $field_checked = '';
+	var $field_option_title = '';
 }
 
 ?>
