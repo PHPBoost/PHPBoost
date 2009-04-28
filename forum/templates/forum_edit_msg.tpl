@@ -91,7 +91,7 @@
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_msg').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>
 							&nbsp;&nbsp;

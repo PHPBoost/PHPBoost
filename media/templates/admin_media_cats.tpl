@@ -222,7 +222,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo('preview_description',{duration:1.2}); return false;"" class="submit" />
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>

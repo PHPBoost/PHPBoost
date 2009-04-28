@@ -283,7 +283,7 @@
 					&nbsp;&nbsp; 									
 					<script type="text/javascript">
 					<!--				
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>				
 					<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>
@@ -344,7 +344,7 @@
 							&nbsp;&nbsp; 
 							<script type="text/javascript">
 							<!--				
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>						
 							<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>								
@@ -431,7 +431,7 @@
 								&nbsp;&nbsp; 
 								<script type="text/javascript">
 								<!--				
-								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 								-->
 								</script>
 								<noscript><input value="{L_PREVIEW}" type="submit" name="prw_convers" class="submit" /></noscript>

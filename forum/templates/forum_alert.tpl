@@ -53,7 +53,7 @@
 									&nbsp;&nbsp; 
 									<script type="text/javascript">
 									<!--				
-									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 									-->
 									</script>	
 									&nbsp;&nbsp; 	

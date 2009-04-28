@@ -44,7 +44,7 @@
 				<input type="submit" name="shoutbox" value="{L_SUBMIT}" class="submit" />
 				<script type="text/javascript">
 				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 				-->
 				</script>
 				<input type="reset" value="{L_RESET}" class="reset" />			
