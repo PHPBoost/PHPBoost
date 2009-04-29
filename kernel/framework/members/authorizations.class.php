@@ -39,9 +39,9 @@ class Authorizations
 	/**
 	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * This returned array is used to be serialized.
-     * @return array The array of authorizations.
-     * @static
-     */
+	 * @return array The array of authorizations.
+	 * @static
+	 */
 	function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
@@ -80,7 +80,7 @@ class Authorizations
 	 * @param $idselect
 	 * @param $admin_auth_default
 	 * @return unknown_type
-     * @static
+	* @static
 	 */
 	function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
@@ -108,7 +108,7 @@ class Authorizations
 	 * @param $disabled
 	 * @param $disabled_advanced_auth
 	 * @return unknown_type
-     * @static
+	* @static
 	 */
 	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
@@ -242,14 +242,14 @@ class Authorizations
 	
 	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
     /**
-     * @desc
-     * @param $type
-     * @param $value
-     * @param $array_auth
-     * @param $bit
-     * @return unknown_type
-     * @static
-     */
+	 * @desc
+	 * @param $type
+	 * @param $value
+	 * @param $array_auth
+	 * @param $bit
+	 * @return unknown_type
+	 * @static
+	 */
 	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
 	{
 		if (!is_int($value))
@@ -285,7 +285,7 @@ class Authorizations
 	 * @param $auth_bit
 	 * @param $mode
 	 * @return unknown_type
-     * @static
+	 * @static
 	 */
 	/*static*/  function merge_auth($parent, $child, $auth_bit, $mode)
 	{
