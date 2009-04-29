@@ -86,7 +86,7 @@ class File extends FileSystemElement
 		if (!$this->is_open())
 		{
 			parent::open();
-			if (is_file($this->path))
+			if (file_exists($this->path) && is_file($this->path))
 			{   // The file already exists and is a file (not a folder)
 				$this->fd = fopen($this->path, 'r+');
 			}
