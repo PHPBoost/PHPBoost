@@ -60,7 +60,7 @@ class ModuleInterface
         $this->attributes =array();
         $this->infos = array();
         $this->functionalities = array();
-        $this->enabled = ($MODULES[strtolower($this->get_id())]['activ'] == '1');
+        $this->enabled = !empty($MODULES[strtolower($this->get_id())]) && ($MODULES[strtolower($this->get_id())]['activ'] == '1');
 
         // Get the config.ini informations
         $this->infos = load_ini_file(PATH_TO_ROOT . '/' . $this->id . '/lang/', get_ulang());
