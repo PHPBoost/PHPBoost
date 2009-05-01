@@ -33,9 +33,9 @@ import('builder/forms/form_fields');
  */
 class FormTextarea extends FormFields
 {
-	function FormTextarea($fieldName, $fieldOptions)
+	function FormTextarea($fieldId, $fieldOptions)
 	{
-		parent::FormFields($fieldName, $fieldOptions);
+		parent::FormFields($fieldId, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);

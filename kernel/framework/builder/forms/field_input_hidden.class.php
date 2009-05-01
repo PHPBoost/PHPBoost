@@ -33,9 +33,9 @@ import('builder/forms/form_fields');
  */
 class FormInputHidden extends FormFields
 {
-	function FormInputHidden($field_name, $field_options)
+	function FormInputHidden($fieldId, $field_options)
 	{
-		parent::FormFields($field_name, $field_options);
+		parent::FormFields($fieldId, $field_options);
 	}
 	
 	function display()
