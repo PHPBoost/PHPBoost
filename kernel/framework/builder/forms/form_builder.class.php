@@ -30,29 +30,40 @@
  * A lot a sort of field and options are supported, for further details refer to each field type classes.
  * 
  * Example of use :
- * import('builder/forms/form_builder');
-	$form = new FormBuilder('test', 'Test form');
-	$form->add_field('login', 'text', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true));
-	//Textarea field
-	$form->add_field('contents', 'textarea', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true));
-	$form->add_field('comments', 'textarea', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false));
-	$form->displayPreview('contents'); //Display a preview button for the textarea field(ajax).
-	//Radio button field
-	$form->add_field('choice', 'radio', array('title' => 'Answer', 'optiontitle' => 'Choix1', 'value' => 1, 'checked' => 0));
-	$form->add_field('choice', 'radio', array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => 1));
-	//Checkbox button field
-	$form->add_field('multiplechoice', 'checkbox', array('title' => 'Answer2', 'optiontitle' => 'Choix3', 'value' => 1));
-	$form->add_field('multiplechoice', 'checkbox', array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => 1));
-	//Select field
-	$form->add_field('sex', 'select', array('title' => 'Sex', 'optiontitle' => 'Men', 'value' => 1));
-	$form->add_field('sex', 'select', array('optiontitle' => 'Women', 'value' => 1));
-	$form->add_field('sex', 'select', array('optiontitle' => '?', 'value' => -1, 'selected' => 1));
-	//File field
-	$form->add_field('avatar', 'file', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true));
-	//Radio button field
-	$form->add_field('test', 'hidden', array('value' => 1));
-	
-	echo $form->display();
+import('builder/forms/form_builder');
+$form = new FormBuilder('test', '');
+
+//####### First fieldset ######//
+$fieldset = new FormFieldset('Test Form');
+
+$fieldset->add_field(new FormInputText('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true)));
+//Textarea field
+$fieldset->add_field(new FormTextarea('contents', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true)));
+$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
+$fieldset->displayPreview('contents'); //Display a preview button for the textarea field(ajax).
+//Radio button field
+$fieldset->add_field(new FormInputRadio('choice', array('title' => 'Answer', 'optiontitle' => 'Choix1', 'value' => 1, 'checked' => 0)));
+$fieldset->add_field(new FormInputRadio('choice', array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => 1)));
+//Checkbox button field
+$fieldset->add_field(new FormInputCheckbox('multiplechoice', array('title' => 'Answer2', 'optiontitle' => 'Choix3', 'value' => 1)));
+$fieldset->add_field(new FormInputCheckbox('multiplechoice', array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => 1)));
+//Select field
+$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex', 'optiontitle' => 'Men', 'value' => 1)));
+$fieldset->add_field(new FormSelect('sex', array('optiontitle' => 'Women', 'value' => 1)));
+$fieldset->add_field(new FormSelect('sex', array('optiontitle' => '?', 'value' => -1, 'selected' => 1)));
+
+$form->add_fieldset($fieldset);  //Add fieldset to the form.
+
+//####### Second fieldset #######//
+$fieldset_up = new FormFieldset('Upload file');
+//File field
+$fieldset_up->add_field(new FormInputFile('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true)));
+//Radio button field
+$fieldset_up->add_field(new FormInputHidden('test', array('value' => 1)));
+
+$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
+
+echo $form->display(); //Display form.
  * @package builder
  */ 
 
@@ -64,6 +75,15 @@ define('FIELD_INPUT__FILE', 'file');
 define('FIELD__TEXTAREA', 'textarea');
 define('FIELD__SELECT', 'select');
 
+import('builder/forms/form_fieldset');
+import('builder/forms/field_input_text');
+import('builder/forms/field_input_hidden');
+import('builder/forms/field_input_file');
+import('builder/forms/field_textarea');
+import('builder/forms/field_input_radio');
+import('builder/forms/field_input_checkbox');
+import('builder/forms/field_select');
+
 class FormBuilder
 {
 	/**
@@ -72,85 +92,24 @@ class FormBuilder
 	 * @param $form_title The tite displayed for the form.
 	 * @param $form_action The url where the form send the data.
 	 */
-	function FormBuilder($form_name, $form_title = '', $form_action = '')
+	function FormBuilder($form_name, $form_action = '')
 	{
 		global $LANG;
 		
 		$this->form_name = $form_name;
-		$this->form_title = $form_title;
 		$this->form_action = $form_action;
 		$this->form_submit = $LANG['submit'];
 	}
 	
 	/**
-	 * @desc Constuct the fields objects and store them in the form.
-	 * @param $field_name
-	 * @param $fieldType
-	 * @param $arrayOptions
-	 * @return unknown_type
+	 * @desc Add fieldset int the form.
+	 * @param object The fieldset object.
 	 */
-	function add_field($field_name, $fieldType, $arrayOptions = array())
+	function add_fieldset($fieldset)
 	{
-		switch ($fieldType)
-		{
-			case FIELD_INPUT__TEXT :
-				import('builder/forms/field_input_text');
-				$this->form_fields[$field_name] = new FormInputText($field_name, $arrayOptions);
-			break;
-			case FIELD_INPUT__HIDDEN :
-				import('builder/forms/field_input_hidden');
-				$this->form_fields[$field_name] = new FormInputHidden($field_name, $arrayOptions);
-			break;
-			case FIELD_INPUT__FILE :
-				import('builder/forms/field_input_file');
-				$this->form_fields[$field_name] = new FormInputFile($field_name, $arrayOptions);
-			break;
-			case FIELD__TEXTAREA :
-				import('builder/forms/field_textarea');
-				$this->form_fields[$field_name] = new FormTextarea($field_name, $arrayOptions);
-			break;
-			case FIELD_INPUT__RADIO :
-				import('builder/forms/field_input_radio');
-				if (isset($this->form_fields[$field_name]))
-				{	
-					$tmpField = new FormInputRadio($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($tmpField);
-				}
-				else
-				{
-					$this->form_fields[$field_name] = new FormInputRadio($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
-				}
-			break;
-			case FIELD_INPUT__CHECKBOX :
-				import('builder/forms/field_input_checkbox');
-				if (isset($this->form_fields[$field_name]))
-				{	
-					$tmpField = new FormInputCheckbox($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($tmpField);
-				}
-				else
-				{
-					$this->form_fields[$field_name] = new FormInputCheckbox($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
-				}
-			break;
-			case FIELD__SELECT :
-				import('builder/forms/field_select');
-				if (isset($this->form_fields[$field_name]))
-				{	
-					$tmpField = new FormSelect($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($tmpField);
-				}
-				else
-				{
-					$this->form_fields[$field_name] = new FormSelect($field_name, $arrayOptions);
-					$this->form_fields[$field_name]->add_option($this->form_fields[$field_name]);
-				}
-			break;
-		}
+		$this->form_fieldsets[] = $fieldset;
 	}
-
+	
 	/**
 	 * @desc Return the form
 	 * @param $Template Optionnal template
@@ -169,19 +128,17 @@ class FormBuilder
 			'FORMONSUBMIT' => $this->form_on_submit,
 			'FORMCLASS' => $this->form_class,
 			'U_FORMACTION' => $this->form_action,
-			'L_FORMTITLE' => $this->form_title,
 			'L_FORMNAME' => $this->form_name,
 			'L_FIELD_CONTENT_PREVIEW' => $this->field_content_preview,
-			'L_REQUIRED_FIELDS' => $LANG['require'],
 			'L_SUBMIT' => $this->form_submit,
 			'L_PREVIEW' => $LANG['preview'],
 			'L_RESET' => $LANG['reset'],
 		));	
 		
-		foreach($this->form_fields as $Field)
+		foreach($this->form_fieldsets as $Fieldset)
 		{
-			$Template->assign_block_vars('fields', array(
-				'FIELD' => $Field->display(),
+			$Template->assign_block_vars('fieldsets', array(
+				'FIELDSET' => $Fieldset->display(),
 			));	
 		}
 		
@@ -208,7 +165,6 @@ class FormBuilder
 	}
 	
 	//Setteurs
-	function set_form_title($form_title) { $this->form_title = $form_title; }
 	function set_form_name($form_name) { $this->form_name = $form_name; }
 	function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
 	function set_form_action($form_action) { $this->form_action = $form_action; }
@@ -216,16 +172,14 @@ class FormBuilder
 	function set_form_class($form_class) { $this->form_class = $form_class; }
 	
 	//Getteurs
-	function get_form_title() { return $this->form_title; }
 	function get_form_name() { return $this->form_name; }
 	function get_form_submit() { return $this->form_submit; }
 	function get_form_action() { return $this->form_action; }
 	function get_form_onsubmit() { return $this->form_on_submit; }
 	function get_form_class() { return $this->form_class; }
 	
-	var $form_fields = array(); //Fields stored
+	var $form_fieldsets = array(); //Fieldsets stored
 	var $form_name = '';
-	var $form_title = '';
 	var $form_submit = '';
 	var $form_action = '';
 	var $form_on_submit = ''; //Action performed on submit (javascript).

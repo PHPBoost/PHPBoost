@@ -38,9 +38,9 @@ import('builder/forms/form_fields');
  */
 class FormInputText extends FormFields
 {
-	function FormInputText($field_name, $field_options)
+	function FormInputText($fieldId, $field_options)
 	{
-		parent::FormFields($field_name, $field_options);
+		parent::FormFields($fieldId, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{

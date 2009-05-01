@@ -38,9 +38,10 @@ import('builder/forms/form_fields');
  */
 class FormInputCheckbox extends FormFields
 {
-	function FormInputCheckbox($field_name, $field_options)
+	function FormInputCheckbox($fieldId, $field_options)
 	{
-		parent::FormFields($field_name, $field_options);
+		parent::FormFields($fieldId, $field_options);
+		$this->has_option = true;
 		
 		foreach($field_options as $attribute => $value)
 		{

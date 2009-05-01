@@ -36,6 +36,7 @@ class FormSelect extends FormFields
 	function FormSelect($field_name, $field_options)
 	{
 		parent::FormFields($field_name, $field_options);
+		$this->has_option = true;
 		
 		foreach($field_options as $attribute => $value)
 		{

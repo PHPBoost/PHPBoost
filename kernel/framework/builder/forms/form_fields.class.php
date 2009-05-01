@@ -43,13 +43,13 @@ class FormFields
 {
 	/**
 	 * @desc Abstract class
-	 * @param string $fieldName Name of the field.
+	 * @param string $fieldId Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	function FormFields($fieldName, $fieldOptions)
+	function FormFields($fieldId, $fieldOptions)
 	{
-		$this->field_name = $fieldName;
-		$this->field_id = $fieldName;
+		$this->field_name = $fieldId;
+		$this->field_id = $fieldId;
 		
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -81,6 +81,15 @@ class FormFields
 		}
 	}
 	
+	/**
+	 * @desc Check if the field can accept option.
+	 * @return boolean true if field accept options, false otherwise.
+	 */
+	 function has_option()
+	{
+		return $this->has_option;
+	}
+	
 	var $field_title = '';
 	var $field_sub_title = '';
 	var $field_name = '';
@@ -89,6 +98,7 @@ class FormFields
 	var $field_css_class = '';
 	var $field_required = '';
 	var $field_on_blur = '';
+	var $has_option = '';
 }
 
 ?>

@@ -1,12 +1,8 @@
 <form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="{FORMONSUBMIT}" class="{FORMCLASS}">
-	<fieldset>
-		<legend>{L_FORMTITLE}</legend>
-		<p>{L_REQUIRED_FIELDS}</p>
-		
-		# START fields #
-			{fields.FIELD}
-		# END fields #
-	</fieldset>			
+	# START fieldsets #
+		{fieldsets.FIELDSET}
+	# END fieldsets #
+	
 	<fieldset class="fieldset_submit">
 		<legend>{L_SUBMIT}</legend>
 		<input type="submit" name="{L_FORMNAME}" value="{L_SUBMIT}" class="submit" />
