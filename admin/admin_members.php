@@ -824,6 +824,10 @@ else
 		'admin_members_management'=> 'admin/admin_members_management.tpl'
 	));
 	 
+	$Template->assign_vars(array(
+		'C_DISPLAY_SEARCH_RESULT' => false
+	));
+	
 	$search = retrieve(POST, 'login_mbr', ''); 
 	if (!empty($search)) //Moteur de recherche des members
 	{
@@ -833,20 +837,23 @@ else
 
 		if (!empty($nbr_result))
 		{			
-			$i = 0;
 			$result = $Sql->query_while ($req, __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result)) //On execute la requête dans une boucle pour afficher tout les résultats.
 			{ 
-				$coma = ($i != 0) ? ', ' : '';
-				$i++;
 				$Template->assign_block_vars('search', array(
-					'RESULT' => $coma . '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>'
+					'RESULT' => '<a href="../admin/admin_members.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a><br />'
+				));
+				$Template->assign_vars(array(
+					'C_DISPLAY_SEARCH_RESULT' => true
 				));
 			}
 			$Sql->query_close($result);
 		}
 		else
 		{
+			$Template->assign_vars(array(
+				'C_DISPLAY_SEARCH_RESULT' => true
+			));
 			$Template->assign_block_vars('search', array(
 				'RESULT' => $LANG['no_result']
 			));
