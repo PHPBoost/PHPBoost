@@ -84,13 +84,13 @@ define('FIELD__TEXTAREA', 'textarea');
 define('FIELD__SELECT', 'select');
 
 import('builder/form/form_fieldset');
-import('builder/form/field_text');
-import('builder/form/field_hidden');
-import('builder/form/field_file');
-import('builder/form/field_textarea');
-import('builder/form/field_radio');
-import('builder/form/field_checkbox');
-import('builder/form/field_select');
+import('builder/form/form_text');
+import('builder/form/form_hidden');
+import('builder/form/form_file');
+import('builder/form/form_textarea');
+import('builder/form/form_radio');
+import('builder/form/form_checkbox');
+import('builder/form/form_select');
 
 class FormBuilder
 {

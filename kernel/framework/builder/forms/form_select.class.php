@@ -25,7 +25,7 @@
 ###################################################*/
 
 import('builder/form/form_field');
-import('builder/form/field_select_option');
+import('builder/form/form_select_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
