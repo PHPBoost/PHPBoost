@@ -64,7 +64,7 @@
 	//####### Second fieldset #######//
 	$fieldset_up = new FormFieldset('Upload file');
 	//File field
-	$fieldset_up->add_field(new FormInputFile('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true)));
+	$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true)));
 	//Radio button field
 	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
 	
@@ -86,7 +86,7 @@ define('FIELD__SELECT', 'select');
 import('builder/form/form_fieldset');
 import('builder/form/form_text');
 import('builder/form/form_hidden');
-import('builder/form/form_file');
+import('builder/form/form_file_uploader');
 import('builder/form/form_textarea');
 import('builder/form/form_radio');
 import('builder/form/form_checkbox');
