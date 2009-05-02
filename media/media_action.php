@@ -381,7 +381,7 @@ elseif (!empty($_POST['submit']))
 	// Ajout
 	elseif (!$media['idedit'] && (($auth_write = $User->check_auth($auth_cat, MEDIA_AUTH_WRITE)) || $User->check_auth($auth_cat, MEDIA_AUTH_CONTRIBUTION)))
 	{
-		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "media (idcat, iduser, timestamp, name, contents, url, mime_type, infos, width, height, users_note) VALUES ('" . $media['idcat'] . "', '" . $User->Get_attribute('user_id') . "', '" . time() . "', '" . $media['name'] . "', '" . strparse($media['contents']) . "', '" . $media['url'] . "', '" . $media['mime_type'] . "', " . "'" . ($User->check_auth($auth_cat, MEDIA_AUTH_WRITE) ? MEDIA_STATUS_APROBED : 0) . "', '" . $media['width'] . "', '" . $media['height'] . "', '')", __LINE__, __FILE__);
 
 		$new_id_media = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "media");
 		$media_categories->recount_media_per_cat($media['idcat']);

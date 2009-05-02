@@ -240,7 +240,7 @@ if ($edit_file_id > 0)
 			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
 				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
 				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
-				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = '" . $file_approved . "' " .
+				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = " . (int)$file_approved . " " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subfiles in each category
@@ -471,9 +471,8 @@ else
             import('util/url');
             $file_relative_url = new Url($file_url);
 			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " .
-				"'" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, users_note) " .
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '')", __LINE__, __FILE__);
 			
 			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			
