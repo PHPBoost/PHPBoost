@@ -28,7 +28,7 @@ import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage textarea fields.
+ * @desc This class manage single-line text fields.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>size : The maximum size for the field</li>

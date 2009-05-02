@@ -28,7 +28,7 @@ import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage textarea fields.
+ * @desc This class manage multi-line text fields.
  * @package builder
  * @subpackage form
  */
