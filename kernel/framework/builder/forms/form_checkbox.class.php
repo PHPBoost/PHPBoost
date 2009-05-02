@@ -25,7 +25,7 @@
 ###################################################*/
 
 import('builder/form/form_field');
-import('builder/form/field_checkbox_option');
+import('builder/form/form_checkbox_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
