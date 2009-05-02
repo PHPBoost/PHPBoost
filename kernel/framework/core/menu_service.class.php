@@ -158,7 +158,7 @@ class MenuService
                     title='" . addslashes($menu->get_title()) . "',
                     object='" . addslashes(serialize($menu)) . "',
                     class='" . strtolower(get_class($menu)) . "',
-                    enabled='" . $menu->is_enabled() . "',
+                    enabled='" . (int)$menu->is_enabled() . "',
                     block='" . $block . "',
                     position='" . $menu->get_block_position() . "'
             WHERE id='" . $id_menu . "';";

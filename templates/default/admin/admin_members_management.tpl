@@ -81,7 +81,8 @@
 						<dd><label>
 							<span style="float:left;">
 								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
-							<span id="search_img"></span>
+								<span id="search_img"></span>
+							
 							</span>
 							<span style="float:left;margin-left:5px;">
 								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
@@ -91,11 +92,12 @@
 									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members(\'\', \'{THEME}\', \'admin_member\', \'{L_REQUIRE_LOGIN}\');" type="button" class="submit">');
 								-->
 								</script>									
-								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
+								<div id="xmlhttprequest_result_search" # IF NOT C_DISPLAY_SEARCH_RESULT # style="display:none;" # ENDIF # class="xmlhttprequest_result_search">
+									# START search #
+									{search.RESULT}
+									# END search #
+								</div>
 							</span>
-							# START search #
-								{search.RESULT}
-							# END search #
 						</label></dd>
 					</dl>
 				</fieldset>	
