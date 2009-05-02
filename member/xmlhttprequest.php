@@ -46,8 +46,8 @@ elseif ($select_cat && empty($open_cat) && $root == 0)
 		$id = $selected_cat; //Permier id
 		do
 		{
-			$localisation[] = $_WIKI_CATS[$id]['name'];
-			$id = (int)$_WIKI_CATS[$id]['id_parent'];
+			$localisation[] = isset($_WIKI_CATS[$id]['name']) ? $_WIKI_CATS[$id]['name'] : '';
+			$id = isset($_WIKI_CATS[$id]['id_parent']) ? (int)$_WIKI_CATS[$id]['id_parent'] : 0;
 		}	
 		while ($id > 0);
 		$localisation = array_reverse($localisation);
