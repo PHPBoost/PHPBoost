@@ -24,21 +24,22 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
+import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage checkbox input field options.
- * It provides you additionnal field options :
+ * @desc This class manages the checkbox fields.
+ * It provides you some additionnal field options:
  * <ul>
  * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify if the option has to be checked.</li>
+ * 	<li>checked : Specify it whether the option has to be checked.</li>
  * </ul>
  * @package builder
+ * @subpackage form
  */
-class FormInputCheckboxOption extends FormField
+class FormCheckboxOption extends FormField
 {
-	function FormInputCheckboxOption($field_options)
+	function FormCheckboxOption($field_options)
 	{
 		parent::FormField('', $field_options);
 		

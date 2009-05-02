@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_radio.class.php
+ *                             field_input_text.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,70 +24,70 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
-import('builder/forms/field_input_radio_option');
+import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage radio input fields.
+ * @desc This class manage textarea fields.
+ * It provides you additionnal field options :
+ * <ul>
+ * 	<li>size : The maximum size for the field</li>
+ * 	<li>maxlength : The maximum length for the field</li>
+ * </ul>
  * @package builder
+ * @subpackage form
  */
-class FormInputRadio extends FormField
+class FormTextEdit extends FormField
 {
-	/**
-	 * @desc constructor It takes a variable number of parameters. The first two are required. 
-	 * @param string $fieldId Name of the field.
-	 * @param array $fieldOptions Option for the field.
-	 * @param FormInputRadioOption Pass variable number of FormInputRadioOption object to add in the FormInputRadio.
-	 */
-	function FormInputRadio()
+	function FormTextEdit($fieldId, $field_options)
 	{
-		$fieldId = func_get_arg(0);
-		$field_options = func_get_arg(1);
-
 		parent::FormField($fieldId, $field_options);
 		
-		$nbr_arg = func_num_args() - 1;		
-		for ($i = 2; $i <= $nbr_arg; $i++)
-			$this->field_options[] = func_get_arg($i);
+		foreach($field_options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'size' :
+					$this->field_size = $value;
+				break;
+				case 'maxlength' :
+					$this->field_maxlength = $value;
+				break;
+			}
+		}
 	}
 	
 	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormInputRadioOption option The new option. 
-	 */
-	function add_option(&$option)
-	{
-		$this->field_options[] = $option;
-	}
-	
-	/**
-	 * @return string The html code for the radio input.
+	 * @return string The html code for the input.
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/field_box.tpl');
+		$Template = new Template('framework/builder/forms/field.tpl');
 			
+		$field = '<input type="text" ';
+		$field .= !empty($this->field_size) ? 'size="' . $this->field_size . '" ' : '';
+		$field .= !empty($this->field_maxlength) ? 'maxlength="' . $this->field_maxlength . '" ' : '';
+		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
+		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
+		$field .= !empty($this->field_value) ? 'value="' . $this->field_value . '" ' : '';
+		$field .= !empty($this->field_css_class) ? 'class="' . $this->field_css_class . '" ' : '';
+		$field .= !empty($this->field_on_blur) ? 'onblur="' . $this->field_on_blur . '" ' : '';
+		$field .= '/>';
+		
 		$Template->assign_vars(array(
 			'ID' => $this->field_id,
-			'FIELD' => $this->field_options,
+			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->field_title,
 			'L_EXPLAIN' => $this->field_sub_title,
 			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
-		foreach($this->field_options as $Option)
-		{
-			$Option->field_name = $this->field_name; //Set the same field name for each option.
-			$Template->assign_block_vars('field_options', array(
-				'OPTION' => $Option->display(),
-			));	
-		}
-		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $field_options = array();
+	var $field_size = '';
+	var $field_maxlength = '';
 }
 
 ?>

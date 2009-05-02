@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_hidden.class.php
+ *                             field_input_file.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,30 +24,63 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
+import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage hidden input fields.
+ * @desc This class manage file input fields.
+ * It provides you additionnal field options :
+ * <ul>
+ * 	<li>size : The size for the field</li>
+ * </ul>
  * @package builder
+ * @subpackage form
  */
-class FormInputHidden extends FormField
+class FormInputFile extends FormField
 {
-	function FormInputHidden($fieldId, $field_options)
+	function FormInputFile($fieldId, $field_options)
 	{
 		parent::FormField($fieldId, $field_options);
+		
+		foreach($field_options as $attribute => $value)
+		{
+			$attribute = strtolower($attribute);
+			switch ($attribute)
+			{
+				case 'size' :
+					$this->field_size = $value;
+				break;
+			}
+		}
 	}
 	
+	/**
+	 * @return string The html code for the file input.
+	 */
 	function display()
 	{
-		$field = '<input type="hidden" ';
+		$Template = new Template('framework/builder/forms/field.tpl');
+			
+		$field = '<input type="file" ';
+		$field .= !empty($this->field_size) ? 'size="' . $this->field_size . '" ' : '';
 		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
 		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
-		$field .= !empty($this->field_value) ? 'value="' . $this->field_value . '" ' : '';
-		$field .= '/>';
+		$field .= !empty($this->field_css_class) ? 'class="' . $this->field_css_class . '" ' : '';
+		$field .= '/>
+		<input name="max_file_size" value="2000000" type="hidden">';
 		
-		return $field;
+		$Template->assign_vars(array(
+			'ID' => $this->field_id,
+			'FIELD' => $field,
+			'L_FIELD_TITLE' => $this->field_title,
+			'L_EXPLAIN' => $this->field_sub_title,
+			'L_REQUIRE' => $this->field_required ? '* ' : ''
+		));	
+		
+		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
+
+	var $field_size = '';
 }
 
 ?>

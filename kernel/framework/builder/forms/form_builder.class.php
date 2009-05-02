@@ -26,31 +26,31 @@
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class allow you to manage easily the forms in your modules. 
- * A lot a sort of field and options are supported, for further details refer to each field type classes.
+ * @desc This class allows you to manage easily the forms in your modules. 
+ * A lot of fields and options are supported, for further details refer yourself to each field class.
  * 
  * Example of use :
-	import('builder/forms/form_builder');
+	import('builder/form/form_builder');
 	$form = new FormBuilder('test', '');
 	
 	//####### First fieldset ######//
-	$fieldset = new FormFieldset('Test Form');
+	$fieldset = new FormFieldset('Form Test');
 	
-	$fieldset->add_field(new FormInputText('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true)));
+	$fieldset->add_field(new FormTextEdit('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true)));
 	//Textarea field
 	$fieldset->add_field(new FormTextarea('contents', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true)));
 	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
 	$fieldset->displayPreview('contents'); //Display a preview button for the textarea field(ajax).
 	//Radio button field
-	$fieldset->add_field(new FormInputRadio('choice', array('title' => 'Answer'),
-		new FormInputRadioOption(array('optiontitle' => 'Choix1', 'value' => 1)), 
-		new FormInputRadioOption(array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => true))
+	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
+		new FormRadioChoiceOption(array('optiontitle' => 'Choix1', 'value' => 1)), 
+		new FormRadioChoiceOption(array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => true))
 	));
 	
 	//Checkbox button field
-	$fieldset->add_field(new FormInputCheckbox('multiplechoice', array('title' => 'Answer2'),
-		new FormInputCheckboxOption(array('optiontitle' => 'Choix3', 'value' => 1)), 
-		new FormInputCheckboxOption(array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => true)) 
+	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
+		new FormCheckboxOption(array('optiontitle' => 'Choix3', 'value' => 1)), 
+		new FormCheckboxOption(array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => true)) 
 	));
 	//Select field
 	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
@@ -66,12 +66,13 @@
 	//File field
 	$fieldset_up->add_field(new FormInputFile('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30, 'required' => true)));
 	//Radio button field
-	$fieldset_up->add_field(new FormInputHidden('test', array('value' => 1)));
+	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
 	
 	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
 	
 	echo $form->display(); //Display form.
  * @package builder
+ * @subpackage form
  */ 
 
 define('FIELD_INPUT__TEXT', 'text');
@@ -82,14 +83,14 @@ define('FIELD_INPUT__FILE', 'file');
 define('FIELD__TEXTAREA', 'textarea');
 define('FIELD__SELECT', 'select');
 
-import('builder/forms/form_fieldset');
-import('builder/forms/field_input_text');
-import('builder/forms/field_input_hidden');
-import('builder/forms/field_input_file');
-import('builder/forms/field_textarea');
-import('builder/forms/field_input_radio');
-import('builder/forms/field_input_checkbox');
-import('builder/forms/field_select');
+import('builder/form/form_fieldset');
+import('builder/form/field_text');
+import('builder/form/field_hidden');
+import('builder/form/field_file');
+import('builder/form/field_textarea');
+import('builder/form/field_radio');
+import('builder/form/field_checkbox');
+import('builder/form/field_select');
 
 class FormBuilder
 {
