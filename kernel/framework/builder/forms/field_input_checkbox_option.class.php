@@ -28,7 +28,7 @@ import('builder/forms/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage checkbox input fields.
+ * @desc This class manage checkbox input field options.
  * It provides you additionnal field options :
  * <ul>
  * 	<li>optiontitle : The option title</li>

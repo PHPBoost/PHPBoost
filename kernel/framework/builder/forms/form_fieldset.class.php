@@ -77,8 +77,25 @@ class FormFieldset extends FormBuilder
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
+	/**
+	 * @param string $fieldset_title The fieldset title
+	 */
 	function set_fieldset_title($fieldset_title) { $this->fieldset_title = $fieldset_title; }
-	function get_fieldse_title() { return $this->fieldset_title; }
+	
+	/**
+	 * @param $fieldset_display_required
+	 */
+	function set_fieldset_display_required($fieldset_display_required) { $this->fieldset_display_required = $fieldset_display_required; }
+	
+	/**
+	 * @return string The fieldset title
+	 */
+	function get_fieldset_title() { return $this->fieldset_title; }
+	
+	/**
+	 * @return boolean True if the fieldset has to display a warning for required fields.
+	 */
+	function get_fieldset_display_required() { return $this->fieldset_display_required; }
 	
 	var $fieldset_title = '';
 	var $fieldset_fields = '';
