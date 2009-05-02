@@ -30,11 +30,6 @@ import('builder/forms/field_input_checkbox_option');
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage checkbox input fields.
- * It provides you additionnal field options :
- * <ul>
- * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify if the option has to be checked.</li>
- * </ul>
  * @package builder
  */
 class FormInputCheckbox extends FormField

@@ -28,7 +28,7 @@ import('builder/forms/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select fields.
+ * @desc This class manage select field options.
  * @package builder
  */
 class FormSelectOption extends FormField

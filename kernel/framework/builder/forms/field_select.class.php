@@ -29,7 +29,11 @@ import('builder/forms/field_select_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select fields.
+ * @desc This class manage select fields. 
+ * It provides you additionnal field options :
+ * <ul>
+ * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
+ * </ul>
  * @package builder
  */
 class FormSelect extends FormField
