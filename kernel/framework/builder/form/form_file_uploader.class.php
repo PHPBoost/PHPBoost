@@ -36,9 +36,9 @@ import('builder/form/form_field');
  * @package builder
  * @subpackage form
  */
-class FormInputFile extends FormField
+class FormFileUploader extends FormField
 {
-	function FormInputFile($fieldId, $field_options)
+	function FormFileUploader($fieldId, $field_options)
 	{
 		parent::FormField($fieldId, $field_options);
 		
