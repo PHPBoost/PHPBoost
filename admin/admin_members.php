@@ -92,7 +92,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			$user_aprob = retrieve(POST, 'user_aprob', 0);  
 			
 			//Informations.
-			$user_show_mail = !empty($_POST['user_show_mail']) ? false : true;
+			$user_show_mail = !empty($_POST['user_show_mail']) ? 0 : 1;
 			$user_lang = retrieve(POST, 'user_lang', '');
 			$user_theme = retrieve(POST, 'user_theme', '');
 			$user_editor = retrieve(POST, 'user_editor', '');
@@ -216,7 +216,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 					$Cache->Generate_file('stats');
 				}
 				
-                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = '" . $user_show_mail . "', user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
+                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . $login . "', level = '" . $MEMBER_LEVEL . "', user_lang = '" . $user_lang . "', user_theme = '" . $user_theme . "', user_mail = '" . $user_mail . "', user_show_mail = " . $user_show_mail . ", user_editor = '" . $user_editor . "', user_timezone = '" . $user_timezone . "', user_local = '" . $user_local . "', " . $user_avatar . "user_msn = '" . $user_msn . "', user_yahoo = '" . $user_yahoo . "', user_web = '" . $user_web . "', user_occupation = '" . $user_occupation . "', user_hobbies = '" . $user_hobbies . "', user_desc = '" . $user_desc . "', user_sex = '" . $user_sex . "', user_born = '" . $user_born . "', user_sign = '" . $user_sign . "', user_warning = '" . $user_warning . "', user_readonly = '" . $user_readonly . "', user_ban = '" . $user_ban . "', user_aprob = '" . $user_aprob . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
 				
                 //Mise à jour de la session si l'utilisateur change de niveau pour lui donner immédiatement les droits
                 if ($member_infos['level'] != $MEMBER_LEVEL)
