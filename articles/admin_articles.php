@@ -327,7 +327,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_UNTIL' => $LANG['until'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
