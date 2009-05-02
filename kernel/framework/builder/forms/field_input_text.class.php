@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -36,11 +36,11 @@ import('builder/forms/form_fields');
  * </ul>
  * @package builder
  */
-class FormInputText extends FormFields
+class FormInputText extends FormField
 {
 	function FormInputText($fieldId, $field_options)
 	{
-		parent::FormFields($fieldId, $field_options);
+		parent::FormField($fieldId, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -62,7 +62,7 @@ class FormInputText extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/field.tpl');
 			
 		$field = '<input type="text" ';
 		$field .= !empty($this->field_size) ? 'size="' . $this->field_size . '" ' : '';
@@ -77,7 +77,7 @@ class FormInputText extends FormFields
 		$Template->assign_vars(array(
 			'ID' => $this->field_id,
 			'FIELD' => $field,
-			'L_FIELD_NAME' => $this->field_title,
+			'L_FIELD_TITLE' => $this->field_title,
 			'L_EXPLAIN' => $this->field_sub_title,
 			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	

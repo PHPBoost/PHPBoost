@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_builder');
 
 class FormFieldset extends FormBuilder
 {
@@ -41,26 +41,12 @@ class FormFieldset extends FormBuilder
 	
 	/**
 	 * @desc Store fields in the fieldset.
-	 * @param $field_name
-	 * @param $fieldType
-	 * @param $arrayOptions
-	 * @return unknown_type
+	 * @param FormField $form_field
 	 */
-	function add_field($object)
+	function add_field($form_field)
 	{
-		$field_name = $object->field_id;
-		if ($object->has_option) //On vérifie si l'objet peut prendre des options.
-		{
-			if (isset($this->fieldset_fields[$field_name]))
-				$this->fieldset_fields[$field_name]->add_option($object);
-			else
-			{
-				$this->fieldset_fields[$field_name] = $object;
-				$this->fieldset_fields[$field_name]->add_option($this->fieldset_fields[$field_name]);
-			}
-		}
-		else
-			$this->fieldset_fields[$field_name] = $object;
+		//TODO Ajouter une alerte si field déjà existant.
+		$this->fieldset_fields[$form_field->field_id] = $form_field;
 	}
 
 	/**
@@ -76,6 +62,7 @@ class FormFieldset extends FormBuilder
 			$Template = new Template('framework/builder/forms/fieldset.tpl');
 			
 		$Template->assign_vars(array(
+			'C_DISPLAY_WARNING_REQUIRED_FIELDS' => $this->fieldset_display_required,
 			'L_FORMTITLE' => $this->fieldset_title,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 		));	
@@ -95,6 +82,7 @@ class FormFieldset extends FormBuilder
 	
 	var $fieldset_title = '';
 	var $fieldset_fields = '';
+	var $fieldset_display_required = false;
 }
 
 ?>

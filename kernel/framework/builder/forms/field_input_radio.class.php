@@ -24,7 +24,8 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_field');
+import('builder/forms/field_input_radio_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -36,39 +37,33 @@ import('builder/forms/form_fields');
  * </ul>
  * @package builder
  */
-class FormInputRadio extends FormFields
+class FormInputRadio extends FormField
 {
-	function FormInputRadio($fieldId, $field_options)
+	/**
+	 * @desc constructor It takes a variable number of parameters. The first two are required. 
+	 * @param string $fieldId Name of the field.
+	 * @param array $fieldOptions Option for the field.
+	 * @param FormInputRadioOption Pass variable number of FormInputRadioOption object to add in the FormInputRadio.
+	 */
+	function FormInputRadio()
 	{
-		parent::FormFields($fieldId, $field_options);		
-		$this->has_option = true;
+		$fieldId = func_get_arg(0);
+		$field_options = func_get_arg(1);
+
+		parent::FormField($fieldId, $field_options);
 		
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'optiontitle' :
-					$this->field_option_title = $value;
-				break;
-				case 'checked' :
-					$this->field_checked = $value;
-				break;
-			}
-		}
+		$nbr_arg = func_num_args() - 1;		
+		for ($i = 2; $i <= $nbr_arg; $i++)
+			$this->field_options[] = func_get_arg($i);
 	}
 	
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param object $option The new option. 
+	 * @param FormInputRadioOption option The new option. 
 	 */
 	function add_option(&$option)
 	{
-		$this->field_options .= '<label><input type="radio" ';
-		$this->field_options .= !empty($option->field_name) ? 'name="' . $option->field_name . '" ' : '';
-		$this->field_options .= !empty($option->field_value) ? 'value="' . $option->field_value . '" ' : '';
-		$this->field_options .= !empty($option->field_checked) ? 'checked="checked" ' : '';
-		$this->field_options .= '/> ' . $option->field_option_title . '</label><br />' . "\n";
+		$this->field_options[] = $option;
 	}
 	
 	/**
@@ -76,22 +71,28 @@ class FormInputRadio extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/field_box.tpl');
 			
 		$Template->assign_vars(array(
 			'ID' => $this->field_id,
 			'FIELD' => $this->field_options,
-			'L_FIELD_NAME' => $this->field_title,
+			'L_FIELD_TITLE' => $this->field_title,
 			'L_EXPLAIN' => $this->field_sub_title,
 			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
+		foreach($this->field_options as $Option)
+		{
+			$Option->field_name = $this->field_name; //Set the same field name for each option.
+			$Template->assign_block_vars('field_options', array(
+				'OPTION' => $Option->display(),
+			));	
+		}
+		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $field_options = '';
-	var $field_checked = '';
-	var $field_option_title = '';
+	var $field_options = array();
 }
 
 ?>

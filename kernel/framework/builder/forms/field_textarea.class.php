@@ -24,18 +24,18 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage textarea fields.
  * @package builder
  */
-class FormTextarea extends FormFields
+class FormTextarea extends FormField
 {
 	function FormTextarea($fieldId, $fieldOptions)
 	{
-		parent::FormFields($fieldId, $fieldOptions);
+		parent::FormField($fieldId, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -62,7 +62,7 @@ class FormTextarea extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/fields_extended.tpl');
+		$Template = new Template('framework/builder/forms/field_extended.tpl');
 			
 		$field = '<textarea type="text" ';
 		$field .= !empty($this->field_rows) ? 'rows="' . $this->field_rows . '" ' : '';
@@ -77,7 +77,7 @@ class FormTextarea extends FormFields
 			'ID' => $this->field_id,
 			'FIELD' => $field,
 			'KERNEL_EDITOR' => $this->field_editor ? display_editor($this->field_id, $this->field_forbidden_tags) : '',
-			'L_FIELD_NAME' => $this->field_title,
+			'L_FIELD_TITLE' => $this->field_title,
 			'L_EXPLAIN' => $this->field_sub_title,
 			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	

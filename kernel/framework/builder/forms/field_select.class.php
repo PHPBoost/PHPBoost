@@ -24,44 +24,45 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_field');
+import('builder/forms/field_select_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage select fields.
  * @package builder
  */
-class FormSelect extends FormFields
+class FormSelect extends FormField
 {
-	function FormSelect($field_name, $field_options)
+	function FormSelect()
 	{
-		parent::FormFields($field_name, $field_options);
-		$this->has_option = true;
-		
+		$fieldId = func_get_arg(0);
+		$field_options = func_get_arg(1);
+
+		parent::FormField($fieldId, $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'optiontitle' :
-					$this->field_option_title = $value;
-				break;
-				case 'selected' :
-					$this->field_selected = $value;
-				break;
 				case 'multiple' :
 					$this->field_multiple = $value;
 				break;
 			}
 		}
+		
+		$nbr_arg = func_num_args() - 1;		
+		for ($i = 2; $i <= $nbr_arg; $i++)
+			$this->field_options[] = func_get_arg($i);
 	}
 	
+	/**
+	 * @desc Add an option for the radio field.
+	 * @param FormInputRadioOption option The new option. 
+	 */
 	function add_option(&$option)
 	{
-		$this->field_options .= '<option ';
-		$this->field_options .= !empty($option->field_value) ? 'value="' . $option->field_value . '" ' : '';
-		$this->field_options .= !empty($option->field_selected) ? 'selected="selected" ' : '';
-		$this->field_options .= '> ' . $option->field_option_title . '</option>' . "\n";
+		$this->field_options[] = $option;
 	}
 	
 	/**
@@ -69,7 +70,7 @@ class FormSelect extends FormFields
 	 */
 	function display()
 	{
-		$Template = new Template('framework/builder/forms/fields.tpl');
+		$Template = new Template('framework/builder/forms/field_select.tpl');
 		
 		if ($this->field_multiple)
 			$field = '<select name="' . $this->field_name . '[]" multiple="multiple">' . $this->field_options . '</select>';
@@ -78,19 +79,26 @@ class FormSelect extends FormFields
 			
 		$Template->assign_vars(array(
 			'ID' => $this->field_id,
-			'FIELD' => $field,
-			'L_FIELD_NAME' => $this->field_title,
+			'C_SELECT_MULTIPLE' => $this->field_multiple,
+			'L_FIELD_NAME' => $this->field_name,
+			'L_FIELD_TITLE' => $this->field_title,
 			'L_EXPLAIN' => $this->field_sub_title,
 			'L_REQUIRE' => $this->field_required ? '* ' : ''
 		));	
 		
+		foreach($this->field_options as $Option)
+		{
+			$Option->field_name = $this->field_name; //Set the same field name for each option.
+			$Template->assign_block_vars('field_options', array(
+				'OPTION' => $Option->display(),
+			));	
+		}
+		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $field_options = '';
-	var $field_selected = '';
-	var $field_option_title = '';
-	var $field_multiple = '';
+	var $field_options = array();
+	var $field_multiple = false;
 }
 
 ?>
