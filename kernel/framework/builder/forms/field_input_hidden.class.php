@@ -24,18 +24,18 @@
  *
 ###################################################*/
 
-import('builder/forms/form_fields');
+import('builder/forms/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage hidden input fields.
  * @package builder
  */
-class FormInputHidden extends FormFields
+class FormInputHidden extends FormField
 {
 	function FormInputHidden($fieldId, $field_options)
 	{
-		parent::FormFields($fieldId, $field_options);
+		parent::FormField($fieldId, $field_options);
 	}
 	
 	function display()

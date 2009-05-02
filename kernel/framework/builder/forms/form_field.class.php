@@ -39,14 +39,14 @@
  * </ul>
  * @package builder
  */
-class FormFields
+class FormField
 {
 	/**
-	 * @desc Abstract class
+	 * @desc constructor
 	 * @param string $fieldId Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	function FormFields($fieldId, $fieldOptions)
+	function FormField($fieldId, $fieldOptions)
 	{
 		$this->field_name = $fieldId;
 		$this->field_id = $fieldId;
@@ -81,24 +81,14 @@ class FormFields
 		}
 	}
 	
-	/**
-	 * @desc Check if the field can accept option.
-	 * @return boolean true if field accept options, false otherwise.
-	 */
-	 function has_option()
-	{
-		return $this->has_option;
-	}
-	
 	var $field_title = '';
 	var $field_sub_title = '';
 	var $field_name = '';
 	var $field_value = '';
 	var $field_id = '';
 	var $field_css_class = '';
-	var $field_required = '';
+	var $field_required = false;
 	var $field_on_blur = '';
-	var $has_option = '';
 }
 
 ?>
