@@ -24,7 +24,7 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
+import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -35,10 +35,11 @@ import('builder/forms/form_field');
  * 	<li>checked : Specify if the option has to be checked.</li>
  * </ul>
  * @package builder
+ * @subpackage form
  */
-class FormInputRadioOption extends FormField
+class FormRadioChoiceOption extends FormField
 {
-	function FormInputRadioOption($field_options)
+	function FormRadioChoiceOption($field_options)
 	{
 		parent::FormField('', $field_options);		
 		

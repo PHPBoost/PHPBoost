@@ -24,8 +24,8 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
-import('builder/forms/field_select_option');
+import('builder/form/form_field');
+import('builder/form/field_select_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -35,6 +35,7 @@ import('builder/forms/field_select_option');
  * 	<li>multiple : Type of select field, mutiple allow you to check several options.</li>
  * </ul>
  * @package builder
+ * @subpackage form
  */
 class FormSelect extends FormField
 {
@@ -62,7 +63,7 @@ class FormSelect extends FormField
 	
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormInputRadioOption option The new option. 
+	 * @param FormRadioChoiceOption option The new option. 
 	 */
 	function add_option(&$option)
 	{

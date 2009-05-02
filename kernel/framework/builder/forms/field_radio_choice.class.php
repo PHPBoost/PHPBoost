@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_checkbox.class.php
+ *                             field_input_radio.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,17 +24,24 @@
  *
 ###################################################*/
 
-import('builder/forms/form_field');
-import('builder/forms/field_input_checkbox_option');
+import('builder/form/form_field');
+import('builder/form/field_radio_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage checkbox input fields.
+ * @desc This class manage radio input fields.
  * @package builder
+ * @subpackage form
  */
-class FormInputCheckbox extends FormField
+class FormRadioChoice extends FormField
 {
-	function FormInputCheckbox()
+	/**
+	 * @desc constructor It takes a variable number of parameters. The first two are required. 
+	 * @param string $fieldId Name of the field.
+	 * @param array $fieldOptions Option for the field.
+	 * @param FormRadioChoiceOption Pass variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
+	 */
+	function FormRadioChoice()
 	{
 		$fieldId = func_get_arg(0);
 		$field_options = func_get_arg(1);
@@ -48,7 +55,7 @@ class FormInputCheckbox extends FormField
 	
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormInputRadioOption option The new option. 
+	 * @param FormRadioChoiceOption option The new option. 
 	 */
 	function add_option(&$option)
 	{
@@ -56,7 +63,7 @@ class FormInputCheckbox extends FormField
 	}
 	
 	/**
-	 * @return string The html code for the checkbox input.
+	 * @return string The html code for the radio input.
 	 */
 	function display()
 	{

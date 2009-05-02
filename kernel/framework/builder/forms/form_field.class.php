@@ -38,6 +38,7 @@
  * 	<li>onblur : Action performed when cursor is clicked outside the field area. (javascript)</li>
  * </ul>
  * @package builder
+ * @subpackage form
  */
 class FormField
 {

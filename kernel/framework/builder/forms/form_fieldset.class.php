@@ -24,8 +24,16 @@
  *
 ###################################################*/
 
-import('builder/forms/form_builder');
+import('builder/form/form_builder');
 
+/**
+ * @desc
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @abstract
+ * @package builder
+ * @subpackage form
+ *
+ */
 class FormFieldset extends FormBuilder
 {
 	/**
