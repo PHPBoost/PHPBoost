@@ -140,11 +140,11 @@ class CategoriesManager
 		{
 			//Whe add it at the end of the parent category
 			if ($order <= 0 || $order > $max_order)
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible, description, auth) VALUES ('" . $name . "', '" . ($max_order + 1) . "', '" . $id_parent . "', '" . $visible . "', '', '')", __LINE__, __FILE__);
 			else
 			{
 				$Sql->query_inject("UPDATE " . PREFIX . $this->table . " SET c_order = c_order + 1 WHERE id_parent = '" . $id_parent . "' AND c_order >= '" . $order . "'", __LINE__, __FILE__);
-				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . $this->table . " (name, c_order, id_parent, visible, description, auth) VALUES ('" . $name . "', '" . $order . "', '" . $id_parent . "', '" . $visible . "', '', '')", __LINE__, __FILE__);
 			}
 			return $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . $this->table);
 		}

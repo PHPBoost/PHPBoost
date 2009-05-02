@@ -239,7 +239,7 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 	{
 		if ($num_title == 0) //Si aucun article existe
 		{
-			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, redirect) VALUES ('" . $redirection_title . "', '" . url_encode_rewrite($redirection_title) . "', '" . $create_redirection . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, redirect, undefined_status, auth) VALUES ('" . $redirection_title . "', '" . url_encode_rewrite($redirection_title) . "', '" . $create_redirection . "', '', '')", __LINE__, __FILE__);
 			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($redirection_title), url_encode_rewrite($redirection_title), '&'));
 		}
 		else
