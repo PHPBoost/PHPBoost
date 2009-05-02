@@ -128,7 +128,7 @@ if (!empty($contents)) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat, undefined_status, auth) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "', '', '')", __LINE__, __FILE__);
 				//On récupère le numéro de l'article créé
 				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu

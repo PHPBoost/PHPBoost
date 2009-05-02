@@ -61,10 +61,10 @@
 					# END cat.no_sub_article #
 					
 				# END cat #
-				<div class="spacer"></div>
+				<div class="spacer" style="margin-top:30px;">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom" style="text-align:center;">{HITS}</div>
+			<div class="module_bottom" style="text-align:center;margin-top:8px;margin-bottom:10px;">{HITS}</div>
 		</div>
 		

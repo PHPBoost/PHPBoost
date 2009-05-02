@@ -9,7 +9,7 @@
 				<tr>
 					<td colspan="3">
 						<span id="errorh"></span>
-						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
+						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;margin-top:15px;margin-bottom:15px;">
 							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
 						</div>
 					</td>
