@@ -119,7 +119,7 @@ else
 	
 	//Type de défilemennt
 	$scroll_types = '';
-	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll']);
+	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll'], $LANG['no_scroll']);
 	foreach ($array_scroll as $key => $name)
 	{
 		$selected = ($CONFIG_GALLERY['scroll_type'] == $key) ? ' selected="selected"' : '';

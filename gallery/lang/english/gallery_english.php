@@ -127,6 +127,7 @@ $LANG['nbr_pics_mini'] = 'Number of thumbnails';
 $LANG['speed_mini_pics'] = 'Scrolling speed';
 $LANG['speed_mini_pics_explain'] = 'Max speed: 10';
 $LANG['scrool_type'] = 'Scrolling type';
+$LANG['no_scroll'] = 'No scrolling';
 $LANG['static_scroll'] = 'Static scrolling';
 $LANG['vertical_dynamic_scroll'] = 'Vertical dynamic scrolling';
 $LANG['horizontal_dynamic_scroll'] = 'Horizontal dynamic scrolling';

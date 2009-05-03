@@ -210,7 +210,7 @@ var Marquee = (function(){
 	_Marquee.fadeIn = { name: "fade", style: "opacity: 1", duration: .4 };
 	_Marquee.fadeOut = { name: "fade", style: "opacity: 0", duration: .6 };
 	_Marquee.slideIn = { name: "slide", style: "left: 0px", duration: .6 };
-	_Marquee.slideOut = { name: "slide", style: "left: -100px", duration: .4 };
+	_Marquee.slideOut = { name: "slide", style: "left: 0px", duration: .4 };
 	_Marquee.blindIn = { name: "blind", style: "top: 0px", duration: .4 };
 	_Marquee.blindOut = { name: "blind", style: "top: -20px", duration: .3 };
 
