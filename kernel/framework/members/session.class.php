@@ -353,6 +353,8 @@ class Session
 	//Récupère les paramtères de la sessions.
 	function set_module_paramaters($paramaters)
 	{
+		global $Sql;
+		
 		$modules_parameters = unserialize($this->data['modules_parameters']);
 		$modules_parameters[MODULE_NAME] = $paramaters;
 		
@@ -360,10 +362,11 @@ class Session
 	}
 	
 	//Récupère les paramtères de la sessions.
-	function get_module_paramaters()
+	function get_module_paramaters($module = NULL)
 	{
+		if (empty($module)) $module = MODULE_NAME;
 		$array = unserialize($this->data['modules_parameters']);
-		return isset($array[MODULE_NAME]) ? $array[MODULE_NAME] : '';
+		return isset($array[$module]) ? $array[$module] : '';
 	}
 	
 	## Private Méthods ##
