@@ -350,7 +350,10 @@ class Session
 		Session::garbage_collector();
 	}
 	
-	//Récupère les paramtères de la sessions.
+	/**
+	*  @desc Save module's parameters into session
+	* @param mixed module's parameters
+	*/
 	function set_module_paramaters($paramaters)
 	{
 		global $Sql;
@@ -361,7 +364,11 @@ class Session
 		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . serialize($modules_parameters) . "'", __LINE__, __FILE__);
 	}
 	
-	//Récupère les paramtères de la sessions.
+	/**
+	*  @desc Get module's parametres from session
+	* @param string module  module name (if null then current module)
+	* @return array array of parameters
+	*/
 	function get_module_paramaters($module = NULL)
 	{
 		if (empty($module)) $module = MODULE_NAME;
