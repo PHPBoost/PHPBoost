@@ -107,3 +107,8 @@ html>body .error_unknow,html>body .error_success,html>body .error_notice,html>bo
     height:auto;
     min-height:35px;
 }
+
+.error_handler_position {
+	margin-top:5px;
+	margin-bottom:5px;
+}

@@ -223,7 +223,7 @@ else //Affichage.
 	$Template->set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
-		
+	
 	//Pseudo du membre connecté.
 	if ($User->get_attribute('user_id') !== -1)
 		$Template->assign_vars(array(
