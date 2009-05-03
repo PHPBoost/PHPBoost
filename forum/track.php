@@ -100,19 +100,21 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		$type = array('2' => $LANG['forum_announce'] . ':', '1' => $LANG['forum_postit'] . ':', '0' => '');
 		
 		//Vérifications des topics Lu/non Lus.
-		$img_announce = 'announce';
+		$img_announce = 'announce';		
 		$new_msg = false;
-		if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
+		if (!$is_guest) //Non visible aux invités.
 		{
-			$img_announce =  'new_' . $img_announce;
-			$new_msg = true;
+			$new_msg = false;
+			if ($row['last_view_id'] != $row['last_msg_id'] && $row['last_timestamp'] >= $max_time_msg) //Nouveau message (non lu).
+			{	
+				$img_announce =  'new_' . $img_announce; //Image affiché aux visiteurs.
+				$new_msg = true;
+			}
 		}
-		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
-			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
-
+		
 		//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
 		//Puis calcul de la page du last_msg_id ou du last_view_id.
 		if (!empty($row['last_view_id']))
@@ -139,11 +141,12 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 		$new_ancre = ($new_msg === true && $User->get_attribute('user_id') !== -1) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->assign_block_vars('topics', array(
+			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
 			'ID' => $row['id'],
 			'INCR' => $nbr_topics_compt,
 			'CHECKED_PM' => ($row['pm'] == 1) ? 'checked="checked"' : '',
 			'CHECKED_MAIL' => ($row['mail'] == 1) ? 'checked="checked"' : '',
-			'ANNOUNCE' => $img_announce,
+			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
 			'POLL' => !empty($row['question']) ? '<img src="' . $Template->get_module_data_path('forum') . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
 			'TRACK' => '<img src="' . $Template->get_module_data_path('forum') . '/images/track_mini.png" class="valign_middle" alt="" />',
