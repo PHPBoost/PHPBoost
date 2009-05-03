@@ -42,7 +42,7 @@ class FormCheckboxOption extends FormField
 	function FormCheckboxOption($field_options)
 	{
 		parent::FormField('', $field_options);
-		
+
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -54,6 +54,8 @@ class FormCheckboxOption extends FormField
 				case 'checked' :
 					$this->option_checked = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s in field option type ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}

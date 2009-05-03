@@ -34,7 +34,7 @@ import('builder/form/form_builder');
  * @subpackage form
  *
  */
-class FormFieldset extends FormBuilder
+class FormFieldset
 {
 	/**
 	 * @desc constructor
@@ -53,8 +53,10 @@ class FormFieldset extends FormBuilder
 	 */
 	function add_field($form_field)
 	{
-		//TODO Ajouter une alerte si field déjà existant.
-		$this->fieldset_fields[$form_field->field_id] = $form_field;
+		if (isset($this->fieldset_fields[$form_field->field_id]))
+			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->field_id), E_USER_WARNING);
+		else
+			$this->fieldset_fields[$form_field->field_id] = $form_field;
 	}
 
 	/**
@@ -64,7 +66,7 @@ class FormFieldset extends FormBuilder
 	 */
 	function display($Template = false)
 	{
-		global $LANG;
+		global $LANG, $Errorh;
 		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/builder/forms/fieldset.tpl');
@@ -75,8 +77,24 @@ class FormFieldset extends FormBuilder
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 		));	
 		
+		//On liste les éventuelles erreurs du fieldset.
+		foreach($this->fieldset_errors as $error) 
+		{
+			$Template->assign_block_vars('errors', array(
+				'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
+			));	
+		}
+		
+		//On affiche les champs		
 		foreach($this->fieldset_fields as $Field)
 		{
+			foreach($Field->get_errors() as $error) //On liste les éventuelles erreurs du champs.
+			{
+				$Template->assign_block_vars('errors', array(
+					'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
+				));	
+			}
+			
 			$Template->assign_block_vars('fields', array(
 				'FIELD' => $Field->display(),
 			));	
@@ -86,27 +104,49 @@ class FormFieldset extends FormBuilder
 	}
 
 	/**
-	 * @param string $fieldset_title The fieldset title
-	 */
-	function set_fieldset_title($fieldset_title) { $this->fieldset_title = $fieldset_title; }
+	 * @desc Store all erros in the field construct process.
+	 * @param string $errstr  Error message description
+	 * @param int $errno Error type, use php constants.
+	 */	
+	function throw_error($errstr, $errno)
+	{
+		$this->fieldset_errors[] = array('errstr' => $errstr, 'errno' => $errno);
+	}
 	
 	/**
-	 * @param $fieldset_display_required
+	 * @desc Display a preview button for the specified field.
+	 * @param string $fieldset_title The fieldset title
 	 */
-	function set_fieldset_display_required($fieldset_display_required) { $this->fieldset_display_required = $fieldset_display_required; }
+	function display_preview_button($field_identifier_preview) { $this->field_identifier_preview = $field_identifier_preview; }
+	
+	/**
+	 * @param string $fieldset_title The fieldset title
+	 */
+	function set_title($fieldset_title) { $this->fieldset_title = $fieldset_title; }
+	
+	/**
+	 * @param boolean $fieldset_display_required
+	 */
+	function set_display_required($fieldset_display_required) { $this->fieldset_display_required = $fieldset_display_required; }
 	
 	/**
 	 * @return string The fieldset title
 	 */
-	function get_fieldset_title() { return $this->fieldset_title; }
+	function get_title() { return $this->fieldset_title; }
+	
+	/**
+	 * @return array All fields in the fieldset.
+	 */
+	function get_fields() { return $this->fieldset_fields; }
 	
 	/**
 	 * @return boolean True if the fieldset has to display a warning for required fields.
 	 */
-	function get_fieldset_display_required() { return $this->fieldset_display_required; }
+	function get_display_required() { return $this->fieldset_display_required; }
 	
 	var $fieldset_title = '';
-	var $fieldset_fields = '';
+	var $fieldset_fields = array();
+	var $fieldset_errors = array();
 	var $fieldset_display_required = false;
 }
 

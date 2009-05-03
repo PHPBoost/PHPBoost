@@ -50,6 +50,8 @@ class FormFileUploader extends FormField
 				case 'size' :
 					$this->field_size = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}

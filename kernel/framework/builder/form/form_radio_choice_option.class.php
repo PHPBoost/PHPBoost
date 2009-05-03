@@ -54,6 +54,8 @@ class FormRadioChoiceOption extends FormField
 				case 'checked' :
 					$this->option_checked = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
