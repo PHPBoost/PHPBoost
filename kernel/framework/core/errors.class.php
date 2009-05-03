@@ -228,15 +228,78 @@ class Errors
 				return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
-		return false;
 	}
 	
+	/**
+	* @desc Exception handler for developper, return the error.
+	* @param string $errstr The text which explain the error.
+	* @param int $errno The error type (use the PHP errors constants).
+	* @param string $errline The error line (use the constant __LINE__).
+	* @param string $errfile The file where the error is located (use the constant __FILE__).
+	* @param boolean $archive (optional) Backup the error in the error.log file
+	* @return string The formated error.
+	*/
+	function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
+	{
+		global $LANG;
+		
+		//Parsage du bloc seulement si une erreur à afficher.
+		if (!empty($errstr))
+		{
+			$Template = new Template('framework/errors.tpl');
+			switch ($errno)
+			{
+				//Message de succès, étrange pour une classe d'erreur non?
+				case E_USER_SUCCESS:
+    				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'success',
+    					'ERRORH_CLASS' => 'error_success',
+    					'L_ERRORH' => $errstr
+    				));
+				break;
+				//Notice utilisateur.
+				case E_USER_NOTICE:
+				case E_NOTICE:
+    				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'notice',
+    					'ERRORH_CLASS' => 'error_notice',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
+				//Warning utilisateur.
+				case E_USER_WARNING:
+				case E_WARNING:
+    				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'important',
+    					'ERRORH_CLASS' => 'error_warning',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
+			}
+			return $Template->parse(TEMPLATE_STRING_MODE);
+			
+			//Enregistrement de l'erreur si demandé.
+			if ($archive)
+				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+		}
+		return '';
+	}
+	
+	/**
+	* @desc Set a personnal template for the handler methods.
+	*/
 	function set_template(&$template)
 	{
 		$this->template = &$template;
 		$this->personal_tpl = true;
 	}
 	
+	/**
+	* @desc Set default template for the handler methods.
+	*/
 	function set_default_template()
 	{
 		global $Template;

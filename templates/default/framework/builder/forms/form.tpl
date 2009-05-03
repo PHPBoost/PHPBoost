@@ -1,4 +1,19 @@
-<form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="{FORMONSUBMIT}" class="{FORMCLASS}">
+<script type="text/javascript">
+<!--
+	function check_generated_form_{L_FORMNAME}(){
+		# START check_form #
+		if (document.getElementById('{check_form.FIELD_ID}').value == "") {
+			alert("{check_form.FIELD_REQUIRED_ALERT}");
+			return false;
+		}
+		# END check_form #
+		
+		return true;
+	}
+-->
+</script>
+
+<form action="{U_FORMACTION}" name="{L_FORMNAME}" method="post" onsubmit="return check_generated_form_{L_FORMNAME}();" class="{FORMCLASS}">
 	# START fieldsets #
 		{fieldsets.FIELDSET}
 	# END fieldsets #
