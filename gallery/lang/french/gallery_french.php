@@ -127,6 +127,7 @@ $LANG['nbr_pics_mini'] = 'Nombre de miniatures';
 $LANG['speed_mini_pics'] = 'Vitesse du défilement';
 $LANG['speed_mini_pics_explain'] = 'Vitesse max: 10';
 $LANG['scrool_type'] = 'Type de défilement';
+$LANG['no_scroll'] = 'Aucun défilement';
 $LANG['static_scroll'] = 'Défilement statique';
 $LANG['vertical_dynamic_scroll'] = 'Défilement dynamique vertical';
 $LANG['horizontal_dynamic_scroll'] = 'Défilement dynamique horizontal';

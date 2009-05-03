@@ -92,7 +92,7 @@ function gallery_mini($position, $block)
     	
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
-    		case 0:
+			case 0:
         	$tpl->assign_vars(array(
     			'C_FADE' => true
     		));
@@ -107,6 +107,11 @@ function gallery_mini($position, $block)
     			'C_HORIZONTAL_SCROLL' => true
     		));
     		break;
+			case 3:
+			$tpl->assign_vars(array(
+    			'C_STATIC' => true
+    		));
+			break;
     	}
     	
     	include_once(PATH_TO_ROOT . '/gallery/gallery.class.php');
@@ -136,6 +141,9 @@ function gallery_mini($position, $block)
     		$sum_height += $row['height'] + 5;
     		$sum_width += $row['width'] + 5;
     		$i++;
+			
+			if ($CONFIG_GALLERY['scroll_type'] == 3)
+				break;
     	}
     }
    
@@ -146,7 +154,7 @@ function gallery_mini($position, $block)
     	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],
     	'SUM_HEIGHT' => $sum_height + 10,
     	'HIDDEN_HEIGHT' => $CONFIG_GALLERY['height'] + 10,
-    	'WIDTH_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 2) ? ($CONFIG_GALLERY['width'] * (($CONFIG_GALLERY['nbr_pics_mini'] <= 3) ? $CONFIG_GALLERY['nbr_pics_mini'] : 3)) : $CONFIG_GALLERY['width'],
+    	'WIDTH_DIV' => $CONFIG_GALLERY['width'],
     	'SUM_WIDTH' => $sum_width + 30,
     	'HIDDEN_WIDTH' => ($CONFIG_GALLERY['width'] * 3) + 30,
     	'SCROLL_DELAY' => 0.2 * (11 - $CONFIG_GALLERY['speed_mini_pics']),
