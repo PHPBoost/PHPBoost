@@ -32,7 +32,7 @@ require_once('../kernel/header.php');
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 
-if (!empty($idart) && isset($_GET['cat']) )
+if (!empty($idart) && isset($_GET['cat']))
 {
 	//Niveau d'autorisation de la catégorie
 	if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
@@ -57,20 +57,16 @@ if (!empty($idart) && isset($_GET['cat']) )
 		$articles['contents'] = ' ' . $articles['contents'];
 		
 	//Pagination des articles.
-	$array_contents = preg_split('`\[page\][^[]+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-
+	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 	//Récupération de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
 	$page_list = '<option value="1">' . $LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
-	$i = 2;
+	$i = 1;
 	foreach ($array_page[1] as $page_name)
 	{
-		if ($page_name != '&nbsp;')
-		{
-			$selected = ($i == $page) ? 'selected="selected"' : '';
-			$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
-		}
+		$selected = ($i == $page) ? 'selected="selected"' : '';
+		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
 	}
 	
 	//Nombre de pages
