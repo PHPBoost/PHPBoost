@@ -33,6 +33,7 @@ import('builder/form/form_field');
  * <ul>
  * 	<li>size : The maximum size for the field</li>
  * 	<li>maxlength : The maximum length for the field</li>
+ * 	<li>required_alert : Text displayed if field is empty (javscript only)</li>
  * </ul>
  * @package builder
  * @subpackage form
@@ -54,6 +55,8 @@ class FormTextEdit extends FormField
 				case 'maxlength' :
 					$this->field_maxlength = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}

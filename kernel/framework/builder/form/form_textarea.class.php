@@ -54,6 +54,8 @@ class FormTextarea extends FormField
 				case 'forbiddentags' :
 					$this->field_forbidden_tags = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}

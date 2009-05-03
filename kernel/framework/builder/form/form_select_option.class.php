@@ -49,6 +49,8 @@ class FormSelectOption extends FormField
 				case 'selected' :
 					$this->option_selected = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
@@ -59,8 +61,8 @@ class FormSelectOption extends FormField
 	function display()
 	{
 		$option = '<option ';
-		$option .= !empty($this->field_value) ? 'value="' . $this->field_value . '" ' : '';
-		$option .= (boolean)$this->option_selected ? 'selected="selected" ' : '';
+		$option .= !empty($this->field_value) ? 'value="' . $this->field_value . '"' : '';
+		$option .= (boolean)$this->option_selected ? ' selected="selected"' : '';
 		$option .= '> ' . $this->option_title . '</option>' . "\n";
 		
 		return $option;

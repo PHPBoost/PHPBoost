@@ -53,12 +53,18 @@ class FormSelect extends FormField
 				case 'multiple' :
 					$this->field_multiple = $value;
 				break;
+				default :
+					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 		
 		$nbr_arg = func_num_args() - 1;		
 		for ($i = 2; $i <= $nbr_arg; $i++)
-			$this->field_options[] = func_get_arg($i);
+		{
+			$option = func_get_arg($i);
+			$this->add_errors($option->get_errors());
+			$this->field_options[] = $option;
+		}
 	}
 	
 	/**

@@ -25,7 +25,7 @@
 ###################################################*/
 
 import('builder/form/form_field');
-import('builder/form/form_radio_option');
+import('builder/form/form_radio_choice_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -39,7 +39,7 @@ class FormRadioChoice extends FormField
 	 * @desc constructor It takes a variable number of parameters. The first two are required. 
 	 * @param string $fieldId Name of the field.
 	 * @param array $fieldOptions Option for the field.
-	 * @param FormRadioChoiceOption Pass variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
+	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
 	 */
 	function FormRadioChoice()
 	{
@@ -47,10 +47,16 @@ class FormRadioChoice extends FormField
 		$field_options = func_get_arg(1);
 
 		parent::FormField($fieldId, $field_options);
+		foreach($field_options as $attribute => $value)
+			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		
 		$nbr_arg = func_num_args() - 1;		
 		for ($i = 2; $i <= $nbr_arg; $i++)
-			$this->field_options[] = func_get_arg($i);
+		{
+			$option = func_get_arg($i);
+			$this->add_errors($option->get_errors());
+			$this->field_options[] = $option;
+		}
 	}
 	
 	/**
@@ -87,8 +93,8 @@ class FormRadioChoice extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	var $field_options = array();
+	
+	var $field_options = array(); //Array of FormRadioChoiceOption
 }
 
 ?>
