@@ -28,12 +28,11 @@
 import('content/editor/editor');
 
 /**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class provides an interface editor for contents.
  * @package content
  * @subpackage editor
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc
  */
-
 class TinyMCEEditor extends ContentEditor
 {
     function TinyMCEEditor()
@@ -41,7 +40,10 @@ class TinyMCEEditor extends ContentEditor
         parent::ContentEditor();
     }
 
-    //Affiche le formulaire
+  	/**
+	 * @desc Display the editor
+	 * @return string Formated editor.
+	 */
     function display()
     {
         global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS;

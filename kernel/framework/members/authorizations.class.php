@@ -76,10 +76,10 @@ class Authorizations
 	
 	/**
 	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
-	 * @param $bit_value
-	 * @param $idselect
-	 * @param $admin_auth_default
-	 * @return unknown_type
+	 * @param int $bit_value The bit emplacement in the authorization array.
+	 * @param $idselect Html id of the html select field of authorizations (in most case the same value as $bit_value).
+	 * @param $admin_auth_default Give authorization for the administrator by default.
+	 * @return Array with the authorization for the bit specified.
 	* @static
 	 */
 	function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
@@ -98,19 +98,18 @@ class Authorizations
 		return $array_auth_all;
 	}
 	
-	//Génération d'une liste à sélection multiple des rangs, groupes et membres
-    
 	/**
-	 * @param $auth_bit
-	 * @param $array_auth
-	 * @param $array_ranks_default
-	 * @param $idselect
-	 * @param $disabled
-	 * @param $disabled_advanced_auth
-	 * @return unknown_type
+	 * @desc Generate a multiple select field for the form which create authorization for ranks, groups and members.
+	 * @param int $auth_bit The bit emplacement used to set it.
+	 * @param array $array_auth Array of authorization, allow you to select value authorized for this bit.
+	 * @param array $array_ranks_default Array of ranks selected by default.
+	 * @param string $idselect Html id used for the select.
+	 * @param int $disabled Disabled all option for the select. Set to 1 for disable.
+	 * @param boolean $disabled_advanced_auth Disable advanced authorizations.
+	 * @return String The formated select.
 	* @static
 	 */
-	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = 0, $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
@@ -240,14 +239,13 @@ class Authorizations
         return $Template->parse(TEMPLATE_STRING_MODE);
     }
 	
-	//Fonction statique qui regarde les autorisations d'un individu, d'un groupe ou d'un rank
     /**
-	 * @desc
-	 * @param $type
-	 * @param $value
-	 * @param $array_auth
-	 * @param $bit
-	 * @return unknown_type
+	 * @desc Check authorizations for a member, a group or a rank
+	 * @param int $type Type of check, used RANK_TYPE for ranks, GROUP_TYPE for groups and USER_TYPE for users.
+	 * @param int $value Value int the authorization array to check.
+	 * @param array $array_auth Array of authorization.
+	 * @param int $bit Bit emplacement for the check
+	 * @return boolean True if authorized, false otherwise.
 	 * @static
 	 */
 	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
@@ -277,14 +275,13 @@ class Authorizations
 		}
 	}
 	
-	//Fusion de deux tableaux d'autorisations
-	// le premier est le parent, le deuxième, le fils qui hérite du parent
 	/**
-	 * @param $parent
-	 * @param $child
-	 * @param $auth_bit
-	 * @param $mode
-	 * @return unknown_type
+	 * @desc Merge two authorizations array, first is the parent, second is the inherited child.
+	 * @param array $parent Array of authorizations.
+	 * @param array $child Array of authorizations.
+	 * @param int $auth_bit Bit emplacement for the merge.
+	 * @param $mode Mode used for the merge. Use AUTH_PARENT_PRIORITY to give to the parent the priority for the authorization, AUTH_CHILD_PRIORITY otherwise.
+	 * @return array The new array merged.
 	 * @static
 	 */
 	/*static*/  function merge_auth($parent, $child, $auth_bit, $mode)
@@ -320,8 +317,15 @@ class Authorizations
 		return $merged;
 	}
 	
-	//Capture les autorisations et les place sur un bit en particulier passé en paramètre et vers un autre bit (1 par défaut)
-	/*static*/ function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
+	/**
+	 * @desc Capture authorizations and shift a particular bit to an another bit (1 is used by default).
+	 * @param array $auth Array of authorizations.
+	 * @param int $original_bit The bit to shift.
+	 * @param int $final_bit Bit distination (1 is used by default).
+	 * @return array The new authorization array.
+	 * @static
+	 */
+	 /*static*/ function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
 	{
 		if ($final_bit == 0)
 			die('<strong>Error :</strong> The destination bit must not be void.');
@@ -354,7 +358,15 @@ class Authorizations
 	
 	##  Private methods ##
 	//Récupération du tableau des autorisations.
-	/*static*/ function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	/**
+	 * @desc Get authorization array from the form.
+	 * @param int $bit_value The bit emplacement in the authorization array used to set it.
+	 * @param string $idselect Html id used for the select.
+	 * @param array $array_auth_all Array where the authorizations collected are stored.
+	 * @param array $sum_auth Sum up all authorizations for the authorization array.
+	 * @static
+	 */
+	 /*static*/ function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		

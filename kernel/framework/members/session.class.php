@@ -33,9 +33,10 @@ define('ALREADY_HASHED', true);
 define('SEASURF_ATTACK_ERROR_PAGE', PATH_TO_ROOT . '/member/csrf-attack.php');
 
 /**
+ * @author Régis VIARRE <crowkait@phpboost.com
+ * @desc This class manages all sessions for the users.
  * @package members
  */
-
 class Session
 {
 	## Public Attribute ##
@@ -44,7 +45,10 @@ class Session
 	var $autoconnect = array(); //Vérification de la session pour l'autoconnexion.
 	
 	## Public Methods ##
-	function act()
+	/**
+	 * @desc Manage the actions for the session caused by the user (connection, disconnection).
+	 */
+ 	function act()
 	{
 		global $Session, $Sql;
 		
@@ -121,8 +125,18 @@ class Session
 		}
 	}
 	
-	//Lancement de la session après récupèration des informations par le formulaire de connexion.
-	function start($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
+	/**
+	 * @desc Start the session
+	 * @param int $user_id The member's user id.
+	 * @param string $password The member's password.
+	 * @param string $session_script Session script value where the session is started.
+	 * @param string $session_script_get Get value of session script where the session is started.
+	 * @param string $session_script_title Title of session script where the session is started.
+	 * @param boolean $autoconnect The member user id.
+	 * @param boolean $already_hashed True if password has been already hashed width str_hash() function, false otherwise.
+	 * @return True if succed, false otherwise and return an error code.
+	 */
+ 	function start($user_id, $password, $level, $session_script, $session_script_get, $session_script_title, $autoconnect = false, $already_hashed = false)
 	{
         global $CONFIG, $Sql;
 		
@@ -216,7 +230,9 @@ class Session
 		return $error;
 	}
 	
-	//Récupération des informations sur le membre.
+	/**
+	 * @desc Get informations from the user, and set it for his session.
+	 */
 	function load()
 	{
 		global $Sql, $CONFIG;
@@ -273,7 +289,10 @@ class Session
 		$this->data['modules_parameters'] = isset($userdata['modules_parameters']) ? $userdata['modules_parameters'] : '';
 	}
 	
-	//Vérification de la session.
+	/**
+	 * @desc Check session validity, and update it
+	 * @param string $session_script_title The page title where the session has been check.
+	 */
 	function check($session_script_title)
 	{
 		global $CONFIG, $Sql;
@@ -331,7 +350,9 @@ class Session
 		}
 	}
 	
-	//Fin de la session
+	/**
+	 * @desc Destroy the session
+	 */
 	function end()
 	{
 		global $CONFIG, $Sql;
@@ -377,7 +398,9 @@ class Session
 	}
 	
 	## Private Méthods ##
-	//Récupération des l'identifiants de session.
+	/**
+	* @desc Get session identifiers
+	*/
 	function _get_id()
 	{
 		global $CONFIG, $Sql;
@@ -420,7 +443,12 @@ class Session
 		}
 	}
 	
-	//Récupération de session en autoconnect.
+	/**
+	* @desc Create session int autoconnect mode
+	* @param string $session_script Session script value where the session is started.
+	* @param string $session_script_get Get value of session script where the session is started.
+	* @param string $session_script_title Title of session script where the session is started.
+	*/
 	function _autoconnect($session_script, $session_script_get, $session_script_title)
 	{
 		global $CONFIG, $Sql;
@@ -478,7 +506,6 @@ class Session
 	/**
 	 * @static
 	 * @desc Deletes all the existing sessions
-	 * @return unknown_type
 	 */
 	function garbage_collector()
 	{
@@ -490,11 +517,11 @@ class Session
 		OR (session_time < '" . (time() - $CONFIG['site_session_invit']) . "' AND user_id = -1)", __LINE__, __FILE__);
 	}
 	
-	//Détecte les principaux robots par plage ip, retourne leurs noms, et enregistre le nombre et l'heure de passages dans un fichier texte.
 	/**
 	 * @static
-	 * @param $user_ip
-	 * @return unknown_type
+	 * @desc Detect the most commons bots used by search engines. Store the number of hits and hour of last visit for each search engines.
+	 * @param string $user_ip
+	 * @return mixed The name of the bot if detected, false if it's a normal user.
 	 */
 	function _check_bot($user_ip)
 	{

@@ -29,9 +29,8 @@
  * @package content
  * @subpackage editor
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc
+ * @desc Abstract class for editors content.
  */
-
 class ContentEditor
 {
     function ContentEditor($language_type = null)
@@ -45,31 +44,46 @@ class ContentEditor
         $this->forbidden_tags =& $CONFIG['forbidden_tags'];
     }
 
-    //Balises interdites.
+    /**
+	 * @desc Set the forbidden tags
+	 * @param array List of forbidden tags.
+	 */
     function set_forbidden_tags(&$forbidden_tags)
     {
         $this->forbidden_tags = $forbidden_tags;
     }
 
-    // Getter des balises interdites
+    /**
+	 * @desc Get the fordidden tags.
+	 * @return array List of forbidden tags.
+	 */
     function get_forbidden_tags()
     {
         return $this->forbidden_tags;
     }
 
-    //Identifiant du textarea de destination.
+    /**
+	 * @desc Set the html identifier of the textarea field which contain the content to edit.
+	 * @param string The html identifier.
+	 */
     function set_identifier($identifier)
     {
         $this->identifier = $identifier;
     }
 
-    //Template alternatif.
+    /**
+	 * @desc Set an alternative template for the editor.
+	 * @param Template $template.
+	 */
     function set_template(&$template)
     {
         $this->template = $template;
     }
 
-    //Fonction qui renvoie le template courant
+    /**
+	 * @desc Get the template used for the editor.
+	 * @return Template The template
+	 */
     function get_template()
     {
         if (!is_object($this->template) || strtolower(get_class($this->template)) != 'template')
