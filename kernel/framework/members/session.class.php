@@ -375,12 +375,13 @@ class Session
 	*  @desc Save module's parameters into session
 	* @param mixed module's parameters
 	*/
-	function set_module_paramaters($paramaters)
+	function set_module_parameters($parameters, $module = NULL)
 	{
 		global $Sql;
-		
+
+		if (empty($module) OR !is_string($module)) $module = MODULE_NAME;		
 		$modules_parameters = unserialize($this->data['modules_parameters']);
-		$modules_parameters[MODULE_NAME] = $paramaters;
+		$modules_parameters[$module] = $parameters;
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . serialize($modules_parameters) . "'", __LINE__, __FILE__);
 	}
@@ -390,9 +391,9 @@ class Session
 	* @param string module  module name (if null then current module)
 	* @return array array of parameters
 	*/
-	function get_module_paramaters($module = NULL)
+	function get_module_parameters($module = NULL)
 	{
-		if (empty($module)) $module = MODULE_NAME;
+		if (empty($module) OR !is_string($module)) $module = MODULE_NAME;
 		$array = unserialize($this->data['modules_parameters']);
 		return isset($array[$module]) ? $array[$module] : '';
 	}
