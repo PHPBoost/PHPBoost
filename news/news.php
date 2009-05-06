@@ -25,9 +25,11 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php');
-require_once('../news/news_begin.php');
-require_once('../kernel/header.php');
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+
+require_once(PATH_TO_ROOT.'/kernel/begin.php');
+require_once(PATH_TO_ROOT.'/news/news_begin.php');
+require_once(PATH_TO_ROOT.'/kernel/header.php');
 
 //$idnews, $idcat, $show_archive définies dans news_begin.php
 
@@ -40,7 +42,7 @@ if (empty($idnews) && empty($idcat)) // Accueil du module de news
 	$module = $modulesLoader->get_module($module_name);
 	if ($module->has_functionality('get_home_page')) {
 		echo $module->functionality('get_home_page');
-		require_once('../kernel/footer.php');
+		require_once(PATH_TO_ROOT.'/kernel/footer.php');
 		exit;
 	} elseif (!$no_alert_on_error) {
 		global $Errorh;	
@@ -78,17 +80,23 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 	));
+
+	$file = PATH_TO_ROOT.'/upload/'.basename($news['img']);
+	if (file_exists($file))
+		$image = $file;
+	else
+		$image = PATH_TO_ROOT.'/news/'.basename($news['img']);
 	
 	$tpl_news->assign_block_vars('news', array(
 		'C_IMG' => !empty($news['img']),
 		'C_ICON' => (!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1),
 		'ID' => $news['id'],
 		'IDCAT' => $news['idcat'],
-		'ICON' => $news['icon'],
+		'ICON' => PATH_TO_ROOT.'/news/'.basename($news['icon']),
 		'TITLE' => $news['title'],
 		'CONTENTS' => second_parse($news['contents']),
 		'EXTEND_CONTENTS' => second_parse($news['extend_contents']) . '<br /><br />',
-		'IMG' => $news['img'],
+		'IMG' => $image,
 		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $CONFIG_NEWS['display_author'] ? $news['login'] : '',				
 		'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $news['timestamp']) : '',
@@ -141,6 +149,6 @@ if (isset($_GET['com']) && $idnews > 0)
 
 $tpl_news->parse();
 
-require_once('../kernel/footer.php');
+require_once(PATH_TO_ROOT.'/kernel/footer.php');
 
 ?>

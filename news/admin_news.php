@@ -267,6 +267,12 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 	
+	$file = PATH_TO_ROOT.'/upload/'.basename($img);
+	if (file_exists($file))
+		$image = $file;
+	else
+		$image = PATH_TO_ROOT.'/news/'.basename($img);
+	
 	$Template->assign_block_vars('news', array(
 		'THEME' => get_utheme(),
 		'IDNEWS' => $id_post,
@@ -274,7 +280,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 	    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
 		'USER_ID' => $user_id,
-		'IMG' => stripslashes($img),
+		'IMG' => stripslashes($image),
 		'ALT' => stripslashes($alt),
 		'START' => $start,
 		'START_HOUR' => !empty($start_hour) ? $start_hour : '',
