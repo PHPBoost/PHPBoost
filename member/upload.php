@@ -437,28 +437,28 @@ else
 			$width_source = !empty($width_source) ? $width_source + 30 : 0;
 			$height_source = !empty($height_source) ? $height_source + 30 : 0;
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', ' . $width_source . ', ' . $height_source . ', \'yes\')';
+			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', ' . $width_source . ', ' . $height_source . ', \'yes\')';
 			break;
 			//Image svg
 			case 'svg':
 			$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
+			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
 			break;
 			//Sons
 			case 'mp3':
 			$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-			$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
+			$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
 			break;
 			default:
 			$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';
-			$link = '<a class="com" href="../upload/' . $row['path'];
+			$link = '../upload/' . $row['path'];
 		}
-        $link .= '" title="' . $row['name'] . '">';
 		
 		$Template->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'IMG' => '<img src="../templates/' . get_utheme() . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
 			'URL' => $link,
+			'TITLE' => str_replace('"', '\"', $row['name']),
 			'NAME' => $name_cut,
 			'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" class="valign_middle" /></a></span>',
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,

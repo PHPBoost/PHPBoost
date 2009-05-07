@@ -403,12 +403,12 @@
 									<table style="border:0;margin:auto;">
 										<tr>
 											<td style="height:{HEIGHT_MAX}px;">
-												<span id="pics{pics.list.ID}">{pics.list.U_DISPLAY}{pics.list.IMG}</a></span>
+												<span id="pics{pics.list.ID}"><a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox">{pics.list.IMG}</a></span>
 											</td>
 										</tr>
 										<tr>
 											<td style="text-align:center;" class="text_small">
-												{pics.list.U_DISPLAY}<span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 												<br />
 												{pics.list.U_POSTOR}
 											</td>

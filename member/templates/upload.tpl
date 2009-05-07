@@ -360,7 +360,7 @@
 									{files.IMG}
 								</td>
 								<td style="padding-top:8px;">	
-									{files.URL}<span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+									<a class="com" href="{files.URL}" title="{files.TITLE}"><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
 									{files.BBCODE}<br />							
 									<span class="text_small">{files.FILETYPE}</span><br />
 									<span class="text_small">{files.SIZE}</span><br />

@@ -133,11 +133,13 @@
 					<strong>{L_DESC}:</strong> {CONTENTS}
 					<br /><br />
 					<strong>{L_CAT}:</strong> 
+					
 					<a href="../web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
 					
 					<strong>{L_DATE}:</strong> {DATE}<br />						
 					<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
-					<div class="spacer">&nbsp;</div>
+					
+					<span class="spacer">&nbsp;</span>
 				</p>
 				<p class="text_center">					
 					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>
