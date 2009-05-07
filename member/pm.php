@@ -277,10 +277,6 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 			elseif ($convers['user_id_dest'] == $User->get_attribute('user_id')) //Le membre est le destinataire de la conversation.
 				$status = 2;
 			
-			//Cas assez sournois, l'expediteur a reçu un message pendant qu'il lisait la conversation juste avant de répondre => on marque le message comme lu.
-			if ($convers['user_view_pm'] > 1 && $convers['last_user_id'] != $User->get_attribute('user_id'))
-				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-				
 			//Envoi du message privé.
 			$Privatemsg->send($user_id_dest, $pm_id_get, $contents, $User->get_attribute('user_id'), $status);
 
@@ -531,7 +527,7 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 	
 	if ($convers['user_view_pm'] > 0 && $convers['last_user_id'] != $User->get_attribute('user_id')) //Membre n'ayant pas encore lu la conversation.
 	{
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER . " SET user_pm = user_pm - '" . $convers['user_view_pm'] . "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER . " SET user_pm = user_pm - " . (int)$convers['user_view_pm'] . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_TOPIC . "  SET user_view_pm = 0 WHERE id = '" . $pm_id_get . "'", __LINE__, __FILE__);
 		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_PM_MSG . " SET view_status = 1 WHERE idconvers = '" . $convers['id'] . "' AND user_id <> '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	}
