@@ -379,13 +379,13 @@ else
 
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
-					$display_link = '<a class="com" href="' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox" title="' . $row['name'] . '">';
+					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']);
 				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
-					$display_link = '<a class="com" href="javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')">';
+					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
-					$display_link = '<a class="com" href="javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)">';
+					$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
 				else //Ouverture nouvelle page.
-					$display_link = '<a class="com" href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max">';
+					$display_link = 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max';
 					
 				//Liste des catégories.
 				$cat_list = '';
@@ -397,6 +397,7 @@ else
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
 					'PATH' => $row['path'],
 					'NAME' => $name_cut,
+					'TITLE' => str_replace('"', '\"', $row['name']),
 					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
 					'IMG_APROB' => ($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'TR_START' => $tr_start,

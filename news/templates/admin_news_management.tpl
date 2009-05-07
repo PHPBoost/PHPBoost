@@ -89,7 +89,6 @@
 
 			<br /><br />
 			<p style="text-align: center;">{PAGINATION}</p>	
-		</div>	
 			# END list #
 
 
@@ -131,9 +130,9 @@
 					<tr> 
 						<td class="row1">
 							<div class="news_container">
-								<div class="msg_top_l"></div>			
-								<div class="msg_top_r"></div>
-								<div class="msg_top">
+								<div class="news_top_l"></div>			
+								<div class="news_top_r"></div>
+								<div class="news_top">
 									<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.preview.TITLE}</h3></div>
 									<div style="float:right"></div>
 								</div>													
@@ -263,7 +262,7 @@
 						<input type="reset" value="{L_RESET}" class="reset" />				
 					</fieldset>	
 				</form>
-
 			# END news #
+			
 		</div>	
 

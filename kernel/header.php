@@ -132,7 +132,7 @@ if (defined('ALTERNATIVE_CSS'))
     {
         $array_alternative_css = explode(',', str_replace(' ', '', ALTERNATIVE_CSS));
         $module = $array_alternative_css[0];
-        $base 	= PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+        $base = PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
         foreach ($array_alternative_css as $alternative)
         {
             $file = $base . $alternative . '.css';

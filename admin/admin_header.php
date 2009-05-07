@@ -43,6 +43,49 @@ $Template->set_filenames(array(
 	'subheader_menu'=> 'admin/subheader_menu.tpl'
 ));
 
+//Ajout des éventuels css alternatifs du module.
+$alternative_css = '';
+if (defined('ALTERNATIVE_CSS'))
+{
+    $alternative = null;
+    $styles = @unserialize(ALTERNATIVE_CSS);
+    if (is_array($styles))
+    {
+        foreach ($styles as $module => $style) {
+            $base = PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+            $file = $base . $style . '.css';
+            if (file_exists($file))
+            {
+                $alternative = $file;
+            }
+            else
+            {
+                $alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $style . '.css';
+            }
+            $alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
+        }
+    }
+    else
+    {
+        $array_alternative_css = explode(',', str_replace(' ', '', ALTERNATIVE_CSS));
+        $module = $array_alternative_css[0];
+        $base 	= PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+        foreach ($array_alternative_css as $alternative)
+        {
+            $file = $base . $alternative . '.css';
+            if (file_exists($file))
+            {
+                $alternative = $file;
+            }
+            else
+            {
+                $alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
+            }
+            $alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
+        }
+    }
+}
+
 $Template->assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'SITE_NAME' => $CONFIG['site_name'],
@@ -51,6 +94,7 @@ $Template->assign_vars(array(
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),
+	'ALTERNATIVE_CSS' => $alternative_css,
 	'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 	'L_ADMINISTRATION' => $LANG['administration'],
 	'L_INDEX' => $LANG['index'],
