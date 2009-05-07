@@ -174,7 +174,11 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 define('MODULE_NAME', get_module_name());
 if (isset($MODULES[MODULE_NAME]) )
 {
-	if ($MODULES[MODULE_NAME]['activ'] == 0 || !$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
+	if ($MODULES[MODULE_NAME]['activ'] == 0 )
+	{	
+		$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
+	}
+	else if(!$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}

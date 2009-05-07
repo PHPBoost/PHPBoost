@@ -86,8 +86,8 @@
 								<strong>{L_ALTERNATIVE_CSS}:</strong> {installed.ALTERNATIVE_CSS}<br />
 							</td>
 							<td class="row2">								
-								<input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}
-								<input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}
+								<label><input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}</label>
+								<label><input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}</label>
 							</td>
 							<td class="row2">							
 								{installed.AUTH_MODULES}			
