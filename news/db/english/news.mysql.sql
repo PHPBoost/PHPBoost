@@ -3,8 +3,8 @@ CREATE TABLE `phpboost_news` (
   `id` int(11) NOT NULL auto_increment,
   `idcat` int(11) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
-  `contents` text NOT NULL,
-  `extend_contents` text NOT NULL,
+  `contents` text,
+  `extend_contents` text,
   `archive` tinyint(1) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
   `visible` tinyint(1) NOT NULL default '0',
@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `phpboost_news_cat`;
 CREATE TABLE `phpboost_news_cat` (
 	`id` int(11) NOT NULL auto_increment,
 	`name` varchar(150) NOT NULL default '',
-	`contents` text NOT NULL,
+	`contents` text,
 	`icon` varchar(255) NOT NULL default '',
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
