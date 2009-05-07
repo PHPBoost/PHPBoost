@@ -11,7 +11,7 @@ CREATE TABLE `phpboost_gallery` (
 	`aprob` tinyint(1) NOT NULL default '0',
 	`views` int(11) NOT NULL default '0',
 	`timestamp` int(11) NOT NULL default '0',
-	`users_note` text NOT NULL,
+	`users_note` text,
 	`nbrnote` mediumint(9) NOT NULL default '0',
 	`note` float NOT NULL default '0',
 	`nbr_com` int(11) unsigned NOT NULL default '0',
@@ -28,12 +28,12 @@ CREATE TABLE `phpboost_gallery_cats` (
 	`id_right` int(11) NOT NULL default '0',
 	`level` int(11) NOT NULL default '0',
 	`name` varchar(150) NOT NULL default '',
-	`contents` text NOT NULL,
+	`contents` text,
 	`nbr_pics_aprob` mediumint(9) unsigned NOT NULL default '0',
 	`nbr_pics_unaprob` mediumint(9) unsigned NOT NULL default '0',
 	`status` tinyint(1) NOT NULL default '0',
 	`aprob` tinyint(1) NOT NULL default '1',
-	`auth` text NOT NULL,
+	`auth` text,
 	PRIMARY KEY	(`id`),
 	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;

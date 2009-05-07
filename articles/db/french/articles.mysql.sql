@@ -5,12 +5,12 @@ CREATE TABLE `phpboost_articles_cats` (
 	`id_right` int(11) NOT NULL default '0',
 	`level` int(11) NOT NULL default '0',
 	`name` varchar(100) NOT NULL default '',
-	`contents` text NOT NULL,
+	`contents` text,
 	`nbr_articles_visible` mediumint(9) unsigned NOT NULL default '0',
 	`nbr_articles_unvisible` mediumint(9) unsigned NOT NULL default '0',
 	`icon` varchar(255) NOT NULL default '',
 	`aprob` tinyint(1) NOT NULL default '0',
-	`auth` text NOT NULL,
+	`auth` text,
 	PRIMARY KEY  (`id`),
 	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
@@ -30,7 +30,7 @@ CREATE TABLE `phpboost_articles` (
 	`end` int(11) NOT NULL default '0',
 	`user_id` int(11) NOT NULL default '0',
 	`views` mediumint(9) NOT NULL default '0',
-	`users_note` text NOT NULL,
+	`users_note` text,
 	`nbrnote` mediumint(9) NOT NULL default '0',
 	`note` float NOT NULL default '0',
 	`nbr_com` int(11) unsigned NOT NULL default '0',
