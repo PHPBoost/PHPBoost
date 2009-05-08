@@ -52,15 +52,15 @@ else
 }
 
 $news_title = !empty($idnews) ? $news['title'] : '';
-$Bread_crumb->add($LANG['title_news'], PATH_TO_ROOT.'/news/'.url('news.php'));
-$show_archive ? $Bread_crumb->add($LANG['archive'], PATH_TO_ROOT.'/news/'.url('news.php?arch=1')) : '';
-$Bread_crumb->add($news_title, (!empty($_GET['i']) ? PATH_TO_ROOT.'/news/'.url('news.php?id=' . $idnews) : ''));
+$Bread_crumb->add($LANG['title_news'], url('news.php'));
+$show_archive ? $Bread_crumb->add($LANG['archive'], url('news.php?arch=1')) : '';
+$Bread_crumb->add($news_title, (!empty($_GET['i']) ? url('news.php?id=' . $idnews) : ''));
 $Bread_crumb->add((isset($_GET['i']) ? $LANG['com'] : ''), '');
 
 //Chargement du cache
 $Cache->load('news');
 //Css alternatif.
 defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
-define('FEED_URL', PATH_TO_ROOT.'/syndication.php?m=news');
+define('FEED_URL', '/syndication.php?m=news');
 
 ?>
