@@ -330,6 +330,7 @@ class Comments
 				$pagination = new Pagination();
 
 				$Template->assign_vars(array(
+					'ERROR_HANDLER' => '',
 					'CURRENT_PAGE_COM' => $integrated_in_environment,
 					'POPUP_PAGE_COM' => !$integrated_in_environment
 				));
@@ -373,32 +374,49 @@ class Comments
 				$Errorh->set_template($Template); //On spécifie le template utilisé.
 				if (!empty($errstr))
 				{	
-					$Errorh->handler($errstr, E_USER_NOTICE);
+					$Template->assign_vars(array(
+						'ERROR_HANDLER' => $Errorh->display($errstr, E_USER_NOTICE)
+					));
 				}
+				
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
 					if ($User->check_level($CONFIG_COM['com_auth']))
+					{	
 						$Template->assign_vars(array(
 							'AUTH_POST_COM' => true
 						));
+					}
 					else
-						$Errorh->handler($LANG['e_unauthorized'], E_USER_NOTICE);
+					{	
+						$Template->assign_vars(array(
+							'ERROR_HANDLER' => $Errorh->display($LANG['e_unauthorized'], E_USER_NOTICE)
+						));
+					}
 					
 					//Pseudo du membre connecté.
 					if ($User->get_attribute('user_id') !== -1)
+					{	
 						$Template->assign_vars(array(
 							'C_HIDDEN_COM' => true,
 							'LOGIN' => $User->get_attribute('login')
 						));
+					}
 					else
+					{	
 						$Template->assign_vars(array(
 							'C_VISIBLE_COM' => true,
 							'LOGIN' => $LANG['guest']
 						));
+					}
 				}
 				else
-					$Errorh->handler($LANG['com_locked'], E_USER_NOTICE);
+				{	
+					$Template->assign_vars(array(
+						'ERROR_HANDLER' => $Errorh->display($LANG['com_locked'], E_USER_NOTICE)
+					));
+				}
 					
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
 				
@@ -417,7 +435,7 @@ class Comments
 					'PATH' => SCRIPT,
 					'UPDATE' => ($integrated_in_environment == true) ? SID : '',
 					'VAR' => $vars_simple,
-					'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
+					'KERNEL_EDITOR' => display_editor($this->script . 'contents', $CONFIG_COM['forbidden_tags']),
 					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
