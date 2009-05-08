@@ -147,6 +147,7 @@ class Session
 		$error = '';
 		$session_script = addslashes($session_script);
 		$session_script_title = addslashes($session_script_title);
+		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 		
 		########Insertion dans le compteur si l'ip est inconnue.########
 		$check_ip = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
