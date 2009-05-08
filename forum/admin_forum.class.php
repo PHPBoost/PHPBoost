@@ -174,7 +174,7 @@ class Admin_forum
 		//On vérifie si la catégorie contient des sous forums.
 		$nbr_sub_cat = (($CAT_FORUM[$idcat]['id_right'] - $CAT_FORUM[$idcat]['id_left'] - 1) / 2);
 		
-		if ($confirm_delete) //Confirmation de suppression, on supprime dans la bdd et on rétabli l'arbre itnervallaire.
+		if ($confirm_delete) //Confirmation de suppression, on supprime dans la bdd et on rétabli l'arbre intervallaire.
 		{
 			$first_parent = $Sql->query("SELECT id FROM " . PREFIX . "forum_cats WHERE id_left < '" . $CAT_FORUM[$idcat]['id_left'] . "' AND id_right > " . $CAT_FORUM[$idcat]['id_right'] . " ORDER BY id_left DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 			$list_parent_cats = $this->get_parent_list($idcat); //Récupère la liste des parents de la catégorie.
@@ -185,7 +185,11 @@ class Admin_forum
 			
 			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_cats WHERE id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'", __LINE__, __FILE__);	
 			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_FORUM[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);	
+			
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_msg WHERE idtopic IN (
+			SELECT id FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "')", __LINE__, __FILE__); //On supprime les messages de tout les sujets.
+			
+			$Sql->query_inject("DELETE FROM " . PREFIX . "forum_topics WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__); //On supprime les topics de la catégorie.
 				
 			$Cache->Generate_module_file('forum'); //Regénération du cache
 			$Cache->load('forum', RELOAD_CACHE); //Rechargement du cache
