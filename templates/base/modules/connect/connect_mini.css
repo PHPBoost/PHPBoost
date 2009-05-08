@@ -6,7 +6,7 @@
 	height:18px;
 	width:115px;
 	font-size:12px;
-	color:#E9ECEF;
+	color: grey /*#E9ECEF */;
 }
 .connect_form:hover {
 	background:url('images/form.png') no-repeat right bottom;
