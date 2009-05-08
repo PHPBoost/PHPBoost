@@ -383,8 +383,9 @@ class Session
 		$modules_parameters = unserialize($this->data['modules_parameters']);
 		$modules_parameters[$module] = $parameters;
 		$this->data['modules_parameters'] = $modules_parameters;
-		
-		setcookie($CONFIG['site_cookie'].'_data', serialize($this->data), time() + 31536000, '/');
+
+		if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
+			setcookie($CONFIG['site_cookie'].'_data', serialize($this->data), time() + 31536000, '/'); // modification contenu du cookie session
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . serialize($modules_parameters) . "'", __LINE__, __FILE__);
 	}
