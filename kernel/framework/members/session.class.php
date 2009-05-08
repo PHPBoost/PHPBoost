@@ -377,11 +377,14 @@ class Session
 	*/
 	function set_module_parameters($parameters, $module = NULL)
 	{
-		global $Sql;
+		global $Sql, $CONFIG;
 
 		if (empty($module) OR !is_string($module)) $module = MODULE_NAME;		
 		$modules_parameters = unserialize($this->data['modules_parameters']);
 		$modules_parameters[$module] = $parameters;
+		$this->data['modules_parameters'] = $modules_parameters;
+		
+		setcookie($CONFIG['site_cookie'].'_data', serialize($this->data), time() + 31536000, '/');
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . serialize($modules_parameters) . "'", __LINE__, __FILE__);
 	}
