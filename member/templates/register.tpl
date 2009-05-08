@@ -349,7 +349,7 @@
 				</dl>
 				<dl>
 					<dt><label for="user_show_mail">{L_HIDE_MAIL}</label></dt>
-					<dd><label><input type="checkbox" class="text" name="user_show_mail" id="user_show_mail" /></label></dd>			
+					<dd><label><input type="checkbox" class="text" name="user_show_mail" id="user_show_mail" checked="checked" /></label></dd>			
 				</dl>
 			</fieldset>	
 
