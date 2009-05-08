@@ -210,15 +210,7 @@
 		</form>
 		# ENDIF #
 		
-		# IF C_ERROR_HANDLER #
-			<br />
-			<span id="errorh"></span>
-			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}	
-				<br />			
-			</div>
-			<br /><br />	
-		# ENDIF #
+		{ERROR_HANDLER}
 		
 		# IF C_COM_DISPLAY #
 		<div class="msg_position">
