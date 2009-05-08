@@ -95,7 +95,7 @@ foreach ($search_module as $module)
 	        $form_module_args = $module->functionality('get_search_args');
 	        // Ajout des paramètres optionnels sans les sécuriser.
 	        // Ils sont sécurisés à l'intérieur de chaque module.
-	        if ($search_in == 'all')
+	        if ($search_in != 'all')
 	        {
 	            foreach ($form_module_args as $arg)
 	            {
