@@ -376,21 +376,18 @@ class Session
 	*  @desc Save module's parameters into session
 	* @param mixed module's parameters
 	*/
-	function set_module_parameters($parameters, $module = NULL)
+	function set_module_parameters($parameters, $module = '')
 	{
 		global $Sql, $CONFIG;
 
-		if (empty($module) OR !is_string($module)) $module = MODULE_NAME;		
+		if (empty($module) || !is_string($module)) 
+			$module = MODULE_NAME;		
+		
 		$modules_parameters = unserialize($this->data['modules_parameters']);
 		$modules_parameters[$module] = $parameters;
 		$modules_param_serial = serialize($modules_parameters);
 		
-		$this->data['modules_parameters'] = $modules_param_serial;
-
-		if (isset($_COOKIE[$CONFIG['site_cookie'].'_data']))
-			setcookie($CONFIG['site_cookie'].'_data', serialize($this->data), time() + 31536000, '/'); // modification contenu du cookie session
-		
-		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $modules_param_serial . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $modules_param_serial . "' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
 	}
 	
 	/**
@@ -398,10 +395,13 @@ class Session
 	* @param string module  module name (if null then current module)
 	* @return array array of parameters
 	*/
-	function get_module_parameters($module = NULL)
+	function get_module_parameters($module = '')
 	{
-		if (empty($module) OR !is_string($module)) $module = MODULE_NAME;
+		if (empty($module) || !is_string($module)) 
+			$module = MODULE_NAME;
+		
 		$array = unserialize($this->data['modules_parameters']);
+		
 		return isset($array[$module]) ? $array[$module] : '';
 	}
 	
