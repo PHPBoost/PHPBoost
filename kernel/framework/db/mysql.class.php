@@ -156,13 +156,16 @@ class Sql
 	function query($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		if ($resource) {
+		if ($resource) 
+		{
 			$result = mysql_fetch_row($resource);
 			$this->query_close($resource); //Déchargement mémoire.
 			$this->req++;
 			return $result[0];
-		} else {
-			return FALSE;
+		} 
+		else 
+		{
+			return false;
 		}
 	}
 	
