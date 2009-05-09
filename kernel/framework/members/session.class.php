@@ -378,16 +378,28 @@ class Session
 	*/
 	function set_module_parameters($parameters, $module = '')
 	{
-		global $Sql, $CONFIG;
+		global $Sql;
+		
+		if (empty($this->data['user_id']) OR !is_numeric($this->data['user_id']))
+			return FALSE;
 
 		if (empty($module) || !is_string($module)) 
 			$module = MODULE_NAME;		
+
+		$current_modules_params = $Sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+		$this->data['modules_parameters'] = NULL;
+		if ($current_modules_params != FALSE)
+		{
+			$this->data['modules_parameters'] = $current_modules_params;
+		}
 		
 		$modules_parameters = unserialize($this->data['modules_parameters']);
 		$modules_parameters[$module] = $parameters;
-		$modules_param_serial = serialize($modules_parameters);
+		$modules_parameters_serialized = serialize($modules_parameters);
+
+		$this->data['modules_parameters'] = $modules_parameters_serialized;
 		
-		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $modules_param_serial . "' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $this->data['modules_parameters'] . "' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
 	}
 	
 	/**
@@ -397,12 +409,23 @@ class Session
 	*/
 	function get_module_parameters($module = '')
 	{
+		global $Sql;
+
+		if (empty($this->data['user_id']) OR !is_numeric($this->data['user_id']))
+			return FALSE;
+			
 		if (empty($module) || !is_string($module)) 
 			$module = MODULE_NAME;
 		
-		$array = unserialize($this->data['modules_parameters']);
+		$current_modules_params = $Sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+		$this->data['modules_parameters'] = NULL;		
+		if ($current_modules_params != FALSE)
+		{
+			$this->data['modules_parameters'] = $current_modules_params;
+		}
 		
-		return isset($array[$module]) ? $array[$module] : '';
+		$array = unserialize($this->data['modules_parameters']);
+		return isset($array[$module]) ? $array[$module] : '';	
 	}
 	
 	## Private Méthods ##
