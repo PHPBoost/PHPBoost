@@ -108,11 +108,12 @@ class Feed
 				$items = $this->data->subitems($number, $begin_at);
 				foreach ($items as $item)
 				{
+					$desc = $item->get_desc(); // Allow the by reference call of the second_parse method
 					$tpl->assign_block_vars('item', array(
                         'TITLE' => $item->get_title(),
                         'U_LINK' => $item->get_link(),
                         'U_GUID' => $item->get_guid(),
-                        'DESC' => htmlspecialchars(second_parse($item->get_desc())),
+                        'DESC' => htmlspecialchars(second_parse($desc)),
                         'DATE' => $item->get_date(),
                         'DATE_RFC822' => $item->get_date_rfc822(),
                         'DATE_RFC3339' => $item->get_date_rfc3339(),

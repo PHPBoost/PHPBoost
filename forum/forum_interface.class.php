@@ -135,7 +135,7 @@ class ForumInterface extends ModuleInterface
 		$search = $args['search'];
 		$idcat = !empty($args['ForumIdcat']) ? numeric($args['ForumIdcat']) : -1;
 		$time = !empty($args['ForumTime']) ? numeric($args['ForumTime']) : 0;
-		$where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'title';
+		$where = !empty($args['ForumWhere']) ? strprotect($args['ForumWhere']) : 'all';
 		$colorate_result = !empty($args['ForumColorate_result']) ? true : false;
 
 		$Tpl->assign_vars(Array(
