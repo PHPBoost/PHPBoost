@@ -89,5 +89,5 @@
 			<div class="module_mini_bottom">
 			</div>
 		</div>
-		# END ENDIF #
+		# ENDIF #
 		
