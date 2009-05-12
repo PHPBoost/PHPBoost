@@ -151,9 +151,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	// Édition.
 	if ($edit > 0 && ($media = $Sql->query_array(PREFIX . 'media', '*', "WHERE id = '" . $edit. "'", __LINE__, __FILE__)) && !empty($media) && $User->check_level(MODO_LEVEL))
 	{
-		// Gère le type du fichier pour ne proposer que les catégories du même type.
-		unset($media_categories);
-		$categories = array();
+		bread_crumb($media['idcat']);
 		
 		if (in_array($media['mime_type'], $mime_type['audio']))
 		{
@@ -163,17 +161,6 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		{
 			$auth = MEDIA_TYPE_VIDEO;
 		}
-		
-		// Construction du tableau javascript pour les caégories étant seulement pour les vidéos.
-		foreach ($MEDIA_CATS as $key => $value)
-		{
-			if ($value['mime_type'] == $auth || $value['mime_type'] == 0)
-			{
-				$categories[$key] = $value;
-			}
-		}
-
-		$media_categories = new MediaCats($categories);
 
 		$Template->assign_vars(array(
 			'L_PAGE_TITLE' => $MEDIA_LANG['edit_media'],
@@ -194,6 +181,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	// Ajout.
 	elseif (($write = $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
 	{
+		bread_crumb($media['add']);
+
 		$Template->assign_vars(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
 			'C_CONTRIBUTION' => !$write,
@@ -217,12 +206,9 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		exit;
 	}
 
-	$idcat = !empty($media) ? $media['idcat'] : $add;
-	bread_crumb($idcat);
-
 	if (!empty($media))
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $idcat . '+' . url_encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . url_encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['id']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
