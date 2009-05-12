@@ -155,13 +155,13 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 		unset($media_categories);
 		$categories = array();
 		
-		if (in_array($media['mime_type'], $mime_type['video']))
+		if (in_array($media['mime_type'], $mime_type['audio']))
 		{
-			$auth = MEDIA_TYPE_VIDEO;
+			$auth = MEDIA_TYPE_MUSIC;
 		}
 		else
 		{
-			$auth = MEDIA_TYPE_MUSIC;
+			$auth = MEDIA_TYPE_VIDEO;
 		}
 		
 		// Construction du tableau javascript pour les caégories étant seulement pour les vidéos.
@@ -187,9 +187,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'DESCRIPTION' => unparse($media['contents']),
 			'APPROVED' => ($media['infos'] & MEDIA_STATUS_APROBED) !== 0 ? ' checked="checked"' : '',
 			'C_APROB' => ($media['infos'] & MEDIA_STATUS_APROBED) === 0,
-			'WIDTH_HEIGHT' => $auth == MEDIA_TYPE_VIDEO ? true : false,
-			'JS_HIDE' => 'false',
-			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"'
+			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
+			'C_MUSIC' => $auth == MEDIA_TYPE_MUSIC ? true : false
 		));
 	}
 	// Ajout.
@@ -208,9 +207,8 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 			'DESCRIPTION' => '',
 			'APPROVED' => 'checked="checked"',
 			'C_APROB' => false,
-			'WIDTH_HEIGHT' => true,
-			'JS_HIDE' => 'true',
-			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"'
+			'JS_ID_MUSIC' => '"' . implode('", "', $js_id_music) . '"',
+			'C_MUSIC' => $MEDIA_CATS[$add]['mime_type'] == MEDIA_TYPE_MUSIC ? true : false
 		));
 	}
 	else

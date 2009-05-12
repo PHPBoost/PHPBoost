@@ -32,10 +32,9 @@
 		function hide_width_height ()
 		{
 			var id_music = new Array({JS_ID_MUSIC});
-			var execut = {JS_HIDE};
 
-			if (execut && id_music.length > 0)
-				if (in_array (document.getElementById('idcat').selectedIndex, id_music))
+			if (id_music.length > 0)
+				if (in_array (document.getElementById('idcat').value, id_music))
 				{
 					document.getElementById('width_dl').style.display = 'none';
 					document.getElementById('height_dl').style.display = 'none';
@@ -46,11 +45,14 @@
 					document.getElementById('height_dl').style.display = 'block';
 				}
 		}
-
+		
 		window.onload = function () {
-			if ({JS_HIDE})
+			var c_music = {C_MUSIC};
+			
+			if (c_music)
 			{
-				hide_width_height ();
+				document.getElementById('width_dl').style.display = 'none';
+				document.getElementById('height_dl').style.display = 'none';
 			}
 		};
 		-->
@@ -76,7 +78,6 @@
 							{CATEGORIES_TREE}
 						</label></dd>
 					</dl>
-					# IF WIDTH_HEIGHT #
 					<dl id="width_dl">
 						<dt><label for="width">{L_WIDTH}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="width" name="width" value="{WIDTH}" class="text" /></dd>
@@ -85,7 +86,6 @@
 						<dt><label for="height">{L_HEIGHT}</label></dt>
 						<dd><input type="text" size="10" maxlength="4" id="height" name="height" value="{HEIGHT}" class="text" /></dd>
 					</dl>
-					# ENDIF #
 					<dl>
 						<dt><label for="u_media">* {L_U_MEDIA}</label></dt>
 						<dd><input type="text" size="50" maxlength="500" id="u_media" name="u_media" value="{U_MEDIA}" class="text" /></dd>
