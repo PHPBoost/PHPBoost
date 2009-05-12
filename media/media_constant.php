@@ -65,7 +65,6 @@ define('NUM_MODO_MEDIA', 25);
 $mime_type = array(
 	'audio' => array(
 		'mp3' => 'audio/mpeg',
-		'swf' => 'application/x-shockwave-flash'
 	),
 	'video' => array(
 		'flv' => 'video/x-flv',
