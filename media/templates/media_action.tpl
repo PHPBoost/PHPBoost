@@ -46,15 +46,12 @@
 				}
 		}
 		
+		# IF C_MUSIC #
 		window.onload = function () {
-			var c_music = {C_MUSIC};
-			
-			if (c_music)
-			{
-				document.getElementById('width_dl').style.display = 'none';
-				document.getElementById('height_dl').style.display = 'none';
-			}
+			document.getElementById('width_dl').style.display = 'none';
+			document.getElementById('height_dl').style.display = 'none';
 		};
+		# ENDIF #
 		-->
 		</script>
 
