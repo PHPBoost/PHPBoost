@@ -181,7 +181,7 @@ elseif ($add >= 0 && empty($_POST['submit']) || $edit > 0)
 	// Ajout.
 	elseif (($write = $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_WRITE)) || $User->check_auth($MEDIA_CATS[$add]['auth'], MEDIA_AUTH_CONTRIBUTION))
 	{
-		bread_crumb($media['add']);
+		bread_crumb($add);
 
 		$Template->assign_vars(array(
 			'L_PAGE_TITLE' => $write ? $MEDIA_LANG['add_media'] : $MEDIA_LANG['contribute_media'],
