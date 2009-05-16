@@ -391,7 +391,7 @@
 						# ENDIF #
 						<td class="row2" style="text-align:center;">
 							<a href="{U_CONTRIBUTION_PANEL}">
-								<img src="../templates/{THEME}/images/contribution.png" alt="{L_PRIVATE_MESSAGE}" title="{L_CONTRIBUTION_PANEL}" />
+								<img src="../templates/{THEME}/images/contribution.png" alt="{L_CONTRIBUTION_PANEL}" title="{L_CONTRIBUTION_PANEL}" />
 							</a>
 							<br />
 							<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
@@ -399,7 +399,7 @@
 						# IF C_IS_MODERATOR #
 						<td class="row2" style="text-align:center;">
 							<a href="{U_MODERATION_PANEL}">
-								<img src="../templates/{THEME}/images/moderation_panel.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
+								<img src="../templates/{THEME}/images/moderation_panel.png" alt="{L_MODERATION_PANEL}" title="{L_MODERATION_PANEL}" />
 							</a>
 							<br />
 							<a href="{U_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> <br /><br />
