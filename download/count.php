@@ -64,8 +64,10 @@ if (!empty($idurl))
 	//Si le téléchargement est forcé et que le fichier est local au serveur
 	if ($info_file['force_download'] == DOWNLOAD_FORCE_DL && strpos($info_file['url'], '://') === false)	
 	{
-    	//Redirection vers le fichier demandé
-    	$filesize = @filesize(str_replace(HOST . DIR . '/', '../', $info_file['url']));
+		$info_file['url'] = second_parse_url($info_file['url']);
+		
+		//Redirection vers le fichier demandé
+    	$filesize = @filesize($info_file['url']);
     	$filesize = ($filesize !== false) ? $filesize : (!empty($info_file) ? number_round($info_file['size'] * 1048576, 0) : false);
     	if ($filesize !== false)
     		header('Content-Length: ' . $filesize);
