@@ -1,9 +1,9 @@
 /* --------------------------------------
 		global.css
- Contient les classes globales au site, peuvent Ãªtre utilisÃ©es partout.
---------------------------------------*/ /* Classes gÃ©nÃ©rales
+ Contient les classes globales au site, peuvent être utilisées partout.
+--------------------------------------*/ /* Classes générales
 --------------------------------------*/
-/* Case gÃ©nÃ©rale des tableaux du site*/
+/* Case générale des tableaux du site*/
 .row1,.block_contents1 {
     background:#E0E9EF;
 	padding:8px 6px;
@@ -46,7 +46,7 @@
     padding:20px 6px;	
 }
 
-/* Case rÃ©sultat recherche membre AJAX */
+/* Case résultat recherche membre AJAX */
 .xmlhttprequest_result_search {
     overflow:auto;
     height:100px;
@@ -71,7 +71,7 @@
     z-index:100;
 }
 
-/* DÃ©placement des fichiers*/
+/* Déplacement des fichiers*/
 .upload_selected_cat {
     background:#f5fbff;
     border:1px solid #2C5169;
@@ -177,7 +177,7 @@ a.membre {
     background:#eaedee;
 }
 
-/* SÃ©parateur */
+/* Séparateur */
 .dynamic_menu ul li.separator {
     background:#849AAC;
 }

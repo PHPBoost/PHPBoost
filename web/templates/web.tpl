@@ -14,7 +14,7 @@
 			</div>
 			<div class="module_contents">
 				# START cat_list #
-				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;height:80px;">
+				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;">
 					{cat_list.U_IMG_CAT}
 					<a href="../web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
 					<span class="text_small">{cat_list.CONTENTS}</span>

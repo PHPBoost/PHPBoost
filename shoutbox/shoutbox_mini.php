@@ -136,7 +136,7 @@ function shoutbox_mini($position, $block)
     		$tpl->assign_block_vars('shout', array(
     			'IDMSG' => $row['id'],
     			'PSEUDO' => $row['login'],
-    			'CONTENTS' => ucfirst($row['contents']) //Majuscule premier caractère.
+    			'CONTENTS' => ucfirst(second_parse($row['contents'])) //Majuscule premier caractère.
     		));
     	}
     	$Sql->query_close($result);

@@ -82,9 +82,10 @@ if ($add)
 				$shout_pseudo = '<a href="javascript:Confirm_del_shout(' . $last_msg_id . ');" title="' . $LANG['delete'] . '"><img src="../templates/' . get_utheme() . '/images/delete_mini.png" alt="" /></a> <a style="font-size:10px;" class="' . $array_class[$User->get_attribute('level')] . '" href="../member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php') . '">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest'])  . '</a>';
 			else
 				$shout_pseudo = '<span class="text_small" style="font-style: italic;">' . (!empty($shout_pseudo) ? wordwrap_html($shout_pseudo, 16) : $LANG['guest']) . '</span>';
-				
+			
+			$test = second_parse($test);
 			echo "array_shout[0] = '" . $shout_pseudo . "';";
-			echo "array_shout[1] = '" . str_replace(array("\n", "\r"), array('', ''), ucfirst($shout_contents)) . "';";
+			echo "array_shout[1] = '" . addslashes(second_parse(str_replace(array("\n", "\r"), array('', ''), ucfirst(stripslashes($shout_contents))))) . "';";
 			echo "array_shout[2] = '" . $last_msg_id . "';";
 		}
 		else //utilisateur non autorisé!
@@ -113,7 +114,7 @@ elseif ($refresh)
 		else
 			$row['login'] = $del . ' <span class="text_small" style="font-style: italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 16) : $LANG['guest']) . '</span>';
 		
-		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst($row['contents'])) . '</span></p>' . "\n";
+		echo '<p id="shout_container_' . $row['id'] . '">' . $row['login'] . '<span class="text_small">: ' . str_replace(array("\n", "\r"), array('', ''), ucfirst(second_parse($row['contents']))) . '</span></p>' . "\n";
 	}
 	$Sql->query_close($result);
 }

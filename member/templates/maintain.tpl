@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{L_XML_LANGUAGE}" >
 	<head>
-		<title>{SITE_NAME} :: {TITLE}</title>
+		<title>{SITE_NAME} : {L_MAINTAIN_TITLE}</title>
 		<link rel="stylesheet" href="../templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="../templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="../templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
