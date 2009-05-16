@@ -486,6 +486,7 @@ $LANG['last_message'] = 'Dernier message';
 $LANG['mark_pm_as_read'] = 'Marquer tous les messages privés comme lus';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'Aucun message';
+$LANG['quote_last_msg'] = 'Reprise du message précédent';
 
 //Oublié
 $LANG['forget_pass'] = 'Mot de passe oublié';

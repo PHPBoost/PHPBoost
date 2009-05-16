@@ -475,7 +475,7 @@ class Stats
 	 * @param resource $similar_color Set 0.40 for a different color and 0.99 for a very similar.
 	 * @return int angle
 	 */
-	 function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
+	function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
 		if ($this->color_index == $this->nbr_color)
 			$this->color_index = 0;

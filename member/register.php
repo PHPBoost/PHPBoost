@@ -51,7 +51,7 @@ if (empty($key))
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
 			'L_HAVE_TO_ACCEPT' => !empty($register_valid) ? $LANG['register_have_to_accept'] : '',
-			'MSG_REGISTER' => $CONFIG_USER['msg_register'],
+			'MSG_REGISTER' => second_parse($CONFIG_USER['msg_register']),
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
 			'L_ACCEPT' => $LANG['register_accept'],
