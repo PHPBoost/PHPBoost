@@ -486,6 +486,7 @@ $LANG['last_message'] = 'Last message';
 $LANG['mark_pm_as_read'] = 'Mark all private message as read';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'No message';
+$LANG['quote_last_msg'] = 'Repost of the preceding message';
 
 //Forgot
 $LANG['forget_pass'] = 'Forgot password';

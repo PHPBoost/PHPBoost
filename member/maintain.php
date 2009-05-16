@@ -85,7 +85,7 @@ $Template->assign_vars(array(
 	'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
 	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['home'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? $CONFIG['maintain_text'] : $LANG['maintain']),
+	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? second_parse($CONFIG['maintain_text']) : $LANG['maintain']),
 	'L_LOADING' => $LANG['loading'],
 	'L_DAYS' => $LANG['days'],
 	'L_HOURS' => $LANG['hours'],

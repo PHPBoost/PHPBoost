@@ -20,6 +20,8 @@
 			#maintain{
 				text-align:center;
 				padding:30px;
+				margin-top:150px;
+				margin-bottom:100px;
 			}
 			.delay{
 				width:280px;				
@@ -31,8 +33,6 @@
 	</head>
 	<body>		
 		<div id="content">
-			<br />
-			<hr />
 			<div id="maintain">					
 				{L_MAINTAIN}
 				
@@ -92,9 +92,6 @@
 				</script>
 				# ENDIF #	
 			</div>	
-			<hr />
-			
-			<br /><br />			
 			<p style="text-align:center;">{U_INDEX}</p>	
 		</div>	
 		<div id="footer" style="position:relative;bottom:0px">
