@@ -29,9 +29,9 @@
 require_once('../admin/admin_begin.php');
 load_module_lang('forum'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
 
 require_once('../forum/forum_begin.php');
+require_once('../admin/admin_header.php');
 
 $class = retrieve(GET, 'id', 0);
 $top = retrieve(GET, 'top', '');
