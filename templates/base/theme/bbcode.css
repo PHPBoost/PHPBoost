@@ -10,11 +10,11 @@
 .bbcode2{
 	width:486px;
 }
-/* Curseur de la souris au passage sur les icÃ´nes */
+/* Curseur de la souris au passage sur les icônes */
 .bbcode_hover{
 	cursor:pointer;
 }
-/* Menu cachÃ© du BBcode */
+/* Menu caché du BBcode */
 .bbcode_block{
 	position:absolute;
 	text-align:center;
@@ -32,47 +32,46 @@
 h3.title1, h3.title2{
 	width:98%;
 	margin:auto;
-	font-size:14px;
+	font-size:12px;
 	margin-bottom:-5px;
 	padding:0px 5px;
-	border-bottom:2px solid #E53B00;
+	border-bottom:2px solid #4F6A7F;
 }
 /* Titre 1 */
 h3.title1{
-	color:#E53B00;
-	border-bottom:2px solid #E53B00;
+	color:#36424F;
+	border-bottom:2px solid #36424F;
 }
 /* Titre 2 */
 h3.title2{
 	background:#FFFFFF;	
-	color:#000000;
+	color:#36424F;
 	padding:2px 5px;
-	border:1px solid #E53B00;
-	border-left:3px solid #E53B00;
-	border-right:3px solid #E53B00;
+	border:1px solid #4F6A7F;
+	border-left:3px solid #4F6A7F;
+	border-right:3px solid #4F6A7F;
 }
 h4.stitle1, h4.stitle2{
 	display:inline;
-	color:#333333;
-	font-size:14px;
+	color:#36424F;
+	font-size:12px;
 	font-weight:bold;
-	margin-left:40px;
-	margin-bottom:45px;
+	margin-left:35px;
 	padding:2px 5px;
 	font-weight:bold;
 	background:#FFFFFF;	
 }
 /* Sous titre 1 */
 h4.stitle1{
-	border:1px solid #0578CC;
-	border-left:3px solid #0578CC;
-	border-right:3px solid #0578CC;
+	border:1px solid #6B9BBF;
+	border-left:3px solid #6B9BBF;
+	border-right:3px solid #6B9BBF;
 }
 /* Sous titre 2 */
 h4.stitle2{
-	margin-left:70px;
-	border:1px solid #0578CC;
-	border-top:3px solid #0578CC;
+	margin-left:50px;
+	border:1px solid #6B9BBF;
+	border-top:3px solid #6B9BBF;
 }
 .float_left
 {

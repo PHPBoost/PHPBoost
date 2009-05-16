@@ -480,11 +480,11 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 
     //Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
     $result = array();
-
+    
     //Si on détecte le bon motif, on le renvoie
     if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
     {
-        return $result[1];
+        return str_replace('\r\n', "\r\n", $result[1]);
     }
     //Sinon, on renvoie une chaîne vide
     else
@@ -700,6 +700,19 @@ function second_parse(&$content)
     $parser->parse();
 
     return $parser->get_content(DO_NOT_ADD_SLASHES);
+}
+
+/**
+ * @desc Second parses relative urls to absolute urls.
+ * @param string $url Url to second parse
+ * @return string The second parsed url.
+ * @see Url
+ */
+function second_parse_url($url)
+{
+	import('util/url');
+	$url = new Url($url);
+	return $url->absolute();
 }
 
 /**
