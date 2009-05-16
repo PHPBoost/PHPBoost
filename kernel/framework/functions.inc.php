@@ -484,7 +484,7 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
     //Si on détecte le bon motif, on le renvoie
     if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
     {
-        return str_replace('\r\n', "\r\n", $result[1]);
+    	return str_replace('\n', "\r\n", $result[1]);
     }
     //Sinon, on renvoie une chaîne vide
     else
@@ -708,11 +708,11 @@ function second_parse(&$content)
  * @return string The second parsed url.
  * @see Url
  */
-function second_parse_url($url)
+function second_parse_url(&$url)
 {
 	import('util/url');
-	$url = new Url($url);
-	return $url->absolute();
+	$Url = new Url($url);
+	return $Url->absolute();
 }
 
 /**
