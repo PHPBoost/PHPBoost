@@ -30,47 +30,49 @@
  * A lot of fields and options are supported, for further details refer yourself to each field class.
  * 
  * Example of use :
-	import('builder/form/form_builder');
-	$form = new FormBuilder('test', '');
-	
-	//####### First fieldset ######//
-	$fieldset = new FormFieldset('Form Test');
-	
-	$fieldset->add_field(new FormTextEdit('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
-	//Textarea field
-	$fieldset->add_field(new FormTextarea('contents', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
-	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
-	//Radio button field
-	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
-		new FormRadioChoiceOption(array('optiontitle' => 'Choix1', 'value' => 1)), 
-		new FormRadioChoiceOption(array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => true))
-	));
-	
-	//Checkbox button field
-	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
-		new FormCheckboxOption(array('optiontitle' => 'Choix3', 'value' => 1)), 
-		new FormCheckboxOption(array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => true)) 
-	));
-	//Select field
-	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
-		new FormSelectOption(array('optiontitle' => 'Men', 'value' => 1)), 
-		new FormSelectOption(array('optiontitle' => 'Women', 'value' => 2)), 
-		new FormSelectOption(array('optiontitle' => '?', 'value' => -1, 'selected' => true))
-	));
-	
-	$form->add_fieldset($fieldset);  //Add fieldset to the form.
-	
-	//####### Second fieldset #######//
-	$fieldset_up = new FormFieldset('Upload file');
-	//File field
-	$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
-	//Radio button field
-	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
-	
-	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
-	
-	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
-	echo $form->display(); //Display form.
+ *<code>
+*	import('builder/form/form_builder');
+*	$form = new FormBuilder('test', '');
+*	
+*	//####### First fieldset ######//
+*	$fieldset = new FormFieldset('Form Test');
+*	
+*	$fieldset->add_field(new FormTextEdit('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
+*	//Textarea field
+*	$fieldset->add_field(new FormTextarea('contents', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
+*	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
+*	//Radio button field
+*	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
+*		new FormRadioChoiceOption(array('optiontitle' => 'Choix1', 'value' => 1)), 
+*		new FormRadioChoiceOption(array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => true))
+*	));
+*	
+*	//Checkbox button field
+*	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
+*		new FormCheckboxOption(array('optiontitle' => 'Choix3', 'value' => 1)), 
+*		new FormCheckboxOption(array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => true)) 
+*	));
+*	//Select field
+*	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
+*		new FormSelectOption(array('optiontitle' => 'Men', 'value' => 1)), 
+*		new FormSelectOption(array('optiontitle' => 'Women', 'value' => 2)), 
+*		new FormSelectOption(array('optiontitle' => '?', 'value' => -1, 'selected' => true))
+*	));
+*	
+*	$form->add_fieldset($fieldset);  //Add fieldset to the form.
+*	
+*	//####### Second fieldset #######//
+*	$fieldset_up = new FormFieldset('Upload file');
+*	//File field
+*	$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
+*	//Radio button field
+*	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
+*	
+*	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
+*	
+*	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
+*	echo $form->display(); //Display form.
+*</code>
  * @package builder
  * @subpackage form
  */ 
