@@ -1,5 +1,11 @@
 <?php
-/*******************************************************************************
+if (defined('PHPBOOST') !== true)	exit;
+/**
+* @package lib
+*
+*/
+
+/**
 *
 *    SHA256 static class for PHP4
 *    implemented by feyd _at_ devnetwork .dot. net
@@ -39,18 +45,24 @@
 *    Usage:
 *        $hash = SHA256::hash('string to hash');
 *
-******************************************************************************/
+*/
 
-
-//    hashing class state and storage object. Abstract base class only.
+/**
+* hashing class state and storage object. Abstract base class only.
+*
+* @package lib
+*/
 class hashData
 {
     //    final hash
     var $hash = null;
 }
 
-
-//    hashing class. Abstract base class only.
+/**
+* hashing class. Abstract base class only.
+*
+* @package lib
+*/
 class hash
 {
     //    The base modes are:
@@ -91,7 +103,11 @@ class hash
 
 //    ------------
 
-
+/**
+* Class SHA256Data
+*
+* @package lib
+*/
 class SHA256Data extends hashData
 {
     //    buffer
@@ -144,7 +160,11 @@ class SHA256Data extends hashData
 }
 
 
-//    static class. Access via SHA256::hash()
+/**
+*  static class. Access via SHA256::hash()
+*
+* @package lib
+*/
 class SHA256 extends hash
 {
     function hash($str, $mode = 'hex')

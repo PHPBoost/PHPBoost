@@ -1,5 +1,8 @@
 <?php
 if (defined('PHPBOOST') !== true)	exit;
+/**
+* @package lib
+*/
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Tar Module 1.3.1

@@ -1,5 +1,8 @@
 <?php
 if (defined('PHPBOOST') !== true)	exit;
+/**
+* @package lib
+*/
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Error 1.0
