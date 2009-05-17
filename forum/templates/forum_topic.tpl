@@ -331,8 +331,9 @@
 		
 		# INCLUDE forum_bottom #
 			
+		<span id="go_bottom"></span>
 		# IF C_AUTH_POST #
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">
+		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;">
 			<div>
                 <div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
                 {KERNEL_EDITOR}
