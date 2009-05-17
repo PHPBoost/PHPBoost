@@ -37,8 +37,6 @@ define('TPL_KEYWORD_STYLE', 'color:#000066; font-weight: bold;');
 /**
  * @package content
  * @subpackage parser
- * @package content
- * @subpackage parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This is a syntax highlighter for the PHPBoost template syntax.
  */
