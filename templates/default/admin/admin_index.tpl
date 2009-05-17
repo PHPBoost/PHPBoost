@@ -62,7 +62,7 @@
 					</tr>
 					<tr> 
 						<td class="row2">
-							<div style="height:140px;overflow:auto;">
+							<div style="height:140px;width:358px;overflow:auto;margin:auto;">
 								# START com_list #	
 								<div style="margin-bottom:10px;">
 									<a href="{com_list.U_PROV}#anchor_{com_list.COM_SCRIPT}"><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> <span class="text_small">{L_BY} {com_list.USER_PSEUDO}</span>
