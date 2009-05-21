@@ -81,29 +81,29 @@ class Url
      */
     function set_url($url)
     {
+        if (strpos($url, 'www.') === 0)
+        {   // If the url begins with 'www.', it's an absolute one
+            $url = 'http://' . $url;
+        }
         $url = str_replace(HOST . DIR . '/', '/', Url::compress($url));
         if (!strpos($url, '://'))
         {
+            $this->is_relative = true;
             if (substr($url, 0, 1) == '/')
             {   // Relative url from the website root (good form)
-                $this->relative = $url;
+                $this->url = $url;
             }
             else
             {   // The url is relative to the current foler
-                $this->relative = $this->root_to_local() . $url;
+                $this->url = $this->root_to_local() . $url;
             }
-            $this->relative = Url::compress($this->relative);
-        }
-
-        global $CONFIG;
-        if (!empty($this->relative))
-        {
-            $this->absolute = Url::compress(Url::get_absolute_root() . $this->relative);
         }
         else
         {
-            $this->absolute = Url::compress($url);
+            $this->is_relative = false;
+            $this->url = $url;
         }
+        $this->url = Url::compress($this->url);
     }
 
     /**
@@ -111,7 +111,7 @@ class Url
      */
     function is_relative()
     {
-        return !empty($this->relative);
+        return $this->is_relative;
     }
 
     /**
@@ -122,11 +122,11 @@ class Url
     {
         if ($this->is_relative())
         {
-            return $this->relative;
+            return $this->url;
         }
         else
         {
-            return $this->absolute;
+            return $this->absolute();
         }
     }
 
@@ -136,7 +136,14 @@ class Url
      */
     function absolute()
     {
-        return $this->absolute;
+        if ($this->is_relative())
+        {
+            return Url::compress($this->get_absolute_root() . $this->url);
+        }
+        else
+        {
+            return $this->url;
+        }
     }
 
 
@@ -156,7 +163,7 @@ class Url
 
         }
         while (preg_match('`/?[^/]+/\.\.`', $url) > 0);
-        return $url;
+        return preg_replace('`^//`', '/', $url);
     }
 
     /**
@@ -321,8 +328,8 @@ class Url
         return $server_url;
     }
 
-    var $relative = '';
-    var $absolute = '';
+    var $url = '';
+    var $is_relative = false;
     var $path_to_root = '';
     var $server_url = '';
 }
