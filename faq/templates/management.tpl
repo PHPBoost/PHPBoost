@@ -233,6 +233,7 @@
 						<label for="contents">{L_ANSWER}</label>
 						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
+						<br />
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
