@@ -131,11 +131,11 @@ function gallery_mini($position, $block)
     			
     		$tpl->assign_block_vars('pics_mini', array(
     			'ID' => $i,
-    			'PICS' => PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
+    			'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
     			'NAME' => $row['name'],
     			'HEIGHT' => $row['height'],
     			'WIDTH' => $row['width'],
-    			'U_PICS' => PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
+    			'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
     		));
 
     		$sum_height += $row['height'] + 5;

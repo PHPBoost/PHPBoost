@@ -83,7 +83,7 @@ function connect_mini($position, $block)
     		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
     		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
     		'IMG_PM' => $User->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-    		'U_USER_PM' => PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+    		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
     		'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', '-' . $User->get_attribute('user_id') . '.php?view=1'),
     		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . $Session->get_token(),
     		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
@@ -108,7 +108,7 @@ function connect_mini($position, $block)
     		'L_FORGOT_PASS' => $LANG['forget_pass'],
     		'L_REGISTER' => $LANG['register'],
     		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
-    		'U_REGISTER' => PATH_TO_ROOT . '/member/register.php' . SID
+    		'U_REGISTER' => TPL_PATH_TO_ROOT . '/member/register.php' . SID
     	));
     }
     

@@ -908,7 +908,7 @@ foreach ($lang_dir->get_folders('`[a-z_-]`i') as $folder)
 }
 
 $template->assign_vars(array(
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
+	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'LANG' => $lang,
 	'NUM_STEP' => $step,
 	'PROGRESS_LEVEL' => $steps[$step - 1][2],

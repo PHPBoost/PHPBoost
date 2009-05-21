@@ -101,7 +101,7 @@ class Template
                     'LANG' => get_ulang(),
                     'C_USER_CONNECTED' => $member_connected,
                     'C_USER_NOTCONNECTED' => !$member_connected,
-                    'PATH_TO_ROOT' => PATH_TO_ROOT,
+                    'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
                     'TOKEN' => !empty($Session) ? $Session->get_token() : ''
                     ));
             }
@@ -385,11 +385,11 @@ class Template
             {
                 if (is_dir($theme_module_templates_folder . '/images'))
                 {
-                    $this->module_data_path[$module] = trim($theme_module_templates_folder, '/');
+                    $this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/' . 'modules/' . $module;
                 }
                 else
                 {
-                    $this->module_data_path[$module] = trim($module_templates_folder, '/');
+                    $this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/' . trim($module . '/templates/', '/');
                 }
             }
 
