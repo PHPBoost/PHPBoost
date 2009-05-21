@@ -115,15 +115,15 @@ if (defined('ALTERNATIVE_CSS'))
     if (is_array($styles))
     {
         foreach ($styles as $module => $style) {
-            $base 	= PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+            $base 	= '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
             $file = $base . $style . '.css';
-            if (file_exists($file))
+            if (file_exists(PATH_TO_ROOT . $file))
             {
-                $alternative = $file;
+                $alternative = TPL_PATH_TO_ROOT . $file;
             }
             else
             {
-                $alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $style . '.css';
+                $alternative = TPL_PATH_TO_ROOT . '/' . $module . '/templates/' . $style . '.css';
             }
             $alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
         }
@@ -132,17 +132,17 @@ if (defined('ALTERNATIVE_CSS'))
     {
         $array_alternative_css = explode(',', str_replace(' ', '', ALTERNATIVE_CSS));
         $module = $array_alternative_css[0];
-        $base = PATH_TO_ROOT . '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
+        $base = '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
         foreach ($array_alternative_css as $alternative)
         {
             $file = $base . $alternative . '.css';
-            if (file_exists($file))
+            if (file_exists(PATH_TO_ROOT . $file))
             {
-                $alternative = $file;
+                $alternative = TPL_PATH_TO_ROOT . $file;
             }
             else
             {
-                $alternative = PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
+                $alternative = TPL_PATH_TO_ROOT . '/' . $module . '/templates/' . $alternative . '.css';
             }
             $alternative_css .= '<link rel="stylesheet" href="' . $alternative . '" type="text/css" media="screen, handheld" />' . "\n";
         }
@@ -155,7 +155,7 @@ if (isset($CSS[get_utheme()]))
 {
     foreach ($CSS[get_utheme()] as $css_mini_module)
     {
-        $alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . PATH_TO_ROOT . $css_mini_module . '" type="text/css" media="screen, handheld" />' . "\n";
+        $alternative_css .= "\t\t" . '<link rel="stylesheet" href="' . TPL_PATH_TO_ROOT . $css_mini_module . '" type="text/css" media="screen, handheld" />' . "\n";
     }
 }
 
@@ -164,6 +164,7 @@ $THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/',
 
 $member_connected = $User->check_level(MEMBER_LEVEL);
 $Template->assign_vars(array(
+	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'SID' => SID,
 	'SERVER_NAME' => $CONFIG['site_name'],
 	'SITE_NAME' => $CONFIG['site_name'],
@@ -181,7 +182,6 @@ $Template->assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'L_VISIT' => $LANG['guest_s'],
 	'L_TODAY' => $LANG['today'],
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
 	'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
 	'L_REQUIRE_PASSWORD' => $LANG['require_password']
 ));

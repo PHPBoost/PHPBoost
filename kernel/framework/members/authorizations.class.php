@@ -132,7 +132,7 @@ class Authorizations
 			'C_NO_ADVANCED_AUTH' => ($disabled_advanced_auth) ? true : false,
 			'C_ADVANCED_AUTH' => ($disabled_advanced_auth) ? false : true,
             'THEME' => get_utheme(),
-            'PATH_TO_ROOT' => PATH_TO_ROOT,
+            'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'IDSELECT' => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
 			'L_USERS' => $LANG['member_s'],

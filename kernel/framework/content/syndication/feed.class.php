@@ -308,7 +308,7 @@ class Feed
 	    $feed_absolut_url = $CONFIG['server_name'] . $CONFIG['server_path'] . '/' . trim($feed_url, '/');
 	    
 	    $feed_menu->assign_vars(array(
-	        'PATH_TO_ROOT' => PATH_TO_ROOT,
+	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'PATH_TO_MENU' => dirname($feed_menu->tpl),
 	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,

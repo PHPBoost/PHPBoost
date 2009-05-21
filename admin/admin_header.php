@@ -90,7 +90,7 @@ $Template->assign_vars(array(
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'SITE_NAME' => $CONFIG['site_name'],
 	'TITLE' => TITLE,
-	'PATH_TO_ROOT' => PATH_TO_ROOT,
+	'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	'SID' => SID,
 	'LANG' => get_ulang(),
 	'THEME' => get_utheme(),

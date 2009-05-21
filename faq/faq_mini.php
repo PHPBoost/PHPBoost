@@ -44,7 +44,7 @@ function faq_mini($position, $block)
     $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     	'FAQ_QUESTION' => $FAQ_LANG['no_random_question'],
-    	'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . url('faq.php')
+    	'U_FAQ_QUESTION' => TPL_PATH_TO_ROOT . '/faq/' . url('faq.php')
     );
     
     //Aucune question à afficher
