@@ -25,6 +25,13 @@
  *
 ###################################################*/
 
+/**
+* @package io
+*/
+
+/**
+* Constant definition
+*/
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('UNAUTHORIZED_PROTOCOL', 'UNAUTHORIZED PROTOCOL');
 define('INVALID_URL', 'INVALID URL');
