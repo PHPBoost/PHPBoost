@@ -1,4 +1,11 @@
 <?php
+/**
+* @package db
+*/
+
+/**
+* Constant definition
+*/
 define('DB_TABLE_COM', PREFIX . 'com');
 define('DB_TABLE_VISIT_COUNTER', PREFIX . 'visit_counter');
 define('DB_TABLE_CONFIGS', PREFIX . 'configs');
