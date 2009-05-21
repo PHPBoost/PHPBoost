@@ -6,14 +6,14 @@
 *   copyright            : (C) 2008 Benoit Sautel
 *   email                :  ben.popeye@phpboost.com
 *
-*   
+*
 ###################################################
 *
 *   This program is free software; you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 *  This program is distributed in the hope that it will be useful,
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -120,7 +120,7 @@ class BBCodeParser extends ContentParser
 	 * </ul>
 	 */
 	function _protect_content()
-	{	
+	{
 		//Breaking the HTML code
 		$this->content = htmlspecialchars($this->content, ENT_NOQUOTES);
 		$this->content = strip_tags($this->content);
@@ -129,22 +129,22 @@ class BBCodeParser extends ContentParser
 		$this->content = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $this->content);
 		
 		//Treatment of the Word pasted characters
-		$array_str = array( 
+		$array_str = array(
 			'€', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰',
 			'Š', '‹', 'Œ', 'Ž', '‘', '’', '“', '”', '•',
 			'–', '—',  '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ'
 		);
 		
-		$array_str_replace = array( 
+		$array_str_replace = array(
 			'&#8364;', '&#8218;', '&#402;', '&#8222;', '&#8230;', '&#8224;', '&#8225;', '&#710;', '&#8240;',
 			'&#352;', '&#8249;', '&#338;', '&#381;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8226;',
 			'&#8211;', '&#8212;', '&#732;', '&#8482;', '&#353;', '&#8250;', '&#339;', '&#382;', '&#376;'
-		);		
+		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 	}
 	
 	/**
-	 * @desc Replaces the smiley's code by the corresponding HTML image tag 
+	 * @desc Replaces the smiley's code by the corresponding HTML image tag
 	 */
 	function _parse_smilies()
 	{
@@ -169,7 +169,7 @@ class BBCodeParser extends ContentParser
 	function _parse_simple_tags()
 	{
 		global $LANG;
-		$array_preg = array( 
+		$array_preg = array(
 			'b' => '`\[b\](.+)\[/b\]`isU',
 			'i' => '`\[i\](.+)\[/i\]`isU',
 			'u' => '`\[u\](.+)\[/u\]`isU',
@@ -191,21 +191,21 @@ class BBCodeParser extends ContentParser
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
             'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`\[url\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\[/url\]`isU',
+			'url' => '`\[url\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\[/url\]`isU',
 			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\[/url\]`isU',
-			'url3' => '`\[url=((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\]([^\n\r\t\f]+)\[/url\]`isU',
+			'url3' => '`\[url=((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?/?)?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\]([^\n\r\t\f]+)\[/url\]`isU',
 			'url4' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url5' => '`(\s+)((?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s|<+)`isU', 
+			'url5' => '`(\s+)((?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s|<+)`isU',
 			'url6' => '`(\s+)((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s|<+)`i',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i'
 		);
 		
-		$array_preg_replace = array( 
+		$array_preg_replace = array(
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
 			'u' => "<span style=\"text-decoration: underline;\">$1</span>",
-			's' => "<strike>$1</strike>",		
+			's' => "<strike>$1</strike>",
 			'sup' => '<sup>$1</sup>',
 			'sub' => '<sub>$1</sub>',
 			'img' => "<img src=\"$2\" alt=\"\" class=\"valign_$1\" />",
@@ -215,7 +215,7 @@ class BBCodeParser extends ContentParser
 			'font' => "<span style=\"font-family: $1;\">$2</span>",
 			'pre' => "<pre>$1</pre>",
 			'align' => "<p style=\"text-align:$1\">$2</p>",
-			'float' => "<p class=\"float_$1\">$2</p>",	
+			'float' => "<p class=\"float_$1\">$2</p>",
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
@@ -236,7 +236,7 @@ class BBCodeParser extends ContentParser
 			'url2' => "<a href=\"http://$1\">$1</a>",
 			'url3' => "<a href=\"$1\">$2</a>",
 			'url4' => "<a href=\"http://$1\">$2</a>",
-			'url5' => "$1<a href=\"$2\">$2</a>$3", 
+			'url5' => "$1<a href=\"$2\">$2</a>$3",
 			'url6' => "$1<a href=\"http://$2\">$2</a>$3",
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
 			'mail2' => "<a href=\"mailto:$1\">$2</a>"
@@ -268,11 +268,11 @@ class BBCodeParser extends ContentParser
 					$parse_line = false;
 				}
 				else
-				{	
+				{
 					unset($array_preg[$tag]);
 					unset($array_preg_replace[$tag]);
 				}
-			}	
+			}
 		}
 		
 		//Remplacement : on parse les balises classiques
@@ -347,7 +347,7 @@ class BBCodeParser extends ContentParser
 					$this->_parse_imbricated_table($content[$i]);
 					//On parse le tableau concerné (il doit commencer par [row] puis [col] ou [head] et se fermer pareil moyennant espaces et retours à la ligne sinon il n'est pas valide)
 					if (preg_match('`^(?:\s|<br />)*\[row(?: style="[^"]+")?\](?:\s|<br />)*\[(?:col|head)(?: colspan="[0-9]+")?(?: rowspan="[0-9]+")?(?: style="[^"]+")?\].*\[/(?:col|head)\](?:\s|<br />)*\[/row\](?:\s|<br />)*$`sU', $content[$i]))
-					{						
+					{
 						//On nettoie les caractères éventuels (espaces ou retours à la ligne) entre les différentes cellules du tableau pour éviter les erreurs xhtml
 						$content[$i] = preg_replace_callback('`^(\s|<br />)+\[row.*\]`U', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`\[/row\](\s|<br />)+$`U', array(&$this, 'clear_html_br'), $content[$i]);
@@ -416,7 +416,7 @@ class BBCodeParser extends ContentParser
 						$this->_parse_imbricated_list($content[$i]);
 					
 					if (strpos($content[$i], '[*]') !== false) //Si il contient au moins deux éléments
-					{				
+					{
 						//Nettoyage des listes (retours à la ligne)
 						$content[$i] = preg_replace_callback('`\[\*\]((?:\s|<br />)+)`', array(&$this, 'clear_html_br'), $content[$i]);
 						$content[$i] = preg_replace_callback('`((?:\s|<br />)+)\[\*\]`', array(&$this, 'clear_html_br'), $content[$i]);
@@ -485,7 +485,7 @@ class BBCodeParser extends ContentParser
 		
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];
 		
-		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';	
+		return '<a href="http://' . $lang . '.wikipedia.org/wiki/' . $page_url . '" class="wikipedia_link">' . $matches[3] . '</a>';
 	}
 	
 	/**
