@@ -219,16 +219,7 @@ class BBCodeParser extends ContentParser
 			'anchor' => "<span id=\"$1\">$2</span>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
-			'swf' => "<object type=\"application/x-shockwave-flash\" data=\"$3\" width=\"$1\" height=\"$2\">
-		<param name=\"allowScriptAccess\" value=\"never\" />
-		<param name=\"play\" value=\"true\" />
-		<param name=\"movie\" value=\"$3\" />
-		<param name=\"menu\" value=\"false\" />
-		<param name=\"quality\" value=\"high\" />
-		<param name=\"scalemode\" value=\"noborder\" />
-		<param name=\"wmode\" value=\"transparent\" />
-		<param name=\"bgcolor\" value=\"#000000\" />
-		</object>",
+			'swf' => "<script type=\"text/javascript\"><!-- \n insertSwfPlayer(\"$3\", $1, $2); \n --></script>",
 			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
 			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
 			'math' => '[[MATH]]$1[[/MATH]]',

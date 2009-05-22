@@ -39,6 +39,7 @@ define('DEBUG', false);
 ob_start();
 
 define('PATH_TO_ROOT', '..');
+define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 
 header('Content-type: text/html; charset=iso-8859-1');
 header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1

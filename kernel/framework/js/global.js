@@ -691,7 +691,7 @@ function insertSoundPlayer(url) {
 		playerDewplayerRequired = true;
 	}
 
-	document.write("<object type=\"application/x-shockwave-flash\" data=\"../kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
+	document.write("<object type=\"application/x-shockwave-flash\" data=\"" + PATH_TO_ROOT + "/kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
 		"<param name=\"allowScriptAccess\" value=\"never\" />" +
 		"<param name=\"play\" value=\"true\" />" + 
 		"<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=" + url + "\" />" +
@@ -700,5 +700,18 @@ function insertSoundPlayer(url) {
 		"<param name=\"scalemode\" value=\"noborder\" />" +
 		"<param name=\"wmode\" value=\"transparent\" />" +
 		"<param name=\"bgcolor\" value=\"#FFFFFF\" />" + 
+		"</object>");
+}
+
+function insertSwfPlayer(url, width, height) {
+	document.write("<object type=\"application/x-shockwave-flash\" data=\"" + url + "\" width=\"" + width.toString() + "\" height=\"" + height.toString() + "\">" +
+		"<param name=\"allowScriptAccess\" value=\"never\" />" +
+		"<param name=\"play\" value=\"true\" />" +
+		"<param name=\"movie\" value=\"" + url + "\" />" +
+		"<param name=\"menu\" value=\"false\" />" +
+		"<param name=\"quality\" value=\"high\" />" +
+		"<param name=\"scalemode\" value=\"noborder\" />" +
+		"<param name=\"wmode\" value=\"transparent\" />" +
+		"<param name=\"bgcolor\" value=\"#000000\" />" +
 		"</object>");
 }
