@@ -209,7 +209,7 @@ class Url
         Url::path_to_root($path_to_root);
         Url::server_url($server_url);
         return preg_replace_callback(
-            '`(<script type="text/javascript">.*insert(?:Sound|Movie)Player\(")(/[^"]+)(".*</script>)`sU',
+            '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU',
         array('Url', '_convert_url_to_absolute'),
         preg_replace_callback(
 		        '`((?:<[^>]+) (?:' . URL_TAGS . ')=")(/[^"]+)("(?:[^<]*>))`',
@@ -232,7 +232,7 @@ class Url
         Url::path_to_root($path_to_root);
         Url::server_url($server_url);
         return preg_replace_callback(
-            '`(<script type="text/javascript">.*insert(?:Sound|Movie)Player\(")([^"]+)(".*</script>)`sU',
+            '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")([^"]+)(".*</script>)`sU',
         array('Url', '_convert_url_to_relative'),
         preg_replace_callback(
 	            '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))([^"]+)("(?:[^<]*>))`',
