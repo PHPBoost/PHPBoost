@@ -131,6 +131,7 @@ class BBCodeUnparser extends ContentUnparser
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
 			'`<script type="text/javascript"><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<script type="text/javascript"><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
 		);
 		
@@ -155,6 +156,7 @@ class BBCodeUnparser extends ContentUnparser
 			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
 		    "[movie=$2,$3]$1[/movie]",
+			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[math]$1[/math]"
 		);	

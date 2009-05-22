@@ -403,16 +403,7 @@ class TinyMCEParser extends ContentParser
 		if (!in_array('swf', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU');
-			array_push($array_preg_replace, '<object type="application/x-shockwave-flash" data="$3" width="$1" height="$2">
-		<param name="allowScriptAccess" value="never" />
-		<param name="play" value="true" />
-		<param name="movie" value="$3" />
-		<param name="menu" value="false" />
-		<param name="quality" value="high" />
-		<param name="scalemode" value="noborder" />
-		<param name="wmode" value="transparent" />
-		<param name="bgcolor" value="#000000" />
-		</object>');
+			array_push($array_preg_replace, '<script type=\"text/javascript\"><!-- \n insertSwfPlayer(\"$3\", $1, $2); \n --></script>');
 		}
 		
 		//Replacement
