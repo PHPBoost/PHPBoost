@@ -48,7 +48,7 @@
 						<legend>{L_CONFIG_GENERAL}</legend>
 						<dl>
 							<dt>
-								<label for="name">{L_MODULE_NAME}</label>
+								<label for="media_name">{L_MODULE_NAME}</label>
 								<br />
 								<span class="text_small">{L_MODULE_NAME_EXPLAIN}</span>
 							</dt>
@@ -60,7 +60,7 @@
 						<label for="contents" id="preview_description">{L_MODULE_DESC}</label>
 						<label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="10" cols="90" id="contents" name="desc">{CONTENTS}</textarea>
+							<textarea type="text" rows="10" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
 						</label>
 						<br />
 						<dl>
