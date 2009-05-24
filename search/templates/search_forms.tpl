@@ -31,7 +31,7 @@
                 }
                 else
                 {
-                    alert('{L_WARNING_LENGTH_STRING_SEARCH}');
+                    alert({L_WARNING_LENGTH_STRING_SEARCH});
                     return false;
                 }
             }
