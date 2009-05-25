@@ -651,7 +651,7 @@
 								if (value.length<3)			
 								{	
 									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
-									document.getElementById('msg_login_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+									document.getElementById('msg_login_div').innerHTML = "{L_LOGIN_TOO_SHORT}";
 								}
 								else	
 								{
