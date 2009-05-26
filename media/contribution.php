@@ -3,7 +3,7 @@
  *                              media_contribution.php
  *                            -------------------
  *   begin               	: October 20, 2008
- *   copyright        	: (C) 2007 Geoffrey ROGUELON
+ *   copyright        		: (C) 2007 Geoffrey ROGUELON
  *   email               	: liaght@gmail.com
  *
  *

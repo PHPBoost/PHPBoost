@@ -3,7 +3,7 @@
  *                               admin_media_config.php
  *                            -------------------
  *   begin                : March 03, 2008
- *   copyright         : (C) 2008 Gsgsd
+ *   copyright         	  : (C) 2008 Gsgsd
  *   email                :  gsetgsd@hotmail.fr
  *
  *
