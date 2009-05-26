@@ -3,7 +3,7 @@ CREATE TABLE `phpboost_pages` (
   `id` int(11) NOT NULL auto_increment,
   `title` varchar(255) NOT NULL default '',
   `encoded_title` varchar(255) NOT NULL default '',
-  `contents` text,
+  `contents` mediumtext,
   `auth` text,
   `is_cat` tinyint(1) NOT NULL default '0',
   `id_cat` int(11) NOT NULL default '0',
