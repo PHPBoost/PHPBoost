@@ -131,7 +131,7 @@ elseif (!empty($_GET['recount']))
 }
 else
 {
-	// Filtre pour le panneau de modÃ©ration.
+	// Filtre pour le panneau de modération.
 	$array_cats = $js_array = array();
 
 	if (!empty($_POST['filter']))
@@ -169,7 +169,7 @@ else
 		$media_categories->build_children_id_list(0, $array_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, MEDIA_AUTH_READ);
 	}
 	
-	//On crÃ©e une pagination si le nombre de fichier est trop important.
+	//On crée une pagination si le nombre de fichier est trop important.
 	import('util/pagination');
 	$Pagination = new Pagination();
 
