@@ -121,7 +121,7 @@
 			</div>
 			<div class="forum_links" style="border-top:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
+					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 				</div>
 				<div style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;
