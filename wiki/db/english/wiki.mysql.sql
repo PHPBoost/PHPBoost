@@ -31,7 +31,7 @@ CREATE TABLE `phpboost_wiki_contents` (
 	`id_contents` int(11) NOT NULL auto_increment,
 	`id_article` int(11) NOT NULL default '0',
 	`menu` text,
-	`content` text,
+	`content` mediumtext,
 	`activ` tinyint(1) NOT NULL default '0',
 	`user_id` int(11) NOT NULL default '0',
 	`user_ip` varchar(50) NOT NULL default '',

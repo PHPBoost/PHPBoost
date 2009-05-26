@@ -3,7 +3,7 @@ CREATE TABLE `phpboost_news` (
   `id` int(11) NOT NULL auto_increment,
   `idcat` int(11) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
-  `contents` text,
+  `contents` mediumtext,
   `extend_contents` text,
   `archive` tinyint(1) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
