@@ -380,14 +380,15 @@ class Session
 	{
 		global $Sql;
 		
+	
 		if (empty($this->data['user_id']) || !is_numeric($this->data['user_id']))
 			return false;
 
-		if (empty($module) || !is_string($module)) 
-			$module = MODULE_NAME;		
+		if (empty($module) || !is_string($module))
+			$module = MODULE_NAME;
 
 		$this->data['modules_parameters'] = $Sql->query("SELECT modules_parameters FROM " . DB_TABLE_SESSIONS . " WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
-		if ($this->data['modules_parameters'] != false)
+		if ($this->data['modules_parameters'] !== false) // test permettant d'ecrire la premiere fois si le contenu est vide
 		{
 			$modules_parameters = unserialize($this->data['modules_parameters']);
 			$modules_parameters[$module] = $parameters;
@@ -396,8 +397,10 @@ class Session
 			
 			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $this->data['modules_parameters'] . "' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
 		}
-		else	
+		else
+		{
 			$this->data['modules_parameters'] = '';
+		}
 	}
 	
 	/**
@@ -411,7 +414,7 @@ class Session
 
 		if (empty($this->data['user_id']) || !is_numeric($this->data['user_id']))
 			return false;
-			
+		
 		if (empty($module) || !is_string($module)) 
 			$module = MODULE_NAME;
 		
@@ -420,8 +423,10 @@ class Session
 		{
 			$array = unserialize($this->data['modules_parameters']);
 		}
-		else	
+		else
+		{
 			$this->data['modules_parameters'] = '';
+		}
 		
 		return isset($array[$module]) ? $array[$module] : '';	
 	}
