@@ -60,7 +60,7 @@
                     <a class="news_title" href="../news/news{news.U_NEWS_LINK}">{news.TITLE}</a>
                 </span>
                 <span style="float:right;">
-					{news.U_COM}
+					<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}
 					# IF C_IS_ADMIN #
 					<a href="../news/admin_news.php?id={news.ID}" title="{L_EDIT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" /></a>
 					<a href="../news/admin_news.php?delete=1&amp;id={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>

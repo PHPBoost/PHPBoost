@@ -157,6 +157,9 @@ elseif ($uninstall) //Désinstallation.
 		}
 		
 		$Cache->generate_file('themes');
+		
+		$Cache->load('themes', RELOAD_CACHE);
+		$Cache->generate_file('css');
 	
 		$error = !empty($error) ? '?error=' . $error : '';
 		redirect(HOST . SCRIPT . $error);

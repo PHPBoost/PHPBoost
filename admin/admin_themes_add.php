@@ -55,6 +55,9 @@ if ($install)
 		
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
+		
+		$Cache->load('themes', RELOAD_CACHE);
+		$Cache->Generate_file('css');
 
 		redirect(HOST . SCRIPT); 
 	}
