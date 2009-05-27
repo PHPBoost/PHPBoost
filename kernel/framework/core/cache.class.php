@@ -39,8 +39,8 @@ define('NO_FATAL_ERROR_CACHE', true);
 class Cache
 {
     /**
-     * @desc Builds a Cache object. Check if the directory in which the cache is written is writable.
-     */
+	 * @desc Builds a Cache object. Check if the directory in which the cache is written is writable.
+	 */
     function Cache()
     {
         if (!is_dir(PATH_TO_ROOT . '/cache') || !is_writable(PATH_TO_ROOT . '/cache'))
@@ -53,11 +53,11 @@ class Cache
     }
 
     /**
-     * @desc Loads a file file.
-     * @param string $file Identifier of the cache file (for example the name of your module).
-     * @param bool $reload_cache If the cache file may have been already loaded, RELOAD_CACHE force it to be reloaded, for example if the file
-     * has been updated since the first loading.
-     */
+	 * @desc Loads a file file.
+	 * @param string $file Identifier of the cache file (for example the name of your module).
+	 * @param bool $reload_cache If the cache file may have been already loaded, RELOAD_CACHE force it to be reloaded, for example if the file
+	 * has been updated since the first loading.
+	 */
     function load($file, $reload_cache = false)
     {
         global $Errorh, $Sql;
@@ -127,19 +127,19 @@ class Cache
     }
 
     /**
-     * @desc Generates a file according to the specified method.
-     * @param string $file The name of the file to generate.
-     */
+	 * @desc Generates a file according to the specified method.
+	 * @param string $file The name of the file to generate.
+	 */
     function generate_file($file)
     {
         $this->write($file, $this->{'_get_' . $file}());
     }
 
     /**
-     * @desc Generates a module file
-     * @param string $module_name Name of the module for which you want to generate the cache.
-     * @param bool $no_alert_on_error true if you want to display the generation error, false otherwise.
-     */
+	 * @desc Generates a module file
+	 * @param string $module_name Name of the module for which you want to generate the cache.
+	 * @param bool $no_alert_on_error true if you want to display the generation error, false otherwise.
+	 */
     function generate_module_file($module_name, $no_alert_on_error = false)
     {
         global $Errorh;
@@ -159,8 +159,8 @@ class Cache
     }
 
     /**
-     * @desc Regenerates all the cache files managed by the PHPBoost cache manager. This method needs a lot of resource, call it only when you are sure you need it.
-     */
+	 * @desc Regenerates all the cache files managed by the PHPBoost cache manager. This method needs a lot of resource, call it only when you are sure you need it.
+	 */
     function generate_all_files()
     {
         foreach ($this->files as $cache_file)
@@ -173,8 +173,8 @@ class Cache
     }
 
     /**
-     * @desc Generates all the module cache files.
-     */
+	 * @desc Generates all the module cache files.
+	 */
     function generate_all_modules()
     {
         global $MODULES;
@@ -192,10 +192,10 @@ class Cache
     }
 
     /**
-     * @desc Deletes a cache file.
-     * @param string $file Name of the file to delete.
-     * @return true if the file could be deleted, false otherwise.
-     */
+	 * @desc Deletes a cache file.
+	 * @param string $file Name of the file to delete.
+	 * @return true if the file could be deleted, false otherwise.
+	 */
     function delete_file($file)
     {
         if (@file_exists(PATH_TO_ROOT . '/cache/' . $file . '.php'))
@@ -209,10 +209,10 @@ class Cache
     }
 
     /**
-     * @desc Writes a cache file.
-     * @param string $module_name Name of the file to write
-     * @param string $cache_string Content of the file to write
-     */
+	 * @desc Writes a cache file.
+	 * @param string $module_name Name of the file to write
+	 * @param string $cache_string Content of the file to write
+	 */
     function write($module_name, &$cache_string)
     {
         $file_path = PATH_TO_ROOT . '/cache/' . $module_name . '.php';
@@ -251,9 +251,9 @@ class Cache
     ## Private Methods ##
     ########## Fonctions de génération des fichiers un à un ##########
     /**
-    * @desc Method which is called to generate the modules file cache.
-    * @return The content of the modules file cache.
-    */
+	* @desc Method which is called to generate the modules file cache.
+	* @return The content of the modules file cache.
+	*/
     function _get_modules()
     {
         global $Sql;
@@ -277,9 +277,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the menus file cache.
-     * @return The content of the menus file cache.
-     */
+	 * @desc Method which is called to generate the menus file cache.
+	 * @return The content of the menus file cache.
+	 */
     function _get_menus()
     {
         import('core/menu_service');
@@ -287,9 +287,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the site configuration file cache.
-     * @return The content of the site configuration file cache.
-     */
+	 * @desc Method which is called to generate the site configuration file cache.
+	 * @return The content of the site configuration file cache.
+	 */
     function _get_config()
     {
         global $Sql;
@@ -305,9 +305,9 @@ class Cache
     }
     
     /**
-     * @desc Method which is called to generate the debug file cache (it cannot be in the configuration file because it must be loaded before the PHPBoost environment).
-     * @return The content of the debug file cache.
-     */
+	 * @desc Method which is called to generate the debug file cache (it cannot be in the configuration file because it must be loaded before the PHPBoost environment).
+	 * @return The content of the debug file cache.
+	 */
     function _get_debug()
     {
         $this->load('config');
@@ -318,9 +318,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the htaccess file cache.
-     * @return The content of the htaccess file cache.
-     */
+	 * @desc Method which is called to generate the htaccess file cache.
+	 * @return The content of the htaccess file cache.
+	 */
     function _get_htaccess()
     {
         global $CONFIG, $Sql;
@@ -385,9 +385,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the css file cache.
-     * @return The content of the css file cache.
-     */
+	 * @desc Method which is called to generate the css file cache.
+	 * @return The content of the css file cache.
+	 */
     function _get_css()
     {
         global $MODULES, $THEME_CONFIG, $CONFIG;
@@ -418,9 +418,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the themes file cache.
-     * @return The content of the themes file cache.
-     */
+	 * @desc Method which is called to generate the themes file cache.
+	 * @return The content of the themes file cache.
+	 */
     function _get_themes()
     {
         global $Sql;
@@ -441,9 +441,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the langs file cache.
-     * @return The content of the langs file cache.
-     */
+	 * @desc Method which is called to generate the langs file cache.
+	 * @return The content of the langs file cache.
+	 */
     function _get_langs()
     {
         global $Sql;
@@ -462,18 +462,18 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the last record day file cache.
-     * @return The content of the last record day file cache.
-     */
+	 * @desc Method which is called to generate the last record day file cache.
+	 * @return The content of the last record day file cache.
+	 */
     function _get_day()
     {
         return 'global $_record_day;' . "\n" . '$_record_day = ' . gmdate_format('j', time(), TIMEZONE_SITE) . ';';
     }
 
     /**
-     * @desc Method which is called to generate the groups file cache.
-     * @return The content of the groups file cache.
-     */
+	 * @desc Method which is called to generate the groups file cache.
+	 * @return The content of the groups file cache.
+	 */
     function _get_groups()
     {
         global $Sql;
@@ -493,9 +493,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the members file cache.
-     * @return The content of the members file cache.
-     */
+	 * @desc Method which is called to generate the members file cache.
+	 * @return The content of the members file cache.
+	 */
     function _get_member()
     {
         global $Sql;
@@ -518,9 +518,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the ranks file cache.
-     * @return The content of the ranks file cache.
-     */
+	 * @desc Method which is called to generate the ranks file cache.
+	 * @return The content of the ranks file cache.
+	 */
     function _get_ranks()
     {
         global $Sql;
@@ -541,9 +541,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the uploads file cache.
-     * @return The content of the uploads file cache.
-     */
+	 * @desc Method which is called to generate the uploads file cache.
+	 * @return The content of the uploads file cache.
+	 */
     function _get_uploads()
     {
         global $Sql;
@@ -568,9 +568,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the comments file cache.
-     * @return The content of the comments file cache.
-     */
+	 * @desc Method which is called to generate the comments file cache.
+	 * @return The content of the comments file cache.
+	 */
     function _get_com()
     {
         global $Sql;
@@ -589,9 +589,9 @@ class Cache
     }
 	
 	/**
-     * @desc Method which is called to generate the writingpad file cache.
-     * @return The content of the writingpad file cache.
-     */
+	 * @desc Method which is called to generate the writingpad file cache.
+	 * @return The content of the writingpad file cache.
+	 */
     function _get_writingpad()
     {
         global $Sql;
@@ -624,9 +624,9 @@ class Cache
     }
 
     /**
-     * @desc Method which is called to generate the statistics file cache.
-     * @return The content of the statistics file cache.
-     */
+	 * @desc Method which is called to generate the statistics file cache.
+	 * @return The content of the statistics file cache.
+	 */
     function _get_stats()
     {
         global $Sql;
@@ -650,9 +650,9 @@ class Cache
 
     ## Private Attributes ##
     /**
-     * @static
-     * @var string[] List of all the cache files of the kernel.
-     */
+	 * @static
+	 * @var string[] List of all the cache files of the kernel.
+	 */
     var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
 }
 

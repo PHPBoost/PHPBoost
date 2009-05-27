@@ -112,7 +112,7 @@ class FormBuilder
 	}
 	
 	/**
-	 * @desc Add fieldset int the form.
+	 * @desc Add fieldset in the form.
 	 * @param FormFieldset The fieldset object.
 	 */
 	function add_fieldset($fieldset)
@@ -122,7 +122,7 @@ class FormBuilder
 	
 	/**
 	 * @desc Return the form
-	 * @param $Template Optionnal template
+	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
 	function display($Template = false)

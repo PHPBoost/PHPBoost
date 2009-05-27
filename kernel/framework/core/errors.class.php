@@ -35,17 +35,17 @@ define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
 /**
- * @author Viarre Régis crowkait@phpboost.com
- * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
- * @package core
- */
+  * @author Viarre Régis crowkait@phpboost.com
+  * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
+  * @package core
+  */
 class Errors
 {
 	## Public Methods ##
     /**
-	* @desc constructor
-	* @param boolean $archive_all TRUE archive all events FALSE if not
-	*/
+	 * @desc constructor
+	 * @param boolean $archive_all TRUE archive all events FALSE if not
+	 */
 	function Errors($archive_all = false)
 	{
 		$this->archive_all = $archive_all;
@@ -69,12 +69,12 @@ class Errors
 	}
 	
 	/**
-	* @desc PHP exceptions handler
-	* @param $errno error number
-	* @param $errstr error label
-	* @param $errfile file name
-	* @param  $errline line number
-	*/
+	 * @desc PHP exceptions handler
+	 * @param string $errno error number
+	 * @param string $errstr error label
+	 * @param string $errfile file name
+	 * @param  string $errline line number
+	 */
 	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
@@ -135,15 +135,15 @@ class Errors
 	}
 	
     /**
-	* @desc Exception handler for developper.
-	* @param string $errstr The text which explain the error.
-	* @param int $errno The error type (use the PHP errors constants).
-	* @param string $errline The error line (use the constant __LINE__).
-	* @param string $errfile The file where the error is located (use the constant __FILE__).
-	* @param $tpl_cond (optional) This argument allow you to display error in a template condition.
-	* @param boolean $archive (optional) Backup the error in the error.log file
-	* @param boolean $stop Avoid redirect loop.
-	*/
+	 * @desc Exception handler for developper.
+	 * @param string $errstr The text which explain the error.
+	 * @param int $errno The error type (use the PHP errors constants).
+	 * @param string $errline The error line (use the constant __LINE__).
+	 * @param string $errfile The file where the error is located (use the constant __FILE__).
+	 * @param string $tpl_cond (optional) This argument allow you to display error in a template condition.
+	 * @param boolean $archive (optional) Backup the error in the error.log file
+	 * @param boolean $stop Avoid redirect loop.
+	 */
 	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
 		global $LANG;
@@ -231,14 +231,14 @@ class Errors
 	}
 	
 	/**
-	* @desc Exception handler for developper, return the error.
-	* @param string $errstr The text which explain the error.
-	* @param int $errno The error type (use the PHP errors constants).
-	* @param string $errline The error line (use the constant __LINE__).
-	* @param string $errfile The file where the error is located (use the constant __FILE__).
-	* @param boolean $archive (optional) Backup the error in the error.log file
-	* @return string The formated error.
-	*/
+	 * @desc Exception handler for developper, return the error.
+	 * @param string $errstr The text which explain the error.
+	 * @param int $errno The error type (use the PHP errors constants).
+	 * @param string $errline The error line (use the constant __LINE__).
+	 * @param string $errfile The file where the error is located (use the constant __FILE__).
+	 * @param boolean $archive (optional) Backup the error in the error.log file
+	 * @return string The formated error.
+	 */
 	function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
 	{
 		global $LANG;
@@ -289,8 +289,8 @@ class Errors
 	}
 	
 	/**
-	* @desc Set a personnal template for the handler methods.
-	*/
+	 * @desc Set a personnal template for the handler methods.
+	 */
 	function set_template(&$template)
 	{
 		$this->template = &$template;
@@ -298,8 +298,8 @@ class Errors
 	}
 	
 	/**
-	* @desc Set default template for the handler methods.
-	*/
+	 * @desc Set default template for the handler methods.
+	 */
 	function set_default_template()
 	{
 		global $Template;
@@ -309,8 +309,8 @@ class Errors
 	}
 	
     /**
-	* @desc Get last error informations
-	*/
+	 * @desc Get last error informations
+	 */
 	function get_last__error_log()
 	{
 		$errinfo = '';
@@ -340,8 +340,8 @@ class Errors
 	}
 	
     /**
-	* @desc Get Error type
-	*/
+	 * @desc Get Error type
+	 */
 	function get_errno_class($errno)
 	{
 		switch ($errno)
@@ -375,8 +375,8 @@ class Errors
 	
 	## Private Methods ##
     /**
-	* @desc Save error in log file
-	*/
+	 * @desc Save error in log file
+	 */
 	function _error_log($errfile, $errline, $errno, $errstr, $archive)
 	{
 		if ($archive || $this->archive_all)
@@ -399,8 +399,8 @@ class Errors
 	}
 	
     /**
-	* @desc Clean Error String
-	*/
+	 * @desc Clean Error String
+	 */
 	function _clean_error_string($errstr)
 	{
 		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);

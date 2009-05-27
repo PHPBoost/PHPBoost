@@ -105,7 +105,6 @@ class PrivateMsg
 	 * @param int $pm_from The member's user id author.
 	 * @param int $pm_status 
 	 * @param boolean $check_pm_before_send
-	 * @return unknown_type
 	 */
 	function send($pm_to, $pm_idconvers, $pm_contents, $pm_from, $pm_status, $check_pm_before_send = true)
 	{
@@ -138,8 +137,8 @@ class PrivateMsg
 	 * @param int $pm_userid
 	 * @param int $pm_idconvers
 	 * @param int $pm_expd
-	 * @param $pm_del
-	 * @param $pm_update
+	 * @param boolean $pm_del
+	 * @param boolean $pm_update
 	 */
 	function delete_conversation($pm_userid, $pm_idconvers, $pm_expd, $pm_del, $pm_update)
 	{
@@ -177,9 +176,9 @@ class PrivateMsg
 	
 	/**
 	 * @desc Deletes a private message, until the recipient has not read it. 
-	 * @param $pm_to
-	 * @param $pm_idmsg
-	 * @param $pm_idconvers
+	 * @param int $pm_to
+	 * @param int $pm_idmsg
+	 * @param int $pm_idconvers
 	 * @return int The previous message id.
 	 */
 	function delete($pm_to, $pm_idmsg, $pm_idconvers)
