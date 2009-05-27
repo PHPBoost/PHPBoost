@@ -57,7 +57,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	if ($User->check_level($array_info['secure']) && $theme != 'default')
     	{
 			$selected = ($utheme == $theme) ? ' selected="selected"' : '';
-    		$info_theme = @parse_ini_file('../templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
+    		$info_theme = @parse_ini_file(PATH_TO_ROOT . '/templates/' . $theme . '/config/' . get_ulang() . '/config.ini');
     		$tpl->assign_block_vars('themes', array(
     			'NAME' => $info_theme['name'],
     			'IDNAME' => $theme,
