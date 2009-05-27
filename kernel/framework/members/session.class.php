@@ -673,8 +673,8 @@ class Session
 	 * </ul>
 	 * If the request doesn't match any of these two cases, this method will consider that it's a CSRF attack.
 	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-     * if false, do not redirect
-     * @return bool true if no csrf attack by post is detected
+	 * if false, do not redirect
+	 * @return bool true if no csrf attack by post is detected
 	 */
     function csrf_post_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
@@ -704,12 +704,12 @@ class Session
     }
     
     /**
-     * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
-     * this site with a correct token.
-     * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-     * if false, do not redirect
-     * @return true if no csrf attack by get is detected
-     */
+	 * @desc Check the session against CSRF attacks by GET. Checks that GETs are done from
+	 * this site with a correct token.
+	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 * @return true if no csrf attack by get is detected
+	 */
     function csrf_get_protect($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
         $token = $this->get_token();
@@ -722,10 +722,10 @@ class Session
     }
     
     /**
-     * @static
-     * @desc check that the operation is done from this site
-     * @return true if the referer is on this site
-     */
+	 * @static
+	 * @desc check that the operation is done from this site
+	 * @return true if the referer is on this site
+	 */
     function _check_referer()
     {
         global $CONFIG;
@@ -734,13 +734,13 @@ class Session
 	    return strpos($_SERVER['HTTP_REFERER'], trim(trim($CONFIG['server_name'], '/') . $CONFIG['server_path'], '/')) === 0;
     }
     
-    /**
-     * @static
-     * @desc Redirect to the $redirect error page if the token is wrong
-     * if false, do not redirect
-     * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
-     * if false, do not redirect
-     */
+	/**
+	 * @static
+	 * @desc Redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 * @param mixed $redirect if string, redirect to the $redirect error page if the token is wrong
+	 * if false, do not redirect
+	 */
     function _csrf_attack($redirect = SEASURF_ATTACK_ERROR_PAGE)
     {
         global $Errorh;

@@ -77,8 +77,8 @@ class Authorizations
 	/**
 	 * @desc Returns an array with the authorizations given by variable number of arrays passed in argument.
 	 * @param int $bit_value The bit emplacement in the authorization array.
-	 * @param $idselect Html id of the html select field of authorizations (in most case the same value as $bit_value).
-	 * @param $admin_auth_default Give authorization for the administrator by default.
+	 * @param string $idselect Html id of the html select field of authorizations (in most case the same value as $bit_value).
+	 * @param boolean $admin_auth_default Give authorization for the administrator by default.
 	 * @return Array with the authorization for the bit specified.
 	* @static
 	 */
@@ -280,7 +280,7 @@ class Authorizations
 	 * @param array $parent Array of authorizations.
 	 * @param array $child Array of authorizations.
 	 * @param int $auth_bit Bit emplacement for the merge.
-	 * @param $mode Mode used for the merge. Use AUTH_PARENT_PRIORITY to give to the parent the priority for the authorization, AUTH_CHILD_PRIORITY otherwise.
+	 * @param int $mode Mode used for the merge. Use AUTH_PARENT_PRIORITY to give to the parent the priority for the authorization, AUTH_CHILD_PRIORITY otherwise.
 	 * @return array The new array merged.
 	 * @static
 	 */

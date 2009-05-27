@@ -149,7 +149,7 @@ class Pagination
 
 	## Private Methods ##
 	/**
-	* @param $var_page The var name used to get the page in the adress (in most case "p" is used).
+	* @param string $var_page The var name used to get the page in the adress (in most case "p" is used).
 	* @return int Return the value of the var page
 	*/
 	function _get_var_page($var_page)
@@ -167,7 +167,7 @@ class Pagination
 
 	/**
 	 * @desc Checks the validity of the page required, otherwise redirect to an error page.
-	 * @param $nbr_page Number total of page.
+	 * @param int $nbr_page Number total of page.
 	 * @return int Return current page if exist, otherwise redirect to an error page.
 	 */
 	function _check_page($nbr_page)

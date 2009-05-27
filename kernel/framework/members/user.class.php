@@ -38,8 +38,8 @@ class User
 {
 	/**
 	 * @desc Sets global authorizations which are given by all the user groups authorizations.
-	 * @param $session_data
-	 * @param $groups_info
+	 * @param array $session_data
+	 * @param array $groups_info
 	 */
 	function User($session_data, &$groups_info)
 	{
@@ -82,7 +82,7 @@ class User
 	 * @param string $user_groups The list of user groups separated by pipe.
 	 * @param int $level The user level. Only member have special color.
 	 * @return string The group color (hexadecimal format)
-     * @static
+	 * @static
 	 */
 	/* static */ function get_group_color($user_groups, $level = 0)
 	{
@@ -100,7 +100,7 @@ class User
 	
 	/**
 	 * @desc Check the authorization level
-	 * @param $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
+	 * @param int $secure Constant of level authorization to check (MEMBER_LEVEL, MODO_LEVEL, ADMIN_LEVEL).
 	 * @return boolean True if authorized, false otherwise.
 	 */
 	function check_level($secure)
@@ -177,7 +177,7 @@ class User
 	
 	/**
 	 * @desc Modify the theme for guest in the database (sessions table).
-	 * @param $user_theme The new theme
+	 * @param string $user_theme The new theme
 	 */
 	function update_user_theme($user_theme)
 	{
@@ -194,7 +194,7 @@ class User
 	
 	/**
 	 * @desc Modify the user lang.
-	 * @param $user_lang The new lang
+	 * @param string $user_lang The new lang
 	 */
 	function set_user_lang($user_lang)
 	{
@@ -203,7 +203,7 @@ class User
 	
 	/**
 	 * @desc Modify the lang for guest in the database (sessions table).
-	 * @param $user_theme The new lang
+	 * @param string $user_theme The new lang
 	 */
 	function update_user_lang($user_lang)
 	{

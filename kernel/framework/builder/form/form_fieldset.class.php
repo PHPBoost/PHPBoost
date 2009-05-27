@@ -38,9 +38,9 @@ class FormFieldset
 {
 	/**
 	 * @desc constructor
-	 * @param $form_name The name of the form.
-	 * @param $form_title The tite displayed for the form.
-	 * @param $form_action The url where the form send the data.
+	 * @param string $form_name The name of the form.
+	 * @param string $form_title The tite displayed for the form.
+	 * @param string $form_action The url where the form send the data.
 	 */
 	function FormFieldset($fieldset_title)
 	{
@@ -61,7 +61,7 @@ class FormFieldset
 
 	/**
 	 * @desc Return the form
-	 * @param $Template Optionnal template
+	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
 	function display($Template = false)

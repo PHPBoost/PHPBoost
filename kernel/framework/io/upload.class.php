@@ -46,7 +46,7 @@ class Upload
 	## Public Methods ##	
 	/**
 	 * @desc constructor
-	 * @param $base_directory Set the directory to upload the files.
+	 * @param string $base_directory Set the directory to upload the files.
 	 */
 	function Upload($base_directory = 'upload')
 	{
@@ -55,12 +55,12 @@ class Upload
 	
 	/**
 	 * @desc Uploads a file.
-	 * @param $filepostname Name in the input file formulary.
-	 * @param $regexp Regular expression to specify file format.
+	 * @param string $filepostname Name in the input file formulary.
+	 * @param string $regexp Regular expression to specify file format.
 	 * @param boolean $uniq_name If true assign a new name if a file with same name already exist. Otherwise previous file is overwrite.
 	 * @param int $weight_max The maximum file size.
 	 * @param boolean $check_exist If true verify if a file with the same name exist on the ftp. Otherwise previous file is overwrite.
-	 * @return unknown_type True if the file has been succefully uploaded. Error code if an error occured.
+	 * @return boolean True if the file has been succefully uploaded. Error code if an error occured.
 	 */
 	function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{		

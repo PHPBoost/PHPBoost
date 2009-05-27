@@ -69,7 +69,7 @@ class FormSelect extends FormField
 	
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option. 
+	 * @param FormSelectOption option The new option. 
 	 */
 	function add_option(&$option)
 	{

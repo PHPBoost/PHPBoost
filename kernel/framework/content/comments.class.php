@@ -32,14 +32,23 @@ define('KERNEL_SCRIPT', true);
 /**
  * @package content
  * @author Révis Viarre <crowkait@phpboost.com>
- * @desc
+ * @desc This class manages comments everywhere in phpboost
+ * Simplyfied use with the display_comments function: 
+ * //news is the name of the modue, $idnews is the id in database for this item.
+ * display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s'))
  */
 class Comments
 {
 	## Public Methods ##
-	//Constructeur.
-	//Script est le nom du module, idprov la clé primaire entière de l'item à commenter dans le script, vars est le lien avec %d réservé au module
-	function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
+	/**
+	 * @desc Display comments form.
+	 * @param string $script Module's name
+	 * @param string $idprov Id field in the database. related to item where the comments are posted.
+	 * @param string $vars Link for the module, it has to include com=%s in the link for the comments system.
+	 * @param string $module_folder Module's folder
+	 * @param string $is_kernel_script
+	 */
+	 function Comments($script, $idprov, $vars, $module_folder = '', $is_kernel_script = false)
 	{
 		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
 		list($this->script, $this->idprov, $this->vars, $this->path) = array(strprotect($script), numeric($idprov), $vars, PATH_TO_ROOT . '/' . $this->module_folder . '/');
@@ -47,8 +56,13 @@ class Comments
 		$this->is_kernel_script = $is_kernel_script;
 	}
 	
-	//Ajoute un commentaire et retourne l'identifiant inséré.
-	function add($contents, $login)
+	/**
+	 * @desc Add a comment
+	 * @param string $contents Comment content
+	 * @param string $login Poster's login
+	 * @return int the inserted identifier.
+	 */
+	 function add($contents, $login)
 	{
 		global $Sql, $User;
 		
@@ -61,14 +75,21 @@ class Comments
 		return $idcom;
 	}
 	
-	//Edition d'un commentaire
+	/**
+	 * @desc Edit a comment
+	 * @param string $contents Comment content
+	 * @param string $login Poster's login
+	 */
 	function update($contents, $login)
 	{
 		global $Sql;
 		$Sql->query_inject("UPDATE " . DB_TABLE_COM . " SET contents = '" . $contents . "', login = '" . $login . "' WHERE idcom = '" . $this->idcom . "' AND idprov = '" . $this->idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
-	//Suppression d'un commentaire
+	/**
+	 * @desc Delete a comment
+	 * @return int the previous comment identifier.
+	 */
 	function del()
 	{
 		global $Sql;
@@ -90,15 +111,21 @@ class Comments
 		return $lastid_com;
 	}
 	
-	//Supprime tous les commentaires de l'item (lié à la suppression de l'item)
-	function delete_all($idprov)
+	/**
+	 * @desc Delete all comments for the specified item.
+	 * @param int $idprov The id field of the item in the database.
+	 */
+	 function delete_all($idprov)
 	{
 		global $Sql;
 		
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $idprov . "' AND script = '" . $this->script . "'", __LINE__, __FILE__);
 	}
 	
-	//Verrouille les commentaires
+	/**
+	 * @desc Lock or unlock comments for an item.
+	 * @param boolean $lock true for locking, false otherwise
+	 */
 	function lock($lock)
 	{
 		global $Sql;
@@ -106,7 +133,10 @@ class Comments
 		$Sql->query_inject("UPDATE ".PREFIX.$this->sql_table." SET lock_com = '" . $lock . "' WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 	}
 	
-	//Vérifie que le système de commentaires est bien chargé.
+	/**
+	 * @desc Check if the comments system is correctly loaded.
+	 * @return boolean true if loaded correctly, false otherwise.
+	 */
 	function is_loaded()
 	{
 		global $Errorh;
@@ -117,7 +147,11 @@ class Comments
 		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
 	}
 	
-	//Met à jour l'id du commentaire.
+	/**
+	 * @desc Set argument for the comments system.
+	 * @param int $idcom
+	 * @param string $path
+	 */
 	function set_arg($idcom, $path = '')
 	{
 		if (!empty($path))
@@ -138,7 +172,13 @@ class Comments
 		return $this->$varname;
 	}
 	
-	//Méthode d'affichage
+	/**
+	 * @desc Display comments form.
+	 * @param int $integrated_in_environment
+	 * @param Template $Template Optional template.
+	 * @param string $page_path_to_root
+	 * @return string The parsed template
+	 */
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
 		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $_array_groups_auth, $Session;
@@ -616,14 +656,14 @@ class Comments
 	
 	/**
 	 * @static
-	 * @param $nbr_com
-	 * @param $path
-	 * @param $idprov
-	 * @param $script
-	 * @param $options
-	 * @return unknown_type
+	 * @param int $nbr_com
+	 * @param string $path
+	 * @param int $idprov
+	 * @param string $script
+	 * @param int $options
+	 * @return string
 	 */
-	function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
+	/* static */ function com_display_link($nbr_com, $path, $idprov, $script, $options = 0)
 	{
 	    global $CONFIG, $LANG;
 	
