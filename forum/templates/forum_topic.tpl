@@ -333,73 +333,28 @@
 			
 		<span id="go_bottom"></span>
 		# IF C_AUTH_POST #
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;">
-			<div>
-                <div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
-                {KERNEL_EDITOR}
-                <label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-                <fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
-                    <legend>{L_SUBMIT}</legend>
-                    <input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-                    &nbsp;&nbsp;
-                    <script type="text/javascript">
-                    <!--				
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
-                    -->
-                    </script>
-                    <noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
-                    &nbsp;&nbsp;
-                    <input type="reset" value="{L_RESET}" class="reset" />
-                </fieldset>
-            </div>
-		</form>
-		<div class="forum_action">
-			# IF C_DISPLAY_MSG #
-			<span id="forum_change_statut">
-				<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_change_statut').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small_link">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small_link"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			# ENDIF #
-			<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
-			<br />
-			
-			<span id="forum_track">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track()" class="small_link">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small_link"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			<span id="forum_track_pm">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track_pm').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small_link">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small_link"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			<span id="forum_track_mail">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track_mail').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small_link">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small_link"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
-			-->
-			</script>
-			
-		</div>
+		<div class="forum_post_form">
+			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
+				<div>
+					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
+					{KERNEL_EDITOR}
+					<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
+						<legend>{L_SUBMIT}</legend>
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						&nbsp;&nbsp;
+						<script type="text/javascript">
+						<!--				
+						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+						-->
+						</script>
+						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
+						&nbsp;&nbsp;
+						<input type="reset" value="{L_RESET}" class="reset" />
+					</fieldset>
+				</div>
+			</form>
+        </div>
 		# ENDIF #
 		
 		# IF C_ERROR_AUTH_WRITE #
