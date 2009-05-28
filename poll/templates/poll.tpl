@@ -54,7 +54,7 @@
 					
 					<div class="block_container">
 						<div class="block_top">{QUESTION}</div>
-						<div class="block_contents">
+						<div class="block_contents row2">
 							# IF C_POLL_QUESTION #
 							<div class="row1 text_small">
 								# START radio #

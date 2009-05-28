@@ -78,7 +78,7 @@ function forum_list_cat($id_select, $level)
 		if ($id_select == $idcat && $array_cat['level'] == $level)
 			$selected = ' selected="selected"';
 		
-		$margin = ($array_cat['level'] > 0) ? str_repeat('--------', $array_cat['level']) : '--';
+		$margin = ($array_cat['level'] > 0) ? str_repeat('------', $array_cat['level']) : '';
 		$select .= $AUTH_READ_FORUM[$idcat] && empty($CAT_FORUM[$idcat]['url']) ? '<option value="' . $idcat . '"' . $selected . '>' . $margin . ' ' . $array_cat['name'] . '</option>' : '';
 	}
 	

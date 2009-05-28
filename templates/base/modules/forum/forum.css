@@ -103,11 +103,18 @@ a.forum_link_pseudo:hover {
 .forum_sous_cat_last:hover{
 	background:#EFFBFF;
 }
+
+/* Formulaire pour poster les messages */
+.forum_post_form{
+	width:80%;
+	margin:auto;
+	margin-top:15px;
+}
 /* Cadre des liens:alerter les modérateurs et suivre le sujet */
-.forum_action{
-	text-align:center;
+.forum_action{	
 	margin-top:5px;
 }
+
 /* Les des catégories de niveau 0 */
 a.forum_link_cat{
 	font-weight:bold;
@@ -142,6 +149,9 @@ a.forum_link_cat{
 	padding:0px 5px;
 }
 .forum_cat_title a{
+}
+a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
+	color:#FFFFFF;
 }
 
 .module_top_l{ /* Barre supérieur des modules */
