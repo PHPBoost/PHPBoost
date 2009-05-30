@@ -80,6 +80,7 @@ class StatsSaver
 			}
 			elseif (!empty($referer['host']))
 			{
+				$referer['scheme'] = !empty($referer['scheme']) ? $referer['scheme'] : 'http';
 				########### Détection du site de provenance ###########
 				$url = addslashes($referer['scheme'] . '://' . $referer['host']);
 				if (strpos($url, HOST) === false)

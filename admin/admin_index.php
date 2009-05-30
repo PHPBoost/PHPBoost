@@ -38,7 +38,7 @@ $writingpad = retrieve(POST, 'writingpad', '');
 if (!empty($writingpad))
 {
 	if (empty($content))
-		$content = addslashes($LANG['writingpad_explain']);
+		$content = addslashes($LANG['writing_pad_explain']);
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . $content . "' WHERE name = 'writingpad'", __LINE__, __FILE__);
 	$Cache->Generate_file('writingpad');
 		
