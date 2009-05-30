@@ -287,6 +287,8 @@ class Url
     /**
      * @static
      * @param string $url the url to "relativize"
+     * @param string $path_to_root Path to root of the page to which you want to fit the URL
+     * @param string $server_url Path from the site root of the page to which you want to fit the URL.
      * @return string the relative url of the $url parameter
      */
     /* static */ function get_relative($url, $path_to_root = null, $server_url = null)
