@@ -1270,7 +1270,7 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
         case REGEX_MULTIPLICITY_OPTIONNAL:
             // Optionnal
             return '(?:' . $sub_regex . ')?';
-        case REGEX_MULTIPLICITY_NEEDED:
+        case REGEX_MULTIPLICITY_REQUIRED:
             // Required
             return $sub_regex;
         case REGEX_MULTIPLICITY_AT_LEAST_ONE:
