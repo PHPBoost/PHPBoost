@@ -156,7 +156,7 @@ class Sql
 	function query($query, $errline, $errfile)
 	{
 		$resource = mysql_query($query, $this->link) or $this->_error($query, 'Invalid SQL request', $errline, $errfile);
-		if ($resource) 
+		if (is_resource($resource)) 
 		{
 			$result = mysql_fetch_row($resource);
 			$this->query_close($resource); //Déchargement mémoire.
@@ -171,14 +171,14 @@ class Sql
 	
 	/**
 	* @desc This method makes automatically a query on several fields of a row.
-	* You tell it in which table you want to select, which row you want to use, and it will return you the values.
-	* It takes a variable number of parameters.
-	* @param string $table Name of the table in which you want to select the values
-	* @param string $field Name of the field for which you want to retrieve the value. If you want to work on several fields, you have to
-	* repeat this parameter for each field you want to select.
-	* @param string $clause Where clause which will enable the method to know in which row it must select the values.
-	* It must respect the MySQL syntax and start off with 'WHERE '.
-    * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+	 * You tell it in which table you want to select, which row you want to use, and it will return you the values.
+	 * It takes a variable number of parameters.
+	 * @param string $table Name of the table in which you want to select the values
+	 * @param string $field Name of the field for which you want to retrieve the value. If you want to work on several fields, you have to
+	 * repeat this parameter for each field you want to select.
+	 * @param string $clause Where clause which will enable the method to know in which row it must select the values.
+	 * It must respect the MySQL syntax and start off with 'WHERE '.
+	 * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
@@ -216,7 +216,7 @@ class Sql
 			$this->req++;
 			return $result;
 		} else {
-			return FALSE;
+			return false;
 		}
 			
 	}
@@ -242,7 +242,7 @@ class Sql
 	/**
 	 * @desc This method enables you to execute a Retrieve query on several rows in the data base.
 	 * @param $query The query you want to execute
-     * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
+          * @param int $errline The number of the line at which you call this method. Use the __LINE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
 	 * @param int $errfile The file in which you call this method. Use the __FILE__ constant.
 	 * It is very interesting when you debug your script and you want to know where is called the query which returns an error.
@@ -357,7 +357,7 @@ class Sql
 	 * @desc Gets the ID generated from the previous INSERT operation.
 	 * @param $query
 	 * @return int The ID generated for an AUTO_INCREMENT column by the previous 
-     * INSERT query on success, 0 if the previous query does not generate an AUTO_INCREMENT value.
+          * INSERT query on success, 0 if the previous query does not generate an AUTO_INCREMENT value.
 	 */
 	function insert_id($query)
 	{
