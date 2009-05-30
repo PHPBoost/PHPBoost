@@ -589,7 +589,7 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 }
 
 /**
- * @desc Retrieves the site start page. 
+ * @desc Retrieves the site start page.
  * @return The absolute start page URL.
  */
 function get_start_page()
@@ -838,10 +838,10 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 
 /**
  * @deprecated
- * @desc Parses a formatted date 
+ * @desc Parses a formatted date
  * @param string $str String to parse
  * @param string $date_format Formatting pattern (d for day, m for month and y for year, for instance m/d/y)
- * @return int The timestamp corresponding to the parsed date or 0 if it couldn't be parsed. 
+ * @return int The timestamp corresponding to the parsed date or 0 if it couldn't be parsed.
  * @see Date::Date()
  */
 function strtotimestamp($str, $date_format)
@@ -889,7 +889,7 @@ function strtotimestamp($str, $date_format)
 
 //Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
 /**
- * @deprecated 
+ * @deprecated
  * @desc Converts a formatted date to the SQL date format.
  * @param string $str Formatted date
  * @param string $date_format Formatting pattern (DD for the day, MM for the month and YYYY for the year separated only by / characters).
@@ -953,7 +953,7 @@ function delete_file($file)
 }
 
 /**
- * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour. 
+ * @desc This function is called by the kernel on each displayed page to count the number of pages seen at each hour.
  * @param bool $no_update True if you just want to read the number of pages viewed, false if you want to increment it.
  * @return int[] Map associating the hour to the number of seen pages. For instance 14 => 56 means that at between 14:00 and 15:00 56 pages were generated.
  */
@@ -1249,6 +1249,41 @@ function to_js_string($string)
 {
     return '\'' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
     addcslashes($string, '\'')) . '\'';
+}
+
+
+/**
+ * @desc Returns the sub-regex with its multiplicity option
+ * @param string $sub_regex the sub-regex on which add the multiplicity
+ * @param int $occurence REGEX_MULTIPLICITY_OPTION
+ * @return string the subregex with its multiplicity option
+ * @see REGEX_MULTIPLICITY_OPTIONNAL
+ * @see REGEX_MULTIPLICITY_NEEDED
+ * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
+ * @see REGEX_MULTIPLICITY_ALL
+ * @see REGEX_MULTIPLICITY_NOT_USED
+ */
+function set_subregex_multiplicity($sub_regex, $multiplicity_option)
+{
+    switch ($multiplicity_option)
+    {
+        case REGEX_MULTIPLICITY_OPTIONNAL:
+            // Optionnal
+            return '(?:' . $sub_regex . ')?';
+        case REGEX_MULTIPLICITY_NEEDED:
+            // Required
+            return $sub_regex;
+        case REGEX_MULTIPLICITY_AT_LEAST_ONE:
+            // Optionnal
+            return '(?:' . $sub_regex . ')+';
+        case REGEX_MULTIPLICITY_ALL:
+            // Optionnal
+            return '(?:' . $sub_regex . ')*';
+        case  REGEX_MULTIPLICITY_NOT_USED:
+        default:
+            // Not present
+            return '';
+    }
 }
 
 ?>
