@@ -6,7 +6,7 @@
  *   copyright          : (C) 2007 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
  *
  ***************************************************************************
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,7 +26,7 @@
  *
 ***************************************************************************/
 
-require_once('../kernel/begin.php');
+require_once '../kernel/begin.php';
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
@@ -51,10 +51,10 @@ $Template->set_filenames(array(
 	'error'=> 'member/error.tpl'
 ));
 
-$class = $Errorh->get_errno_class($errinfo['errno']);	
+$class = $Errorh->get_errno_class($errinfo['errno']);
 	
 $Template->assign_vars(array(
-	'THEME' => get_utheme(),		
+	'THEME' => get_utheme(),
 	'ERRORH_IMG' => 'stop',
 	'ERRORH_CLASS' => $class,
 	'C_ERRORH_CONNEXION' => false,
@@ -68,6 +68,6 @@ $Template->pparse('error');
 
 echo '</body></html>';
 
-require_once('../kernel/footer_no_display.php');
+require_once '../kernel/footer_no_display.php';
 
 ?>

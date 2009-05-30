@@ -139,7 +139,6 @@ $Cache->load('day');
 //On vérifie que le jour n'a pas changé => sinon on execute les requêtes.. (simulation d'une tache cron).
 if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day))
 {
-	// 'CHANGE DAY DETECTED<hr />';
 	import('io/filesystem/file');
 	$lock_file = new File(PATH_TO_ROOT . '/cache/changeday_lock');
 	if (!$lock_file->exists())
@@ -149,7 +148,6 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
 	}
 	if ($lock_file->lock(false))
 	{
-		// 'CHANGE DAY LOCK OBTAINED<hr />';
 		$yesterday_timestamp = time() - 86400;
 		if ((int) $Sql->query("
 		    SELECT COUNT(*)
@@ -159,13 +157,11 @@ if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record
                 stats_day = '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) . "'", __LINE__, __FILE__) == 0
 		)
 		{
-			// 'CHANGE DAY PROCESSING<hr />';
 			//Inscription du nouveau jour dans le fichier en cache.
 			$Cache->generate_file('day');
 
 			require_once(PATH_TO_ROOT . '/kernel/changeday.php');
 			change_day();
-			// echo 'CHANGE DAY DONE<hr />';
 		}
 	}
 	$lock_file->close();
@@ -176,7 +172,7 @@ define('MODULE_NAME', get_module_name());
 if (isset($MODULES[MODULE_NAME]) )
 {
 	if ($MODULES[MODULE_NAME]['activ'] == 0 )
-	{	
+	{
 		$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
 	}
 	else if(!$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
