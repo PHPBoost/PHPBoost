@@ -144,7 +144,7 @@ define('USER_IP', addslashes($ip));
 // Regex multiplicity options
 define('REGEX_MULTIPLICITY_NOT_USED', 0x01);
 define('REGEX_MULTIPLICITY_OPTIONNAL', 0x02);
-define('REGEX_MULTIPLICITY_NEEDED', 0x03);
+define('REGEX_MULTIPLICITY_REQUIRED', 0x03);
 define('REGEX_MULTIPLICITY_AT_LEAST_ONE', 0x04);
 define('REGEX_MULTIPLICITY_ALL', 0x05);
 

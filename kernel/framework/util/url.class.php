@@ -346,13 +346,15 @@ class Url
      * @see REGEX_MULTIPLICITY_ALL
      * @see REGEX_MULTIPLICITY_NOT_USED
      */
-    /* static */ function get_wellformness_regex($protocol = 0, $user = 0, $domain = 0,
-    $folders = 0, $file = 0, $args = 0, $anchor = 0)
+    /* static */ function get_wellformness_regex($protocol = REGEX_MULTIPLICITY_OPTIONNAL,
+    $user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
+    $folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
+    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL)
     {
         static $protocol_regex = '[^"\'/\s]+//';
         static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
-        static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})/?';
-        static $folders_regex = '(?<!/)/?(?:[a-z0-9~_-]+/)*';
+        static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
+        static $folders_regex = '(?:(?<!/)/?)?(?:[a-z0-9~_-]+/)*';
         static $file_regex = '[a-z0-9-+=_~:&\.\%]+';
         static $args_regex = '\?[a-z0-9-+=_~:&\.\?\'\%]+';
         static $anchor_regex = '\#[a-z0-9-_]';
@@ -383,8 +385,10 @@ class Url
      * @see REGEX_MULTIPLICITY_ALL
      * @see REGEX_MULTIPLICITY_NOT_USED
      */
-    /* static */ function check_wellformness($url, $protocol = 0, $user = 0, $domain = 0,
-    $folders = 0, $file = 0, $args = 0, $anchor = 0)
+    /* static */ function check_wellformness($url, $protocol = REGEX_MULTIPLICITY_OPTIONNAL,
+    $user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
+    $folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
+    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL)
     {
         return preg_match('`^' . Url::get_wellformness_regex($protocol, $user, $domain,
         $folders, $file, $args, $anchor) . '$`i', $url);
