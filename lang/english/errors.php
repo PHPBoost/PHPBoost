@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -104,4 +104,8 @@ $LANG['e_warning'] = 'Warning';
 $LANG['e_unknow'] = 'Unknow';
 $LANG['infile'] = 'in file';
 $LANG['atline'] = 'at line';
+
+// Too Many Connections
+$LANG['too_many_connections'] = 'Too many connections';
+$LANG['too_many_connections_explain'] = 'The maximum number of connections that the database could handle has been reached.<br />Please, try again in a few seconds.';
 ?>
