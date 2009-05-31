@@ -42,10 +42,12 @@
 					{L_MAINTAIN_DELAY}
 					<br /><br />	
 					<script type="text/javascript">
+					<!--
 						document.write('<div id="release">{L_LOADING}...</div>');
+					-->
 					</script>
 					<noscript>				
-						<strong>{delay.DELAY}</strong>
+						<p style="display:inline;font-weight:bold;">{DELAY}</p>
 					</noscript>
 				</div>
 				
