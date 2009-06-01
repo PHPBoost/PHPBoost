@@ -115,7 +115,7 @@ class TinyMCEParser extends ContentParser
 	## Protected ##
 	/**
 	 * @desc Prepares the content of the parser. Treats the HTML entities contained by the content, most of them has been added by TinyMCE.
-	 * It also authorizes the non-utf-8 characters by accepting their HTML entity. 
+	 * It also authorizes the non-utf-8 characters by accepting their HTML entity.
 	 */
 	function _prepare_content()
 	{
@@ -154,7 +154,7 @@ class TinyMCEParser extends ContentParser
 		
 		//Height ?
 		if (preg_match('`height="([0-9]+)"`iU', $table_properties, $temp_array))
-		{			
+		{
 			$style_properties .= 'height:' . $temp_array[1] . 'px;';
 		}
 		
@@ -194,13 +194,13 @@ class TinyMCEParser extends ContentParser
 		$temp_array = array();
 		//Alignment
 		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
-		{			
+		{
 			$col_style .= 'text-align:' . $temp_array[1] . ';';
 		}
 		
 		//Style ?
 		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
-		{			
+		{
 			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
 		}
 		elseif (!empty($col_style))
@@ -234,19 +234,19 @@ class TinyMCEParser extends ContentParser
 		
 		//Rowspan ?
 		if (preg_match('`rowspan="([0-9]+)"`iU', $col_properties, $temp_array))
-		{			
+		{
 			$col_new_properties .= ' rowspan="' . $temp_array[1] . '"';
 		}
 		
 		//Alignment
 		if (preg_match('`align="([^"]+)"`iU', $col_properties, $temp_array))
-		{			
+		{
 			$col_style .= 'text-align:' . $temp_array[1] . ';';
 		}
 		
 		//Style ?
 		if (preg_match('`style="([^"]+)"`iU', $col_properties, $temp_array))
-		{			
+		{
 			$col_style .= ' style="' . $temp_array[1] . ' ' . $col_style . '"';
 		}
 		elseif (!empty($col_style))
@@ -336,10 +336,11 @@ class TinyMCEParser extends ContentParser
 		//Link tag
 		if (!in_array('url', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;a href="((?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)"&gt;(.+)&lt;/a&gt;`isU');
+		    import('util/url');
+			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<a href="$1">$2</a>');
-			array_push($array_preg, '`&lt;a href="((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)"&gt;(.+)&lt;/a&gt;`isU');
-			array_push($array_preg_replace, '<a href="$1">$2</a>');
+			//array_push($array_preg, '`&lt;a href="((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)"&gt;(.+)&lt;/a&gt;`isU');
+			//array_push($array_preg_replace, '<a href="$1">$2</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
@@ -513,7 +514,7 @@ class TinyMCEParser extends ContentParser
 	 */
 	function _parse_smilies()
 	{
-		$this->content = preg_replace('`&lt;img class="smiley" (?:style="vertical-align:middle" )?src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" [^/]*/&gt;`i', 
+		$this->content = preg_replace('`&lt;img class="smiley" (?:style="vertical-align:middle" )?src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" [^/]*/&gt;`i',
 			'<img src="/images/smileys/$1" alt="$2" class="smiley" />', $this->content);
 		
 		//Smilies
@@ -523,7 +524,7 @@ class TinyMCEParser extends ContentParser
 			//Création du tableau de remplacement.
 			foreach ($_array_smiley_code as $code => $img)
 			{
-				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')`';
+				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . str_replace('\'', '\\\\\\\'', preg_quote($code)) . ')(?:(?![a-z0-9]))`';
 				$smiley_img_url[] = '<img src="/images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
@@ -536,7 +537,7 @@ class TinyMCEParser extends ContentParser
 	function _parse_bbcode_tags()
 	{
 		global $LANG;
-		
+		import('util/url');
 		$array_preg = array(
 			'pre' => '`\[pre\](.+)\[/pre\]`isU',
 			'float' => '`\[float=(left|right)\](.+)\[/float\]`isU',
@@ -545,8 +546,8 @@ class TinyMCEParser extends ContentParser
             'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
             'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`(\s+)((?:https?|ftps?)+://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`isU',
-			'url2' => '`(\s+)((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s+)`i',
+            'url' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
+            'url2' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 		);
 		
@@ -616,7 +617,7 @@ class TinyMCEParser extends ContentParser
 		if (!in_array('wikipedia', $this->forbidden_tags))
 		{
 			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isU', array(&$this, '_parse_wikipedia_links'), $this->content);
-		}	
+		}
 			
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
