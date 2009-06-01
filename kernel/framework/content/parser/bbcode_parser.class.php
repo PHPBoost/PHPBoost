@@ -154,7 +154,7 @@ class BBCodeParser extends ContentParser
 			//Création du tableau de remplacement.
 			foreach ($_array_smiley_code as $code => $img)
 			{
-				$smiley_code[] = '`(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')`';
+				$smiley_code[] = '`(?:(?![a-z0-9]))(?<!&[a-z]{4}|&[a-z]{5}|&[a-z]{6}|")(' . preg_quote($code) . ')(?:(?![a-z0-9]))`';
 				$smiley_img_url[] = '<img src="/images/smileys/' . $img . '" alt="' . addslashes($code) . '" class="smiley" />';
 			}
 			$this->content = preg_replace($smiley_code, $smiley_img_url, $this->content);
@@ -169,6 +169,7 @@ class BBCodeParser extends ContentParser
 	function _parse_simple_tags()
 	{
 		global $LANG;
+		import('util/url');
 		$array_preg = array(
 			'b' => '`\[b\](.+)\[/b\]`isU',
 			'i' => '`\[i\](.+)\[/i\]`isU',
@@ -191,16 +192,14 @@ class BBCodeParser extends ContentParser
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
             'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
-			'url' => '`\[url\]((?!javascript:)[^"]+)\[/url\]`isU',
-			'url2' => '`\[url\]((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\[/url\]`isU',
-			'url3' => '`\[url=((?!javascript:)[^"]+)\]([^\n\r\t\f]+)\[/url\]`isU',
-			'url4' => '`\[url=((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,() -]*)\]([^\n\r\t\f]+)\[/url\]`iU',
-			'url5' => '`(\s+)((?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s|<+)`isU',
-			'url6' => '`(\s+)((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)(\s|<+)`i',
+			'url1' => '`\[url\]((?!javascript:)[^"]+)\[/url\]`isU',
+			'url2' => '`\[url=((?!javascript:)[^"]+)\]([^\n\r\t\f]+)\[/url\]`isU',
+			'url3' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
+			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
 			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
 			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i'
 		);
-		
+		echo htmlentities($array_preg['url3']) . '<br />\n\n';
 		$array_preg_replace = array(
 			'b' => "<strong>$1</strong>",
 			'i' => "<em>$1</em>",
@@ -223,12 +222,10 @@ class BBCodeParser extends ContentParser
 			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
 			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
 			'math' => '[[MATH]]$1[[/MATH]]',
-			'url' => "<a href=\"$1\">$1</a>",
-			'url2' => "<a href=\"http://$1\">$1</a>",
-			'url3' => "<a href=\"$1\">$2</a>",
-			'url4' => "<a href=\"http://$1\">$2</a>",
-			'url5' => "$1<a href=\"$2\">$2</a>$3",
-			'url6' => "$1<a href=\"http://$2\">$2</a>$3",
+			'url1' => '<a href="$1">$1</a>',
+			'url2' => '<a href="$1">$2</a>',
+            'url3' => '$1<a href="$2">$2</a>$3',
+            'url4' => '$1<a href="$2">$2</a>$3',
 			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
 			'mail2' => "<a href=\"mailto:$1\">$2</a>"
 		);
@@ -241,8 +238,8 @@ class BBCodeParser extends ContentParser
 			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
 			if (in_array('url', $this->forbidden_tags))
 			{
+				$this->forbidden_tags[] = 'url1';
 				$this->forbidden_tags[] = 'url2';
-				$this->forbidden_tags[] = 'url3';
 				$this->forbidden_tags[] = 'url4';
 				$this->forbidden_tags[] = 'url5';
 				$this->forbidden_tags[] = 'url6';

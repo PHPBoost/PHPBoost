@@ -341,6 +341,7 @@ class Url
      * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
      * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
      * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
+     * @param bool $forbid_js true if you want to forbid javascript uses in urls
      * @return the regex matching the requested url form
      * @see REGEX_MULTIPLICITY_OPTIONNAL
      * @see REGEX_MULTIPLICITY_NEEDED
@@ -351,17 +352,27 @@ class Url
     /* static */ function get_wellformness_regex($protocol = REGEX_MULTIPLICITY_OPTIONNAL,
     $user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
     $folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL)
+    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
     {
-        static $protocol_regex = '[^"\'/\s]+//';
+        static $forbid_js_regex = '(?!javascript:)';
+        static $protocol_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)*://';
         static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
         static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
-        static $folders_regex = '(?:(?<!/)/?)?(?:[a-z0-9~_-]+/)*';
-        static $file_regex = '[a-z0-9-+=_~:&\.\%]+';
+        static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
+        static $file_regex = '[a-z0-9-+_~:\.\%]+';
         static $args_regex = '\?[a-z0-9-+=_~:&\.\?\'\%]+';
         static $anchor_regex = '\#[a-z0-9-_]';
+        
+        if ($forbid_js)
+        {
+            $protocol_regex_secured = $forbid_js_regex . $protocol_regex;
+        }
+        else
+        {
+            $protocol_regex_secured = $protocol_regex;
+        }
 
-        return set_subregex_multiplicity($protocol_regex, $protocol) .
+        return set_subregex_multiplicity($protocol_regex_secured, $protocol) .
         set_subregex_multiplicity($user_regex, $user) .
         set_subregex_multiplicity($domain_regex, $domain) .
         set_subregex_multiplicity($folders_regex, $folders) .
@@ -380,6 +391,7 @@ class Url
      * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
      * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
      * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
+     * @param bool $forbid_js true if you want to forbid javascript uses in urls
      * @return true if the url match the requested url form
      * @see REGEX_MULTIPLICITY_OPTIONNAL
      * @see REGEX_MULTIPLICITY_NEEDED
@@ -390,10 +402,10 @@ class Url
     /* static */ function check_wellformness($url, $protocol = REGEX_MULTIPLICITY_OPTIONNAL,
     $user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
     $folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL)
+    $args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
     {
         return preg_match('`^' . Url::get_wellformness_regex($protocol, $user, $domain,
-        $folders, $file, $args, $anchor) . '$`i', $url);
+        $folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
     }
 
     var $url = '';
