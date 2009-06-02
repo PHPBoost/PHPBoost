@@ -54,6 +54,9 @@ if (!empty($_POST['valid']))
 	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
 	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
 	
+	//Image en relatif.
+	$img_url = new Url($img); 
+
 	if (!empty($idcat) && !empty($title) && !empty($contents))
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60);
@@ -80,7 +83,7 @@ if (!empty($_POST['valid']))
 			$timestamp = time();
 		
 		$Sql->query_inject("INSERT INTO " . PREFIX . "news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
-		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '" . $alt . "', '0')", __LINE__, __FILE__);
+		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', '" . $img_url->relative() . "', '" . $alt . "', '0')", __LINE__, __FILE__);
 		
         // Feeds Regeneration
         import('content/syndication/feed');

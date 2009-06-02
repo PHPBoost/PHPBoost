@@ -60,6 +60,9 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
 	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
 	
+	//Image en relatif.
+	$img_url = new Url($img); 
+	
 	//On met à jour 
 	if (!empty($idcat) && !empty($title) && !empty($contents) && isset($get_visible))
 	{
@@ -90,7 +93,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //inject
 		else //Ajout des heures et minutes
 			$timestamp = ' , timestamp = \'' . time() . '\'';
 
-		$Sql->query_inject("UPDATE " . PREFIX . "news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
+		$Sql->query_inject("UPDATE " . PREFIX . "news SET idcat = '" . $idcat . "', title = '" . $title . "', contents = '" . $contents . "', extend_contents = '" . $extend_contents . "', img = '" . $img_url->relative() . "', alt = '" . $alt . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "'" . $timestamp . " 
 		WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
         
         // Feeds Regeneration
