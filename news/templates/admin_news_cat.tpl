@@ -80,7 +80,7 @@
 							</select>
 							<span id="{cat.IDCAT}icon_img">{cat.IMG_ICON}</span>
 							<br />
-							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if( this.value != '' ) change_icon('{cat.IDCAT}', this.value)" />
+							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if(this.value != '') change_icon('{cat.IDCAT}', this.value)" />
 						</td>					
 						<td class="row2"> 
 							<textarea type="text" class="post" rows="3" cols="20" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
