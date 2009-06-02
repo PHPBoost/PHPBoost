@@ -275,11 +275,11 @@
 			}
 			-->	
 			</script>
-			<div class="block_container" style="width:98%;" id="executed_query">
+			<div class="block_container" style="width:98%;margin-top:28px;" id="executed_query">
 				<div class="block_top">
 					{L_RESULT}
 				</div>
-				<div class="block_contents2">
+				<div class="block_contents">
 					<fieldset style="background-color:white;margin:0px">
 						<legend><strong>{L_EXECUTED_QUERY}:</strong></legend>
 						<p style="color:black;font-size:10px;">{QUERY_HIGHLIGHT}</p>
@@ -341,7 +341,7 @@
 			</script>
 			
 			<form action="admin_database_tools.php?table={TABLE_NAME}&action=query&amp;token={TOKEN}#executed_query" method="post" onsubmit="return check_form();">
-				<div class="block_container">
+				<div class="block_container" style="margin-top:28px;">
 					<div class="block_top">
 						{L_QUERY}
 					</div>

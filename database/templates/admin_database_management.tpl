@@ -185,7 +185,7 @@
 			-->	
 			</script>
 			<div style="width:95%;margin:auto;">	
-				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px">
+				<div class="block_contents1" style="padding:5px;padding-bottom:7px;margin-bottom:5px;">
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database.php#tables">{L_DATABASE_MANAGEMENT}</a> <img src="{PATH_TO_ROOT}/templates/{THEME}/images/li.png" class="valign_middle" alt="" /> <a class="small_link" href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure">{TABLE_NAME}</a>
 				</div>
 				<div class="dynamic_menu" style="z-index:0;float:none">
@@ -214,7 +214,8 @@
 					</ul>
 				</div>
 			</div>
-			<br /><br />
+			<br />
+			<br />
 			# ENDIF #
 			
 			<form action="admin_database.php?action=backup&amp;token={TOKEN}" method="post" name="table_list">
@@ -231,7 +232,7 @@
 					-->
 				</script>
 				
-				<table class="module_table">
+				<table class="module_table" style="padding:0;margin-top:11px;">
 					<tr>
 						<th colspan="2" style="text-align:center;">
 							{L_BACKUP_DATABASE}
