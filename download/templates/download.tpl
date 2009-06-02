@@ -153,7 +153,7 @@
 			<div class="module_contents">
 				<table>
 					<tr>
-						<td style="float:left;text-align:center;padding-right:20px;">
+						<td style="text-align:center;padding-right:20px;">
 							# IF C_IMG #
 								<img src="{U_IMG}" alt="{IMAGE_ALT}" />
 								<br /><br />
@@ -161,10 +161,10 @@
 							<a href="{U_DOWNLOAD_FILE}">
 								<img src="{MODULE_DATA_PATH}/images/download_file.png" alt="" />
 							</a>
-							<p style="margin-top:-15px;"><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
+							<p><a href="{U_DOWNLOAD_FILE}">{L_DOWNLOAD_FILE}</a></p>
 						</td>
 						<td>
-							<p class="text_justify" style="margin-top:-20px">
+							<p class="text_justify">
 								{CONTENTS}
 							</p>
 						</td>
