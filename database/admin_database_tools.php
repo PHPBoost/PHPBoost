@@ -153,7 +153,7 @@ elseif (!empty($table) && $action == 'delete')
 	$value = retrieve(GET, 'value', '');
 	
 	if (!empty($value) && !empty($field))
-		$Sql->query("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM ".$table." WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 	redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
 elseif (!empty($table) && $action == 'update') //Mise à jour.
@@ -171,7 +171,7 @@ elseif (!empty($table) && $action == 'update') //Mise à jour.
 		foreach ($table_structure['fields'] as $fields_info)
 			$request .= $fields_info['name'] . " = '" . retrieve(POST, $fields_info['name'], '', TSTRING_HTML) . "', ";
 		
-		$Sql->query("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE ".$table." SET " . trim($request, ', ') . " WHERE " . $field . " = '" . $value . "'", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
@@ -239,7 +239,7 @@ elseif (!empty($table) && $action == 'insert') //Mise à jour.
 			$fields .= $fields_info['name'] . ', ';
 		}
 		
-		$Sql->query("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO ".$table." (" . trim($fields, ', ') . ") VALUES (" . trim($values, ', ') . ")", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	else

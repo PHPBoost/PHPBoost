@@ -141,14 +141,14 @@
 					</dl>
 					<dl>
 						<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
-						<dd><label>
+						<dd>
 							<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
 								{IMG_LIST}
 							</select>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
-						</label></dd>
+							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if(this.value != '')change_icon(this.value)" />
+						</dd>
 					</dl>
 					<br />
 					<label for="contents">* {L_TEXT}</label>
