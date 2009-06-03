@@ -237,10 +237,11 @@ class ArticlesInterface extends ModuleInterface
 		$data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(READ_CAT_ARTICLES);
 
+		$cat_clause = !empty($idcat) ? ' AND a.idcat = ' . $idcat : 0;
 		$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM " . PREFIX . "articles a
         LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
-        WHERE a.visible = 1 AND (ac.aprob = 1 OR a.idcat = 0)
+        WHERE a.visible = 1 AND (ac.aprob = 1 OR a.idcat = 0) " . $cat_clause . "
         ORDER BY a.timestamp DESC
         " . $Sql->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
