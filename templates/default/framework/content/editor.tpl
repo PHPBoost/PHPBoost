@@ -1,7 +1,7 @@
 		<script type="text/javascript">
 		<!--
 		var displayed = new Array();
-		displayed[{FIELD}] = false;
+		displayed['{FIELD}'] = false;
 		function XMLHttpRequest_preview(field)
 		{
 			if( XMLHttpRequest_preview.arguments.length == 0 )

@@ -15,6 +15,7 @@ div.syndication_choices ul {
 }
 div.syndication_choices ul li {
 	height:18px;
+    margin-bottom:1px;
 }
 
 ul.rss_feed {
