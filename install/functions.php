@@ -60,7 +60,7 @@ function check_database_config($host, $login, $password, $database_name, $tables
 		//La base de données n'existe pas
 		case UNEXISTING_DATABASE:
 			//Tentative de création de la base de données
-			$Sql->create_database($database_name);
+			$database_name = $Sql->create_database($database_name);
 			
 			//On regarde si elle a pu être traitée
 			$databases_list = $Sql->list_databases();

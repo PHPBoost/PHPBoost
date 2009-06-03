@@ -611,11 +611,13 @@ class Sql
 	/**
 	* @desc Creates a data base on the DBMS at which is connected the current object.
 	* @param string $db_name Name of the data base to create
-	* @return resource The resource associated to the executed request.
+	* @return string The name of the database created
 	*/
 	function create_database($db_name)
 	{
-        return mysql_query( "CREATE DATABASE " . str_replace('-', '_', url_encode_rewrite($db_name)));
+		$db_name = str_replace('-', '_', url_encode_rewrite($db_name));
+        mysql_query("CREATE DATABASE " . $db_name);
+        return $db_name;
 	}
 	
 	/**
