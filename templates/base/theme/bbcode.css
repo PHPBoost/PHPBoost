@@ -150,6 +150,9 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
     height:auto;
     min-height:30px;
 }
+.notice a{
+	color:#FFF;
+}
 
 /* Affichage balise quote, code, hide */
 .text_blockquote, .text_code, .text_hide{
