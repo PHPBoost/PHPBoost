@@ -35,6 +35,7 @@ if (!empty($_POST['valid']))
 {
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
+	$icon_path = retrieve(POST, 'icon_path', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
@@ -44,6 +45,9 @@ if (!empty($_POST['valid']))
 	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
+	if (!empty($icon_path))
+		$icon = $icon_path;
+		
 	if (!empty($title) && !empty($contents))
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);

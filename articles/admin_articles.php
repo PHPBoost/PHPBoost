@@ -37,9 +37,12 @@ $idcat = retrieve(GET, 'idcat', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-if ($del && !empty($id)) //Suppresion de l'article.
+if ($del && !empty($id)) //Suppression de l'article.
 {    
 	$Session->csrf_get_protect(); //Protection csrf
+	
+	//Visibilité de l'article.
+	$visible = $Sql->query("SELECT visible FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	//On supprime dans la bdd.
 	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
@@ -50,9 +53,9 @@ if ($del && !empty($id)) //Suppresion de l'article.
 		$CAT_ARTICLES[0]['id_left'] = 0;
 		$CAT_ARTICLES[0]['id_right'] = 0;
 	}
+	
 	//Mise à jours du nombre d'articles des parents.
-	$visible = $Sql->query("SELECT visible FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
-	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
+	$clause_update = ($visible == '1') ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
 	$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 	
 	//On supprimes les éventuels commentaires associés.
