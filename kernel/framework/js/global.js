@@ -52,11 +52,6 @@ for(var i = 0; i < max_level; i++)
 	menu_started.push(false);
 }
 
-// Feeds menu gestion
-var feed_menu_timeout_in = null;
-var feed_menu_timeout_out = null;
-var feed_menu_elt = null;
-
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function showMenu(idmenu, level)
 {
@@ -621,6 +616,13 @@ function isInteger(number)
     return i == number.length ;
 }
 
+
+/*#######Feeds menu gestion######*/
+var feed_menu_timeout_in = null;
+var feed_menu_timeout_out = null;
+var feed_menu_elt = null;
+var feed_menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
+
 // Print the syndication's choice menu
 function ShowSyndication(element) {
     if( feed_menu_elt )
@@ -634,12 +636,16 @@ function ShowSyndication(element) {
             break;
         }
     }
-    feed_menu_timeout_in = setTimeout('feed_menu_elt.style.visibility = \'visible\'', menu_delay_onmouseover);
+	feed_menu_elt.style.visibility = 'visible';
+    clearTimeout(feed_menu_timeout_out);
+}
+function ShowSyndicationMenu(element) {
+	element.style.visibility = 'visible';
     clearTimeout(feed_menu_timeout_out);
 }
 function HideSyndication(element) {
     feed_menu_elt = element;
-    feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
+    feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', feed_menu_delay);
     clearTimeout(feed_menu_timeout_in);
 }
 
