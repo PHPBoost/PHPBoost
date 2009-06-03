@@ -83,7 +83,7 @@ $Cache->load('langs'); //Récupération de la configuration des thèmes.
 
 define('DIR', $CONFIG['server_path']);
 define('HOST', $CONFIG['server_name']);
-define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '/');
+define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '');
 
 $Session = new Session(); //!\\Initialisation  de la class des sessions//!\\
 
