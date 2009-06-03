@@ -180,7 +180,7 @@ class NewsInterface extends ModuleInterface
 	function get_home_page()
 	{
 		global $User, $Sql, $Cache, $Bread_crumb, $CONFIG_NEWS, $LANG, $Session;
-		require_once('../news/news_begin.php');
+		require_once(PATH_TO_ROOT . '/news/news_begin.php');
 		
 		$show_archive = retrieve(GET, 'arch', false);
 		$is_admin = $User->check_level(ADMIN_LEVEL);
@@ -206,18 +206,18 @@ class NewsInterface extends ModuleInterface
 		//Pagination activée, sinon affichage lien vers les archives.
 		if ($CONFIG_NEWS['activ_pagin'] == '1')
 		{
-			$show_pagin = $Pagination->display('../news/news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
+			$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
 			$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p');
 		}
 		elseif ($show_archive) //Pagination des archives.
 		{
-			$show_pagin = $Pagination->display('../news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
+			$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
 			$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p');
 			$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
 		}
 		else //Affichage du lien vers les archives.
 		{
-			$show_pagin = (($CONFIG_NEWS['nbr_news'] > $CONFIG_NEWS['pagination_news']) && ($CONFIG_NEWS['nbr_news'] != 0)) ? '<a href="../news/news.php?arch=1" title="' . $LANG['display_archive'] . '">' . $LANG['display_archive'] . '</a>' : '';
+			$show_pagin = (($CONFIG_NEWS['nbr_news'] > $CONFIG_NEWS['pagination_news']) && ($CONFIG_NEWS['nbr_news'] != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php?arch=1" title="' . $LANG['display_archive'] . '">' . $LANG['display_archive'] . '</a>' : '';
 			$first_msg = 0;
 		}
 			
@@ -278,16 +278,16 @@ class NewsInterface extends ModuleInterface
 					'C_NEWS_ROW' => $new_row,
 					'ID' => $row['id'],
 					'IDCAT' => $row['idcat'],
-					'ICON' => second_parse($row['icon']),
+					'ICON' => second_parse_url($row['icon']),
 					'TITLE' => $row['title'],
 					'CONTENTS' => second_parse($row['contents']),
-					'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="../news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
-					'IMG' => second_parse($row['img']),
+					'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
+					'IMG' => second_parse_url($row['img']),
 					'IMG_DESC' => $row['alt'],
 					'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',
 					'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
 					'TOKEN' => $Session->get_token(),
-					'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
+					'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], PATH_TO_ROOT . '/news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 					'NEW_ROW' => $new_row,
 					'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
@@ -342,11 +342,11 @@ class NewsInterface extends ModuleInterface
 				
 				$tpl_news->assign_block_vars('list', array(
 					'C_NEWS_ROW' => $new_row,
-					'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="../news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
+					'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="' . PATH_TO_ROOT . '/news/news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
 					'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
 					'TITLE' => $row['title'],
 					'NEW_ROW' => $new_row,
-					'U_NEWS' => '../news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+					'U_NEWS' => PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
 				));
 			}
 			$Sql->query_close($result);
