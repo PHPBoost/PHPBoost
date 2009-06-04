@@ -50,8 +50,10 @@
                     <td class="row1 {apps.priority_css_class}" >{apps.L_PRIORITY}</td>
                     <td class="row1" style="text-align:center;">
                         <a href="{apps.download_url}" title="{L_DOWNLOAD_THE_COMPLETE_PACK}">{L_DOWNLOAD_PACK}</a><br />
+                        # IF apps.update_url #
                         /<br />
                         <a href="{apps.update_url}" title="{L_DOWNLOAD_THE_UPDATE_PACK}">{L_UPDATE_PACK}</a>
+                        # END IF #
                     </td>
                 </tr>
                 # END apps #
