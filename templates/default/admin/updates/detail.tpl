@@ -69,7 +69,9 @@
 		                <div class="block_contents">
 							<ul class="list">
 								<li><a href="{U_APP_DOWNLOAD}">{L_DOWNLOAD_PACK}</a></li>
+								# IF U_APP_UPDATE #
 								<li><a href="{U_APP_UPDATE}">{L_UPDATE_PACK}</a></li>
+								# END IF #
 							</ul>
 						</div>
 		            </div>
