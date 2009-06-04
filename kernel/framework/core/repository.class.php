@@ -29,7 +29,7 @@ import('core/application');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
- * @desc 
+ * @desc
  * @package core
  */
 class Repository
@@ -49,7 +49,7 @@ class Repository
     /**
 	* @desc Check Application
 	* @param $app
-	*/    
+	*/
     function check($app)
     {
         global $CONFIG;
@@ -88,7 +88,7 @@ class Repository
 
     /**
 	* @desc Accessor of url
-	*/	
+	*/
     function get_url() { return $this->url; }
     
     var $url = '';
