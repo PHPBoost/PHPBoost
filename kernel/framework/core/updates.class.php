@@ -39,7 +39,7 @@ import('core/repository');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
- * @desc 
+ * @desc
  * @package core
  */
 class Updates
@@ -58,7 +58,7 @@ class Updates
     /**
 	* @desc Load Application Classes
 	* @param $checks
-	*/    
+	*/
     function _load_apps($checks = CHECK_ALL_UPDATES)
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -67,7 +67,7 @@ class Updates
             
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, phpboost_version(), PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
             if ($checks & CHECK_MODULES)
@@ -117,7 +117,7 @@ class Updates
 
     /**
 	* @desc Check Repository for Update Notification
-	*/    
+	*/
     function _check_repositories()
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)

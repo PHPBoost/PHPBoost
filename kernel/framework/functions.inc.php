@@ -1286,4 +1286,17 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
     }
 }
 
+/**
+ * @desc Returns the full phpboost version with its build number
+ * @return string the full phpboost version with its build number
+ */
+function phpboost_version() {
+    global $CONFIG;
+    import('io/filesystem/file');
+    $file = new File(PATH_TO_ROOT . '/.build');
+    $build =  $file->get_contents();
+    $file->close();
+    return $CONFIG['version'] . trim($build);
+}
+
 ?>
