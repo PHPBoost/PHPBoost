@@ -68,8 +68,8 @@ function CheckForm() {
 				</label></dd>
 			</dl>
 			<dl>
-				<dt><label for="auth">{L_AUTHS}</label></dt>
-				<dd><label>{AUTH_MENUS}</label></dd>
+				<dt>{L_AUTHS}</dt>
+				<dd>{AUTH_MENUS}</dd>
 			</dl>
 		</fieldset>		
 	

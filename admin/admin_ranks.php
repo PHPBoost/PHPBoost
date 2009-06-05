@@ -117,7 +117,7 @@ else //Sinon on rempli le formulaire
 		$Template->assign_block_vars('rank', array(
 			'ID' => $row['id'],
 			'RANK' => $row['name'],
-			'MSG' => ($row['special'] == 0) ? '<input type="text" maxlength="6" size="6" name="' . $row['id'] . 'msg" id="vmsg" value="' . $row['msg'] . '" class="text" />' : $LANG['special_rank'],
+			'MSG' => ($row['special'] == 0) ? '<input type="text" maxlength="6" size="6" name="' . $row['id'] . 'msg" value="' . $row['msg'] . '" class="text" />' : $LANG['special_rank'],
 			'RANK_OPTIONS' => $rank_options,
 			'IMG_RANK' => $row['icon'],
 			'DELETE' => $del

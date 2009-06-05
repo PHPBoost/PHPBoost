@@ -15,7 +15,7 @@
 
 # IF C_NEXT_MENU #
 	<li class="row1 menu_link_element" id="menu_element_{ID}">
-			<div style="float:left;">
+		<div style="float:left;">
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name" />
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{ABSOLUTE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url" />
@@ -29,7 +29,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<dl>
-				<dt><label>{L_AUTHORIZATIONS}</label></dt>
+				<dt>{L_AUTHORIZATIONS}</dt>
 				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>
@@ -62,7 +62,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<dl>
-				<dt><label for="menu_element_{ID}_auth">{L_AUTHORIZATIONS}</label></dt>
+				<dt>{L_AUTHORIZATIONS}</dt>
 				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>

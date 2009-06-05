@@ -36,7 +36,7 @@
 								
 								# IF C_ADMIN #
 								<a href="{row.list_cats.U_ADMIN_CAT}">
-									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+									<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 								</a>
 								# ENDIF #
 								<div class="text_small">
@@ -89,10 +89,10 @@
 									<a href="{file.U_DOWNLOAD_LINK}" class="big_link">{file.NAME}</a>
 									# IF C_ADMIN #
 										<a href="{file.U_ADMIN_EDIT_FILE}">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 										</a>
 										<a href="{file.U_ADMIN_DELETE_FILE}" onclick="return confirm('{L_CONFIRM_DELETE_FILE}');">
-											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="">
+											<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
 										</a>
 									# ENDIF #
 								</p>

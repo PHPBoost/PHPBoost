@@ -15,13 +15,13 @@
 
 			function img_change(id, url)
 			{
-				if( document.images && url != '' )
+				if( document.getElementById(id) && url != '' )
 				{	
-					document.images[id].style.display = 'inline';
-					document.images[id].src = url;
+					document.getElementById(id).style.display = 'inline';
+					document.getElementById(id).src = url;
 				}
 				else
-					document.images[id].style.display = 'none';
+					document.getElementById(id).style.display = 'none';
 			}
 		-->
 		</script>
@@ -54,7 +54,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_ranks_add.php?token={TOKEN}" method="post" action="" enctype="multipart/form-data" class="fieldset_content">				
+			<form action="admin_ranks_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_RANKS}</legend>						
 					<dl>
@@ -85,10 +85,10 @@
 					<dl>
 						<dt><label for="icon">{L_IMG_ASSOC}</label></dt>
 						<dd><label>
-							<select name="icon" id="icon" onChange="img_change('icon', this.options[selectedIndex].value)">
+							<select name="icon" id="icon" onchange="img_change('img_icon', this.options[selectedIndex].value)">
 								{RANK_OPTIONS}
 							</select>
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.gif" name="icon" alt="" style="display:none;" />
+							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/ranks/rank_0.gif" id="img_icon" alt="" style="display:none;" />
 						</label></dd>
 					</dl>
 				</fieldset>

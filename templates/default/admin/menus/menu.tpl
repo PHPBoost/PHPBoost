@@ -55,8 +55,9 @@
                 <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
             </div>
         </div>
-        
-        <p>{CONTENTS}</p>&nbsp;
+        <div style="margin-top:10px;">
+			{CONTENTS}
+		</div>
     </div>
     <div class="module_mini_bottom">
     </div>
@@ -119,8 +120,9 @@
             </div>
             <a href="javascript:menu_display_block('menu{IDMENU}');" onmouseover="menu_hide_block('menu{IDMENU}', 1);" onmouseout="menu_hide_block('menu{IDMENU}', 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/move.png" alt="" /></a>
         </div>
-        <p>{CONTENTS}</p>
-        <br /><br />
+        <div style="margin:10px 0px;">
+			{CONTENTS}
+		</div>
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>

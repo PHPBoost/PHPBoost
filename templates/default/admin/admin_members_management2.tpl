@@ -210,7 +210,7 @@
 					<dl>
 						<dt><label for="user_lang">{L_LANG_CHOOSE}</label></dt>
 						<dd><label>
-							<select name="user_lang" id="user_lang" onChange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
+							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
 								# START select_lang #
 									<option value="{select_lang.IDNAME}"{select_lang.SELECTED}>{select_lang.NAME}</option>
 								# END select_lang #			
@@ -224,7 +224,7 @@
 					<dl>
 						<dt><label for="user_theme">{L_THEME_CHOOSE}</label></dt>
 						<dd><label>
-							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
+							<select name="user_theme" id="user_theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
 								# START select_theme #
 									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #				
@@ -311,7 +311,7 @@
 					<dl>
 						<dt><label for="user_sex">{L_SEX}</label></dt>
 						<dd><label>
-							<select name="user_sex" id="user_sex" onChange="img_change_sex(this.options[selectedIndex].value)">
+							<select name="user_sex" id="user_sex" onchange="img_change_sex(this.options[selectedIndex].value)">
 								{SEX_OPTIONS}						
 							</select>
 							<span id="img_sex">{IMG_SEX}</span>

@@ -71,7 +71,7 @@
 					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<img src="{PATH_TO_ROOT}/images/stats/countries/{list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{list.IDLANG}"><strong>{list.LANG}</strong>		
+							<img src="{PATH_TO_ROOT}/images/stats/countries/{list.IDENTIFIER}.png" alt="" class="valign_middle" /> <span id="t{list.IDLANG}"><strong>{list.LANG}</strong></span>	
 						</td>
 						<td class="row2" style="vertical-align:top">	
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
@@ -107,9 +107,12 @@
 					# END list #	
 					<tr> 
 						<th colspan="5">
-							<noscript>
-								<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-							</noscript>
+							<input type="submit" name="valid" id="submit_lang" value="{L_SUBMIT}" class="submit" />
+							<script type="text/javascript">
+							<!--				
+							document.getElementById('submit_lang').style.display = 'none';
+							-->
+							</script>
 							&nbsp;
 						</th>
 					</tr>	

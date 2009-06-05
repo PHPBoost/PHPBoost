@@ -15,7 +15,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form class="fieldset_content">
+			<form class="fieldset_content" action="">
 				<fieldset>
 					<legend>
 						{L_SERVER}
@@ -154,7 +154,7 @@
 				<fieldset>
 					<legend>{L_SUMMERIZATION}</legend>
 					<p>{L_SUMMERIZATION_EXPLAIN}</p>
-					<textarea style="font-family:Courier new; width:53em;" rows="20">{SUMMERIZATION}</textarea>
+					<textarea style="font-family:Courier new; width:53em;" rows="20" cols="15">{SUMMERIZATION}</textarea>
 				</fieldset>
 			</form>
 		</div>

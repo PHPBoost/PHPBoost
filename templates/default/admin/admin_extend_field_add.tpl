@@ -64,7 +64,7 @@
 				<dl> 
 					<dt><label for="name">* {L_NAME}</label></dt>
 					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" class="text" /></label></dd>
-				<dl>
+				</dl>
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>
 					<dd><label><textarea class="post" rows="4" cols="30" name="contents" id="contents"></textarea></label></dd>

@@ -44,13 +44,17 @@ function menu_hide_block(idfield, stop)
 		<tr>
 			<td colspan="{COLSPAN}" style="border:1px solid black;background:#cee6cd">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_HEADER}</p>
-				# START mod_header #{mod_header.MENU}# END mod_header #
+				# START mod_header #
+				{mod_header.MENU}
+				# END mod_header #
 			</td>
 		</tr>
 		<tr>
 			<td colspan="{COLSPAN}" style="border:1px solid black;background:#CCFF99">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_SUB_HEADER}</p>
-				# START mod_subheader #{mod_subheader.MENU}# END mod_subheader #
+				# START mod_subheader #
+				{mod_subheader.MENU}
+				# END mod_subheader #
 			</td>
 		</tr>
 		<tr>				
@@ -58,8 +62,16 @@ function menu_hide_block(idfield, stop)
 			<td style="width:18%;vertical-align:top;padding:4px;border:1px solid black;background:#afafaf">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_LEFT_MENU}</p>
 				<div class="module_mini_container" style="background:none;padding:0;margin:auto;float:none;border:none;">
-				# START mod_left #{mod_left.MENU}# END mod_left #
-                # IF NOT RIGHT_COLUMN #<hr /><br /># START mod_right #{mod_right.MENU}# END mod_right ## END IF #   			
+				# START mod_left #
+				{mod_left.MENU}
+				# END mod_left #
+				
+                # IF NOT RIGHT_COLUMN #
+				<hr /><br />
+				# START mod_right #
+				{mod_right.MENU}
+				# END mod_right #
+				# ENDIF #   			
 				</div>
 			</td>
 			# ENDIF #
@@ -74,14 +86,18 @@ function menu_hide_block(idfield, stop)
 					<tr>
 						<td style="border:1px solid black;background:#FFE25F">
 							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_TOP_CENTRAL_MENU}</p>
-					# START mod_topcentral #{mod_topcentral.MENU}# END mod_topcentral #
-					&nbsp;
+							# START mod_topcentral #
+							{mod_topcentral.MENU}
+							# END mod_topcentral #
+							&nbsp;
 						</td>
 					</tr>
 					<tr>
 						<td style="border:1px solid black;">
 							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_MENUS_AVAILABLE}</p>
-							# START mod_main #{mod_main.MENU}# END mod_main #
+							# START mod_main #
+							{mod_main.MENU}
+							# END mod_main #
 							
 							<div class="spacer">&nbsp;</div>
 							
@@ -105,8 +121,10 @@ function menu_hide_block(idfield, stop)
 					<tr>
 						<td style="border:1px solid black;background:#FF5F5F">
 							<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_BOTTOM_CENTRAL_MENU}</p>
-					# START mod_bottomcentral #{mod_bottomcentral.MENU}# END mod_bottomcentral #
-					&nbsp;
+							# START mod_bottomcentral #
+							{mod_bottomcentral.MENU}
+							# END mod_bottomcentral #
+							&nbsp;
 						</td>
 					</tr>
 				</table>							
@@ -115,21 +133,33 @@ function menu_hide_block(idfield, stop)
 			# IF RIGHT_COLUMN #
 			<td style="width:18%;vertical-align:top;padding:4px;border:1px solid black;background:#bdaeca">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_RIGHT_MENU}</p>
-				# START mod_right #{mod_right.MENU}# END mod_right #
-                # IF NOT LEFT_COLUMN #<hr /><br /># START mod_left #{mod_left.MENU}# END mod_left ## END IF #			
+				# START mod_right #
+				{mod_right.MENU}
+				# END mod_right #
+				
+                # IF NOT LEFT_COLUMN #
+				<hr /><br />
+				# START mod_left #
+				{mod_left.MENU}
+				# END mod_left #
+				# ENDIF #			
 			</td>
 			# ENDIF #
 		</tr>
 		<tr>
 			<td colspan="{COLSPAN}" style="border:1px solid black;background:#90ab8e">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_TOP_FOOTER}</p>
-				# START mod_topfooter #{mod_topfooter.MENU}# END mod_topfooter #
+				# START mod_topfooter #
+				{mod_topfooter.MENU}
+				# END mod_topfooter #
 			</td>
 		</tr>
 		<tr>
 			<td colspan="{COLSPAN}" style="border:1px solid black;background:#A8D1CB">
 				<p class="text_center text_strong" style="padding:6px;padding-bottom:0px;">{L_FOOTER}</p>
-				# START mod_footer #{mod_footer.MENU}# END mod_footer #
+				# START mod_footer #
+				{mod_footer.MENU}
+				# END mod_footer #
 			</td>
 		</tr>
 	</table>

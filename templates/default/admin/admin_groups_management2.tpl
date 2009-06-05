@@ -24,11 +24,11 @@
 		{
 			if( document.images && url != '' )
 			{	
-				document.images['img_group'].style.display = 'inline';
-				document.images['img_group'].src = "{PATH_TO_ROOT}/images/group/" + url;
+				document.getElementById('img_group_change').style.display = 'inline';
+				document.getElementById('img_group_change').src = "{PATH_TO_ROOT}/images/group/" + url;
 			}
 			else
-				document.images['img_group'].style.display = 'none';
+				document.getElementById('img_group_change').style.display = 'none';
 		}
 		function XMLHttpRequest_search()
 		{
@@ -148,22 +148,22 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
-							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
+						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
-						</label></dd>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd>
 							<label>
-								<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
+								<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 									{IMG_GROUPS}
 								</select>
-								<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" class="valign_middle" style="display:none" />
+								<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="" class="valign_middle" style="display:none" />
 							</label>
 						</dd>
 					</dl>
@@ -192,7 +192,7 @@
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
 						<dt><label for="login">* {L_PSEUDO}</label></dt>
-						<dd><label>
+						<dd>
 							<input type="text" size="20" maxlength="25" id="login" value="{LOGIN}" name="login_mbr" class="text" /> 
 							<span id="loading_groups"></span>
 							<script type="text/javascript">
@@ -201,7 +201,7 @@
 							-->
 							</script>
 							<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-						</label></dd>
+						</dd>
 					</dl>
 				</fieldset>	
 				<fieldset class="fieldset_submit">
@@ -211,10 +211,12 @@
 			</form>
 			
 			<table class="module_table">
-				<th colspan="2">
-					{L_MBR_GROUP}<span id="add"></span>
-				</th>				
 				<tr> 
+					<th colspan="2">
+						{L_MBR_GROUP}<span id="add"></span>
+					</th>				
+				</tr>
+				<tr>
 					<td class="row1">
 						* {L_PSEUDO}
 					</td>
@@ -240,7 +242,7 @@
 			
 			
 			# IF C_ADD_GROUP #
-			<form action="admin_groups.php?add=1" method="post" action="" enctype="multipart/form-data" class="fieldset_content">				
+			<form action="admin_groups.php?add=1" method="post" enctype="multipart/form-data" class="fieldset_content">				
 				<fieldset>
 				<legend>{L_UPLOAD_GROUPS}</legend>						
 					<dl>
@@ -281,21 +283,21 @@
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="color_group">{L_COLOR_GROUP}</label><br /><span>{L_COLOR_GROUP_EXPLAIN}</span></dt>
-						<dd><label>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
-							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" /></a>	
+						<dd>#<input type="text" size="7" name="color_group" id="color_group" value="{COLOR_GROUP}" class="text" />
+							<a href="javascript:bbcode_color();bb_display_block('1', '');" onmouseout="bb_hide_block('1', '', 0);" class="bbcode_hover" title="{L_BB_COLOR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/color.png" alt="" class="valign_middle" /></a>	
 							<div style="position:relative;z-index:100;display:none;" id="bb_block1">
 								<div id="color_group_list" class="bbcode_block" style="background:white;width:150px;" onmouseover="bb_hide_block('1', '', 1);" onmouseout="bb_hide_block('1', '', 0);">
 								</div>
 							</div>
-						</label></dd>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label for="img_group">{L_IMG_ASSOC_GROUP}</label><br /><span>{L_IMG_ASSOC_GROUP_EXPLAIN}</span></dt>
 						<dd><label>
-							<select name="img" id="img_group" onChange="img_change(this.options[selectedIndex].value)">
+							<select name="img" id="img_group" onchange="img_change(this.options[selectedIndex].value)">
 								{IMG_GROUPS}
 							</select>				
-							<img src="{PATH_TO_ROOT}/images/group/{IMG}" name="img_group" alt="" style="vertical-align:middle" style="display:none" />
+							<img src="{PATH_TO_ROOT}/images/group/{IMG}" id="img_group_change" alt="" class="valign_middle" style="display:none" />
 						</label></dd>
 					</dl>				
 				</fieldset>
