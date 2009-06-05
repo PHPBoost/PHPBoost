@@ -62,12 +62,12 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left" class="text_small">
+				<div style="float:left" class="text_small">
 					{KERNEL_NOTATION}
-				</span>
-				<span style="float:right" class="text_small">
+				</div>
+				<div style="float:right" class="text_small">
 					{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
-				</span>
+				</div>
 				<div class="spacer"></div>
 			</div>
 		</div>

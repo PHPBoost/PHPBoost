@@ -20,12 +20,14 @@
 		# ENDIF #
 		
 		<form action="" method="post" class="text_small">
-			{NOTE}
-			<select id="note_select{ID}" name="note">
-				{SELECT}
-			</select>
-			<input type="hidden" name="token" value="{TOKEN}" />
-			<input type="submit" name="valid_note" id="valid_note{ID}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
+			<div>
+				{NOTE}
+				<select id="note_select{ID}" name="note">
+					{SELECT}
+				</select>
+				<input type="hidden" name="token" value="{TOKEN}" />
+				<input type="submit" name="valid_note" id="valid_note{ID}" value="{L_VALID_NOTE}" class="submit" style="padding:1px 2px;" />
+			</div>
 			<script type="text/javascript">
 			<!--				
 			document.getElementById('note_value{ID}').style.display = 'none';
