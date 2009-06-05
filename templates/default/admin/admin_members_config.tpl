@@ -142,10 +142,8 @@
 				<fieldset>
 					<legend>{L_USERS_MSG}</legend>
 					<label for="contents">* {L_CONTENTS}</label>
-					<label>
-						{KERNEL_EDITOR}
-						<textarea rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea> 
-					</label>
+					{KERNEL_EDITOR}
+					<textarea rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea> 
 				</fieldset>
 							
 				<fieldset class="fieldset_submit">

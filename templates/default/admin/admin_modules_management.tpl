@@ -22,7 +22,7 @@
 		<div id="admin_contents">
 			# IF C_MODULES_LIST #	
 				<form action="admin_modules.php?uninstall=1" method="post">
-					<table class="module_table" style="width:99%">
+					<table class="module_table" style="width:99%;margin-bottom:30px;">
 						<tr> 
 							<th colspan="5">
 								{L_MODULES_INSTALLED}
@@ -98,8 +98,6 @@
 						</tr>					
 						# END installed #
 					</table>
-					
-					<br /><br />
 					
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
