@@ -60,11 +60,11 @@
 					</dl>
 					<dl>
 						<dt><label for="site_desc">{L_SITE_DESC}</label><br /><span>{L_SITE_DESC_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_desc" id="site_desc">{SITE_DESCRIPTION}</textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="37" name="site_desc" id="site_desc">{SITE_DESCRIPTION}</textarea></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_keyword" id="site_keyword">{SITE_KEYWORD}</textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="37" name="site_keyword" id="site_keyword">{SITE_KEYWORD}</textarea></label></dd>
 					</dl> 
 					<dl>
 						<dt><label for="site_lang">* {L_DEFAULT_LANGUAGES}</label></dt>
@@ -158,7 +158,7 @@
 					</dl>
 					<dl>
 						<dt><label for="sign">{L_EMAIL_ADMIN_SIGN}</label><br /><span>{L_EMAIL_ADMIN_SIGN_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="sign" id="sign">{SIGN}</textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="37" name="sign" id="sign">{SIGN}</textarea></label></dd>
 					</dl>
 				</fieldset> 
 

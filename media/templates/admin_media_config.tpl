@@ -60,7 +60,7 @@
 						<label for="contents" id="preview_description">{L_MODULE_DESC}</label>
 						<label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="10" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
+							<textarea rows="10" cols="90" id="contents" name="contents">{CONTENTS}</textarea>
 						</label>
 						<br />
 						<dl>

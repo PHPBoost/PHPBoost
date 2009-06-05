@@ -275,7 +275,7 @@
 		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
 			{KERNEL_EDITOR}		
-			<label><textarea type="text" class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea> </label>
+			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea> </label>
 			<div style="padding:17px;">					
 				<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
@@ -334,7 +334,7 @@
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 							<br />
 						</fieldset>
 						
@@ -421,7 +421,7 @@
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 							<br />
 						</fieldset>
 						

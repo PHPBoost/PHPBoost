@@ -79,7 +79,7 @@
 							<p>{L_REQUIRE}</p>
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<label><textarea type="text" rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+							<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">

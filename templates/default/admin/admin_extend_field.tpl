@@ -118,7 +118,7 @@
 				<dl>
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>
-					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents">{CONTENTS}</textarea> </label></dd>
+					<dd><label><textarea class="post" rows="4" cols="30" name="contents">{CONTENTS}</textarea> </label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="required_field">* {L_REQUIRED_FIELD}</label><br /><span>{L_REQUIRED_FIELD_EXPLAIN}</span></dt>
@@ -137,12 +137,12 @@
 				</dl>
 				<dl> 
 					<dt><label for="possible_values">{L_POSSIBLE_VALUES}</label><br /><span>{L_POSSIBLE_VALUES_EXPLAIN}</span></dt>
-					<dd><label><textarea type="text" class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%">{POSSIBLE_VALUES}</textarea></label></dd>
+					<dd><label><textarea class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%">{POSSIBLE_VALUES}</textarea></label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="default_values">{L_DEFAULT_VALUE}</label><br /><span>{L_DEFAULT_VALUE_EXPLAIN}</span></dt>
 					<dd>
-						<label><textarea type="text" class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%">{DEFAULT_VALUES}</textarea></label>
+						<label><textarea class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%">{DEFAULT_VALUES}</textarea></label>
 					</dd>
 				</dl>
 				<dl> 

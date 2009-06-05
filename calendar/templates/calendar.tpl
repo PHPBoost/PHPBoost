@@ -171,7 +171,7 @@
 				<br />
 				<label for="contents">* {L_ACTION}</label>
 				{KERNEL_EDITOR}
-				<label><textarea type="text" rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
+				<label><textarea rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">

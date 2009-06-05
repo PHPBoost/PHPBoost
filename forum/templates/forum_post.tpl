@@ -155,7 +155,7 @@
 							
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<label><textarea type="text" rows="25" cols="40" id="contents" name="contents">{CONTENTS}</textarea></label>
+							<label><textarea rows="25" cols="40" id="contents" name="contents">{CONTENTS}</textarea></label>
 							
 							<br /><br />
 							
