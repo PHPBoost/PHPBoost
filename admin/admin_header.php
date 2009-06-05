@@ -186,6 +186,7 @@ foreach ($modules_config as $module_name => $auth)
 				$admin_links = parse_ini_array($modules_config[$module_name]['admin_links']);
 				$links = '';
 				$i = 0;
+				$j = 0;
 				foreach ($admin_links as $key => $value)
 				{
 					if (is_array($value))
@@ -198,10 +199,11 @@ foreach ($modules_config as $module_name => $auth)
 					}
 					else
 						$links .= '<li><a href="' . PATH_TO_ROOT . '/' . $name . '/' . $value . '" style="background-image:url(' . PATH_TO_ROOT . '/' . $name . '/' . $name . '_mini.png);">' . $key . '</a></li>' . "\n";
+					$j++;
 				}
 				
 				$Template->assign_block_vars('admin_links_' . $menu_pos, array(
-					'C_ADMIN_LINKS_EXTEND' => true,
+					'C_ADMIN_LINKS_EXTEND' => ($j > 0 ? true : false),
 					'IDMENU' => $idmenu,
 					'NAME' => $modules_config[$module_name]['name'],
 					'LINKS' => $links,
