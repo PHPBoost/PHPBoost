@@ -79,27 +79,27 @@
 				</table>
 			</div>
 			<div style="float:right;width:50%;">
-				<table class="module_table">
-					<tr> 
-						<th colspan="4">
-							{L_WRITING_PAD}
-						</th>
-					</tr>
-					<tr> 
-						<td class="row2">
-							<div class="block_contents">
-								<form action="admin_index.php?token={TOKEN}" method="post" style="margin-top:6px;margin-bottom:1px;">
-									<label><textarea type="text" id="writing_pad_content" name="writing_pad_content" style="height:237px">{WRITING_PAD_CONTENT}</textarea></label> 
+				<form action="admin_index.php?token={TOKEN}" method="post">
+					<table class="module_table">
+						<tr> 
+							<th colspan="4">
+								{L_WRITING_PAD}
+							</th>
+						</tr>
+						<tr> 
+							<td class="row2">
+								<div class="block_contents">
+									<textarea id="writing_pad_content" name="writing_pad_content" cols="15" rows="10" style="height:243px">{WRITING_PAD_CONTENT}</textarea> 
 									<p style="text-align:center;margin:0;margin-top:8px;">
 										<input type="submit" name="writingpad" value="{L_UPDATE}" class="submit" />
 										&nbsp;&nbsp; 
 										<input type="reset" value="{L_RESET}" class="reset" />
-									</p>	
-								</form>
-							</div>
-						</td>
-					</tr>
-				</table>
+									</p>
+								</div>
+							</td>
+						</tr>
+					</table>	
+				</form>
 			</div>
 			
 			<div style="clear:right;"></div>
