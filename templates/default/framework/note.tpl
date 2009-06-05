@@ -1,10 +1,8 @@
 		<script type="text/javascript">
 		<!--
-		
 		# IF C_JS_NOTE #
 		array_note = new Array();
 		# ENDIF #
-
 		
 		var theme = '{THEME}';
 		var l_already_voted = '{L_ALERT_ALREADY_VOTE}';
@@ -37,3 +35,4 @@
 			-->
 			</script>
 		</form>
+		
