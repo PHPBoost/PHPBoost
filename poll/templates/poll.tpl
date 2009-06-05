@@ -37,8 +37,8 @@
 				<div class="module_top">
 					{QUESTION}
 					# IF C_IS_ADMIN #
-					<a href="../poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a>
-					&nbsp;&nbsp;<a href="../poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" /></a>
+					<a href="../poll/admin_poll.php?id={IDPOLL}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="" /></a>
+					&nbsp;&nbsp;<a href="../poll/admin_poll.php?delete=1&amp;id={IDPOLL}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="" /></a>
 					# ENDIF #
 				</div>
 				<div class="module_contents">

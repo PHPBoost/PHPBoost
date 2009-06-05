@@ -122,7 +122,7 @@ if ($checkdate === true && empty($id) && !$add)
 	$month_day = $array_month[$month - 1];
 	
 	if ($User->check_level($CONFIG_CALENDAR['calendar_auth'])) //Autorisation de poster?
-		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" /></a><br />';
+		$add_event = '<a href="calendar' . url('.php?add=1') . '" title="' . $LANG['add_event'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" /></a><br />';
 	else
 		$add_event = '';
 	
@@ -133,8 +133,8 @@ if ($checkdate === true && empty($id) && !$add)
 		'DATE' => $day . ' ' . $array_l_month[$month - 1] . ' ' . $year,
 		'U_PREVIOUS' => ($month == 1) ? url('.php?d=' . $day . '&amp;m=12&amp;y=' . ($year - 1), '-' . $day . '-12-' . ($year - 1) . '.php') :  url('.php?d=1&amp;m=' . ($month - 1) . '&amp;y=' . $year, '-1-' . ($month - 1) . '-' . $year . '.php'),
 		'U_NEXT' => ($month == 12) ? url('.php?d=' . $day . '&amp;m=1&amp;y=' . ($year + 1), '-' . $day . '-1-' . ($year + 1) . '.php') :  url('.php?d=1&amp;m=' . ($month + 1) . '&amp;y=' . $year, '-1-' . ($month + 1) . '-' . $year . '.php'),
-		'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="calendar' . url('.php?e=down&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
-		'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="calendar' . url('.php?e=up&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
+		'U_PREVIOUS_EVENT' => ( $get_event != 'fd' ) ? '<a href="calendar' . url('.php?e=down&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=down') . '#act" title="">&laquo;</a>' : '',
+		'U_NEXT_EVENT' => ( $get_event != 'fu') ? '<a href="calendar' . url('.php?e=up&amp;d=' . $day . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=up') . '#act" title="">&raquo;</a>' : '',
 		'L_CALENDAR' => $LANG['calendar'],
 		'L_ACTION' => $LANG['action'],
 		'L_EVENTS' => $LANG['events'],
@@ -195,7 +195,7 @@ if ($checkdate === true && empty($id) && !$add)
 			$action = $j;
 			if ( !empty($array_action[$j]) )
 			{
-				$action = '<a href="calendar' . url('.php?d=' . $j . '&m=' . $month . '&y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
+				$action = '<a href="calendar' . url('.php?d=' . $j . '&amp;m=' . $month . '&amp;y=' . $year, '-' . $j . '-' . $month . '-' . $year . '.php') . '#act">' . $j . '</a>';
 				$class = 'calendar_event';
 			}
 			elseif ($day == $j)
@@ -230,7 +230,7 @@ if ($checkdate === true && empty($id) && !$add)
 			if ($User->check_level(ADMIN_LEVEL))
 			{
 				$edit = '&nbsp;&nbsp;<a href="calendar' . url('.php?edit=1&amp;id=' . $row['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
+				$del = '&nbsp;&nbsp;<a href="calendar' . url('.php?delete=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm_del();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" alt="" /></a>';
 				$java = '<script type="text/javascript">
 				<!--
 				function Confirm_del() {
