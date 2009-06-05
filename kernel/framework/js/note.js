@@ -46,9 +46,9 @@ function select_stars(divid, note)
 			else
 				star_img = 'stars3.png';
 		}
-					
-		if( document.getElementById(divid + '_stars' + i) )
-			document.getElementById(divid + '_stars' + i).src = PATH_TO_ROOT + '/templates/' + theme + '/images/' + star_img;
+		
+		if( document.getElementById('n' + divid + '_stars' + i) )
+			document.getElementById('n' + divid + '_stars' + i).src = PATH_TO_ROOT + '/templates/' + theme + '/images/' + star_img;
 	}
 }
 function out_div(divid, note)

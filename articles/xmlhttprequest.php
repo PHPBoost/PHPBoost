@@ -44,6 +44,7 @@ if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur con
 	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
-
+else
+	echo -2;
 
 ?>
