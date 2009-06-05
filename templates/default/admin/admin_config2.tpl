@@ -96,7 +96,7 @@
 						<label for="htaccess_manual_content">
 							{L_HTACCESS_MANUAL_CONTENT}
 						</label>
-						<p>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</p>
+						<br /><span>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</span>
 					</dt>
 					<dd>
 						<textarea name="htaccess_manual_content" rows="5" cols="5" style="font-family:'Courier new';">{HTACCESS_MANUAL_CONTENT}</textarea>
