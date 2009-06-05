@@ -48,7 +48,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_smileys_add.php?token={TOKEN}" method="post" action="" enctype="multipart/form-data" class="fieldset_content">
+			<form action="admin_smileys_add.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
 				<fieldset>
 					<legend>{L_UPLOAD_SMILEY}</legend>
 					<dl>

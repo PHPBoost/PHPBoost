@@ -174,7 +174,7 @@
 						<div class="question">{L_ALTERNATIVE_PM}</div>
 						<br />
 						{KERNEL_EDITOR}
-						<label><textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea></label>
+						<label><textarea name="action_contents" id="action_contents" class="post" rows="12" cols="15">{ALTERNATIVE_PM}</textarea></label>
 					</td>
 				</tr>
 				<tr>
