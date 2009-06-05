@@ -77,7 +77,7 @@
 					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
+							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong></span> <em>({list.VERSION})</em>				
 						</td>
 						<td class="row2">					
 							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
@@ -98,7 +98,7 @@
 							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'">'; 
+							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'"> 
 								{list.OPTIONS}
 							</select>
 						</td>
@@ -128,9 +128,12 @@
 					# END list #	
 					<tr> 
 						<th colspan="7">
-							<noscript>
-								<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-							</noscript>
+							<input type="submit" name="valid" id="submit_theme" value="{L_SUBMIT}" class="submit" />
+							<script type="text/javascript">
+							<!--				
+							document.getElementById('submit_theme').style.display = 'none';
+							-->
+							</script>
 							&nbsp;
 						</th>
 					</tr>	

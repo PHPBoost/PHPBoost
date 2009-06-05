@@ -31,10 +31,8 @@ function CheckForm() {
 				<dt><label for="location">* {L_LOCATION}</label></dt>
 				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
 			</dl>
-			<label>
-				{KERNEL_EDITOR}
-				<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
-			</label>
+			{KERNEL_EDITOR}
+			<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
 			<dl>
 				<dt><label for="activ">{L_STATUS}</label></dt>
 				<dd>
@@ -50,7 +48,7 @@ function CheckForm() {
 				</dd>
 			</dl>
 			<dl>
-				<dt><label>{L_AUTHS}</label></dt>
+				<dt>{L_AUTHS}</dt>
 				<dd>{AUTH_MENUS}</dd>
 			</dl>
 		</fieldset>		

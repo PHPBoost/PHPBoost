@@ -124,7 +124,7 @@
                 # IF C_SIMPLE_SEARCH #
                     <div id="results_choices" class="resultsChoices" style="display:none">
                         <span>{L_PRINT}</span>
-                        <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
+                        <select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
                             <option value="all">{L_TITLE_ALL_RESULTS}</option>
                             # START results #
                                 <option value="{results.MODULE_NAME}"> --&gt; {results.L_MODULE_NAME}</option>

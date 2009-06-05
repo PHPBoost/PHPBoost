@@ -318,7 +318,7 @@
 					<dt><label for="user_theme">{L_THEME_CHOOSE}</label></dt>
 					<dd>
 						<label>
-							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">			
+							<select name="user_theme" id="user_theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">			
 								# START select_theme #
 									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #
