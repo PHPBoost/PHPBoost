@@ -109,7 +109,7 @@ class Authorizations
 	 * @return String The formated select.
 	* @static
 	 */
-	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = 0, $disabled_advanced_auth = false)
+	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
 		
@@ -176,7 +176,7 @@ class Authorizations
 					'ID' => $j,
 					'IDRANK' => $idrank,
 					'RANK_NAME' => $group_name,
-					'DISABLED' => $disabled,
+					'DISABLED' => (!empty($disabled) ? 'disabled = "disabled" ' : ''),
 					'SELECTED' => $selected
 				));
         	}

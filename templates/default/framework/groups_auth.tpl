@@ -10,6 +10,7 @@
 		# START groups_list #
 			<option {groups_list.DISABLED} value="{groups_list.IDGROUP}" {groups_list.SELECTED}>{groups_list.GROUP_NAME}</option>
 		# END groups_list #
+			<option></option>
 		</optgroup>
 	</select>
 </div>
@@ -19,12 +20,13 @@
 # ENDIF #
 
 # IF C_ADVANCED_AUTH #
-<div id="advanced_auth2{IDSELECT}" style="margin-left:5px;{ADVANCED_AUTH_STYLE}float:left;">
-	<select id="members_auth{IDSELECT}"  name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
+<div id="advanced_authb{IDSELECT}" style="margin-left:5px;{ADVANCED_AUTH_STYLE}float:left;">
+	<select id="members_auth{IDSELECT}" name="members_auth{IDSELECT}[]" size="8" multiple="multiple">
 		<optgroup label="{L_USERS}" id="advanced_auth3{IDSELECT}">
 			# START members_list #
 			<option value="{members_list.USER_ID}" selected="selected">{members_list.LOGIN}</option>
 			# END members_list #
+			<option></option>
 		</optgroup>
 	</select>
 </div>
@@ -41,7 +43,7 @@
 # ENDIF #
 
 <div class="spacer"></div>
-<a class="small_link" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_auth2{IDSELECT}', '');switch_img('advanced_auth_plus{IDSELECT}', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png');"><img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /> {L_ADVANCED_AUTHORIZATION}</a>
+<a class="small_link" href="javascript:display_div_auto('advanced_auth{IDSELECT}', '');display_div_auto('advanced_authb{IDSELECT}', '');switch_img('advanced_auth_plus{IDSELECT}', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/minus.png', '{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png');"><img id="advanced_auth_plus{IDSELECT}" src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/plus.png" alt="" class="valign_middle" /> {L_ADVANCED_AUTHORIZATION}</a>
 <br />
 <a class="small_link" href="javascript:check_select_multiple('{IDSELECT}', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple('{IDSELECT}', false);">{L_SELECT_NONE}</a>
 <br />

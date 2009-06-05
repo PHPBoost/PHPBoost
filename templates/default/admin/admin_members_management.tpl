@@ -78,13 +78,13 @@
 					<legend>{L_SEARCH_USER}</legend>
 					<dl>
 						<dt><label for="login_mbr">* {L_PSEUDO}</label><br /><span>{L_JOKER}</span></dt>
-						<dd><label>
-							<span style="float:left;">
+						<dd>
+							<div style="float:left;">
 								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 								<span id="search_img"></span>
 							
-							</span>
-							<span style="float:left;margin-left:5px;">
+							</div>
+							<div style="float:left;margin-left:5px;">
 								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
 								<script type="text/javascript">
 								<!--								
@@ -97,8 +97,8 @@
 									{search.RESULT}
 									# END search #
 								</div>
-							</span>
-						</label></dd>
+							</div>
+						</dd>
 					</dl>
 				</fieldset>	
 			</form>

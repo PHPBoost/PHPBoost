@@ -10,7 +10,7 @@
 		-->
 		</script>
 		
-		<form action="track{U_TRACK_ACTION}" method="post" name="track">	
+		<form action="track{U_TRACK_ACTION}" method="post">	
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>

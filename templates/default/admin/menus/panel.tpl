@@ -18,8 +18,8 @@
             <a href="feed.php" class="quick_link">{L_ADD_FEED_MENUS}</a>
         </li>
         <li>
-            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&name={THEME_NAME}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="{L_MANAGE_THEME_COLUMNS}" /></a><br />
-            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&name={THEME_NAME}" class="quick_link">{L_MANAGE_THEME_COLUMNS}</a>
+            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&amp;name={THEME_NAME}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/menus.png" alt="{L_MANAGE_THEME_COLUMNS}" /></a><br />
+            <a href="{PATH_TO_ROOT}/admin/admin_themes.php?edit=1&amp;name={THEME_NAME}" class="quick_link">{L_MANAGE_THEME_COLUMNS}</a>
         </li>
     </ul>
 </div>

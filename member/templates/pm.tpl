@@ -273,20 +273,21 @@
 		# ENDIF #
 		<span id="quote"></span>			
 		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
+		{KERNEL_EDITOR}		
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
-			{KERNEL_EDITOR}		
-			<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea> </label>
-			<div style="padding:17px;">					
+			<div>					
+				<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp; 									
+					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />
 					<script type="text/javascript">
 					<!--				
+					document.getElementById('prw_pm').style.display = 'none';
 					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>				
-					<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
@@ -342,12 +343,13 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit" />
 							&nbsp;&nbsp; 
+							<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />							
 							<script type="text/javascript">
 							<!--				
+							document.getElementById('prw_pm').style.display = 'none';
 							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>						
-							<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>								
 							&nbsp;&nbsp; 
 							<input type="reset" value="{L_RESET}" class="reset" />
 						</fieldset>	
@@ -404,14 +406,16 @@
 							# START post_convers.user_id_dest #
 							<dl>
 								<dt><label for="login">* {L_RECIPIENT}</label></dt>
-								<dd><label>
-									<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-									<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
+								<dd>
+									<label>
+										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
+										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit" />								
+									</label>
 									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 									# START post_convers.user_id_dest.search #
 										{search.RESULT}
 									# END post_convers.user_id_dest.search #
-								</label></dd>
+								</dd>
 							</dl>		
 							# END post_convers.user_id_dest #
 							<dl>
@@ -429,12 +433,13 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit" />
 								&nbsp;&nbsp; 
+								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit" />
 								<script type="text/javascript">
 								<!--				
+								document.getElementById('prw_convers_pm').style.display = 'none';
 								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 								-->
 								</script>
-								<noscript><input value="{L_PREVIEW}" type="submit" name="prw_convers" class="submit" /></noscript>
 								&nbsp;&nbsp; 
 								<input type="reset" value="{L_RESET}" class="reset" />
 						</fieldset>	

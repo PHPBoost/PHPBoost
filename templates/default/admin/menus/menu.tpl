@@ -5,13 +5,13 @@
         <h5 class="sub_title">
             {NAME}
 			# IF C_EDIT #
-			    <a href="{U_EDIT}" title="{L_EDIT}" />
-			        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/edit.png" alt="{L_EDIT}" class="valign_middle">
+			    <a href="{U_EDIT}" title="{L_EDIT}">
+			        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/edit.png" alt="{L_EDIT}" class="valign_middle" />
 			    </a>
 			# ENDIF #
 			# IF C_DEL #
 			    <a href="{U_DELETE}" title="{L_DEL}" onclick="javascript:return Confirm_menu();">
-			        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/delete.png" alt="{L_DEL}" class="valign_middle">
+			        <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/delete.png" alt="{L_DEL}" class="valign_middle" />
 			    </a>
 			# ENDIF #
           </h5>
@@ -28,12 +28,12 @@
         <div style="width:100px;height:30px;margin:auto;">
             <div style="float:left">
                 # IF C_UP #
-                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
+                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt="" /></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
                 # IF C_DOWN #
-                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
+                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt="" /></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
@@ -70,13 +70,13 @@
         <h5 class="sub_title">
             {NAME}
             # IF C_EDIT #
-                <a href="{U_EDIT}" title="{L_EDIT}" />
-                    <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/edit.png" alt="{L_EDIT}" class="valign_middle">
+                <a href="{U_EDIT}" title="{L_EDIT}">
+                    <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/edit.png" alt="{L_EDIT}" class="valign_middle" />
                 </a>
             # ENDIF #
             # IF C_DEL #
                 <a href="{U_DELETE}" title="{L_DEL}" onclick="javascript:return Confirm_menu();">
-                    <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/delete.png" alt="{L_DEL}" class="valign_middle">
+                    <img src="{PATH_TO_ROOT}/templates/{THEME}/images/french/delete.png" alt="{L_DEL}" class="valign_middle" />
                 </a>
             # ENDIF #
           </h5>
@@ -92,12 +92,12 @@
         <div style="width:100px;height:30px;">
             <div style="float:left">
                 # IF C_UP #
-                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt=""></a>
+                    <a href="{U_UP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/up.png" alt="" /></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
                 # IF C_DOWN #
-                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt=""></a>
+                     <a href="{U_DOWN}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/down.png" alt="" /></a>
                 # ELSE #
                     <div style="float:left;width:32px;"> </div>
                 # ENDIF #
