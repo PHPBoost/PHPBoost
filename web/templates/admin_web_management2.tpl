@@ -117,7 +117,7 @@
 					<label for="contents">{L_DESC}</label>
 					<label>
 						{KERNEL_EDITOR}
-						<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
+						<textarea rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>
 					<dl>

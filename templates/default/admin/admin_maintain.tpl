@@ -62,7 +62,7 @@
 					<label for="contents">{L_MAINTAIN_TEXT}</label>
 					<label>
 						{KERNEL_EDITOR}	
-						<textarea type="text" rows="14" cols="20" name="contents" id="contents">{MAINTAIN_CONTENTS}</textarea>
+						<textarea rows="14" cols="20" name="contents" id="contents">{MAINTAIN_CONTENTS}</textarea>
 					</label>
 				</fieldset>			
 				<fieldset class="fieldset_submit">

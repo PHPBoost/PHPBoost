@@ -30,7 +30,7 @@
 					<p>{L_EXPLAIN_TERMS}</p>
 					<label for="contents">{L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<label><textarea type="text" rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea></label> 
+					<label><textarea rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea></label> 
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">

@@ -332,12 +332,12 @@
 					<p><label for="user_sign">{L_USER_SIGN}</label><br /><span>{L_USER_SIGN_EXPLAIN}</span></p>
 					<p>
 						{USER_SIGN_EDITOR}
-						<textarea type="text" class="post" rows="10" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea>
+						<textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea>
 					</p>
 					<p><label for="user_desc">{L_USER_BIOGRAPHY}</label></p>
 					<p>
 						{USER_DESC_EDITOR}
-						<textarea type="text" class="post" rows="10" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea>
+						<textarea class="post" rows="10" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea>
 					</p>
 					<div class="spacer">&nbsp;</div>
 				</fieldset>	

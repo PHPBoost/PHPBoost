@@ -90,7 +90,7 @@
 					<br />
 					<label for="contents" id="preview_content">{L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<textarea type="text" rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
+					<textarea rows="10" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>
 					<br />
 					# IF C_APROB #
 					<dl>

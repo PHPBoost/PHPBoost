@@ -424,7 +424,7 @@
 						</td>
 						<td class="row2">
 							# IF fields.C_FIELD_FORM_EXTEND #
-							<textarea type="text" class="post" rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
+							<textarea class="post" rows="6" cols="37" name="{fields.FIELD_NAME}">{fields.FIELD_VALUE}</textarea>
 							# ELSE #
 							<input type="text" size="30" name="{fields.FIELD_NAME}" class="text" value="{fields.FIELD_VALUE}" />
 							# ENDIF #

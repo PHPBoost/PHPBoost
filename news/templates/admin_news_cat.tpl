@@ -83,7 +83,7 @@
 							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="{cat.IDCAT}icon_path" value="{cat.IMG_PATH}" onblur="if(this.value != '') change_icon('{cat.IDCAT}', this.value)" />
 						</td>					
 						<td class="row2"> 
-							<textarea type="text" class="post" rows="3" cols="20" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
+							<textarea class="post" rows="3" cols="20" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
 						</td>
 						<td class="row2">
 							<a href="admin_news_cat.php?del=true&amp;id={cat.IDCAT}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
@@ -122,7 +122,7 @@
 					</dl>
 					<dl>
 						<dt><label for="contents">{L_DESC}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="20" name="contents" id="contents"></textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="20" name="contents" id="contents"></textarea></label></dd>
 					</dl>
 				</fieldset>	
 				

@@ -115,12 +115,12 @@
 					<br />
 					<label for="contents">* {L_TEXT}</label>
 					{KERNEL_EDITOR}
-					<label><textarea type="text" rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<br />
 					<br />
 					<label for="extend_contents">{L_EXTENDED_NEWS}</label>
 					{KERNEL_EDITOR_EXTEND}
-					<label><textarea type="text" rows="20" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
+					<label><textarea rows="20" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
 					<br />
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
