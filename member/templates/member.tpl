@@ -158,7 +158,7 @@
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></label></dd>
+					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /></label> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_old">(*) {L_PREVIOUS_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
@@ -166,11 +166,11 @@
 				</dl>
 				<dl>
 					<dt><label for="pass">(*) {L_NEW_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /></label> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_bis">(*) {L_CONFIRM_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /></label> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="del_member">{L_DEL_USER}</label></dt>
@@ -266,26 +266,21 @@
 				</dl>
 				<dl class="overflow_visible">
 					<dt><label for="user_born">{L_DATE_OF_BIRTH}</label><br /><span>{L_DATE_FORMAT}</span></dt>
-					<dd><label>
-						<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /> 
-
+					<dd>
+						<label><input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /></label>
 						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
 						<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-					</label></dd>
+					</dd>
 				</dl>
 				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p>
-                <p>
-                    {USER_SIGN_EDITOR}
-                    <textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
-                </p>
+				{USER_SIGN_EDITOR}
+				<textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
 				<p><label for="user_desc">{L_BIOGRAPHY}</label></p>
-                <p>
-                    {USER_DESC_EDITOR}
-					<textarea class="post" rows="10" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
-				</p>
+				{USER_DESC_EDITOR}
+				<textarea class="post" rows="10" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
 				<div class="spacer">&nbsp;</div>
 			</fieldset>
 				

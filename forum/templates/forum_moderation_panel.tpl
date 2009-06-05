@@ -48,7 +48,7 @@
 							<td class="row3">
 								{L_USER_CONCERN}
 							</td>
-							<td class="row3"style="width: 150px">
+							<td class="row3" style="width: 150px">
 								{L_DATE}
 							</td>
 						</tr>
