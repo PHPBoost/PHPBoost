@@ -108,7 +108,7 @@ class Note
 			if (!empty($_POST['valid_note']))
 			{
 				if (!empty($note))
-					$Note->Add_note($note); //Ajout de la note.
+					$this->add($note); //Ajout de la note.
 				
 				redirect($path_redirect);
 			}
