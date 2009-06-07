@@ -34,7 +34,7 @@ define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/publication.png" alt=
 <p>This distribution is ideal to create a website which will purpose some content to visitors, that can be text, pictures or others kinds of content.</p>');
 
 //Thème de la distribution
-define('DISTRIBUTION_THEME', 'bluedream2');
+define('DISTRIBUTION_THEME', 'publishing');
 
 //Page de démarrage de la distribution (commencer à la racine du site avec /)
 define('DISTRIBUTION_START_PAGE', '/news/news.php');
