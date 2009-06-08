@@ -67,7 +67,10 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
             }
             else
             {
-                AdministratorAlertService::delete_alert($update_alert);
+                // Like the update is incompatible (or has been applied)
+                // We set the alert status to processed
+            	$update_alert->set_status(EVENT_STATUS_PROCESSED);
+                AdministratorAlertService::save_alert($update_alert);
             }
         }
     }

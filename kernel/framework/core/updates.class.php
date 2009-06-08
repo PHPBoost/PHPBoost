@@ -80,7 +80,9 @@ class Updates
                     $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
                     $repository = !empty($infos['repository']) ? $infos['repository'] : PHPBOOST_OFFICIAL_REPOSITORY;
                     if (!empty($infos['repository']))
+                    {
                         $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $repository);
+                    }
                 }
             }
             
@@ -93,7 +95,9 @@ class Updates
                 {
                     $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
                     if (!empty($infos['repository']))
-                        $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
+                    {
+                        $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);
+                    }
                 }
             }
         }
