@@ -57,6 +57,8 @@ catch (NoSuchControlerMethodException $ex)
 }
 
 echo '<hr />';
+$url = Dispatcher::get_rewrited_url(''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
+$url = Dispatcher::get_rewrited_url('/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
 $url = Dispatcher::get_rewrited_url('/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 $url = Dispatcher::get_rewrited_url('/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 $url = Dispatcher::get_rewrited_url('/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';

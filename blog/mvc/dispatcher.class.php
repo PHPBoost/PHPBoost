@@ -25,14 +25,33 @@
  *
  ###################################################*/
 
+
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc dispatch the current url arg to the first method matching
+ * in the UrlDispatcherItem list of the controler object
+ */
 class Dispatcher
 {
 	// TODO Move this file into the framework
+	
+	
+	/**
+	 * @desc build a new Dispatcher from a UrlDispatcherItem List
+	 * @param UrlDispatcherItem[] the list of the UrlDispatcherItem
+	 * that could be applied on an url for that module
+	 */
 	public function __construct($dispatch_urls_list)
 	{
 		$this->dispatch_urls_list =& $dispatch_urls_list;
 	}
 
+	/**
+	 * @desc dispatch the current url arg to the first method matching
+	 * in the UrlDispatcherItem list of the controler object
+     * @throws NoSuchControlerMethodException
+	 * @throws NoUrlMatchException
+	 */
 	public function dispatch()
 	{
 		$url = retrieve(GET, Dispatcher::URL_PARAM_NAME, '');
@@ -47,6 +66,11 @@ class Dispatcher
 		throw new NoUrlMatchException($url);
 	}
 
+	/**
+	 * @desc Returns an url object relative to the current script path
+	 * @param string $url the url to apply the rewrite form on
+	 * @return Url an url object relative to the current script path
+	 */
 	public static function get_rewrited_url($url)
 	{
 		import('util/url');
@@ -54,17 +78,36 @@ class Dispatcher
 		global $CONFIG;
 		if ($CONFIG['rewrite'] == 1)
 		{
+			if (empty($url))
+			{
+				$url = '.';
+			}
 			return new Url($url);
 		}
 		return new Url ('?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
 	}
 
+	// Changing this value will result in a crash in rewrite mode.
+	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files 
 	const URL_PARAM_NAME = 'url';
+	
 	private $dispatch_urls_list = array();
 }
 
+
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc Call the controler method matching an url
+ */
 class UrlDispatcherItem
 {
+	/**
+	 * @desc build a new UrlDispatcherItem
+	 * @param Object $controler the controler
+	 * @param string $method_name the controler method name 
+	 * @param string $capture_regex the regular expression matching the url
+	 * and capturing the controler method parameters
+	 */
 	public function __construct($controler, $method_name, $capture_regex)
 	{
 		$this->controler = $controler;
@@ -72,11 +115,20 @@ class UrlDispatcherItem
 		$this->capture_regex = $capture_regex;
 	}
 
-	public public function call(&$url)
+	/**
+	 * @desc Call the controler method if the url match and if the method exists
+	 * @param string $url the url
+	 * @throws NoUrlMatchException
+	 * @throws NoSuchControlerMethodException
+	 */
+	public function call(&$url)
 	{
 		if ($this->params === null)
 		{
-			$this->match($url);
+			if (!$this->match($url))
+			{
+				throw NoUrlMatchException($url);
+			}
 		}
 		// Call the controler method_name with all the given parameters
 		if (!method_exists($this->controler, $this->method_name))
@@ -86,6 +138,11 @@ class UrlDispatcherItem
 		call_user_func_array(array($this->controler, $this->method_name), $this->params);
 	}
 
+	/**
+	 * @desc Returns true if the UrlDispatcherItem match the url
+	 * @param string $url the to match
+	 * @return boolean true if the UrlDispatcherItem match the url
+	 */
 	public function match(&$url)
 	{
 		$this->params = array();
@@ -101,14 +158,23 @@ class UrlDispatcherItem
 	private $params;
 }
 
-class DispatcherException extends Exception
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @abstract
+ *
+ */
+abstract class DispatcherException extends Exception
 {
-	public function __construct($message = 'Dispatcher Exception')
+	public function __construct($message)
 	{
 		parent::__construct($message);
 	}
 }
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc No UrlDispatcherItem were found matching the given url 
+ */
 class NoUrlMatchException extends DispatcherException
 {
 	public function __construct($url)
@@ -117,6 +183,11 @@ class NoUrlMatchException extends DispatcherException
 	}
 }
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc The specified method of the controler from the UrlDispatcherItem
+ * matching the url does not exists 
+ */
 class NoSuchControlerMethodException extends DispatcherException
 {
 	public function __construct($controler, $method_name)
