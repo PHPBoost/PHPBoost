@@ -27,62 +27,70 @@
 
 class Dispatcher
 {   // TODO Move this file into the framework
-	function __construct($dispatch_urls_list)
-	{
-		$this->dispatch_urls_list =& $dispatch_urls_list;
-	}
+function __construct($dispatch_urls_list)
+{
+	$this->dispatch_urls_list =& $dispatch_urls_list;
+}
 
-	function dispatch(&$url)
+function dispatch(&$url)
+{
+	foreach ($this->dispatch_urls_list as $url_dispatcher_item)
 	{
-		foreach ($dispatch_urls_list as $url_dispatcher_item)
+		if ($url_dispatcher_item->match($url))
 		{
-			if ($url_dispatcher_item->match($url))
-			{
-				$url_dispatcher_item->call($url);
-				return;
-			}
+			$url_dispatcher_item->call($url);
+			return;
 		}
-		throw new NoUrlMatchException($url);
 	}
+	throw new NoUrlMatchException($url);
+}
 
-	private $dispatch_urls_list = array();
+private $dispatch_urls_list = array();
 }
 
 class UrlDispatcherItem
 {
-	function __construct($controler, $method_name, $capture_regex, $replacement_regex)
+	function __construct($controler, $method_name, $capture_regex)
 	{
 		$this->controler = $controler;
 		$this->method_name = $method_name;
-        $this->capture_regex = $capture_regex;
-		$this->replacement_regex = $replacement_regex;
+		$this->capture_regex = $capture_regex;
 	}
 
 	public function call(&$url)
 	{
+		if ($this->params === null)
+		{
+			$this->match($url);
+		}
 		// Call the controler method_name with all the given parameters
-		if (!call_user_func_array(array(&$this->controler, $this->method_name), preg_replace($this->capture_regex, $this->replacement_regex, $url)))
+		if (!method_exists($this->controler, $this->method_name))
 		{
 			throw new NoSuchControlerMethodException($this->controler, $this->method_name);
 		}
+		call_user_func_array(array($this->controler, $this->method_name), $this->params);
 	}
 
 	public function match(&$url)
 	{
-		 return preg_match($this->capture_regex, $url);
+		$this->params = array();
+		$match = preg_match($this->capture_regex, $url, $this->params);
+		// Remove the global url from the parameters that the controler will receive
+		unset($this->params[0]);
+		return $match;
 	}
 
 	private $method_name;
 	private $controler;
 	private $params_capture_regex;
-	private $replacement_regex;
+	private $params;
 }
 
 class DispatcherException extends Exception
 {
 	function __construct($message = 'Dispatcher Exception')
 	{
-		super($message);
+		parent::__construct($message);
 	}
 }
 
@@ -90,7 +98,7 @@ class NoUrlMatchException extends DispatcherException
 {
 	function __construct($url)
 	{
-		super('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
+		parent::__construct('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
 	}
 }
 
@@ -98,7 +106,7 @@ class NoSuchControlerMethodException extends DispatcherException
 {
 	function __construct($controler, $method_name)
 	{
-		super('Controler "' . get_class($controler) . '" doesn\'t have a method called "' . $method_name . '"');
+		parent::__construct('Controler "' . get_class($controler) . '" doesn\'t have a method called "' . $method_name . '"');
 	}
 }
 ?>
