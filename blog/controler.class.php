@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-class Controler
+class BlogControler
 {   
     function __construct()
     {

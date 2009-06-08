@@ -26,38 +26,53 @@
  ###################################################*/
 
 class Dispatcher
-{   // TODO Move this file into the framework
-function __construct($dispatch_urls_list)
 {
-	$this->dispatch_urls_list =& $dispatch_urls_list;
-}
-
-function dispatch(&$url)
-{
-	foreach ($this->dispatch_urls_list as $url_dispatcher_item)
+	// TODO Move this file into the framework
+	public function __construct($dispatch_urls_list)
 	{
-		if ($url_dispatcher_item->match($url))
-		{
-			$url_dispatcher_item->call($url);
-			return;
-		}
+		$this->dispatch_urls_list =& $dispatch_urls_list;
 	}
-	throw new NoUrlMatchException($url);
-}
 
-private $dispatch_urls_list = array();
+	public function dispatch()
+	{
+		$url = retrieve(GET, Dispatcher::URL_PARAM_NAME, '');
+		foreach ($this->dispatch_urls_list as $url_dispatcher_item)
+		{
+			if ($url_dispatcher_item->match($url))
+			{
+				$url_dispatcher_item->call($url);
+				return;
+			}
+		}
+		throw new NoUrlMatchException($url);
+	}
+
+	public static function get_rewrited_url($url)
+	{
+		import('util/url');
+		$url = ltrim($url, '/');
+		global $CONFIG;
+		if ($CONFIG['rewrite'] == 1)
+		{
+			return new Url($url);
+		}
+		return new Url ('?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
+	}
+
+	const URL_PARAM_NAME = 'url';
+	private $dispatch_urls_list = array();
 }
 
 class UrlDispatcherItem
 {
-	function __construct($controler, $method_name, $capture_regex)
+	public function __construct($controler, $method_name, $capture_regex)
 	{
 		$this->controler = $controler;
 		$this->method_name = $method_name;
 		$this->capture_regex = $capture_regex;
 	}
 
-	public function call(&$url)
+	public public function call(&$url)
 	{
 		if ($this->params === null)
 		{
@@ -88,7 +103,7 @@ class UrlDispatcherItem
 
 class DispatcherException extends Exception
 {
-	function __construct($message = 'Dispatcher Exception')
+	public function __construct($message = 'Dispatcher Exception')
 	{
 		parent::__construct($message);
 	}
@@ -96,7 +111,7 @@ class DispatcherException extends Exception
 
 class NoUrlMatchException extends DispatcherException
 {
-	function __construct($url)
+	public function __construct($url)
 	{
 		parent::__construct('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
 	}
@@ -104,7 +119,7 @@ class NoUrlMatchException extends DispatcherException
 
 class NoSuchControlerMethodException extends DispatcherException
 {
-	function __construct($controler, $method_name)
+	public function __construct($controler, $method_name)
 	{
 		parent::__construct('Controler "' . get_class($controler) . '" doesn\'t have a method called "' . $method_name . '"');
 	}

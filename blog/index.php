@@ -33,18 +33,17 @@ require_once PATH_TO_ROOT . '/kernel/header.php';
 require_once PATH_TO_ROOT . '/blog/controler.class.php';
 require_once PATH_TO_ROOT . '/blog/mvc/dispatcher.class.php';
 
-$url = retrieve(GET, 'url', '/view/');
-
-$my_controler = new Controler();
+$my_controler = new BlogControler();
 $my_dispatcher = new Dispatcher(array(
-    new UrlDispatcherItem($my_controler, 'view', '`^/view/?$`'),
-    new UrlDispatcherItem($my_controler, 'view_by_id', '`^/view/([0-9]+)/?$`'),
-    new UrlDispatcherItem($my_controler, 'none', '`^/none/?$`'),
+new UrlDispatcherItem($my_controler, 'view', '`^/?$`'),
+new UrlDispatcherItem($my_controler, 'view', '`^/view/?$`'),
+new UrlDispatcherItem($my_controler, 'view_by_id', '`^/view/([0-9]+)/?$`'),
+new UrlDispatcherItem($my_controler, 'none', '`^/none/?$`'),
 ));
 
 try
 {
-	$my_dispatcher->dispatch($url);
+	$my_dispatcher->dispatch();
 }
 catch (NoUrlMatchException $ex)
 {
@@ -53,9 +52,17 @@ catch (NoUrlMatchException $ex)
 }
 catch (NoSuchControlerMethodException $ex)
 {
-    echo $ex->getMessage();
+	echo $ex->getMessage();
 	$Errorh->handler($ex->getMessage(), $ex->getCode(), __LINE__, __FILE__);
 }
+
+echo '<hr />';
+$url = Dispatcher::get_rewrited_url('/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_rewrited_url('/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_rewrited_url('/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_rewrited_url('/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_rewrited_url('/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_rewrited_url('/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 
 require_once PATH_TO_ROOT . '/kernel/footer.php';
 
