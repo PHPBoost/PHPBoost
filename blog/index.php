@@ -30,16 +30,28 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/kernel/header.php';
 
-require_once PATH_TO_ROOT . '/blog/controler.class.php';
-require_once PATH_TO_ROOT . '/blog/mvc/dispatcher.class.php';
+// TODO remove this line (content will be in functions.inc.php already imported in begin.php
+require_once PATH_TO_ROOT . '/blog/mvc/func.inc.php';
+
+mimport('blog/blog_controler');
+// TODO Replace with import('mvc/dispatcher');
+mimport('blog/mvc/dispatcher');
 
 $my_controler = new BlogControler();
-$my_dispatcher = new Dispatcher(array(
-new UrlDispatcherItem($my_controler, 'view', '`^/?$`'),
-new UrlDispatcherItem($my_controler, 'view', '`^/view/?$`'),
-new UrlDispatcherItem($my_controler, 'view_by_id', '`^/view/([0-9]+)/?$`'),
-new UrlDispatcherItem($my_controler, 'none', '`^/none/?$`'),
-));
+$my_dispatcher = null;
+try
+{
+	$my_dispatcher = new Dispatcher(array(
+	new UrlDispatcherItem($my_controler, 'view', '`^/?$`'),
+	new UrlDispatcherItem($my_controler, 'view', '`^/view/?$`'),
+	new UrlDispatcherItem($my_controler, 'view_by_id', '`^/view/([0-9]+)/?$`'),
+	new UrlDispatcherItem($my_controler, 'none', '`^/none/?$`'),
+	));
+}
+catch (NoSuchControlerException $ex)
+{
+	echo $ex->getMessage();
+}
 
 try
 {
@@ -48,23 +60,21 @@ try
 catch (NoUrlMatchException $ex)
 {
 	echo $ex->getMessage();
-	$Errorh->handler($ex->getMessage(), $ex->getCode(), __LINE__, __FILE__);
 }
 catch (NoSuchControlerMethodException $ex)
 {
 	echo $ex->getMessage();
-	$Errorh->handler($ex->getMessage(), $ex->getCode(), __LINE__, __FILE__);
 }
 
 echo '<hr />';
-$url = Dispatcher::get_rewrited_url(''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-$url = Dispatcher::get_rewrited_url('/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-$url = Dispatcher::get_rewrited_url('/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_rewrited_url('/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_rewrited_url('/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_rewrited_url('/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_rewrited_url('/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_rewrited_url('/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog', ''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
+$url = Dispatcher::get_url('/blog', '/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
+$url = Dispatcher::get_url('/blog', '/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog', '/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog', '/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog/', '/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog/', '/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog/', '/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 
 require_once PATH_TO_ROOT . '/kernel/footer.php';
 
