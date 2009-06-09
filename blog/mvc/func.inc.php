@@ -1,9 +1,15 @@
 <?php
 // TODO add this in /kernel/framework/functions.inc.php
 
+/**
+ * @desc Returns true if the object $object implements the interface named $interface_name
+ * @param object $object the object
+ * @param string $interface_name the interface
+ * @return boolean true if the object $object implements the interface named $interface_name
+ */
 function implements_interface($object, $interface_name)
 {
-    return in_array($interface_name, class_implements($object));
+	return in_array($interface_name, class_implements($object));
 }
 
 /**
@@ -15,7 +21,7 @@ function implements_interface($object, $interface_name)
  */
 function mimport($path, $import_type = CLASS_IMPORT)
 {
-    require_once(PATH_TO_ROOT . '/' . $path . $import_type);
+	require_once(PATH_TO_ROOT . '/' . $path . $import_type);
 }
 
 

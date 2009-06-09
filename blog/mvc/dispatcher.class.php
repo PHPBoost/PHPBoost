@@ -36,7 +36,7 @@ mimport('blog/mvc/controler');
  * in the UrlDispatcherItem list of the controler object
  */
 class Dispatcher
-{	
+{
 	/**
 	 * @desc build a new Dispatcher from a UrlDispatcherItem List
 	 * @param UrlDispatcherItem[] the list of the UrlDispatcherItem
@@ -50,7 +50,7 @@ class Dispatcher
 	/**
 	 * @desc dispatch the current url arg to the first method matching
 	 * in the UrlDispatcherItem list of the controler object
-     * @throws NoSuchControlerMethodException
+	 * @throws NoSuchControlerMethodException
 	 * @throws NoUrlMatchException
 	 */
 	public function dispatch()
@@ -70,16 +70,16 @@ class Dispatcher
 	/**
 	 * @desc Returns an url object from the dispatcher path with the $url param
 	 * dispatcher must be in the index.php file
-     * @param string $path the url to apply the rewrite form on
-     * @param string $url the url to apply the rewrite form on
+	 * @param string $path the url to apply the rewrite form on
+	 * @param string $url the url to apply the rewrite form on
 	 * @return Url an url object relative to the current script path
 	 */
 	public static function get_url($path, $url)
 	{
 		import('util/url');
-        $dispatcher_url = new Url(rtrim($path, '/'));
+		$dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
-        
+
 		global $CONFIG;
 		if ($CONFIG['rewrite'] == 1)
 		{
@@ -93,9 +93,9 @@ class Dispatcher
 	}
 
 	// Changing this value will result in a crash in rewrite mode.
-	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files 
+	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
 	const URL_PARAM_NAME = 'url';
-	
+
 	private $dispatch_urls_list = array();
 }
 
@@ -109,7 +109,7 @@ class UrlDispatcherItem
 	/**
 	 * @desc build a new UrlDispatcherItem
 	 * @param Object $controler the controler
-	 * @param string $method_name the controler method name 
+	 * @param string $method_name the controler method name
 	 * @param string $capture_regex the regular expression matching the url
 	 * and capturing the controler method parameters
 	 * @throws NoSuchControlerException
@@ -185,7 +185,7 @@ abstract class DispatcherException extends Exception
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc No UrlDispatcherItem were found matching the given url 
+ * @desc No UrlDispatcherItem were found matching the given url
  */
 class NoUrlMatchException extends DispatcherException
 {
@@ -198,20 +198,20 @@ class NoUrlMatchException extends DispatcherException
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc The specified method of the controler from the UrlDispatcherItem
- * matching the url does not exists 
+ * matching the url does not exists
  */
 class NoSuchControlerException extends DispatcherException
 {
-    public function __construct($controler)
-    {
-        parent::__construct('Class "' . get_class($controler) . '" is not a valid controler (does not inherit from AbstractControler');
-    }
+	public function __construct($controler)
+	{
+		parent::__construct('Class "' . get_class($controler) . '" is not a valid controler (does not inherit from AbstractControler');
+	}
 }
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc The specified method of the controler from the UrlDispatcherItem
- * matching the url does not exists 
+ * matching the url does not exists
  */
 class NoSuchControlerMethodException extends DispatcherException
 {
