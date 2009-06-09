@@ -33,35 +33,35 @@ require_once PATH_TO_ROOT . '/kernel/header.php';
 // TODO remove this line (content will be in functions.inc.php already imported in begin.php
 require_once PATH_TO_ROOT . '/blog/mvc/func.inc.php';
 
-mimport('blog/blog_controler');
+mimport('blog/blog_controller');
 // TODO Replace with import('mvc/dispatcher');
 mimport('blog/mvc/dispatcher');
 
-$my_controler = new BlogControler();
+$my_controller = new BlogController();
 $my_dispatcher = null;
 try
 {
 	$my_dispatcher = new Dispatcher(array(
-	new UrlDispatcherItem($my_controler, 'view', '`^/?$`'),
-	new UrlDispatcherItem($my_controler, 'view', '`^/view/?$`'),
-	new UrlDispatcherItem($my_controler, 'view_by_id', '`^/view/([0-9]+)/?$`'),
-	new UrlDispatcherItem($my_controler, 'none', '`^/none/?$`'),
+	new UrlDispatcherItem($my_controller, 'view', '`^/?$`'),
+	new UrlDispatcherItem($my_controller, 'view', '`^/view/?$`'),
+	new UrlDispatcherItem($my_controller, 'view_by_id', '`^/view/([0-9]+)/?$`'),
+	new UrlDispatcherItem($my_controller, 'none', '`^/none/?$`'),
 	));
-}
-catch (NoSuchControlerException $ex)
-{
-	echo $ex->getMessage();
-}
 
-try
-{
-	$my_dispatcher->dispatch();
+	try
+	{
+		$my_dispatcher->dispatch();
+	}
+	catch (NoUrlMatchException $ex)
+	{
+		echo $ex->getMessage();
+	}
+	catch (NoSuchControllerMethodException $ex)
+	{
+		echo $ex->getMessage();
+	}
 }
-catch (NoUrlMatchException $ex)
-{
-	echo $ex->getMessage();
-}
-catch (NoSuchControlerMethodException $ex)
+catch (NoSuchControllerException $ex)
 {
 	echo $ex->getMessage();
 }

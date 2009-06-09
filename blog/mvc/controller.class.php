@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controleur.class.php
+ *                           controller.class.php
  *                            -------------------
- *   begin                : June 08 2009
+ *   begin                : June 09 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,28 +25,38 @@
  *
  ###################################################*/
 
-// TODO change to import('mvc/controler');
-mimport('blog/mvc/controler');
+// TODO Move this file into the /kernel/framework/mvc
 
-class BlogControler extends AbstractControler
+define('ICONTROLER__INTERFACE', 'IController');
+
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc This interface declares the minimalist controler pattern
+ * with no actions.
+ *
+ */
+interface IController
 {
-	public function init()
-	{
-		echo '<br />Init()<hr />';
-	}
-	public function destroy()
-	{
-		echo '<hr />Destroy()<br />';
-	}
+	/**
+	 * @desc This method will always be called just before the controler action
+	 */
+	public function init();
+	/**
+	 * @desc This method will always be called just after the controler action
+	 */
+	public function destroy();
+}
 
-	function view()
-	{
-		echo 'Je suis view';
-	}
-
-	function view_by_id($id)
-	{
-		echo 'Je suis view by id avec comme id : ' . $id;
-	}
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc This class defines the minimalist controler pattern
+ * with no actions. This, in order to avoid to defines empty
+ * init() and destroy() method for controlers that doesn't need
+ * this functionality
+ */
+abstract class AbstractController implements IController
+{
+	public function init() {}
+	public function destroy() {}
 }
 ?>

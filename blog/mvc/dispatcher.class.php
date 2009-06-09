@@ -27,13 +27,13 @@
 
 // TODO Move this file into the /kernel/framework/mvc
 
-// TODO Replace with import('mvc/controler');
-mimport('blog/mvc/controler');
+// TODO Replace with import('mvc/controller');
+mimport('blog/mvc/controller');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc dispatch the current url arg to the first method matching
- * in the UrlDispatcherItem list of the controler object
+ * in the UrlDispatcherItem list of the controller object
  */
 class Dispatcher
 {
@@ -49,8 +49,8 @@ class Dispatcher
 
 	/**
 	 * @desc dispatch the current url arg to the first method matching
-	 * in the UrlDispatcherItem list of the controler object
-	 * @throws NoSuchControlerMethodException
+	 * in the UrlDispatcherItem list of the controller object
+	 * @throws NoSuchControllerMethodException
 	 * @throws NoUrlMatchException
 	 */
 	public function dispatch()
@@ -102,34 +102,34 @@ class Dispatcher
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc Call the controler method matching an url
+ * @desc Call the controller method matching an url
  */
 class UrlDispatcherItem
 {
 	/**
 	 * @desc build a new UrlDispatcherItem
-	 * @param Object $controler the controler
-	 * @param string $method_name the controler method name
+	 * @param Object $controller the controller
+	 * @param string $method_name the controller method name
 	 * @param string $capture_regex the regular expression matching the url
-	 * and capturing the controler method parameters
-	 * @throws NoSuchControlerException
+	 * and capturing the controller method parameters
+	 * @throws NoSuchControllerException
 	 */
-	public function __construct(&$controler, $method_name, $capture_regex)
+	public function __construct(&$controller, $method_name, $capture_regex)
 	{
-		if (!implements_interface($controler, ICONTROLER__INTERFACE))
+		if (!implements_interface($controller, ICONTROLER__INTERFACE))
 		{
-			throw new NoSuchControlerException($controler);
+			throw new NoSuchControllerException($controller);
 		}
-		$this->controler =& $controler;
+		$this->controller =& $controller;
 		$this->method_name = $method_name;
 		$this->capture_regex = $capture_regex;
 	}
 
 	/**
-	 * @desc Call the controler method if the url match and if the method exists
+	 * @desc Call the controller method if the url match and if the method exists
 	 * @param string $url the url
 	 * @throws NoUrlMatchException
-	 * @throws NoSuchControlerMethodException
+	 * @throws NoSuchControllerMethodException
 	 */
 	public function call(&$url)
 	{
@@ -140,14 +140,14 @@ class UrlDispatcherItem
 				throw NoUrlMatchException($url);
 			}
 		}
-		// Call the controler method_name with all the given parameters
-		if (!method_exists($this->controler, $this->method_name))
+		// Call the controller method_name with all the given parameters
+		if (!method_exists($this->controller, $this->method_name))
 		{
-			throw new NoSuchControlerMethodException($this->controler, $this->method_name);
+			throw new NoSuchControllerMethodException($this->controller, $this->method_name);
 		}
-		$this->controler->init();
-		call_user_func_array(array($this->controler, $this->method_name), $this->params);
-		$this->controler->destroy();
+		$this->controller->init();
+		call_user_func_array(array($this->controller, $this->method_name), $this->params);
+		$this->controller->destroy();
 	}
 
 	/**
@@ -159,13 +159,13 @@ class UrlDispatcherItem
 	{
 		$this->params = array();
 		$match = preg_match($this->capture_regex, $url, $this->params);
-		// Remove the global url from the parameters that the controler will receive
+		// Remove the global url from the parameters that the controller will receive
 		unset($this->params[0]);
 		return $match;
 	}
 
 	private $method_name;
-	private $controler;
+	private $controller;
 	private $params_capture_regex;
 	private $params;
 }
@@ -197,27 +197,27 @@ class NoUrlMatchException extends DispatcherException
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc The specified method of the controler from the UrlDispatcherItem
+ * @desc The specified method of the controller from the UrlDispatcherItem
  * matching the url does not exists
  */
-class NoSuchControlerException extends DispatcherException
+class NoSuchControllerException extends DispatcherException
 {
-	public function __construct($controler)
+	public function __construct($controller)
 	{
-		parent::__construct('Class "' . get_class($controler) . '" is not a valid controler (does not inherit from AbstractControler');
+		parent::__construct('Class "' . get_class($controller) . '" is not a valid controller (does not implement IController)');
 	}
 }
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc The specified method of the controler from the UrlDispatcherItem
+ * @desc The specified method of the controller from the UrlDispatcherItem
  * matching the url does not exists
  */
-class NoSuchControlerMethodException extends DispatcherException
+class NoSuchControllerMethodException extends DispatcherException
 {
-	public function __construct($controler, $method_name)
+	public function __construct($controller, $method_name)
 	{
-		parent::__construct('Controler "' . get_class($controler) . '" doesn\'t have a method called "' . $method_name . '"');
+		parent::__construct('Controller "' . get_class($controller) . '" doesn\'t have a method called "' . $method_name . '"');
 	}
 }
 ?>
