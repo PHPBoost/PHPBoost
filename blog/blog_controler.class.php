@@ -25,21 +25,28 @@
  *
  ###################################################*/
 
-class BlogControler
-{   
-    function __construct()
-    {
-        
-    }
-    
-    function view()
-    {
-    	echo 'Je suis view';
-    }
-    
-    function view_by_id($id)
-    {
-    	echo 'Je suis view by id avec comme id : ' . $id;
-    }
+// TODO change to import('mvc/controler');
+mimport('blog/mvc/controler');
+
+class BlogControler extends AbstractControler
+{
+	public function init()
+	{
+		echo '<br />Init()<hr />';
+	}
+	public function destroy()
+	{
+		echo '<hr />Destroy()<br />';
+	}
+
+	function view()
+	{
+		echo 'Je suis view';
+	}
+
+	function view_by_id($id)
+	{
+		echo 'Je suis view by id avec comme id : ' . $id;
+	}
 }
 ?>

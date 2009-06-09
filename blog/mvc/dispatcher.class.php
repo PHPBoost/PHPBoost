@@ -25,6 +25,10 @@
  *
  ###################################################*/
 
+// TODO Move this file into the /kernel/framework/mvc
+
+// TODO Replace with import('mvc/controler');
+mimport('blog/mvc/controler');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -32,10 +36,7 @@
  * in the UrlDispatcherItem list of the controler object
  */
 class Dispatcher
-{
-	// TODO Move this file into the framework
-	
-	
+{	
 	/**
 	 * @desc build a new Dispatcher from a UrlDispatcherItem List
 	 * @param UrlDispatcherItem[] the list of the UrlDispatcherItem
@@ -67,14 +68,18 @@ class Dispatcher
 	}
 
 	/**
-	 * @desc Returns an url object relative to the current script path
-	 * @param string $url the url to apply the rewrite form on
+	 * @desc Returns an url object from the dispatcher path with the $url param
+	 * dispatcher must be in the index.php file
+     * @param string $path the url to apply the rewrite form on
+     * @param string $url the url to apply the rewrite form on
 	 * @return Url an url object relative to the current script path
 	 */
-	public static function get_rewrited_url($url)
+	public static function get_url($path, $url)
 	{
 		import('util/url');
+        $dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
+        
 		global $CONFIG;
 		if ($CONFIG['rewrite'] == 1)
 		{
@@ -82,9 +87,9 @@ class Dispatcher
 			{
 				$url = '.';
 			}
-			return new Url($url);
+			return new Url($dispatcher_url->relative() . $url);
 		}
-		return new Url ('?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
+		return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
 	}
 
 	// Changing this value will result in a crash in rewrite mode.
@@ -107,10 +112,15 @@ class UrlDispatcherItem
 	 * @param string $method_name the controler method name 
 	 * @param string $capture_regex the regular expression matching the url
 	 * and capturing the controler method parameters
+	 * @throws NoSuchControlerException
 	 */
-	public function __construct($controler, $method_name, $capture_regex)
+	public function __construct(&$controler, $method_name, $capture_regex)
 	{
-		$this->controler = $controler;
+		if (!implements_interface($controler, ICONTROLER__INTERFACE))
+		{
+			throw new NoSuchControlerException($controler);
+		}
+		$this->controler =& $controler;
 		$this->method_name = $method_name;
 		$this->capture_regex = $capture_regex;
 	}
@@ -135,7 +145,9 @@ class UrlDispatcherItem
 		{
 			throw new NoSuchControlerMethodException($this->controler, $this->method_name);
 		}
+		$this->controler->init();
 		call_user_func_array(array($this->controler, $this->method_name), $this->params);
+		$this->controler->destroy();
 	}
 
 	/**
@@ -181,6 +193,19 @@ class NoUrlMatchException extends DispatcherException
 	{
 		parent::__construct('No Url were matching this url "' . $url . '" in the dispatcher\'s list');
 	}
+}
+
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc The specified method of the controler from the UrlDispatcherItem
+ * matching the url does not exists 
+ */
+class NoSuchControlerException extends DispatcherException
+{
+    public function __construct($controler)
+    {
+        parent::__construct('Class "' . get_class($controler) . '" is not a valid controler (does not inherit from AbstractControler');
+    }
 }
 
 /**

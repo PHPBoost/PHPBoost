@@ -1237,7 +1237,8 @@ function inc($file, $once = true)
  */
 function of_class(&$object, $classname)
 {
-    return strtolower(get_class($object)) == strtolower($classname);
+    return strtolower(get_class($object)) == strtolower($classname) ||
+        is_subclass_of(strtolower(get_class($object)), strtolower($classname));
 }
 
 /**
