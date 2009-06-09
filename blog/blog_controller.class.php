@@ -34,6 +34,7 @@ class BlogController extends AbstractController
 	{
 		echo '<br />Init()<hr />';
 	}
+
 	public function destroy()
 	{
 		echo '<hr />Destroy()<br />';
@@ -47,6 +48,12 @@ class BlogController extends AbstractController
 	function view_by_id($id)
 	{
 		echo 'Je suis view by id avec comme id : ' . $id;
+	}
+
+	function special($id)
+	{
+		echo 'Je suis special : ' . $id . '<br />';
+		echo 'param1=' . $_GET['param1'] . '&amp;param2=' . $_GET['param2'];
 	}
 }
 ?>

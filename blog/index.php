@@ -46,6 +46,7 @@ try
 	new UrlDispatcherItem($my_controller, 'view', '`^/view/?$`'),
 	new UrlDispatcherItem($my_controller, 'view_by_id', '`^/view/([0-9]+)/?$`'),
 	new UrlDispatcherItem($my_controller, 'none', '`^/none/?$`'),
+	new UrlDispatcherItem($my_controller, 'special', '`^/special/([0-9]+)/?.*$`'),
 	));
 
 	try
@@ -75,6 +76,8 @@ $url = Dispatcher::get_url('/blog', '/view/37/'); $url = $url->absolute(); echo 
 $url = Dispatcher::get_url('/blog/', '/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 $url = Dispatcher::get_url('/blog/', '/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 $url = Dispatcher::get_url('/blog/', '/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog/', '/special/42/?param1=42&amp;param2=37'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+$url = Dispatcher::get_url('/blog/', '/special/256/?param1=007&amp;param2=128'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 
 require_once PATH_TO_ROOT . '/kernel/footer.php';
 
