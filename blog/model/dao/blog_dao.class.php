@@ -27,18 +27,20 @@
 
 define('BLOG_DAO__CLASS','blog_dao');
 
+mimport('blog/mvc/model');
+
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
- * @desc 
+ * @desc
  */
-class BlogDAO
+class BlogDAO extends AbstractDAO
 {
-    /**
-     * @return unknown_type
-     */
-    function BlogDAO()
-    {
-    	
-    }
+	public function __construct()
+	{
+		parent::__construct(
+		  new Model('blog', 'id', array(
+		      new ModelField('title', 'string', 64),
+		      new ModelField('posts', 'integer', 12, false, 'posts', 'id'))));
+	}
 }
 ?>

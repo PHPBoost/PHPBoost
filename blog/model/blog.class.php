@@ -27,18 +27,14 @@
 
 define('BLOG__CLASS','blog');
 
+mimport('blog/model/dao/blog_dao');
+
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
  * @desc 
  */
 class Blog
 {
-    /**
-     * @return unknown_type
-     */
-    function Blog()
-    {
-    	
-    }
+    
 }
 ?>
