@@ -40,7 +40,7 @@ class BlogDAO extends AbstractDAO
 		parent::__construct(
 		  new Model('blog', 'id', array(
 		      new ModelField('title', 'string', 64),
-		      new ModelField('posts', 'integer', 12, false, 'posts', 'id'))));
+		      new ModelField('posts', 'integer', 12, 'posts', 'id'))));
 	}
 }
 ?>
