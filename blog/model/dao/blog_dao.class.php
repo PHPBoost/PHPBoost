@@ -28,6 +28,7 @@
 define('BLOG_DAO__CLASS','blog_dao');
 
 mimport('blog/mvc/model');
+mimport('blog/model/blog_post');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
@@ -35,12 +36,41 @@ mimport('blog/mvc/model');
  */
 class BlogDAO extends AbstractDAO
 {
+    public static function instance()
+    {
+        if (self::$instance === null)
+        {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
 	public function __construct()
 	{
 		parent::__construct(
-		  new Model('blog', 'id', array(
-		      new ModelField('title', 'string', 64),
-		      new ModelField('posts', 'integer', 12, 'posts', 'id'))));
+		new Model('Blog', new ModelField('id', 'integer', 12), array(
+		new ModelField('title', 'string', 64))));
 	}
+
+	public function save($blog)
+	{
+		parent::save($blog);
+		$posts = $blog->get_posts();
+		if (!empty($posts))
+		{
+			foreach ($posts as $post)
+			{
+				$post->set_id($blog->get_id());
+				BlogPostDAO::save($post);
+			}
+		}
+	}
+	
+	public function delete($blog)
+	{
+		BlogPostDAO::delete_all_blog_post($blog->get_id());
+	}
+	
+	private static $instance;
 }
 ?>
