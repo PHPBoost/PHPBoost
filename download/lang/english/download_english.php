@@ -104,7 +104,7 @@ $DOWNLOAD_LANG['read_feed'] = 'Download';
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Add a category';
 $DOWNLOAD_LANG['removing_category'] = 'Removing category';
-$DOWNLOAD_LANG['explain_removing_category'] = 'You will delete the category. You have two choices : you can move its contents (questions and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>';
+$DOWNLOAD_LANG['explain_removing_category'] = 'You will delete the category. You have two choices : you can move its contents (files and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>';
 $DOWNLOAD_LANG['delete_category_and_its_content'] = 'Delete the category and all its contents';
 $DOWNLOAD_LANG['move_category_content'] = 'Move its contents in :';
 $DOWNLOAD_LANG['required_fields'] = 'The * marked files are required!';
