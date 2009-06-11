@@ -28,13 +28,66 @@
 define('BLOG__CLASS','blog');
 
 mimport('blog/model/dao/blog_dao');
+mimport('blog/model/blog_post');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
- * @desc 
+ * @desc
  */
 class Blog
 {
-    
+	public function __construct($title = '')
+	{
+		$this->title = $title;
+	}
+
+	public function get_id()
+	{
+		return $this->id;
+	}
+
+	public function get_title()
+	{
+		return $this->id;
+	}
+
+	public function set_id($value)
+	{
+		$this->id = $value;
+	}
+
+	public function set_title($value)
+	{
+		$this->title = $value;
+	}
+
+	public function get_post($i)
+	{
+		return $this->posts[$i];
+	}
+
+	public function get_posts()
+	{
+		return $this->posts;
+	}
+
+	public function get_nb_posts()
+	{
+		return count($this->posts);
+	}
+
+	public function add($post)
+	{
+		$this->posts[] = $post;
+	}
+	
+	public function remove_post($i)
+	{
+		unset($this->posts[$i]);
+	}
+
+	private $id;
+	private $title;
+	private $posts = array();
 }
 ?>

@@ -2,13 +2,13 @@
 
 interface IDAO
 {
-	public static function delete($object);
-	public static function save($object);
+	public function delete($object);
+	public function save($object);
 
-	public static function find_by_id($id);
-	public static function find_by_criteria($criteria);
+	public function find_by_id($id);
+	public function find_by_criteria($criteria);
 
-	public static function create_criteria($table_name);
+	public function create_criteria();
 }
 
 class DAOFactory
@@ -26,15 +26,15 @@ abstract class DAO implements IDAO
 		$this->model = $model;
 	}
 
-	public static function delete($object) {}
-	public static function save($object) {}
+	public function delete($object) {}
+	public function save($object) {}
 
-	public static function find_by_id($id) {}
-	public static function find_by_criteria($criteria) {}
+	public function find_by_id($id) {}
+	public function find_by_criteria($criteria) {}
 
-	public static function create_criteria($table_name) {}
+	public function create_criteria() {}
 
-	protected final $model;
+	protected $model;
 }
 
 abstract class SQLDAO extends DAO
@@ -58,26 +58,26 @@ class MySQLDAO extends SQLDAO
 		parent::__construct($model);
 	}
 
-	public static function delete($object)
+	public function delete($object)
 	{
 		$pk_getter = $this->model->primary_key()->getter();
 		if ($object->$pk_getter() !== null)
 		{
-			MySQLDAO::get_connection()->query_inject('DELETE FROM ' . $this->model->table_name() . ' WHERE ' .
+			MySQLDAO::get_connection()->query_inject('DELETE FROM ' . $this->model->name() . ' WHERE ' .
 			$this->model->primary_key()->name() . '=' .
 			$field->escape($object->$pk_getter()),
 			__LINE__, __FILE__);
 		}
 	}
 
-	public static function save($object)
+	public function save($object)
 	{
 		try
 		{
 			$pk_getter = $this->model->primary_key()->getter();
 			if ($object->$pk_getter() !== null)
 			{   // UPDATE
-				$query = 'UPDATE ' . $this->model->table_name() . ' SET ';
+				$query = 'UPDATE ' . $this->model->name() . ' SET ';
 				$fields_and_values = array();
 				foreach ($this->model->fields() as $field)
 				{
@@ -96,9 +96,12 @@ class MySQLDAO extends SQLDAO
 					$fields_names[] = $field->name();
 					$fields_values[] = $field->escape($object->$getter());
 				}
-				$query = 'INSERT INTO ' . $this->model->table_name() . ' (' . implode(',', $fields_names) . ') VALUES (' . implode(',', $fields_values) . ')';
+				$query = 'INSERT INTO ' . $this->model->name() . ' (' . implode(',', $fields_names) . ') VALUES (' . implode(',', $fields_values) . ')';
 			}
 			MySQLDAO::get_connection()->query_inject($query, __LINE__, __FILE__);
+
+			$pk_setter = $this->model->primary_key()->setter();
+			$object->$pk_setter(MySQLDAO::get_connection()->insert_id());
 		}
 		catch (Exception $ex)
 		{
@@ -107,9 +110,9 @@ class MySQLDAO extends SQLDAO
 		}
 	}
 
-	public static function find_by_id($id)
+	public function find_by_id($id)
 	{
-		$params = array($this->model->table_name(), $this->model->primary_key()->name());
+		$params = array($this->model->name(), $this->model->primary_key()->name());
 		foreach ($this->model->fields() as $field)
 		{
 			$params[] = $field->name();
@@ -129,33 +132,34 @@ class MySQLDAO extends SQLDAO
 		return $object;
 	}
 
-	public static function find_by_criteria($criteria)
+	public function find_by_criteria($criteria, $start = 0, $max_results = 100)
 	{
-
+		$criteria->set_offset($start);
+		$criteria->set_max_results($max_results);
+		return $criteria->results_list();
 	}
 
-	public static function create_criteria($table_name)
+	public function create_criteria()
 	{
-		return new MySQLCriteria($table_name);
+		return new MySQLCriteria($this->model);
 	}
 }
 
 abstract class AbstractDAO extends DAO
 {
-	protected function __construct($model)
+	public function __construct($model)
 	{
 		parent::__construct($model);
 		$this->sql_dao = DAOFactory::get_sql_dao($model);
 	}
 
-	protected static function before_delete($object) {}
-	final public static function delete($object)
+	protected function before_delete($object) {}
+	public function delete($object)
 	{
-		$instance = self::instance();
 		try
 		{
-			$instance->before_delete($object);
-			$instance->sql_dao->delete($object);
+			$this->before_delete($object);
+			$this->sql_dao->delete($object);
 		}
 		catch (DAOValidationException $ex)
 		{
@@ -163,14 +167,13 @@ abstract class AbstractDAO extends DAO
 		}
 	}
 
-	protected static function before_save($object){}
-	final public static function save($object)
+	protected function before_save($object){}
+	public function save($object)
 	{
-		$instance = self::instance();
 		try
 		{
-			$instance->before_save($object);
-			$instance->sql_dao->save($object);
+			$this->before_save($object);
+			$this->sql_dao->save($object);
 		}
 		catch (DAOValidationException $ex)
 		{
@@ -178,40 +181,23 @@ abstract class AbstractDAO extends DAO
 		}
 	}
 
-	final public static function find_by_id($id)
+	public function find_by_id($id)
 	{
-		self::instance()->sql_dao->find_by_id($id);
+		return $this->sql_dao->find_by_id($id);
 	}
 
-	final public static function find_by_criteria($criteria)
+	public function find_by_criteria($criteria)
 	{
-		self::instance()->sql_dao->find_by_criteria($criteria);
+		return $this->sql_dao->find_by_criteria($criteria);
 	}
 
-	final public static function create_criteria($table_name)
+	public function create_criteria()
 	{
-		self::instance()->sql_dao->create_criteria($table_name);
+		return $this->sql_dao->create_criteria();
 	}
 
-	final protected static function instance()
-	{
-		if (self::$instance === null)
-		{
-			if (empty(self::$class))
-			{
-				// TODO Throw a special exception here
-				throw new Exception('self::class have to be overidden in DAO subclass');
-			}
-			// This need to be done instead of self::$instance = new self(); because before
-			// PHP 5.3 this will only create an AbstractDAO object and not its real subclass
-			self::$instance = new self::$class();
-		}
-		return self::$instance;
-	}
 
 	protected $sql_dao;
-	static protected $class;
-	static private $instance;
 }
 
 interface ICriteria
@@ -221,9 +207,10 @@ interface ICriteria
 	public function set_fetch_mode($fetch_attribute, $mode);
 	public function set_projection($projection);
 	public function set_max_results($max_results);
+	public function set_offset($offset);
 
 	public function unique_result();
-	public function result_list();
+	public function results_list();
 }
 
 abstract class SQLCriteria implements ICriteria
@@ -231,7 +218,7 @@ abstract class SQLCriteria implements ICriteria
 	public function __construct($model, $connection)
 	{
 		$this->model = $model;
-		$this->connection = $connnection;
+		$this->connection = $connection;
 	}
 
 	public function add($restriction)
@@ -243,45 +230,32 @@ abstract class SQLCriteria implements ICriteria
 	public function set_projection($projection) {}
 	public function set_max_results($max_results)
 	{
-		$this->max_results = $max_results;
-	}
-
-	public function unique_result()
-	{
-		$params = array($this->model->table_name(), $this->model->primary_key()->name());
-		foreach ($this->model->fields() as $field)
+		if (is_numeric($max_results))
 		{
-			$params[] = $field->name();
+			$max_results =  numeric($max_results);
+			if (is_integer($max_results) && $max_results > 0)
+			{
+				$this->max_results = $max_results;
+				return;
+			}
 		}
-		$params[] = 'WHERE ' . $this->model->primary_key()->name() . '=' . $id;
-		$params[] = __LINE__;
-		$params[] = __FILE__;
-
-		return $this->build_object(call_user_func_array(array($this->connection, 'query_array'), $params));
+		throw new InvalidArgumentException('ICriteria->set_max_results($max_results): $max_results must be a strictly positive integer');
 	}
-
-	public function result_list()
+	public function set_offset($offset)
 	{
-		$results = array();
-		$sql_results = $this->connection->query_while($this->build_query(), __LINE__, __FILE__);
-		while ($row = $this->connection->fetch_assoc($sql_results))
+		if (is_numeric($offset))
 		{
-			$results[] = $this->build_object($row);
+			$offset =  numeric($offset);
+			if (is_integer($offset) && $offset >= 0)
+			{
+				$this->offset = $offset;
+				return;
+			}
 		}
-		return $results;
+		throw new InvalidArgumentException('ICriteria->set_offset($offset): $offset must be a positive integer');
 	}
 
-	protected function build_query()
-	{
-		$query = 'SELECT ' . $this->fields() . ' FROM ' . $this->table;
-		if (!empty($this->restrictions))
-		{
-			$query .= ' WHERE (' . implode(') AND (', $this->restrictions) ; ')';
-		}
-		return $query;
-	}
-
-	protected function fields($fields_options)
+	protected function fields($fields_options = null)
 	{
 		return '*';
 	}
@@ -298,9 +272,10 @@ abstract class SQLCriteria implements ICriteria
 		return $object;
 	}
 
-	private $model;
-	private $restrictions = array();
-	private $max_results = 100;
+	protected $model;
+	protected $restrictions = array();
+	protected $offset = 0;
+	protected $max_results = 100;
 }
 
 class MySQLCriteria extends SQLCriteria
@@ -308,6 +283,75 @@ class MySQLCriteria extends SQLCriteria
 	public function __construct($model)
 	{
 		parent::__construct($model, MySQLDAO::get_connection());
+	}
+
+	public function unique_result()
+	{
+		$params = array($this->model->name(), $this->model->primary_key()->name());
+		foreach ($this->model->fields() as $field)
+		{
+			$params[] = $field->name();
+		}
+		$params[] = 'WHERE ' . $this->model->primary_key()->name() . '=' . $id;
+		$params[] = __LINE__;
+		$params[] = __FILE__;
+
+		return $this->build_object(call_user_func_array(array($this->connection, 'query_array'), $params));
+	}
+
+	public function results_list()
+	{
+		$query = 'SELECT ' . $this->fields() . ' FROM ' . $this->model->name();
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		$query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
+
+		$results = array();
+		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
+		while ($row = $this->connection->fetch_assoc($sql_results))
+		{
+			$results[] = $this->build_object($row);
+		}
+		return $results;
+	}
+
+	public function update()
+	{
+		$query = 'UPDATE ' . $this->model->name() . ' SET ';
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		$this->connection->query_inject($query);
+	}
+
+	public function delete()
+	{
+		$query = 'DELETE FROM ' . $this->model->name();
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		$this->connection->query_inject($query);
+	}
+
+	protected function build_query_conditions()
+	{
+		if (!empty($this->restrictions))
+		{
+			return '(' . implode(') AND (', $this->restrictions) ; ')';
+		}
+		return '';
+	}
+
+	protected function fields($fields_options = null)
+	{
+		return '*';
 	}
 }
 
@@ -439,7 +483,7 @@ class Model
 		return $this->primary_key;
 	}
 
-	public function table_name()
+	public function name()
 	{
 		return PREFIX . $this->name;
 	}

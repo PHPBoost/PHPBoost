@@ -27,6 +27,8 @@
 
 // TODO change to import('mvc/controller');
 mimport('blog/mvc/controller');
+mimport('blog/mvc/model');
+mimport('blog/model/blog');
 
 class BlogController extends AbstractController
 {
@@ -42,7 +44,13 @@ class BlogController extends AbstractController
 
 	function view()
 	{
-		echo 'Je suis view';
+		echo 'Je suis view<br />';
+		try {
+			BlogDAO::instance()->find_by_criteria(BlogDAO::instance()->create_criteria());
+		} catch (Exception $ex) {
+			echo '<hr />' . $ex->getMessage() . '<hr />';
+			echo '<pre>';print_r($ex->getTraceAsString());echo '</pre><hr />';
+		}
 	}
 
 	function view_by_id($id)
