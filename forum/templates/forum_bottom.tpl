@@ -110,7 +110,7 @@
 					</script>
 					&bull;
 					<span id="forum_track_pm">
-						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
+						<a href="action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				
@@ -120,7 +120,7 @@
 					</script>
 					&bull;
 					<span id="forum_track_mail">
-						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
+						<a href="action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE_MAIL}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
 					</span>
 					<script type="text/javascript">
 					<!--				

@@ -425,6 +425,8 @@ $Template->assign_vars(array(
 	'GUEST' => $total_visit,
 	'SELECT_CAT' => forum_list_cat($topic['idcat'], $CAT_FORUM[$topic['idcat']]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'U_SUSCRIBE' => ($track === false) ? url('.php?t=' . $id_get) : url('.php?ut=' . $id_get),
+	'U_SUSCRIBE_PM' => url('.php?token=' . $Session->get_token() . '&amp;' . ($track_pm ? 'utp' : 'tp') . '=' . $id_get),
+	'U_SUSCRIBE_MAIL' => url('.php?token=' . $Session->get_token() . '&amp;' . ($track_mail ? 'utm' : 'tm') . '=' . $id_get),
 	'IS_TRACK' => $track ? 'true' : 'false',
 	'IS_TRACK_PM' => $track_pm ? 'true' : 'false',
 	'IS_TRACK_MAIL' => $track_mail ? 'true' : 'false',
@@ -488,7 +490,7 @@ else
 		'ICON_SUSCRIBE_PM2' => '<img src="' . $module_data_path . '/images/' . $img_track_pm_display . '" alt="" class="valign_middle" id="forum_track_pm_img" />',
 		'ICON_SUSCRIBE' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" />',
 		'ICON_SUSCRIBE2' => '<img src="' . $module_data_path . '/images/' . $img_track_mail_display . '" alt="" class="valign_middle" id="forum_track_mail_img" />',
-		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . $Session->get_token())
+		'U_FORUM_ACTION_POST' => url('.php?idt=' . $id_get . '&amp;id=' . $topic['idcat'] . '&amp;new=n_msg&amp;token=' . $Session->get_token()),
 	));
 
 	//Affichage du lien pour changer le display_msg du topic et autorisation d'édition du statut.
@@ -503,7 +505,7 @@ else
 			'L_EXPLAIN_DISPLAY_MSG_DEFAULT' => $topic['display_msg'] ? $CONFIG_FORUM['explain_display_msg_bis'] : $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG' => $CONFIG_FORUM['explain_display_msg'],
 			'L_EXPLAIN_DISPLAY_MSG_BIS' => $CONFIG_FORUM['explain_display_msg_bis'],
-			'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get)
+			'U_ACTION_MSG_DISPLAY' => url('.php?msg_d=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token())
 		));
 	}
 }

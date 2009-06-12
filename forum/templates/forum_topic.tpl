@@ -240,12 +240,14 @@
 					# IF msg.C_FORUM_MSG_DEL #
 					&nbsp;
 						# IF msg.C_FORUM_MSG_DEL_MSG #
+					<a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimgnojs{msg.ID}" /></a>
+					<img style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /> 
 					<script type="text/javascript">
-					<!-- 
-					document.write('<img style="cursor:pointer;" onclick="del_msg(\'{msg.ID}\');" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" />'); 
+					<!--
+						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
+						document.getElementById('dimg{msg.ID}').style.display = 'inline';
 					-->
 					</script>
-					<noscript><a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /></a></noscript>
 						# ELSE #
 					<a href="action{msg.U_FORUM_MSG_DEL}" title="" onclick="javascript:return Confirm_del_topic();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> 
 						# ENDIF #
