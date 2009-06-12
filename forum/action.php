@@ -34,13 +34,18 @@ require_once('../kernel/header_no_display.php');
 $idt_get = retrieve(GET, 'id', 0);
 $idm_get = retrieve(GET, 'idm', 0);
 $del = retrieve(GET, 'del', false);
-$track = retrieve(GET, 't', '');	
-$untrack = retrieve(GET, 'ut', '');	
 $alert = retrieve(GET, 'a', '');	
 $read = retrieve(GET, 'read', false);
 $msg_d = retrieve(GET, 'msg_d', false);
 $lock_get = retrieve(GET, 'lock', '');
 $page_get = retrieve(GET, 'p', 1);
+
+$track = retrieve(GET, 't', '');	
+$untrack = retrieve(GET, 'ut', '');	
+$track_pm = retrieve(GET, 'tp', '');	
+$untrack_pm = retrieve(GET, 'utp', '');	
+$track_mail = retrieve(GET, 'tm', '');	
+$untrack_mail = retrieve(GET, 'utm', '');	
 
 //Variable $_POST
 $poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
@@ -193,6 +198,42 @@ elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($track_pm) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Track_topic($track_pm, FORUM_PM_TRACKING); //Ajout du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track_pm, '-' . $track_pm . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($untrack_pm) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Untrack_topic($untrack_pm, FORUM_PM_TRACKING); //Retrait du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack_pm, '-' . $untrack_pm . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($track_mail) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Track_topic($track_mail, FORUM_EMAIL_TRACKING); //Ajout du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track_mail, '-' . $track_mail . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($untrack_mail) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Untrack_topic($untrack_mail, FORUM_EMAIL_TRACKING); //Retrait du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack_mail, '-' . $untrack_mail . '.php', '&') . '#go_bottom');
 }
 elseif ($read) //Marquer comme lu.
 {
