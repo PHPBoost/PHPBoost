@@ -171,7 +171,7 @@ else
 	$Sql->query_close($result);
 	
 	//Modules disponibles
-	$root = '../';
+	$root = PATH_TO_ROOT . '/';
 	$i = 0;
 	if (is_dir($root)) //Si le dossier existe
 	{
@@ -181,36 +181,32 @@ else
 		foreach ($lang_folder_path->get_folders() as $odir)
 		{	
 			$dir = $odir->get_name();
-			if (!in_array($dir, $installed_modules))
+			if (!in_array($dir, $installed_modules) && $dir != 'lang')
 			{
-				//Désormais on vérifie que le fichier de configuration est présent.
-				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini') && !file_exists($root . $dir . '/syndication.php'))
+				//Récupération des infos de config.
+				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
+				if (!empty($info_module) && is_array($info_module))
 				{
-					//Récupération des infos de config.
-					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-					if (is_array($info_module))
-					{
-						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-						$Template->assign_block_vars('available', array(
-							'ID' => $dir,
-							'NAME' => ucfirst($info_module['name']),
-							'ICON' => $dir,
-							'VERSION' => $info_module['version'],
-							'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-							'DESC' => $info_module['info'],
-							'COMPAT' => $info_module['compatibility'],
-							'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
-							'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
-							'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-							'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
-							'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
-							'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
-							'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
-						));
-						$i++;
-					}
-				}				
+					$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
+					$Template->assign_block_vars('available', array(
+						'ID' => $dir,
+						'NAME' => ucfirst($info_module['name']),
+						'ICON' => $dir,
+						'VERSION' => $info_module['version'],
+						'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
+						'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+						'DESC' => $info_module['info'],
+						'COMPAT' => $info_module['compatibility'],
+						'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
+						'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
+						'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
+						'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
+						'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
+						'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
+						'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
+					));
+					$i++;
+				}
 			}
 		}	
 	}
