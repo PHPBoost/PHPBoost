@@ -33,21 +33,12 @@ mimport('blog/model/blog');
 
 class BlogController extends AbstractController
 {
-	public function init()
-	{
-		echo '<br />Init()<hr />';
-	}
-
-	public function destroy()
-	{
-		echo '<hr />Destroy()<br />';
-	}
-
 	function view()
 	{
 		echo 'Je suis view<br />';
 		try {
-			BlogDAO::instance()->find_by_criteria(BlogDAO::instance()->create_criteria());
+			$dao = BlogDAO::instance();//->find_by_criteria(BlogDAO::instance()->create_criteria());
+			//$dao->find_by_id(0);
 		} catch (Exception $ex) {
 			echo '<hr />' . $ex->getMessage() . '<hr />';
 			echo '<pre>';print_r($ex->getTraceAsString());echo '</pre><hr />';
@@ -58,11 +49,19 @@ class BlogController extends AbstractController
 	{
 		echo 'Je suis view by id avec comme id : ' . $id;
 	}
-
 	function special($id)
 	{
 		echo 'Je suis special : ' . $id . '<br />';
 		echo 'param1=' . $_GET['param1'] . '&amp;param2=' . $_GET['param2'];
+	}
+	public function init()
+	{
+		echo '<br />Init()<hr />';
+	}
+
+	public function destroy()
+	{
+		echo '<hr />Destroy()<br />';
 	}
 }
 ?>

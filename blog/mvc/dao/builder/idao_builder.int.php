@@ -27,6 +27,6 @@
 
 interface IDAOBuilder
 {
-    function get_cached_instance();
+    function dao_instance();
 }
 ?>

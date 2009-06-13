@@ -26,6 +26,7 @@
  ###################################################*/
 
 mvcimport('mvc/model_field');
+mvcimport('mvc/dao/abstract_dao');
 mvcimport('mvc/exceptions');
 
 class Model
@@ -62,7 +63,7 @@ class Model
 
 	public function name()
 	{
-		return PREFIX . $this->name;
+		return $this->name;
 	}
 
 	private $name;

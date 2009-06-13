@@ -307,7 +307,6 @@ class Template
 		 $folder = framework/content/syndication
 		 */
 
-		$filename = trim($filename, '/');
 		$i = strpos($filename, '/');
 		$module = substr($filename, 0, $i);
 		$file = trim(substr($filename, $i), '/');
@@ -316,8 +315,16 @@ class Template
 
 		$default_templates_folder = PATH_TO_ROOT . '/templates/default/';
 		$theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
-
-		if (empty($module) || in_array($module, array('admin') ))
+		if (strpos($filename, '/') === 0)
+		{
+			// Load the file from its absolute location
+			// (Not overlaodable)
+			if (file_exists(PATH_TO_ROOT . $filename))
+			{
+				return PATH_TO_ROOT . $filename;
+			}
+		}
+		elseif (empty($module) || in_array($module, array('admin') ))
 		{   // Kernel - Templates priority order
 			//      /templates/$theme/.../$file.tpl
 			//      /templates/default/.../$file.tpl
