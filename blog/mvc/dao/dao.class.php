@@ -34,16 +34,6 @@ abstract class DAO implements IDAO
 	{
 		$this->model = $model;
 	}
-
-	/** /
-	public abstract function delete($object);
-	public function save($object) {}
-
-	public function find_by_id($id) {}
-	public function find_by_criteria($criteria) {}
-
-	public function create_criteria() {}
-    /**/
 	protected $model;
 }
 ?>
