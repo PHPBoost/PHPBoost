@@ -28,7 +28,7 @@
 // TODO Move this file into the /kernel/framework/mvc
 
 // TODO Replace with import('mvc/controller');
-mimport('blog/mvc/controller');
+mvcimport('mvc/controller');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

@@ -1,5 +1,5 @@
 <?php
-mvcimport('mvc/model/dao/builder/sql_dao_builder');
+mvcimport('mvc/dao/builder/sql_dao_builder');
 class MySQLDAOBuilder extends SQLDAOBuilder
 {
     public function __construct($model, $cache_path = '/blog/mvc/cache/')

@@ -1,5 +1,5 @@
 <?php
-mvcimport('mvc/model/dao/dao');
+mvcimport('mvc/dao/dao');
 abstract class SQLDAO extends DAO
 {
 	public function __construct($model)

@@ -1,5 +1,5 @@
 <?php
-mvcimport('mvc/model/dao/builder/idao_builder');
+mvcimport('mvc/dao/builder/idao_builder');
 abstract class SQLDAOBuilder implements IDAOBuilder
 {
 	public function __construct($model, $cache_path = '/blog/mvc/cache/')
