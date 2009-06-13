@@ -42,6 +42,6 @@ define('DISTRIBUTION_START_PAGE', '/member/member.php');
 define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('connect', 'database');
+$DISTRIBUTION_MODULES = array('connect', 'database', 'doc');
 
 ?>
