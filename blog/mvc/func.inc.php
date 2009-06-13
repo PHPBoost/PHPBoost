@@ -26,5 +26,8 @@ function mimport($path, $import_type = CLASS_IMPORT)
 	require_once(PATH_TO_ROOT . '/' . $path . $import_type);
 }
 
-
+function mvcimport($path, $import_type = CLASS_IMPORT)
+{
+	mimport('blog/' . $path, $import_type);
+}
 ?>

@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/idao', INTERFACE_IMPORT);
 abstract class DAO implements IDAO
 {
 	public function __construct($model)

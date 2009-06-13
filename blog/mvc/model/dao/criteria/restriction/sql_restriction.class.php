@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/criteria/restriction/irestriction');
 abstract class SQLRestriction implements IRestriction
 {
 	public abstract static function eq($field, $value);

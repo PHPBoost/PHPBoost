@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/criteria/sql_criteria');
 class MySQLCriteria extends SQLCriteria
 {
     public function __construct($model)

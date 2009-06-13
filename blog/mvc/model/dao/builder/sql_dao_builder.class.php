@@ -1,5 +1,6 @@
 <?php
-abstract class SQLDAOBuilder implements SQLDAOBuilder
+mvcimport('mvc/model/dao/builder/idao_builder');
+abstract class SQLDAOBuilder implements IDAOBuilder
 {
 	public function __construct($model, $cache_path = '/blog/mvc/cache/')
 	{
@@ -16,6 +17,7 @@ abstract class SQLDAOBuilder implements SQLDAOBuilder
 		// TODO change path here
 		$tpl = new Template('/blog/mvc/dao/builder/' . $tpl_name);
 		$tpl->assign_vars(array(
+           'CLASSNAME' => $this->model->name(),
            'TABLE_NAME' => PREFIX . $this->model->name(),
            'PK_NAME' => $this->model->name(),
            'PK_GETTER' => $this->model->primary_key()->getter(),
