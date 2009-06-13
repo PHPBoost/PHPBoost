@@ -48,7 +48,7 @@ class Blog
 
 	public function get_title()
 	{
-		return $this->id;
+		return $this->title;
 	}
 
 	public function set_id($value)

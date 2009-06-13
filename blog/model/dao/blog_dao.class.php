@@ -60,15 +60,18 @@ class BlogDAO extends AbstractDAO
 		{
 			foreach ($posts as $post)
 			{
-				$post->set_id($blog->get_id());
-				BlogPostDAO::save($post);
+				$post->set_blog_id($blog->get_id());
+				BlogPostDAO::instance()->save($post);
+				// TODO remove
+                sleep(1);
 			}
 		}
 	}
 	
 	public function delete($blog)
 	{
-		BlogPostDAO::delete_all_blog_post($blog->get_id());
+		BlogPostDAO::instance()->delete_all_blog_post($blog->get_id());
+		parent::delete($blog);
 	}
 	
 	private static $instance;

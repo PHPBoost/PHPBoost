@@ -19,7 +19,8 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
     {
         try
         {
-            if ($object->{PK_GETTER}() !== null)
+            $id = $object->{PK_GETTER}();
+            if ($id !== null)
             {   // UPDATE
                 $query = 'UPDATE {TABLE_NAME} SET ';
                 $fields_and_values = array();
@@ -28,7 +29,8 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
                     $getter = ModelField::GETTER_PREFIX . $field;
                     $fields_and_values[]= $field . '=' . $this->escape($object->$getter());
                 }
-                $query .=  implode(', ', $fields_and_values) . ' WHERE {PK_NAME}=' . $this->escape($object->{PK_GETTER}());
+                $query .=  implode(', ', $fields_and_values) . ' WHERE {PK_NAME}=' . $this->escape($id);
+                $this->connection->query_inject($query, __LINE__, __FILE__);
             }
             else
             {   // CREATE
@@ -41,10 +43,9 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
                     $fields_values[] = $this->escape($object->$getter());
                 }
                 $query = 'INSERT INTO {TABLE_NAME} (' . implode(',', $fields_names) . ') VALUES (' . implode(',', $fields_values) . ')';
+                $this->connection->query_inject($query, __LINE__, __FILE__);
+                $object->{PK_SETTER}($this->connection->insert_id());
             }
-            $this->connection->query_inject($query, __LINE__, __FILE__);
-
-            $object->{PK_SETTER}($this->connection->insert_id());
         }
         catch (Exception $ex)
         {
@@ -63,9 +64,10 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
         $result = call_user_func_array(array($this->connection, 'query_array'), $params);
         $classname = $this->model->name();
         $object = new {CLASSNAME}();
+        $object->{PK_SETTER}($result['{PK_NAME}']);
         foreach ($this->fields_names_list as $field)
         {
-            $setter = $field;
+            $setter = ModelField::SETTER_PREFIX . $field;
             $object->$setter($result[$field]);
         }
         return $object;

@@ -26,81 +26,112 @@
  ###################################################*/
 
 mvcimport('mvc/dao/criteria/sql_criteria');
+mvcimport('mvc/dao/criteria/restriction/mysql_restriction');
 
 class MySQLCriteria extends SQLCriteria
 {
-    public function __construct($model)
-    {
-        parent::__construct($model, MySQLDAO::get_connection());
-    }
+	public function __construct($model)
+	{
+		parent::__construct($model, MySQLDAO::get_connection());
+	}
 
-    public function unique_result()
-    {
-        $params = array($this->model->name(), $this->model->primary_key()->name());
-        foreach ($this->model->fields() as $field)
-        {
-            $params[] = $field->name();
-        }
-        $params[] = 'WHERE ' . $this->model->primary_key()->name() . '=' . $id;
-        $params[] = __LINE__;
-        $params[] = __FILE__;
+	public function create_restriction()
+	{
+		return new MySQLRestriction($this->model);
+	}
 
-        return $this->build_object(call_user_func_array(array($this->connection, 'query_array'), $params));
-    }
+	public function count()
+	{
+		$params = array($this->model->table_name(), 'COUNT(*)');
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$params[] = ' WHERE ' . $conditions;
+			$params[] = __LINE__;
+			$params[] = __FILE__;
+		}
+		return (int) call_user_func_array(array($this->connection, 'query_array'), $params);
+	}
 
-    public function results_list()
-    {
-        $query = 'SELECT ' . $this->fields() . ' FROM ' . $this->model->name();
-        $conditions = $this->build_query_conditions();
-        if (!empty($conditions))
-        {
-            $query .= ' WHERE ' . $conditions;
-        }
-        $query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
+	//    public function unique_result()
+	//    {
+	//        $params = array($this->model->table_name(), $this->model->primary_key()->name());
+	//        foreach ($this->model->fields() as $field)
+	//        {
+	//            $params[] = $field->name();
+	//        }
+	//        $params[] = 'WHERE ' . $this->model->primary_key()->name() . '=' . $id;
+	//        $params[] = __LINE__;
+	//        $params[] = __FILE__;
+	//
+	//        return $this->build_object(call_user_func_array(array($this->connection, 'query_array'), $params));
+	//    }
 
-        $results = array();
-        $sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
-        while ($row = $this->connection->fetch_assoc($sql_results))
-        {
-            $results[] = $this->build_object($row);
-        }
-        return $results;
-    }
+	public function results_list()
+	{
+		$query = 'SELECT ' . $this->fields() . ' FROM ' . $this->model->table_name();
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		if (!empty($this->order_by))
+		{
+			$query .= ' ORDER BY ' . $this->order_by;
+			if ($this->way == ICriteria::ASC)
+			{
+				$query .= ' ASC ';
+			}
+			else
+			{
+				$query .= ' DESC ';
+			}
+		}
+		$query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
 
-    public function update()
-    {
-        $query = 'UPDATE ' . $this->model->name() . ' SET ';
-        $conditions = $this->build_query_conditions();
-        if (!empty($conditions))
-        {
-            $query .= ' WHERE ' . $conditions;
-        }
-        $this->connection->query_inject($query);
-    }
+		$results = array();
+		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
+		while ($row = $this->connection->fetch_assoc($sql_results))
+		{
+			$results[] = $this->build_object($row);
+		}
+		return $results;
+	}
 
-    public function delete()
-    {
-        $query = 'DELETE FROM ' . $this->model->name();
-        $conditions = $this->build_query_conditions();
-        if (!empty($conditions))
-        {
-            $query .= ' WHERE ' . $conditions;
-        }
-        $this->connection->query_inject($query);
-    }
+	public function update()
+	{
+		$query = 'UPDATE ' . $this->model->table_name() . ' SET ';
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		$this->connection->query_inject($query, __LINE__, __FILE__);
+	}
 
-    protected function build_query_conditions()
-    {
-        if (!empty($this->restrictions))
-        {
-            return '(' . implode(') AND (', $this->restrictions) ; ')';
-        }
-        return '';
-    }
+	public function delete()
+	{
+		$query = 'DELETE FROM ' . $this->model->table_name();
+		$conditions = $this->build_query_conditions();
+		if (!empty($conditions))
+		{
+			$query .= ' WHERE ' . $conditions;
+		}
+		$this->connection->query_inject($query, __LINE__, __FILE__);
+	}
 
-    protected function fields($fields_options = null)
-    {
-        return '*';
-    }
+	protected function build_query_conditions()
+	{
+		if (!empty($this->restrictions))
+		{
+			return '(' . implode(') AND (', $this->restrictions) . ')';
+		}
+		return '';
+	}
+
+	protected function fields($fields_options = null)
+	{
+		return '*';
+	}
 }
 ?>
