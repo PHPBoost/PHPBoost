@@ -32,13 +32,13 @@ abstract class SQLDAO extends DAO
 	public function __construct($model)
 	{
 		parent::__construct($model);
-		global $Sql;
-		$this->connection = $Sql;
+		$this->connection = SQLDAO::get_connection();
 	}
 
 	public static function get_connection()
 	{
-		return $this->connection;
+		global $Sql;
+		return $Sql;
 	}
 
 	protected $connection;

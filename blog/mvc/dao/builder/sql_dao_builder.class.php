@@ -51,9 +51,9 @@ abstract class SQLDAOBuilder implements IDAOBuilder
 		$tpl->assign_vars(array(
            'CLASSNAME' => $this->model->name(),
            'TABLE_NAME' => PREFIX . $this->model->name(),
-           'PK_NAME' => $this->model->name(),
+           'PK_NAME' => $this->model->primary_key()->name(),
            'PK_GETTER' => $this->model->primary_key()->getter(),
-           'PK_SETTER' => $this->model->primary_key()->setter(),
+           'PK_SETTER' => $this->model->primary_key()->setter()
 		));
 		$fields = $this->model->fields();
 		foreach ($fields as $field)
@@ -63,7 +63,7 @@ abstract class SQLDAOBuilder implements IDAOBuilder
            'GETTER' => $field->getter(),
            'SETTER' => $field->setter(),
            'TYPE' => $field->type(),
-           'LENGTH' => $field->length(),
+           'LENGTH' => $field->length()
 			));
 		}
 		return $tpl;

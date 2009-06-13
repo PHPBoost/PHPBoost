@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/criteria/icriteria');
+mvcimport('mvc/dao/criteria/icriteria', INTERFACE_IMPORT);
 
 abstract class SQLCriteria implements ICriteria
 {
@@ -33,6 +33,8 @@ abstract class SQLCriteria implements ICriteria
     {
         $this->model = $model;
         $this->connection = $connection;
+        $this->order_by = $model->primary_key()->name();
+        $this->way = ICriteria::ASC;
     }
 
     public function add($restriction)
@@ -68,6 +70,11 @@ abstract class SQLCriteria implements ICriteria
         }
         throw new InvalidArgumentException('ICriteria->set_offset($offset): $offset must be a positive integer');
     }
+    public function order_by($field_name, $way = ICriteria::ASC)
+    {
+    	$this->order_by = $field_name;
+    	$this->way = $way;
+    }
 
     protected function fields($fields_options = null)
     {
@@ -90,5 +97,7 @@ abstract class SQLCriteria implements ICriteria
     protected $restrictions = array();
     protected $offset = 0;
     protected $max_results = 100;
+    protected $order_by;
+    protected $way;
 }
 ?>

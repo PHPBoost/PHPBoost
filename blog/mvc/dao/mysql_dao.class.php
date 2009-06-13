@@ -26,6 +26,7 @@
  ###################################################*/
 
 mvcimport('mvc/dao/sql_dao');
+mvcimport('mvc/dao/criteria/mysql_criteria');
 
 abstract class MySQLDAO  extends SQLDAO
 {
@@ -50,7 +51,7 @@ abstract class MySQLDAO  extends SQLDAO
 	{
 		if ($value === null)
 		{
-			return null;
+			return 'NULL';
 		}
 		if (!MAGIC_QUOTES)
 		{

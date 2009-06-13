@@ -35,7 +35,10 @@ class Model
 	{
 		$this->name = $name;
 		$this->primary_key = $primary_key;
-		$this->fields = $model_fields;
+		foreach ($model_fields as $field)
+		{
+			$this->fields[$field->name()] = $field; 
+		}
 		if (empty($this->name))
 		{
 			throw new NoTableModelException();
@@ -53,6 +56,10 @@ class Model
 
 	public function field($field_name)
 	{
+		if ($field_name == $this->primary_key->name())
+		{
+			return $this->primary_key;
+		}
 		return $this->fields[$field_name];
 	}
 
@@ -61,10 +68,16 @@ class Model
 		return $this->primary_key;
 	}
 
-	public function name()
-	{
-		return $this->name;
-	}
+    public function name()
+    {
+        return $this->name;
+    }
+    
+
+    public function table_name()
+    {
+        return PREFIX . $this->name;
+    }
 
 	private $name;
 	private $fields;

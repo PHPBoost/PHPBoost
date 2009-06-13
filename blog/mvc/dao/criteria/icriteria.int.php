@@ -27,14 +27,20 @@
 
 interface ICriteria
 {
+	public function create_restriction();
     public function add($restriction);
 
     public function set_fetch_mode($fetch_attribute, $mode);
     public function set_projection($projection);
     public function set_max_results($max_results);
     public function set_offset($offset);
+    public function order_by($field_name, $way = ICriteria::ASC);
+    public function count();
 
-    public function unique_result();
+//    public function unique_result();
     public function results_list();
+    
+    const ASC = 'asc';
+    const DESC = 'desc';
 }
 ?>

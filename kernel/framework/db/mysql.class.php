@@ -359,7 +359,7 @@ class Sql
 	 * @return int The ID generated for an AUTO_INCREMENT column by the previous 
           * INSERT query on success, 0 if the previous query does not generate an AUTO_INCREMENT value.
 	 */
-	function insert_id($query)
+	function insert_id($query = '')
 	{
 		return mysql_insert_id();
 	}

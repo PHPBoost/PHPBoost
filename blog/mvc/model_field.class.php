@@ -68,7 +68,7 @@ class ModelField
 
 	public function setter()
 	{
-		return self::GETTER_PREFIX . $this->name;
+		return self::SETTER_PREFIX . $this->name;
 	}
 
 	private $name;
