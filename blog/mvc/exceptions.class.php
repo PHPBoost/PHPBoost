@@ -24,6 +24,7 @@ class NoPrimaryKeyModelException extends ModelException
 		parent::__construct('No Primary Key found for model ' . $model_name);
 	}
 }
+
 class DAOValidationException
 {
 	public function __construct($message)
