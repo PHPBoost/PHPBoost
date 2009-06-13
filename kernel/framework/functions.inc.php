@@ -383,7 +383,7 @@ function load_menu_lang($menu_name)
 function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
     $dir = find_require_dir($dir_path, $require_dir, false);
-    $file = $dir_path . $require_dir . '/' . $ini_name;
+    $file = $dir_path . $dir . '/' . $ini_name;
     if (!DEBUG)
     {
         $result = @parse_ini_file($file);
