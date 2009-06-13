@@ -26,8 +26,9 @@
  ###################################################*/
 
 // TODO change to import('mvc/controller');
-mimport('blog/mvc/controller');
-mimport('blog/mvc/model/');
+mvcimport('mvc/model');
+mvcimport('mvc/controller');
+
 mimport('blog/model/blog');
 
 class BlogController extends AbstractController

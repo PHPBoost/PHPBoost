@@ -1,6 +1,6 @@
 <?php
-mvcimport('mvc/model/model_field');
-mvcimport('mvc/model/exceptions');
+mvcimport('mvc/model_field');
+mvcimport('mvc/exceptions');
 class Model
 {
 	public function __construct($name, $primary_key, $model_fields)
