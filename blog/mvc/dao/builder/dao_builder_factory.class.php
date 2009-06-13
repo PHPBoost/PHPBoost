@@ -25,13 +25,15 @@
  *
  ###################################################*/
 
+mvcimport('mvc/dao/builder/sql_dao_builder');
+
 class DAOBuilderFactory
 {
-	public static function get_sql_dao($model)
+	public static function get_sql_dao($model, $cache = SQLDAOBuilder::cache_path)
 	{
 		mvcimport('mvc/dao/builder/mysql_dao_builder');
-		$sql_dao = new MySQLDAOBuilder($model);
-		return $sql_dao->get_cached_instance();
+		$sql_dao_builder = new MySQLDAOBuilder($model, $cache);
+		return $sql_dao_builder->dao_instance();
 	}
 }
 ?>

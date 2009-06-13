@@ -26,13 +26,14 @@
  ###################################################*/
 
 mvcimport('mvc/dao/dao');
+mvcimport('mvc/dao/builder/dao_builder_factory');
 
 abstract class AbstractDAO extends DAO
 {
     public function __construct($model)
     {
         parent::__construct($model);
-        $this->sql_dao = DAOFactory::get_sql_dao($model);
+        $this->sql_dao = DAOBuilderFactory::get_sql_dao($model);
     }
 
     protected function before_delete($object) {}

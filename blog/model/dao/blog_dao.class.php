@@ -27,7 +27,7 @@
 
 define('BLOG_DAO__CLASS','blog_dao');
 
-mimport('blog/mvc/model');
+mvcimport('mvc/dao/abstract_dao');
 mimport('blog/model/blog_post');
 
 /**

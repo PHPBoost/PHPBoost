@@ -1,6 +1,6 @@
 // TODO rename extension (remove .php)
-mvcimport('mvc/model/dao/builder/sql_dao_builder');
-class {CLASSNAME} extends MySQLDAO
+mvcimport('mvc/dao/mysql_dao');
+class {CLASSNAME}MySQLDAO extends MySQLDAO
 {
     public function __construct($model)
     {
@@ -57,12 +57,12 @@ class {CLASSNAME} extends MySQLDAO
     {
         $params = array(
             '{TABLE_NAME}', '{PK_NAME}',
-            # start fields #'{fields.NAME}',# end fields #
+            # START fields #'{fields.NAME}',# END fields #
             'WHERE {PK_NAME}=' . $id, __LINE__, __FILE__);
 
         $result = call_user_func_array(array($this->connection, 'query_array'), $params);
         $classname = $this->model->name();
-        $object = new '{CLASSNAME}'();
+        $object = new {CLASSNAME}();
         foreach ($this->fields_names_list as $field)
         {
             $setter = $field;
@@ -71,5 +71,5 @@ class {CLASSNAME} extends MySQLDAO
         return $object;
     }
     
-    private $fields_names_list = array(# start fields #'{fields.NAME}',# end fields #);
+    private $fields_names_list = array(# START fields #'{fields.NAME}',# END fields #);
 }

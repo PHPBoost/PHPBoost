@@ -36,13 +36,18 @@ class MySQLDAOBuilder extends SQLDAOBuilder
 
     protected function cache_classname()
     {
-        return $this->model->name() . '_MySQL';	
+        return $this->model->name() . 'MySQLDAO';	
     }
     
+    protected function get_template_filename()
+    {
+    	return self::$template_filename;
+    }
     protected function generate_content()
     {
-    	$tpl = parent::generate_content('mysql_dao_builder.class.tpl');
+    	$tpl = parent::generate_content($this->get_template_filename());
     	return $tpl->parse(TEMPLATE_STRING_MODE);
     }
+    private static $template_filename = 'mysql_dao_builder';
 }
 ?>

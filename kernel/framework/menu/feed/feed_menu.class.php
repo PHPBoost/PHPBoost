@@ -110,7 +110,7 @@ class FeedMenu extends Menu
 	 */
 	/* static */ function get_template($name = '', $block_position = BLOCK_POSITION__LEFT)
 	{
-		$tpl = new Template('/framework/menus/feed/feed.tpl');
+		$tpl = new Template('framework/menus/feed/feed.tpl');
 
 		$tpl->assign_vars(array(
 			'NAME' => $name,

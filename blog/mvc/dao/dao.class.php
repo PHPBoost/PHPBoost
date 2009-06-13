@@ -26,6 +26,7 @@
  ###################################################*/
 
 mvcimport('mvc/dao/idao', INTERFACE_IMPORT);
+mvcimport('mvc/model');
 
 abstract class DAO implements IDAO
 {
@@ -34,6 +35,7 @@ abstract class DAO implements IDAO
 		$this->model = $model;
 	}
 
+	/** /
 	public abstract function delete($object);
 	public function save($object) {}
 
@@ -41,7 +43,7 @@ abstract class DAO implements IDAO
 	public function find_by_criteria($criteria) {}
 
 	public function create_criteria() {}
-
+    /**/
 	protected $model;
 }
 ?>
