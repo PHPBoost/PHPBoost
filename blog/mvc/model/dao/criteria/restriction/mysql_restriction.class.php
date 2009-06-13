@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/criteria/restriction/sql_restriction');
 class MySQLRestriction extends SQLRestriction
 {
     public static function eq($field, $value)

@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/dao');
 abstract class AbstractDAO extends DAO
 {
     public function __construct($model)

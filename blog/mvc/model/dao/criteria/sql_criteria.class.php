@@ -1,4 +1,5 @@
 <?php
+mvcimport('mvc/model/dao/criteria/icriteria');
 abstract class SQLCriteria implements ICriteria
 {
     public function __construct($model, $connection)

@@ -1,5 +1,5 @@
 <?php
-	
+mvcimport('mvc/model/dao/sql_dao');	
 class MySQLDAO  extends SQLDAO
 {
     public function __construct($model)
