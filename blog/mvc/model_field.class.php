@@ -28,7 +28,7 @@
 
 class ModelField
 {
-	public function __construct($name, $type, $length = 0)
+	public function __construct($name, $type, $length = 0, $property_name = null)
 	{
 		switch ($type)
 		{
@@ -44,11 +44,19 @@ class ModelField
 		$dot_pos = strpos($name, '.');
 		if ($dot_pos !== false)
 		{
-			$this->table = PREFIX . substr($name, 0, $dot_pos);
+			$this->table = substr($name, 0, $dot_pos);
 		}
 		$this->name = $name;
 		$this->type = $type;
 		$this->length = $length;
+		if ($property_name !== null)
+		{
+		  $this->property_name = $property_name;
+		}
+		else
+		{
+			$this->property_name = $this->short_name();
+		}
 	}
 
 	public function short_name()
@@ -58,9 +66,9 @@ class ModelField
 
 	public function name()
 	{
-		if (($dot_pos = strpos($this->name, '.')) !== false)
+		if ($this->got_table_in_name())
 		{
-            return $this->get_table() . '.' . substr($this->name, $dot_pos + 1);
+			return $this->name;
 		}
 		return $this->get_table() . '.' . $this->name;
 	}
@@ -77,12 +85,12 @@ class ModelField
 
 	public function getter()
 	{
-		return self::GETTER_PREFIX . $this->extra_name();
+		return self::GETTER_PREFIX . $this->property_name;
 	}
 
 	public function setter()
 	{
-		return self::SETTER_PREFIX . $this->extra_name();
+		return self::SETTER_PREFIX . $this->property_name;
 	}
 
 	public function extra_name()
@@ -99,11 +107,22 @@ class ModelField
 	{
 		return $this->table;
 	}
+	
+    protected function got_table_in_name()
+    {
+        return strpos($this->name, '.') !== false;
+    }
+    
+    public function property()
+    {
+        return $this->property_name;
+    }
 
 	protected $name;
 	protected $type;
 	protected $length;
 	protected $table;
+	protected $property_name;
 
 	const GETTER_PREFIX = 'get_';
 	const SETTER_PREFIX = 'set_';

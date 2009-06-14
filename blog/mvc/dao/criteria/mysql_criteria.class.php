@@ -133,7 +133,7 @@ class MySQLCriteria extends SQLCriteria
 		$fields = array_merge($this->model->extra_fields(), $this->extra_fields);
         foreach ($fields as $field)
         {
-            $requested_fields .= ', ' . $field->name() . ' AS ' . $field->extra_name();
+            $requested_fields .= ', ' . $field->name() . ' AS ' . $field->property();
             if (!in_array($field->get_table(), $this->tables))
             {
             	$this->tables[] = $field->get_table();

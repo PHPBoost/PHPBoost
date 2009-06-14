@@ -51,8 +51,8 @@ class BlogDAO extends AbstractDAO
         new ModelField('title', 'string', 64),
         new ModelField('description', 'string', 65535),
         new ModelField('user_id', 'integer', 12)),
-        array(new ModelField('member.login', 'string', 255, 'user_id')),
-        array('member.user_id' => 'user_id')
+        array(new ModelField(DB_TABLE_MEMBER . '.login', 'string', 255, 'member_login')),
+        array(DB_TABLE_MEMBER . '.user_id' => 'user_id')
         ));
 	}
 

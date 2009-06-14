@@ -37,6 +37,10 @@ class BlogController extends AbstractBlogController
 	public function blogs()
 	{
 		$this->set_bread_crumb();
+		$c = $blogs = BlogDAO::instance()->create_criteria();
+		$blog = $c->results_list();
+//		echo '<pre>'; print_r($blog); echo '</pre>';
+		exit;
 		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', ICriteria::DESC);
 		$tpl = new Template('blog/list.tpl');
 		$tpl->assign_vars(array(
