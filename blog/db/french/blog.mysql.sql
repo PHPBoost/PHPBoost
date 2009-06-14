@@ -3,6 +3,7 @@ CREATE TABLE `phpboost_Blog` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128) NOT NULL,
   `description` TEXT NOT NULL,
+  `user_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT INDEX `title`(`title`),
   FULLTEXT INDEX `description`(`description`),

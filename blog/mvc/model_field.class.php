@@ -41,14 +41,28 @@ class ModelField
 				break;
 		}
 
+		$dot_pos = strpos($name, '.');
+		if ($dot_pos !== false)
+		{
+			$this->table = PREFIX . substr($name, 0, $dot_pos);
+		}
 		$this->name = $name;
 		$this->type = $type;
 		$this->length = $length;
 	}
 
-	public function name()
+	public function short_name()
 	{
 		return $this->name;
+	}
+
+	public function name()
+	{
+		if (($dot_pos = strpos($this->name, '.')) !== false)
+		{
+            return $this->get_table() . '.' . substr($this->name, $dot_pos + 1);
+		}
+		return $this->get_table() . '.' . $this->name;
 	}
 
 	public function type()
@@ -63,17 +77,33 @@ class ModelField
 
 	public function getter()
 	{
-		return self::GETTER_PREFIX . $this->name;
+		return self::GETTER_PREFIX . $this->extra_name();
 	}
 
 	public function setter()
 	{
-		return self::SETTER_PREFIX . $this->name;
+		return self::SETTER_PREFIX . $this->extra_name();
 	}
 
-	private $name;
-	private $type;
-	private $length;
+	public function extra_name()
+	{
+		return strtr($this->name, '.', '_');
+	}
+
+	public function set_table($table_name)
+	{
+		$this->table = PREFIX . $table_name;
+	}
+
+	public function get_table()
+	{
+		return $this->table;
+	}
+
+	protected $name;
+	protected $type;
+	protected $length;
+	protected $table;
 
 	const GETTER_PREFIX = 'get_';
 	const SETTER_PREFIX = 'set_';
