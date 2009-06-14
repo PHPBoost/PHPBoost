@@ -39,7 +39,7 @@ class Model
 		foreach ($model_fields as $field)
 		{
 			$field->set_table($name);
-			$this->fields[$field->short_name()] = $field;
+			$this->fields[$field->property()] = $field;
 		}
 		if (empty($this->name))
 		{
@@ -51,11 +51,11 @@ class Model
 		}
 		foreach ($extra_fields as $field)
 		{
-			$this->extra_fields[$field->short_name()] = $field;
+			$this->extra_fields[$field->property()] = $field;
 		}
 		foreach ($joins as $left_join => $right_join)
 		{
-			$this->joins[PREFIX . $left_join] = PREFIX . $this->name . '.' . $right_join;
+			$this->joins[$left_join] = PREFIX . $this->name . '.' . $right_join;
 		}
 	}
 
@@ -80,14 +80,13 @@ class Model
         {
             return $this->fields[$field_name];
         }
-		if ($field_name == $this->primary_key->short_name())
+		if ($field_name == $this->primary_key->property())
 		{
 			return $this->primary_key;
 		}
-		$extra_field_name = strtr($field_name, '_', '.');
-		if (array_key_exists($extra_field_name, $this->extra_fields))
+		if (array_key_exists($field_name, $this->extra_fields))
         {
-            return $this->extra_fields[$extra_field_name];
+            return $this->extra_fields[$field_name];
         }
         return null;
 	}
