@@ -30,4 +30,5 @@ function mvcimport($path, $import_type = CLASS_IMPORT)
 {
 	mimport('blog/' . $path, $import_type);
 }
+
 ?>

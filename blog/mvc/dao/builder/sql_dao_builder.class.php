@@ -46,7 +46,6 @@ abstract class SQLDAOBuilder implements IDAOBuilder
 	protected function generate_content($tpl_name = '')
 	{
 		import('io/template');
-		// TODO change path here
 		$tpl = new Template(self::get_tpl_full_path($tpl_name));
 		$tpl->assign_vars(array(
            'CLASSNAME' => $this->model->name(),

@@ -79,7 +79,11 @@ abstract class AbstractDAO extends DAO
         return $this->sql_dao->create_criteria();
     }
 
-
+    public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC)
+    {
+    	return $this->sql_dao->find_all($offset, $limit);
+    }
+    
     protected $sql_dao;
 }
 ?>

@@ -25,8 +25,6 @@
  *
  ###################################################*/
 
-// TODO Move this file into the /kernel/framework/mvc
-
 define('ICONTROLER__INTERFACE', 'IController');
 
 /**

@@ -36,9 +36,10 @@ mimport('blog/model/blog_post');
  */
 class Blog
 {
-	public function __construct($title = '')
+	public function __construct($title = '', $description = '')
 	{
-		$this->title = $title;
+        $this->title = $title;
+        $this->description = $description;
 	}
 
 	public function get_id()
@@ -51,6 +52,11 @@ class Blog
 		return $this->title;
 	}
 
+	public function get_description()
+	{
+		return $this->description;
+	}
+
 	public function set_id($value)
 	{
 		$this->id = $value;
@@ -61,33 +67,83 @@ class Blog
 		$this->title = $value;
 	}
 
-	public function get_post($i)
+	public function set_description($value)
 	{
-		return $this->posts[$i];
+		$this->description = $value;
 	}
 
-	public function get_posts()
+	public static function global_action_url($global_action)
 	{
-		return $this->posts;
+		switch ($global_action)
+		{
+            case self::GLOBAL_ACTION_CREATE:
+                return Dispatcher::get_url('/blog', '/create/');
+            case self::GLOBAL_ACTION_CREATE_VALID:
+            	global $Session;
+                return Dispatcher::get_url('/blog', '/create/valid/?token=' . $Session->get_token());
+			case self::GLOBAL_ACTION_LIST:
+			default:
+				return Dispatcher::get_url('/blog', '/');
+		}
 	}
 
-	public function get_nb_posts()
+	public function action_url($action, $param = null)
 	{
-		return count($this->posts);
+		switch ($action)
+		{
+            case self::ACTION_EDIT:
+                return Dispatcher::get_url('/blog', $this->id . '/edit/');
+            case self::ACTION_EDIT_VALID:
+                global $Session;
+                return Dispatcher::get_url('/blog', $this->id . '/edit/valid/?token=' . $Session->get_token());
+			case self::ACTION_DELETE:
+                global $Session;
+				return Dispatcher::get_url('/blog', $this->id . '/delete/?token=' . $Session->get_token());
+			case self::ACTION_ADD_POST:
+				return Dispatcher::get_url('/blog', $this->id . '/add/');
+			case self::ACTION_DETAILS:
+			default:
+				if ($param !== null && is_numeric($param))
+				{   // represents the page number
+					return Dispatcher::get_url('/blog', '/' . $this->id . '/' . $param . '/');
+				}
+				return Dispatcher::get_url('/blog', '/' . $this->id . '/');
+		}
 	}
+
 
 	public function add($post)
 	{
 		$this->posts[] = $post;
 	}
-	
-	public function remove_post($i)
+
+	public function get_added_post($i)
+	{
+		return $this->posts[$i];
+	}
+
+	public function get_added_posts()
+	{
+		return $this->posts;
+	}
+
+	public function remove_added_post($i)
 	{
 		unset($this->posts[$i]);
 	}
 
 	private $id;
 	private $title;
+	private $description;
 	private $posts = array();
+
+	const GLOBAL_ACTION_LIST = 0x00;
+    const GLOBAL_ACTION_CREATE = 0x01;
+    const GLOBAL_ACTION_CREATE_VALID = 0x02;
+	const ACTION_DETAILS = 0x01;
+    const ACTION_EDIT = 0x02;
+    const ACTION_EDIT_VALID = 0x03;
+	const ACTION_DELETE = 0x04;
+	const ACTION_ADD_POST = 0x05;
 }
 ?>

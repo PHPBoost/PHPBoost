@@ -26,29 +26,31 @@
  ###################################################*/
 
 define('TITLE', 'Blog');
-
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
-require_once PATH_TO_ROOT . '/kernel/header.php';
-
 // TODO remove this line (content will be in functions.inc.php already imported in begin.php
-require_once PATH_TO_ROOT . '/blog/mvc/func.inc.php';
+require_once PATH_TO_ROOT . '/blog/func.inc.php';
 
+mvcimport('mvc/dispatcher');
 mimport('blog/blog_controller');
-// TODO Replace with import('mvc/dispatcher');
-mimport('blog/mvc/dispatcher');
 
 $my_controller = new BlogController();
 $my_dispatcher = null;
 try
 {
 	$my_dispatcher = new Dispatcher(array(
-	new UrlDispatcherItem($my_controller, 'view', '`^/?$`'),
-	new UrlDispatcherItem($my_controller, 'view', '`^/view/?$`'),
-	new UrlDispatcherItem($my_controller, 'view_by_id', '`^/view/([0-9]+)/?$`'),
-	new UrlDispatcherItem($my_controller, 'none', '`^/none/?$`'),
-	new UrlDispatcherItem($my_controller, 'special', '`^/special/([0-9]+)/?.*$`'),
+	new UrlDispatcherItem($my_controller, 'list_blogs', '`^/?$`'),
+	new UrlDispatcherItem($my_controller, 'view_blog', '`^/([0-9]+)/?$`'),
+	new UrlDispatcherItem($my_controller, 'create_blog', '`^/create/?$`'),
+	new UrlDispatcherItem($my_controller, 'create_blog_valid', '`^/create/valid/?(?:\?token=.+)?$`'),
+	new UrlDispatcherItem($my_controller, 'delete_blog', '`^/([0-9]+)/delete/?$`'),
+	new UrlDispatcherItem($my_controller, 'edit_blog', '`^/([0-9]+)/edit/?$`'),
+	new UrlDispatcherItem($my_controller, 'edit_blog_valid', '`^/([0-9]+)/edit/valid/?(?:\?token=.+)?$`'),
+	new UrlDispatcherItem($my_controller, 'view_posts', '`^/([0-9]+)/posts/?$`'),
+	new UrlDispatcherItem($my_controller, 'view_post', '`^/([0-9]+)/posts/([0-9]+)/?$`'),
+	new UrlDispatcherItem($my_controller, 'add_post', '`^/([0-9]+)/add/?$`'),
+	new UrlDispatcherItem($my_controller, 'delete_post', '`^/([0-9]+)/delete/([0-9]+)/?(?:\?token=.+)?$`'),
 	));
 
 	try
@@ -57,30 +59,37 @@ try
 	}
 	catch (NoUrlMatchException $ex)
 	{
+		// This is the only dispatcher exception that could be launched
+		// in production.
 		echo $ex->getMessage();
+		//redirect(PATH_TO_ROOT . '/member/404.php');
 	}
 	catch (NoSuchControllerMethodException $ex)
 	{
+		require_once PATH_TO_ROOT . '/kernel/header.php';
+		// This exception should only be launched in development
 		echo $ex->getMessage();
+		require_once PATH_TO_ROOT . '/kernel/footer.php';
 	}
 }
 catch (NoSuchControllerException $ex)
 {
+	// This exception should only be launched in development
+	require_once PATH_TO_ROOT . '/kernel/header.php';
 	echo $ex->getMessage();
+	require_once PATH_TO_ROOT . '/kernel/footer.php';
 }
 
-echo '<hr />';
-$url = Dispatcher::get_url('/blog', ''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-$url = Dispatcher::get_url('/blog', '/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-$url = Dispatcher::get_url('/blog', '/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog', '/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog', '/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog/', '/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog/', '/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog/', '/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog/', '/special/42/?param1=42&amp;param2=37'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-$url = Dispatcher::get_url('/blog/', '/special/256/?param1=007&amp;param2=128'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-
-require_once PATH_TO_ROOT . '/kernel/footer.php';
+//echo '<hr />';
+//$url = Dispatcher::get_url('/blog', ''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
+//$url = Dispatcher::get_url('/blog', '/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
+//$url = Dispatcher::get_url('/blog', '/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog', '/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog', '/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog/', '/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog/', '/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog/', '/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog/', '/special/42/?param1=42&amp;param2=37'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
+//$url = Dispatcher::get_url('/blog/', '/special/256/?param1=007&amp;param2=128'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 
 ?>
