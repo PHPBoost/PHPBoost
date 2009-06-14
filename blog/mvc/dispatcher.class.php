@@ -25,9 +25,6 @@
  *
  ###################################################*/
 
-// TODO Move this file into the /kernel/framework/mvc
-
-// TODO Replace with import('mvc/controller');
 mvcimport('mvc/controller');
 
 /**
@@ -145,13 +142,18 @@ class UrlDispatcherItem
 				throw NoUrlMatchException($url);
 			}
 		}
-		// Call the controller method_name with all the given parameters
+		
+        $this->controller->init();
+        
 		if (!method_exists($this->controller, $this->method_name))
 		{
+			$this->controller->destroy();
 			throw new NoSuchControllerMethodException($this->controller, $this->method_name);
 		}
-		$this->controller->init();
+		
+        // Call the controller method_name with all the given parameters
 		call_user_func_array(array($this->controller, $this->method_name), $this->params);
+		
 		$this->controller->destroy();
 	}
 

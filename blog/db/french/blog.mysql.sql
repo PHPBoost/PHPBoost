@@ -2,8 +2,11 @@ DROP TABLE IF EXISTS `phpboost_Blog`;
 CREATE TABLE `phpboost_Blog` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128) NOT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`id`),
-  FULLTEXT INDEX `title`(`title`)
+  FULLTEXT INDEX `title`(`title`),
+  FULLTEXT INDEX `description`(`description`),
+  FULLTEXT INDEX `title_description`(`description`, `title`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `phpboost_BlogPost`;

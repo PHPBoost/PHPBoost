@@ -79,6 +79,18 @@ class Model
         return PREFIX . $this->name;
     }
 
+    public function build($row)
+    {
+        $classname = $this->name();
+        $object = new $classname();
+        foreach ($row as $field_name => $value)
+        {
+            $setter = $this->field($field_name)->setter();
+            $object->$setter($value);
+        }
+        return $object;
+    }
+    
 	private $name;
 	private $fields;
 	private $primary_key;

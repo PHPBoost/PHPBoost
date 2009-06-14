@@ -64,7 +64,7 @@ class MySQLCriteria extends SQLCriteria
 	//        $params[] = __LINE__;
 	//        $params[] = __FILE__;
 	//
-	//        return $this->build_object(call_user_func_array(array($this->connection, 'query_array'), $params));
+	//        return $this->model->build(call_user_func_array(array($this->connection, 'query_array'), $params));
 	//    }
 
 	public function results_list()
@@ -93,7 +93,7 @@ class MySQLCriteria extends SQLCriteria
 		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
 		while ($row = $this->connection->fetch_assoc($sql_results))
 		{
-			$results[] = $this->build_object($row);
+			$results[] = $this->model->build($row);
 		}
 		return $results;
 	}

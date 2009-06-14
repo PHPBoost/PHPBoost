@@ -51,9 +51,9 @@ class NoPrimaryKeyModelException extends ModelException
 	}
 }
 
-class DAOValidationException
+class ValidationException extends Exception
 {
-	public function __construct($message)
+	public function __construct($message = 'Validation Exception')
 	{
 		parent::__construct($message);
 	}

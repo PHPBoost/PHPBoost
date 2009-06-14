@@ -1,39 +1,34 @@
 <div class="module_position">
     <div class="module_top_l"></div>
     <div class="module_top_r">
-        <span style="float: right;">
-            <a href="{U_EDIT}" title="{EL_EDIT}">
-                <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}">
-            </a>
-        </span>
+        <span style="float: right;"><a href="{U_CREATE}" title="{EL_CREATE_NEW_BLOG}">{L_CREATE_NEW_BLOG}</a></span>
     </div>
-    <div class="module_top">{TITLE}</div>
+    <div class="module_top">{L_BLOGS_LIST}</div>
     <div class="module_contents">
-        <div class="module_position">
-            <div class="module_contents">{DESCRIPTION}<div class="spacer"></div></div>
-        </div>
-        # START posts #
+        # START blogs #
         <div class="module_position">
             <div class="module_top_l"></div>
             <div class="module_top_r"></div>
             <div class="module_top">
-                <span style="float: left; padding-left: 5px;"><a href="{blogs.U_DETAILS}" title="{blogs.E_TITLE}">{posts.TITLE}</a></span>
+                <span style="float: left; padding-left: 5px;"><a href="{blogs.U_DETAILS}" title="{blogs.E_TITLE}">{blogs.TITLE}</a></span>
                 <span style="float: right;">
-                    <!--  <a href="{blogs.U_EDIT}" title="{EL_EDIT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}"></a>
+                    <a href="{blogs.U_EDIT}" title="{EL_EDIT}">
+                        <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}">
+                    </a>
                     <a href="{blogs.U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE});">
                         <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/delete.png" alt="{EL_DELETE}">
-                    </a>-->
+                    </a>
                 </span>
             </div>
             <div class="module_contents">
-                {posts.CONTENT}
+                {blogs.DESCRIPTION}
                 <div class="spacer"></div>
             </div>
             <div class="module_bottom_l"></div>
-            <div class="module_bottom_r"><span style="float:right">{posts.DATE}</span></div>
+            <div class="module_bottom_r"></div>
             <div class="module_bottom"></div>
         </div>
-        # END posts #
+        # END blogs #
     </div>
     <div class="module_bottom_l"></div>
     <div class="module_bottom_r"></div>

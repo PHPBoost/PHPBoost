@@ -32,6 +32,7 @@ interface IDAO
 
     public function find_by_id($id);
     public function find_by_criteria($criteria);
+    public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC);
 
     public function create_criteria();
 }

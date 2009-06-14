@@ -81,18 +81,6 @@ abstract class SQLCriteria implements ICriteria
         return '*';
     }
 
-    protected function build_object($row)
-    {
-        $classname = $this->model->name();
-        $object = new $classname();
-        foreach ($row as $field_name => $value)
-        {
-            $setter = $this->model->field($field_name)->setter();
-            $object->$setter($value);
-        }
-        return $object;
-    }
-
     protected $model;
     protected $restrictions = array();
     protected $offset = 0;

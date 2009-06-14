@@ -29,5 +29,17 @@
 ####################################################
 #                       French                     #
 ####################################################
- 
+
+global $BLOG_LANGS;
+$BLOG_LANGS = array();
+$BLOG_LANGS['blogs_list'] = 'Liste des blogs';
+$BLOG_LANGS['create_new_blog'] = 'Créer un blog';
+$BLOG_LANGS['edit'] = 'Editer';
+$BLOG_LANGS['delete'] = 'Supprimer';
+$BLOG_LANGS['title'] = 'Titre';
+$BLOG_LANGS['description'] = 'Description';
+$BLOG_LANGS['create'] = 'Créer';
+$BLOG_LANGS['confirm_delete_blog'] = 'Voulez vous vraiment supprimer cet élément?';
+$BLOG_LANGS['missing_fields'] = 'Certains champs obligatoires (*) ne sont pas renseignés. Veuillez remplir tous ces champs obligatoires';
+$BLOG_LANGS['edit_blog'] = '[Edition] %s';
 ?>

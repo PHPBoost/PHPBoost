@@ -49,13 +49,14 @@ class BlogDAO extends AbstractDAO
 	{
 		parent::__construct(
 		new Model('Blog', new ModelField('id', 'integer', 12), array(
-		new ModelField('title', 'string', 64))));
+        new ModelField('title', 'string', 64),
+        new ModelField('description', 'string', 65535))));
 	}
 
 	public function save($blog)
 	{
 		parent::save($blog);
-		$posts = $blog->get_posts();
+		$posts = $blog->get_added_posts();
 		if (!empty($posts))
 		{
 			foreach ($posts as $post)
@@ -63,17 +64,37 @@ class BlogDAO extends AbstractDAO
 				$post->set_blog_id($blog->get_id());
 				BlogPostDAO::instance()->save($post);
 				// TODO remove
-                sleep(1);
+                // sleep(1);
 			}
+		}
+	}
+	
+	public function before_save($blog)
+	{
+		$title = $blog->get_title();
+		$description = $blog->get_description();
+		if (empty($title) || empty($description))
+		{
+            throw new BlogValidationExceptionMissingFields();		
 		}
 	}
 	
 	public function delete($blog)
 	{
-		BlogPostDAO::instance()->delete_all_blog_post($blog->get_id());
+		BlogPostDAO::instance()->delete_all_blog_post(is_numeric($blog) ? $blog : $blog->get_id());
 		parent::delete($blog);
 	}
 	
 	private static $instance;
 }
+
+class BlogValidationException extends ValidationException
+{
+	public function __construct($message = 'Blog Validation Exception')
+	{
+		parent::__construct($message);
+	}
+}
+
+class BlogValidationExceptionMissingFields extends BlogValidationException { }
 ?>

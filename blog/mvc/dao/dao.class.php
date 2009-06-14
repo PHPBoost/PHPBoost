@@ -34,6 +34,12 @@ abstract class DAO implements IDAO
 	{
 		$this->model = $model;
 	}
+	
+	public function get_model()
+	{
+		return $this->model;
+	}
+	
 	protected $model;
 }
 ?>

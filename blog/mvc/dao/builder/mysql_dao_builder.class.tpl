@@ -1,4 +1,3 @@
-// TODO rename extension (remove .php)
 mvcimport('mvc/dao/mysql_dao');
 class {CLASSNAME}MySQLDAO extends MySQLDAO
 {
@@ -9,9 +8,18 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
 
 	public function delete($object)
     {
-        if ($object->{PK_GETTER}() !== null)
+        $id = null;
+        if (is_numeric($object))
         {
-            $this->connection->query_inject('DELETE FROM {TABLE_NAME} WHERE {PK_NAME}=' . $this->escape($object->{PK_GETTER}()), __LINE__, __FILE__);
+            $id = $object;
+        }
+        else
+        {
+            $id = $object->{PK_GETTER}();
+        }
+        if ($id !== null)
+        {
+            $this->connection->query_inject('DELETE FROM {TABLE_NAME} WHERE {PK_NAME}=' . $this->escape($id), __LINE__, __FILE__);
         }
     }
 
@@ -60,17 +68,38 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
             '{TABLE_NAME}', '{PK_NAME}',
             # START fields #'{fields.NAME}',# END fields #
             'WHERE {PK_NAME}=' . $id, __LINE__, __FILE__);
-
         $result = call_user_func_array(array($this->connection, 'query_array'), $params);
-        $classname = $this->model->name();
-        $object = new {CLASSNAME}();
-        $object->{PK_SETTER}($result['{PK_NAME}']);
-        foreach ($this->fields_names_list as $field)
+        if ($result !== false)
         {
-            $setter = ModelField::SETTER_PREFIX . $field;
-            $object->$setter($result[$field]);
+            return $this->model->build($result);
         }
-        return $object;
+        return null;
+    }
+
+    public function find_all($offset = 0, $max_results = 100, $order_by = null, $way = ICriteria::ASC)
+    {
+        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME}# END fields # FROM {TABLE_NAME}';
+        if (!empty($order_by))
+        {
+            $query .= ' ORDER BY ' . $order_by;
+            if ($way == ICriteria::ASC)
+            {
+                $query .= ' ASC ';
+            }
+            else
+            {
+                $query .= ' DESC ';
+            }
+        }
+        $query .= ' LIMIT ' . $offset . ', ' . $max_results;
+
+        $results = array();
+        $sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
+        while ($row = $this->connection->fetch_assoc($sql_results))
+        {
+            $results[] = $this->model->build($row);
+        }
+        return $results;
     }
     
     private $fields_names_list = array(# START fields #'{fields.NAME}',# END fields #);

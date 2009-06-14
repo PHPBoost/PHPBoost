@@ -29,6 +29,7 @@ if (defined('PHPBOOST') !== true)
 {
     exit;
 }
+global $Sql, $Template, $MENUS, $LANG, $THEME, $CONFIG, $Bench, $Session, $User, $Cache, $THEME_CONFIG, $CSS;
 
 if (!defined('TITLE'))
 {
