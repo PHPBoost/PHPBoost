@@ -75,7 +75,6 @@ class MySQLCriteria extends SQLCriteria
 			}
 		}
 		$query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
-        echo ($query) . '<hr />';
 		$results = array();
 		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
 		while ($row = $this->connection->fetch_assoc($sql_results))
@@ -113,7 +112,7 @@ class MySQLCriteria extends SQLCriteria
 		$joins = $this->model->joins();
 		foreach ($joins as $left_key => $right_key)
 		{
-            $this->restrictions[] = $left_key . '=' . $right_key;
+			$this->restrictions[] = $left_key . '=' . $right_key;
 		}
 		if (!empty($this->restrictions))
 		{
@@ -131,17 +130,17 @@ class MySQLCriteria extends SQLCriteria
 			$requested_fields .= ', ' . $field->name();
 		}
 		$fields = array_merge($this->model->extra_fields(), $this->extra_fields);
-        foreach ($fields as $field)
-        {
-            $requested_fields .= ', ' . $field->name() . ' AS ' . $field->property();
-            if (!in_array($field->get_table(), $this->tables))
-            {
-            	$this->tables[] = $field->get_table();
-            }
-        }
-        return $requested_fields;
+		foreach ($fields as $field)
+		{
+			$requested_fields .= ', ' . $field->name() . ' AS ' . $field->property();
+			if (!in_array($field->get_table(), $this->tables))
+			{
+				$this->tables[] = $field->get_table();
+			}
+		}
+		return $requested_fields;
 	}
-	
+
 	private $tables = array();
 }
 ?>

@@ -49,9 +49,14 @@ class Model
 		{
 			throw new NoPrimaryKeyModelException($this->name);
 		}
+		$this->used_tables[] = $this->table_name();
 		foreach ($extra_fields as $field)
 		{
 			$this->extra_fields[$field->property()] = $field;
+			if (!in_array($field->get_table(), $this->used_tables))
+			{
+				$this->used_tables[] = $field->get_table();
+			}
 		}
 		foreach ($joins as $left_join => $right_join)
 		{
@@ -76,19 +81,21 @@ class Model
 
 	public function field($field_name)
 	{
-        if (array_key_exists($field_name, $this->fields))
-        {
-            return $this->fields[$field_name];
-        }
+		if (array_key_exists($field_name, $this->fields))
+		{
+			return $this->fields[$field_name];
+		}
 		if ($field_name == $this->primary_key->property())
 		{
 			return $this->primary_key;
 		}
 		if (array_key_exists($field_name, $this->extra_fields))
-        {
-            return $this->extra_fields[$field_name];
-        }
-        return null;
+		{
+			return $this->extra_fields[$field_name];
+		}
+		echo $field_name;
+		print_r($this->extra_fields);
+		return null;
 	}
 
 	public function primary_key()
@@ -124,10 +131,16 @@ class Model
 		return $object;
 	}
 
+	public function used_tables()
+	{
+		return $this->used_tables;
+	}
+
 	private $name;
 	private $primary_key;
 	private $fields;
 	private $extra_fields = array();
 	private $joins = array();
+	private $used_tables = array();
 }
 ?>

@@ -32,10 +32,10 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
             {   // UPDATE
                 $query = 'UPDATE {TABLE_NAME} SET ';
                 $fields_and_values = array();
-                foreach ($this->fields_names_list as $field)
+                foreach ($this->model->fields() as $field)
                 {
-                    $getter = ModelField::GETTER_PREFIX . $field;
-                    $fields_and_values[]= $field . '=' . $this->escape($object->$getter());
+                    $getter = $field->getter();
+                    $fields_and_values[]= $field->name() . '=' . $this->escape($object->$getter());
                 }
                 $query .=  implode(', ', $fields_and_values) . ' WHERE {PK_NAME}=' . $this->escape($id);
                 $this->connection->query_inject($query, __LINE__, __FILE__);
@@ -44,10 +44,10 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
             {   // CREATE
                 $fields_names = array('{PK_NAME}');
                 $fields_values = array('NULL');
-                foreach ($this->fields_names_list as $field)
+                foreach ($this->model->fields() as $field)
                 {
-                    $getter = ModelField::GETTER_PREFIX . $field;
-                    $fields_names[] = $field;
+                    $getter = $field->getter();
+                    $fields_names[] = $field->name();
                     $fields_values[] = $this->escape($object->$getter());
                 }
                 $query = 'INSERT INTO {TABLE_NAME} (' . implode(',', $fields_names) . ') VALUES (' . implode(',', $fields_values) . ')';
@@ -64,21 +64,28 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
 
     public function find_by_id($id)
     {
-        $params = array(
-            '{TABLE_NAME}', '{PK_NAME}',
-            # START fields #'{fields.NAME}',# END fields #
-            'WHERE {PK_NAME}=' . $id, __LINE__, __FILE__);
-        $result = call_user_func_array(array($this->connection, 'query_array'), $params);
-        if ($result !== false)
+        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
+        # START extra_fields #, {extra_fields.NAME} AS {extra_fields.PROPERTY}# END extra_fields # FROM {TABLES_NAMES}
+        WHERE {PK_NAME}=' . $id # IF JOIN_CLAUSE #. ' AND {JOIN_CLAUSE}'# ENDIF #;
+        $sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
+        while ($row = $this->connection->fetch_assoc($sql_results))
         {
-            return $this->model->build($result);
+            if ($row !== false)
+            {
+                $this->connection->query_close($sql_results);
+                return $this->model->build($row);
+            }
         }
+        $this->connection->query_close($sql_results);
         return null;
     }
 
     public function find_all($offset = 0, $max_results = 100, $order_by = null, $way = ICriteria::ASC)
     {
-        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME}# END fields # FROM {TABLE_NAME}';
+        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
+        # START extra_fields #, {extra_fields.NAME} AS {extra_fields.PROPERTY}# END extra_fields # FROM {TABLES_NAMES}'
+        # IF JOIN_CLAUSE #. ' WHERE {JOIN_CLAUSE}'# ENDIF #;
+        
         if (!empty($order_by))
         {
             $query .= ' ORDER BY ' . $order_by;
@@ -99,8 +106,7 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
         {
             $results[] = $this->model->build($row);
         }
+        $this->connection->query_close($sql_results);
         return $results;
     }
-    
-    private $fields_names_list = array(# START fields #'{fields.NAME}',# END fields #);
 }

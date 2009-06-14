@@ -5,7 +5,7 @@
             <a href="{U_EDIT}" title="{EL_EDIT}">
                 <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}">
             </a>
-            <a href="{U_DELETE}" title="{EL_DELETE}">
+            <a href="{U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE});">
                 <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/delete.png" alt="{EL_DELETE}">
             </a>
         </span>
@@ -14,6 +14,7 @@
     <div class="module_contents">
         <div class="module_position">
             <div class="module_contents">{DESCRIPTION}<div class="spacer"></div></div>
+            <span style="float:right">{USER}</span>
         </div>
         # START posts #
         <div class="module_position">

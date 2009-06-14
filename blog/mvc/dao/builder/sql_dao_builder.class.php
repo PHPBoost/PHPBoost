@@ -48,21 +48,34 @@ abstract class SQLDAOBuilder implements IDAOBuilder
 		import('io/template');
 		$tpl = new Template(self::get_tpl_full_path($tpl_name));
 		$tpl->assign_vars(array(
-           'CLASSNAME' => $this->model->name(),
-           'TABLE_NAME' => PREFIX . $this->model->name(),
-           'PK_NAME' => $this->model->primary_key()->name(),
-           'PK_GETTER' => $this->model->primary_key()->getter(),
-           'PK_SETTER' => $this->model->primary_key()->setter()
+            'CLASSNAME' => $this->model->name(),
+            'TABLE_NAME' => PREFIX . $this->model->name(),
+            'PK_NAME' => $this->model->primary_key()->name(),
+            'PK_GETTER' => $this->model->primary_key()->getter(),
+            'PK_SETTER' => $this->model->primary_key()->setter()
 		));
 		$fields = $this->model->fields();
 		foreach ($fields as $field)
 		{
 			$tpl->assign_block_vars('fields', array(
-           'NAME' => $field->name(),
-           'GETTER' => $field->getter(),
-           'SETTER' => $field->setter(),
-           'TYPE' => $field->type(),
-           'LENGTH' => $field->length()
+	            'NAME' => $field->name(),
+	            'GETTER' => $field->getter(),
+	            'SETTER' => $field->setter(),
+	            'TYPE' => $field->type(),
+	            'LENGTH' => $field->length(),
+                'PROPERTY' => $field->property()
+			));
+		}
+		$fields = $this->model->extra_fields();
+		foreach ($fields as $field)
+		{
+			$tpl->assign_block_vars('extra_fields', array(
+	            'NAME' => $field->name(),
+	            'GETTER' => $field->getter(),
+	            'SETTER' => $field->setter(),
+	            'TYPE' => $field->type(),
+	            'LENGTH' => $field->length(),
+	            'PROPERTY' => $field->property()
 			));
 		}
 		return $tpl;
