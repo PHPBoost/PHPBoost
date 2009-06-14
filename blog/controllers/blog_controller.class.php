@@ -96,7 +96,7 @@ class BlogController extends AbstractBlogController
             'L_TITLE' => $this->lang['title'],
             'L_DESCRIPTION' => $this->lang['description'],
             'TITLE_MAX_LENGTH' => BlogDAO::instance()->get_model()->field('title')->length(),
-		    'KERNEL_EDITOR' => display_editor()
+		    'KERNEL_EDITOR' => display_editor('description')
 		));
 		if (!empty($error_message))
 		{
