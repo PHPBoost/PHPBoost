@@ -145,7 +145,7 @@ class StatsSaver
 			'amigavoyager'=> 'amigavoyager',
 			'amiga-aweb'=> 'amiga-aweb',
 			'ibrowse' => 'ibrowse',
-			'samsung|sony|nokia' => 'phone'
+			'samsung|sony|nokia|blackberry|android|ipod|iphone|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
