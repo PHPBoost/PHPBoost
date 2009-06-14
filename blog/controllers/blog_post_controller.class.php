@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           blog_post_controller.class.php
  *                            -------------------
- *   begin                : June 09 2009
+ *   begin                : June 08 2009
  *   copyright            : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
@@ -25,42 +25,29 @@
  *
  ###################################################*/
 
-define('ICONTROLER__INTERFACE', 'IController');
+import('io/template');
+import('modules/modules_discovery_service');
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
- */
-interface IController
-{
-	/**
-	 * @desc This method will always be called just before the controler action
-	 */
-	public function init();
-	/**
-	 * @desc This method will always be called just after the controler action
-	 */
-	public function destroy();
-}
+mimport('blog/controllers/abstract_blog_controller');
+mimport('blog/models/blog_post');
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This class defines the minimalist controler pattern
- * with no actions. This, in order to avoid to defines empty
- * init() and destroy() method for controlers that doesn't need
- * this functionality
- */
-abstract class AbstractController implements IController
+
+class BlogPostController extends AbstractBlogController
 {
-	public function init() {}
-	public function destroy() {}
+	public function posts() {}
+	public function view() {}
+	public function create($blog_post = null, $error_message = null, $blog_post_id = -1) {}
+	public function create_valid($blog_post_id = -1) {}
+	public function edit($blog_post_id) {}
+	public function edit_valid($blog_post_id) {}
 	
-	protected function check_token()
+	public function delete($blog_post_id)
 	{
-		global $Session;
-		$Session->csrf_get_protect();
+		$blog_post = BlogPostDAO::instance()->find_by_id($blog_post_id);
+		$redirect_url = $blog_post->action_url(BlogPost::ACTION_LIST)->absolute();
+		
+		BlogPostDAO::instance()->delete($blog_post_id);
+        redirect($redirect_url);
 	}
 }
 ?>

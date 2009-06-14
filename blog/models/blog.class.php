@@ -27,8 +27,8 @@
 
 define('BLOG__CLASS','blog');
 
-mimport('blog/model/dao/blog_dao');
-mimport('blog/model/blog_post');
+mimport('blog/models/dao/blog_dao');
+mimport('blog/models/blog_post');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>

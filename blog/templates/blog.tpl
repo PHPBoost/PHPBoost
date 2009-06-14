@@ -5,6 +5,9 @@
             <a href="{U_EDIT}" title="{EL_EDIT}">
                 <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}">
             </a>
+            <a href="{U_DELETE}" title="{EL_DELETE}">
+                <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/delete.png" alt="{EL_DELETE}">
+            </a>
         </span>
     </div>
     <div class="module_top">{TITLE}</div>

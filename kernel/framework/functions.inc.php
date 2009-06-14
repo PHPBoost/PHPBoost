@@ -561,8 +561,9 @@ function redirect($url)
     {
         $Sql->close();
     }
-
-    header('Location:' . $url);
+    import('util/url');
+    $url = new Url($url);
+    header('Location:' . $url->absolute());
     exit;
 }
 
