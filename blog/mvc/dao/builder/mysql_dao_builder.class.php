@@ -46,6 +46,16 @@ class MySQLDAOBuilder extends SQLDAOBuilder
     protected function generate_content()
     {
     	$tpl = parent::generate_content($this->get_template_filename());
+    	$clauses = $this->model->joins();
+    	$join_clause = array();
+    	foreach ($clauses as $left_key => $right_field)
+    	{
+    	   $join_clause[] = $left_key . '=' . $right_field;
+    	}
+    	$tpl->assign_vars(array(
+            'TABLES_NAMES' => implode(',', $this->model->used_tables()),
+            'JOIN_CLAUSE' => implode(' AND ', $join_clause)
+    	));
     	return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     private static $template_filename = 'mysql_dao_builder';

@@ -40,6 +40,8 @@ class Blog
 	{
 		$this->title = $title;
 		$this->description = $description;
+		global $User;
+		$this->user_id = $User->get_id();
 	}
 
 	public function get_id()
@@ -144,7 +146,7 @@ class Blog
 
 	public function get_member_login()
 	{
-		return $user_name;
+		return $this->user_name;
 	}
 
 	public function set_member_login($value)

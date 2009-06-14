@@ -25,9 +25,10 @@
                 <div class="spacer"></div>
             </div>
             <div class="module_bottom_l"></div>
-            <div class="module_bottom_r"></div>
+            <div class="module_bottom_r"><span style="float:right">{blogs.USER}</span></div>
             <div class="module_bottom"></div>
         </div>
+        <br />
         # END blogs #
     </div>
     <div class="module_bottom_l"></div>
