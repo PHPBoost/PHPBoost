@@ -33,24 +33,29 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 require_once PATH_TO_ROOT . '/blog/func.inc.php';
 
 mvcimport('mvc/dispatcher');
-mimport('blog/blog_controller');
+mimport('blog/controllers/blog_controller');
+mimport('blog/controllers/blog_post_controller');
 
-$my_controller = new BlogController();
+$blog_controller = new BlogController();
+$blog_post_controller = new BlogPostController();
 $my_dispatcher = null;
 try
 {
 	$my_dispatcher = new Dispatcher(array(
-	new UrlDispatcherItem($my_controller, 'list_blogs', '`^/?$`'),
-	new UrlDispatcherItem($my_controller, 'view_blog', '`^/([0-9]+)/?$`'),
-	new UrlDispatcherItem($my_controller, 'create_blog', '`^/create/?$`'),
-	new UrlDispatcherItem($my_controller, 'create_blog_valid', '`^/create/valid/?(?:\?token=.+)?$`'),
-	new UrlDispatcherItem($my_controller, 'delete_blog', '`^/([0-9]+)/delete/?$`'),
-	new UrlDispatcherItem($my_controller, 'edit_blog', '`^/([0-9]+)/edit/?$`'),
-	new UrlDispatcherItem($my_controller, 'edit_blog_valid', '`^/([0-9]+)/edit/valid/?(?:\?token=.+)?$`'),
-	new UrlDispatcherItem($my_controller, 'view_posts', '`^/([0-9]+)/posts/?$`'),
-	new UrlDispatcherItem($my_controller, 'view_post', '`^/([0-9]+)/posts/([0-9]+)/?$`'),
-	new UrlDispatcherItem($my_controller, 'add_post', '`^/([0-9]+)/add/?$`'),
-	new UrlDispatcherItem($my_controller, 'delete_post', '`^/([0-9]+)/delete/([0-9]+)/?(?:\?token=.+)?$`'),
+	new UrlDispatcherItem($blog_controller, 'blogs', '`^/?$`'),
+	new UrlDispatcherItem($blog_controller, 'view', '`^/([0-9]+)/?$`'),
+	new UrlDispatcherItem($blog_controller, 'create', '`^/create/?$`'),
+	new UrlDispatcherItem($blog_controller, 'create_valid', '`^/create/valid/?$`'),
+	new UrlDispatcherItem($blog_controller, 'edit', '`^/([0-9]+)/edit/?$`'),
+	new UrlDispatcherItem($blog_controller, 'edit_valid', '`^/([0-9]+)/edit/valid/?$`'),
+	new UrlDispatcherItem($blog_controller, 'delete', '`^/([0-9]+)/delete/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'posts', '`^/([0-9]+)/posts/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'view', '`^/([0-9]+)/posts/([0-9]+)/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'create', '`^/([0-9]+)/post/add/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'create_valid', '`^/([0-9]+)/post/add/valid/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'edit', '`^/[0-9]+/post/([0-9]+)/edit/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'edit_valid', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`'),
+	new UrlDispatcherItem($blog_post_controller, 'delete', '`^/[0-9]+/post/delete/([0-9]+)/?$`')
 	));
 
 	try
@@ -61,8 +66,14 @@ try
 	{
 		// This is the only dispatcher exception that could be launched
 		// in production.
-		echo $ex->getMessage();
-		//redirect(PATH_TO_ROOT . '/member/404.php');
+		if (DEBUG)
+		{
+			echo $ex->getMessage();
+		}
+		else
+		{
+			redirect(PATH_TO_ROOT . '/member/404.php');
+		}
 	}
 	catch (NoSuchControllerMethodException $ex)
 	{

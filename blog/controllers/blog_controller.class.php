@@ -26,15 +26,15 @@
  ###################################################*/
 
 import('io/template');
-mvcimport('mvc/controller');
 import('modules/modules_discovery_service');
 
-mimport('blog/model/blog');
+mimport('blog/controllers/abstract_blog_controller');
+mimport('blog/models/blog');
 
 
-class BlogController extends AbstractController
+class BlogController extends AbstractBlogController
 {
-	public function list_blogs()
+	public function blogs()
 	{
 		$this->set_bread_crumb();
 		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', ICriteria::DESC);
@@ -67,7 +67,7 @@ class BlogController extends AbstractController
 		$tpl->parse();
 	}
 
-	public function create_blog($blog = null, $error_message = null, $blog_id = -1)
+	public function create($blog = null, $error_message = null, $blog_id = -1)
 	{
 		$tpl = new Template('blog/save.tpl');
 		if ($blog_id >= 0)
@@ -113,8 +113,9 @@ class BlogController extends AbstractController
 		$tpl->parse();
 	}
 
-	public function create_blog_valid($blog_id = -1)
+	public function create_valid($blog_id = -1)
 	{
+		$this->check_token();
 		$blog = new Blog(retrieve(POST, 'title', ''), strparse(retrieve(POST, 'description', '', TSTRING_AS_RECEIVED), array(), false));
 		if ($blog_id >= 0)
 		{
@@ -127,7 +128,7 @@ class BlogController extends AbstractController
 		}
 		catch (BlogValidationExceptionMissingFields $ex)
 		{
-			$this->create_blog($blog, $this->lang['missing_fields']);
+			$this->create($blog, $this->lang['missing_fields']);
 		}
 		catch (ValidationException $ex)
 		{
@@ -138,7 +139,7 @@ class BlogController extends AbstractController
 		}
 	}
 
-	public function view_blog($blog_id, $page = 1)
+	public function view($blog_id, $page = 1)
 	{
 		$tpl = new Template('blog/blog.tpl');
 		$blog = BlogDAO::instance()->find_by_id($blog_id);
@@ -155,6 +156,8 @@ class BlogController extends AbstractController
 		$tpl->assign_vars(array(
             'U_EDIT' => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
             'EL_EDIT' => htmlspecialchars($this->lang['edit']),
+            'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
+            'EL_DELETE' => htmlspecialchars($this->lang['delete']),
             'TITLE' => $blog->get_title(),
             'DESCRIPTION' => second_parse($blog->get_description())
 		));
@@ -170,150 +173,22 @@ class BlogController extends AbstractController
 
 		$tpl->parse();
 	}
-	public function edit_blog($blog_id)
+	public function edit($blog_id)
 	{
 		$blog = BlogDAO::instance()->find_by_id($blog_id);
-		$this->create_blog($blog, null, $blog_id);
+		$this->create($blog, null, $blog_id);
 	}
-	public function edit_blog_valid($blog_id)
+	public function edit_valid($blog_id)
 	{
-		$this->create_blog_valid($blog_id);
+		$this->create_valid($blog_id);
 	}
-	public function delete_blog($blog_id)
+	public function delete($blog_id)
 	{
-		try
-		{
-			BlogDAO::instance()->delete($blog_id);
-			redirect(Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
-		}
-		catch (ValidationException $ex)
-		{
-			// TODO process exception here thrown by
-			// before_save method. You could implement this method
-			// the way you want in order to check object completeness
-			// or authorizations
-		}
+		$this->check_token();
+		BlogDAO::instance()->delete($blog_id);
+		redirect(Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
 	}
-	public function view_posts($blog_id)
-	{
-
-	}
-	public function view_post($blog_id, $post_id)
-	{
-
-	}
-	public function add_post()
-	{
-
-	}
-	public function delete_posts($blog_id)
-	{
-
-	}
-
-	function test()
-	{
-		try
-		{
-			// Creates a blog and some blog posts
-			$blog = new Blog('Mon Blog Perso');
-			$blog->add(new BlogPost('Mon Premier Post', 'Voici mon premier post.<br />
-            J\'espère que vous appréciez le blog'));
-			$blog->add(new BlogPost('Mon Second Post', 'Voici mon second post.<br />
-            J\'espère que vous appréciez <strong>toujours</strong> le blog'));
-			$blog->add(new BlogPost('Mon Troisième Post', 'Voici mon troisième post.<br />
-            J\'espère que vous appréciez <strong>encore</strong> le blog'));
-			BlogDAO::instance()->save($blog);
-
-			// Retrieves the blog and the last 2 blog posts
-			$blog_id = $blog->get_id();
-			unset($blog);
-			$blog = BlogDAO::instance()->find_by_id($blog_id);
-			$posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 2, true);
-
-			echo '<h1>' . $blog->get_title() . '</h1>';
-			foreach ($posts as $post)
-			{
-				echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
-				echo '<p>' . $post->get_content() . '</p>';
-			}
-
-			// Edit the blog and the third post
-			$blog->set_title('Mon Nouveau Blog Perso');
-			$posts[0]->set_title($posts[0]->get_title() . ' [EDITED]');
-			$posts[0]->set_content($posts[0]->get_content() . '<br /> @+ ;)');
-			BlogPostDAO::instance()->save($posts[0]);
-			// Delete the 1° blog post
-			BlogPostDAO::instance()->delete($posts[1]);
-			// Adds another blog post
-			$blog->add(new BlogPost('Mon Quatrième Post', 'Voici mon quatrième post.<br />
-            J\'espère que vous appréciez <strong>encore et toujours</strong> le blog'));
-			// Saves
-			BlogDAO::instance()->save($blog);
-			echo '<hr />';
-			// Retrieves the blog and the last 5 blog posts
-			unset($blog); unset($posts);
-			$blog = BlogDAO::instance()->find_by_id($blog_id);
-			$posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 5, false);
-
-			echo '<h1>' . $blog->get_title() . '</h1>';
-			foreach ($posts as $post)
-			{
-				echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
-				echo '<p>' . $post->get_content() . '</p>';
-			}
-
-			// Delete All
-			BlogDAO::instance()->delete($blog);
-			//			global $Sql;
-			//            $Sql->query_inject('TRUNCATE phpboost_blog', __LINE__, __FILE__);
-			//            $Sql->query_inject('TRUNCATE phpboost_blogpost', __LINE__, __FILE__);
-		}
-		catch (Exception $ex)
-		{
-			echo '<hr />' . $ex->getMessage() . '<Br />';
-			echo '<pre>';print_r($ex->getTraceAsString());echo '</pre><hr />';
-		}
-	}
-
-	public function set_bread_crumb($items = null)
-	{
-		global $Bread_crumb;
-		$Bread_crumb->add($this->interface->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
-		if ($items !== null)
-		{
-			foreach ($items as $item => $target)
-			{
-				$Bread_crumb->add($item, $target);
-			}
-		}
-		require_once PATH_TO_ROOT . '/kernel/header.php';
-		$this->initialized = true;
-	}
-
-	public function init()
-	{
-		global $BLOG_LANGS;
-		load_module_lang('blog');
-
-		$this->lang = $BLOG_LANGS;
-		$this->module_discovery_service = new ModulesDiscoveryService();
-		$this->interface = $this->module_discovery_service->get_module('blog');
-	}
-
-	public function destroy()
-	{
-		if ($this->initialized)
-		{
-			require_once PATH_TO_ROOT . '/kernel/footer.php';
-		}
-	}
-
-	private $lang;
-	private $interface;
-	private $module_discovery_service;
-	private $initialized = false;
-
+	
 	const POSTS_PER_PAGE = 3;
 }
 ?>
