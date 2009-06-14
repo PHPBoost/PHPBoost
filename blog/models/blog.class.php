@@ -38,13 +38,18 @@ class Blog
 {
 	public function __construct($title = '', $description = '')
 	{
-        $this->title = $title;
-        $this->description = $description;
+		$this->title = $title;
+		$this->description = $description;
 	}
 
 	public function get_id()
 	{
 		return $this->id;
+	}
+
+	public function get_user_id()
+	{
+		return $this->user_id;
 	}
 
 	public function get_title()
@@ -62,6 +67,11 @@ class Blog
 		$this->id = $value;
 	}
 
+	public function set_user_id($value)
+	{
+		$this->user_id = $value;
+	}
+
 	public function set_title($value)
 	{
 		$this->title = $value;
@@ -76,11 +86,11 @@ class Blog
 	{
 		switch ($global_action)
 		{
-            case self::GLOBAL_ACTION_CREATE:
-                return Dispatcher::get_url('/blog', '/create/');
-            case self::GLOBAL_ACTION_CREATE_VALID:
-            	global $Session;
-                return Dispatcher::get_url('/blog', '/create/valid/?token=' . $Session->get_token());
+			case self::GLOBAL_ACTION_CREATE:
+				return Dispatcher::get_url('/blog', '/create/');
+			case self::GLOBAL_ACTION_CREATE_VALID:
+				global $Session;
+				return Dispatcher::get_url('/blog', '/create/valid/?token=' . $Session->get_token());
 			case self::GLOBAL_ACTION_LIST:
 			default:
 				return Dispatcher::get_url('/blog', '/');
@@ -91,13 +101,13 @@ class Blog
 	{
 		switch ($action)
 		{
-            case self::ACTION_EDIT:
-                return Dispatcher::get_url('/blog', $this->id . '/edit/');
-            case self::ACTION_EDIT_VALID:
-                global $Session;
-                return Dispatcher::get_url('/blog', $this->id . '/edit/valid/?token=' . $Session->get_token());
+			case self::ACTION_EDIT:
+				return Dispatcher::get_url('/blog', $this->id . '/edit/');
+			case self::ACTION_EDIT_VALID:
+				global $Session;
+				return Dispatcher::get_url('/blog', $this->id . '/edit/valid/?token=' . $Session->get_token());
 			case self::ACTION_DELETE:
-                global $Session;
+				global $Session;
 				return Dispatcher::get_url('/blog', $this->id . '/delete/?token=' . $Session->get_token());
 			case self::ACTION_ADD_POST:
 				return Dispatcher::get_url('/blog', $this->id . '/add/');
@@ -132,17 +142,29 @@ class Blog
 		unset($this->posts[$i]);
 	}
 
+	public function get_member_login()
+	{
+		return $user_name;
+	}
+
+	public function set_member_login($value)
+	{
+		return $this->user_name = $value;
+	}
+
 	private $id;
 	private $title;
 	private $description;
+	private $user_id;
+	private $user_name;
 	private $posts = array();
 
 	const GLOBAL_ACTION_LIST = 0x00;
-    const GLOBAL_ACTION_CREATE = 0x01;
-    const GLOBAL_ACTION_CREATE_VALID = 0x02;
+	const GLOBAL_ACTION_CREATE = 0x01;
+	const GLOBAL_ACTION_CREATE_VALID = 0x02;
 	const ACTION_DETAILS = 0x01;
-    const ACTION_EDIT = 0x02;
-    const ACTION_EDIT_VALID = 0x03;
+	const ACTION_EDIT = 0x02;
+	const ACTION_EDIT_VALID = 0x03;
 	const ACTION_DELETE = 0x04;
 	const ACTION_ADD_POST = 0x05;
 }

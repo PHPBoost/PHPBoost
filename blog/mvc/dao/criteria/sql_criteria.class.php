@@ -41,9 +41,11 @@ abstract class SQLCriteria implements ICriteria
     {
         $this->restrictions[] = $restriction;
     }
+    public function add_extra_field($extra_field)
+    {
+    	$this->extra_fields[] = $extra_field;
+    }
 
-    public function set_fetch_mode($fetch_attribute, $mode) {}
-    public function set_projection($projection) {}
     public function set_max_results($max_results)
     {
         if (is_numeric($max_results))
@@ -87,5 +89,6 @@ abstract class SQLCriteria implements ICriteria
     protected $max_results = 100;
     protected $order_by;
     protected $way;
+    protected $extra_fields = array();
 }
 ?>

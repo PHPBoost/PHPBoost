@@ -31,13 +31,15 @@ mvcimport('mvc/exceptions');
 
 class Model
 {
-	public function __construct($name, $primary_key, $model_fields)
+	public function __construct($name, $primary_key, $model_fields, $extra_fields = array(), $joins = array())
 	{
 		$this->name = $name;
 		$this->primary_key = $primary_key;
+		$this->primary_key->set_table($name);
 		foreach ($model_fields as $field)
 		{
-			$this->fields[$field->name()] = $field; 
+			$field->set_table($name);
+			$this->fields[$field->short_name()] = $field;
 		}
 		if (empty($this->name))
 		{
@@ -47,6 +49,24 @@ class Model
 		{
 			throw new NoPrimaryKeyModelException($this->name);
 		}
+		foreach ($extra_fields as $field)
+		{
+			$this->extra_fields[$field->short_name()] = $field;
+		}
+		foreach ($joins as $left_join => $right_join)
+		{
+			$this->joins[PREFIX . $left_join] = PREFIX . $this->name . '.' . $right_join;
+		}
+	}
+
+	public function extra_fields()
+	{
+		return $this->extra_fields;
+	}
+
+	public function extra_field($field)
+	{
+		return $this->extra_fields[$field];
 	}
 
 	public function fields()
@@ -56,11 +76,20 @@ class Model
 
 	public function field($field_name)
 	{
-		if ($field_name == $this->primary_key->name())
+        if (array_key_exists($field_name, $this->fields))
+        {
+            return $this->fields[$field_name];
+        }
+		if ($field_name == $this->primary_key->short_name())
 		{
 			return $this->primary_key;
 		}
-		return $this->fields[$field_name];
+		$extra_field_name = strtr($field_name, '_', '.');
+		if (array_key_exists($extra_field_name, $this->extra_fields))
+        {
+            return $this->extra_fields[$extra_field_name];
+        }
+        return null;
 	}
 
 	public function primary_key()
@@ -68,31 +97,38 @@ class Model
 		return $this->primary_key;
 	}
 
-    public function name()
-    {
-        return $this->name;
-    }
-    
+	public function name()
+	{
+		return $this->name;
+	}
 
-    public function table_name()
-    {
-        return PREFIX . $this->name;
-    }
 
-    public function build($row)
-    {
-        $classname = $this->name();
-        $object = new $classname();
-        foreach ($row as $field_name => $value)
-        {
-            $setter = $this->field($field_name)->setter();
-            $object->$setter($value);
-        }
-        return $object;
-    }
-    
+	public function table_name()
+	{
+		return PREFIX . $this->name;
+	}
+
+	public function joins()
+	{
+		return $this->joins;
+	}
+
+	public function build($row)
+	{
+		$classname = $this->name();
+		$object = new $classname();
+		foreach ($row as $field_name => $value)
+		{
+			$setter = $this->field($field_name)->setter();
+			$object->$setter($value);
+		}
+		return $object;
+	}
+
 	private $name;
-	private $fields;
 	private $primary_key;
+	private $fields;
+	private $extra_fields = array();
+	private $joins = array();
 }
 ?>

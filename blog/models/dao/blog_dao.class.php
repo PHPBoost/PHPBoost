@@ -49,7 +49,11 @@ class BlogDAO extends AbstractDAO
 		parent::__construct(
 		new Model('Blog', new ModelField('id', 'integer', 12), array(
         new ModelField('title', 'string', 64),
-        new ModelField('description', 'string', 65535))));
+        new ModelField('description', 'string', 65535),
+        new ModelField('user_id', 'integer', 12)),
+        array(new ModelField('member.login', 'string', 255, 'user_id')),
+        array('member.user_id' => 'user_id')
+        ));
 	}
 
 	public function save($blog)

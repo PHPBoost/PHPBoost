@@ -33,6 +33,7 @@ class MySQLCriteria extends SQLCriteria
 	public function __construct($model)
 	{
 		parent::__construct($model, MySQLDAO::get_connection());
+		$this->tables[] = $this->model->table_name();
 	}
 
 	public function create_restriction()
@@ -53,23 +54,9 @@ class MySQLCriteria extends SQLCriteria
 		return (int) call_user_func_array(array($this->connection, 'query_array'), $params);
 	}
 
-	//    public function unique_result()
-	//    {
-	//        $params = array($this->model->table_name(), $this->model->primary_key()->name());
-	//        foreach ($this->model->fields() as $field)
-	//        {
-	//            $params[] = $field->name();
-	//        }
-	//        $params[] = 'WHERE ' . $this->model->primary_key()->name() . '=' . $id;
-	//        $params[] = __LINE__;
-	//        $params[] = __FILE__;
-	//
-	//        return $this->model->build(call_user_func_array(array($this->connection, 'query_array'), $params));
-	//    }
-
 	public function results_list()
 	{
-		$query = 'SELECT ' . $this->fields() . ' FROM ' . $this->model->table_name();
+		$query = 'SELECT ' . $this->fields() . ' FROM ' . implode(', ', $this->tables) . ' ';
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
 		{
@@ -88,7 +75,7 @@ class MySQLCriteria extends SQLCriteria
 			}
 		}
 		$query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
-
+        echo ($query) . '<hr />';
 		$results = array();
 		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
 		while ($row = $this->connection->fetch_assoc($sql_results))
@@ -101,6 +88,7 @@ class MySQLCriteria extends SQLCriteria
 	public function update()
 	{
 		$query = 'UPDATE ' . $this->model->table_name() . ' SET ';
+		// TODO insert the list of the updated fields with their new values
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
 		{
@@ -122,6 +110,11 @@ class MySQLCriteria extends SQLCriteria
 
 	protected function build_query_conditions()
 	{
+		$joins = $this->model->joins();
+		foreach ($joins as $left_key => $right_key)
+		{
+            $this->restrictions[] = $left_key . '=' . $right_key;
+		}
 		if (!empty($this->restrictions))
 		{
 			return '(' . implode(') AND (', $this->restrictions) . ')';
@@ -131,7 +124,24 @@ class MySQLCriteria extends SQLCriteria
 
 	protected function fields($fields_options = null)
 	{
-		return '*';
+		$requested_fields = $this->model->primary_key()->name();
+		$fields = $this->model->fields();
+		foreach ($fields as $field)
+		{
+			$requested_fields .= ', ' . $field->name();
+		}
+		$fields = array_merge($this->model->extra_fields(), $this->extra_fields);
+        foreach ($fields as $field)
+        {
+            $requested_fields .= ', ' . $field->name() . ' AS ' . $field->extra_name();
+            if (!in_array($field->get_table(), $this->tables))
+            {
+            	$this->tables[] = $field->get_table();
+            }
+        }
+        return $requested_fields;
 	}
+	
+	private $tables = array();
 }
 ?>
