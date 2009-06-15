@@ -36,7 +36,7 @@ define('DISTRIBUTION_DESCRIPTION', '<p>Vous allez installer la distribution <str
 define('DISTRIBUTION_THEME', 'base');
 
 //Page de démarrage de la distribution (commencer à la racine du site avec /)
-define('DISTRIBUTION_START_PAGE', '/member/member.php');
+define('DISTRIBUTION_START_PAGE', '/doc/index.php');
 
 //Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
 define('DISTRIBUTION_ENABLE_USER', true);

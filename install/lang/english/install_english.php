@@ -62,7 +62,7 @@ $LANG['intro_explain'] = '<p>Thank you to have trusted PHPBoost to build your we
 <p>To install PHPBoost you need to have some informations about your server which must be provided by your hoster. The installation is absolutely automatic, it should take only a few minutes. Click on the right arrow above to start the installation process.</p>
 <p>Cordially, the PHPBoost Team.</p>';
 $LANG['intro_distribution'] = '%s distribution';
-$LANG['intro_distribution_intro'] = '<p>It exists differents distributions of PHPBoost which enable the users to configure their website according to their objectives. A distribution contains some modules and also a kernel configuration.</p>
+$LANG['intro_distribution_intro'] = '<p>It exists differents distributions of PHPBoost which enable users to configure their website according to their objectives. A distribution contains modules and a kernel configuration.</p>
 <p>PHPBoost is going to install itself according to the configuration of this distribution. You will be able to change the configuration, add or remove modules later, when using PHPBoost.</p>';
 $LANG['start_install'] = 'Start installation';
 
@@ -121,7 +121,7 @@ $LANG['field_host'] = 'Host';
 $LANG['field_login'] = 'Login';
 $LANG['field_password'] = 'Password';
 $LANG['field_database'] = 'Database name';
-$LANG['db_error_connexion'] = 'Impossible to connect to database server. Please check informations which you entered.';
+$LANG['db_error_connexion'] = 'Impossible to connect to database server. Please check the informations you entered.';
 $LANG['db_error_selection_not_creable'] = 'The database you typed doesn\'t exist and the system couldn\'t create it.';
 $LANG['db_error_selection_but_created'] = 'The database you typed doesn\'t exist but the system could create it.';
 $LANG['db_success'] = 'The connection to your database server has been etablished successful. You can continue installation.';

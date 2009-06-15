@@ -254,7 +254,7 @@ else
             }
             else
             {
-                $Template->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_availables_updates']));
+                $Template->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
             }
         }
         else
