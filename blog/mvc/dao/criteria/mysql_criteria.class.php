@@ -33,7 +33,6 @@ class MySQLCriteria extends SQLCriteria
 	public function __construct($model)
 	{
 		parent::__construct($model, MySQLDAO::get_connection());
-		$this->tables[] = $this->model->table();
 	}
 
 	public function create_restriction()
@@ -133,14 +132,9 @@ class MySQLCriteria extends SQLCriteria
 		foreach ($fields as $field)
 		{
 			$requested_fields .= ', ' . $field->name() . ' AS ' . $field->property();
-			if (!in_array($field->get_table(), $this->tables))
-			{
-				$this->tables[] = $field->get_table();
-			}
+			$this->add_external_table($field->get_table());
 		}
 		return $requested_fields;
 	}
-
-	private $tables = array();
 }
 ?>

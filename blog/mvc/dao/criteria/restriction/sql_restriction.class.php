@@ -29,11 +29,17 @@ mvcimport('mvc/dao/criteria/restriction/irestriction', INTERFACE_IMPORT);
 mvcimport('mvc/dao/criteria/restriction/irestriction', INTERFACE_IMPORT);
 
 abstract class SQLRestriction implements IRestriction
-{	
+{
+	public function __construct($criteria)
+	{
+        $this->criteria = $criteria;		
+	}
+	
 	public function value($field_or_value)
     {
         if ($field_or_value instanceof ModelField)
         {
+        	$this->criteria->add_external_table($field_or_value->table());
             return $field_or_value->name();
         }
         else
@@ -41,5 +47,7 @@ abstract class SQLRestriction implements IRestriction
             return MySQLDAO::escape($field_or_value);
         }
     }
+    
+    private $criteria;
 }
 ?>

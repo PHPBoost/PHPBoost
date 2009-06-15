@@ -30,60 +30,76 @@ mvcimport('mvc/dao/builder/dao_builder_factory');
 
 abstract class AbstractDAO extends DAO
 {
-    public function __construct($model)
-    {
-        parent::__construct($model);
-        $this->sql_dao = DAOBuilderFactory::get_sql_dao($model);
-    }
+	public function __construct($model)
+	{
+		parent::__construct($model);
+		$this->sql_dao = DAOBuilderFactory::get_sql_dao($model);
+	}
 
-    protected function before_delete($object) {}
-    public function delete($object)
-    {
-        try
-        {
-            $this->before_delete($object);
-            $this->sql_dao->delete($object);
-        }
-        catch (DAOValidationException $ex)
-        {
-            throw $ex;
-        }
-    }
+	protected function before_delete($object) {}
+	public function delete($object)
+	{
+		try
+		{
+			$this->before_delete($object);
+			$this->sql_dao->delete($object);
+		}
+		catch (DAOValidationException $ex)
+		{
+			throw $ex;
+		}
+	}
 
-    protected function before_save($object){}
-    public function save($object)
-    {
-        try
-        {
-            $this->before_save($object);
-            $this->sql_dao->save($object);
-        }
-        catch (DAOValidationException $ex)
-        {
-            throw $ex;
-        }
-    }
+	protected function before_save($object){}
+	public function save($object)
+	{
+		try
+		{
+			$this->before_save($object);
+			$this->sql_dao->save($object);
+		}
+		catch (DAOValidationException $ex)
+		{
+			throw $ex;
+		}
+	}
 
-    public function find_by_id($id)
-    {
-        return $this->sql_dao->find_by_id($id);
-    }
+	public function find_by_id($id)
+	{
+		return $this->sql_dao->find_by_id($id);
+	}
 
-    public function find_by_criteria($criteria)
-    {
-        return $this->sql_dao->find_by_criteria($criteria);
-    }
+	public function find_by_criteria($criteria)
+	{
+		return $this->sql_dao->find_by_criteria($criteria);
+	}
 
-    public function create_criteria()
-    {
-        return $this->sql_dao->create_criteria();
-    }
+	public function create_criteria()
+	{
+		return $this->sql_dao->create_criteria();
+	}
 
-    public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC)
-    {
-    	return $this->sql_dao->find_all($offset, $limit);
-    }
-    
-    protected $sql_dao;
+	public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC)
+	{
+		return $this->sql_dao->find_all($offset, $limit);
+	}
+
+	public function set_external_field($property, $value)
+	{
+		$this->external_fields[$property] = $value;
+	}
+	
+	public function get_external_field($property)
+	{
+		if (array_key_exists($property, $this->external_fields))
+		{
+		  return $this->external_fields[$property];
+		}
+		// TODO Throw special exception
+		throw new Exception('Property \'' . $property . '\' doesn\' exists');
+	}
+
+	protected $sql_dao;
+	protected $external_fields = array();
 }
 ?>

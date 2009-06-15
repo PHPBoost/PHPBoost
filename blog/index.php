@@ -66,14 +66,8 @@ try
 	{
 		// This is the only dispatcher exception that could be launched
 		// in production.
-		if (DEBUG)
-		{
-			echo $ex->getMessage();
-		}
-		else
-		{
-			redirect(PATH_TO_ROOT . '/member/404.php');
-		}
+		echo $ex->getMessage();
+		redirect(PATH_TO_ROOT . '/member/404.php');
 	}
 	catch (NoSuchControllerMethodException $ex)
 	{
