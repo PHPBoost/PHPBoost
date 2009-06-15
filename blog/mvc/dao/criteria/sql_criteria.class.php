@@ -34,7 +34,7 @@ abstract class SQLCriteria implements ICriteria
         $this->model = $model;
         $this->connection = $connection;
         $this->order_by = $model->primary_key()->name();
-        $this->way = ICriteria::ASC;
+        $this->tables[] = $this->model->table();
     }
 
     public function add($restriction)
@@ -44,6 +44,13 @@ abstract class SQLCriteria implements ICriteria
     public function add_extra_field($extra_field)
     {
     	$this->extra_fields[] = $extra_field;
+    }
+    public function add_external_table($table_name)
+    {
+    	if (!in_array($table_name, $this->tables))
+    	{
+    	   $this->tables[] = $table_name;
+    	}
     }
 
     public function set_max_results($max_results)
@@ -88,7 +95,8 @@ abstract class SQLCriteria implements ICriteria
     protected $offset = 0;
     protected $max_results = 100;
     protected $order_by;
-    protected $way;
+    protected $way = ICriteria::ASC;
     protected $extra_fields = array();
+    protected $tables = array();
 }
 ?>

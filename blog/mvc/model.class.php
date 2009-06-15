@@ -33,6 +33,7 @@ class Model
 {
 	public function __construct($name, $primary_key, $model_fields, $extra_fields = array(), $joins = array())
 	{
+		// TODO set des special properties
 		$this->name = $name;
 		$this->primary_key = $primary_key;
 		$this->primary_key->set_table(PREFIX . $name);
