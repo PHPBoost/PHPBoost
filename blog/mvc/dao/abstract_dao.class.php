@@ -84,22 +84,8 @@ abstract class AbstractDAO extends DAO
 		return $this->sql_dao->find_all($offset, $limit);
 	}
 
-	public function set_external_field($property, $value)
-	{
-		$this->external_fields[$property] = $value;
-	}
 	
-	public function get_external_field($property)
-	{
-		if (array_key_exists($property, $this->external_fields))
-		{
-		  return $this->external_fields[$property];
-		}
-		// TODO Throw special exception
-		throw new Exception('Property \'' . $property . '\' doesn\' exists');
-	}
 
 	protected $sql_dao;
-	protected $external_fields = array();
 }
 ?>

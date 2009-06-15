@@ -27,6 +27,8 @@
 
 define('BLOG__CLASS','blog');
 
+mvcimport('mvc/abstract_dao_object');
+
 mimport('blog/models/dao/blog_dao');
 mimport('blog/models/blog_post');
 
@@ -34,7 +36,7 @@ mimport('blog/models/blog_post');
  * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  */
-class Blog
+class Blog extends AbstractDAOObject
 {
 	public function __construct($title = '', $description = '')
 	{
@@ -144,21 +146,10 @@ class Blog
 		unset($this->posts[$i]);
 	}
 
-	public function get_member_login()
-	{
-		return $this->user_name;
-	}
-
-	public function set_member_login($value)
-	{
-		return $this->user_name = $value;
-	}
-
 	private $id;
 	private $title;
 	private $description;
 	private $user_id;
-	private $user_name;
 	private $posts = array();
 
 	const GLOBAL_ACTION_LIST = 0x00;

@@ -122,11 +122,11 @@ class MySQLCriteria extends SQLCriteria
 
 	protected function fields($fields_options = null)
 	{
-		$requested_fields = $this->model->primary_key()->name();
+		$requested_fields = $this->model->primary_key()->name() . ' AS ' . $this->model->primary_key()->property();
 		$fields = $this->model->fields();
 		foreach ($fields as $field)
 		{
-			$requested_fields .= ', ' . $field->name();
+			$requested_fields .= ', ' . $field->name() . ' AS ' . $field->property();
 		}
 		$fields = array_merge($this->model->extra_fields(), $this->extra_fields);
 		foreach ($fields as $field)

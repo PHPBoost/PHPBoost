@@ -42,7 +42,8 @@ $my_dispatcher = null;
 try
 {
 	$my_dispatcher = new Dispatcher(array(
-	new UrlDispatcherItem($blog_controller, 'blogs', '`^/?$`'),
+    new UrlDispatcherItem($blog_controller, 'test', '`^/test/?$`'),
+    new UrlDispatcherItem($blog_controller, 'blogs', '`^/?$`'),
 	new UrlDispatcherItem($blog_controller, 'view', '`^/([0-9]+)/?$`'),
 	new UrlDispatcherItem($blog_controller, 'create', '`^/create/?$`'),
 	new UrlDispatcherItem($blog_controller, 'create_valid', '`^/create/valid/?$`'),

@@ -34,29 +34,34 @@ class Model
 	public function __construct($name, $primary_key, $model_fields, $extra_fields = array(), $joins = array())
 	{
 		// TODO set des special properties
+		$refection_class = new ReflectionClass($name);
+
 		$this->name = $name;
 		$this->primary_key = $primary_key;
 		$this->primary_key->set_table(PREFIX . $name);
-		
+		$this->primary_key->set_class($refection_class);
+
 		foreach ($model_fields as $field)
 		{
 			$field->set_table(PREFIX . $name);
+			$field->set_class($refection_class);
 			$this->fields[$field->property()] = $field;
 		}
-		
+
 		if (empty($this->name))
 		{
 			throw new NoTableModelException();
 		}
-		
+
 		if (!is_a($this->primary_key, 'ModelField'))
 		{
 			throw new NoPrimaryKeyModelException($this->name);
 		}
-		
+
 		$this->used_tables[] = $this->table();
 		foreach ($extra_fields as $field)
 		{
+			$field->set_class($refection_class);
 			$this->extra_fields[$field->property()] = $field;
 			if (!in_array($field->table(), $this->used_tables))
 			{
@@ -127,10 +132,18 @@ class Model
 	{
 		$classname = $this->name();
 		$object = new $classname();
-		foreach ($row as $field_name => $value)
+		foreach ($row as $property => $value)
 		{
-			$setter = $this->field($field_name)->setter();
-			$object->$setter($value);
+			$field = $this->field($property);
+			$setter = $field->setter();
+			if ($field->has_setter())
+			{
+				$object->$setter($value);
+			}
+			else
+			{
+				$object->$setter($property, $value);
+			}
 		}
 		return $object;
 	}

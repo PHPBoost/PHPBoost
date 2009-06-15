@@ -1,9 +1,11 @@
 <?php
 
 import('util/date');
+mvcimport('mvc/abstract_dao_object');
+
 mimport('blog/models/dao/blog_post_dao');
 
-class BlogPost
+class BlogPost extends AbstractDAOObject
 {
 	public function __construct($title = '', $content = '')
 	{

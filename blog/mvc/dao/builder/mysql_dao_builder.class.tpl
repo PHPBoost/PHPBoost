@@ -15,7 +15,11 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
         }
         else
         {
-            $id = $object->{PK_GETTER}();
+            # IF PK_HAS_GETTER #
+                $id = $object->{PK_GETTER}();
+            # ELSE #
+                $id = $object->{PK_GETTER}('{PK_PROPERTY}');
+            # ENDIF #
         }
         if ($id !== null)
         {
@@ -27,7 +31,12 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
     {
         try
         {
-            $id = $object->{PK_GETTER}();
+            
+            # IF PK_HAS_GETTER #
+                $id = $object->{PK_GETTER}();
+            # ELSE #
+                $id = $object->{PK_GETTER}('{PK_PROPERTY}');
+            # ENDIF #
             if ($id !== null)
             {   // UPDATE
                 $query = 'UPDATE {TABLE_NAME} SET ';
@@ -35,7 +44,14 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
                 foreach ($this->model->fields() as $field)
                 {
                     $getter = $field->getter();
-                    $fields_and_values[]= $field->name() . '=' . $this->escape($object->$getter());
+                    if ($field->has_getter())
+                    {
+                        $fields_and_values[]= $field->name() . '=' . $this->escape($object->$getter());
+                    }
+                    else
+                    {
+                        $fields_and_values[]= $field->name() . '=' . $this->escape($object->$getter($field->property()));
+                    }
                 }
                 $query .=  implode(', ', $fields_and_values) . ' WHERE {PK_NAME}=' . $this->escape($id);
                 $this->connection->query_inject($query, __LINE__, __FILE__);
@@ -46,13 +62,25 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
                 $fields_values = array('NULL');
                 foreach ($this->model->fields() as $field)
                 {
-                    $getter = $field->getter();
                     $fields_names[] = $field->name();
-                    $fields_values[] = $this->escape($object->$getter());
+                    $getter = $field->getter();
+                    if ($field->has_getter())
+                    {
+                        $fields_values[] = $this->escape($object->$getter());
+                    }
+                    else
+                    {
+                        $fields_values[] = $this->escape($object->$getter($field->property()));
+                    }
                 }
                 $query = 'INSERT INTO {TABLE_NAME} (' . implode(',', $fields_names) . ') VALUES (' . implode(',', $fields_values) . ')';
                 $this->connection->query_inject($query, __LINE__, __FILE__);
-                $object->{PK_SETTER}($this->connection->insert_id());
+                # IF PK_HAS_SETTER #
+                    $object->{PK_SETTER}($this->connection->insert_id());
+                # ELSE #
+                    $object->{PK_SETTER}('{PK_PROPERTY}', $this->connection->insert_id());
+                # ENDIF #
+                
             }
         }
         catch (Exception $ex)
@@ -64,7 +92,7 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
 
     public function find_by_id($id)
     {
-        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
+        $query = 'SELECT {PK_NAME} AS {PK_PROPERTY}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
         # START extra_fields #, {extra_fields.NAME} AS {extra_fields.PROPERTY}# END extra_fields # FROM {TABLES_NAMES}
         WHERE {PK_NAME}=' . $id # IF JOIN_CLAUSE #. ' AND {JOIN_CLAUSE}'# ENDIF #;
         $sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
@@ -82,7 +110,7 @@ class {CLASSNAME}MySQLDAO extends MySQLDAO
 
     public function find_all($offset = 0, $max_results = 100, $order_by = null, $way = ICriteria::ASC)
     {
-        $query = 'SELECT {PK_NAME}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
+        $query = 'SELECT {PK_NAME} AS {PK_PROPERTY}# START fields #, {fields.NAME} AS {fields.PROPERTY}# END fields #
         # START extra_fields #, {extra_fields.NAME} AS {extra_fields.PROPERTY}# END extra_fields # FROM {TABLES_NAMES}'
         # IF JOIN_CLAUSE #. ' WHERE {JOIN_CLAUSE}'# ENDIF #;
         
