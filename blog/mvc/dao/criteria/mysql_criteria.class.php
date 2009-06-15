@@ -33,7 +33,7 @@ class MySQLCriteria extends SQLCriteria
 	public function __construct($model)
 	{
 		parent::__construct($model, MySQLDAO::get_connection());
-		$this->tables[] = $this->model->table_name();
+		$this->tables[] = $this->model->table();
 	}
 
 	public function create_restriction()
@@ -43,7 +43,7 @@ class MySQLCriteria extends SQLCriteria
 
 	public function count()
 	{
-		$params = array($this->model->table_name(), 'COUNT(*)');
+		$params = array($this->model->table(), 'COUNT(*)');
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
 		{
@@ -86,7 +86,7 @@ class MySQLCriteria extends SQLCriteria
 
 	public function update()
 	{
-		$query = 'UPDATE ' . $this->model->table_name() . ' SET ';
+		$query = 'UPDATE ' . $this->model->table() . ' SET ';
 		// TODO insert the list of the updated fields with their new values
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
@@ -98,7 +98,7 @@ class MySQLCriteria extends SQLCriteria
 
 	public function delete()
 	{
-		$query = 'DELETE FROM ' . $this->model->table_name();
+		$query = 'DELETE FROM ' . $this->model->table();
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
 		{

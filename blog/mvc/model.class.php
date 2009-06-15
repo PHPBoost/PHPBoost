@@ -35,27 +35,31 @@ class Model
 	{
 		$this->name = $name;
 		$this->primary_key = $primary_key;
-		$this->primary_key->set_table($name);
+		$this->primary_key->set_table(PREFIX . $name);
+		
 		foreach ($model_fields as $field)
 		{
-			$field->set_table($name);
+			$field->set_table(PREFIX . $name);
 			$this->fields[$field->property()] = $field;
 		}
+		
 		if (empty($this->name))
 		{
 			throw new NoTableModelException();
 		}
+		
 		if (!is_a($this->primary_key, 'ModelField'))
 		{
 			throw new NoPrimaryKeyModelException($this->name);
 		}
-		$this->used_tables[] = $this->table_name();
+		
+		$this->used_tables[] = $this->table();
 		foreach ($extra_fields as $field)
 		{
 			$this->extra_fields[$field->property()] = $field;
-			if (!in_array($field->get_table(), $this->used_tables))
+			if (!in_array($field->table(), $this->used_tables))
 			{
-				$this->used_tables[] = $field->get_table();
+				$this->used_tables[] = $field->table();
 			}
 		}
 		foreach ($joins as $left_join => $right_join)
@@ -93,9 +97,8 @@ class Model
 		{
 			return $this->extra_fields[$field_name];
 		}
-		echo $field_name;
-		print_r($this->extra_fields);
-		return null;
+		// TODO process special Exception here
+		throw new Exception('Model doesn\'t contain field \'' . $field_name . '\'');
 	}
 
 	public function primary_key()
@@ -109,7 +112,7 @@ class Model
 	}
 
 
-	public function table_name()
+	public function table()
 	{
 		return PREFIX . $this->name;
 	}

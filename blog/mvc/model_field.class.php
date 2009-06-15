@@ -28,7 +28,7 @@
 
 class ModelField
 {
-	public function __construct($name, $type, $length = 0, $property_name = null)
+	public function __construct($name, $type, $length = 0, $property = null)
 	{
 		switch ($type)
 		{
@@ -45,32 +45,23 @@ class ModelField
 		if ($dot_pos !== false)
 		{
 			$this->table = substr($name, 0, $dot_pos);
+			$this->name = $name;
 		}
-		$this->name = $name;
+		
+        $this->given_name = $name;
 		$this->type = $type;
 		$this->length = $length;
-		if ($property_name !== null)
+
+		if ($property !== null)
 		{
-		  $this->property_name = $property_name;
+			$this->property = $property;
 		}
 		else
 		{
-			$this->property_name = $this->short_name();
+			$this->property = substr($name, $dot_pos);
 		}
-	}
-
-	public function short_name()
-	{
-		return $this->name;
-	}
-
-	public function name()
-	{
-		if ($this->got_table_in_name())
-		{
-			return $this->name;
-		}
-		return $this->get_table() . '.' . $this->name;
+		$this->getter = self::GETTER_PREFIX . $this->property;
+		$this->setter = self::SETTER_PREFIX . $this->property;
 	}
 
 	public function type()
@@ -83,46 +74,44 @@ class ModelField
 		return $this->length;
 	}
 
+	public function name()
+	{
+		return $this->name;
+	}
+
+	public function property()
+	{
+		return $this->property;
+	}
+
+	public function table()
+	{
+		return $this->table;
+	}
+
 	public function getter()
 	{
-		return self::GETTER_PREFIX . $this->property_name;
+		return $this->getter;
 	}
 
 	public function setter()
 	{
-		return self::SETTER_PREFIX . $this->property_name;
-	}
-
-	public function extra_name()
-	{
-		return strtr($this->name, '.', '_');
+		return $this->setter;
 	}
 
 	public function set_table($table_name)
 	{
-		$this->table = PREFIX . $table_name;
+		$this->table = $table_name;
+		$this->name = $this->table . '.' . $this->given_name;
 	}
 
-	public function get_table()
-	{
-		return $this->table;
-	}
-	
-    protected function got_table_in_name()
-    {
-        return strpos($this->name, '.') !== false;
-    }
-    
-    public function property()
-    {
-        return $this->property_name;
-    }
-
-	protected $name;
+	protected $table;
+	protected $db_name;
 	protected $type;
 	protected $length;
-	protected $table;
-	protected $property_name;
+	protected $property;
+	protected $getter;
+	protected $setter;
 
 	const GETTER_PREFIX = 'get_';
 	const SETTER_PREFIX = 'set_';
