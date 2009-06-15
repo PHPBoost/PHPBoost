@@ -207,15 +207,12 @@ class Errors
                     {
                         if (!$_err_stop)
                         {
-                            if (!empty($Session) && is_object($Session))
-                                redirect($this->redirect . '/member/fatal' . url('.php?error=' . $error_id . '&_err_stop=1'));
-                            else
-                                redirect($this->redirect . '/member/fatal' . url('.php?error=' . $error_id . '&_err_stop=1'));
+							//Redirection sans passer par la fonction redirect, constantes pas forcément initialisées.
+							header('Location:' . $this->redirect . '/member/fatal.php?error=' . $error_id . '&_err_stop=1');
                             exit;
                         }
                         else
                             die($errstr);
-                        
                     }
 			}
 		
