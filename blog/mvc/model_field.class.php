@@ -47,8 +47,8 @@ class ModelField
 			$this->table = substr($name, 0, $dot_pos);
 			$this->name = $name;
 		}
-		
-        $this->given_name = $name;
+
+		$this->given_name = $name;
 		$this->type = $type;
 		$this->length = $length;
 
@@ -99,10 +99,41 @@ class ModelField
 		return $this->setter;
 	}
 
+	public function has_getter()
+	{
+		return $this->has_getter;
+	}
+
+	public function has_setter()
+	{
+		return $this->has_setter;
+	}
+
 	public function set_table($table_name)
 	{
 		$this->table = $table_name;
 		$this->name = $this->table . '.' . $this->given_name;
+	}
+
+	public function set_class($reflection_class)
+	{
+		if ($reflection_class->hasMethod($this->getter()))
+		{
+			$this->has_getter = true;
+		}
+		else
+		{
+			$this->getter = self::DEFAULT_GETTER;
+		}
+		
+		if ($reflection_class->hasMethod($this->setter()))
+		{
+			$this->has_setter = true;
+		}
+		else
+		{
+			$this->setter = self::DEFAULT_SETTER;
+		}
 	}
 
 	protected $table;
@@ -112,8 +143,12 @@ class ModelField
 	protected $property;
 	protected $getter;
 	protected $setter;
+	protected $has_getter = false;
+	protected $has_setter = false;
 
 	const GETTER_PREFIX = 'get_';
 	const SETTER_PREFIX = 'set_';
+	const DEFAULT_GETTER = 'get_property';
+	const DEFAULT_SETTER = 'set_property';
 }
 ?>

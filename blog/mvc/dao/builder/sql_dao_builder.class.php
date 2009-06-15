@@ -51,8 +51,11 @@ abstract class SQLDAOBuilder implements IDAOBuilder
             'CLASSNAME' => $this->model->name(),
             'TABLE_NAME' => PREFIX . $this->model->name(),
             'PK_NAME' => $this->model->primary_key()->name(),
+            'PK_PROPERTY' => $this->model->primary_key()->property(),
             'PK_GETTER' => $this->model->primary_key()->getter(),
-            'PK_SETTER' => $this->model->primary_key()->setter()
+            'PK_SETTER' => $this->model->primary_key()->setter(),
+            'PK_HAS_GETTER' => $this->model->primary_key()->has_getter(),
+            'PK_HAS_SETTER' => $this->model->primary_key()->has_setter()
 		));
 		$fields = $this->model->fields();
 		foreach ($fields as $field)
