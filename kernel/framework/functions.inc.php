@@ -71,89 +71,89 @@ define('TIMEZONE_USER', 3);
  */
 function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $flags = 0)
 {
-    $var = null;
-    switch ($var_type)
-    {
-        case GET:
-            if (isset($_GET[$var_name]))
-            {
-                $var = $_GET[$var_name];
-            }
-            break;
-        case POST:
-            if (isset($_POST[$var_name]))
-            {
-                $var = $_POST[$var_name];
-            }
-            break;
-        case REQUEST:
-            if (isset($_REQUEST[$var_name]))
-            {
-                $var = $_REQUEST[$var_name];
-            }
-            break;
-        case COOKIE:
-            if (isset($_COOKIE[$var_name]))
-            {
-                $var = $_COOKIE[$var_name];
-            }
-            break;
-        case FILES:
-            if (isset($_FILES[$var_name]))
-            {
-                $var = $_FILES[$var_name];
-            }
-            break;
-        default:
-            break;
-    }
+	$var = null;
+	switch ($var_type)
+	{
+		case GET:
+			if (isset($_GET[$var_name]))
+			{
+				$var = $_GET[$var_name];
+			}
+			break;
+		case POST:
+			if (isset($_POST[$var_name]))
+			{
+				$var = $_POST[$var_name];
+			}
+			break;
+		case REQUEST:
+			if (isset($_REQUEST[$var_name]))
+			{
+				$var = $_REQUEST[$var_name];
+			}
+			break;
+		case COOKIE:
+			if (isset($_COOKIE[$var_name]))
+			{
+				$var = $_COOKIE[$var_name];
+			}
+			break;
+		case FILES:
+			if (isset($_FILES[$var_name]))
+			{
+				$var = $_FILES[$var_name];
+			}
+			break;
+		default:
+			break;
+	}
 
-    //If $var is not set or an empty value is retrieved with the USE_DEFAULT_IF_EMPTY flag, we return the default value
-    if ($var === null || (($flags & USE_DEFAULT_IF_EMPTY != 0) && empty($var)))
-    {
-        return $default_value;
-    }
+	//If $var is not set or an empty value is retrieved with the USE_DEFAULT_IF_EMPTY flag, we return the default value
+	if ($var === null || (($flags & USE_DEFAULT_IF_EMPTY != 0) && empty($var)))
+	{
+		return $default_value;
+	}
 
-    $force_type = !isset($force_type) ? gettype($default_value) : $force_type;
-    switch ($force_type)
-    {
-        case TINTEGER:
-            return (int)$var;
-        case TSTRING:
-            return strprotect($var); //Chaine protégée.
-        case TSTRING_UNCHANGE:
-            if (MAGIC_QUOTES)
-            {
-                $var = trim(stripslashes($var));
-            }
-            else
-            {
-                $var = trim($var);
-            }
-            return (string)$var; //Chaine non protégée.
-        case TSTRING_PARSE:
-            return strparse($var); //Chaine parsée.
-        case TBOOL:
-            return (bool)$var;
-        case TUNSIGNED_INT:
-            $var = (int)$var;
-            return $var > 0 ? $var : max(0, $default_value);
-        case TUNSIGNED_DOUBLE:
-            $var = (double)$var;
-            return $var > 0.0 ? $var : max(0.0, $default_value);
-        case TSTRING_HTML:
-            return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
-        case TSTRING_AS_RECEIVED:
-            return (string)$var;
-        case TARRAY:
-            return (array)$var;
-        case TDOUBLE:
-            return (double)$var;
-        case TNONE:
-            return $var;
-        default:
-            return $default_value;
-    }
+	$force_type = !isset($force_type) ? gettype($default_value) : $force_type;
+	switch ($force_type)
+	{
+		case TINTEGER:
+			return (int)$var;
+		case TSTRING:
+			return strprotect($var); //Chaine protégée.
+		case TSTRING_UNCHANGE:
+			if (MAGIC_QUOTES)
+			{
+				$var = trim(stripslashes($var));
+			}
+			else
+			{
+				$var = trim($var);
+			}
+			return (string)$var; //Chaine non protégée.
+		case TSTRING_PARSE:
+			return strparse($var); //Chaine parsée.
+		case TBOOL:
+			return (bool)$var;
+		case TUNSIGNED_INT:
+			$var = (int)$var;
+			return $var > 0 ? $var : max(0, $default_value);
+		case TUNSIGNED_DOUBLE:
+			$var = (double)$var;
+			return $var > 0.0 ? $var : max(0.0, $default_value);
+		case TSTRING_HTML:
+			return strprotect($var, HTML_NO_PROTECT); //Chaine non protégée pour l'html.
+		case TSTRING_AS_RECEIVED:
+			return (string)$var;
+		case TARRAY:
+			return (array)$var;
+		case TDOUBLE:
+			return (double)$var;
+		case TNONE:
+			return $var;
+		default:
+			return $default_value;
+	}
 }
 
 /**
@@ -167,37 +167,37 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  */
 function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES_AUTO)
 {
-    $var = trim((string)$var);
+	$var = trim((string)$var);
 
-    //Protection contre les balises html.
-    if ($html_protect)
-    {
-        $var = htmlspecialchars($var);
-        //While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
-        $var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
-    }
+	//Protection contre les balises html.
+	if ($html_protect)
+	{
+		$var = htmlspecialchars($var);
+		//While we aren't in UTF8 encoding, we have to use HTML entities to display some special chars, we accept them.
+		$var = preg_replace('`&amp;((?:#[0-9]{2,5})|(?:[a-z0-9]{2,8}));`i', "&$1;", $var);
+	}
 
-    switch ($addslashes)
-    {
-        case ADDSLASHES_FORCE:
-            //On force l'échappement de caractères
-            $var = addslashes($var);
-            break;
-        case ADDSLASHES_NONE:
-            //On ne touche pas la chaîne
-            $var = stripslashes($var);
-            break;
-            //Mode automatique
-        case ADDSLASHES_AUTO:
-        default:
-            //On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
-            if (!MAGIC_QUOTES)
-            {
-                $var = addslashes($var);
-            }
-    }
+	switch ($addslashes)
+	{
+		case ADDSLASHES_FORCE:
+			//On force l'échappement de caractères
+			$var = addslashes($var);
+			break;
+		case ADDSLASHES_NONE:
+			//On ne touche pas la chaîne
+			$var = stripslashes($var);
+			break;
+			//Mode automatique
+		case ADDSLASHES_AUTO:
+		default:
+			//On échappe les ' si la fonction magic_quotes_gpc() n'est pas activée sur le serveur.
+			if (!MAGIC_QUOTES)
+			{
+				$var = addslashes($var);
+			}
+	}
 
-    return $var;
+	return $var;
 }
 
 /**
@@ -208,21 +208,21 @@ function strprotect($var, $html_protect = HTML_PROTECT, $addslashes = ADDSLASHES
  */
 function numeric($var, $type = 'int')
 {
-    if (is_numeric($var)) //Retourne un nombre
-    {
-        if ($type === 'float')
-        {
-            return (float)$var; //Nbr virgule flottante.
-        }
-        else
-        {
-            return (int)$var; //Nombre entier
-        }
-    }
-    else
-    {
-        return 0;
-    }
+	if (is_numeric($var)) //Retourne un nombre
+	{
+		if ($type === 'float')
+		{
+			return (float)$var; //Nbr virgule flottante.
+		}
+		else
+		{
+			return (int)$var; //Nombre entier
+		}
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /**
@@ -231,8 +231,8 @@ function numeric($var, $type = 'int')
  */
 function get_utheme()
 {
-    global $User;
-    return !empty($User) ? $User->get_attribute('user_theme') : 'default';
+	global $User;
+	return !empty($User) ? $User->get_attribute('user_theme') : 'default';
 }
 
 /**
@@ -241,8 +241,8 @@ function get_utheme()
  */
 function get_ulang()
 {
-    global $User;
-    return $User->get_attribute('user_lang');
+	global $User;
+	return $User->get_attribute('user_lang');
 }
 
 /**
@@ -256,8 +256,8 @@ function get_ulang()
  */
 function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $cut = true)
 {
-    $str = wordwrap(html_entity_decode($str), $lenght, $cut_char, $cut);
-    return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES));
+	$str = wordwrap(html_entity_decode($str), $lenght, $cut_char, $cut);
+	return str_replace('&lt;br /&gt;', '<br />', htmlspecialchars($str, ENT_NOQUOTES));
 }
 
 /**
@@ -272,14 +272,14 @@ function wordwrap_html(&$str, $lenght, $cut_char = '<br />', $cut = true)
  */
 function substr_html(&$str, $start, $end = '')
 {
-    if ($end == '')
-    {
-        return htmlspecialchars(substr(html_entity_decode($str), $start), ENT_NOQUOTES);
-    }
-    else
-    {
-        return htmlspecialchars(substr(html_entity_decode($str), $start, $end), ENT_NOQUOTES);
-    }
+	if ($end == '')
+	{
+		return htmlspecialchars(substr(html_entity_decode($str), $start), ENT_NOQUOTES);
+	}
+	else
+	{
+		return htmlspecialchars(substr(html_entity_decode($str), $start, $end), ENT_NOQUOTES);
+	}
 }
 
 /**
@@ -290,15 +290,15 @@ function substr_html(&$str, $start, $end = '')
  */
 function display_editor($field = 'contents', $forbidden_tags = array())
 {
-    $content_editor = new ContentFormattingFactory();
-    $editor = $content_editor->get_editor();
-    if (!empty($forbidden_tags) && is_array($forbidden_tags))
-    {
-        $editor->set_forbidden_tags($forbidden_tags);
-    }
-    $editor->set_identifier($field);
+	$content_editor = new ContentFormattingFactory();
+	$editor = $content_editor->get_editor();
+	if (!empty($forbidden_tags) && is_array($forbidden_tags))
+	{
+		$editor->set_forbidden_tags($forbidden_tags);
+	}
+	$editor->set_identifier($field);
 
-    return $editor->display();
+	return $editor->display();
 }
 
 /**
@@ -312,10 +312,10 @@ function display_editor($field = 'contents', $forbidden_tags = array())
  */
 function display_comments($script, $idprov, $vars, $module_folder = '')
 {
-    import('content/comments');
-    $comments = new Comments($script, $idprov, $vars, $module_folder);
+	import('content/comments');
+	$comments = new Comments($script, $idprov, $vars, $module_folder);
 
-    return $comments->display();
+	return $comments->display();
 }
 
 /**
@@ -326,40 +326,40 @@ function display_comments($script, $idprov, $vars, $module_folder = '')
  */
 function load_module_lang($module_name, $path = PATH_TO_ROOT)
 {
-    global $LANG;
+	global $LANG;
 
-    $file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
-    if (!DEBUG) {
-        $result = @include_once($file);
-    }
-    else
-    {
-        $result = include_once($file);
-    }
+	$file = $path . '/' . $module_name . '/lang/' . get_ulang() . '/' . $module_name . '_' . get_ulang() . '.php';
+	if (!DEBUG) {
+		$result = @include_once($file);
+	}
+	else
+	{
+		$result = include_once($file);
+	}
 
-    if (!$result)
-    {
-        $lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
-        $file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
-        
-        if (!DEBUG)
-        {
-            $result2 = @include_once($file2);
-        }
-        else
-        {
-            $result2 = include_once($file2);
-        }
-        
-        if (!$result2)
-        {
-            global $Errorh;
+	if (!$result)
+	{
+		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', get_ulang(), NO_FATAL_ERROR);
+		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
 
-            //Déclenchement d'une erreur fatale.
-            $Errorh->handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
-            exit;
-        }
-    }
+		if (!DEBUG)
+		{
+			$result2 = @include_once($file2);
+		}
+		else
+		{
+			$result2 = include_once($file2);
+		}
+
+		if (!$result2)
+		{
+			global $Errorh;
+
+			//Déclenchement d'une erreur fatale.
+			$Errorh->handler(sprintf('Unable to load lang file \'%s\'!', PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php'), E_USER_ERROR, __LINE__, __FILE__);
+			exit;
+		}
+	}
 }
 
 /**
@@ -369,7 +369,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
  */
 function load_menu_lang($menu_name)
 {
-    load_module_lang($menu_name, PATH_TO_ROOT . '/menus');
+	load_module_lang($menu_name, PATH_TO_ROOT . '/menus');
 }
 
 /**
@@ -382,21 +382,21 @@ function load_menu_lang($menu_name)
  */
 function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {
-    $dir = find_require_dir($dir_path, $require_dir, false);
-    $file = $dir_path . $dir . '/' . $ini_name;
-    if (!DEBUG)
-    {
-        $result = @parse_ini_file($file);
-    }
-    elseif(file_exists($file))
-    {
-        $result = parse_ini_file($file);
-    }
-    else
-    {
-        $result = FALSE;
-    }
-    return $result;
+	$dir = find_require_dir($dir_path, $require_dir, false);
+	$file = $dir_path . $dir . '/' . $ini_name;
+	if (!DEBUG)
+	{
+		$result = @parse_ini_file($file);
+	}
+	elseif(file_exists($file))
+	{
+		$result = parse_ini_file($file);
+	}
+	else
+	{
+		$result = FALSE;
+	}
+	return $result;
 }
 
 /**
@@ -408,56 +408,56 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function parse_ini_array($links_format)
 {
-    $links_format = preg_replace('` ?=> ?`', '=', $links_format);
-    $links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
-    list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
-    $string_length = strlen($links_format);
-    while ($cursor < $string_length) //Parcours linéaire.
-    {
-        $char = substr($links_format, $cursor, 1);
-        if (!$check_value) //On récupère la clé.
-        {
-            if ($char != '=')
-            {
-                $key .= $char;
-            }
-            else
-            {
-                $check_value =  true;
-            }
-        }
-        else //On récupère la valeur associé à la clé, une fois celle-ci récupérée.
-        {
-            if ($char == '(') //On marque l'ouverture de la parenthèse.
-            {
-                $open = $key;
-            }
+	$links_format = preg_replace('` ?=> ?`', '=', $links_format);
+	$links_format = preg_replace(' ?, ?', ',', $links_format) . ' ';
+	list($key, $value, $open, $cursor, $check_value, $admin_links) = array('', '', '', 0, false, array());
+	$string_length = strlen($links_format);
+	while ($cursor < $string_length) //Parcours linéaire.
+	{
+		$char = substr($links_format, $cursor, 1);
+		if (!$check_value) //On récupère la clé.
+		{
+			if ($char != '=')
+			{
+				$key .= $char;
+			}
+			else
+			{
+				$check_value =  true;
+			}
+		}
+		else //On récupère la valeur associé à la clé, une fois celle-ci récupérée.
+		{
+			if ($char == '(') //On marque l'ouverture de la parenthèse.
+			{
+				$open = $key;
+			}
 
-            if ($char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length) //Si ce n'est pas un caractère délimiteur, on la fin => on concatène.
-            {
-                $value .= $char;
-            }
-            else
-            {
-                if (!empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
-                {
-                    $admin_links[$open][$key] = $value;
-                }
-                else
-                {
-                    $admin_links[$key] = $value; //Ajout simple.
-                }
-                list($key, $value, $check_value) = array('', '', false);
-            }
-            if ($char == ')')
-            {
-                $open = ''; //On supprime le marqueur.
-                $cursor++; //On avance le curseur pour faire sauter la virugle après la parenthèse.
-            }
-        }
-        $cursor++;
-    }
-    return $admin_links;
+			if ($char != ',' && $char != '(' && $char != ')' && ($cursor+1) < $string_length) //Si ce n'est pas un caractère délimiteur, on la fin => on concatène.
+			{
+				$value .= $char;
+			}
+			else
+			{
+				if (!empty($open) && !empty($value)) //On insère dans la clé marqué précédemment à l'ouveture de la parenthèse.
+				{
+					$admin_links[$open][$key] = $value;
+				}
+				else
+				{
+					$admin_links[$key] = $value; //Ajout simple.
+				}
+				list($key, $value, $check_value) = array('', '', false);
+			}
+			if ($char == ')')
+			{
+				$open = ''; //On supprime le marqueur.
+				$cursor++; //On avance le curseur pour faire sauter la virugle après la parenthèse.
+			}
+		}
+		$cursor++;
+	}
+	return $admin_links;
 }
 
 /**
@@ -471,26 +471,26 @@ function parse_ini_array($links_format)
  */
 function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
 {
-    $dir = find_require_dir($dir_path, $require_dir, false);
-    import('io/filesystem/file');
+	$dir = find_require_dir($dir_path, $require_dir, false);
+	import('io/filesystem/file');
 
-    $module_config_file = new File($dir_path . $dir . '/config.ini', READ);
-    $module_config_file->open();
-    $module_config_text = $module_config_file->get_contents();
+	$module_config_file = new File($dir_path . $dir . '/config.ini', READ);
+	$module_config_file->open();
+	$module_config_text = $module_config_file->get_contents();
 
-    //Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
-    $result = array();
-    
-    //Si on détecte le bon motif, on le renvoie
-    if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
-    {
-    	return str_replace('\n', "\r\n", $result[1]);
-    }
-    //Sinon, on renvoie une chaîne vide
-    else
-    {
-        return '';
-    }
+	//Maintenant qu'on a le contenu du fichier, on tente d'extraire la dernière ligne qui est commentée car sa syntaxe est incorrecte
+	$result = array();
+
+	//Si on détecte le bon motif, on le renvoie
+	if (preg_match('`;config="(.*)"\s*$`s', $module_config_text, $result))
+	{
+		return str_replace('\n', "\r\n", $result[1]);
+	}
+	//Sinon, on renvoie une chaîne vide
+	else
+	{
+		return '';
+	}
 }
 
 //Cherche un dossier s'il n'est pas trouvé, on parcourt le dossier passé en argument à la recherche du premier dossier.
@@ -505,35 +505,35 @@ function get_ini_config($dir_path, $require_dir, $ini_name = 'config.ini')
  */
 function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 {
-    //Si le dossier de langue n'existe pas on prend le suivant exisant.
-    if (!@file_exists($dir_path . $require_dir))
-    {
-        if (@is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
-        {
-            while (!is_bool($dir = readdir($dh)))
-            {
-                if (strpos($dir, '.') === false  )
-                {
-                    closedir($dh);
-                    return $dir;
-                }
-            }
-            closedir($dh);
-        }
-    }
-    else
-    {
-    	return $require_dir;
-    }
+	//Si le dossier de langue n'existe pas on prend le suivant exisant.
+	if (!@file_exists($dir_path . $require_dir))
+	{
+		if (@is_dir($dir_path) && $dh = @opendir($dir_path)) //Si le dossier existe et qu'on a les permissions suffisantes
+		{
+			while (!is_bool($dir = readdir($dh)))
+			{
+				if (strpos($dir, '.') === false  )
+				{
+					closedir($dh);
+					return $dir;
+				}
+			}
+			closedir($dh);
+		}
+	}
+	else
+	{
+		return $require_dir;
+	}
 
-    if ($fatal_error)
-    {
-        global $Errorh;
+	if ($fatal_error)
+	{
+		global $Errorh;
 
-        //Déclenchement d'une erreur fatale.
-        $Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__);
-        exit;
-    }
+		//Déclenchement d'une erreur fatale.
+		$Errorh->handler(sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir), E_USER_ERROR, __LINE__, __FILE__);
+		exit;
+	}
 }
 
 /**
@@ -545,7 +545,7 @@ function get_module_name()
 	$path = str_replace(DIR, '', SCRIPT);
 	$path = trim($path, '/');
 	$module_name = explode('/', $path);
-	
+
 	return $module_name[0];
 }
 
@@ -555,16 +555,20 @@ function get_module_name()
  */
 function redirect($url)
 {
-    global $Sql;
+	global $Sql, $CONFIG;
 
-    if (!empty($Sql) && is_object($Sql)) //Coupure de la connexion mysql.
-    {
-        $Sql->close();
-    }
-    import('util/url');
-    $url = new Url($url);
-    header('Location:' . $url->absolute());
-    exit;
+	if (!empty($Sql) && is_object($Sql)) //Coupure de la connexion mysql.
+	{
+		$Sql->close();
+	}
+	if (!empty($CONFIG) && is_array($CONFIG))
+	{
+		import('util/url');
+		$url = new Url($url);
+        $url = $url->absolute();
+	}
+    header('Location:' . $url);
+	exit;
 }
 
 /**
@@ -575,18 +579,18 @@ function redirect($url)
  */
 function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
 {
-    global $LANG;
+	global $LANG;
 
-    $template = new Template('framework/confirm.tpl');
+	$template = new Template('framework/confirm.tpl');
 
-    $template->assign_vars(array(
+	$template->assign_vars(array(
 		'URL_ERROR' => !empty($url_error) ? $url_error : get_start_page(),
 		'DELAY_REDIRECT' => $delay_redirect,
 		'L_ERROR' => $l_error,
 		'L_REDIRECT' => $LANG['redirect']
-    ));
+	));
 
-    $template->parse();
+	$template->parse();
 }
 
 /**
@@ -595,10 +599,10 @@ function redirect_confirm($url_error, $l_error, $delay_redirect = 3)
  */
 function get_start_page()
 {
-    global $CONFIG;
+	global $CONFIG;
 
-    $start_page = (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
-    return $start_page;
+	$start_page = (substr($CONFIG['start_page'], 0, 1) == '/') ? url(HOST . DIR . $CONFIG['start_page']) : $CONFIG['start_page'];
+	return $start_page;
 }
 
 /**
@@ -609,18 +613,18 @@ function get_start_page()
  */
 function check_nbr_links($contents, $max_nbr)
 {
-    if ($max_nbr == -1)
-    {
-        return true;
-    }
+	if ($max_nbr == -1)
+	{
+		return true;
+	}
 
-    $nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
-    if ($nbr_link !== false && $nbr_link > $max_nbr)
-    {
-        return false;
-    }
+	$nbr_link = preg_match_all('`(?:ftp|https?)://`', $contents, $array);
+	if ($nbr_link !== false && $nbr_link > $max_nbr)
+	{
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 /**
@@ -646,24 +650,24 @@ function check_mail($mail)
  */
 function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
 {
-    //On utilise le gestionnaire de contenu
-    $content_manager = new ContentFormattingFactory();
-    //On lui demande le parser adéquat
-    $parser = $content_manager->get_parser();
+	//On utilise le gestionnaire de contenu
+	$content_manager = new ContentFormattingFactory();
+	//On lui demande le parser adéquat
+	$parser = $content_manager->get_parser();
 
-    //On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
-    $parser->set_content($content, MAGIC_QUOTES);
+	//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
+	$parser->set_content($content, MAGIC_QUOTES);
 
-    //Si il y a des balises interdites, on lui signale
-    if (!empty($forbidden_tags))
-    {
-        $parser->set_forbidden_tags($forbidden_tags);
-    }
-    //Au travail maintenant !
-    $parser->parse();
+	//Si il y a des balises interdites, on lui signale
+	if (!empty($forbidden_tags))
+	{
+		$parser->set_forbidden_tags($forbidden_tags);
+	}
+	//Au travail maintenant !
+	$parser->parse();
 
-    //Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
-    return $parser->get_content($addslashes);
+	//Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
+	return $parser->get_content($addslashes);
 }
 
 /**
@@ -676,12 +680,12 @@ function strparse(&$content, $forbidden_tags = array(), $addslashes = true)
  */
 function unparse(&$content)
 {
-    $content_manager = new ContentFormattingFactory();
-    $parser = $content_manager->get_unparser();
-    $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
-    $parser->parse();
+	$content_manager = new ContentFormattingFactory();
+	$parser = $content_manager->get_unparser();
+	$parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
+	$parser->parse();
 
-    return $parser->get_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 /**
@@ -694,13 +698,13 @@ function unparse(&$content)
  */
 function second_parse(&$content)
 {
-    $content_manager = new ContentFormattingFactory();
+	$content_manager = new ContentFormattingFactory();
 
-    $parser = $content_manager->get_second_parser();
-    $parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
-    $parser->parse();
+	$parser = $content_manager->get_second_parser();
+	$parser->set_content($content, PARSER_DO_NOT_STRIP_SLASHES);
+	$parser->parse();
 
-    return $parser->get_content(DO_NOT_ADD_SLASHES);
+	return $parser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 /**
@@ -726,32 +730,32 @@ function second_parse_url(&$url)
  */
 function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 {
-    global $CONFIG, $Session;
+	global $CONFIG, $Session;
 
-    if (!is_object($Session))
-    {
-        $session_mod = 0;
-    }
-    else
-    {
-        $session_mod = $Session->session_mod;
-    }
+	if (!is_object($Session))
+	{
+		$session_mod = 0;
+	}
+	else
+	{
+		$session_mod = $Session->session_mod;
+	}
 
-    if ($session_mod == 0)
-    {
-        if ($CONFIG['rewrite'] == 1 && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
-        {
-            return $mod_rewrite;
-        }
-        else
-        {
-            return $url;
-        }
-    }
-    elseif ($session_mod == 1)
-    {
-        return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
-    }
+	if ($session_mod == 0)
+	{
+		if ($CONFIG['rewrite'] == 1 && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
+		{
+			return $mod_rewrite;
+		}
+		else
+		{
+			return $url;
+		}
+	}
+	elseif ($session_mod == 1)
+	{
+		return $url . ((strpos($url, '?') === false) ? '?' : $ampersand) . 'sid=' . $Session->data['session_id'] . $ampersand . 'suid=' . $Session->data['user_id'];
+	}
 }
 
 /**
@@ -761,13 +765,13 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
  */
 function url_encode_rewrite($string)
 {
-    $string = strtolower(html_entity_decode($string));
-    $string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
-    $string = preg_replace('`([^a-z0-9]|[\s])`', '-', $string);
-    $string = preg_replace('`[-]{2,}`', '-', $string);
-    $string = trim($string, ' -');
+	$string = strtolower(html_entity_decode($string));
+	$string = strtr($string, ' éèêàâùüûïîôç', '-eeeaauuuiioc');
+	$string = preg_replace('`([^a-z0-9]|[\s])`', '-', $string);
+	$string = preg_replace('`[-]{2,}`', '-', $string);
+	$string = trim($string, ' -');
 
-    return $string;
+	return $string;
 }
 
 /**
@@ -781,60 +785,60 @@ function url_encode_rewrite($string)
  */
 function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 {
-    global $User, $CONFIG, $LANG;
+	global $User, $CONFIG, $LANG;
 
-    if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
-    {
-        switch ($format)
-        {
-            case 'date_format':
-                $format = $LANG['date_format'];
-                break;
-            case 'date_format_tiny':
-                $format = $LANG['date_format_tiny'];
-                break;
-            case 'date_format_short':
-                $format = $LANG['date_format_short'];
+	if (strpos($format, 'date_format') !== false) //Inutile de tout tester si ce n'est pas un formatage prédéfini.
+	{
+		switch ($format)
+		{
+			case 'date_format':
+				$format = $LANG['date_format'];
+				break;
+			case 'date_format_tiny':
+				$format = $LANG['date_format_tiny'];
+				break;
+			case 'date_format_short':
+				$format = $LANG['date_format_short'];
 
-                break;
-            case 'date_format_long':
-                $format = $LANG['date_format_long'];
-                break;
-        }
-    }
+				break;
+			case 'date_format_long':
+				$format = $LANG['date_format_long'];
+				break;
+		}
+	}
 
-    if ($timestamp === false)
-    {
-        $timestamp = time();
-    }
+	if ($timestamp === false)
+	{
+		$timestamp = time();
+	}
 
-    // Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
-    $serveur_hour = number_round(date('Z')/3600, 0) - date('I');
+	// Décallage du serveur par rapport au méridien de greenwitch et à l'heure d'été
+	$serveur_hour = number_round(date('Z')/3600, 0) - date('I');
 
-    if ($timezone_system == 1) //Timestamp du site, non dépendant de l'utilisateur.
-    {
-        $timezone = $CONFIG['timezone'] - $serveur_hour;
-    }
-    elseif ($timezone_system == 2) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
-    {
-        $timezone = 0;
-    }
-    else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
-    {
-        $timezone = $User->get_attribute('user_timezone') - $serveur_hour;
-    }
+	if ($timezone_system == 1) //Timestamp du site, non dépendant de l'utilisateur.
+	{
+		$timezone = $CONFIG['timezone'] - $serveur_hour;
+	}
+	elseif ($timezone_system == 2) //Timestamp du serveur, non dépendant de l'utilisateur et du fuseau par défaut du site.
+	{
+		$timezone = 0;
+	}
+	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
+	{
+		$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	}
 
-    if ($timezone != 0)
-    {
-        $timestamp += $timezone * 3600;
-    }
+	if ($timezone != 0)
+	{
+		$timestamp += $timezone * 3600;
+	}
 
-    if ($timestamp <= 0)
-    {
-        return '';
-    }
+	if ($timestamp <= 0)
+	{
+		return '';
+	}
 
-    return date($format, $timestamp);
+	return date($format, $timestamp);
 }
 
 /**
@@ -847,45 +851,45 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
  */
 function strtotimestamp($str, $date_format)
 {
-    global $CONFIG, $User;
+	global $CONFIG, $User;
 
-    list($month, $day, $year) = array(0, 0, 0);
-    $array_timestamp = explode('/', $str);
-    $array_date = explode('/', $date_format);
-    for ($i = 0; $i < 3; $i++)
-    {
-        switch ($array_date[$i])
-        {
-            case 'd':
-                $day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-                break;
-            case 'm':
-                $month = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-                break;
-            case 'y':
-                $year = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
-                break;
-        }
-    }
+	list($month, $day, $year) = array(0, 0, 0);
+	$array_timestamp = explode('/', $str);
+	$array_date = explode('/', $date_format);
+	for ($i = 0; $i < 3; $i++)
+	{
+		switch ($array_date[$i])
+		{
+			case 'd':
+				$day = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				break;
+			case 'm':
+				$month = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				break;
+			case 'y':
+				$year = (isset($array_timestamp[$i])) ? numeric($array_timestamp[$i]) : 0;
+				break;
+		}
+	}
 
-    //Vérification du format de la date.
-    if (checkdate($month, $day, $year))
-    {
-        $timestamp = @mktime(0, 0, 1, $month, $day, $year);
-    }
-    else
-    {
-        $timestamp = time();
-    }
+	//Vérification du format de la date.
+	if (checkdate($month, $day, $year))
+	{
+		$timestamp = @mktime(0, 0, 1, $month, $day, $year);
+	}
+	else
+	{
+		$timestamp = time();
+	}
 
-    $serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
-    $timezone = $User->get_attribute('user_timezone') - $serveur_hour;
-    if ($timezone != 0)
-    {
-        $timestamp -= $timezone * 3600;
-    }
+	$serveur_hour = number_round(date('Z')/3600, 0) - date('I'); //Décallage du serveur par rapport au méridien de greenwitch.
+	$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+	if ($timezone != 0)
+	{
+		$timestamp -= $timezone * 3600;
+	}
 
-    return ($timestamp > 0) ? $timestamp : time();
+	return ($timestamp > 0) ? $timestamp : time();
 }
 
 //Convertit une chaîne au format $LANG['date_format'] (ex:DD/MM/YYYY) en type DATE, si la date saisie est valide sinon retourne 0000-00-00.
@@ -898,36 +902,36 @@ function strtotimestamp($str, $date_format)
  */
 function strtodate($str, $date_format)
 {
-    list($month, $day, $year) = array(0, 0, 0);
-    $array_date = explode('/', $str);
-    $array_format = explode('/', $date_format);
-    for ($i = 0; $i < 3; $i++)
-    {
-        switch ($array_format[$i])
-        {
-            case 'DD':
-                $day = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
-                break;
-            case 'MM':
-                $month = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
-                break;
-            case 'YYYY':
-                $year = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
-                break;
-        }
-    }
+	list($month, $day, $year) = array(0, 0, 0);
+	$array_date = explode('/', $str);
+	$array_format = explode('/', $date_format);
+	for ($i = 0; $i < 3; $i++)
+	{
+		switch ($array_format[$i])
+		{
+			case 'DD':
+				$day = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				break;
+			case 'MM':
+				$month = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				break;
+			case 'YYYY':
+				$year = (isset($array_date[$i])) ? numeric($array_date[$i]) : 0;
+				break;
+		}
+	}
 
-    //Vérification du format de la date.
-    if (checkdate($month, $day, $year))
-    {
-        $date = $year . '-' . $month . '-' . $day;
-    }
-    else
-    {
-        $date = '0000-00-00';
-    }
+	//Vérification du format de la date.
+	if (checkdate($month, $day, $year))
+	{
+		$date = $year . '-' . $month . '-' . $day;
+	}
+	else
+	{
+		$date = '0000-00-00';
+	}
 
-    return $date;
+	return $date;
 }
 
 /**
@@ -938,19 +942,19 @@ function strtodate($str, $date_format)
  */
 function delete_file($file)
 {
-    global $LANG;
+	global $LANG;
 
-    if (function_exists('unlink'))
-    {
-        if (file_exists($file))
-        {
-            return @unlink($file); //On supprime le fichier.
-        }
-    }
-    else
-    {
-        return false;
-    }
+	if (function_exists('unlink'))
+	{
+		if (file_exists($file))
+		{
+			return @unlink($file); //On supprime le fichier.
+		}
+	}
+	else
+	{
+		return false;
+	}
 }
 
 /**
@@ -960,34 +964,34 @@ function delete_file($file)
  */
 function pages_displayed($no_update = false)
 {
-    if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+'))
-    {
-        $hour = gmdate_format('G');
-        $data = unserialize(fgets($file, 4096)); //Renvoie la première ligne du fichier (le array précédement crée).
-        if (!$no_update)
-        {
-            if (isset($data[$hour])) //Robo repasse.
-            {
-                $data[$hour]++; //Nbr de vue.
-            }
-            else
-            {
-                $data[$hour] = 1;
-            }
-        }
+	if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+'))
+	{
+		$hour = gmdate_format('G');
+		$data = unserialize(fgets($file, 4096)); //Renvoie la première ligne du fichier (le array précédement crée).
+		if (!$no_update)
+		{
+			if (isset($data[$hour])) //Robo repasse.
+			{
+				$data[$hour]++; //Nbr de vue.
+			}
+			else
+			{
+				$data[$hour] = 1;
+			}
+		}
 
-        rewind($file);
-        fwrite($file, serialize($data)); //On stocke le tableau dans le fichier de données
-        fclose($file);
-    }
-    else if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'w+')) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-    {
-        $data = array();
-        fwrite($file, serialize($data)); //On insère un tableau vide.
-        fclose($file);
-    }
+		rewind($file);
+		fwrite($file, serialize($data)); //On stocke le tableau dans le fichier de données
+		fclose($file);
+	}
+	else if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'w+')) //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
+	{
+		$data = array();
+		fwrite($file, serialize($data)); //On insère un tableau vide.
+		fclose($file);
+	}
 
-    return $data;
+	return $data;
 }
 
 /**
@@ -998,7 +1002,7 @@ function pages_displayed($no_update = false)
  */
 function number_round($number, $dec)
 {
-    return trim(number_format($number, $dec, '.', ''));
+	return trim(number_format($number, $dec, '.', ''));
 }
 
 /**
@@ -1010,135 +1014,135 @@ function number_round($number, $dec)
  */
 function file_get_contents_emulate($filename, $incpath = false, $resource_context = null)
 {
-    if (false === ($fh = @fopen($filename, 'rb', $incpath)))
-    {
-        user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
-        return false;
-    }
+	if (false === ($fh = @fopen($filename, 'rb', $incpath)))
+	{
+		user_error('file_get_contents_emulate() failed to open stream: No such file or directory', E_USER_WARNING);
+		return false;
+	}
 
-    clearstatcache();
-    if ($fsize = @filesize($filename))
-    {
-        $data = fread($fh, $fsize);
-    }
-    else
-    {
-        $data = '';
-        while (!feof($fh))
-        {
-            $data .= fread($fh, 8192);
-        }
-    }
-    fclose($fh);
-    return $data;
+	clearstatcache();
+	if ($fsize = @filesize($filename))
+	{
+		$data = fread($fh, $fsize);
+	}
+	else
+	{
+		$data = '';
+		while (!feof($fh))
+		{
+			$data .= fread($fh, 8192);
+		}
+	}
+	fclose($fh);
+	return $data;
 }
 
 //Emulates the PHP5 html_entity_decode function
 if (!function_exists('html_entity_decode'))
 {
-    function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
-    {
-        if (!is_int($quote_style))
-        {
-            user_error('html_entity_decode() expects parameter 2 to be long, ' .
-            gettype($quote_style) . ' given', E_USER_WARNING);
-            return;
-        }
+	function html_entity_decode($string, $quote_style = ENT_COMPAT, $charset = null)
+	{
+		if (!is_int($quote_style))
+		{
+			user_error('html_entity_decode() expects parameter 2 to be long, ' .
+			gettype($quote_style) . ' given', E_USER_WARNING);
+			return;
+		}
 
-        $trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
+		$trans_tbl = array_flip(get_html_translation_table(HTML_ENTITIES));
 
-        // Add single quote to translation table;
-        $trans_tbl['&#039;'] = '\'';
+		// Add single quote to translation table;
+		$trans_tbl['&#039;'] = '\'';
 
-        // Not translating double quotes
-        if ($quote_style & ENT_NOQUOTES)
-        {
-            unset($trans_tbl['&quot;']); // Remove double quote from translation table
-        }
-        return strtr($string, $trans_tbl);
-    }
+		// Not translating double quotes
+		if ($quote_style & ENT_NOQUOTES)
+		{
+			unset($trans_tbl['&quot;']); // Remove double quote from translation table
+		}
+		return strtr($string, $trans_tbl);
+	}
 }
 
 //Emulates the PHP5 htmlspecialchars_decode function
 if (!function_exists('htmlspecialchars_decode'))
 {
-    function htmlspecialchars_decode($string, $quote_style = null)
-    {
-        // Sanity check
-        if (!is_scalar($string))
-        {
-            user_error('htmlspecialchars_decode() expects parameter 1 to be string, ' . gettype($string) . ' given', E_USER_WARNING);
-            return;
-        }
+	function htmlspecialchars_decode($string, $quote_style = null)
+	{
+		// Sanity check
+		if (!is_scalar($string))
+		{
+			user_error('htmlspecialchars_decode() expects parameter 1 to be string, ' . gettype($string) . ' given', E_USER_WARNING);
+			return;
+		}
 
-        if (!is_int($quote_style) && $quote_style !== null)
-        {
-            user_error('htmlspecialchars_decode() expects parameter 2 to be integer, ' . gettype($quote_style) . ' given', E_USER_WARNING);
-            return;
-        }
+		if (!is_int($quote_style) && $quote_style !== null)
+		{
+			user_error('htmlspecialchars_decode() expects parameter 2 to be integer, ' . gettype($quote_style) . ' given', E_USER_WARNING);
+			return;
+		}
 
-        // Init
-        $from = array('&amp;', '&lt;', '&gt;');
-        $to = array('&', '<', '>');
+		// Init
+		$from = array('&amp;', '&lt;', '&gt;');
+		$to = array('&', '<', '>');
 
-        // The function does not behave as documented
-        // This matches the actual behaviour of the function
-        if ($quote_style & ENT_COMPAT || $quote_style & ENT_QUOTES)
-        {
-            $from[] = '&quot;';
-            $to[] = '"';
+		// The function does not behave as documented
+		// This matches the actual behaviour of the function
+		if ($quote_style & ENT_COMPAT || $quote_style & ENT_QUOTES)
+		{
+			$from[] = '&quot;';
+			$to[] = '"';
 
-            $from[] = '&#039;';
-            $to[] = "'";
-        }
+			$from[] = '&#039;';
+			$to[] = "'";
+		}
 
-        return str_replace($from, $to, $string);
-    }
+		return str_replace($from, $to, $string);
+	}
 }
 
 //Emulates the PHP5 array_combine function
 if (!function_exists('array_combine'))
 {
-    function array_combine($keys, $values)
-    {
-        if (!is_array($keys))
-        {
-            user_error('array_combine() expects parameter 1 to be array, ' .
-            gettype($keys) . ' given', E_USER_WARNING);
-            return;
-        }
+	function array_combine($keys, $values)
+	{
+		if (!is_array($keys))
+		{
+			user_error('array_combine() expects parameter 1 to be array, ' .
+			gettype($keys) . ' given', E_USER_WARNING);
+			return;
+		}
 
-        if (!is_array($values))
-        {
-            user_error('array_combine() expects parameter 2 to be array, ' .
-            gettype($values) . ' given', E_USER_WARNING);
-            return;
-        }
+		if (!is_array($values))
+		{
+			user_error('array_combine() expects parameter 2 to be array, ' .
+			gettype($values) . ' given', E_USER_WARNING);
+			return;
+		}
 
-        $key_count = count($keys);
-        $value_count = count($values);
-        if ($key_count !== $value_count) {
-            user_error('array_combine() Both parameters should have equal number of elements', E_USER_WARNING);
-            return false;
-        }
+		$key_count = count($keys);
+		$value_count = count($values);
+		if ($key_count !== $value_count) {
+			user_error('array_combine() Both parameters should have equal number of elements', E_USER_WARNING);
+			return false;
+		}
 
-        if ($key_count === 0 || $value_count === 0)
-        {
-            user_error('array_combine() Both parameters should have number of elements at least 0', E_USER_WARNING);
-            return false;
-        }
+		if ($key_count === 0 || $value_count === 0)
+		{
+			user_error('array_combine() Both parameters should have number of elements at least 0', E_USER_WARNING);
+			return false;
+		}
 
-        $keys = array_values($keys);
-        $values  = array_values($values);
+		$keys = array_values($keys);
+		$values  = array_values($values);
 
-        $combined = array();
-        for ($i = 0; $i < $key_count; $i++)
-        {
-            $combined[$keys[$i]] = $values[$i];
-        }
+		$combined = array();
+		for ($i = 0; $i < $key_count; $i++)
+		{
+			$combined[$keys[$i]] = $values[$i];
+		}
 
-        return $combined;
-    }
+		return $combined;
+	}
 }
 
 /**
@@ -1152,24 +1156,24 @@ if (!function_exists('array_combine'))
 function strhash($str, $salt = true)
 {
 
-    if ($salt === true)
-    {   // Default salt
-        $str = md5($str) . $str;
-    }
-    elseif ($salt !== false)
-    {   // Specific salt
-        $str = $salt . $str;
-    }
+	if ($salt === true)
+	{   // Default salt
+		$str = md5($str) . $str;
+	}
+	elseif ($salt !== false)
+	{   // Specific salt
+		$str = $salt . $str;
+	}
 
-    if (phpversion() >= '5.1.2')
-    {   // PHP5 Primitive
-        return hash('sha256', $str);
-    }
-    else
-    {   // With PHP4
-        import('lib/sha256');
-        return SHA256::hash($str);
-    }
+	if (phpversion() >= '5.1.2')
+	{   // PHP5 Primitive
+		return hash('sha256', $str);
+	}
+	else
+	{   // With PHP4
+		import('lib/sha256');
+		return SHA256::hash($str);
+	}
 }
 
 /**
@@ -1178,8 +1182,8 @@ function strhash($str, $salt = true)
  */
 function get_uid()
 {
-    static $uid = 1764;
-    return $uid++;
+	static $uid = 1764;
+	return $uid++;
 }
 
 define('CLASS_IMPORT', '.class.php');
@@ -1205,14 +1209,14 @@ function import($path, $import_type = CLASS_IMPORT)
  */
 function req($file, $once = true)
 {
-    if ($once)
-    {
-        require_once(PATH_TO_ROOT . $file) !== false;
-    }
-    else
-    {
-        return (require PATH_TO_ROOT . $file) !== false;
-    }
+	if ($once)
+	{
+		require_once(PATH_TO_ROOT . $file) !== false;
+	}
+	else
+	{
+		return (require PATH_TO_ROOT . $file) !== false;
+	}
 }
 
 /**
@@ -1223,11 +1227,11 @@ function req($file, $once = true)
  */
 function inc($file, $once = true)
 {
-    if ($once)
-    {
-        return include_once(PATH_TO_ROOT . $file) !== false;
-    }
-    return (include PATH_TO_ROOT . $file) !== false;
+	if ($once)
+	{
+		return include_once(PATH_TO_ROOT . $file) !== false;
+	}
+	return (include PATH_TO_ROOT . $file) !== false;
 }
 
 /**
@@ -1238,11 +1242,11 @@ function inc($file, $once = true)
  */
 function of_class(&$object, $classname)
 {
-    if (!get_class($object)) //$object is not an object.
-		return false;
-	
+	if (!get_class($object)) //$object is not an object.
+	return false;
+
 	return strtolower(get_class($object)) == strtolower($classname) ||
-        is_subclass_of(strtolower(get_class($object)), strtolower($classname));
+	is_subclass_of(strtolower(get_class($object)), strtolower($classname));
 }
 
 /**
@@ -1252,8 +1256,8 @@ function of_class(&$object, $classname)
  */
 function to_js_string($string)
 {
-    return '\'' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
-    addcslashes($string, '\'')) . '\'';
+	return '\'' . str_replace(array("\r\n", "\r", "\n"), array('\n', '\n', '\n'),
+	addcslashes($string, '\'')) . '\'';
 }
 
 
@@ -1270,25 +1274,25 @@ function to_js_string($string)
  */
 function set_subregex_multiplicity($sub_regex, $multiplicity_option)
 {
-    switch ($multiplicity_option)
-    {
-        case REGEX_MULTIPLICITY_OPTIONNAL:
-            // Optionnal
-            return '(?:' . $sub_regex . ')?';
-        case REGEX_MULTIPLICITY_REQUIRED:
-            // Required
-            return $sub_regex;
-        case REGEX_MULTIPLICITY_AT_LEAST_ONE:
-            // Optionnal
-            return '(?:' . $sub_regex . ')+';
-        case REGEX_MULTIPLICITY_ALL:
-            // Optionnal
-            return '(?:' . $sub_regex . ')*';
-        case  REGEX_MULTIPLICITY_NOT_USED:
-        default:
-            // Not present
-            return '';
-    }
+	switch ($multiplicity_option)
+	{
+		case REGEX_MULTIPLICITY_OPTIONNAL:
+			// Optionnal
+			return '(?:' . $sub_regex . ')?';
+		case REGEX_MULTIPLICITY_REQUIRED:
+			// Required
+			return $sub_regex;
+		case REGEX_MULTIPLICITY_AT_LEAST_ONE:
+			// Optionnal
+			return '(?:' . $sub_regex . ')+';
+		case REGEX_MULTIPLICITY_ALL:
+			// Optionnal
+			return '(?:' . $sub_regex . ')*';
+		case  REGEX_MULTIPLICITY_NOT_USED:
+		default:
+			// Not present
+			return '';
+	}
 }
 
 /**
@@ -1296,12 +1300,12 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
  * @return string the full phpboost version with its build number
  */
 function phpboost_version() {
-    global $CONFIG;
-    import('io/filesystem/file');
-    $file = new File(PATH_TO_ROOT . '/.build');
-    $build =  $file->get_contents();
-    $file->close();
-    return $CONFIG['version'] . trim($build);
+	global $CONFIG;
+	import('io/filesystem/file');
+	$file = new File(PATH_TO_ROOT . '/.build');
+	$build =  $file->get_contents();
+	$file->close();
+	return $CONFIG['version'] . trim($build);
 }
 
 ?>
