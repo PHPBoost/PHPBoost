@@ -698,7 +698,7 @@ $LANG['details'] = 'Détails';
 $LANG['more_details'] = 'Plus de détails';
 $LANG['download_the_complete_pack'] = 'Téléchargez le pack complet';
 $LANG['download_the_update_pack'] = 'Téléchargez le pack de mise à jour';
-$LANG['no_availables_updates'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
+$LANG['no_available_update'] = 'Aucune mise à jour n\'est disponible pour l\'instant.';
 $LANG['incompatible_php_version'] = 'Impossible de vérifier la présence de mise à jour.
 Veuillez utiliser la version %s ou ultérieure de PHP.<br />Si vous ne pouvez utiliser PHP5,
 veuillez vérifier la présence de ces mises à jour sur notre <a href="http://www.phpboost.com">site officiel</a>.';

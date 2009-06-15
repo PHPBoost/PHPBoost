@@ -133,7 +133,7 @@ if (phpversion() > PHP_MIN_VERSION_UPDATES)
         
     }
     else
-        $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_availables_updates']));
+        $tpl->assign_vars(array('L_NO_AVAILABLES_UPDATES' => $LANG['no_available_update']));
 }
 else
 {
