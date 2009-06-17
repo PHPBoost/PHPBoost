@@ -728,7 +728,11 @@ class CategoriesManager
 		{
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
-			if ($id != 0 && $id != $current_id_cat && $value['id_parent'] == $id_cat)
+			
+			if ($id == $current_id_cat)
+				continue;
+				
+			if ($id != 0 && $value['id_parent'] == $id_cat)
 			{
 				// According to the recursion mode (this is default)
 				//Exploration which reading behaviour : if we can't se a folder, we can't see its children
