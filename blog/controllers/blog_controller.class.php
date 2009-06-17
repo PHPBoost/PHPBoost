@@ -89,7 +89,7 @@ class BlogController extends AbstractBlogController
             'EL_DELETE' => htmlspecialchars($this->lang['delete']),
             'TITLE' => $blog->get_title(),
             'DESCRIPTION' => second_parse($blog->get_description()),
-            'USER' => second_parse($blog->get_member_login()),
+            'USER' => second_parse($blog->get_property('member_login')),
             'JL_CONFIRM_DELETE' => to_js_string($this->lang['confirm_delete_blog'])
 		));
 

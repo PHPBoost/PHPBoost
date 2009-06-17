@@ -43,6 +43,14 @@ interface IController
 	 * @desc This method will always be called just after the controler action
 	 */
 	public function destroy();
+	
+	/**
+	 * @desc Catch all non-catched exceptions thrown by the controller method
+	 * matching the current url
+	 * @param Exception $exception the thrown exception
+	 * @throws Exception
+	 */
+	public function exception_handler($exception);
 }
 
 /**
@@ -56,6 +64,11 @@ abstract class AbstractController implements IController
 {
 	public function init() {}
 	public function destroy() {}
+	
+	public function exception_handler($exception)
+	{
+		throw $exception;
+	}
 	
 	protected function check_token()
 	{
