@@ -151,8 +151,15 @@ class UrlDispatcherItem
 			throw new NoSuchControllerMethodException($this->controller, $this->method_name);
 		}
 		
-        // Call the controller method_name with all the given parameters
-		call_user_func_array(array($this->controller, $this->method_name), $this->params);
+		try
+		{
+            // Call the controller method_name with all the given parameters
+            call_user_func_array(array($this->controller, $this->method_name), $this->params);
+		}
+		catch (Exception $ex)
+		{
+			$this->controller->exception_handler($ex);
+		}
 		
 		$this->controller->destroy();
 	}

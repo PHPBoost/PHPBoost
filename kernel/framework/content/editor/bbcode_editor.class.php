@@ -148,6 +148,9 @@ class BBCodeEditor extends ContentEditor
         $nbr_smile = count($_array_smiley_code);
         $i = 1;
         $z = 0;
+        import('util/url');
+        $base_url = new Url(PATH_TO_ROOT . '/images/smileys');
+        $base_url = $base_url->absolute();
         foreach ($_array_smiley_code as $code_smile => $url_smile)
         {
             if ($z == $smile_max)
@@ -182,7 +185,7 @@ class BBCodeEditor extends ContentEditor
                 $height = $height_source;
             }
              
-            $img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+            $img = '<img src="' . $base_url . '/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
 
             $template->assign_block_vars('smiley', array(
 				'IMG' => $img,
