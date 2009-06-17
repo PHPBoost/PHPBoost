@@ -44,9 +44,11 @@ abstract class SQLRestriction implements IRestriction
         }
         else
         {
-            return MySQLDAO::escape($field_or_value);
+            return $this->escape($field_or_value);
         }
     }
+    
+    abstract protected static function escape($value); 
     
     private $criteria;
 }

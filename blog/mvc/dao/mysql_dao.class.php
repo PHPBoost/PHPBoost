@@ -47,7 +47,7 @@ abstract class MySQLDAO extends SQLDAO
 		return new MySQLCriteria($this->model);
 	}
 
-	public function escape($value)
+	public static function escape($value)
 	{
 		if ($value === null)
 		{

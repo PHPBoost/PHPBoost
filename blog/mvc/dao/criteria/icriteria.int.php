@@ -30,16 +30,14 @@ interface ICriteria
 	public function create_restriction();
     public function add($restriction);
 
-    public function add_extra_field($extra_field);
+    public function add_external_field($external_field);
     public function add_external_table($table_name);
     
-    public function set_max_results($max_results);
-    public function set_offset($offset);
-    public function order_by($field_name, $way = ICriteria::ASC);
     public function count();
 
-//    public function unique_result();
-    public function results_list();
+    public function update(&$fields_and_values);
+    public function delete();
+    public function results_list($max_results = -1, $offset = 0, $order_by = null, $way = ICriteria::ASC);
     
     const ASC = 'asc';
     const DESC = 'desc';
