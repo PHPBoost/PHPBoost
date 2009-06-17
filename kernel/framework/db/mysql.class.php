@@ -615,7 +615,7 @@ class Sql
 	*/
 	function create_database($db_name)
 	{
-		$db_name = str_replace('-', '_', url_encode_rewrite($db_name));
+		$db_name = Sql::clean_database_name($db_name);
         mysql_query("CREATE DATABASE " . $db_name);
         return $db_name;
 	}
@@ -705,6 +705,17 @@ class Sql
         redirect(PATH_TO_ROOT . '/member/toomanyconnections.php');
 	}
 	
+	/**
+	 * Cleans the data base name to be sure it's a correct name
+	 * @param string $db_name Name to clear
+	 * @return The clean name
+	 * @static
+	 */
+	function clean_database_name($db_name)
+	{
+		return str_replace('-', '_', url_encode_rewrite($db_name));
+	}
+	
 	
 	## Private attributes ##
 	/**
@@ -724,4 +735,4 @@ class Sql
 	 */
 	var $base_name = '';
 }
-?>
+?> 

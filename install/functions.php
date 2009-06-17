@@ -51,6 +51,8 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	
 	$status = CONNECTION_FAILED;
 	
+	$database_name = Sql::clean_database_name($database_name);
+	
 	//Tentative de connexion à la base de données
 	switch ($Sql->connect($host, $login, $password, $database_name, ERRORS_MANAGEMENT_BY_RETURN))
 	{
