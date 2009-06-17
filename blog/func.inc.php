@@ -7,9 +7,9 @@
  * @param string $interface_name the interface
  * @return boolean true if the object $object implements the interface named $interface_name
  */
-function implements_interface($object, $interface_name)
+function implements_interface($class, $interface_name)
 {
-	return in_array($interface_name, class_implements($object));
+	return in_array($interface_name, class_implements($class));
 }
 
 define('INTERFACE_IMPORT', '.int.php');

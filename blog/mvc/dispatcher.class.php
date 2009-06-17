@@ -110,13 +110,13 @@ class UrlDispatcherItem
 {
 	/**
 	 * @desc build a new UrlDispatcherItem
-	 * @param Object $controller the controller
+	 * @param string $controller the controller classname
 	 * @param string $method_name the controller method name
 	 * @param string $capture_regex the regular expression matching the url
 	 * and capturing the controller method parameters
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct(&$controller, $method_name, $capture_regex)
+	public function __construct($controller, $method_name, $capture_regex)
 	{
 		if (!implements_interface($controller, ICONTROLER__INTERFACE))
 		{
@@ -143,25 +143,26 @@ class UrlDispatcherItem
 			}
 		}
 		
-        $this->controller->init();
+        $controller = new $this->controller();
+        $controller->init();
         
-		if (!method_exists($this->controller, $this->method_name))
+		if (!method_exists($controller, $this->method_name))
 		{
 			$this->controller->destroy();
-			throw new NoSuchControllerMethodException($this->controller, $this->method_name);
+			throw new NoSuchControllerMethodException($controller, $this->method_name);
 		}
 		
 		try
 		{
             // Call the controller method_name with all the given parameters
-            call_user_func_array(array($this->controller, $this->method_name), $this->params);
+            call_user_func_array(array($controller, $this->method_name), $this->params);
 		}
 		catch (Exception $ex)
 		{
-			$this->controller->exception_handler($ex);
+			$controller->exception_handler($ex);
 		}
 		
-		$this->controller->destroy();
+		$controller->destroy();
 	}
 
 	/**
@@ -218,7 +219,7 @@ class NoSuchControllerException extends DispatcherException
 {
 	public function __construct($controller)
 	{
-		parent::__construct('Class "' . get_class($controller) . '" is not a valid controller (does not implement IController)');
+		parent::__construct('Class "' . $controller . '" is not a valid controller (does not implement IController)');
 	}
 }
 
@@ -231,7 +232,7 @@ class NoSuchControllerMethodException extends DispatcherException
 {
 	public function __construct($controller, $method_name)
 	{
-		parent::__construct('Controller "' . get_class($controller) . '" doesn\'t have a method called "' . $method_name . '"');
+		parent::__construct('Controller "' . $controller . '" doesn\'t have a method called "' . $method_name . '"');
 	}
 }
 ?>

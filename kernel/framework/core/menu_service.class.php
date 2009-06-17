@@ -648,7 +648,7 @@ class MenuService
             if (!empty($infos['infos']) && !empty($infos['infos']['starteable_page']))
             {
                 $img = '';
-                $img_url = '../' . $module->get_id() . '/' . $module->get_id();
+                $img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id();
                 import('io/filesystem/file');
                 foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
                 {

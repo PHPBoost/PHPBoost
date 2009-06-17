@@ -36,27 +36,25 @@ mvcimport('mvc/dispatcher');
 mimport('blog/controllers/blog_controller');
 mimport('blog/controllers/blog_post_controller');
 
-$blog_controller = new BlogController();
-$blog_post_controller = new BlogPostController();
-$my_dispatcher = null;
 try
 {
+	$my_dispatcher = null;
 	$my_dispatcher = new Dispatcher(array(
-    new UrlDispatcherItem($blog_controller, 'test', '`^/test/?$`'),
-    new UrlDispatcherItem($blog_controller, 'blogs', '`^/?$`'),
-	new UrlDispatcherItem($blog_controller, 'view', '`^/([0-9]+)/?$`'),
-	new UrlDispatcherItem($blog_controller, 'create', '`^/create/?$`'),
-	new UrlDispatcherItem($blog_controller, 'create_valid', '`^/create/valid/?$`'),
-	new UrlDispatcherItem($blog_controller, 'edit', '`^/([0-9]+)/edit/?$`'),
-	new UrlDispatcherItem($blog_controller, 'edit_valid', '`^/([0-9]+)/edit/valid/?$`'),
-	new UrlDispatcherItem($blog_controller, 'delete', '`^/([0-9]+)/delete/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'posts', '`^/([0-9]+)/posts/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'view', '`^/([0-9]+)/posts/([0-9]+)/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'create', '`^/([0-9]+)/post/add/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'create_valid', '`^/([0-9]+)/post/add/valid/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'edit', '`^/[0-9]+/post/([0-9]+)/edit/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'edit_valid', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`'),
-	new UrlDispatcherItem($blog_post_controller, 'delete', '`^/[0-9]+/post/delete/([0-9]+)/?$`')
+	new UrlDispatcherItem('BlogController', 'test', '`^/test/?$`'),
+	new UrlDispatcherItem('BlogController', 'blogs', '`^/?$`'),
+	new UrlDispatcherItem('BlogController', 'view', '`^/([0-9]+)/?$`'),
+	new UrlDispatcherItem('BlogController', 'create', '`^/create/?$`'),
+	new UrlDispatcherItem('BlogController', 'create_valid', '`^/create/valid/?$`'),
+	new UrlDispatcherItem('BlogController', 'edit', '`^/([0-9]+)/edit/?$`'),
+	new UrlDispatcherItem('BlogController', 'edit_valid', '`^/([0-9]+)/edit/valid/?$`'),
+	new UrlDispatcherItem('BlogController', 'delete', '`^/([0-9]+)/delete/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'posts', '`^/([0-9]+)/posts/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'view', '`^/([0-9]+)/posts/([0-9]+)/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'create', '`^/([0-9]+)/post/add/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'create_valid', '`^/([0-9]+)/post/add/valid/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'edit', '`^/[0-9]+/post/([0-9]+)/edit/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'edit_valid', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`'),
+	new UrlDispatcherItem('BlogPostController', 'delete', '`^/[0-9]+/post/delete/([0-9]+)/?$`')
 	));
 
 	try

@@ -53,7 +53,7 @@ class MySQLCriteria extends SQLCriteria
 		return (int) call_user_func_array(array($this->connection, 'query_array'), $params);
 	}
 
-	public function results_list()
+	public function results_list($max_results = 0, $offset = 0, $order_by = null, $way = ICriteria::ASC)
 	{
 		$query = 'SELECT ' . $this->fields() . ' FROM ' . implode(', ', $this->tables) . ' ';
 		$conditions = $this->build_query_conditions();
@@ -61,10 +61,10 @@ class MySQLCriteria extends SQLCriteria
 		{
 			$query .= ' WHERE ' . $conditions;
 		}
-		if (!empty($this->order_by))
+		if (!empty($order_by))
 		{
-			$query .= ' ORDER BY ' . $this->order_by;
-			if ($this->way == ICriteria::ASC)
+			$query .= ' ORDER BY ' . $order_by;
+			if ($way == ICriteria::ASC)
 			{
 				$query .= ' ASC ';
 			}
@@ -73,7 +73,10 @@ class MySQLCriteria extends SQLCriteria
 				$query .= ' DESC ';
 			}
 		}
-		$query .= ' LIMIT ' . $this->offset . ', ' . $this->max_results;
+		if ($max_results > 0)
+		{
+		    $query .= ' LIMIT ' .$max_results . ', ' . $offset;
+		}
 		$results = array();
 		$sql_results = $this->connection->query_while($query, __LINE__, __FILE__);
 		while ($row = $this->connection->fetch_assoc($sql_results))
@@ -83,15 +86,27 @@ class MySQLCriteria extends SQLCriteria
 		return $results;
 	}
 
-	public function update()
+    public function update(&$fields_and_values)
 	{
 		$query = 'UPDATE ' . $this->model->table() . ' SET ';
-		// TODO insert the list of the updated fields with their new values
+        $fields_update = '';
+        $model_fields = array_keys($this->model->fiedls());
+		foreach ($fields_and_values as $field => $value)
+		{
+			if (!in_array($field, $model_fields))
+			{   // TODO Special exception here
+                throw new Exception('Field "' . $field . '" doesn\'t exist in model "' . $this->model->name() . '"');
+			}
+			// TODO find a solution for request like:
+			// SET myField = myField + 1
+			$fields_update .= $field->name() . '=' . MySQLDAO::escape($value);
+		}
 		$conditions = $this->build_query_conditions();
 		if (!empty($conditions))
 		{
-			$query .= ' WHERE ' . $conditions;
+			$query .= 'WHERE ' . $conditions;
 		}
+		die($query);
 		$this->connection->query_inject($query, __LINE__, __FILE__);
 	}
 

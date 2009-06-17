@@ -41,7 +41,8 @@ abstract class SQLCriteria implements ICriteria
     {
         $this->restrictions[] = $restriction;
     }
-    public function add_extra_field($extra_field)
+    
+    public function add_external_field($external_field)
     {
     	$this->extra_fields[] = $extra_field;
     }
@@ -51,38 +52,6 @@ abstract class SQLCriteria implements ICriteria
     	{
     	   $this->tables[] = $table_name;
     	}
-    }
-
-    public function set_max_results($max_results)
-    {
-        if (is_numeric($max_results))
-        {
-            $max_results =  numeric($max_results);
-            if (is_integer($max_results) && $max_results > 0)
-            {
-                $this->max_results = $max_results;
-                return;
-            }
-        }
-        throw new InvalidArgumentException('ICriteria->set_max_results($max_results): $max_results must be a strictly positive integer');
-    }
-    public function set_offset($offset)
-    {
-        if (is_numeric($offset))
-        {
-            $offset =  numeric($offset);
-            if (is_integer($offset) && $offset >= 0)
-            {
-                $this->offset = $offset;
-                return;
-            }
-        }
-        throw new InvalidArgumentException('ICriteria->set_offset($offset): $offset must be a positive integer');
-    }
-    public function order_by($field_name, $way = ICriteria::ASC)
-    {
-    	$this->order_by = $field_name;
-    	$this->way = $way;
     }
 
     protected function fields($fields_options = null)

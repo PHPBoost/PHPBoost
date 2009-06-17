@@ -36,11 +36,8 @@ class BlogPostDAO extends AbstractDAO
 
 	public function find_by_blog_id($blog_id, $offset = 0, $max_results = 100, $most_recent_first = true)
 	{
-		$criteria = $this->get_blog_id_criteria($blog_id);
-		$criteria->set_offset($offset);
-		$criteria->set_max_results($max_results);
-		$criteria->order_by('creation_date', $most_recent_first ? ICriteria::DESC : ICriteria::ASC);
-		return $criteria->results_list();
+		return $this->get_blog_id_criteria($blog_id)->results_list($max_results, $offset,
+		    'creation_date', $most_recent_first ? ICriteria::DESC : ICriteria::ASC);
 	}
 
 	public function delete_all_blog_post($blog_id)

@@ -58,7 +58,7 @@ class MySQLRestriction extends SQLRestriction
         $nb = count(values);
         for ($i = 0; i < $nb; $i++)
         {
-            $values[$i] = MySQLDAO::escape($value[$i]);
+            $values[$i] = self::escape($value[$i]);
         }
         return $field->name() . ' IN (' . implode(',', $values) . ')';
     }
@@ -68,11 +68,11 @@ class MySQLRestriction extends SQLRestriction
     }
     public function like($field, $pattern)
     {
-        return $field->name() . ' LIKE ' . MySQLDAO::escape($pattern);
+        return $field->name() . ' LIKE ' . self::escape($pattern);
     }
     public function match($field, $text_value)
     {
-        return 'MATCH (' . $field->name() . ') AGAINST (' . MySQLDAO::escape($text_value) . ')';
+        return 'MATCH (' . $field->name() . ') AGAINST (' . self::escape($text_value) . ')';
     }
 
     public function and_criterions($left_restriction, $right_restriction)
@@ -87,5 +87,10 @@ class MySQLRestriction extends SQLRestriction
     {
         return 'NOT (' . $restriction . ')';
     }
+    
+    protected static function escape($value)
+    {
+    	return MySQLDAO::escape($value);
+    } 
 }
 ?>
