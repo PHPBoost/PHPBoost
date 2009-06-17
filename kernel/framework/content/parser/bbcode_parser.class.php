@@ -192,12 +192,12 @@ class BBCodeParser extends ContentParser
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iU',
             'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iU',
 			'math' => '`\[math\](.+)\[/math\]`iU',
+            'mail' => '`(?<=\s|^)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(?=\s|\n|\r|<|$)`i',
+            'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i',
 			'url1' => '`\[url\]((?!javascript:)[^"]+)\[/url\]`isU',
 			'url2' => '`\[url=((?!javascript:)[^"]+)\]([^\n\r\t\f]+)\[/url\]`isU',
 			'url3' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
-			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU',
-			'mail' => '`(\s+)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(\s+)`i',
-			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`i'
+			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU'
 			);
 			
 			$array_preg_replace = array(
@@ -222,12 +222,12 @@ class BBCodeParser extends ContentParser
 			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
 			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
 			'math' => '[[MATH]]$1[[/MATH]]',
+            'mail' => "<a href=\"mailto:$1\">$1</a>",
+            'mail2' => "<a href=\"mailto:$1\">$2</a>",
 			'url1' => '<a href="$1">$1</a>',
 			'url2' => '<a href="$1">$2</a>',
             'url3' => '$1<a href="$2">$2</a>$3',
-            'url4' => '$1<a href="$2">$2</a>$3',
-			'mail' => "$1<a href=\"mailto:$2\">$2</a>$3",
-			'mail2' => "<a href=\"mailto:$1\">$2</a>"
+            'url4' => '$1<a href="$2">$2</a>$3'
 			);
 
 			$parse_line = true;
@@ -245,7 +245,8 @@ class BBCodeParser extends ContentParser
 			    }
 			    if (in_array('mail', $this->forbidden_tags))
 			    {
-			        $this->forbidden_tags[] = 'mail2';
+                    $this->forbidden_tags[] = 'mail';
+                    $this->forbidden_tags[] = 'mail2';
 			    }
 			    	
 			    foreach ($this->forbidden_tags as $key => $tag)

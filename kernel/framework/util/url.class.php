@@ -91,7 +91,7 @@ class Url
 				}
 
 			}
-			if (strpos($url, 'javascript:') === 0)
+			if (strpos($url, 'javascript:') === 0 || strpos($url, 'mailto:') === 0)
 			{   // This is a javascript command and we don't try to convert it.
 				$this->url = $url;
 				return;
