@@ -31,9 +31,13 @@ import('modules/modules_discovery_service');
 
 class AbstractBlogController extends AbstractController
 {
-	protected function set_bread_crumb($items = null)
+	protected function init_env($view = null, $items = null)
 	{
 		global $Bread_crumb;
+		if ($view !== null)
+		{
+			$view->add_lang($this->lang);
+		}
 		$Bread_crumb->add($this->interface->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
 		if ($items !== null)
 		{

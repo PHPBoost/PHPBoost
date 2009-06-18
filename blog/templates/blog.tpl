@@ -5,7 +5,7 @@
             <a href="{U_EDIT}" title="{EL_EDIT}">
                 <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}">
             </a>
-            <a href="{U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE});">
+            <a href="{U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE_BLOG});">
                 <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/delete.png" alt="{EL_DELETE}">
             </a>
         </span>
@@ -24,7 +24,7 @@
                 <span style="float: left; padding-left: 5px;"><a href="{blogs.U_DETAILS}" title="{blogs.E_TITLE}">{posts.TITLE}</a></span>
                 <span style="float: right;">
                     <!--  <a href="{blogs.U_EDIT}" title="{EL_EDIT}"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/edit.png" alt="{EL_EDIT}"></a>
-                    <a href="{blogs.U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE});">
+                    <a href="{blogs.U_DELETE}" title="{EL_DELETE}" onclick="return confirm({JL_CONFIRM_DELETE_POST});">
                         <img class="valign_middle" src="{PATH_TO_ROOT}/templates/base/images/{LANG}/delete.png" alt="{EL_DELETE}">
                     </a>-->
                 </span>

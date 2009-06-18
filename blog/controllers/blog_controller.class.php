@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/template');
+mvcimport('mvc/view');
 import('modules/modules_discovery_service');
 
 mimport('blog/controllers/abstract_blog_controller');
@@ -36,26 +36,17 @@ class BlogController extends AbstractBlogController
 {
 	public function blogs()
 	{
-		$this->set_bread_crumb();
+		$view = new View('blog/list.tpl');
+		$this->init_env($view);
 		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', ICriteria::DESC);
-		$tpl = new Template('blog/list.tpl');
-		$tpl->assign_vars(array(
+		$view->assign_vars(array(
             'U_CREATE' => Blog::global_action_url(Blog::GLOBAL_ACTION_CREATE)->absolute(),
-            'U_LIST' => Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute(),
-            'L_BLOGS_LIST' => $this->lang['blogs_list'],
-            'L_EDIT' => $this->lang['edit'],
-            'L_DELETE' => $this->lang['delete'],
-            'L_CREATE_NEW_BLOG' => $this->lang['create_new_blog'],
-            'EL_BLOGS_LIST' => htmlspecialchars($this->lang['blogs_list']),
-            'EL_EDIT' => htmlspecialchars($this->lang['edit']),
-            'EL_DELETE' => htmlspecialchars($this->lang['delete']),
-            'EL_CREATE_NEW_BLOG' => htmlspecialchars($this->lang['create_new_blog']),
-		    'JL_CONFIRM_DELETE' => to_js_string($this->lang['confirm_delete_blog'])
+            'U_LIST' => Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute()
 		));
 
 		foreach ($blogs as $blog)
 		{
-			$tpl->assign_block_vars('blogs', array(
+			$view->assign_block_vars('blogs', array(
                 'TITLE' => $blog->get_title(),
                 'DESCRIPTION' => second_parse($blog->get_description()),
         	    'E_TITLE' => htmlspecialchars($blog->get_title()),
@@ -65,90 +56,85 @@ class BlogController extends AbstractBlogController
                 'USER' => $blog->get_property('member_login')
 			));
 		}
-		$tpl->parse();
+		$view->parse();
 	}
 
 	public function view($blog_id, $page = 1)
 	{
-		$tpl = new Template('blog/blog.tpl');
+		$view = new View('blog/blog.tpl');
 		$blog = BlogDAO::instance()->find_by_id($blog_id);
 		if ($blog === null)
 		{
 			// TODO error message here
-			$tpl->assign_vars(array('L_ERROR_MESSAGE' => 'ERROR_MESSAGE'));
+			$view->assign_vars(array('L_ERROR_MESSAGE' => 'ERROR_MESSAGE'));
 			die('error');
 		}
 
-		$this->set_bread_crumb(array( $blog->get_title() => ''));
+		$this->init_env($view, array( $blog->get_title() => ''));
 		$posts = BlogPostDAO::instance()->find_by_blog_id($blog->get_id(), ($page - 1) * self::POSTS_PER_PAGE, $page * self::POSTS_PER_PAGE);
 
-		$tpl->assign_vars(array(
+		$view->assign_vars(array(
             'U_EDIT' => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
-            'EL_EDIT' => htmlspecialchars($this->lang['edit']),
             'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
-            'EL_DELETE' => htmlspecialchars($this->lang['delete']),
             'TITLE' => $blog->get_title(),
             'DESCRIPTION' => second_parse($blog->get_description()),
-            'USER' => second_parse($blog->get_property('member_login')),
-            'JL_CONFIRM_DELETE' => to_js_string($this->lang['confirm_delete_blog'])
+            'USER' => second_parse($blog->get_property('member_login'))
 		));
 
 		foreach ($posts as $post)
 		{
-			$tpl->assign_block_vars('posts', array(
+			$view->assign_block_vars('posts', array(
                 'TITLE' => $post->get_title(),
                 'CONTENT' => second_parse($post->get_content()),
                 'CREATION_DATE' => $post->get_date()
 			));
 		}
 
-		$tpl->parse();
+		$view->parse();
 	}
 
 	public function create($blog = null, $error_message = null, $blog_id = -1)
 	{
-		$tpl = new Template('blog/save.tpl');
+		$view = new View('blog/save.tpl');
 		if ($blog_id >= 0)
 		{
-			$this->set_bread_crumb(array(
+			$this->init_env($view, array(
 			$blog->get_title() => $blog->action_url(Blog::ACTION_DETAILS)->absolute(),
-			$this->lang['edit'] => $blog->action_url(Blog::ACTION_EDIT)->absolute(),
+			$this->lang['edit'] => $blog->action_url(Blog::ACTION_EDIT)->absolute()
 			));
-			$tpl->assign_vars(array(
+			$view->assign_vars(array(
                 'U_FORM_VALID' => $blog->action_url(Blog::ACTION_EDIT_VALID)->absolute(),
                 'L_SAVE_BLOG' => sprintf($this->lang['edit_blog'], $blog->get_title()),
+			    'TITLE' => $blog->get_title(),
                 'EL_SAVE' => $this->lang['edit']
 			));
 		}
 		else
 		{
-			$this->set_bread_crumb(array($this->lang['create_new_blog'] => ''));
-			$tpl->assign_vars(array(
+			$this->init_env($view, array($this->lang['create_new_blog'] => ''));
+			$view->assign_vars(array(
 	            'U_FORM_VALID' => Blog::global_action_url(Blog::GLOBAL_ACTION_CREATE_VALID)->absolute(),
-	            'L_SAVE_BLOG' => $this->lang['create_new_blog'],
-	            'EL_SAVE' => $this->lang['create']
+                'L_SAVE_BLOG' => $this->lang['create_new_blog'],
+                'EL_SAVE' => $this->lang['create']
 			));
 		}
 
-		$tpl->assign_vars(array(
-            'L_TITLE' => $this->lang['title'],
-            'L_DESCRIPTION' => $this->lang['description'],
+		$view->assign_vars(array(
             'TITLE_MAX_LENGTH' => BlogDAO::instance()->get_model()->field('title')->length(),
 		    'KERNEL_EDITOR' => display_editor('description')
 		));
 		if (!empty($error_message))
 		{
-			$tpl->assign_vars(array('L_ERROR_MESSAGE' => $error_message));
+			$view->assign_vars(array('ERROR_MESSAGE' => $error_message));
 		}
 		if ($blog instanceof Blog)
 		{
 			$blog->set_description(unparse($blog->get_description()));
-			$tpl->assign_vars(array(
-	            'E_TITLE' => htmlspecialchars($blog->get_title()),
+			$view->assign_vars(array(
 	            'DESCRIPTION' => $blog->get_description()
 			));
 		}
-		$tpl->parse();
+		$view->parse();
 	}
 
 	public function create_valid($blog_id = -1)
@@ -192,73 +178,73 @@ class BlogController extends AbstractBlogController
 		BlogDAO::instance()->delete($blog_id);
 		redirect(Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
 	}
-	
+
 	function test()
-    {
-    	$this->set_bread_crumb();
-        try
-        {
-            // Creates a blog and some blog posts
-            $blog = new Blog('Mon Blog Perso', 'Pas de description');
-            $blog->add(new BlogPost('Mon Premier Post', 'Voici mon premier post.<br />
+	{
+		$this->init_env();
+		try
+		{
+			// Creates a blog and some blog posts
+			$blog = new Blog('Mon Blog Perso', 'Pas de description');
+			$blog->add(new BlogPost('Mon Premier Post', 'Voici mon premier post.<br />
             J\'espère que vous appréciez le blog'));
-            $blog->add(new BlogPost('Mon Second Post', 'Voici mon second post.<br />
+			$blog->add(new BlogPost('Mon Second Post', 'Voici mon second post.<br />
             J\'espère que vous appréciez <strong>toujours</strong> le blog'));
-            $blog->add(new BlogPost('Mon Troisième Post', 'Voici mon troisième post.<br />
+			$blog->add(new BlogPost('Mon Troisième Post', 'Voici mon troisième post.<br />
             J\'espère que vous appréciez <strong>encore</strong> le blog'));
-            BlogDAO::instance()->save($blog);
+			BlogDAO::instance()->save($blog);
 
-            // Retrieves the blog and the last 2 blog posts
-            $blog_id = $blog->get_id();
-            unset($blog);
-            $blog = BlogDAO::instance()->find_by_id($blog_id);
-            $posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 2, true);
+			// Retrieves the blog and the last 2 blog posts
+			$blog_id = $blog->get_id();
+			unset($blog);
+			$blog = BlogDAO::instance()->find_by_id($blog_id);
+			$posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 2, true);
 
-            echo '<h1>' . $blog->get_title() . '</h1>';
-            foreach ($posts as $post)
-            {
-                echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
-                echo '<p>' . $post->get_content() . '</p>';
-            }
+			echo '<h1>' . $blog->get_title() . '</h1>';
+			foreach ($posts as $post)
+			{
+				echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
+				echo '<p>' . $post->get_content() . '</p>';
+			}
 
-            // Edit the blog and the third post
-            $blog->set_title('Mon Nouveau Blog Perso');
-            $posts[0]->set_title($posts[0]->get_title() . ' [EDITED]');
-            $posts[0]->set_content($posts[0]->get_content() . '<br /> @+ ;)');
-            BlogPostDAO::instance()->save($posts[0]);
-            // Delete the 1° blog post
-            BlogPostDAO::instance()->delete($posts[1]);
-            // Adds another blog post
-            $blog->add(new BlogPost('Mon Quatrième Post', 'Voici mon quatrième post.<br />
+			// Edit the blog and the third post
+			$blog->set_title('Mon Nouveau Blog Perso');
+			$posts[0]->set_title($posts[0]->get_title() . ' [EDITED]');
+			$posts[0]->set_content($posts[0]->get_content() . '<br /> @+ ;)');
+			BlogPostDAO::instance()->save($posts[0]);
+			// Delete the 1° blog post
+			BlogPostDAO::instance()->delete($posts[1]);
+			// Adds another blog post
+			$blog->add(new BlogPost('Mon Quatrième Post', 'Voici mon quatrième post.<br />
             J\'espère que vous appréciez <strong>encore et toujours</strong> le blog'));
-            // Saves
-            BlogDAO::instance()->save($blog);
-            echo '<hr />';
-            // Retrieves the blog and the last 5 blog posts
-            unset($blog); unset($posts);
-            $blog = BlogDAO::instance()->find_by_id($blog_id);
-            $posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 5, false);
+			// Saves
+			BlogDAO::instance()->save($blog);
+			echo '<hr />';
+			// Retrieves the blog and the last 5 blog posts
+			unset($blog); unset($posts);
+			$blog = BlogDAO::instance()->find_by_id($blog_id);
+			$posts = BlogPostDAO::instance()->find_by_blog_id($blog_id, 0, 5, false);
 
-            echo '<h1>' . $blog->get_title() . '</h1>';
-            foreach ($posts as $post)
-            {
-                echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
-                echo '<p>' . $post->get_content() . '</p>';
-            }
+			echo '<h1>' . $blog->get_title() . '</h1>';
+			foreach ($posts as $post)
+			{
+				echo '<h2>(' . $post->get_date(DATE_FORMAT_LONG) . ') ' . $post->get_title() . '</h2>';
+				echo '<p>' . $post->get_content() . '</p>';
+			}
 
-            // Delete All
-            BlogDAO::instance()->delete($blog);
-            //          global $Sql;
-            //            $Sql->query_inject('TRUNCATE phpboost_blog', __LINE__, __FILE__);
-            //            $Sql->query_inject('TRUNCATE phpboost_blogpost', __LINE__, __FILE__);
-        }
-        catch (Exception $ex)
-        {
-            echo '<hr />' . $ex->getMessage() . '<Br />';
-            echo '<pre>';print_r($ex->getTraceAsString());echo '</pre><hr />';
-        }
-    }
-	
+			// Delete All
+			BlogDAO::instance()->delete($blog);
+			//          global $Sql;
+			//            $Sql->query_inject('TRUNCATE phpboost_blog', __LINE__, __FILE__);
+			//            $Sql->query_inject('TRUNCATE phpboost_blogpost', __LINE__, __FILE__);
+		}
+		catch (Exception $ex)
+		{
+			echo '<hr />' . $ex->getMessage() . '<Br />';
+			echo '<pre>';print_r($ex->getTraceAsString());echo '</pre><hr />';
+		}
+	}
+
 
 	const POSTS_PER_PAGE = 3;
 }
