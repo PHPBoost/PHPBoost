@@ -105,7 +105,7 @@ class BlogController extends AbstractBlogController
 			$view->assign_vars(array(
                 'U_FORM_VALID' => $blog->action_url(Blog::ACTION_EDIT_VALID)->absolute(),
                 'L_SAVE_BLOG' => sprintf($this->lang['edit_blog'], $blog->get_title()),
-			    'TITLE' => $blog->get_title(),
+                'TITLE' => $blog->get_title(),
                 'EL_SAVE' => $this->lang['edit']
 			));
 		}
