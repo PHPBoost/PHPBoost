@@ -11,8 +11,8 @@ function check_create_blog_form()
     <div class="module_top_r"></div>
     <div class="module_top">{L_SAVE_BLOG}</div>
     <div class="module_contents">
-        # IF L_ERROR_MESSAGE #
-            <div class="warning">{L_ERROR_MESSAGE}</div>
+        # IF ERROR_MESSAGE #
+            <div class="warning">{ERROR_MESSAGE}</div>
         # ENDIF #
         <form action="{U_FORM_VALID}" onsubmit="return check_create_blog_form();" method="post">
             <fieldset>
