@@ -111,7 +111,6 @@ class View extends Template
 		$file->open(WRITE);
 		$file->lock();
 		$file->write(
-		//if (isset($this->_var[\'$1\'])) echo $this->_var[\'$1\'];
 		preg_replace('`if\s+\(isset\(\$this->_var\[\'(.+)\'\]\)\)\s+echo\s+\$this->_var\[\'.+\'\]`iU', 'echo $this->get_var(\'$1\')', $this->template)
 		);
 		$file->unlock();
