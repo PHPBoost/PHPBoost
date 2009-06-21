@@ -93,10 +93,10 @@ class BlogController extends AbstractBlogController
 		$view->parse();
 	}
 
-	public function create($blog = null, $error_message = null, $blog_id = -1)
+	public function create($blog = null, $error_message = null)
 	{
 		$view = new View('blog/save.tpl');
-		if ($blog_id >= 0)
+		if ($blog !== null && $blog->get_id() > 0)
 		{
 			$this->init_env($view, array(
 			$blog->get_title() => $blog->action_url(Blog::ACTION_DETAILS)->absolute(),
@@ -105,7 +105,6 @@ class BlogController extends AbstractBlogController
 			$view->assign_vars(array(
                 'U_FORM_VALID' => $blog->action_url(Blog::ACTION_EDIT_VALID)->absolute(),
                 'L_SAVE_BLOG' => sprintf($this->lang['edit_blog'], $blog->get_title()),
-                'TITLE' => $blog->get_title(),
                 'EL_SAVE' => $this->lang['edit']
 			));
 		}
@@ -121,7 +120,9 @@ class BlogController extends AbstractBlogController
 
 		$view->assign_vars(array(
             'TITLE_MAX_LENGTH' => BlogDAO::instance()->get_model()->field('title')->length(),
-		    'KERNEL_EDITOR' => display_editor('description')
+		    'KERNEL_EDITOR' => display_editor('description'),
+            'TITLE' => retrieve(POST, 'title', ''),
+            'DESCRIPTION' => retrieve(POST, 'description', '')
 		));
 		if (!empty($error_message))
 		{
@@ -166,12 +167,16 @@ class BlogController extends AbstractBlogController
 	public function edit($blog_id)
 	{
 		$blog = BlogDAO::instance()->find_by_id($blog_id);
+        $_POST['title'] = $blog->get_title();
+        $_POST['description'] = $blog->get_description();
 		$this->create($blog, null, $blog_id);
 	}
+	
 	public function edit_valid($blog_id)
 	{
 		$this->create_valid($blog_id);
 	}
+	
 	public function delete($blog_id)
 	{
 		$this->check_token();
