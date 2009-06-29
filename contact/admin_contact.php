@@ -61,7 +61,7 @@ else
 		'CONTACT_VERIFCODE_DISABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_CONTACT' => $LANG['title_contact'],
 		'L_CONTACT_CONFIG' => $LANG['contact_config'],
-		'L_CONTACT_VERIFCODE' => $LANG['verif_code'],
+		'L_CONTACT_VERIFCODE' => $LANG['activ_verif_code'],
 		'L_CONTACT_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
 		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_YES' => $LANG['yes'],
