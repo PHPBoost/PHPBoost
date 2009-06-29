@@ -100,14 +100,14 @@ class BBCodeParser extends ContentParser
             $this->_reimplant_tag('html');
         }
 
+        parent::parse();
+         
         //On réinsère les fragments de code qui ont été prévelevés pour ne pas les considérer
         if (!empty($this->array_tags['code']))
         {
             $this->array_tags['code'] = array_map(create_function('$string', 'return preg_replace(\'`^\[code(=.+)?\](.+)\[/code\]$`isU\', \'[[CODE$1]]$2[[/CODE]]\', $string);'), $this->array_tags['code']);
             $this->_reimplant_tag('code');
         }
-
-        parent::parse();
     }
 
     ## Private ##
