@@ -42,6 +42,6 @@ $LANG['alert_contact_mail'] = 'Your e-mail address isn\'t valid!';
 
 //Admin
 $LANG['contact_config'] = 'Configuration';
-$LANG['verif_code'] = 'Enter verification code';
+$LANG['activ_verif_code'] = 'Enter verification code';
 
 ?>
