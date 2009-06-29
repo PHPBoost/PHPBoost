@@ -98,6 +98,8 @@ class TinyMCEParser extends ContentParser
 			$this->_reimplant_tag('html');
 		}
 		
+		parent::parse();
+		
 		//On réinsère les fragments de code qui ont été prélevés pour ne pas les considérer
 		if (!empty($this->array_tags['code']))
 		{
@@ -108,8 +110,6 @@ class TinyMCEParser extends ContentParser
 			
 			$this->_reimplant_tag('code');
 		}
-		
-        parent::parse();
 	}
 	
 	## Protected ##
