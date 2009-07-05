@@ -95,5 +95,5 @@ Go into the articles management panel of the administration, and approve it.
 ' . HOST . DIR . '/admin/admin_articles_gestion.php';
 
 $LANG['read_feed'] = 'Read the Article';
-$LANG['posted_on'] = 'The';
+$LANG['posted_on'] = 'Posted on';
 ?>

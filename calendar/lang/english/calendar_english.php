@@ -40,7 +40,7 @@ $LANG['calendar'] = 'Calendar';
 $LANG['date_calendar'] = 'Date <span class="text_small">(mm/dd/yy)</span>';
 $LANG['events'] = 'Events';
 $LANG['action'] = 'Action';
-$LANG['no_current_action'] = 'No event on this date';
+$LANG['no_current_action'] = 'No events scheduled for this date';
 $LANG['edit_event'] = 'Edit event';
 $LANG['add_event'] = 'Add event';
 $LANG['january'] = 'January';

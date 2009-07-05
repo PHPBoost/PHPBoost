@@ -41,7 +41,6 @@ $LANG['db_explain_actions'] = 'Ce panneau vous permet de gérer votre base de don
 La réparation n\'est normalement pas à envisager mais en cas de problème elle peut s\'avérer utile. Le support vous dira de l\'effectuer quand cela sera nécessaire.
 <br />
 <strong>Attention : </strong>C\'est une opération lourde, elle consomme beaucoup de ressources, il est donc conseillé d\'éviter de réparer les tables si ce n\'est pas utile !</div>';
-$LANG['db_restore'] = 'Restaurer la base de données depuis un fichier de sauvegarde';
 $LANG['db_restore_from_server'] = 'Vous pouvez utiliser les fichiers que vous n\'aviez pas supprimé lors de restaurations antérieures.';
 $LANG['db_view_file_list'] = 'Voir la liste des fichiers disponibles (<em>cache/backup</em>)';
 $LANG['import_file_explain'] = 'Vous pouvez restaurer votre base de données par un fichier que vous possédez sur votre ordinateur. Si votre fichier dépasse la taille maximale autorisée par votre serveur, c\'est-à-dire %s, vous devez utiliser l\'autre méthode en envoyant par FTP votre fichier dans le répertoire <em>cache/backup</em>.';
@@ -72,7 +71,6 @@ $LANG['db_backup'] = 'Sauvegarder';
 $LANG['db_succes_repair_tables'] = 'La sélection de tables (<em>%s</em>) a été réparée avec succès';
 $LANG['db_succes_optimize_tables'] = 'La sélection de tables (<em>%s</em>) a été optimisée avec succès';
 $LANG['db_backup_database'] = 'Sauvegarder la base de données';
-$LANG['db_selected_tables'] = 'Tables sélectionnées';
 $LANG['db_backup_explain'] = 'Vous pouvez encore modifier la liste des tables que vous souhaitez sélectionner dans le formulaire.
 <br />
 Ensuite vous devez choisir ce que vous souhaitez sauvegarder.';
