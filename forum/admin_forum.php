@@ -301,7 +301,7 @@ elseif (!empty($id))
 		'CATEGORIES' => $forums,
 		'NAME' => $forum_info['name'],
 		'URL' => $forum_info['url'],
-		'DESC' => $forum_info['subname'],
+		'DESC' => unparse($forum_info['subname']),
 		'CHECKED_APROB' => ($forum_info['aprob'] == 1) ? 'checked="checked"' : '',
 		'UNCHECKED_APROB' => ($forum_info['aprob'] == 0) ? 'checked="checked"' : '',
 		'CHECKED_STATUS' => ($forum_info['status'] == 1) ? 'checked="checked"' : '',
