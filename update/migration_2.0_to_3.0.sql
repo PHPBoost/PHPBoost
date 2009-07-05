@@ -1,11 +1,3 @@
-ALTER TABLE `phpboost_articles` CHANGE `contents` `contents` MEDIUMTEXT NOT NULL;
-ALTER TABLE `phpboost_articles` CHANGE `note` `note` float NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_articles` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_articles` ADD FULLTEXT (`title`);
-ALTER TABLE `phpboost_articles` ADD FULLTEXT (`contents`);
-
-ALTER TABLE `phpboost_calendar` DROP `timestamp_end` ;
-
 ALTER TABLE `phpboost_com` CHANGE `idcom` `idcom` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `phpboost_com` CHANGE `idprov` `idprov` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `phpboost_com` CHANGE `user_id` `user_id` int(11) NOT NULL DEFAULT '0';
@@ -15,7 +7,6 @@ ALTER TABLE `phpboost_com` DROP INDEX `idcom`, ADD PRIMARY KEY ( `idcom` ) ;
 ALTER TABLE `phpboost_com` ADD INDEX (`idprov` ,`script`);
 
 DROP TABLE IF EXISTS `phpboost_compteur`;
-
 
 -- Il faudra vérifier les modules à insérer dans cette table!
 TRUNCATE `phpboost_configs`;
@@ -44,27 +35,6 @@ INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES
 (22, 'web', 'a:4:{s:11:"nbr_web_max";i:10;s:11:"nbr_cat_max";i:10;s:10:"nbr_column";i:2;s:8:"note_max";i:5;}'),
 (23, 'wiki', 'a:6:{s:4:"auth";s:71:"a:4:{s:3:"r-1";i:1041;s:2:"r0";i:1299;s:2:"r1";i:4095;s:2:"r2";i:4095;}";s:9:"wiki_name";s:13:"Wiki PHPBoost";s:13:"last_articles";i:0;s:12:"display_cats";i:0;s:10:"index_text";s:22:"Bienvenue sur le wiki.";s:10:"count_hits";i:1;}');
 
-
-ALTER TABLE `phpboost_download` ADD `short_contents` text NOT NULL AFTER `title` ;
-ALTER TABLE `phpboost_download` ADD `image` varchar(255) NOT NULL DEFAULT '' AFTER `url` ;
-ALTER TABLE `phpboost_download` ADD `release_timestamp` int(11) NOT NULL AFTER `timestamp` ;
-ALTER TABLE `phpboost_download` ADD `approved` tinyint(1) unsigned NOT NULL DEFAULT '0' AFTER `visible` ;
-ALTER TABLE `phpboost_download` CHANGE `compt` `count`  int(11) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_download` CHANGE `note` `note` float NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_download` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_download` ADD `force_download` tinyint(1) NOT NULL AFTER `lock_com` ;
-ALTER TABLE `phpboost_download` ADD FULLTEXT (`title`);
-ALTER TABLE `phpboost_download` ADD FULLTEXT (`contents`);
-ALTER TABLE `phpboost_download` ADD FULLTEXT (`short_contents`);
-
-
-ALTER TABLE `phpboost_download_cat` CHANGE `class` `c_order` int(11) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_download_cat` ADD `id_parent` int(11) NOT NULL DEFAULT '0' AFTER `c_order` ;
-ALTER TABLE `phpboost_download_cat` CHANGE `aprob` `visible` tinyint(1) NOT NULL DEFAULT '1';
-ALTER TABLE `phpboost_download_cat` DROP `secure`;
-ALTER TABLE `phpboost_download_cat` ADD `auth` text NOT NULL AFTER `visible` ;
-ALTER TABLE `phpboost_download_cat` ADD `num_files` int(11) NOT NULL DEFAULT '0' AFTER `auth` ;
-
 CREATE TABLE IF NOT EXISTS `phpboost_events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `entitled` varchar(255) NOT NULL,
@@ -92,59 +62,11 @@ CREATE TABLE IF NOT EXISTS `phpboost_events` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
-CREATE TABLE IF NOT EXISTS `phpboost_faq` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idcat` int(11) NOT NULL DEFAULT '0',
-  `q_order` int(11) NOT NULL DEFAULT '0',
-  `question` varchar(255) NOT NULL DEFAULT '',
-  `answer` text,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `timestamp` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  FULLTEXT KEY `question` (`question`),
-  FULLTEXT KEY `answer` (`answer`),
-  FULLTEXT KEY `question_2` (`question`,`answer`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-CREATE TABLE IF NOT EXISTS `phpboost_faq_cats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_parent` int(11) NOT NULL DEFAULT '0',
-  `c_order` int(11) unsigned NOT NULL DEFAULT '0',
-  `auth` text,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `visible` tinyint(1) NOT NULL DEFAULT '0',
-  `display_mode` tinyint(2) NOT NULL DEFAULT '0',
-  `description` text,
-  `image` varchar(255) NOT NULL DEFAULT '',
-  `num_questions` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-ALTER TABLE `phpboost_forum_cats` DROP `type`;
-ALTER TABLE `phpboost_forum_cats` ADD `url` varchar(255) NOT NULL AFTER `auth` ;
-
-ALTER TABLE `phpboost_forum_history` CHANGE `action` `action` varchar(50) NOT NULL DEFAULT '';
-ALTER TABLE `phpboost_forum_history` ADD `user_id_action` int(11) NOT NULL DEFAULT '0' AFTER `user_id` ;
-ALTER TABLE `phpboost_forum_history` ADD `url` varchar(255) NOT NULL AFTER `user_id_action` ;
-
-ALTER TABLE `phpboost_forum_msg` ADD `user_ip` varchar(50) NOT NULL DEFAULT '' AFTER `user_id_edit` ;
-
-ALTER TABLE `phpboost_forum_topics` CHANGE `nbr_vus` `nbr_views`  mediumint(9) NOT NULL DEFAULT '0';
-
-ALTER TABLE `phpboost_forum_track` ADD `track` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id` ;
-UPDATE `phpboost_forum_track` SET `track` = 1;
-
-ALTER TABLE `phpboost_gallery` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
-
-
 ALTER TABLE `phpboost_group` ADD `color` varchar(6) NOT NULL DEFAULT '' AFTER `img` ;
 ALTER TABLE `phpboost_group` DROP `auth`;
 ALTER TABLE `phpboost_group` ADD `auth` varchar(255) NOT NULL DEFAULT '0' AFTER `color` ;
 
-
 DROP TABLE IF EXISTS `phpboost_links`;
-
 
 ALTER TABLE `phpboost_member` CHANGE `password` `password`  varchar(64) NOT NULL DEFAULT '';
 ALTER TABLE `phpboost_member` ADD `user_editor` varchar(15) NOT NULL DEFAULT '' AFTER `user_show_mail` ;
@@ -158,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_member_extend` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
- ALTER TABLE `phpboost_member_extend_cat` CHANGE `require` `required` TINYINT( 1 ) NOT NULL DEFAULT '0';
+ALTER TABLE `phpboost_member_extend_cat` CHANGE `require` `required` TINYINT( 1 ) NOT NULL DEFAULT '0';
 
 
 CREATE TABLE IF NOT EXISTS `phpboost_menus` (
@@ -190,22 +112,7 @@ INSERT INTO `phpboost_menus` (`id`, `title`, `object`, `class`, `enabled`, `bloc
 
 DROP TABLE IF EXISTS `phpboost_modules_mini`;
 
-
-ALTER TABLE `phpboost_news` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_news` DROP INDEX `id` , ADD INDEX `idcat` ( `idcat` ); 
-ALTER TABLE `phpboost_news` ADD FULLTEXT (`title`);
-ALTER TABLE `phpboost_news` ADD FULLTEXT (`contents`);
-ALTER TABLE `phpboost_news` ADD FULLTEXT (`extend_contents`);
-
-ALTER TABLE `phpboost_pages` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'; 
-ALTER TABLE `phpboost_pages` ADD FULLTEXT (`title`);
-ALTER TABLE `phpboost_pages` ADD FULLTEXT (`contents`);
-ALTER TABLE `phpboost_pages` ADD FULLTEXT `all` (`title` ,`contents`);
-
-
 ALTER TABLE `phpboost_pm_topic` DROP `visible`;
-
-ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip` ;
 
 TRUNCATE `phpboost_ranks`;
 INSERT INTO `phpboost_ranks` (`id`, `name`, `msg`, `icon`, `special`) VALUES
@@ -252,11 +159,6 @@ ALTER TABLE `phpboost_sessions` ADD `user_lang` varchar(50) NOT NULL DEFAULT '' 
 ALTER TABLE `phpboost_sessions` ADD `modules_parameters` text NOT NULL AFTER `user_lang` ;
 ALTER TABLE `phpboost_sessions` ADD `token` varchar(64) NOT NULL AFTER `modules_parameters` ;
 
-
-ALTER TABLE `phpboost_shoutbox` ADD `level` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id` ;
-
-
-
 ALTER TABLE `phpboost_stats` ADD `pages` int(11) NOT NULL DEFAULT '0' AFTER `nbr` ;
 ALTER TABLE `phpboost_stats` ADD `pages_detail` text NOT NULL AFTER `pages` ;
 ALTER TABLE `phpboost_stats` DROP INDEX `stats_day`, ADD UNIQUE `stats_day` ( `stats_day` , `stats_month` , `stats_year` ) ;
@@ -275,14 +177,11 @@ CREATE TABLE IF NOT EXISTS `phpboost_stats_referer` (
   KEY `url` (`url`,`relative_url`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
-
-
 ALTER TABLE `phpboost_themes` ADD `left_column` tinyint(1) NOT NULL DEFAULT '0' AFTER `secure` ;
 ALTER TABLE `phpboost_themes` ADD `right_column` tinyint(1) NOT NULL DEFAULT '0'AFTER `left_column` ;
 UPDATE `phpboost_themes` SET `left_column` = 1, `right_column` = 1;
 
 ALTER TABLE `phpboost_verif_code` CHANGE `user_id` `user_id` varchar(15) NOT NULL DEFAULT '';
-
 
 CREATE TABLE IF NOT EXISTS `phpboost_visit_counter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -296,13 +195,5 @@ CREATE TABLE IF NOT EXISTS `phpboost_visit_counter` (
 INSERT INTO `phpboost_visit_counter` (`id`, `ip`, `time`, `total`) VALUES (1, '1', '2009-03-20', 1);
 
 
-ALTER TABLE `phpboost_web` CHANGE `note` `note` float NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_web` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
-
-
-ALTER TABLE `phpboost_web_cat` CHANGE `secure` `secure` tinyint(1) NOT NULL DEFAULT '0';
-
-
-ALTER TABLE `phpboost_wiki_articles` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0';
 
 
