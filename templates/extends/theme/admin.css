@@ -1,0 +1,223 @@
+/* --------------------------------------
+		admin.css
+Contient les classes supplémentaires pour l'administration.
+--------------------------------------*/ /* Entéte de la page */
+div#header_admin_container {
+}
+
+
+div#header_admin {
+}
+
+/* Menu de lien horizontal */
+div#sub_header_admin {
+    height:35px;
+}
+
+/* Lien du subheader */
+div#sub_header_admin .dynamic_menu {
+	width:auto;
+	height:35px;
+	margin-top:-3px;
+	padding-left:15px;
+	float:left;
+}
+div#admin_extend_link{
+	float:right;
+	margin-right:15px;
+	margin-top:-3px;
+	background:#F2F7FB;
+    border:1px solid #C4CED6;
+    padding:4px 6px;
+    -moz-border-radius-topleft:12px;
+    -khtml-border-radius-topleft:12px;
+    -webkit-border-radius-topleft:12px;
+    -moz-border-radius-bottomright:12px;
+    -khtml-border-radius-bottomright:12px;
+    -webkit-border-radius-bottomright:12px;
+    border-radius:12px;
+}
+
+/* Conteneur principal */
+div#admin_main {
+	margin:0;
+	padding:0;
+	margin-top:10px;
+}
+
+/* Conteneurs */
+div#admin_contents {
+    margin:auto;
+    margin-left:202px;
+    border:1px #cccccc solid;
+    border-spacing:1px;
+    padding:10px;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+}
+
+html>body div#admin_contents {
+    height:auto;
+    min-height:450px;
+}
+
+/* Menu de gauche */
+div#admin_quick_menu {
+    float:left;
+    width:170px;
+    text-align:center;
+    padding-top:5px;
+    margin:auto;
+    border:1px #cccccc solid;
+    border-spacing:1px;
+    padding:10px;
+    padding-bottom:20px;
+    background:#F7F8F5 url(images/contentbg.png) repeat-x;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+}
+
+div#admin_quick_menu ul {
+    list-style-type:none;
+    width:169px;
+    margin-top:12px;
+}
+
+div#admin_quick_menu li {
+    display:block;
+    width:160px;
+    padding:15px 0px;
+}
+
+div#admin_quick_menu li.title_menu {
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:0.75em;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
+    color:#FFFFFF;
+    padding:3px 0px;
+	margin-bottom:20px;
+    -moz-border-radius:12px;
+    -khtml-border-radius:12px;
+    -webkit-border-radius:12px;
+    border-radius:12px;
+}
+
+div#admin_quick_menu li a.quick_link {
+    font-family:Verdana, 'Bitstream Vera Sans', Times, serif;
+    text-transform:uppercase;
+    font-weight:bold;
+    font-size:0.75em;
+    color:#FFFFFF;
+	background:#5D7C94 url(images/msg_top_row.png) repeat-x;
+    border:1px solid #CCCCCC;
+    padding:3px 8px;
+    text-decoration:none;
+    line-height:2.2em;
+    -moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+
+/* Tableaux de l'administration */
+.module_table,.block_container {
+    width:98%;
+    margin-top:15px;
+}
+
+.error_handler_position {
+    margin-top:15px;
+}
+
+/* Fond des catégories dans l'administration */
+.management_cat_admin {
+    width:100%;
+    height:20px;
+    margin-bottom:2px;
+    padding:4px 0px;
+}
+
+/* Liens vers les menus étendus */
+a.admin_extend_link {
+    text-decoration:none;
+    color:#666666;
+}
+
+/* Coloration des moteur de recherche */
+.robot {
+    color:#FF6600;
+    font-size:12px;
+    font-weight:bold;
+}
+
+/* Styles */
+.success_test {
+    text-align:center;
+    width:20%;
+    background:#81c3a6;
+    display:block;
+    margin:auto;
+    margin-top:4px;
+    color:green;
+    font-weight:bold;
+    padding:1px;
+}
+
+.failure_test {
+    text-align:center;
+    width:20%;
+    background:#ee8d8d;
+    display:block;
+    margin:auto;
+    margin-top:4px;
+    color:red;
+    font-weight:bold;
+    padding:1px;
+}
+
+.unspecified_test {
+    text-align:center;
+    width:20%;
+    background:#5189bb;
+    display:block;
+    margin:auto;
+    margin-top:4px;
+    color:#133554;
+    font-weight:bold;
+    padding:1px;
+}
+
+/* phpinfo */
+h1,h2 {
+    font-family:sans-serif;
+}
+
+h1 {
+    font-size:150%;
+}
+
+h2 {
+    font-size:125%;
+}
+
+pre {
+    margin:0px;
+    font-family:monospace;
+}
+
+.center {
+    text-align:center;
+}
+
+.em {
+    color:#666666;
+    background-color:#cccccc;
+}
