@@ -243,11 +243,14 @@ switch($step)
                 case DB_CONFIG_SUCCESS:
                     die('correct :)');
                     import('core/errors');
+                    import('core/cache');
                     $Errorh = new Errors;
                     $Sql = new Sql();
                     //Connexion
                     $Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
-                        
+
+					$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
+					
                     //Création du fichier de configuration
                     import('io/filesystem/file');
                     
@@ -282,6 +285,44 @@ switch($step)
                     //On parse le fichier de mise à jour de la structure de la base de données
                     $Sql->parse('migration_2.0_to_3.0.sql');
                     
+					$Cache->load('modules'); //Cache des autorisations des modules
+					if (isset($MODULES['forum']))
+						$Sql->parse('migration_forum_2.0_to_3.0.sql');
+					if (isset($MODULES['download']))
+						$Sql->parse('migration_download_2.0_to_3.0.sql');
+					if (isset($MODULES['poll']))
+					{	
+						$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
+					}
+					if (isset($MODULES['articles']))
+						$Sql->parse('migration_articles_2.0_to_3.0.sql');
+					if (isset($MODULES['news']))
+						$Sql->parse('migration_news_2.0_to_3.0.sql');
+					if (isset($MODULES['faq']))
+						$Sql->parse('migration_faq_2.0_to_3.0.sql');
+					if (isset($MODULES['calendar']))
+						$Sql->query_inject("ALTER TABLE `phpboost_calendar` DROP `timestamp_end`", __LINE__, __FILE__);
+					if (isset($MODULES['gallery']))
+						$Sql->query_inject("ALTER TABLE `phpboost_gallery` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+					if (isset($MODULES['shoutbox']))
+						$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` ADD `level` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id`", __LINE__, __FILE__);
+					if (isset($MODULES['wiki']))
+						$Sql->query_inject("ALTER TABLE `phpboost_wiki_articles` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+					if (isset($MODULES['web']))
+					{
+						$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `note` `note` float NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_web_cat` CHANGE `secure` `secure` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+					}
+					if (isset($MODULES['pages']))
+					{
+						$Sql->query_inject("ALTER TABLE `phpboost_pages` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`title`)", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`contents`)", __LINE__, __FILE__);
+						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT `all` (`title` ,`contents`)", __LINE__, __FILE__);
+					}
+					
                     //Fermeture de la connexion BDD
                     $Sql->close();
                     
