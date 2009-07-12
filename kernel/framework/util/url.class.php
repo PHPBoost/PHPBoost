@@ -76,12 +76,12 @@ class Url
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
-				// Backup url arguments inn order to restore them after compression
+				// Backup url arguments in order to restore them after compression
 				if ($pos == 0)
 				{
 					// acnhor to the current page
 					$this->url = $url;
-					$this->is_relative = false; // forbidds all url transformations
+					$this->is_relative = false; // forbids all url transformations
 					return;
 				}
 				else
@@ -102,7 +102,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(HOST . DIR . '/', '/', Url::compress($url));
+			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url));
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -206,7 +206,7 @@ class Url
 			$local_path = substr($local_path, 0, $file_begun) . '/';
 		}
 
-		return $local_path;
+		return '/' . ltrim($local_path, '/');
 	}
 
 	/**
