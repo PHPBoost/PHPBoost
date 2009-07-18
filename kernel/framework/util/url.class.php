@@ -27,7 +27,6 @@
 
 define('URL__CLASS','url');
 define('SERVER_URL', $_SERVER['PHP_SELF']);
-define('URL_TAGS', 'src|data|value|href|son|flv');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
@@ -194,7 +193,8 @@ class Url
 	/**
 	 * @desc Returns the relative path from the website root to the current path if working on a relative url
 	 * @return string the relative path from the website root to the current path if working on a relative url
-	 */function root_to_local()
+	 */
+	function root_to_local()
 	{
 		global $CONFIG;
 
@@ -231,17 +231,30 @@ class Url
 	 */
 	/* static */ function html_convert_root_relative2absolute($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
+		$path_to_root_bak = Url::path_to_root();
+		$server_url_bak = Url::server_url();
+		
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
-		return preg_replace_callback(
-            '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU',
-		array('Url', '_convert_url_to_absolute'),
-		preg_replace_callback(
-		        '`((?:<[^>]+) (?:' . URL_TAGS . ')=")(/[^"]+)("(?:[^<]*>))`',
-		array('Url', '_convert_url_to_absolute'),
-		$html_text
-		)
-		);
+		
+		//define('URL_TAGS', 'src|data|value|href|son|flv');
+		// return preg_replace_callback(
+            // '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU',
+			// array('Url', '_convert_url_to_absolute'),
+			// preg_replace_callback(
+					// '`((?:<[^>]+) (?:' . URL_TAGS . ')=")(/[^"]+)("(?:[^<]*>))`',
+			// array('Url', '_convert_url_to_absolute'),
+			// $html_text
+			// )
+		// );
+
+		$result = preg_replace_callback(Url::_build_html_match_regex(),
+			array('Url', '_convert_url_to_absolute'), $html_text);
+		
+		Url::path_to_root($path_to_root_bak);
+		Url::server_url($server_url_bak);
+		
+		return $result;
 	}
 
 	/**
@@ -254,17 +267,28 @@ class Url
 	 */
 	/* static */ function html_convert_absolute2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
+		$path_to_root_bak = Url::path_to_root();
+		$server_url_bak = Url::server_url();
+		
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
-		return preg_replace_callback(
-            '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")([^"]+)(".*</script>)`sU',
-		array('Url', '_convert_url_to_relative'),
-		preg_replace_callback(
-	            '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))([^"]+)("(?:[^<]*>))`',
-		array('Url', '_convert_url_to_relative'),
-		$html_text
-		)
-		);
+		
+		// return preg_replace_callback(
+            // '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")([^"]+)(".*</script>)`sU',
+			// array('Url', '_convert_url_to_relative'),
+				// preg_replace_callback(
+					// '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))([^"]+)("(?:[^<]*>))`',
+					// array('Url', '_convert_url_to_relative'),
+					// $html_text
+				// )
+			// );
+		$result = preg_replace_callback(Url::_build_html_match_regex(true),
+			array('Url', '_convert_url_to_relative'), $html_text);
+		
+		Url::path_to_root($path_to_root_bak);
+		Url::server_url($server_url_bak);
+		
+		return $result;
 	}
 
 	/**
@@ -276,10 +300,11 @@ class Url
 	 */
 	/* static */ function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT)
 	{
-		return  preg_replace(
-	            '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))(/[^"]+)("(?:[^<]*>))`',
-                '$1' . $path_to_root . '$2$3',
-		$html_text);
+		// TODO rework this
+		return preg_replace(
+			'`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))(/[^"]+)("(?:[^<]*>))`',
+			'$1' . $path_to_root . '$2$3',
+			$html_text);
 	}
 
 	/**
@@ -308,6 +333,62 @@ class Url
 		return $url_params[1] . $url_params[2] . $url_params[3];
 	}
 
+	
+	/* static */ function _build_html_match_regex($only_match_relative = false)
+	{
+		static $regex_match_all = null;
+		static $regex_only_match_relative = null;
+		
+		// regex cache is empty, builds it
+		if ((!$only_match_relative && $regex_match_all === null) || ($only_match_relative && $regex_only_match_relative === null))
+		{
+			$regex = array();
+			$nodes = array('a', 'img', 'x', 'x', 'x', 'x');
+			$attributes = array('href', 'src', 'data', 'value', 'son', 'flv');
+			
+			$nodes_length = count($nodes);
+			for ($i = 0; $i < $nodes_length; $i++)
+			{
+				$a_regex = '`(<' . $nodes[$i] . ' [^>]*(?<=\s)' . $attributes[$i] . '=")(';
+				if ($only_match_relative)
+				{
+					$a_regex .= '/';
+				}
+				$a_regex .= '[^"]+)(")`isU';
+				$regex[] = $a_regex;
+			}
+			//'`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
+			$a_regex = '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\()(?:"|\')(';
+			if ($only_match_relative)
+			{
+				$a_regex .= '/';
+			}
+			$a_regex .= '.+)((?:"|\')\).*</script>)`isU';
+			$regex[] = $a_regex;
+			
+			// Update regex cache
+			if ($only_match_relative)
+			{
+				$regex_only_match_relative = $regex;
+			}
+			else
+			{
+				$regex_match_all = $regex;
+			}
+		}
+		
+		// return result
+		if ($only_match_relative)
+		{
+			return $regex_only_match_relative;
+		}
+		else
+		{
+			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
+			return $regex_match_all;
+		}
+	}
+	
 	/**
 	 * @static
 	 * @param string $url the url to "relativize"
