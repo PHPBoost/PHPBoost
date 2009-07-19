@@ -236,19 +236,8 @@ class Url
 		
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
-		
-		//define('URL_TAGS', 'src|data|value|href|son|flv');
-		// return preg_replace_callback(
-            // '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU',
-			// array('Url', '_convert_url_to_absolute'),
-			// preg_replace_callback(
-					// '`((?:<[^>]+) (?:' . URL_TAGS . ')=")(/[^"]+)("(?:[^<]*>))`',
-			// array('Url', '_convert_url_to_absolute'),
-			// $html_text
-			// )
-		// );
 
-		$result = preg_replace_callback(Url::_build_html_match_regex(),
+		$result = preg_replace_callback(Url::_build_html_match_regex(true),
 			array('Url', '_convert_url_to_absolute'), $html_text);
 		
 		Url::path_to_root($path_to_root_bak);
@@ -273,17 +262,10 @@ class Url
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
 		
-		// return preg_replace_callback(
-            // '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")([^"]+)(".*</script>)`sU',
-			// array('Url', '_convert_url_to_relative'),
-				// preg_replace_callback(
-					// '`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))([^"]+)("(?:[^<]*>))`',
-					// array('Url', '_convert_url_to_relative'),
-					// $html_text
-				// )
-			// );
-		$result = preg_replace_callback(Url::_build_html_match_regex(true),
+		$result = preg_replace_callback(Url::_build_html_match_regex(),
 			array('Url', '_convert_url_to_relative'), $html_text);
+			
+//			echo '<hr />' . htmlentities($html_text) . '<hr />' . htmlentities($result) . '<hr />';
 		
 		Url::path_to_root($path_to_root_bak);
 		Url::server_url($server_url_bak);
@@ -343,13 +325,13 @@ class Url
 		if ((!$only_match_relative && $regex_match_all === null) || ($only_match_relative && $regex_only_match_relative === null))
 		{
 			$regex = array();
-			$nodes = array('a', 'img', 'x', 'x', 'x', 'x');
-			$attributes = array('href', 'src', 'data', 'value', 'son', 'flv');
+			$nodes =      array('a',    'img', 'form',   'object', 'param name="movie"', 'x',    'x');
+			$attributes = array('href', 'src', 'action', 'data',   'value',              'son',  'flv');
 			
 			$nodes_length = count($nodes);
 			for ($i = 0; $i < $nodes_length; $i++)
 			{
-				$a_regex = '`(<' . $nodes[$i] . ' [^>]*(?<=\s)' . $attributes[$i] . '=")(';
+				$a_regex = '`(<' . $nodes[$i] . ' [^>]*(?<= )' . $attributes[$i] . '=")(';
 				if ($only_match_relative)
 				{
 					$a_regex .= '/';
@@ -358,7 +340,7 @@ class Url
 				$regex[] = $a_regex;
 			}
 			//'`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
-			$a_regex = '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\()(?:"|\')(';
+			$a_regex = '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\((?:"|\'))(';
 			if ($only_match_relative)
 			{
 				$a_regex .= '/';
@@ -377,14 +359,14 @@ class Url
 			}
 		}
 		
-		// return result
 		if ($only_match_relative)
 		{
+//            echo '<pre>' . htmlentities(var_export($regex_only_match_relative, true)) . '</pre>';
 			return $regex_only_match_relative;
 		}
 		else
 		{
-			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
+//			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
 			return $regex_match_all;
 		}
 	}
