@@ -70,6 +70,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	//Code de vérification si activé
 	import('util/captcha');
 	$Captcha = new Captcha();
+	$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 	
 	if (!($CONFIG_USER['verif_code'] == '1') || $Captcha->is_valid()) //Code de vérification si activé
 	{
