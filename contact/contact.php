@@ -91,7 +91,7 @@ elseif ($get_error == 'error')//Message de succés.
 }
 
 //Code de vérification, anti-bots.
-if ($captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
+if ($captcha->is_available() && $CONFIG_CONTACT['contact_verifcode'])
 {
     $Template->assign_vars(array(
 		'C_VERIF_CODE' => true,

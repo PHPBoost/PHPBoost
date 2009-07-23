@@ -266,7 +266,7 @@ else //Affichage.
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
 	//Code de vérification, anti-bots.
-	if ($captcha->gd_loaded() && $CONFIG_GUESTBOOK['guestbook_verifcode'])
+	if ($captcha->is_available() && $CONFIG_GUESTBOOK['guestbook_verifcode'])
 	{
 		$Template->assign_vars(array(
 			'C_VERIF_CODE' => true,
