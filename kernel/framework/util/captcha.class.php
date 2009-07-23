@@ -47,7 +47,6 @@ class Captcha
 		Captcha::update_instance(); //Mise à jour de l'instance.
 		if (@extension_loaded('gd'))
 			$this->gd_loaded = true;
-		$this->location = md5(rand(243, 1357));
 	}
 	
 	## Public Methods ##

@@ -35,6 +35,8 @@ if (!empty($_POST['valid']) )
 	$config_com = array();
 	$config_com['com_auth'] = retrieve(POST, 'com_auth', -1);
 	$config_com['com_max'] = retrieve(POST, 'com_max', 10);
+	$config_com['com_verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
+	$config_com['com_verif_code_difficulty'] = retrieve(POST, 'verif_code_difficulty', 2);
 	$config_com['forbidden_tags'] = isset($_POST['forbidden_tags']) ? $_POST['forbidden_tags'] : array();
 	$config_com['max_link'] = retrieve(POST, 'max_link', -1);
 	
@@ -72,8 +74,15 @@ else
 		$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 	}
 	
-	$j = 0;
+	for ($i = 0; $i < 5; $i++)
+	{
+		$Template->assign_block_vars('difficulty', array(
+			'VALUE' => $i,
+			'SELECTED' => ($CONFIG_USER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+		));
+	}
 	
+	$j = 0;
 	foreach (ContentFormattingFactory::get_available_tags() as $identifier => $name)
 	{	
 		$Template->assign_block_vars('tag', array(
@@ -91,6 +100,9 @@ else
 		'MAX_LINK' => isset($CONFIG_COM['max_link']) ? $CONFIG_COM['max_link'] : '-1',
 		'COM_ENABLED' => ($CONFIG['com_popup'] == 0) ? 'checked="checked"' : '',
 		'COM_DISABLED' => ($CONFIG['com_popup'] == 1) ? 'checked="checked"' : '',
+		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
+		'VERIF_CODE_ENABLED' => ($CONFIG_USER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
+		'VERIF_CODE_DISABLED' => ($CONFIG_USER['verif_code'] == 0) ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_COM' => $LANG['com'],
 		'L_COM_MANAGEMENT' => $LANG['com_management'],
@@ -99,13 +111,18 @@ else
 		'L_CURRENT_PAGE' => $LANG['current_page'],
 		'L_NEW_PAGE' => $LANG['new_page'],
 		'L_RANK' => $LANG['rank_com_post'],
-		'L_VIEW_COM' => $LANG['view_com'],	
+		'L_VIEW_COM' => $LANG['view_com'],
+		'L_VERIF_CODE' => $LANG['verif_code'],
+		'L_VERIF_CODE_EXPLAIN' => $LANG['verif_code_explain'],
+		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],	
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
 		'L_FORBIDDEN_TAGS' => $LANG['forbidden_tags'],
 		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
 		'L_SELECT_ALL' => $LANG['select_all'],
 		'L_SELECT_NONE' => $LANG['select_none'],
+		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));

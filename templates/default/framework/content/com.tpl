@@ -30,6 +30,17 @@
 					<dd><input type="text" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" /></dd>
 				</dl>
 				# ENDIF #
+				
+				# IF C_VERIF_CODE #
+				<dl>
+					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
+				</dl>
+				# ENDIF #
 				<br />
 				<label for="contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
