@@ -18,15 +18,15 @@
 		
 		<div style="float:right;margin-right:8px;">
 			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" style="text-align:right;display:inline;">
-				<input size="15" type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
+				<p style="display:inline"><input size="15" type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
 				<input size="15" type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
 				<input checked="checked" type="checkbox" name="auto" />
-				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
 			</form>
 			
 			# IF C_USER_REGISTER #
 			<form action="{U_REGISTER}" method="post" style="display:inline;">
-				<input type="submit" name="register" value="{L_REGISTER}" class="submit" />
+				<p style="display:inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit" /></p>
 			</form>
 			# ENDIF #
 		</div>
