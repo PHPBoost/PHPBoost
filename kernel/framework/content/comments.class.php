@@ -208,6 +208,10 @@ class Comments
 			//Chargement du cache
 			$Cache->load('com');
 			
+			import('util/captcha');
+			$captcha = new Captcha();
+			$captcha->set_difficulty($CONFIG_COM['com_verif_code_difficulty']);
+						
 			###########################Insertion##############################
 			if (retrieve(POST, 'valid_com', false) && !$updatecom)
 			{
@@ -233,6 +237,12 @@ class Comments
 						{
 							if ($check_time >= (time() - $CONFIG['delay_flood'])) //On calcule la fin du delai.
 								redirect($path_redirect . '&errorh=flood#errorh');
+						}
+						
+						//Code de vérification anti-bots.
+						if ($CONFIG_COM['com_verif_code'] && !$captcha->is_valid())
+						{
+							redirect($path_redirect . '&errorh=verif#errorh');
 						}
 						
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
@@ -395,6 +405,10 @@ class Comments
 						$errstr = $LANG['e_unauthorized'];
 						$errno = E_USER_WARNING;
 						break;
+					case 'verif':
+						$errstr = $LANG['e_incorrect_verif_code'];
+						$errno = E_USER_WARNING;
+						break;
 					case 'l_flood':
 						$errstr = sprintf($LANG['e_l_flood'], $CONFIG_COM['max_link']);
 						break;
@@ -422,6 +436,16 @@ class Comments
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
+					//Code de vérification, anti-bots.
+					if ($captcha->gd_loaded() && $CONFIG_COM['com_verif_code'])
+					{
+					    $Template->assign_vars(array(
+							'C_VERIF_CODE' => true,
+							'VERIF_CODE' => $captcha->display_form(),
+							'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
+					    ));
+					}
+
 					if ($User->check_level($CONFIG_COM['com_auth']))
 					{	
 						$Template->assign_vars(array(
@@ -483,6 +507,7 @@ class Comments
 					'CONTENTS' => unparse($contents),
 					'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
 					'L_REQUIRE_TEXT' => $LANG['require_text'],
+					'L_VERIF_CODE' => $LANG['verif_code'],
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 					'L_ADD_COMMENT' => $LANG['add_comment'],
 					'L_LOGIN' => $LANG['pseudo'],
