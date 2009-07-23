@@ -437,7 +437,7 @@ class Comments
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
 					//Code de vérification, anti-bots.
-					if ($captcha->gd_loaded() && $CONFIG_COM['com_verif_code'])
+					if ($captcha->is_available() && $CONFIG_COM['com_verif_code'])
 					{
 					    $Template->assign_vars(array(
 							'C_VERIF_CODE' => true,

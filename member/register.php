@@ -120,7 +120,7 @@ if (empty($key))
 		//Code de vérification, anti-bots.
 		import('util/captcha');
 		$Captcha = new Captcha();
-		if ($Captcha->gd_loaded() && $CONFIG_USER['verif_code'] == '1')
+		if ($Captcha->is_available() && $CONFIG_USER['verif_code'] == '1')
 		{
 			$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 			$Template->assign_vars(array(

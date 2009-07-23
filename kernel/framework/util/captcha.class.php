@@ -51,12 +51,14 @@ class Captcha
 	
 	## Public Methods ##
 	/**
-	 * @desc Checks if GD library is loaded.
+	 * @desc Checks if captcha is loaded, disabled for members.
 	 * @return boolean true if is loaded, false otherwise
 	 */
-	function gd_loaded()
+	function is_available()
 	{
-		if ($this->gd_loaded)
+		global $User;
+		
+		if ($this->gd_loaded && $User->get_attribute('level') == -1)
 			return true;
 		return false;
 	}
@@ -136,6 +138,9 @@ class Captcha
 	{
 		global $Sql;
 		
+		if (!$this->is_available()) //Non activé, retourne vrai.
+			return true;
+			
 		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNCHANGE);
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
 		$captcha = $Sql->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
@@ -157,7 +162,7 @@ class Captcha
 	{
 		global $LANG;
 		
-		return $this->gd_loaded() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
+		return $this->is_available() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
 			alert("' . $LANG['require_verif_code'] . '");
 			return false;
 		}' : '';
@@ -175,7 +180,7 @@ class Captcha
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/captcha.tpl');
 		
-		if ($this->gd_loaded())
+		if ($this->is_available())
 		{		
 			$Template->assign_vars(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
