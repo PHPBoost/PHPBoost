@@ -36,6 +36,7 @@ $Cache->load('guestbook');
 
 import('util/captcha');
 $captcha = new Captcha();
+$captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 
 if ($guestbook && empty($id_get)) //Enregistrement
 {
@@ -267,7 +268,6 @@ else //Affichage.
 	//Code de vérification, anti-bots.
 	if ($captcha->gd_loaded() && $CONFIG_GUESTBOOK['guestbook_verifcode'])
 	{
-		$captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 		$Template->assign_vars(array(
 			'C_VERIF_CODE' => true,
 			'VERIF_CODE' => $captcha->display_form(),

@@ -37,6 +37,7 @@ $get_error = '';
 
 import('util/captcha');
 $captcha = new Captcha();
+$captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
 
 ###########################Envoi##############################
 if (!empty($mail_valid))
@@ -92,7 +93,6 @@ elseif ($get_error == 'error')//Message de succés.
 //Code de vérification, anti-bots.
 if ($captcha->gd_loaded() && $CONFIG_CONTACT['contact_verifcode'])
 {
-    $captcha->set_difficulty($CONFIG_CONTACT['contact_difficulty_verifcode']);
     $Template->assign_vars(array(
 		'C_VERIF_CODE' => true,
 		'VERIF_CODE' => $captcha->display_form(),

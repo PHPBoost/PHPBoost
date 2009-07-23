@@ -47,6 +47,7 @@ class Captcha
 		Captcha::update_instance(); //Mise à jour de l'instance.
 		if (@extension_loaded('gd'))
 			$this->gd_loaded = true;
+		$this->location = md5(rand(243, 1357));
 	}
 	
 	## Public Methods ##
@@ -138,11 +139,12 @@ class Captcha
 		
 		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNCHANGE);
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$code = $Sql->query("SELECT code FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$captcha = $Sql->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			
 		//Suppression pour éviter une réutilisation du code frauduleuse.
 		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		
-		if (!empty($code) && $code == $get_code)
+		if (!empty($captcha['code']) && $captcha['code'] == $get_code && $captcha['difficulty'] == $this->difficulty)
 			return true;
 		else 
 			return false;
@@ -178,7 +180,6 @@ class Captcha
 		{		
 			$Template->assign_vars(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
-				'CAPTCHA_DIFFICULTY' => $this->difficulty,
 				'CAPTCHA_WIDTH' => $this->width,
 				'CAPTCHA_HEIGHT' => $this->height,
 				'CAPTCHA_FONT' => $this->font,
@@ -355,9 +356,9 @@ class Captcha
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
 		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if ($check_user_id == 1)
-			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
 	}
 		
 	## Private Attributes ##
