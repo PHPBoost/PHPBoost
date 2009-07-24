@@ -55,7 +55,7 @@ class ContentParser extends Parser
     function parse()
     {
         import('util/url');
-        $this->content = Url::html_convert_absolute2relative($this->content, $this->path_to_root, $this->page_path);
+        $this->content = Url::html_convert_absolute2root_relative($this->content, $this->path_to_root, $this->page_path);
     }
 
     /**

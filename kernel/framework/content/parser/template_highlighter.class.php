@@ -61,7 +61,7 @@ class TemplateHighlighter extends Parser
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
 		
-		$geshi =& new GeSHi($this->content, 'html');
+		$geshi = new GeSHi($this->content, 'html');
 				
 		if ($line_number) //Affichage des numéros de lignes.
 		{
