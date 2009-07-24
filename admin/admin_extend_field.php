@@ -187,7 +187,7 @@ elseif (!empty($id))
 	}
 	
 	$Template->assign_vars(array(
-		'REGEX' => (!$predef_regex) ? $extend_field : '',
+		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
 		'OPTION_REGEX' => $option_regex,
 		'OPTION_FIELD' => $option_field,
 		'REQUIRED_FIELD_ENABLE' => $extend_field['required'] ? 'checked="checked"' : '',
