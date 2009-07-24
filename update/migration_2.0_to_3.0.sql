@@ -182,6 +182,7 @@ ALTER TABLE `phpboost_themes` ADD `right_column` tinyint(1) NOT NULL DEFAULT '0'
 UPDATE `phpboost_themes` SET `left_column` = 1, `right_column` = 1;
 
 ALTER TABLE `phpboost_verif_code` CHANGE `user_id` `user_id` varchar(15) NOT NULL DEFAULT '';
+ALTER TABLE `phpboost_verif_code` ADD `difficulty` TINYINT( 1 ) NOT NULL AFTER `code`;
 
 CREATE TABLE IF NOT EXISTS `phpboost_visit_counter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
