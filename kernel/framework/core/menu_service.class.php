@@ -576,7 +576,7 @@ class MenuService
         while ($row = $Sql->fetch_assoc($result))
         {
             // Build the module name from the mini module file_path
-            $title = split('/', strtolower($row['title']) , 2);
+            $title = explode('/', strtolower($row['title']) , 2);
             if (!is_array($title) || count($title) < 1)
             {
                 continue;
