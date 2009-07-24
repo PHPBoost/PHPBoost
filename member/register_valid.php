@@ -227,9 +227,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 							{
 								if ($valid_field) //Validation par expression régulière si présente.
 								{
-									$req_update .= $row['field_name'] . ' = \'' . strprotect(trim($field, '|'), HTML_NO_PROTECT) . '\', ';
+									$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
 									$req_field .= $row['field_name'] . ', ';
-									$req_insert .= '\'' . strprotect(trim($field, '|'), HTML_NO_PROTECT) . '\', ';
+									$req_insert .= '\'' . trim($field, '|') . '\', ';
 								}
 							}
 						}

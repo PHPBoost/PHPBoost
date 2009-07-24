@@ -124,4 +124,4 @@ INSERT INTO `phpboost_forum_topics` (`id`, `idcat`, `title`, `subtitle`, `user_i
 INSERT INTO `phpboost_forum_msg` (`id`, `idtopic`, `user_id`, `contents`, `timestamp`, `timestamp_edit`, `user_id_edit`) VALUES (1, 1, 1, 'Test message on PHPBoost forum' , unix_timestamp(current_timestamp), 0, 0);
 
 INSERT INTO `phpboost_member_extend_cat` (`class`, `name`, `field_name`, `contents`, `field`, `possible_values`, `default_values`, `required`, `display`, `regex`)  VALUES (0, 'last_view_forum', 'last_view_forum', '', 0, '', '', 0, 0, '');
-ALTER TABLE `phpboost_member_extend` ADD `last_view_forum` INT( 11 ) NOT NULL AFTER `user_id`;  
+ALTER TABLE `phpboost_member_extend` ADD `last_view_forum` INT( 11 ) NOT NULL DEFAULT '0' AFTER `user_id`;  
