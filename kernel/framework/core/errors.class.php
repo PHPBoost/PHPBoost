@@ -34,8 +34,8 @@ define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
-if (!defined('E_STRICT', 2048)) //A virer après passage PHP5
-	define('E_STRICT');
+if (!defined('E_STRICT')) //A virer après passage PHP5
+	define('E_STRICT', 2048);
 
 /**
   * @author Viarre Régis crowkait@phpboost.com
