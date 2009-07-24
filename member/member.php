@@ -198,7 +198,7 @@ if (!empty($id_get)) //Espace membre
 			$utheme = get_utheme();
 			foreach($THEME_CONFIG as $theme => $array_info)
 			{
-				if ($User->check_level($array_info['secure']) && $theme != 'default')
+				if ($CONFIG['theme'] == $theme || ($User->check_level($array_info['secure']) && $theme != 'default'))
 				{
 					$selected = ($utheme == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', get_ulang());

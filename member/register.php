@@ -252,7 +252,7 @@ if (empty($key))
 		{
 			foreach($THEME_CONFIG as $theme => $array_info)
 			{
-				if ($array_info['secure'] == -1 && $theme != 'default')
+				if ($CONFIG['theme'] == $theme || ($array_info['secure'] == -1 && $theme != 'default'))
 				{
 					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
