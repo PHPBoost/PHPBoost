@@ -268,9 +268,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							
 						if (!empty($field))
 						{
-							$req_update .= $row['field_name'] . ' = \'' . strprotect(trim($field, '|'), HTML_NO_PROTECT) . '\', ';
+							$req_update .= $row['field_name'] . ' = \'' . trim($field, '|') . '\', ';
 							$req_field .= $row['field_name'] . ', ';
-							$req_insert .= '\'' . strprotect(trim($field, '|'), HTML_NO_PROTECT) . '\', ';
+							$req_insert .= '\'' . trim($field, '|') . '\', ';
 						}
 					}
 					$Sql->query_close($result);	
