@@ -237,7 +237,7 @@ class ArticlesInterface extends ModuleInterface
 		$data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(READ_CAT_ARTICLES);
 
-		$cat_clause = !empty($idcat) ? ' AND a.idcat = ' . $idcat : '';
+		$cat_clause = !empty($idcat) ? " AND a.idcat = '". $idcat . "'" : '';
 		$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM " . PREFIX . "articles a
         LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
