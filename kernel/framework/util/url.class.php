@@ -233,16 +233,16 @@ class Url
 	{
 		$path_to_root_bak = Url::path_to_root();
 		$server_url_bak = Url::server_url();
-		
+
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
 
 		$result = preg_replace_callback(Url::_build_html_match_regex(true),
-			array('Url', '_convert_url_to_absolute'), $html_text);
-		
+		array('Url', '_convert_url_to_absolute'), $html_text);
+
 		Url::path_to_root($path_to_root_bak);
 		Url::server_url($server_url_bak);
-		
+
 		return $result;
 	}
 
@@ -254,22 +254,20 @@ class Url
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The HTML text with only absolutes urls
 	 */
-	/* static */ function html_convert_absolute2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	/* static */ function html_convert_absolute2root_relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
 		$path_to_root_bak = Url::path_to_root();
 		$server_url_bak = Url::server_url();
-		
+
 		Url::path_to_root($path_to_root);
 		Url::server_url($server_url);
-		
+
 		$result = preg_replace_callback(Url::_build_html_match_regex(),
-			array('Url', '_convert_url_to_relative'), $html_text);
-			
-//			echo '<hr />' . htmlentities($html_text) . '<hr />' . htmlentities($result) . '<hr />';
-		
+		  array('Url', '_convert_url_to_root_relative'), $html_text);
+
 		Url::path_to_root($path_to_root_bak);
 		Url::server_url($server_url_bak);
-		
+
 		return $result;
 	}
 
@@ -278,15 +276,24 @@ class Url
 	 * @desc Transforms the relative URL whose base is the site root (for instance /images/mypic.png) to the real relative path fited to the current page.
 	 * @param string $html_text The HTML text in which you want to replace the paths
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
+	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The transformed string
 	 */
-	/* static */ function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT)
+	/* static */ function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		// TODO rework this
-		return preg_replace(
-			'`((?:<[^>]+) (?:' . URL_TAGS . ')(?:="))(/[^"]+)("(?:[^<]*>))`',
-			'$1' . $path_to_root . '$2$3',
-			$html_text);
+		$path_to_root_bak = Url::path_to_root();
+		$server_url_bak = Url::server_url();
+
+		Url::path_to_root($path_to_root);
+		Url::server_url($server_url);
+
+		$result = preg_replace_callback(Url::_build_html_match_regex(true),
+		array('Url', '_convert_url_to_relative'), $html_text);
+
+		Url::path_to_root($path_to_root_bak);
+		Url::server_url($server_url_bak);
+
+		return $result;
 	}
 
 	/**
@@ -304,6 +311,19 @@ class Url
 
 	/**
 	 * @static
+	 * @desc replace an absolute url by the corresponding root relative one if possible
+	 * @param string[] $url_params Array containing the attributes containing the url and the url
+	 * @return string the replaced url
+	 */
+	/* static */ function _convert_url_to_root_relative($url_params)
+	{
+		$url = new Url($url_params[2]);
+		$url_params[2] = $url->relative();
+		return $url_params[1] . $url_params[2] . $url_params[3];
+	}
+
+	/**
+	 * @static
 	 * @desc replace an absolute url by the corresponding relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
@@ -311,23 +331,26 @@ class Url
 	/* static */ function _convert_url_to_relative($url_params)
 	{
 		$url = new Url($url_params[2]);
-		$url_params[2] = $url->relative();
+		if ($url->is_relative())
+		{
+			$url_params[2] = Url::compress($this->path_to_root() . $url->relative());
+		}
 		return $url_params[1] . $url_params[2] . $url_params[3];
 	}
 
-	
+
 	/* static */ function _build_html_match_regex($only_match_relative = false)
 	{
 		static $regex_match_all = null;
 		static $regex_only_match_relative = null;
-		
+
 		// regex cache is empty, builds it
 		if ((!$only_match_relative && $regex_match_all === null) || ($only_match_relative && $regex_only_match_relative === null))
 		{
 			$regex = array();
-			$nodes =      array('a',    'img', 'form',   'object', 'param name="movie"', 'x',    'x');
-			$attributes = array('href', 'src', 'action', 'data',   'value',              'son',  'flv');
-			
+			$nodes =      array('a',    'img', 'form',   'object', 'param name="movie"');
+			$attributes = array('href', 'src', 'action', 'data',   'value');
+
 			$nodes_length = count($nodes);
 			for ($i = 0; $i < $nodes_length; $i++)
 			{
@@ -340,14 +363,14 @@ class Url
 				$regex[] = $a_regex;
 			}
 			//'`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\(")(/[^"]+)(".*</script>)`sU';
-			$a_regex = '`(<script type="text/javascript">.*insert(?:Sound|Movie|Swf)Player\((?:"|\'))(';
+			$a_regex = '`(<script type="text/javascript"><!--\s*insert(?:Sound|Movie|Swf)Player\\(")(';
 			if ($only_match_relative)
 			{
 				$a_regex .= '/';
 			}
-			$a_regex .= '.+)((?:"|\')\).*</script>)`isU';
+			$a_regex .= '[^"]+)("\\)\s*--></script>)`isU';
 			$regex[] = $a_regex;
-			
+
 			// Update regex cache
 			if ($only_match_relative)
 			{
@@ -358,19 +381,19 @@ class Url
 				$regex_match_all = $regex;
 			}
 		}
-		
+
 		if ($only_match_relative)
 		{
-//            echo '<pre>' . htmlentities(var_export($regex_only_match_relative, true)) . '</pre>';
+			//            echo '<pre>' . htmlentities(var_export($regex_only_match_relative, true)) . '</pre>';
 			return $regex_only_match_relative;
 		}
 		else
 		{
-//			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
+			//			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
 			return $regex_match_all;
 		}
 	}
-	
+
 	/**
 	 * @static
 	 * @param string $url the url to "relativize"
