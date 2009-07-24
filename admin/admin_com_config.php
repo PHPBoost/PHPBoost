@@ -78,7 +78,7 @@ else
 	{
 		$Template->assign_block_vars('difficulty', array(
 			'VALUE' => $i,
-			'SELECTED' => ($CONFIG_USER['verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
+			'SELECTED' => ($CONFIG_COM['com_verif_code_difficulty'] == $i) ? 'selected="selected"' : ''
 		));
 	}
 	
@@ -101,8 +101,8 @@ else
 		'COM_ENABLED' => ($CONFIG['com_popup'] == 0) ? 'checked="checked"' : '',
 		'COM_DISABLED' => ($CONFIG['com_popup'] == 1) ? 'checked="checked"' : '',
 		'GD_DISABLED' => (!@extension_loaded('gd')) ? 'disabled="disabled"' : '',
-		'VERIF_CODE_ENABLED' => ($CONFIG_USER['verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
-		'VERIF_CODE_DISABLED' => ($CONFIG_USER['verif_code'] == 0) ? 'checked="checked"' : '',
+		'VERIF_CODE_ENABLED' => ($CONFIG_COM['com_verif_code'] == 1 && @extension_loaded('gd')) ? 'checked="checked"' : '',
+		'VERIF_CODE_DISABLED' => ($CONFIG_COM['com_verif_code'] == 0) ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_COM' => $LANG['com'],
 		'L_COM_MANAGEMENT' => $LANG['com_management'],
