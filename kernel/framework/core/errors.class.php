@@ -34,6 +34,9 @@ define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
+if (!defined('E_STRICT', 2048)) //A virer après passage PHP5
+	define('E_STRICT');
+
 /**
   * @author Viarre Régis crowkait@phpboost.com
   * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
@@ -91,6 +94,7 @@ class Errors
 			//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
+			case E_STRICT:
 				$errdesc = $LANG['e_notice'];
 				$errimg = 'notice';
 				$errclass = 'error_notice';
@@ -111,7 +115,7 @@ class Errors
 			break;
 			//Erreur inconnue.
 			default:
-				$errdesc = $LANG['e_unknown'];
+				$errdesc = $LANG['e_unknow'];
 				$errimg = 'question';
 				$errclass = 'error_unknow';
 		}
