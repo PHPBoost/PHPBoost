@@ -670,7 +670,7 @@ playerflowPlayerRequired = false;
 function insertMoviePlayer(url, width, height, id) {
 	if (!playerflowPlayerRequired) {
 		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js"></script>');
-		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.min.js"></script>');
+		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js"></script>');
 		playerflowPlayerRequired = true;
 	}
 	insertedCode = '<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="flow_' + id  + '"></a><br />';
