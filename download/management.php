@@ -216,14 +216,16 @@ if ($edit_file_id > 0)
 			switch ($file_visibility)
 			{
 				case 2:
-					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
+					if (($begining_date->get_timestamp() > $date_now->get_timestamp() || $end_date->get_timestamp() > $date_now->get_timestamp()) && $begining_date->get_timestamp() < $end_date->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
 						$end_timestamp = $end_date->get_timestamp();
+						
+						if ($begining_date->get_timestamp() > $date_now->get_timestamp())
+							$visible = 0;
 					}
 					else
-						$visible = 0;
-
+						list($start_timestamp, $end_timestamp) = array(0, 0);
 					break;
 				case 1:
 					list($start_timestamp, $end_timestamp) = array(0, 0);

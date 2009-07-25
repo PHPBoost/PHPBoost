@@ -96,7 +96,7 @@ class DownloadInterface extends ModuleInterface
 				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			
 			//If it's not visible anymore
-			if ($row['start'] >= $time || $row['end'] <= $time && $row['visible'] = 1)
+			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
 				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
