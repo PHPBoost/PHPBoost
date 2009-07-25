@@ -664,13 +664,28 @@ function functionExists(function_name) {
     }
 }
 
+//Includes synchronously a js file
+function include(file)
+{
+	if (window.document.getElementsByTagName)
+	{
+		script = window.document.createElement("script");
+		script.type = "text/javascript";
+		script.src = file;
+		body = window.document.getElementsByTagName("body");
+		if (body) 
+		{
+			body[0].appendChild(script);
+		}
+	}
+}
 
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
 function insertMoviePlayer(url, width, height, id) {
 	if (!playerflowPlayerRequired) {
-		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js"></script>');
-		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js"></script>');
+		include(PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js');
+		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
 	insertedCode = '<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="flow_' + id  + '"></a><br />';
@@ -681,12 +696,21 @@ function insertMoviePlayer(url, width, height, id) {
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
 function flowPlayerDisplay(id)
 {
-	if (!functionExists('flowPlayerBuild'))
+	//Construit et affiche un lecteur vidéo de type flowplayer
+	//Si la fonction n'existe pas, on attend qu'elle soit interprétée
+	if (!functionExists('flowplayer'))
 	{
-		setTimeout('flowPlayerDisplay(\'' + id + '\')', 1000);
+		setTimeout('flowPlayerDisplay(\'' + id + '\')', 100);
 		return;
 	}
-	flowPlayerBuild(id);
+	//On lance le flowplayer
+	flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.swf', { 
+		    clip: { 
+		        url: $(id).href,
+		        autoPlay: false 
+		    }
+	    }
+	);
 }
 
 //Affiche le lecteur audio avec l'URL du fichier audio

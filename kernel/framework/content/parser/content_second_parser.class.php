@@ -241,11 +241,10 @@ class ContentSecondParser extends Parser
 	function _process_swf_tag($matches)
 	{
 		$id = 'swf_' . get_uid();
-		return '<div id="' . $id . '">' .
+		return '<div id="' . $id . '"></div>' .
 			'<script type="text/javascript"><!--' . "\n" .
 			'insertSwfPlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
-			"\n" . '--></script>' .
-			'</div>';
+			"\n" . '--></script>';
 	}
 
 	/**
@@ -256,11 +255,10 @@ class ContentSecondParser extends Parser
 	function _process_movie_tag($matches)
 	{
 		$id = 'movie_' . get_uid();
-		return '<div id="' . $id . '">' .
+		return '<div id="' . $id . '"></div>' .
 			'<script type="text/javascript"><!--' . "\n" .
 			'insertMoviePlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
-			"\n" . '--></script>' .
-			'</div>';
+			"\n" . '--></script>';
 	}
 
 	/**
@@ -271,11 +269,10 @@ class ContentSecondParser extends Parser
 	function _process_sound_tag($matches)
 	{
 		$id = 'sound_' . get_uid();
-		return '<div id="' . $id . '">' .
+		return '<div id="' . $id . '"></div>' .
 			'<script type="text/javascript"><!--' . "\n" .
 			'insertSoundPlayer(\'' . $matches[1] . '\', \'' . $id . '\');' .
-			"\n" . '--></script>' .
-			'</div>';
+			"\n" . '--></script>';
 	}
 }
 ?>
