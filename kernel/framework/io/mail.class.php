@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+define('CRLF', "\r\n");
 define('MIME_FORMAT_TEXT', 'text/plain');
 define('MIME_FORMAT_HTML', 'text/html');
 
@@ -234,7 +235,7 @@ class Mail
             $this->_generate_headers();
         }
         
-        $recipients = trim(implode('; ', $this->recipients), '; ');
+        $recipients = trim(implode(', ', $this->recipients), ', ');
         return @mail($recipients, $this->object, $this->content, $this->headers);
     }
     
@@ -259,20 +260,26 @@ class Mail
         global $LANG;
 
         //Sender
-        $this->headers .= 'From: ' . $this->sender_name . ' ' . HOST . ' <' . $this->sender_mail . '>' . "\n";
+        $this->headers .= 'From: ' . $this->sender_name . ' ' . HOST . ' <' . $this->sender_mail . '>' . CRLF;
 
         //Recipients
         $this->headers .= 'To: ';
-        foreach ($this->recipients as $recipient)
+        
+        $nb_recipients = count($this->recipients);
+        for ($i = 0; $i < $nb_recipients; $i++)
         {
-            $this->headers .= $recipient . '<' . $recipient . '>, ';
+            $this->headers .= $this->recipients[$i] . '<' . $this->recipients[$i] . '>';
+            if ($i < $nb_recipients - 1)
+            {
+            	$this->headers .= ', ';
+            }
         }
-        $this->headers .= "\n";
+        $this->headers .= CRLF;
         
         //Subject
-        $this->headers .= 'Subject: ' . $this->object . "\n";
+        $this->headers .= 'Subject: ' . $this->object . CRLF;
         $this->headers .= "MIME-Version: 1.0\n";
-        $this->headers .= 'Content-type: ' . $this->format . '; charset=ISO-8859-1' . "\n";
+        $this->headers .= 'Content-type: ' . $this->format . '; charset=ISO-8859-1' . CRLF;
     }
 
     ## Private Attributes ##
