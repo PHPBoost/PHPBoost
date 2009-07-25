@@ -6,7 +6,6 @@ function flowPlayerBuild(id) {
 		setTimeout('flowPlayerBuild(\'' + id + '\')', 100);
 		return;
 	}
-	
 	//On lance le flowplayer
 	flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.swf', { 
 		    clip: { 
