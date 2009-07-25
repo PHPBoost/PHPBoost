@@ -47,7 +47,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	//Gestion de la page de démarrage.
 	if (!empty($_POST['start_page2']) )
 	{
-		$start_page = strprotect($_POST['start_page2']);
+		$start_page = strprotect($_POST['start_page2'], HTML_UNPROTECT);
 	}
 	elseif (!empty($_POST['start_page']))
 	{
