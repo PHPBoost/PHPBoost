@@ -51,7 +51,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	}
 	elseif (!empty($_POST['start_page']))
 	{
-		$start_page = strprotect($_POST['start_page']);
+		$start_page = strprotect($_POST['start_page'], HTML_UNPROTECT);
 	}
 	else
 	{
