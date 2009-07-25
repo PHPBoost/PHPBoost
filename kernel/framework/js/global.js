@@ -667,15 +667,15 @@ function functionExists(function_name) {
 
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
-function insertMoviePlayer(url, width, height) {
+function insertMoviePlayer(url, width, height, id) {
 	if (!playerflowPlayerRequired) {
 		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js"></script>');
 		document.write('<script src="' + PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.min.js"></script>');
 		playerflowPlayerRequired = true;
 	}
-	id = 'flowplayer' + getUid();
-	document.write('<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="' + id  + '"></a><br />');
-	flowPlayerDisplay(id);
+	insertedCode = '<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="flow_' + id  + '"></a><br />';
+	$(id).innerHTML = insertedCode;
+	flowPlayerDisplay("flow_" + id);
 }
 
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
@@ -691,13 +691,13 @@ function flowPlayerDisplay(id)
 
 //Affiche le lecteur audio avec l'URL du fichier audio
 playerDewplayerRequired = false;
-function insertSoundPlayer(url) {
+function insertSoundPlayer(url, id) {
 	if (!playerDewplayerRequired) {
 		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/dewplayer.js"></script>');
 		playerDewplayerRequired = true;
 	}
 
-	document.write("<object type=\"application/x-shockwave-flash\" data=\"" + PATH_TO_ROOT + "/kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
+	$(id).innerHTML = "<object type=\"application/x-shockwave-flash\" data=\"" + PATH_TO_ROOT + "/kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
 		"<param name=\"allowScriptAccess\" value=\"never\" />" +
 		"<param name=\"play\" value=\"true\" />" + 
 		"<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=" + url + "\" />" +
@@ -706,11 +706,11 @@ function insertSoundPlayer(url) {
 		"<param name=\"scalemode\" value=\"noborder\" />" +
 		"<param name=\"wmode\" value=\"transparent\" />" +
 		"<param name=\"bgcolor\" value=\"#FFFFFF\" />" + 
-		"</object>");
+		"</object>";
 }
 
-function insertSwfPlayer(url, width, height) {
-	document.write("<object type=\"application/x-shockwave-flash\" data=\"" + url + "\" width=\"" + width.toString() + "\" height=\"" + height.toString() + "\">" +
+function insertSwfPlayer(url, width, height, id) {
+	$(id).innerHTML = "<object type=\"application/x-shockwave-flash\" data=\"" + url + "\" width=\"" + width.toString() + "\" height=\"" + height.toString() + "\">" +
 		"<param name=\"allowScriptAccess\" value=\"never\" />" +
 		"<param name=\"play\" value=\"true\" />" +
 		"<param name=\"movie\" value=\"" + url + "\" />" +
@@ -719,5 +719,5 @@ function insertSwfPlayer(url, width, height) {
 		"<param name=\"scalemode\" value=\"noborder\" />" +
 		"<param name=\"wmode\" value=\"transparent\" />" +
 		"<param name=\"bgcolor\" value=\"#000000\" />" +
-		"</object>");
+		"</object>";
 }

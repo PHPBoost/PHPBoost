@@ -438,8 +438,7 @@ else
 	$contribution_counterpart = retrieve(POST, 'counterpart', '', TSTRING_PARSE);
 	
 	//If we can't write, the file cannot be approved
-	if (!$auth_write)
-		$file_approved = false;
+	$file_approved = $auth_write;
 	
 	if ($submit)
 	{

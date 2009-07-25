@@ -404,7 +404,7 @@ class TinyMCEParser extends ContentParser
 		if (!in_array('swf', $this->forbidden_tags))
 		{
 			array_push($array_preg, '`&lt;object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="([^"]+)%?" height="([^"]+)%?"&gt;&lt;param name="movie" value="([^"]+)"(.*)&lt;/object&gt;`isU');
-			array_push($array_preg_replace, '<script type=\"text/javascript\"><!-- \n insertSwfPlayer(\"$3\", $1, $2); \n --></script>');
+			array_push($array_preg_replace, '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]');
 		}
 		
 		//Replacement
@@ -556,8 +556,8 @@ class TinyMCEParser extends ContentParser
 			'float' => "<p class=\"float_$1\">$2</p>",
 			'acronym' => "<acronym title=\"$1\" class=\"bb_acronym\">$2</acronym>",
 			'style' => "<span class=\"$1\">$2</span>",
-			'movie' => "<script type=\"text/javascript\"><!-- \n insertMoviePlayer(\"$3\", $1, $2); \n --></script>",
-			'sound' => "<script type=\"text/javascript\"><!-- \n insertSoundPlayer(\"$1\"); \n --></script>",
+			'movie' => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",
+			'sound' => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
 			'math' => '[[MATH]]$1[[/MATH]]',
 			'url' => "$1<a href=\"$2\">$2</a>$3",
 			'url2' => "$1<a href=\"http://$2\">$2</a>$3",

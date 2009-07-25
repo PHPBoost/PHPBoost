@@ -39,50 +39,56 @@ import('content/parser/parser');
  */
 class ContentSecondParser extends Parser
 {
-    ######## Public #######
-    /**
-    * @desc Builds a ContentSecondParser object
-    */
-    function ContentSecondParser()
-    {
-        parent::Parser();
-    }
+	######## Public #######
+	/**
+	* @desc Builds a ContentSecondParser object
+	*/
+	function ContentSecondParser()
+	{
+		parent::Parser();
+	}
 
-    /**
-     * @desc Parses the content of the parser. The result will be ready to be displayed.
-     */
-    function parse()
-    {
-        global $LANG;
+	/**
+	 * @desc Parses the content of the parser. The result will be ready to be displayed.
+	 */
+	function parse()
+	{
+		global $LANG;
 
-        //Balise code
-        if (strpos($this->content, '[[CODE') !== false)
-        {
-            $this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
-        }
+		//Balise code
+		if (strpos($this->content, '[[CODE') !== false)
+		{
+			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+		}
 
-        //Balise latex.
-        if (strpos($this->content, '[[MATH]]') !== false)
-        {
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php');
-            $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
-        }
-        
-        import('util/url');
-        $this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path); 
-    }
-    
-    /**
-     * @desc Transforms a PHPBoost HTML content to make it exportable and usable every where in the web. 
-     * @param string $html Content to transform
-     * @return string The exportable content
-     */
-    function export_html_text($html_content)
-    {
-        import('util/url');
-        
-        //Balise vidéo
-        $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertMoviePlayer\("([^"]+)", ([0-9]+), ([0-9]+)\);\s+--></script>`isU',
+		//Media
+		if (strpos($this->content, '[[MEDIA]]') !== false)
+		{
+			$this->_process_media_insertion();
+		}
+
+		//Balise latex.
+		if (strpos($this->content, '[[MATH]]') !== false)
+		{
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php');
+			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
+		}
+
+		import('util/url');
+		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
+	}
+
+	/**
+	 * @desc Transforms a PHPBoost HTML content to make it exportable and usable every where in the web.
+	 * @param string $html Content to transform
+	 * @return string The exportable content
+	 */
+	function export_html_text($html_content)
+	{
+		import('util/url');
+
+		//Balise vidéo
+		$html_content = preg_replace('`[[MEDIA]]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);[[/MEDIA]]`isU',
             '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
@@ -94,10 +100,10 @@ class ContentSecondParser extends Parser
                 <param name="wmode" value="transparent" />
                 <param name="bgcolor" value="#FFFFFF" />
             </object>',
-            $html_content);
-            
-        //Balise son
-        $html_content = preg_replace('`<script type="text/javascript"><!--\s+insertSoundPlayer\("([^"]+)\);\s+--></script>`isU',
+		$html_content);
+
+		//Balise son
+		$html_content = preg_replace('`[[MEDIA]]insertSoundPlayer\(\'([^\']+)\'\);[[/MEDIA]]`isU',
         	'<object type="application/x-shockwave-flash" data="/kernel/data/dewplayer.swf\?son=$1" width="200" height="20">
          		<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
@@ -108,110 +114,168 @@ class ContentSecondParser extends Parser
                 <param name="wmode" value="transparent" />
                 <param name="bgcolor" value="#FFFFFF" />
             </object>',
-            $html_content);
-        
-        return Url::html_convert_root_relative2absolute($html_content);
-    }
+		$html_content);
 
-    ## Private ##
+		return Url::html_convert_root_relative2absolute($html_content);
+	}
 
-    /**
-     * @static
-     * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
-     * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html, 
-     * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml, 
-     * PHPBoost templates and PHPBoost BBCode.
-     * @param string $contents Content to highlight
-     * @param string $language Language name
-     * @param bool $line_number Indicate whether or not the line number must be added to the code.
-     * @param bool $inline_code Indicate if the code is multi line.
-     */
-    function _highlight_code($contents, $language, $line_number, $inline_code)
-    {
-        //BBCode PHPBoost
-        if (strtolower($language) == 'bbcode')
-        {
-            import('content/parser/bbcode_highlighter');
-            $bbcode_highlighter = new BBCodeHighlighter();
-            $bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-            $bbcode_highlighter->parse($inline_code);
-            $contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
-        }
-        //Templates PHPBoost
-        elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
-        {        	
-            import('content/parser/template_highlighter');
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-             
-            $template_highlighter = new TemplateHighlighter();
-            $template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-            $template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-            $contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
-        }
-        elseif ($language != '')
-        {
-            require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-            $Geshi = new GeSHi($contents, $language);
+	## Private ##
 
-            if ($line_number) //Affichage des numéros de lignes.
-            $Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-             
-            //No container if we are in an inline tag
-            if ($inline_code)
-            $Geshi->set_header_type(GESHI_HEADER_NONE);
+	/**
+	 * @static
+	 * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
+	 * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
+	 * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
+	 * PHPBoost templates and PHPBoost BBCode.
+	 * @param string $contents Content to highlight
+	 * @param string $language Language name
+	 * @param bool $line_number Indicate whether or not the line number must be added to the code.
+	 * @param bool $inline_code Indicate if the code is multi line.
+	 */
+	function _highlight_code($contents, $language, $line_number, $inline_code)
+	{
+		//BBCode PHPBoost
+		if (strtolower($language) == 'bbcode')
+		{
+			import('content/parser/bbcode_highlighter');
+			$bbcode_highlighter = new BBCodeHighlighter();
+			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+			$bbcode_highlighter->parse($inline_code);
+			$contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
+		}
+		//Templates PHPBoost
+		elseif (strtolower($language) == 'tpl' || strtolower($language) == 'template')
+		{
+			import('content/parser/template_highlighter');
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			 
+			$template_highlighter = new TemplateHighlighter();
+			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
+			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+			$contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
+		}
+		elseif ($language != '')
+		{
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
+			$Geshi = new GeSHi($contents, $language);
 
-            $contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
-        }
-        else
-        {
-            $highlight = highlight_string($contents, true);
-            $font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-            $contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
-        }
+			if ($line_number) //Affichage des numéros de lignes.
+			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			 
+			//No container if we are in an inline tag
+			if ($inline_code)
+			$Geshi->set_header_type(GESHI_HEADER_NONE);
 
-        return $contents;
-    }
+			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
+		}
+		else
+		{
+			$highlight = highlight_string($contents, true);
+			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
+			$contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
+		}
 
-    /**
-     * @static
-     * @desc Handler which highlights a string matched by the preg_replace_callback function.
-     * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?, 
-     * 3 => multi line?, 4 => the code to highlight.
-     * @return string the colored content
-     */
-    function _callback_highlight_code($matches)
-    {
-        global $LANG;
-		
-        $line_number = !empty($matches[2]);
-        $inline_code = !empty($matches[3]);
-        
-        $contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
+		return $contents;
+	}
 
-        if (!$inline_code && !empty($matches[1]))
-        {
-        	$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
-        }
-        else if (!$inline_code && empty($matches[1]))
-        {
-        	$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
-        }
-         
-        return $contents;
-    }
+	/**
+	 * @static
+	 * @desc Handler which highlights a string matched by the preg_replace_callback function.
+	 * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?,
+	 * 3 => multi line?, 4 => the code to highlight.
+	 * @return string the colored content
+	 */
+	function _callback_highlight_code($matches)
+	{
+		global $LANG;
 
-    /**
-     * @static
-     * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
-     * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
-     * @return string The code of the image containing the formula.
-     */
-    function _math_code($matches)
-    {
-        $matches[1] = str_replace('<br />', '', $matches[1]);
-        $matches = mathfilter(html_entity_decode($matches[1]), 12);
+		$line_number = !empty($matches[2]);
+		$inline_code = !empty($matches[3]);
 
-        return $matches;
-    }
+		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
+
+		if (!$inline_code && !empty($matches[1]))
+		{
+			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
+		}
+		else if (!$inline_code && empty($matches[1]))
+		{
+			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
+		}
+		 
+		return $contents;
+	}
+
+	/**
+	 * @static
+	 * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
+	 * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
+	 * @return string The code of the image containing the formula.
+	 */
+	function _math_code($matches)
+	{
+		$matches[1] = str_replace('<br />', '', $matches[1]);
+		$matches = mathfilter(html_entity_decode($matches[1]), 12);
+
+		return $matches;
+	}
+
+	/**
+	 * Processes the media insertion it replaces the [[MEDIA]]tag[[/MEDIA]] by the Javascript API correspondig calls.
+	 */
+	function _process_media_insertion()
+	{
+		//Swf
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_swf_tag'), $this->content);
+		//Movie
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_movie_tag'), $this->content);
+		//Sound
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_sound_tag'), $this->content);
+	}
+
+	/**
+	 * Inserts the javascript calls for the swf tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_swf_tag($matches)
+	{
+		$id = 'swf_' . get_uid();
+		return '<div id="' . $id . '">' .
+			'<script type="text/javascript"><!--' . "\n" .
+			'insertSwfPlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
+			"\n" . '--></script>' .
+			'</div>';
+	}
+
+	/**
+	 * Inserts the javascript calls for the movie tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_movie_tag($matches)
+	{
+		$id = 'movie_' . get_uid();
+		return '<div id="' . $id . '">' .
+			'<script type="text/javascript"><!--' . "\n" .
+			'insertMoviePlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
+			"\n" . '--></script>' .
+			'</div>';
+	}
+
+	/**
+	 * Inserts the javascript calls for the sound tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_sound_tag($matches)
+	{
+		$id = 'sound_' . get_uid();
+		return '<div id="' . $id . '">' .
+			'<script type="text/javascript"><!--' . "\n" .
+			'insertSoundPlayer(\'' . $matches[1] . '\', \'' . $id . '\');' .
+			"\n" . '--></script>' .
+			'</div>';
+	}
 }
 ?>

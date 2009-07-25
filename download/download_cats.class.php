@@ -141,7 +141,7 @@ class DownloadCats extends CategoriesManager
 	}
 	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
-	function Recount_sub_files($no_cache_generation = false)
+	function recount_sub_files($no_cache_generation = false)
 	{
 		global $Cache, $DOWNLOAD_CATS;
 		$this->_recount_cat_subquestions($DOWNLOAD_CATS, 0);
@@ -223,7 +223,7 @@ class DownloadCats extends CategoriesManager
 		
 		foreach ($categories as $id => $value)
 		{
-			if ($id != 0 && $value['id_parent'] == $cat_id)
+			if ($id != 0 && $value['id_parent'] == $cat_id && $value['visible'])
 				$num_subquestions += $this->_recount_cat_subquestions($categories, $id);
 		}
 		
