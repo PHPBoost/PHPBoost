@@ -88,26 +88,12 @@ class ContentSecondParser extends Parser
 		import('util/url');
 
 		//Balise vidéo
-		$html_content = preg_replace('`[[MEDIA]]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);[[/MEDIA]]`isU',
+		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="[^"]*"></a><br /><div id=".*"></div>\s*<script type="text/javascript"><!--\s*insertMoviePlayer(\'([^\']+)\', ([0-9]+), ([0-9]+), \'[^\']*\');\s*--></script>`isU',
             '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
             	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
             	<param name="allowScriptAccess" value="never" />
                 <param name="play" value="true" />
                 <param name="movie" value="$1" />
-                <param name="menu" value="false" />
-                <param name="quality" value="high" />
-                <param name="scalemode" value="noborder" />
-                <param name="wmode" value="transparent" />
-                <param name="bgcolor" value="#FFFFFF" />
-            </object>',
-		$html_content);
-
-		//Balise son
-		$html_content = preg_replace('`[[MEDIA]]insertSoundPlayer\(\'([^\']+)\'\);[[/MEDIA]]`isU',
-        	'<object type="application/x-shockwave-flash" data="/kernel/data/dewplayer.swf\?son=$1" width="200" height="20">
-         		<param name="allowScriptAccess" value="never" />
-                <param name="play" value="true" />
-                <param name="movie" value="/kernel/data/dewplayer.swf?son=$1" />
                 <param name="menu" value="false" />
                 <param name="quality" value="high" />
                 <param name="scalemode" value="noborder" />
@@ -240,11 +226,16 @@ class ContentSecondParser extends Parser
 	 */
 	function _process_swf_tag($matches)
 	{
-		$id = 'swf_' . get_uid();
-		return '<div id="' . $id . '"></div>' .
-			'<script type="text/javascript"><!--' . "\n" .
-			'insertSwfPlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
-			"\n" . '--></script>';
+		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
+			"<param name=\"allowScriptAccess\" value=\"never\" />" .
+			"<param name=\"play\" value=\"true\" />" .
+			"<param name=\"movie\" value=\"" . $matches[1] . "\" />" .
+			"<param name=\"menu\" value=\"false\" />" .
+			"<param name=\"quality\" value=\"high\" />" .
+			"<param name=\"scalemode\" value=\"noborder\" />" .
+			"<param name=\"wmode\" value=\"transparent\" />" .
+			"<param name=\"bgcolor\" value=\"#000000\" />" .
+			"</object>";
 	}
 
 	/**
@@ -255,9 +246,9 @@ class ContentSecondParser extends Parser
 	function _process_movie_tag($matches)
 	{
 		$id = 'movie_' . get_uid();
-		return '<div id="' . $id . '"></div>' .
+		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
 			'<script type="text/javascript"><!--' . "\n" .
-			'insertMoviePlayer(\'' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ', \'' . $id . '\');' .
+			'insertMoviePlayer(\'' . $id . '\');' .
 			"\n" . '--></script>';
 	}
 
@@ -268,11 +259,17 @@ class ContentSecondParser extends Parser
 	 */
 	function _process_sound_tag($matches)
 	{
-		$id = 'sound_' . get_uid();
-		return '<div id="' . $id . '"></div>' .
-			'<script type="text/javascript"><!--' . "\n" .
-			'insertSoundPlayer(\'' . $matches[1] . '\', \'' . $id . '\');' .
-			"\n" . '--></script>';
+		//Balise son
+		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
+         		<param name="allowScriptAccess" value="never" />
+                <param name="play" value="true" />
+                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" />
+                <param name="menu" value="false" />
+                <param name="quality" value="high" />
+                <param name="scalemode" value="noborder" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+            </object>';
 	}
 }
 ?>

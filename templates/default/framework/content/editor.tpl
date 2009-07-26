@@ -20,10 +20,17 @@
 				displayed[field] = true;			
 
 				new Ajax.Request(
-					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?token={TOKEN}&path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}&page_path={PAGE_PATH}',
+					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php',
 					{
 						method: 'post',
-						parameters: {contents: contents, ftags: '{FORBIDDEN_TAGS}'},
+						parameters: {
+							token: '{TOKEN}',
+							path_to_root: '{PHP_PATH_TO_ROOT}',
+							editor: '{EDITOR_NAME}',
+							page_path: '{PAGE_PATH}',  
+							contents: contents,
+							ftags: '{FORBIDDEN_TAGS}'
+						 },
 						onSuccess: function(response)
 						{
 							document.getElementById('xmlhttprequest_preview' + field).innerHTML = response.responseText;
