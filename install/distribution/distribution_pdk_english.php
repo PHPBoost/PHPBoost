@@ -33,7 +33,7 @@ define('DISTRIBUTION_DESCRIPTION', '<p>You are going to install the <strong><acr
 <p>This distribution fits very well to developers who want to create and integrate a module in PHPBoost. It contains tools enabling you to manage the database and the PHPBoost framework documentation.</p>');
 
 //Thème de la distribution
-define('DISTRIBUTION_THEME', 'base');
+define('DISTRIBUTION_THEME', 'extends');
 
 //Page de démarrage de la distribution (commencer à la racine du site avec /)
 define('DISTRIBUTION_START_PAGE', '/doc/3.0/index.php');
