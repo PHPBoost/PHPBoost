@@ -50,7 +50,7 @@ if (!empty($_POST['valid']))
 			'id_parent' => -1,
 			'order' => 1,
 			'name' => stripslashes(retrieve(POST, 'media_name', $MEDIA_CATS[0]['name'])),
-			'desc' => stripslashes(retrieve(POST, 'desc', $MEDIA_CATS[0]['desc'], TSTRING_PARSE)),
+			'desc' => stripslashes(retrieve(POST, 'contents', $MEDIA_CATS[0]['desc'], TSTRING_PARSE)),
 			'visible' => true,
 			'image' => 'media.png',
 			'num_media' => $MEDIA_CATS[0]['num_media'],
