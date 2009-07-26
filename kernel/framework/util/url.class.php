@@ -333,7 +333,7 @@ class Url
 		$url = new Url($url_params[2]);
 		if ($url->is_relative())
 		{
-			$url_params[2] = Url::compress($this->path_to_root() . $url->relative());
+			$url_params[2] = Url::compress(Url::path_to_root() . $url->relative());
 		}
 		return $url_params[1] . $url_params[2] . $url_params[3];
 	}
