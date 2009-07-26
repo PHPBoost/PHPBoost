@@ -33,7 +33,7 @@ define('DISTRIBUTION_DESCRIPTION', '<p>Vous allez installer la distribution <str
 <p>Cette distribution est parfaitement adaptée aux développeurs qui souhaitent développer un module afin de l\'intégrer à PHPBoost. Elle contient un outil de gestion de la base de données ainsi que la documentation du framework de PHPBoost.</p>');
 
 //Thème de la distribution
-define('DISTRIBUTION_THEME', 'base');
+define('DISTRIBUTION_THEME', 'extends');
 
 //Page de démarrage de la distribution (commencer à la racine du site avec /)
 define('DISTRIBUTION_START_PAGE', '/doc/3.0/index.php');
