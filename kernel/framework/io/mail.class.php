@@ -287,9 +287,9 @@ class Mail
     
     
     /**
-     * @param $field
-     * @param $value
-     * @return unknown_type
+     * @desc add the current coupe <code>$field</code> and <code>$value</code> to the mail headers
+     * @param string $field the header field 
+     * @param string $value the header value
      */
     function _add_header_field($field, $value) {
         $this->headers .= wordwrap($field . ': ' . $value, 78, "\n ") . CRLF;
