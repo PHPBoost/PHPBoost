@@ -127,10 +127,13 @@ class BBCodeUnparser extends ContentUnparser
 			'`<h4 class="stitle2">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-		    '`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
+		    '`<script type="text/javascript"><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
+			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
 			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
+			'`<script type="text/javascript"><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
+			'`<script type="text/javascript"><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
 			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
 		);
@@ -154,8 +157,11 @@ class BBCodeUnparser extends ContentUnparser
 			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
+			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
 		    "[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
+			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[swf=$2,$3]$1[/swf]",
 			"[math]$1[/math]"
