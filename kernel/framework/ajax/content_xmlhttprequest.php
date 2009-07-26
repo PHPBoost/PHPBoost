@@ -35,11 +35,11 @@ define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans
 include_once(PATH_TO_ROOT . '/kernel/begin.php');
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$page_path_to_root = retrieve(GET, 'path_to_root', '');
-$page_path = retrieve(GET, 'page_path', '');
+$page_path_to_root = retrieve(REQUEST, 'path_to_root', '');
+$page_path = retrieve(REQUEST, 'page_path', '');
 
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
-$editor = retrieve(GET, 'editor', $CONFIG['editor']);
+$editor = retrieve(REQUEST, 'editor', $CONFIG['editor']);
 
 $contents = utf8_decode(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
 

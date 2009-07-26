@@ -102,6 +102,7 @@ class Template
                     'C_USER_CONNECTED' => $member_connected,
                     'C_USER_NOTCONNECTED' => !$member_connected,
                     'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
+					'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
                     'TOKEN' => !empty($Session) ? $Session->get_token() : ''
                     ));
 			}

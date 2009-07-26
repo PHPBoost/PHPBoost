@@ -682,15 +682,13 @@ function include(file)
 
 //Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
 playerflowPlayerRequired = false;
-function insertMoviePlayer(url, width, height, id) {
+function insertMoviePlayer(id) {
 	if (!playerflowPlayerRequired) {
 		include(PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js');
 		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
-	insertedCode = '<a href="' + url + '" style="display:block;margin:auto;width:' + width + 'px;height:' + height + 'px;" id="flow_' + id  + '"></a><br />';
-	$(id).innerHTML = insertedCode;
-	flowPlayerDisplay("flow_" + id);
+	flowPlayerDisplay(id);
 }
 
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
@@ -711,37 +709,4 @@ function flowPlayerDisplay(id)
 		    }
 	    }
 	);
-}
-
-//Affiche le lecteur audio avec l'URL du fichier audio
-playerDewplayerRequired = false;
-function insertSoundPlayer(url, id) {
-	if (!playerDewplayerRequired) {
-		document.write('<script src="' + PATH_TO_ROOT + '/kernel/framework/js/players/dewplayer.js"></script>');
-		playerDewplayerRequired = true;
-	}
-
-	$(id).innerHTML = "<object type=\"application/x-shockwave-flash\" data=\"" + PATH_TO_ROOT + "/kernel/data/dewplayer.swf?son=" + url + "\" width=\"200\" height=\"20\">" + 
-		"<param name=\"allowScriptAccess\" value=\"never\" />" +
-		"<param name=\"play\" value=\"true\" />" + 
-		"<param name=\"movie\" value=\"../kernel/data/dewplayer.swf?son=" + url + "\" />" +
-		"<param name=\"menu\" value=\"false\" />" + 
-		"<param name=\"quality\" value=\"high\" />" +
-		"<param name=\"scalemode\" value=\"noborder\" />" +
-		"<param name=\"wmode\" value=\"transparent\" />" +
-		"<param name=\"bgcolor\" value=\"#FFFFFF\" />" + 
-		"</object>";
-}
-
-function insertSwfPlayer(url, width, height, id) {
-	$(id).innerHTML = "<object type=\"application/x-shockwave-flash\" data=\"" + url + "\" width=\"" + width.toString() + "\" height=\"" + height.toString() + "\">" +
-		"<param name=\"allowScriptAccess\" value=\"never\" />" +
-		"<param name=\"play\" value=\"true\" />" +
-		"<param name=\"movie\" value=\"" + url + "\" />" +
-		"<param name=\"menu\" value=\"false\" />" +
-		"<param name=\"quality\" value=\"high\" />" +
-		"<param name=\"scalemode\" value=\"noborder\" />" +
-		"<param name=\"wmode\" value=\"transparent\" />" +
-		"<param name=\"bgcolor\" value=\"#000000\" />" +
-		"</object>";
 }
