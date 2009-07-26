@@ -6,15 +6,15 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- * 
  *
-###################################################
+ *
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 require_once('../admin/admin_begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
@@ -39,56 +39,56 @@ if (!empty($_POST['valid']))
 	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_PARSE);
 	$img = retrieve(POST, 'img', '');
 	$alt = retrieve(POST, 'alt', '');
-	
+
 	//Gestion de la parution
 	$get_visible = retrieve(POST, 'visible', 0);
 	$start = retrieve(POST, 'start', 0, TSTRING_UNCHANGE);
 	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNCHANGE);
-	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);	
+	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);
 	$end = retrieve(POST, 'end', 0, TSTRING_UNCHANGE);
 	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNCHANGE);
 	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNCHANGE);
-	
+
 	//Date de la news
 	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
 	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
 	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
-	
+
 	//Image en relatif.
-	$img_url = new Url($img); 
+	$img_url = new Url($img);
 
 	if (!empty($idcat) && !empty($title) && !empty($contents))
-	{	
+	{
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']) + ($start_hour * 3600) + ($start_min * 60);
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']) + ($end_hour * 3600) + ($end_min * 60);
-		
-		$visible = 1;		
+
+		$visible = 1;
 		if ($get_visible == 2)
-		{		
+		{
 			if ($start_timestamp < time() || $start_timestamp < 0) //Date inférieure à celle courante => inutile.
-				$start_timestamp = 0;
+			$start_timestamp = 0;
 
 			if ($end_timestamp < time() || ($end_timestamp < $start_timestamp && $start_timestamp != 0)) //Date inférieur à celle courante => inutile.
-				$end_timestamp = 0;
+			$end_timestamp = 0;
 		}
 		elseif ($get_visible == 1)
-			list($start_timestamp, $end_timestamp) = array(0, 0);
+		list($start_timestamp, $end_timestamp) = array(0, 0);
 		else
-			list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
+		list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 
 		$timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 		if ($timestamp > 0)
-			$timestamp += ($current_hour * 3600) + ($current_min * 60);
+		$timestamp += ($current_hour * 3600) + ($current_min * 60);
 		else //Ajout des heures et minutes
-			$timestamp = time();
-		
-		$Sql->query_inject("INSERT INTO " . PREFIX . "news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com) 
+		$timestamp = time();
+
+		$Sql->query_inject("INSERT INTO " . PREFIX . "news (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com)
 		VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $extend_contents . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', '" . $img_url->relative() . "', '" . $alt . "', '0')", __LINE__, __FILE__);
-		
-        // Feeds Regeneration
-        import('content/syndication/feed');
-        Feed::clear_cache('news');
-		
+
+		// Feeds Regeneration
+		import('content/syndication/feed');
+		Feed::clear_cache('news');
+
 		//Mise à jour du nombre de news dans le cache de la configuration.
 		$Cache->load('news'); //Requête des configuration générales (news), $CONFIG_NEWS variable globale.
 		$CONFIG_NEWS['nbr_news'] = $Sql->query("SELECT COUNT(*) AS nbr_news FROM " . PREFIX . "news WHERE visible = 1", __LINE__, __FILE__);
@@ -99,65 +99,73 @@ if (!empty($_POST['valid']))
 		redirect(HOST . DIR . '/news/admin_news.php');
 	}
 	else
-		redirect(HOST . DIR . '/news/admin_news_add.php?error=incomplete#errorh');
+	redirect(HOST . DIR . '/news/admin_news_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_POST['previs']))
 {
 	$Template->set_filenames(array(
 		'admin_news_add'=> 'news/admin_news_add.tpl'
-	));
+		));
 
-	$title = stripslashes(retrieve(POST, 'title', ''));
-	$idcat = retrieve(POST, 'idcat', '', TSTRING_UNCHANGE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
-	$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_PARSE);
-	$img = retrieve(POST, 'img', '', TSTRING_UNCHANGE);
-	$alt = retrieve(POST, 'alt', '', TSTRING_UNCHANGE);
+		$title = stripslashes(retrieve(POST, 'title', ''));
+		$idcat = retrieve(POST, 'idcat', '', TSTRING_UNCHANGE);
+		$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+		$extend_contents = retrieve(POST, 'extend_contents', '', TSTRING_PARSE);
+		$img = retrieve(POST, 'img', '', TSTRING_UNCHANGE);
+		$alt = retrieve(POST, 'alt', '', TSTRING_UNCHANGE);
 
-	//Gestion de la parution
-	$get_visible = retrieve(POST, 'visible', 0);
-	$start = retrieve(POST, 'start', 0, TSTRING_UNCHANGE);
-	$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNCHANGE);
-	$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);	
-	$end = retrieve(POST, 'end', 0, TSTRING_UNCHANGE);
-	$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNCHANGE);
-	$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNCHANGE);
-	
-	//Date de la news
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
-	$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
-	$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
-	
-	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
-	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
-	$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
+		//Gestion de la parution
+		$get_visible = retrieve(POST, 'visible', 0);
+		$start = retrieve(POST, 'start', 0, TSTRING_UNCHANGE);
+		$start_hour = retrieve(POST, 'start_hour', 0, TSTRING_UNCHANGE);
+		$start_min = retrieve(POST, 'start_min', 0, TSTRING_UNCHANGE);
+		$end = retrieve(POST, 'end', 0, TSTRING_UNCHANGE);
+		$end_hour = retrieve(POST, 'end_hour', 0, TSTRING_UNCHANGE);
+		$end_min = retrieve(POST, 'end_min', 0, TSTRING_UNCHANGE);
 
-	$Template->assign_block_vars('news', array(
+		//Date de la news
+		$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+		$current_hour = retrieve(POST, 'current_hour', 0, TSTRING_UNCHANGE);
+		$current_min = retrieve(POST, 'current_min', 0, TSTRING_UNCHANGE);
+
+		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
+		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
+		$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
+
+		$img_displays = '';
+		if (!empty($img))
+		{
+			$img_url = new Url(stripslashes($img));
+			$img_displays = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
+		'" title="' . stripslashes($alt) . '" class="img_right" />';
+		}
+
+		$Template->assign_block_vars('news', array(
 		'TITLE' => $title,
 		'PREVIEWED_CONTENTS' => second_parse(stripslashes($contents)),
 		'PREVIEWED_EXTEND_CONTENTS' => second_parse(stripslashes($extend_contents)),
 		'PSEUDO' => $User->get_attribute('login'),
-		'IMG' => (!empty($img) ? '<img src="' . stripslashes($img) . '" alt="' . stripslashes($alt) . '" title="' . stripslashes($alt) . '" class="img_right" style="margin:6px;border:1px solid #000000;" />' : ''),
+		'IMG' => $img_displays,
 		'DATE' => gmdate_format('date_format_short')
-	));
-
-	//Catégories.	
-	$i = 0;
-	$result = $Sql->query_while ("SELECT id, name FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-		$Template->assign_block_vars('select', array(
-			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
-		$i++;
-	}	
-	$Sql->query_close($result);
-	
-	if ($i == 0) //Aucune catégorie => alerte.	 
+
+		//Catégories.
+		$i = 0;
+		$result = $Sql->query_while ("SELECT id, name FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
+			$Template->assign_block_vars('select', array(
+			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
+			));
+			$i++;
+		}
+		$Sql->query_close($result);
+
+		if ($i == 0) //Aucune catégorie => alerte.
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
-	
-	$Template->assign_vars(array(
+
+		$Template->assign_vars(array(
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
 		'TOKEN' => $Session->get_token(),
 		'NEWS_TITLE' => $title,
@@ -221,17 +229,17 @@ elseif (!empty($_POST['previs']))
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
-	));	
-	
-	$Template->pparse('admin_news_add');    
+		));
+
+		$Template->pparse('admin_news_add');
 }
 else
 {
 	$Template->set_filenames(array(
 		'admin_news_add'=> 'news/admin_news_add.tpl'
-	));
-	
-	$Template->assign_vars(array(
+		));
+
+		$Template->assign_vars(array(
 		'TOKEN' => $Session->get_token(),
 		'TITLE' => '',
 		'THEME' => get_utheme(),
@@ -270,29 +278,29 @@ else
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
-	));
-	
-	//Catégories.	
-	$i = 0;
-	$result = $Sql->query_while("SELECT id, name 
-	FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		$Template->assign_block_vars('select', array(
-			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
 		));
-		$i++;
-	}
-	$Sql->query_close($result);
 
-	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
-	if ($get_error == 'incomplete')
+		//Catégories.
+		$i = 0;
+		$result = $Sql->query_while("SELECT id, name
+	FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$Template->assign_block_vars('select', array(
+			'CAT' => '<option value="' . $row['id'] . '">' . $row['name'] . '</option>'
+			));
+			$i++;
+		}
+		$Sql->query_close($result);
+
+		//Gestion erreur.
+		$get_error = retrieve(GET, 'error', '');
+		if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-	elseif ($i == 0) //Aucune catégorie => alerte.	 
+		elseif ($i == 0) //Aucune catégorie => alerte.
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
-	
-	$Template->pparse('admin_news_add'); 
+
+		$Template->pparse('admin_news_add');
 }
 
 require_once('../admin/admin_footer.php');
