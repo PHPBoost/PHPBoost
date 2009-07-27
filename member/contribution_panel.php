@@ -203,7 +203,7 @@ elseif ($id_update > 0)
 		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
 		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
 		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
-		'L_EVENT_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
+		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
 		'L_CONTRIBUTION' => $LANG['contribution'],
 		'L_DESCRIPTION' => $LANG['contribution_description'],
 		'L_STATUS' => $LANG['contribution_status'],
