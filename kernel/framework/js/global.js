@@ -672,11 +672,7 @@ function include(file)
 		script = window.document.createElement("script");
 		script.type = "text/javascript";
 		script.src = file;
-		body = window.document.getElementsByTagName("body");
-		if (body) 
-		{
-			body[0].appendChild(script);
-		}
+		$("header").appendChild(script);
 	}
 }
 
@@ -684,11 +680,11 @@ function include(file)
 playerflowPlayerRequired = false;
 function insertMoviePlayer(id) {
 	if (!playerflowPlayerRequired) {
-		include(PATH_TO_ROOT + '/kernel/framework/js/players/flowplayer.js');
 		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
-	flowPlayerDisplay(id);
+	//flowPlayerDisplay(id);
+	setTimeout('flowPlayerDisplay(\'' + id + '\')', 1000);
 }
 
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
