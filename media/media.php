@@ -175,8 +175,8 @@ if (empty($id_media) && $id_cat >= 0)
 		));
 
 		$result = $Sql->query_while("SELECT v.id, v.iduser, v.name, v.timestamp, v.counter, v.note, v.nbrnote, v.nbr_com, v.infos, v.contents, mb.login, mb.level
-			FROM ".PREFIX."media AS v
-			LEFT JOIN ".PREFIX."member AS mb ON v.iduser = mb.user_id
+			FROM " . PREFIX . "media AS v
+			LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id
 			WHERE idcat = '" . $id_cat . "' AND infos = '" . MEDIA_STATUS_APROBED . "'
 			ORDER BY " . $sort . " " . $mode .
 			$Sql->limit($Pagination->get_first_msg($MEDIA_CONFIG['pagin'], 'p'), $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
@@ -213,7 +213,7 @@ if (empty($id_media) && $id_cat >= 0)
 // Display the media file.
 elseif ($id_media > 0)
 {
-	$result = $Sql->query_while("SELECT v.*, mb.login, mb.level	FROM ".PREFIX."media AS v LEFT JOIN ".PREFIX."member AS mb ON v.iduser = mb.user_id	WHERE id = '" . $id_media . "'", __LINE__, __FILE__);
+	$result = $Sql->query_while("SELECT v.*, mb.login, mb.level	FROM " . PREFIX . "media AS v LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.iduser = mb.user_id	WHERE id = '" . $id_media . "'", __LINE__, __FILE__);
 	$media = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	
@@ -235,7 +235,7 @@ elseif ($id_media > 0)
 	require_once('../kernel/header.php');
 
 	//MAJ du compteur.
-	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " ".PREFIX."media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "media SET counter = counter + 1 WHERE id = " . $id_media, __LINE__, __FILE__);
 
 	//Affichage notation.
 	import('content/note');

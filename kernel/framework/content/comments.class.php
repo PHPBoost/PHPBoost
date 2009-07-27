@@ -665,7 +665,7 @@ class Comments
 						'DEL' => $del,
 						'EDIT' => $edit,
 						'U_USER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
-						'U_ANCHOR' => $this->path . $this->vars . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
+						'U_ANCHOR' => $this->path . $vars_simple . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
 						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script
 					));
 					$j++;
