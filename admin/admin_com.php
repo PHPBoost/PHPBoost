@@ -193,7 +193,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$Template->assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(second_parse($row['contents'])),
-		'COM_SCRIPT' => $row['script'],
+		'COM_SCRIPT' => 'anchor_' . $row['script'],
 		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 		'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 		'USER_PSEUDO' => $com_pseudo,			
@@ -212,8 +212,8 @@ while ($row = $Sql->fetch_assoc($result))
 		'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 		'U_PROV' => $row['path'],
 		'U_USER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
-		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
-		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
+		'U_EDIT_COM' => preg_replace('`com=[0-9]+`', 'com=' . $row['idcom'], $row['path']) . '&editcom=1',
+		'U_DEL_COM' => preg_replace('`com=[0-9]+`', 'com=' . $row['idcom'], $row['path']) . '&delcom=1',
 	));
 }
 
