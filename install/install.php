@@ -103,7 +103,7 @@ else
 		define('DISTRIBUTION_DESCRIPTION', 'This distribution is the default distribution. You will manage to install PHPBoost with the default configuration but it will install only the kernel without any module.');
 		
 		//Thème de la distribution
-		define('DISTRIBUTION_THEME', 'main');
+		define('DISTRIBUTION_THEME', 'base');
 		
 		//Page de démarrage de la distribution (commencer à la racine du site avec /)
 		define('DISTRIBUTION_START_PAGE', '/member/member.php');
