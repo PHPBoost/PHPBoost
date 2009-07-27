@@ -683,8 +683,7 @@ function insertMoviePlayer(id) {
 		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
-	//flowPlayerDisplay(id);
-	setTimeout('flowPlayerDisplay(\'' + id + '\')', 1000);
+	flowPlayerDisplay(id);
 }
 
 //Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
