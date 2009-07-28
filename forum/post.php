@@ -844,7 +844,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$type = E_USER_NOTICE;
 				break;
 				case 'locked':
-				$errstr = $LANG['e_topic_lock'];
+				$errstr = $LANG['e_topic_lock_forum'];
 				$type = E_USER_WARNING;
 				break;
 				default:
