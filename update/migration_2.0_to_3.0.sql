@@ -1,15 +1,12 @@
-ALTER TABLE `phpboost_com` CHANGE `idcom` `idcom` int(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `phpboost_com` CHANGE `idprov` `idprov` int(11) NOT NULL DEFAULT '0';
-ALTER TABLE `phpboost_com` CHANGE `user_id` `user_id` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `phpboost_com` ADD `path` VARCHAR( 255 ) NOT NULL DEFAULT '' AFTER `script` ;
 ALTER TABLE `phpboost_com` ADD `user_ip` VARCHAR( 50 ) NOT NULL DEFAULT '' AFTER `path`; 
-ALTER TABLE `phpboost_com` DROP INDEX `idcom`, ADD PRIMARY KEY ( `idcom` ) ;
-ALTER TABLE `phpboost_com` ADD INDEX (`idprov` ,`script`);
+ALTER TABLE `phpboost_com` CHANGE `contents` `contents` text; 
 
 DROP TABLE IF EXISTS `phpboost_compteur`;
 
 -- Il faudra vérifier les modules à insérer dans cette table!
 TRUNCATE `phpboost_configs`;
+ALTER TABLE `phpboost_configs` CHANGE `value` `value` text; 
 INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES
 (1, 'config', 'a:38:{s:11:"server_name";s:16:"http://localhost";s:11:"server_path";s:9:"/phpboost";s:9:"site_name";s:4:"Test";s:9:"site_desc";s:0:"";s:12:"site_keyword";s:0:"";s:5:"start";i:1237569582;s:7:"version";s:4:"3.0b";s:4:"lang";s:6:"french";s:5:"theme";s:4:"base";s:6:"editor";s:6:"bbcode";s:8:"timezone";i:1;s:10:"start_page";s:14:"/news/news.php";s:8:"maintain";i:0;s:14:"maintain_delay";i:1;s:22:"maintain_display_admin";i:1;s:13:"maintain_text";s:40:"Le site est actuellement en maintenance.";s:23:"htaccess_manual_content";s:0:"";s:7:"rewrite";i:0;s:9:"com_popup";i:0;s:8:"compteur";i:0;s:5:"bench";i:0;s:12:"theme_author";i:0;s:12:"ob_gzhandler";i:0;s:11:"site_cookie";s:7:"session";s:12:"site_session";i:3600;s:18:"site_session_invit";i:300;s:8:"mail_exp";s:15:"crowkait@ds.Fsd";s:4:"mail";s:15:"crowkait@ds.Fsd";s:10:"activ_mail";i:0;s:4:"sign";s:31:"Cordialement, l''équipe du site.";s:10:"anti_flood";i:0;s:11:"delay_flood";i:7;s:12:"unlock_admin";s:64:"2189bcc8e11935dbdf403bb7434ba53ceb8a7fe461388096cea65e3e1deba7b3";s:6:"pm_max";i:50;s:17:"search_cache_time";i:30;s:14:"search_max_use";i:100;s:9:"html_auth";a:1:{s:2:"r2";i:1;}s:14:"forbidden_tags";a:0:{}}'),
 (2, 'member', 'a:14:{s:14:"activ_register";i:1;s:7:"msg_mbr";s:169:"Bienvenue sur le site. Vous êtes membre du site, vous pouvez accéder à tous les espaces nécessitant un compte utilisateur, éditer votre profil et voir vos contributions.";s:12:"msg_register";s:158:"Vous vous apprêtez à vous enregistrer sur le site. Nous vous demandons d''être poli et courtois dans vos interventions.<br />\r\n<br />\r\nMerci, l''équipe du site.";s:9:"activ_mbr";i:0;s:10:"verif_code";i:1;s:21:"verif_code_difficulty";i:2;s:17:"delay_unactiv_max";i:20;s:11:"force_theme";i:0;s:15:"activ_up_avatar";i:0;s:9:"width_max";i:120;s:10:"height_max";i:120;s:10:"weight_max";i:20;s:12:"activ_avatar";i:0;s:10:"avatar_url";s:13:"no_avatar.png";}'),
@@ -65,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_events` (
 ALTER TABLE `phpboost_group` ADD `color` varchar(6) NOT NULL DEFAULT '' AFTER `img` ;
 ALTER TABLE `phpboost_group` DROP `auth`;
 ALTER TABLE `phpboost_group` ADD `auth` varchar(255) NOT NULL DEFAULT '0' AFTER `color` ;
+ALTER TABLE `phpboost_group` CHANGE `members` `members` text; 
 
 DROP TABLE IF EXISTS `phpboost_links`;
 
@@ -72,7 +70,10 @@ ALTER TABLE `phpboost_member` CHANGE `password` `password`  varchar(64) NOT NULL
 ALTER TABLE `phpboost_member` ADD `user_editor` varchar(15) NOT NULL DEFAULT '' AFTER `user_show_mail` ;
 ALTER TABLE `phpboost_member` ADD `user_timezone` tinyint(2) NOT NULL DEFAULT '0' AFTER `user_editor` ;
 ALTER TABLE `phpboost_member` CHANGE `new_pass` `new_pass`  varchar(64) NOT NULL DEFAULT '';
-
+ALTER TABLE `phpboost_member` CHANGE `user_groups` `user_groups` text; 
+ALTER TABLE `phpboost_member` CHANGE `user_desc` `user_desc` text; 
+ALTER TABLE `phpboost_member` CHANGE `user_sign` `user_sign` text; 
+ALTER TABLE `phpboost_member` ADD UNIQUE `login` ( `login` ) ;
 
 CREATE TABLE IF NOT EXISTS `phpboost_member_extend` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,7 +82,10 @@ CREATE TABLE IF NOT EXISTS `phpboost_member_extend` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 ALTER TABLE `phpboost_member_extend_cat` CHANGE `require` `required` TINYINT( 1 ) NOT NULL DEFAULT '0';
-
+ALTER TABLE `phpboost_member_extend_cat` CHANGE `contents` `contents` text; 
+ALTER TABLE `phpboost_member_extend_cat` CHANGE `field` `field` tinyint(1) NOT NULL DEFAULT '0'; 
+ALTER TABLE `phpboost_member_extend_cat` CHANGE `possible_values` `possible_values` text; 
+ALTER TABLE `phpboost_member_extend_cat` CHANGE `default_values` `default_values` text; 
 
 CREATE TABLE IF NOT EXISTS `phpboost_menus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -112,7 +116,10 @@ INSERT INTO `phpboost_menus` (`id`, `title`, `object`, `class`, `enabled`, `bloc
 
 DROP TABLE IF EXISTS `phpboost_modules_mini`;
 
+ALTER TABLE `phpboost_modules` CHANGE `auth` `auth` text; 
+
 ALTER TABLE `phpboost_pm_topic` DROP `visible`;
+ALTER TABLE `phpboost_pm_msg` CHANGE `contents` `contents` text; 
 
 TRUNCATE `phpboost_ranks`;
 INSERT INTO `phpboost_ranks` (`id`, `name`, `msg`, `icon`, `special`) VALUES
@@ -156,12 +163,13 @@ CREATE TABLE IF NOT EXISTS `phpboost_search_results` (
 ALTER TABLE `phpboost_sessions` CHANGE `session_id` `session_id` varchar(64) NOT NULL DEFAULT '';
 ALTER TABLE `phpboost_sessions` ADD `user_theme` varchar(50) NOT NULL DEFAULT '' AFTER `session_flag` ;
 ALTER TABLE `phpboost_sessions` ADD `user_lang` varchar(50) NOT NULL DEFAULT '' AFTER `user_theme` ;
-ALTER TABLE `phpboost_sessions` ADD `modules_parameters` text NOT NULL AFTER `user_lang` ;
+ALTER TABLE `phpboost_sessions` ADD `modules_parameters` text AFTER `user_lang` ;
 ALTER TABLE `phpboost_sessions` ADD `token` varchar(64) NOT NULL AFTER `modules_parameters` ;
 
 ALTER TABLE `phpboost_stats` ADD `pages` int(11) NOT NULL DEFAULT '0' AFTER `nbr` ;
 ALTER TABLE `phpboost_stats` ADD `pages_detail` text NOT NULL AFTER `pages` ;
 ALTER TABLE `phpboost_stats` DROP INDEX `stats_day`, ADD UNIQUE `stats_day` ( `stats_day` , `stats_month` , `stats_year` ) ;
+ALTER TABLE `phpboost_stats` CHANGE `pages_detail` `pages_detail` text; 
 
 CREATE TABLE IF NOT EXISTS `phpboost_stats_referer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
