@@ -62,6 +62,7 @@ else
 
 $l_com_note = !empty($idurl) ? (!empty($get_note) ? $LANG['note'] : (!empty($_GET['i']) ? $LANG['com'] : '') ) : '';
 
+$visible = true;
 $auth_read = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 $auth_write = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 $auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
@@ -73,6 +74,7 @@ while ($id_cat_for_download > 0)
 	if (!empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
 	{
 		//If we can't read a category, we can't read sub elements.
+		$visible = $DOWNLOAD_CATS[$id_cat_for_download]['visible'];
 		$auth_read = $auth_read && $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_READ_CAT_AUTH_BIT);
 		$auth_write = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_WRITE_CAT_AUTH_BIT);
 		$auth_contribution = $User->check_auth($DOWNLOAD_CATS[$id_cat_for_download]['auth'], DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT);
@@ -84,7 +86,7 @@ $Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
 
 $Bread_crumb->reverse();
 
-if (!$auth_read)
+if (!$auth_read || !$visible)
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 ?>
