@@ -1,9 +1,7 @@
 # IF C_VERTICAL_BLOCK #
 <div class="module_mini_container">
 	<div class="module_mini_top">
-		<h5 class="sub_title">
-			# IF C_DISPLAY_TITLE #<h5 class="sub_title">{TITLE}</h5># ENDIF #
-		</h5>
+		# IF C_DISPLAY_TITLE #<h5 class="sub_title">{TITLE}</h5># ENDIF #
 	</div>
 	<div class="module_mini_contents">
 		{CONTENT}
