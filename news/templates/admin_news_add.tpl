@@ -1,5 +1,3 @@
-		<link href="{MODULE_DATA_PATH}/news.css" rel="stylesheet" type="text/css" media="screen, handheld">
-
 		<script type="text/javascript">
 		<!--
 			var theme = '{THEME}';
@@ -56,31 +54,33 @@
 		<div id="admin_contents">
 			# START news #
 			<div class="block_container">
-				<div class="block_top">{L_PREVIEW}</div>
-				<div class="block_contents row2">
-					<div class="news_container">
-						<div class="msg_top_l"></div>			
-						<div class="msg_top_r"></div>
-						<div class="msg_top">
-							<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
-							<div style="float:right"></div>
-						</div>												
-						<div class="news_content">
-							{news.IMG}
-							{news.PREVIEWED_CONTENTS}
-							<hr />	
-							{news.PREVIEWED_EXTEND_CONTENTS}	
-						</div>								
-						<div class="news_bottom_l"></div>		
-						<div class="news_bottom_r"></div>
-						<div class="news_bottom">
-							<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
-							<span style="float:right">{L_ON}: {news.DATE}</span>
-						</div>
-					</div>				
-				</div>				
+			<div class="block_top">{L_PREVIEW}</div>
+			<div class="block_contents row2">
+				<div class="news_container">
+					<div class="news_top_l"></div>			
+					<div class="news_top_r"></div>
+					<div class="news_top">
+						<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
+						<div style="float:right"></div>
+					</div>													
+					<div class="news_content">
+						{news.IMG}
+						{news.PREVIEWED_CONTENTS}
+						<div class="spacer"></div>
+						<hr />
+						{news.PREVIEWED_EXTEND_CONTENTS}
+						<div class="spacer"></div>
+					</div>									
+					<div class="news_bottom_l"></div>		
+					<div class="news_bottom_r"></div>
+					<div class="news_bottom">
+						<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
+						<span style="float:right">{L_ON}: {news.DATE}</span>
+					</div>
+				</div>					
 			</div>				
-
+			</div>
+		
 			<br /><br /><br />
 			# END news #
 			
