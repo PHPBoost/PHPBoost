@@ -195,7 +195,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php'),
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id']),
+				'U_ADMIN_DELETE_MEDIA' => url('media_action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../media/media' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php?com=0'), $row['id'], 'media')
 			));
 		}
@@ -272,7 +272,7 @@ elseif ($id_media > 0)
 		'L_CONFIRM_DELETE_MEDIA' => str_replace('\'', '\\\'', $MEDIA_LANG['confirm_delete_media']),
 		'U_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_EDIT_MEDIA' => url('media_action.php?edit=' . $id_media),
-		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media),
+		'U_DELETE_MEDIA' => url('media_action.php?del=' . $id_media . '&amp;token=' . $Session->get_token()),
 		'U_POPUP_MEDIA' => url('media_popup.php?id=' . $id_media),
 		'C_DISPLAY' => (($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_DATE) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_USER) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COUNT) !== 0 || ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_NOTE) !== 0),
 		'A_COM' => ($MEDIA_CATS[$media['idcat']]['active'] & MEDIA_DV_COM) !== 0,
