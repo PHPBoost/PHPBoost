@@ -132,7 +132,7 @@ if (!empty($contents)) //On enregistre un article
 				//On récupère le numéro de l'article créé
 				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu
-				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
 				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
 				$cat_update = '';
