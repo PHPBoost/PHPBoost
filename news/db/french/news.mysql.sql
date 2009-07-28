@@ -4,7 +4,7 @@ CREATE TABLE `phpboost_news` (
   `idcat` int(11) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
   `contents` mediumtext,
-  `extend_contents` text,
+  `extend_contents` mediumtext,
   `archive` tinyint(1) NOT NULL default '0',
   `timestamp` int(11) NOT NULL default '0',
   `visible` tinyint(1) NOT NULL default '0',
