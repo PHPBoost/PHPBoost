@@ -33,6 +33,7 @@ define('STEPS_NUMBER', 6);
 define('STEP_INTRODUCTION', 1);
 define('STEP_SERVER_CONFIG', 2);
 define('STEP_DB_CONFIG', 3);
+define('STEP_DB_MAJ', 4);
 
 define('DEBUG', false);
 
@@ -91,6 +92,28 @@ $User = new User($user_data, $user_groups);
 if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
 {
     die($LANG['cache_tpl_must_exist_and_be_writable']);
+}
+
+//Fonction pour gérer la langue
+function add_lang($url, $header_location = false)
+{
+	global $lang;
+	if ($lang != DEFAULT_LANGUAGE)
+	{
+		if (strpos($url, '?') !== false)
+		{
+			$ampersand = $header_location ? '&' : '&amp;';
+			return $url . $ampersand . 'lang=' . $lang;
+		}
+		else
+		{
+			return $url . '?' . 'lang=' . $lang;
+		}
+	}
+	else
+	{
+		return $url;
+	}
 }
 
 //Template d'installation
@@ -241,13 +264,9 @@ switch($step)
             switch ($result)
             {
                 case DB_CONFIG_SUCCESS:
-                    die('correct :)');
                     import('core/errors');
                     import('core/cache');
                     $Errorh = new Errors;
-                    $Sql = new Sql();
-                    //Connexion
-                    $Sql->connect($host, $login, $password, $database, ERRORS_MANAGEMENT_BY_RETURN);
 
 					$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
 					
@@ -281,51 +300,7 @@ switch($step)
                     $db_config_file->write($db_config_content);
                     //Fermeture du fichier dont on n'a plus besoin
                     $db_config_file->close();
-                    
-                    //On parse le fichier de mise à jour de la structure de la base de données
-                    $Sql->parse('migration_2.0_to_3.0.sql');
-                    
-					$Cache->load('modules'); //Cache des autorisations des modules
-					if (isset($MODULES['forum']))
-						$Sql->parse('migration_forum_2.0_to_3.0.sql');
-					if (isset($MODULES['download']))
-						$Sql->parse('migration_download_2.0_to_3.0.sql');
-					if (isset($MODULES['poll']))
-					{	
-						$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
-					}
-					if (isset($MODULES['articles']))
-						$Sql->parse('migration_articles_2.0_to_3.0.sql');
-					if (isset($MODULES['news']))
-						$Sql->parse('migration_news_2.0_to_3.0.sql');
-					if (isset($MODULES['faq']))
-						$Sql->parse('migration_faq_2.0_to_3.0.sql');
-					if (isset($MODULES['calendar']))
-						$Sql->query_inject("ALTER TABLE `phpboost_calendar` DROP `timestamp_end`", __LINE__, __FILE__);
-					if (isset($MODULES['gallery']))
-						$Sql->query_inject("ALTER TABLE `phpboost_gallery` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-					if (isset($MODULES['shoutbox']))
-						$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` ADD `level` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id`", __LINE__, __FILE__);
-					if (isset($MODULES['wiki']))
-						$Sql->query_inject("ALTER TABLE `phpboost_wiki_articles` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-					if (isset($MODULES['web']))
-					{
-						$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `note` `note` float NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_web_cat` CHANGE `secure` `secure` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-					}
-					if (isset($MODULES['pages']))
-					{
-						$Sql->query_inject("ALTER TABLE `phpboost_pages` CHANGE `activ_com` `lock_com` tinyint(1) NOT NULL DEFAULT '0'", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`title`)", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`contents`)", __LINE__, __FILE__);
-						$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT `all` (`title` ,`contents`)", __LINE__, __FILE__);
-					}
 					
-                    //Fermeture de la connexion BDD
-                    $Sql->close();
-                    
                     redirect(HOST . FILE . '?step=4');
                     break;
                 case DB_CONFIG_ERROR_CONNECTION_TO_DBMS:
@@ -407,6 +382,97 @@ switch($step)
             'L_ALREADY_INSTALLED_OVERWRITE' => $LANG['already_installed_overwrite']
         ));
         break;
+	case STEP_DB_MAJ :
+		if (retrieve(POST, 'submit', false))
+        {
+			import('core/errors');
+			import('db/mysql');
+			import('core/cache');
+			$Errorh = new Errors;
+			$Sql = new Sql();
+			
+			include_once '../kernel/db/config.php';
+			//Connexion
+			$Sql->connect($sql_host, $sql_login, $sql_pass, $sql_base, ERRORS_MANAGEMENT_BY_RETURN);
+			
+			$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
+			
+			//On parse le fichier de mise à jour de la structure de la base de données
+			$Sql->parse('migration_2.0_to_3.0.sql');
+			
+			$Cache->load('modules'); //Cache des autorisations des modules
+			if (isset($MODULES['forum']))
+				$Sql->parse('migration_forum_2.0_to_3.0.sql');
+			if (isset($MODULES['download']))
+				$Sql->parse('migration_download_2.0_to_3.0.sql');
+			if (isset($MODULES['poll']))
+			{	
+				$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['articles']))
+				$Sql->parse('migration_articles_2.0_to_3.0.sql');
+			if (isset($MODULES['news']))
+				$Sql->parse('migration_news_2.0_to_3.0.sql');
+			if (isset($MODULES['faq']))
+				$Sql->parse('migration_faq_2.0_to_3.0.sql');
+			if (isset($MODULES['calendar']))
+				$Sql->query_inject("ALTER TABLE `phpboost_calendar` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+			if (isset($MODULES['guestbook']))
+				$Sql->query_inject("ALTER TABLE `phpboost_guestbook` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+			if (isset($MODULES['newsletter']))
+				$Sql->query_inject("ALTER TABLE `phpboost_newsletter_arch` CHANGE `message` `message` text", __LINE__, __FILE__);
+			if (isset($MODULES['gallery']))
+			{
+				$Sql->query_inject("ALTER TABLE `phpboost_gallery` CHANGE `users_note` `users_note` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_gallery_cats` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_gallery_cats` CHANGE `auth` `auth` text", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['shoutbox']))
+			{
+				$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` ADD `level` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id`", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['wiki']))
+			{	
+				$Sql->query_inject("ALTER TABLE `phpboost_wiki_articles` CHANGE `undefined_status` `undefined_status` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_wiki_articles` CHANGE `auth` `auth` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_wiki_contents` CHANGE `menu` `menu` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_wiki_contents` CHANGE `content` `content` mediumtext", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['web']))
+			{
+				$Sql->query_inject("ALTER TABLE `phpboost_web_cat` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `users_note` `users_note` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `url` `url` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `note` `note` float NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['pages']))
+			{
+				$Sql->query_inject("ALTER TABLE `phpboost_pages` CHANGE `auth` `auth` text", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_pages` CHANGE `contents` `contents` mediumtext", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`title`)", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`contents`)", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT `all` (`title` ,`contents`)", __LINE__, __FILE__);
+			}
+			
+			//Fermeture de la connexion BDD
+			$Sql->close();
+			
+			redirect(HOST . FILE . add_lang('?step=5', true));
+		}
+		
+		 $template->assign_vars(array(
+            'C_DATABASE_MAJ' => true,
+            'U_PREVIOUS_STEP' => 'update.php?step=3',
+            'U_CURRENT_STEP' => 'update.php?step=4',
+            'L_PREVIOUS_STEP' => $LANG['previous_step'],
+            'L_NEXT_STEP' => $LANG['next_step'],
+            'L_DATABASE_MAJ' => $LANG['db_update'],
+            'L_DATABASE_MAJ_EXPLAIN' => $LANG['db_update_explain']
+        ));
+		
+		break;
     // Configuration du site
     case 5:
         //Variables serveur.
@@ -449,7 +515,7 @@ switch($step)
             $CONFIG['theme'] = DEFAULT_THEME;
             $CONFIG['editor'] = 'bbcode';
             $CONFIG['timezone'] = $site_timezone;
-            $CONFIG['start_page'] = DISTRIBUTION_START_PAGE;
+            $CONFIG['start_page'] = './index.php';
             $CONFIG['maintain'] = 0;
             $CONFIG['maintain_delay'] = 1;
             $CONFIG['maintain_display_admin'] = 1;
@@ -495,14 +561,6 @@ switch($step)
             include '../kernel/framework/core/cache.class.php';
             include '../lang/' . $lang . '/main.php';
             $Cache = new Cache;
-            
-            //Installation des modules de la distribution
-            import('modules/packages_manager');
-            foreach ($DISTRIBUTION_MODULES as $module_name)
-            {
-                $Cache->load('modules', RELOAD_CACHE);
-                PackagesManager::install_module($module_name, true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
-            }
             
             $Cache->generate_file('modules');
             $Cache->load('modules', RELOAD_CACHE);
@@ -581,171 +639,8 @@ switch($step)
             'L_CONFIRM_SITE_URL' => $LANG['confirm_site_url'],
             'L_CONFIRM_SITE_PATH' => $LANG['confirm_site_path']
         ));
-    //Compte administrateur
+		break;
     case 6:
-        $template->assign_block_vars('admin', array());
-        //Validation de l'étape
-        if (retrieve(POST, 'submit', false))
-        {
-        	import('io/mail');
-            $login = retrieve(POST, 'login', '', TSTRING_AS_RECEIVED);
-            $password = retrieve(POST, 'password', '', TSTRING_AS_RECEIVED);
-            $password_repeat = retrieve(POST, 'password_repeat', '', TSTRING_AS_RECEIVED);
-            $user_mail = retrieve(POST, 'mail', '', TSTRING_AS_RECEIVED);
-            $create_session = retrieve(POST, 'create_session', false);
-            $auto_connection = retrieve(POST, 'auto_connection', false);
-            
-            function check_admin_account($login, $password, $password_repeat, $user_mail)
-            {
-                global $LANG;
-                if (empty($login))
-                {
-                    return $LANG['admin_require_login'];
-                }
-                elseif (strlen($login) < 3)
-                {
-                    return $LANG['admin_login_too_short'];
-                }
-                elseif (empty($password))
-                {
-                    return $LANG['admin_require_password'];
-                }
-                elseif (empty($password_repeat))
-                {
-                    return $LANG['admin_require_password_repeat'];
-                }
-                elseif (strlen($password) < 6)
-                {
-                    return $LANG['admin_password_too_short'];
-                }
-                elseif (empty($user_mail))
-                {
-                    return $LANG['admin_require_mail'];
-                }
-                elseif ($password != $password_repeat)
-                {
-                    return $LANG['admin_passwords_error'];
-                }
-                elseif (!Mail::check_validity($user_mail))
-                {
-                    return $LANG['admin_email_error'];
-                }
-                else
-                {
-                    return '';
-                }
-            }
-            $error = check_admin_account($login, $password, $password_repeat, $user_mail);
-    
-            //Si il n'y a pas d'erreur on enregistre dans la table
-            if (empty($error))
-            {
-                require_once('functions.php');
-                load_db_connection();
-                
-                //On crée le code de déverrouillage
-                import('core/cache');
-                $Cache = new Cache;
-                $Cache->load('config');
-                
-                //On enregistre le membre (l'entrée était au préalable créée)
-                $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
-                
-                //Génération de la clé d'activation, en cas de verrouillage de l'administration
-                $unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
-                $CONFIG['unlock_admin'] = strhash($unlock_admin);
-                $CONFIG['mail_exp'] = $user_mail;
-                $CONFIG['mail'] = $user_mail;
-                
-                $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-                
-                $Cache->Generate_file('config');
-                
-                //Configuration des membres
-                $Cache->load('member');
-                
-                $CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
-                $CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
-                $CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
-                
-                $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
-                
-                $Cache->generate_file('member');
-                
-                //On envoie un mail à l'administrateur
-                $LANG['admin'] = '';
-                import('io/mail');
-                $mail = new Mail();
-                
-                //Paramètres du mail
-                $mail->set_sender($CONFIG['mail_exp']);
-                $mail->set_recipients($user_mail);
-                $mail->set_object($LANG['admin_mail_object']);
-                $mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
-                
-                //On envoie le mail
-                $mail->send();
-                
-                //On connecte directement l'administrateur si il l'a demandé
-                if ($create_session)
-                {
-                    import('members/session');
-                    $Session = new Session;
-                    
-                    //Remise à zéro du compteur d'essais.
-                    $Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '1'", __LINE__, __FILE__);
-                    //Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
-                    $Session->start(1, $password, 2, '/install/update.php', '', $LANG['page_title'], $auto_connection);
-                }
-                
-                $Cache->generate_file('stats');
-                
-                //On redirige vers l'étape suivante
-                redirect(HOST . FILE . add_lang('?step=7', true));
-            }
-            else
-            {
-                $template->assign_block_vars('error', array(
-                    'ERROR' => '<div class="warning">' . $error . '</div>'
-                ));
-            }
-        }
-        
-        $template->assign_vars(array(
-            'C_ADMIN_ACCOUNT' => true,
-            'U_PREVIOUS_STEP' => add_lang('update.php?step=5'),
-            'U_CURRENT_STEP' => add_lang('update.php?step=6'),
-            'L_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation'],
-            'L_EXPLAIN_ADMIN_ACCOUNT_CREATION' => $LANG['admin_account_creation_explain'],
-            'L_ADMIN_ACCOUNT' => $LANG['admin_account'],
-            'L_PSEUDO' => $LANG['admin_pseudo'],
-            'L_PSEUDO_EXPLAIN' => $LANG['admin_pseudo_explain'],
-            'L_PASSWORD' => $LANG['admin_password'],
-            'L_PASSWORD_EXPLAIN' => $LANG['admin_password_explain'],
-            'L_PASSWORD_REPEAT' => $LANG['admin_password_repeat'],
-            'L_MAIL' => $LANG['admin_mail'],
-            'L_MAIL_EXPLAIN' => $LANG['admin_mail_explain'],
-            'L_PREVIOUS_STEP' => $LANG['previous_step'],
-            'L_NEXT_STEP' => $LANG['next_step'],
-            'L_ERROR' => $LANG['admin_error'],
-            'L_REQUIRE_LOGIN' => $LANG['admin_require_login'],
-            'L_LOGIN_TOO_SHORT' => $LANG['admin_login_too_short'],
-            'L_PASSWORD_TOO_SHORT' => $LANG['admin_password_too_short'],
-            'L_REQUIRE_PASSWORD' => $LANG['admin_require_password'],
-            'L_REQUIRE_PASSWORD_REPEAT' => $LANG['admin_require_password_repeat'],
-            'L_REQUIRE_MAIL' => $LANG['admin_require_mail'],
-            'L_PASSWORDS_ERROR' => $LANG['admin_passwords_error'],
-            'L_CREATE_SESSION' => $LANG['admin_create_session'],
-            'L_AUTO_CONNECTION' => $LANG['admin_auto_connection'],
-            'L_EMAIL_ERROR' => $LANG['admin_email_error'],
-            'L_MAIL_INVALID' => $LANG['admin_invalid_email_error'],
-            'LOGIN_VALUE' => !empty($error) ? $login : '',
-            'PASSWORD_VALUE' => !empty($error) ? $password : '',
-            'MAIL_VALUE' => !empty($error) ? $user_mail : '',
-            'CHECKED_AUTO_CONNECTION' => !empty($error) ? ($auto_connection ? 'checked="checked"' : '') : 'checked="checked"',
-            'CHECKED_CREATE_SESSION' => !empty($error) ? ($create_session ? 'checked="checked"' : '') : 'checked="checked"'
-        ));
-    case 7:
         require_once('functions.php');
         load_db_connection();
         
@@ -774,8 +669,8 @@ $steps = array(
     array($LANG['introduction'], 'intro.png', 0),
     array($LANG['config_server'], 'config.png', 30),
     array($LANG['database_config'], 'database.png', 40),
+    array($LANG['maj'], 'database.png', 40),
     array($LANG['advanced_config'], 'advanced_config.png', 80),
-    array($LANG['administrator_account_creation'], 'admin.png', 90),
     array($LANG['end'], 'end.png', 100)
 );
 
