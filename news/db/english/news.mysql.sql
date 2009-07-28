@@ -11,7 +11,7 @@ CREATE TABLE `phpboost_news` (
   `start` int(11) NOT NULL default '0',
   `end` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
-  `img` varchar(250) NOT NULL default '',
+  `img` varchar(255) NOT NULL default '',
   `alt` varchar(255) NOT NULL default '',
   `nbr_com` int(11) unsigned NOT NULL default '0',
   `lock_com` tinyint(1) NOT NULL default '0',
