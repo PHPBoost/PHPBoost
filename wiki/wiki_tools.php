@@ -125,11 +125,7 @@ if ($page_type == 'article' || $page_type == 'cat')
 		$tools[$LANG['wiki_restriction_level']] = array(url('property.php?auth=' . $article_infos['id']), 'restriction_level');
 	}
 
-	//Niveau de restricton
-	if ($User->check_auth($_WIKI_CONFIG['auth'], WIKI_RESTRICTION))
-	{
-		$tools[$LANG['printable_version']] = array(url('print.php?id=' . $article_infos['id']), 'print');
-	}
+	$tools[$LANG['printable_version']] = array(url('print.php?id=' . $article_infos['id']), 'print');
 }
 //Accueil du wiki
 elseif ($page_type == 'index')
