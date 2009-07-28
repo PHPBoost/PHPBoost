@@ -383,7 +383,9 @@ class Authorizations
 				foreach ($array_level as $level => $key)
 				{
 					if (in_array($key, $array_auth_groups))
+					{
 						$min_auth = $level;
+					}
 					else
 					{
 						if ($min_auth < $level)
@@ -394,7 +396,7 @@ class Authorizations
 				//Ajout des autorisations au tableau final.
 				foreach ($array_auth_groups as $value)
 				{
-					if ($value == 'r2')
+					if ($value == "" || $value == 'r2')
 						continue;
 					if (isset($array_auth_all[$value]))
 						$array_auth_all[$value] += $bit_value;
@@ -413,6 +415,10 @@ class Authorizations
 				//Ajout des autorisations au tableau final.
 				foreach ($array_auth_members as $key => $value)
 				{
+					if ($value == "")
+					{
+						continue;
+					}
 					if (isset($array_auth_all['m' . $value]))
 						$array_auth_all['m' . $value] += $bit_value;
 					else
