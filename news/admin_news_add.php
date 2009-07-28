@@ -27,6 +27,7 @@
  ###################################################*/
 
 require_once('../admin/admin_begin.php');
+define('ALTERNATIVE_CSS', 'news');
 load_module_lang('news'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
@@ -138,6 +139,8 @@ elseif (!empty($_POST['previs']))
 			$img_url = new Url(stripslashes($img));
 			$img_displays = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
 		'" title="' . stripslashes($alt) . '" class="img_right" />';
+			$img_preview = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
+		'" title="' . stripslashes($alt) . '" />';
 		}
 
 		$Template->assign_block_vars('news', array(
@@ -145,6 +148,7 @@ elseif (!empty($_POST['previs']))
 		'PREVIEWED_CONTENTS' => second_parse(stripslashes($contents)),
 		'PREVIEWED_EXTEND_CONTENTS' => second_parse(stripslashes($extend_contents)),
 		'PSEUDO' => $User->get_attribute('login'),
+		'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
 		'IMG' => $img_displays,
 		'DATE' => gmdate_format('date_format_short')
 		));
@@ -171,7 +175,7 @@ elseif (!empty($_POST['previs']))
 		'NEWS_TITLE' => $title,
 		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 	    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
-		'IMG_PREVIEW' => !empty($img) ? '<img src="' . $img . '" alt="" />' : $LANG['no_img'],
+		'IMG_PREVIEW' => !empty($img) ? $img_preview : $LANG['no_img'],
 		'IMG' => $img,
 		'ALT' => stripslashes($alt),
 		'START' => $start,

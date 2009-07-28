@@ -134,18 +134,20 @@
 						<div class="news_content">
 							{news.preview.IMG}
 							{news.preview.CONTENTS}
+							<div class="spacer"></div>
 							<hr />
-							{news.preview.EXTEND_CONTENTS}	
-						</div>									
+							{news.preview.EXTEND_CONTENTS}
+							<div class="spacer"></div>
+						</div>
 						<div class="news_bottom_l"></div>		
 						<div class="news_bottom_r"></div>
 						<div class="news_bottom">
-							<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.preview.PSEUDO}</a></span>
+							<span style="float:left"><a class="small_link" href="../member/member{news.preview.USER_ID}">{news.preview.PSEUDO}</a></span>
 							<span style="float:right">{L_ON}: {news.preview.DATE}</span>
 						</div>
 					</div>					
 				</div>				
-			</div>
+				</div>
 			
 				<br /><br /><br />
 				# END news.preview #
@@ -235,7 +237,7 @@
 						<legend>{L_IMG_MANAGEMENT}</legend>
 						<dl>
 							<dt><label>{L_PREVIEW_IMG}</label><br /><span>{L_PREVIEW_IMG_EXPLAIN}</span></dt>
-							<dd>{IMG_PREVIEW}</dd>
+							<dd>{news.IMG_PREVIEW}</dd>
 						</dl>
 						<dl>
 							<dt><label for="img_field">{L_IMG_LINK}</label></dt>
@@ -250,6 +252,7 @@
 					<fieldset class="fieldset_submit">
 						<legend>{L_UPDATE}</legend>
 						<input type="hidden" name="id" value="{news.IDNEWS}" class="submit" />
+						<input type="hidden" name="user_id" value="{news.USER_ID}" class="submit" />
 						<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 						&nbsp;&nbsp; 
 						<input type="submit" name="previs" value="{L_PREVIEW}" class="submit" />

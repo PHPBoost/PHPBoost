@@ -140,11 +140,17 @@ elseif (!empty($id)) //Vue de la news
 {
 	$Template->set_filenames(array(
 		'admin_news_management'=> 'news/admin_news_management.tpl'
-		));
+	));
 
-		$row = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
-		$Template->assign_block_vars('news', array(
+	if (!empty($row['img']))
+	{
+		import('util/url');
+		$img_url = new Url($row['img']);
+	}
+
+	$Template->assign_block_vars('news', array(
 		'TOKEN' => $Session->get_token(),
 		'TITLE' => $row['title'],
 		'IDNEWS' => $row['id'],
@@ -173,12 +179,12 @@ elseif (!empty($id)) //Vue de la news
 		'CURRENT_DATE' => (!empty($row['timestamp'])) ? gmdate_format('date_format_short', $row['timestamp']) : '',
 		'CURRENT_HOUR' => gmdate_format('H', $row['timestamp']),
 		'CURRENT_MIN' => gmdate_format('i', $row['timestamp']),
-		'IMG_PREVIEW' => !empty($row['img']) ? '<img src="' . $row['img'] . '" alt="" />': $LANG['no_img'],
+		'IMG_PREVIEW' => !empty($row['img']) ? '<img src="' . $img_url->absolute() . '" alt="" />': $LANG['no_img'],
 		'IMG' => $row['img'],
 		'ALT' => $row['alt']
-		));
+	));
 
-		$Template->assign_vars(array(
+	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
 		'L_UNTIL' => $LANG['until'],
@@ -212,31 +218,30 @@ elseif (!empty($id)) //Vue de la news
 		'L_IMG_DESC' => $LANG['img_desc'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
+	));
+
+	//Catégories.
+	$i = 0;
+	$idcat = $row['idcat'];
+	$result = $Sql->query_while("SELECT id, name FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
+		$Template->assign_block_vars('news.select', array(
+		'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
 		));
+		$i++;
+	}
+	$Sql->query_close($result);
 
-		//Catégories.
-		$i = 0;
-		$idcat = $row['idcat'];
-		$result = $Sql->query_while("SELECT id, name
-	FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
-			$Template->assign_block_vars('news.select', array(
-			'CAT' => '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['name'] . '</option>'
-			));
-			$i++;
-		}
-		$Sql->query_close($result);
-
-		//Gestion erreur.
-		$get_error = retrieve(GET, 'error', '');
-		if ($get_error == 'incomplete')
+	//Gestion erreur.
+	$get_error = retrieve(GET, 'error', '');
+	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
-		elseif ($i == 0) //Aucune catégorie => alerte.
+	elseif ($i == 0) //Aucune catégorie => alerte.
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 
-		$Template->pparse('admin_news_management');
+	$Template->pparse('admin_news_management');
 }
 elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la news.
 {
@@ -270,42 +275,53 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
 		$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 
+		$img_displays = $LANG['no_img'];
+		if (!empty($img))
+		{
+			import('util/url');
+			$img_url = new Url(stripslashes($img));
+			$img_displays = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
+        '" title="' . stripslashes($alt) . '" class="img_right" />';
+			$img_preview = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
+    	'" title="' . stripslashes($alt) . '" />';
+		}
+		
 		$Template->assign_block_vars('news', array(
-		'THEME' => get_utheme(),
-		'IDNEWS' => $id_post,
-		'TITLE' => $title,
-		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
-	    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
-		'USER_ID' => $user_id,
-		'IMG' => stripslashes($img),
-		'ALT' => stripslashes($alt),
-		'START' => $start,
-		'START_HOUR' => !empty($start_hour) ? $start_hour : '',
-		'START_MIN' => !empty($start_min) ? $start_min : '',
-		'END' => $end,
-		'END_HOUR' => !empty($end_hour) ? $end_hour : '',
-		'END_MIN' => !empty($end_min) ? $end_min : '',
-		'CURRENT_DATE' => $current_date,
-		'CURRENT_HOUR' => !empty($current_hour) ? $current_hour : '',
-		'CURRENT_MIN' => !empty($current_min) ? $current_min : '',
-		'DAY_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('d', $start_timestamp) : '',
-		'MONTH_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('m', $start_timestamp) : '',
-		'YEAR_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('Y', $start_timestamp) : '',
-		'DAY_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('d', $end_timestamp) : '',
-		'MONTH_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('m', $end_timestamp) : '',
-		'YEAR_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('Y', $end_timestamp) : '',
-		'DAY_DATE' => !empty($current_date_timestamp) ? gmdate_format('d', $current_date_timestamp) : '',
-		'MONTH_DATE' => !empty($current_date_timestamp) ? gmdate_format('m', $current_date_timestamp) : '',
-		'YEAR_DATE' => !empty($current_date_timestamp) ? gmdate_format('Y', $current_date_timestamp) : '',
-		'VISIBLE_WAITING' => (($get_visible == 2) ? 'checked="checked"' : ''),
-		'VISIBLE_ENABLED' => (($get_visible == 1) ? 'checked="checked"' : ''),
-		'VISIBLE_UNAPROB' => (($get_visible == 0) ? 'checked="checked"' : '')
+			'THEME' => get_utheme(),
+			'IDNEWS' => $id_post,
+			'TITLE' => $title,
+			'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
+		    'EXTEND_CONTENTS' => retrieve(POST, 'extend_contents', '', TSTRING_UNCHANGE),
+			'USER_ID' => $user_id,
+			'IMG_PREVIEW' => $img_preview,
+			'IMG' => stripslashes($img),
+			'ALT' => stripslashes($alt),
+			'START' => $start,
+			'START_HOUR' => !empty($start_hour) ? $start_hour : '',
+			'START_MIN' => !empty($start_min) ? $start_min : '',
+			'END' => $end,
+			'END_HOUR' => !empty($end_hour) ? $end_hour : '',
+			'END_MIN' => !empty($end_min) ? $end_min : '',
+			'CURRENT_DATE' => $current_date,
+			'CURRENT_HOUR' => !empty($current_hour) ? $current_hour : '',
+			'CURRENT_MIN' => !empty($current_min) ? $current_min : '',
+			'DAY_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('d', $start_timestamp) : '',
+			'MONTH_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('m', $start_timestamp) : '',
+			'YEAR_RELEASE_S' => !empty($start_timestamp) ? gmdate_format('Y', $start_timestamp) : '',
+			'DAY_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('d', $end_timestamp) : '',
+			'MONTH_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('m', $end_timestamp) : '',
+			'YEAR_RELEASE_E' => !empty($end_timestamp) ? gmdate_format('Y', $end_timestamp) : '',
+			'DAY_DATE' => !empty($current_date_timestamp) ? gmdate_format('d', $current_date_timestamp) : '',
+			'MONTH_DATE' => !empty($current_date_timestamp) ? gmdate_format('m', $current_date_timestamp) : '',
+			'YEAR_DATE' => !empty($current_date_timestamp) ? gmdate_format('Y', $current_date_timestamp) : '',
+			'VISIBLE_WAITING' => (($get_visible == 2) ? 'checked="checked"' : ''),
+			'VISIBLE_ENABLED' => (($get_visible == 1) ? 'checked="checked"' : ''),
+			'VISIBLE_UNAPROB' => (($get_visible == 0) ? 'checked="checked"' : '')
 		));
 
 		//Catégories.
 		$i = 0;
-		$result = $Sql->query_while("SELECT id, name
-	FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
+		$result = $Sql->query_while("SELECT id, name FROM " . PREFIX . "news_cat", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -319,64 +335,55 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		if ($i == 0) //Aucune catégorie => alerte.
 		$Errorh->handler($LANG['require_cat_create'], E_USER_WARNING);
 
-
-		$img_displays = $LANG['no_img'];
-		if (!empty($img))
-		{
-			$img_url = new Url(stripslashes($img));
-			$img_displays = '<img src="' . $img_url->absolute() . '" alt="' . stripslashes($alt) .
-        '" title="' . stripslashes($alt) . '" class="img_right" />';
-		}
-
 		$Template->assign_block_vars('news.preview', array(
-		'THEME' => get_utheme(),
-		'TITLE' => $title,
-		'CONTENTS' => second_parse(stripslashes($contents)),
-		'EXTEND_CONTENTS' => second_parse(stripslashes($extend_contents)),
-		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
-		'USER_ID' => $user_id,
-		'IMG_PREVIEW' => $img_displays,
-		'IMG' => $img_displays,
-		'DATE' => gmdate_format('date_format_short')
+			'THEME' => get_utheme(),
+			'TITLE' => $title,
+			'CONTENTS' => second_parse(stripslashes($contents)),
+			'EXTEND_CONTENTS' => second_parse(stripslashes($extend_contents)),
+			'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__),
+			'USER_ID' => url('.php?id=' . $user_id, '-' . $user_id . '.php'),
+			'IMG_PREVIEW' => $img_displays,
+			'IMG' => $img_displays,
+			'DATE' => gmdate_format('date_format_short')
 		));
 
 		$Template->assign_vars(array(
-		'TOKEN' => $Session->get_token(),
-		'KERNEL_EDITOR' => display_editor(),
-		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
-		'L_UNTIL' => $LANG['until'],
-		'L_REQUIRE_TITLE' => $LANG['require_title'],
-		'L_REQUIRE_TEXT' => $LANG['require_text'],
-		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_PREVIEW' => $LANG['preview'],		
-		'L_COM' => $LANG['com'],
-		'L_ON' => $LANG['on'],
-		'L_EDIT_NEWS' => $LANG['edit_news'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
-		'L_ADD_NEWS' => $LANG['add_news'],
-		'L_CONFIG_NEWS' => $LANG['configuration_news'],
-		'L_CAT_NEWS' => $LANG['category_news'],
-		'L_TITLE' => $LANG['title'],
-		'L_CATEGORY' => $LANG['category'],
-		'L_TEXT' => $LANG['content'],
-		'L_EXTENDED_NEWS' => $LANG['extended_news'],
-		'L_RELEASE_DATE' => $LANG['release_date'],
-		'L_IMMEDIATE' => $LANG['immediate'],
-		'L_UNAPROB' => $LANG['unaprob'],
-		'L_NEWS_DATE' => $LANG['news_date'],
-		'L_UNIT_HOUR' => $LANG['unit_hour'],
-		'L_AT' => $LANG['at'],
-		'L_YES' => $LANG['yes'],
-		'L_NO' => $LANG['no'],
-		'L_IMG_MANAGEMENT' => $LANG['img_management'],
-		'L_PREVIEW_IMG' => $LANG['preview_image'],
-		'L_PREVIEW_IMG_EXPLAIN' => $LANG['preview_image_explain'],
-		'L_BB_UPLOAD' => $LANG['bb_upload'],
-		'L_IMG_LINK' => $LANG['img_link'],
-		'L_IMG_DESC' => $LANG['img_desc'],
-		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']
+			'TOKEN' => $Session->get_token(),
+			'KERNEL_EDITOR' => display_editor(),
+			'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
+			'L_UNTIL' => $LANG['until'],
+			'L_REQUIRE_TITLE' => $LANG['require_title'],
+			'L_REQUIRE_TEXT' => $LANG['require_text'],
+			'L_REQUIRE_CAT' => $LANG['require_cat'],
+			'L_PREVIEW' => $LANG['preview'],		
+			'L_COM' => $LANG['com'],
+			'L_ON' => $LANG['on'],
+			'L_EDIT_NEWS' => $LANG['edit_news'],
+			'L_REQUIRE' => $LANG['require'],
+			'L_NEWS_MANAGEMENT' => $LANG['news_management'],
+			'L_ADD_NEWS' => $LANG['add_news'],
+			'L_CONFIG_NEWS' => $LANG['configuration_news'],
+			'L_CAT_NEWS' => $LANG['category_news'],
+			'L_TITLE' => $LANG['title'],
+			'L_CATEGORY' => $LANG['category'],
+			'L_TEXT' => $LANG['content'],
+			'L_EXTENDED_NEWS' => $LANG['extended_news'],
+			'L_RELEASE_DATE' => $LANG['release_date'],
+			'L_IMMEDIATE' => $LANG['immediate'],
+			'L_UNAPROB' => $LANG['unaprob'],
+			'L_NEWS_DATE' => $LANG['news_date'],
+			'L_UNIT_HOUR' => $LANG['unit_hour'],
+			'L_AT' => $LANG['at'],
+			'L_YES' => $LANG['yes'],
+			'L_NO' => $LANG['no'],
+			'L_IMG_MANAGEMENT' => $LANG['img_management'],
+			'L_PREVIEW_IMG' => $LANG['preview_image'],
+			'L_PREVIEW_IMG_EXPLAIN' => $LANG['preview_image_explain'],
+			'L_BB_UPLOAD' => $LANG['bb_upload'],
+			'L_IMG_LINK' => $LANG['img_link'],
+			'L_IMG_DESC' => $LANG['img_desc'],
+			'L_UPDATE' => $LANG['update'],
+			'L_RESET' => $LANG['reset']
 		));
 
 		$Template->pparse('admin_news_management');
@@ -393,33 +400,33 @@ else
 		$Pagination = new Pagination();
 
 		$Template->assign_vars(array(
-		'TOKEN' => $Session->get_token(),
-		'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
-		'LANG' => get_ulang(),
-		'THEME' => get_utheme(),
-		'L_CONFIRM_DEL_NEWS' => $LANG['confirm_del_news'],
-		'L_NEWS_MANAGEMENT' => $LANG['news_management'],
-		'L_ADD_NEWS' => $LANG['add_news'],
-		'L_CONFIG_NEWS' => $LANG['configuration_news'],
-		'L_CAT_NEWS' => $LANG['category_news'],
-		'L_CATEGORY' => $LANG['category'],
-		'L_TITLE' => $LANG['title'],
-		'L_PSEUDO' => $LANG['pseudo'],
-		'L_DATE' => $LANG['date'],
-		'L_APROB' => $LANG['aprob'],
-		'L_UPDATE' => $LANG['update'],
-		'L_DELETE' => $LANG['delete']
+			'TOKEN' => $Session->get_token(),
+			'PAGINATION' => $Pagination->display('admin_news.php?p=%d', $nbr_news, 'p', 25, 3),
+			'LANG' => get_ulang(),
+			'THEME' => get_utheme(),
+			'L_CONFIRM_DEL_NEWS' => $LANG['confirm_del_news'],
+			'L_NEWS_MANAGEMENT' => $LANG['news_management'],
+			'L_ADD_NEWS' => $LANG['add_news'],
+			'L_CONFIG_NEWS' => $LANG['configuration_news'],
+			'L_CAT_NEWS' => $LANG['category_news'],
+			'L_CATEGORY' => $LANG['category'],
+			'L_TITLE' => $LANG['title'],
+			'L_PSEUDO' => $LANG['pseudo'],
+			'L_DATE' => $LANG['date'],
+			'L_APROB' => $LANG['aprob'],
+			'L_UPDATE' => $LANG['update'],
+			'L_DELETE' => $LANG['delete']
 		));
 
 		$Template->assign_block_vars('list', array(
 		));
 
 		$result = $Sql->query_while("SELECT nc.name, n.id, n.title, n.timestamp, n.visible, n.start, n.end, m.login
-	FROM " . PREFIX . "news n
-	LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
-	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	ORDER BY n.timestamp DESC 
-	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
+			FROM " . PREFIX . "news n
+			LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+			ORDER BY n.timestamp DESC 
+			" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($row['visible'] && $row['start'] > time())
