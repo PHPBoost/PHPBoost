@@ -165,10 +165,10 @@ a.membre {
 	margin-right:2px;
 	-moz-border-radius-topleft:12px;
     -khtml-border-radius-topleft:12px;
-    -webkit-border-radius-topleft:12px;
+    -webkit-border-top-left-radius:12px;
     -moz-border-radius-bottomright:12px;
     -khtml-border-radius-bottomright:12px;
-    -webkit-border-radius-bottomright:12px;
+    -webkit-border-bottom-right-radius:12px;
     border-radius:12px;
 }
 
