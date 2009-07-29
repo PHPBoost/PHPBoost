@@ -254,7 +254,7 @@ else
 				'DESCRIPTION' => second_parse($row['short_contents']),
 				'DATE' => sprintf($DOWNLOAD_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
-				'NOTE' => $row['nbrnote'] > 0 ? Note::display_img((int)$row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => $row['nbrnote'] > 0 ? Note::display_img($row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (number_round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],

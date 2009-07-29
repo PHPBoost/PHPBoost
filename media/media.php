@@ -191,7 +191,7 @@ if (empty($id_media) && $id_cat >= 0)
 				'POSTER' => !empty($row['login']) ? sprintf($MEDIA_LANG['media_added_by'], $row['login'], '../member/member' . url('.php?id=' . $row['iduser'], '-' . $row['iduser'] . '.php'), $level[$row['level']]) : $LANG['guest'],
 				'DATE' => sprintf($MEDIA_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT' => sprintf($MEDIA_LANG['view_n_times'], $row['counter']),
-				'NOTE' => $row['nbrnote'] ? Note::display_img((int)$row['note'], $MEDIA_CONFIG['note_max'], $MEDIA_CONFIG['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => $row['nbrnote'] ? Note::display_img($row['note'], $MEDIA_CONFIG['note_max'], $MEDIA_CONFIG['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 				'U_MEDIA_LINK' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $id_cat . '+' . url_encode_rewrite($row['name']) . '.php'),
 				'U_ADMIN_UNVISIBLE_MEDIA' => url('media_action.php?unvisible=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ADMIN_EDIT_MEDIA' => url('media_action.php?edit=' . $row['id']),
