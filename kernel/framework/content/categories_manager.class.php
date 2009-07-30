@@ -513,7 +513,7 @@ class CategoriesManager
 	 * @desc Builds the list of all the children of a category
 	 * @param int $category_id Id of the category for which we want to know the children
 	 * @param &int[] &$list Array in which the result will be written.
-	 * @param bool $recursive_exploration Sets if you want to explorer only the current sublevel of the tree or the whole subtree. Use RECURSIVE_OPERATION to make a recursive exploration, NOT_RECURSIVE_EXPLORATION otherwise.
+	 * @param bool $recursive_exploration Sets if you want to explorer only the current sublevel of the tree or the whole subtree. Use RECURSIVE_EXPLORATION to make a recursive exploration, NOT_RECURSIVE_EXPLORATION otherwise.
 	 * @param bool $add_this If you want to add the current category to the list use ADD_THIS_CATEGORY_IN_LIST, DO_NOT_ADD_THIS_CATEGORY_IN_LIST otherwise.
 	 * @param int $num_auth If you want to filter the category according to an authorization bit, put its value here
 	 * @return int[] The list of the ids of the subcategories.
@@ -709,7 +709,7 @@ class CategoriesManager
 	 * @param int $level Recursion level
 	 * @param int $selected_id Selected category
 	 * @param int $current_id_cat Current category
-	 * @param bool $recursion_mode RECURSIVE_OPERATION or NOT_RECURSIVE_OPERATION
+	 * @param bool $recursion_mode RECURSIVE_EXPLORATION or NOT_RECURSIVE_EXPLORATION
 	 * @param int $num_auth If we manage authorizations, the bit on which we check.
 	 * @param mixed[] $general_auth Authorization to use if a category hasn't special auth
 	 * @param Template $template Customized template to use
