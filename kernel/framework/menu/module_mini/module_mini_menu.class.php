@@ -30,10 +30,10 @@ import('menu/menu');
 define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
- * @package Menu
- * @subpackage ModulesMiniMenu
+ * @package menu
+ * @subpackage modulesminimenu
  */
 class ModuleMiniMenu extends Menu
 {
@@ -44,8 +44,8 @@ class ModuleMiniMenu extends Menu
      */
     function ModuleMiniMenu($module, $filename)
     {
-       parent::Menu($module);
-       $this->filename = strprotect($filename);
+        parent::Menu($module);
+        $this->filename = strprotect($filename);
     }
     
     /**
@@ -54,10 +54,10 @@ class ModuleMiniMenu extends Menu
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
-        $cache_str.= '$__menu.=' . $this->filename . '().\'';
+        $cache_str.= 'if(function_exists(\'' . $this->filename . '\')) { $__menu.=' . $this->filename . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
-    
+
     function get_title()
     {
         return $this->title . '/' . $this->filename;

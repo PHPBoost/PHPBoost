@@ -3,7 +3,7 @@
  *                                link.php
  *                            -------------------
  *   begin                : July 06, 2006
- *   copyright          : (C) 2006 Sautel Benoit
+ *   copyright            : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -27,13 +27,15 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-function newsletter_mini()
+function newsletter_mini($position, $block)
 {
     global  $LANG, $User;
     //Chargement de la langue du module.
     load_module_lang('newsletter');
     
     $tpl = new Template('newsletter/newsletter_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $tpl->assign_vars(array(
     	'SUBSCRIBE' => $LANG['subscribe'],

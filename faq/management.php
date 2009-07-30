@@ -3,7 +3,7 @@
 *                               management.php
 *                            -------------------
 *   begin                : December 1, 2007
-*   copyright          : (C) 2007 Sautel Benoit
+*   copyright            : (C) 2007 Sautel Benoit
 *   email                : ben.popeye@phpboost.com
 *
 *
@@ -13,7 +13,7 @@
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
-* 
+*
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
 *
 ###################################################*/
 
-include_once('../kernel/begin.php'); 
+include_once('../kernel/begin.php');
 include_once('faq_begin.php');
 
 $id_faq = retrieve(GET, 'faq', 0);
@@ -38,7 +38,7 @@ $id_move = retrieve(GET, 'move', 0);
 if ($edit_question > 0)
 {
 	define('TITLE', $FAQ_LANG['question_edition']);
-	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $edit_question . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 elseif ($cat_of_new_question >= 0 && $new)
@@ -49,7 +49,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 elseif ($id_move > 0)
 {
 	define('TITLE', $FAQ_LANG['moving_a_question']);
-	$question_infos = $Sql->query_array("faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
+	$question_infos = $Sql->query_array(PREFIX . "faq", "*", "WHERE id = '" . $id_move . "'", __LINE__, __FILE__);
 	$id_cat_for_bread_crumb = $question_infos['idcat'];
 }
 else
@@ -69,23 +69,23 @@ if (!$auth_write)
 
 if ($edit_question > 0)
 {
-	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $question_infos['idcat'])); 
-	$Bread_crumb->add($FAQ_LANG['question_edition'], url('management.php?edit=' . $edit_question)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $question_infos['idcat']));
+	$Bread_crumb->add($FAQ_LANG['question_edition'], url('management.php?edit=' . $edit_question));
 }
 elseif ($cat_of_new_question >= 0 && $new)
 {
-	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question)); 
-	$Bread_crumb->add($FAQ_LANG['question_creation'], url('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question));
+	$Bread_crumb->add($FAQ_LANG['question_creation'], url('management.php?new=1&amp;idcat=' . $cat_of_new_question . '&amp;after=' . $new_after_id));
 }
 //Moving interface
 elseif ($id_move > 0)
 {
-	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question)); 
-	$Bread_crumb->add($FAQ_LANG['moving_a_question'], url('management.php?move=' . $id_move)); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php?faq=' . $cat_of_new_question));
+	$Bread_crumb->add($FAQ_LANG['moving_a_question'], url('management.php?move=' . $id_move));
 }
 else
 {
-	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : ''))); 
+	$Bread_crumb->add($FAQ_LANG['category_management'], url('management.php' . ($id_faq > 0 ? '?faq=' . $id_faq : '')));
 }
 	
 include_once('../kernel/header.php');
@@ -99,7 +99,7 @@ if ($edit_question > 0)
 	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => $question_infos['question'],
 		'ANSWER' => unparse($question_infos['answer']),
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'ID_QUESTION' => $edit_question
 	));
 	$Template->assign_vars(array(
@@ -116,7 +116,7 @@ elseif ($cat_of_new_question >= 0 && $new)
 	$Template->assign_block_vars('edit_question', array(
 		'ENTITLED' => '',
 		'ANSWER' => '',
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'ID_AFTER' => $new_after_id,
 		'ID_CAT' => $cat_of_new_question
 	));
@@ -142,14 +142,14 @@ elseif ($id_move > 0)
 		'L_TARGET' => $FAQ_LANG['target_category'],
 		'L_MOVE' => $FAQ_LANG['move'],
 		'ID_QUESTION' => $id_move,
-		'U_FORM_TARGET' => url('action.php')
+		'U_FORM_TARGET' => url('action.php?token=' . $Session->get_token())
 	));
 }
 else
 {
 	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
-		'TARGET' => url('action.php?idcat=' . $id_faq . '&amp;cat_properties=1'),
+		'TARGET' => url('action.php?idcat=' . $id_faq . '&amp;cat_properties=1&amp;token=' . $Session->get_token()),
 		'AUTO_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 0 ? 'selected="selected"' : '',
 		'INLINE_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 1 ? 'selected="selected"' : '',
 		'BLOCK_SELECTED' => $FAQ_CATS[$id_faq]['display_mode'] == 2 ? 'selected="selected"' : '',
@@ -219,12 +219,12 @@ else
 	
 	//Questions management
 	$result = $Sql->query_while("SELECT id, q_order, question, answer
-	FROM ".PREFIX."faq
-	WHERE idcat = '" . $id_faq . "' 
+	FROM " . PREFIX . "faq
+	WHERE idcat = '" . $id_faq . "'
 	ORDER BY q_order",
 	__LINE__, __FILE__);
 	
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "faq WHERE idcat = '" . $id_faq . "'", __LINE__, __FILE__);
 	
 	if ($num_rows > 0 || $id_faq == 0)
 	{
@@ -240,7 +240,7 @@ else
 			$Template->assign_block_vars('category.questions', array(
 				'QUESTION' => $row['question'],
 				'ID' => $row['q_order'],
-				'U_DEL' => url('action.php?del=' . $row['id']),
+				'U_DEL' => url('action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_DOWN' => url('action.php?down=' . $row['id']),
 				'U_UP' => url('action.php?up=' . $row['id']),
 				'U_EDIT' => url('management.php?edit=' . $row['id']),
@@ -269,6 +269,6 @@ $Template->assign_vars(array(
 
 $Template->pparse('faq');
 
-include_once('../kernel/footer.php'); 
+include_once('../kernel/footer.php');
 
 ?>

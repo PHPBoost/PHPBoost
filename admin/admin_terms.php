@@ -46,9 +46,9 @@ if (!empty($_POST['msg_register'])) //Message à l'inscription.
 	$config_member['avatar_url'] = isset($CONFIG_USER['avatar_url']) ? $CONFIG_USER['avatar_url'] : 0;
 	$config_member['msg_mbr'] = isset($CONFIG_USER['msg_mbr']) ? $CONFIG_USER['msg_mbr'] : '';
 	
-	$config_member['msg_register'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
+	$config_member['msg_register'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_USER #######
 	$Cache->Generate_file('member');
@@ -66,14 +66,14 @@ else
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 	));
 	
-	$msg_register = $Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
+	$msg_register = $Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'member'", __LINE__, __FILE__); //Message à l'inscription.
 	
 	$Template->assign_vars(array(
 		'CONTENTS' => unparse($CONFIG_USER['msg_register']),
 		'KERNEL_EDITOR' => display_editor(),
 		'L_TERMS' => $LANG['register_terms'],
 		'L_EXPLAIN_TERMS' => $LANG['explain_terms'],
-		'L_CONTENTS' => $LANG['contents'],
+		'L_CONTENTS' => $LANG['content'],
 		'L_UPDATE' => $LANG['update'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset']

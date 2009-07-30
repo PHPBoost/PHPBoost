@@ -25,7 +25,7 @@
 		</script>
 		
 		<div id="admin_contents">
-			<form action="admin_content_config.php" method="post" class="fieldset_content">
+			<form action="admin_content_config.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_LANGUAGE_CONFIG}</legend>
 					<dl> 
@@ -43,9 +43,9 @@
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
 								# START tag #
 									# IF tag.C_ENABLED #
-									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ELSE #
-									<option id="tag{tag.IDENTIFIER}" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ENDIF #
 								# END tags #
 								</select>

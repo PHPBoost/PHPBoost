@@ -44,12 +44,38 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 	
 	$parent_category = retrieve(POST, 'category', 0);
 	$name = retrieve(POST, 'name', '');
-	$subname = retrieve(POST, 'desc', '');
 	$url = retrieve(POST, 'url', '');
 	$type = retrieve(POST, 'type', '');
 	$aprob = retrieve(POST, 'aprob', 0);
 	$status = retrieve(POST, 'status', 0);
 
+	$subname = retrieve(POST, 'desc', '', TSTRING_UNCHANGE);
+	$subname = strparse($subname, array(
+	    4 => 'title',
+	    5 => 'style',
+	    8 => 'quote',
+	    9 => 'hide',
+	    10 => 'list',
+	    15 => 'align',
+	    16 => 'float',
+	    19 => 'indent',
+	    20 => 'pre',
+	    21 => 'table',
+	    22 => 'swf',
+	    23 => 'movie',
+	    24 => 'sound',
+	    25 => 'code',
+	    26 => 'math',
+	    27 => 'anchor',
+	    28 => 'acronym',
+	    29 => 'block',
+	    30 => 'fieldset',
+	    31 => 'mail',
+	    32 => 'line',
+	    33 => 'wikipedia',
+	    34 => 'html'
+    ));
+	
 	if ($type == 1)
 	{
 		$url = '';
@@ -70,7 +96,7 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 			//Forums parent du forum cible.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."forum_cats
+			FROM " . PREFIX . "forum_cats
 			WHERE id_left <= '" . $CAT_FORUM[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_FORUM[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -85,19 +111,19 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 			
 			$id_left = $CAT_FORUM[$parent_category]['id_right'];
-			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
 			$level = $CAT_FORUM[$parent_category]['level'] + 1;
 
 		}
 		else //Insertion forum niveau 0.
 		{
-			$id_left = $Sql->query("SELECT MAX(id_right) FROM ".PREFIX."forum_cats", __LINE__, __FILE__);
+			$id_left = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "forum_cats", __LINE__, __FILE__);
 			$id_left++;
 			$level = 0;
 		}
 		
-		$Sql->query_inject("INSERT INTO ".PREFIX."forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "forum_cats (id_left, id_right, level, name, subname, url, nbr_topic, nbr_msg, last_topic_id, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $subname . "', '" . $url . "', 0, 0, 0, '" . $status . "', '" . $aprob . "', '" . addslashes(serialize($array_auth_all)) . "')", __LINE__, __FILE__);
 
 		###### Regénération du cache des catégories (liste déroulante dans le forum) #######
 		$Cache->Generate_module_file('forum');
@@ -117,7 +143,7 @@ else
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$forums = '<option value="0" checked="checked" disabled="disabled">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
-	FROM ".PREFIX."forum_cats
+	FROM " . PREFIX . "forum_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

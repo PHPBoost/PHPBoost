@@ -17,7 +17,7 @@
 			
 			var xhr_object = null;
 			var data = null;
-			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id;
+			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?change_status=' + id + '&token={TOKEN}';
 
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
@@ -59,7 +59,7 @@
 			
 			var xhr_object = null;
 			var data = null;
-			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id;
+			var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id + '&token={TOKEN}';
 
 			if(window.XMLHttpRequest) // Firefox
 			   xhr_object = new XMLHttpRequest();
@@ -92,7 +92,7 @@
 				</tr>	
 				# IF C_EXISTING_ALERTS #
 				<tr> 
-					<td class="row2" style="text-align:center;">
+					<td class="row1" style="text-align:center;">
 						# IF NOT C_ORDER_ENTITLED_ASC #
 							<a href="{U_ORDER_ENTITLED_ASC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
@@ -101,7 +101,7 @@
 							<a href="{U_ORDER_ENTITLED_DESC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
 					</td>
-					<td class="row2" style="text-align:center;">
+					<td class="row1" style="text-align:center;">
 						# IF NOT C_ORDER_CREATION_DATE_ASC #
 							<a href="{U_ORDER_CREATION_DATE_ASC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
@@ -110,7 +110,7 @@
 							<a href="{U_ORDER_CREATION_DATE_DESC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
 					</td>
-					<td class="row2" style="text-align:center;">
+					<td class="row1" style="text-align:center;">
 						# IF NOT C_ORDER_PRIORITY_ASC #
 							<a href="{U_ORDER_PRIORITY_ASC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
@@ -119,7 +119,7 @@
 							<a href="{U_ORDER_PRIORITY_DESC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
 					</td>
-					<td class="row2" style="text-align:center;">
+					<td class="row1" style="text-align:center;">
 						# IF NOT C_ORDER_STATUS_ASC #
 							<a href="{U_ORDER_STATUS_ASC}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						# ENDIF #
@@ -139,23 +139,23 @@
 				
 				# START alerts #
 				<tr id="delete_{alerts.ID}"> 
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{alerts.IMG} <a href="{alerts.FIXING_URL}">{alerts.NAME}</a>
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{alerts.DATE}
 					</td>
-					<td class="row1" style="text-align:center;{alerts.STYLE}">
+					<td class="row2" style="text-align:center;{alerts.STYLE}">
 						{alerts.PRIORITY} 
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{alerts.ACTIONS}
 						# IF alerts.C_PROCESSED #
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_UNFIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="delete" /></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_UNFIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="{L_UNFIX}" /></a>
 						# ELSE #
-						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="delete" /></a>
+						<a href="javascript:change_alert_status('{alerts.ID}', '{alerts.STATUS}');" title="{L_FIX}" id="status_{alerts.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_FIX}" /></a>
 						# ENDIF #
-						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="delete" /></a>
+						<a href="javascript:delete_alert('{alerts.ID}');" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" /></a>
 					</td>			
 				</tr>
 				# END alerts #

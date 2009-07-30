@@ -42,8 +42,13 @@ if (!empty($_POST['valid']) )
 	{	
 		foreach ($auth_extensions_sup as $extension)
 		{
-			if (!isset($auth_extensions[$extension]) && $extension != 'php') 
+		    //Suppression de tous les caractères interdits dans les extensions
+		    $extension = str_replace('-', '', url_encode_rewrite($extension));
+		    
+			if ($extension != '' && !isset($auth_extensions[$extension]) && $extension != 'php') 
+			{
 				array_push($auth_extensions, $extension);
+			}
 		}
 	}
 	$CONFIG_UPLOADS['auth_extensions'] = $auth_extensions;
@@ -52,7 +57,7 @@ if (!empty($_POST['valid']) )
 	$array_auth_all = Authorizations::build_auth_array_from_form(AUTH_FILES);
 	$CONFIG_UPLOADS['auth_files'] = serialize($array_auth_all);
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_UPLOADS)) . "' WHERE name = 'uploads'", __LINE__, __FILE__);
 	
 	###### Régénération du cache dela configuration #######
 	$Cache->Generate_file('uploads');
@@ -71,12 +76,12 @@ else
 	
 	$Cache->load('uploads');
 	
-	$CONFIG_UPLOADS['auth_extensions'] = is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
+	$CONFIG_UPLOADS['auth_extensions'] = !empty($CONFIG_UPLOADS['auth_extensions']) && is_array($CONFIG_UPLOADS['auth_extensions']) ? $CONFIG_UPLOADS['auth_extensions'] : array();
 	$array_ext_sup = $CONFIG_UPLOADS['auth_extensions'];
 	$array_extensions_type = array(
 		$LANG['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico'),
 		$LANG['files_archives'] => array('rar', 'zip', 'gz'), 
-		$LANG['files_text'] => array('txt', 'doc', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
+		$LANG['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf'),
 		$LANG['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt'), 
 		$LANG['files_prog'] => array('c', 'h', 'cpp', 'java', 'py', 'css', 'html', 'xml'),
 		$LANG['files_misc'] => array('ttf', 'tex', 'rtf', 'psd')

@@ -34,8 +34,8 @@ include_once('../wiki/wiki_functions.php');
 
 $Cache->load('wiki');
 
-$wiki_name = strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
-$index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
+$wiki_name = strprotect(retrieve(POST, 'wiki_name', $LANG['wiki'], TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
+$index_text = stripslashes(wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 $last_articles = retrieve(POST, 'last_articles', 0);
 $display_cats = !empty($_POST['display_cats']) ? 1 : 0;
 $count_hits = !empty($_POST['count_hits']) ? 1 : 0;
@@ -49,7 +49,7 @@ if (!empty($_POST['update']))  //Mise à jour
 	$_WIKI_CONFIG['count_hits'] = $count_hits;
 	$_WIKI_CONFIG['auth'] = serialize($_WIKI_CONFIG['auth']);
 
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_WIKI_CONFIG)) . "' WHERE name = 'wiki'", __LINE__, __FILE__);
 	//Régénération du cache
 	$Cache->Generate_module_file('wiki');	
 }
@@ -61,8 +61,8 @@ $Template->set_filenames(array(
 ));
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new ContentManager(BBCODE_LANGUAGE);
-$editor =& $content_editor->get_editor();
+$content_editor = new ContentFormattingFactory(BBCODE_LANGUAGE);
+$editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 
 $Template->assign_vars(array(

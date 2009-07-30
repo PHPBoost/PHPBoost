@@ -6,7 +6,7 @@
     			{elements.DISPLAY}
     		# END elements #
     	</ul>
-        <fieldset class="fieldset_submit" style="margin-bottom:0px;padding-bottom:5px;padding-top:12px;">
+        <fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
             <input type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" value="{L_ADD_SUB_ELEMENT}" onclick="addSubElement('menu_element_{ID}');" class="submit" />
             <input type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" value="{L_ADD_SUB_MENU}" onclick="addSubMenu('menu_element_{ID}');" class="submit" />
         </fieldset>
@@ -15,7 +15,7 @@
 
 # IF C_NEXT_MENU #
 	<li class="row1 menu_link_element" id="menu_element_{ID}">
-			<div style="float:left;">
+		<div style="float:left;">
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name" />
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{ABSOLUTE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url" />
@@ -29,7 +29,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<dl>
-				<dt><label>{L_AUTHORIZATIONS}</label></dt>
+				<dt>{L_AUTHORIZATIONS}</dt>
 				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>
@@ -39,7 +39,7 @@
     			{elements.DISPLAY}
     		# END elements #
 		</ul>
-		<fieldset class="fieldset_submit" style="margin-bottom:0px;padding-bottom:4px;padding-top:8px;">
+		<fieldset class="fieldset_submit" style="padding:0;margin-bottom:4px;margin-top:15px;">
 			<input type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" value="{L_ADD_SUB_ELEMENT}" onclick="addSubElement('menu_element_{ID}');" class="submit" />
             <input type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" value="{L_ADD_SUB_MENU}" onclick="addSubMenu('menu_element_{ID}');" class="submit" />
 		</fieldset>
@@ -62,7 +62,7 @@
 		<fieldset id="menu_element_{ID}_properties" style="display:none;">
 			<legend>{L_PROPERTIES}</legend>
 			<dl>
-				<dt><label for="menu_element_{ID}_auth">{L_AUTHORIZATIONS}</label></dt>
+				<dt>{L_AUTHORIZATIONS}</dt>
 				<dd>{AUTH_FORM}</dd>
 			</dl>
 		</fieldset>

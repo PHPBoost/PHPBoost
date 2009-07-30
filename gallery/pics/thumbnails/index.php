@@ -1,1 +1,1 @@
-<?php header('location: ./gallery.php'); ?>
+<?php header('location: ../../gallery.php'); ?>

@@ -6,7 +6,7 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   Admin, v 1.0.0 
+ *   Admin, v 1.0.0
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,7 +50,8 @@ $Template->assign_vars(array(
 	'L_THEME_NAME' => $THEME['name'],
 	'L_BY' => strtolower($LANG['by']),
 	'L_THEME_AUTHOR' => $THEME['author'],
-	'U_THEME_AUTHOR_LINK' => $THEME['author_link']
+	'U_THEME_AUTHOR_LINK' => $THEME['author_link'],
+    'PHPBOOST_VERSION' => $CONFIG['version']
 ));
 
 if ($CONFIG['bench'])
@@ -59,7 +60,7 @@ if ($CONFIG['bench'])
 	$Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => $Bench->to_string(), //Fin du benchmark
-		'REQ' => $Sql->display_request(),
+		'REQ' => $Sql->get_executed_requests_number(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],
 		'L_ACHIEVED' => $LANG['achieved'],

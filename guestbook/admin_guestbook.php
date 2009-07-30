@@ -37,8 +37,10 @@ if (!empty($_POST['valid']) )
 	$config_guestbook['guestbook_auth'] = retrieve(POST, 'guestbook_auth', -1);
 	$config_guestbook['guestbook_forbidden_tags'] = isset($_POST['guestbook_forbidden_tags']) ? serialize($_POST['guestbook_forbidden_tags']) : serialize(array());
 	$config_guestbook['guestbook_max_link'] = retrieve(POST, 'guestbook_max_link', -1);
-		
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
+	$config_guestbook['guestbook_verifcode'] = retrieve(POST, 'guestbook_verifcode', 1);
+	$config_guestbook['guestbook_difficulty_verifcode'] = retrieve(POST, 'guestbook_difficulty_verifcode', 2);
+	
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_guestbook)) . "' WHERE name = 'guestbook'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('guestbook');
@@ -58,24 +60,34 @@ else
 	$i = 0;
 	$tags = '';
 	$CONFIG_GUESTBOOK['guestbook_forbidden_tags'] = isset($CONFIG_GUESTBOOK['guestbook_forbidden_tags']) ? $CONFIG_GUESTBOOK['guestbook_forbidden_tags'] : $array_tags;
-	foreach (ContentManager::get_available_tags() as $name)
+	foreach (ContentFormattingFactory::get_available_tags() as $name => $value)
 	{
 		$selected = '';
 		if (in_array($name, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))
 			$selected = 'selected="selected"';
-		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $name . '</option>';
+		$tags .= '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $value . '</option>';
 	}
+	
+	$CONFIG_GUESTBOOK['guestbook_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_verifcode'] : 0;
+	$CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] = isset($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']) ? $CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] : 2;
 	
 	$Template->assign_vars(array(
 		'TAGS' => $tags,
 		'NBR_TAGS' => $i,
 		'MAX_LINK' => isset($CONFIG_GUESTBOOK['guestbook_max_link']) ? $CONFIG_GUESTBOOK['guestbook_max_link'] : '-1',
+		'GUESTBOOK_VERIFCODE_ENABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '1') ? 'checked="checked"' : '',
+		'GUESTBOOK_VERIFCODE_DISABLED' => ($CONFIG_GUESTBOOK['guestbook_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],	
 		'L_GUESTBOOK' => $LANG['title_guestbook'],
 		'L_GUESTBOOK_CONFIG' => $LANG['guestbook_config'],
+		'L_GUESTBOOK_VERIFCODE' => $LANG['verif_code'],
+		'L_GUESTBOOK_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
+		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_RANK' => $LANG['rank_post'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset'],
+		'L_YES' => $LANG['yes'],
+		'L_NO' => $LANG['no'],
 		'L_FORBIDDEN_TAGS' => $LANG['forbidden_tags'],
 		'L_EXPLAIN_SELECT_MULTIPLE' => $LANG['explain_select_multiple'],
 		'L_SELECT_ALL' => $LANG['select_all'],
@@ -83,7 +95,15 @@ else
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
-		
+	
+	for ($i = 0; $i < 5; $i++)
+	{
+		$Template->assign_block_vars('difficulty', array(
+			'VALUE' => $i,
+			'SELECTED' => ($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode'] == $i) ? 'selected="selected"' : ''
+		));
+	}
+	
 	$CONFIG_GUESTBOOK['guestbook_auth'] = isset($CONFIG_GUESTBOOK['guestbook_auth']) ? $CONFIG_GUESTBOOK['guestbook_auth'] : '-1';	
 	//Rang d'autorisation.
 	for ($i = -1; $i <= 2; $i++)

@@ -27,26 +27,34 @@
 
 import('content/parser/parser');
 
-//Classe de gestion du contenu
+/**
+ * @package content
+ * @subpackage parser
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
+ */
 class ContentUnparser extends Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	 * @desc Builds a ContentUnparser class. 
+	 */
 	function ContentUnparser()
 	{
 		parent::Parser();
 	}
 	
-	/*abstract*/ function unparse() {}
-	
 	## Private ##
-	//Fonction de retour pour le html (prélèvement ou réinsertion)
+	/**
+	 * @desc Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it. 
+	 * @param bool $action PICK_UP if you want to pick up the html tag and REIMPLANT to reimplant it.
+	 */
 	function _unparse_html($action)
 	{
 		//Prélèvement du HTML
 		if ($action == PICK_UP)
 		{
-			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`is';
+			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`sU';
 			$content_split = preg_split($mask, $this->content, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$content_length = count($content_split);
@@ -94,7 +102,10 @@ class ContentUnparser extends Parser
 		}
 	}
 	
-	//Fonction de retour pour le html (prélèvement ou réinsertion)
+	/**
+	 * @desc Unparses the code tag. In a first time, you pick it up and you reimplant it.
+	 * @param bool $action PICK_UP to pick the code tag up, REIMPLANT to reinsert them. 
+	 */
 	function _unparse_code($action)
 	{
 		//Prélèvement du HTML

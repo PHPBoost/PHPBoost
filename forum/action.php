@@ -34,12 +34,18 @@ require_once('../kernel/header_no_display.php');
 $idt_get = retrieve(GET, 'id', 0);
 $idm_get = retrieve(GET, 'idm', 0);
 $del = retrieve(GET, 'del', false);
-$track = retrieve(GET, 't', '');	
-$untrack = retrieve(GET, 'ut', '');	
 $alert = retrieve(GET, 'a', '');	
 $read = retrieve(GET, 'read', false);
 $msg_d = retrieve(GET, 'msg_d', false);
 $lock_get = retrieve(GET, 'lock', '');
+$page_get = retrieve(GET, 'p', 1);
+
+$track = retrieve(GET, 't', '');	
+$untrack = retrieve(GET, 'ut', '');	
+$track_pm = retrieve(GET, 'tp', '');	
+$untrack_pm = retrieve(GET, 'utp', '');	
+$track_mail = retrieve(GET, 'tm', '');	
+$untrack_mail = retrieve(GET, 'utm', '');	
 
 //Variable $_POST
 $poll = retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
@@ -51,11 +57,13 @@ $Forumfct = new Forum;
 
 if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Info sur le message.	
-	$msg = $Sql->query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);
+	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);
 	
 	//On va chercher les infos sur le topic	
-	$topic = $Sql->query_array('forum_topics', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 
 	//Si on veut supprimer le premier message, alors son rippe le topic entier (admin et modo seulement).
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] == $idm_get)
@@ -89,8 +97,10 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 }
 elseif (!empty($idt_get))
 {		
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On va chercher les infos sur le topic	
-	$topic = $Sql->query_array('forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'user_id', 'idcat', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', "WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 
 	if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
@@ -103,10 +113,10 @@ elseif (!empty($idt_get))
 	if ($msg_d)
 	{
 		//Vérification de l'appartenance du sujet au membres, ou modo.
-		$check_mbr = $Sql->query("SELECT user_id FROM ".PREFIX."forum_topics WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+		$check_mbr = $Sql->query("SELECT user_id FROM " . PREFIX . "forum_topics WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 		if ((!empty($check_mbr) && $User->get_attribute('user_id') == $check_mbr) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}	
@@ -115,17 +125,17 @@ elseif (!empty($idt_get))
 	}	
 	elseif ($poll && $User->get_attribute('user_id') !== -1) //Enregistrement vote du sondage
 	{
-		$info_poll = $Sql->query_array('forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+		$info_poll = $Sql->query_array(PREFIX . 'forum_poll', 'voter_id', 'votes', 'type', "WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		//Si l'utilisateur n'est pas dans le champ on prend en compte le vote.
 		if (!in_array($User->get_attribute('user_id'), explode('|', $info_poll['voter_id'])))
 		{		
 			//On concatène avec les votans existants.
 			$add_voter_id = "voter_id = CONCAT(voter_id, '|" . $User->get_attribute('user_id') . "'),"; 
 			$array_votes = explode('|', $info_poll['votes']);
-				
+			
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = retrieve(POST, 'radio', -1); 
+				$id_answer = retrieve(POST, 'forumpoll', 0); 
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
@@ -135,15 +145,14 @@ elseif (!empty($idt_get))
 				$nbr_answer = count($array_votes);
 				for ($i = 0; $i < $nbr_answer; $i++)
 				{
-					if (retrieve(POST, $i, false)) 
+					if (retrieve(POST, 'forumpoll' . $i, false)) 
 						$array_votes[$i]++;
 				}
 			}
-
-			$Sql->query_inject("UPDATE ".PREFIX."forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "forum_poll SET " . $add_voter_id . " votes = '" . implode('|', $array_votes) . "' WHERE idtopic = '" . $idt_get . "'", __LINE__, __FILE__);
 		}
 		
-		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
+		redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
 	}
 	elseif (!empty($lock_get))
 	{
@@ -177,31 +186,68 @@ elseif (!empty($idt_get))
 	else
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 }
-elseif (!empty($track) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go_bottom');
 }
-elseif (!empty($untrack) && $User->check_level(USER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
-	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
+	$tracking_type = retrieve(GET, 'trt', 0);
+	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 	
 	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go_bottom');
 }
+elseif (!empty($track_pm) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Track_topic($track_pm, FORUM_PM_TRACKING); //Ajout du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track_pm, '-' . $track_pm . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($untrack_pm) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Untrack_topic($untrack_pm, FORUM_PM_TRACKING); //Retrait du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack_pm, '-' . $untrack_pm . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($track_mail) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Track_topic($track_mail, FORUM_EMAIL_TRACKING); //Ajout du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $track_mail, '-' . $track_mail . '.php', '&') . '#go_bottom');
+}
+elseif (!empty($untrack_mail) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+{
+	//Instanciation de la class du forum.
+	include_once('../forum/forum.class.php');
+	$Forumfct = new Forum;
+
+	$Forumfct->Untrack_topic($untrack_mail, FORUM_EMAIL_TRACKING); //Retrait du sujet aux sujets suivis.
+	redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $untrack_mail, '-' . $untrack_mail . '.php', '&') . '#go_bottom');
+}
 elseif ($read) //Marquer comme lu.
 {
-	if (!$User->check_level(USER_LEVEL)) //Réservé aux membres.
+	if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
 		redirect(HOST . DIR . '/member/error.php'); 
 			
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$check_last_view_forum = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		$Sql->query_inject("UPDATE ".LOW_PRIORITY." ".PREFIX."member_extend SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__); 	
+		$Sql->query_inject("UPDATE ".LOW_PRIORITY." " . DB_TABLE_MEMBER_EXTEND . " SET last_view_forum = '" .  time(). "' WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__); 	
 	else
-		$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__); 	
+		$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id,last_view_forum) VALUES ('" . $User->get_attribute('user_id') . "', '" .  time(). "')", __LINE__, __FILE__); 	
 
 	redirect(HOST . DIR . '/forum/index.php' . SID2);
 }

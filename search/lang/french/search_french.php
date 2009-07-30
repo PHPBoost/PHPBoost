@@ -51,7 +51,7 @@ $LANG['nb_results_found'] = 'résultats ont été trouvés';
 $LANG['one_result_found'] = 'résultat a été trouvé';
 $LANG['no_results_found'] = 'Aucun résultat n\'a été trouvé';
 $LANG['search_all'] = 'Tout';
-$LANG['search_no_options'] = 'Aucune options de recherche spécifique à ce module';
+$LANG['search_no_options'] = 'Aucune option de recherche spécifique à ce module';
 
 //Administration
 $LANG['search_management'] = 'Gestion de la recherche';
@@ -66,7 +66,7 @@ $LANG['nb_results_per_page'] = 'Nombre de résultats à afficher par page';
 $LANG['max_use'] = 'Nombre d\'utilisation maximum des résultats du cache';
 $LANG['max_use_explain'] = 'Ce nombre représente le nombre de fois que les résultats de la recherche peuvent être utilisés avant de les recalculer';
 $LANG['clear_out_cache'] = 'Vider le contenu du cache';
-$LANG['authorized_modules'] = 'Modules autorisés';
-$LANG['authorized_modules_explain'] = 'Sélectionnez les modules dans lesquels vous souhaitez autoriser la recherche';
+$LANG['unauthorized_modules'] = 'Modules interdits';
+$LANG['unauthorized_modules_explain'] = 'Sélectionnez les modules dans lesquels vous ne souhaitez pas autoriser la recherche';
 $LANG['update'] = 'Modifier';
 $LANG['reset'] = 'Défaut';

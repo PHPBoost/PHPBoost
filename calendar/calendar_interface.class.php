@@ -3,7 +3,7 @@
  *                              calendar_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true) exit;
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class CalendarInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -39,15 +39,15 @@ class CalendarInterface extends ModuleInterface
         parent::ModuleInterface('calendar');
     }
     
-	//RÃ©cupÃ©ration du cache.
+	//Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 	
 		$code = 'global $CONFIG_CALENDAR;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_CALENDAR = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'calendar'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_CALENDAR = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'calendar'", __LINE__, __FILE__));
 		$CONFIG_CALENDAR = is_array($CONFIG_CALENDAR) ? $CONFIG_CALENDAR : array();
 		
 		$code .= '$CONFIG_CALENDAR = ' . var_export($CONFIG_CALENDAR, true) . ';' . "\n";
@@ -55,7 +55,7 @@ class CalendarInterface extends ModuleInterface
 		return $code;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

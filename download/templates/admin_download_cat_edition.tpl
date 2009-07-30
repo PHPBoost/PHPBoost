@@ -33,7 +33,7 @@
 				}
 			-->
 			</script>
-			<form action="admin_download_cat.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_download_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
@@ -140,7 +140,7 @@
 					<input type="hidden" name="idcat" value="{IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>

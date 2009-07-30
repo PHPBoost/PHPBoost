@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	
 	exit;
-	
+
 load_module_lang('download'); //Chargement de la langue du module.
 $Cache->load('download');
 
@@ -40,7 +40,7 @@ $id_cat_for_download = 0;
 
 if (!empty($file_id))
 {
-	$download_info = $Sql->query_array('download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
+	$download_info = $Sql->query_array(PREFIX . 'download', '*', "WHERE visible = 1 AND approved = 1 AND id = '" . $file_id . "'", __LINE__, __FILE__);
 	
 	if (empty($download_info['id']))
 		$Errorh->handler('e_unexist_file_download', E_USER_REDIRECT);
@@ -70,6 +70,7 @@ $auth_contribution = $User->check_auth($CONFIG_DOWNLOAD['global_auth'], DOWNLOAD
 while ($id_cat_for_download > 0)
 {
 	$Bread_crumb->add($DOWNLOAD_CATS[$id_cat_for_download]['name'], url('download.php?cat=' . $id_cat_for_download, 'category-' . $id_cat_for_download . '+' . url_encode_rewrite($DOWNLOAD_CATS[$id_cat_for_download]['name']) . '.php'));
+	$auth_read = $auth_read && $DOWNLOAD_CATS[$id_cat_for_download]['visible'];
 	if (!empty($DOWNLOAD_CATS[$id_cat_for_download]['auth']))
 	{
 		//If we can't read a category, we can't read sub elements.

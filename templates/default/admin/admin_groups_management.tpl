@@ -54,7 +54,7 @@
 							<a href="admin_groups.php?id={group.ID}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 						</td>
 						<td class="row2">
-							<a href="admin_groups.php?del=1&amp;id={group.ID}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+							<a href="admin_groups.php?del=1&amp;id={group.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 						</td>
 					</tr>
 					# END group #

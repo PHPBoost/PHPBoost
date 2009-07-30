@@ -23,3 +23,5 @@ CREATE TABLE `phpboost_poll_ip` (
 	`timestamp` int(11) NOT NULL default '0',
 	PRIMARY KEY	(`id`)
 ) ENGINE=MyISAM;
+
+INSERT INTO phpboost_poll (`question`, `answers`, `votes`, `type`, `archive`, `timestamp`, `visible`, `start`, `end`, `user_id`) VALUES ('PHPBoost 3.0', 'Super site!|Pas mal|Plutôt moyen|Bof', '|||', '1', '0', unix_timestamp(current_timestamp), '1', '0', '0', '1');

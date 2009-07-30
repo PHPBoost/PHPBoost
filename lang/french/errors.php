@@ -3,17 +3,17 @@
  *                                errors.php
  *                            -------------------
  *   begin                : June 27, 2006
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : mickaelhemri@gmail.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,6 +35,7 @@ $LANG['error'] = 'Erreur';
 $LANG['unknow_error'] = 'Erreur inconnue';
 $LANG['e_auth'] = 'Vous n\'avez pas le niveau requis !';
 $LANG['e_unexist_module'] = 'Le module associé n\'existe pas !';
+$LANG['e_uninstalled_module'] = 'Ce module n\'est pas installé !';
 $LANG['e_incomplete'] = 'Tous les champs obligatoires doivent être remplis !';
 $LANG['e_auth_post'] = 'Vous devez être inscrit pour poster !';
 $LANG['e_readonly'] = 'Vous ne pouvez exécuter cette action, car vous avez été placé en lecture seule !';
@@ -47,6 +48,7 @@ $LANG['e_unauthorized'] = 'Vous n\'êtes pas autorisé à poster !';
 $LANG['e_flood'] = 'Vous ne pouvez pas encore poster, réessayez dans quelques instants';
 $LANG['e_l_flood'] = 'Nombre maximum de lien(s) internet autorisé(s) dans votre message : %d';
 $LANG['e_link_pseudo'] = 'Vous ne pouvez pas mettre de lien dans votre pseudo';
+$LANG['e_php_version_conflict'] = 'Version PHP inadaptée';
 
 //Cache
 $LANG['e_cache_modules'] = 'Cache -> La génération du fichier de cache des modules a échoué !';
@@ -103,4 +105,8 @@ $LANG['e_warning'] = 'Avertissement';
 $LANG['e_unknow'] = 'Inconnue';
 $LANG['infile'] = 'dans le fichier';
 $LANG['atline'] = 'à la ligne';
+
+// Too Many Connections
+$LANG['too_many_connections'] = 'Trop de connexions';
+$LANG['too_many_connections_explain'] = 'Le nombre maximum de connexions simultanées à la base de données à été atteint.<br />Veuillez réessayer dans quelques secondes.';
 ?>

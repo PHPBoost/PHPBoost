@@ -4,6 +4,7 @@
 		<title>{L_TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
+		<meta name="robots" content="noindex, follow" />
 		<link type="text/css" href="templates/install.css" title="phpboost" rel="stylesheet" />
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
@@ -17,6 +18,8 @@
 		-->
 		</script>
 	<div id="global">
+		<div id="header_container">
+		</div>
 		<div id="left_menu">
 			<table class="table_left">
 				<tr>
@@ -69,11 +72,11 @@
 				</tr>
 				<tr>
 					<td class="row_next row_final">
-						<div style="margin:auto;width:235px">
-							<div style="text-align:center;margin-bottom:5px;">{L_STEP}</div>
+						<div style="margin:auto;width:200px">
+							<div style="text-align:center;margin-bottom:5px;">{L_STEP} :&nbsp;{PROGRESS_LEVEL}%</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
 								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
-							</div>&nbsp;{PROGRESS_LEVEL}%
+							</div>
 						</div>
 					</td>
 				</tr>						
@@ -105,8 +108,7 @@
 			<table class="table_contents">
 				<tr> 
 					<th colspan="2">
-						<span style="float:left;padding-left:35px;width:257px"><img src="templates/images/phpboost.jpg" alt="Logo PHPBoost" /></span>
-						<span style="float:right;padding-top:15px;padding-right:35px;">{L_STEP}</span>
+						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {L_STEP}</div>
 					</th>
 				</tr>
 				
@@ -355,7 +357,7 @@
 									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}':
-									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}</div>';
+									document.getElementById("db_result").innerHTML = '<div class="success">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}</div>';
 									break;
 								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}':
 									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}</div>';
@@ -376,7 +378,7 @@
 								return;
 							
 							load_progress_bar(20, '');
-							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value;
+							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value + "&prefix=" + document.getElementById("tableprefix").value;
 
 							if( !display_result )
 								Effect.Appear('result_box');
@@ -444,15 +446,15 @@
 								<legend>{L_SGBD_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="host">* {L_HOST}</label><br /><span>{L_HOST_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="login">* {L_LOGIN}</label><br /><span>{L_LOGIN_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>	
 							
@@ -460,13 +462,23 @@
 								<legend>{L_DB_PARAMETERS}</legend>
 								<dl>
 									<dt><label for="database">* {L_DB_NAME}</label><br /><span>{L_DB_NAME_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="small_text" /></label></dd>
 								</dl>
 								<dl>
 									<dt><label for="tableprefix">{L_DB_PREFIX}</label><br /><span>{L_DB_PREFIX_EXPLAIN}</span></dt>
-									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="phpboost_" class="text" /></label></dd>
+									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="{PREFIX_VALUE}" class="small_text" /></label></dd>
 								</dl>
 							</fieldset>
+							
+							# IF C_ALREADY_INSTALLED #
+							<fieldset>
+								<legend>{L_ALREADY_INSTALLED}</legend>
+								<div class="warning">
+									{L_ALREADY_INSTALLED_EXPLAIN}
+								</div>
+								<label><input type="checkbox" name="overwrite_db" /> {L_ALREADY_INSTALLED_OVERWRITE}</label>
+							</fieldset>
+							# ENDIF #
 							
 							<fieldset id="result_box">
 								<legend>
@@ -547,15 +559,15 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="site_url">* {L_SITE_URL}</label><br /><span>{L_SITE_URL_EXPLAIN}</span></dt>
-									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="text" /></dd>	
+									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="small_text" /></dd>	
 								</dl>
 								<dl>
 									<dt><label for="site_path">* {L_SITE_PATH}</label><br /><span>{L_SITE_PATH_EXPLAIN}</span></dt>
-									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="text" /></dd>
+									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="small_text" /></dd>
 								</dl>
 								<dl>
 									<dt><label for="site_name">* {L_SITE_NAME}</label></dt>
-									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="text" /></dd>								
+									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="small_text" /></dd>								
 								</dl>
 								<dl>
 									<dt><label for="site_desc">{L_SITE_DESCRIPTION}</label><br /><span>{L_SITE_DESCRIPTION_EXPLAIN}</span></dt>
@@ -591,45 +603,43 @@
 						<script type="text/javascript">
 						<!--
 							function check_form_admin()
-							{
-								regex = new RegExp("^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$", "i");
-								
-								if( document.getElementById("login").value == "" )
+							{								
+								if (document.getElementById("login").value == "")
 								{
 									alert("{L_REQUIRE_LOGIN}");
 									return false;
 								}
-								else if( document.getElementById("login").value.length < 3 )
+								else if (document.getElementById("login").value.length < 3)
 								{
 									alert("{L_LOGIN_TOO_SHORT}");
 									return false;
 								}
-								else if( document.getElementById("password").value == "" )
+								else if (document.getElementById("password").value == "")
 								{
 									alert("{L_REQUIRE_PASSWORD}");
 									return false;
 								}
-								else if( document.getElementById("password_repeat").value == "" )
+								else if (document.getElementById("password_repeat").value == "")
 								{
 									alert("{L_REQUIRE_PASSWORD_REPEAT}");
 									return false;
 								}
-								else if( document.getElementById("password").value.length < 6 )
+								else if (document.getElementById("password").value.length < 6)
 								{
 									alert("{L_PASSWORD_TOO_SHORT}");
 									return false;
 								}
-								else if( document.getElementById("mail").value == "" )
-								{
+								else if (document.getElementById("mail").value == "")
+								{ 
 									alert("{L_REQUIRE_MAIL}");
 									return false;
 								}	
-								else if( document.getElementById("password").value != document.getElementById("password_repeat").value )
+								else if (document.getElementById("password").value != document.getElementById("password_repeat").value)
 								{
 									alert("{L_PASSWORDS_ERROR}");
 									return false;
 								}
-								else if( !regex.test(document.getElementById("mail").value)  )
+								else if (!check_mail_validity(document.getElementById("mail").value))
 								{
 									alert("{L_EMAIL_ERROR}");
 									return false;
@@ -637,13 +647,99 @@
 								else
 									return true;
 							}
-							
+							function check_login(value) 
+							{
+								if (value.length<3)			
+								{	
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = "{L_LOGIN_TOO_SHORT}";
+								}
+								else	
+								{
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = '';
+								}
+							}
+							function check_mail(value) 
+							{
+								if (!check_mail_validity(value))
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
+								}
+								else
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = '';
+								}
+							}
+							function check_password(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password_repeat').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+									}
+								}	
+							}
+							function check_password2(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+								}	
+							}
 							function change_img_theme(id, value)
 							{
 								if(document.images )
 									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
 							}
-							
 							var array_identifier = new Array();
 							{JS_LANG_IDENTIFIER}
 							function change_img_lang(id, lang)
@@ -667,27 +763,27 @@
 								<p>{L_CHECK_EXTENSIONS}</p>
 								<dl>
 									<dt><label for="login">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="text" /></label></dd>								
+									<dd><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div id="msg_login_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
-									<dd><label><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
+									<dd><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div id="msg_password1_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
-									<dd><label><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="text" /></label></dd>								
+									<dd><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div id="msg_password2_div"></div></dd>
 								</dl>
 								<dl>
 									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
-									<dd><label><input type="text" size="25" maxlength="40" id="mail" name="mail" value="{MAIL_VALUE}" class="text" /></label></dd>								
+									<dd><input type="text" size="25" maxlength="50" id="mail" name="mail" value="{MAIL_VALUE}" class="small_text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div id="msg_email_div"></div></dd>								
 								</dl>
 								<dl>
 									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>
-									<dd><label><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></label></dd>								
+									<dd><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></dd>								
 								</dl>
 								<dl>
 									<dt><label for="auto_connection">{L_AUTO_CONNECTION}</label></dt>
-									<dd><label><input type="checkbox" name="auto_connection" id="auto_connection" {CHECKED_AUTO_CONNECTION} /></label></dd>								
+									<dd><input type="checkbox" name="auto_connection" id="auto_connection" {CHECKED_AUTO_CONNECTION} /></dd>								
 								</dl>
 							</fieldset>
 							
@@ -729,6 +825,11 @@
 				</tr>
 			</table>		
 		</div>
+	</div>
+	<div id="footer">
+		<span>
+			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+		</span>	
 	</div>
 	</body>
 </html>

@@ -33,28 +33,39 @@ class Bench
 {
     ## Public Methods ##
     /**
-     * @desc starts the bench now
-     */
-    function Bench() { $this->start = $this->_get_microtime(); }
+	 * @desc starts the bench now
+	 */
+    function Bench()
+    {
+    	$this->start = Bench::get_microtime();
+    }
     /**
-     * @desc stops the bench now
-     */
-    function stop() { $this->duration = $this->_get_microtime() - $this->start; }
+	 * @desc stops the bench now
+	 */
+    function stop()
+    {
+    	$this->duration = Bench::get_microtime() - $this->start; 
+    }
     
     /**
-     * @desc returns the number formatted with $digits floating numbers
-     * @param int $digits the desired display precision
-     * @return string the formatted duration
-     */
-    function to_string($digits = 3) { $this->stop(); return number_round($this->duration, $digits); }
+	 * @desc returns the number formatted with $digits floating numbers
+	 * @param int $digits the desired display precision
+	 * @return string the formatted duration
+	 */
+    function to_string($digits = 3) 
+    {
+    	$this->stop();
+    	return number_round($this->duration, $digits); 
+    }
     
     ## Private Methods ##
     /**
-     * @desc computes the time with a microsecond precision
-     * @access protected
-     * @return float
-     */
-    function _get_microtime()
+	 * @static
+	 * @desc computes the time with a microsecond precision
+	 * @access protected
+	 * @return float
+	 */
+    function get_microtime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
@@ -62,14 +73,14 @@ class Bench
     
     ## Private Attributes ##
     /**
-     * @access protected
-     * @var int start microtime
-     */
+	 * @access protected
+	 * @var int start microtime
+	 */
     var $start = 0;
     /**
-     * @access protected
-     * @var int duration microtime
-     */
+	 * @access protected
+	 * @var int duration microtime
+	 */
     var $duration = 0;
 }
 

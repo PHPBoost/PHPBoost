@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,6 +32,6 @@ if (!defined('PATH_TO_ROOT'))
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
 //Inclusion des langues de l'administration.
-require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php'); 
+require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 
 ?>

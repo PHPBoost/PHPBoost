@@ -53,15 +53,16 @@ $Template->assign_vars(array(
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 	'LANG' => get_ulang(),
 	'SID' => SID,
-	'SEARCH' => $search,
-	'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+	'SEARCH' => stripslashes($search),
+	'SELECT_CAT' => forum_list_cat(0, 0), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'CONTENTS_CHECKED' => ($where == 'contents' || empty($where)) ? 'checked="checked"' : '',
 	'TITLE_CHECKED' => ($where == 'title') ? 'checked="checked"' : '',
 	'ALL_CHECKED' => ($where == 'all') ? 'checked="checked"' : '',
 	'COLORATE_RESULT' => ($colorate_result || empty($where)) ? 'checked="checked"' : '',
 	'U_FORUM_CAT' => '<a href="search.php' . SID . '">' . $LANG['search'] . '</a>',
 	'U_CHANGE_CAT' => 'search.php' . SID,	
-	'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",	
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),	
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 	'L_FORUM_INDEX' => $LANG['forum_index'],
 	'L_REQUIRE_TEXT' => $LANG['require_text'],
 	'L_SEARCH_FORUM' => $LANG['search_forum'],
@@ -76,7 +77,7 @@ $Template->assign_vars(array(
 	'L_YEAR' => $LANG['year'],
 	'L_CATEGORY' => $LANG['category'],
 	'L_TITLE' => $LANG['title'],
-	'L_CONTENTS' => $LANG['contents'],
+	'L_CONTENTS' => $LANG['content'],
 	'L_RELEVANCE' => $LANG['relevance'],
 	'L_COLORATE_RESULT' => $LANG['colorate_result'],
 	'L_SEARCH' => $LANG['search'],
@@ -100,7 +101,7 @@ $Template->assign_block_vars('cat', array(
 	'CAT' => '<option value="-1"' . $selected . '>' . $LANG['all'] . '</option>'
 ));	
 $result = $Sql->query_while("SELECT id, name, level
-FROM ".PREFIX."forum_cats 
+FROM " . PREFIX . "forum_cats 
 WHERE aprob = 1 " . $auth_cats_select . "
 ORDER BY id_left", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
@@ -125,11 +126,11 @@ if (!empty($valid_search) && !empty($search))
 		$auth_cats = !empty($auth_cats) ? " AND c.id NOT IN (" . trim($auth_cats, ',') . ")" : '';
 		
 		$req_msg = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
-		FROM ".PREFIX."forum_msg msg
-		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
+		FROM " . PREFIX . "forum_msg msg
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+		JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE MATCH(msg.contents) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY msg.id
@@ -137,11 +138,11 @@ if (!empty($valid_search) && !empty($search))
 		" . $Sql->limit(0, 24);
 
 		$req_title = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, 0 AS relevance2
-		FROM ".PREFIX."forum_msg msg
-		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
+		FROM " . PREFIX . "forum_msg msg
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE MATCH(t.title) AGAINST('" . $search . "') AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
@@ -149,11 +150,11 @@ if (!empty($valid_search) && !empty($search))
 		" . $Sql->limit(0, 24);
 		
 		$req_all = "SELECT msg.id as msgid, msg.user_id, msg.idtopic, msg.timestamp, t.title, c.id, c.auth, m.login, s.user_id AS connect, msg.contents, MATCH(t.title) AGAINST('" . $search . "') AS relevance, MATCH(msg.contents) AGAINST('" . $search . "') AS relevance2
-		FROM ".PREFIX."forum_msg msg
-		LEFT JOIN ".PREFIX."sessions s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
-		LEFT JOIN ".PREFIX."member m ON m.user_id = msg.user_id
-		JOIN ".PREFIX."forum_topics t ON t.id = msg.idtopic
-		JOIN ".PREFIX."forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
+		FROM " . PREFIX . "forum_msg msg
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.user_id != -1
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = msg.user_id
+		JOIN " . PREFIX . "forum_topics t ON t.id = msg.idtopic
+		JOIN " . PREFIX . "forum_cats c	ON c.id = t.idcat AND c.level > 0 AND c.aprob = 1
 		WHERE (MATCH(t.title) AGAINST('" . $search . "') OR MATCH(msg.contents) AGAINST('" . $search . "')) AND msg.timestamp > '" . (time() - $time) . "'
 		" . (!empty($idcat) ? " AND c.id_left BETWEEN '" . $CAT_FORUM[$idcat]['id_left'] . "' AND '" . $CAT_FORUM[$idcat]['id_right'] . "'" : '') . $auth_cats . "
 		GROUP BY t.id
@@ -227,39 +228,8 @@ elseif (!empty($valid_search))
 	$Errorh->handler($LANG['invalid_req'], E_USER_WARNING);
 	
 //Listes les utilisateurs en lignes.
-list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM ".PREFIX."sessions s 
-LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
-WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/search.php'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while ($row = $Sql->fetch_assoc($result))
-{
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-	{ 		
-		case -1:
-		$status = 'visiteur';
-		$total_visit++;
-		break;			
-		case 0:
-		$status = 'member';
-		$total_member++;
-		break;			
-		case 1: 
-		$status = 'modo';
-		$total_modo++;
-		break;			
-		case 2: 
-		$status = 'admin';
-		$total_admin++;
-		break;
-	} 
-	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-}
-$Sql->query_close($result);
-
-$total_online = $total_admin + $total_modo + $total_member + $total_visit;
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/search.php'");
+	
 $Template->assign_vars(array(
 	'TOTAL_ONLINE' => $total_online,
 	'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,

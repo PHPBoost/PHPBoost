@@ -3,7 +3,7 @@
  *                                mini_calendar.class.php
  *                            -------------------
  *   begin                : June 3rd, 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *   Mini_calendar 1.0
@@ -27,12 +27,20 @@
 ###################################################*/
 
 import('util/date');
-import('io/template');
 
+/**
+ * @desc This class enables you to retrieve easily a date entered by a user.
+ * If the user isn't in the same timezone as the server, the hour will be automatically recomputed.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ * @package util
+ */
 class MiniCalendar
 {
-	# Public #
-	// Constructeur d'un calendrier : il dépend du nom qu'il aura lorsqu'on le récupèrera dans le formulaire
+	/**
+	 * @desc Builds a calendar which will be displayable.
+	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
+	 * This name must be a HTML identificator.
+	 */
 	function MiniCalendar($form_name)
 	{
 		// Feinte pour PHP 4, en PHP 5 on mettra un attribut static à la classe
@@ -42,25 +50,39 @@ class MiniCalendar
 		$this->date = new Date(DATE_NOW);
 	}
 	
-	//Fonction d'assignation de la date
+	/**
+	 * @desc Sets the date at which will be initialized the calendar.
+	 * @param Date $date Date
+	 */
 	function set_date($date)
 	{
 		$this->date = $date;
 	}
 	
-	//Fonction d'assignation de style css au conteneur du calendrier.
+	/**
+	 * @desc Sets the CSS properties of the element. 
+	 * You can use it if you want to customize the mini calendar, but the best solution is to redefine the template in your module.
+	 * The template used is framework/mini_calendar.tpl.
+	 * @param string $style The CSS properties
+	 */
 	function set_style($style)
 	{
 		$this->style = $style;
 	}
 	
-	//Fonction de renvoi de la date
+	/**
+	 * @desc Returns the date
+	 * @return Date the date
+	 */
 	function get_date()
 	{
 		return $this->date;
 	}
 	
-	//Fonction d'affichage du calendrier, qui charge automatiquement le javascript
+	/**
+	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
+	 * @return string The code to write in the HTML page.
+	 */
 	function display()
 	{
 		global $CONFIG;
@@ -88,10 +110,34 @@ class MiniCalendar
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
 	
+	/**
+	 * @static
+	 * @desc Retrieves a date entered in a mini calendar.
+	 * @param string $calendar_name Name of the calendar (HTML identifier).
+	 * @return Date The date of the calendar.
+	 */
+	function retrieve_date($calendar_name)
+	{
+		global $LANG;
+		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+	}
+	
 	# Private #	
+	/**
+	 * @var int The number of calendars created in that page (used to know if we have to load the javascript code)
+	 */
 	var $num_instance = 0;
+	/**
+	 * @var string The CSS properties of the calendar
+	 */
 	var $style = '';
+	/**
+	 * @var string The calendar name
+	 */
 	var $form_name = '';
+	/**
+	 * @var Date The date it displays
+	 */
 	var $date;
 }
 

@@ -72,10 +72,10 @@ if (($id_search >= 0) && ($module_id != ''))
         // Ajout de la liste des paramètres de recherches spécifiques à chaque module
         foreach ($forms_module as $form_module)
         {
-            if ($form_module->has_functionnality('get_search_args'))
+            if ($form_module->has_functionality('get_search_args'))
             {
                 // Récupération de la liste des paramètres
-                $form_module_args = $form_module->functionnality('get_search_args');
+                $form_module_args = $form_module->functionality('get_search_args');
                 // Ajout des paramètres optionnels sans les sécuriser.
                 // Ils sont sécurisés à l'intérieur de chaque module.
                 foreach ($form_module_args as $arg)

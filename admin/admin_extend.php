@@ -53,7 +53,6 @@ $Template->assign_vars(array(
 	'L_ROBOTS' => $LANG['robots'],	
 	'L_ERRORS' => $LANG['errors'],
 	'L_COM' => $LANG['com'],
-	'L_SITE_DATABASE' => $LANG['database'],
 	'L_UPDATER' => $LANG['updater'],
 	'L_MODULES' => $LANG['modules'],
 	'L_CACHE' => $LANG['cache'],
@@ -61,33 +60,24 @@ $Template->assign_vars(array(
     'L_WEBSITE_UPDATES' => $LANG['website_updates']
 ));
 
-
 //Listing des modules disponibles:
 $i = 1;
-$result = $Sql->query_while("SELECT name 
-FROM ".PREFIX."modules
-WHERE activ = 1", __LINE__, __FILE__);
-$nbr_modules = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."modules WHERE activ = 1 AND admin = 1");
-while ($row = $Sql->fetch_assoc($result))
+$nbr_modules = count($modules_config);
+foreach ($modules_config as $module_name => $auth)
 {
-	$config = load_ini_file('../' . $row['name'] . '/lang/', get_ulang());
-	if (is_array($config))
-	{	
-		if ($config['admin'] == 1)
-		{
-			$Template->assign_block_vars('modules_extend', array(
-				'NAME' => $config['name'],
-				'IMG' => '../' . $row['name'] . '/' . $row['name'] . '.png',
-				'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
-				'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
-				'U_ADMIN_MODULE' => '../' . $row['name'] . '/admin_' . $row['name'] . '.php'
-			));			
-			$i++;
-		}
+	$name = $modules_config[$module_name]['module_name'];
+	if (is_array($modules_config[$module_name]))
+	{
+		$Template->assign_block_vars('modules_extend', array(
+			'NAME' => $module_name,
+			'IMG' => '../' . $name . '/' . $name . '.png',
+			'START_TR' => ((($i - 1) % 5) == 0 || $i == 1)? '<tr style="text-align:center;">' : '',
+			'END_TR' => ((($i % 5) == 0 && $i != 1) || $i == $nbr_modules ) ? '</tr>' : '',			
+			'U_ADMIN_MODULE' => '../' . $name . '/admin_' . $name . '.php'
+		));			
+		$i++;
 	}
 }
-$Sql->query_close($result);
-
 //Complétion éventuelle des cases du tableaux.
 if ($i != 0)
 {

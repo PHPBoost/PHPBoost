@@ -2,6 +2,10 @@
 		<!--
 		function XMLHttpRequest_shoutmsg()
 		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			var pseudo = document.getElementById("shout_pseudo").value;
 			var contents = document.getElementById("shout_contents").value;
 
@@ -12,7 +16,7 @@
 				pseudo = escape_xmlhttprequest(pseudo);
 				contents = escape_xmlhttprequest(contents);
 				data = "pseudo=" + pseudo + "&contents=" + contents;
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?add=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?token={TOKEN}&add=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' && xhr_object.responseText != '-2' && xhr_object.responseText != '-3' && xhr_object.responseText != '-4' && xhr_object.responseText != '-5' && xhr_object.responseText != '-6' )
@@ -58,7 +62,7 @@
 		{
 			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
 			data = "idmsg=" + idmsg;
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?del=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
@@ -75,7 +79,7 @@
 		function XMLHttpRequest_shoutrefresh()
 		{
 			document.getElementById('shoutimg').src = '{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif';
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/shoutbox/xmlhttprequest.php?refresh=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -106,7 +110,7 @@
 		-->
 		</script>
 
-		<form action="" method="post" onsubmit="return check_form_shout();">
+		<form action="?token={TOKEN}" method="post" onsubmit="return check_form_shout();">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_SHOUTBOX}</h5>

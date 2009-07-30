@@ -6,14 +6,14 @@
  *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,10 +34,21 @@ define('NO_LINE_ERROR', ''); //N'affiche pas la ligne de l'erreur courante.
 define('NO_FILE_ERROR', ''); //N'affiche pas le fichier de l'erreur courante.
 define('DISPLAY_ALL_ERROR', false); //N'affiche pas le fichier de l'erreur courante.
 
+if (!defined('E_STRICT')) //A virer après passage PHP5
+	define('E_STRICT', 2048);
+
+/**
+  * @author Viarre Régis crowkait@phpboost.com
+  * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
+  * @package core
+  */
 class Errors
 {
 	## Public Methods ##
-	//Constructeur
+    /**
+	 * @desc constructor
+	 * @param boolean $archive_all TRUE archive all events FALSE if not
+	 */
 	function Errors($archive_all = false)
 	{
 		$this->archive_all = $archive_all;
@@ -55,9 +66,18 @@ class Errors
 		
 		//On utilise notre propre handler pour la gestion des erreurs php
 		set_error_handler(array($this, 'handler_php'));
-	}	
+		
+		//On met le template à utiliser par défaut.
+		$this->set_default_template();
+	}
 	
-	//Gestionnaire d'erreur.
+	/**
+	 * @desc PHP exceptions handler
+	 * @param string $errno error number
+	 * @param string $errstr error label
+	 * @param string $errfile file name
+	 * @param  string $errline line number
+	 */
 	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
@@ -66,7 +86,7 @@ class Errors
 			return true;
 		
 		//Si une erreur est supprimé par un @ alors on passe
-		if (!DISPLAY_ALL_ERROR && error_reporting() == 0) 
+		if (!DISPLAY_ALL_ERROR && error_reporting() == 0)
 			return true;
 		
 		switch ($errno)
@@ -74,6 +94,7 @@ class Errors
 			//Notice utilisateur.
 			case E_USER_NOTICE:
 			case E_NOTICE:
+			case E_STRICT:
 				$errdesc = $LANG['e_notice'];
 				$errimg = 'notice';
 				$errclass = 'error_notice';
@@ -94,22 +115,22 @@ class Errors
 			break;
 			//Erreur inconnue.
 			default:
-				$errdesc = $LANG['e_unknown'];
+				$errdesc = $LANG['e_unknow'];
 				$errimg = 'question';
 				$errclass = 'error_unknow';
 		}
 
 		//On affiche l'erreur
 		echo '<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;">
-			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" /> 
+			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
 			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
-			<br />	
+			<br />
 		</div>';
 		
 		//Et on l'archive
 		$this->_error_log($errfile, $errline, $errno, $errstr, true);
 		
-		//Dans le cas d'un E_USER_ERROR on arrête l'execution
+		//Dans le cas d'un E_USER_ERROR on arrête l'exécution
 		if ($errno == E_USER_ERROR)
 			exit;
 		
@@ -117,86 +138,188 @@ class Errors
 		return true;
 	}
 	
-	//Gestionnaire d'erreurs controlées par le développeur.
+    /**
+	 * @desc Exception handler for developper.
+	 * @param string $errstr The text which explain the error.
+	 * @param int $errno The error type (use the PHP errors constants).
+	 * @param string $errline The error line (use the constant __LINE__).
+	 * @param string $errfile The file where the error is located (use the constant __FILE__).
+	 * @param string $tpl_cond (optional) This argument allow you to display error in a template condition.
+	 * @param boolean $archive (optional) Backup the error in the error.log file
+	 * @param boolean $stop Avoid redirect loop.
+	 */
 	function handler($errstr, $errno, $errline = '', $errfile = '', $tpl_cond = '', $archive = false, $stop = true)
 	{
-		global $LANG, $Template;
+		global $LANG;
+		$_err_stop = retrieve(GET, '_err_stop', false);
 		
 		//Parsage du bloc seulement si une erreur à afficher.
 		if (!empty($errstr))
-		{		
-			switch ($errno) 
+		{
+			switch ($errno)
 			{
-				//Message d'erreur demandant une redirection.
+                case E_TOKEN:
+                    $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+                    break;
+                //Message d'erreur demandant une redirection.
 				case E_USER_REDIRECT:
-				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
-				redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr, '', '&'));
-				break;				
+    				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+    				if (!$_err_stop)
+    				    redirect($this->redirect . '/member/error' . url('.php?e=' . $errstr . '&_err_stop=1'));
+				    else
+				        die($errstr);
+    				break;
 				//Message de succès, étrange pour une classe d'erreur non?
 				case E_USER_SUCCESS:
-				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
-				$Template->assign_vars(array(
-					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
-					'ERRORH_IMG' => 'success',
-					'ERRORH_CLASS' => 'error_success',
-					'L_ERRORH' => $errstr
-				));
+    				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
+    				$this->template->assign_vars(array(
+    					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+    					'ERRORH_IMG' => 'success',
+    					'ERRORH_CLASS' => 'error_success',
+    					'L_ERRORH' => $errstr
+    				));
 				break;
 				//Notice utilisateur.
 				case E_USER_NOTICE:
 				case E_NOTICE:
-				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
-				$Template->assign_vars(array(
-					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
-					'ERRORH_IMG' => 'notice',
-					'ERRORH_CLASS' => 'error_notice',
-					'L_ERRORH' => $errstr
-				));
-				break;
+    				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
+    				$this->template->assign_vars(array(
+    					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+    					'ERRORH_IMG' => 'notice',
+    					'ERRORH_CLASS' => 'error_notice',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
 				//Warning utilisateur.
 				case E_USER_WARNING:
 				case E_WARNING:
-				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
-				$Template->assign_vars(array(
-					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
-					'ERRORH_IMG' => 'important',
-					'ERRORH_CLASS' => 'error_warning',
-					'L_ERRORH' => $errstr
-				));
-				break;
+    				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
+    				$this->template->assign_vars(array(
+    					'C_ERROR_HANDLER' . strtoupper($tpl_cond) => true,
+    					'ERRORH_IMG' => 'important',
+    					'ERRORH_CLASS' => 'error_warning',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
 				//Erreur fatale.
 				case E_USER_ERROR:
 				case E_ERROR:
-				//Enregistrement de l'erreur fatale dans tout les cas.
-				$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
-				
-                if ($stop)
-                {
-                    if (!empty($Session) && is_object($Session))
-                        redirect($this->redirect . '/member/fatal' . url('.php?error=' . $error_id, '', '&'));
-                    else
-                        redirect($this->redirect . '/member/fatal.php?error=' . $error_id);
-                    exit;
-                }
+    				//Enregistrement de l'erreur fatale dans tout les cas.
+    				$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
+    				
+                    if ($stop)
+                    {
+                        if (!$_err_stop)
+                        {
+							//Redirection sans passer par la fonction redirect, constantes pas forcément initialisées.
+							header('Location:' . $this->redirect . '/member/fatal.php?error=' . $error_id . '&_err_stop=1');
+                            exit;
+                        }
+                        else
+                            die($errstr);
+                    }
 			}
 		
-			//Enregistrement de l'erreur si demandé.			
+			//On remet le template par défaut.
+			if ($this->personal_tpl)
+				$this->set_default_template();
+			
+			//Enregistrement de l'erreur si demandé.
 			if ($archive)
 				return $this->_error_log($errfile, $errline, $errno, $errstr, $archive);
 			return true;
 		}
-		return false;
 	}
 	
-	//Récupération des informations de la dernière erreur.
+	/**
+	 * @desc Exception handler for developper, return the error.
+	 * @param string $errstr The text which explain the error.
+	 * @param int $errno The error type (use the PHP errors constants).
+	 * @param string $errline The error line (use the constant __LINE__).
+	 * @param string $errfile The file where the error is located (use the constant __FILE__).
+	 * @param boolean $archive (optional) Backup the error in the error.log file
+	 * @return string The formated error.
+	 */
+	function display($errstr, $errno, $errline = '', $errfile = '', $archive = false)
+	{
+		global $LANG;
+		
+		//Parsage du bloc seulement si une erreur à afficher.
+		if (!empty($errstr))
+		{
+			$Template = new Template('framework/errors.tpl');
+			switch ($errno)
+			{
+				//Message de succès, étrange pour une classe d'erreur non?
+				case E_USER_SUCCESS:
+    				$errstr = sprintf($LANG['error_success'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'success',
+    					'ERRORH_CLASS' => 'error_success',
+    					'L_ERRORH' => $errstr
+    				));
+				break;
+				//Notice utilisateur.
+				case E_USER_NOTICE:
+				case E_NOTICE:
+    				$errstr = sprintf($LANG['error_notice_tiny'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'notice',
+    					'ERRORH_CLASS' => 'error_notice',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
+				//Warning utilisateur.
+				case E_USER_WARNING:
+				case E_WARNING:
+    				$errstr = sprintf($LANG['error_warning_tiny'], $errstr, '', '');
+    				$Template->assign_vars(array(
+    					'ERRORH_IMG' => 'important',
+    					'ERRORH_CLASS' => 'error_warning',
+    					'L_ERRORH' => $errstr
+    				));
+    				break;
+			}
+			return $Template->parse(TEMPLATE_STRING_MODE);
+			
+			//Enregistrement de l'erreur si demandé.
+			if ($archive)
+				$this->_error_log($errfile, $errline, $errno, $errstr, $archive);
+		}
+		return '';
+	}
+	
+	/**
+	 * @desc Set a personnal template for the handler methods.
+	 */
+	function set_template(&$template)
+	{
+		$this->template = &$template;
+		$this->personal_tpl = true;
+	}
+	
+	/**
+	 * @desc Set default template for the handler methods.
+	 */
+	function set_default_template()
+	{
+		global $Template;
+		
+		$this->template = &$Template;
+		$this->personal_tpl = false;
+	}
+	
+    /**
+	 * @desc Get last error informations
+	 */
 	function get_last__error_log()
 	{
-		$errinfo = '';		
+		$errinfo = '';
 		$handle = @fopen(PATH_TO_ROOT . '/cache/error.log', 'r');
-		if ($handle) 
+		if ($handle)
 		{
 			$i = 1;
-			while (!feof($handle)) 
+			while (!feof($handle))
 			{
 				$buffer = fgets($handle, 4096);
 				if ($i == 2)
@@ -207,17 +330,19 @@ class Errors
 					$errinfo['errfile'] = $buffer;
 				if ($i == 5)
 				{
-					$errinfo['errline'] = $buffer;		
-					$i = 0;	
+					$errinfo['errline'] = $buffer;
+					$i = 0;
 				}
-				$i++;				
+				$i++;
 			}
 			@fclose($handle);
 		}
 		return $errinfo;
 	}
 	
-	//Récupération du type de l'erreur.
+    /**
+	 * @desc Get Error type
+	 */
 	function get_errno_class($errno)
 	{
 		switch ($errno)
@@ -238,7 +363,7 @@ class Errors
 			break;
 			//Erreur fatale.
 			case E_USER_ERROR:
-			case E_ERROR:	
+			case E_ERROR:
 			$class = 'error_fatal';
 			break;
 			//Erreur inconnue.
@@ -250,11 +375,13 @@ class Errors
 	
 	
 	## Private Methods ##
-	//Enregistre l'erreur dans le fichier de log.
+    /**
+	 * @desc Save error in log file
+	 */
 	function _error_log($errfile, $errline, $errno, $errstr, $archive)
-	{		
+	{
 		if ($archive || $this->archive_all)
-		{				
+		{
 			//Nettoyage de la chaîne avant enregistrement.
 			$errstr = $this->_clean_error_string($errstr);
 			
@@ -272,7 +399,9 @@ class Errors
 		return false;
 	}
 	
-	//Nettoie la chaine d'erreur pour compresser le fichier.
+    /**
+	 * @desc Clean Error String
+	 */
 	function _clean_error_string($errstr)
 	{
 		$errstr = preg_replace("`\r|\n|\t`", "\n", $errstr);
@@ -284,6 +413,8 @@ class Errors
 	## Private Attribute ##
 	var $archive_all; //Enregistrement des logs d'erreurs, pour tout les types d'erreurs.
 	var $redirect;
+	var $template; //Template used by the error handler.
+	var $personal_tpl = false; //Template used by the error handler.
 }
 
 ?>

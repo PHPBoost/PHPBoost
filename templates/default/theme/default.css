@@ -1,9 +1,7 @@
 /* --------------------------------------
 		default.css
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
---------------------------------------*/ /* Titres */
-
-/* Sécurité */
+--------------------------------------*/ /* Titres */ /* Sécurité */
 .row_priority_very_high {
     text-align: center;
     background: #F3A29B !important;
@@ -32,7 +30,6 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au fr
 }
 
 /* Imite l'affichage fieldset / legend */
-
 .fieldset_content {
     width: 95%;
     margin: auto;
@@ -52,8 +49,6 @@ div.block_title span {
 }
 
 div.block_title {
-    position: relative;
-    top: -1.2em;
 }
 
 div.block_content {
@@ -62,11 +57,171 @@ div.block_content {
     margin: 20px auto;
     padding: 6px;
     border: 1px solid;
-    position: relative;
 }
 
 div.block_content ul {
     padding-left: 20px;
+}
+
+/*Menu dynamique des liens
+--------------------------------------*/
+.dynamic_menu {
+    position:relative;
+    z-index:100;
+}
+
+.dynamic_menu ul {
+    margin:0;
+    padding:0;
+    border:none;
+    font-weight:bold;
+    list-style:none;
+}
+
+.dynamic_menu li {
+    position:relative;
+    float:left;
+    display:inline;
+}
+
+.dynamic_menu li.vertical {
+    display:block;
+    float:none;
+    margin-bottom:15px;
+}
+
+/* Lien du menu */
+.dynamic_menu h5 {
+    color:#0578CC;
+    text-align:center;
+    background:#F2F7FB;
+    border:1px solid #C4CED6;
+    padding:4px 6px;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.dynamic_menu h5:hover {
+    color:#01528D;
+    background:#E4F0F9;
+    cursor:default;
+}
+
+/* Séparateur */
+.dynamic_menu ul li.separator {
+    background:#104069;
+    height:2px;
+}
+
+.dynamic_menu ul li.extend {
+}
+
+/* Case du menu */
+.dynamic_menu li ul {
+    visibility:hidden;
+    position:absolute;
+    border:1px solid #104069;
+}
+
+.dynamic_menu li.vertical ul {
+    top:0;
+    margin-left:150px;
+}
+
+.dynamic_menu li li {
+    clear:both;
+    color:#0578CC;
+    background:#FFFFFF url(images/bgmenu.png) repeat-y;
+    display:block;
+    width:169px;
+}
+
+.dynamic_menu li li span {
+    color:#0578CC;
+    font-size:10px;
+    text-decoration:none;
+    padding-left:32px;
+    width:133px;
+    display:block;
+    white-space:nowrap;
+    margin:auto;
+    padding-top:6px;
+    padding-bottom:6px;
+    background-repeat:no-repeat;
+    background-position:5px;
+}
+
+.dynamic_menu li li a {
+    color:#0578CC;
+    font-size:10px;
+    text-decoration:none;
+    padding-left:32px;
+    width:133px;
+    display:block;
+    white-space:nowrap;
+    margin:auto;
+    padding-top:6px;
+    padding-bottom:6px;
+    background-repeat:no-repeat;
+    background-position:5px;
+}
+
+.dynamic_menu li li a:hover {
+    background:#D7EDFA;
+    background-repeat:no-repeat;
+    background-position:5px;
+    border:1px solid #0578CC;
+    padding-top:5px;
+    padding-bottom:5px;
+    cursor:pointer;
+}
+
+/* Niveau 2 */
+.dynamic_menu li li ul {
+    visibility:hidden;
+    top:-1px;
+    left:100%;
+    z-index:101;
+}
+
+/* Menu Vertical - Scrolling */
+ul.vertical_scrolling_menu li {
+    /*list-style: none;*/
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+ul.vertical_scrolling_menu li ul {
+    /*list-style: none;*/
+    margin-left: 155px;
+}
+
+ul.vertical_scrolling_menu li.first_level {
+    padding-left: 20px;
+}
+
+/* Menu Horizontal - Scrolling */
+ul.horizontal_scrolling_menu li {
+    display: inline;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+ul.horizontal_scrolling_menu li.first_level {
+    padding-left: 20px;
+}
+
+/* Menu Horizontal */
+div.menu_horizontal {
+    padding: 10px;
+}
+
+ul.menu_horizontal {
+    
+}
+
+ul.menu_horizontal li {
+    display: inline;
 }
 
 /* Menu Vertical */
@@ -74,7 +229,6 @@ h3.menu_vertical_0 {
     text-align: center;
     font-size: 12px;
     font-weight: bold;
-    border-bottom: 1px solid #cccccc;
     margin-top: -2px;
     padding-bottom: 2px;
 }
@@ -94,6 +248,11 @@ ul.menu_vertical li {
     margin-left: 10px;
 }
 
+ul.menu_vertical li span {
+    font-size: 11px;
+    font-weight: bold;
+}
+
 ul.menu_vertical_0 {
     
 }
@@ -102,7 +261,7 @@ ul.menu_vertical li_0 {
     
 }
 
-ul.menu_vertical_0 li a {
+ul.menu_vertical_0 li a,ul.menu_vertical_0 li span {
     color: #334455;
 }
 
@@ -114,7 +273,7 @@ ul.menu_vertical_1 li {
     
 }
 
-ul.menu_vertical_1 li a {
+ul.menu_vertical_1 li a,ul.menu_vertical_1 li span {
     color: #445566;
 }
 
@@ -126,7 +285,7 @@ ul.menu_vertical_2 li {
     font-style: italic;
 }
 
-ul.menu_vertical_2 li a {
+ul.menu_vertical_2 li a,ul.menu_vertical_2 li span {
     color: #556677;
 }
 
@@ -138,7 +297,7 @@ ul.menu_vertical_3 li {
     font-style: normal;
 }
 
-ul.menu_vertical_3 li a {
+ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
     color: #778899;
     font-size: 80%;
 }

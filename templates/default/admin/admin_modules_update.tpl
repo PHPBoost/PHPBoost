@@ -31,7 +31,7 @@
     </div>
     # ENDIF #
     
-    <form action="" method="post" enctype="multipart/form-data" class="fieldset_content">
+    <form action="admin_modules_update.php?token={TOKEN}" method="post" enctype="multipart/form-data" class="fieldset_content">
         <fieldset>
             <legend>{L_UPLOAD_MODULE}</legend>
             <dl>
@@ -82,84 +82,4 @@
             &nbsp;<div class="question" style="width:300px;margin:auto;margin-top:100px;">{L_NO_AVAILABLES_UPDATES}</div>
         # END IF #
     # END IF #
-    
-<!--<table class="module_table">
-        <tr> 
-            <th>
-                {L_UPDATE_AVAILABLE}
-            </th>
-        </tr>
-        <tr> 
-            <td class="row1{WARNING_MODULES}" style="text-align:center">
-                {UPDATE_MODULES_AVAILABLE} {L_MODULES_UPDATE}<br />
-                # START update_modules_available #
-                <a href="http://www.phpboost.com/phpboost/modules.php?name={update_modules_available.ID}">{update_modules_available.NAME} <em>({update_modules_available.VERSION})</em></a><br />
-                # END update_modules_available #
-            </td>
-        </tr>	
-    </table>
-        
-    <br /><br />		
-    
-    <form action="admin_modules_update.php?update=1" method="post">
-        <table class="module_table">
-            <tr> 
-                <th colspan="6">
-                    {L_MODULES_AVAILABLE}
-                </th>
-            </tr>
-            # IF C_MODULES_AVAILABLE #
-            <tr>
-                <td class="row2" style="width:160px">
-                    {L_NAME}
-                </td>
-                <td class="row2" style="width:140px;text-align:center;">
-                    {L_NEW_VERSION}
-                </td>
-                <td class="row2" style="width:140px;text-align:center;">
-                    {L_INSTALLED_VERSION}
-                </td>
-                <td class="row2">
-                    {L_DESC}
-                </td>
-                <td class="row2" style="width:100px">
-                    {L_UPDATE}
-                </td>
-            </tr>
-            # ENDIF #
-            # IF C_NO_MODULE #
-            <tr>
-                <td class="row2" colspan="4" style="text-align:center;">
-                    <strong>{L_NO_MODULES_AVAILABLE}</strong>
-                </td>
-            </tr>
-            # ENDIF #
-            
-            
-            # START available #
-            <tr> 	
-                <td class="row2">					
-                    <img class="valign_middle" src="{PATH_TO_ROOT}/{available.ICON}/{available.ICON}.png" alt="" /> <strong>{available.NAME}</strong>
-                </td>
-                <td class="row2" style="text-align:center;">					
-                    <strong>{available.VERSION}</strong>
-                </td>
-                <td class="row2" style="text-align:center;">					
-                    <strong>{available.PREVIOUS_VERSION}</strong>
-                </td>
-                <td class="row2">	
-                    <strong>{L_AUTHOR}:</strong> {available.AUTHOR} {available.AUTHOR_WEBSITE}<br />
-                    <strong>{L_DESC}:</strong> {available.DESC}<br />
-                    <strong>{L_COMPAT}:</strong> PHPBoost {available.COMPAT}<br />
-                    <strong>{L_USE_SQL}:</strong> {available.USE_SQL} <em>{available.SQL_TABLE}</em><br />
-                    <strong>{L_USE_CACHE}:</strong> {available.USE_CACHE}<br />
-                    <strong>{L_ALTERNATIVE_CSS}:</strong> {available.ALTERNATIVE_CSS}<br />
-                </td>
-                <td class="row2" style="text-align:center;">	
-                    <input type="submit" name="{available.ID}" value="{L_UPDATE}" class="submit" />
-                </td>
-            </tr>						
-            # END available #
-        </table>			
-    </form>-->
 </div>

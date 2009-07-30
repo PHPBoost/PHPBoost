@@ -13,7 +13,7 @@
 		{
 			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?g_' + direction + '=' + divid);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -26,7 +26,7 @@
 		
 		function XMLHttpRequest_articles_cats_move(change_cat, divid, direction)
 		{
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?id=' + divid + '&move=' + direction);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&id=' + divid + '&move=' + direction);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -258,10 +258,10 @@
 				# ENDIF #
 				
 				<tr>
-					<td style="padding-left:20px;" class="row2">
+					<td class="row2">
 						<span id="display"></span>
 						<br />
-						<div style="width:80%;margin:auto;">						
+						<div style="width:98%;margin:auto;">						
 							<div>
 								<div class="row3 articles_cat_admin">
 									<span style="float:left;">
@@ -278,7 +278,7 @@
 								<div style="margin-left:{list.INDENT}px;">
 									<div class="row3 articles_cat_admin">
 										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="articles{list.U_ARTICLES_VARS}" class="articles_link_cat">{list.NAME}</a> &nbsp;<span class="text_small">{list.DESC}</span>
+											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="articles{list.U_ARTICLES_VARS}" class="articles_link_cat">{list.NAME}</a>
 										</span>
 										<span style="float:right;">
 											<span id="l{list.ID}"></span> 
@@ -296,7 +296,7 @@
 											</script>										
 											<noscript><a href="admin_articles_cat.php?id={list.ID}&amp;move=down"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_articles_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_articles_cat.php?del={list.ID}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_articles_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_articles_cat.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

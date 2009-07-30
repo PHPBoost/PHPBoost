@@ -35,15 +35,19 @@ if (!empty($_POST['valid']))
 {
 	$title = retrieve(POST, 'title', '');
 	$icon = retrieve(POST, 'icon', '');
+	$icon_path = retrieve(POST, 'icon_path', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
+	if (!empty($icon_path))
+		$icon = $icon_path;
+		
 	if (!empty($title) && !empty($contents))
 	{	
 		$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
@@ -89,12 +93,12 @@ if (!empty($_POST['valid']))
 			$CAT_ARTICLES[0]['id_right'] = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO ".PREFIX."articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
-		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."articles");
+		$Sql->query_inject("INSERT INTO " . PREFIX . "articles (idcat, title, contents, icon, timestamp, visible, start, end, user_id, views, users_note, nbrnote, note, nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . str_replace('[page][/page]', '', $contents) . "', '" . $icon . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "', 0, 0, 0, 0, 0)", __LINE__, __FILE__);
+		$last_articles_id = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "articles");
 		
 		//Mise à jours du nombre d'articles des parents.
 		$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible + 1' : 'nbr_articles_unvisible = nbr_articles_unvisible + 1';
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 		
         ###### Regénération du cache #######
 		$Cache->Generate_module_file('articles');
@@ -114,17 +118,17 @@ elseif (!empty($_POST['previs']))
 		'admin_articles_add'=> 'articles/admin_articles_add.tpl'
 	));
 
-	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
-	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
-	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$contents_preview = retrieve(POST, 'contents', '' , TSTRING_UNSECURE);
+	$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+	$icon = retrieve(POST, 'icon', '', TSTRING_UNCHANGE);
+	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNCHANGE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+	$contents_preview = retrieve(POST, 'contents', '' , TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 		
 	if (!empty($icon_path))
@@ -164,7 +168,7 @@ elseif (!empty($_POST['previs']))
 		$end = '';
 	}	
 	
-	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = " . $User->get_attribute('user_id'), __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = " . $User->get_attribute('user_id'), __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'C_ARTICLES_PREVIEW' => true,
 		'TITLE_PRW' => $title,
@@ -177,7 +181,7 @@ elseif (!empty($_POST['previs']))
 	$i = 0;	
 	$categories = '<option value="0" %s>' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -190,24 +194,15 @@ elseif (!empty($_POST['previs']))
 	
 	//Images disponibles
 	$img_direct_path = (strpos($icon, '/') !== false);
-	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{	
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-		{	
-			$selected = $img_path == $icon ? ' selected="selected"' : '';
-			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
-		}
+		$image = $images->get_name();
+		$selected = $image == $icon ? ' selected="selected"' : '';
+		$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 	}
 	
 	$Template->assign_vars(array(
@@ -257,7 +252,7 @@ elseif (!empty($_POST['previs']))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $LANG['articles_date'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']
@@ -277,7 +272,7 @@ else
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -288,21 +283,14 @@ else
 	$Sql->query_close($result);
 	
 	//Images disponibles
-	$rep = './';
 	$image_list = '<option value="" selected="selected">--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{	
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.				
-		}	
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-			$image_list .= '<option value="' . $img_path . '">' . $img_path . '</option>';
+		$image = $images->get_name();
+		$image_list .= '<option value="' . $image . '">' . $image . '</option>';
 	}
 	
 	$Template->assign_vars(array(
@@ -333,7 +321,7 @@ else
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_ARTICLES_DATE' => $LANG['articles_date'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset']

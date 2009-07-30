@@ -48,7 +48,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_smileys.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_smileys.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 				<legend>{L_EDIT_SMILEY}</legend>
 					<dl>
@@ -58,7 +58,7 @@
 					<dl>
 						<dt><label for="code_smiley">* {L_SMILEY_AVAILABLE}</label></dt>
 						<dd><label>
-							<select name="url_smiley" id="url_smiley" onChange="img_smiley(this.options[selectedIndex].value)">
+							<select name="url_smiley" id="url_smiley" onchange="img_smiley(this.options[selectedIndex].value)">
 								{SMILEY_OPTIONS}					
 							</select>
 							<span id="img_smiley">{IMG_SMILEY}</span>

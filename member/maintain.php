@@ -29,7 +29,7 @@ include_once('../kernel/begin.php');
 define('TITLE', $LANG['title_maintain']);
 include_once('../kernel/header_no_display.php');
 
-if ($CONFIG['maintain'] <= time())
+if ($CONFIG['maintain'] != -1 && $CONFIG['maintain'] <= time())
 {	
 	header('location: ' . get_start_page());
 	exit;
@@ -59,15 +59,21 @@ if ($CONFIG['maintain'] != -1)
 	}
 	
 	//Calcul du format de la date
-	$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SYSTEM);
+	$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
 	$array_release = array(
-	gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SYSTEM), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SYSTEM) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SYSTEM), 
-	gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SYSTEM), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SYSTEM), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+	gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE), 
+	gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds );
+
+	$seconds = gmdate_format('s', time(), TIMEZONE_SITE);
+    $array_now = array(
+    gmdate_format('Y', time(), TIMEZONE_SITE), (gmdate_format('n', time(), TIMEZONE_SITE) - 1), gmdate_format('j', time(), TIMEZONE_SITE),
+    gmdate_format('G', time(), TIMEZONE_SITE), gmdate_format('i', time(), TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
 }	
 else //Délai indéterminé.
 {	
 	$key = -1;
-	$array_release = array('', '', '', '', '', '');
+	$array_release = array('0', '0', '0', '0', '0', '0');
+	$array_now = array('0', '0', '0', '0', '0', '0');
 }
 
 $Template->assign_vars(array(	
@@ -75,17 +81,20 @@ $Template->assign_vars(array(
 	'VERSION' => $CONFIG['version'],
 	'THEME' => get_utheme(),
 	'DELAY' => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0',
-	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['reception'] . '</a>',	
+	'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
+	'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
+	'U_INDEX' => !$User->check_level(ADMIN_LEVEL) ? '<a href="../admin/admin_index.php">' . $LANG['admin'] . '</a>' : '<a href="' . get_start_page() . '">' . $LANG['home'] . '</a>',	
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
-	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? $CONFIG['maintain_text'] : $LANG['maintain']),
+	'L_MAINTAIN' => (!empty($CONFIG['maintain_text']) ? second_parse($CONFIG['maintain_text']) : $LANG['maintain']),
+	'L_MAINTAIN_TITLE' => $LANG['title_maintain'],
 	'L_LOADING' => $LANG['loading'],
-	'L_RELEASE_FORMAT' => implode(',', $array_release),
 	'L_DAYS' => $LANG['days'],
 	'L_HOURS' => $LANG['hours'],
 	'L_MIN' => $LANG['minutes'],
 	'L_SEC' => $LANG['seconds'],
 	'L_POWERED_BY' => $LANG['powered_by'],
-	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right']
+	'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
+	'PHPBOOST_VERSION' => $CONFIG['version']
 ));
 
 if ($CONFIG['maintain_delay'] == 1 && $CONFIG['maintain'] != -1)

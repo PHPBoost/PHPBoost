@@ -32,18 +32,19 @@ include_once('../articles/articles_begin.php');
 require_once('../kernel/header_no_display.php');
 
 //Notation.
-if (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur connecté.
+if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
 
 	//Initialisation  de la class de gestion des fichiers.
-	include_once('../kernel/framework/content/note.class.php');
+	import('content/note');
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
-
+else
+	echo -2;
 
 ?>

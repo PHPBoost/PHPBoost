@@ -26,12 +26,13 @@
 
 		<div id="admin_contents">
 			
-			<form method="post" action="admin_forum.php?del={IDCAT}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
+			<form method="post" action="admin_forum.php?del={IDCAT}&amp;token={TOKEN}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
 				# START topics #
 				<fieldset>
 					<legend>{topics.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
 						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{topics.L_EXPLAIN_CAT}
+						<br />	
 						<br />	
 					</div>
 					<br />	
@@ -51,6 +52,7 @@
 					<legend>{subforums.L_KEEP}</legend>
 					<div class="error_warning" style="width:500px;margin:auto;padding:15px;">
 						<img src="../templates/{THEME}/images/important.png" alt="" style="float:left;padding-right:6px;" /> &nbsp;{subforums.L_EXPLAIN_CAT}
+						<br />	
 						<br />	
 					</div>
 					<br />	

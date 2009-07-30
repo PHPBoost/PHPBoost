@@ -78,11 +78,18 @@ a.forum_link_pseudo:hover {
 .forum_sous_cat_last:hover{
 	background:#A3C8DF;
 }
-/* Cadre des liens:alerter les modérateurs et suivre le sujet */
-.forum_action{
-	text-align:center;
+
+/* Formulaire pour poster les messages */
+.forum_post_form{
+	width:80%;
+	margin:auto;
 	margin-top:15px;
 }
+/* Cadre des liens:alerter les modérateurs et suivre le sujet */
+.forum_action{	
+	margin-top:5px;
+}
+
 /* Liens des catégories de niveau 0 */
 a.forum_link_cat{
 	color:#FEFFE4;
@@ -113,4 +120,13 @@ a.forum_link_cat{
 	padding:0px;
 	padding-right:2px;
 	background:none;
+}
+.forum_cat_title{
+	float:left;
+	padding:0px 5px;
+}
+.forum_cat_title a{
+}
+a.forum_mbrmsg_links { /* Couleur des liens pour les messages du membre */
+	color:#FFFFFF;
 }

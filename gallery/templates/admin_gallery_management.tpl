@@ -1,6 +1,4 @@
 		<link href="{MODULE_DATA_PATH}/gallery.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/prototype.js"></script>
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/scriptaculous.js?load=effects"></script>
 		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/lightbox.js"></script>
 		<script type="text/javascript">
 		<!--
@@ -33,14 +31,14 @@
 			{	
 				document.getElementById('fi_' + id).style.display = 'none';
 				document.getElementById('fi' + id).style.display = 'inline';
-				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" />';
+				document.getElementById('fi' + id).innerHTML = '<input size="27" type="text" name="fiinput' + id + '" id="fiinput' + id + '" class="text" value="' + previous_name.replace(/\"/g, "&quot;") + '" onblur="rename_file(\'' + id + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;") + '\');" />';
 				document.getElementById('fiinput' + id).focus();
 			}
 		}	
 		function rename_file(id_file, previous_cut_name)
 		{
 			var name = document.getElementById("fiinput" + id_file).value;
-			var regex = /\/|\\|\||\?|<|>|\"/;
+			var regex = /\/|\\|\||\?|<|>/;
 			
 			if( regex.test(name) ) //interdiction des caractères spéciaux dans la nom.
 			{
@@ -51,8 +49,8 @@
 			else
 			{
 				document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name;
-				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?rename_pics=1');
+				data = "id_file=" + id_file + "&name=" + name.replace(/&/g, "%26") + "&previous_name=" + previous_cut_name.replace(/&/g, "%26");
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&rename_pics=1&token={TOKEN}');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '0' )
@@ -60,7 +58,11 @@
 						document.getElementById('fi' + id_file).style.display = 'none';
 						document.getElementById('fi_' + id_file).style.display = 'inline';
 						document.getElementById('fi_' + id_file).innerHTML = xhr_object.responseText;
-						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + xhr_object.responseText.replace(/\'/g, "\\\'") + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
+						
+						html_protected_name = name.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
+						html_protected_name2 = xhr_object.responseText.replace(/\'/g, "\\\'").replace(/\"/g, "&quot;");
+						
+						document.getElementById('fihref' + id_file).innerHTML = '<a href="javascript:display_rename_file(\'' + id_file + '\', \'' + html_protected_name + '\', \'' + html_protected_name2 + '\');"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>';
 						document.getElementById('img' + id_file).innerHTML = '';
 					}
 					else if( xhr_object.readyState == 4 && xhr_object.responseText == '0' )
@@ -76,7 +78,7 @@
 			document.getElementById('img' + id_file).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 
 			data = "id_file=" + id_file;
-			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?aprob_pics=1');
+			var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&aprob_pics=1&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -401,37 +403,36 @@
 									<table style="border:0;margin:auto;">
 										<tr>
 											<td style="height:{HEIGHT_MAX}px;">
-												<span id="pics{pics.list.ID}">{pics.list.U_DISPLAY}{pics.list.IMG}</a></span>
+												<span id="pics{pics.list.ID}"><a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox">{pics.list.IMG}</a></span>
 											</td>
 										</tr>
 										<tr>
 											<td style="text-align:center;" class="text_small">
-												{pics.list.U_DISPLAY}<span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
+												<a class="com" href="{pics.list.U_DISPLAY}" title="{pics.list.TITLE}" rel="lightbox"><span id="fi_{pics.list.ID}">{pics.list.NAME}</span></a> <span id="fi{pics.list.ID}"></span>
 												<br />
 												{pics.list.U_POSTOR}
 											</td>
 										</tr>									
 										<tr>
 											<td style="text-align:center;">
-													{pics.list.RENAME_FILE}
-													
-													<a href="admin_gallery.php?del={pics.list.ID}&amp;cat={CAT_ID}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
-										
-													<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
-														<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
-															<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
-															<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;move=' + this.options[this.selectedIndex].value">
-																{pics.list.CAT}
-															</select>
-															<br /><br />
-														</div>
+												{pics.list.RENAME_FILE}
+												
+												<a href="admin_gallery.php?del={pics.list.ID}&amp;token={TOKEN}&amp;cat={CAT_ID}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" class="valign_middle" /></a>
+									
+												<div style="position:absolute;z-index:100;margin-top:110px;float:left;display:none;" id="move{pics.list.ID}">
+													<div class="bbcode_block" style="width:190px;overflow:auto;" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);">
+														<div style="margin-bottom:4px;"><strong>{L_MOVETO}</strong>:</div>
+														<select class="valign_middle" name="{pics.list.ID}cat" onchange="document.location = 'admin_gallery.php?id={pics.list.ID}&amp;token={TOKEN}&amp;move=' + this.options[this.selectedIndex].value">
+															{pics.list.CAT}
+														</select>
+														<br /><br />
 													</div>
-													<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
-													
-													
-													<a href="javascript:pics_aprob({pics.list.ID});" title="{L_APROB_IMG}"><img id="img_aprob{pics.list.ID}" src="../templates/{THEME}/images/{LANG}/{pics.list.IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
-													&nbsp;<span id="img{pics.list.ID}"></span>
 												</div>
+												<a href="javascript:pics_display_block({pics.list.ID});" onmouseover="pics_hide_block({pics.list.ID}, 1);" onmouseout="pics_hide_block({pics.list.ID}, 0);" class="bbcode_hover" title="{L_MOVETO}"><img src="../templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+												
+												
+												<a href="javascript:pics_aprob({pics.list.ID});" title="{L_APROB_IMG}"><img id="img_aprob{pics.list.ID}" src="../templates/{THEME}/images/{LANG}/{pics.list.IMG_APROB}" alt="{L_APROB_IMG}" title="{L_APROB_IMG}" class="valign_middle" /></a>
+												&nbsp;<span id="img{pics.list.ID}"></span>
 											</td>
 										</tr>
 									</table>

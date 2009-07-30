@@ -36,32 +36,36 @@ $del = !empty($_GET['delete']) ? true : false;
 
 if ($del && !empty($id)) //Suppresion poll
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('poll');
 	
 	//On supprime des tables config et reponses des polls.
-	$Sql->query_inject("DELETE FROM ".PREFIX."poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "poll WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	###### Régénération du cache du mini poll #######
 	if ($id == $CONFIG_POLL['mini_poll'])		
 	{	
 		$CONFIG_POLL['poll_mini'] = '-1';
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('poll');
 	}
 	redirect(HOST . SCRIPT);
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('poll');
 	
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 0);
 	$archive = retrieve(POST, 'archive', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
@@ -111,19 +115,19 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		{
 			if (!empty($_POST['a'.$i]))
 			{				
-				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
-				$votes .= strprotect(str_replace('|', '', (!empty($_POST['v'.$i]) ? $_POST['v'.$i] : '0'))) . '|';
+				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
+				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
 				$check_nbr_answer++;
 			}
 		}
 		$votes = trim($votes, '|');
 		
-		$Sql->query_inject("UPDATE ".PREFIX."poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "poll SET question = '" . $question . "', answers = '" . substr($answers, 0, strlen($answers) - 1) . "', votes = '" . $votes . "', type = '" . $type . "', archive = '" . $archive . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		if ($id_post == $CONFIG_POLL['poll_mini'] && ($visible == '0' || $archive == '1'))
 		{
 			$CONFIG_POLL['poll_mini'] = '-1';
-			$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
+			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_POLL)) . "' WHERE name = 'poll'", __LINE__, __FILE__);	
 		
 			###### Régénération du cache #######
 			$Cache->Generate_module_file('poll');
@@ -143,7 +147,7 @@ elseif (!empty($id))
 		'admin_poll_management2'=> 'poll/admin_poll_management2.tpl'
 	));
 
-	$row = $Sql->query_array('poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'poll', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 	$Template->assign_vars(array(
 		'IDPOLL' => $row['id'],
@@ -240,7 +244,7 @@ else
 	 
 	$nbr_poll = $Sql->count_table('poll', __LINE__, __FILE__);
 
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(
@@ -263,8 +267,8 @@ else
 	)); 
 
 	$result = $Sql->query_while("SELECT p.id, p.question, p.archive, p.timestamp, p.visible, p.start, p.end, m.login 
-	FROM ".PREFIX."poll p
-	LEFT JOIN ".PREFIX."member m ON p.user_id = m.user_id	
+	FROM " . PREFIX . "poll p
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON p.user_id = m.user_id	
 	ORDER BY p.timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(20, 'p'), 20), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

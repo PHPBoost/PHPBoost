@@ -27,18 +27,19 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function gallery_mini()
+function gallery_mini($position, $block)
 {
-    global $Cache, $CAT_GALLERY, $CONFIG_GALLERY, $LANG;
+    global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics;
     $tpl = new Template('gallery/gallery_mini.tpl');
-    
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $block);
+
     //Chargement de la langue du module.
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
-     
+
     //Affichage des miniatures disponibles
     $i = 0;
-    
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
     list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
     if (isset($_array_random_pics) && $_array_random_pics !== array())
@@ -68,8 +69,8 @@ function gallery_mini()
     	if (count($gallery_mini) == 0)
     	{
     		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
-    		FROM ".PREFIX."gallery g
-    		LEFT JOIN ".PREFIX."gallery_cats gc on gc.id = g.idcat
+    		FROM " . PREFIX . "gallery g
+    		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
     		WHERE g.aprob = 1 AND gc.aprob = 1
     		ORDER BY RAND()
     		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
@@ -91,74 +92,72 @@ function gallery_mini()
     	
     	switch ($CONFIG_GALLERY['scroll_type'])
     	{
-    		case 0:
-    		$scoll_mode = 'static_scroll';
+			case 0:
+        	$tpl->assign_vars(array(
+    			'C_FADE' => true
+    		));
     		break;
     		case 1:
-    		$Template->assign_vars(array(
+    		$tpl->assign_vars(array(
     			'C_VERTICAL_SCROLL' => true
     		));
-    		$scoll_mode = 'dynamic_scroll_v';
     		break;
     		case 2:
-    		$Template->assign_vars(array(
+    		$tpl->assign_vars(array(
     			'C_HORIZONTAL_SCROLL' => true
     		));
-    		$scoll_mode = 'dynamic_scroll_h';
     		break;
+			case 3:
+			$tpl->assign_vars(array(
+    			'C_STATIC' => true
+    		));
+			break;
     	}
     	
-    	include_once('../gallery/gallery.class.php');
+    	include_once(PATH_TO_ROOT . '/gallery/gallery.class.php');
     	$Gallery = new Gallery;
     	
     	foreach ($gallery_mini as $key => $row)
     	{
     		//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-    		if (!is_file('../gallery/pics/thumbnails/' . $row['path']))
-    			$Gallery->Resize_pics('../gallery/pics/' . $row['path']); //Redimensionnement + création miniature
+    		if (!is_file(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']))
+    			$Gallery->Resize_pics(PATH_TO_ROOT . '/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
     		
     		// On recupère la hauteur et la largeur de l'image.
     		if ($row['width'] == 0 || $row['height'] == 0)
-    			list($row['width'], $row['height']) = @getimagesize('../gallery/pics/thumbnails/' . $row['path']);
+    			list($row['width'], $row['height']) = @getimagesize(PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path']);
     		if ($row['width'] == 0 || $row['height'] == 0)
     			list($row['width'], $row['height']) = array(142, 142);
     			
-    		if ($CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2)
-    		{
-    			$tpl->assign_block_vars('pics_mini', array(
-    				'ID' => $i,
-    				'PICS' => '../gallery/pics/thumbnails/' . $row['path'],
-    				'NAME' => $row['name'],
-    				'HEIGHT' => $row['height'],
-    				'WIDTH' => $row['width'],
-    				'U_PICS' => '../gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
-    			));
-    		}
-    		else
-    		{
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '] = new Array();' . "\n";
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'link\'] = \'' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php') . '\';' . "\n";
-    			$array_pics_mini .= 'array_pics_mini[' . $i . '][\'path\'] = \'' . $row['path'] . '\';' . "\n";
-    		}
-    		
+    		$tpl->assign_block_vars('pics_mini', array(
+    			'ID' => $i,
+    			'PICS' => TPL_PATH_TO_ROOT . '/gallery/pics/thumbnails/' . $row['path'],
+    			'NAME' => $row['name'],
+    			'HEIGHT' => $row['height'],
+    			'WIDTH' => $row['width'],
+    			'U_PICS' => TPL_PATH_TO_ROOT . '/gallery/gallery' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '.php')
+    		));
+
     		$sum_height += $row['height'] + 5;
     		$sum_width += $row['width'] + 5;
     		$i++;
+			
+			if ($CONFIG_GALLERY['scroll_type'] == 3)
+				break;
     	}
     }
-    
+   
     $tpl->assign_vars(array(
     	'SID' => SID,
     	'MODULE_DATA_PATH' => $tpl->get_module_data_path('gallery'),
     	'ARRAY_PICS' => $array_pics_mini,
-    	'HEIGHT_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 1) ? ($CONFIG_GALLERY['height'] * 2) : $CONFIG_GALLERY['height'],
+    	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],
     	'SUM_HEIGHT' => $sum_height + 10,
-    	'HIDDEN_HEIGHT' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2) ? ($CONFIG_GALLERY['height'] * 2) + 10 : $CONFIG_GALLERY['height'] + 10,
-    	'WIDTH_DIV' => ($CONFIG_GALLERY['nbr_pics_mini'] > 2 && $CONFIG_GALLERY['scroll_type'] == 2) ? ($CONFIG_GALLERY['width'] * (($CONFIG_GALLERY['nbr_pics_mini'] <= 3) ? $CONFIG_GALLERY['nbr_pics_mini'] : 3)) : $CONFIG_GALLERY['width'],
+    	'HIDDEN_HEIGHT' => $CONFIG_GALLERY['height'] + 10,
+    	'WIDTH_DIV' => $CONFIG_GALLERY['width'],
     	'SUM_WIDTH' => $sum_width + 30,
     	'HIDDEN_WIDTH' => ($CONFIG_GALLERY['width'] * 3) + 30,
-    	'SCROLL_SPEED' => ($CONFIG_GALLERY['scroll_type'] == 1 || $CONFIG_GALLERY['scroll_type'] == 2) ? $CONFIG_GALLERY['speed_mini_pics']*10 : $CONFIG_GALLERY['speed_mini_pics']*500,
-    	'SCROLL_MODE' => $scoll_mode,
+    	'SCROLL_DELAY' => 0.2 * (11 - $CONFIG_GALLERY['speed_mini_pics']),
     	'L_RANDOM_PICS' => $LANG['random_img'],
     	'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
     	'L_GALLERY' => $LANG['gallery']

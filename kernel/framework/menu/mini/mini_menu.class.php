@@ -30,10 +30,10 @@ import('menu/menu');
 define('MINI_MENU__CLASS','MiniMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
- * @package Menu
- * @subpackage MiniMenu
+ * @package menu
+ * @subpackage minimenu
  */
 class MiniMenu extends Menu
 {
@@ -42,7 +42,6 @@ class MiniMenu extends Menu
     {
         $this->function_name = 'menu_' . strtolower($title) . '_' . strtolower($filename);
         parent::Menu($title . '/' . $filename);
-        //echo $this->title . ' - ' . $this->function_name;
     }
     /**
      * @return string the string the string to write in the cache file
@@ -50,7 +49,7 @@ class MiniMenu extends Menu
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/menus/' . strtolower($this->title) . '.php\';';
-        $cache_str.= '$__menu.=' . $this->function_name . '().\'';
+        $cache_str.= 'if(function_exists(\'' . $this->function_name . '\')) { $__menu.=' . $this->function_name . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
     var $function_name = '';

@@ -17,8 +17,8 @@
 		</tr>							
 		<tr> 
 			<td class="row2">
-				<a href="upload.php?root=1&amp;{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
-				<a href="upload.php?root=1&amp;{POPUP}">{L_ROOT}</a>
+				<a href="upload.php?root=1{POPUP}"><img src="../templates/{THEME}/images/upload/home.png" class="valign_middle" alt="" /></a>
+				<a href="upload.php?root=1{POPUP}">{L_ROOT}</a>
 			</td>
 		</tr>							
 		<tr> 
@@ -28,7 +28,6 @@
 				</div>
 				<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
 						<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> {U_ROOT}{URL}
-					</div>
 				</div>
 			</td>
 		</tr>			
@@ -66,8 +65,8 @@
 							# START file #							
 							<table style="border:0;width:210px;">
 								<tr>
-									<td style="width:34px;vertical-align:top;">
-										<img src="{file.U_IMG_MOVE}" alt="" />
+									<td style="width:100px;vertical-align:top;">
+										<img src="{file.U_IMG_MOVE}" alt="" style="width:100px;" />
 									</td>
 									<td style="padding-top:8px;">						
 										{file.NAME}	

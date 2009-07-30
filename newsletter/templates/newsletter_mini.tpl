@@ -1,4 +1,4 @@
-		<form action="{PATH_TO_ROOT}/newsletter/newsletter.php{SID}" method="post">
+		<form action="{PATH_TO_ROOT}/newsletter/newsletter.php?token={TOKEN}" method="post">
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_NEWSLETTER}</h5>
@@ -13,6 +13,7 @@
 					<label><input type="radio" name="subscribe" value="unsubscribe" /> {UNSUBSCRIBE}</label>
 				</p>
 				<p>
+					<input type="hidden" name="token" value="{TOKEN}" />
 					<input type="submit" value="{L_SUBMIT}" class="submit" />	
 				</p>
 				<p style="margin:0;margin-top:10px;">

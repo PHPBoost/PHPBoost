@@ -6,7 +6,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{L_CATEGORIES}</strong> {EDIT}
+					<strong>{L_CATEGORIES}</strong> # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -14,7 +14,7 @@
 			</div>
 			<div class="module_contents">
 				# START cat_list #
-				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;height:80px;">
+				<div style="float:left;text-align:center;width:{cat_list.WIDTH}%;">
 					{cat_list.U_IMG_CAT}
 					<a href="../web/web{cat_list.U_WEB_CAT}">{cat_list.CAT}</a> <span class="text_small">({cat_list.TOTAL})</span><br />
 					<span class="text_small">{cat_list.CONTENTS}</span>
@@ -44,7 +44,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{CAT_NAME}</strong>
+					<strong>{CAT_NAME}</strong>  # IF C_IS_ADMIN # &nbsp;&nbsp;<a href="admin_web_cat.php{SID}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" /></a> # ENDIF #
 				</div>
 				<div style="float:right">
 					{PAGINATION}
@@ -133,11 +133,13 @@
 					<strong>{L_DESC}:</strong> {CONTENTS}
 					<br /><br />
 					<strong>{L_CAT}:</strong> 
+					
 					<a href="../web/web{U_WEB_CAT}" title="{CAT}">{CAT}</a><br />
 					
 					<strong>{L_DATE}:</strong> {DATE}<br />						
 					<strong>{L_VIEWS}:</strong> {COMPT} {L_TIMES}
-					<div class="spacer">&nbsp;</div>
+					
+					<span class="spacer">&nbsp;</span>
 				</p>
 				<p class="text_center">					
 					<a href="{URL}" title="{NAME}" onclick="document.location = 'count.php?id={IDWEB}';"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" /></a>

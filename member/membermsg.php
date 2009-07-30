@@ -40,17 +40,17 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		'membermsg'=> 'member/membermsg.tpl',
 	));
 	
-	require_once('../kernel/framework/modules/modules_discovery_service.class.php');
+	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$modules = $modulesLoader->get_available_modules('get_member_msg_link');
 	foreach ($modules as $module)
 	{
-		$img = $module->functionnality('get_member_msg_img');
+		$img = $module->functionality('get_member_msg_img');
 		$Template->assign_block_vars('available_modules_msg', array(
-			'NAME_USER_MSG' => $module->functionnality('get_member_msg_name'),
+			'NAME_USER_MSG' => $module->functionality('get_member_msg_name'),
 			'IMG_USER_MSG' => $img,
 			'C_IMG_USER_MSG' => !empty($img) ? true : false,
-			'U_LINK_USER_MSG' => $module->functionnality('get_member_msg_link', array($memberId))
+			'U_LINK_USER_MSG' => $module->functionality('get_member_msg_link', array($memberId))
 		));
 	}
 	
@@ -67,10 +67,10 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	if (!empty($script))
 	{
 		//On crée une pagination si le nombre de commentaires est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 
-		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
+		$nbr_msg = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE user_id = '" . $memberId . "'", __LINE__, __FILE__);
 		$Template->assign_vars(array(
 			'C_START_MSG' => true,
 			'PAGINATION' => $Pagination->display('membermsg.php?pmsg=%d', $nbr_msg, 'pmsg', 25, 3),
@@ -79,9 +79,9 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 		));
 
 		$result = $Sql->query_while("SELECT c.timestamp, c.script, c.path, m.login, s.user_id AS connect, c.contents
-		FROM ".PREFIX."com c
-		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
-		LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+		FROM " . DB_TABLE_COM . " c
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
+		LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 		WHERE m.user_id = '" . $memberId . "'
 		ORDER BY c.timestamp DESC 
 		" . $Sql->limit($Pagination->get_first_msg(25, 'pmsg'), 25), __LINE__, __FILE__);

@@ -3,7 +3,7 @@
  *                              pages_french.php
  *                            -------------------
  *   begin                : August 07, 2007
- *   copyright          : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -82,9 +82,9 @@ $LANG['pages_page_com'] = 'Commentaires de la page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'Vous êtes sur le panneau de contrôle des pages. Vous pouvez ici gérer l\'ensemble de vos pages.
-<div class="question">Vous pouvez insérer aussi bien du code HTML et javascript que du BBCode. Seul le langage PHP est interdit.
-<br />
-Pour faire des liens entre les différentes pages il suffit d\'utiliser la balise BBCode [link] qui n\'existe que sur ce module et qui s\'utilise de la façon suivante : [link=titre-de-la-page]Lien vers la page[/link].</div>';
+<div class="question"><p>Vous utilisez l\'éditeur que vous avez choisi dans votre profil pour mettre en forme les pages. Pour insérer du code HTML, utilisez la balise BBCode <span style="font-family:courier new;">[html]code html[/html]</span>, que vous soyez en BBCode ou avez TinyMCE.</p>
+<p>Pour des raisons de sécurité il est interdit d\'insérer du code PHP dans les pages.</p>
+<p>Pour faire des liens entre les différentes pages il suffit d\'utiliser la balise BBCode [link] qui n\'existe que sur ce module et qui s\'utilise de la façon suivante : <span style="font-family:courier new;">[link=titre-de-la-page]Lien vers la page[/link]</span>.</p></div>';
 $LANG['pages_redirections'] = 'Gestion des redirections';
 $LANG['pages_num_pages'] = '%d page(s) existantes';
 $LANG['pages_num_coms'] = '%d commentaire(s) sur l\'ensemble des pages soit %1.1f commentaire par page';

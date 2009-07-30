@@ -59,7 +59,7 @@
 		</div>
 		# ENDIF #
 		
-		<form action="admin_config.php?adv=1" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+		<form action="admin_config.php?adv=1&amp;token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<fieldset> 
 				<legend>{L_CONFIG_ADVANCED}</legend>
 				<dl>
@@ -96,7 +96,7 @@
 						<label for="htaccess_manual_content">
 							{L_HTACCESS_MANUAL_CONTENT}
 						</label>
-						<p>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</p>
+						<br /><span>{L_HTACCESS_MANUAL_CONTENT_EXPLAIN}</span>
 					</dt>
 					<dd>
 						<textarea name="htaccess_manual_content" rows="5" cols="5" style="font-family:'Courier new';">{HTACCESS_MANUAL_CONTENT}</textarea>
@@ -146,6 +146,14 @@
 					<dt><label for="sign">{L_UNLOCK_ADMIN}</label><br /><span>{L_UNLOCK_ADMIN_EXPLAIN}</span></dt>
 					<dd><label><a href="admin_config.php?unlock=1" onclick="javascript:return Confirm_unlock();">{L_UNLOCK_LINK}</a></label></dd>
 				</dl>
+	            <dl>
+                        <dt><label for="debug">{L_DEBUG}</label><br /><span>{L_DEBUG_EXPLAIN}</span></dt>
+                        <dd>
+                            <label><input type="radio" {DEBUG_ENABLED} name="debug" id="debug" value="1" /> {L_ACTIV}</label>
+                            &nbsp;&nbsp;
+                            <label><input type="radio" {DEBUG_DISABLED} name="debug" value="0" /> {L_UNACTIVE}</label>
+                        </dd>
+                    </dl>
 			</fieldset> 
 			
 			<fieldset class="fieldset_submit">

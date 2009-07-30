@@ -3,7 +3,7 @@
  *                               admin_extend_field_add.php
  *                            -------------------
  *   begin                : June 16, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -33,8 +33,9 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 {
 	$name = retrieve(POST, 'name', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
 	$field = retrieve(POST, 'field', 0);
+	$required = retrieve(POST, 'required', 0);
 	$possible_values = retrieve(POST, 'possible_values', '');
 	$default_values = retrieve(POST, 'default_values', '');
 	
@@ -45,7 +46,7 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 		$regex = retrieve(POST, 'regex2', '');
 
 	$array_field = array(
-		1 => 'VARCHAR(255) NOT NULL', 
+		1 => 'VARCHAR(255) NOT NULL DEFAULT \'\'', 
 		2 => 'TEXT NOT NULL', 
 		3 => 'TEXT NOT NULL', 
 		4 => 'TEXT NOT NULL', 
@@ -63,15 +64,14 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 			return 'f_' . $field;
 		}
 		$field_name = rewrite_field($name);
-		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
+		$check_name = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $field_name . "'", __LINE__, __FILE__);
 		if (empty($check_name)) 
 		{
-			$class = $Sql->query("SELECT MAX(class) + 1 FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO ".PREFIX."member_extend_cat (name, class, field_name, contents, field, possible_values, default_values, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
-			
+			$class = $Sql->query("SELECT MAX(class) + 1 FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND_CAT . " (name, class, field_name, contents, field, possible_values, default_values, required, display, regex) VALUES ('" . $name . "', '" . $class . "', '" . $field_name . "', '" . $contents . "', '" . $field . "', '" . $possible_values . "', '" . $default_values . "', '" . $required . "', 1, '" . $regex . "')", __LINE__, __FILE__);		
 			//Alteration de la table pour prendre en compte le nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
-			$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend ADD " . $field_name, __LINE__, __FILE__);
+			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
@@ -103,7 +103,11 @@ else
 		'L_REQUIRE' => $LANG['require'],
 		'L_NAME' => $LANG['name'],
 		'L_TYPE' => $LANG['type'],
-		'L_DESC' => $LANG['description'],		
+		'L_DESC' => $LANG['description'],
+		'L_REQUIRED_FIELD' => $LANG['required_field'],
+		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
+		'L_REQUIRED' => $LANG['required'],
+		'L_NOT_REQUIRED' => $LANG['not_required'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
 		'L_LONG_TEXT' => $LANG['long_text'],
 		'L_SEL_UNIQ' => $LANG['sel_uniq'],

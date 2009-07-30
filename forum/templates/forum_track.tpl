@@ -10,7 +10,7 @@
 		-->
 		</script>
 		
-		<form action="track{U_TRACK_ACTION}" method="post" name="track">	
+		<form action="track{U_TRACK_ACTION}" method="post">	
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
@@ -22,7 +22,7 @@
 				</div>
 				<div class="module_contents forum_contents">
 					<div class="row2 text_small">{L_EXPLAIN_TRACK}</div>
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr class="forum_text_column">			
 							<td>{L_TOPIC}</td>
 							<td style="width:100px;">{L_AUTHOR}</td>
@@ -38,7 +38,7 @@
 			</div>	
 			<div class="module_position">
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						# IF C_NO_TRACKED_TOPICS #
 						<tr>
 							<td class="forum_sous_cat" style="text-align:center;">
@@ -50,7 +50,11 @@
 						# START topics #		
 						<tr>
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.gif" alt="" />
+								# IF NOT topics.C_HOT_TOPIC # 
+								<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
+								# ELSE #
+								<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+								# ENDIF #
 							</td>
 							<td class="forum_sous_cat" style="width:35px;text-align:center;">
 								{topics.DISPLAY_MSG} {topics.TRACK} {topics.POLL}

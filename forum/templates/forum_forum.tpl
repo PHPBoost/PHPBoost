@@ -12,11 +12,11 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<a href="syndication.php?idcat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&nbsp;&nbsp;<strong>{L_SUBFORUMS}</strong>
 				</div>
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>			
 							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
 							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
@@ -29,7 +29,7 @@
 			# START subcats #			
 			<div class="module_position">
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
@@ -42,7 +42,7 @@
 							</td>	
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								{subcats.ANNOUNCE}
+								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{subcats.U_FORUM_VARS}">{subcats.NAME}</a>
@@ -78,7 +78,10 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="syndication.php?idcat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} 
+					# IF C_POST_NEW_SUBJECT #
+						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
+					# ENDIF #
 				</span>
 				<span style="float:right;">
 					# IF IDCAT #
@@ -88,7 +91,7 @@
 				</span>
 			</div>
 			<div class="module_contents forum_contents">
-				<table class="module_table" style="width:100%">
+				<table class="module_table forum_table">
 					<tr>			
 						<td class="forum_text_column" style="min-width:175px;">{L_TOPIC}</td>
 						<td class="forum_text_column" style="width:100px;">{L_AUTHOR}</td>
@@ -101,7 +104,7 @@
 		</div>	
 		<div class="module_position">
 			<div class="module_contents forum_contents">
-				<table class="module_table" style="width:100%">
+				<table class="module_table forum_table">
 					# IF C_NO_MSG_NOT_READ #
 					<tr>
 						<td class="forum_sous_cat" style="text-align:center;">
@@ -118,10 +121,16 @@
 						</td>
 						# ENDIF #
 						<td class="forum_sous_cat" style="width:25px;text-align:center;">
-							<img src="{MODULE_DATA_PATH}/images/{topics.ANNOUNCE}.gif" alt="" />
+							# IF NOT topics.C_HOT_TOPIC # 
+							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}.png" alt="" />
+							# ELSE #
+							<img src="{MODULE_DATA_PATH}/images/{topics.IMG_ANNOUNCE}_hot.gif" alt="" /> 
+							# ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="width:35px;text-align:center;">
-							{topics.DISPLAY_MSG} {topics.TRACK} {topics.POLL}
+							# IF topics.C_DISPLAY_MSG # <img src="{MODULE_DATA_PATH}/images/msg_display_mini.png" alt="" class="valign_middle" /> # ENDIF # 
+							# IF topics.C_IMG_POLL # <img src="{MODULE_DATA_PATH}/images/poll_mini.png" class="valign_middle" alt="" /> # ENDIF # 
+							# IF topics.C_IMG_TRACK # <img src="{MODULE_DATA_PATH}/images/track_mini.png" class="valign_middle" alt="" /> # ENDIF #
 						</td>
 						<td class="forum_sous_cat" style="min-width:115px;">
 							{topics.ANCRE} <strong>{topics.TYPE}</strong> <a href="topic{topics.U_TOPIC_VARS}">{topics.L_DISPLAY_MSG} {topics.TITLE}</a>
@@ -159,7 +168,10 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
 				<span style="float:left;">
-					<a href="syndication.php?idcat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT} {U_POST_NEW_SUBJECT}
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={IDCAT}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> &bull; {U_FORUM_CAT}
+					# IF C_POST_NEW_SUBJECT #
+						&raquo; <a href="{U_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/post.png" alt="{L_POST_NEW_SUBJECT}" title="{L_POST_NEW_SUBJECT}" /></a>
+					# ENDIF #
 				</span>
 				<span style="float:right;">{PAGINATION}</span>&nbsp;
 			</div>

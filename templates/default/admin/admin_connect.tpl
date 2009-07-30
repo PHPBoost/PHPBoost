@@ -15,6 +15,7 @@
 		<script type="text/javascript">
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
+			var TOKEN = "{TOKEN}";
 		-->
 		</script>
 		
@@ -40,7 +41,7 @@
 		-->
 		</script>
 		
-		<form action="{PATH_TO_ROOT}/admin/admin_index.php" method="post" onsubmit="return check_connect();" class="fieldset_content" style="width:550px;margin:auto;margin-top:10%">
+		<form action="{PATH_TO_ROOT}/admin/admin_index.php?token={TOKEN}" method="post" onsubmit="return check_connect();" class="fieldset_content" style="width:550px;margin:auto;margin-top:10%">
 			<fieldset>
 				<legend>{L_ADMIN}</legend>
 				<dl>

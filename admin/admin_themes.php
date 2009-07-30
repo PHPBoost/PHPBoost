@@ -3,7 +3,7 @@
  *                               admin_themes.php
  *                            -------------------
  *   begin                : June 29, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -24,17 +24,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ###################################################*/
 
-require_once('../admin/admin_begin.php');
+require_once '../admin/admin_begin.php';
 define('TITLE', $LANG['administration']);
-require_once('../admin/admin_header.php');
+require_once '../admin/admin_header.php';
 	
 $uninstall = isset($_GET['uninstall']) ? true : false;	
 $edit = isset($_GET['edit']) ? true : false;	
 $id = retrieve(GET, 'id', 0);
+$name = retrieve(GET, 'name', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Session->csrf_get_protect(); //Protection csrf
+	
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 	
@@ -42,7 +45,9 @@ if (isset($_GET['activ']) && !empty($id)) //Aprobation du thème.
 }
 elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."themes SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
+	$Session->csrf_get_protect(); //Protection csrf
+	
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND theme <> '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 		
@@ -50,29 +55,39 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 }
 elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$result = $Sql->query_while("SELECT id, name, activ, secure
-	FROM ".PREFIX."themes
+	FROM " . DB_TABLE_THEMES . "
 	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-			$Sql->query_inject("UPDATE ".PREFIX."themes SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		{
+			$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		}
 	}
 	//Régénération du cache.
 	$Cache->Generate_file('themes');
 		
 	redirect(HOST . SCRIPT);	
 }
-elseif ($edit && !empty($id)) //Edition
+elseif ($edit && (!empty($id) || !empty($name))) //Edition
 {
+	if (!empty($name))
+	{
+        $id = (int) $Sql->query("SELECT id FROM " . DB_TABLE_THEMES . " WHERE theme='" . $name . "'", __LINE__, __FILE__);
+	}
 	if (isset($_POST['valid_edit'])) //Modication de la configuration du thème.
 	{
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$left_column = !empty($_POST['left_column']) ? 1 : 0; 
 		$right_column = !empty($_POST['right_column']) ? 1 : 0; 
 		
-		$Sql->query_inject("UPDATE ".PREFIX."themes SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Régénération du cache.
 		$Cache->Generate_file('themes');
@@ -86,7 +101,7 @@ elseif ($edit && !empty($id)) //Edition
 		));
 		
 		//Récupération des configuration dans la base de données.
-		$config_theme = $Sql->query_array("themes", "theme", "left_column", "right_column", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$config_theme = $Sql->query_array(PREFIX . "themes", "theme", "left_column", "right_column", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//On récupère la configuration du thème.
 		$info_theme = load_ini_file('../templates/' . $config_theme['theme'] . '/config/', get_ulang());
@@ -95,8 +110,8 @@ elseif ($edit && !empty($id)) //Edition
 			'C_EDIT_THEME' => true,
 			'IDTHEME' => $id,
 			'THEME_NAME' => $info_theme['name'],
-			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="ckecked"' : '',
-			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="ckecked"' : '',
+			'LEFT_COLUMN_ENABLED' => $config_theme['left_column'] ? 'checked="checked"' : '',
+			'RIGHT_COLUMN_ENABLED' => $config_theme['right_column'] ? 'checked="checked"' : '',
 			'L_THEME_ADD' => $LANG['theme_add'],	
 			'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 			'L_THEME' => $LANG['theme'],
@@ -113,17 +128,19 @@ elseif ($uninstall) //Désinstallation.
 {
 	if (!empty($_POST['valid_del']))
 	{		
+		$Session->csrf_get_protect(); //Protection csrf
+		
 		$idtheme = retrieve(POST, 'idtheme', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
-		$previous_theme = $Sql->query("SELECT theme FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
+		$previous_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
 		if ($previous_theme != $CONFIG['theme'] && !empty($idtheme))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_theme = '" . $CONFIG['theme'] . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_theme = '" . $CONFIG['theme'] . "' WHERE user_theme = '" . $previous_theme . "'", __LINE__, __FILE__);
 				
 			//On supprime le theme de la bdd.
-			$Sql->query_inject("DELETE FROM ".PREFIX."themes WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
 		}
 		else
 			redirect(HOST . DIR . '/admin/admin_themes.php?error=incomplete#errorh');
@@ -131,9 +148,18 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_theme))
 		{
-			if (!delete_directory('../templates/' . $previous_theme, '../templates/' . $previous_theme))
+			import('io/filesystem/folder');
+			$folder = new Folder('../templates/' . $previous_theme);
+			if (!$folder->delete())
+			{
 				$error = 'files_del_failed';
+			}
 		}
+		
+		$Cache->generate_file('themes');
+		
+		$Cache->load('themes', RELOAD_CACHE);
+		$Cache->generate_file('css');
 	
 		$error = !empty($error) ? '?error=' . $error : '';
 		redirect(HOST . SCRIPT . $error);
@@ -143,8 +169,12 @@ elseif ($uninstall) //Désinstallation.
 		//Récupération de l'identifiant du thème.
 		$idtheme = '';
 		foreach ($_POST as $key => $value)
+		{
 			if ($value == $LANG['uninstall'])
+			{
 				$idtheme = $key;
+			}
+		}
 				
 		$Template->set_filenames(array(
 			'admin_themes_management'=> 'admin/admin_themes_management.tpl'
@@ -204,86 +234,72 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
-	elseif (!empty($get_error) && isset($LANG[$get_error]))
-		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
-	 
-	
-	//On recupère les dossier des thèmes contenu dans le dossier templates	
-	$z = 0;
-	$rep = '../templates/';
-	if (is_dir($rep)) //Si le dossier existe
 	{
-		$dir_array = array();
-		$dh = @opendir( $rep);
-		while (!is_bool($dir = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false)
-				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
-		}	
-		closedir($dh); //On ferme le dossier		
-
-		$themes_bdd = array();
-		$result = $Sql->query_while("SELECT id, theme, activ, secure 
-		FROM ".PREFIX."themes", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if (array_search($row['theme'], $dir_array) !== false)
-				$themes_bdd[] = array('id' => $row['id'], 'name' => $row['theme'], 'activ' => $row['activ'], 'secure' => $row['secure']); 		}
-		$Sql->query_close($result);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+	}
+	elseif (!empty($get_error) && isset($LANG[$get_error]))
+	{
+		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
+	}
+	
+	//On listes les thèmes.
+	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	$z = 0;
+	$result = $Sql->query_while("SELECT id, theme, activ, secure 
+	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		//On selectionne le theme suivant les valeurs du tableau. 
+		$info_theme = load_ini_file('../templates/' . $row['theme'] . '/config/', get_ulang());
 		
-		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach ($themes_bdd as $key => $theme) //On effectue la recherche dans le tableau.
+		$options = '';
+		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 		{
-			//On selectionne le theme suivant les valeurs du tableau. 
-			$info_theme = load_ini_file('../templates/' . $theme['name'] . '/config/', get_ulang());
-			
-			$options = '';
-			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-			{
-				$selected = ($i == $theme['secure']) ? 'selected="selected"' : '';
-				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-			}	
-			
-			$default_theme = ($theme['name'] == $CONFIG['theme']);
-			$Template->assign_block_vars('list', array(
-				'C_THEME_DEFAULT' => $default_theme ? true : false,
-				'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
-				'IDTHEME' =>  $theme['id'],		
-				'THEME' =>  $info_theme['name'],				
-				'ICON' => $theme['name'],
-				'VERSION' => $info_theme['version'],
-				'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-				'DESC' => $info_theme['info'],
-				'COMPAT' => $info_theme['compatibility'],
-				'HTML_VERSION' => $info_theme['html_version'],
-				'CSS_VERSION' => $info_theme['css_version'],
-				'MAIN_COLOR' => $info_theme['main_color'],
-				'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
-				'WIDTH' => $info_theme['width'],
-				'OPTIONS' => $options,
-				'THEME_ACTIV' => ($theme['activ'] == 1) ? 'checked="checked"' : '',
-				'THEME_UNACTIV' => ($theme['activ'] == 0) ? 'checked="checked"' : ''
-			));
-			$z++;
-		}
-	}	
+			$selected = ($i == $row['secure']) ? 'selected="selected"' : '';
+			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
+		}	
+		
+		$default_theme = ($row['theme'] == $CONFIG['theme']);
+		$Template->assign_block_vars('list', array(
+			'C_THEME_DEFAULT' => $default_theme ? true : false,
+			'C_THEME_NOT_DEFAULT' => !$default_theme ? true : false,
+			'IDTHEME' =>  $row['id'],		
+			'THEME' =>  $info_theme['name'],				
+			'ICON' => $row['theme'],
+			'VERSION' => $info_theme['version'],
+			'AUTHOR' => (!empty($info_theme['author_mail']) ? '<a href="mailto:' . $info_theme['author_mail'] . '">' . $info_theme['author'] . '</a>' : $info_theme['author']),
+			'AUTHOR_WEBSITE' => (!empty($info_theme['author_link']) ? '<a href="' . $info_theme['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'DESC' => $info_theme['info'],
+			'COMPAT' => $info_theme['compatibility'],
+			'HTML_VERSION' => $info_theme['html_version'],
+			'CSS_VERSION' => $info_theme['css_version'],
+			'MAIN_COLOR' => $info_theme['main_color'],
+			'VARIABLE_WIDTH' => ($info_theme['variable_width'] ? $LANG['yes'] : $LANG['no']),
+			'WIDTH' => $info_theme['width'],
+			'OPTIONS' => $options,
+			'THEME_ACTIV' => ($row['activ'] == 1) ? 'checked="checked"' : '',
+			'THEME_UNACTIV' => ($row['activ'] == 0) ? 'checked="checked"' : ''
+		));
+		$z++;
+	}
+	$Sql->query_close($result);
 	
 	if ($z != 0)
-		$Template->assign_vars(array(		
+	{
+		$Template->assign_vars(array(
 			'C_THEME_PRESENT' => true
 		));
+	}
 	else
+	{
 		$Template->assign_vars(array(		
 			'C_NO_THEME_PRESENT' => true
 		));
+	}
 		
 	$Template->pparse('admin_themes_management'); 
 }
 
-require_once('../admin/admin_footer.php');
+require_once '../admin/admin_footer.php';
 
 ?>

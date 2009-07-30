@@ -84,7 +84,7 @@
 						<a href="admin_poll.php?id={questions.IDPOLL}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_poll.php?delete=true&amp;id={questions.IDPOLL}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END questions #

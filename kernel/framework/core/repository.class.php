@@ -27,8 +27,17 @@
 
 import('core/application');
 
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc
+ * @package core
+ */
 class Repository
 {
+    /**
+	* @desc constructor of the class
+	* @param $url
+	*/
     function Repository($url)
     {
         $this->url = $url;
@@ -36,7 +45,11 @@ class Repository
         if ($this->xml == false)
             $this->xml = null;
     }
-    
+
+    /**
+	* @desc Check Application
+	* @param $app
+	*/
     function check($app)
     {
         global $CONFIG;
@@ -50,19 +63,14 @@ class Repository
             // Retrieves all the available updates for the current application
             for ($i = 0; $i < $nbVersions; $i++)
             {
-                $attributes = $versions[$i]->attributes();
-                $version = $attributes['num'];
-                if ($version > $app->get_version())
+                $rep_app = clone($app);
+                $rep_app->load($versions[$i]);
+                
+                if (version_compare($app->get_version(), $rep_app->get_version(), '<') > 0)
                 {
-                    $compatibility = $versions[$i]->xpath('compatibility');
-                    if (!empty($compatibility) && is_array($compatibility) && count($compatibility) > 0)
+                    if ($rep_app->check_compatibility())
                     {
-                        $compatibility_attributes = $compatibility[0]->attributes();
-                        $version_min = (string) (!empty($compatibility_attributes['min']) ? $compatibility_attributes['min'] : '0');
-                        $version_max = (string) (!empty($compatibility_attributes['max']) ? $compatibility_attributes['max'] : $version_min);
-                        
-                        if ($CONFIG['version'] >= $version_min && $CONFIG['version'] <= $version_max && $version_max >= $version_min)
-                            $newerVersions[(string) $version] = $i;
+                        $newerVersions[$rep_app->get_version()] = $i;
                     }
                 }
             }
@@ -77,7 +85,10 @@ class Repository
         }
         return null;
     }
-    
+
+    /**
+	* @desc Accessor of url
+	*/
     function get_url() { return $this->url; }
     
     var $url = '';

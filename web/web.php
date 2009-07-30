@@ -49,7 +49,7 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 		</script>";
 		
 		$edit = '&nbsp;&nbsp;<a href="../web/admin_web' . url('.php?id=' . $web['id']) . '" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
+		$del = '&nbsp;&nbsp;<a href="../web/admin_web.php?delete=1&amp;id=' . $web['id'] . '&amp;token=' . $Session->get_token() . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" class="valign_middle" /></a>';
 	}
 	else
 	{
@@ -65,22 +65,24 @@ if (!empty($idweb) && !empty($CAT_WEB[$idcat]['name']) && !empty($idcat)) //Cont
 	));
 		
 	//Affichage notation.
-	include_once('../kernel/framework/content/note.class.php'); 
+	import('content/note'); 
 	$Note = new Note('web', $idweb, url('web.php?cat=' . $idcat . '&amp;id=' . $idweb, 'web-' . $idcat . '-' . $idweb . '.php'), $CONFIG_WEB['note_max'], '', NOTE_DISPLAY_NOTE);
+	
+	import('content/comments');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_WEB' => true,
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'IDWEB' => $web['id'],		
 		'NAME' => $web['title'],
-		'CONTENTS' => $web['contents'],
+		'CONTENTS' => second_parse($web['contents']),
 		'URL' => $web['url'],
 		'CAT' => $CAT_WEB[$idcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $web['timestamp']),
 		'COMPT' => $web['compt'],
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'COM' => com_display_link($web['nbr_com'], '../web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
+		'COM' => Comments::com_display_link($web['nbr_com'], '../web/web' . url('.php?cat=' . $idcat . '&amp;id=' . $idweb . '&amp;com=0', '-' . $idcat . '-' . $idweb . '.php?com=0'), $idweb, 'web'),
 		'KERNEL_NOTATION' => $Note->display_form(),
 		'U_WEB_CAT' => url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
 		'L_DESC' => $LANG['description'],
@@ -108,11 +110,12 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	$nbr_web = $Sql->query("SELECT COUNT(*) as compt 
-	FROM ".PREFIX."web 
+	FROM " . PREFIX . "web 
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
 		'C_WEB_LINK' => true,
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'CAT_NAME' => $CAT_WEB[$idcat]['name'],		
 		'NO_CAT' => ($nbr_web == 0) ? $LANG['none_link'] : '',
 		'MAX_NOTE' => $CONFIG_WEB['note_max'],
@@ -160,17 +163,18 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de lien est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
 		'PAGINATION' => $Pagination->display('web' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idcat . '&amp;p=%d', '-' . $idcat . '-0-%d.php' . (!empty($unget) ? '?' . $unget : '')), $nbr_web, 'p', $CONFIG_WEB['nbr_web_max'], 3)
 	));
 
-	include_once('../kernel/framework/content/note.class.php');
-	$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
+	//Notes
+	import('content/note');
+
 	$result = $Sql->query_while("SELECT id, title, timestamp, compt, note, nbrnote, nbr_com
-	FROM ".PREFIX."web
+	FROM " . PREFIX . "web
 	WHERE aprob = 1 AND idcat = '" . $idcat . "'
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg($CONFIG_WEB['nbr_web_max'], 'p'), $CONFIG_WEB['nbr_web_max']), __LINE__, __FILE__);
@@ -184,7 +188,7 @@ elseif (!empty($idcat) && empty($idweb)) //Catégories.
 			'CAT' => $CAT_WEB[$idcat]['name'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'COMPT' => $row['compt'],
-			'NOTE' => ($row['nbrnote'] > 0) ? $Note->display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
+			'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_WEB['note_max']) : '<em>' . $LANG['no_note'] . '</em>',
 			'COM' => $row['nbr_com'],
 			'U_WEB_LINK' => url('.php?cat=' . $idcat . '&amp;id=' . $row['id'], '-' .  $idcat . '-' . $row['id'] . '.php')
 		));
@@ -197,17 +201,13 @@ else
 {
 	$Template->set_filenames(array('web'=> 'web/web.tpl'));
 	
-	$total_link = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."web_cat wc
-	LEFT JOIN ".PREFIX."web w ON w.idcat = wc.id
+	$total_link = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "web_cat wc
+	LEFT JOIN " . PREFIX . "web w ON w.idcat = wc.id
 	WHERE w.aprob = 1 AND wc.aprob = 1 AND wc.secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) as compt FROM " . PREFIX . "web_cat WHERE aprob = 1 AND secure <= '" . $User->get_attribute('level') . "'", __LINE__, __FILE__);
 	
-	$edit = '';
-	if ($User->check_level(ADMIN_LEVEL))
-		$edit = '&nbsp;&nbsp;<a href="admin_web_cat.php' .  SID . '" title=""><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>';
-
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	$CONFIG_WEB['nbr_column'] = ($total_cat > $CONFIG_WEB['nbr_column']) ? $CONFIG_WEB['nbr_column'] : $total_cat;
@@ -215,8 +215,8 @@ else
 	
 	$Template->assign_vars(array(
 		'C_WEB_CAT' => true,
+		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
 		'PAGINATION' => $Pagination->display('web' . url('.php?p=%d', '-0-0-%d.php'), $total_cat, 'p', $CONFIG_WEB['nbr_cat_max'], 3),
-		'EDIT' => $edit,
 		'TOTAL_FILE' => $total_link,
 		'L_CATEGORIES' => $LANG['categories'],
 		'L_PROPOSE_LINK' => $LANG['propose_link'],
@@ -228,8 +228,8 @@ else
 	$column_width = floor(100/$CONFIG_WEB['nbr_column']);
 	$result = $Sql->query_while(
 	"SELECT aw.id, aw.name, aw.contents, aw.icon, COUNT(w.id) as count
-	FROM ".PREFIX."web_cat aw
-	LEFT JOIN ".PREFIX."web w ON w.idcat = aw.id AND w.aprob = 1
+	FROM " . PREFIX . "web_cat aw
+	LEFT JOIN " . PREFIX . "web w ON w.idcat = aw.id AND w.aprob = 1
 	WHERE aw.aprob = 1 AND aw.secure <= '" . $User->get_attribute('level') . "'
 	GROUP BY aw.id
 	ORDER BY aw.class

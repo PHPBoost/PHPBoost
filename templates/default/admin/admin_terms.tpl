@@ -24,13 +24,13 @@
 		</div>
 		
 		<div id="admin_contents">			
-			<form action="admin_terms.php" method="post" class="fieldset_content">
+			<form action="admin_terms.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_TERMS}</legend>
 					<p>{L_EXPLAIN_TERMS}</p>
 					<label for="contents">{L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<label><textarea type="text" rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea></label> 
+					<label><textarea rows="20" cols="63" id="contents" name="contents">{CONTENTS}</textarea></label> 
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
@@ -38,7 +38,7 @@
 					<input type="submit" name="msg_register" value="{L_UPDATE}" class="submit" />
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>
 					&nbsp;&nbsp; 

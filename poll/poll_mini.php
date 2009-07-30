@@ -3,7 +3,7 @@
  *                               poll_mini.php
  *                            -------------------
  *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright          : (C) 2005 Viarre Rï¿½gis
  *   email                : crowkait@phpboost.com
  *
   *
@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function poll_mini()
+function poll_mini($position, $block)
 {
     global $Cache, $LANG, $CONFIG_POLL, $_array_poll;
     $Cache->load('poll'); //Mini sondages en cache => $_array_poll.
@@ -35,12 +35,14 @@ function poll_mini()
     {
     	//Chargement de la langue du module.
     	load_module_lang('poll');
-    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage aléatoire.
+    	$poll_mini = $_array_poll[array_rand($_array_poll)]; //Sondage alÃ©atoire.
     	
     	$tpl = new Template('poll/poll_mini.tpl');
+        import('core/menu_service');
+        MenuService::assign_positions_conditions($tpl, $block);
     		
-    	#####################Résultats######################
-    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vérification par ip plus tard).
+    	#####################Rï¿½sultats######################
+    	//Si le cookie existe, on redirige vers les resulats, sinon on prend en compte le vote (vÃ©rification par ip plus tard).
     	$array_cookie = isset($_COOKIE[$CONFIG_POLL['poll_cookie']]) ? explode('/', $_COOKIE[$CONFIG_POLL['poll_cookie']]) : array();
     	if (in_array($poll_mini['id'], $array_cookie))
     	{
@@ -75,8 +77,9 @@ function poll_mini()
     			'U_POLL_RESULT' => url('.php?id=' . $poll_mini['id'] . '&amp;r=1', '-' . $poll_mini['id'] . '-1.php')
     		));
     		
+    		global $Session;
     		$tpl->assign_block_vars('question', array(
-    			'ID' => url('.php?id=' . $poll_mini['id'], '-' . $poll_mini['id'] . '.php'),
+    			'ID' => url('.php?id=' . $poll_mini['id'] . '&amp;token=' . $Session->get_token(), '-' . $poll_mini['id'] . '.php?token=' . $Session->get_token()),
     			'QUESTION' => $poll_mini['question']
     		));
     			
@@ -87,7 +90,6 @@ function poll_mini()
     			{
     				$tpl->assign_block_vars('question.radio', array(
     					'NAME' => $z,
-    					'TYPE' => 'radio',
     					'ANSWERS' => $answer
     				));
     				$z++;
@@ -99,7 +101,6 @@ function poll_mini()
     			{
     				$tpl->assign_block_vars('question.checkbox', array(
     					'NAME' => $z,
-    					'TYPE' => 'checkbox',
     					'ANSWERS' => $answer
     				));
     				$z++;

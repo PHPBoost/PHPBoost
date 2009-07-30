@@ -1,5 +1,3 @@
-		<link href="{MODULE_DATA_PATH}/news.css" rel="stylesheet" type="text/css" media="screen, handheld">
-
 		<script type="text/javascript">
 		<!--
 			var theme = '{THEME}';
@@ -9,6 +7,10 @@
 		<script type="text/javascript">
 		<!--
 		function check_form(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('title').value == "") {
 				alert("{L_REQUIRE_TITLE}");
 				return false;
@@ -51,40 +53,34 @@
 		</div>
 		<div id="admin_contents">
 			# START news #
-
-			<table class="module_table">
-					<tr> 
-						<th colspan="2">
-							{L_PREVIEW}
-						</th>
-					</tr>
-
-					<tr> 
-						<td class="row1">
-							<div class="news_container">
-								<div class="msg_top_l"></div>			
-								<div class="msg_top_r"></div>
-								<div class="msg_top">
-									<div style="float:left"><a href="syndication.php" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
-									<div style="float:right"></div>
-								</div>												
-								<div class="news_content">
-									{news.IMG}
-									{news.CONTENTS}
-									<br /><br />	
-									{news.EXTEND_CONTENTS}	
-								</div>								
-								<div class="news_bottom_l"></div>		
-								<div class="news_bottom_r"></div>
-								<div class="news_bottom">
-									<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
-									<span style="float:right">{L_ON}: {news.DATE}</span>
-								</div>
-							</div>				
-						</td>
-					</tr>
-			</table>	
-
+			<div class="block_container">
+			<div class="block_top">{L_PREVIEW}</div>
+			<div class="block_contents row2">
+				<div class="news_container">
+					<div class="news_top_l"></div>			
+					<div class="news_top_r"></div>
+					<div class="news_top">
+						<div style="float:left"><a href="{PATH_TO_ROOT}/syndication.php?m=news" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <h3 class="title valign_middle">{news.TITLE}</h3></div>
+						<div style="float:right"></div>
+					</div>													
+					<div class="news_content">
+						{news.IMG}
+						{news.PREVIEWED_CONTENTS}
+						<div class="spacer"></div>
+						<hr />
+						{news.PREVIEWED_EXTEND_CONTENTS}
+						<div class="spacer"></div>
+					</div>									
+					<div class="news_bottom_l"></div>		
+					<div class="news_bottom_r"></div>
+					<div class="news_bottom">
+						<span style="float:left"><a class="small_link" href="../member/member{news.U_USER_ID}">{news.PSEUDO}</a></span>
+						<span style="float:right">{L_ON}: {news.DATE}</span>
+					</div>
+				</div>					
+			</div>				
+			</div>
+		
 			<br /><br /><br />
 			# END news #
 			
@@ -98,13 +94,13 @@
 			</div>
 			# ENDIF #	
 			
-			<form action="admin_news_add.php" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_news_add.php?token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_NEWS}</legend>
 					<p>{L_REQUIRE}</p>
 					<dl>
 						<dt><label for="title">* {L_TITLE}</label></dt>
-						<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
+						<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{NEWS_TITLE}" class="text" /></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="idcat">* {L_CATEGORY}</label></dt>
@@ -117,36 +113,37 @@
 						</label></dd>
 					</dl>
 					<br />
-					<label for="contents">* {L_TEXT}</label></dt>
+					<label for="contents">* {L_TEXT}</label>
 					{KERNEL_EDITOR}
-					<label><textarea type="text" rows="25" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 					<br />
 					<br />
-					<label for="extend_contents">{L_EXTENDED_NEWS}</label></dt>
+					<label for="extend_contents">{L_EXTENDED_NEWS}</label>
 					{KERNEL_EDITOR_EXTEND}
-					<label><textarea type="text" rows="25" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
+					<label><textarea rows="20" cols="86" id="extend_contents" name="extend_contents">{EXTEND_CONTENTS}</textarea> </label>
 					<br />
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 						<dd>
-							<label><input type="radio" value="2" name="visible" {VISIBLE_WAITING} /></label> 							
-							<input type="text" size="7" maxlength="8" id="start" name="start" value="{START}" class="text" /> 				
-							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-								<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
+							<div onclick="document.getElementById('start_end_date').checked = true;">
+								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} /></label>
+								<input type="text" size="7" maxlength="8" id="start" name="start" value="{START}" class="text" /> 				
+								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+									<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
+								</div>
+								<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+								
+								{L_AT}
+								<input type="text" size="1" maxlength="2" name="start_hour" value="{START_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="start_min" value="{START_MIN}" class="text" />
+								&nbsp;{L_UNTIL}&nbsp;
+								<input type="text" size="7" maxlength="8" id="end" name="end" value="{END}" class="text" /> 
+								<div style="position:relative;z-index:100;top:6px;margin-left:250px;float:left;display:none;" id="calendar2">
+									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
+								</div>
+								<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+								{L_AT}
+								<input type="text" size="1" maxlength="2" name="end_hour" value="{END_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="end_min" value="{END_MIN}" class="text" />
 							</div>
-							<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-							
-							{L_AT}
-							<input type="text" size="1" maxlength="2" name="start_hour" value="{START_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="start_min" value="{START_MIN}" class="text" />
-							&nbsp;{L_UNTIL}&nbsp;
-							<input type="text" size="7" maxlength="8" id="end" name="end" value="{END}" class="text" /> 
-							<div style="position:relative;z-index:100;top:6px;margin-left:250px;float:left;display:none;" id="calendar2">
-								<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
-							</div>
-							<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-							{L_AT}
-							<input type="text" size="1" maxlength="2" name="end_hour" value="{END_HOUR}" class="text" /> {L_UNIT_HOUR} <input type="text" size="1" maxlength="2" name="end_min" value="{END_MIN}" class="text" />
-							<br />
 							<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date" /> {L_IMMEDIATE}</label>
 							<br />
 							<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB} /> {L_UNAPROB}</label>
@@ -174,7 +171,7 @@
 					</dl>
 					<dl>
 						<dt><label for="img_field">{L_IMG_LINK}</label></dt>
-						<dd><label><input type="text" size="60" id="img_field" name="img" value="{IMG}" class="text" /></label></dd>
+						<dd><label><input type="text" size="60" id="img_field" name="img" value="{IMG}" class="text" /> &nbsp;&nbsp;<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd=img_field', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="alt">{L_IMG_DESC}</label></dt>

@@ -29,87 +29,65 @@ require_once('../admin/admin_begin.php');
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
+//Gestion des alertes.
+import('events/administrator_alert_service');
+
+//Enregistrement du bloc note
+$content = retrieve(POST, 'writing_pad_content', '');
+$writingpad = retrieve(POST, 'writingpad', '');
+if (!empty($writingpad))
+{
+	if (empty($content))
+		$content = addslashes($LANG['writing_pad_explain']);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . $content . "' WHERE name = 'writingpad'", __LINE__, __FILE__);
+	$Cache->Generate_file('writingpad');
+		
+	redirect(HOST . SCRIPT);
+}
+$Cache->load('writingpad');
+
 $Template->set_filenames(array(
 	'admin_index'=> 'admin/admin_index.tpl'
 ));
 
-/*
-//Vérification des mises à jour du noyau  et des modules sur le site officiel.
-$get_info_update = @file_get_contents_emulate('http://www.phpboost.com/phpboost/updates.txt');
-$check_core_update = false;
-$check_modules_update = false;
-$modules_update = array();
-if (!empty($get_info_update))
-{	
-	//Maj du noyau.
-	$array_infos = explode("\n", $get_info_update);
-	if (isset($array_infos[0]))
-	{
-		$check_version = substr(strstr($array_infos[0], ':'), 1);
-		if (version_compare($check_version, $CONFIG['version'], '<=') != -1)
-		{
-			$check_core_update = true;
-			$l_core_update = sprintf($LANG['core_update_available'], $check_version);
-		}
-		else
-			$l_core_update = $LANG['no_core_update_available'];
-	}
-	else
-		$l_core_update = $LANG['unknow_update'];
-	
-	//Mise à jour des modules.
-	$count = count($array_infos);	
-	for ($i = 1; $i < $count; $i++)
-	{
-		if (isset($array_infos[$i]))
-		{
-			$array_infos_modules = explode(':', $array_infos[$i]);
-			$name = $array_infos_modules[0];
-			$version = $array_infos_modules[1];
-			
-			//Nouvelle version du module.
-			if (isset($modules_config[$name]['version']) && $modules_config[$name]['version'] != $version)
-				$modules_update[$name] = $version;
-		}
-	}	
-	
-	if (count($modules_update) > 0)
-	{
-		$check_modules_update = true;
-		$l_modules_update = $LANG['module_update_available'];
-	}
-	else
-		$l_modules_update = $LANG['no_module_update_available'];
-}
-else
-{	
-	$l_core_update = $LANG['unknow_update'];
-	$l_modules_update = $LANG['unknow_update'];
-}
-$Template->assign_vars(array(
-	'VERSION' => $CONFIG['version'],
-	'WARNING_CORE' => ($check_core_update) ? ' error_warning' : '',
-	'WARNING_MODULES' => ($check_modules_update) ? ' error_warning' : '',
-	'UPDATE_AVAILABLE' => ($check_core_update) ? '<img src="../templates/' . get_utheme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
-	'UPDATE_MODULES_AVAILABLE' => ($check_modules_update) ? '<img src="../templates/' . get_utheme() . '/images/admin/update_available.png" alt="" class="valign_middle" />' : '',
-	'L_UPDATE_AVAILABLE' => $LANG['update_available'],
-	'L_CORE_UPDATE' => $l_core_update,
-	'L_MODULES_UPDATE' => $l_modules_update	
-));
-//Listing des modules mis à jour.
-foreach ($modules_update as $name => $version)
+//Affichage des derniers commentaires
+$i = 0;
+$array_class = array('member', 'modo', 'admin');
+$result = $Sql->query_while("SELECT c.idprov, c.idcom, c.timestamp, c.script, c.path, m.user_id, m.login as mlogin, m.level, m.user_groups, c.contents
+FROM " . DB_TABLE_COM . " c
+LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
+GROUP BY c.idcom
+ORDER BY c.timestamp DESC
+" . $Sql->limit(0, 8), __LINE__, __FILE__);
+while ($row = $Sql->fetch_assoc($result))
 {
-	$Template->assign_block_vars('modules_available', array(
-		'ID' => $name,
-		'NAME' => $modules_config[$name]['name'],
-		'VERSION' => $version
+	$is_guest = empty($row['user_id']);
+	$group_color = User::get_group_color($row['user_groups'], $row['level']);
+	
+	//Pseudo.
+	if (!$is_guest) 
+		$com_pseudo = '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" title="' . $row['mlogin'] . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['mlogin'], 13) . '</a>';
+	else
+		$com_pseudo = '<span style="font-style:italic;">' . (!empty($row['login']) ? wordwrap_html($row['login'], 13) : $LANG['guest']) . '</span>';
+	
+	$Template->assign_block_vars('com_list', array(
+		'ID' => $row['idcom'],
+		'CONTENTS' => ucfirst(second_parse($row['contents'])),
+		'COM_SCRIPT' => $row['script'],
+		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
+		'USER_PSEUDO' => $com_pseudo,			
+		'U_PROV' => $row['path'],
+		'U_USER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
+		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
+		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
 	));
+	$i++;
 }
-*/
-
-import('events/administrator_alert_service');
+$Sql->query_close($result);
 
 $Template->assign_vars(array(
+	'WRITING_PAD_CONTENT' => !empty($_writing_pad_content) ? $_writing_pad_content : $LANG['writing_pad_explain'],
+	'C_NO_COM' => $i == 0 ? $LANG['no_comment'] : '',
 	'C_UNREAD_ALERTS' => (bool)AdministratorAlertService::get_number_unread_alerts(),
 	'L_INDEX_ADMIN' => $LANG['administration'],
 	'L_ADMIN_ALERTS' => $LANG['administrator_alerts'],
@@ -120,19 +98,26 @@ $Template->assign_vars(array(
 	'L_USERS_MANAGMENT' => $LANG['members_managment'],
 	'L_MENUS_MANAGMENT' => $LANG['menus_managment'],
 	'L_MODULES_MANAGMENT' => $LANG['modules_managment'],
+	'L_NO_COMMENT' => $LANG['no_comment'],
+	'L_LAST_COMMENTS' => $LANG['last_comments'],
+	'L_VIEW_ALL_COMMENTS' => $LANG['view_all_comments'],
+	'L_WRITING_PAD' => $LANG['writing_pad'],
 	'L_STATS' => $LANG['stats'],
 	'L_USER_ONLINE' => $LANG['user_online'],
 	'L_USER_IP' => $LANG['user_ip'],
 	'L_LOCALISATION' => $LANG['localisation'],
 	'L_LAST_UPDATE' => $LANG['last_update'],
-    'L_WEBSITE_UPDATES' => $LANG['website_updates']
+    'L_WEBSITE_UPDATES' => $LANG['website_updates'],
+    'L_BY' => $LANG['by'],
+    'L_UPDATE' => $LANG['update'],
+    'L_RESET' => $LANG['reset']
 ));
 
-  
+//Liste des personnes en lignes.
 $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
-FROM ".PREFIX."sessions s
-LEFT JOIN ".PREFIX."member m ON s.user_id = m.user_id
+FROM " . DB_TABLE_SESSIONS . " s
+LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
 WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
@@ -142,7 +127,7 @@ while ($row = $Sql->fetch_assoc($result))
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
-		case USER_LEVEL:
+		case MEMBER_LEVEL:
 		$class = 'member';
 		break;
 		

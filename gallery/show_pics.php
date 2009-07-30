@@ -50,10 +50,10 @@ if (!empty($g_idpics))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 	//Mise à jour du nombre de vues.
-	$Sql->query_inject("UPDATE LOW_PRIORITY ".PREFIX."gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 	
 	$clause_admin = $User->check_level(ADMIN_LEVEL) ? '' : ' AND aprob = 1';
-	$path = $Sql->query("SELECT path FROM ".PREFIX."gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
+	$path = $Sql->query("SELECT path FROM " . PREFIX . "gallery WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'" . $clause_admin, __LINE__, __FILE__);
 	if (empty($path))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 

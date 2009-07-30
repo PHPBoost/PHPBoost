@@ -54,7 +54,7 @@
 					if( login != "" )
 					{
 						data = "login=" + login + "&admin=1";
-						var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+						var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 						xhr_object.onreadystatechange = function() 
 						{
 							if( xhr_object.readyState == 4 ) 
@@ -132,7 +132,6 @@
 				</tr>		
 				# ENDIF #
 			</table>
-			</form>
 			# ENDIF #
 
 
@@ -141,10 +140,13 @@
 			<!--
 			function change_textarea_level(replace_value, regex)
 			{
-				var contents = document.getElementById('action_contents').innerHTML;
-				{REPLACE_VALUE}		
+				# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
 				
-				document.getElementById('action_contents').innerHTML = contents;	
+				var contents = document.getElementById('action_contents').value;
+				{REPLACE_VALUE}		
+				document.getElementById('action_contents').value = contents;	
+				
+				# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.getInstanceById('action_contents').getBody().innerHTML = contents;  # ENDIF #
 			}
 			-->
 			</script>
@@ -168,12 +170,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row1" style="vertical-align:top">
-						<label for="action_contents">{L_ALTERNATIVE_PM}</label>
-					</td>
-					<td class="row2">
+					<td class="row2" colspan="2">
+						<div class="question">{L_ALTERNATIVE_PM}</div>
+						<br />
 						{KERNEL_EDITOR}
-						<label><textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea></label>
+						<label><textarea name="action_contents" id="action_contents" class="post" rows="12" cols="15">{ALTERNATIVE_PM}</textarea></label>
 					</td>
 				</tr>
 				<tr>

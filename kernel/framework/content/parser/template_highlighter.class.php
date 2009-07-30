@@ -34,36 +34,53 @@ define('TPL_NESTED_VARIABLE_STYLE', 'color:#8F5211;');
 define('TPL_SHARP_STYLE', 'color:#9915AF; font-weight: bold;');
 define('TPL_KEYWORD_STYLE', 'color:#000066; font-weight: bold;');
 
-//Classe de gestion du contenu
+/**
+ * @package content
+ * @subpackage parser
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This is a syntax highlighter for the PHPBoost template syntax.
+ */
 class TemplateHighlighter extends Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	 * @desc Build a TemplateHighlighter object. 
+	 */
 	function TemplateHighlighter()
 	{
 		parent::Parser();
 	}
 
-	//Highlights the content of the parser
-	function highlight($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
+	/**
+	 * @desc Highlights the code. It uses the geshi HTML syntax highlighter and then it highlights the specific template syntax. 
+	 * @param int $line_number GESHI_NO_LINE_NUMBERS => no line numbers, GESHI_NORMAL_LINE_NUMBERS line numbers.
+	 * @param bool $inline_code true if it's a sigle line code, otherwise false.
+	 */
+	function parse($line_number = GESHI_NO_LINE_NUMBERS, $inline_code = false)
 	{
 		//The template language of PHPBoost contains HTML. We first ask to highlight the html code.
 		require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-		$Geshi =& new GeSHi($this->content, 'html');
+		
+		$geshi = new GeSHi($this->content, 'html');
 				
 		if ($line_number) //Affichage des numéros de lignes.
-			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		{
+			$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+		}
 		
 		//GeSHi must not put any div or pre tag before and after the content
 		if ($inline_code)
-			$Geshi->set_header_type(GESHI_HEADER_NONE);
+		{
+			$geshi->set_header_type(GESHI_HEADER_NONE);
+		}
 
-		$this->content = $Geshi->parse_code();
+		$this->content = $geshi->parse_code();
 		
 		//Now we highlight the specific syntax of PHPBoost templates
 		
 		//Conditionnal block
 		$this->content = preg_replace('`# IF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">IF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
+		$this->content = preg_replace('`# ELSEIF( NOT)? ((?:\w+\.)*)(\w+) #`i', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSEIF$1</span> <span style="' . TPL_NESTED_VARIABLE_STYLE . '">$2</span><span style="' . TPL_VARIABLE_STYLE . '">$3</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ELSE #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ELSE</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		$this->content = str_replace('# ENDIF #', '<span style="' . TPL_SHARP_STYLE . '">#</span> <span style="' . TPL_KEYWORD_STYLE . '">ENDIF</span> <span style="' . TPL_SHARP_STYLE . '">#</span>', $this->content);
 		
@@ -80,7 +97,9 @@ class TemplateHighlighter extends Parser
 		$this->content = preg_replace('`{((?:[\w]+\.)+)([\w]+)}`i', '<span style="' . TPL_BRACES_STYLE . '">{</span><span style="' . TPL_NESTED_VARIABLE_STYLE . '">$1</span><span style="' . TPL_VARIABLE_STYLE . '">$2</span><span style="' . TPL_BRACES_STYLE . '">}</span>', $this->content);
 		
 		if ($inline_code)
+		{
 			$this->content = '<pre style="display:inline; font-color:courier new;">' . $this->content . '</pre>';
+		}
 	}
 }
 ?>

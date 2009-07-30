@@ -47,7 +47,7 @@
 			<br />
 			# ENDIF #
 			
-			<form action="admin_web_cat.php" method="post">
+			<form action="admin_web_cat.php?token={TOKEN}" method="post">
 				<table  class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -87,7 +87,7 @@
 									<input type="text" maxlength="60" size="20" name="{cat.IDCAT}cat" value="{cat.CAT}" class="text" />
 								</td>							
 								<td class="row2"> 
-									<textarea type="text" class="post" rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
+									<textarea class="post" rows="3" cols="40" name="{cat.IDCAT}contents">{cat.CONTENTS}</textarea> 
 								</td>
 								<td class="row2"> 
 									<select name="{cat.IDCAT}icon" onchange="change_icon('{cat.IDCAT}', this.options[this.selectedIndex].value)" onclick="change_icon('{cat.IDCAT}', this.options[this.selectedIndex].value)">
@@ -114,12 +114,10 @@
 									{cat.BOTTOM}
 								</td>
 								<td class="row2">
-									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+									<a href="admin_web_cat.php?del=1&amp;id={cat.IDCAT}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 								</td>
 							</tr>
-							# END cat #							
-						</td>
-					</tr>
+							# END cat #
 				</table>
 				
 				<br /><br />
@@ -132,7 +130,7 @@
 				</fieldset>	
 			</form>
 
-			<form action="admin_web_cat.php" method="post" class="fieldset_content">
+			<form action="admin_web_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<dl>
@@ -141,7 +139,7 @@
 					</dl>
 					<dl>
 						<dt><label for="cat">{L_DESC}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="20" name="contents" id="contents"></textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="20" name="contents" id="contents"></textarea></label></dd>
 					</dl>
 					<dl>
 						<dt><label for="icon">{L_ICON}</label></dt>

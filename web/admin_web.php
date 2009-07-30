@@ -42,7 +42,7 @@ if (!empty($id) && !$del)
 		'admin_web_management2'=> 'web/admin_web_management2.tpl'
 	));
 
-	$row = $Sql->query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$aprob_enabled = ($row['aprob'] == 1) ? 'checked="checked"' : '';
 	$aprob_disabled = ($row['aprob'] == 0) ? 'checked="checked"' : '';
@@ -82,7 +82,7 @@ if (!empty($id) && !$del)
 	//Catégories.
 	$i = 0;	
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
+	FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? 'selected="selected"' : '';
@@ -108,11 +108,11 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'admin_web_management'=> 'web/admin_web_management2.tpl'
 	));
 
-	$row = $Sql->query_array('web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$row = $Sql->query_array(PREFIX . 'web', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
-	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$title = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
 	$aprob = retrieve(POST, 'aprob', 0);
@@ -120,7 +120,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
@@ -140,6 +140,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	));
 
 	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'IDWEB' => $id_post,
@@ -178,7 +179,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	//Catégories.	
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat", __LINE__, __FILE__);
+	FROM " . PREFIX . "web_cat", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$selected = ($row['id'] == $idcat) ? ' selected="selected"' : '';
@@ -205,7 +206,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 
 	if (!empty($title) && !empty($url) && !empty($idcat))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("UPDATE " . PREFIX . "web SET title = '" . $title . "', contents = '" . $contents . "', url = '" . $url . "', idcat = '" . $idcat . "', compt = '" . $compt . "', aprob = '" . $aprob . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);	
 		
 		redirect(HOST . SCRIPT);
 	}
@@ -214,11 +215,13 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM ".PREFIX."web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "web WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	//On supprimes les éventuels commentaires associés.
-	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = '" . $id . "' AND script = 'web'", __LINE__, __FILE__);
 	
 	redirect(HOST . SCRIPT);
 }		
@@ -231,7 +234,7 @@ else
 	$nbr_web = $Sql->count_table('web', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de web est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	$Template->assign_vars(array(	
@@ -256,8 +259,8 @@ else
 	));
 		
 	$result = $Sql->query_while("SELECT d.*, ad.name 
-	FROM ".PREFIX."web d 
-	LEFT JOIN ".PREFIX."web_cat ad ON ad.id = d.idcat
+	FROM " . PREFIX . "web d 
+	LEFT JOIN " . PREFIX . "web_cat ad ON ad.id = d.idcat
 	ORDER BY timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

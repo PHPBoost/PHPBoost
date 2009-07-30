@@ -48,7 +48,7 @@
 							<td class="row3">
 								{L_USER_CONCERN}
 							</td>
-							<td class="row3"style="width: 150px">
+							<td class="row3" style="width: 150px">
 								{L_DATE}
 							</td>
 						</tr>
@@ -73,7 +73,7 @@
 						# IF C_FORUM_NO_ACTION #
 						<tr style="text-align:center;">
 							<td class="row2" colspan="4">
-								L_NO_ACTION}
+								{L_NO_ACTION}
 							</td>
 						</tr>
 						# ENDIF #
@@ -97,9 +97,7 @@
 				function check_alert(status)
 				{
 					for (i = 0; i < document.alert.length; i++)
-					{
 						document.alert.elements[i].checked = status;
-					}
 				}
 				function Confirm_msg() {
 					return confirm("{L_DELETE_MESSAGE}");
@@ -107,18 +105,18 @@
 				-->
 				</script>
 		
-				<table class="module_table">
-					<tr>			
-						<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_convers(true)} else {check_convers(false)};" /></th>
-						<th style="width:20%;">{L_TITLE}</th>
-						<th style="width:20%;">{L_TOPIC}</th>
-						<th style="width:100px;">{L_STATUS}</th>
-						<th style="width:70px;">{L_LOGIN}</th>
-						<th style="width:70px;">{L_TIME}</th>
-					</tr>
-				</table>
-				
 				<form name="alert" action="moderation_forum{U_ACTION_ALERT}" method="post" onsubmit="javascript:return Confirm_alert();">
+					<table class="module_table">
+						<tr>			
+							<th style="width:25px;"><input type="checkbox" onclick="if(this.checked) {check_alert(true)} else {check_alert(false)};" /></th>
+							<th style="width:20%;">{L_TITLE}</th>
+							<th style="width:20%;">{L_TOPIC}</th>
+							<th style="width:100px;">{L_STATUS}</th>
+							<th style="width:70px;">{L_LOGIN}</th>
+							<th style="width:70px;">{L_TIME}</th>
+						</tr>
+					</table>
+				
 					<table class="module_table">
 						# START alert_list #
 						<tr>
@@ -142,7 +140,7 @@
 							</td>
 						</tr>
 						# END alert_list #
-											
+						
 						# IF C_FORUM_NO_ALERT #		
 						<tr>
 							<td class="row2" colspan="6" style="text-align:center;">
@@ -263,7 +261,7 @@
 							if( document.getElementById('search_img') )
 								document.getElementById('search_img').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 							data = 'login=' + login;
-							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -357,10 +355,13 @@
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
-					var contents = document.getElementById('action_contents').innerHTML;
-					{REPLACE_VALUE}		
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
 					
-					document.getElementById('action_contents').innerHTML = contents;	
+					var contents = document.getElementById('action_contents').value;
+					{REPLACE_VALUE}	
+					document.getElementById('action_contents').value = contents;
+					
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.getInstanceById('action_contents').getBody().innerHTML = contents;  # ENDIF #
 				}
 				-->
 				</script>
@@ -383,12 +384,10 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="row1" style="vertical-align:top">
-								<label for="action_contents">{L_ALTERNATIVE_PM}</label>
-							</td>
-							<td class="row2">
+							<td class="row2" colspan="2">
+								<div class="question">{L_ALTERNATIVE_PM}</div>
 								{KERNEL_EDITOR}
-								<label><textarea name="action_contents" id="action_contents" class="post" rows="12">{ALTERNATIVE_PM}</textarea></label>
+								<label><textarea name="action_contents" id="action_contents" class="post" rows="12" cols="15">{ALTERNATIVE_PM}</textarea></label>
 							</td>
 						</tr>
 						<tr>

@@ -5,21 +5,22 @@
 		<script type="text/javascript">
 		<!--
 		function check_form_msg(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #	
+			
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_MESSAGE}");
 				return false;
 		    }
 			return true;
 		}
-		function Confirm_msg() {
-			return confirm('{L_DELETE_MESSAGE}');
-		}
 		function XMLHttpRequest_del(idmsg)
 		{
 			if( document.getElementById('dimg' + idmsg) )
 				document.getElementById('dimg' + idmsg).src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?del=1&idm=' + idmsg);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&del=1&idm=' + idmsg + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
@@ -41,7 +42,7 @@
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -63,7 +64,7 @@
 			if( document.getElementById('forum_track_img') )
 				document.getElementById('forum_track_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track ? 'ut' : 't') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track ? 'ut' : 't') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -84,7 +85,7 @@
 			if( document.getElementById('forum_track_pm_img') )
 				document.getElementById('forum_track_pm_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_pm ? 'utp' : 'tp') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -105,7 +106,7 @@
 			if( document.getElementById('forum_track_mail_img') )
 				document.getElementById('forum_track_mail_img').src = '../templates/{THEME}/images/loading_mini.gif';
 			
-			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
+			xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&' + (is_track_mail ? 'utm' : 'tm') + '=' + idtopic);
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -124,19 +125,19 @@
 			if( confirm('{L_DELETE_MESSAGE}') )
 				XMLHttpRequest_del(idmsg);
 		}
-		function Confirm_topic() {
+		function Confirm_del_topic() {
 			return confirm("{L_ALERT_DELETE_TOPIC}");
 		}		
-		function Confirm_lock() {
+		function Confirm_lock_topic() {
 			return confirm("{L_ALERT_LOCK_TOPIC}");
 		}		
-		function Confirm_unlock() {
+		function Confirm_unlock_topic() {
 			return confirm("{L_ALERT_UNLOCK_TOPIC}");
 		}		
-		function Confirm_move() {
+		function Confirm_move_topic() {
 			return confirm("{L_ALERT_MOVE_TOPIC}");
 		}
-		function Confirm_cut() {
+		function Confirm_cut_topic() {
 			return confirm("{L_ALERT_CUT_TOPIC}");
 		}
 		-->
@@ -147,11 +148,21 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<span style="float:left;">
-					<a href="syndication.php?idcat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
 				<span style="float:right;">
-					{PAGINATION} {LOCK} {MOVE}
+					{PAGINATION} 
+					
+					# IF C_FORUM_MODERATOR #
+						# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ENDIF #
+					
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					# ENDIF #
 				</span>
 			</div>
 		</div>	
@@ -167,7 +178,7 @@
 						# START poll_radio #
 						<tr>
 							<td class="row2" style="font-size:10px;">
-								<label><input type="{poll_radio.TYPE}" name="radio" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
+								<label><input type="{poll_radio.TYPE}" name="forumpoll" value="{poll_radio.NAME}" /> {poll_radio.ANSWERS}</label>
 							</td>
 						</tr>
 						# END poll_radio #
@@ -213,10 +224,38 @@
 				<span id="m{msg.ID}" />
 				<div class="msg_top_row">
 					<div class="msg_pseudo_mbr">
-						{msg.USER_ONLINE} {msg.USER_PSEUDO}
+						# IF msg.C_FORUM_USER_LOGIN # 
+							<img src="../templates/{THEME}/images/{msg.FORUM_ONLINE_STATUT_USER}.png" alt="" class="valign_middle" />
+							<a class="msg_link_pseudo" href="../member/member{msg.U_FORUM_USER_LOGIN}">{msg.FORUM_USER_LOGIN}</a>
+						# ELSE # 
+							<em>{L_GUEST}</em>
+						# ENDIF #
 					</div>
-					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {msg.DATE}</span>
-					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>{msg.EDIT}{msg.DEL}{msg.CUT}&nbsp;&nbsp;<a href="#go_top"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="#go_bottom"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
+					<span style="float:left;">&nbsp;&nbsp;<a href="topic{msg.U_VARS_ANCRE}#m{msg.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {msg.FORUM_MSG_DATE}</span>
+					<span style="float:right;"><a href="topic{msg.U_VARS_QUOTE}#go_bottom" title="{L_QUOTE}"><img src="../templates/{THEME}/images/{LANG}/quote.png" alt="{L_QUOTE}" title="{L_QUOTE}" /></a>
+					# IF msg.C_FORUM_MSG_EDIT # 
+					&nbsp;&nbsp;<a href="post{msg.U_FORUM_MSG_EDIT}" title=""><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" title="{L_EDIT}" /></a>
+					# ENDIF #
+					
+					# IF msg.C_FORUM_MSG_DEL #
+					&nbsp;
+						# IF msg.C_FORUM_MSG_DEL_MSG #
+					<a href="action{msg.U_FORUM_MSG_DEL}" title=""><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimgnojs{msg.ID}" /></a>
+					<img style="cursor:pointer;display:none" onclick="del_msg('{msg.ID}');" src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" id="dimg{msg.ID}" /> 
+					<script type="text/javascript">
+					<!--
+						document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
+						document.getElementById('dimg{msg.ID}').style.display = 'inline';
+					-->
+					</script>
+						# ELSE #
+					<a href="action{msg.U_FORUM_MSG_DEL}" title="" onclick="javascript:return Confirm_del_topic();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a> 
+						# ENDIF #
+					# ENDIF #
+					
+					# IF msg.C_FORUM_MSG_CUT # &nbsp;&nbsp;<a href="move{msg.U_FORUM_MSG_CUT}" title="{L_CUT_TOPIC}" onclick="javascript:return Confirm_cut_topic();"><img src="{MODULE_DATA_PATH}/images/cut.png" alt="{L_CUT_TOPIC}" /></a> # ENDIF #
+					
+					&nbsp;&nbsp;<a href="{U_TITLE_T}#go_top" onclick="new Effect.ScrollTo('go_top',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/top.png" alt="" /></a> <a href="{U_TITLE_T}#go_bottom" onclick="new Effect.ScrollTo('go_bottom',{duration:1.2}); return false;"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>&nbsp;&nbsp;</span>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
@@ -231,8 +270,20 @@
 					</div>
 					<div class="msg_contents{msg.CLASS_COLOR}">
 						<div class="msg_contents_overflow">
-							{msg.CONTENTS}
-							{msg.USER_EDIT}
+							# IF msg.L_FORUM_QUOTE_LAST_MSG # <span class="text_strong">{msg.L_FORUM_QUOTE_LAST_MSG}</span><br /><br /> # ENDIF #
+							
+							{msg.FORUM_MSG_CONTENTS}
+							
+							# IF msg.C_FORUM_USER_EDITOR # 
+							<br /><br /><br /><br /><span style="padding: 10px;font-size:10px;font-style:italic;">
+							{L_EDIT_BY}
+								# IF msg.C_FORUM_USER_EDITOR_LOGIN # 
+							<a class="small_link" href="../member/member{msg.U_FORUM_USER_EDITOR_LOGIN}">{msg.FORUM_USER_EDITOR_LOGIN}</a>
+								# ELSE #
+							<em>{L_GUEST}</em>
+								# ENDIF #
+							{L_ON} {msg.FORUM_USER_EDITOR_DATE}</span>
+							# ENDIF #
 						</div>
 					</div>
 				</div>
@@ -246,7 +297,12 @@
 					{msg.USER_PM} {msg.USER_MAIL} {msg.USER_MSN} {msg.USER_YAHOO} {msg.USER_WEB}
 				</span>
 				<span style="float:right;font-size:10px;">
-					{msg.WARNING} {msg.PUNISHMENT}
+					&nbsp;
+					# IF msg.C_FORUM_MODERATOR # 
+					{msg.USER_WARNING}%
+					<a href="moderation_forum{msg.U_FORUM_WARNING}" title="{L_WARNING_MANAGEMENT}"><img src="../templates/{THEME}/images/admin/important.png" alt="{L_WARNING_MANAGEMENT}" class="valign_middle" /></a>
+					<a href="moderation_forum{msg.U_FORUM_PUNISHEMENT}" title="{L_PUNISHEMENT_MANAGEMENT}"><img src="../templates/{THEME}/images/readonly.png" alt="{L_PUNISHEMENT_MANAGEMENT}" class="valign_middle" /></a>
+					# ENDIF #
 				</span>&nbsp;
 			</div>	
 		</div>	
@@ -256,83 +312,51 @@
 			<div class="msg_bottom_r"></div>
 			<div class="msg_bottom" style="text-align:center;">
 				<span style="float:left;">
-					<a href="syndication.php?idcat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={ID}" title="Rss"><img class="valign_middle" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 					&bull; {U_FORUM_CAT} <a href="{U_TITLE_T}"><span id="display_msg_title2">{DISPLAY_MSG}</span>{TITLE_T}</a> <span style="font-weight:normal"><em>{DESC}</em></span>
 				</span>
-				<span style="float:right;">{PAGINATION} {LOCK} {MOVE}</span>&nbsp;
+				<span style="float:right;">
+					{PAGINATION}
+					
+					# IF C_FORUM_MODERATOR #
+						# IF C_FORUM_LOCK_TOPIC #
+					<a href="action{U_TOPIC_LOCK}" onclick="javascript:return Confirm_lock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/lock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ELSE #
+					<a href="action{U_TOPIC_UNLOCK}" onclick="javascript:return Confirm_unlock_topic();" title="{L_TOPIC_LOCK}"><img src="../templates/{THEME}/images/{LANG}/unlock.png" alt="{L_TOPIC_LOCK}" title="{L_TOPIC_LOCK}" class="valign_middle" /></a>
+						# ENDIF #
+						
+					<a href="move{U_TOPIC_MOVE}" onclick="javascript:return Confirm_move_topic();" title="{L_TOPIC_MOVE}"><img src="{MODULE_DATA_PATH}/images/move.png" alt="{L_TOPIC_MOVE}" title="{L_TOPIC_MOVE}" class="valign_middle" /></a>
+					# ENDIF #
+				</span>&nbsp;
 			</div>
 		</div>
 		
 		# INCLUDE forum_bottom #
 			
+		<span id="go_bottom"></span>
 		# IF C_AUTH_POST #
-		<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto;margin-top:15px;" id="go_bottom">
-			<div>
-                <div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
-                {KERNEL_EDITOR}
-                <label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
-                <fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
-                    <legend>{L_SUBMIT}</legend>
-                    <input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-                    &nbsp;&nbsp;
-                    <script type="text/javascript">
-                    <!--				
-                    document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
-                    -->
-                    </script>
-                    <noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
-                    &nbsp;&nbsp;
-                    <input type="reset" value="{L_RESET}" class="reset" />
-                </fieldset>
-            </div>
-		</form>
-		<div class="forum_action">
-			# IF C_DISPLAY_MSG #
-			<span id="forum_change_statut">
-				<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_change_statut').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small_link">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small_link"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			# ENDIF #
-			<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /> {L_ALERT}</a>
-			<br />
-			
-			<span id="forum_track">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track()" class="small_link">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small_link"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			<span id="forum_track_pm">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track_pm').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small_link">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small_link"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
-			-->
-			</script>
-			&bull;
-			<span id="forum_track_mail">
-				<a href="action{U_SUSCRIBE}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
-			</span>
-			<script type="text/javascript">
-			<!--				
-			document.getElementById('forum_track_mail').style.display = 'none';
-			document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small_link">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small_link"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
-			-->
-			</script>
-			
-		</div>
+		<div class="forum_post_form">
+			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
+				<div>
+					<div style="font-size:10px;text-align:center;"><label for="contents">{L_RESPOND}</label></div>	
+					{KERNEL_EDITOR}
+					<label><textarea class="post" rows="15" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
+						<legend>{L_SUBMIT}</legend>
+						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+						&nbsp;&nbsp;
+						<script type="text/javascript">
+						<!--				
+						document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
+						-->
+						</script>
+						<noscript><div><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></div></noscript>
+						&nbsp;&nbsp;
+						<input type="reset" value="{L_RESET}" class="reset" />
+					</fieldset>
+				</div>
+			</form>
+        </div>
 		# ENDIF #
 		
 		# IF C_ERROR_AUTH_WRITE #

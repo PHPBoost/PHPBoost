@@ -27,6 +27,7 @@
 
 define('MENU__CLASS','Menu');
 
+define('MENU_AUTH_BIT', 1);
 define('MENU_ENABLE_OR_NOT', 42);
 define('MENU_ENABLED', true);
 define('MENU_NOT_ENABLED', false);
@@ -43,10 +44,10 @@ define('BLOCK_POSITION__RIGHT',             8);
 define('BLOCK_POSITION__ALL',               9);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class represents a menu element and is used to build any kind of menu
  * @abstract
- * @package Menu
+ * @package menu
  */
 class Menu
 {
@@ -58,14 +59,14 @@ class Menu
      */
     function Menu($title)
     {
-       $this->title = htmlentities($title);
+       $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
     }
     
     ## Setters ##
     /**
      * @param string $image the value to set
      */
-    function set_title($title) { $this->title = htmlentities($title); }
+    function set_title($title) { $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE); }
     /**
      * @param array $url the authorisation array to set
      */
@@ -91,7 +92,7 @@ class Menu
     /**
      * @return array the authorization array $auth
      */
-    function get_auth() { return $this->auth; }
+    function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' => AUTH_MENUS); }
     /**
      * @return int the $id of the menu in the database
      */
@@ -120,6 +121,7 @@ class Menu
     {
         return '';
     }
+
     
     /**
      * @desc Display the menu admin gui
@@ -143,7 +145,7 @@ class Menu
     function cache_export_begin()
     {
         if (is_array($this->auth))
-            return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if (empty($__auth)||$User->check_auth($__auth,1)){$__menu.=\'';
+            return '\'; $__auth=' . preg_replace('`[\s]+`', '', var_export($this->auth, true)) . ';if ($User->check_auth($__auth,1)){$__menu.=\'';
         return '';
     }
     
@@ -161,7 +163,20 @@ class Menu
      * @param int $id Set the Menu database id
      */
     function id($id) { $this->id = $id; }
+    
+    
     ## Private Methodss ##
+    /**
+     * @desc Assign tpl vars
+     * @access protected
+     * @param Template $template the template on which we gonna assign vars
+     */
+    function _assign(&$template)
+    {
+    	import('core/menu_service');
+    	MenuService::assign_positions_conditions($template, $this->get_block());
+    }
+    
     /**
      * @desc Check the user authorization to see the LinksMenuElement
      * @return bool true if the user is authorised, false otherwise
@@ -169,7 +184,7 @@ class Menu
     function _check_auth()
     {
         global $User;
-        return empty($this->auth) || $User->check_auth($this->auth, 1);
+        return empty($this->auth) || $User->check_auth($this->auth, MENU_AUTH_BIT);
     }
     
     ## Private Attributes ##
@@ -187,7 +202,7 @@ class Menu
      * @access protected
      * @var int[string] Represents the Menu authorisations array
      */
-    var $auth = array();
+    var $auth = null;
     /**
      * @access protected
      * @var bool true if the Menu is used

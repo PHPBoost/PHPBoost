@@ -11,7 +11,7 @@
 					document.getElementById('write_auth').style.display = 'none';
 					document.getElementById('edit_auth').style.display = 'none';
 				}
-				else if( value == 1 ) //Catégorie
+				else if( value == 1 ) //Catï¿½gorie
 				{
 					document.getElementById('forum_category').style.display = 'none';
 					document.getElementById('forum_url').style.display = 'none';
@@ -68,7 +68,7 @@
 			</div>	
 			# ENDIF #
 				
-			<form action="admin_forum_add.php" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_forum_add.php?token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_CAT}</legend>
 					<p>{L_REQUIRE}</p>

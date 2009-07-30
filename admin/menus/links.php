@@ -34,7 +34,7 @@ require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 import('core/menu_service');
 
 $menu_id = retrieve(REQUEST, 'id', 0);
-$action = retrieve(REQUEST, 'action', '');
+$action = retrieve(GET, 'action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
@@ -47,13 +47,13 @@ if ($action == 'save')
     {
         $menu = null;
         $menu_element_id = $elements_ids['id'];
-        $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '');
+        $menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
         $menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
         $menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
         
     	$array_size = count($elements_ids);
     	if ($array_size == 1 && $level > 0)
-    	{   // If it's a menu, there's only one element
+    	{   // If it's a menu, there's only one element;
     		$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
     	}
     	else
@@ -114,6 +114,7 @@ if ($action == 'save')
     $menu = build_menu_from_form($menu_tree);
     $menu->set_type($type);
     
+    $previous_menu = null;
     //If we edit the menu
     if ($menu_id > 0)
     {   // Edit the Menu
@@ -130,8 +131,9 @@ if ($action == 'save')
     
     if ($menu->is_enabled())
     {
-        if ($menu->get_block() == $previous_menu->get_block())
+        if ($previous_menu != null && $menu->get_block() == $previous_menu->get_block())
         {   // Save the menu if enabled
+            $menu->set_block_position($previous_menu->get_block_position());
             MenuService::save($menu);
         }
         else
@@ -142,17 +144,16 @@ if ($action == 'save')
     else
     {   // The menu is not enabled, we only save it with its block location
         // When enabling it, the menu will be moved to this block location
+        $block = $menu->get_block();
+        // Disable the menu and move it to the disabled position computing new positions
+        MenuService::move($menu, BLOCK_POSITION__NOT_ENABLED);
+        
+        // Restore its position and save it
+        $menu->set_block($block);
         MenuService::save($menu);
     }
    	MenuService::generate_cache();
-    redirect(HOST . DIR . '/admin/menus/menus.php#m' . $menu->get_id());
-}
-elseif ($action == 'delete' && !empty($menu_id))
-{   // Delete a Menu
-    MenuService::delete($menu_id);
-    MenuService::generate_cache();
-    
-    redirect('menus.php');
+    redirect('menus.php#m' . $menu->get_id());
 }
 
 // Display the Menu administration
@@ -183,7 +184,7 @@ $tpl->assign_vars(array(
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
     'L_TYPE' => $LANG['type'],
-    'L_CONTENT' => $LANG['contents'],
+    'L_CONTENT' => $LANG['content'],
     'L_AUTHORIZATIONS' => $LANG['authorizations'],
     'L_ADD' => $LANG['add'],
     'J_AUTH_FORM' => to_js_string(Authorizations::generate_select(
@@ -200,8 +201,6 @@ $tpl->assign_vars(array(
     'JL_DELETE' => to_js_string($LANG['delete']),
     'JL_ADD_SUB_ELEMENT' => to_js_string($LANG['add_sub_element']),
     'JL_ADD_SUB_MENU' => to_js_string($LANG['add_sub_menu']),
-    'JL_NEW_SUB_ELEMENT' => to_js_string($LANG['new_sub_element']),
-    'JL_NEW_SUB_MENU' => to_js_string($LANG['new_sub_menu']),
 ));
 
 //Localisation possibles.
@@ -214,7 +213,7 @@ $array_location = array(
     BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
     BLOCK_POSITION__RIGHT => $LANG['menu_right'],
     BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
+    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 $edit_menu_tpl = new Template('admin/menus/menu_edition.tpl');
@@ -240,7 +239,7 @@ if ($menu_id > 0)
 }
 else
 {   // Create a new generic menu
-    $menu = new LinksMenu('', '', '', VERTICAL_SCROLLING_MENU);
+    $menu = new LinksMenu('', '', '', VERTICAL_MENU);
 }
 
 $block = $menu->get_block();
@@ -249,7 +248,7 @@ $tpl->assign_vars(array(
 	'AUTH_MENUS' => Authorizations::generate_select(
         AUTH_MENUS, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'
     ),
-    'C_ENABLED' => $menu->is_enabled(),
+    'C_ENABLED' => !empty($menu_id) ? $menu->is_enabled() : true,
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),

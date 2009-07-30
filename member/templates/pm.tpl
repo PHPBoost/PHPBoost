@@ -1,6 +1,10 @@
 		<script type="text/javascript">
 		<!--
 		function check_form_convers(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('login').value == "") {
 				alert("{L_REQUIRE_RECIPIENT}");
 				return false;
@@ -67,7 +71,7 @@
 					<table class="module_table">	
 						<tr>
 							<th style="text-align:center;width:20px;">
-								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');">
+								<input type="checkbox" id="checkall" onclick="check_convers(this.checked, 'd');" />
 							</th>
 							<th colspan="2" style="text-align:center;">
 								{L_TITLE}
@@ -89,7 +93,7 @@
 								<input type="checkbox" id="d{convers.list.INCR}" name="{convers.list.ID}" />
 							</td>
 							<td class="text_small" style="width:40px;text-align:center;">
-								{convers.list.ANNOUNCE}
+								<img src="{convers.list.ANNOUNCE}.png" alt="" />
 							</td>
 							<td style="padding:4px;">
 								{convers.list.ANCRE} <a href="pm{convers.list.U_CONVERS}">{convers.list.TITLE}</a> &nbsp;<span class="text_small">[{convers.list.U_AUTHOR}]</span>
@@ -117,7 +121,7 @@
 						# END convers.no_pm #	
 						<tr>
 							<td colspan="6" class="row3">
-								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');"> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
+								<div style="float:left;">&nbsp;<input type="checkbox" id="validc" onclick="check_convers(this.checked, 'd');" /> &nbsp;<input type="submit" name="valid" value="{L_DELETE}" class="submit" /></div>
 								<div style="float:right;">{convers.PAGINATION}&nbsp;</div>
 							</td>
 						</tr>
@@ -125,14 +129,14 @@
 					<br />
 					<table class="module_table">
 						<tr> 		
-							<td style="width:33%;text-align:center"> 
-								<img class="valign_middle" src="../templates/{THEME}/images/announce.gif" alt="" /> {L_READ} 
+							<td style="width:33%;text-align:center" class="row2"> 
+								<img class="valign_middle" src="../templates/{THEME}/images/announce.png" alt="" /> {L_READ} 
 							</td>
-							<td style="width:34%;text-align:center"> 
-								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.gif" alt="" /> {L_TRACK}		
+							<td style="width:34%;text-align:center" class="row2">  
+								<img class="valign_middle" src="../templates/{THEME}/images/announce_track.png" alt="" /> {L_TRACK}		
 							</td>
-							<td style="width:33%;text-align:center"> 
-								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.gif" alt="" /> {L_NOT_READ}		
+							<td style="width:33%;text-align:center" class="row2">  
+								<img class="valign_middle" src="../templates/{THEME}/images/new_announce.png" alt="" /> {L_NOT_READ}		
 							</td>
 						</tr>
 					</table>
@@ -168,7 +172,16 @@
 					{pm.msg.USER_ONLINE} <a class="msg_link_pseudo" href="../member/member{pm.msg.U_USER_ID}">{pm.msg.USER_PSEUDO}</a>
 					</div>
 					<div style="float:left;">&nbsp;&nbsp;<a href="{pm.msg.U_ANCHOR}"><img src="../templates/{THEME}/images/ancre.png" alt="{pm.msg.ID}" /></a> {pm.msg.DATE}</div>
-					<div style="float:right;">{pm.msg.U_QUOTE}&nbsp; {pm.msg.EDIT}{pm.msg.DEL}&nbsp;&nbsp;</div>
+					<div style="float:right;">
+						{pm.msg.U_QUOTE}
+						&nbsp; 						
+						# IF pm.msg.C_MODERATION_TOOLS #
+						<a href="pm.php?edit={pm.msg.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
+						&nbsp;&nbsp;
+						<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" title="{L_DELETE}"  onclick="javascript:return Confirm_pm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" /></a>
+						&nbsp;&nbsp;
+						# ENDIF #
+					</div>
 				</div>
 				<div class="msg_contents_container">
 					<div class="msg_info_mbr">
@@ -260,20 +273,21 @@
 		# ENDIF #
 		<span id="quote"></span>			
 		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
+		{KERNEL_EDITOR}		
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
-			{KERNEL_EDITOR}		
-			<label><textarea type="text" class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea> </label>
-			<div style="padding:17px;">					
+			<div>					
+				<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 				<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp; 									
+					<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />
 					<script type="text/javascript">
 					<!--				
-					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+					document.getElementById('prw_pm').style.display = 'none';
+					document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>				
-					<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
@@ -321,7 +335,7 @@
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 							<br />
 						</fieldset>
 						
@@ -329,12 +343,13 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="{SUBMIT_NAME}" value="{L_SUBMIT}" class="submit" />
 							&nbsp;&nbsp; 
+							<input value="{L_PREVIEW}" type="submit" name="prw" id="prw_pm" class="submit" />							
 							<script type="text/javascript">
 							<!--				
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+							document.getElementById('prw_pm').style.display = 'none';
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>						
-							<noscript><input value="{L_PREVIEW}" type="submit" name="prw" class="submit" /></noscript>								
 							&nbsp;&nbsp; 
 							<input type="reset" value="{L_RESET}" class="reset" />
 						</fieldset>	
@@ -391,14 +406,16 @@
 							# START post_convers.user_id_dest #
 							<dl>
 								<dt><label for="login">* {L_RECIPIENT}</label></dt>
-								<dd><label>
-									<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
-									<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit">
+								<dd>
+									<label>
+										<input type="text" size="20" maxlength="25" id="login" name="login" value="{post_convers.LOGIN}" class="text" />
+										<span id="search_img"></span> <input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members('', '{THEME}', 'insert_member', '{L_REQUIRE_RECIPIENT}');" type="button" class="submit" />								
+									</label>
 									<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
 									# START post_convers.user_id_dest.search #
 										{search.RESULT}
 									# END post_convers.user_id_dest.search #
-								</label></dd>
+								</dd>
 							</dl>		
 							# END post_convers.user_id_dest #
 							<dl>
@@ -408,7 +425,7 @@
 							<br />
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<textarea type="text" rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
+							<textarea rows="25" cols="66" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 							<br />
 						</fieldset>
 						
@@ -416,12 +433,13 @@
 							<legend>{L_SUBMIT}</legend>
 							<input type="submit" name="convers" value="{L_SUBMIT}" class="submit" />
 								&nbsp;&nbsp; 
+								<input value="{L_PREVIEW}" type="submit" name="prw_convers" id="prw_convers_pm" class="submit" />
 								<script type="text/javascript">
 								<!--				
-								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+								document.getElementById('prw_convers_pm').style.display = 'none';
+								document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 								-->
 								</script>
-								<noscript><input value="{L_PREVIEW}" type="submit" name="prw_convers" class="submit" /></noscript>
 								&nbsp;&nbsp; 
 								<input type="reset" value="{L_RESET}" class="reset" />
 						</fieldset>	

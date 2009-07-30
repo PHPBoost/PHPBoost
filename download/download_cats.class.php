@@ -28,11 +28,11 @@
 global $Cache;
 
 $Cache->load('download');
-import('content/categories');
+import('content/categories_manager');
 
 define('NOT_GENERATE_CACHE', true);
 
-class DownloadCats extends CategoriesManagement
+class DownloadCats extends CategoriesManager
 {
 	## Public methods ##
 	
@@ -40,7 +40,7 @@ class DownloadCats extends CategoriesManagement
 	function DownloadCats()
 	{
 		global $DOWNLOAD_CATS;
-		parent::CategoriesManagement('download_cat', 'download', $DOWNLOAD_CATS);
+		parent::CategoriesManager('download_cat', 'download', $DOWNLOAD_CATS);
 	}
 	
 	//Method which removes all subcategories and their content
@@ -56,7 +56,7 @@ class DownloadCats extends CategoriesManagement
 				$this->Delete_category_recursively($id_cat);
 		}
 		
-		$Cache->Generate_module_file('download', RELOAD_FILE);
+		$Cache->Generate_module_file('download', RELOAD_CACHE);
 		
 		$this->Recount_sub_files();
 	}
@@ -79,7 +79,7 @@ class DownloadCats extends CategoriesManagement
 				parent::move_into_another($id_cat, $new_id_cat_content);
 		}
 		
-		$Sql->query_inject("UPDATE ".PREFIX."download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
 		$this->Recount_sub_files();
 		
@@ -93,7 +93,7 @@ class DownloadCats extends CategoriesManagement
 		if ($id_parent == 0 || array_key_exists($id_parent, $this->cache_var))
 		{
 			$new_id_cat = parent::add($id_parent, $name);
-			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET contents = '" . $description . "', icon = '" . $image . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $new_id_cat . "'", __LINE__, __FILE__);
 			//We don't recount the number of questions because this category is empty
 			return 'e_success';
 		}
@@ -118,11 +118,11 @@ class DownloadCats extends CategoriesManagement
 				}
 				else
 				{
-					$Cache->load('download', RELOAD_FILE);
+					$Cache->load('download', RELOAD_CACHE);
 					$this->Recount_sub_files(NOT_CACHE_GENERATION);
 				}
 			}
-			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('download');
 			
 			return 'e_success';
@@ -141,7 +141,7 @@ class DownloadCats extends CategoriesManagement
 	}
 	
 	//Function which recounts the number of subquestions of each category (it should be unuseful but if they are errors it will correct them)
-	function Recount_sub_files($no_cache_generation = false)
+	function recount_sub_files($no_cache_generation = false)
 	{
 		global $Cache, $DOWNLOAD_CATS;
 		$this->_recount_cat_subquestions($DOWNLOAD_CATS, 0);
@@ -207,7 +207,7 @@ class DownloadCats extends CategoriesManagement
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
-			$Sql->query_inject("DELETE FROM ".PREFIX."download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 			return true;
 		}
 		else
@@ -223,7 +223,7 @@ class DownloadCats extends CategoriesManagement
 		
 		foreach ($categories as $id => $value)
 		{
-			if ($id != 0 && $value['id_parent'] == $cat_id)
+			if ($id != 0 && $value['id_parent'] == $cat_id && $value['visible'])
 				$num_subquestions += $this->_recount_cat_subquestions($categories, $id);
 		}
 		
@@ -231,9 +231,9 @@ class DownloadCats extends CategoriesManagement
 		if ($cat_id != 0)
 		{
 			//We add to this number the number of questions of this category
-			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE idcat = '" . $cat_id . "'", __LINE__, __FILE__);
+			$num_subquestions += (int) $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE idcat = '" . $cat_id . "' AND visible = 1 AND approved = 1", __LINE__, __FILE__);
 			
-			$Sql->query_inject("UPDATE ".PREFIX."download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET num_files = '" . $num_subquestions . "' WHERE id = '" . $cat_id . "' AND visible = 1", __LINE__, __FILE__);
 			
 			return $num_subquestions;
 		}

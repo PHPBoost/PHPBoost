@@ -95,13 +95,14 @@ $LANG['e_unable_cut_forum'] = 'Vous ne pouvez pas scinder le sujet à partir de c
 $LANG['e_cat_write'] = 'Vous n\'êtes pas autorisé à écrire dans cette catégorie';
 
 //Alertes
-$LANG['alert_delete_topic'] = 'Supprimer ce Sujet ?';
-$LANG['alert_lock_topic'] = 'Verrouiller ce Sujet ?';
-$LANG['alert_unlock_topic'] = 'Déverrouiller ce Sujet ?';
-$LANG['alert_move_topic'] = 'Déplacer ce Sujet ?';
-$LANG['alert_warning'] = 'Avertir ce membre?';
-$LANG['alert_history'] = 'Supprimer l\'historique?';
-$LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus?';
+$LANG['alert_delete_topic'] = 'Supprimer ce sujet ?';
+$LANG['alert_lock_topic'] = 'Verrouiller ce sujet ?';
+$LANG['alert_unlock_topic'] = 'Déverrouiller ce sujet ?';
+$LANG['alert_move_topic'] = 'Déplacer ce sujet ?';
+$LANG['alert_warning'] = 'Avertir ce membre ?';
+$LANG['alert_history'] = 'Supprimer l\'historique ?';
+$LANG['confirm_mark_as_read'] = 'Marquer tous les sujets comme lus ?';
+$LANG['contribution_alert_moderators_for_topics'] = 'Sujet non conforme : %s';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
@@ -233,22 +234,26 @@ $LANG['open_menu_poll'] = 'Ouvrir le menu sondage';
 $LANG['simple_answer'] = 'Simple réponse';
 $LANG['multiple_answer'] = 'Multiple réponses';
 $LANG['delete_poll'] = 'Supprimer le sondage';
+$LANG['require_title_poll'] = 'Veuillez entrer un titre pour le sondage!';
 
 //Post
-$LANG['next'] = 'Suite';
 $LANG['forum_mail_title_new_post'] = 'Nouveau message sur le forum';
-$LANG['forum_mail_new_post'] = 'Vous suivez le sujet: %s
+$LANG['forum_mail_new_post'] = 'Cher %s
+
+Vous suivez le sujet: %s
  
 Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 
 %s a répondu sur le sujet: 
-%s... %s
+%s
+
+[Suite du message : %s]
 
 
 
 
 Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
-' . HOST . DIR . '/forum/action.php?ut=%d
+' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
 
 ' . $CONFIG['sign'];
 

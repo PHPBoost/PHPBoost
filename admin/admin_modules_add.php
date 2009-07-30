@@ -51,6 +51,9 @@ if ($install) //Installation du module
 		case MODULE_ALREADY_INSTALLED:
 			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=incomplete#errorh');
 			break;
+		case PHP_VERSION_CONFLICT:
+			redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_php_version_conflict#errorh');
+			break;
 		case MODULE_INSTALLED:
 		default:
 			redirect(HOST . DIR . '/admin/admin_modules.php');
@@ -73,10 +76,10 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."modules WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
+		$ckeck_module = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MODULES . " WHERE name = '" . addslashes($module_name) . "'", __LINE__, __FILE__);
 		if (empty($ckeck_module) && !is_dir('../' . $module_name))
 		{
-			include_once('../kernel/framework/io/upload.class.php');
+			import('io/upload');
 			$Upload = new Upload($dir);
 			if ($Upload->file('upload_module', '`([a-z0-9()_-])+\.(gzip|zip)+$`i'))
 			{					
@@ -84,13 +87,13 @@ elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l
 				//Place à la décompression.
 				if ($Upload->extension['upload_module'] == 'gzip')
 				{
-					include_once('../kernel/framework/lib/pcl/pcltar.lib.php');
+					import('lib/pcl/pcltar', LIB_IMPORT);
 					if (!$zip_files = PclTarExtract($Upload->filename['upload_module'], '../'))
 						$error = $Upload->error;
 				}
 				elseif ($Upload->extension['upload_module'] == 'zip')
 				{
-					include_once('../kernel/framework/lib/pcl/pclzip.lib.php');
+					import('lib/pcl/pclzip', LIB_IMPORT);
 					$Zip = new PclZip($archive_path);
 					if (!$zip_files = $Zip->extract(PCLZIP_OPT_PATH, '../', PCLZIP_OPT_SET_CHMOD, 0666))
 						$error = $Upload->error;
@@ -149,7 +152,7 @@ else
 
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict');
+	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_config_conflict', 'e_php_version_conflict');
 	if (in_array($get_error, $array_error))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	if ($get_error == 'incomplete')
@@ -159,7 +162,7 @@ else
 	$i = 0;
 	$installed_modules = array();
 	$result = $Sql->query_while("SELECT id, name
-	FROM ".PREFIX."modules
+	FROM " . PREFIX . "modules
 	WHERE activ = 1", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
@@ -168,47 +171,44 @@ else
 	$Sql->query_close($result);
 	
 	//Modules disponibles
-	$root = '../';
+	$root = PATH_TO_ROOT . '/';
 	$i = 0;
 	if (is_dir($root)) //Si le dossier existe
 	{
-		$dh = @opendir($root);
-		while (!is_bool($dir = readdir($dh)))
+		import('io/filesystem/folder');
+		$dir_array = array();
+		$lang_folder_path = new Folder($root);
+		foreach ($lang_folder_path->get_folders() as $odir)
 		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false && !in_array($dir, $installed_modules))
+			$dir = $odir->get_name();
+			if (!in_array($dir, $installed_modules) && $dir != 'lang')
 			{
-				//Désormais on vérifie que le fichier de configuration est présent.
-				if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
+				//Récupération des infos de config.
+				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
+				if (!empty($info_module) && is_array($info_module))
 				{
-					//Récupération des infos de config.
-					$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-					if (is_array($info_module))
-					{
-						$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
-						$Template->assign_block_vars('available', array(
-							'ID' => $dir,
-							'NAME' => ucfirst($info_module['name']),
-							'ICON' => $dir,
-							'VERSION' => $info_module['version'],
-							'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
-							'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-							'DESC' => $info_module['info'],
-							'COMPAT' => $info_module['compatibility'],
-							'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
-							'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
-							'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
-							'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
-							'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
-							'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
-							'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
-						));
-						$i++;
-					}
-				}				
+					$l_tables = ($info_module['sql_table'] > 1) ? $LANG['tables'] : $LANG['table'];
+					$Template->assign_block_vars('available', array(
+						'ID' => $dir,
+						'NAME' => ucfirst($info_module['name']),
+						'ICON' => $dir,
+						'VERSION' => $info_module['version'],
+						'AUTHOR' => (!empty($info_module['author_mail']) ? '<a href="mailto:' . $info_module['author_mail'] . '">' . $info_module['author'] . '</a>' : $info_module['author']),
+						'AUTHOR_WEBSITE' => (!empty($info_module['author_link']) ? '<a href="' . $info_module['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+						'DESC' => $info_module['info'],
+						'COMPAT' => $info_module['compatibility'],
+						'USE_SQL' => (($info_module['sql_table'] > 0) ? $LANG['yes'] : $LANG['no']),
+						'SQL_TABLE' => (($info_module['sql_table'] > 0) ? '(' . $info_module['sql_table'] . ' ' . $l_tables . ')' : ''),
+						'USE_CACHE' => ($info_module['cache'] ? $LANG['yes'] : $LANG['no']),
+						'ALTERNATIVE_CSS' => ($info_module['css'] ? $LANG['yes'] : $LANG['no']),	
+						'STARTEABLE_PAGE' => ($info_module['starteable_page'] ? $LANG['yes'] : $LANG['no']),
+						'ACTIV_ENABLED' => ($row['activ'] == 1 ? 'checked="checked"' : ''),
+						'ACTIV_DISABLED' => ($row['activ'] == 0 ? 'checked="checked"' : '')
+					));
+					$i++;
+				}
 			}
 		}	
-		closedir($dh); //On ferme le dossier
 	}
 	
 	if ($i == 0)

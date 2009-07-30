@@ -5,7 +5,7 @@
             var LastSpecializedFormUsed = 'all';
             
             function ChangeForm(module)
-            // Change le cadre des r�sultats
+            // Change le cadre des résultats
             {
                 hide_div(FORM + LastSpecializedFormUsed);
                 show_div(FORM + module);
@@ -20,7 +20,7 @@
             }
             
             function check_search_form_post()
-            // V�rifie la validit� du formulaire
+            // V�rifie la validité du formulaire
             {
                 var textSearched = document.getElementById("TxTsearched").value;
                 
@@ -31,7 +31,7 @@
                 }
                 else
                 {
-                    alert('{L_WARNING_LENGTH_STRING_SEARCH}');
+                    alert({L_WARNING_LENGTH_STRING_SEARCH});
                     return false;
                 }
             }
@@ -44,9 +44,9 @@
             <div class="module_top">{L_TITLE_SEARCH}</div>
             <div class="module_contents">
                 <div class="spacer">&nbsp;</div>
-                <form id="search_form" action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
+                <form action="{U_FORM_VALID}" onsubmit="return check_search_form_post();" method="post">
                     <div class="search_field"><input type="text" id="TxTsearched" name="q" value="{TEXT_SEARCHED}" class="text" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></div>
-                    <br />
+                    <div class="spacer">&nbsp;</div>
                     <div style="text-align:center;">
                         <p id="forms_selection">
                             <a id="specialize_form_link_all" href="javascript:ChangeForm('all');" class="small_link">{L_SEARCH_ALL}</a>
@@ -76,11 +76,13 @@
                         </fieldset>
                     </div>
                     # END forms #
-                    <br />
+                    <div class="spacer">&nbsp;</div>
                     <fieldset class="fieldset_submit">
                         <legend>{L_SEARCH}</legend>
                         <input type="hidden" id="search_in" name="search_in" value="all" />
+                        <input type="hidden" id="query_mode" name="query_mode" value="0" />
                         <input type="submit" id="search_submit" name="search_submit" value="{L_SEARCH}" class="submit" />
+                        <input type="hidden" name="token" value="{TOKEN}" />
                     </fieldset>
                 </form>
             </div>

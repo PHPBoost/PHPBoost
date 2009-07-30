@@ -30,10 +30,10 @@ import('menu/menu');
 define('CONTENT_MENU__CLASS','ContentMenu');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
- * @package Menu
- * @subpackage ContentMenu
+ * @package menu
+ * @subpackage contentmenu
  */
 class ContentMenu extends Menu
 {
@@ -44,22 +44,42 @@ class ContentMenu extends Menu
     }
     
     ## Setters ##
+
+    /**
+     * @param bool $display_title if false, the title won't be displayed
+     */
+    function set_display_title($display_title) { $this->display_title = $display_title; }
+    
     /**
      * @param string $content the content to set
      */
-    function set_content($content) { $this->content = $content; }
+    function set_content($content) { $this->content = strparse($content, array(), DO_NOT_ADD_SLASHES); }
     
     ## Getters ##
+    /**
+     * @desc Returns true if the title will be displayed
+     * @return bool true if the title will be displayed
+     */
+    function get_display_title() { return $this->display_title; }
+    
     /**
      * @return string the menu content
      */
     function get_content() { return $this->content; }
     
-    
+	/**
+     * @desc Display the content menu.
+     * @return a string of the parsed template ready to be displayed
+     */
     function display()
     {
-        $tpl = new Template('framework/menus/content/display.tpl');
-        $tpl->assign_vars(array('CONTENT' => $this->content));
+		$tpl = new Template('framework/menus/content/display.tpl');
+        $tpl->assign_vars(array(
+            'C_DISPLAY_TITLE' => $this->display_title,
+			'C_VERTICAL_BLOCK' => ($this->get_block() == BLOCK_POSITION__LEFT || $this->get_block() == BLOCK_POSITION__RIGHT),
+            'TITLE' => $this->title,
+        	'CONTENT' => second_parse($this->content)
+        ));
         return $tpl->parse(TEMPLATE_STRING_MODE);
     }
     
@@ -75,6 +95,11 @@ class ContentMenu extends Menu
      * @var string the menu's content
      */
     var $content = '';
+    
+    /**
+     * @var bool If true, the content menu title will be displayed
+     */
+    var $display_title = true;
     
 }
 

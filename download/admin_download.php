@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               admin_download_management.php
+ *                            admin_download.php
  *                            -------------------
  *   begin                : July 25, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -39,7 +39,7 @@ $Template->set_filenames(array(
 $nbr_dl = $Sql->count_table('download', __LINE__, __FILE__);
 
 //On crée une pagination si le nombre de fichier est trop important.
-include_once('../kernel/framework/util/pagination.class.php');
+import('util/pagination');
 $Pagination = new Pagination();
 
 $Template->assign_vars(array(
@@ -62,7 +62,7 @@ $Template->assign_vars(array(
 ));
 
 $result = $Sql->query_while("SELECT id, idcat, title, timestamp, approved, start, end, size
-FROM ".PREFIX."download
+FROM " . PREFIX . "download
 ORDER BY timestamp DESC 
 " . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
@@ -87,7 +87,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'APROBATION' => $aprob,
 		'U_FILE' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 		'U_EDIT_FILE' => url('management.php?edit=' . $row['id']),
-		'U_DEL_FILE' => url('management.php?del=' . $row['id']),
+		'U_DEL_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 	));
 }
 $Sql->query_close($result);

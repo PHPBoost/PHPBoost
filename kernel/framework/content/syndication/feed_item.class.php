@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,19 +25,75 @@
  *
 ###################################################*/
 
+import('util/url');
+
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc Contains meta-informations and informations about a feed entry / item
+ * @package content
+ * @subpackage syndication
+ */
 class FeedItem
 {
     ## Public Methods ##
+    /**
+     * @desc Builds a FeedItem element
+     */
     function FeedItem() {}
 
     ## Setters ##
-    function set_title($value) { $this->title = $value; }
-    function set_link($value) { $this->link = $value; }
-    function set_guid($value) { $this->guid = $value; }
+    /**
+     * @desc Sets the feed item title
+     * @param string $value The title
+     */
+    function set_title($value) { $this->title = strip_tags($value); }
+    /**
+     * @desc Sets the feed item date
+     * @param Date $value a date object representing the item date
+     */
     function set_date($value) { $this->date = $value; }
+    /**
+     * @desc Sets the feed item description
+     * @param string $value the feed item description
+     */
     function set_desc($value) { $this->desc = $value; }
+    /**
+     * @desc Sets the feed item picture
+     * @param string $value the picture url
+     */
     function set_image_url($value) { $this->image_url = $value; }
+    /**
+     * @desc Sets the feed item auth, useful to check authorizations
+     * @param int[string] $value the item authorizations array
+     */
     function set_auth($auth) { $this->auth = $auth; }
+    /**
+     * @desc Sets the feed item link
+     * @param mixed $value a string url or an Url object
+     */
+    function set_link($value)
+    {
+        if (!of_class($value, URL__CLASS))
+        {
+            $value = new Url($value);
+        }
+        $this->link = $value->absolute();
+    }
+    /**
+     * @desc Sets the feed item guid
+     * @param mixed $value a string url or an Url object
+     */
+    function set_guid($value)
+    {
+        if (of_class($value, URL__CLASS))
+        {
+            $this->guid = $value->absolute();
+        }
+        else
+        {
+            $this->guid = $value;
+        }
+    }
     
     ## Getters ##
     function get_title() { return $this->title; }
@@ -54,10 +110,10 @@ class FeedItem
     ## Private attributes ##
     var $title = '';        // Item Title
     var $link = '';         // Item Url
-    var $date = null;         // Feed date
+    var $date = null;       // Feed date
     var $desc = '';         // Item Description
     var $guid = '';         // Item GUID
-    var $image_url = '';        // Item Image
+    var $image_url = '';    // Item Image
     var $auth = null;       // Authorizations
 }
 

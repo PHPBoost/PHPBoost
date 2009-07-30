@@ -1,34 +1,44 @@
 		<script type="text/javascript">
 		<!--
-		var displayed{FIELD} = false;
-		function XMLHttpRequest_preview()
+		var displayed = new Array();
+		displayed['{FIELD}'] = false;
+		function XMLHttpRequest_preview(field)
 		{
+			if( XMLHttpRequest_preview.arguments.length == 0 )
+ 			    field = '{FIELD}';
+
 			{TINYMCE_TRIGGER}
-			var contents = document.getElementById('{FIELD}').value;
+			var contents = document.getElementById(field).value;
 			
 			if( contents != "" )
 			{
-				if( !displayed{FIELD} ) 
-					Effect.BlindDown('xmlhttprequest_preview{FIELD}', { duration: 0.5 });
+				if( !displayed[field] ) 
+					Effect.BlindDown('xmlhttprequest_preview' + field, { duration: 0.5 });
 					
-				if( document.getElementById('loading_preview{FIELD}') )
-					document.getElementById('loading_preview{FIELD}').style.display = 'block';
-				displayed{FIELD} = true;			
-			
-				contents = escape_xmlhttprequest(contents);
-				data = "contents=" + contents + "&ftags={FORBIDDEN_TAGS}";			
-			  
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php?path_to_root={PATH_TO_ROOT}&editor={EDITOR_NAME}');
-				xhr_object.onreadystatechange = function() 
-				{
-					if( xhr_object.readyState == 4 ) 
-					{	
-						document.getElementById('xmlhttprequest_preview{FIELD}').innerHTML = xhr_object.responseText;
-						if( document.getElementById('loading_preview{FIELD}') )
-							document.getElementById('loading_preview{FIELD}').style.display = 'none';
+				if( document.getElementById('loading_preview' + field) )
+					document.getElementById('loading_preview' + field).style.display = 'block';
+				displayed[field] = true;			
+
+				new Ajax.Request(
+					'{PATH_TO_ROOT}/kernel/framework/ajax/content_xmlhttprequest.php',
+					{
+						method: 'post',
+						parameters: {
+							token: '{TOKEN}',
+							path_to_root: '{PHP_PATH_TO_ROOT}',
+							editor: '{EDITOR_NAME}',
+							page_path: '{PAGE_PATH}',  
+							contents: contents,
+							ftags: '{FORBIDDEN_TAGS}'
+						 },
+						onSuccess: function(response)
+						{
+							document.getElementById('xmlhttprequest_preview' + field).innerHTML = response.responseText;
+							if( document.getElementById('loading_preview' + field) )
+								document.getElementById('loading_preview' + field).style.display = 'none';
+						}
 					}
-				}
-				xmlhttprequest_sender(xhr_object, data);
+				);
 			}	
 			else
 				alert("{L_REQUIRE_TEXT}");
@@ -39,7 +49,6 @@
 		<div style="display:none;" class="xmlhttprequest_preview" id="xmlhttprequest_preview{FIELD}"></div>
 		
 		# IF C_BBCODE_TINYMCE_MODE #			
-		# IF C_EDITOR_NOT_ALREADY_INCLUDED # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #
 		<script language="javascript" type="text/javascript">
 		<!--
 		tinyMCE.init({
@@ -54,7 +63,7 @@
 			theme_advanced_toolbar_location : "top", 
 			theme_advanced_toolbar_align : "center", 
 			theme_advanced_statusbar_location : "bottom",
-			plugins : "table,flash,searchreplace,inlinepopups,fullscreen",
+			plugins : "table,flash,searchreplace,inlinepopups,fullscreen,emotions",
 			extended_valid_elements : "font[face|size|color|style],span[class|align|style],a[href|name]",
 			theme_advanced_resize_horizontal : false, 
 			theme_advanced_resizing : true
@@ -64,7 +73,7 @@
 		
 			# IF C_UPLOAD_MANAGEMENT #
 				<div style="float:right;margin-left:5px;">
-					<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={IDENTIFIER}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROO{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+					<a style="font-size: 10px;" title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={IDENTIFIER}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
 				</div>
 			# ENDIF #
 		
@@ -150,17 +159,17 @@
 				<td>
 					<table class="bbcode">
 						<tr>
-							<td style="padding: 2px;">
+							<td style="padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 
-								<div style="position:relative;z-index:100;margin-left:-70px;float:left;display:none;" id="bb_block1{FIELD}">
+								<div style="position:relative;z-index:100;margin-left:-50px;float:left;display:none;" id="bb_block1{FIELD}">
 									<div class="bbcode_block" style="width:130px;" onmouseover="bb_hide_block('1', '{FIELD}', 1);" onmouseout="bb_hide_block('1', '{FIELD}', 0);">
 										# START smiley #
 										<a onclick="insertbbcode('{smiley.CODE}', 'smile', '{FIELD}');" class="bbcode_hover" title="{smiley.CODE}">{smiley.IMG}</a>{smiley.END_LINE}
 										# END smiley #
 										# IF C_BBCODE_SMILEY_MORE #
 										<br />
-										<a style="font-size: 10px;" href="#" onclick="window.open('{PATH_TO_ROOT}/kernel/bbcode.php?show=true&amp;field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
+										<a style="font-size: 10px;" href="#" onclick="window.open('{PATH_TO_ROOT}/kernel/framework/content/editor/smileys.php?field={FIELD}', '{more.L_SMILEY}', 'height=550,width=650,resizable=yes,scrollbars=yes');return false;">{L_ALL_SMILEY}</a>
 										# ENDIF #
 									</div>
 								</div>
@@ -197,7 +206,7 @@
 										</select>	
 									</div>
 								</div>
-								<a href="javascript:{DISABLED_STITLE}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_STITLE}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SUBTITLE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_STITLE} alt="{L_BB_CONTAINER}" /></a>
+								<a href="javascript:{DISABLED_BLOCK}bb_display_block('3', '{FIELD}');" onmouseout="{DISABLED_BLOCK}bb_hide_block('3', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CONTAINER}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/subtitle.png" {AUTH_BLOCK} alt="{L_BB_CONTAINER}" /></a>
 								
 								<div style="position:relative;z-index:100;float:left;display:none;" id="bb_block4{FIELD}">
 									<div style="margin-left:160px;" class="bbcode_block" onmouseover="bb_hide_block('4', '{FIELD}', 1);" onmouseout="bb_hide_block('4', '{FIELD}', 0);">
@@ -256,7 +265,7 @@
 								<a href="javascript:{DISABLED_SIZE}bb_display_block('6', '{FIELD}');" onmouseout="{DISABLED_SIZE}bb_hide_block('6', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_SIZE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/size.png" {AUTH_SIZE} alt="{L_BB_SIZE}" /></a>			
 
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
-
+								&nbsp;
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/minus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', -100, 'height');textarea_resize('xmlhttprequest_preview', -100, 'height');" alt="{L_BB_SMALL}" title="{L_BB_SMALL}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/plus.png" style="cursor: pointer;cursor:hand;" onclick="textarea_resize('{FIELD}', 100, 'height');textarea_resize('xmlhttprequest_preview', 100, 'height');" alt="{L_BB_LARGE}" title="{L_BB_LARGE}" />
 
@@ -264,9 +273,9 @@
 							</td>
 						</tr>	
 					</table>
-					<table class="bbcode" id="bbcode_more{FIELD}" style="display:none;margin-top:-1px;padding-right:23px;">
+					<table class="bbcode2" id="bbcode_more{FIELD}" style="display:none;margin-top:-1px;margin-left:-1px;">
 						<tr>
-							<td style="width:100%;">
+							<td style="width:100%;padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/left.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" alt="{L_BB_LEFT}" title="{L_BB_LEFT}" />
@@ -290,7 +299,7 @@
                                 
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 								
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/flash.png" class="bbcode_hover" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=100,100]', '[/swf]', '{FIELD}');" alt="{L_BB_SWF}" title="{L_BB_SWF}" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/flash.png" class="bbcode_hover" {AUTH_SWF} onclick="{DISABLED_SWF}insertbbcode('[swf=425,344]', '[/swf]', '{FIELD}');" alt="{L_BB_SWF}" title="{L_BB_SWF}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/movie.png" class="bbcode_hover" {AUTH_MOVIE} onclick="{DISABLED_MOVIE}insertbbcode('[movie=100,100]', '[/movie]', '{FIELD}');" alt="{L_BB_MOVIE}" title="{L_BB_MOVIE}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/sound.png" class="bbcode_hover" {AUTH_SOUND} onclick="{DISABLED_SOUND}insertbbcode('[sound]', '[/sound]', '{FIELD}');" alt="{L_BB_SOUND}" title="{L_BB_SOUND}" />
 								
@@ -341,18 +350,21 @@
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/math.png" class="bbcode_hover" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/anchor.png" class="bbcode_hover" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/html.png" class="bbcode_hover" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');" alt="{L_BB_HTML}" title="{L_BB_HTML}" />
 							</td>
 							<td style="width:3px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
 							</td>
-							<td style="padding:2px;width:22px;">
+							<td style="padding:0px 2px;width:22px;">
 								<a href="http://www.phpboost.com/wiki/bbcode" title="{L_BB_HELP}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/help.png" alt="{L_BB_HELP}" /></a>
 							</td>
 						</tr>	
 					</table>
 				</td>
 				<td style="vertical-align:top;padding-left:8px;padding-top:5px;">
-					{UPLOAD_MANAGEMENT}
+					# IF C_UPLOAD_MANAGEMENT #
+					<a title="{L_BB_UPLOAD}" href="#" onclick="window.open('{PATH_TO_ROOT}/member/upload.php?popup=1&amp;fd={FIELD}', '', 'height=500,width=720,resizable=yes,scrollbars=yes');return false;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/files_add.png" alt="" /></a>
+					# ENDIF #
 				</td>
 			</tr>
 		</table>

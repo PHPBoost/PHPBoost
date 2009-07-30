@@ -119,12 +119,14 @@ $stats_array_browsers = array(
 	'amigavoyager'=> array('Amigavoyager', ''),
 	'amiga-aweb'=> array('Amiga-aweb', ''),
 	'ibrowse' => array('Ibrowse', ''),
+	'phone' => array('Mobile', '../phone.png'),
 	'other' => array('Autres', '../other.png')
 );
 
 //Système d'exploitation.
 $stats_array_os = array(
 	'linux' => array('Linux', 'linux.png'),
+	'windowsseven' => array('Windows Seven', 'windowsseven.png'),
 	'windowsvista' => array('Windows Vista', 'windowsvista.png'),
 	'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
 	'windowsxp' => array('Windows XP', 'windowsxp.png'),
@@ -133,6 +135,7 @@ $stats_array_os = array(
 	'windowsme' => array('Windows Me', 'windowsold.png'),
 	'windows98' => array('Windows 98', 'windowsold.png'),
 	'windows95' => array('Windows 95', 'windowsold.png'),
+	'windowsce' => array('Windows CE', 'windowsold.png'),
 	'macintosh' => array('Mac OS', 'mac.png'),
 	'sunos' => array('SunOS', 'sun.png'),
 	'os2' => array('OS2', 'os2.png'),
@@ -144,6 +147,7 @@ $stats_array_os = array(
 	'wii' => array('Wii', 'wii.png'),
 	'psp' => array('Psp', 'psp.png'),
 	'playstation3' => array('Playstation 3', 'ps3.png'),
+	'phone' => array('Mobile', '../phone.png'),
 	'other' => array('Autres', '../other.png')
 );
 
@@ -400,7 +404,7 @@ $stats_array_lang = array(
 	'zw' => array('Zimbabwe', 'zw.png'),
 	'tv' => array('Tuvalu', 'tv.png'),
 	'ws' => array('Western Samoa', 'ws.png'),
-	'other' => array('Autres', 'other.png')
+	'other' => array('Autres', '../other.png')
 );
 
 ?>

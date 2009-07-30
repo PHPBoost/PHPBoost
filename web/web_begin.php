@@ -40,7 +40,7 @@ $CAT_WEB[$idcat]['name'] = !empty($CAT_WEB[$idcat]['name']) ? $CAT_WEB[$idcat]['
 $web['title'] = '';
 if (!empty($idweb) && !empty($idcat))
 { 
-	$web = $Sql->query_array('web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$web = $Sql->query_array(PREFIX . 'web' , '*', "WHERE aprob = 1 AND id = '" . $idweb . "' AND idcat = '" . $idcat . "'", __LINE__, __FILE__);
 	define('TITLE', $LANG['title_web'] . ' - ' . addslashes($web['title']));
 }
 elseif (!empty($idcat))

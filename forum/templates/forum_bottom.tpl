@@ -42,7 +42,7 @@
 					# IF SELECT_CAT #
 					<form action="{U_CHANGE_CAT}" method="post">
                         <div>
-                            <select name="change_cat" onchange="document.location = {U_ONCHANGE};">
+                            <select name="change_cat" onchange="if(this.options[this.selectedIndex].text.substring(0, 4) == '----') document.location = 'forum{U_ONCHANGE}'; else document.location = '{U_ONCHANGE_CAT}';">
                                 {SELECT_CAT}
                             </select>
                             <noscript>
@@ -53,7 +53,7 @@
 					# ENDIF #
 						
 					# IF C_MASS_MODO_CHECK #
-					<form action="action.php{SID}">
+					<form action="action.php?token={TOKEN}">
                         <div>
                             {L_FOR_SELECTION}: 
                             <select name="massive_action_type">
@@ -81,6 +81,53 @@
 						<a href="stats.php{SID}">{L_STATS}</a> <a href="stats.php{SID}"><img src="{MODULE_DATA_PATH}/images/stats.png" alt="" class="valign_middle" /></a>
 					</span>
 					<div class="spacer"></div>
+				</div>
+				# ENDIF #
+				
+				# IF C_AUTH_POST #
+				<div class="forum_action">
+					# IF C_DISPLAY_MSG #
+					<span id="forum_change_statut">
+						<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom">{ICON_DISPLAY_MSG}</a>	<a href="action{U_ACTION_MSG_DISPLAY}#go_bottom" class="small_link">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_change_statut').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_change_statut()" class="small_link">{ICON_DISPLAY_MSG2}</a> <a href="javascript:XMLHttpRequest_change_statut()" class="small_link"><span id="forum_change_msg">{L_EXPLAIN_DISPLAY_MSG_DEFAULT}</span></a>');
+					-->
+					</script>
+					&bull;
+					# ENDIF #
+					<a href="alert{U_ALERT}#go_bottom" class="small_link"><img class="valign_middle" src="{MODULE_DATA_PATH}/images/important_mini.png" alt="" /></a> <a href="alert{U_ALERT}#go_bottom" class="small_link">{L_ALERT}</a>
+					<span id="forum_track">
+						<a href="action{U_SUSCRIBE}#go_bottom">{ICON_TRACK}</a> <a href="action{U_SUSCRIBE}#go_bottom" class="small_link">{L_TRACK_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_track').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_track()" class="small_link">{ICON_TRACK2}</a> <a href="javascript:XMLHttpRequest_track()" class="small_link"><span id="forum_track_msg">{L_TRACK_DEFAULT}</span></a>');
+					-->
+					</script>
+					&bull;
+					<span id="forum_track_pm">
+						<a href="action{U_SUSCRIBE_PM}#go_bottom">{ICON_SUSCRIBE_PM}</a> <a href="action{U_SUSCRIBE_PM}#go_bottom" class="small_link">{L_SUSCRIBE_PM_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_track_pm').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_track_pm()" class="small_link">{ICON_SUSCRIBE_PM2}</a> <a href="javascript:XMLHttpRequest_track_pm()" class="small_link"><span id="forum_track_pm_msg">{L_SUSCRIBE_PM_DEFAULT}</span></a>');
+					-->
+					</script>
+					&bull;
+					<span id="forum_track_mail">
+						<a href="action{U_SUSCRIBE_MAIL}#go_bottom">{ICON_SUSCRIBE}</a> <a href="action{U_SUSCRIBE_MAIL}#go_bottom" class="small_link">{L_SUSCRIBE_DEFAULT}</a>
+					</span>
+					<script type="text/javascript">
+					<!--				
+					document.getElementById('forum_track_mail').style.display = 'none';
+					document.write('<a href="javascript:XMLHttpRequest_track_mail()" class="small_link">{ICON_SUSCRIBE2}</a> <a href="javascript:XMLHttpRequest_track_mail()" class="small_link"><span id="forum_track_mail_msg">{L_SUSCRIBE_DEFAULT}</span></a>');
+					-->
+					</script>
 				</div>
 				# ENDIF #
 			</div>

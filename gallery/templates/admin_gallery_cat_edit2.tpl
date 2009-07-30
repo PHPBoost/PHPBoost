@@ -42,7 +42,7 @@
 				</li>
 			</ul>
 		</div>
-						 
+
 		<div id="admin_contents">
 		
 			# IF C_ERROR_HANDLER #
@@ -55,7 +55,7 @@
 			</div>
 			# ENDIF #
 				
-			<form action="admin_gallery_cat.php" method="post" class="fieldset_content">
+			<form action="admin_gallery_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>

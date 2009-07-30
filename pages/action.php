@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 include_once('pages_begin.php');
 include_once('pages_functions.php');
 
@@ -49,7 +49,7 @@ $remove_action = retrieve(POST, 'action', ''); //Action à faire lors de la suppr
 
 if (!empty($new_title) && $id_rename_post > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -59,7 +59,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
-	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'])
@@ -67,18 +67,18 @@ if (!empty($new_title) && $id_rename_post > 0)
 		//On doit créer une redirection automatique
 		if (!empty($_POST['create_redirection']))
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $page_infos['title'] . "', '" . $page_infos['encoded_title'] . "', '" . $id_rename_post . "')", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $page_infos['title'] . "', '" . $page_infos['encoded_title'] . "', '" . $id_rename_post . "')", __LINE__, __FILE__);
 			
 		}
 		else
-			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
@@ -87,7 +87,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_new_post . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_new_post . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -97,12 +97,12 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
-	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
+	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0)
 	{
-		$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
@@ -111,7 +111,10 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 //Suppression des redirections
 elseif ($del_redirection > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
+    //Vérification de la validité du jeton
+    $Session->csrf_get_protect();
+    
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -122,7 +125,7 @@ elseif ($del_redirection > 0)
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
 		
 	redirect(HOST . DIR . url('/pages/action.php?id=' . $page_infos['redirect'], '', '&'));
 }
@@ -130,12 +133,12 @@ elseif ($del_redirection > 0)
 elseif ($del_cat_post > 0 && $report_cat >= 0)
 {
 	$remove_action = ($remove_action == 'move_all') ? 'move_all' : 'remove_all';
-	$page_infos = $Sql->query_array("pages", "encoded_title", "id_cat", "auth", "WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . "pages", "encoded_title", "id_cat", "auth", "WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
 	
 	$general_auth = empty($page_infos['auth']) ? true : false;
 	$array_auth = !empty($page_infos['auth']) ? unserialize($page_infos['auth']) : array();
 	if (!((!$general_auth || $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) && ($general_auth || $User->check_auth($array_auth , EDIT_PAGE))))
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 	$sub_cats = array();
 	//On fait un tableau contenant la liste des sous catégories de cette catégorie
@@ -144,7 +147,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	$id_to_delete = implode($sub_cats, ', ');
 	
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
-	{	
+	{
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $page_infos['id_cat'])//Si on veut reporter dans une catégorie parente
 			redirect(HOST . DIR . '/pages/' . url('action.php?del_cat=' . $del_cat_post . '&error=e_cat_contains_cat#errorh', '','&'));
@@ -153,9 +156,9 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	if ($remove_action == 'remove_all') //On supprime le contenu de la catégorie
 	{
 		//Suppression des pages contenues par cette catégorie
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id_cat IN (" . $id_to_delete . ")", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages_cats WHERE id IN (" . $id_to_delete . ")", __LINE__, __FILE__);
-		$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE script = 'pages' AND idprov IN (" . $id_to_delete . ")", __LINE__); 
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id_cat IN (" . $id_to_delete . ")", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id IN (" . $id_to_delete . ")", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE script = 'pages' AND idprov IN (" . $id_to_delete . ")", __LINE__);
 		$Cache->Generate_module_file('pages');
 		
 		//On redirige soit vers l'article parent soit vers la catégorie
@@ -170,11 +173,11 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
 		//Quoi qu'il arrive on supprime l'article associé
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);	
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages_cats WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);  
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_cat_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages_cats WHERE id = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 		
-		$Sql->query_inject("UPDATE ".PREFIX."pages SET id_cat = '" . $report_cat . "' WHERE id_cat = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."pages_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages SET id_cat = '" . $report_cat . "' WHERE id_cat = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages_cats SET id_parent = '" . $report_cat . "' WHERE id_parent = '" . $page_infos['id_cat'] . "'", __LINE__, __FILE__);
 		$Cache->Generate_module_file('pages');
 		
 		if (array_key_exists($report_cat, $_PAGES_CATS))
@@ -189,7 +192,7 @@ elseif ($del_cat_post > 0 && $report_cat >= 0)
 
 if ($id_page > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_page . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_page . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -210,7 +213,7 @@ if ($id_page > 0)
 	$id = $page_infos['id_cat'];
 	while ($id > 0)
 	{
-	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))	
+	if (empty($_PAGES_CATS[$id]['auth']) || $User->check_auth($_PAGES_CATS[$id]['auth'], READ_PAGE))
 		$Bread_crumb->add($_PAGES_CATS[$id]['name'], url('pages.php?title=' . url_encode_rewrite($_PAGES_CATS[$id]['name']), url_encode_rewrite($_PAGES_CATS[$id]['name'])));
 		$id = (int)$_PAGES_CATS[$id]['id_parent'];
 	}
@@ -228,7 +231,7 @@ $Template->set_filenames(array('pages_action'=> 'pages/action.tpl'));
 
 if ($del_cat > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect', "WHERE id = '" . $del_cat . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'auth', 'id_cat', 'redirect', "WHERE id = '" . $del_cat . "'", __LINE__, __FILE__);
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
@@ -272,7 +275,7 @@ if ($del_cat > 0)
 		'SELECTED_CAT' => $page_infos['id_cat'],
 		'CAT_0' => ($page_infos['id_cat'] == 0 ? 'pages_selected_cat' : ''),
 		'ID_CAT' => $page_infos['id_cat']
-	));	
+	));
 	
 	//Gestion des erreurs
 	$error = retrieve(GET, 'error', '');
@@ -290,7 +293,7 @@ elseif ($id_rename > 0)
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
 		'L_SUBMIT' => $LANG['submit'],
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -310,7 +313,7 @@ elseif ($id_new > 0)
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => url('action.php'),
+		'TARGET' => url('action.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -329,15 +332,15 @@ elseif ($id_redirection > 0)
 	$Template->assign_block_vars('redirection', array());
 	
 	$result = $Sql->query_while("SELECT id, title, auth AS auth
-	FROM ".PREFIX."pages
+	FROM " . PREFIX . "pages
 	WHERE redirect = '" . $id_redirection . "'
 	ORDER BY title ASC", __LINE__, __FILE__);
-	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
+	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('redirection.list', array(
 			'REDIRECTION_TITLE' => $row['title'],
-			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
+			'ACTIONS' => '<a href="action.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>'
 		));
 
 		if ($nbr_rows == 0)
@@ -363,11 +366,11 @@ else
 	$Template->assign_block_vars('redirections', array());
 	
 	$result = $Sql->query_while("SELECT r.title, r.encoded_title AS encoded_title, r.id, p.id AS page_id, p.title AS page_title, p.encoded_title AS page_encoded_title, p.auth AS auth
-	FROM ".PREFIX."pages r
-	LEFT JOIN ".PREFIX."pages p ON p.id = r.redirect
+	FROM " . PREFIX . "pages r
+	LEFT JOIN " . PREFIX . "pages p ON p.id = r.redirect
 	WHERE r.redirect > 0
 	ORDER BY r.title ASC", __LINE__, __FILE__);
-	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect > 0", __LINE__, __FILE__);
+	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect > 0", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -377,7 +380,7 @@ else
 		$Template->assign_block_vars('redirections.list', array(
 			'REDIRECTION_TITLE' => '<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a>',
 			'REDIRECTION_TARGET' => '<a href="' . url('pages.php?title=' . $row['page_encoded_title'], $row['page_encoded_title']) . '">' . $row['page_title'] . '</a>',
-			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
+			'ACTIONS' => ( ($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)) ) ? '<a href="action.php?del=' . $row['id'] . '&amp;token)' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>&nbsp;&bull;&nbsp;<a href="action.php?id=' . $row['page_id'] . '" title="' . $LANG['pages_manage_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/redirect.png" alt="' . $LANG['pages_manage_redirection'] . '" /></a>' : ''
 		));
 	}
 	

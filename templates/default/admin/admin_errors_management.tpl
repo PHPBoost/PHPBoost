@@ -17,7 +17,7 @@
 		-->	
 		</script>
 		<div id="admin_contents">
-			<form action="admin_errors.php" name="form" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
+			<form action="admin_errors.php?token={TOKEN}" method="post" class="fieldset_content" onsubmit="javascript:return Confirm_del()">
 				<fieldset>
 					<legend>{L_ERASE}</legend>
 					<dl>
@@ -51,7 +51,7 @@
 				# START errors #
 				<tr>
 					<td class="row2">
-						<p class="{errors.CLASS}" style="width:500px;margin:auto;padding:8px;" id="errorh">
+						<p class="{errors.CLASS}" style="width:500px;margin:auto;padding:8px;">
 							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{errors.IMG}.png" style="float:left;padding-right:6px;" alt="" /> {errors.L_ERROR_DESC}
 							<br /><br />						
 						</p>

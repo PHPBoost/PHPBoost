@@ -30,17 +30,18 @@
 //      use, on of these
 
 import('menu/menu');
+import('util/url');
 
 define('LINKS_MENU_ELEMENT__CLASS','LinksMenuElement');
 define('LINKS_MENU_ELEMENT__FULL_DISPLAYING', true);
 define('LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING', false);
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @abstract
  * @desc A LinksMenuElement contains a Title, an url, and an image url
- * @package Menu
- * @subpackage LinksMenu
+ * @package menu
+ * @subpackage linksmenu
  */
 class LinksMenuElement extends Menu
 {
@@ -54,10 +55,10 @@ class LinksMenuElement extends Menu
 	 */
 	function LinksMenuElement($title, $url, $image = '')
 	{
+       parent::Menu($title);
        $this->set_url($url);
        $this->set_image($image);
        $this->uid = get_uid();
-       parent::Menu($title);
 	}
 	
 	## Setters ##
@@ -66,37 +67,14 @@ class LinksMenuElement extends Menu
      */
 	function set_image($image)
 	{
-	   if (!strpos($image, '://') && !strpos($image, '/') == 0)
-        {   // The url is relative and we need to put it in the right format
-            $this->image = '/' . preg_replace('`(^\./)`', '',
-                preg_replace('`((?=[/^]?)\.{2})/`', '', $image, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
-            );
-        }
-        else
-        {  // Absolute url (http or from the website root),
-           // we do not need to do anything
-           $this->image = $image;
-        }
+        $this->image = Url::get_relative($image);
 	}
 	/**
 	 * @param string $url the value to set
 	 */
 	function set_url($url)
 	{
-//	    $url = '/../forum/forum.php';
-	    if (!strpos($url, '://') && !strpos($url, '/') == 0)
-	    {   // The url is relative and we need to put it in the right format
-            $this->url = '/' . preg_replace('`(^\./)`', '',
-                preg_replace('`((?=[/^]?)\.{2})/`', '', $url, (int) ((strlen(PATH_TO_ROOT) + 1) / 3)), 1
-            );
-	    }
-	    else
-	    {  // Absolute url (http or from the website root),
-	       // we do not need to do anything
-	       $this->url = $url;
-	    }
-//	    echo $url . '<br />' . $this->url;
-//	    exit;
+        $this->url = Url::get_relative($url);
 	}
      
 	## Getters ##
@@ -121,13 +99,20 @@ class LinksMenuElement extends Menu
      */
     function get_url($compute_relative_url = true)
     {
-        if ($compute_relative_url)
+        if (!empty($this->url))
         {
-            global $CONFIG;
-            return url(strpos($this->url, '://') > 0 ? $this->url :
-                trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->url);
+            if ($compute_relative_url)
+            {
+                global $CONFIG;
+                import('util/url');
+                return url(strpos($this->url, '://') > 0 ? $this->url : Url::compress($CONFIG['server_name'] . '/' . $CONFIG['server_path'] . '/' . $this->url));
+            }
+            else
+            {
+                return url($this->url);
+            }
         }
-       return url($this->url);
+        return '';
     }
     /**
      * @param bool $compute_relative_url If true, computes relative urls to the website root
@@ -135,13 +120,17 @@ class LinksMenuElement extends Menu
      */
     function get_image($compute_relative_url = true)
     {
-        if ($compute_relative_url)
+        if (!empty($this->image))
         {
-            global $CONFIG;
-            return strpos($this->image, '://') > 0 ? $this->image :
-                trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->image;
+            if ($compute_relative_url)
+            {
+                global $CONFIG;
+                return strpos($this->image, '://') > 0 ? $this->image :
+                    trim($CONFIG['server_name'], '/') . '/' .trim($CONFIG['server_path'], '/') . $this->image;
+            }
+            return $this->image;
         }
-        return $this->image;
+        return '';
     }
 	
     /**
@@ -174,17 +163,34 @@ class LinksMenuElement extends Menu
     {
     }
 	
+    /**
+     * @desc returns the string to write in the cache file
+     * @return string the string to write in the cache file
+     */
+    function cache_export()
+    {
+        return parent::cache_export();
+    }
+    
     ## Private Methods ##
     /**
      * @desc Assign tpl vars
      * @access protected
      * @param Template $template the template on which we gonna assign vars
+     * @param int $mode in LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
+     * displayed. With the LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
+     * also shown.
      */
     function _assign(&$template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
+    	parent::_assign($template);
         $template->assign_vars(array(
-            'C_IMG' => !empty($this->image),
             'TITLE' => $this->title,
+            'C_FIRST_LEVEL' => $this->depth == 1,
+            'DEPTH' => $this->depth,
+            'PARENT_DEPTH' => $this->depth - 1,
+            'C_URL' => !empty($this->url),
+            'C_IMG' => !empty($this->image),
             'ABSOLUTE_URL' => $this->get_url(false),
             'ABSOLUTE_IMG' => $this->get_image(false),
             'RELATIVE_URL' => $this->get_url(true),
@@ -197,20 +203,20 @@ class LinksMenuElement extends Menu
   		if ($mode)
   		{
   			$template->assign_vars(array(
-  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->auth, array(), 'menu_element_' . $this->uid . '_auth')
+  				'AUTH_FORM' => Authorizations::generate_select(AUTH_MENUS, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
   			));
 		}
     }
 	
-    
     /**
-     * @desc returns the string to write in the cache file
-     * @return string the string to write in the cache file
+     * @desc Increase the Menu Depth and set the menu type to its parent one
+     * @access protected
      */
-    function cache_export()
+    function _parent()
     {
-        return parent::cache_export();
+        $this->depth++;
     }
+    
     
 	## Private attributes ##
 	/**
@@ -228,6 +234,11 @@ class LinksMenuElement extends Menu
      * @var int Menu's uid
      */
     var $uid = null;
+    /**
+     * @access protected
+     * @var int Menu's depth
+     */
+    var $depth = 0;
 }
 
 ?>

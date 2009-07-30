@@ -51,7 +51,7 @@
 			-->
 			</script>
 				
-			<form action="admin_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset> 
 					<legend>{L_CONFIG_MAIN}</legend>
 					<dl>
@@ -59,12 +59,12 @@
 						<dd><label><input type="text" size="40" maxlength="100" id="site_name" name="site_name" value="{SITE_NAME}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="site_desc">{L_SITE_DESC}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_desc" id="site_desc">{SITE_DESCRIPTION}</textarea></label></dd>
+						<dt><label for="site_desc">{L_SITE_DESC}</label><br /><span>{L_SITE_DESC_EXPLAIN}</span></dt>
+						<dd><label><textarea class="post" rows="3" cols="37" name="site_desc" id="site_desc">{SITE_DESCRIPTION}</textarea></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="site_keyword" id="site_keyword">{SITE_KEYWORD}</textarea></label></dd>
+						<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
+						<dd><label><textarea class="post" rows="3" cols="37" name="site_keyword" id="site_keyword">{SITE_KEYWORD}</textarea></label></dd>
 					</dl> 
 					<dl>
 						<dt><label for="site_lang">* {L_DEFAULT_LANGUAGES}</label></dt>
@@ -84,19 +84,20 @@
 								{select.THEME}				
 							# END select #				
 							</select>
-							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{THEME}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
+							<img id="img_theme" src="{PATH_TO_ROOT}/templates/{THEME_DEFAULT}/theme/images/theme.jpg" alt="" style="vertical-align:top" />
 						</label></dd>
 					</dl>
 					<dl>
 						<dt><label for="start_page">* {L_START_PAGE}</label></dt>
 						<dd><label>
-							<select name="start_page" id="start_page">		
+							<select name="start_page" id="start_page" onclick="document.getElementById('start_page2').value = '';">		
+								<option value="" selected="selected" id="start_page_default">--</option>
 								{SELECT_PAGE}			
 							</select> 
 						</label>
 						<br />
 						<label>{L_OTHER} 
-						<input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" /></label>
+						<input type="text" maxlength="255" size="20" id="start_page2" name="start_page2" class="text" value="{START_PAGE}" onclick="document.getElementById('start_page_default').selected = true;" /></label>
 						</dd>
 					</dl>
 					<dl>
@@ -148,19 +149,16 @@
 						{L_EMAIL_MANAGEMENT}
 					</legend>
 					<dl>
+						<dt><label for="mail_exp">* {L_EMAIL_ADMIN_EXP}</label><br /><span>{L_EMAIL_ADMIN_EXP_EXPLAIN}</span></dt>
+						<dd><label><input type="text" maxlength="255" size="40" id="mail_exp" name="mail_exp" value="{MAIL_EXP}" class="text" /></label></dd>
+					</dl>
+					<dl>
 						<dt><label for="mail">* {L_EMAIL_ADMIN}</label><br /><span>{L_EMAIL_ADMIN_EXPLAIN}</span></dt>
 						<dd><label><input type="text" maxlength="255" size="40" id="mail" name="mail" value="{MAIL}" class="text" /></label></dd>
 					</dl>
 					<dl>
-						<dt><label for="activ_mail">{L_EMAIL_ADMIN_STATUS}</label><br /><span>{L_EMAIL_ADMIN_STATUS_EXPLAIN}</span></dt>
-						<dd>
-							<label><input type="radio" {MAIL_ENABLED} name="activ_mail" id="activ_mail" value="1" /> {L_ACTIV}&nbsp;&nbsp;</label>
-							<label><input type="radio" {MAIL_DISABLED} name="activ_mail" value="0" /> {L_UNACTIVE}</label>
-						</dd>
-					</dl>
-					<dl>
 						<dt><label for="sign">{L_EMAIL_ADMIN_SIGN}</label><br /><span>{L_EMAIL_ADMIN_SIGN_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="3" cols="37" name="sign" id="sign">{SIGN}</textarea></label></dd>
+						<dd><label><textarea class="post" rows="3" cols="37" name="sign" id="sign">{SIGN}</textarea></label></dd>
 					</dl>
 				</fieldset> 
 

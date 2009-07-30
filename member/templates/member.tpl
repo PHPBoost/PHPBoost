@@ -7,6 +7,15 @@
 				alert("{L_REQUIRE_MAIL}");
 				return false;
 		    }
+			# IF C_PROFIL_MISCELLANEOUS #
+				# START miscellaneous_js_list #
+				if(document.getElementById('{miscellaneous_js_list.ID}') && document.getElementById('{miscellaneous_js_list.ID}').value == "") {
+					alert("{miscellaneous_js_list.L_REQUIRED}");
+					return false;
+				}
+				# END miscellaneous_js_list #	
+			# ENDIF #
+			
 			return true;
 		}
 		function img_sex(url)
@@ -38,50 +47,92 @@
 		{
 			document.getElementById('msg_email').innerHTML = '<img src="{PATH_TO_ROOT}/templates/{THEME}/images/loading_mini.gif" alt="" />';
 			data = "mail=" + value + "&login=" + "{USER_LOGIN}";
-			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php');
+			var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/member/register_xmlhttprequest.php?token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText == '1' )
 				{
-					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_AUTH}";
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_email_div').innerHTML = "{L_MAIL_AUTH}";
 				}
 				else if( xhr_object.readyState == 4 )
-					document.getElementById('msg_email').innerHTML = '';
+				{	
+					document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_email_div').innerHTML = "";
+				}
 			}
 			xmlhttprequest_sender(xhr_object, data);
 		}
 		function check_email(value) 
 		{
-			regex=/^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
-			if (!regex.test(value))
-				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_MAIL_INVALID}";
-			else	
+			if (!check_mail_validity(value))
+			{	
+				document.getElementById('msg_email').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
+			}
+			else
 				XMLHttpRequest_register_mail(value);	
 		}
 		function check_password(value) 
 		{
-			document.getElementById('msg_password2').innerHTML = "";
 			if (value.length<6)
-				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			{	
+				document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_HOW}";
+			}
 			else
 			{
-				document.getElementById('msg_password1').innerHTML = "";
 				var password = document.getElementById('pass_bis').value;
-				if (password.length > 0 && password != value)
-					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+				if (password == value)
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
+				else if (password.length > 0)
+				{	
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_SAME}";
+				}
+				else
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+				}
 			}	
 		}
 		function check_password2(value) 
 		{
-			document.getElementById('msg_password1').innerHTML = "";
 			if (value.length<6)
-				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_HOW}";
+			{	
+				document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+				document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_HOW}";
+			}
 			else
 			{
-				document.getElementById('msg_password2').innerHTML = "";
 				var password = document.getElementById('pass').value;
-				if (password.length > 0 && password != value)
-					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/admin/errors_mini.png" alt="" class="valign_middle" /> ' + "{L_PASSWORD_SAME}";
+				if (password == value)
+				{
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = '';
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
+				else if (password.length > 0)
+				{	
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+					document.getElementById('msg_password1').innerHTML = '<img src="../templates/{THEME}/images/forbidden_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_SAME}";
+				}
+				else
+				{
+					document.getElementById('msg_password2').innerHTML = '<img src="../templates/{THEME}/images/processed_mini.png" alt="" class="valign_middle" />';
+					document.getElementById('msg_password2_div').innerHTML = '';
+				}
 			}	
 		}
 		-->
@@ -107,7 +158,7 @@
 				<legend>{L_PROFIL_EDIT}</legend>
 				<dl>
 					<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_VALID}</span></dt>
-					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_email"></div></label></dd>
+					<dd><label><input type="text" maxlength="50" size="30" id="mail" name="mail" value="{MAIL}" class="text" onblur="check_email(this.value);" /></label> &nbsp;<span id="msg_email"></span><div style="font-weight:bold" id="msg_email_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_old">(*) {L_PREVIOUS_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
@@ -115,11 +166,11 @@
 				</dl>
 				<dl>
 					<dt><label for="pass">(*) {L_NEW_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password1"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass" id="pass" maxlength="30" onblur="check_password(this.value);" /></label> &nbsp;<span id="msg_password1"></span><div style="font-weight:bold" id="msg_password1_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="pass_bis">(*) {L_CONFIRM_PASS}</label><br /><span>{L_EDIT_JUST_IF_MODIF}</span></dt>
-					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /> <br /><div style="margin-top:4px;font-weight:bold" id="msg_password2"></div></label></dd>
+					<dd><label><input size="30" type="password" class="text" name="pass_bis" id="pass_bis" maxlength="30" onblur="check_password2(this.value);" /></label> &nbsp;<span id="msg_password2"></span><div style="font-weight:bold" id="msg_password2_div"></div></dd>
 				</dl>
 				<dl>
 					<dt><label for="del_member">{L_DEL_USER}</label></dt>
@@ -145,7 +196,7 @@
 					<dt><label for="user_theme">* {L_THEME_CHOOSE}</label></dt>
 					<dd>
 						<label>
-							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">
+							<select name="user_theme" id="user_theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">
 								# START select_theme #
 									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #
@@ -215,26 +266,22 @@
 				</dl>
 				<dl class="overflow_visible">
 					<dt><label for="user_born">{L_DATE_OF_BIRTH}</label><br /><span>{L_DATE_FORMAT}</span></dt>
-					<dd><label>
-						<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /> 
-
+					<dd>
+						<label><input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /></label>
 						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
 						<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-					</label></dd>
+					</dd>
 				</dl>
-				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p></dt>
-                <p>
-                    {USER_SIGN_EDITOR}
-                    <textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
-                </p>
+				<p><label for="user_sign">{L_SIGN}</label><br /><span class="text_small">{L_SIGN_WHERE}</span></p>
+				{USER_SIGN_EDITOR}
+				<textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{USER_SIGN}</textarea>
 				<p><label for="user_desc">{L_BIOGRAPHY}</label></p>
-                <p>
-                    {USER_DESC_EDITOR}
-					<textarea class="post" rows="15" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
-				</p>
+				{USER_DESC_EDITOR}
+				<textarea class="post" rows="10" cols="27" id="user_desc" name="user_desc">{USER_DESC}</textarea>
+				<div class="spacer">&nbsp;</div>
 			</fieldset>
 				
 			<fieldset>
@@ -245,7 +292,7 @@
 				</dl>
 				<dl>
 					<dt><label for="user_yahoo">Yahoo</label></dt>
-					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{USER_YAHOO}" maxlength="50" /></label></dd>
+					<dd><input size="30" type="text" class="text" name="user_yahoo" id="user_yahoo" value="{USER_YAHOO}" maxlength="50" /></dd>
 				</dl>
 			</fieldset>	
 				
@@ -253,7 +300,7 @@
 				<legend>{L_AVATAR_MANAGEMENT}</legend>
 				<dl>
 					<dt><label>{L_CURRENT_AVATAR}</label></dt>
-					<dd>{USER_AVATAR}</label></dd>
+					<dd>{USER_AVATAR}</dd>
 				</dl>	
 				# IF C_UPLOAD_AVATAR #
 				<dl>
@@ -262,11 +309,11 @@
 						<input type="file" name="avatars" id="avatars" size="30" class="file" />					
 						<input type="hidden" name="max_file_size" value="2000000" />
 						<br />
-						{L_WEIGHT_MAX}: {WEIGHT_MAX} ko
+						{L_WEIGHT_MAX}: {WEIGHT_MAX} {L_UNIT_KO}
 						<br />
-						{L_HEIGHT_MAX}: {HEIGHT_MAX} pixels
+						{L_HEIGHT_MAX}: {HEIGHT_MAX} {L_UNIT_PX}
 						<br />
-						{L_WIDTH_MAX}: {WIDTH_MAX} pixels
+						{L_WIDTH_MAX}: {WIDTH_MAX} {L_UNIT_PX}
 					</label></dd>
 				</dl>
 				# ENDIF #
@@ -311,41 +358,46 @@
 			<div class="module_top"><strong>{L_PROFIL}</strong></div>
 			<div class="module_contents">
 				<p style="text-align:center;" class="text_strong">{L_WELCOME} {USER_NAME}</p>
-				<table class="module_table">
+				
+				<table class="module_table" style="width:99%;margin-top:15px;">
 					<tr>
 						<td class="row2" style="text-align:center;">
-							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a>
-							<br /><br />
 							<a href="member{U_USER_ID}" title="">
 								<img src="../templates/{THEME}/images/upload/member.png" alt="{L_PROFIL_EDIT}" title="{L_PROFIL_EDIT}" />
 							</a>
+							<br />
+							<a href="member{U_USER_ID}">{L_PROFIL_EDIT}</a> <br /><br />
 						</td>
 						<td class="row2" style="text-align:center;">
-							<a href="pm{U_USER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
 							<a href="pm{U_USER_PM}">
 								<img src="../templates/{THEME}/images/{IMG_PM}" alt="{L_PRIVATE_MESSAGE}" title="{L_PRIVATE_MESSAGE}" />
 							</a>
+							<br />
+							<a href="pm{U_USER_PM}">{PM} {L_PRIVATE_MESSAGE}</a> <br /><br />
 						</td>
 						# IF C_USER_AUTH_FILES #
 						<td class="row2" style="text-align:center;">
-							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 							<a href="upload.php{SID}">
 								<img src="../templates/{THEME}/images/upload/files_add.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
 							</a>
+							<br />
+							<a href="upload.php{SID}">{L_FILES_MANAGEMENT}</a> <br /><br />
 						</td>				
 						# ENDIF #
 						<td class="row2" style="text-align:center;">
-							<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
 							<a href="{U_CONTRIBUTION_PANEL}">
-								<img src="../templates/{THEME}/images/contribution.png" alt="{L_PRIVATE_MESSAGE}" title="{L_CONTRIBUTION_PANEL}" />
+								<img src="../templates/{THEME}/images/contribution.png" alt="{L_CONTRIBUTION_PANEL}" title="{L_CONTRIBUTION_PANEL}" />
 							</a>
+							<br />
+							<a href="{U_CONTRIBUTION_PANEL}">{L_CONTRIBUTION_PANEL}</a> <br /><br />
 						</td>
 						# IF C_IS_MODERATOR #
 						<td class="row2" style="text-align:center;">
-							<a href="{U_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> <br /><br />
 							<a href="{U_MODERATION_PANEL}">
-								<img src="../templates/{THEME}/images/moderation_panel.png" alt="{L_FILES_MANAGEMENT}" title="{L_FILES_MANAGEMENT}" />
+								<img src="../templates/{THEME}/images/moderation_panel.png" alt="{L_MODERATION_PANEL}" title="{L_MODERATION_PANEL}" />
 							</a>
+							<br />
+							<a href="{U_MODERATION_PANEL}">{L_MODERATION_PANEL}</a> <br /><br />
 						</td>				
 						# ENDIF #
 					</tr>
@@ -365,7 +417,7 @@
 		<table class="module_table" style="width:98%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="../member/member.php{SID}" method="post">
+					<form action="../member/member.php?token={TOKEN}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #
@@ -379,7 +431,7 @@
 					</form>				
 				</td>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?token={TOKEN}" method="post">
 						<span style="float:left;">
 							{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
 							<span id="search_img"></span>
@@ -590,7 +642,7 @@
 		<table class="module_table" style="width:70%;">	
 			<tr>
 				<td style="vertical-align:top;" class="row2">
-					<form action="member.php{SID}" method="post">
+					<form action="member.php?token={TOKEN}" method="post">
 						{L_SELECT_GROUP}: <select name="show_group" style="text-align:center;" onchange="document.location = {U_SELECT_SHOW_GROUP};">  
 							<option value="0" selected="selected">-- {L_LIST} --</option>
 							# START group_select #

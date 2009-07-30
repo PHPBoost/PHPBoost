@@ -27,9 +27,9 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function faq_mini()
+function faq_mini($position, $block)
 {
-    global $Cache, $Template, $FAQ_LANG, $RANDOM_QUESTIONS;
+    global $Cache, $Template, $FAQ_LANG, $FAQ_CATS, $RANDOM_QUESTIONS;
     
     load_module_lang('faq');
     $Cache->load('faq'); //Chargement du cache
@@ -38,11 +38,13 @@ function faq_mini()
     include_once(PATH_TO_ROOT . '/faq/faq_cats.class.php');
     
     $tpl = new Template('faq/faq_mini.tpl');
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $block);
     
     $no_random_question = array(
     	'L_FAQ_RANDOM_QUESTION' => $FAQ_LANG['random_question'],
     	'FAQ_QUESTION' => $FAQ_LANG['no_random_question'],
-    	'U_FAQ_QUESTION' => PATH_TO_ROOT . '/faq/' . url('faq.php')
+    	'U_FAQ_QUESTION' => TPL_PATH_TO_ROOT . '/faq/' . url('faq.php')
     );
     
     //Aucune question à afficher

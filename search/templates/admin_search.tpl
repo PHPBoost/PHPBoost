@@ -44,7 +44,7 @@
                 <br />
             # ENDIF #
             # IF NOT C_WEIGHTING #
-            <form action="admin_search.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+            <form action="admin_search.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG}</legend>
                     <dl>
@@ -82,7 +82,7 @@
                     <input type="reset" value="{L_RESET}" class="reset" />
                 </fieldset>
             </form>
-            <form action="admin_search.php?clear=1" name="form" method="post" class="fieldset_content">
+            <form action="admin_search.php?clear=1&amp;token={TOKEN}" name="form" method="post" class="fieldset_content">
                 <fieldset>
                     <legend>{L_CLEAR_OUT_CACHE}</legend>
                     <p style="text-align:center;">
@@ -93,7 +93,7 @@
                 </fieldset>
             </form>
             # ELSE #
-            <form action="admin_search.php?weighting=true" method="post" class="fieldset_content">
+            <form action="admin_search.php?weighting=true&amp;token={TOKEN}" method="post" class="fieldset_content">
                 <fieldset>
                     <legend>{L_SEARCH_CONFIG_WEIGHTING}</legend>
                     <p>{L_SEARCH_CONFIG_WEIGHTING_EXPLAIN}</p>

@@ -14,21 +14,27 @@
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/bbcode.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/admin.css" type="text/css" media="screen" />
+		<!-- Alternative CSS -->
+		{ALTERNATIVE_CSS}
+		
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 		
 		<script type="text/javascript">
 		<!--
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
+			var TOKEN = "{TOKEN}";
 		-->
 		</script>
+		# IF C_BBCODE_TINYMCE_MODE # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #
 		
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype-minified.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>	
+
 	</head>
 	<body>
 	<div id="global">
-		<div id="header_container">
+		<div id="header_admin_container">
 			<div id="header_admin">&nbsp;</div>
 			<div id="sub_header_admin">
 				<div class="dynamic_menu">
@@ -44,4 +50,4 @@
 		</div>
 		
 		<div id="admin_main">
-			&nbsp;
+			

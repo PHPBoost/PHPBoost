@@ -30,8 +30,7 @@
 		</div>
 						 
 		<div id="admin_contents">
-
-			<form method="post" action="admin_gallery_cat.php?del={IDCAT}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
+			<form method="post" action="admin_gallery_cat.php?del={IDCAT}&amp;token={TOKEN}" onsubmit="javascript:return check_form_select();" class="fieldset_content">
 				# START pics #
 				<fieldset>
 					<legend>{pics.L_KEEP}</legend>

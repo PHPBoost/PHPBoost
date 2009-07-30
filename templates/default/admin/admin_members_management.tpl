@@ -34,8 +34,12 @@
 		    }
 			return true;
 		}
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL_USER}");
+		function Confirm(level) {
+			ok = confirm("{L_CONFIRM_DEL_USER}");
+			if (ok && (level == 2)) {
+				return confirm("{L_CONFIRM_DEL_ADMIN}");
+			}
+			return ok;
 		}
 		-->
 		</script>
@@ -74,12 +78,13 @@
 					<legend>{L_SEARCH_USER}</legend>
 					<dl>
 						<dt><label for="login_mbr">* {L_PSEUDO}</label><br /><span>{L_JOKER}</span></dt>
-						<dd><label>
-							<span style="float:left;">
+						<dd>
+							<div style="float:left;">
 								{L_SEARCH_USER}: <input type="text" size="20" maxlength="25" id="login" value="{all.LOGIN}" name="login_mbr" class="text" />
-							<span id="search_img"></span>
-							</span>
-							<span style="float:left;margin-left:5px;">
+								<span id="search_img"></span>
+							
+							</div>
+							<div style="float:left;margin-left:5px;">
 								<input type="submit" id="search_member" name="search_member" value="{L_SEARCH}" class="submit" />
 								<script type="text/javascript">
 								<!--								
@@ -87,12 +92,13 @@
 									document.write('<input value="{L_SEARCH}" onclick="XMLHttpRequest_search_members(\'\', \'{THEME}\', \'admin_member\', \'{L_REQUIRE_LOGIN}\');" type="button" class="submit">');
 								-->
 								</script>									
-								<div id="xmlhttprequest_result_search" style="display:none;" class="xmlhttprequest_result_search"></div>
-							</span>
-							# START search #
-								{search.RESULT}
-							# END search #
-						</label></dd>
+								<div id="xmlhttprequest_result_search" # IF NOT C_DISPLAY_SEARCH_RESULT # style="display:none;" # ENDIF # class="xmlhttprequest_result_search">
+									# START search #
+									{search.RESULT}
+									# END search #
+								</div>
+							</div>
+						</dd>
 					</dl>
 				</fieldset>	
 			</form>
@@ -162,7 +168,7 @@
 						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">
-						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}" onclick="javascript:return Confirm();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}&amp;token={TOKEN}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #

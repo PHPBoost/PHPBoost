@@ -34,7 +34,7 @@ $Cache->load('articles');
 $idart = retrieve(GET, 'id', '', TSTRING);
 if ($idart > 0)
 {
-	$articles = $Sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
+	$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
 	
 	$idartcat = $articles['idcat'];
 	

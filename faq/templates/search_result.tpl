@@ -5,5 +5,5 @@
     </span>
     <div style="clear: both;"></div>
 </div>
-<br>
+<br />
 <div class="blockquote" style="margin-bottom: 30px;">{ANSWER}</div>

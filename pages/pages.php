@@ -37,13 +37,13 @@ include_once('pages_functions.php');
 //Requêtes préliminaires utiles par la suite
 if (!empty($encoded_title)) //Si on connait son titre
 {
-	$page_infos = $Sql->query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	$num_rows =!empty($page_infos['title']) ? 1 : 0;
 	if ($page_infos['redirect'] > 0)
 	{
 		$redirect_title = $page_infos['title'];
 		$redirect_id = $page_infos['id'];
-		$page_infos = $Sql->query_array("pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
+		$page_infos = $Sql->query_array(PREFIX . "pages", 'id', 'title', 'auth', 'is_cat', 'id_cat', 'hits', 'count_hits', 'activ_com', 'nbr_com', 'redirect', 'contents', "WHERE id = '" . $page_infos['redirect'] . "'", __LINE__, __FILE__);
 	}
 	else
 		$redirect_title = '';
@@ -70,10 +70,10 @@ if (!empty($encoded_title)) //Si on connait son titre
 elseif ($id_com > 0)
 {
 	$result = $Sql->query_while("SELECT id, title, encoded_title, auth, is_cat, id_cat, hits, count_hits, activ_com, nbr_com, contents
-		FROM ".PREFIX."pages
+		FROM " . PREFIX . "pages
 		WHERE id = '" . $id_com . "'"
 	, __LINE__, __FILE__);
-	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE id = '" . $id_com . "'");
+	$num_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE id = '" . $id_com . "'");
 	$page_infos = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 	define('TITLE', sprintf($LANG['pages_page_com'], $page_infos['title']));
@@ -120,7 +120,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$links[$LANG['pages_edit']] = array(url('post.php?id=' . $page_infos['id']), $pages_data_path . '/images/edit.png');
 		$links[$LANG['pages_rename']] = array(url('action.php?rename=' . $page_infos['id']), $pages_data_path . '/images/rename.png');
-		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id']), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
+		$links[$LANG['pages_delete']] = $page_infos['is_cat'] == 1 ? array(url('action.php?del_cat=' . $page_infos['id']), $pages_data_path . '/images/delete.png') : array(url('post.php?del=' . $page_infos['id'] . '&amp;token=' . $Session->get_token()), $pages_data_path . '/images/delete.png', 'return confirm(\'' . $LANG['pages_confirm_delete'] . '\');');
 		$links[$LANG['pages_redirections']] = array(url('action.php?id=' . $page_infos['id']), $pages_data_path . '/images/redirect.png');
 		$links[$LANG['pages_create']] = array(url('post.php'), $pages_data_path . '/images/create_page.png');
 		$links[$LANG['printable_version']] = array(url('print.php?title=' . $encoded_title), '../templates/' . get_utheme() . '/images/print_mini.png');
@@ -153,7 +153,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	{
 		$Template->assign_block_vars('redirect', array(
 			'REDIRECTED_FROM' => sprintf($LANG['pages_redirected_from'], $redirect_title),
-			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
+			'DELETE_REDIRECTION' => (($special_auth && $User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))) ? '<a href="action.php?del=' . $redirect_id . '&amp;token=' . $Session->get_token() . '" onclick="return confirm(\'' . $LANG['pages_confirm_delete_redirection'] . '\');" title="' . $LANG['pages_delete_redirection'] . '"><img src="' . $Template->get_module_data_path('pages') . '/images/delete.png" alt="' . $LANG['pages_delete_redirection'] . '" /></a>' : ''
 		));
 	}
 	
@@ -169,7 +169,7 @@ if (!empty($encoded_title) && $num_rows == 1)
 	
 	//On compte le nombre de vus
 	if ($page_infos['count_hits'] == 1)
-		$Sql->query_inject("UPDATE ".PREFIX."pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages SET hits = hits + 1 WHERE id = '" . $page_infos['id'] . "'", __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
 		'TITLE' => $page_infos['title'],
@@ -201,7 +201,7 @@ elseif ($id_com > 0)
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	
 	$Template->assign_vars(array(
-		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s', ''))
+		'COMMENTS' => display_comments('pages', $id_com, url('pages.php?id=' . $id_com . '&amp;com=%s'))
 	));
 	
 	$Template->pparse('com');
@@ -244,8 +244,8 @@ else
 {
 	$Template->set_filenames(array('index'=> 'pages/index.tpl'));
 	
-	$num_pages = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '0'", __LINE__, __FILE__);
-	$num_coms = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."com WHERE script = 'pages'", __LINE__, __FILE__);
+	$num_pages = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '0'", __LINE__, __FILE__);
+	$num_coms = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_COM . " WHERE script = 'pages'", __LINE__, __FILE__);
 	
 	$Template->assign_vars(array(
 		'PAGES_PATH' => $Template->get_module_data_path('pages'),
@@ -287,7 +287,7 @@ else
 	}
 	//Liste des fichiers de la racine
 	$result = $Sql->query_while("SELECT title, id, encoded_title, auth
-		FROM ".PREFIX."pages
+		FROM " . PREFIX . "pages
 		WHERE id_cat = 0 AND is_cat = 0
 		ORDER BY is_cat DESC, title ASC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -317,13 +317,13 @@ else
 
 	$contents = '';
 	$result = $Sql->query_while("SELECT c.id, p.title, p.encoded_title
-	FROM ".PREFIX."pages_cats c
-	LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
+	FROM " . PREFIX . "pages_cats c
+	LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 	WHERE c.id_parent = 0
 	ORDER BY p.title ASC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 		if ($sub_cats_number > 0)
 		{	
 			$Template->assign_block_vars('list', array(

@@ -38,10 +38,10 @@ if (!empty($_POST['add']))
 	
 	if (!empty($code_smiley) && !empty($url_smiley))
 	{
-		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."smileys WHERE code_smiley = '" . $code_smiley . "'", __LINE__, __FILE__);
+		$check_smiley = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_SMILEYS . " WHERE code_smiley = '" . $code_smiley . "'", __LINE__, __FILE__);
 		if (empty($check_smiley))
 		{
-			$Sql->query_inject("INSERT INTO ".PREFIX."smileys (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_SMILEYS . " (code_smiley,url_smiley) VALUES('" . $code_smiley . "','" . $url_smiley . "')", __LINE__, __FILE__);
 		
 			###### Régénération du cache des smileys #######	
 			$Cache->Generate_file('smileys');	
@@ -66,9 +66,9 @@ elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible
 	{
-		include_once('../kernel/framework/io/upload.class.php');
+		import('io/upload');
 		$Upload = new Upload($dir);
-		if (!$Upload->file('upload_smiley', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+		if (!$Upload->file('upload_smiley', '`[a-z0-9_ -]+\.(jpg|gif|png|bmp)+$`i'))
 			$error = $Upload->error;
 	}
 	else
@@ -92,42 +92,27 @@ else
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 		
 	//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
-	$smiley_options = '';
-	$rep = '../images/smileys';
-	$y = 0;
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$smileys_array = array();
+	$smileys_folder_path = new Folder('../images/smileys');
+	foreach ($smileys_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $smileys)
+		$smileys_array[] = $smileys->get_name();
+	
+	$result = $Sql->query_while("SELECT url_smiley
+	FROM " . PREFIX . "smileys", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		$file_array = array();
-		$dh = @opendir($rep);
-		while (!is_bool($file = readdir($dh)))
-		{	
-			if ($file != '.' && $file != '..' && $file != 'index.php' && $file != 'Thumbs.db')
-				$file_array[] = $file; //On crée un array, avec les different fichiers.
-		}	
-		closedir($dh); //On ferme le dossier
-
-		$result = $Sql->query_while("SELECT url_smiley
-		FROM ".PREFIX."smileys", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			$key = array_search($row['url_smiley'], $file_array);
-			if ($key !== false)
-				unset($file_array[$key]); //On supprime ces clées du tableau.
-		}
-		$Sql->query_close($result);
-		
-		foreach ($file_array as $smiley)
-		{
-			if ($y == 0)
-			{
-				$smiley_options .= '<option value="" selected="selected">--</option>';
-				$y++;
-			}
-			else
-				$smiley_options .= '<option value="' . $smiley . '">' . $smiley . '</option>';
-		}
-	}	
+		//On recherche les clées correspondante à celles trouvée dans la bdd.
+		$key = array_search($row['url_smiley'], $smileys_array);
+		if ($key !== false)
+			unset($smileys_array[$key]); //On supprime ces clées du tableau.
+	}
+	$Sql->query_close($result);
+	
+	$y = 0;
+	$smiley_options = '<option value="" selected="selected">--</option>';
+	foreach ($smileys_array as $smiley)
+		$smiley_options .= '<option value="' . $smiley . '">' . $smiley . '</option>';
 	
 	$Template->assign_vars(array(
 		'SMILEY_OPTIONS' => $smiley_options,

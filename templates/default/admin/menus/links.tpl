@@ -48,13 +48,13 @@ function addSubElement(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_ELEMENT}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_url', name: 'menu_element_' + id + '_url'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_IMAGE}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
@@ -90,13 +90,13 @@ function addSubMenu(menu_element_id) {
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_NEW_SUB_MENU}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_MENU}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_url', name: 'menu_element_' + id + '_url'}),
             ' ',
-            Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_IMAGE}),
+            Builder.node('label', {htmlFor: 'menu_element_' + id + '_image'}, {JL_IMAGE}),
             ' ',
             Builder.node('input', {type: 'text', value: '', id: 'menu_element_' + id + '_image', name: 'menu_element_' + id + '_image'})
         ]),
@@ -147,7 +147,7 @@ function deleteElement(element_id)
 		<fieldset> 
 			<legend>{L_ACTION_MENUS}</legend>
 			<dl>
-				<dt><label for="menu_element_{ID}_name">{L_NAME}</label></dt>
+				<dt><label for="menu_element_{ID}_name">* {L_NAME}</label></dt>
 				<dd><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}" /></dd>
 			</dl>
 			<dl>
@@ -159,7 +159,7 @@ function deleteElement(element_id)
 				<dd><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}" /></dd>
 			</dl>
 			<dl>
-				<dt><label for="menu_element_{ID}_type">{L_TYPE}</label></dt>
+				<dt><label for="menu_element_{ID}_type">* {L_TYPE}</label></dt>
 				<dd>
 					<label>
 						<select name="menu_element_{ID}_type" id="menu_element_{ID}_type">
@@ -171,7 +171,7 @@ function deleteElement(element_id)
 				</dd>
 			</dl>
 			<dl>
-				<dt><label for="menu_element_{ID}_location">{L_LOCATION}</label></dt>
+				<dt><label for="menu_element_{ID}_location">* {L_LOCATION}</label></dt>
 				<dd><label>
                     <select name="menu_element_{ID}_location" id="menu_element_{ID}_location">
                         # START location #
@@ -197,13 +197,13 @@ function deleteElement(element_id)
 				</label></dd>
 			</dl>
 			<dl>
-				<dt><label for="menu_element_{ID}_auth">{L_AUTHS}</label></dt>
-				<dd><label>{AUTH_MENUS}</label></dd>
+				<dt>{L_AUTHS}</dt>
+				<dd>{AUTH_MENUS}</dd>
 			</dl>
 		</fieldset>
 		
 		<fieldset>
-			<legend>{L_CONTENT}</legend>
+			<legend>* {L_CONTENT}</legend>
 			{MENU_TREE}
 		    <script type="text/javascript">
 		    <!--
@@ -217,8 +217,7 @@ function deleteElement(element_id)
 			<legend>{L_ACTION}</legend>
 			<input type="hidden" name="id" value="{MENU_ID}" />
 			<input type="hidden" name="menu_tree" id="menu_tree" value="" />
-			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />
-			<input type="reset" value="{L_RESET}" class="reset" />					
+			<input type="submit" name="valid" value="{L_ACTION}" class="submit" />					
 		</fieldset>
 	</form>
 </div>

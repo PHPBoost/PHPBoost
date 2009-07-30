@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 if (!empty($_POST['msg_mbr'])) //Message aux membres.
 {
 	$config_member['activ_register'] = retrieve(POST, 'activ_register', 0);
-	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE)));
+	$config_member['msg_mbr'] = stripslashes(strparse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED)));
 	$config_member['msg_register'] = $CONFIG_USER['msg_register'];
 	$config_member['activ_mbr'] = retrieve(POST, 'activ_mbr', 0); //désactivé par defaut. 
 	$config_member['verif_code'] = (isset($_POST['verif_code']) && @extension_loaded('gd')) ? numeric($_POST['verif_code']) : 0; //désactivé par defaut. 
@@ -46,7 +46,7 @@ if (!empty($_POST['msg_mbr'])) //Message aux membres.
 	$config_member['activ_avatar'] = retrieve(POST, 'activ_avatar', 0);
 	$config_member['avatar_url'] = retrieve(POST, 'avatar_url', '');
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_member)) . "' WHERE name = 'member'", __LINE__, __FILE__); //MAJ	
 	
 	###### Régénération du cache $CONFIG_USER #######
 	$Cache->Generate_file('member');
@@ -129,7 +129,7 @@ else
 		'L_URL_DEFAUT_AVATAR_EXPLAIN' => $LANG['url_defaut_avatar_explain'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],
-		'L_CONTENTS' => $LANG['contents'],
+		'L_CONTENTS' => $LANG['content'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
 	));

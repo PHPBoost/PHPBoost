@@ -1,5 +1,8 @@
 <?php
 if (defined('PHPBOOST') !== true)	exit;
+/**
+* @package lib
+*/
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library (PCL) Trace 1.0
@@ -442,11 +445,11 @@ if (!defined("PCLTRACE_LIB"))
 			for ($i=0; $i<$p_entry[index]; $i++)
 			echo "---";
 			if ($p_entry[type] == 1)
-			echo "<b>".$p_entry[name]."</b>(".$p_entry[param].") : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";
+			echo "<b>".$p_entry[name]."</b>(".$p_entry[param].") : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br />";
 			else if ($p_entry[type] == 2)
-			echo "<b>".$p_entry[name]."</b>()=".$p_entry[param]." : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";
+			echo "<b>".$p_entry[name]."</b>()=".$p_entry[param]." : ".$p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br />";
 			else
-			echo $p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br>";
+			echo $p_entry[message]." [".$p_entry[file].", ".$p_entry[line]."]<br />";
 		}
 	}
 	// --------------------------------------------------------------------------------

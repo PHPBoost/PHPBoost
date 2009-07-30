@@ -1,4 +1,7 @@
 <?php
+/**
+* @package util
+*/
 
 /*##################################################
  *                                constant.php
@@ -27,7 +30,11 @@
  *
 ###################################################*/
 
-//Si register_globals activé, suppression des variables globales qui trainent. Fonction emprunté à phpBB3
+/**
+ * @desc Unsets all the variables automatically set by the register_globals option.
+ * This function must be called only if the register_globals option is enable, otherwise it is useless.
+ * @author PHPBB 3 <http://www.phpbb.com/>
+ */
 function securit_register_globals()
 {
     $not_unset = array(
@@ -78,10 +85,13 @@ function securit_register_globals()
     unset($input);
 }
 
-//Récupération de la page d'installation.
+/**
+ * @desc Computes the path at which we must redirect the user when PHPBoost is not installed.
+ * @param string $path Path to add after the site path.
+ * @return string The URL to which you have to redirect.
+ */
 function get_server_url_page($path)
 {
-   
     $server_name = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
     $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
     if (!$server_path)

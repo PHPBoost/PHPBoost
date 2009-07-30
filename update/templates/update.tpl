@@ -5,77 +5,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<meta name="description" content="PHPBoost" />
 		<link type="text/css" href="templates/update.css" title="phpboost" rel="stylesheet" />
-		<link rel="shortcut" href="../favicon.ico" />
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
+		<script type="text/javascript" src="templates/global.js"></script>
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
 		<script type="text/javascript">
 		<!--
-			var speed_progress = 20;
-			var timeout = null;
-			var max_percent = 0;
-			var info_progress_tmp = '';
 			var step = {NUM_STEP};
-			
-			function progress_bar(percent_progress, info_progress, restart_progress)
-			{
-				bar_progress = (percent_progress * 55) / 100;
-				
-				if (arguments.length == 5)
-				{
-					result_id = arguments[3];
-					result_msg = arguments[4];
-				}
-				else
-				{
-					result_id = "";
-					result_msg = "";
-				}	
-				
-				// Déclaration et initialisation d'une variable statique
-			    if( typeof this.percent_begin == 'undefined' || restart_progress == 1 ) 
-				{	
-					this.percent_begin = 0;
-					max_percent = 0;
-					if( document.getElementById('progress_bar') )
-						document.getElementById('progress_bar').innerHTML = '';
-				}
-			
-				if( this.percent_begin <= bar_progress )
-				{
-					if( document.getElementById('progress_bar') )
-						document.getElementById('progress_bar').innerHTML += '<img src="templates/images/loading.png" alt="" />';
-					if( document.getElementById('progress_percent') )
-						document.getElementById('progress_percent').innerHTML = Math.round((this.percent_begin * 100) / 55);
-					if( document.getElementById('progress_info') )
-					{	
-						if( percent_progress > max_percent )
-						{	
-							max_percent = percent_progress;
-							info_progress_tmp = info_progress;
-						}
-						document.getElementById('progress_info').innerHTML = info_progress_tmp;
-					
-					}
-					//Message de fin
-					if( this.percent_begin == 55 && result_id != "" && result_msg != "" )
-						document.getElementById(result_id).innerHTML = result_msg;
-					timeout = setTimeout('progress_bar(' + percent_progress + ', "' + info_progress + '", 0, "' + result_id + '", "' + result_msg.replace(/"/g, "\\\"") + '")', speed_progress);
-				}
-				else
-					this.percent_begin = this.percent_begin - 1;
-				this.percent_begin++;
-			}
 		-->
 		</script>
-		<div id="header">
-			<img src="templates/images/header_boost.jpg" alt="PHPBoost" />
-		</div>
-
-		<div id="sub_header">
-			<div id="sub_header_left">
-			</div>
-			<div id="sub_header_right">
-			</div>
+	<div id="global">
+		<div id="header_container">
 		</div>
 		<div id="left_menu">
 			<table class="table_left">
@@ -85,12 +27,13 @@
 					</td>
 				</tr>
 				# START link_menu #
-					{link_menu.ROW}
+					<tr>
+						<td class="{link_menu.CLASS}">
+							<img src="templates/images/{link_menu.STEP_IMG}" alt="" class="valign_middle" />&nbsp;&nbsp;{link_menu.STEP_NAME}
+						</td>				
+					</tr>
 				# END link_menu #
 			</table>
-			
-			<br /><br />
-			
 			<table class="table_left">
 				<tr>
 					<td class="row_top">
@@ -98,39 +41,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row_next">
-						<div style="margin:auto;width:235px">
-							<div style="text-align:center;">{L_STEP}</div>
+					<td class="row_next row_final">
+						<div style="margin:auto;width:200px">
+							<div style="text-align:center;margin-bottom:5px;">{L_STEP} :&nbsp;{PROGRESS_LEVEL}%</div>
 							<div style="float:left;height:12px;border:1px solid black;background:white;width:192px;padding:2px;padding-left:3px;padding-right:1px;">
-								{PROGRESS_BAR_PICS}
-							</div>&nbsp;{PROGRESS_LEVEL}%
+								# START progress_bar #<img src="templates/images/progress.png" alt="" /># END progress_bar #
+							</div>
 						</div>
 					</td>
 				</tr>						
-			</table>
-			
-			<br /><br />
-			
-			<table class="table_left">
-				<tr>
-					<td class="row_top">
-						{L_APPENDICES}
-					</td>
-				</tr>
-				<tr>
-					<td class="row_next">
-						<img src="templates/images/help.png" alt="{L_DOCUMENTATION}" class="valign_middle" />
-						&nbsp;&nbsp;
-						<a href="{U_DOCUMENTATION}">{L_DOCUMENTATION}</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="row_next">
-						<img src="templates/images/intro.png" alt="{L_RESTART_INSTALL}" class="valign_middle" />
-						&nbsp;&nbsp;
-						<a href="{U_RESTART}" onclick="return confirm('{L_CONFIRM_RESTART}');">{L_RESTART_INSTALL}</a>
-					</td>
-				</tr>					
 			</table>
 		</div>
 		
@@ -138,376 +57,743 @@
 			<table class="table_contents">
 				<tr> 
 					<th colspan="2">
-						{L_STEP}
+						<div style="text-align:right;padding-top:5px;padding-right:30px;"><img src="templates/images/phpboost.png" alt="Logo PHPBoost" class="valign_middle" /> {L_STEP}</div>
 					</th>
 				</tr>
 				
 				<tr> 					
-					# START intro #
+					# IF C_INTRO #
 					<td class="row_contents">						
-						<span style="float:left;padding:8px;padding-top:0px">
-							<img src="templates/images/phpboost.png" alt="Logo PHPBoost" />
+						<span style="float:right;padding:8px;padding-top:0px;padding-right:25px">
+							<img src="templates/images/PHPBoost_box3.0.png" alt="Logo PHPBoost" />
 						</span>
-						Vous êtes sur le point de mettre à jour PHPBoost de la version 1.6.0 à la 2.0.
+						<h1>{L_INTRO_TITLE}</h1>
+						{L_INTRO_EXPLAIN}
+						
+						<div style="margin-bottom:60px;">&nbsp;</div>
+						
+						<h1>{DISTRIBUTION}</h1>
+						{L_DISTRIBUTION_EXPLAIN}
 						<br />
-						L'installation se fera en plusieurs parties, en un premier temps vous mettrez à jour le noyau de PHPBoost (la partie fixe) et ensuite chaque module un par un.
+						{DISTRIBUTION_DESCRIPTION}
+						
 						<fieldset class="submit_case">
-							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" /></a>
-						</fieldset>		
+							<a href="{L_NEXT_STEP}" title="{L_START_INSTALL}" ><img src="templates/images/right.png" alt="{L_START_INSTALL}" class="valign_middle" /></a>
+						</fieldset>						
 					</td>
-					# END intro #
-					
-					# START kernel_update #
-					<td class="row_contents">						
-						Cette étape concerne la mise à jour du noyau, c'est à dire l'importation dans la nouvelle structure des anciennes données principales dans la nouvelle structure. Les mises à jour concernant chaque module se feront ultérieurement.
-						<br />
-						<div class="warning">
-							Les messages privés ne seront pas conservés.
-							<br />
-							Certaines de vos configurations seront perdues, pensez à noter la configuration actuelle.
-						</div>
-						# START error #
-							<br />
-							<div class="error">
-								{kernel_update.error.ERROR}
-							</div>
-						# END error #
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />
-							</fieldset>		
-						</form>
-					</td>
-					# END kernel_update #
-					
-					# START articles_update #
-					<td class="row_contents">						
-						Vous allez ici mettre à jour la table articles. Vos anciens articles et catégories seront importés.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Nouveauté: Gestion totale de la parution de l'article, date de début/fin d'affichage, intervalle d'affichage.</li>
-									<li>Nouveauté: Gestion des sous-catégories infinies.</li>
-									<li>Possibilité d'afficher les catégories sur plusieurs colonnes (configurable).</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END articles_update #
-								
-					# START calendar_update #
-					<td class="row_contents">						
-						Tous les évennements du calendrier seront importés.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Mini calendrier de saisie</li>
-									<li>Corrections, améliorations et intégration du mini-calendrier en popup pour la saisie des dates.</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END calendar_update #
+					# ENDIF #
 					
 					
-					# START forum_update #
-					<td class="row_contents">						
-						Tous les événements du calendrier seront importés.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Nouveauté: Création de sous-forums illimité.
-									</li><li>Nouveauté: Gestion complète des mutligroupes, gestion des droits très fine (lecture, écriture, édition) pour chaque catégorie et pour chaque groupes. Autorisations globales des groupes sur le forum (flood, marqueurs d'édition, etc..).
-									</li><li>Nouveauté: Suppression des messages instantanée sur le forum (sans rechargement de la page grâce à Ajax).
-									</li><li>Nouveauté: Intégration du module de gestion des médias, ajout d'images sur le forum automatisé par attachement de l'image au message.
-									</li><li>Nouveauté: Possibilité de choisir d'être prévenu (ou non) lors d'un nouveau message par messages privés ou par mails (si déconnecté du site), pour chaque sujets suivis du forum. Ajout d'une option de suppression des sujets suivis.
-									</li><li>Nouveauté: Possibilité d'afficher les derniers messages lu, afin de faciliter leur suivi.
-									</li><li>Nouveauté: Possibilité de masquer les menus de gauche et droite.
-									</li><li>Possibilité de prédéfinir un texte inséré devant le topic, ajouté automatiquement à l'édition (ex: [Résolu] Nom du topic).
-									</li><li>Possibilité de choisir le contenu du message envoyé lors de l'avertissement/mise en lectures seule d'un membre.
-									</li><li>Nouvelle page de statistiques, ajout de la moyenne de sujets/messages par jour et du nombre de sujets/messages total et de la journée.
-									</li><li>Possibilité de mettre à jour les données en cache (recompte le nombre de topics et de messages pour chaque catégories).</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END forum_update #
-
-					# START gallery_update #
-					<td class="row_contents">						
-						Toutes les images de votre galerie seront importés
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Nouveauté: Refonte complète du module, avec gestion des sous-albums infinis.
-									<li>Nouveauté: Nouveau mode d'affichage des images (plein écran, agrandissement, etc...).</li>
-									<li>Nouveauté: Interface de visualisation avec défilement des miniatures.</li>
-									<li>Menu défilant avec affichage de plusieurs photos (configurable) dans ordre aléatoire (mini galerie).</li>
-								</ul>
-						</fieldset>
-						<br />
-						# START error #
-							<div class="error">
-								{gallery_update.error.ERROR}
-							</div>
-						# END error #
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END gallery_update #
-
-					# START guestbook_update #
-					<td class="row_contents">						
-						Les anciens messages du livre d'or vont être copiés vers la nouvelle version.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Configuration du livre d'or dans l'administration, rang pour pouvoir poster, balises interdites...</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END guestbook_update #
-					
-					# START news_update #
-					<td class="row_contents">						
-						Toutes les news seront récupérées.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Nouveauté: Gestion totale de la parution des news, date de début/fin d'affichage, intervalle d'affichage.</li>
-									<li>Nouveauté: Gestion des catégories pour les news, avec description et icône associé à la news (désactivable), lien permettant l'affichage des news par catégories.</li>
-									<li>Nouveauté: Possibilité de tronquer l'affichage de la news, un lien permet de lire la suite.</li>
-									<li>Nouveauté: Gestion du système de média intégré aux news, permet l'ajout simplifié des images.</li>
-									<li>Nouveauté: Possibilité de changer la date de parution de la news (classement des news possible).</li>
-									<li>Nouveauté: Possibilité d'afficher les news sur plusieurs colonnes (configurable).</li>
-									<li>Ajout du titre de la news dans l'url rewriting.</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="warning">
-							Toutes les news seront approuvées.
-						</div>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END news_update #
-					
-					# START pages_update #
-					<td class="row_contents">						
-						Toutes les news seront récupérées.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Gestion des catégories infinies</li>
-									<li>Langage hybride : HTML ou BBCode</li>
-									<li>Commentaires en option pour chaque page</li>
-									<li>Possibilité de créer des redirections d'une page vers une autre</li>
-									<li>Optimisation en ce qui concerne le référéncement de vos pages</li>
-								</ul>
-						</fieldset>
-						<div class="warning">
-							La syntaxe des pages ayant changé on ne peut pas garantir l'exactitude de l'importation des pages. Il est donc vivement conseillé de sauvegarder vos pages (par votre client ftp télécharger le contenu du dossier page) car à la fin du traitement elles seront supprimées.
-							<br />
-							Veillez aussi à reprendre les autorisations pour chaque page, elles ne seront pas conservées.
-						</div>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END pages_update #
-
-					# START shoutbox_update #
-					<td class="row_contents">						
-						Importation des messages de la shoutbox.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Délestage automatique des messages, configurable et désactivable.</li>
-									<li>Configuration de la shoutbox dans l'administration, rang pour pouvoir poster, balises interdites...</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END shoutbox_update #
-					
-					# START web_update #
-					<td class="row_contents">						
-						Importe les liens web.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Liens en dur (adresse directe sur le bouton) avec compteur.</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END web_update #
-					
-					# START download_update #
-					<td class="row_contents">						
-						Importation des fichiers en téléchargement.
-						<br />
-						<fieldset>
-							<legend>Nouveautés</legend>							    
-								<ul>
-									<li>Nouveauté: Gestion totale de la parution du téléchargement, date de début/fin d'affichage, intervalle d'affichage.</li>
-									<li>Possibilité d'afficher les catégories sur plusieurs colonnes (configurable).</li>
-									<li>Force le téléchargement des fichiers.</li>
-									<li>Mise en cache des catégories.</li>
-								</ul>
-						</fieldset>
-						<br />
-						<div class="question">
-							Si vous ne souhaitez pas mettre à jour ce module vous pouvez ignorer cette étape en cliquant sur le bouton associé : <img src="templates/images/stop.png" alt="" class="valign_middle" >
-						</div>
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<a href="{U_NEXT_PAGE}" title="{L_IGNORE}"><img src="templates/images/stop.png" alt="{L_IGNORE}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END download_update #
-					
-					# START cache #
-					<td class="row_contents">						
-						Finalisation de l'installation (régénération du cache, mise en place des menus).
-						<br />
-						<form action="{TARGET}" method="post">
-							<fieldset class="submit_case">
-								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;
-								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" name="submit" value="submit" />							
-							</fieldset>		
-						</form>
-					</td>
-					# END cache #
-					
-					# START end #
-					<td class="row_contents">						
-						<fieldset>
-							<legend>Mise à jour terminée</legend>
-							<div class="success">
-								Votre portail PHPBoost est désormais à jour. Vos données ont été importées, mais certaines de vos configurations n'ont pas pu être reconduites. Nous vous prions de vérifier chacune d'elles afin d'utiliser PHPBoost à votre sauce.
-							</div>
-							<br />
-							Merci de nous faire confiance depuis un certain temps et de continuer. Bonne continuation sur PHPBoost.
-						</fieldset>
-						<fieldset>
-							<legend>Rejoindre votre site</legend>
-							<div class="warning">
-								Il est important de supprimer le dossier update de votre site, cela pourrait vous poser des problèmes de sécurité.
-							</div>
-							<div style="text-align:center;">
-								<a href="../news/news.php"><img src="templates/images/go-home.png" alt="Go home" /></a>
+					# IF C_LICENSE #
+					<td class="row_contents">
+						<h1>{L_REQUIRE_LICENSE}</h1>
+						<script type="text/javascript">
+						<!--
+							function check_license_agreement()
+							{
+								if( document.getElementById('license_agreement').checked == false )
+								{
+									alert("{L_ALERT_PLEASE_AGREE_LICENSE}");
+									return false;
+								}
+								else
+									return true;
+							}
+						-->
+						</script>
+						<form action="{TARGET}" method="post" onsubmit="return check_license_agreement();" class="fieldset_content">
+							<fieldset>
+								<legend>
+									{L_QUERY_TERMS}
+								</legend>
+								{L_REQUIRE_LICENSE_AGREEMENT}
 								<br />
-								<a href="../news/news.php">Rejoindre le site</a>
-							</div>
+								<br />
+								<div style="width:auto;height:340px;overflow-y:scroll;border:1px solid #DFDFDF;background-color:#F1F4F1">
+									{L_LICENSE_TERMS}
+								</div>
+								<div style="text-align:center;margin:15px;margin-bottom:10px;">
+									<label style="cursor:pointer;">
+										<input type="checkbox" name="license_agreement" id="license_agreement" class="valign_middle" />
+										{L_PLEASE_AGREE}
+									</label>
+								</div>
+							</fieldset>
+							
+							<fieldset class="submit_case">
+								<a href="{U_PREVIOUS_PAGE}" title="{L_PREVIOUS_STEP}" ><img src="templates/images/left.png" alt="{L_START_INSTALL}" class="valign_middle" /></a>
+								&nbsp;
+								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+								<input type="hidden"  name="submit" value="next" />
+							</fieldset>		
+						</form>
+					</td>
+					# ENDIF #
+					
+					
+					# IF C_SERVER_CONFIG #
+					<td class="row_contents">
+						<script type="text/javascript">
+						<!--
+						display_result = false;
+						function refresh()
+						{
+							load_progress_bar(20, '');
+							if( !display_result )
+								Effect.Appear('result_box');
+							
+							data = null;
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&chmod=1');
+							xhr_object.onreadystatechange = function() 
+							{
+								if( xhr_object.readyState == 1 )
+									progress_bar(25, "{L_QUERY_LOADING}");
+								else if( xhr_object.readyState == 2 )
+									progress_bar(50, "{L_QUERY_SENT}");
+								else if( xhr_object.readyState == 3 )
+									progress_bar(75, "{L_QUERY_PROCESSING}");
+								else if( xhr_object.readyState == 4 )
+								{
+									if( xhr_object.status == 200 )
+									{
+										document.getElementById("chmod").innerHTML = xhr_object.responseText;
+										progress_bar(100, "{L_QUERY_SUCCESS}");
+									}
+									else
+										progress_bar(99, "{L_QUERY_FAILURE}");
+								}									
+							}
+							xmlhttprequest_sender(xhr_object, data);
+						}
+						-->
+						</script>
+						
+						<div class="fieldset_content">
+							<h1>{L_CONFIG_SERVER_TITLE}</h1>
+							<a href="http://www.php.net/">
+								<img src="templates/images/php.png" alt="PHP" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+							</a>
+							{L_CONFIG_SERVER_EXPLAIN}
+							
+							<fieldset>
+								<legend>{L_PHP_VERSION}</legend>
+								<p>{L_CHECK_PHP_VERSION_EXPLAIN}</p>
+								<dl>
+									<dt><label>{L_CHECK_PHP_VERSION}</label></dt>
+									<dd>
+									# IF C_PHP_VERSION_OK #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+									# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+									# ENDIF #
+									</dd>								
+								</dl>
+							</fieldset>
+							
+							<fieldset>
+								<legend>{L_EXTENSIONS}</legend>	
+								<p>{L_CHECK_EXTENSIONS}</p>
+								<dl>
+									<dt><label>{L_GD_LIBRARY}</label><br /><span>{L_GD_LIBRARY_EXPLAIN}</span></dt>
+									<dd>
+									# IF C_GD_LIBRAIRY_ENABLED #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+									# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+									# ENDIF #
+									</dd>								
+								</dl>
+								<dl>
+									<dt><label>{L_URL_REWRITING}</label><br /><span>{L_URL_REWRITING_EXPLAIN}</span></dt>
+									<dd>
+									# IF C_URL_REWRITING_KNOWN #
+										# IF C_URL_REWRITING_ENABLED #
+										<img src="templates/images/success.png" alt="{L_YES}" />
+										# ELSE #
+										<img src="templates/images/stop.png" alt="{L_NO}" />
+										# ENDIF #
+									# ELSE #
+									<img src="templates/images/question.png" alt="{L_UNKNOWN}" />
+									# ENDIF #
+									</dd>								
+								</dl>
+							</fieldset>
+							
+							<fieldset>
+								<legend>{L_AUTH_DIR}</legend>
+								<p>{L_CHECK_AUTH_DIR}</p>
+								<div id="chmod">
+									# START chmod #							
+									<dl>
+										<dt><label>{chmod.TITLE}</label></dt>
+										<dd>
+											# IF chmod.C_EXISTING_DIR #
+												<div class="success_block">{L_EXISTING}</div>
+											# ELSE #
+												<div class="failure_block">{L_NOT_EXISTING}</div>
+											# ENDIF #
+											# IF chmod.C_WRITIBLE_DIR #
+												<div class="success_block">{L_WRITABLE}</div>
+											# ELSE #
+												<div class="failure_block">{L_NOT_WRITABLE}</div>
+											# ENDIF #
+										</dd>								
+									</dl>
+									# END chmod #
+								</div>
+							</fieldset>	
+							
+							<fieldset style="display:none;" id="result_box">
+								<legend>
+									{L_RESULT}
+								</legend>
+								# IF C_ERROR #
+									<div class="error">
+										{L_ERROR}
+									</div>
+								# ENDIF #
+								<div style="margin:auto;width:500px;">
+									<div id="progress_info" style="text-align:center;"></div>
+									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar"></div>
+									&nbsp;<span id="progress_percent">0</span>%
+								</div>
+							</fieldset>
+							
+							# IF C_ERROR #
+							<script type="text/javascript">
+							<!--
+								document.getElementById("result_box").style.display = "block";
+								load_progress_bar(5, '');
+								progress_bar(100, "{L_QUERY_SUCCESS}");
+							-->
+							</script>
+							# ENDIF #
+							
+							<form action="{U_CURRENT_STEP}#result_box" method="post">
+								<fieldset class="submit_case">
+									<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+									<a href="{U_CURRENT_STEP}" title="{L_REFRESH}" id="enougth_js_preview">
+										<img src="templates/images/refresh.png" alt="{L_REFRESH}" class="valign_middle" />
+									</a>
+									<script type="text/javascript">
+									<!--
+										document.getElementById("enougth_js_preview").style.display = "none";
+										document.write("<a title=\"{L_REFRESH}\" href=\"javascript:refresh();\" ><img src=\"templates/images/refresh.png\" alt=\"{L_REFRESH}\" class=\"valign_middle\" /></a>&nbsp;<span id=\"image_loading\"></span>&nbsp;");
+									-->
+									</script>
+									<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+									<input type="hidden"  name="submit" value="next" />
+								</fieldset>
+							</form>
+						</div>
+					</td>
+					# ENDIF #
+
+					
+					# IF C_DATABASE_CONFIG #
+					<td class="row_contents">
+						<script type="text/javascript">
+						<!--
+						
+						function display_result_text(return_code)
+						{
+							switch(return_code)
+							{
+								case '{DB_CONFIG_SUCCESS}':
+									document.getElementById("db_result").innerHTML = '<div class="success">{L_DB_CONFIG_SUCESS}</div>';
+									break;
+								case '{DB_CONFIG_ERROR_CONNECTION_TO_DBMS}':
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_CONNECTION_TO_DBMS}</div>';
+									break;
+								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}':
+									document.getElementById("db_result").innerHTML = '<div class="success">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_BUT_CREATED}</div>';
+									break;
+								case '{DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}':
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_DB_CONFIG_ERROR_DATABASE_NOT_FOUND_AND_COULDNOT_BE_CREATED}</div>';
+									break;
+								case '{DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}':
+									document.getElementById("db_result").innerHTML = '<div class="notice">{L_DB_CONFIG_ERROR_TABLES_ALREADY_EXIST}</div>';
+									break;
+								default:
+									document.getElementById("db_result").innerHTML = '<div class="error">{L_UNKNOWN_ERROR}</div>';
+							}
+						}
+						
+						display_result = false;
+						
+						function send_infos()
+						{
+							if( !check_form_db() )
+								return;
+							
+							load_progress_bar(20, '');
+							data = "host=" + document.getElementById("host").value + "&login=" + document.getElementById("login").value + "&password=" + document.getElementById("password").value + "&database=" + document.getElementById("database").value + "&prefix=" + document.getElementById("tableprefix").value;
+
+							if( !display_result )
+								Effect.Appear('result_box');
+								
+							var xhr_object = xmlhttprequest_init('xmlhttprequest.php?lang={LANG}&db=1');
+							xhr_object.onreadystatechange = function() 
+							{
+								switch(xhr_object.readyState)
+								{
+									case 1:
+										progress_bar(25, "{L_QUERY_LOADING}");
+										break;
+									case 2:
+										progress_bar(50, "{L_QUERY_SENT}");
+										break;
+									case 3:
+										progress_bar(75, "{L_QUERY_PROCESSING}");
+										break;
+									case 4:
+										if( xhr_object.status == 200 )
+										{
+											progress_bar(100, "{L_QUERY_SUCCESS}");
+											display_result_text(xhr_object.responseText);
+										}
+										else
+											progress_bar(99, "{L_QUERY_FAILURE}");
+										break;
+								}
+							}
+							xmlhttprequest_sender(xhr_object, data);
+						}
+						
+						function check_form_db()
+						{
+							if(document.getElementById('host').value == "")
+							{
+								alert("{L_REQUIRE_HOSTNAME}");
+								return false;
+							}
+
+							if(document.getElementById('login').value == "")
+							{
+								alert("{L_REQUIRE_LOGIN}");
+								return false;
+							}
+							if(document.getElementById('database').value == "")
+							{
+								alert("{L_REQUIRE_DATABASE_NAME}");
+								return false;
+							}
+							
+							return true;
+						}
+						-->
+						</script>
+						<h1>{L_DB_TITLE}</h1>
+						<a href="http://www.mysql.com/">
+							<img src="templates/images/mysql.png" alt="MySQL" style="float:right; margin-bottom:5px; margin-left:5px;"/>
+						</a>
+						{L_DB_EXPLAIN}
+						<br />
+						
+						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_db();" class="fieldset_content">
+							<fieldset>
+								<legend>{L_SGBD_PARAMETERS}</legend>
+								<dl>
+									<dt><label for="host">* {L_HOST}</label><br /><span>{L_HOST_EXPLAIN}</span></dt>
+									<dd><label><input type="text" maxlength="150" size="25" id="host" name="host" value="{HOST_VALUE}" class="small_text" /></label></dd>
+								</dl>
+								<dl>
+									<dt><label for="login">* {L_LOGIN}</label><br /><span>{L_LOGIN_EXPLAIN}</span></dt>
+									<dd><label><input type="text" maxlength="25" size="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" /></label></dd>
+								</dl>
+								<dl>
+									<dt><label for="password">{L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
+									<dd><label><input type="password" maxlength="25" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" /></label></dd>
+								</dl>
+							</fieldset>	
+							
+							<fieldset>
+								<legend>{L_DB_PARAMETERS}</legend>
+								<dl>
+									<dt><label for="database">* {L_DB_NAME}</label><br /><span>{L_DB_NAME_EXPLAIN}</span></dt>
+									<dd><label><input type="text" maxlength="150" size="25" id="database" name="database" value="{DB_NAME_VALUE}" class="small_text" /></label></dd>
+								</dl>
+								<dl>
+									<dt><label for="tableprefix">{L_DB_PREFIX}</label><br /><span>{L_DB_PREFIX_EXPLAIN}</span></dt>
+									<dd><label><input type="text" maxlength="20" size="25" name="tableprefix" id="tableprefix" value="{PREFIX_VALUE}" class="small_text" /></label></dd>
+								</dl>
+							</fieldset>
+							
+							# IF C_ALREADY_INSTALLED #
+							<fieldset>
+								<legend>{L_ALREADY_INSTALLED}</legend>
+								<div class="warning">
+									{L_ALREADY_INSTALLED_EXPLAIN}
+								</div>
+								<label><input type="checkbox" name="overwrite_db" /> {L_ALREADY_INSTALLED_OVERWRITE}</label>
+							</fieldset>
+							# ENDIF #
+							
+							<fieldset id="result_box">
+								<legend>
+									{L_RESULT}
+								</legend>
+								<div style="margin:auto;margin-bottom:15px;width:500px;">
+									<div id="db_result">
+										{ERROR}
+									</div>
+									<div id="progress_info" style="text-align:center;">
+										{PROGRESS_STATUS}
+									</div>
+									<div style="float:left;height:13px;border:1px solid black;background:white;width:448px;padding:2px;padding-top:1px;padding-left:3px;padding-right:1px;" id="progress_bar">
+										{PROGRESS_BAR}
+									</div>
+									&nbsp;<span id="progress_percent">{PROGRESS}</span>%
+								</div>
+							</fieldset>
+							
+							# IF NOT C_DISPLAY_RESULT #
+							<script type="text/javascript">
+							<!--
+								document.getElementById("result_box").style.display = 'none';
+							-->
+							</script>
+							# ENDIF #
+							
+							<fieldset class="submit_case">
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+								<script type="text/javascript">
+								<!--
+									document.write("<a href=\"javascript:send_infos();\" title=\"{L_TEST_DB_CONFIG}\" /><img src=\"templates/images/refresh.png\" class=\"valign_middle\" title=\"{L_TEST_DB_CONFIG}\" /></a>&nbsp;");
+								-->
+								</script>
+								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />
+								<input type="hidden" name="submit" value="submit" />
+							</fieldset>
+						</form>
+					</td>
+					# ENDIF #
+					
+					# IF C_DATABASE_MAJ #
+					<td class="row_contents">
+						<h1>{L_DATABASE_MAJ}</h1>
+						{L_DATABASE_MAJ_EXPLAIN}
+						
+						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_site_config();" class="fieldset_content">
+							<fieldset class="submit_case">
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />
+								<input type="hidden" name="submit" value="submit" />
+							</fieldset>
+						</form>
+					</td>
+					# ENDIF #
+					
+					
+					# IF C_SITE_CONFIG #
+					<td class="row_contents">
+						<script type="text/javascript">
+						<!--
+							var site_url = "{SITE_URL}";
+							var site_path = "{SITE_PATH}";
+							function check_form_site_config()
+							{
+								if( document.getElementById('site_url').value == "" )
+								{
+									alert("{L_REQUIRE_SITE_URL}");
+									return false;
+							    }
+								if( document.getElementById('site_name').value == "" )
+								{
+									alert("{L_REQUIRE_SITE_NAME}");
+									return false;
+							    }
+								if( document.getElementById('site_url').value != site_url )
+								{
+									return confirm("{L_CONFIRM_SITE_URL}");
+								}
+								if( document.getElementById('site_path').value != site_path )
+								{
+									return confirm("{L_CONFIRM_SITE_PATH}");
+								}
+							}
+						-->
+						</script>
+						<h1>{L_SITE_CONFIG}</h1>
+						{L_SITE_CONFIG_EXPLAIN}
+						
+						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_site_config();" class="fieldset_content">
+							<fieldset>
+								<legend>{L_YOUR_SITE}</legend>	
+								<p>{L_CHECK_EXTENSIONS}</p>
+								<dl>
+									<dt><label for="site_url">* {L_SITE_URL}</label><br /><span>{L_SITE_URL_EXPLAIN}</span></dt>
+									<dd><input type="text" maxlength="150" size="25" id="site_url" name="site_url" value="{SITE_URL}" class="small_text" /></dd>	
+								</dl>
+								<dl>
+									<dt><label for="site_path">* {L_SITE_PATH}</label><br /><span>{L_SITE_PATH_EXPLAIN}</span></dt>
+									<dd><input type="text" maxlength="255" size="25" id="site_path" name="site_path" value="{SITE_PATH}" class="small_text" /></dd>
+								</dl>
+								<dl>
+									<dt><label for="site_name">* {L_SITE_NAME}</label></dt>
+									<dd><input type="text" size="25" maxlength="100" id="site_name" name="site_name" class="small_text" /></dd>								
+								</dl>
+								<dl>
+									<dt><label for="site_desc">{L_SITE_DESCRIPTION}</label><br /><span>{L_SITE_DESCRIPTION_EXPLAIN}</span></dt>
+									<dd><textarea rows="3" cols="23" name="site_desc" id="site_desc" class="post"></textarea></dd>								
+								</dl>
+								<dl>
+									<dt><label for="site_keyword">{L_SITE_KEYWORDS}</label><br /><span>{L_SITE_KEYWORDS_EXPLAIN}</span></dt>
+									<dd><textarea rows="3" cols="23" name="site_keyword" id="site_keyword" class="post"></textarea></dd>								
+								</dl>
+								<dl>
+									<dt><label for="site_timezone">{L_SITE_TIMEZONE}</label><br /><span>{L_SITE_TIMEZONE_EXPLAIN}</span></dt>
+									<dd>
+										<select name="site_timezone" id="site_timezone">
+											# START timezone #
+											<option value="{timezone.VALUE}" {timezone.SELECTED}>{timezone.NAME}</option>
+											# END timezone #
+										</select>
+									</dd>								
+								</dl>
+							</fieldset>
+							
+							<fieldset class="submit_case">
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" alt="{L_PREVIOUS_STEP}" class="valign_middle" /></a>&nbsp;&nbsp;
+								<input title="{L_NEXT_STEP}" class="img_submit" src="templates/images/right.png" type="image" />
+								<input type="hidden" name="submit" value="submit" />
+							</fieldset>
+						</form>
+					</td>
+					# ENDIF #
+					
+					# IF C_ADMIN_ACCOUNT #
+					<td class="row_contents">
+						<script type="text/javascript">
+						<!--
+							function check_form_admin()
+							{								
+								if (document.getElementById("login").value == "")
+								{
+									alert("{L_REQUIRE_LOGIN}");
+									return false;
+								}
+								else if (document.getElementById("login").value.length < 3)
+								{
+									alert("{L_LOGIN_TOO_SHORT}");
+									return false;
+								}
+								else if (document.getElementById("password").value == "")
+								{
+									alert("{L_REQUIRE_PASSWORD}");
+									return false;
+								}
+								else if (document.getElementById("password_repeat").value == "")
+								{
+									alert("{L_REQUIRE_PASSWORD_REPEAT}");
+									return false;
+								}
+								else if (document.getElementById("password").value.length < 6)
+								{
+									alert("{L_PASSWORD_TOO_SHORT}");
+									return false;
+								}
+								else if (document.getElementById("mail").value == "")
+								{ 
+									alert("{L_REQUIRE_MAIL}");
+									return false;
+								}	
+								else if (document.getElementById("password").value != document.getElementById("password_repeat").value)
+								{
+									alert("{L_PASSWORDS_ERROR}");
+									return false;
+								}
+								else if (!check_mail_validity(document.getElementById("mail").value))
+								{
+									alert("{L_EMAIL_ERROR}");
+									return false;
+								}
+								else
+									return true;
+							}
+							function check_login(value) 
+							{
+								if (value.length<3)			
+								{	
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = "{L_LOGIN_TOO_SHORT}";
+								}
+								else	
+								{
+									document.getElementById('msg_login').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_login_div').innerHTML = '';
+								}
+							}
+							function check_mail(value) 
+							{
+								if (!check_mail_validity(value))
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = "{L_MAIL_INVALID}";
+								}
+								else
+								{	
+									document.getElementById('msg_email').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_email_div').innerHTML = '';
+								}
+							}
+							function check_password(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password_repeat').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+									}
+								}	
+							}
+							function check_password2(value) 
+							{
+								if (value.length<6)
+								{	
+									document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+									document.getElementById('msg_password2_div').innerHTML = "{L_PASSWORD_TOO_SHORT}";
+								}
+								else
+								{
+									var password = document.getElementById('password').value;
+									if (password == value)
+									{
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = '';
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+									else if (password.length > 0)
+									{	
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+										document.getElementById('msg_password1').innerHTML = '<img src="./templates/images/forbidden_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password1_div').innerHTML = "{L_PASSWORDS_ERROR}";
+									}
+									else
+									{
+										document.getElementById('msg_password2').innerHTML = '<img src="./templates/images/processed_mini.png" alt="" class="valign_middle" />';
+										document.getElementById('msg_password2_div').innerHTML = '';
+									}
+								}	
+							}
+							function change_img_theme(id, value)
+							{
+								if(document.images )
+									document.images[id].src = "../templates/" + value + "/theme/images/theme.jpg";
+							}
+							var array_identifier = new Array();
+							{JS_LANG_IDENTIFIER}
+							function change_img_lang(id, lang)
+							{
+								if( array_identifier[lang] && document.getElementById(id) ) 
+									document.getElementById(id).src = '../images/stats/countries/' + array_identifier[lang] + '.png';
+							}
+						-->
+						</script>
+						<h1>{L_ADMIN_ACCOUNT_CREATION}</h1>
+						{L_EXPLAIN_ADMIN_ACCOUNT_CREATION}
+						<form action="{U_CURRENT_STEP}" method="post" onsubmit="return check_form_admin();" class="fieldset_content">
+							# START error #
+							<fieldset>
+								<legend>{L_ERROR}</legend>
+								{error.ERROR}
+							</fieldset>
+							# END error #
+							<fieldset>
+								<legend>{L_ADMIN_ACCOUNT}</legend>	
+								<p>{L_CHECK_EXTENSIONS}</p>
+								<dl>
+									<dt><label for="login">* {L_PSEUDO}</label><br /><span>{L_PSEUDO_EXPLAIN}</span></dt>
+									<dd><input type="text" size="25" maxlength="25" id="login" name="login" value="{LOGIN_VALUE}" class="small_text" onblur="check_login(this.value);" /> &nbsp;<span id="msg_login"></span><div id="msg_login_div"></div></dd>								
+								</dl>
+								<dl>
+									<dt><label for="password">* {L_PASSWORD}</label><br /><span>{L_PASSWORD_EXPLAIN}</span></dt>
+									<dd><input type="password" size="25" id="password" name="password" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password(this.value);" /> &nbsp;<span id="msg_password1"></span><div id="msg_password1_div"></div></dd>								
+								</dl>
+								<dl>
+									<dt><label for="password_repeat">* {L_PASSWORD_REPEAT}</label></dt>
+									<dd><input type="password" size="25" id="password_repeat" name="password_repeat" value="{PASSWORD_VALUE}" class="small_text" onblur="check_password2(this.value);" /> &nbsp;<span id="msg_password2"></span><div id="msg_password2_div"></div></dd>
+								</dl>
+								<dl>
+									<dt><label for="mail">* {L_MAIL}</label><br /><span>{L_MAIL_EXPLAIN}</span></dt>
+									<dd><input type="text" size="25" maxlength="50" id="mail" name="mail" value="{MAIL_VALUE}" class="small_text" onblur="check_mail(this.value);" /> &nbsp;<span id="msg_email"></span><div id="msg_email_div"></div></dd>								
+								</dl>
+								<dl>
+									<dt><label for="create_session">{L_CREATE_SESSION}</label></dt>
+									<dd><input type="checkbox" name="create_session" id="create_session" {CHECKED_AUTO_CONNECTION} /></dd>								
+								</dl>
+								<dl>
+									<dt><label for="auto_connection">{L_AUTO_CONNECTION}</label></dt>
+									<dd><input type="checkbox" name="auto_connection" id="auto_connection" {CHECKED_AUTO_CONNECTION} /></dd>								
+								</dl>
+							</fieldset>
+							
+							<fieldset class="submit_case">
+								<a href="{U_PREVIOUS_STEP}" title="{L_PREVIOUS_STEP}"><img src="templates/images/left.png" class="valign_middle" alt="{L_PREVIOUS_STEP}" /></a>
+								&nbsp;
+								<input type="image" src="templates/images/right.png" title="{L_NEXT_STEP}" class="img_submit" />
+								<input type="hidden" name="submit" value="submit" />
+							</fieldset>
+						</form>
+					</td>
+					# ENDIF #
+					
+					# IF C_END #
+					<td class="row_contents">
+						{CONTENTS}						
+						<fieldset class="submit_case" style="width:450px;text-align:center">
+							<table style="margin:auto;">
+								<tr>
+									<td style="width:50%">
+										<a href="{U_INDEX}"><img src="templates/images/go-home.png" alt="{L_SITE_INDEX}" /></a>
+									</td>
+									<td style="padding: 0 20px;">
+										<a href="{U_ADMIN_INDEX}"><img src="templates/images/admin_panel.png" alt="{L_ADMIN_INDEX}" /></a>
+									</td>
+								</tr>
+								<tr>
+									<td style="width:50%">
+										<a href="{U_INDEX}">{L_SITE_INDEX}</a>
+									</td>
+									<td style="padding:0 20px;">
+										<a href="{U_ADMIN_INDEX}">{L_ADMIN_INDEX}</a>
+									</td>
+								</tr>
+							</table>
 						</fieldset>
 					</td>
-					# END end #
+					# ENDIF #
 				</tr>
 			</table>		
 		</div>
-		<div id="footer">
-			<span class="text_small">{L_GENERATED_BY}</span>
-		</div>
+	</div>
+	<div id="footer">
+		<span>
+			{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
+		</span>	
+	</div>
 	</body>
 </html>

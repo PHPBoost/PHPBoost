@@ -38,7 +38,7 @@
 		
 		<div id="admin_contents">
 
-			<form action="admin_news_config.php" method="post" onsubmit="return check_msg();" class="fieldset_content">
+			<form action="admin_news_config.php?token={TOKEN}" method="post" onsubmit="return check_msg();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWS}</legend>
 					<p>{L_REQUIRE}</p>
@@ -122,7 +122,7 @@
 					<label for="contents">{L_TEXT}</label>
 					<label>
 						{KERNEL_EDITOR}
-						<textarea type="text" rows="30" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
+						<textarea rows="20" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
 					</label>
 					<br />
 				</fieldset>	
@@ -132,7 +132,7 @@
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />					
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />&nbsp;&nbsp;');
+					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />&nbsp;&nbsp;');
 					-->
 					</script>
 					&nbsp;&nbsp; 

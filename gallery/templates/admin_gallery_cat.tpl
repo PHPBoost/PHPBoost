@@ -13,7 +13,7 @@
 		{
 			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?g_' + direction + '=' + divid);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -26,7 +26,7 @@
 		
 		function XMLHttpRequest_gallery_cats_move(change_cat, divid, direction)
 		{
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?id=' + divid + '&move=' + direction);
+			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&id=' + divid + '&move=' + direction + '&token={TOKEN}');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -235,9 +235,8 @@
 				</li>
 			</ul>
 		</div>
-						 
-		<div id="admin_contents">
 
+		<div id="admin_contents">
 			<table class="module_table" style="width:99%;">
 				<tr>			
 					<th colspan="3">
@@ -286,16 +285,16 @@
 											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'up\');"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>');
 											-->
 											</script>
-											<noscript><a href="admin_gallery_cat.php?id={list.ID}&amp;move=up"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a></noscript>
+											<noscript><a href="admin_gallery_cat.php?id={list.ID}&amp;move=up&amp;token={TOKEN}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a></noscript>
 											
 											<script type="text/javascript">
 											<!--
 											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'down\');"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>');
 											-->
 											</script>										
-											<noscript><a href="admin_gallery_cat.php?id={list.ID}&amp;move=down"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
+											<noscript><a href="admin_gallery_cat.php?id={list.ID}&amp;move=down&amp;token={TOKEN}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
 											
-											<a href="admin_gallery_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_gallery_cat.php?del={list.ID}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
+											<a href="admin_gallery_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_gallery_cat.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
 										</span>&nbsp;
 									</div>	
 								</div>

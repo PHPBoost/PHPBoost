@@ -3,7 +3,7 @@
  *                              pages_english.php
  *                            -------------------
  *   begin                : August 18, 2007
- *   copyright          : (C) 2007 Benoît Sautel
+ *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
@@ -82,9 +82,9 @@ $LANG['pages_page_com'] = 'Comments of the page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you can manage your whole pages.
-<div class="question">You can use both BBCode and HTML syntax to create your page but PHP scripts are forbidden for security reasons.
-<br />
-To create links between different pages of this module you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : [link=title-of-the-page]Link up to page[/link].</div>';
+<div class="question"><p>You will edit your page with the editor you choosed in your personal profile. You can insert some HTML code using the BBCode tag <span style="font-family:courier new;">[html]HTML code[/html]</span></p>
+<p>You cannot insert some PHP code in you pages for security reason.</p>
+<p>To create links between different pages of this module you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p></div>';
 $LANG['pages_redirections'] = 'Redirections';
 $LANG['pages_num_pages'] = '%d existing page(s)';
 $LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f commentary by page';

@@ -37,7 +37,7 @@ if (!empty($_POST['valid']) )
 	$config_contact['contact_verifcode'] = retrieve(POST, 'contact_verifcode', 1);
 	$config_contact['contact_difficulty_verifcode'] = retrieve(POST, 'contact_difficulty_verifcode', 2);
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_contact)) . "' WHERE name = 'contact'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('contact');
@@ -61,7 +61,7 @@ else
 		'CONTACT_VERIFCODE_DISABLED' => ($CONFIG_CONTACT['contact_verifcode'] == '0') ? 'checked="checked"' : '',
 		'L_CONTACT' => $LANG['title_contact'],
 		'L_CONTACT_CONFIG' => $LANG['contact_config'],
-		'L_CONTACT_VERIFCODE' => $LANG['verif_code'],
+		'L_CONTACT_VERIFCODE' => $LANG['activ_verif_code'],
 		'L_CONTACT_VERIFCODE_EXPLAIN' => $LANG['verif_code_explain'],
 		'L_CAPTCHA_DIFFICULTY' => $LANG['captcha_difficulty'],
 		'L_YES' => $LANG['yes'],

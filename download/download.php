@@ -41,12 +41,14 @@ if ($file_id > 0) //Contenu
 		$size_tpl = $DOWNLOAD_LANG['unknown_size'];
 	
 	import('util/date');
- 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['timestamp']);
- 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $download_info['release_timestamp']);
+ 	$creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['timestamp']);
+ 	$release_date = new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $download_info['release_timestamp']);
 	
 	//Affichage notation.
 	import('content/note');
 	$Note = new Note('download', $file_id, url('download.php?id=' . $file_id, 'category-' . $category_id . '-' . $file_id . '.php'), $CONFIG_DOWNLOAD['note_max'], '', NOTE_NODISPLAY_NBRNOTES);
+	
+	import('content/comments');
 	
 	$Template->assign_vars(array(
 		'C_DISPLAY_DOWNLOAD' => true,
@@ -67,7 +69,7 @@ if ($file_id > 0) //Contenu
 		'U_IMG' => $download_info['image'],
 		'IMAGE_ALT' => str_replace('"', '\"', $download_info['title']),
 		'LANG' => get_ulang(),
-		'U_COM' => com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
+		'U_COM' => Comments::com_display_link($download_info['nbr_com'], '../download/download' . url('.php?id=' . $file_id . '&amp;com=0', '-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php?com=0'), $file_id, 'download'),
 		'L_DATE' => $LANG['date'],
 		'L_SIZE' => $LANG['size'],
 		'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
@@ -80,7 +82,7 @@ if ($file_id > 0) //Contenu
 		'L_CONFIRM_DELETE_FILE' => str_replace('\'', '\\\'', $DOWNLOAD_LANG['confirm_delete_file']),
 		'L_DELETE_FILE' => str_replace('"', '\"', $DOWNLOAD_LANG['delete_file']),
 		'U_EDIT_FILE' => url('management.php?edit=' . $file_id),
-		'U_DELETE_FILE' => url('management.php?del=' . $file_id),
+		'U_DELETE_FILE' => url('management.php?del=' . $file_id . '&amp;token=' . $Session->get_token()),
 		'U_DOWNLOAD_FILE' => url('count.php?id=' . $file_id, 'file-' . $file_id . '+' . url_encode_rewrite($download_info['title']) . '.php')
 	));
 	
@@ -100,14 +102,15 @@ else
 	
 	$Template->assign_vars(array(
 		'C_ADMIN' => $auth_write,
-		'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
 		'C_DOWNLOAD_CAT' => true,
-		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
-		'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
-		'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents']),
 		'C_ADD_FILE' => $auth_write || $auth_contribution,
-		'U_ADD_FILE' => url('management.php?new=1&idcat=' . $category_id),
-		'L_ADD_FILE' => $DOWNLOAD_LANG['add_file']
+		'C_DESCRIPTION' => !empty($DOWNLOAD_CATS[$category_id]['contents']) || ($category_id == 0 && !empty($CONFIG_DOWNLOAD['root_contents'])),
+		'IDCAT' => $category_id,
+		'TITLE' => sprintf($DOWNLOAD_LANG['title_download'] . ($category_id > 0 ? ' - ' . $DOWNLOAD_CATS[$category_id]['name'] : '')),
+		'DESCRIPTION' => $category_id > 0 ? second_parse($DOWNLOAD_CATS[$category_id]['contents']) : second_parse($CONFIG_DOWNLOAD['root_contents']),
+		'L_ADD_FILE' => $DOWNLOAD_LANG['add_file'],
+		'U_ADMIN_CAT' => $category_id > 0 ? url('admin_download_cat.php?edit=' . $category_id) : url('admin_download_cat.php'),
+		'U_ADD_FILE' => url('management.php?new=1&amp;idcat=' . $category_id)
 	));
 	
 	//let's check if there are some subcategories
@@ -152,7 +155,7 @@ else
 	}
 	
 	//Contenu de la catégorie	
-	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM ".PREFIX."download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
+	$nbr_files = (int)$Sql->query("SELECT COUNT(*) FROM " . PREFIX . "download WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'", __LINE__, __FILE__);
 	if ($nbr_files > 0)
 	{
 		$get_sort = retrieve(GET, 'sort', '');	
@@ -224,21 +227,21 @@ else
 		));
 			
 		//On crée une pagination si le nombre de fichiers est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 		
 		//Notes
-		include_once('../kernel/framework/content/note.class.php');
-		$Note = new Note(null, null, null, null, '', NOTE_NO_CONSTRUCT);
+		import('content/note');
+		import('content/comments');
 		
 		$Template->assign_vars(array(
 			'PAGINATION' => $Pagination->display(url('download.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $category_id . '&amp;p=%d', 'category-' . $category_id . '-%d.php' . $unget), $nbr_files, 'p', $CONFIG_DOWNLOAD['nbr_file_max'], 3),
 			'C_FILES' => true,
 			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $category_id . '.php?' : 'download.php?cat=' . $category_id . '&'
-			));
+		));
 
 		$result = $Sql->query_while("SELECT id, title, timestamp, size, count, note, nbrnote, nbr_com, image, short_contents
-		FROM ".PREFIX."download
+		FROM " . PREFIX . "download
 		WHERE visible = 1 AND approved = 1 AND idcat = '" . $category_id . "'
 		ORDER BY " . $sort . " " . $mode . 
 		$Sql->limit($Pagination->get_first_msg($CONFIG_DOWNLOAD['nbr_file_max'], 'p'), $CONFIG_DOWNLOAD['nbr_file_max']), __LINE__, __FILE__);
@@ -251,14 +254,14 @@ else
 				'DESCRIPTION' => second_parse($row['short_contents']),
 				'DATE' => sprintf($DOWNLOAD_LANG['add_on_date'], gmdate_format('date_format_short', $row['timestamp'])),
 				'COUNT_DL' => sprintf($DOWNLOAD_LANG['downloaded_n_times'], $row['count']),
-				'NOTE' => $row['nbrnote'] > 0 ? $Note->display_img((int)$row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+				'NOTE' => $row['nbrnote'] > 0 ? Note::display_img($row['note'], $CONFIG_DOWNLOAD['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 				'SIZE' => ($row['size'] >= 1) ? number_round($row['size'], 1) . ' ' . $LANG['unit_megabytes'] : (number_round($row['size'], 1) * 1024) . ' ' . $LANG['unit_kilobytes'],
 				'C_IMG' => !empty($row['image']),
 				'IMG' => $row['image'],
 				'U_DOWNLOAD_LINK' => url('download.php?id=' . $row['id'], 'download-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 				'U_ADMIN_EDIT_FILE' => url('management.php?edit=' . $row['id']),
-				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id']),
-				'U_COM_LINK' => com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
+				'U_ADMIN_DELETE_FILE' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+				'U_COM_LINK' => Comments::com_display_link($row['nbr_com'], '../download/download' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'download')
 			));
 		}
 		$Sql->query_close($result);

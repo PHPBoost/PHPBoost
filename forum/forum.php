@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
 require_once('../forum/forum_tools.php');
 
@@ -72,7 +72,6 @@ if (!empty($id_get))
 	
 	//Invité?	
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
-	$module_data_path = $Template->get_module_data_path('forum');
 	
 	//Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
 	$max_time_msg = forum_limit_time_msg();
@@ -99,10 +98,10 @@ if (!empty($id_get))
 		//On liste les sous-catégories.
 		$result = $Sql->query_while("SELECT c.id AS cid, c.name, c.subname, c.url, c.nbr_topic, c.nbr_msg, c.status, t.id AS tid, 
 		t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
-		FROM ".PREFIX."forum_cats c
-		LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
-		LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
-		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
+		FROM " . PREFIX . "forum_cats c
+		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
+		LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE c.aprob = 1 AND c.id_left > '" . $CAT_FORUM[$id_get]['id_left'] . "' AND c.id_right < '" . $CAT_FORUM[$id_get]['id_right'] . "' AND c.level = '" . $CAT_FORUM[$id_get]['level'] . "' + 1  " . $unauth_cats . "
 		ORDER BY c.id_left ASC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
@@ -168,7 +167,7 @@ if (!empty($id_get))
 			$img_announce .= ($row['status'] == '0') ? '_lock' : '';
 			
 			$Template->assign_block_vars('subcats', array(					
-				'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+				'IMG_ANNOUNCE' => $img_announce,
 				'NAME' => $row['name'],
 				'DESC' => $row['subname'],
 				'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
@@ -200,7 +199,7 @@ if (!empty($id_get))
 	}
 	
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	//Affichage de l'arborescence des catégories.
@@ -218,20 +217,22 @@ if (!empty($id_get))
 	//Si l'utilisateur a les droits d'édition.	
 	$check_group_edit_auth = $User->check_auth($CAT_FORUM[$id_get]['auth'], EDIT_CAT_FORUM);
 
-	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
+	$nbr_topic = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_topics WHERE idcat = '" . $id_get . "'", __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 		'SID' => SID,		
-		'MODULE_DATA_PATH' => $module_data_path,
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
 		'PAGINATION' => $Pagination->display('forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d.php'), $nbr_topic, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 		'IDCAT' => $id_get,
 		//'C_MASS_MODO_CHECK' => $check_group_edit_auth ? true : false,
 		'C_MASS_MODO_CHECK' => false,
+		'C_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat),
 		'U_MSG_SET_VIEW' => '<a class="small_link" href="../forum/action' . url('.php?read=1&amp;f=' . $id_get, '') . '" title="' . $LANG['mark_as_read'] . '" onclick="javascript:return Confirm_read_topics();">' . $LANG['mark_as_read'] . '</a>',
-		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get, '-' . $id_get . $rewrited_title . '.php'),
-		'U_ONCHANGE' => "'forum" . url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php") . "'",
+		'U_CHANGE_CAT'=> 'forum' . url('.php?id=' . $id_get . '&amp;token=' . $Session->get_token(), '-' . $id_get . $rewrited_title . '.php?token=' . $Session->get_token()),
+		'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+		'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 		'U_FORUM_CAT' => $forum_cats,		
-		'U_POST_NEW_SUBJECT' => ($check_group_write_auth && !$locked_cat) ? '&raquo; <a href="post' . url('.php?new=topic&amp;id=' . $id_get, '') . '" title="' . $LANG['post_new_subject'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/post.png" alt="' . $LANG['post_new_subject'] . '" title="' . $LANG['post_new_subject'] . '" /></a>' : '',
+		'U_POST_NEW_SUBJECT' => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 		'L_FORUM_INDEX' => $LANG['forum_index'],		
 		'L_SUBFORUMS' => $LANG['sub_forums'],
 		'L_DISPLAY_UNREAD_MSG' => $LANG['show_not_reads'],
@@ -242,6 +243,7 @@ if (!empty($id_get))
 		'L_MESSAGE' => $LANG['message_s'],
 		'L_VIEW' => $LANG['views'],
 		'L_LAST_MESSAGE' => $LANG['last_messages'],
+		'L_POST_NEW_SUBJECT' => $LANG['post_new_subject'],
 		'L_FOR_SELECTION' => $LANG['for_selection'],
 		'L_CHANGE_STATUT_TO' => sprintf($LANG['change_status_to'], $CONFIG_FORUM['display_msg']),
 		'L_CHANGE_STATUT_TO_DEFAULT' => $LANG['change_status_to_default'],
@@ -254,12 +256,12 @@ if (!empty($id_get))
 
 	$nbr_topics_display = 0;
 	$result = $Sql->query_while("SELECT m1.login AS login, m2.login AS last_login, t.id, t.title, t.subtitle, t.user_id, t.nbr_msg, t.nbr_views, t.last_user_id , t.last_msg_id, t.last_timestamp, t.type, t.status, t.display_msg, v.last_view_id, p.question, tr.id AS idtrack
-	FROM ".PREFIX."forum_topics t
-	LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
-	LEFT JOIN ".PREFIX."member m1 ON m1.user_id = t.user_id
-	LEFT JOIN ".PREFIX."member m2 ON m2.user_id = t.last_user_id
-	LEFT JOIN ".PREFIX."forum_poll p ON p.idtopic = t.id
-	LEFT JOIN ".PREFIX."forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
+	FROM " . PREFIX . "forum_topics t
+	LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+	LEFT JOIN " . DB_TABLE_MEMBER . " m1 ON m1.user_id = t.user_id
+	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
+	LEFT JOIN " . PREFIX . "forum_poll p ON p.idtopic = t.id
+	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = '" . $User->get_attribute('user_id') . "'
 	WHERE t.idcat = '" . $id_get . "'
 	ORDER BY t.type DESC , t.last_timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg($CONFIG_FORUM['pagination_topic'], 'p'), $CONFIG_FORUM['pagination_topic']), __LINE__, __FILE__);	
@@ -280,8 +282,6 @@ if (!empty($id_get))
 				$new_msg = true;
 			}
 		}
-		if ($row['type'] == '0' && $row['status'] != '0') //Topic non vérrouillé de type normal avec plus de pagination_msg réponses.
-			$img_announce .= ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg']) ? '_hot' : '';			
 		$img_announce .= ($row['type'] == '1') ? '_post' : '';
 		$img_announce .= ($row['type'] == '2') ? '_top' : '';
 		$img_announce .= ($row['status'] == '0' && $row['type'] == '0') ? '_lock' : '';
@@ -312,11 +312,12 @@ if (!empty($id_get))
 		$new_ancre = ($new_msg === true && !$is_guest) ? '<a href="topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title . '.php') . '#m' . $last_msg_id . '" title=""><img src="../templates/' . get_utheme() . '/images/ancre.png" alt="" /></a>' : '';
 		
 		$Template->assign_block_vars('topics', array(
-			'ANNOUNCE' => $img_announce,
+			'C_IMG_POLL' => !empty($row['question']),
+			'C_IMG_TRACK' => !empty($row['idtrack']),
+			'C_DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']),
+			'C_HOT_TOPIC' => ($row['type'] == '0' && $row['status'] != '0' && ($row['nbr_msg'] > $CONFIG_FORUM['pagination_msg'])),
+			'IMG_ANNOUNCE' => $img_announce,
 			'ANCRE' => $new_ancre,
-			'POLL' => !empty($row['question']) ? '<img src="' . $module_data_path . '/images/poll_mini.png" class="valign_middle" alt="" />' : '',
-			'TRACK' => !empty($row['idtrack']) ? '<img src="' . $module_data_path . '/images/favorite_mini.png" class="valign_middle" alt="" />' : '',
-			'DISPLAY_MSG' => ($CONFIG_FORUM['activ_display_msg'] && $CONFIG_FORUM['icon_activ_display_msg'] && $row['display_msg']) ? '<img src="' . $module_data_path . '/images/msg_display_mini.png" alt="" class="valign_middle" />' : '',
 			'TYPE' => $type[$row['type']],
 			'TITLE' => ucfirst($row['title']),			
 			'AUTHOR' => !empty($row['login']) ? '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="small_link">' . $row['login'] . '</a>' : '<em>' . $LANG['guest'] . '</em>',
@@ -342,39 +343,8 @@ if (!empty($id_get))
 	}
 		
 	//Listes les utilisateurs en lignes.
-	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-	$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-	FROM ".PREFIX."sessions s 
-	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
-	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'
-	ORDER BY s.session_time DESC", __LINE__, __FILE__);
-	while ($row = $Sql->fetch_assoc($result))
-	{
-		switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-		{ 		
-			case -1:
-			$status = 'visiteur';
-			$total_visit++;
-			break;			
-			case 0:
-			$status = 'member';
-			$total_member++;
-			break;			
-			case 1: 
-			$status = 'modo';
-			$total_modo++;
-			break;			
-			case 2: 
-			$status = 'admin';
-			$total_admin++;
-			break;
-		} 
-		$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-		$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-	}
-	$Sql->query_close($result);
+	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/forum.php' AND s.session_script_get LIKE '%id=" . $id_get . "%'");
 
-	$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 	$Template->assign_vars(array(
 		'TOTAL_ONLINE' => $total_online,
 		'USERS_ONLINE' => (($total_online - $total_visit) == 0) ? '<em>' . $LANG['no_member_online'] . '</em>' : $users_list,
@@ -382,7 +352,7 @@ if (!empty($id_get))
 		'MODO' => $total_modo,
 		'USER' => $total_member,
 		'GUEST' => $total_visit,
-		'SELECT_CAT' => forum_list_cat(), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
+		'SELECT_CAT' => forum_list_cat($id_get, $CAT_FORUM[$id_get]['level']), //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 		'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],
 		'L_ADMIN' => ($total_admin > 1) ? $LANG['admin_s'] : $LANG['admin'],
 		'L_MODO' => ($total_modo > 1) ? $LANG['modo_s'] : $LANG['modo'],

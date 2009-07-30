@@ -61,6 +61,11 @@ $DOWNLOAD_LANG['explain_icon_cat'] = 'Vous pouvez choisir une image du répertoir
 $DOWNLOAD_LANG['root_description'] = 'Description de la racine des téléchargements';
 $DOWNLOAD_LANG['approved'] = 'Approuvé';
 $DOWNLOAD_LANG['hidden'] = 'Caché';
+$DOWNLOAD_LANG['number_of_hits'] = 'Nombre de téléchargements';
+$DOWNLOAD_LANG['download_method'] = 'Méthode de téléchargement';
+$DOWNLOAD_LANG['download_method_explain'] = 'Choisissez de faire une redirection vers le fichier sauf si le fichier s\'affiche dans le navigateur au lieu d\'être téléchargé par le téléchargement et que ce fichier est <strong>sur votre serveur</strong>, dans ce cas, choisissez de forcer le téléchargement';
+$DOWNLOAD_LANG['force_download'] = 'Forcer le téléchargement';
+$DOWNLOAD_LANG['redirection_up_to_file'] = 'Rediriger vers le fichier';
 
 //Titre
 $DOWNLOAD_LANG['title_download'] = 'Téléchargements';
@@ -99,7 +104,7 @@ $DOWNLOAD_LANG['read_feed'] = 'Téléchager';
 //Catégories
 $DOWNLOAD_LANG['add_category'] = 'Ajouter une catégorie';
 $DOWNLOAD_LANG['removing_category'] = 'Suppression d\'une catégorie';
-$DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (questions et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
+$DOWNLOAD_LANG['explain_removing_category'] = 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>';
 $DOWNLOAD_LANG['delete_category_and_its_content'] = 'Supprimer la catégorie et tout son contenu';
 $DOWNLOAD_LANG['move_category_content'] = 'Déplacer son contenu dans :';
 $DOWNLOAD_LANG['required_fields'] = 'Les champs marqués * sont obligatoires !';
@@ -135,7 +140,7 @@ $DOWNLOAD_LANG['read_feed'] = 'Télécharger';
 $DOWNLOAD_LANG['posted_on'] = 'Le';
 
 //Contribution
-$DOWNLOAD_LANG['notice_contribution'] = 'Vous n\'êtes pas autorisé à créer un fichier, cependant vous pouvez proposer un fichier. Votre contribution suivra le parcours classique et sera traitée dans la panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
+$DOWNLOAD_LANG['notice_contribution'] = 'Vous n\'êtes pas autorisé à créer un fichier, cependant vous pouvez proposer un fichier. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.';
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Complément de contribution';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer ce fichier au téléchargement). Ce champ est facultatif.';
 $DOWNLOAD_LANG['contribution_entitled'] = 'Un fichier a été proposé : %s';
