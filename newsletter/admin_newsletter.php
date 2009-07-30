@@ -32,12 +32,12 @@ define('TITLE', $LANG['newsletter']);
 require_once('../admin/admin_header.php');
 
 //On recupère les variables.
-$type = retrieve(GET, 'type', '', TSTRING_UNSECURE);
-$send = !empty($_POST['send']) ? true : false ;
-$send_test = !empty($_POST['send_test']) ? true : false ;
-$mail_contents = retrieve(POST, 'contents', '');
-$mail_object = trim(retrieve(POST, 'title', ''));
-$member_list = !empty($_GET['member_list']) ? true : false;
+$type = retrieve(GET, 'type', '', TSTRING_UNCHANGE);
+$send = retrieve(POST, 'send', false);
+$send_test = retrieve(POST, 'send_test', false);
+$mail_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$mail_object = trim(retrieve(POST, 'title', '', TSTRING_UNCHANGE));
+$member_list = retrieve(GET, 'member_list', false);
 $del_member = retrieve(GET, 'del_member', 0);
 
 $Template->set_filenames(array(
@@ -52,8 +52,7 @@ $Template->assign_vars(array(
 ));
 
 $Cache->load('newsletter');
-include('newsletter.class.php');
-$newsletter_sender = new Newsletter_sender;
+include('newsletter_service.class.php');
 
 //Liste des membres
 if ($member_list)
@@ -62,16 +61,16 @@ if ($member_list)
 	
 	if ($del_member > 0)
 	{
-		$member_mail = $Sql->query("SELECT mail FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+		$member_mail = $Sql->query("SELECT mail FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 		if (!empty($member_mail))
 		{
-			$Sql->query_inject("DELETE FROM ".PREFIX."newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "newsletter WHERE id = '" . $del_member . "'", __LINE__, __FILE__);
 			$Errorh->handler(sprintf($LANG['newsletter_del_member_success'], $member_mail), E_USER_NOTICE);
 		}
 		else
 			$Errorh->handler($LANG['newsletter_member_does_not_exists'], E_USER_WARNING);
 	}
-	$result = $Sql->query_while ("SELECT id, mail FROM ".PREFIX."newsletter ORDER by id", __LINE__, __FILE__);
+	$result = $Sql->query_while ("SELECT id, mail FROM " . PREFIX . "newsletter ORDER by id", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('member_list.line', array(
 			'MAIL' => $row['mail'],
@@ -86,14 +85,14 @@ elseif (!empty($type) && $send && !$send_test && !empty($mail_object) && !empty(
 	switch ($type)
 	{
 		case 'html':
-			$error_mailing_list = $newsletter_sender->send_html($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_html($mail_object, $mail_contents);
 			break;
 		case 'bbcode':
-			$error_mailing_list = $newsletter_sender->send_bbcode($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_bbcode($mail_object, $mail_contents);
 			break;
 		default:
 			$type = 'text';
-			$error_mailing_list = $newsletter_sender->send_text($mail_object, $mail_contents);
+			$error_mailing_list = NewsletterService::send_text($mail_object, $mail_contents);
 	}
 	
 	//On envoie une confirmation
@@ -155,13 +154,13 @@ elseif (!empty($type)) //Rédaction
 		switch ($type)
 		{
 			case 'html':
-				$newsletter_sender->send_html($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_html($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 				break;
 			case 'bbcode':
-				$newsletter_sender->send_bbcode($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_bbcode($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 				break;
 			default:
-				$newsletter_sender->send_text($mail_object, $mail_contents, $User->get_attribute('user_mail'));
+				NewsletterService::send_text($mail_object, $mail_contents, $User->get_attribute('user_mail'));
 			break;
 		}
 		$Errorh->handler(sprintf($LANG['newsletter_test_sent'], $User->get_attribute('user_mail')), E_USER_NOTICE);

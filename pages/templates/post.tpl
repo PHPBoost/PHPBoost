@@ -3,6 +3,10 @@
 			var path = '{PAGES_PATH}';
 			var selected_cat = {SELECTED_CAT};
 			function check_form_post(){
+				# IF C_BBCODE_TINYMCE_MODE #
+					tinyMCE.triggerSave();
+				# ENDIF #
+			
 				if(document.getElementById('title') && document.getElementById('title').value == "") {
 					alert("{L_ALERT_TITLE}");
 					return false;
@@ -63,6 +67,8 @@
 				# END create #
 				<br />
 				<label for="contents">{L_CONTENTS}</label>
+				<br />
+				<br />
 				{KERNEL_EDITOR}
 				<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 				<br />

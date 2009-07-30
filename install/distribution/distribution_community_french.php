@@ -34,7 +34,7 @@ define('DISTRIBUTION_DESCRIPTION', '<img src="distribution/community.png" alt=""
 <p>Cette distribution est idéale pour créer et gérer une communauté en ligne. Des outils de discussion (tels que le forum ou la discussion) ainsi que des outils de contribution (wiki) vous permettront à vos utilisateurs d\'interagir.</p>');
 
 //Thème de la distribution
-define('DISTRIBUTION_THEME', 'phpboost');
+define('DISTRIBUTION_THEME', 'extends');
 
 //Page de démarrage de la distribution (commencer à la racine du site avec /)
 define('DISTRIBUTION_START_PAGE', '/news/news.php');
@@ -43,6 +43,6 @@ define('DISTRIBUTION_START_PAGE', '/news/news.php');
 define('DISTRIBUTION_ENABLE_USER', true);
 
 //Liste des modules
-$DISTRIBUTION_MODULES = array('articles', 'contact', 'news', 'pages', 'search', 'web', 'download', 'wiki', 'shoutbox', 'faq', 'forum', 'guestbook', 'online', 'poll');
+$DISTRIBUTION_MODULES = array('articles', 'connect', 'contact', 'database', 'news', 'pages', 'search', 'web', 'download', 'wiki', 'shoutbox', 'faq', 'forum', 'guestbook', 'online', 'poll');
 
 ?>

@@ -27,12 +27,12 @@
 
 require_once('../kernel/begin.php');
 
-if (!$User->check_level(USER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
+if (!$User->check_level(MEMBER_LEVEL)) //Si il n'est pas member (les invités n'ont rien à faire ici)
 	$Errorh->handler('e_auth', E_USER_REDIRECT); 
 
 $contribution_id = retrieve(GET, 'id', 0);
 $id_to_delete = retrieve(GET, 'del', 0);
-$id_to_update = retrieve(REQUEST, 'idedit', 0);
+$id_to_update = retrieve(POST, 'idedit', 0);
 $id_update = retrieve(GET, 'edit', 0);
 
 import('events/contribution_service');
@@ -79,9 +79,9 @@ elseif ($id_to_update > 0)
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	//Récupération des éléments de la contribution
-	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNSECURE);
+	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
 	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));	
-	$status = retrieve(POST, 'status', CONTRIBUTION_STATUS_UNREAD);
+	$status = retrieve(POST, 'status', EVENT_STATUS_UNREAD);
 	
 	//Si le titre n'est pas vide
 	if (!empty($entitled))
@@ -91,7 +91,7 @@ elseif ($id_to_update > 0)
 		$contribution->set_description($description);
 		
 		//Changement de statut ? On regarde si la contribution a été réglée
-		if ($status == CONTRIBUTION_STATUS_PROCESSED && $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED)
+		if ($status == EVENT_STATUS_PROCESSED && $contribution->get_status() != EVENT_STATUS_PROCESSED)
 		{
 			$contribution->set_fixer_id($User->get_attribute('user_id'));
 			$contribution->set_fixing_date(new Date());
@@ -111,7 +111,8 @@ elseif ($id_to_update > 0)
 //Suppression d'une contribution
 elseif ($id_to_delete > 0)
 {
-	global $User;
+	//Vérification de la validité du jeton
+    $Session->csrf_get_protect();
 	
 	$contribution = new Contribution();
 	
@@ -140,7 +141,7 @@ if ($contribution_id > 0)
 		'C_CONSULT_CONTRIBUTION' => true
 	));
 	
-	include_once('../kernel/framework/content/comments.class.php'); 
+	import('content/comments'); 
 	$comments = new Comments('events', $contribution_id, url('contribution_panel.php?id=' . $contribution_id . '&amp;com=%s'), 'member', KERNEL_SCRIPT);
 	
 	//For PHP 4 :(
@@ -149,11 +150,11 @@ if ($contribution_id > 0)
 	
 	$template->assign_vars(array(
 		'C_WRITE_AUTH' => $User->check_auth($contribution->get_auth(), CONTRIBUTION_AUTH_BIT),
-		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != CONTRIBUTION_STATUS_PROCESSED,
+		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != EVENT_STATUS_PROCESSED,
 		'ENTITLED' => $contribution->get_entitled(),
 		'DESCRIPTION' => second_parse($contribution->get_description()),
 		'STATUS' => $contribution->get_status_name(),
-		'CONTRIBUTER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
+		'CONTRIBUTER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_poster_id() . "'", __LINE__, __FILE__),
 		'COMMENTS' => $comments->display(),
 		'CREATION_DATE' => $contribution_creation_date->format(DATE_FORMAT_SHORT),
 		'MODULE' => $contribution->get_module_name(),
@@ -162,10 +163,10 @@ if ($contribution_id > 0)
 	));
 	
 	//Si la contribution a été traitée
-	if ($contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED)
+	if ($contribution->get_status() == EVENT_STATUS_PROCESSED)
 		$template->assign_vars(array(
 			'C_CONTRIBUTION_FIXED' => true,
-			'FIXER' => $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
+			'FIXER' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $contribution->get_fixer_id() . "'", __LINE__, __FILE__),
 			'FIXING_DATE' => $contribution_fixing_date->format(DATE_FORMAT_SHORT),
 			'U_FIXER_PROFILE' => url('member.php?id=' . $contribution->get_poster_id(), 'member-' . $contribution->get_poster_id() . '.php')
 		));
@@ -185,7 +186,7 @@ if ($contribution_id > 0)
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 		'U_UPDATE' => url('contribution_panel.php?edit=' . $contribution_id),
-		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id)
+		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . $Session->get_token())
 	));
 }
 //Modification d'une contribution
@@ -195,11 +196,11 @@ elseif ($id_update > 0)
 		'C_EDIT_CONTRIBUTION' => true,
 		'EDITOR' => display_editor(),
 		'ENTITLED' => $contribution->get_entitled(),
-		'DESCRIPTION' => $contribution->get_description(),
+		'DESCRIPTION' => unparse($contribution->get_description()),
 		'CONTRIBUTION_ID' => $contribution->get_id(),
-		'CONTRIBUTION_STATUS_UNREAD_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_UNREAD ? ' selected="selected"' : '',
-		'CONTRIBUTION_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
-		'CONTRIBUTION_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_UNREAD_SELECTED' => $contribution->get_status() == EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
+		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
+		'EVENT_STATUS_PROCESSED_SELECTED' => $contribution->get_status() == EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
 		'L_CONTRIBUTION_STATUS_UNREAD' => $LANG['contribution_status_unread'],
 		'L_CONTRIBUTION_STATUS_BEING_PROCESSED' => $LANG['contribution_status_being_processed'],
 		'L_CONTRIBUTION_STATUS_PROCESSED' => $LANG['contribution_status_processed'],
@@ -210,7 +211,7 @@ elseif ($id_update > 0)
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
-		'U_TARGET' => url('contribution_panel.php')
+		'U_TARGET' => url('contribution_panel.php?token=' . $Session->get_token())
 	));
 }
 else
@@ -218,7 +219,6 @@ else
 	import('util/pagination');
 	
 	$pagination = new Pagination();
-	$pagination->set_var_name_current_page('p');
 	
 	$template->assign_vars(array(
 		'C_CONTRIBUTION_LIST' => true
@@ -260,8 +260,8 @@ else
 					'U_FIXER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_fixer_id(), 'member-' . $this_contribution->get_fixer_id() . '.php'),
 					'U_POSTER_PROFILE' => PATH_TO_ROOT . '/member/' . url('member.php?id=' . $this_contribution->get_poster_id(), 'member-' . $this_contribution->get_poster_id() . '.php'),
 					'U_CONSULT' => PATH_TO_ROOT . '/member/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
-					'C_FIXED' => $this_contribution->get_status() == CONTRIBUTION_STATUS_PROCESSED,
-					'C_PROCESSING' => $this_contribution->get_status() == CONTRIBUTION_STATUS_BEING_PROCESSED
+					'C_FIXED' => $this_contribution->get_status() == EVENT_STATUS_PROCESSED,
+					'C_PROCESSING' => $this_contribution->get_status() == EVENT_STATUS_BEING_PROCESSED
 				));
 			
 			$num_contributions++;

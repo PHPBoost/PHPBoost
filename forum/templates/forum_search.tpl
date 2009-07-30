@@ -18,12 +18,12 @@
 				&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a> &raquo; {U_FORUM_CAT}
 			</div>
 			<div class="module_contents">
-				<form action="search.php{SID}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
+				<form action="search.php?token={TOKEN}#search_forum" method="post" onsubmit="return check_form();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_SEARCH_FORUM}</legend>
 						<dl>
-							<dt><label for="search">{L_KEYWORDS}</label></dt>
-							<dd><label><input type="text" size="35" id="search" name="search" value="{SEARCH}"  class="text" /></label></dd>
+							<dt><label for="search_forum_form">{L_KEYWORDS}</label></dt>
+							<dd><label><input type="text" size="35" id="search_forum_form" name="search" value="{SEARCH}"  class="text" /></label></dd>
 						</dl>
 						<dl>
 							<dt><label for="time">{L_DATE}</label></dt>
@@ -71,7 +71,7 @@
 						<input type="submit" name="valid_search" value="{L_SEARCH}" class="submit" />			
 					</fieldset>
 					
-					<span id="search_forum"></span>
+					<p><span id="search_forum"></span></p>
 					# IF C_ERROR_HANDLER #
 					<span id="errorh"></span>
 					<div class="{ERRORH_CLASS}">
@@ -111,7 +111,6 @@
 						<div class="msg_bottom"><span class="text_small">{L_RELEVANCE}: {list.RELEVANCE}%</span></div>
 					</div>
 					# END list #
-					<br />
 				</form>			
 			</div>	
 			<div class="module_bottom_l"></div>		

@@ -42,7 +42,7 @@ $error = retrieve(GET, 'error', '');
 
 if (!empty($new_title) && $id_rename_post > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -52,7 +52,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
-	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0 && $encoded_title != $page_infos['encoded_title'])
@@ -60,18 +60,18 @@ if (!empty($new_title) && $id_rename_post > 0)
 		//On doit créer une redirection automatique
 		if (!empty($_POST['create_redirection']))
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
-			$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $page_infos['title'] . "', '" . $page_infos['encoded_title'] . "', '" . $id_rename_post . "')", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $page_infos['title'] . "', '" . $page_infos['encoded_title'] . "', '" . $id_rename_post . "')", __LINE__, __FILE__);
 			
 		}
 		else
-			$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "', encoded_title = '" . $encoded_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	//le titre réel change mais pas celui encodé
 	elseif ($num_rows_same_title > 0 && $encoded_title == $page_infos['encoded_title'])
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "pages SET title = '" . $new_title . "' WHERE id = '" . $id_rename_post . "'", __LINE__, __FILE__);
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
@@ -80,7 +80,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_new_post . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_new_post . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -90,12 +90,12 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
-	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM ".PREFIX."pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
+	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
 	
 	//On peut enregistrer
 	if ($num_rows_same_title == 0)
 	{
-		$Sql->query_inject("INSERT INTO ".PREFIX."pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
 		redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
@@ -104,7 +104,7 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 //Suppression des redirections
 elseif ($del_redirection > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'redirect', "WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -115,13 +115,13 @@ elseif ($del_redirection > 0)
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
-		$Sql->query_inject("DELETE FROM ".PREFIX."pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "pages WHERE id = '" . $del_redirection . "' AND redirect > 0", __LINE__, __FILE__);
 	redirect(HOST . DIR . url('/pages/redirections.php?id=' . $page_infos['redirect'], '', '&'));
 }
 
 if ($id_page > 0)
 {
-	$page_infos = $Sql->query_array('pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_page . "'", __LINE__, __FILE__);
+	$page_infos = $Sql->query_array(PREFIX . 'pages', 'id', 'title', 'encoded_title', 'contents', 'auth', 'count_hits', 'activ_com', 'id_cat', 'is_cat', "WHERE id = '" . $id_page . "'", __LINE__, __FILE__);
 	
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
@@ -160,7 +160,7 @@ if ($id_rename > 0)
 {
 	$Template->assign_vars(array(
 		'ID_RENAME' => $id_rename,
-		'TARGET' => url('redirections.php'),
+		'TARGET' => url('redirections.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_rename_page'], $page_infos['title']),
 		'L_NEW_TITLE' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection'],
@@ -179,7 +179,7 @@ elseif ($id_new > 0)
 {
 	$Template->assign_vars(array(
 		'ID_NEW' => $id_new,
-		'TARGET' => url('redirections.php'),
+		'TARGET' => url('redirections.php?token=' . $Session->get_token()),
 		'L_TITLE' => sprintf($LANG['pages_creation_redirection_title'], $page_infos['title']),
 		'L_REDIRECTION_NAME' => $LANG['pages_new_title'],
 		'L_CREATE_REDIRECTION' => $LANG['pages_create_redirection']
@@ -197,10 +197,10 @@ elseif ($id_redirection > 0)
 	$Template->assign_block_vars('redirection', array());
 	
 	$result = $Sql->query_while("SELECT id, title, auth AS auth
-	FROM ".PREFIX."pages
+	FROM " . PREFIX . "pages
 	WHERE redirect = '" . $id_redirection . "'
 	ORDER BY title ASC", __LINE__, __FILE__);
-	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
+	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect = '" . $id_redirection . "'", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 		$Template->assign_block_vars('redirection.list', array(
@@ -230,11 +230,11 @@ else
 	$Template->assign_block_vars('redirections', array());
 	
 	$result = $Sql->query_while("SELECT r.title, r.encoded_title AS encoded_title, r.id, p.id AS page_id, p.title AS page_title, p.encoded_title AS page_encoded_title, p.auth AS auth
-	FROM ".PREFIX."pages r
-	LEFT JOIN ".PREFIX."pages p ON p.id = r.redirect
+	FROM " . PREFIX . "pages r
+	LEFT JOIN " . PREFIX . "pages p ON p.id = r.redirect
 	WHERE r.redirect > 0
 	ORDER BY r.title ASC", __LINE__, __FILE__);
-	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM ".PREFIX."pages WHERE redirect > 0", __LINE__, __FILE__);
+	$nbr_rows = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "pages WHERE redirect > 0", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{

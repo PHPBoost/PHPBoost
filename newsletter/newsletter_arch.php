@@ -33,7 +33,7 @@ $id = retrieve(GET, 'id', 0);
 
 if (!empty($id))
 {
-	$newsletter = $Sql->query_array('newsletter_arch', 'type', 'title', 'message', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$newsletter = $Sql->query_array(PREFIX . 'newsletter_arch', 'type', 'title', 'message', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if ($newsletter['type'] == 'html')
 	{
 		$message = stripslashes($newsletter['message']);

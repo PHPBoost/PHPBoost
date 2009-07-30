@@ -28,12 +28,12 @@
 			<script type="text/javascript">
 			<!--
 				//Javascript timeout to hide this message
-				setTimeout('Effect.Fade("error_msg");', 5000);
+				setTimeout('Effect.Fade("error_msg");', 1500);
 			-->
 			</script>
 			# ENDIF #
 			
-			<form action="admin_cache.php" method="post" class="fieldset_content">
+			<form action="admin_cache.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CACHE}</legend>
 					<p>

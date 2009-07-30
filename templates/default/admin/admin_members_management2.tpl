@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			# ENDIF #
-			<form action="admin_members.php?add=1" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php?add=1&amp;token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_ADD}</legend>
 					<dl>
@@ -161,7 +161,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_members.php" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_members.php?token={TOKEN}" enctype="multipart/form-data" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_USERS_MANAGEMENT}</legend>
 					<dl>
@@ -210,7 +210,7 @@
 					<dl>
 						<dt><label for="user_lang">{L_LANG_CHOOSE}</label></dt>
 						<dd><label>
-							<select name="user_lang" id="user_lang" onChange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
+							<select name="user_lang" id="user_lang" onchange="change_img_lang('img_lang', this.options[selectedIndex].value)">	
 								# START select_lang #
 									<option value="{select_lang.IDNAME}"{select_lang.SELECTED}>{select_lang.NAME}</option>
 								# END select_lang #			
@@ -224,7 +224,7 @@
 					<dl>
 						<dt><label for="user_theme">{L_THEME_CHOOSE}</label></dt>
 						<dd><label>
-							<select name="user_theme" id="user_theme" onChange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
+							<select name="user_theme" id="user_theme" onchange="change_img_theme('img_theme', this.options[selectedIndex].value)">						
 								# START select_theme #
 									<option value="{select_theme.IDNAME}"{select_theme.SELECTED}>{select_theme.NAME}</option>
 								# END select_theme #				
@@ -311,7 +311,7 @@
 					<dl>
 						<dt><label for="user_sex">{L_SEX}</label></dt>
 						<dd><label>
-							<select name="user_sex" id="user_sex" onChange="img_change_sex(this.options[selectedIndex].value)">
+							<select name="user_sex" id="user_sex" onchange="img_change_sex(this.options[selectedIndex].value)">
 								{SEX_OPTIONS}						
 							</select>
 							<span id="img_sex">{IMG_SEX}</span>
@@ -329,14 +329,17 @@
 							<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1&amp;d={BORN_DAY}&amp;m={BORN_MONTH}&amp;y={BORN_YEAR}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a>
 						</label></dd>
 					</dl>
-					<dl>
-						<dt><label for="user_sign">{L_USER_SIGN}</label><br /><span>{L_USER_SIGN_EXPLAIN}</span></dt>
-						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea></label></dd>
-					</dl>
-					<dl>
-						<dt><label for="user_desc">{L_USER_BIOGRAPHY}</label></dt>
-						<dd><label><textarea type="text" class="post" rows="4" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea></label></dd>
-					</dl>
+					<p><label for="user_sign">{L_USER_SIGN}</label><br /><span>{L_USER_SIGN_EXPLAIN}</span></p>
+					<p>
+						{USER_SIGN_EDITOR}
+						<textarea class="post" rows="10" cols="27" name="user_sign" id="user_sign">{SIGN}</textarea>
+					</p>
+					<p><label for="user_desc">{L_USER_BIOGRAPHY}</label></p>
+					<p>
+						{USER_DESC_EDITOR}
+						<textarea class="post" rows="10" cols="27" name="user_desc" id="user_desc">{BIOGRAPHY}</textarea>
+					</p>
+					<div class="spacer">&nbsp;</div>
 				</fieldset>	
 					
 				<fieldset>

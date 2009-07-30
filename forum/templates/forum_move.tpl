@@ -25,7 +25,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
 			<div class="module_contents">			
-				<form method="post" action="move.php{SID}" onsubmit="javascript:return check_form_move();" class="fieldset_content">
+				<form method="post" action="move{U_MOVE}" onsubmit="javascript:return check_form_move();" class="fieldset_content">
 					<fieldset>
 						<legend>{L_MOVE_SUBJECT} :: {TITLE}</legend>
 						<dl>
@@ -47,7 +47,7 @@
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
-			<div class="module_bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</a></div>
+			<div class="module_bottom">&bull; {U_FORUM_CAT} &raquo; {U_TITLE_T}</div>
 		</div>
 		
 		# INCLUDE forum_bottom #

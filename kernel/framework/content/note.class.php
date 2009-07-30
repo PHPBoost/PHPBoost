@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                             com.class.php
+ *                              note.class.php
  *                            -------------------
-*   begin                : April 08, 2008
- *   copyright          : (C) 2008 Viarre Régis
+ *   begin                : April 08, 2008
+ *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,32 +28,46 @@
 define('NOTE_DISPLAY_NOTE', 0x01);
 define('NOTE_NODISPLAY_NBRNOTES', 0x02);
 define('NOTE_DISPLAY_BLOCK', 0x04);
-define('NOTE_NO_CONSTRUCT', 0x08);
 
+/**
+ * @package content
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class provides you an easy way to manage notation.
+ */
 class Note
 {
 	## Public Methods ##
-	//Constructeur.
-	function Note($script, $idprov, $vars, $notation_scale, $module_folder = '', $options = 0) 
+	/**
+	 * @desc Create an new object Note.
+	 * @param string $script The module name in which the pagination is used.
+	 * <strong>Warning</strong>The sql table name has to be the same name, otherwise you has to specify the sql table name in $script and module name in $module_folder argument
+	 * @param int $idprov The id of the item in the module.
+	 * @param string $script_path The script path. Example : url('file.php?id=' . $idart, 'file-' . $idart . '.php')
+	 * @param int $notation_scale The notation scale
+	 * @param string $module_folder (optional) The folder where the module is located. It allow you to specify a different module location
+	 * @param int $options
+	 */
+	function Note($script, $idprov, $script_path, $notation_scale, $module_folder = '', $options = 0)
 	{
-		if (($options & NOTE_NO_CONSTRUCT) === 0)
-		{
-			$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
-			$this->options = (int)$options;
-			list($this->script, $this->idprov, $this->vars, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $vars, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
-			$this->sql_table = $this->_get_table_module();
-		}
+		$this->module_folder = !empty($module_folder) ? strprotect($module_folder) : strprotect($script);
+		$this->options = (int)$options;
+		list($this->script, $this->idprov, $this->script_path, $this->notation_scale, $this->path) = array(strprotect($script), numeric($idprov), $script_path, $notation_scale, PATH_TO_ROOT . '/' . $this->module_folder . '/');
+		$this->sql_table = $this->_get_table_module();
 	}
 	
-	//Ajoute une note.
+	/**
+	 * @desc Add a note on the item. It has to be into the notation scale.
+	 * @param int $note The note given by the user.
+	 * @return Return a string used in the ajax file, to update the notation. If an error occur, return an error code.
+	 */
 	function add($note)
 	{
 		global $Sql, $User;
 		
-		if ($User->check_level(USER_LEVEL))
+		if ($User->check_level(MEMBER_LEVEL))
 		{
-			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.			
-			$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+			$check_note = ($note >= 0 && $note <= $this->notation_scale) ? true : false; //Validité de la note.
+			$row_note = $Sql->query_array(PREFIX . $this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 			$user_id = $User->get_attribute('user_id');
 			$array_users_note = explode('/', $row_note['users_note']);
 			if (!in_array($user_id, $array_users_note) && $check_note) //L'utilisateur n'a pas déjà voté, et la note est valide.
@@ -72,13 +86,17 @@ class Note
 			return -2;
 	}
 	
-	//Affiche la notation
+	/**
+	 * @desc Display the ajax notation form.
+	 * @param object $template Template object to use another template file.
+	 * @return string the parsed template.
+	 */
 	function display_form($template = false)
 	{
-		global $CONFIG, $Sql, $LANG;
+		global $CONFIG, $Sql, $LANG, $Session;
 		
 		$note = !empty($_POST['note']) ? numeric($_POST['note']) : 0;
-		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->vars), 0);
+		$path_redirect = $this->path . sprintf(str_replace('&amp;', '&', $this->script_path), 0);
 
 		//Notes chargées?
 		if ($this->_note_loaded()) //Utilisateur connecté.
@@ -90,14 +108,14 @@ class Note
 			if (!empty($_POST['valid_note']))
 			{
 				if (!empty($note))
-					$Note->Add_note($note); //Ajout de la note.
+					$this->add($note); //Ajout de la note.
 				
 				redirect($path_redirect);
 			}
 			else
 			{
 				###########################Affichage##############################
-				$row_note = $Sql->query_array($this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
+				$row_note = $Sql->query_array(PREFIX . $this->sql_table, 'users_note', 'nbrnote', 'note', "WHERE id = '" . $this->idprov . "'", __LINE__, __FILE__);
 					
 				//Génération de l'échelle de notation pour ceux ayant le javascript désactivé.
 				$select = '<option value="-1" selected="selected">' . $LANG['note'] . '</option>';
@@ -116,7 +134,7 @@ class Note
 				{
 					$star_img = 'stars.png';
 					if ($row_note['note'] < $i)
-					{							
+					{
 						$decimal = $i - $row_note['note'];
 						if ($decimal >= 1)
 							$star_img = 'stars0.png';
@@ -126,8 +144,8 @@ class Note
 							$star_img = 'stars2.png';
 						else
 							$star_img = 'stars3.png';
-					}			
-					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="' . $this->idprov . '_stars' . $i . '" /></a>';
+					}
+					$ajax_note .= '<a href="javascript:send_note(' . $this->idprov . ', ' . $i . ', \'' . $Session->get_token() . '\')" onmouseover="select_stars(' . $this->idprov . ', ' . $i . ');"><img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" id="n' . $this->idprov . '_stars' . $i . '" /></a>';
 				}
 				if (($this->options & NOTE_NODISPLAY_NBRNOTES) !== 0) //Affichage du nombre de votant.
 					$ajax_note .= '</div> <span id="noteloading' . $this->idprov . '"></span>';
@@ -163,8 +181,15 @@ class Note
         }
 	}
 	
-	//Affiche les images de la notation.
-	function display_img($note, $notation_scale, $num_stars_display = 0)
+	/**
+	 * @desc Static method which display the notation with images, you can restrain the number of images displayed with the argument $num_stars_display
+	 * @param int $note The note of the item.
+	 * @param int $notation_scale Notation scale
+	 * @param int $num_stars_display Number of image to display.
+	 * @return string The notation with images.
+	 * @static
+	 */
+	/* static */ function display_img($note, $notation_scale, $num_stars_display = 0)
 	{
 		global $CONFIG;
 		
@@ -181,7 +206,7 @@ class Note
 		{
 			$star_img = 'stars.png';
 			if ($note < $i)
-			{							
+			{
 				$decimal = $i - $note;
 				if ($decimal >= 1)
 					$star_img = 'stars0.png';
@@ -191,21 +216,28 @@ class Note
 					$star_img = 'stars2.png';
 				else
 					$star_img = 'stars3.png';
-			}			
+			}
 			$display_note .= '<img src="../templates/'. get_utheme() . '/images/' . $star_img . '" alt="" class="valign_middle" />';
 		}
 		
 		return $display_note;
 	}
 	
-	//Accesseur
+	/**
+	 * @desc Accessor
+	 * @param string $varname
+	 * @return unknown_type
+	 */
 	function get_attribute($varname)
 	{
 		return $this->$varname;
 	}
 	
 	## Private Methods ##
-	//Vérifie que le système de commentaires est bien chargé.
+	/**
+	 * @desc Check if the notation system is correctly loaded.
+	 * @return bool
+	 */
 	function _note_loaded()
 	{
 		global $Errorh;
@@ -213,10 +245,13 @@ class Note
 		if (empty($this->sql_table)) //Erreur avec le module non prévu pour gérer les commentaires.
 			$Errorh->handler('e_unexist_page', E_USER_REDIRECT);
 		
-		return (!empty($this->script) && !empty($this->idprov) && !empty($this->vars));
+		return (!empty($this->script) && !empty($this->idprov) && !empty($this->script_path));
 	}
 	
-	//Récupération de la table du module associée aux notes.
+	/**
+	 * @desc Get the sql table of the associated module
+	 * @return string The sql table of the associated module
+	 */
 	function _get_table_module()
 	{
 		global $Sql, $CONFIG;
@@ -234,14 +269,14 @@ class Note
 			}
 		}
 		
-		return $check_script ? $info_module['note'] : 0;
+		return $check_script ? $info_module['note'] : '0';
 	}
 	
 	## Private attributes ##
 	var $script = '';
 	var $idprov = 0;
 	var $path = '';
-	var $vars = '';
+	var $script_path = '';
 	var $module_folder = '';
 	var $options = '';
 	var $sql_table = '';

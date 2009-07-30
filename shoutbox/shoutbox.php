@@ -38,14 +38,14 @@ if ($shoutbox && empty($shout_id)) //Insertion
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
 	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);
+		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{		
 		//Accès pour poster.		
 		if ($User->check_level($CONFIG_SHOUTBOX['shoutbox_auth']))
 		{
 			//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
-			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM ".PREFIX."shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
+			$check_time = ($User->get_attribute('user_id') !== -1 && $CONFIG['anti_flood'] == 1) ? $Sql->query("SELECT MAX(timestamp) as timestamp FROM " . PREFIX . "shoutbox WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__) : '';
 			if (!empty($check_time) && !$User->check_max_value(AUTH_FLOOD))
 			{
 				if ($check_time >= (time() - $CONFIG['delay_flood']))
@@ -59,7 +59,7 @@ if ($shoutbox && empty($shout_id)) //Insertion
 			if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
 				redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "shoutbox (login, user_id, level, contents, timestamp) VALUES('" . $shout_pseudo . "', '" . $User->get_attribute('user_id') . "', '" . $User->get_attribute('level') . "','" . $shout_contents . "', '" . time() . "')", __LINE__, __FILE__);
 				
 			redirect(HOST . url(SCRIPT . '?' . QUERY_STRING, '', '&'));
 		}
@@ -74,19 +74,21 @@ elseif (!empty($shout_id)) //Edition + suppression!
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
-	
+
 	$del_message = retrieve(GET, 'del', false);
 	$edit_message = retrieve(GET, 'edit', false);
-	$update = retrieve(GET, 'update', false);
+	$update_message = retrieve(GET, 'update', false);
 	
-	$row = $Sql->query_array('shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
+	$row = $Sql->query_array(PREFIX . 'shoutbox', '*', "WHERE id = '" . $shout_id . "'", __LINE__, __LINE__);
 	$row['user_id'] = (int)$row['user_id'];
 	
 	if ($User->check_level(MODO_LEVEL) || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 	{
 		if ($del_message)
 		{
-			$Sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+			$Session->csrf_get_protect(); //Protection csrf
+			
+			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . SCRIPT . SID2);
 		}
@@ -109,7 +111,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				));
 			
 			$Template->assign_vars(array(
-				'UPDATE' => url('?update=1&amp;id=' . $row['id']),
+				'UPDATE' => url('?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'SID' => '',
 				'CONTENTS' => unparse($row['contents']),
 				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
@@ -127,9 +129,9 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			$Template->pparse('shoutbox'); 
 		}
-		elseif ($update)
+		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNSECURE);			
+			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);			
 			$shout_pseudo = retrieve(POST, 'shout_pseudo', '');			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
@@ -140,7 +142,7 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				if (!check_nbr_links($shout_contents, $CONFIG_SHOUTBOX['shoutbox_max_link'])) //Nombre de liens max dans le message.
 					redirect(HOST . SCRIPT . url('?error=l_flood', '', '&') . '#errorh');
 			
-				$Sql->query_inject("UPDATE ".PREFIX."shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "shoutbox SET contents = '" . $shout_contents . "', login = '" . $shout_pseudo . "' WHERE id = '" . $shout_id . "'", __LINE__, __FILE__);
 			
 				redirect(HOST . SCRIPT. SID2);
 			}
@@ -213,7 +215,7 @@ else //Affichage.
 	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre de messages est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
@@ -227,9 +229,9 @@ else //Affichage.
 	$Cache->load('ranks');
 	$j = 0;
 	$result = $Sql->query_while("SELECT s.id, s.login, s.user_id, s.timestamp, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, se.user_id AS connect, s.contents
-	FROM ".PREFIX."shoutbox s
-	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
-	LEFT JOIN ".PREFIX."sessions se ON se.user_id = s.user_id AND se.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+	FROM " . PREFIX . "shoutbox s
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
+	LEFT JOIN " . DB_TABLE_SESSIONS . " se ON se.user_id = s.user_id AND se.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 	GROUP BY s.id
 	ORDER BY s.timestamp DESC 
 	" . $Sql->limit($Pagination->get_first_msg(10, 'p'), 10), __LINE__, __FILE__);	
@@ -252,8 +254,8 @@ else //Affichage.
 		//Edition/suppression.
 		if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 		{
-			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&id=' . $row['id']) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+			$edit_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?edit=1&amp;id=' . $row['id']) . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
+			$del_message = '&nbsp;&nbsp;<a href="../shoutbox/shoutbox' . url('.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()) . '" onclick="javascript:return Confirm_shout();"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
 		}
 		
 		//Pseudo.
@@ -353,7 +355,7 @@ else //Affichage.
 			'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
 			'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 			'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
+			'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . second_parse($row['user_sign']) : '',
 			'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 			'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
 			'PUNISHMENT' => $readonly,			

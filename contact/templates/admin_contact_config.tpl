@@ -11,7 +11,7 @@
 		
 		<div id="admin_contents">
 		
-			<form action="admin_contact.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_contact.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONTACT_CONFIG}</legend>
 					<dl>

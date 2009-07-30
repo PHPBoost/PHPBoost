@@ -6,7 +6,7 @@
 				alert("{L_REQUIRE_LOGIN}");
 				return false;
 			}
-			if(document.getElementById('contents').value == "") {
+			if(document.getElementById('{SCRIPT}contents').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
 			}
@@ -30,15 +30,26 @@
 					<dd><input type="text" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" /></dd>
 				</dl>
 				# ENDIF #
+				
+				# IF C_VERIF_CODE #
+				<dl>
+					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
+				</dl>
+				# ENDIF #
 				<br />
 				<label for="contents">* {L_MESSAGE}</label>
 				{KERNEL_EDITOR}
-				<label><textarea rows="10" cols="40" id="contents" name="contents">{CONTENTS}</textarea> </label>
+				<label><textarea rows="10" cols="40" id="{SCRIPT}contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				# IF C_HIDDEN_COM #
-				<input type="hidden" maxlength="25" size="25" name="login" value="{LOGIN}" class="text" />
+				<input type="hidden" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" />
 				# ENDIF #
 				<input type="hidden" name="contents_ftags" id="contents_ftags" value="{FORBIDDEN_TAGS}" />
 				<input type="hidden" name="idprov" value="{IDPROV}" />
@@ -48,7 +59,7 @@
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
 				-->
 				</script>						
 				<input type="reset" value="{L_RESET}" class="reset" />
@@ -56,15 +67,7 @@
 		</form>
 		# ENDIF #
 		
-		# IF C_ERROR_HANDLER #
-		<br />
-		<span id="errorh"></span>
-		<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}	
-			<br />			
-		</div>
-		<br /><br />	
-		# ENDIF #
+		{ERROR_HANDLER}
 		
 		# IF C_COM_DISPLAY #
 		<div class="msg_position">
@@ -139,7 +142,10 @@
 		<title>{L_TITLE}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"  />
 		<meta http-equiv="Content-Language" content="{L_XML_LANGUAGE}" />
-		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
+		<!-- Default CSS -->
+		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/default/theme/default.css" type="text/css" media="screen, print, handheld" />
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/design.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/global.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/generic.css" type="text/css" media="screen, print, handheld" />
 		<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/content.css" type="text/css" media="screen, print, handheld" />
@@ -150,11 +156,11 @@
 			var PATH_TO_ROOT = "{PATH_TO_ROOT}";
 		-->
 		</script>
+		# IF C_BBCODE_TINYMCE_MODE # <script language="javascript" type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/content/tinymce/tiny_mce.js"></script> # ENDIF #
+		
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/global.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/prototype.js"></script>
-		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/scriptaculous/scriptaculous.js"></script>
 	</head>
 
 	<body>
@@ -207,7 +213,7 @@
 				&nbsp;&nbsp; 						
 				<script type="text/javascript">
 				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
 				-->
 				</script>						
 				<input type="reset" value="{L_RESET}" class="reset" />
@@ -215,15 +221,7 @@
 		</form>
 		# ENDIF #
 		
-		# IF C_ERROR_HANDLER #
-			<br />
-			<span id="errorh"></span>
-			<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
-				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}	
-				<br />			
-			</div>
-			<br /><br />	
-		# ENDIF #
+		{ERROR_HANDLER}
 		
 		# IF C_COM_DISPLAY #
 		<div class="msg_position">

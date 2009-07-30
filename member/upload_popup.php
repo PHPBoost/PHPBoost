@@ -33,7 +33,7 @@ $id = retrieve(GET, 'id', 0);
 if (!empty($id))
 {
 	$basedir = '../upload/';
-	$info_file = $Sql->query_array("upload", "id", "path", "type", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$info_file = $Sql->query_array(PREFIX . "upload", "id", "path", "type", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (!empty($info_file['id']))
 	{
 		switch ($info_file['type'])

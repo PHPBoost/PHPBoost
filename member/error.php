@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,13 +25,13 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_error']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $id_error = retrieve(GET, 'e', '');
 	
-$array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood');	
+$array_error = array('e_member_ban', 'e_member_ban_w', 'e_unexist_member', 'e_unactiv_member', 'e_member_flood', 'e_forget_confirm_change');
 if (in_array($id_error, $array_error))
 {
 	if ($User->get_attribute('user_id') === -1)
@@ -42,7 +42,7 @@ if (in_array($id_error, $array_error))
 
 		$errno = E_USER_WARNING;
 		switch ($id_error)
-		{ 
+		{
 			case 'e_member_ban':
 				$ban = !empty($_GET['ban']) ? numeric($_GET['ban']) : '';
 				if ($ban > 0)
@@ -52,17 +52,17 @@ if (in_array($id_error, $array_error))
 					elseif ($ban < 1440)
 					{
 						$delay_ban = number_round($ban/60, 0);
-						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['hours'] : $LANG['hour']);				
+						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['hours'] : $LANG['hour']);
 					}
 					elseif ($ban < 10080)
 					{
 						$delay_ban = number_round($ban/1440, 0);
-						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['days'] : $LANG['day']);				
+						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['days'] : $LANG['day']);
 					}
 					elseif ($ban < 43200)
 					{
-						$delay_ban = number_round($ban/10080, 0);	
-						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['weeks'] : $LANG['week']);				
+						$delay_ban = number_round($ban/10080, 0);
+						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['weeks'] : $LANG['week']);
 					}
 					elseif ($ban < 525600)
 					{
@@ -72,34 +72,37 @@ if (in_array($id_error, $array_error))
 					else
 					{
 						$delay_ban = number_round($ban/525600, 0);
-						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['years'] : $LANG['year']);				
+						$delay_ban = $delay_ban . ' ' . (($delay_ban > 1) ? $LANG['years'] : $LANG['year']);
 					}
 				}
 				else
 					$delay_ban = 0 . ' ' . $LANG['minutes'];
 				$errstr = $LANG['e_member_ban'] . ' ' . $delay_ban;
 			break;
-			case 'e_member_ban_w':			
+			case 'e_member_ban_w':
 				$errstr = $LANG['e_member_ban_w'];
 			break;
-			case 'e_unexist_member':			
+			case 'e_unexist_member':
 				$errstr = $LANG['e_unexist_member'];
 			break;
-			case 'e_unactiv_member':			
+			case 'e_unactiv_member':
 				$errstr = $LANG['e_unactiv_member'];
 			break;
-			case 'e_member_flood':			
-				$flood = retrieve(GET, 'flood', 0);		
-				$flood = ($flood > 0 && $flood <= 5) ? $flood : 0;		
+			case 'e_forget_confirm_change':
+				$errstr = $LANG['e_forget_confirm_change'];
+			break;
+			case 'e_member_flood':
+				$flood = retrieve(GET, 'flood', 0);
+				$flood = ($flood > 0 && $flood <= 5) ? $flood : 0;
 				$flood = ($flood > 0) ? sprintf($LANG['e_test_connect'], $flood) : $LANG['e_nomore_test_connect'];
 				$errstr = $flood;
 			break;
 			default:
 			$errstr = '';
-		}	
+		}
 			
 		if (!empty($errstr))
-			$Errorh->handler($errstr, $errno);		
+			$Errorh->handler($errstr, $errno);
 			
 		$Template->assign_vars(array(
 			'C_ERRORH_CONNEXION' => true,
@@ -129,10 +132,10 @@ elseif (!empty($id_error))
 		load_module_lang($module); //Chargement de la langue du module.
 
 	$Template->assign_vars(array(
-		'THEME' => get_utheme(),		
+		'THEME' => get_utheme(),
 		'L_ERROR' => $LANG['error'],
 		'U_BACK' => !empty($_SERVER['HTTP_REFERER']) ? '<a href="' . url($_SERVER['HTTP_REFERER']) .'">' . $LANG['back'] . '</a>' : '<a href="javascript:history.back(1)">' . $LANG['back'] . '</a>',
-		'U_INDEX' => '<a href="' . url(get_start_page()) .'">' . $LANG['reception'] . '</a>', 
+		'U_INDEX' => '<a href="' . url(get_start_page()) .'">' . $LANG['home'] . '</a>',
 	));
 	
 	$Template->assign_vars(array(
@@ -167,6 +170,6 @@ elseif ($User->get_attribute('user_id') === -1)
 else
 	redirect(get_start_page());
 
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

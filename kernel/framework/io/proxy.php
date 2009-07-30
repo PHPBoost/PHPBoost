@@ -3,7 +3,7 @@
  *                               proxy.php
  *                            -------------------
  *   begin                : June 18, 2008
- *   copyright            : (C) 2008 LoÃ¯c Rouchon
+ *   copyright            : (C) 2008 Loïc Rouchon
  *   email                : horn@phpboost.com
  *
  *
@@ -25,17 +25,24 @@
  *
 ###################################################*/
 
+/**
+* @package io
+*/
+
+/**
+* Constant definition
+*/
 define('ERROR_REPORTING', E_ALL | E_NOTICE);
 define('UNAUTHORIZED_PROTOCOL', 'UNAUTHORIZED PROTOCOL');
 define('INVALID_URL', 'INVALID URL');
 
 define('PATH_TO_ROOT', '../../..');
 
+require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php');
 require_once(PATH_TO_ROOT . '/kernel/constant.php');
-import('functions', LIB_IMPORT);
 
-$url = retrieve(GET, 'url', '', TSTRING_UNSECURE);
-$content_type = retrieve(GET, 'ctype', '', TSTRING_UNSECURE);
+$url = retrieve(GET, 'url', '', TSTRING_UNCHANGE);
+$content_type = retrieve(GET, 'ctype', '', TSTRING_UNCHANGE);
 
 if ($content_type == 'iso-8859-1')
 	header('Content-type: text/html; charset=iso-8859-1');

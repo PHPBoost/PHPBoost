@@ -41,26 +41,26 @@ $LANG['articles_add'] = 'Add an article';
 $LANG['articles_config'] = 'Articles configuration';
 $LANG['articles_cats_add'] = 'Add a category';
 $LANG['edit_article'] = 'Edit the article';
-$LANG['cat_edit'] = 'Edit category';
+$LANG['cat_edit'] = 'Edit the category';
 $LANG['nbr_articles_max'] = 'Maximum number of displayed articles';
-$LANG['articles_date'] = 'Article date <span class="text_small">(dd/mm/yy)</span> <br />
+$LANG['articles_date'] = 'Article date <span class="text_small">(mm/dd/yy)</span> <br />
 <span class="text_small">(Leave empty to set today date)</span>';
 $LANG['icon_cat'] = 'Icon category';
-$LANG['icon_cat_explain'] = 'Put it in /articles folder';
+$LANG['icon_cat_explain'] = 'Put it in the /articles folder';
 $LANG['parent_category'] = 'Parent category';
-$LANG['explain_article'] = 'The category you wish delete contains <strong>1</strong> article, do you want to preserve it by transferring it in another category, or delete this article ?';
-$LANG['explain_articles'] = 'The category you wish delete contains <strong>%d</strong> articles, do you want to preserve them by transferring them in another category, or delete these articles ?';
-$LANG['explain_subcat'] = 'The category you wish delete contains <strong>1</strong> subcategory, do you want to preserve it by transferring it in another category, or delete it and his contents ?';
-$LANG['explain_subcats'] = 'The category you wish delete contains <strong>%d</strong> subcategories, do you want to preserve them by transferring them in another category, or delete them and their contents ?';
+$LANG['explain_article'] = 'The category you wish to delete contains <strong>1</strong> article, do you want to save it by transferring it in another category, or delete this article?';
+$LANG['explain_articles'] = 'The category you wish to delete contains <strong>%d</strong> articles, do you want to save them by transferring them in another category, or delete these articles?';
+$LANG['explain_subcat'] = 'The category you wish to delete contains <strong>1</strong> subcategory, do you want to save it by transferring it in another category, or delete it and its content?';
+$LANG['explain_subcats'] = 'The category you wish to delete contains <strong>%d</strong> subcategories, do you want to save them by transferring them in another category, or delete them and their contents?';
 $LANG['keep_articles'] = 'Keep article(s)';
 $LANG['keep_subcat'] = 'Keep subcategory(ies)';
 $LANG['move_articles_to'] = 'Move article(s) to';
 $LANG['move_subcat_to'] = 'Move subcategories to';
 $LANG['cat_target'] = 'Target category';
-$LANG['del_all'] = 'Complete suppression';
-$LANG['del_articles_contents'] = 'Delete category "<strong>%s</strong>", <strong>subcategories</strong> and <strong>all</strong> its contents.';
+$LANG['del_all'] = 'Complete removal';
+$LANG['del_articles_contents'] = 'Delete the category "<strong>%s</strong>", its <strong>subcategories</strong> and <strong>all</strong> its content.';
 $LANG['article_icon'] = 'Article icon';
-$LANG['article_icon_explain'] = 'Put it in /articles folder';
+$LANG['article_icon_explain'] = 'Put it in the /articles folder';
 $LANG['explain_articles_count'] = 'Recount the number of articles per category';
 $LANG['recount'] = 'Recount';
 
@@ -72,12 +72,12 @@ $LANG['title_articles'] = 'Articles';
 
 //Articles
 $LANG['articles'] = 'Articles';
-$LANG['alert_delete_article'] = 'Delete this article ?';
+$LANG['alert_delete_article'] = 'Delete this article?';
 $LANG['propose_article'] = 'Suggest an article';
 $LANG['none_article'] = 'No article in this category';
 $LANG['xml_articles_desc'] = 'Last articles';
 $LANG['no_note'] = 'No note';
-$LANG['actual_note'] = 'Actual note';
+$LANG['actual_note'] = 'Current note';
 $LANG['vote'] = 'Vote';
 $LANG['nbr_articles_info'] = '%d article(s) in this category';
 $LANG['sub_categories'] = 'Subcategories';
@@ -85,7 +85,7 @@ $LANG['sub_categories'] = 'Subcategories';
 //Add article.
 $MAIL['new_article_website'] = 'New article on your website';
 $MAIL['new_article'] = 'A new article was added on your website ' . HOST . ',
-it will have to be approved before being visible by everyone.
+it will have to be approved before being readable by everyone.
 
 Title of the article: %s
 Contents: %s...[next]
@@ -95,5 +95,5 @@ Go into the articles management panel of the administration, and approve it.
 ' . HOST . DIR . '/admin/admin_articles_gestion.php';
 
 $LANG['read_feed'] = 'Read the Article';
-$LANG['posted_on'] = 'The';
+$LANG['posted_on'] = 'Posted on';
 ?>

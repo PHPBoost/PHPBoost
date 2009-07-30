@@ -36,7 +36,7 @@ define('TITLE' , $LANG['wiki_history']);
 
 if (!empty($id_article))
 {
-	$article_infos = $Sql->query_array('wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
+	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', 'title', 'auth', 'encoded_title', 'id_cat', 'WHERE id = ' . $id_article, __LINE__, __FILE__);
 }
 
 $bread_crumb_key = !empty($id_article) ? 'wiki_history_article' : 'wiki_history';
@@ -59,19 +59,19 @@ if (!empty($id_article))
 	
 	//on va chercher le contenu de la page
 	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents, c.user_id, c.user_ip, m.login, c.id_article, c.activ
-		FROM ".PREFIX."wiki_contents c
-		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.id_article
-		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
+		FROM " . PREFIX . "wiki_contents c
+		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.id_article
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE c.id_article = '" . $id_article . "'
 		ORDER BY c.timestamp DESC", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//Restauration
-		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
+		$actions = ($row['activ'] != 1 && $restore_auth) ? '<a href="' . url('action.php?restore=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['wiki_restore_version'] . '"><img src="templates/images/restore.png" alt="' . $LANG['wiki_restore_version'] . '" /></a> &nbsp; ' : '';
 		
 		//Suppression
-		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
+		$actions .= ($row['activ'] != 1 && $delete_auth) ? '<a href="' . url('action.php?del_contents=' . $row['id_contents']. '&amp;token=' . $Session->get_token()) . '" title="' . $LANG['delete'] . '" onclick="javascript: return confirm(\'' . str_replace('\'', '\\\'', $LANG['wiki_confirm_delete_archive']) . '\');"><img src="' . $Template->get_module_data_path('wiki') . '/images/delete.png" alt="' . $LANG['delete'] . '" /></a>' : '';
 		
 		
 		$Template->assign_block_vars('article.list', array(
@@ -103,10 +103,10 @@ else //On affiche la liste des modifications
 	$order = $order == 'asc' ? 'asc' : 'desc';
 	
 	//On compte le nombre d'articles
-	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
+	$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE redirect = '0'", __LINE__, __FILE__);
 	
 	//On instancie la classe de pagination
-	include_once('../kernel/framework/util/pagination.class.php');
+	import('util/pagination');
 	$Pagination = new Pagination();
 	$show_pagin = $Pagination->display(url('history.php?field=' . $field . '&amp;order=' . $order . '&amp;p=%d'), $nbr_articles, 'p', $_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 3); 
 	
@@ -125,13 +125,13 @@ else //On affiche la liste des modifications
 	));	
 
 	$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.timestamp, c.id_contents AS id, c.user_id, c.user_ip, m.login, c.id_article, c.activ,  a.id_contents
-		FROM ".PREFIX."wiki_articles a
-		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id_contents
-		LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
+		FROM " . PREFIX . "wiki_articles a
+		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
 		WHERE a.redirect = 0
 		ORDER BY " . ($field == 'title' ? 'a' : 'c') . "." . $field . " " . $order . "
 		" . $Sql->limit($Pagination->get_first_msg($_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY, 'p'),$_WIKI_NBR_ARTICLES_A_PAGE_IN_HISTORY), __LINE__, __FILE__);
-	while ($row = myfetch_assoc($result))
+	while ($row = $Sql->fetch_assoc($result))
 	{
 		$Template->assign_block_vars('index.list', array(
 			'TITLE' => $row['title'],

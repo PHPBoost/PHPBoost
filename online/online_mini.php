@@ -27,7 +27,7 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
-function online_mini()
+function online_mini($position, $block)
 {
     if (strpos(SCRIPT, '/online/online.php') === false)
     {
@@ -38,15 +38,17 @@ function online_mini()
     	$Cache->load('online');
     	
     	$tpl = new Template('online/online_mini.tpl');
+        import('core/menu_service');
+        MenuService::assign_positions_conditions($tpl, $block);
     
     	//On compte les visiteurs en ligne dans la bdd, en prenant en compte le temps max de connexion.
     	list($count_visit, $count_member, $count_modo, $count_admin) = array(0, 0, 0, 0);
     
     	$i = 0;
     	$array_class = array('member', 'modo', 'admin');
-    	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.login
-    	FROM ".PREFIX."sessions s
-    	LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id
+    	$result = $Sql->query_while("SELECT s.user_id, s.level, s.session_time, m.user_groups, m.login
+    	FROM " . DB_TABLE_SESSIONS . " s
+    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
     	WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
     	ORDER BY " . $CONFIG_ONLINE['display_order_online'], __LINE__, __FILE__); //4 Membres enregistrés max.
     	while ($row = $Sql->fetch_assoc($result))
@@ -56,8 +58,9 @@ function online_mini()
     			//Visiteurs non pris en compte.
     			if ($row['level'] !== '-1')
     			{
-    				$tpl->assign_block_vars('online', array(
-    					'USER' => '<a href="' . PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '">' . wordwrap_html($row['login'], 19) . '</a><br />'
+    				$group_color = User::get_group_color($row['user_groups'], $row['level']);
+					$tpl->assign_block_vars('online', array(
+    					'USER' => '<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a><br />'
     				));
     				$i++;
     			}

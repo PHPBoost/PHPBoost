@@ -4,7 +4,7 @@
     			<span>
     				<!-- This mention must figured on the website ! -->
     				<!-- Cette mention dois figurer sur le site ! -->
-    				{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost 2</a> {L_PHPBOOST_RIGHT}
+    				{L_POWERED_BY} <a style="font-size:10px" href="http://www.phpboost.com" title="PHPBoost">PHPBoost {PHPBOOST_VERSION}</a> {L_PHPBOOST_RIGHT}
     			</span>	
     			# IF C_DISPLAY_BENCH #
     			<br />

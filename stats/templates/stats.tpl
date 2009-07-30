@@ -186,13 +186,13 @@
 				</th>
 			</tr>
 			<tr>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					N&deg;
 				</td>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					{L_PSEUDO}
 				</td>
-				<td class="row3" style="text-align:center;">
+				<td class="row1" style="text-align:center;">
 					{L_MSG}
 				</td>
 			</tr>			
@@ -299,12 +299,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="row2" style="text-align:center;" colspan="{COLSPAN}">
+					<td class="row3" style="text-align:center;" colspan="{COLSPAN}">
 						{L_TOTAL}: {SUM_NBR}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{L_AVERAGE}: {MOY_NBR}
 					</td>
 				</tr>
 				<tr>
-					<td class="row2" style="text-align:center;">
+					<td class="row3" style="text-align:center;">
 						{U_VISITS_MORE}
 					</td>
 				</tr>
@@ -337,7 +337,7 @@
 		# IF C_STATS_BROWSERS #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_BROWSERS}
 				</th>
 			</tr>
@@ -370,7 +370,7 @@
 		# IF C_STATS_OS #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_OS}
 				</th>
 			</tr>
@@ -403,7 +403,7 @@
 		# IF C_STATS_LANG #
 		<table class="module_table">
 			<tr>
-				<th colspan="3">
+				<th colspan="2">
 					{L_LANG}
 				</th>
 			</tr>
@@ -430,7 +430,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="row2" colspan="3" style="text-align:center;">
+				<td class="row2" colspan="2" style="text-align:center;">
 					{L_LANG_ALL}
 				</td>
 			</tr>
@@ -548,7 +548,7 @@
 			else
 			{
 				document.getElementById('load' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/stats_xmlhttprequest.php?stats_keyword=1&id=' + divid);
+				var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/stats_xmlhttprequest.php?token={TOKEN}&stats_keyword=1&id=' + divid);
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

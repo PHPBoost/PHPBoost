@@ -27,13 +27,27 @@
 
 import('content/syndication/feed_item');
 import('util/date');
+import('util/url');
 
+define('FEED_DATA__CLASS', 'FeedData');
+
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc Contains meta-informations about a feed with its entries
+ * @package content
+ * @subpackage syndication
+ */
 class FeedData
 {
     ## Public Methods ##
+    
+    /**
+     * @desc Builds a FeedData Object
+     * @param FeedData $data an other FeedData object to clone
+     */
     function FeedData($data = null)
     {
-		if ($data != null && strtolower(get_class($data)) == 'feeddata')
+		if ($data !== null && of_class($data, FEED_DATA__CLASS))
 		{
 			$this->title = $data->title;
 			$this->link = $data->link;
@@ -46,13 +60,48 @@ class FeedData
 	}
     
     ## Setters ##
-    function set_title($value) { $this->title = $value; }
-    function set_link($value) { $this->link = $value; }
+    /**
+     * @desc Sets the feed title
+     * @param string $value The title
+     */
+    function set_title($value) { $this->title = strip_tags($value); }
+    /**
+     * @desc Sets the feed data date
+     * @param Date $value a date object representing the feed date
+     */
     function set_date($value) { $this->date = $value; }
+    /**
+     * @desc Sets the feed description
+     * @param string $value the feed description
+     */
     function set_desc($value) { $this->desc = $value; }
+    /**
+     * @desc Sets the feed language
+     * @param string $value the feed language
+     */
     function set_lang($value) { $this->lang = $value; }
+    /**
+     * @desc Sets the feed host
+     * @param string $value the feed host
+     */
     function set_host($value) { $this->host = $value; }
+    /**
+     * @desc Sets the feed auth bit, useful to check authorizations
+     * @param int $value the bit position in an int (from 1 to 32)
+     */
     function set_auth_bit($value) { $this->auth_bit = $value; }
+    /**
+     * @desc Sets the feed item link
+     * @param mixed $value a string url or an Url object
+     */
+    function set_link($value)
+    {
+        if (!of_class($value, URL__CLASS))
+        {
+            $value = new Url($value);
+        }
+        $this->link = $value->absolute();
+    }
     
     function add_item($item) { array_push($this->items, $item); }
     
@@ -66,6 +115,10 @@ class FeedData
     function get_lang() { return $this->lang; }
     function get_host() { return $this->host; }
     
+    /**
+     * @desc Returns the feed items
+     * @return FeedItem[] the feed items
+     */
     function get_items()
     {
         global $User;
@@ -84,7 +137,13 @@ class FeedData
         return serialize($this);
     }
     
-    // Returns a items list containing $number items starting from the $begin_at one
+    
+    /**
+     * @desc Returns a items list containing $number items starting from the $begin_at one
+     * @param int $number the number of items to retrieve
+     * @param int $begin_at the number of the first to retrieve
+     * @return FeedItem[] the items list containing $number items starting from the $begin_at one
+     */
     function subitems($number = 10, $begin_at = 0)
     {
         $secured_items = $this->get_items();
@@ -103,7 +162,7 @@ class FeedData
     ## Private attributes ##
     var $title = '';        // Feed Title
     var $link = '';         // Feed Url
-    var $date = null;         // Feed date
+    var $date = null;       // Feed date
     var $desc = '';         // Feed Description
     var $lang = '';         // Feed Language
     var $host = '';         // Feed Host

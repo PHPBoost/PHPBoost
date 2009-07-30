@@ -3,7 +3,7 @@
  *                              wiki_functions.php
  *                            -------------------
  *   begin                : May 6, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -27,32 +27,34 @@
 
 if (defined('PHPBOOST') !== true)	exit;
 
+define('WIKI_MENU_MAX_DEPTH', 5);
+
 //Interprétation du BBCode en ajoutant la balise [link]
 function wiki_parse(&$var)
 {
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentManager(BBCODE_LANGUAGE);
-	$parser =& $content_manager->get_parser();
+	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
+	$parser = $content_manager->get_parser();
     $parser->set_content($var, MAGIC_QUOTES);
     $parser->parse();
 	
     //Parse la balise link
-	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="$1">$2</a>', $parser->get_content());
+	return preg_replace('`\[link=([a-z0-9+#-]+)\](.+)\[/link\]`isU', '<a href="/wiki/$1">$2</a>', $parser->get_content());
 }
 
 //Retour au BBCode en tenant compte de [link]
 function wiki_unparse($var)
 {
 	//Unparse de la balise link
-	$var = preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
+	$var = preg_replace('`<a href="(?:/wiki/)?([a-z0-9+#-]+)">(.*)</a>`sU', "[link=$1]$2[/link]", $var);
 	
 	//On force le langage de formatage à BBCode
-	$content_manager = new ContentManager(BBCODE_LANGUAGE);
-	$parser =& $content_manager->get_unparser();
-    $parser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
-    $parser->unparse();
+	$content_manager = new ContentFormattingFactory(BBCODE_LANGUAGE);
+	$unparser = $content_manager->get_unparser();
+    $unparser->set_content($var, PARSER_DO_NOT_STRIP_SLASHES);
+    $unparser->parse();
 	
-	return $parser->get_content(DO_NOT_ADD_SLASHES);
+	return $unparser->get_content(DO_NOT_ADD_SLASHES);
 }
 
 //Fonction de correction dans le cas où il n'y a pas de rewriting (balise link considére par défaut le rewriting activé)
@@ -66,54 +68,90 @@ function wiki_no_rewrite($var)
 }
 
 //Fonction de décomposition récursive (passage par référence pour la variable content qui passe de chaîne à tableau de chaînes (5 niveaux maximum)
-function wiki_explode_menu(&$content, $level)
+function wiki_explode_menu(&$content)
 {
-	//On éclate le tableau suivant la syntaxe nécessaire pour les paragraphes fils (motif: [\-]{2,6} texte [\-]{2,6}) (on capture les titres des paragraphes et les contenus, c'est alterné: pairs => contenus, impairs => titres)
-	$content = preg_split('`[\n\r]{1}[\-]{' . ($level + 1) . '}[\s]+(.+)+[\s]+[\-]{' . ($level + 1) . '}[<]{1}`', "\n" . $content . "\n", -1, PREG_SPLIT_DELIM_CAPTURE);
-
-	$nbr_occur = count($content); //On compte le nombre d'éléments du tableau (on n'utilse pas de foreach car on a besoin de savoir si les clés sont paires ou impaires)
+	$lines = explode("\n", $content);
+	$num_lines = count($lines);
+	$max_level_expected = 2;
 	
-	for ($i = 1; $i < $nbr_occur; $i++) //On passe tous les éléments du tableau, on commence à 1 car on sait qu'il n'y a rien d'intéressant avant
+	$list = array();
+	
+	//We read the text line by line
+	$i = 0;
+	while ($i < $num_lines)
 	{
-		//Si c'est un nombre pair, cela signifie qu'il contient peut-être des (sous){0,4} catégories, on vérifie
-		if ($i % 2 === 0 && $level <= 5 && preg_match('`[\-]{' . ($level + 1) . '}`isU', $content[$i]))
+		for ($level = 2; $level <= $max_level_expected; $level++)
 		{
-			wiki_explode_menu($content[$i], $level + 1); //On éclate la chaîne $content[$i] à un niveau intérieur
+			$matches = array();
+			
+			//If the line contains a title
+			if (preg_match('`^\s*[\-]{' . $level . '}[\s]+(.+)[\s]+[\-]{' . $level . '}(?:<br />)?\s*$`', $lines[$i], $matches))
+			{
+				$title_name = strip_tags(html_entity_decode($matches[1]));
+				
+				//We add it to the list
+				$list[] = array($level - 1, $title_name);
+				//Now we wait one of its children or its brother
+				$max_level_expected = min($level + 1, WIKI_MENU_MAX_DEPTH + 1);
+				
+				//Réinsertion
+				$class_level = $level - 1;
+				$lines[$i] = '<h' . $class_level . ' class="wiki_paragraph' .  $class_level . '" id="paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) .'</h' . $class_level . '><br />' . "\n";
+			}
 		}
+		$i++;
 	}
+	
+	$content = implode("\n", $lines);
+	
+	return $list;
 }
 
 //Fonction d'affichage récursive
-function wiki_display_menu($array_menu, &$menu, $level)
+function wiki_display_menu($menu_list)
 {
-	if (!is_array($array_menu)) //Si ce n'est pas un tableau
+	if (count($menu_list) == 0) //Aucun titre de paragraphe
 	{
-		$menu = '';
-		return 0;
+		return '';
 	}
+	
+	$menu = '';
+	$last_level = 0;
 		
-	$menu .= '<ol class=\"wiki_list_' . $level . '\">
-	<li>';
-	
-	$nbr_occur = count($array_menu); //On compte le nombre d'éléments du tableau (on n'utilse pas de foreach car on a besoin de savoir si les clés sont paires ou impaires)
-	
-	for ($i = 1; $i < $nbr_occur; $i++) //On boucle sur le tableau
+	foreach ($menu_list as $title)
 	{
-		if ($i % 2 === 0 && is_array($array_menu[$i]) && $level <= 5)//Si c'est un nombre pair, cela signifie qu'il contient peut-être des (sous){0,4} catégories
+		$current_level = $title[0];
+		
+		$title_name = stripslashes($title[1]);		
+		$title_link = '<a href="#paragraph_' . url_encode_rewrite($title_name) . '">' . htmlspecialchars($title_name) . '</a>';
+		
+		if ($current_level > $last_level)
 		{
-			wiki_display_menu($array_menu[$i], $menu, $level + 1); //On appelle cette même fonction à un niveau de hiérarchie inférieur
+			$menu .= '<ol class="wiki_list_' . $current_level . '"><li>' . $title_link;
 		}
-		elseif ($i % 2 === 1 && !empty($array_menu[$i])) //sinon on affiche simplement le titre du paragraphe et le lien vers l'ancre
+		elseif ($current_level == $last_level)
 		{
-			$menu .= (($i === 1 || $i >= $nbr_occur - 1) ? '' : '</li><li>') . '<a href="#' . url_encode_rewrite($array_menu[$i]) . '">' . htmlentities($array_menu[$i]) . '</a>' . "\n"; //On affiche le lien vers l'ancre (on met rajoute une puce seulement si on n'est pas au premier ou au dernier élément de la liste)
+			$menu .= '</li><li>' . $title_link;
 		}
+		else
+		{
+			if (substr($menu, strlen($menu) - 4, 4) == '<li>')
+			{
+				$menu = substr($menu, 0, strlen($menu) - 4);
+			}
+			$menu .= str_repeat('</li></ol>', $last_level - $current_level) . '</li><li>' . $title_link;
+		}
+		$last_level = $title[0];
 	}
-	$menu .= '</li></ol>'; //On ferme les balises de la liste
-}
-
-function wiki_make_anchors($array) //Fonction qui crée les ancres
-{
-	return 'id=\"' . url_encode_rewrite($array[1]) . '\">';
+	
+	//End
+	if (substr($menu, strlen($menu) - 4, 4) == '<li>')
+	{
+		$menu = substr($menu, 0, strlen($menu) - 4);
+	}
+	$menu .= str_repeat('</li></ol>', $last_level);
+	
+	return $menu;
 }
 
 //Catégories (affichage si on connait la catégorie et qu'on veut reformer l'arborescence)
@@ -172,7 +210,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link)
 			else
 			{
 				//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $key . "'", __LINE__, __FILE__);
+				$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $key . "'", __LINE__, __FILE__);
 				//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 				if ($sub_cats_number > 0)
 					$line .= '<li><a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $key . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $key . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt="" id="img_' . $key . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $key . '" class="' . ($key == $id ? 'wiki_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $key . ');">' . $value['name'] . '</a></span><span id="cat_' . $key . '"></span></li>';

@@ -10,7 +10,7 @@
 			if( document.getElementById('refresh_unread' + divID) )
 				document.getElementById('refresh_unread' + divID).src = '../templates/{THEME}/images/loading_mini.gif';
 				
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?refresh_unread=1');
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&refresh_unread=1');
 			xhr_object.onreadystatechange = function() 
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -93,7 +93,7 @@
 								<a class="small_link" href="../member/error.php"><img src="../templates/{THEME}/images/connect_mini.png" alt="" class="valign_middle" /> {L_CONNECT}</a> <span style="color:#000000;">&bull;</span> <a class="small_link" href="../member/register.php"><img src="../templates/{THEME}/images/register_mini.png" alt="" class="valign_middle" /> {L_REGISTER}</a>
 								# ENDIF #
 								# IF C_USER_CONNECTED #
-									<a class="small_link" href="?disconnect=true"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
+									<a class="small_link" href="?disconnect=true&amp;token={TOKEN}"><img src="../templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> {L_DISCONNECT}</a> 
 								# ENDIF # 						
 							# ENDIF #
 							
@@ -104,7 +104,7 @@
 						</div>
 					</div>
 					<div style="float:right;text-align:right">
-						<form action="search.php{SID}" method="post">
+						<form action="search.php?token={TOKEN}" method="post">
                             <div>
                                 <label><input type="text" size="14" id="search" name="search" value="{L_SEARCH}..." class="text" style="background:#FFFFFF url(../templates/{THEME}/images/search.png) no-repeat;background-position:2px 1px;padding-left:22px;" onclick="if(this.value=='{L_SEARCH}...')this.value='';" onblur="if(this.value=='')this.value='{L_SEARCH}...';" /></label>
                                 <input class="submit" value="{L_SEARCH}" type="submit" name="valid_search" style="padding:1px" /><br />
@@ -121,7 +121,7 @@
 			</div>
 			<div class="forum_links" style="border-top:none;">
 				<div style="float:left;">
-					&bull; <a href="index.php{SID}">{L_FORUM_INDEX}</a>
+					&bull; <a href="index.php?{SID}">{L_FORUM_INDEX}</a>
 				</div>
 				<div style="float:right;">
 					<img src="{MODULE_DATA_PATH}/images/track_mini.png" alt="" class="valign_middle" /> {U_TOPIC_TRACK} &bull;

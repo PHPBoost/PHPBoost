@@ -16,8 +16,8 @@
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
 				<div class="module_top">
-					<span style="float:left">
-						<a href="syndication.php?idcat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
+					<span class="forum_cat_title">
+						<a href="{PATH_TO_ROOT}/syndication.php?m=forum&amp;cat={forums_list.cats.IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>
 						&nbsp;&nbsp;<a href="{forums_list.cats.U_FORUM_VARS}" class="forum_link_cat">{forums_list.cats.NAME}</a>
 					</span>
 					<span style="float:right">
@@ -25,7 +25,7 @@
 					</span>
 				</div>
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>			
 							<td class="forum_text_column" style="min-width:175px;">{L_FORUM}</td>
 							<td class="forum_text_column" style="width:60px;">{L_TOPIC}</td>
@@ -39,7 +39,7 @@
 			# START forums_list.subcats #		
 			<div class="module_position">
 				<div class="module_contents forum_contents">
-					<table class="module_table" style="width:100%">
+					<table class="module_table forum_table">
 						<tr>
 							# IF forums_list.subcats.U_FORUM_URL #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
@@ -52,7 +52,7 @@
 							</td>
 							# ELSE #
 							<td class="forum_sous_cat" style="width:25px;text-align:center;">
-								{forums_list.subcats.ANNOUNCE}
+								<img src="{MODULE_DATA_PATH}/images/{forums_list.subcats.IMG_ANNOUNCE}.png" alt="" />
 							</td>
 							<td class="forum_sous_cat" style="min-width:150px;">
 								<a href="forum{forums_list.subcats.U_FORUM_VARS}">{forums_list.subcats.NAME}</a>

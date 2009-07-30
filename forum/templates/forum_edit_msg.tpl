@@ -3,6 +3,10 @@
 		<script type='text/javascript'>
 		<!--
 		function check_form_post(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
@@ -75,7 +79,7 @@
 							<p>{L_REQUIRE}</p>
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<label><textarea type="text" rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
+							<label><textarea rows="25" cols="66" id="contents" name="contents">{CONTENTS}</textarea></label>
 						</fieldset>
 						
 						<fieldset class="fieldset_submit">
@@ -87,7 +91,7 @@
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_msg').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>
 							&nbsp;&nbsp;

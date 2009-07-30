@@ -3,7 +3,7 @@
  *                               download_auth.php
  *                            -------------------
  *   begin                : April 12, 2008
- *   copyright          : (C) 2008 Sautel Benoit
+ *   copyright            : (C) 2008 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -31,5 +31,9 @@ define('DOWNLOAD_READ_CAT_AUTH_BIT', 0x01);
 define('DOWNLOAD_WRITE_CAT_AUTH_BIT', 0x02);
 //Authorization bit to contribution in a category
 define('DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT', 0x04);
+
+//Flag used in the database to know if we must force the file download or redirect the user up tu the file by a HTTP redirection
+define('DOWNLOAD_FORCE_DL', 1);
+define('DOWNLOAD_REDIRECT', 0);
 
 ?>

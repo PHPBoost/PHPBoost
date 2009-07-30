@@ -3,6 +3,10 @@
 		<script type='text/javascript'>
 		<!--
 		function check_form_post(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('contents').value == "") {
 				alert("{L_REQUIRE_TEXT}");
 				return false;
@@ -11,21 +15,29 @@
 				alert("{L_REQUIRE_TITLE}");
 				return false;
 		    }
+			if(!poll_hidded && document.getElementById('question').value == "") {
+				alert("{L_REQUIRE_TITLE_POLL}");
+				return false;
+		    }
 			return true;
 		}
+		var poll_hidded = true;
 		function hide_poll(divID)
 		{
 			if( document.getElementById(divID) )
 			{
 				document.getElementById(divID).style.display = 'block';
 				if( document.getElementById('hidepoll_link') )
+				{	
 					document.getElementById('hidepoll_link').style.display = 'none';
+					poll_hidded = false;
+				}
 			}
 		}
 		function add_poll_field(nbr_field)
 		{
 			if ( typeof this.max_field_p == 'undefined' )
-				this.max_field_p = nbr_field;
+				this.max_field_p = (nbr_field == 0) ? 5 : nbr_field;
 			else
 				this.max_field_p++;
 			
@@ -45,7 +57,7 @@
 			if( document.getElementById('forum_change_img') )
 				document.getElementById('forum_change_img').src = '../templates/{THEME}/images/loading.gif';
 			
-			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?msg_d=' + idtopic);
+			var xhr_object = xmlhttprequest_init('../forum/xmlhttprequest.php?token={TOKEN}&msg_d=' + idtopic);
 			xhr_object.onreadystatechange = function()
 			{
 				if( xhr_object.readyState == 4 && xhr_object.status == 200 )
@@ -143,7 +155,7 @@
 							
 							<label for="contents">* {L_MESSAGE}</label>
 							{KERNEL_EDITOR}
-							<label><textarea type="text" rows="25" cols="40" id="contents" name="contents">{CONTENTS}</textarea></label>
+							<label><textarea rows="25" cols="40" id="contents" name="contents">{CONTENTS}</textarea></label>
 							
 							<br /><br />
 							
@@ -213,7 +225,7 @@
 							<script type="text/javascript">
 							<!--
 							document.getElementById('previs_topic').style.display = 'none';
-							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+							document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 							-->
 							</script>
 							&nbsp;&nbsp;

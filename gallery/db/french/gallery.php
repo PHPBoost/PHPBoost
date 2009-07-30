@@ -42,5 +42,8 @@ foreach ($chmod_dir as $dir)
 	else
 		@mkdir($dir, 0777);
 }
-	
+
+if ( !@extension_loaded('gd') )
+	MenuService::delete_mini_module('gallery');
+
 ?>

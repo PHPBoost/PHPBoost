@@ -55,7 +55,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form action="admin_articles_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_articles_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ARTICLES_CONFIG}</legend>
 					<dl>
@@ -83,7 +83,7 @@
 				</fieldset>	
 			</form>
 
-			<form action="admin_articles_config.php" name="form" method="post" class="fieldset_content">
+			<form action="admin_articles_config.php?token={TOKEN}" name="form" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_RECOUNT}</legend>
 					<img src="../templates/{THEME}/images/admin/maintain.png" alt="" class="valign_middle" />

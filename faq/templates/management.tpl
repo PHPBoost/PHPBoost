@@ -24,8 +24,8 @@
 					{
 						if( document.getElementById("id_faq").value > 0 && document.getElementById("cat_name").value == "" )
 						{
-								alert("{L_REQUIRE_CAT_NAME}");
-								return false;
+							alert("{L_REQUIRE_CAT_NAME}");
+							return false;
 						}
 						else
 							return true;
@@ -76,7 +76,7 @@
 						<textarea id="contents" rows="15" cols="40" name="description">{DESCRIPTION}</textarea>
 						<br />
 						<div style="text-align:center;">
-							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+							<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
 						</div>
 						<br />
 						<dl>
@@ -86,7 +86,7 @@
 								<span class="text_small">{L_DISPLAY_EXPLAIN}</span>
 							</dt>
 							<dd>
-								<select name="display_mode">
+								<select name="display_mode" id="display_mode">
 									<option value="0" {AUTO_SELECTED}>{L_DISPLAY_AUTO}</option>
 									<option value="1" {INLINE_SELECTED}>{L_DISPLAY_INLINE}</option>
 									<option value="2" {BLOCK_SELECTED}>{L_DISPLAY_BLOCK}</option>
@@ -195,6 +195,10 @@
 		<!--
 		function check_form_faq()
 		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if( document.getElementById("entitled").value == '' )
 			{
 				alert("{L_REQUIRE_ENTITLED}");
@@ -229,12 +233,13 @@
 						<label for="contents">{L_ANSWER}</label>
 						{KERNEL_EDITOR}
 						<textarea id="contents" rows="15" cols="66" name="answer">{edit_question.ANSWER}</textarea>
+						<br />
 					</fieldset>
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>
 						<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
 						&nbsp;&nbsp;
-						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" type="button" />
+						<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" type="button" />
 						&nbsp;&nbsp;
 						<input type="reset" value="{L_RESET}" class="reset" />
 						<input type="hidden" name="id_question" value="{edit_question.ID_QUESTION}" />

@@ -2,6 +2,10 @@
 		<!--
 		function check_form()
 		{
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if( document.getElementById('contents').value == "" )
 			{
 				alert("{L_REQUIRE_DESCRIPTION}");
@@ -12,8 +16,7 @@
 				alert("{L_REQUIRE_TITLE}");
 				return false;
 		    }
-			reg_exp = new RegExp(".*", "g");
-			if( !document.getElementById('url').match(reg_exp) )
+			if( document.getElementById('url').value == "" )
 			{
 				alert("{L_REQUIRE_URL}");
 				return false;
@@ -96,24 +99,36 @@
 					</dl>
 					<dl>
 						<dt><label for="url">* {L_URL}</label></dt>
-						<dd><input type="text" size="50" id="url" name="url" id="url" value="{URL}" class="text" /></dd>
+						<dd><input type="text" size="50" id="url" name="url" value="{URL}" class="text" /></dd>
 					</dl>
 					<dl>
 						<dt><label for="size">{L_SIZE}</label></dt>
 						<dd><input type="text" size="10" maxlength="10" name="size" id="size" value="{SIZE_FORM}" class="text" /> {L_UNIT_SIZE}</dd>
 					</dl>
 					<dl>
-						<dt><label for="count">{L_DOWNLOAD}</label></dt>
+						<dt><label for="count">{L_NUMBER_OF_HITS}</label></dt>
 						<dd><input type="text" size="10" maxlength="10" name="count" id="count" value="{COUNT}" class="text" /></dd>
+					</dl>
+					<dl>					
+						<dt>
+							<label for="download_method">{L_DOWNLOAD_METHOD}</label>
+							<br /><span>{L_DOWNLOAD_METHOD_EXPLAIN}</span>
+						</dt>
+						<dd>
+							<select name="download_method" id="download_method">
+								<option value="force_download" {FORCE_DOWNLOAD_SELECTED}>{L_FORCE_DOWNLOAD}</option>
+								<option value="redirect" {REDIRECTION_SELECTED}>{L_REDIRECTION}</option>
+							</select>
+						</dd>
 					</dl>
 					<br />
 					<label for="contents">* {L_CONTENTS}</label>
 					{KERNEL_EDITOR}
-					<textarea type="text" rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
+					<textarea rows="20" cols="90" id="contents" name="contents">{DESCRIPTION}</textarea>					
 					<br />
 					<label for="short_contents">{L_SHORT_CONTENTS}</label>
 					{KERNEL_EDITOR_SHORT}
-					<textarea type="text" rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
+					<textarea rows="20" cols="90" id="short_contents" name="short_contents">{SHORT_DESCRIPTION}</textarea>
 					<br />
 					<dl>
 						<dt>
@@ -122,11 +137,11 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="50" name="image" class="text" value="{FILE_IMAGE}" />
+							<input type="text" size="50" name="image" id="image" class="text" value="{FILE_IMAGE}" />
 						</dd>
 					</dl>
 					<dl class="overflow_visible">
-						<dt><label for="creation">* {L_DOWNLOAD_DATE}</label></dt>
+						<dt><label for="calendar_1">* {L_DOWNLOAD_DATE}</label></dt>
 						<dd>
 							{DATE_CALENDAR_CREATION}
 						</dd>
@@ -140,13 +155,13 @@
 						</dd>
 					</dl>
 					<dl id="release_date_form" style="display:{STYLE_FIELD_RELEASE_DATE};" class="overflow_visible">
-						<dt><label for="release">* {L_RELEASE_DATE}</label></dt>
+						<dt><label for="calendar_2">* {L_RELEASE_DATE}</label></dt>
 						<dd>
 							{DATE_CALENDAR_RELEASE}
 						</dd>
 					</dl>
 					<dl class="overflow_visible">
-						<dt><label for="visible">* {L_FILE_VISIBILITY}</label></dt>
+						<dt><label>* {L_FILE_VISIBILITY}</label></dt>
 						<dd>
 							<input type="radio" value="2" name="visibility" {VISIBLE_WAITING} /> 
 						{L_FROM_DATE}&nbsp;
@@ -191,7 +206,8 @@
 					&nbsp;&nbsp; 
 					<input type="submit" name="preview" value="{L_PREVIEW}" class="submit" />
 					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset" />
+					<input type="hidden" name="token" value="{TOKEN}" />
 				</fieldset>
 			</form>
 			</div>
@@ -199,3 +215,4 @@
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom"></div>
 		</div>
+		

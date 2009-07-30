@@ -32,4 +32,7 @@ load_module_lang('calendar'); //Chargement de la langue du module.
 define('TITLE', $LANG['title_calendar']);
 $Cache->load('calendar');
 
+//Chargement du css alternatif.
+define('ALTERNATIVE_CSS', 'calendar');
+
 ?>

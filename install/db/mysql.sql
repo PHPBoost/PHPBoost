@@ -4,7 +4,7 @@ CREATE TABLE `phpboost_com` (
   `idprov` int(11) NOT NULL default '0',
   `login` varchar(255) NOT NULL default '',
   `user_id` int(11) NOT NULL default '0',
-  `contents` text NOT NULL,
+  `contents` text,
   `timestamp` int(11) NOT NULL default '0',
   `script` varchar(20) NOT NULL default '',
   `path` varchar(255) NOT NULL default '',
@@ -14,8 +14,8 @@ CREATE TABLE `phpboost_com` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `phpboost_compteur`;
-CREATE TABLE `phpboost_compteur` (
+DROP TABLE IF EXISTS `phpboost_visit_counter`;
+CREATE TABLE `phpboost_visit_counter` (
   `id` int(11) NOT NULL auto_increment,
   `ip` varchar(50) NOT NULL default '',
   `time` date NOT NULL default '0000-00-00',
@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `phpboost_configs`;
 CREATE TABLE `phpboost_configs` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(150) NOT NULL default '',
-  `value` text NOT NULL,
+  `value` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -68,22 +68,11 @@ CREATE TABLE `phpboost_group` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL default '',
   `img` varchar(255) NOT NULL default '',
+  `color` varchar(6) NOT NULL default '',
   `auth` varchar(255) NOT NULL default '0',
-  `members` text NOT NULL,
+  `members` text,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS `phpboost_guestbook`;
-CREATE TABLE `phpboost_guestbook` (
-  `id` int(11) NOT NULL auto_increment,
-  `contents` text NOT NULL,
-  `login` varchar(255) NOT NULL default '',
-  `user_id` int(11) NOT NULL default '0',
-  `timestamp` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ;
 
 
 DROP TABLE IF EXISTS `phpboost_lang`;
@@ -102,7 +91,7 @@ CREATE TABLE `phpboost_member` (
   `login` varchar(255) NOT NULL default '',
   `password` varchar(64) NOT NULL default '',
   `level` tinyint(1) NOT NULL default '0',
-  `user_groups` text NOT NULL,
+  `user_groups` text,
   `user_lang` varchar(25) NOT NULL default '',
   `user_theme` varchar(50) NOT NULL default '',
   `user_mail` varchar(50) NOT NULL default '',
@@ -118,10 +107,10 @@ CREATE TABLE `phpboost_member` (
   `user_web` varchar(70) NOT NULL default '',
   `user_occupation` varchar(50) NOT NULL default '',
   `user_hobbies` varchar(50) NOT NULL default '',
-  `user_desc` text NOT NULL,
+  `user_desc` text,
   `user_sex` tinyint(1) NOT NULL default '0',
   `user_born` date NOT NULL default '0000-00-00',
-  `user_sign` text NOT NULL,
+  `user_sign` text,
   `user_pm` smallint(6) unsigned NOT NULL default '0',
   `user_warning` smallint(6) NOT NULL default '0',
   `user_readonly` int(11) NOT NULL default '0',
@@ -132,6 +121,7 @@ CREATE TABLE `phpboost_member` (
   `user_ban` int(11) NOT NULL default '0',
   `user_aprob` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`user_id`),
+  UNIQUE KEY `login` (`login`),
   KEY `user_id` (`login`,`password`,`level`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -149,11 +139,11 @@ CREATE TABLE `phpboost_member_extend_cat` (
   `class` int(11) NOT NULL default '0',
   `name` varchar(255) NOT NULL default '',
   `field_name` varchar(255) NOT NULL default '',
-  `contents` text NOT NULL,
+  `contents` text,
   `field` tinyint(1) NOT NULL default '0',
-  `possible_values` text NOT NULL,
-  `default_values` text NOT NULL,
-  `require` tinyint(1) NOT NULL default '0',
+  `possible_values` text,
+  `default_values` text,
+  `required` tinyint(1) NOT NULL default '0',
   `display` tinyint(1) NOT NULL default '0',
   `regex` varchar(255) NOT NULL default '',
   UNIQUE KEY `id` (`id`)
@@ -165,7 +155,7 @@ CREATE TABLE `phpboost_modules` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(150) NOT NULL default '',
   `version` varchar(15) NOT NULL default '',
-  `auth` text NOT NULL,
+  `auth` text,
   `activ` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -175,7 +165,7 @@ DROP TABLE IF EXISTS `phpboost_menus`;
 CREATE TABLE `phpboost_menus` (
   `id` int(11) NOT NULL auto_increment,
   `title` varchar(128) NOT NULL,
-  `object` text NOT NULL,
+  `object` text,
   `class` varchar(64) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
   `block` tinyint(2) NOT NULL,
@@ -191,7 +181,7 @@ CREATE TABLE `phpboost_pm_msg` (
   `id` int(11) NOT NULL auto_increment,
   `idconvers` int(11) NOT NULL default '0',
   `user_id` int(11) NOT NULL default '0',
-  `contents` text NOT NULL,
+  `contents` text,
   `timestamp` int(11) NOT NULL default '0',
   `view_status` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`),
@@ -267,7 +257,8 @@ CREATE TABLE `phpboost_sessions` (
   `session_flag` tinyint(1) NOT NULL default '0',
   `user_theme` varchar(50) NOT NULL default '',
   `user_lang` varchar(50) NOT NULL default '',
-  `modules_parameters` text NOT NULL,
+  `modules_parameters` text,
+  `token` varchar(64) NOT NULL,
   PRIMARY KEY  (`session_id`),
   KEY `user_id` (`user_id`,`session_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -290,7 +281,7 @@ CREATE TABLE `phpboost_stats` (
   `stats_day` tinyint(4) NOT NULL default '0',
   `nbr` mediumint(9) NOT NULL default '0',
   `pages` int(11) NOT NULL default '0',
-  `pages_detail` text NOT NULL,
+  `pages_detail` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `stats_day` (`stats_day`,`stats_month`,`stats_year`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -353,6 +344,7 @@ CREATE TABLE `phpboost_verif_code` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` varchar(15) NOT NULL default '',
   `code` varchar(20) NOT NULL default '',
+  `difficulty` tinyint(1) NOT NULL,
   `timestamp` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;

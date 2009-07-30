@@ -30,17 +30,27 @@ import('events/administrator_alert');
 //Flag which distinguishes an alert and a contribution in the database
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
-//This is a static class, it must not be instantiated.
+/**
+ * @static
+ * @package events
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This static class allows you to handler easily the administrator alerts which can be made in PHPBoost.
+ */
 class AdministratorAlertService
 {
-	//Function which builds an alert knowing its id. If it's not found, it returns null
-	/*static*/ function find_by_id($alert_id)
+	/**
+	 * @static
+	 * @desc Builds an alert knowing its id.
+	 * @param int $alert_id Id of the alert.
+	 * @return AdministratorAlert The wanted alert. If it's not found, it returns null.
+	 */
+	function find_by_id($alert_id)
 	{
 		global $Sql;
 		
 		//Selection query
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . "
+		FROM " . DB_TABLE_EVENTS  . "
 		WHERE id = '" . $alert_id . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
@@ -54,23 +64,39 @@ class AdministratorAlertService
 			return $alert;
 		}
 		else
+		{
 			return null;
+		}
 	}
 	
-	//Function which builds a list of alerts matching the required criteria(s)
-	/*static*/ function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
+	/**
+	 * @static
+	 * @desc Builds a list of alerts matching the required criteria(s). You can specify many criterias. When you use several of them, it's a AND condition.
+	 * It will only return the alert which match all the criterias.
+	 * @param int $id_in_module Id in the module. 
+	 * @param string $type Alert type.
+	 * @param string $identifier Alert identifier.
+	 * @return AdministratorAlert[] The list of the matching alerts.
+	 */
+	function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
 	{
 		global $Sql;
 		$criterias = array();
 	
 		if ($id_in_module != null)
+		{
 			$criterias[] = "id_in_module = '" . intval($id_in_module) . "'";
+		}
 		
 		if ($type != null)
-			$criterias[] = "type = '" . strprotect($type) . "'";
+		{
+		    $criterias[] = "type = '" . strprotect($type) . "'";
+		}
 			
 		if ($identifier != null)
+		{
 			$criterias[] = "identifier = '" . strprotect($identifier). "'";
+		}
 		
 		//Restrictive criteria
 		if (!empty($criterias))
@@ -78,7 +104,7 @@ class AdministratorAlertService
 			$array_result = array();
 			$where_clause = "contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode($criterias, " AND ");
 			$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
-			FROM " . PREFIX . EVENTS_TABLE_NAME . "
+			FROM " . DB_TABLE_EVENTS  . "
 			WHERE " . $where_clause, __LINE__, __FILE__);
 			
 			while ($row = $Sql->fetch_assoc($result))
@@ -92,16 +118,25 @@ class AdministratorAlertService
 		}
 		//There is no criteria, we return all alerts
 		else
+		{
 			return AdministratorAlertService::get_all_alerts();
+		}
 	}
 	
- 	/*static*/ function find_by_identifier($identifier, $type = '')
+ 	/**
+ 	 * @static
+	 * @desc Finds an alert knowing its identifier and maybe its type.
+	 * @param string $identifier The identifier of the alerts you look for.
+	 * @param string $type The type of the alert you look for.
+	 * @return AdministratorAlert[] The list of the matching alerts.
+ 	 */
+	function find_by_identifier($identifier, $type = '')
 	{
         global $Sql;
         
         $result = $Sql->query_while(
             "SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
-    		FROM " . PREFIX . EVENTS_TABLE_NAME . "
+    		FROM " . DB_TABLE_EVENTS  . "
     		WHERE identifier = '" . addslashes($identifier) . "'" . (!empty($type) ? " AND type = '" . addslashes($type) . "'" : '') . " ORDER BY creation_date DESC " . $Sql->limit(0, 1) . ";"
             , __LINE__, __FILE__);
             
@@ -117,8 +152,17 @@ class AdministratorAlertService
         return null;
 	}
 	
-	//Function which returns all the alerts of the table
-	/*static*/ function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
+	/**
+	 * @static
+	 * @desc Lists all the alerts of the site. You can order them. You can also choose how much alerts you want.
+	 * @param string $criteria The criteria according to which you want to order. It can be id, entitled, fixing_url, 
+	 * current_status, creation_date, identifier, id_in_module, type, priority, description.
+	 * @param string $order asc or desc.
+	 * @param int $begin You want all the alert from the ($begin+1)(th).
+	 * @param int $number The number of alerts you want.
+	 * @return AdministratorAlerts[] The list of the alerts.
+	 */
+	function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
 	{
 		global $Sql;
 		
@@ -126,7 +170,7 @@ class AdministratorAlertService
 		
 		//On liste les alertes
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . "
+		FROM " . DB_TABLE_EVENTS  . "
 		WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order) . " " . 
 		$Sql->limit($begin, $number), __LINE__, __FILE__);
@@ -142,8 +186,12 @@ class AdministratorAlertService
 		return $array_result;
 	}
 	
-	//Function which saves an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
-	/*static*/ function save_alert(&$alert)
+	/**
+	 * @static
+     * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
+     * @param AdministratorAlert $alert The alert to create or update.
+	 */
+    function save_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
@@ -153,7 +201,7 @@ class AdministratorAlertService
 			//This line exists only to be compatible with PHP 4 (we cannot use $var->get_var()->method(), whe have to use a temp var)
 			$creation_date = $alert->get_creation_date();
 			
-			$Sql->query_inject("UPDATE " . PREFIX . EVENTS_TABLE_NAME . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_EVENTS  . " SET entitled = '" . addslashes($alert->get_entitled()) . "', description = '" . addslashes($alert->get_properties()) . "', fixing_url = '" . addslashes($alert->get_fixing_url()) . "', current_status = '" . $alert->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', id_in_module = '" . $alert->get_id_in_module() . "', identifier = '" . addslashes($alert->get_identifier()) . "', type = '" . addslashes($alert->get_type()) . "', priority = '" . $alert->get_priority() . "' WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			
 			//Regeneration of the member cache file
 			if ($alert->get_must_regenerate_cache())
@@ -165,47 +213,67 @@ class AdministratorAlertService
 		else //We create it
 		{
 			$creation_date = new Date();
-			$Sql->query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')", __LINE__, __FILE__);
-			$alert->set_id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . EVENTS_TABLE_NAME));
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_EVENTS  . " (entitled, description, fixing_url, current_status, creation_date, id_in_module, identifier, type, priority) VALUES ('" . addslashes($alert->get_entitled()) . "', '" . addslashes($alert->get_properties()) . "', '" . addslashes($alert->get_fixing_url()) . "', '" . $alert->get_status() . "', '" . $creation_date->get_timestamp() . "', '" . $alert->get_id_in_module() . "', '" . addslashes($alert->get_identifier()) . "', '" . addslashes($alert->get_type()) . "', '" . $alert->get_priority() . "')", __LINE__, __FILE__);
+			$alert->set_id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS ));
 
 			//Cache regeneration
 			$Cache->generate_file('member');
 		}
 	}
 	
-	//Function which deletes an alert from the database
-	/*static*/ function delete_alert(&$alert)
+	/** 
+ 	 * @desc Deletes an alert from the database.
+ 	 * @param AdministratorAlert $alert The alert to delete.
+	 */
+	function delete_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
 		// If it exists in the data base
 		if ($alert->get_id() > 0)
 		{			
-			$Sql->query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $alert->get_id() . "'", __LINE__, __FILE__);
 			$alert->set_id(0);
+			$Cache->generate_file('member');
 		}
 		//Else it's not present in the database, we have nothing to delete
 	}
 	
-	//Counts the number of unread alerts
-	/*static*/ function compute_number_unread_alerts()
+	/**
+	 * @static
+	 * @desc Counts the number of unread alerts.
+	 * @return int[] An associative map:
+	 * <ul>	
+	 * 	<li>unread => the number of the unread alerts</li>
+	 * 	<li>all => the number of all the alerts of the site</li>
+	 * </ul>
+	 */
+	function compute_number_unread_alerts()
 	{
 		global $Sql;
 		
-		return array('unread' => $Sql->query("SELECT count(*) FROM ".PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
-			'all' => $Sql->query("SELECT count(*) FROM ".PREFIX.EVENTS_TABLE_NAME . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
+		return array('unread' => $Sql->query("SELECT count(*) FROM ".DB_TABLE_EVENTS  . " WHERE current_status = '" . ADMIN_ALERT_STATUS_UNREAD . "' AND contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__),
+			'all' => $Sql->query("SELECT count(*) FROM " . DB_TABLE_EVENTS . " WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'", __LINE__, __FILE__)
 			);
 	}
 	
-	//Returns the number of unread alerts
-	/*static*/ function get_number_unread_alerts()
+	/**
+	 * @static
+	 * @desc Returns the number of unread alerts.
+	 * @return int The number of unread alerts.
+	 */
+	function get_number_unread_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['unread'];
 	}
 	
-	//Returns the number of alerts
-	/*static*/ function get_number_alerts()
+	/**
+	 * @static
+	 * @desc Returns the number of alerts.
+	 * @return int The number of alerts.
+	 */
+	function get_number_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['all'];

@@ -40,68 +40,69 @@ $LANG['lock'] = 'Lock';
 $LANG['unlock'] = 'Unlock';
 $LANG['cat_edit'] = 'Edit category';
 $LANG['del_cat'] = 'Subcategory suppression tool';
-$LANG['explain_topic'] = 'The forum you wish delete contains <strong>1</strong> topic, do you want to preserve it by transferring it in another forum, or delete this topic?';
-$LANG['explain_topics'] = 'The forum you wish delete contains <strong>%d</strong> topics, do you want to preserve them by transferring them in another forum, or delete all topics?';
-$LANG['explain_subcat'] = 'The forum you wish delete contains <strong>1</strong> subforum, do you want to preserve it by transferring in another forum, or delete it and his contents?';
-$LANG['explain_subcats'] = 'The forum you wish delete contains <strong>%d</strong> subforums, do you want to preserve them by transferring them in another forum, or delete all this subforums and their contents?';
-$LANG['keep_topic'] = 'Keep topic(s)';
+$LANG['explain_topic'] = 'The forum you wish to delete contains <strong>1</strong> thread, do you want to preserve it by transferring it in another forum, or delete this thread?';
+$LANG['explain_topics'] = 'The forum you wish to delete contains <strong>%d</strong> threads, do you want to preserve them by transferring them in another forum, or delete all threads?';
+$LANG['explain_subcat'] = 'The forum you wish to delete contains <strong>1</strong> subforum, do you want to preserve it by transferring in another forum, or delete it and his contents?';
+$LANG['explain_subcats'] = 'The forum you wish to delete contains <strong>%d</strong> subforums, do you want to preserve them by transferring them in another forum, or delete all this subforums and their contents?';
+$LANG['keep_topic'] = 'Keep thread(s)';
 $LANG['keep_subforum'] = 'Keep subforum(s)';
-$LANG['move_topics_to'] = 'Move topic(s) to';
+$LANG['move_topics_to'] = 'Move thread(s) to';
 $LANG['move_forums_to'] = 'Move sub-forum(s) to';
 $LANG['cat_target'] = 'Category target';
 $LANG['del_all'] = 'Complete supression';
-$LANG['del_cat'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> his contents <span class="text_small">(irreversible)</span>';
+$LANG['del_forum_contents'] = 'Delete the forum "<strong>%s</strong>", <strong>subforums</strong> and <strong>all</strong> his contents <span class="text_small">(irreversible)</span>';
 $LANG['forum_config'] = 'Forum configuration';
 $LANG['forum_management'] = 'Forum management';
 $LANG['forum_name'] = 'Forum name';
-$LANG['nbr_topic_p'] = 'Number of topic per page';
+$LANG['nbr_topic_p'] = 'Number of thread per page';
 $LANG['nbr_topic_p_explain'] = 'Default 20';
 $LANG['nbr_msg_p'] = 'Number of messages per page';
 $LANG['nbr_msg_p_explain'] = 'Default 15';
 $LANG['time_new_msg'] = 'Duration for which the messages read by the members are stored';
-$LANG['time_new_msg_explain'] = 'To adjust according to the number of messages per day, by default 30 days';
-$LANG['topic_track_max'] = 'Favorites topics max number';
+$LANG['time_new_msg_explain'] = 'Adjust according to the number of messages per day, by default 30 days';
+$LANG['topic_track_max'] = 'Favorites threads max number';
 $LANG['topic_track_max_explain'] = 'Default 40';
 $LANG['edit_mark'] = 'Messages edition markers';
 $LANG['forum_display_connexion'] = 'Display connexion formular';
 $LANG['no_left_column'] = 'Hide left column menu on the forum';
 $LANG['no_right_column'] = 'Hide right column menu on the forum';
-$LANG['activ_display_msg'] = 'Active message in front of topic';
-$LANG['display_msg'] = 'Message before the topic title';
+$LANG['activ_display_msg'] = 'Active message in front of thread';
+$LANG['display_msg'] = 'Message before the thread title';
 $LANG['explain_display_msg'] = 'Message explanation for members';
 $LANG['explain_display_msg_explain'] = 'If status no changed';
 $LANG['explain_display_msg_bis_explain'] = 'If status changed';
 $LANG['icon_display_msg'] = 'Associated icon';
-$LANG['update_data_cached'] = 'Recount number of topics and messages';
-$LANG['forum_groups_config'] = 'Groups config';
+$LANG['update_data_cached'] = 'Recount number of threads and messages';
 $LANG['explain_forum_groups'] = 'These configuration are only on the forum';
+$LANG['forum_groups_config'] = 'Groups config';
 $LANG['flood_auth'] = 'Allowed flood';
-$LANG['edit_mark_auth'] = 'Unactiv edit mark';
-$LANG['track_topic_auth'] = 'Unactiv tracked topics limit';
+$LANG['edit_mark_auth'] = 'Hide editing mark';
+$LANG['track_topic_auth'] = 'Unactivate tracked threads limit';
 $LANG['forum_read_feed'] = 'Read the thread';
 	
 //Require
-$LANG['require_topic_p'] = 'Please enter the number of topics per page!';
-$LANG['require_nbr_msg_p'] = 'Please enter the number of messages per page!';
-$LANG['require_time_new_msg'] = 'Please enter one duration for the sight of the new messages!';
-$LANG['require_topic_track_max'] = 'Please enter the maximum number of tracked topics!';
+$LANG['require_topic_p'] = 'Please enter the number of threads per page !';
+$LANG['require_nbr_msg_p'] = 'Please enter the number of messages per page !';
+$LANG['require_time_new_msg'] = 'Please enter a duration for the sight of new messages !';
+$LANG['require_topic_track_max'] = 'Please enter the maximum number of tracked threads !';
 	
 //Error
-$LANG['e_topic_lock_forum'] = 'Locked topic, you can\'t post';
-$LANG['e_cat_lock_forum'] = 'Locked category, you can\'t post new topic or message';
-$LANG['e_unexist_topic_forum'] = 'This topic doesn\'t exist';
+$LANG['e_topic_lock_forum'] = 'Locked thread, you can\'t post';
+$LANG['e_cat_lock_forum'] = 'Locked category, you can\'t post new thread or message';
+$LANG['e_unexist_topic_forum'] = 'This thread doesn\'t exist';
 $LANG['e_unexist_cat_forum'] = 'This category doesn\'t exist';
-$LANG['e_unable_cut_forum'] = 'You can\'t divide this topic starting the first message';
+$LANG['e_unable_cut_forum'] = 'You can\'t divide this thread starting the first message';
 $LANG['e_cat_write'] = 'You aren\'t allowed to write in this category';
 
 //Alerts
-$LANG['alert_delete_topic'] = 'Delete this Topic ?';
-$LANG['alert_lock_topic'] = 'Lock this Topic ?';
-$LANG['alert_unlock_topic'] = 'Unlock this Topic ?';
-$LANG['alert_move_topic'] = 'Move this Topic ?';
-$LANG['alert_warning'] = 'Warning this member?';
-$LANG['alert_history'] = 'Delete history?';
-$LANG['confirm_mark_as_read'] = 'Mark all topics as read?';
+$LANG['alert_delete_topic'] = 'Delete this thread ?';
+$LANG['alert_lock_topic'] = 'Lock this thread ?';
+$LANG['alert_unlock_topic'] = 'Unlock this thread ?';
+$LANG['alert_move_topic'] = 'Move this thread ?';
+$LANG['alert_warning'] = 'Warn this member ?';
+$LANG['alert_history'] = 'Delete history ?';
+$LANG['confirm_mark_as_read'] = 'Mark all threads as read ?';
+$LANG['contribution_alert_moderators_for_topics'] = 'thread not complying with the forum rules: %s';
 
 //Titres
 $LANG['title_forum'] = 'Forum';
@@ -113,37 +114,37 @@ $LANG['title_search'] = 'Search';
 $LANG['forum_index'] = 'Index';
 $LANG['forum'] = 'Forum';
 $LANG['forum_s'] = 'Forums';
-$LANG['subforum_s'] = 'Sub-forums';
-$LANG['topic'] = 'Topic';
-$LANG['topic_s'] = 'Topics';
+$LANG['subforum_s'] = 'Subforums';
+$LANG['topic'] = 'Thread';
+$LANG['topic_s'] = 'Threads';
 $LANG['author'] = 'Author';
 $LANG['advanced_search'] = 'Advanced search';
 $LANG['distributed'] = 'Distributed in';
-$LANG['mark_as_read'] = 'Mark all topics as read';
-$LANG['show_topic_track'] = 'Tracked topics';
-$LANG['no_msg_not_read'] = 'No message not read';
+$LANG['mark_as_read'] = 'Mark all threads as read';
+$LANG['show_topic_track'] = 'Tracked threads';
+$LANG['no_msg_not_read'] = 'No message unread';
 $LANG['show_not_reads'] = 'Unread messages';
 $LANG['show_last_read'] = 'Last messages read';
 $LANG['no_last_read'] = 'message read';
 $LANG['last_message'] = 'Last message';
 $LANG['last_messages'] = 'Last messages';
-$LANG['forum_new_subject'] = 'New subject';
-$LANG['post_new_subject'] = 'Post a new subject';
-$LANG['forum_edit_subject'] = 'Edit Topic';
+$LANG['forum_new_subject'] = 'New thread';
+$LANG['post_new_subject'] = 'Post a new thread';
+$LANG['forum_edit_subject'] = 'Edit thread';
 $LANG['forum_announce'] = 'Announce';
-$LANG['forum_postit'] = 'Post it';
+$LANG['forum_postit'] = 'Pinned';
 $LANG['forum_lock'] = 'Lock';
 $LANG['forum_unlock'] = 'Unlock';
 $LANG['forum_move'] = 'Move';
-$LANG['forum_move_subject'] = 'Move subject';
+$LANG['forum_move_subject'] = 'Move thread';
 $LANG['forum_quote_last_msg'] = 'Repost of the preceding message ';
 $LANG['edit_message'] = 'Edit Message';
 $LANG['edit_by'] = 'Edit by';
 $LANG['no_message'] = 'No message';
 $LANG['group'] = 'Group';
-$LANG['cut_topic'] = 'Divide this topic starting from this message';
-$LANG['forum_cut_subject'] = 'Divide topic';
-$LANG['alert_cut_topic'] = 'Divide this topic starting from this message?';
+$LANG['cut_topic'] = 'Divide this thread starting from this message';
+$LANG['forum_cut_topic'] = 'Divide thread';
+$LANG['alert_cut_topic'] = 'Divide this thread starting from this message?';
 $LANG['track_topic'] = 'Add to favorite';
 $LANG['untrack_topic'] = 'Remove from favorites';
 $LANG['track_topic_pm'] = 'Track by private message';
@@ -152,19 +153,19 @@ $LANG['track_topic_mail'] = 'Track by email';
 $LANG['untrack_topic_mail'] = 'Stop email tracking';
 $LANG['alert_topic'] = 'Alert moderators';
 $LANG['banned'] = 'Banned';
-$LANG['xml_forum_desc'] = 'Last forum\'s subject';
-$LANG['alert_modo_explain'] = 'You are about to alert the moderators. You help the moderating team by announcing topics to him which do not comply with certain rules, but will know that when you alert a moderator your pseudo is recorded, it is thus necessary that your request is justified without what you risk sanctions on behalf of the team of the regulators and administrators in the event of abuse. In order to help the team, thank you to explain what does not observe the conditions in this subject.
+$LANG['xml_forum_desc'] = 'Last forum thread';
+$LANG['alert_modo_explain'] = 'You are about to alert the moderators. You are helping the moderation team by informing us about threads which don\'t comply with certain rules, but will know that when you alert a moderator your pseudo is recorded, it is thus necessary that your request is justified without what you risk sanctions on behalf of the team of the moderators and administrators in the event of abuse. In order to help the team, thank you to explain what does not observe the conditions in this thread.
 
-You wish to alert the regulators of a problem on the following subject';
+You wish to alert the moderators about a problem on the following thread';
 $LANG['alert_title'] = 'Short description';
 $LANG['alert_contents'] = 'Thanks for detailing the problem more in order to help the moderating team';
-$LANG['alert_success'] = 'You announced successfully the nonconformity of the subject <em>%title</em>, the moderating team thanks you for having helped it.';
-$LANG['alert_topic_already_done'] = 'We thank you for having taken the initiative to help the moderating team, but a member already announced a nonconformity of this subject.';
-$LANG['alert_back'] = 'Back to topic';
-$LANG['explain_track'] = 'Check Pm to receive a private message, Mail for an email in case of answers in this tracked topic. Check delete box for untrack topic';
+$LANG['alert_success'] = 'You announced successfully the nonconformity of the thread <em>%title</em>, the moderating team thanks you for having helped it.';
+$LANG['alert_topic_already_done'] = 'We thank you for having taken the initiative to help the moderating team, but a member already announced a nonconformity of this thread.';
+$LANG['alert_back'] = 'Back to thread';
+$LANG['explain_track'] = 'Check Pm to receive a private message, Mail for an email in case of answers in this tracked thread. Check delete box for untrack thread';
 $LANG['sub_forums'] = 'Sub-forums';
 $LANG['moderation_forum'] = 'Forum moderation';
-$LANG['no_topics'] = 'No topics';
+$LANG['no_topics'] = 'No threads';
 $LANG['for_selection'] = 'For the selection';
 $LANG['change_status_to'] = 'Set status: %s';
 $LANG['change_status_to_default'] = 'Set default status';
@@ -180,31 +181,31 @@ $LANG['colorate_result'] = 'Colorate results';
 
 //Stats
 $LANG['stats'] = 'Statistics';
-$LANG['nbr_topics_day'] = 'Number topics per day';
+$LANG['nbr_topics_day'] = 'Number threads per day';
 $LANG['nbr_msg_day'] = 'Number messages per day';
-$LANG['nbr_topics_today'] = 'Number topics today';
+$LANG['nbr_topics_today'] = 'Number threads today';
 $LANG['nbr_msg_today'] = 'Number messages today';
-$LANG['forum_last_msg'] = 'The 10 last topics';
-$LANG['forum_popular'] = 'The 10 most famous topics';
-$LANG['forum_nbr_answers'] = 'The 10 topics with the highest number of answers';
+$LANG['forum_last_msg'] = 'The 10 last threads';
+$LANG['forum_popular'] = 'The 10 most famous threads';
+$LANG['forum_nbr_answers'] = 'The 10 threads with the highest number of answers';
 
 //History
 $LANG['history'] = 'Actions history';
 $LANG['history_member_concern'] = 'Member concern';
 $LANG['no_action'] = 'No action in database';
 $LANG['delete_msg'] = 'Delete message';
-$LANG['delete_topic'] = 'Delete topic';
-$LANG['lock_topic'] = 'Lock topic';
-$LANG['unlock_topic'] = 'Unlock topic';
-$LANG['move_topic'] = 'Move topic';
-$LANG['cut_topic'] = 'Cut topic';
+$LANG['delete_topic'] = 'Delete thread';
+$LANG['lock_topic'] = 'Lock thread';
+$LANG['unlock_topic'] = 'Unlock thread';
+$LANG['move_topic'] = 'Move thread';
+$LANG['cut_topic'] = 'Cut thread';
 $LANG['warning_on_user'] = '+10% to member';
 $LANG['warning_off_user'] = '-10% to member';
 $LANG['set_warning_user'] = 'Warning pourcent modification';
 $LANG['more_action'] = 'Show 100 action moreover';
 $LANG['ban_user'] = 'Ban member';
 $LANG['edit_msg'] = 'Edit message member';
-$LANG['edit_topic'] = 'Edit topic member';
+$LANG['edit_topic'] = 'Edit thread member';
 $LANG['solve_alert'] = 'Set alert statute to solve';
 $LANG['wait_alert'] = 'Set alert statute to standby';
 $LANG['del_alert'] = 'Delete alert';
@@ -233,29 +234,33 @@ $LANG['open_menu_poll'] = 'Open poll menu';
 $LANG['simple_answer'] = 'Single answer';
 $LANG['multiple_answer'] = 'Multiple answer';
 $LANG['delete_poll'] = 'Delete poll';
+$LANG['require_title_poll'] = 'Please set a title for the poll!';
 
 //Post
-$LANG['next'] = 'Next';
 $LANG['forum_mail_title_new_post'] = 'New post on the forum';
-$LANG['forum_mail_new_post'] = 'You track the subject: %s 
+$LANG['forum_mail_new_post'] = 'Dear %s
+
+You track the thread: %s 
 
 You asked a notify in case of answer on it.
 
 %s has reply: 
-%s... %s
+%s
+
+[Rest of the message : %s]
 
 
 
 
-If you do not wish any more to be informed answers of this subject, click on the link below:
-' . HOST . DIR . '/forum/action.php?ut=%d
+If you do not wish any more to be informed answers of this thread, click on the link below:
+' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
 
 ' . $CONFIG['sign'];
 
 //Alerts
 $LANG['alert_management'] = 'Alert management';
-$LANG['alert_concerned_topic'] = 'Concerned topic';
-$LANG['alert_concerned_cat'] = 'Concerned topic\'s category';
+$LANG['alert_concerned_topic'] = 'Concerned thread';
+$LANG['alert_concerned_cat'] = 'Concerned thread\'s category';
 $LANG['alert_login'] = 'Alert postor';
 $LANG['alert_msg'] = 'Precisions';
 $LANG['alert_not_solved'] = 'Waiting for treatement';

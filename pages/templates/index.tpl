@@ -55,9 +55,9 @@
 		<td colspan="2" style="padding:0;">
 			<table style="border-collapse:collapse; width:100%;">
 				<tr>
-					<th style="width:200px;" class="row1">
+					<td style="width:200px;" class="row1">
 						{L_CATS}
-					</th>
+					</td>
 					<td id="cat_contents" class="row2" rowspan="2" style="vertical-align:top;">
 						<table style="width:100%;">
 							{ROOT_CONTENTS}

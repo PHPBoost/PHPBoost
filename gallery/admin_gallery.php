@@ -43,15 +43,19 @@ $Cache->load('gallery');
 
 if (!empty($idpics) && isset($_GET['move'])) //Déplacement d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Gallery->Move_pics($idpics, $move);
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-					
+
 	redirect(HOST . DIR . '/gallery/admin_gallery.php?cat=' . $move);
 }
 elseif (!empty($del)) //Suppression d'une image.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Gallery->Del_pics($del);
 	
 	//Régénération du cache des photos aléatoires.
@@ -88,8 +92,8 @@ else
 		$CAT_GALLERY[0]['level'] = -1;
 	}
 	
-	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
-	$total_cat = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
+	$nbr_pics = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+	$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "gallery_cats gc " . $clause_cat, __LINE__, __FILE__);
 	
 	//Gestion erreur.
 	$get_error = !empty($_GET['error']) ? trim($_GET['error']) : '';
@@ -97,7 +101,7 @@ else
 		$Errorh->handler($LANG['e_unexist_cat'], E_USER_NOTICE);	
 		
 	//On crée une pagination si le nombre de catégories est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 
 	//Colonnes des catégories.
@@ -154,8 +158,8 @@ else
 			
 		$i = 0;	
 		$result = $Sql->query_while ("SELECT gc.id, gc.name, gc.status, (gc.nbr_pics_aprob + gc.nbr_pics_unaprob) AS nbr_pics, gc.nbr_pics_unaprob, g.path 
-		FROM ".PREFIX."gallery_cats gc
-		LEFT JOIN ".PREFIX."gallery g ON g.idcat = gc.id
+		FROM " . PREFIX . "gallery_cats gc
+		LEFT JOIN " . PREFIX . "gallery g ON g.idcat = gc.id
 		" . $clause_cat . "
 		GROUP BY gc.id
 		ORDER BY gc.id_left
@@ -205,7 +209,7 @@ else
 		));	
 			
 		//On crée une pagination si le nombre de photos est trop important.
-		include_once('../kernel/framework/util/pagination.class.php'); 
+		import('util/pagination'); 
 		$Pagination = new Pagination();
 			
 		$Template->assign_vars(array(
@@ -214,7 +218,7 @@ else
 		
 		$array_cat_list = array(0 => '<option value="0" %s>' . $LANG['root'] . '</option>');
 		$result = $Sql->query_while("SELECT id, level, name 
-		FROM ".PREFIX."gallery_cats
+		FROM " . PREFIX . "gallery_cats
 		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -226,8 +230,8 @@ else
 		if (!empty($idpics))
 		{
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.note, g.nbrnote, g.nbr_com, g.aprob, m.login
-			FROM ".PREFIX."gallery g
-			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
+			FROM " . PREFIX . "gallery g
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id		
 			WHERE g.idcat = '" . $idcat . "' AND g.id = '" . $idpics . "'
 			" . $Sql->limit(0, 1), __LINE__, __FILE__);
 			$info_pics = $Sql->fetch_assoc($result);			
@@ -242,8 +246,8 @@ else
 				$array_pics = array();
 				$array_js = 'var array_pics = new Array();';
 				$result = $Sql->query_while("SELECT g.id, g.idcat, g.path
-				FROM ".PREFIX."gallery g
-				LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id		
+				FROM " . PREFIX . "gallery g
+				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id		
 				WHERE g.idcat = '" . $idcat . "'", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
@@ -309,7 +313,7 @@ else
 				$cat_list = '';
 				foreach ($array_cat_list as $key_cat => $option_value)
 					$cat_list .= ($key_cat == $info_pics['idcat']) ? sprintf($option_value, 'selected="selected"') : sprintf($option_value, '');
-								
+
 				//Affichage de l'image et de ses informations.
 				$Template->assign_block_vars('pics.pics_max', array(
 					'ID' => $info_pics['id'],
@@ -325,8 +329,8 @@ else
 					'RENAME' => addslashes($info_pics['name']),
 					'RENAME_CUT' => addslashes($info_pics['name']),		
 					'IMG_APROB' => ($info_pics['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
-					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat,
-					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;move=\' + this.options[this.selectedIndex].value',
+					'U_DEL' => 'php?del=' . $info_pics['id'] . '&amp;cat=' . $idcat . '&amp;token=' . $Session->get_token(),
+					'U_MOVE' => '.php?id=' . $info_pics['id'] . '&amp;token=' . $Session->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value',
 					'U_PREVIOUS' => ($pos_pics > 0) ? '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max"><img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /></a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_previous . '#pics_max">' . $LANG['previous'] . '</a>' : '',
 					'U_NEXT' => ($pos_pics < ($i - 1)) ? '<a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max">' . $LANG['next'] . '</a> <a href="admin_gallery.php?cat=' . $idcat . '&amp;id=' . $id_next . '#pics_max"><img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" /></a>' : '',
 					'U_LEFT_THUMBNAILS' => (($pos_pics - $start_thumbnails) > 0) ? '<span id="display_left"><a href="javascript:display_thumbnails(\'left\')"><img src="../templates/' . get_utheme() . '/images/left.png" class="valign_middle" alt="" /></a></span>' : '<span id="display_left"></span>',
@@ -351,8 +355,8 @@ else
 		{
 			$j = 0;
 			$result = $Sql->query_while("SELECT g.id, g.idcat, g.name, g.path, g.timestamp, g.aprob, g.width, g.height, m.login, m.user_id
-			FROM ".PREFIX."gallery g
-			LEFT JOIN ".PREFIX."member m ON m.user_id = g.user_id
+			FROM " . PREFIX . "gallery g
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 			WHERE g.idcat = '" . $idcat . "' 
 			ORDER BY g.timestamp 
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_GALLERY['nbr_pics_max'], 'pp'), $CONFIG_GALLERY['nbr_pics_max']), __LINE__, __FILE__);
@@ -375,13 +379,13 @@ else
 
 				//Affichage de l'image en grand.
 				if ($CONFIG_GALLERY['display_pics'] == 3) //Ouverture en popup plein écran.
-					$display_link = '<a class="com" href="' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '" rel="lightbox" title="' . $row['name'] . '">';
+					$display_link = HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']);
 				elseif ($CONFIG_GALLERY['display_pics'] == 2) //Ouverture en popup simple.
-					$display_link = '<a class="com" href="javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')">';
+					$display_link = 'javascript:display_pics_popup(\'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\')';
 				elseif ($CONFIG_GALLERY['display_pics'] == 1) //Ouverture en agrandissement simple.
-					$display_link = '<a class="com" href="javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)">';
+					$display_link = 'javascript:display_pics(' . $row['id'] . ', \'' . HOST . DIR . '/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat']) . '\', 0)';
 				else //Ouverture nouvelle page.
-					$display_link = '<a class="com" href="admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max">';
+					$display_link = 'admin_gallery.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '#pics_max';
 					
 				//Liste des catégories.
 				$cat_list = '';
@@ -393,6 +397,7 @@ else
 					'IMG' => '<img src="pics/thumbnails/' . $row['path'] . '" alt="' . $name . '" />',
 					'PATH' => $row['path'],
 					'NAME' => $name_cut,
+					'TITLE' => str_replace('"', '\"', $row['name']),
 					'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" class="valign_middle" /></a></span>',
 					'IMG_APROB' => ($row['aprob'] == 1) ? 'unvisible.png' : 'visible.png',
 					'TR_START' => $tr_start,

@@ -44,7 +44,7 @@ if (!empty($_POST['valid']))
 	$config_gallery['weight_max'] = isset($_POST['weight_max']) ? numeric($_POST['weight_max']) : '1024';  
 	$config_gallery['quality'] = isset($_POST['quality']) ? numeric($_POST['quality']) : '80';    
 	$config_gallery['trans'] = isset($_POST['trans']) ? numeric($_POST['trans']) : '40';   
-	$config_gallery['logo'] = strprotect(retrieve(POST, 'logo', ''), HTML_PROTECT, STRIP_SLASHES_OFF);
+	$config_gallery['logo'] = strprotect(retrieve(POST, 'logo', ''), HTML_PROTECT, ADDSLASHES_NONE);
 	$config_gallery['activ_logo'] = isset($_POST['activ_logo']) ? numeric($_POST['activ_logo']) : '0';
 	$config_gallery['d_width'] = isset($_POST['d_width']) ? numeric($_POST['d_width']) : '5';  
 	$config_gallery['d_height'] = isset($_POST['d_height']) ? numeric($_POST['d_height']) : '5';
@@ -62,13 +62,13 @@ if (!empty($_POST['valid']))
 	$config_gallery['display_pics'] = !empty($_POST['display_pics']) ? numeric($_POST['display_pics']) : '0';
 	$config_gallery['scroll_type'] = !empty($_POST['scroll_type']) ? numeric($_POST['scroll_type']) : 0;
 	$config_gallery['nbr_pics_mini'] = !empty($_POST['nbr_pics_mini']) ? numeric($_POST['nbr_pics_mini']) : 8;
-	$config_gallery['speed_mini_pics'] = !empty($_POST['speed_mini_pics']) ? numeric($_POST['speed_mini_pics']) : 6;
+	$config_gallery['speed_mini_pics'] = retrieve(POST, 'speed_mini_pics', 6);
 	$config_gallery['auth_root'] = !empty($CONFIG_GALLERY['auth_root']) ? stripslashes(serialize($CONFIG_GALLERY['auth_root'])) : serialize(array());
 
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_gallery)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 	
 	if ($CONFIG_GALLERY['note_max'] != $config_gallery['note_max'])
-		$Sql->query_inject("UPDATE ".PREFIX."gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "gallery SET note = note * " . ($config_gallery['note_max']/$CONFIG_GALLERY['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache de la gallery #######
 	$Cache->Generate_module_file('gallery');
@@ -111,22 +111,19 @@ else
 	
 	//Vitesse de défilement des miniatures.
 	$speed_mini_pics = '';
-	$z = 10;
 	for ($i = 1; $i <= 10; $i++)
 	{
-		$selected = ($CONFIG_GALLERY['speed_mini_pics'] == $z) ? ' selected="selected"' : '';
-		$speed_mini_pics .= '<option value="' . $z . '"' . $selected . '>' . $i . '</option>';
-		$z--;
+		$selected = ($CONFIG_GALLERY['speed_mini_pics'] == $i) ? ' selected="selected"' : '';
+		$speed_mini_pics .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
 	}
 	
 	//Type de défilemennt
 	$scroll_types = '';
-	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll']);
+	$array_scroll = array($LANG['static_scroll'], $LANG['vertical_dynamic_scroll'], $LANG['horizontal_dynamic_scroll'], $LANG['no_scroll']);
 	foreach ($array_scroll as $key => $name)
 	{
 		$selected = ($CONFIG_GALLERY['scroll_type'] == $key) ? ' selected="selected"' : '';
 		$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
-		$z--;
 	}
 	
 	$Template->assign_vars(array(

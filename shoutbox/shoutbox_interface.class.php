@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                              shoutbox_interface.class.php
+ *                        shoutbox_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class ShoutboxInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,15 +37,15 @@ class ShoutboxInterface extends ModuleInterface
         parent::ModuleInterface('shoutbox');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 	
 		$shoutbox_config = 'global $CONFIG_SHOUTBOX;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_SHOUTBOX = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'shoutbox'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_SHOUTBOX = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'shoutbox'", __LINE__, __FILE__));
 		$CONFIG_SHOUTBOX = is_array($CONFIG_SHOUTBOX) ? $CONFIG_SHOUTBOX : array();
 		
 		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
@@ -56,7 +56,7 @@ class ShoutboxInterface extends ModuleInterface
 		return $shoutbox_config;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	function on_changeday()
 	{
 		global $Sql, $Cache, $CONFIG_SHOUTBOX;
@@ -67,10 +67,10 @@ class ShoutboxInterface extends ModuleInterface
 		{
 			//Suppression des messages en surplus dans la shoutbox.
 			$Sql->query_inject("SELECT @compt := id AS compt
-			FROM ".PREFIX."shoutbox
+			FROM " . PREFIX . "shoutbox
 			ORDER BY id DESC
 			" . $Sql->limit(0, $CONFIG_SHOUTBOX['shoutbox_max_msg']), __LINE__, __FILE__);
-			$Sql->query_inject("DELETE FROM ".PREFIX."shoutbox WHERE id < @compt", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "shoutbox WHERE id < @compt", __LINE__, __FILE__);
 		}
 	}
 }

@@ -51,11 +51,11 @@ $LANG['unit_seconds_short'] = 's';
 	
 //Erreurs
 $LANG['error'] = 'Erreur';
-$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_fatal'] = '<strong>Erreur fatale :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_warning_tiny'] = '<strong>Attention :</strong> %s %s %s';
-$LANG['error_warning'] = '<strong>Attention :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_warning'] = '<strong>Attention :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_notice_tiny'] = '<strong>Remarque :</strong> %s %s %s';
-$LANG['error_notice'] = '<strong>Remarque :</strong> %s<br/><br/><br/><strong>Ligne %s : %s</strong>';
+$LANG['error_notice'] = '<strong>Remarque :</strong> %s<br /><br /><br /><strong>Ligne %s : %s</strong>';
 $LANG['error_success'] = '<strong>Succès :</strong> %s %s %s';
 $LANG['error_unknow'] = '<strong>Erreur :</strong> Cause inconnue %s %s %s';
 
@@ -86,6 +86,7 @@ $LANG['message_s'] = 'Messages';
 $LANG['forget_pass'] = 'Mot de passe oublié';
 
 $LANG['require'] = 'Les champs marqués * sont obligatoires!';
+$LANG['required_field'] = 'Le champs \"%s\" est obligatoire !';
 
 //Alertes formulaires
 $LANG['require_title'] = 'Veuillez entrer un titre !';
@@ -127,6 +128,7 @@ $LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]
 $LANG['bb_small'] = 'Réduire le champ texte';
 $LANG['bb_large'] = 'Agrandir le champ texte';
 $LANG['bb_title'] = 'Titre [title=x]texte[/title]';
+$LANG['bb_html'] = 'Code html [html]code[/html]';
 $LANG['bb_container'] = 'Conteneur';
 $LANG['bb_block'] = 'Bloc';
 $LANG['bb_fieldset'] = 'Bloc champs';
@@ -144,7 +146,7 @@ $LANG['bb_sound'] = 'Son [sound]adresse du son[/sound]';
 $LANG['bb_movie'] = 'Vidéo [movie=largeur,hauteur]adresse du fichier[/movie]';
 $LANG['bb_help'] = 'Aide BBcode';
 $LANG['bb_upload'] = 'Attacher un fichier';
-$LANG['bb_url_prompt'] = 'Adresse du lien?';
+$LANG['bb_url_prompt'] = 'Adresse du lien ?';
 $LANG['bb_text'] = 'Texte';
 $LANG['bb_script'] = 'Script';
 $LANG['bb_web'] = 'Web';
@@ -156,16 +158,51 @@ $LANG['head_add'] = 'Ajouter l\'entête';
 $LANG['insert_table'] = 'Insérer le tableau';
 $LANG['ordered_list'] = 'Liste ordonnée';
 $LANG['insert_list'] = 'Insérer la liste';
-$LANG['forbidden_tags'] = 'Balises de formatage interdites';
+$LANG['forbidden_tags'] = 'Types de formatage interdits';
 $LANG['phpboost_languages'] = 'PHPBoost';
 $LANG['wikipedia_subdomain'] = 'fr'; //Sous domaine sur wikipédia (ex fr pour fr.wikipedia.org)
+$LANG['format_bold'] = 'Gras';
+$LANG['format_italic'] = 'Italique';
+$LANG['format_underline'] = 'Souligné';
+$LANG['format_strike'] = 'Barré';
+$LANG['format_title'] = 'Titre';
+$LANG['format_style'] = 'Style';
+$LANG['format_url'] = 'Lien';
+$LANG['format_img'] = 'Image';
+$LANG['format_quote'] = 'Citation';
+$LANG['format_hide'] = 'Caché';
+$LANG['format_list'] = 'Liste';
+$LANG['format_color'] = 'Couleur';
+$LANG['format_bgcolor'] = 'Couleur de fond';
+$LANG['format_font'] = 'Police';
+$LANG['format_size'] = 'Taille';
+$LANG['format_align'] = 'Alignement';
+$LANG['format_float'] = 'Elément flottant';
+$LANG['format_sup'] = 'Exposant';
+$LANG['format_sub'] = 'Indice';
+$LANG['format_indent'] = 'Indentation';
+$LANG['format_pre'] = 'Préformaté';
+$LANG['format_table'] = 'Tableau';
+$LANG['format_flash'] = 'Flash';
+$LANG['format_movie'] = 'Vidéo';
+$LANG['format_sound'] = 'Son';
+$LANG['format_code'] = 'Code';
+$LANG['format_math'] = 'Mathématiques';
+$LANG['format_anchor'] = 'Ancre';
+$LANG['format_acronym'] = 'Acronyme';
+$LANG['format_block'] = 'Bloc';
+$LANG['format_fieldset'] = 'Zone de champs';
+$LANG['format_mail'] = 'Mail';
+$LANG['format_line'] = 'Ligne horizontale';
+$LANG['format_wikipedia'] = 'Lien Wikipédia';
+$LANG['format_html'] = 'Code HTML';
 
 //Impression
 $LANG['printable_version'] = 'Version imprimable';
 
 //Connexion
-$LANG['connect_private_message'] = 'Messagerie privée';
-$LANG['connect_private_profil'] = 'Mon profil';
+$LANG['private_messaging'] = 'Messagerie privée';
+$LANG['my_private_profile'] = 'Mon profil';
 
 //Maintain
 $LANG['maintain'] = 'Le site est actuellement en maintenance merci de votre patience, seul(s) le(s) administrateur(s) du site peuvent y accèder.';
@@ -180,11 +217,12 @@ $LANG['guest'] = 'Visiteur';
 $LANG['guest_s'] = 'Visiteurs';
 $LANG['member'] = 'Membre';
 $LANG['member_s'] = 'Membres';
+$LANG['members_list'] = 'Liste des membres';
 $LANG['modo'] = 'Modérateur';
 $LANG['modo_s'] = 'Modérateurs';
 $LANG['admin'] = 'Administrateur';
 $LANG['admin_s'] = 'Administrateurs';
-$LANG['reception'] = 'Accueil';
+$LANG['home'] = 'Accueil';
 $LANG['date'] = 'Date';
 $LANG['today'] = 'Aujourd\'hui';
 $LANG['day'] = 'Jour';
@@ -207,7 +245,7 @@ $LANG['previous'] = 'Précédent';
 $LANG['next'] = 'Suivant';
 $LANG['mail'] = 'Mail';
 $LANG['objet'] = 'Objet';
-$LANG['contents'] = 'Contenu';
+$LANG['content'] = 'Contenu';
 $LANG['options'] = 'Options';
 $LANG['all'] = 'Tout';
 $LANG['title'] = 'Titre';
@@ -287,6 +325,7 @@ $LANG['code_tag'] = 'Code :';
 $LANG['code_langage'] = 'Code %s :';
 $LANG['com'] = 'Commentaire';
 $LANG['com_s'] = 'Commentaires';
+$LANG['no_comment'] = 'Aucun commentaire';
 $LANG['post_com'] = 'Poster commentaire';
 $LANG['com_locked'] = 'Les commentaires sont verrouillés pour cet élément';
 $LANG['add_msg'] = 'Ajout message';
@@ -340,12 +379,12 @@ $LANG['edit_comment'] = 'Editer commentaire';
 
 //Membres
 $LANG['member_area'] = 'Zone membre';
-$LANG['profil'] = 'Profil';
-$LANG['profil_edit'] = 'Edition du profil';
-$LANG['previous_pass'] = 'Ancien mot de passe';
-$LANG['edit_if_modif'] = 'Remplir seulement en cas de modification';
-$LANG['new_pass'] = 'Nouveau mot de passe';
-$LANG['confirm_pass'] = 'Retapez votre mot de passe';
+$LANG['profile'] = 'Profil';
+$LANG['profile_edition'] = 'Edition du profil';
+$LANG['previous_password'] = 'Ancien mot de passe';
+$LANG['fill_only_if_modified'] = 'Remplir seulement en cas de modification';
+$LANG['new_password'] = 'Nouveau mot de passe';
+$LANG['confirm_password'] = 'Retapez votre mot de passe';
 $LANG['hide_mail'] = 'Cacher votre email';
 $LANG['hide_mail_who'] = 'Aux autres utilisateurs';
 $LANG['mail_track_topic'] = 'Etre averti par email lors d\'une réponse dans un sujet que vous suivez';
@@ -401,6 +440,7 @@ $LANG['password_how'] = 'Longueur minimale du password : 6 caractères';
 $LANG['confirm_register'] = 'Merci de vous être enregistré %s. Un mail vous sera envoyé pour confirmer votre inscription.';
 $LANG['register_terms'] = 'Règlement';
 $LANG['register_accept'] = 'J\'accepte';
+$LANG['register_have_to_accept'] = 'Vous devez accepter le réglement pour pouvoir vous inscrire!';
 $LANG['activ_mbr_mail'] = 'Vous devrez activer votre compte dans l\'email qui vous sera envoyé avant de pouvoir vous connecter!';
 $LANG['activ_mbr_admin'] = 'Un administrateur devra activer votre compte avant de pouvoir vous connecter';
 $LANG['member_registered_to_approbate'] = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
@@ -421,7 +461,7 @@ $LANG['register_valid_email'] = 'Vous devez activer votre compte avant de pouvoi
 $LANG['register_valid_admin'] = 'Attention : Votre compte devra être activé par un administrateur avant de pouvoir vous connecter. Merci de votre patience.';
 $LANG['register_mail'] = 'Cher %s,
 
-Tout d\'abord, merci de vous être inscrit sur %s. Vous faites partie dès maintenant des membres du site.
+Tout d\'abord, merci de vous être inscrit sur %s. Vous faites parti dès maintenant des membres du site.
 En vous inscrivant sur %s, vous obtenez un accès à la zone membre qui vous offre plusieurs avantages. Vous pourrez, entre autre, être reconnu automatiquement sur tout le site, pour poster des messages, modifier la langue et/ou le thème par défaut, éditer votre profil, accéder à des catégories réservées aux membres... Bref vous accédez à toute la communauté du site.
 
 Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de passe.
@@ -429,7 +469,7 @@ Pour vous connecter, il vous faudra retenir votre identifiant et votre mot de pa
 Nous vous rappelons vos identifiants.
 
 Identifiant : %s
-Password : %s
+Mot de passe : %s
 
 %s
 
@@ -446,6 +486,7 @@ $LANG['last_message'] = 'Dernier message';
 $LANG['mark_pm_as_read'] = 'Marquer tous les messages privés comme lus';
 $LANG['participants'] = 'Participant(s)';
 $LANG['no_pm'] = 'Aucun message';
+$LANG['quote_last_msg'] = 'Reprise du message précédent';
 
 //Oublié
 $LANG['forget_pass'] = 'Mot de passe oublié';
@@ -453,7 +494,7 @@ $LANG['forget_pass_send'] = 'Validez pour recevoir un nouveau mot de passe par m
 $LANG['forget_mail_activ_pass'] = 'Activation du mot de passe';
 $LANG['forget_mail_pass'] = 'Cher %s
 
-Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le reçevoir, veuillez contacter l\'administrateur du site.
+Vous recevez cet e-mail parce que vous (ou quelqu\'un qui prétend l\'être) avez demandé à ce qu\'un nouveau mot de passe vous soit envoyé pour votre compte sur %s. Si vous n\'avez pas demandé de changement de mot de passe, veuillez l\'ignorer. Si vous continuez à le recevoir, veuillez contacter l\'administrateur du site.
 
 Pour utiliser le nouveau mot de passe, vous avez besoin de le confirmer. Pour le faire, cliquez sur le lien fourni ci-dessous.
 
@@ -498,6 +539,7 @@ $LANG['document_type'] = 'Document %s';
 $LANG['moveto'] = 'Déplacer vers';
 $LANG['success_upload'] = 'Votre fichier a bien été enregistré !';
 $LANG['upload_folder_contains_folder'] = 'Vous souhaitez placer cette catégorie dans une de ses catégories filles ou dans elle-même, ce qui est impossible !';
+$LANG['popup_insert'] = 'Insérer le code dans le formulaire';
 
 //gestion des catégories
 $LANG['cats_managment_could_not_be_moved'] = 'Une erreur est survenue, la catégorie n\'a pas pu être déplacée';
@@ -608,4 +650,6 @@ $LANG['_code_dictionnary'] = array('image', 'php', 'requete', 'azerty', 'exit', 
 'date', 'jour', 'mois', 'nom', 'noter', 'objet', 'options', 'titre', 'valide', 'liste', 'citer', 'fermer', 'minute', 'heure', 'semaine', 'groupe', 'taille', 'modules', 'pendant', 'style', 'divers', 'autre', 'erreur',
 'editer', 'banni', 'niveau', 'dossier', 'fichier', 'racine', 'vider', 'archive', 'boite');
 
+$LANG['csrf_attack'] = '<p>Vous avez été potentiellement victime d\'une attaque de type <acronym title="Cross-Site Request Forgery">CSRF</acronym> que PHPBoost a bloquée.</p>
+<p>Pour plus d\'informations, visitez <a href="http://fr.wikipedia.org/wiki/Cross-Site_Request_Forgeries" title="Attaques CSRF" class="wikipedia_link">wikipedia</a></p>';
 ?>

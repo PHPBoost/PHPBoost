@@ -58,7 +58,7 @@
 				<br />	
 			# ENDIF #
 				
-			<form action="admin_articles_cat.php?id={ID}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
+			<form action="admin_articles_cat.php?id={ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_list();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_CAT}</legend>
 					<p>{L_REQUIRE}</p>
@@ -94,8 +94,8 @@
 							</select></label>
 							<span id="icon_img">{IMG_ICON}</span>
 							<br />
-							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '');change_icon(this.value)" /></label>
-						</label></dd>
+							<label><span class="text_small">{L_OR_DIRECT_PATH}</span> <input type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '');change_icon(this.value)" onclick="document.getElementById('img_default_select').selected = 'selected';" /></label>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label>{L_AUTH_READ}</label></dt>

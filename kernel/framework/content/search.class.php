@@ -31,22 +31,31 @@ global $CONFIG;
 define('CACHE_TIME', $CONFIG['search_cache_time']);
 define('CACHE_TIMES_USED', $CONFIG['search_max_use']);
 
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc
+ * @package content
+ */
 class Search
 {
     //----------------------------------------------------------------- PUBLIC
     //---------------------------------------------------------- Constructeurs
     
-    function Search($search = '', $modules = array())
     /**
-     *  Constructeur de la classe Search
-     *  Nb requêtes : 6 + k / 10
-     *  avec k nombre de module n'ayant pas de cache de recherche
+     * @desc Builds a search object.
+     * Query Complexity: 6 + k / 10 database queries. (k represent the number of
+     * module without search cache)
+     * @param string $search the string to search
+     * @param mixed[] $modules Modules in which we gonna search with their search params.
+     * This argument is an array which keys are module id's and values are arrays
+     * containing the specialized search arguments for a particular module.
      */
+    function Search($search = '', $modules = array())
     {
         global $Sql, $User;
         
         $this->errors = 0;
-        $this->search = md5($search); // Identifiant de la chaîne recherchée;
+        $this->search = md5($search); // Generating a search id;
         $this->modules = $modules;
         $this->id_search = array();
         $this->cache = array();
@@ -54,10 +63,14 @@ class Search
         $this->id_user = $User->get_attribute('user_id');
         $this->modules_conditions = $this->_get_modules_conditions($this->modules);
                 
-        // Suppression des vieux résultats du cache
-        // Ici 3 requêtes pour éviter un delete multi-table non portable ou 2 requête avec un NOT IN long en exécution
-        // Liste des résultats à supprimer
-        $reqOldIndex = "SELECT id_search FROM ".PREFIX."search_index
+        
+        // Deletes old results from cache
+        
+        // Here, 3 queries in order to avoid a multi-table delete which is not portable
+        // or 2 queries with a NOT IN (a bit long)
+        
+        // Lists old results to delete
+        $reqOldIndex = "SELECT id_search FROM " . PREFIX . "search_index
                         WHERE  last_search_use <= '".(time() - (CACHE_TIME * 60))."'
                             OR times_used >= '".CACHE_TIMES_USED."'";
         
@@ -66,91 +79,92 @@ class Search
         $request = $Sql->query_while ($reqOldIndex, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($request))
         {
-            if ( $nbIdsToDelete > 0 )
+            if ($nbIdsToDelete > 0)
+            {
                 $idsToDelete .= ',';
-            $idsToDelete .= "'".$row['id_search']."'";
+            }
+            $idsToDelete .= "'" . $row['id_search'] . "'";
             $nbIdsToDelete++;
         }
         $Sql->query_close($request);
         
-        // Si il y a des résultats à supprimer, on les supprime
-        if ( $nbIdsToDelete > 0 )
+        // Deletes old results
+        if ($nbIdsToDelete > 0)
         {
-            $reqDeleteIdx = "DELETE FROM ".PREFIX."search_index WHERE id_search IN (".$idsToDelete.")";
-            $reqDeleteRst = "DELETE FROM ".PREFIX."search_results WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteIdx = "DELETE FROM " . DB_TABLE_SEARCH_INDEX . " WHERE id_search IN (".$idsToDelete.")";
+            $reqDeleteRst = "DELETE FROM " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search IN (".$idsToDelete.")";
             
             $Sql->query_inject($reqDeleteIdx, __LINE__, __FILE__);
             $Sql->query_inject($reqDeleteRst, __LINE__, __FILE__);
         }
         
-        // Si on demande une recherche directe par id, on ne calcule pas de résultats
+        // Don't compute anything if no text is searched
+        // (useful for based-id searches)
         if ($this->search != '')
         {
-            // Vérifications des résultats dans le cache.
-            $reqCache  = "SELECT id_search, module FROM " . PREFIX . "search_index WHERE ";
+            // Checks cache results meta-inf
+            $reqCache  = "SELECT id_search, module FROM " . DB_TABLE_SEARCH_INDEX . " WHERE ";
             $reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
             if ($this->modules_conditions != '')
+            {
                 $reqCache .= " AND " . $this->modules_conditions;
+            }
             
             $request = $Sql->query_while ($reqCache, __LINE__, __FILE__);
             while ($row = $Sql->fetch_assoc($request))
-            {   // Récupération du cache
+            {   // retrieves cache result meta-inf
                 array_push($this->cache, $row['module']);
                 $this->id_search[$row['module']] = $row['id_search'];
             }
             $Sql->query_close($request);
             
-            // Mise à jours des résultats du cache
+            // Updates cache results meta-inf
             if (count($this->id_search) > 0)
             {
-                $reqUpdate  = "UPDATE " . PREFIX . "search_index SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
+                $reqUpdate  = "UPDATE " . DB_TABLE_SEARCH_INDEX . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
                 $reqUpdate .= "id_search IN (" . implode(',', $this->id_search) . ");";
                 $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             }
             
-            // Si tous les modules ne sont pas en cache
-            if ( count($modules) > count($this->cache) )
+            // Adds modules missing in cache
+            if (count($modules) > count($this->cache))
             {
                 $nbReqInsert = 0;
                 $reqInsert = '';
-                // Pour chaque module n'étant pas dans le cache
+                
                 foreach ($modules as $module_name => $options)
                 {
                     if (!$this->is_in_cache($module_name))
                     {
                         $reqInsert .= "('" . $this->id_user . "','" . $module_name . "','" . $this->search . "','" . md5(implode('|', $options)) . "','" . time() . "', '0'),";
-                        // Exécution de 10 requêtes d'insertions
+                        // Executes 10 insertions
                         if ($nbReqInsert == 10)
                         {
-                            $reqInsert = "INSERT INTO " . PREFIX . "search_index (id_user, module, search, options, last_search_use, times_used) VALUES " . $reqInsert . "";
+                            $reqInsert = "INSERT INTO " . DB_TABLE_SEARCH_INDEX . " (id_user, module, search, options, last_search_use, times_used) VALUES " . $reqInsert . "";
                             $Sql->Query_insert($reqInsert, __LINE__, __FILE__);
                             $reqInsert = '';
                             $nbReqInsert = 0;
                         }
-                        else { $nbReqInsert++; }
+                        else
+                        {
+                            $nbReqInsert++;
+                        }
                     }
                 }
                 
-                // Exécution des derniéres requêtes d'insertions
+                // Executes last insertions queries
                 if ($nbReqInsert > 0)
-                    $Sql->query_inject("INSERT INTO " . PREFIX . "search_index (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
+                {
+                    $Sql->query_inject("INSERT INTO " . DB_TABLE_SEARCH_INDEX . " (id_user, module, search, options, last_search_use, times_used) VALUES " . substr($reqInsert, 0, strlen($reqInsert) - 1) . "", __LINE__, __FILE__);
+                }
                 
-                // Récupération des résultats et de leurs id dans le cache.
-                
-                // Pourquoi faire çà plutôt que de récupérer id_search pour chaque
-                // insertion dans l'index du cache.
-                // parce que cela donne au total pour le contructeur une complexité
-                // en requête de :
-                // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k / 10 (nb non dans le cache) + 1 (recup id) = 4 + k/10
-                // au lieu de :
-                // 1 (delete) + 1 (recup id) + 1 (update timestamp) + k (nb non dans le cache) = 3 + k
-                // cela permet donc de grouper les insertions dans l'index du cache.
-                
-                // Vérifications des résultats dans le cache.
-                $reqCache  = "SELECT id_search, module FROM " . PREFIX . "search_index WHERE ";
+                // Checks and retrieves cache meta-informations
+                $reqCache  = "SELECT id_search, module FROM " . DB_TABLE_SEARCH_INDEX . " WHERE ";
                 $reqCache .= "search='" . $this->search . "' AND id_user='" . $this->id_user . "'";
                 if ($this->modules_conditions != '')
+                {
                     $reqCache .= " AND " . $this->modules_conditions;
+                }
                 
                 $request = $Sql->query_while ($reqCache, __LINE__, __FILE__);
                 while ($row = $Sql->fetch_assoc($request))
@@ -162,103 +176,114 @@ class Search
         }
     }
     
-    //----------------------------------------------------- Méthodes publiques
-    function get_results_by_id(&$results, $id_search = 0, $nb_lines = 0, $offset = 0)
+    
     /**
-     *  Renvoie les résultats de la recherche d'id <idSearch>
-     *  Nb requêtes : 2
+     * @desc Puts results from the search results identified by the $id_search parameter
+     * in the $results parameter and returns the number of results.
+     * Query complexity: 2 queries.
+     * @param string[] &$results the results returned
+     * @param int $id_search the search id
+     * @param int $nb_lines the number of lines to return
+     * @param int $offset the offset from which return results
+     * @return int The number of results
      */
+    function get_results_by_id(&$results, $id_search = 0, $nb_lines = 0, $offset = 0)
     {
         global $Sql;
         $results = array();
         
-        // Récupération des $nb_lines résultats à partir de l'$offset
+        // Building request
         $reqResults = "SELECT module, id_content, title, relevance, link
-                        FROM ".PREFIX."search_index idx, ".PREFIX."search_results rst
+                        FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
                         WHERE idx.id_search = '" . $id_search . "' AND rst.id_search = '" . $id_search . "'
                         AND id_user = '".$this->id_user."' ORDER BY relevance DESC ";
-        if ( $nb_lines > 0 )
+        if ($nb_lines > 0)
+        {
             $reqResults .= $Sql->limit($offset, $nb_lines);
+        }
         
-        // Exécution de la requête
+        // Retrieves results
         $request = $Sql->query_while ($reqResults, __LINE__, __FILE__);
         while ($result = $Sql->fetch_assoc($request))
-        {   // Ajout des résultats
+        {
             $results[] = $result;
         }
-        // Récupération du nombre de résultats correspondant à la recherche
-        $reqNbResults  = "SELECT COUNT(*) " . PREFIX . "search_results WHERE id_search = ".$id_search;
-        $nbResults = $Sql->num_rows( $request, $reqNbResults );
-        
-        //On libére la mémoire
+        $nbResults = $Sql->num_rows($request, "SELECT COUNT(*) " . DB_TABLE_SEARCH_RESULTS . " WHERE id_search = ".$id_search);
         $Sql->query_close($request);
         
         return $nbResults;
     }
     
-    function get_results(&$results, &$module_names, $nb_lines = 0, $offset = 0 )
+    
     /**
-     *  Renvoie le nombre de résultats de la recherche
-     *  et mets les résultats dans le tableau $results
-     *  Nb requêtes : 1, 2 si le SGBD ne supporte pas 'sql->Sql_num_rows'
+     * @desc Puts results from the search results in the $results parameter and
+     * returns the number of results.
+     * Query complexity: 1 query.
+     * @param string[] &$results the results returned
+     * @param string[] &$module_ids the modules ids from which retrieve results
+     * @param int $nb_lines the number of lines to return
+     * @param int $offset the offset from which return results
+     * @return int The number of results
      */
+    function get_results(&$results, &$module_ids, $nb_lines = 0, $offset = 0 )
     {
         global $Sql;
 
-        $results = array( );
+        $results = array();
         $num_modules = 0;
         $modules_conditions = '';
         
-        // Construction des conditions de recherche
-        foreach ($module_names as $module_name)
+        // Builds search conditions
+        foreach ($module_ids as $module_id)
         {
-            // Teste l'existence de la recherche dans la base sinon signale l'erreur
-            if (in_array($module_name, array_keys($this->id_search)))
+            // Checks search cache.
+            if (in_array($module_id, array_keys($this->id_search)))
             {
-                // Conditions de la recherche
+                // Search conditions
                 if ($num_modules > 0)
+                {
                     $modules_conditions .= ", ";
-                $modules_conditions .= $this->id_search[$module_name];
+                }
+                $modules_conditions .= $this->id_search[$module_id];
                 $num_modules++;
             }
         }
         
-        // Récupération des $nb_lines résultats à partir de l'$offset
+        // Builds search results retrieval request
         $reqResults  = "SELECT module, id_content, title, relevance, link
-                        FROM " . PREFIX . "search_index idx, " . PREFIX . "search_results rst
+                        FROM " . DB_TABLE_SEARCH_INDEX . " idx, " . DB_TABLE_SEARCH_RESULTS . " rst
                         WHERE (idx.id_search = rst.id_search) ";
         if ($modules_conditions != '')
+        {
             $reqResults .= " AND rst.id_search  IN (" . $modules_conditions . ")";
+        }
         $reqResults .= " ORDER BY relevance DESC ";
         if ( $nb_lines > 0 )
+        {
             $reqResults .= $Sql->limit($offset, $nb_lines);
-        
-        // Exécution de la requête
-        $request = $Sql->query_while ($reqResults, __LINE__, __FILE__);
-        while ($result = $Sql->fetch_assoc($request))
-        {   // Ajout des résultats
-            array_push($results, $result);
         }
         
-        // Récupération du nombre de résultats correspondant à la recherche
-        $reqNbResults  = "SELECT COUNT(*) FROM ".PREFIX."search_results WHERE id_search IN ( ".$modules_conditions." )";
-        if ( $modules_conditions > 0 )
-            $nbResults = $Sql->query($reqNbResults, __LINE__, __FILE__  );
-        else
-            $nbResults = 0;
+        // Executes search
+        $request = $Sql->query_while ($reqResults, __LINE__, __FILE__);
+        while ($result = $Sql->fetch_assoc($request))
+        {
+            $results[] = $result;
+        }
+        $nbResults = $Sql->num_rows($request, __LINE__, __FILE__  );
         
-        //On libére la mémoire
         $Sql->query_close($request);
         
         return $nbResults;
     }
     
-    function insert_results(&$requestAndResults)
+    
     /**
-     *  Enregistre les résultats de la recherche dans la base des résultats
-     *  si ils n'y sont pas déjà
-     *  Nb requêtes : 1 + k / 10
+     * @desc Inserts search results in the database cache in order to speed up next searches.
+     * Query complexity: 1 + k / 10 queries. (k represent the number of results to insert in the database)
+     * @param mixed[] &$requestAndResults This parameters is an array with keys that are
+     * modules ids and values that could be both a SQL query or a results array.
      */
+    function insert_results(&$requestAndResults)
     {
         global $Sql;
         
@@ -266,64 +291,77 @@ class Search
         $reqSEARCH = "";
         $results = array();
         
-        // Vérification de la présence des résultats dans le cache
+        // Checks results in cache
         foreach ($requestAndResults as $module_name => $request)
         {
-            if ( !is_array($request) )
+            if (!is_array($request))
             {
                 if (!$this->is_in_cache($module_name))
-                {   // Si les résultats ne sont pas dans le cache.
-                    // Ajout des résultats dans le cache
+                {   // If results are not in cache, adds them
                     if ($nbReqSEARCH > 0)
+                    {
                         $reqSEARCH .= " UNION ";
+                    }
                     
                     $reqSEARCH .= "(".trim( $request, ' ;' ).")";
                     $nbReqSEARCH++;
                 }
             }
-            else $results += $requestAndResults[$module_name];
+            else
+            {
+                $results += $requestAndResults[$module_name];
+            }
         }
         
         $nbResults = count($results);
-        // Dans le cas ou il y a des résultats à enregistrer
-        if ( ($nbReqSEARCH > 0) || ($nbResults > 0) )
+        // If there is many results to insert
+        if (($nbReqSEARCH > 0) || ($nbResults > 0))
         {
             $nbReqInsert = 0;
             $reqInsert = '';
             
-            for ( $nbReqInsert = 0; $nbReqInsert < $nbResults; $nbReqInsert++ )
+            // Group insertions by 10
+            for ($nbReqInsert = 0; $nbReqInsert < $nbResults; $nbReqInsert++)
             {
                 $row = $results[$nbReqInsert];
                 if ($nbReqInsert > 0)
+                {
                     $reqInsert .= ',';
+                }
                 $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
                 $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
             }
 
-            if ( !empty($reqSEARCH) )
-            {
+            if (!empty($reqSEARCH))
+            {   // Inserts results
                 $request = $Sql->query_while($reqSEARCH, __LINE__, __FILE__);
                 while ($row = $Sql->fetch_assoc($request))
                 {
                     if ($nbReqInsert > 0)
+                    {
                         $reqInsert .= ',';
+                    }
                     $reqInsert .= " ('".$row['id_search']."','".$row['id_content']."','".addslashes($row['title'])."',";
                     $reqInsert .= "'".$row['relevance']."','".$row['link']."')";
                     $nbReqInsert++;
                 }
             }
             
-            // Exécution des derniéres requêtes d'insertions
+            // Executes last insertions
             if ($nbReqInsert > 0)
-                $Sql->query_inject("INSERT INTO ".PREFIX."search_results VALUES ".$reqInsert, __LINE__, __FILE__);
+            {
+                $Sql->query_inject("INSERT INTO " . DB_TABLE_SEARCH_RESULTS . " VALUES ".$reqInsert, __LINE__, __FILE__);
+            }
         }
     }
     
-    function is_search_id_in_cache($id_search)
+    
     /**
-     *  Renvoie <true> si la recherche est en cache et <false> sinon.
-     *  Nb requêtes : 2
+     * @desc Returns true if the id_search is in cache, else, false.
+     * @param int $id_search the search id to check.
+     * @return bool true if the id_search is in cache, else, false.
      */
+    function is_search_id_in_cache($id_search)
     {
         if (in_array($id_search, $this->id_search))
         {
@@ -331,12 +369,12 @@ class Search
         }
 
         global $Sql;
-        $id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."search_index WHERE id_search = '".$id_search."' AND id_user = '".$this->id_user."';", __LINE__, __FILE__);
+        $id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_SEARCH_INDEX . " WHERE id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';", __LINE__, __FILE__);
         if ($id == 1)
         {
-            // la recherche est déjà, en cache, on la met à jour.
-            $reqUpdate  = "UPDATE ".PREFIX."search_index SET times_used=times_used+1, last_search_use='".time()."' WHERE ";
-            $reqUpdate .= "id_search = '".$id_search."' AND id_user = '".$this->id_user."';";
+            // Search is already in cache, we update it.
+            $reqUpdate  = "UPDATE " . DB_TABLE_SEARCH_INDEX . " SET times_used=times_used+1, last_search_use='" . time() . "' WHERE ";
+            $reqUpdate .= "id_search = '" . $id_search . "' AND id_user = '" . $this->id_user . "';";
             $Sql->query_inject($reqUpdate, __LINE__, __FILE__);
             
             return true;
@@ -344,47 +382,43 @@ class Search
         return false;
     }
     
-    function is_in_cache($module_name)
+    
     /**
-     *  Renvoie true si les résultats du module sont dans le cache
-     *  Nb requêtes : 0
+     * @desc Returns true if the module results are in cache, else, false.
+     * @param string $module_id the module to check.
+     * @return bool true if the module results are in cache, else, false.
      */
+    function is_in_cache($module_id)
     {
-        return in_array($module_name, $this->cache);
+        return in_array($module_id, $this->cache);
     }
     
-    function modules_in_cache()
+    
     /**
-     *  Renvoie la liste des modules présent dans le cache
-     *  Nb requêtes : 0
+     * @desc Returns the list of the modules ids present in the cache
+     * @return string[] the list of the modules present in the cache
      */
+    function modules_in_cache()
     {
         return array_keys($this->id_search);
     }
     
-    function get_ids()
     /**
-     *  Renvoie l'id de la recherche
+     * @desc Returns the search id
+     * @return int the search id
      */
+    function get_ids()
     {
         return $this->id_search;
     }
     
-    //------------------------------------------------------------------ PRIVE
-    /**
-     *  Pour des raisons de compatibilité avec PHP 4, les mots-clés private,
-     *  protected et public ne sont pas utilisé.
-     *
-     *  L'appel aux méthodes et/ou attributs PRIVE/PROTEGE est donc possible.
-     *  Cependant il est strictement déconseillé, car cette partie du code
-     *  est suceptible de changer sans avertissement et donc vos modules ne
-     *  fonctionnerai plus.
-     *
-     *  Bref, utilisation et vos risques et périls !!!
-     *
-     */
     
-    //----------------------------------------------------- Méthodes protégées
+    /**
+     * @desc Builds modules search conditions on the meta-information cache
+     * @param mixed[string] $modules An array with modules ids keys and values
+     * containings modules specifics options.
+     * @return string The condition to put in a query WHERE clause
+     */
     function _get_modules_conditions(&$modules)
     /**
      *  Génère les conditions de la clause WHERE pour limiter les requêtes
@@ -397,14 +431,18 @@ class Search
         {
             $modules_conditions .= " ( ";
             $i = 0;
-            foreach ($modules as $module_name => $options)
+            foreach ($modules as $module_id => $options)
             {
-                $modules_conditions .= "( module='" . $module_name . "' AND options='" . md5(implode('|', $options)) . "' )";
+                $modules_conditions .= "( module='" . $module_id . "' AND options='" . md5(implode('|', $options)) . "' )";
                 
                 if ($i < ($nbModules - 1))
+                {
                     $modules_conditions .= " OR ";
+                }
                 else
+                {
                     $modules_conditions .= " ) ";
+                }
                 $i++;
             }
         }

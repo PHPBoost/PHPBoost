@@ -27,36 +27,97 @@
 
 import('content/parser/parser');
 
-//Classe de gestion du contenu
+/**
+ * @package content
+ * @subpackage parser
+ * @desc This class ensures the real time processing of the content. The major part of the processing is saved in the database to minimize as much as possible the treatment
+ * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
+ * which replaces the code by a lot of html code which formats the code.
+ * This kind of tag is treated in real time by this class.
+ * The content you put in that parser must come from a ContentParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ */
 class ContentSecondParser extends Parser
 {
 	######## Public #######
-	//Constructeur
+	/**
+	* @desc Builds a ContentSecondParser object
+	*/
 	function ContentSecondParser()
 	{
 		parent::Parser();
 	}
 
-	//Parse temps réel => détection des balises [code]  et remplacement, coloration si contient du code php.
-	//This function exists whatever type of content you have because it's use to finish parsing of a recorded string
-	function second_parse()
+	/**
+	 * @desc Parses the content of the parser. The result will be ready to be displayed.
+	 */
+	function parse()
 	{
 		global $LANG;
-        
-		$this->content = str_replace('../includes/data', PATH_TO_ROOT . '/kernel/data', $this->content);
-        
+
 		//Balise code
 		if (strpos($this->content, '[[CODE') !== false)
+		{
 			$this->content = preg_replace_callback('`\[\[CODE(?:=([A-Za-z0-9#+-]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`sU', array(&$this, '_callback_highlight_code'), $this->content);
+		}
+
+		//Media
+		if (strpos($this->content, '[[MEDIA]]') !== false)
+		{
+			$this->_process_media_insertion();
+		}
 
 		//Balise latex.
 		if (strpos($this->content, '[[MATH]]') !== false)
+		{
+			require_once(PATH_TO_ROOT . '/kernel/framework/content/math/mathpublisher.php');
 			$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU', array(&$this, '_math_code'), $this->content);
+		}
+
+		import('util/url');
+		$this->content = Url::html_convert_root_relative2absolute($this->content, $this->path_to_root, $this->page_path);
+	}
+
+	/**
+	 * @desc Transforms a PHPBoost HTML content to make it exportable and usable every where in the web.
+	 * @param string $html Content to transform
+	 * @return string The exportable content
+	 */
+	function export_html_text($html_content)
+	{
+		import('util/url');
+
+		//Balise vidéo
+		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="[^"]*"></a><br /><div id=".*"></div>\s*<script type="text/javascript"><!--\s*insertMoviePlayer(\'([^\']+)\', ([0-9]+), ([0-9]+), \'[^\']*\');\s*--></script>`isU',
+            '<object type="application/x-shockwave-flash" data="/kernel/data/movieplayer.swf" width="$2" height="$3">
+            	<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
+            	<param name="allowScriptAccess" value="never" />
+                <param name="play" value="true" />
+                <param name="movie" value="$1" />
+                <param name="menu" value="false" />
+                <param name="quality" value="high" />
+                <param name="scalemode" value="noborder" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+            </object>',
+		$html_content);
+
+		return Url::html_convert_root_relative2absolute($html_content);
 	}
 
 	## Private ##
 
-	//Coloration syntaxique suivant le langage, tracé des lignes si demandé.
+	/**
+	 * @static
+	 * @desc Highlights a content in a supported language using the appropriate syntax highlighter.
+	 * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
+	 * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
+	 * PHPBoost templates and PHPBoost BBCode.
+	 * @param string $contents Content to highlight
+	 * @param string $language Language name
+	 * @param bool $line_number Indicate whether or not the line number must be added to the code.
+	 * @param bool $inline_code Indicate if the code is multi line.
+	 */
 	function _highlight_code($contents, $language, $line_number, $inline_code)
 	{
 		//BBCode PHPBoost
@@ -65,7 +126,7 @@ class ContentSecondParser extends Parser
 			import('content/parser/bbcode_highlighter');
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$bbcode_highlighter->highlight($inline_code);
+			$bbcode_highlighter->parse($inline_code);
 			$contents = $bbcode_highlighter->get_content(DO_NOT_ADD_SLASHES);
 		}
 		//Templates PHPBoost
@@ -73,23 +134,23 @@ class ContentSecondParser extends Parser
 		{
 			import('content/parser/template_highlighter');
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-			
+			 
 			$template_highlighter = new TemplateHighlighter();
 			$template_highlighter->set_content($contents, PARSER_DO_NOT_STRIP_SLASHES);
-			$template_highlighter->highlight($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
+			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
 			$contents = $template_highlighter->get_content(DO_NOT_ADD_SLASHES);
 		}
 		elseif ($language != '')
 		{
 			require_once(PATH_TO_ROOT . '/kernel/framework/content/geshi/geshi.php');
-			$Geshi =& new GeSHi($contents, $language);
-				
+			$Geshi = new GeSHi($contents, $language);
+
 			if ($line_number) //Affichage des numéros de lignes.
-				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-			
+			$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+			 
 			//No container if we are in an inline tag
 			if ($inline_code)
-				$Geshi->set_header_type(GESHI_HEADER_NONE);
+			$Geshi->set_header_type(GESHI_HEADER_NONE);
 
 			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
 		}
@@ -103,35 +164,112 @@ class ContentSecondParser extends Parser
 		return $contents;
 	}
 
-	//Fonction appliquée aux balises [code] temps réel.
+	/**
+	 * @static
+	 * @desc Handler which highlights a string matched by the preg_replace_callback function.
+	 * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?,
+	 * 3 => multi line?, 4 => the code to highlight.
+	 * @return string the colored content
+	 */
 	function _callback_highlight_code($matches)
 	{
 		global $LANG;
-		
-		//Chargement de la librairie mathématique
-		require_once(PATH_TO_ROOT . '/kernel/framework/content/mathpublisher.php');
 
 		$line_number = !empty($matches[2]);
 		$inline_code = !empty($matches[3]);
+
 		$contents = $this->_highlight_code($matches[4], $matches[1], $line_number, $inline_code);
 
 		if (!$inline_code && !empty($matches[1]))
+		{
 			$contents = '<span class="text_code">' . sprintf($LANG['code_langage'], strtoupper($matches[1])) . '</span><div class="code">' . $contents .'</div>';
-		elseif ($inline_code)
-			$contents = $contents;
-		else
+		}
+		else if (!$inline_code && empty($matches[1]))
+		{
 			$contents = '<span class="text_code">' . $LANG['code_tag'] . '</span><div class="code">' . $contents . '</div>';
-			
+		}
+		 
 		return $contents;
 	}
 
-	//Fonction appliquée aux balises [math] temps réel, formules matématiques.
+	/**
+	 * @static
+	 * @desc Parses the latex code and replaces it by an image containing the mathematic formula.
+	 * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
+	 * @return string The code of the image containing the formula.
+	 */
 	function _math_code($matches)
 	{
 		$matches[1] = str_replace('<br />', '', $matches[1]);
 		$matches = mathfilter(html_entity_decode($matches[1]), 12);
 
 		return $matches;
+	}
+
+	/**
+	 * Processes the media insertion it replaces the [[MEDIA]]tag[[/MEDIA]] by the Javascript API correspondig calls.
+	 */
+	function _process_media_insertion()
+	{
+		//Swf
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_swf_tag'), $this->content);
+		//Movie
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_movie_tag'), $this->content);
+		//Sound
+		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isU', array('ContentSecondParser', '_process_sound_tag'), $this->content);
+	}
+
+	/**
+	 * Inserts the javascript calls for the swf tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_swf_tag($matches)
+	{
+		return "<object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\" width=\"" . $matches[2] . "\" height=\"" . $matches[3] . "\">" .
+			"<param name=\"allowScriptAccess\" value=\"never\" />" .
+			"<param name=\"play\" value=\"true\" />" .
+			"<param name=\"movie\" value=\"" . $matches[1] . "\" />" .
+			"<param name=\"menu\" value=\"false\" />" .
+			"<param name=\"quality\" value=\"high\" />" .
+			"<param name=\"scalemode\" value=\"noborder\" />" .
+			"<param name=\"wmode\" value=\"transparent\" />" .
+			"<param name=\"bgcolor\" value=\"#000000\" />" .
+			"</object>";
+	}
+
+	/**
+	 * Inserts the javascript calls for the movie tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_movie_tag($matches)
+	{
+		$id = 'movie_' . get_uid();
+		return '<a href="' . $matches[1] . '" style="display:block;margin:auto;width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;" id="' . $id .  '"></a><br />' .
+			'<script type="text/javascript"><!--' . "\n" .
+			'insertMoviePlayer(\'' . $id . '\');' .
+			"\n" . '--></script>';
+	}
+
+	/**
+	 * Inserts the javascript calls for the sound tag.
+	 * @param $matches The matched elements
+	 * @return The movie insertion code containing javascrpt calls
+	 */
+	function _process_sound_tag($matches)
+	{
+		//Balise son
+		return '<object type="application/x-shockwave-flash" data="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" width="200" height="20">
+         		<param name="allowScriptAccess" value="never" />
+                <param name="play" value="true" />
+                <param name="movie" value="' . PATH_TO_ROOT . '/kernel/data/dewplayer.swf?son=' . $matches[1] . '" />
+                <param name="menu" value="false" />
+                <param name="quality" value="high" />
+                <param name="scalemode" value="noborder" />
+                <param name="wmode" value="transparent" />
+                <param name="bgcolor" value="#FFFFFF" />
+            </object>';
 	}
 }
 ?>

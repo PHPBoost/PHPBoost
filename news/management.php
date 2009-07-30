@@ -3,7 +3,7 @@
  *                               management.php
  *                            -------------------
  *   begin                :  August 13, 2008
- *   copyright          : (C) 2008 Viarre RÃ©gis
+ *   copyright          : (C) 2008 Viarre Régis
  *   email                : regis.viarre@phpboost.com
  *
  *
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,8 +30,8 @@ require_once('../kernel/begin.php');
 load_module_lang('news'); //Chargement de la langue du module.
 $Cache->load('news');
 
-include_once('../kernel/framework/util/date.class.php');
-include_once('../kernel/framework/util/mini_calendar.class.php');
+import('util/date');
+import('util/mini_calendar');
 
 $edit_news_id = retrieve(GET, 'edit', 0);
 $add_news = retrieve(GET, 'new', false);
@@ -43,39 +43,39 @@ $delete_news = retrieve(GET, 'del', 0);
 //Form variables
 $news_title = retrieve(POST, 'title', '');
 $news_image = retrieve(POST, 'image', '');
-$news_contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-$news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNSECURE);
+$news_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+$news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
 $news_timestamp = retrieve(POST, 'timestamp', 0);
 $news_cat_id = retrieve(POST, 'idcat', 0);
-$news_visibility = retrieve(POST, 'visibility', 0);		
+$news_visibility = retrieve(POST, 'visibility', 0);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
 
 //Instanciations of objects required
-$news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 if (!$ignore_release_date)
-	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNSECURE);
+	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNCHANGE);
 else
 	$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 
 //Deleting a news
 if ($delete_news > 0)
 {
-	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
 	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	
 	if ($news_categories->check_auth($news_infos['idcat']))
 	{
-		$Sql->query_inject("DELETE FROM ".PREFIX."news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
 		//Deleting comments if the news has
 		if ($news_infos['nbr_com'] > 0)
 		{
-			include_once('../kernel/framework/content/comments.class.php');
+			import('content/comments');
 			$Comments = new Comments('news', $delete_news, url('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
 			//$Comments->set_arg($news_id);
 			$Comments->delete_all($delete_news);
@@ -91,7 +91,7 @@ if ($delete_news > 0)
 }
 elseif ($edit_news_id > 0)
 {
-	$news_infos = $Sql->query_array('news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);	
+	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 	if (empty($news_infos['title']))
 		redirect(HOST. DIR . url('/news/news.php'));
 	define('TITLE', $NEWS_LANG['news_management']);
@@ -150,7 +150,7 @@ if ($edit_news_id > 0)
 			
 			switch ($news_visibility)
 			{
-				case 2:		
+				case 2:
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -167,7 +167,7 @@ if ($edit_news_id > 0)
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("UPDATE ".PREFIX."news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subnewss in each category
 			if ($news_cat_id != $news_infos['idcat'])
@@ -189,11 +189,11 @@ if ($edit_news_id > 0)
 	}
 	//Previewing a news
 	elseif ($preview)
-	{		
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);		
+		$end_calendar->set_date($end_date);
 		$end_calendar->set_style('margin-left:150px;');
 
 		$Template->set_filenames(array('news' => 'news/news.tpl'));
@@ -283,7 +283,7 @@ if ($edit_news_id > 0)
 		
 		
 		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar = new MiniCalendar('end_date');
 		$end_calendar->set_style('margin-left:150px;');
 		
 		if (!empty($news_infos['start']) && !empty($news_infos['end']))
@@ -317,7 +317,7 @@ if ($edit_news_id > 0)
 			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
 			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_news_id)
+			'U_TARGET' => url('management.php?edit=' . $edit_news_id . '&amp;token=' . $Session->get_token())
 		));
 	}
 }
@@ -335,7 +335,7 @@ elseif ($add_news)
 			
 			switch ($news_visibility)
 			{
-				case 2:		
+				case 2:
 					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
@@ -352,9 +352,9 @@ elseif ($add_news)
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
 			
-			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."news");
+			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "news");
 			
 			//Updating the number of subnewss in each category
 			if ($news_cat_id != $news_infos['idcat'])
@@ -376,7 +376,7 @@ elseif ($add_news)
 	}
 	//Previewing a news
 	elseif ($preview)
-	{	
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
@@ -496,7 +496,7 @@ elseif ($add_news)
 			'VISIBLE_WAITING' => '',
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_UNAPROVED' => '',
-			'U_TARGET' => url('management.php?new=1')
+			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
 }

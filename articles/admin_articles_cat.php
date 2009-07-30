@@ -32,7 +32,7 @@ require_once('../admin/admin_header.php');
 		
 $id = retrieve(GET, 'id', 0);
 $del = retrieve(GET, 'del', 0);
-$move = retrieve(GET, 'move', '', TSTRING_UNSECURE);
+$move = retrieve(GET, 'move', '', TSTRING_UNCHANGE);
 $root = retrieve(GET, 'root', 0);
 
 define('READ_CAT_ARTICLES', 0x01);
@@ -57,10 +57,10 @@ if (!empty($_POST['valid']) && !empty($id))
 	if (!empty($name))
 	{
 		$icon = !empty($icon) ? $icon : $icon_path;
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET name = '" . $name . "', contents = '"  . $contents . "', aprob = '" . $aprob . "', icon = '" . $icon . "', auth = '" . addslashes(serialize($array_auth_all)) . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 
 		//Empêche le déplacement dans une catégorie fille.
-		$to = $Sql->query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+		$to = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats WHERE id = '" . $to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 		 
 		//Catégorie parente changée?
 		$change_cat = !empty($to) ? !($CAT_ARTICLES[$to]['id_left'] < $CAT_ARTICLES[$id]['id_left'] && $CAT_ARTICLES[$to]['id_right'] > $CAT_ARTICLES[$id]['id_right'] && ($CAT_ARTICLES[$id]['level'] - 1) == $CAT_ARTICLES[$to]['level']) : $CAT_ARTICLES[$id]['level'] > 0;
@@ -72,7 +72,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			//Sous catégories de l'article à supprimer.
 			$list_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."articles_cats
+			FROM " . PREFIX . "articles_cats
 			WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 			ORDER BY id_left", __LINE__, __FILE__);
 			
@@ -85,7 +85,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			//Catégories parentes de l'article à supprimer.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."articles_cats
+			FROM " . PREFIX . "articles_cats
 			WHERE id_left < '" . $CAT_ARTICLES[$id]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 			
 			while ($row = $Sql->fetch_assoc($result))
@@ -103,7 +103,7 @@ if (!empty($_POST['valid']) && !empty($id))
 			{
 				$list_parent_cats_to = '';
 				$result = $Sql->query_while("SELECT id
-				FROM ".PREFIX."articles_cats
+				FROM " . PREFIX . "articles_cats
 				WHERE id_left <= '" . $CAT_ARTICLES[$to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 					$list_parent_cats_to .= $row['id'] . ', ';
@@ -119,37 +119,38 @@ if (!empty($_POST['valid']) && !empty($id))
 
 			########## Suppression ##########
 			//On supprime virtuellement (changement de signe des bornes) les enfants.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			
 			//Récupération du nombre d'articles de l'article.
-			$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM ".PREFIX."articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-			$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM ".PREFIX."articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM " . PREFIX . "articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM " . PREFIX . "articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			//On modifie les bornes droites des parents et le nbr d'articles.
 			if (!empty($list_parent_cats))
 			{
-				$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 			}
 			
 			//On réduit la taille de l'arbre du nombre de articles supprimées à partir de la position de celui-ci.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 
 			########## Ajout ##########
 			if (!empty($to)) //Galerie cible différent de la racine.
 			{
 				//On modifie les bornes droites et le nbr d'articles des parents de la cible.
-				$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 
 				//On augmente la taille de l'arbre du nombre de articles supprimées à partir de la position de l'article cible.
-				if ($CAT_ARTICLES[$id]['id_left'] > $CAT_ARTICLES[$to]['id_left'] ) //Direction article source -> article cible.
+				$array_parents_cats = explode(', ', $list_parent_cats);
+				if ($CAT_ARTICLES[$id]['id_left'] > $CAT_ARTICLES[$to]['id_left'] && !in_array($to, $array_parents_cats) ) //Direction forum source -> forum cible, et source non incluse dans la cible.
 				{
-					$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 					$limit = $CAT_ARTICLES[$to]['id_right'];
 					$end = $limit + ($nbr_cat*2) - 1;
 				}
 				else
 				{
-					$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
 					$limit = $CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2);
 					$end = $limit + ($nbr_cat*2) - 1;
 				}
@@ -160,16 +161,16 @@ if (!empty($_POST['valid']) && !empty($id))
 				{
 					$id_left = $limit + ($CAT_ARTICLES[$array_sub_cats[$z]]['id_left'] - $CAT_ARTICLES[$id]['id_left']);
 					$id_right = $end - ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$array_sub_cats[$z]]['id_right']);
-					$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 					$z++;
 				}
 					
 				//On met à jour la nouvelle article.
-				$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET level = level - '" . (($CAT_ARTICLES[$id]['level'] - $CAT_ARTICLES[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET level = level - '" . (($CAT_ARTICLES[$id]['level'] - $CAT_ARTICLES[$to]['level']) - 1) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			}
 			else //Racine
 			{
-				$max_id = $Sql->query("SELECT MAX(id_right) FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
+				$max_id = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
 				//On replace les articles supprimées virtuellement.
 				$array_sub_cats = explode(', ', $list_cats);
 				$z = 0;
@@ -179,10 +180,10 @@ if (!empty($_POST['valid']) && !empty($id))
 				{
 					$id_left = $limit + ($CAT_ARTICLES[$array_sub_cats[$z]]['id_left'] - $CAT_ARTICLES[$id]['id_left']);
 					$id_right = $end - ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$array_sub_cats[$z]]['id_right']);
-					$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 					$z++;
 				}
-				$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET level = level - '" . ($CAT_ARTICLES[$id]['level'] - $CAT_ARTICLES[$to]['level']) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET level = level - '" . ($CAT_ARTICLES[$id]['level'] - $CAT_ARTICLES[$to]['level']) . "' WHERE id IN (" . $list_cats . ")", __LINE__, __FILE__);
 			}
 		}
 		
@@ -203,7 +204,7 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_CAT_ARTICLES);
 	$CONFIG_ARTICLES['auth_root'] = serialize($array_auth_all);
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_ARTICLES)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	$Cache->Generate_module_file('articles');
 	
     import('content/syndication/feed');
@@ -213,17 +214,19 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 }
 elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('articles');
 	
 	$confirm_delete = false;
 	
-	$idcat = $Sql->query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
+	$idcat = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats WHERE id = '" . $del . "'", __LINE__, __FILE__);
 	if (!empty($idcat) && isset($CAT_ARTICLES[$idcat]))
 	{
 		//On vérifie si l'articles contient des sous catégories.
 		$nbr_sub_cat = (($CAT_ARTICLES[$idcat]['id_right'] - $CAT_ARTICLES[$idcat]['id_left'] - 1) / 2);
 		//On vérifie si l'articles ne contient pas d'articles.
-		$check_articles = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."articles WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+		$check_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 		
 		if ($check_articles == 0 && $nbr_sub_cat == 0) //Si vide on supprime simplement, l'articles.
 		{
@@ -242,7 +245,7 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$subcats = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."articles_cats
+					FROM " . PREFIX . "articles_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
@@ -264,7 +267,7 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 					//Listing des catégories disponibles, sauf celle qui va être supprimée.
 					$subcats = '<option value="0">' . $LANG['root'] . '</option>';
 					$result = $Sql->query_while("SELECT id, name, level
-					FROM ".PREFIX."articles_cats
+					FROM " . PREFIX . "articles_cats
 					WHERE id_left NOT BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'
 					ORDER BY id_left", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
@@ -282,7 +285,7 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 					));
 				}
 		
-				$articles_name = $Sql->query("SELECT name FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$articles_name = $Sql->query("SELECT name FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 				$Template->assign_vars(array(
 					'IDCAT' => $idcat,
 					'ARTICLES_NAME' => $articles_name,
@@ -310,17 +313,17 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 				{
 					//Déplacement de sous catégories.
 					$f_to = retrieve(POST, 'f_to', 0);
-					$f_to = $Sql->query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+					$f_to = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats WHERE id = '" . $f_to . "' AND id_left NOT BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					
 					//Déplacement d'articles
 					$t_to = !empty($_POST['t_to']) ? numeric($_POST['t_to']) : 0;
-					$t_to = $Sql->query("SELECT id FROM ".PREFIX."articles_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
+					$t_to = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats WHERE id = '" . $t_to . "' AND id <> '" . $idcat . "'", __LINE__, __FILE__);
 					
 					####Déplacement des articles dans la catégorie sélectionnée.####
 					//Catégories parentes de l'article à supprimer.
 					$list_parent_cats = '';
 					$result = $Sql->query_while("SELECT id
-					FROM ".PREFIX."articles_cats
+					FROM " . PREFIX . "articles_cats
 					WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					while ($row = $Sql->fetch_assoc($result))
 						$list_parent_cats .= $row['id'] . ', ';
@@ -329,50 +332,43 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 					$list_parent_cats = trim($list_parent_cats, ', ');
 					
 					//On va chercher la somme du nombre d'articles
-					$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+					$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 					$nbr_articles_visible = !empty($nbr_articles_visible) ? $nbr_articles_visible : 0;
-					$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+					$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 					$nbr_articles_unvisible = !empty($nbr_articles_unvisible) ? $nbr_articles_unvisible : 0;
 					
 					//On déplace les images dans la nouvelle article.
-					$Sql->query_inject("UPDATE ".PREFIX."articles SET idcat = '" . $t_to . "' WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles SET idcat = '" . $t_to . "' WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 
 					//On met à jour la nouvelle article.
-					$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE id = '" . $t_to . "'", __LINE__, __FILE__);
+					$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE id = '" . $t_to . "'", __LINE__, __FILE__);
 					
 					//On modifie les bornes droites des parents et le nbr d'articles.
 					if (!empty($list_parent_cats))
 					{
-						$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 					}
-					
-					//On supprime l'ancienne article.
-					$Sql->query_inject("DELETE FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				
 					
 					//Présence de sous-cat => déplacement de celles-ci.
 					if ($nbr_sub_cat > 0)
 					{
-						//Sous catégories de l'article à supprimer.
+						//Sous catégories de la catégorie à supprimer.
 						$list_sub_cats = '';
 						$result = $Sql->query_while("SELECT id
-						FROM ".PREFIX."articles_cats
+						FROM " . PREFIX . "articles_cats
 						WHERE id_left BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "' AND id != '" . $idcat . "' ORDER BY id_left", __LINE__, __FILE__);
-						
 						while ($row = $Sql->fetch_assoc($result))
 							$list_sub_cats .= $row['id'] . ', ';
-						
 						$Sql->query_close($result);
 						$list_sub_cats = trim($list_sub_cats, ', ');
 						
-						//Catégories parentes de l'article à supprimer.
+						//Catégories parentes de la catégorie à supprimer.
 						$list_parent_cats = '';
 						$result = $Sql->query_while("SELECT id
-						FROM ".PREFIX."articles_cats
+						FROM " . PREFIX . "articles_cats
 						WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 						while ($row = $Sql->fetch_assoc($result))
 							$list_parent_cats .= $row['id'] . ', ';
-						
 						$Sql->query_close($result);
 						$list_parent_cats = trim($list_parent_cats, ', ');
 						
@@ -385,7 +381,7 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 						{
 							$list_parent_cats_to = '';
 							$result = $Sql->query_while("SELECT id
-							FROM ".PREFIX."articles_cats
+							FROM " . PREFIX . "articles_cats
 							WHERE id_left <= '" . $CAT_ARTICLES[$f_to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$f_to]['id_right'] . "'", __LINE__, __FILE__);
 							while ($row = $Sql->fetch_assoc($result))
 								$list_parent_cats_to .= $row['id'] . ', ';
@@ -400,41 +396,42 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 						}
 							
 						########## Suppression ##########
-						//On supprime l'ancienne article.
-						$Sql->query_inject("DELETE FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						//On supprime l'ancienne catégorie.
+						$Sql->query_inject("DELETE FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 						
 						//On supprime virtuellement (changement de signe des bornes) les enfants.
-						$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left, id_right = - id_right WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
 						
 						//Récupération du nombre d'articles de l'article.
-						$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-						$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+						$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			
 						//On modifie les bornes droites des parents et le nbr d'articles.
 						if (!empty($list_parent_cats))
 						{
-							$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "', nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+							$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "', nbr_articles_visible = nbr_articles_visible - " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible - " . numeric($nbr_articles_unvisible) . " WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 						}
 						
 						//On réduit la taille de l'arbre du nombre de article supprimées à partir de la position de celui-ci.
-						$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - '" . (2 + $nbr_sub_cat*2) . "', id_right = id_right - '" . (2 + $nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					
 						########## Ajout ##########
 						if (!empty($f_to)) //Galerie cible différent de la racine.
 						{
 							//On modifie les bornes droites et le nbr d'articles des parents de la cible.
-							$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "', nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+							$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right + '" . ($nbr_sub_cat*2) . "', nbr_articles_visible = nbr_articles_visible + " . numeric($nbr_articles_visible) . ", nbr_articles_unvisible = nbr_articles_unvisible + " . numeric($nbr_articles_unvisible) . " WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 							
 							//On augmente la taille de l'arbre du nombre de article supprimées à partir de la position de l'article cible.
-							if ($CAT_ARTICLES[$idcat]['id_left'] > $CAT_ARTICLES[$f_to]['id_left']) //Direction article source -> article cible.
+							$array_parents_cats = explode(', ', $list_parent_cats);
+							if ($CAT_ARTICLES[$idcat]['id_left'] > $CAT_ARTICLES[$f_to]['id_left'] && !in_array($f_to, $array_parents_cats) ) //Direction forum source -> forum cible, et source non incluse dans la cible.
 							{
-								$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$f_to]['id_right'] . "'", __LINE__, __FILE__);
+								$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$f_to]['id_right'] . "'", __LINE__, __FILE__);
 								$limit = $CAT_ARTICLES[$f_to]['id_right'];
 								$end = $limit + ($nbr_sub_cat*2) - 1;
 							}
 							else
 							{
-								$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'", __LINE__, __FILE__);
+								$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_sub_cat*2) . "', id_right = id_right + '" . ($nbr_sub_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$f_to]['id_right'] - (2 + $nbr_sub_cat*2)) . "'", __LINE__, __FILE__);
 								$limit = $CAT_ARTICLES[$f_to]['id_right'] - (2 + $nbr_sub_cat*2);
 								$end = $limit + ($nbr_sub_cat*2) - 1;
 							}
@@ -446,16 +443,16 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 							{
 								$id_left = $limit + ($CAT_ARTICLES[$array_sub_cats[$z]]['id_left'] - $CAT_ARTICLES[$idcat]['id_left']) - 1;
 								$id_right = $end - ($CAT_ARTICLES[$idcat]['id_right'] - $CAT_ARTICLES[$array_sub_cats[$z]]['id_right']) + 1;
-								$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+								$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 								$z++;
 							}
 
 							//On met à jour le nouveau article.
-							$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET level = level - '" . ($CAT_ARTICLES[$idcat]['level'] - $CAT_ARTICLES[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
+							$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET level = level - '" . ($CAT_ARTICLES[$idcat]['level'] - $CAT_ARTICLES[$f_to]['level']) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
 						}
 						else //Racine
 						{
-							$max_id = $Sql->query("SELECT MAX(id_right) FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
+							$max_id = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
 							//On replace les articles supprimées virtuellement.
 							$array_sub_cats = explode(', ', $list_sub_cats);
 							$z = 0;
@@ -465,16 +462,16 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 							{
 								$id_left = $limit + ($CAT_ARTICLES[$array_sub_cats[$z]]['id_left'] - $CAT_ARTICLES[$idcat]['id_left']) - 1;
 								$id_right = $end - ($CAT_ARTICLES[$idcat]['id_right'] - $CAT_ARTICLES[$array_sub_cats[$z]]['id_right']) + 1;
-								$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+								$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 								$z++;
 							}
-							$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET level = level - '" . ($CAT_ARTICLES[$idcat]['level'] - $CAT_ARTICLES[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
+							$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET level = level - '" . ($CAT_ARTICLES[$idcat]['level'] - $CAT_ARTICLES[$f_to]['level'] + 1) . "' WHERE id IN (" . $list_sub_cats . ")", __LINE__, __FILE__);
 						}
 					}
 					else //On rétabli l'arbre intervallaire.
 					{
-						$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-						$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right - 2 WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+						$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - 2, id_right = id_right - 2 WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 					}
 					
 					$Cache->Generate_module_file('articles');
@@ -489,7 +486,7 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 			//Catégories parentes de l'article à supprimer.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."articles_cats
+			FROM " . PREFIX . "articles_cats
 			WHERE id_left < '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 				$list_parent_cats .= $row['id'] . ', ';
@@ -501,15 +498,15 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 			if (!empty($list_parent_cats))
 			{
 				//Récupération du nombre d'articles de l'article.
-				$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
-				$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM ".PREFIX."articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+				$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM " . PREFIX . "articles_cats WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 				
-				$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right - '" . $nbr_del . "', nbr_articles_visible = nbr_articles_visible - '" . numeric($nbr_articles_visible) . "', nbr_articles_unvisible = nbr_articles_unvisible - '" . numeric($nbr_articles_unvisible) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right - '" . $nbr_del . "', nbr_articles_visible = nbr_articles_visible - '" . numeric($nbr_articles_visible) . "', nbr_articles_unvisible = nbr_articles_unvisible - '" . numeric($nbr_articles_unvisible) . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 			}
 			
-			$Sql->query_inject("DELETE FROM ".PREFIX."articles_cats WHERE id_left BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("DELETE FROM ".PREFIX."articles WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "articles_cats WHERE id_left BETWEEN '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - '" . $nbr_del . "', id_right = id_right - '" . $nbr_del . "' WHERE id_left > '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE idcat = '" . $idcat . "'", __LINE__, __FILE__);
 			
 			###### Regénération du cache #######
 			$Cache->Generate_module_file('articles');
@@ -524,6 +521,8 @@ elseif (!empty($del)) //Suppression de l'articles/sous-catégorie.
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$Cache->load('articles');
 	
 	//Catégorie existe?
@@ -533,7 +532,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	//Catégories parentes de l'article à déplacer.
 	$list_parent_cats = '';
 	$result = $Sql->query_while("SELECT id
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	WHERE id_left < '" . $CAT_ARTICLES[$id]['id_left'] . "' AND id_right > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 		$list_parent_cats .= $row['id'] . ', ';
@@ -545,25 +544,25 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	if ($move == 'up')
 	{
 		//Même catégorie
-		$switch_id_cat = $Sql->query("SELECT id FROM ".PREFIX."articles_cats
+		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats
 		WHERE '" . $CAT_ARTICLES[$id]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);
 		if (!empty($switch_id_cat))
 		{
 			//On monte l'articles à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left + '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left + '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right + '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 			//On descend l'articles cible.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$switch_id_cat]['id_left'] . "' AND '" . $CAT_ARTICLES[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "', id_right = id_right + '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$switch_id_cat]['id_left'] . "' AND '" . $CAT_ARTICLES[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//On rétablit les valeurs absolues.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
 			
 			$Cache->Generate_module_file('articles');
 		}
 		elseif (!empty($list_parent_cats) )
 		{
 			//Changement de catégorie.
-			$to = $Sql->query("SELECT id FROM ".PREFIX."articles_cats
+			$to = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats
 			WHERE id_left < '" . $CAT_ARTICLES[$id]['id_left'] . "' AND level = '" . ($CAT_ARTICLES[$id]['level'] - 1) . "' AND
 			id NOT IN (" . $list_parent_cats . ")
 			ORDER BY id_left DESC" .
@@ -573,25 +572,25 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	elseif ($move == 'down')
 	{
 		//Doit-on changer de catégorie parente ou non ?
-		$switch_id_cat = $Sql->query("SELECT id FROM ".PREFIX."articles_cats
+		$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats
 		WHERE id_left - '" . $CAT_ARTICLES[$id]['id_right'] . "' = 1", __LINE__, __FILE__);
 		if (!empty($switch_id_cat))
 		{
 			//On monte l'articles à déplacer, on lui assigne des id négatifs pour assurer l'unicité.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left - '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left - '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "', id_right = - id_right - '" . ($CAT_ARTICLES[$switch_id_cat]['id_right'] - $CAT_ARTICLES[$switch_id_cat]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 			//On descend l'articles cible.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$switch_id_cat]['id_left'] . "' AND '" . $CAT_ARTICLES[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "', id_right = id_right - '" . ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$id]['id_left'] + 1) . "' WHERE id_left BETWEEN '" . $CAT_ARTICLES[$switch_id_cat]['id_left'] . "' AND '" . $CAT_ARTICLES[$switch_id_cat]['id_right'] . "'", __LINE__, __FILE__);
 			
 			//On rétablit les valeurs absolues.
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left WHERE id_left < 0", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = - id_right WHERE id_right < 0", __LINE__, __FILE__);
 			
 			$Cache->Generate_module_file('articles');
 		}
 		elseif (!empty($list_parent_cats) )
 		{
 			//Changement de catégorie.
-			$to = $Sql->query("SELECT id FROM ".PREFIX."articles_cats
+			$to = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats
 			WHERE id_left > '" . $CAT_ARTICLES[$id]['id_left'] . "' AND level = '" . ($CAT_ARTICLES[$id]['level'] - 1) . "'
 			ORDER BY id_left" .
 			$Sql->limit(0, 1), __LINE__, __FILE__);
@@ -606,7 +605,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		//Sous catégories de l'article à déplacer.
 		$list_cats = '';
 		$result = $Sql->query_while("SELECT id
-		FROM ".PREFIX."articles_cats
+		FROM " . PREFIX . "articles_cats
 		WHERE id_left BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 		ORDER BY id_left", __LINE__, __FILE__);
 		
@@ -622,13 +621,13 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 			$clause_cats = " id IN (" . $list_cats . ")";
 			
 		//Récupération du nombre d'articles de l'article.
-		$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM ".PREFIX."articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM ".PREFIX."articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$nbr_articles_visible = $Sql->query("SELECT nbr_articles_visible FROM " . PREFIX . "articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$nbr_articles_unvisible = $Sql->query("SELECT nbr_articles_unvisible FROM " . PREFIX . "articles_cats WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
 		//Catégories parentes de l'article cible.
 		$list_parent_cats_to = '';
 		$result = $Sql->query_while("SELECT id, level
-		FROM ".PREFIX."articles_cats
+		FROM " . PREFIX . "articles_cats
 		WHERE id_left <= '" . $CAT_ARTICLES[$to]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 		
 		while ($row = $Sql->fetch_assoc($result))
@@ -644,30 +643,30 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 			
 		########## Suppression ##########
 		//On supprime virtuellement (changement de signe des bornes) les enfants.
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = - id_left, id_right = - id_right WHERE " . $clause_cats, __LINE__, __FILE__);
 		//On modifie les bornes droites des parents.
 		if (!empty($list_parent_cats))
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible - '" . $nbr_articles_visible . "', nbr_articles_unvisible = nbr_articles_unvisible - '" . $nbr_articles_unvisible . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right - '" . ( $nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible - '" . $nbr_articles_visible . "', nbr_articles_unvisible = nbr_articles_unvisible - '" . $nbr_articles_unvisible . "' WHERE id IN (" . $list_parent_cats . ")", __LINE__, __FILE__);
 		}
 		
 		//On réduit la taille de l'arbre du nombre de articles supprimées à partir de la position de celui-ci.
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left - '" . ($nbr_cat*2) . "', id_right = id_right - '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$id]['id_right'] . "'", __LINE__, __FILE__);
 
 		########## Ajout ##########
 		//On modifie les bornes droites des parents de la cible.
-		$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible + '" . $nbr_articles_visible . "', nbr_articles_unvisible = nbr_articles_unvisible + '" . $nbr_articles_unvisible . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_right = id_right + '" . ($nbr_cat*2) . "', nbr_articles_visible = nbr_articles_visible + '" . $nbr_articles_visible . "', nbr_articles_unvisible = nbr_articles_unvisible + '" . $nbr_articles_unvisible . "' WHERE " . $clause_parent_cats_to, __LINE__, __FILE__);
 
 		//On augmente la taille de l'arbre du nombre de articles supprimées à partir de la position de l'article cible.
 		if ($CAT_ARTICLES[$id]['id_left'] > $CAT_ARTICLES[$to]['id_left'] ) //Direction article source -> article cible.
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . $CAT_ARTICLES[$to]['id_right'] . "'", __LINE__, __FILE__);
 			$limit = $CAT_ARTICLES[$to]['id_right'];
 			$end = $limit + ($nbr_cat*2) - 1;
 		}
 		else
 		{
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = id_left + '" . ($nbr_cat*2) . "', id_right = id_right + '" . ($nbr_cat*2) . "' WHERE id_left > '" . ($CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2)) . "'", __LINE__, __FILE__);
 			$limit = $CAT_ARTICLES[$to]['id_right'] - ($nbr_cat*2);
 			$end = $limit + ($nbr_cat*2) - 1;
 		}
@@ -679,7 +678,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 		{
 			$id_left = $limit + ($CAT_ARTICLES[$array_sub_cats[$z]]['id_left'] - $CAT_ARTICLES[$id]['id_left']);
 			$id_right = $end - ($CAT_ARTICLES[$id]['id_right'] - $CAT_ARTICLES[$array_sub_cats[$z]]['id_right']);
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET id_left = '" . $id_left . "', id_right = '" . $id_right . "' WHERE id = '" . $array_sub_cats[$z] . "'", __LINE__, __FILE__);
 			$z++;
 		}
 		
@@ -695,8 +694,8 @@ elseif (!empty($id)) //Edition des catégories.
 	$Template->set_filenames(array(
 		'admin_articles_cat_edit'=> 'articles/admin_articles_cat_edit.tpl'
 	));
-			
-	$articles_info = $Sql->query_array("articles_cats", "id_left", "id_right", "level", "name", "contents", "icon", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	
+	$articles_info = $Sql->query_array(PREFIX . "articles_cats", "id_left", "id_right", "level", "name", "contents", "icon", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (!isset($CAT_ARTICLES[$id]))
 		redirect(HOST . DIR . '/articles/admin_articles_cat.php?error=unexist_cat');
@@ -704,7 +703,7 @@ elseif (!empty($id)) //Edition des catégories.
 	//Listing des catégories disponibles.
 	$articles = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, id_left, id_right, name, level
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	WHERE id_left NOT BETWEEN '" . $CAT_ARTICLES[$id]['id_left'] . "' AND '" . $CAT_ARTICLES[$id]['id_right'] . "'
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -717,24 +716,15 @@ elseif (!empty($id)) //Edition des catégories.
 
 	//Images disponibles
 	$img_direct_path = (strpos($articles_info['icon'], '/') !== false);
-	$rep = './';
 	$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
-	if (is_dir($rep)) //Si le dossier existe
+	import('io/filesystem/folder');
+	$image_list = '<option value="" id="img_default_select">--</option>';
+	$image_folder_path = new Folder('./');
+	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 	{
-		$img_array = array();
-		$dh = @opendir( $rep);
-		while (! is_bool($lang = readdir($dh)))
-		{
-			if (preg_match('`\.(gif|png|jpg|jpeg|tiff)+$`i', $lang))
-				$img_array[] = $lang; //On crée un tableau, avec les different fichiers.
-		}
-		closedir($dh); //On ferme le dossier
-
-		foreach ($img_array as $key => $img_path)
-		{
-			$selected = $img_path == $articles_info['icon'] ? ' selected="selected"' : '';
-			$image_list .= '<option value="' . $img_path . '"' . ($img_direct_path ? '' : $selected) . '>' . $img_path . '</option>';
-		}
+		$image = $images->get_name();
+		$selected = $image == $articles_info['icon'] ? ' selected="selected"' : '';
+		$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 	}
 	
 	//Gestion erreur.
@@ -872,12 +862,12 @@ else
 		'L_SELECT_NONE' => $LANG['select_none']
 	));
 
-	$max_cat = $Sql->query("SELECT MAX(id_left) FROM ".PREFIX."articles_cats", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(id_left) FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
 	$list_cats_js = '';
 	$array_js = '';
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, contents
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -885,8 +875,7 @@ else
 		$Template->assign_block_vars('list', array(
 			'I' => $i,
 			'ID' => $row['id'],
-			'NAME' => $row['name'],
-			'DESC' => $row['contents'],
+			'NAME' => (strlen($row['name']) > 60) ? (substr($row['name'], 0, 60) . '...') : $row['name'],
 			'INDENT' => ($row['level'] + 1) * 75, //Indentation des sous catégories.
 			'U_ARTICLES_VARS' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 		));

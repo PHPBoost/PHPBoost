@@ -3,7 +3,7 @@
  *                             backup.class.php
  *                            -------------------
  *   begin                : July 23, 2006
- *   copyright          : (C) 2005 Benoît Sautel / Régis Viarre
+ *   copyright            : (C) 2005 Benoît Sautel / Régis Viarre
  *   email                : ben.popeye@gmail.com / crowkait@phpboost.com
  *
  *   
@@ -25,45 +25,62 @@
  *
 ###################################################*/
 
-//Fonction d'importation/exportation de base de donnée.
+/**
+ * @package db
+ * @author Benoît Sautel ben.popeye@gmail.com / Régis Viarre crowkait@phpboost.com
+ * @desc This class helps you to generate the backup file of your data base.
+ */
 class Backup
 {
-	## Public Attributes ##
-	var $tables = array(); //Liste des tables.
-	var $save = ''; //Sauvegarde
-	
-	## Public Methods ##	
-	//On modifie le temps d'exécution maximal si le serveur le permet
+	/**
+	 * @desc Builds a Backup object
+	 */
 	function Backup()
 	{
-		$this->list_table(); //Liste toutes les tables de PHPBoost.
+		$this->list_db_tables(); //Liste toutes les tables de PHPBoost.
+		//On modifie le temps d'exécution maximal si le serveur le permet 
+		//parce que les opérations sont longues
 		@set_time_limit(600);
 	}
 		
-	//On crée le tableau qui contient les tables
-	function list_table()
+	/**
+	 * @desc Retrieves the list of the tables present on the database used.
+	 */
+	function list_db_tables()
 	{
 		global $Sql;
 		
-		if ($this->tables === array())
+		if (empty($this->tables))
+		{
 			$this->tables = $Sql->list_tables();
+		}
 	}
 	
-	//Suppression  des tables
-	function drop_tables_exists($table_list = array())
+	/**
+	 * @desc Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
+	 * @param string[] $table_list names of the tables which must be dropped by the query.
+	 * If you want to generate the query which will drop all the tables, don't use this parameter
+	 * of let an empty array. 
+	 */
+	function generate_drop_table_query($table_list = array())
 	{
 		$selected_tables =  array();
-		$all_tables = count($table_list) == 0 ? true : false;
+		$all_tables = count($table_list) == 0;
 		foreach ($this->tables as $id => $properties)
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 				$selected_tables[] = $properties['name'];
 		}
-		$this->save .= 'DROP TABLE IF EXISTS ' . implode(', ', $selected_tables) . ';' . "\n";
+		$this->backup_script .= 'DROP TABLE IF EXISTS ' . implode(', ', $selected_tables) . ';' . "\n";
 	}
 	
-	//Création des tables (structure)
-	function create_tables($table_list = array())
+	/**
+	 * @desc Concatenates the tables creation to the SQL backup script.
+	 * @param string[] $table_list names of the tables which must be created by the backup script.
+	 * If you want to generate the query which will create all the tables, don't use this parameter
+	 * of let an empty array. 
+	 */
+	function generate_create_table_query($table_list = array())
 	{
 		global $Sql;
 		
@@ -75,14 +92,19 @@ class Backup
 			{
 				$result = $Sql->query_while ('SHOW CREATE TABLE ' . $properties['name'], __LINE__, __FILE__);
 				while ($row = $Sql->fetch_row($result))
-					$this->save .=  $row[1] . ';' . "\n\n";
+					$this->backup_script .=  $row[1] . ';' . "\n\n";
 				$Sql->query_close($result);
 			}		
 		}
 	}	
 	
-	//Requêtes d'insertion
-	function insert_values($tables = array())
+	/**
+	 * @desc Concatenates the tables content insertion queries to the SQL backup script.
+	 * @param $tables names of the tables which must be filled by the backup script.
+	 * If you want to generate the query which will fill all the tables, don't use this parameter
+	 * of let an empty array. 
+	 */
+	function generate_insert_values_query($tables = array())
 	{
 		global $Sql;
 		
@@ -95,9 +117,9 @@ class Backup
 				$rows_number = $Sql->query("SELECT COUNT(*) FROM " . $table_info['name'], __LINE__, __FILE__);
 				if ($rows_number > 0)
 				{
-					$this->save .= "INSERT INTO " . $table_info['name'] . " (`";
-					$this->save .= implode('`, `', $Sql->list_fields($table_info['name']));
-					$this->save .= "`) VALUES ";
+					$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (`";
+					$this->backup_script .= implode('`, `', $Sql->list_fields($table_info['name']));
+					$this->backup_script .= "`) VALUES ";
 					
 					$i = 1;
 					$list_fields = $Sql->list_fields($table_info['name']);
@@ -106,35 +128,114 @@ class Backup
 					{
 						if ($i % 10 == 0) //Toutes les 10 entrées on reforme une requête
 						{
-							$this->save .= ";\n";
-							$this->save .= "INSERT INTO " . $table_info['name'] . " (";
-							$this->save .= implode(', ', $list_fields);
-							$this->save .= ") VALUES ";
+							$this->backup_script .= ";\n";
+							$this->backup_script .= "INSERT INTO " . $table_info['name'] . " (";
+							$this->backup_script .= implode(', ', $list_fields);
+							$this->backup_script .= ") VALUES ";
 						}
 						elseif ($i > 1)
-							$this->save .= ", ";
-						$this->save .= "(";
+							$this->backup_script .= ", ";
+						$this->backup_script .= "(";
 						foreach ($row as $key => $value)
 							$row[$key] = '\'' . str_replace(chr(13), '\r', str_replace(chr(10), '\n', str_replace('\\', '\\\\', str_replace("'", "''", $value)))) . '\'';
-						$this->save .= implode(', ', $row) . ")";
+						$this->backup_script .= implode(', ', $row) . ")";
 						$i++;
 					}
-					$this->save .= ";\n";
+					$this->backup_script .= ";\n";
 					$Sql->query_close($result);
 				}
 			}
 		}
 	}
 	
-	//Extraction de la structure de la table.
+	/**
+	 * @desc Concatenates a string at the end of the current script.
+	 * @param string $string String to concatenate.
+	 */
+	function concatenate_to_query($string)
+	{
+		$this->backup_script .= $string;
+	}
+	
+	/**
+	 * @desc Returns the current backup script.
+	 * @return string the whole script
+	 */
+	function get_script()
+	{
+		return $this->backup_script;
+	}
+	
+	/**
+	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
+	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
+	* @return string[] Map containing the following structure:
+	* for each table: table_name => array(
+	* 	'name' => name of the table,
+	* 	'engine' => storage engine of the table,
+	* 	'row_format' => row storage format,
+	* 	'rows' => number of rows,
+	* 	'data_length' => the length of the data file,
+	* 	'index_length' => the length of the index file,
+	* 	'data_free' => the number of allocated but unused bytes,
+	* 	'collation' => the table's character set and collation,
+	* 	'auto_increment' => the next AUTO_INCREMENT value,
+	* 	'create_time' => when the table was created,
+	* 	'update_time' => when the data file was last updated
+	* )  
+	*/
+	function get_tables_properties_list()
+	{
+		$this->list_db_tables();
+		return $this->tables;
+	}
+	
+	/**
+	 * @desc Retrieves the list of the tables used by PHPBoost.
+	 * @return string[] The list of the table names.
+	 */
+	function get_tables_list()
+	{
+		$this->list_db_tables();
+		return array_keys($this->tables);
+	}
+	
+	/**
+	 * @desc Returns the number of tables used by PHPBoost.
+	 * @return int number of tables
+	 */
+	function get_tables_number()
+	{
+		$this->list_db_tables();
+		return count($this->tables);
+	}
+	
+	/**
+	 * @desc Writes the backup script in a text file.
+	 * @param string $file_path Path of the file.
+	 */
+	function export_file($file_path)
+	{
+		import('io/filesystem/file');
+		$file = new File($file_path);
+		$file->open(WRITE);
+		$file->write($this->backup_script);
+		$file->close();
+	}
+	
+	/**
+	 * @desc 
+	 * @param $tables
+	 * @return unknown_type
+	 */
 	function extract_table_structure($tables = array())
 	{
-		$this->create_tables($tables);
+		$this->generate_create_table_query($tables);
 		
 		$structure = array();
 		$structure['fields'] = array();
 		$structure['index'] = array();
-		$struct = substr(strstr($this->save, '('), 1);
+		$struct = substr(strstr($this->backup_script, '('), 1);
 		$struct = substr($struct, 0, strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
 		foreach ($array_struct as $field)
@@ -164,55 +265,15 @@ class Backup
 		return $structure;
 	}
 	
-	//Création du fichier
-	function export_file($file_path)
-	{
-		$file = @fopen($file_path, 'w+');	
-		fwrite($file, $this->save); //On stocke le tableau dans le fichier de données
-		fclose($file);
-	}
-		
-	//Optimisation des tables
-	function optimize_tables($table_array) 
-	{		
-		global $Sql;
-		
-		if (count($table_array) != 0)
-			$Sql->query_inject("OPTIMIZE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
-	}
-	
-	//Réparation des tables
-	function Repair_tables($table_array)
-	{
-		global $Sql;
-		
-		if (count($table_array) != 0)
-			$Sql->query_inject("REPAIR TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
-	}
-	
-	//Vidage des tables
-	function truncate_tables($table_array)
-	{
-		global $Sql;
-		
-		if (count($table_array) != 0)
-			$Sql->query_inject("TRUNCATE TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
-	}
-	
-	//Suppression des tables
-	function drop_tables($table_array)
-	{
-		global $Sql;
-		
-		if (count($table_array) != 0)
-			$Sql->query_inject("DROP TABLE " . implode(', ', $table_array), __LINE__, __FILE__);
-	}
-	## Private Methods ##
-	
 	## Private Attributes ##
-	var $values = array(); //tableau temporaire
-	var $mysql_base = ''; //base sur laquelle on travaille
-	var $array_req = ''; //Requête pour l'importation
+	/**
+	 * @var string[] List of the tables used by PHPBoost.
+	 */
+	var $tables = array();
+	/**
+	 * @var string Backup script
+	 */
+	var $backup_script = '';
 }
 
 ?>

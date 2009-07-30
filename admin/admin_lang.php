@@ -34,7 +34,7 @@ $error = retrieve(GET, 'error', '');
 
 if (isset($_GET['activ']) && !empty($id)) //Activation
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . numeric($_GET['activ']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
@@ -43,7 +43,7 @@ if (isset($_GET['activ']) && !empty($id)) //Activation
 }
 if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation.
 {
-	$Sql->query_inject("UPDATE ".PREFIX."lang SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET secure = '" . numeric($_GET['secure']) . "' WHERE id = '" . $id . "' AND lang <> '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	
 	//Régénération du cache.
 	$Cache->Generate_file('langs');
@@ -53,14 +53,14 @@ if (isset($_GET['secure']) && !empty($id)) //Changement de niveau d'autorisation
 elseif (isset($_POST['valid'])) //Mise à jour
 {
 	$result = $Sql->query_while("SELECT id, name, activ, secure
-	FROM ".PREFIX."lang
+	FROM " . PREFIX . "lang
 	WHERE activ = 1 AND lang != '" . $CONFIG['lang'] . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$activ = retrieve(POST, $row['id'] . 'activ', 0);
 		$secure = retrieve(POST, $row['id'] . 'secure', 0);
 		if ($row['activ'] != $activ || $row['secure'] != $secure)
-			$Sql->query_inject("UPDATE ".PREFIX."lang SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_LANG . " SET activ = '" . $activ . "', secure = '" . $secure . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	
 	//Régénération du cache.
@@ -75,14 +75,14 @@ elseif ($uninstall) //Désinstallation.
 		$idlang = retrieve(POST, 'idlang', 0); 
 		$drop_files = !empty($_POST['drop_files']) ? true : false;
 		
-		$previous_lang = $Sql->query("SELECT lang FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+		$previous_lang = $Sql->query("SELECT lang FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		if ($previous_lang != $CONFIG['lang'] && !empty($idlang) && !empty($previous_lang))
 		{
 			//On met le thème par défaut du site aux membres ayant choisi le thème qui vient d'être supprimé!		
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_lang = '" . $CONFIG['lang'] . "' WHERE user_lang = '" . $previous_lang . "'", __LINE__, __FILE__);
 				
 			//On supprime le lang de la bdd.
-			$Sql->query_inject("DELETE FROM ".PREFIX."lang WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
 			redirect(HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
@@ -90,7 +90,9 @@ elseif ($uninstall) //Désinstallation.
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_lang))
 		{
-			if (!delete_directory('../lang/' . $previous_lang, '../lang/' . $previous_lang))
+			import('io/filesystem/folder');
+			$folder = new Folder('../lang/' . $previous_lang);
+			if (!$folder->delete())
 				$error = 'files_del_failed';
 		}
 	
@@ -157,67 +159,45 @@ else
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
 	if ($get_error == 'incomplete')
-		$Errorh->handler($LANG[$get_error], E_USER_NOTICE);
+		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	elseif (!empty($get_error) && isset($LANG[$get_error]))
 		$Errorh->handler($LANG[$get_error], E_USER_WARNING);
 	 
 	
-	//On recupère les dossier des thèmes contenu dans le dossier templates	
+	//On liste les langues.
 	$z = 0;
-	$rep = '../lang/';
-	if (is_dir($rep)) //Si le dossier existe
+	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
+	$result = $Sql->query_while("SELECT id, lang, activ, secure 
+	FROM " . PREFIX . "lang", __LINE__, __FILE__);
+	while ($row = $Sql->fetch_assoc($result))
 	{
-		$dir_array = array();
-		$dh = @opendir($rep);
-		while (!is_bool($dir = readdir($dh)))
-		{	
-			//Si c'est un repertoire, on affiche.
-			if (strpos($dir, '.') === false)
-				$dir_array[] = $dir; //On crée un array, avec les different dossiers.
-		}	
-		closedir($dh); //On ferme le dossier		
-
-		$lang_bdd = array();
-		$result = $Sql->query_while("SELECT id, lang, activ, secure 
-		FROM ".PREFIX."lang", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			//On recherche les clées correspondante à celles trouvée dans la bdd.
-			if (array_search($row['lang'], $dir_array) !== false)
-				$lang_bdd[] = array('id' => $row['id'], 'name' => $row['lang'], 'activ' => $row['activ'], 'secure' => $row['secure']); //On supprime ces clées du tableau.
-		}
-		$Sql->query_close($result);
+		//On selectionne le lang suivant les valeurs du tableau. 
+		$info_lang = load_ini_file('../lang/', $row['lang']);
 		
-		$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
-		foreach ($lang_bdd as $key => $lang) //On effectue la recherche dans le tableau.
+		$options = '';
+		for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
 		{
-			//On selectionne le lang suivant les valeurs du tableau. 
-			$info_lang = load_ini_file('../lang/', $lang['name']);
-			
-			$options = '';
-			for ($i = -1 ; $i <= 2 ; $i++) //Rang d'autorisation.
-			{
-				$selected = ($i == $lang['secure']) ? 'selected="selected"' : '';
-				$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
-			}
-			
-			$default_lang = ($lang['name'] == $CONFIG['lang']);
-			$Template->assign_block_vars('list', array(
-				'C_LANG_DEFAULT' => $default_lang ? true : false,
-				'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
-				'IDLANG' =>  $lang['id'],		
-				'LANG' =>  $info_lang['name'],
-				'IDENTIFIER' =>  $info_lang['identifier'],
-				'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
-				'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
-				'COMPAT' => $info_lang['compatibility'],
-				'OPTIONS' => $options,
-				'LANG_ACTIV' => ($lang['activ'] == 1) ? 'checked="checked"' : '',
-				'LANG_UNACTIV' => ($lang['activ'] == 0) ? 'checked="checked"' : ''
-			));
-			$z++;
+			$selected = ($i == $row['secure']) ? 'selected="selected"' : '';
+			$options .= '<option value="' . $i . '" ' . $selected . '>' . $array_ranks[$i] . '</option>';
 		}
-	}	
+		
+		$default_lang = ($row['lang'] == $CONFIG['lang']);
+		$Template->assign_block_vars('list', array(
+			'C_LANG_DEFAULT' => $default_lang ? true : false,
+			'C_LANG_NOT_DEFAULT' => !$default_lang ? true : false,
+			'IDLANG' =>  $row['id'],		
+			'LANG' =>  $info_lang['name'],
+			'IDENTIFIER' =>  $info_lang['identifier'],
+			'AUTHOR' => (!empty($info_lang['author_mail']) ? '<a href="mailto:' . $info_lang['author_mail'] . '">' . $info_lang['author'] . '</a>' : $info_lang['author']),
+			'AUTHOR_WEBSITE' => (!empty($info_lang['author_link']) ? '<a href="' . $info_lang['author_link'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="" /></a>' : ''),
+			'COMPAT' => $info_lang['compatibility'],
+			'OPTIONS' => $options,
+			'LANG_ACTIV' => ($row['activ'] == 1) ? 'checked="checked"' : '',
+			'LANG_UNACTIV' => ($row['activ'] == 0) ? 'checked="checked"' : ''
+		));
+		$z++;
+	}
+	$Sql->query_close($result);
 	
 	if ($z != 0)
 		$Template->assign_vars(array(		

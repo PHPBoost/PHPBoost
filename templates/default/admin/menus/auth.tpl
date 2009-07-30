@@ -15,7 +15,7 @@ function check_msg(){
 </script>
     
 <div id="admin_contents">
-    <form action="auth.php" method="post" class="fieldset_content">
+    <form action="auth.php?token={TOKEN}" method="post" class="fieldset_content">
         <fieldset> 
             <legend>{L_ACTION_MENUS}</legend>
             <dl>

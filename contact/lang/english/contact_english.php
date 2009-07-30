@@ -35,13 +35,13 @@ $LANG['title_contact'] = 'Contact';
  
 //Contact
 $LANG['contact_mail'] = 'Send an e-mail to the administrator';
-$LANG['valid_mail'] = 'Must be valid if you want an answer !';
-$LANG['success_mail'] = 'Thank you, your e-mail has been sent succesfully';
-$LANG['error_mail'] = 'Sorry, your mail couldn\'t be sent';
-$LANG['alert_contact_mail'] = 'Your e-mail isn\'t valid!';
+$LANG['valid_mail'] = 'Must be valid if you want to be answered!';
+$LANG['success_mail'] = 'Thank you, your e-mail has been sent successfully';
+$LANG['error_mail'] = 'Sorry, your e-mail couldn\'t be sent';
+$LANG['alert_contact_mail'] = 'Your e-mail address isn\'t valid!';
 
 //Admin
 $LANG['contact_config'] = 'Configuration';
-$LANG['verif_code'] = 'Enter verification code';
+$LANG['activ_verif_code'] = 'Enter verification code';
 
 ?>

@@ -3,7 +3,7 @@
  *                              web_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class WebInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,22 +37,22 @@ class WebInterface extends ModuleInterface
         parent::ModuleInterface('web');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 	
 		$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_WEB = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'web'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_WEB = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'web'", __LINE__, __FILE__));
 		$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
 		
 		$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";
 		$code .= "\n";
 		
 		$result = $Sql->query_while("SELECT id, name, secure
-		FROM ".PREFIX."web_cat
+		FROM " . PREFIX . "web_cat
 		WHERE aprob = 1", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{		
@@ -63,7 +63,7 @@ class WebInterface extends ModuleInterface
 		return $code;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

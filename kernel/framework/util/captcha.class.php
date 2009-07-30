@@ -3,7 +3,7 @@
  *                               captcha.class.php
  *                            -------------------
  *   begin                : Februar, 06 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -32,10 +32,16 @@ define('CAPTCHA_NORMAL', 2);
 define('CAPTCHA_HARD', 3);
 define('CAPTCHA_VERY_HARD', 4);
 
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class provide you an easy way to prevent spam by bot in public formular.
+ * @package util
+ */
 class Captcha
 {
-	## Public Methods ##
-	//Lancement du bench.
+	/**
+	 * @desc Captcha constructor. It allows you to create multiple instance of captcha, and check if GD is loaded.
+	 */
 	function Captcha()
 	{
 		Captcha::update_instance(); //Mise à jour de l'instance.
@@ -43,27 +49,43 @@ class Captcha
 			$this->gd_loaded = true;
 	}
 	
-	//Chargement de la librairie GD?
-	function gd_loaded()
+	## Public Methods ##
+	/**
+	 * @desc Checks if captcha is loaded, disabled for members.
+	 * @return boolean true if is loaded, false otherwise
+	 */
+	function is_available()
 	{
-		if ($this->gd_loaded)
+		global $User;
+		
+		if ($this->gd_loaded && $User->get_attribute('level') == -1)
 			return true;
 		return false;
 	}
 	
-	//Mise à jour de l'instance.	
+	/**
+	 * @desc Updates the object instance.
+	 */
 	function update_instance()
 	{
 		static $instance = 0;
 		
 		$this->instance = ++$instance;
 	}
-		
-	//Gère le niveau de difficulté du captcha.
+
+	/**
+	 * @desc Modifies the level of difficulty to decrypt the code on the captcha image.
+	 * @param int $difficulty The difficulty :
+	 *  0: Dictionnary words, regular background, horizontal text.
+	 *	1: blended word, regular background.
+	 *	2: blended word + figures, irregular background.
+	 *	3: blended word + figures, shadows.
+	 *	4: blended word + figures, shadows.
+	 */
 	function set_difficulty($difficulty)
 	{
-		/*
-		0: Mot du dictionnaire, fond uni, texte à l'horinzontal.
+		/* 
+		0: Mot du dictionnaire, fond uni, texte à l'horizontal.
 		1: Mot mélangé, fond uni.
 		2: Mot mélangé + chiffres, fond brouillé.
 		3: Mot mélangé + chiffres, identification par contour, faible ombrage.
@@ -72,117 +94,129 @@ class Captcha
 		$this->difficulty = max(0, $difficulty);		
 	}
 	
-	//Largeur de l'image.
+	/**
+	 * @desc Modify instance number.
+	 * @param int $instance
+	 */
 	function set_instance($instance)
 	{
 		$this->instance = $instance;
 	}
 	
-	//Largeur de l'image.
+	/**
+	 * @desc Modify width of the image.
+	 * @param float $width Width of the image.
+	 */
 	function set_width($width)
 	{
 		$this->width = $width;
 	}
 	
-	//Hauteur de l'image.
+	/**
+	 * @desc Modify height of the image.
+	 * @param float $height Height of the image.
+	 */
 	function set_height($height)
 	{
 		$this->height = $height;
 	}
 	
-	//Police.
+	/**
+	 * @desc Modify font used for the text on the image.
+	 * @param string $font Font used for the text on the image.
+	 */
 	function set_font($font)
 	{
 		$this->font = $font;
 	}
 	
-	//Validation du code.
+	/**
+	 * @desc Check if the code is valid, then delete it in the database to avoid multiple attempts.
+	 * @return boolean true if is valid, false otherwise.
+	 */
 	function is_valid()
 	{
 		global $Sql;
 		
-		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNSECURE);
+		if (!$this->is_available()) //Non activé, retourne vrai.
+			return true;
+			
+		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNCHANGE);
 		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$code = $Sql->query("SELECT code FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$captcha = $Sql->query_array(DB_TABLE_VERIF_CODE, 'code', 'difficulty', "WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			
 		//Suppression pour éviter une réutilisation du code frauduleuse.
-		$Sql->query_inject("DELETE FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);	
 		
-		if (!empty($code) && $code == $get_code)
+		if (!empty($captcha['code']) && $captcha['code'] == $get_code && $captcha['difficulty'] == $this->difficulty)
 			return true;
 		else 
 			return false;
 	}
 	
 	//Alerte javascript
+	/**
+	 * @desc Javascript alert if the formular of the captcha code is empty.
+	 */
 	function js_require()
 	{
 		global $LANG;
 		
-		return $this->gd_loaded() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
+		return $this->is_available() ? 'if (document.getElementById(\'verif_code' . $this->instance . '\').value == "") {
 			alert("' . $LANG['require_verif_code'] . '");
 			return false;
 		}' : '';
 	}
 	
-	//Affichage du formulaire.
+	/**
+	 * @desc Display captcha formular.
+	 * @param object $Template (optional) The template used to create and display the captcha formular.
+	 * @return string The parsed template.
+	 */
 	function display_form($Template = false)
 	{
 		global $CONFIG;
 		
+		$this->_save_user();
+		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/captcha.tpl');
 		
-		if ($this->gd_loaded())
+		if ($this->is_available())
 		{		
 			$Template->assign_vars(array(
 				'CAPTCHA_INSTANCE' => $this->instance,
-				'CAPTCHA_DIFFICULTY' => $this->difficulty,
 				'CAPTCHA_WIDTH' => $this->width,
 				'CAPTCHA_HEIGHT' => $this->height,
 				'CAPTCHA_FONT' => $this->font,
+				'CAPTCHA_DIFFICULTY' => $this->difficulty,
 			));
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
 		return '';
 	}
 	
-	//Affichage de l'image.
+	/**
+	 * @desc Display the captcha image to the user, and set the code to decrypt in the database.
+	 */
 	function display()
 	{
-		global $LANG;
+		$this->_generate_code(); //Mise à jour du code.
 		
 		$rand = rand(0,1);
 
 		##Définition des couleurs##
 		$array_color = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));
 		
-		##Génération du code##
-		$words = $LANG['_code_dictionnary'];
-		
 		switch ($this->difficulty)
 		{
-			case 0;
-				$code = $words[array_rand($words)]; //Mot aléatoire
-				break;
-			case 1:
-				$code = str_shuffle($words[array_rand($words)]); //Mot mélangé aléatoire.
-				break;
 			case 2:
-				$code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2))); //Mot + nombres mélangé aléatoire
-				array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237));
+				$array_color = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237));
 				break;
 			case 3:
 			case 4:
-				$code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2))); //Mot + nombres mélangé aléatoire.
 				$array_color = array(array(224, 118, 27));
 				break;
-			default:
-				$code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2)));
-		}
-		if ($this->difficulty > 0)
-		{	
-			$code = substr($code, 0, 6);
-			$code = str_replace(array('l', '1', 'o', '0'), array('', '', '', ''), $code);
 		}
 		
 		##Création de l'image##
@@ -193,7 +227,7 @@ class Captcha
 
 		//Choix aléatoire de couleur, et suppression du tableau pour éviter une réutilisation pour le texte.
 		$bg_bis_index_color = array_rand($array_color);	
-		list($r, $g, $b) = $this->__image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
+		list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
 		$bg_img = @imagecolorallocate($img, $r, $g, $b);
 		if ($this->difficulty < 3)
 			unset($array_color[$bg_bis_index_color]);
@@ -231,20 +265,20 @@ class Captcha
 		##Attribut du code à écrire##	
 		//Centrage du texte.	
 		$global_font_size = 24;
-		$array_size_ttf = @imagettfbbox($global_font_size + 2, 0, $this->font, $code);
+		$array_size_ttf = @imagettfbbox($global_font_size + 2, 0, $this->font, $this->code);
 		$text_width = abs($array_size_ttf[2] - $array_size_ttf[0]);
 		$text_height = abs($array_size_ttf[7] - $array_size_ttf[1]);
 		$text_x = ($this->width/2) - ($text_width/2);
 		$text_y = ($this->height/2) + ($text_height/2);
 
-		preg_match_all('/.{1}/s', $code, $matches);
+		preg_match_all('/.{1}/s', $this->code, $matches);
 		foreach ($matches[0] as $key => $letter)
 		{	
 			//Allocation des couleurs.
 			$index_color = array_rand($array_color);
 			list($r, $g, $b) = $array_color[$index_color];
 			$text_color = @imagecolorallocate($img, $r, $g, $b);
-			list($r, $g, $b) = $this->__image_color_allocate_dark($array_color[$index_color]);
+			list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$index_color]);
 			$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			$font_size = rand($global_font_size - 4, $global_font_size);
 			$angle = rand(-15, 15);
@@ -258,14 +292,14 @@ class Captcha
 			//Ajout de l'ombre.
 			if ($this->difficulty == 4)
 			{
-				list($r, $g, $b) = $this->__image_color_allocate_dark($array_color[$index_color], 90, 0.50);
+				list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$index_color], 90, 0.50);
 				$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			}
 			@imagettftext($img, $font_size, $angle, ($text_x + 1), ($move_y + 1), $text_color_dark, $this->font, $letter);	
 			
 			//Ecriture du code.
 			@imagettftext($img, $font_size, $angle, $text_x, $move_y, $text_color, $this->font, $letter);
-			$array_size_ttf = @imagettfbbox($font_size, $angle, $this->font, $code);
+			$array_size_ttf = @imagettfbbox($font_size, $angle, $this->font, $this->code);
 			$text_width = max(abs($array_size_ttf[2] - $array_size_ttf[0]), 5);
 			$text_x += $global_font_size - 6;
 		}
@@ -278,12 +312,90 @@ class Captcha
 		imagedestroy($img);
 		
 		//Enregistrement du code pour l'utilisateur dans la base de données;
-		$this->_save_user($code);
+		$this->_update_code($this->code);
 	}
 	
 	## Private Methods ##
-	//Calcul de la version sombre de la couleur. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
-	function __image_color_allocate_dark($array_color, $mask_color = 0, $similar_color = 0.40)
+	/**
+	 * @desc Génère un code aléatoire dépendant de la difficulté.
+	*/
+	function _generate_code()
+	{
+		global $LANG;
+		
+		$rand = rand(0,1);
+
+		##Génération du code##
+		$words = $LANG['_code_dictionnary'];
+		
+		switch ($this->difficulty)
+		{
+			case 0;
+				$this->code = $words[array_rand($words)]; //Mot aléatoire
+				break;
+			case 1:
+				$this->code = str_shuffle($words[array_rand($words)]); //Mot mélangé aléatoire.
+				break;
+			case 2:
+				$this->code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2))); //Mot + nombres mélangé aléatoire
+				break;
+			case 3:
+			case 4:
+				$this->code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2))); //Mot + nombres mélangé aléatoire.
+				break;
+			default:
+				$this->code = str_shuffle($words[array_rand($words)] . substr(rand(0, 99), 0, rand(1, 2)));
+		}
+		if ($this->difficulty > 0)
+		{	
+			$this->code = substr($this->code, 0, 6);
+			$this->code = str_replace(array('l', '1', 'o', '0'), array('', '', '', ''), $this->code);
+		}
+	}	
+	
+	/**
+	 * @desc Set the captcha code in the database.
+	 */
+	function _save_user()
+	{
+		global $Sql;
+		
+		$this->_generate_code(); //Mise à jour du code.
+		
+		$code = substr(md5(uniqid(mt_rand(), true)), 0, 20);
+		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
+		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		if ($check_user_id == 1)
+			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		else
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
+	}
+	
+	/**
+	 * @desc Set the captcha's code in the database.
+	 */
+	function _update_code()
+	{
+		global $Sql;
+		
+		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
+		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		if ($check_user_id == 1)
+			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $this->code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		else
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $this->code . "', '4', '" . time() . "')", __LINE__, __FILE__);
+	}
+	
+	
+	/**
+	 * @desc Return the darker version of a color passed in argument.
+	 * 3D effect, mask_color: 0 for the darkest, 255 for the brightest; similar_color: between 0.40 very different to 0.99 very close.
+	 * @param $array_color
+	 * @param $mask_color
+	 * @param $similar_color
+	 * @return array The new darker color.
+	 */
+	function _image_color_allocate_dark($array_color, $mask_color = 0, $similar_color = 0.40)
 	{
 		list($r, $g, $b) = $array_color;
 		$rd = round($r * $similar_color) + round($mask_color * (1 - $similar_color));
@@ -293,23 +405,11 @@ class Captcha
 		return array($rd, $gd, $bd);
 	}
 	
-	//Enregistrement du code pour l'utilisateur dans la base de données;
-	function _save_user($code)
-	{
-		global $Sql;
-		
-		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$check_user_id = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."verif_code WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if ($check_user_id == 1)
-			$Sql->query_inject("UPDATE ".PREFIX."verif_code SET code = '" . $code . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		else
-			$Sql->query_inject("INSERT INTO ".PREFIX."verif_code (user_id, code, timestamp) VALUES ('" . $user_id . "', '" . $code . "', '" . time() . "')", __LINE__, __FILE__);
-	}
-		
 	## Private Attributes ##
 	var $instance = 0; //Numéro d'instance.
 	var $gd_loaded = false; //Chargement de la librairie GD.
 	var $width = 160; //Largeur de l'image générée.
+	var $code = ''; //Code captcha.
 	var $height = 50; //Largeur de l'image générée.
 	var $font = '../kernel/data/fonts/impact.ttf'; //Police
 	var $difficulty = 2; //Difficulté du code. 

@@ -10,7 +10,11 @@
 				<script type='text/javascript'>
 				<!--
 				function check_form_alert(){
-						if(document.getElementById('contents').value == "") {
+					# IF C_BBCODE_TINYMCE_MODE #
+					tinyMCE.triggerSave();
+					# ENDIF #
+
+					if(document.getElementById('contents').value == "") {
 						alert("{L_REQUIRE_TEXT}");
 						return false;
 					}
@@ -23,7 +27,7 @@
 				-->
 				</script>
 				
-				<form method="post" action="alert.php{SID}" onsubmit="javascript:return check_form_alert();">
+				<form method="post" action="alert.php?token={TOKEN}" onsubmit="javascript:return check_form_alert();">
 					<table class="module_table" style="width:80%">
 						<tr>
 							<th>{L_ALERT}</th>
@@ -41,7 +45,7 @@
 								<br />
 								<p style="text-align:center;"><label for="contents">{L_ALERT_CONTENTS}</label></p>
 								{KERNEL_EDITOR}
-								<textarea type="text" class="post" style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
+								<textarea class="post" style="width:70%" rows="15" cols="40" id="contents" name="contents"></textarea> 
 								<br />
 								<input type="hidden" name="id" value="{alert_form.ID_ALERT}" />
 								<p style="text-align:center;">
@@ -49,7 +53,7 @@
 									&nbsp;&nbsp; 
 									<script type="text/javascript">
 									<!--				
-									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+									document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 									-->
 									</script>	
 									&nbsp;&nbsp; 	

@@ -38,7 +38,7 @@ $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');	
 $msg_d = retrieve(GET, 'msg_d', '');
 
-if (retrieve(GET, 'refresh_unread', false)) //Suppression d'un message.
+if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 {
 	$is_guest = ($User->get_attribute('user_id') !== -1) ? false : true;
 	$nbr_msg_not_read = 0;
@@ -63,10 +63,10 @@ if (retrieve(GET, 'refresh_unread', false)) //Suppression d'un message.
 		//Requête pour compter le nombre de messages non lus.
 		$nbr_msg_not_read = 0;
 		$result = $Sql->query_while("SELECT t.id AS tid, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
-		FROM ".PREFIX."forum_topics t
-		LEFT JOIN ".PREFIX."forum_cats c ON c.id = t.idcat
-		LEFT JOIN ".PREFIX."forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
-		LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
+		FROM " . PREFIX . "forum_topics t
+		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.idcat
+		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . $User->get_attribute('user_id') . "'
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $unauth_cats . "
 		ORDER BY t.last_timestamp DESC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
@@ -108,15 +108,17 @@ if (retrieve(GET, 'refresh_unread', false)) //Suppression d'un message.
 }
 elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
 	$Forumfct = new Forum;
 
 	$idm_get = retrieve(GET, 'idm', '');	
 	//Info sur le message.	
-	$msg = $Sql->query_array('forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
+	$msg = $Sql->query_array(PREFIX . 'forum_msg', 'user_id', 'idtopic', "WHERE id = '" . $idm_get . "'", __LINE__, __FILE__);	
 	//On va chercher les infos sur le topic	
-	$topic = $Sql->query_array('forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . 'forum_topics', 'id', 'user_id', 'idcat', 'first_msg_id', 'last_msg_id', 'last_timestamp', "WHERE id = '" . $msg['idtopic'] . "'", __LINE__, __FILE__);
 	if (!empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
 	{	
 		if (!empty($topic['idcat']) && ($User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM) || $User->get_attribute('user_id') == $msg['user_id'])) //Autorisé à supprimer?
@@ -133,7 +135,7 @@ elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
 	else
 		echo '-1';	
 }
-elseif (!empty($track) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -142,7 +144,7 @@ elseif (!empty($track) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux s
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack) && $User->check_level(USER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -151,7 +153,7 @@ elseif (!empty($untrack) && $User->check_level(USER_LEVEL)) //Retrait du sujet, 
 	$Forumfct->Untrack_topic($untrack); //Retrait du sujet aux sujets suivis.
 	echo 2;
 }
-elseif (!empty($track_pm) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track_pm) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -160,7 +162,7 @@ elseif (!empty($track_pm) && $User->check_level(USER_LEVEL)) //Ajout du sujet au
 	$Forumfct->Track_topic($track_pm, FORUM_PM_TRACKING); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack_pm) && $User->check_level(USER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack_pm) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -169,7 +171,7 @@ elseif (!empty($untrack_pm) && $User->check_level(USER_LEVEL)) //Retrait du suje
 	$Forumfct->Untrack_topic($untrack_pm, FORUM_PM_TRACKING); //Retrait du sujet aux sujets suivis.
 	echo 2;
 }
-elseif (!empty($track_mail) && $User->check_level(USER_LEVEL)) //Ajout du sujet aux sujets suivis.
+elseif (!empty($track_mail) && $User->check_level(MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -178,7 +180,7 @@ elseif (!empty($track_mail) && $User->check_level(USER_LEVEL)) //Ajout du sujet 
 	$Forumfct->Track_topic($track_mail, FORUM_EMAIL_TRACKING); //Ajout du sujet aux sujets suivis.
 	echo 1;
 }
-elseif (!empty($untrack_mail) && $User->check_level(USER_LEVEL)) //Retrait du sujet, aux sujets suivis.
+elseif (!empty($untrack_mail) && $User->check_level(MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
 	//Instanciation de la class du forum.
 	include_once('../forum/forum.class.php');
@@ -189,11 +191,13 @@ elseif (!empty($untrack_mail) && $User->check_level(USER_LEVEL)) //Retrait du su
 }
 elseif (!empty($msg_d))
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	//Vérification de l'appartenance du sujet au membres, ou modo.
-	$topic = $Sql->query_array("forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+	$topic = $Sql->query_array(PREFIX . "forum_topics", "idcat", "user_id", "display_msg", "WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 	if ((!empty($topic['user_id']) && $User->get_attribute('user_id') == $topic['user_id']) || $User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], EDIT_CAT_FORUM))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $msg_d . "'", __LINE__, __FILE__);
 		echo ($topic['display_msg']) ? 2 : 1;
 	}	
 }
@@ -204,7 +208,7 @@ elseif (retrieve(GET, 'warning_moderation_panel', false) || retrieve(GET, 'punis
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $Sql->query_while ("SELECT user_id, login FROM ".PREFIX."member WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT user_id, login FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '" . $login . "%'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if (retrieve(GET, 'warning_moderation_panel', false))

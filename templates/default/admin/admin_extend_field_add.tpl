@@ -58,16 +58,23 @@
 		</div>
 		# ENDIF #
 		
-		<form action="admin_extend_field_add.php" method="post" onsubmit="return check_form_field();" class="fieldset_content">
+		<form action="admin_extend_field_add.php?token={TOKEN}" method="post" onsubmit="return check_form_field();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_EXTEND_FIELD_ADD}</legend>
 				<dl> 
 					<dt><label for="name">* {L_NAME}</label></dt>
-					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" class="text" /></select></label></dd>
-				<dl>
+					<dd><label><input type="text" size="40" maxlength="100" id="name" name="name" class="text" /></label></dd>
+				</dl>
 				<dl> 
 					<dt><label for="contents">{L_DESC}</label></dt>
-					<dd><label><textarea type="text" class="post" rows="4" cols="30" name="contents" id="contents"></textarea></label></dd>
+					<dd><label><textarea class="post" rows="4" cols="30" name="contents" id="contents"></textarea></label></dd>
+				</dl>
+				<dl> 
+					<dt><label>* {L_REQUIRED_FIELD}</label><br /><span>{L_REQUIRED_FIELD_EXPLAIN}</span></dt>
+					<dd><label>
+						<label><input type="radio" name="required" id="required_field1" value="1" /> {L_REQUIRED}</label>
+						<label><input type="radio" name="required" id="required_field2" value="0" checked="checked" /> {L_NOT_REQUIRED}</label>
+					</label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="field">* {L_TYPE}</label></dt>
@@ -84,12 +91,12 @@
 				</dl>
 				<dl> 
 					<dt><label for="possible_values">{L_POSSIBLE_VALUES}</label><br /><span>{L_POSSIBLE_VALUES_EXPLAIN}</span></dt>
-					<dd><label><textarea type="text" class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%;"></textarea> </label></dd>
+					<dd><label><textarea class="post" rows="2" cols="30" name="possible_values" id="possible_values" style="width:50%;"></textarea> </label></dd>
 				</dl>
 				<dl> 
 					<dt><label for="default_values">{L_DEFAULT_VALUE}</label><br /><span>{L_DEFAULT_VALUE_EXPLAIN}</span></dt>
 					<dd>
-						<label><textarea type="text" class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%;"></textarea></label>
+						<label><textarea class="post" rows="2" cols="30" name="default_values" id="default_values" style="width:50%;"></textarea></label>
 					</dd>
 				</dl>
 				<dl> 

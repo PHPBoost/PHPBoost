@@ -3,17 +3,17 @@
  *                              mail.class.php
  *                            -------------------
  *   begin                : March 11, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2009 Viarre Régis, Benoit Sautel
+ *   email                : crowkait@phpboost.com, ben.popeye@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,110 +23,313 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
+
+define('CRLF', "\r\n");
+define('MIME_FORMAT_TEXT', 'text/plain');
+define('MIME_FORMAT_HTML', 'text/html');
+
+/**
+ * @package io
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class allows you to send mails without having to deal with the mail headers and parameters.
+ */
 
 class Mail
 {
-	## Public Methods ##
-	//Constructeur.
-	function Mail() 
-	{
-	}
-	
-	//Envoi du mail valide.
-	function send($mail_to, $mail_objet, $mail_contents, $mail_from, $mail_header = '', $mail_sender = 'admin')
-	{
-		$this->sender = $mail_sender;
-		$this->from = $mail_from;
-		$this->to = $mail_to;
-		
-		if ($mail_sender == 'admin')
-		{
-			$this->_clean($mail_objet, $mail_contents);
-			if (empty($mail_header))
-				$this->_send_headers();
-			else
-				$this->header = $mail_header;
-				
-			//On envoi à l'aide de la fonction mail() de php.
-			return @mail($mail_to, $this->objet, $this->contents, $this->header);
-		}
-		else
-		{
-			if ($this->check_validity($this->from))
-			{
-				$this->_clean($mail_objet, $mail_contents);
-				if (empty($mail_header))
-					$this->_send_headers();
-				else
-					$this->header = $mail_header;
-					
-				//On envoi à l'aide de la fonction mail() de php.
-				return @mail($mail_to, $this->objet, $this->contents, $this->header);
-			}
-			else 
-				return false;
-		}		
-	}	
-	
-    //Vérification de la validité du mail du posteur => Protection contre injection header.
-    function check_validity()
+    /**
+     * @desc Builds a Mail object.
+     */
+    function Mail()
     {
-        global $LANG, $Errorh;
+    }
 
-        $array_mail = explode(';', $this->from); //Récupération de l'adresse email du posteur.
-        $this->from = $array_mail[0];
-        
-        if (!preg_match('`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`', $this->from))
+    /**
+     * @desc Sets the mail sender.
+     * @param string $sender The mail sender address.
+     * @param string $sender_name 'admin' if the mail is sent by the administrator, 'user' otherwise.
+     * @return bool True, if the mail sender address is correct, false otherwise.
+     */
+    function set_sender($sender, $sender_name = 'admin')
+    {
+        global $LANG, $CONFIG;
+        $this->sender_name = str_replace('"', '', $CONFIG['site_name'] . ' - ' . ($sender_name == 'admin' ? $LANG['admin'] : $LANG['user']));
+
+        if (Mail::check_validity($sender))
         {
-            $Errorh->handler('e_mail_format', E_USER_REDIRECT);
-            return false;
-        }
-        else
-        { 
+            $this->sender_mail = $sender;
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
-	
-	## Private Methods ##
-	//Nettoie les entrées.
-	function _clean($mail_objet, $mail_contents)
-	{
-		if (get_magic_quotes_gpc())
-		{
-			$this->objet = stripslashes($mail_objet);
-			$this->contents = stripslashes($mail_contents);
-		}
-		else
-		{
-			$this->objet = $mail_objet;
-			$this->contents = $mail_contents;
-		}
-	}
-	
-	//Génération des headers du mail.
-	function _send_headers()
-	{
-		global $LANG;
-		
-		$array_cc = explode(';', $this->to); //Récupération des adresses mails auxquelles il faut envoyer le mail en copie.
-		$this->header .= 'From: "' . (($this->sender == 'admin') ? $LANG['admin'] : $LANG['user']) . ' ' . HOST . '" <' . $this->from . ">\r\n"; 
 
-		$nbr_cc = count($array_cc);
-		if ($nbr_cc > 1) 
-		{	
-			for ($i = 0; $i < $nbr_cc; $i++) 
-				$this->header .= 'cc: ' . $array_cc[$i] . "\r\n";			
-		}
-	}
-	
-	
-	## Private Attribute ##
-	var $objet; //Objet du mail.
-	var $contents;	//Contenu du mail.
-	var $from; //Mail de l'envoyeur.
-	var $sender; //Nom de l'envoyeur.
-	var $header; //Contient le header du mail.
+    /**
+     * @desc Sets the recipient(s) of the mail.
+     * @param string $recipients Recipients of the mail. It they are more than one, use the comma to separate their addresses.
+     */
+    function set_recipients($recipients)
+    {
+        $this->recipients = '';
+
+        $recipients_list = explode(';', $recipients);
+        $recipients_list = array_map('trim', $recipients_list);
+
+        //We check that each recipient address is correct
+        foreach ($recipients_list as $recipient)
+        {
+            if (Mail::check_validity($recipient))
+            {
+                $this->recipients[] = $recipient;
+            }
+        }
+         
+        //We return the setting status.
+        if (!empty($this->recipients))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * @desc Sets the mail object
+     * @param string $object Mail object
+     */
+    function set_object($object)
+    {
+        $this->object = $object;
+    }
+
+    /**
+     * @desc The mail content.
+     * @param string $content The mail content
+     */
+    function set_content($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @desc Sets the headers. Forces them, they won't be generated automatically.
+     * @param string $headers The mail headers.
+     */
+    function set_headers($headers)
+    {
+        $this->headers = $headers;
+    }
+
+    /**
+     * @desc Returns the mail address of the sender.
+     * @return string the sender's mail address
+     */
+    function get_sender_mail()
+    {
+        return $this->sender_mail;
+    }
+
+    /**
+     * @desc Returns the mail sender's name.
+     * @return string The mail sender's name.
+     */
+    function get_sender_name()
+    {
+        return $this->sender_name;
+    }
+
+    /**
+     * @desc Returns the mail recipients' addresses. They are separated by a comma.
+     * @return string The mail recipients.
+     */
+    function get_recipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * @desc Returns the mail object.
+     * @return string The mail object.
+     */
+    function get_object()
+    {
+        return $this->object;
+    }
+
+    /**
+     * @desc Returns the mail content.
+     * @return string The mail content.
+     */
+    function get_content()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @desc Returns the mail headers.
+     * @return string The mail headers.
+     */
+    function get_headers()
+    {
+        return $this->headers;
+    }
+    
+    /**
+     * Sets the MIME type of the mail content
+     * @param string $mime MIME_FORMAT_TEXT or MIME_FORMAT_HTML
+     */
+    function set_mime($mime)
+    {
+        $this->format = $mime;
+    }
+    
+    /**
+     * Returns the MIME type of the mail content
+     * @return string the MIME type
+     */
+    function get_mime()
+    {
+        return $this->format();
+    }
+    
+    /**
+     * @desc Sends the mail.
+     * @deprecated
+     * @param string $mail_to The mail recipients' address.
+     * @param string $mail_object The mail object.
+     * @param string $mail_content content of the mail
+     * @param string $mail_from The mail sender's address.
+     * @param string $mail_header The header you want to specify (it you don't specify it, it will be generated automatically).
+     * @param string $sender_name The mail sender's name. If you don't use this parameter, the name of the site administrator will be taken.
+     * @return bool True if the mail could be sent, false otherwise.
+     */
+    function send_from_properties($mail_to, $mail_object, $mail_content, $mail_from, $mail_header = null, $sender_name = 'admin')
+    {
+        // Initialization of the mail properties
+        $recipient = $this->set_recipients($mail_to);
+        $sender = $this->set_sender($mail_from, $sender_name);
+        if (!$recipient || !$sender)
+        {
+            return false;
+        }
+         
+        $this->set_object($mail_object);
+        $this->set_content($mail_content);
+
+        $this->set_headers($mail_header);
+
+        // Let's send the mail
+        return $this->send();
+    }
+
+    /** 
+     * @desc Sends the mail. 
+     * @return bool True if the mail could be sent, false otherwise.
+     */
+    function send()
+    {
+        if (empty($this->headers))
+        {
+            $this->_generate_headers();
+        }
+        
+        $recipients = trim(implode(', ', $this->recipients), ', ');
+        return @mail($recipients, $this->object, $this->content, $this->headers);
+    }
+    
+    /**
+     * @static
+     * @desc Checks that an email address has a correct form.
+     * @return bool True if it's valid, false otherwise.
+     */
+    function check_validity($mail_address)
+    {
+        return preg_match('`^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$`i', $mail_address);
+    }
+    
+
+    ## Protected Methods ##
+    /**
+    * @access protected
+    * @desc Generates the mail headers.
+    */
+    function _generate_headers()
+    {
+        global $LANG;
+
+        $this->header = '';
+        
+        //Sender
+        $this->_add_header_field('From', '"' . $this->sender_name . ' ' . HOST . '" <' . $this->sender_mail . '>');
+
+        //Recipients
+        $recipients = '';
+        $nb_recipients = count($this->recipients);
+        for ($i = 0; $i < $nb_recipients; $i++)
+        {
+            $recipients .= '"' . $this->recipients[$i] . '" <' . $this->recipients[$i] . '>';
+            if ($i < $nb_recipients - 1)
+            {
+            	$recipients .= ', ';
+            }
+        }
+        $this->_add_header_field('To', $recipients);
+        
+        //Subject
+        $this->_add_header_field('Subject', $this->object);
+        $this->_add_header_field('MIME-Version',  '1.0');
+        $this->_add_header_field('Content-type', $this->format . '; charset=ISO-8859-1');
+    }
+    
+    
+    /**
+     * @desc add the current coupe <code>$field</code> and <code>$value</code> to the mail headers
+     * @param string $field the header field 
+     * @param string $value the header value
+     */
+    function _add_header_field($field, $value) {
+        $this->headers .= wordwrap($field . ': ' . $value, 78, "\n ") . CRLF;
+    }
+
+    ## Private Attributes ##
+    /**
+    * @var sting object of the mail
+    */
+    var $object = '';
+
+    /**
+     * @var string content of the mail
+     */
+    var $content = '';
+
+    /**
+     * @var string Address of the mail sender.
+     */
+    var $sender_mail = '';
+
+    /**
+     * @var string The mail sender name.
+     */
+    var $sender_name = '';
+
+    /**
+     * @var The mail headers.
+     */
+    var $headers = '';
+
+    /**
+     * @var string[] Recipients of the mail. If they are more than one, a comma separates their addresses.
+     */
+    var $recipients = array();
+    
+    /**
+     * @var string MIME of the mail content
+     */
+    var $format = MIME_FORMAT_TEXT; 
 }
 
 ?>

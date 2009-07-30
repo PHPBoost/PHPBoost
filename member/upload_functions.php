@@ -37,12 +37,11 @@ function display_cat_explorer($id, &$cats, $display_select_link = 1, $user_id)
 		//On remonte l'arborescence des catégories afin de savoir quelle catégorie développer
 		do
 		{
-			$id_cat = $Sql->query("SELECT id_parent FROM ".PREFIX."upload_cat WHERE id = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$id_cat = $Sql->query("SELECT id_parent FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			$cats[] = $id_cat;
 		}	
 		while ($id_cat > 0);
-	}
-	
+	}	
 
 	//Maintenant qu'on connait l'arborescence on part du début
 	$cats_list = '<ul style="margin:0;padding:0;list-style-type:none;line-height:normal;">' . show_cat_contents(0, $cats, $id, $display_select_link, $user_id) . '</ul>';
@@ -69,7 +68,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	global $Sql, $CONFIG;
 	$line = '';
 	$result = $Sql->query_while("SELECT id, name
-	FROM ".PREFIX."upload_cat
+	FROM " . PREFIX . "upload_cat
 	WHERE user_id = '" . $user_id . "'
 	AND id_parent = '" . $id_cat . "'
 	ORDER BY name", __LINE__, __FILE__);
@@ -84,7 +83,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		else
 		{
 			//On compte le nombre de catégories présentes pour savoir si on donne la possibilité de faire un sous dossier
-			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."upload_cat WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="../templates/' . get_utheme() . '/images/upload/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="../templates/' . get_utheme() . '/images/upload/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload_selected_cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
@@ -100,7 +99,7 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 function upload_find_subcats(&$array, $id_cat, $user_id)
 {
 	global $Sql;
-	$result = $Sql->query_while ("SELECT id FROM ".PREFIX."upload_cat WHERE id_parent = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$result = $Sql->query_while ("SELECT id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id_parent = '" . $id_cat . "' AND user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		$array[] = $row['id'];

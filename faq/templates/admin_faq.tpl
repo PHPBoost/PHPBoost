@@ -21,6 +21,11 @@
 					<br />
 					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
 				</li>
+				<li>
+					<a href="management.php?new=1"><img src="faq.png" alt="{L_ADD_QUESTION}" /></a>
+					<br />
+				<a href="management.php?new=1" class="quick_link">{L_ADD_QUESTION}</a>
+				</li>
 			</ul>
 		</div>
 
@@ -33,7 +38,7 @@
 				</div>		
 			# ENDIF #
 		
-			<form action="admin_faq.php" method="post" class="fieldset_content">
+			<form action="admin_faq.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_MANAGEMENT}</legend>
 					<dl>

@@ -3,7 +3,7 @@
  *                                register.php
  *                            -------------------
  *   begin                : August 04 2005
- *   copyright          : (C) 2005 Viarre Régis
+ *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *   
@@ -37,10 +37,12 @@ if (!$CONFIG_USER['activ_register'])
 $key = retrieve(GET, 'key', '');
 $get_error = retrieve(GET, 'error', '');
 $get_erroru = retrieve(GET, 'erroru', '');
+$register_valid = retrieve(POST, 'register_valid', '');
+$register_confirm = retrieve(POST, 'confirm', '');
 
 if (empty($key))
 {
-	if (!$User->check_level(USER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($_POST['confirm']) && empty($get_error) && empty($get_erroru))
+	if (!$User->check_level(MEMBER_LEVEL) && !empty($CONFIG_USER['msg_register']) && empty($register_confirm) && empty($get_error) && empty($get_erroru))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -48,7 +50,8 @@ if (empty($key))
 		
 		$Template->assign_vars(array(
 			'C_CONFIRM_REGISTER' => true,
-			'MSG_REGISTER' => $CONFIG_USER['msg_register'],
+			'L_HAVE_TO_ACCEPT' => !empty($register_valid) ? $LANG['register_have_to_accept'] : '',
+			'MSG_REGISTER' => second_parse($CONFIG_USER['msg_register']),
 			'L_REGISTER' => $LANG['register'],
 			'L_REGISTRATION_TERMS' => $LANG['register_terms'],
 			'L_ACCEPT' => $LANG['register_accept'],
@@ -57,7 +60,7 @@ if (empty($key))
 		
 		$Template->pparse('register');
 	}
-	elseif ($User->check_level(USER_LEVEL) !== true && (!empty($_POST['confirm']) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
+	elseif ($User->check_level(MEMBER_LEVEL) !== true && (!empty($register_confirm) || empty($CONFIG_USER['msg_register']) || !empty($get_error) || !empty($get_erroru)))
 	{
 		$Template->set_filenames(array(
 			'register' => 'member/register.tpl'
@@ -115,9 +118,9 @@ if (empty($key))
 		}
 		
 		//Code de vérification, anti-bots.
-		include_once('../kernel/framework/util/captcha.class.php');
+		import('util/captcha');
 		$Captcha = new Captcha();
-		if ($Captcha->gd_loaded() && $CONFIG_USER['verif_code'] == '1')
+		if ($Captcha->is_available() && $CONFIG_USER['verif_code'] == '1')
 		{
 			$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 			$Template->assign_vars(array(
@@ -199,7 +202,7 @@ if (empty($key))
 			'L_PSEUDO_HOW' => $LANG['pseudo_how'],
 			'L_PASSWORD' => $LANG['password'],
 			'L_PASSWORD_HOW' => $LANG['password_how'],
-			'L_CONFIRM_PASSWORD' => $LANG['confirm_pass'],
+			'L_CONFIRM_PASSWORD' => $LANG['confirm_password'],
 			'L_VERIF_CODE' => $LANG['verif_code'],
 			'L_VERIF_CODE_EXPLAIN' => $LANG['verif_code_explain'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
@@ -230,10 +233,10 @@ if (empty($key))
 			'L_UPLOAD_AVATAR' => $LANG['upload_avatar'],
 			'L_UPLOAD_AVATAR_WHERE' => $LANG['upload_avatar_where'],
 			'L_SUBMIT' => $LANG['submit'],		
-			'L_PREVIOUS_PASS' => $LANG['previous_pass'],
-			'L_EDIT_JUST_IF_MODIF' => $LANG['edit_if_modif'],
-			'L_NEW_PASS' => $LANG['new_pass'],
-			'L_CONFIRM_PASS' => $LANG['confirm_pass'],
+			'L_PREVIOUS_PASS' => $LANG['previous_password'],
+			'L_EDIT_JUST_IF_MODIF' => $LANG['fill_only_if_modified'],
+			'L_NEW_PASS' => $LANG['new_password'],
+			'L_CONFIRM_PASS' => $LANG['confirm_password'],
 			'L_LANG_CHOOSE' => $LANG['choose_lang'],
 			'L_HIDE_MAIL' => $LANG['hide_mail'],
 			'L_HIDE_MAIL_WHO' => $LANG['hide_mail_who'],
@@ -243,14 +246,13 @@ if (empty($key))
 			'L_HEIGHT_MAX' => $LANG['height_max'],
 			'L_WIDTH_MAX' => $LANG['width_max']
 		));		
-			
 		
 		//Gestion thème par défaut.
 		if ($CONFIG_USER['force_theme'] == 0) //Thèmes aux membres autorisés.
 		{
 			foreach($THEME_CONFIG as $theme => $array_info)
 			{
-				if ($array_info['secure'] == -1)
+				if ($CONFIG['theme'] == $theme || ($array_info['secure'] == -1 && $theme != 'default'))
 				{
 					$selected = ($CONFIG['theme'] == $theme) ? ' selected="selected"' : '';
 					$info_theme = load_ini_file('../templates/' . $theme . '/config/', $CONFIG['lang']);
@@ -272,7 +274,7 @@ if (empty($key))
 		}
 
 		//Champs supplémentaires.
-		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+		$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 		if ($extend_field_exist > 0)
 		{
 			$Template->assign_vars(array(			
@@ -280,8 +282,8 @@ if (empty($key))
 			));
 			$Template->assign_block_vars('miscellaneous', array(			
 			));
-			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.require, exc.field_name, exc.possible_values, exc.default_values
-			FROM ".PREFIX."member_extend_cat AS exc
+			$result = $Sql->query_while("SELECT exc.name, exc.contents, exc.field, exc.required, exc.field_name, exc.possible_values, exc.default_values
+			FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " AS exc
 			WHERE exc.display = 1
 			ORDER BY exc.class", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
@@ -342,8 +344,16 @@ if (empty($key))
 					break;
 				}				
 				
+				if ($row['required'])
+				{	
+					$Template->assign_block_vars('miscellaneous_js_list', array(
+						'L_REQUIRED' => sprintf($LANG['required_field'], ucfirst($row['name'])),
+						'ID' => $row['field_name']
+					));
+				}
+				
 				$Template->assign_block_vars('miscellaneous.list', array(
-					'NAME' => $row['require'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
+					'NAME' => $row['required'] ? '* ' . ucfirst($row['name']) : ucfirst($row['name']),
 					'ID' => $row['field_name'],
 					'DESC' => !empty($row['contents']) ? ucfirst($row['contents']) : '',
 					'FIELD' => $field
@@ -357,7 +367,7 @@ if (empty($key))
 	else
 		redirect(get_start_page());
 }
-elseif (!empty($key) && $User->check_level(USER_LEVEL) !== true) //Activation du compte membre
+elseif (!empty($key) && $User->check_level(MEMBER_LEVEL) !== true) //Activation du compte membre
 {
 	$Template->set_filenames(array(
 		'register' => 'member/register.tpl'
@@ -367,10 +377,10 @@ elseif (!empty($key) && $User->check_level(USER_LEVEL) !== true) //Activation du
 		'C_ACTIVATION_REGISTER' => true
 	));	
 	
-	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+	$check_mbr = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 	if ($check_mbr == '1') //Activation du compte.
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."member SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_aprob = 1, activ_pass = '' WHERE activ_pass = '" . $key . "'", __LINE__, __FILE__);
 		
 		$Template->assign_vars(array(
 			'L_REGISTER' => $LANG['register'],

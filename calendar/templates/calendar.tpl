@@ -3,7 +3,7 @@
 
 		# IF C_CALENDAR_DISPLAY #
 
-		<form action="calendar.php" method="get">
+		<form action="calendar.php?token={TOKEN}" method="get">
 			<div class="module_position">					
 				<div class="module_top_l"></div>		
 				<div class="module_top_r"></div>
@@ -29,16 +29,16 @@
 					
 					<br /><br />
 					<span id="act"></span>
-					<table class="module_table" style="width: auto;padding:5px;"> 
+					<table class="module_table" style="border-spacing:1px;border-collapse:separate">
 						<tr>
 							<td class="row3">
-								<a href="calendar{U_PREVIOUS}" title="">«</a>
+								<a href="calendar{U_PREVIOUS}" title="">&laquo;</a>
 							</td> 
 							<td colspan="5" class="row3">
 								{DATE} 
 							</td> 
 							<td class="row3">
-								<a href="calendar{U_NEXT}" title="">»</a>
+								<a href="calendar{U_NEXT}" title="">&raquo;</a>
 							</td> 
 						</tr>
 						<tr style="text-align:center;">
@@ -46,20 +46,20 @@
 							{day.L_DAY}
 							# END day #
 						</tr>
-						<tr style="text-align:center;">			
-							# START calendar #					
+						<tr style="text-align:center;">
+							# START calendar #
 							{calendar.DAY}
 							{calendar.TR}
 							# END calendar #
 						</tr>
 						<tr>
-							<td style="width:16px;" class="row3">
+							<td class="row3">
 								{U_PREVIOUS_EVENT}
 							</td>
 							<td  colspan="5" class="row3">
 								{L_EVENTS} 
 							</td>
-							<td style="width:16px;" class="row3">
+							<td class="row3">
 								{U_NEXT_EVENT}
 							</td> 
 						</tr>
@@ -118,6 +118,10 @@
 		<script type="text/javascript">
 		<!--
 		function check_form_cl(){
+			# IF C_BBCODE_TINYMCE_MODE #
+			tinyMCE.triggerSave();
+			# ENDIF #	
+
 			if(document.getElementById('title').value == "") {
 				alert("{L_REQUIRE_TITLE}");
 				return false;
@@ -167,7 +171,7 @@
 				<br />
 				<label for="contents">* {L_ACTION}</label>
 				{KERNEL_EDITOR}
-				<label><textarea type="text" rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
+				<label><textarea rows="10" cols="60" id="contents" name="contents">{CONTENTS}</textarea> </label>
 			</fieldset>	
 			
 			<fieldset class="fieldset_submit">

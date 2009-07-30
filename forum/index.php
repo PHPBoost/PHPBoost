@@ -46,15 +46,14 @@ $Template->set_filenames(array(
 
 //Affichage des sous-catégories de la catégorie.
 $display_sub_cat = ' AND c.level BETWEEN 0 AND 1';
-if (!empty($id_get))
+$display_cat = !empty($id_get);
+if ($display_cat)
 {
-	$intervall = $Sql->query_array("forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
+	$intervall = $Sql->query_array(PREFIX . "forum_cats", "id_left", "id_right", "level", "WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
 	$display_sub_cat = ' AND c.id_left > \'' . $intervall['id_left'] . '\'
    AND c.id_right < \'' . $intervall['id_right'] . '\'
    AND c.level = \'' . $intervall['level'] . '\' + 1';
 }
-
-$module_data_path = $Template->get_module_data_path('forum');
 
 //Vérification des autorisations.
 $unauth_cats = '';
@@ -78,10 +77,10 @@ $i = 0;
 //On liste les catégories et sous-catégories.
 $result = $Sql->query_while("SELECT c.id AS cid, c.level, c.name, c.subname, c.url, c.nbr_msg, c.nbr_topic, c.status, c.last_topic_id, t.id AS tid, 
 t.idcat, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, m.user_id, m.login, v.last_view_id 
-FROM ".PREFIX."forum_cats c
-LEFT JOIN ".PREFIX."forum_topics t ON t.id = c.last_topic_id
-LEFT JOIN ".PREFIX."forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
-LEFT JOIN ".PREFIX."member m ON m.user_id = t.last_user_id
+FROM " . PREFIX . "forum_cats c
+LEFT JOIN " . PREFIX . "forum_topics t ON t.id = c.last_topic_id
+LEFT JOIN " . PREFIX . "forum_view v ON v.user_id = '" . $User->get_attribute('user_id') . "' AND v.idtopic = t.id
+LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 WHERE c.aprob = 1 " . $display_sub_cat . " " . $unauth_cats . "
 ORDER BY c.id_left", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
@@ -106,41 +105,39 @@ while ($row = $Sql->fetch_assoc($result))
 	}
 	else //On liste les sous-catégories
 	{
-		$subforums = '';
-		if (!empty($id_get))
+		if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 		{
 			$Template->assign_block_vars('forums_list.cats', array(
 				'IDCAT' => $id_get,
 				'NAME' => $CAT_FORUM[$id_get]['name'],
 				'U_FORUM_VARS' => url('index.php?id=' . $id_get, 'cat-' . $id_get . '+' . url_encode_rewrite($CAT_FORUM[$id_get]['name']) . '.php')
 			));
-			$id_get = '';
+			$display_cat = false;
 		}
-		else //Vérirication de l'existance de sous forums.
-		{
-			$Template->assign_vars(array(
-				'C_FORUM_ROOT_CAT' => false,
-				'C_FORUM_CHILD_CAT' => true,
-				'C_END_S_CATS' => false
-			));			
-			if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
-			{		
-				foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+		
+		$subforums = '';
+		$Template->assign_vars(array(
+			'C_FORUM_ROOT_CAT' => false,
+			'C_FORUM_CHILD_CAT' => true,
+			'C_END_S_CATS' => false
+		));			
+		if ($CAT_FORUM[$row['cid']]['id_right'] - $CAT_FORUM[$row['cid']]['id_left'] > 1)
+		{		
+			foreach ($CAT_FORUM as $idcat => $key) //Listage des sous forums.
+			{
+				if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
 				{
-					if ($CAT_FORUM[$idcat]['id_left'] > $CAT_FORUM[$row['cid']]['id_left'] && $CAT_FORUM[$idcat]['id_right'] < $CAT_FORUM[$row['cid']]['id_right'])
+					if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
 					{
-						if ($CAT_FORUM[$idcat]['level'] == ($CAT_FORUM[$row['cid']]['level'] + 1)) //Sous forum distant d'un niveau au plus.
+						if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
 						{
-							if ($AUTH_READ_FORUM[$row['cid']]) //Autorisation en lecture.
-							{
-								$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
-								$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
-							}	
-						}
+							$link = !empty($CAT_FORUM[$idcat]['url']) ? '<a href="' . $CAT_FORUM[$idcat]['url'] . '" class="small_link">' : '<a href="forum' . url('.php?id=' . $idcat, '-' . $idcat . '+' . url_encode_rewrite($CAT_FORUM[$idcat]['name']) . '.php') . '" class="small_link">';
+							$subforums .= !empty($subforums) ? ', ' . $link . $CAT_FORUM[$idcat]['name'] . '</a>' : $link . $CAT_FORUM[$idcat]['name'] . '</a>';				
+						}	
 					}
-				}	
-				$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
-			}
+				}
+			}	
+			$subforums = '<strong>' . $LANG['subforum_s'] . '</strong>: ' . $subforums;
 		}
 		
 		if (!empty($row['last_topic_id']))
@@ -185,9 +182,9 @@ while ($row = $Sql->fetch_assoc($result))
 		$total_topic += $row['nbr_topic'];
 		$total_msg += $row['nbr_msg'];
 		$Template->assign_block_vars('forums_list.subcats', array(
-			'ANNOUNCE' => '<img src="' . $module_data_path . '/images/' . $img_announce . '.gif" alt="" />',
+			'IMG_ANNOUNCE' => $img_announce,
 			'NAME' => $row['name'],
-			'DESC' => $row['subname'],
+			'DESC' => second_parse($row['subname']),
 			'SUBFORUMS' => !empty($subforums) && !empty($row['subname']) ? '<br />' . $subforums : $subforums,
 			'NBR_TOPIC' => $row['nbr_topic'],
 			'NBR_MSG' => $row['nbr_msg'],
@@ -207,39 +204,8 @@ if ($i > 0) //Fermeture de la catégorie racine.
 }
 	
 //Listes les utilisateurs en lignes.
-list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM ".PREFIX."sessions s 
-LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
-WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while ($row = $Sql->fetch_assoc($result))
-{
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-	{ 		
-		case -1:
-		$status = 'visiteur';
-		$total_visit++;
-		break;			
-		case 0:
-		$status = 'member';
-		$total_member++;
-		break;			
-		case 1: 
-		$status = 'modo';
-		$total_modo++;
-		break;			
-		case 2: 
-		$status = 'admin';
-		$total_admin++;
-		break;
-	} 
-	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-}
-$Sql->query_close($result);
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script LIKE '/forum/%'");
 
-$total_online = $total_admin + $total_modo + $total_member + $total_visit;
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'NBR_MSG' => $total_msg,
@@ -251,8 +217,11 @@ $Template->assign_vars(array(
 	'USER' => $total_member,
 	'GUEST' => $total_visit,
 	'SID' => SID,
-	'MODULE_DATA_PATH' => $module_data_path,
+	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
+	'SELECT_CAT' => !empty($id_get) ? forum_list_cat($id_get, 0) : '', //Retourne la liste des catégories, avec les vérifications d'accès qui s'imposent.
 	'C_TOTAL_POST' => true,
+	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
+	'U_ONCHANGE_CAT' => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),		
 	'L_SEARCH' => $LANG['search'],
 	'L_ADVANCED_SEARCH' => $LANG['advanced_search'],
 	'L_FORUM_INDEX' => $LANG['forum_index'],

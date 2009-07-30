@@ -37,7 +37,7 @@ if (!empty($_POST['valid']) )
 	$config_calendar = array();
 	$config_calendar['calendar_auth'] = retrieve(POST, 'calendar_auth', -1);
 		
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_calendar)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_calendar)) . "' WHERE name = 'calendar'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('calendar');

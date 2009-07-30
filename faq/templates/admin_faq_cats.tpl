@@ -21,6 +21,11 @@
 					<br />
 					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
 				</li>
+				<li>
+					<a href="management.php?new=1"><img src="faq.png" alt="{L_ADD_QUESTION}" /></a>
+					<br />
+				<a href="management.php?new=1" class="quick_link">{L_ADD_QUESTION}</a>
+				</li>
 			</ul>
 		</div>
 
@@ -68,7 +73,7 @@
 			
 			# START removing_interface #
 			
-			<form action="admin_faq_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_faq_cats.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
@@ -108,7 +113,7 @@
 			}
 			-->
 			</script>
-			<form action="admin_faq_cats.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_faq_cats.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CATEGORY}</legend>
 					<p>{L_REQUIRED_FIELDS}</p>
@@ -154,7 +159,7 @@
 					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
 					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp;
-					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" class="submit" />
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
 					&nbsp;&nbsp;
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>

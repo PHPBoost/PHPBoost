@@ -34,16 +34,26 @@ define('DRAW_VALUES', true);
 
 define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
 
+/**
+ * @desc This class provides easy ways to create several type of charts.
+ * @author regis viarre <crowkait@phpboost.com>
+ * @package util
+ *
+ */
 class Stats
 {		
 	## Public Methods ##
-	//Constructeur
 	function Stats() 
 	{
 	}
 	
-	//Chargement des données.
-	function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
+	/**
+	 * @desc Load data for the charts.
+	 * @param array $array_stats Associative array, array key is the legend for the value.
+	 * @param string $draw_type Type of chart.
+	 * @param int $decimal Round precision.
+	 */
+ 	function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		global $LANG;
 		
@@ -60,7 +70,7 @@ class Stats
 				arsort($array_stats);
 					
 				//Conversion valeur vers angle.
-				$this->data_stats = array_map(array($this, 'value_to_angle'), $array_stats);
+				$this->data_stats = array_map(array($this, '_value_to_angle'), $array_stats);
 			}
 		}
 		elseif ($draw_type == 'histogram')
@@ -72,7 +82,18 @@ class Stats
 			$this->data_stats = array($LANG['other'] => 360);
 	}		
 	
-	//Graphique camenbert en ellipse.
+	/**
+	 * @desc Drawn an ellipse.
+	 * @param int $w_arc Ellipse width.
+	 * @param int $h_arc Ellipse height.
+	 * @param string $img_cache Name of the image store in cache.
+	 * @param int $height_3d Height for the 3d ellipse effect.
+	 * @param boolean $draw_percent Display percents around the ellipse.
+	 * @param boolean $draw_legend Display a legend next to the ellipse.
+	 * @param string $font_size Font size used for the legend.
+	 * @param string $font Font type used for the legend.
+	 * @return Return true if image has been succefully created, false otherwise and create an error image.
+	 */
 	function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>='))
@@ -215,8 +236,19 @@ class Stats
 		}
 	}
 	
-	//Graphique en baton.
-	function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	/**
+	 * @desc Draw a histogram
+	 * @param int $w_histo Histogram width.
+	 * @param int $h_histo Histogram height.
+	 * @param string $img_cache Name of the image store in cache.
+	 * @param int $scale_legend Height for the 3d histogram effect.
+	 * @param boolean $draw_legend Display a legend next the histogram
+	 * @param boolean $draw_values Display value under the histogram
+	 * @param string $font_size Font size used for the legend.
+	 * @param string $font Font type used for the legend.
+	 * @return Return true if image has been succefully created, false otherwise and create an error image.
+	 */
+	 function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd'))
 		{					
@@ -289,7 +321,7 @@ class Stats
 			$array_scale = array();
 			$this->_generate_scale($array_scale, $max_element);
 			$scale_pos = $margin;
-			$scale_iteration = _number_round(($h_histo_content+1)/15, 2);
+			$scale_iteration = $this->_number_round(($h_histo_content+1)/15, 2);
 			$j = 0;
 			for ($i = 0; $i < 16; $i++)
 			{
@@ -323,7 +355,7 @@ class Stats
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
-			$space_bar = _number_round(($w_histo_content - 4)/count($this->data_stats), 0);
+			$space_bar = $this->_number_round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
@@ -415,7 +447,9 @@ class Stats
 		}
 	}
 	
-	//Courbe cassées.
+	/**
+	 * @desc Draw graph, not yet implemented.
+	 */
 	function draw_graph()
 	{
 	
@@ -424,13 +458,23 @@ class Stats
 	
 	
 	## Private Methods ##
-	//Conversion valeur vers angle.
+	/**
+	 * @desc convert value to angle
+	 * @param int $value the value to convert.
+	 * @return int angle
+	 */
 	function _value_to_angle($value)
 	{
 		return $this->_number_round(($value * 360)/$this->nbr_entry, $this->decimal);
 	}
 		
-	//Allocation de la couleur et calcul de la version sombre. Paramètres couleur de l'effet 3D, mask_color: 0 pour sombre, 255 pour lumineux; similar_color: entre 0.40 (très différents et 0.99 très proche.
+	/**
+	 * @desc Allocate a darker color than the color given.
+	 * @param resource $image Image concerned.
+	 * @param resource $mask_color Set 0 for darker, 255 for brighter
+	 * @param resource $similar_color Set 0.40 for a different color and 0.99 for a very similar.
+	 * @return int angle
+	 */
 	function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
 		if ($this->color_index == $this->nbr_color)
@@ -451,7 +495,11 @@ class Stats
 		return ($this->color_index - 1);
 	}
 	
-	//Génère une echelle.
+	/**
+	 * @desc Generate a scale
+	 * @param array $array_scale List of element
+	 * @param resource $max_element Maximal element int the array_scale list
+	 */
 	function _generate_scale(&$array_scale, $max_element)
 	{
 		$max_element += ($max_element * 20/100);
@@ -462,16 +510,21 @@ class Stats
 		$scale_iteration = $max_element/3;
 		for ($i = 0; $i < 4; $i++)
 		{	
-			$array_scale[$i] = _number_round(abs($scale), 0);
+			$array_scale[$i] = $this->_number_round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
 	}
 	
-	//Arrondi à la (demie?) dizaine prêt.
-	function _number_round_dozen($number, $demi_dozen = true)
+	/**
+	 * @desc Round to the next dozen
+	 * @param int $number Number to round
+	 * @param boolean $demi_dozen Round to the half dozen.
+	 * @return int The number rounded.
+	 */
+	 function _number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
-		$number = _number_round($number, 1) * 10;
+		$number = $this->_number_round($number, 1) * 10;
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
@@ -492,10 +545,16 @@ class Stats
 				$number = $number - $decimal + 10;
 		}
 		
-		return _number_round($number, 0);
+		return $this->_number_round($number, 0);
 	}
 	
-	//Création de l'image d'erreur
+	/**
+	 * @desc Create error image
+	 * @param int $width Image width
+	 * @param int $height Image height
+	 * @param int $font_size Font size used on the image.
+	 * @param int $font Font type used on the image.
+	 */
 	function _create_pics_error($width, $height, $font_size, $font)
 	{
 		$thumbtail = @imagecreate($width, $height);
@@ -518,10 +577,15 @@ class Stats
 		imagedestroy($thumbtail);
 	}
 	
-	//Arrondi au nbr de décimales voulu.
-	function _number_round($nombre, $dec)
+	/**
+	 * @desc Round with a number of decimal specified.
+	 * @param int $number Number to round.
+	 * @param int $dec Number of decimal used to round.
+	 * @return int The number rounded.
+	 */
+	function _number_round($number, $dec)
 	{
-		return trim(number_format($nombre, $dec, '.', ''));
+		return trim(number_format($number, $dec, '.', ''));
 	}
 	
 	## Private attribute ##

@@ -40,40 +40,41 @@ $action = retrieve(REQUEST, 'action', '');
 $action_post = retrieve(POST, 'action', '');
 
 if ($action_post == 'save')
-{   // Save a Menu (New / Edit)
+{
+    // Save a Menu (New / Edit)
     import('content/parser/parser');
     $menu = null;
+    
+    $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
     
     if (!empty($id_post))
     {   // Edit the Menu
         $menu = MenuService::load($id_post);
-        $menu->set_title(retrieve(POST, 'name', ''));
+        $menu->set_title($menu_name);
     }
     else
     {   // Add the new Menu
-        $menu = new ContentMenu(retrieve(POST, 'name', ''));
+        $menu = new ContentMenu($menu_name);
     }
     
     if (!of_class($menu, CONTENT_MENU__CLASS))
+    {
         redirect('menus.php');
+    }
     
     $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
     if ($menu->is_enabled())
+    {
         $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
+    }
     $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    $menu->set_content(!empty($_POST['contents']) ? strparse($_POST['contents'], array(), DO_NOT_ADD_SLASHES) : '');
+    $menu->set_display_title(retrieve(POST, 'display_title', false));
+    $menu->set_content((string) $_POST['contents']);
     
     MenuService::save($menu);
     MenuService::generate_cache();
 	
 	redirect('menus.php#m' . $id_post);
-}
-elseif ($action == 'delete' && !empty($id))
-{   // Delete a Menu
-    MenuService::delete($id);
-    MenuService::generate_cache();
-	
-	redirect('menus.php');
 }
 
 // Display the Menu administration
@@ -86,8 +87,8 @@ $tpl = new Template('admin/menus/content.tpl');
 
 $tpl->assign_vars(array(
 	'KERNEL_EDITOR' => display_editor(),
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_REQUIRE_TEXT' => $LANG['require_text'],
+	'L_REQUIRE_TITLE' => to_js_string($LANG['require_title']),
+	'L_REQUIRE_TEXT' => to_js_string($LANG['require_text']),
 	'L_NAME' => $LANG['name'],
 	'L_STATUS' => $LANG['status'],
 	'L_AUTHS' => $LANG['auths'],
@@ -103,6 +104,7 @@ $tpl->assign_vars(array(
 	'L_ACTION' => ($edit) ? $LANG['update'] : $LANG['submit'],
 	'L_RESET' => $LANG['reset'],
     'ACTION' => 'save',
+    'L_DISPLAY_TITLE' => $LANG['display_title']
 ));
 
 //Localisation possibles.
@@ -115,7 +117,7 @@ $array_location = array(
     BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
     BLOCK_POSITION__RIGHT => $LANG['menu_right'],
     BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_top_footer']
+    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 if ($edit)
@@ -133,7 +135,8 @@ if ($edit)
 		'NAME' => $menu->get_title(),
 		'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, $menu->get_auth()),
         'C_ENABLED' => $menu->is_enabled(),
-		'CONTENTS' => !empty($content) ? unparse($content) : ''
+		'CONTENTS' => !empty($content) ? unparse($content) : '',
+	    'DISPLAY_TITLE_CHECKED' => $menu->get_display_title() ? 'checked="checked"' : ''
 	));
 }
 else

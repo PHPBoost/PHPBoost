@@ -33,7 +33,7 @@
 		</div>
 		
 		<div id="admin_contents">
-			<form action="admin_guestbook.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_guestbook.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_GUESTBOOK_CONFIG}</legend>
 					<dl>
@@ -45,6 +45,26 @@
 								# END select_auth #
 							</select>
 						</label></dd>
+					</dl>	
+					<dl>
+						<dt><label for="contact_verifcode">{L_GUESTBOOK_VERIFCODE}</label><br /><span>{L_GUESTBOOK_VERIFCODE_EXPLAIN}</span></dt>
+						<dd>
+							<label><input type="radio" {GUESTBOOK_VERIFCODE_ENABLED} name="guestbook_verifcode" id="guestbook_verifcode" value="1" />	{L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {GUESTBOOK_VERIFCODE_DISABLED} name="guestbook_verifcode" value="0" /> {L_NO}</label>
+						</dd>
+					</dl>	
+					<dl>
+						<dt><label for="guestbook_difficulty_verifcode">{L_CAPTCHA_DIFFICULTY}</label></dt>
+						<dd>
+							<label>
+								<select name="guestbook_difficulty_verifcode" id="guestbook_difficulty_verifcode">
+									# START difficulty #
+									<option value="{difficulty.VALUE}" {difficulty.SELECTED}>{difficulty.VALUE}</option>
+									# END difficulty #
+								</select>         
+							</label>
+						</dd>
 					</dl>
 					<dl>
 						<dt><label>* {L_FORBIDDEN_TAGS}</label></dt>

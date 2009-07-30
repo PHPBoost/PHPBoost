@@ -70,7 +70,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_poll.php" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_poll.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_POLL_MANAGEMENT}</legend>
 					<p>{L_REQUIRE}</p>
@@ -140,29 +140,29 @@
 					<legend>{L_DATE}</legend>
 					<dl class="overflow_visible">
 						<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
-						<dd><label>
-							<label><input type="radio" value="2" name="visible" {VISIBLE_WAITING} /> 
-							<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text" /> 
-							<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
-								<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+						<dd>
+							<div onclick="document.getElementById('start_end_date').checked = true;">
+								<label><input type="radio" value="2" name="visible" id="start_end_date" {VISIBLE_WAITING} /></label>
+								<input type="text" size="8" maxlength="8" id="start" name="start" value="{START}" class="text" /> 
+								<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+									<div id="start_date" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
+									</div>
 								</div>
-							</div>
-							<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
-							
-							{L_UNTIL}&nbsp;
-							
-							<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}" class="text" /> 
-							<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
-								<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+								<a onclick="xmlhttprequest_calendar('start_date', '?input_field=start&amp;field=start_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgstart_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
+								
+								{L_UNTIL}&nbsp;
+								
+								<input type="text" size="8" maxlength="8" id="end" name="end" value="{END}" class="text" /> 
+								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
+									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);">							
+									</div>
 								</div>
+								<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a>
 							</div>
-							<a onclick="xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date&amp;d={DAY_RELEASE_S}&amp;m={MONTH_RELEASE_S}&amp;y={YEAR_RELEASE_S}');display_calendar(2);" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="../templates/{THEME}/images/calendar.png" alt="" /></a></label>
-						
-							<br />
 							<label><input type="radio" value="1" name="visible" {VISIBLE_ENABLED} id="release_date" /> {L_IMMEDIATE}</label>
 							<br />
 							<label><input type="radio" value="0" name="visible" {VISIBLE_UNAPROB} /> {L_UNAPROB}</label>
-						</label></dd>
+						</dd>
 					</dl>
 					<dl class="overflow_visible">
 						<dt><label for="current_date">* {L_POLL_DATE}</label></dt>

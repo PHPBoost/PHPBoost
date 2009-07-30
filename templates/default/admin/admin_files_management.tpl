@@ -32,13 +32,13 @@
 				
 			if( !hide_folder )
 			{
-				document.getElementById('new_folder').innerHTML += '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onBlur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');" /></td></tr></table></div>';
+				document.getElementById('new_folder').innerHTML += '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');" /></td></tr></table></div>';
 				document.getElementById('folder_name').focus();
 			}
 			else
 			{	
 				document.getElementById('new_folder' + (divid - 1)).style.display = 'block';
-				document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onBlur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');" /></td></tr></table></div>';
+				document.getElementById('new_folder' + (divid - 1)).innerHTML = '<div style="width:210px;height:90px;float:left;margin-top:5px;" id="new_folder' + divid + '"><table style="border:0"><tr><td style="width:34px;vertical-align:top;"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></td><td style="padding-top:8px;"><input type="text" name="folder_name" id="folder_name" class="text" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');" /></td></tr></table></div>';
 				document.getElementById('folder_name').focus();
 				this.divid--;	
 				hide_folder = false;
@@ -48,7 +48,7 @@
 		{
 			if( document.getElementById('f' + id) )
 			{	
-				document.getElementById('f' + id).innerHTML = '<input type="text" name="finput' + id + '" id="finput' + id + '" class="text" value="' + previous_name + '" onBlur="rename_folder(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" />';
+				document.getElementById('f' + id).innerHTML = '<input type="text" name="finput' + id + '" id="finput' + id + '" class="text" value="' + previous_name + '" onblur="rename_folder(\'' + id + '\', \'' + previous_name.replace(/\'/g, "\\\'") + '\', \'' + previous_cut_name.replace(/\'/g, "\\\'") + '\');" />';
 				document.getElementById('finput' + id).focus();
 			}
 		}		
@@ -67,7 +67,7 @@
 			else if( name != '' )
 			{
 				data = "id_folder=" + id_folder + "&name=" + name + "&previous_name=" + previous_name + "&user_id=" + {USER_ID};
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?rename_folder=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_folder=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
@@ -105,14 +105,14 @@
 			else if( name != '' )
 			{
 				data = "name=" + name + "&user_id=" + user_id + "&id_parent=" + id_parent;
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?new_folder=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&new_folder=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 ) 
 					{
 						if( xhr_object.responseText > 0 )
 						{
-							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" onclick="javascript:return Confirm_folder();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
+							document.getElementById('new_folder' + divid).innerHTML = '<table style="border:0"><tr><td style="width:34px;vertical-align:top;"><a href="admin_files.php?f=' + xhr_object.responseText + '"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_max.png" alt="" /></a></td><td style="padding-top:8px;"> <span id="f' + xhr_object.responseText + '"><a class="com" href="admin_files.php?f=' + xhr_object.responseText + '">' + name + '</a></span></span><div style="padding-top:5px;"><span id="fhref' + xhr_object.responseText + '"><span id="fihref' + xhr_object.responseText + '"><a href="javascript:display_rename_folder(\'' + xhr_object.responseText + '\', \'' + name.replace(/\'/g, "\\\'") + '\', \'' + name.replace(/\'/g, "\\\'") + '\');"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a></span></a></span> <a href="admin_files.php?delf=' + xhr_object.responseText + '&amp;f={FOLDER_ID}" onclick="javascript:return Confirm_folder();"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> <a href="admin_files.php?movefd=' + xhr_object.responseText + '&amp;f={FOLDER_ID}&amp;fm=' + user_id + '" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a></div><span id="img' + xhr_object.responseText + '"></span></td></tr></table>';
 							var total_folder = document.getElementById('total_folder').innerHTML;
 							total_folder++;						
 							document.getElementById('total_folder').innerHTML = total_folder;
@@ -165,7 +165,7 @@
 			else if( name != '' )
 			{
 				data = "id_file=" + id_file + "&name=" + name + "&previous_name=" + previous_cut_name + "&user_id=" + {USER_ID};
-				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?rename_file=1');
+				var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/kernel/framework/ajax/uploads_xmlhttprequest.php?token={TOKEN}&rename_file=1');
 				xhr_object.onreadystatechange = function() 
 				{
 					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' ) 
@@ -287,16 +287,15 @@
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
-							</div>
 						</div>
 					</td>
 				</tr>	
 				
 				<tr>	
-					<td class="row2" style="padding:10px 2px;">
+					<td class="row2" style="padding:5px 2px;">
 						# IF C_EMPTY_FOLDER #
-							<p style="text-align:center;" id="empty_folder">					
-								{EMPTY_FOLDER}					
+							<p style="text-align:center;padding-top:15px;" id="empty_folder">					
+								{L_EMPTY_FOLDER}					
 							</p>
 						# ENDIF #
 						
@@ -310,9 +309,9 @@
 									<td style="padding-top:8px;">						
 										<span id="f{folder.ID}"><a href="admin_files.php{folder.U_FOLDER}" class="com">{folder.NAME}</a></span>
 										<div style="padding-top:5px;">
-											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}" onclick="javascript:return Confirm_{folder.ALERT_DEL}();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
+											{folder.RENAME_FOLDER}	<a href="admin_files.php?{folder.DEL_TYPE}={folder.ID}&amp;f={FOLDER_ID}&amp;token={TOKEN}{FOLDERM_ID}" onclick="javascript:return Confirm_{folder.ALERT_DEL}();" title="{folder.L_TYPE_DEL_FOLDER}">{folder.DEL_TYPE_IMG}</a>
 											
-											<a style="display:none" href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>
+											# IF folder.C_TYPEFOLDER #<a href="admin_files{folder.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a># ENDIF #
 											<span id="img{folder.ID}"></span>
 										</div>
 									</td>
@@ -336,9 +335,9 @@
 										<span class="text_small">{files.FILETYPE}</span><br />
 										<span class="text_small">{files.SIZE}</span><br />
 										{files.RENAME_FILE}
-										<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
+										<a href="admin_files.php?del={files.ID}&amp;f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" onclick="javascript:return Confirm_file();" title="{L_DELETE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a> 
 										
-										<a style="display:none" href="admin_files{files.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>						
+										<a href="admin_files{files.U_MOVE}" title="{L_MOVETO}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/move.png" alt="" class="valign_middle" /></a>						
 										
 										{files.INSERT}
 										<span id="imgf{files.ID}"></span>
@@ -346,8 +345,8 @@
 								</tr>
 							</table>
 						</div>	
-						# END files #				
-						
+						# END files #	
+						<div class="spacer">&nbsp;</div>						
 					</td>
 				</tr>
 				
@@ -365,7 +364,7 @@
 				# ENDIF #
 				<tr>				
 					<td class="row3" id="new_file">							
-						<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}" enctype="multipart/form-data" method="post">
+						<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">
 							<span style="float:left">						
 								<strong>{L_ADD_FILES}</strong>
 								<br />

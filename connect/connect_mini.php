@@ -28,12 +28,14 @@
 
 if (defined('PHPBOOST') !== true) exit;
 
-function connect_mini()
+function connect_mini($position, $block)
 {
-    global $User, $CONTRIBUTION_PANEL_UNREAD, $LANG;
+    global $User, $LANG, $CONFIG_USER, $CONTRIBUTION_PANEL_UNREAD, $ADMINISTRATOR_ALERTS, $Session;
     
     $tpl = new Template('connect/connect_mini.tpl');
-    if ($User->check_level(USER_LEVEL)) //Connecté.
+    import('core/menu_service');
+    MenuService::assign_positions_conditions($tpl, $block);
+    if ($User->check_level(MEMBER_LEVEL)) //Connecté.
     {
     	//Vaut 0 si l'utilisateur n'a aucune contribution. Est > 0 si on connait le nombre de contributions
     	//Vaut -1 si l'utilisateur a au moins une contribution (mais on ne sait pas combien à cause des recoupements entre les groupes)
@@ -81,14 +83,14 @@ function connect_mini()
     		'NUM_UNREAD_CONTRIBUTIONS' => $contribution_number,
     		'NUMBER_UNREAD_ALERTS' => AdministratorAlertService::get_number_unread_alerts(),
     		'IMG_PM' => $User->get_attribute('user_pm') > 0 ? 'new_pm.gif' : 'pm_mini.png',
-    		'U_USER_PM' => PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
+    		'U_USER_PM' => TPL_PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php'),
     		'U_USER_ID' => url('.php?id=' . $User->get_attribute('user_id') . '&amp;view=1', '-' . $User->get_attribute('user_id') . '.php?view=1'),
-    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true',
-    		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['connect_private_message']),
-    		'L_PROFIL' => $LANG['profil'],
+    		'U_DISCONNECT' => HOST . DIR . '/member/member.php?disconnect=true&amp;token=' . $Session->get_token(),
+    		'L_NBR_PM' => ($User->get_attribute('user_pm') > 0 ? ($User->get_attribute('user_pm') . ' ' . (($User->get_attribute('user_pm') > 1) ? $LANG['message_s'] : $LANG['message'])) : $LANG['private_messaging']),
+    		'L_PROFIL' => $LANG['profile'],
     		'L_ADMIN_PANEL' => $LANG['admin_panel'],
     		'L_MODO_PANEL' => $LANG['modo_panel'],
-    		'L_PRIVATE_PROFIL' => $LANG['connect_private_profil'],
+    		'L_PRIVATE_PROFIL' => $LANG['my_private_profile'],
     		'L_DISCONNECT' => $LANG['disconnect'],
     		'L_CONTRIBUTION_PANEL' => $LANG['contribution_panel']
     	));
@@ -96,15 +98,17 @@ function connect_mini()
     else
     {
     	$tpl->assign_vars(array(
-    		'C_USER_REGISTER' => $CONFIG_USER['activ_register'] ? true : false,
-    		'L_CONNECT' => $LANG['connect'],
+    		'C_USER_REGISTER' => (bool)$CONFIG_USER['activ_register'],
+    		'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+			'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+			'L_CONNECT' => $LANG['connect'],
     		'L_PSEUDO' => $LANG['pseudo'],
     		'L_PASSWORD' => $LANG['password'],
     		'L_AUTOCONNECT' => $LANG['autoconnect'],
     		'L_FORGOT_PASS' => $LANG['forget_pass'],
     		'L_REGISTER' => $LANG['register'],
-    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) : '',
-    		'U_REGISTER' => PATH_TO_ROOT . '/member/register.php' . SID
+    		'U_CONNECT' => (QUERY_STRING != '') ? '?' . str_replace('&', '&amp;', QUERY_STRING) . '&amp;' : '',
+    		'U_REGISTER' => TPL_PATH_TO_ROOT . '/member/register.php' . SID
     	));
     }
     

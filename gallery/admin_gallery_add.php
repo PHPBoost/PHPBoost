@@ -43,7 +43,7 @@ $nbr_pics_post = !empty($_POST['nbr_pics']) ? numeric($_POST['nbr_pics']) : 0;
 if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 { 
 	$dir = 'pics/';
-	include_once('../kernel/framework/io/upload.class.php');
+	import('io/upload');
 	$Upload = new Upload($dir);
 	
 	$idpic = 0;
@@ -102,7 +102,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 	
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
-					
+
 	redirect(HOST . DIR . '/gallery/admin_gallery_add.php');
 }
 else
@@ -121,7 +121,7 @@ else
 	$cat_list = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
 	$cat_list_unselect = '<option value="0" selected="selected">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."gallery_cats
+	FROM " . PREFIX . "gallery_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -136,7 +136,7 @@ else
 	if (!empty($add_pic))
 	{	
 		$CAT_GALLERY[0]['name'] = $LANG['root'];
-		$imageup = $Sql->query_array("gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
+		$imageup = $Sql->query_array(PREFIX . "gallery", "idcat", "name", "path", "WHERE id = '" . $add_pic . "'", __LINE__, __FILE__);
 		$Template->assign_block_vars('image_up', array(
 			'NAME' => $imageup['name'],
 			'IMG' => '<a href="admin_gallery.php?cat=' . $imageup['idcat'] . '&amp;id=' . $add_pic . '#pics_max"><img src="pics/' . $imageup['path'] . '" alt="" /></a>',
@@ -151,7 +151,7 @@ else
 		'WEIGHT_MAX' => $CONFIG_GALLERY['weight_max'],
 		'AUTH_EXTENSION' => 'JPEG, GIF, PNG',
 		'CATEGORIES' => $cat_list,
-		'IMG_HEIGHT_MAX' => $CONFIG_GALLERY['height'],
+		'IMG_HEIGHT_MAX' => $CONFIG_GALLERY['height']+10,
 		'L_GALLERY_MANAGEMENT' => $LANG['gallery_management'], 
 		'L_GALLERY_PICS_ADD' => $LANG['gallery_pics_add'], 
 		'L_GALLERY_CAT_MANAGEMENT' => $LANG['gallery_cats_management'], 
@@ -180,19 +180,17 @@ else
 	$dir = 'pics/';
 	if (is_dir($dir)) //Si le dossier existe
 	{		
+		import('io/filesystem/folder');
+
 		$array_pics = array();
-		$dh = @opendir($dir);
-		while (!is_bool($pics = readdir($dh)))
-		{	
-			if ($pics != '.' && $pics != '..' && $pics != 'index.php' && $pics != 'Thumbs.db' && $pics != 'thumbnails')
-				$array_pics[] = $pics; //On crée un array, avec les different fichiers.
-		}	
-		@closedir($dh); //On ferme le dossier
+		$image_folder_path = new Folder('./pics/');
+		foreach ($image_folder_path->get_files('`.*\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $image)
+			$array_pics[] = $image->get_name();
 		
 		if (is_array($array_pics))
 		{
 			$result = $Sql->query_while("SELECT path
-			FROM ".PREFIX."gallery", __LINE__, __FILE__);
+			FROM " . PREFIX . "gallery", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				//On recherche les clées correspondante à celles trouvée dans la bdd.

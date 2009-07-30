@@ -31,14 +31,16 @@ require_once('../admin/admin_header.php');
 
 if (!empty($_POST['valid']))
 {
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	$question = retrieve(POST, 'question', '');
 	$type = retrieve(POST, 'type', 1);
 	$archive = retrieve(POST, 'archive', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	//On verifie les conditions!
@@ -87,12 +89,12 @@ if (!empty($_POST['valid']))
 		{	
 			if (!empty($_POST['a'.$i]))
 			{				
-				$answers .= strprotect(str_replace('|', '', $_POST['a'.$i])) . '|';
-				$votes .= strprotect(str_replace('|', '', $_POST['v'.$i])) . '|';
+				$answers .= str_replace('|', '', retrieve(POST, 'a'.$i, '')) . '|';
+				$votes .= str_replace('|', '', retrieve(POST, 'v'.$i, 0)) . '|';
 			}
 		}
 
-		$Sql->query_inject("INSERT INTO ".PREFIX."poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
 				
 		redirect(HOST . DIR . '/poll/admin_poll.php');
 	}

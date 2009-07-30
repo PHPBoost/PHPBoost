@@ -33,7 +33,8 @@
 					<br />
 					<label>{L_AUTOCONNECT} <input checked="checked" type="checkbox" name="auto" /></label>
 				</p>
-				<p>	
+				<p>
+					<input type="hidden" name="token" value="{TOKEN}" />
 					<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
 				</p>
 				<p style="margin:0;margin-top:5px;">
@@ -49,7 +50,6 @@
 		</div>				
 		</form>	
 		# ENDIF #		
-		
 		
 		# IF C_USER_CONNECTED #		
 		<div class="module_mini_container">
@@ -89,5 +89,5 @@
 			<div class="module_mini_bottom">
 			</div>
 		</div>
-		# END ENDIF #
+		# ENDIF #
 		

@@ -28,15 +28,16 @@
 import('content/parser/content_unparser');
 
 /**
- * @package parser
+ * @package content
+ * @subpackage parser
  * @author Benoît Sautel <ben.popeye@phpboost.com>
- * BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
+ * @desc BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
  * coming from a database) to the PHPBoost BBCode syntax.
  */
 class BBCodeUnparser extends ContentUnparser
 {
 	/**
-	 * Builds a BBCodeUnparser object
+	 * @desc Builds a BBCodeUnparser object
 	 */
 	function BBCodeUnparser()
 	{
@@ -45,20 +46,14 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * Unparses the content of the parser.
+	 * @desc Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
-	function unparse()
+	function parse()
 	{
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->_unparse_html(PICK_UP);
 		$this->_unparse_code(PICK_UP);
-		
-		//Si on n'est pas à la racine du site plus un dossier, on remplace les liens relatifs générés par le BBCode
-		if (PATH_TO_ROOT != '..')
-		{
-			$this->content = str_replace('"' . PATH_TO_ROOT . '/', '"../', $this->content);
-		}
 		
 		//Smilies
 		$this->_unparse_smilies();
@@ -80,7 +75,7 @@ class BBCodeUnparser extends ContentUnparser
 	
 	## Private ##
 	/**
-	 * Unparse the smiley's code of the content of the parser.
+	 * @desc Unparse the smiley's code of the content of the parser.
 	 * Replace the HTML code by the smiley code (for instance :) or :|)
 	 */
 	function _unparse_smilies()
@@ -92,7 +87,7 @@ class BBCodeUnparser extends ContentUnparser
 			//Création du tableau de remplacement
 			foreach ($_array_smiley_code as $code => $img)
 			{	
-				$smiley_img_url[] = '`<img src="../images/smileys/' . preg_quote($img) . '(.*) />`sU';
+				$smiley_img_url[] = '`<img src="(\.\.)?/images/smileys/' . preg_quote($img) . '(.*) />`sU';
 				$smiley_code[] = $code;
 			}	
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
@@ -100,7 +95,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * Unparsed the simple tags of the content of the parser.
+	 * @desc Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
 	function _unparse_simple_tags()
@@ -131,10 +126,15 @@ class BBCodeUnparser extends ContentUnparser
 			'`<h4 class="stitle1">(.*)</h4>`isU',
 			'`<h4 class="stitle2">(.*)</h4>`isU',
 			'`<span class="(success|question|notice|warning|error)">(.*)</span>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
-			'`<object type="application/x-shockwave-flash" data="\.\./(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
+			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/dewplayer\.swf\?son=(.*)" width="200" height="20">(.*)</object>`isU',
+		    '`<script type="text/javascript"><!--\s{1,5}insertSoundPlayer\("([^"]+)"\);\s{1,5}--></script>`sU',
+			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`sU',
+			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isU',
+			'`<script type="text/javascript"><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
+			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isU',
-			'`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`isU',
+			'`<script type="text/javascript"><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`sU',
+			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`sU',
 			'`\[\[MATH\]\](.+)\[\[/MATH\]\]`sU'
 		);
 		
@@ -156,9 +156,14 @@ class BBCodeUnparser extends ContentUnparser
 			"[title=4]$1[/title]",
 			"[style=$1]$2[/style]",
 			"[sound]$1[/sound]",
+			"[sound]$1[/sound]",
+			"[sound]$1[/sound]",
 			"[movie=$1,$2]$3[/movie]",
+		    "[movie=$2,$3]$1[/movie]",
+			"[movie=$2,$3]$1[/movie]",
 			"[swf=$2,$3]$1[/swf]",
-			"[html]$1[/html]",
+			"[swf=$2,$3]$1[/swf]",
+			"[swf=$2,$3]$1[/swf]",
 			"[math]$1[/math]"
 		);	
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
@@ -178,14 +183,17 @@ class BBCodeUnparser extends ContentUnparser
 		$this->_parse_imbricated('<div class="bb_block" style=', '`<div class="bb_block" style="([^"]+)">(.+)</div>`sU', '[block style="$1"]$2[/block]', $this->content);
 		
 		//Bloc de formulaire
-		$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->content);
+		while (preg_match('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', $this->content))
+		{
+			$this->content = preg_replace_callback('`<fieldset class="bb_fieldset" style="([^"]*)"><legend>(.*)</legend>(.+)</fieldset>`sU', array(&$this, '_unparse_fieldset'), $this->content);
+		}
 		
 		//Liens Wikipédia
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia_link">(.*)</a>`sU', array(&$this, '_unparse_wikipedia_link'), $this->content);
 	}
 	
 	/**
-	 * Unparses the table tag
+	 * @desc Unparses the table tag
 	 */
 	function _unparse_table()
 	{
@@ -193,7 +201,7 @@ class BBCodeUnparser extends ContentUnparser
 		while (strpos($this->content, '<table class="bb_table"') !== false)
 			$this->content = preg_replace('`<table class="bb_table"([^>]*)>(.*)</table>`sU', '[table$1]$2[/table]', $this->content);
 		while (strpos($this->content, '<tr class="bb_table_row"') !== false)
-			$this->content = preg_replace('`<tr class="bb_table_row">(.*)</tr>`sU', '[row]$1[/row]', $this->content);
+			$this->content = preg_replace('`<tr class="bb_table_row"([^>]*)>(.*)</tr>`sU', '[row$1]$2[/row]', $this->content);
 		while (strpos($this->content, '<th class="bb_table_head"') !== false)
 			$this->content = preg_replace('`<th class="bb_table_head"([^>]*)>(.*)</th>`sU', '[head$1]$2[/head]', $this->content);
 		while (strpos($this->content, '<td class="bb_table_col"') !== false)
@@ -201,7 +209,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 
 	/**
-	 * Unparses the list tag
+	 * @desc Unparses the list tag
 	 */
 	function _unparse_list()
 	{
@@ -215,7 +223,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * Callback which allows to unparse the fieldset tag
+	 * @desc Callback which allows to unparse the fieldset tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
@@ -237,7 +245,7 @@ class BBCodeUnparser extends ContentUnparser
 	}
 	
 	/**
-	 * Callback which allows to unparse the Wikipedia tag
+	 * @desc Callback which allows to unparse the Wikipedia tag
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */

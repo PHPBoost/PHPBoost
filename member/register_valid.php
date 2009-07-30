@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *   
+ *
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,31 +26,31 @@
  *
 ###################################################*/
 
-require_once('../kernel/begin.php'); 
+require_once('../kernel/begin.php');
 define('TITLE', $LANG['title_register']);
-require_once('../kernel/header.php'); 
+require_once('../kernel/header.php');
 
 $Cache->load('member');
 if (!$CONFIG_USER['activ_register'])
 	redirect(get_start_page());
 
 $user_mail = strtolower(retrieve(POST, 'mail', ''));
-$valid = retrieve(POST, 'register_valid', false);
+$valid = retrieve(POST, 'valid', false);
 if ($valid && !empty($user_mail) && check_mail($user_mail))
 {
 	//Info de connexion
-	$login = substr(retrieve(POST, 'log', ''), 0, 25);
-	$password = retrieve(POST, 'pass', '', TSTRING_UNSECURE);
+	$login = !empty($_POST['log']) ? strprotect(substr($_POST['log'], 0, 25)) : '';
+	$password = retrieve(POST, 'pass', '', TSTRING_UNCHANGE);
 	$password_hash = strhash($password);
-	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNSECURE);
+	$password_bis = retrieve(POST, 'pass_bis', '', TSTRING_UNCHANGE);
 	$password_bis_hash = strhash($password_bis);
 		
 	//Configuration
 	$user_show_mail = retrieve(POST, 'user_show_mail', 0) ? 1 : 0;
 	$user_lang = retrieve(POST, 'user_lang', '');
-	$user_theme = retrieve(POST, 'user_theme', '');	
-	$user_editor = retrieve(POST, 'user_editor', '');	
-	$user_timezone = retrieve(POST, 'user_timezone', 0);	
+	$user_theme = retrieve(POST, 'user_theme', '');
+	$user_editor = retrieve(POST, 'user_editor', '');
+	$user_timezone = retrieve(POST, 'user_timezone', 0);
 	
 	//Informations.
 	$user_avatar = retrieve(POST, 'user_avatar', '');
@@ -68,8 +68,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	$user_born = strtodate(retrieve(POST, 'user_born', '0'), $LANG['date_birth_parse']);
 		
 	//Code de vérification si activé
-	include_once('../kernel/framework/util/captcha.class.php');
+	import('util/captcha');
 	$Captcha = new Captcha();
+	$Captcha->set_difficulty($CONFIG_USER['verif_code_difficulty']);
 	
 	if (!($CONFIG_USER['verif_code'] == '1') || $Captcha->is_valid()) //Code de vérification si activé
 	{
@@ -79,9 +80,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 			{
 				####Vérification de la validité de l'avatar####
 				$user_avatar = '';
-				//Gestion upload d'avatar.				
+				//Gestion upload d'avatar.
 				$dir = '../images/avatars/';
-				include_once('../kernel/framework/io/upload.class.php');
+				import('io/upload');
 				$Upload = new Upload($dir);
 				
 				if (is_writable($dir) && $CONFIG_USER['activ_up_avatar'] == 1)
@@ -116,12 +117,12 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				
 				$admin_sign = $CONFIG['sign'];
 						
-				$check_user = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE login = '" . $login . "'", __LINE__, __FILE__);
-				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM ".PREFIX."member WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
+				$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
+				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
-				if ($check_user >= 1) 
+				if ($check_user >= 1)
 					redirect(HOST . DIR . '/member/register' . url('.php?error=pseudo_auth') . '#errorh');
-				elseif ($check_mail >= 1) 
+				elseif ($check_mail >= 1)
 					redirect(HOST . DIR . '/member/register' . url('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
@@ -132,13 +133,13 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 					@unlink('../cache/sex.png');
 					@unlink('../cache/theme.png');
 					
-					$Sql->query_inject("INSERT INTO ".PREFIX."member (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob) 
+					$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER . " (login,password,level,user_groups,user_lang,user_theme,user_mail,user_show_mail,user_editor,user_timezone,timestamp,user_avatar,user_msg,user_local,user_msn,user_yahoo,user_web,user_occupation,user_hobbies,user_desc,user_sex,user_born,user_sign,user_pm,user_warning,last_connect,test_connect,activ_pass,new_pass,user_ban,user_aprob)
 					VALUES ('" . $login . "', '" . $password_hash . "', 0, '0', '" . $user_lang . "', '" . $user_theme . "', '" . $user_mail . "', '" . $user_show_mail . "', '" . $user_editor . "', '" . $user_timezone . "', '" . time() . "', '" . $user_avatar . "', 0, '" . $user_local . "', '" . $user_msn . "', '" . $user_yahoo . "', '" . $user_web . "', '" . $user_occupation . "', '" . $user_hobbies . "', '" . $user_desc . "', '" . $user_sex . "', '" . $user_born . "', '" . $user_sign . "', 0, 0, '" . time() . "', 0, '" . $activ_mbr . "', '', 0, '" . $user_aprob . "')", __LINE__, __FILE__); //Compte membre
 					
-					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."member"); //Id du membre qu'on vient d'enregistrer
+					$last_mbr_id = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_MEMBER); //Id du membre qu'on vient d'enregistrer
 					
 					//Si son inscription nécessite une approbation, on en avertit l'administration au biais d'une alerte
-					if (!$user_aprob)
+					if ($CONFIG_USER['activ_mbr'] == 2)
 					{
 						import('events/administrator_alert_service');
 						
@@ -154,20 +155,27 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						//Enregistrement
 						AdministratorAlertService::save_alert($alert);
 					}
-						
+					else //Régénération du cache des stats.
+						$Cache->Generate_file('stats');
+					
 					//Champs supplémentaires.
-					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+					$extend_field_exist = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE display = 1", __LINE__, __FILE__);
 					if ($extend_field_exist > 0)
 					{
 						$req_update = '';
 						$req_field = '';
 						$req_insert = '';
-						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex
-						FROM ".PREFIX."member_extend_cat
+						$result = $Sql->query_while("SELECT field_name, field, possible_values, regex, required
+						FROM " . DB_TABLE_MEMBER_EXTEND_CAT . "
 						WHERE display = 1", __LINE__, __FILE__);
 						while ($row = $Sql->fetch_assoc($result))
 						{
-							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNSECURE);
+							$field = retrieve(POST, $row['field_name'], '', TSTRING_UNCHANGE);
+							
+							//Champs requis, si vide redirection.
+							if ($row['required'] && $row['field'] != 6 && empty($field))
+								redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
+							
 							//Validation par expressions régulières.
 							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
 							{
@@ -175,8 +183,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									1 => '`^[0-9]+$`',
 									2 => '`^[a-z]+$`',
 									3 => '`^[a-z0-9]+$`',
-									4 => '`^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-zA-Z]{2,4}$`',
-									5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`'
+									4 => '`^[a-z0-9._-]+@(?:[a-z0-9_-]{2,}\.)+[a-z]{2,4}$`i',
+									5 => '`^http(s)?://[a-z0-9._/-]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(.*)$`i'
 								);
 								$row['regex'] = $array_regex[$row['regex']];
 							}
@@ -209,6 +217,8 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									$field .= !empty($_POST[$row['field_name'] . '_' . $i]) ? addslashes($value) . '|' : '';
 									$i++;
 								}
+								if ($row['required'] && empty($field))
+									redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
 							}
 							else
 								$field = strprotect($field);
@@ -225,26 +235,23 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						}
 						$Sql->query_close($result);
 						
-						$check_member = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
+						$check_member = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
 						if ($check_member && !empty($req_update))
-								$Sql->query_inject("UPDATE ".PREFIX."member_extend SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); 
+								$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND . " SET " . trim($req_update, ', ') . " WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__);
 						else if (!empty($req_insert))
-								$Sql->query_inject("INSERT INTO ".PREFIX."member_extend (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
+								$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $last_mbr_id . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
-					
-					//On régénère le cache
-					$Cache->Generate_file('stats');
 					
 					//Ajout du lien de confirmation par mail si activé et activation par admin désactivé.
 					if ($CONFIG_USER['activ_mbr'] == 1)
-					{	
+					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_email_confirm'];
 						$valid = sprintf($LANG['register_valid_email'], HOST . DIR . '/member/register.php?key=' . $activ_mbr);
 					}
-					elseif ($CONFIG_USER['activ_mbr'] == 2)							
+					elseif ($CONFIG_USER['activ_mbr'] == 2)
 					{
 						$l_register_confirm = $LANG['confirm_register'] . '<br />' . $LANG['register_valid_admin'];
-						$valid = $LANG['register_valid_admin'];				
+						$valid = $LANG['register_valid_admin'];
 					}
 					else
 					{
@@ -253,16 +260,16 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$valid = '';
 					}
 					
-					include_once('../kernel/framework/io/mail.class.php');
+					import('io/mail');
 					$Mail = new Mail();
 					
-					$Mail->send($user_mail, sprintf(addslashes($LANG['register_title_mail']), $CONFIG['site_name']), sprintf(addslashes($LANG['register_mail']), $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail']);
+					$Mail->send_from_properties($user_mail, sprintf($LANG['register_title_mail'], $CONFIG['site_name']), sprintf($LANG['register_mail'], $login, $CONFIG['site_name'], $CONFIG['site_name'], stripslashes($login), $password, $valid, $CONFIG['sign']), $CONFIG['mail_exp']);
 					
 					//On connecte le membre directement si aucune activation demandée.
 					if ($CONFIG_USER['activ_mbr'] == 0)
 					{
-						$Sql->query_inject("UPDATE ".PREFIX."member SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
-						$Session->Session_begin($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
+						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "' WHERE user_id = '" . $last_mbr_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$Session->start($last_mbr_id, $password, 0, SCRIPT, QUERY_STRING, TITLE, 1); //On lance la session.
 					}
 					unset($password, $password_hash);
 					
@@ -280,12 +287,12 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 	}
 	else
 		redirect(HOST . DIR . '/member/register' . url('.php?error=verif_code') . '#errorh');
-}	
+}
 elseif (!empty($user_mail))
 	redirect(HOST . DIR . '/member/register' . url('.php?error=invalid_mail') . '#errorh');
 else
 	redirect(get_start_page());
 	
-require_once('../kernel/footer.php'); 
+require_once('../kernel/footer.php');
 
 ?>

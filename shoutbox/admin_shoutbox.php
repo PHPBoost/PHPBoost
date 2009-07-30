@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                               admin_shoutbox.php
+ *                             admin_shoutbox.php
  *                            -------------------
  *   begin                : March 12, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
@@ -40,7 +40,7 @@ if (!empty($_POST['valid']) )
 	$config_shoutbox['shoutbox_max_link'] = retrieve(POST, 'shoutbox_max_link', -1);
 	$config_shoutbox['shoutbox_refresh_delay'] = numeric(retrieve(POST, 'shoutbox_refresh_delay', 0)* 60000, 'float');
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_shoutbox)) . "' WHERE name = 'shoutbox'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('shoutbox');
@@ -95,24 +95,19 @@ else
 		'L_MAX_LINK' => $LANG['max_link'],
 		'L_MAX_LINK_EXPLAIN' => $LANG['max_link_explain']
 	));
-		
-	//Balises interdites
-	$i = 0;
-	foreach ($array_tags as $name => $is_selected)
-	{
-		if (isset($CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
-		{	
-			if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
-				$selected = 'selected="selected"';
-		}
-		else
-			$selected = ($is_selected) ? 'selected="selected"' : '';	
 			
+	//Forbidden tags
+	$i = 0;
+	foreach (ContentFormattingFactory::get_available_tags() as $name => $value)
+	{
+		$selected = '';
+		if (in_array($name, $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']))
+			$selected = 'selected="selected"';
+		
 		$Template->assign_block_vars('forbidden_tags', array(
-			'TAGS' => '<option id="tag' . $i . '" value="' . $name . '" ' . $selected . '>[' . $name . ']</option>'
+			'TAGS' => '<option id="tag' . $i++ . '" value="' . $name . '" ' . $selected . '>' . $value . '</option>'
 		));
-		$i++;
-	}	
+	}
 	
 	$Template->pparse('admin_shoutbox_config'); // traitement du modele	
 }

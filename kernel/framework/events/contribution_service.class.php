@@ -30,18 +30,28 @@ import('events/contribution');
 //Flag which distinguishes a contribution from an alert
 define('CONTRIBUTION_TYPE', 0);
 
-//This is a static class, it must not be instantiated.
+/**
+ * @static
+ * @package events
+ * @author Benoît Sautel <ben.popeye@phpboost.com>
+ * @desc This service allows developers to manage their contributions.
+ */
 class ContributionService
 {
-	//Method returning the contribution when we know its integer identifier
-	/*static*/ function find_by_id($id_contrib)
+	/**
+	 * @static
+     * @desc Finds a contribution with its identifier.
+     * @param int $id_contrib Id of the contribution.
+     * @return Contribution The contribution you wanted. If it doesn't exist, it will return null.
+	 */
+    function find_by_id($id_contrib)
 	{
 		global $Sql;
 		
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, poster_member.login poster_login, fixer_member.login fixer_login, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
-		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.poster_id
+		FROM " . DB_TABLE_EVENTS  . " c
+		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.poster_id
 		WHERE id = '" . $id_contrib . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'
 		ORDER BY creation_date DESC", __LINE__, __FILE__);
 		
@@ -57,8 +67,16 @@ class ContributionService
 			return null;
 	}
 	
-	//Function which returns all the contributions of the table (we can force it to be ordered)
-	/*static*/ function get_all_contributions($criteria = 'creation_date', $order = 'desc')
+	/**
+	 * @static
+	 * @desc Gets all the contributions of the table. You can sort the list.
+	 * @param string $criteria Criteria according to which they are ordered. 
+	 * It can be id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, 
+	 * poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description.
+	 * @param string $order desc or asc.
+	 * @return Contribution[] The list of the contributions.
+	 */
+	function get_all_contributions($criteria = 'creation_date', $order = 'desc')
 	{
 		global $Sql;
 		
@@ -66,9 +84,9 @@ class ContributionService
 		
 		//On liste les contributions
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
-		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
+		FROM " . DB_TABLE_EVENTS  . " c
+		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = " . CONTRIBUTION_TYPE . "
 		ORDER BY " . $criteria . " " . strtoupper($order), __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
@@ -84,8 +102,19 @@ class ContributionService
 		return $array_result;
 	}
 	
-	//Function which builds a list of the contributions matching the required criteria(s)
-	/*static*/ function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
+	/**
+	 * @static
+	 * @desc Builds a list of the contributions matching the required criteria(s). All the parameters represent the criterias you can use.
+	 * If you don't want to use a criteria, let the null value. The returned contribution match all the criterias (it's a AND condition).
+	 * @param string $module The module identifier.
+	 * @param int $id_in_module The id in module field.
+	 * @param string $type The contribution type.
+	 * @param string $identifier The contribution identifier.
+	 * @param int $poster_id The poster.
+	 * @param int $fixer_id The fixer.
+	 * @return Contribution[] The list of the contributions matching all the criterias.
+	 */
+	function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
 	{
 		global $Sql;
 		$criterias = array();
@@ -115,9 +144,9 @@ class ContributionService
 		$where_clause = "contribution_type = '" . CONTRIBUTION_TYPE . "' AND " . implode($criterias, " AND ");
 		
 		$result = $Sql->query_while("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.login poster_login, fixer_member.login fixer_login, identifier, id_in_module, type, description
-		FROM " . PREFIX . EVENTS_TABLE_NAME . " c
-		LEFT JOIN ".PREFIX."member poster_member ON poster_member.user_id = c.poster_id
-		LEFT JOIN ".PREFIX."member fixer_member ON fixer_member.user_id = c.fixer_id
+		FROM " . DB_TABLE_EVENTS  . " c
+		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
+		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE " . $where_clause, __LINE__, __FILE__);
 		
 		while ($row = $Sql->fetch_assoc($result))
@@ -130,8 +159,12 @@ class ContributionService
 		return $array_result;
 	}
 	
-	//Creation or update of a contribution (in database)
-	/*static*/ function save_contribution(&$contribution)
+	/**
+	 * @static
+     * @desc Create or update a contribution in the database.
+     * @param Contribution $contribution The contribution to synchronize with the data base.
+	 */
+	function save_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -142,14 +175,14 @@ class ContributionService
 			$creation_date = $contribution->get_creation_date();
 			$fixing_date = $contribution->get_fixing_date();
 			
-			$Sql->query_inject("UPDATE " . PREFIX . EVENTS_TABLE_NAME . " SET entitled = '" . addslashes($contribution->get_entitled()) . "', description = '" . addslashes($contribution->get_description()) . "', fixing_url = '" . addslashes($contribution->get_fixing_url()) . "', module = '" . addslashes($contribution->get_module()) . "', current_status = '" . $contribution->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($contribution->get_auth())) . "', poster_id = '" . $contribution->get_poster_id() . "', fixer_id = '" . $contribution->get_fixer_id() . "', id_in_module = '" . $contribution->get_id_in_module() . "', identifier = '" . addslashes($contribution->get_identifier()) . "', type = '" . addslashes($contribution->get_type()) . "' WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_EVENTS  . " SET entitled = '" . addslashes($contribution->get_entitled()) . "', description = '" . addslashes($contribution->get_description()) . "', fixing_url = '" . addslashes($contribution->get_fixing_url()) . "', module = '" . addslashes($contribution->get_module()) . "', current_status = '" . $contribution->get_status() . "', creation_date = '" . $creation_date->get_timestamp() . "', fixing_date = '" . $fixing_date->get_timestamp() . "', auth = '" . addslashes(serialize($contribution->get_auth())) . "', poster_id = '" . $contribution->get_poster_id() . "', fixer_id = '" . $contribution->get_fixer_id() . "', id_in_module = '" . $contribution->get_id_in_module() . "', identifier = '" . addslashes($contribution->get_identifier()) . "', type = '" . addslashes($contribution->get_type()) . "' WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
 		}
 		else //We create it
 		{
 			$contribution_auth = $contribution->get_auth();
 			$creation_date = $contribution->get_creation_date();
-			$Sql->query_inject("INSERT INTO " . PREFIX . EVENTS_TABLE_NAME . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, contribution_type, nbr_com, lock_com) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "', '" . CONTRIBUTION_TYPE . "', '0', '0')", __LINE__, __FILE__);
-			$contribution->set_id($Sql->insert_id("SELECT MAX(id) FROM " . PREFIX. EVENTS_TABLE_NAME));	
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_EVENTS  . " (entitled, description, fixing_url, module, current_status, creation_date, fixing_date, auth, poster_id, fixer_id, id_in_module, identifier, type, contribution_type, nbr_com, lock_com) VALUES ('" . addslashes($contribution->get_entitled()) . "', '" . addslashes($contribution->get_description()) . "', '" . addslashes($contribution->get_fixing_url()) . "', '" . addslashes($contribution->get_module()) . "', '" . $contribution->get_status() . "', '" . $creation_date->get_timestamp() . "', 0, '" . (!empty($contribution_auth) ? addslashes(serialize($contribution_auth)) : '') . "', '" . $contribution->get_poster_id() . "', '" . $contribution->get_fixer_id() . "', '" . $contribution->get_id_in_module() . "', '" . addslashes($contribution->get_identifier()) . "', '" . addslashes($contribution->get_type()) . "', '" . CONTRIBUTION_TYPE . "', '0', '0')", __LINE__, __FILE__);
+			$contribution->set_id($Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_EVENTS));	
 		}
 		
 		//Regeneration of the member cache file
@@ -160,15 +193,18 @@ class ContributionService
 		}
 	}
 	
-	//Deleting a contribution in the database
-	/*static*/ function delete_contribution(&$contribution)
+	/**
+     * @desc Deletes a contribution in the database.
+     * @param Contribution $contribution The contribution to delete in the data base.
+	 */
+	function delete_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
 		//If it exists in database
 		if ($contribution->get_id() > 0)
 		{
-			$Sql->query_inject("DELETE FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS  . " WHERE id = '" . $contribution->get_id() . "'", __LINE__, __FILE__);
 			//We reset the id
 			$contribution->set_id(0);
 			
@@ -177,19 +213,36 @@ class ContributionService
 		}
 	}
 	
-	/*static*/ function generate_cache()
+	/**
+	 * @static
+	 * @desc Generates the contribution cache file.
+	 */
+	function generate_cache()
 	{
 		global $Cache;
 		$Cache->generate_file('member');
 	}
 	
-	/*static*/ function compute_number_contrib_for_each_profile()
+	/**
+	 * @static 
+	 * @desc Computes the number of contributions available for each profile.
+	 * It will count the contributions for the administrator, the moderators, the members, for each group and for each member who can have some special authorizations.
+	 * @return int[] A map containing the values for each profile:
+	 * <ul>
+	 * 	<li>r2 => for the administrator</li>
+	 * 	<li>r1 => for the moderators</li>
+	 * 	<li>r0 => for the members</li>
+	 * 	<li>gi => for the group whose id is i</li>
+	 * 	<li>mi => for the member whose id is i</li>
+	 * </ul>
+	 */
+	function compute_number_contrib_for_each_profile()
 	{
 		global $Sql;
 		
 		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
 		
-		$result = $Sql->query_while ("SELECT auth FROM " . PREFIX . EVENTS_TABLE_NAME . " WHERE current_status = '" . CONTRIBUTION_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
+		$result = $Sql->query_while ("SELECT auth FROM " . DB_TABLE_EVENTS  . " WHERE current_status = '" . EVENT_STATUS_UNREAD . "' AND contribution_type = '" . CONTRIBUTION_TYPE . "'", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if (!($this_auth = @unserialize($row['auth'])))
@@ -205,7 +258,7 @@ class ContributionService
 				$array_result['r1']++;
 			
 			//For members ?
-			if (Authorizations::check_auth(RANK_TYPE, USER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
+			if (Authorizations::check_auth(RANK_TYPE, MEMBER_LEVEL, $this_auth, CONTRIBUTION_AUTH_BIT))
 				$array_result['r0']++;
 				
 			foreach ($this_auth as $profile => $auth_profile)

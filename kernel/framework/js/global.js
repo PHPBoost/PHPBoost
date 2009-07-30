@@ -24,6 +24,18 @@
  *
 ###################################################*/
 
+//Javascript frame breaker necessary to the CSRF attack protection
+if (top != self)
+{
+	top.location = self.location;
+}
+
+__uid = 42;
+
+function getUid() {
+	return __uid++;
+}
+
 var menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
 var menu_delay_onmouseover = 180; //Durée après laquelle la menu est affiché lors du passage de la souris dessus.
 var menu_previous = new Array();
@@ -39,11 +51,6 @@ for(var i = 0; i < max_level; i++)
 	menu_timeout_tmp.push(null);
 	menu_started.push(false);
 }
-
-// Feeds menu gestion
-var feed_menu_timeout_in = null;
-var feed_menu_timeout_out = null;
-var feed_menu_elt = null;
 
 //Fonction de temporisation, permet d'éviter que le menu déroulant perturbe la navigation lors du survol rapide de la souris.
 function showMenu(idmenu, level)
@@ -192,6 +199,19 @@ function strpos(haystack, needle)
 {
     var i = haystack.indexOf(needle, 0); // returns -1
     return i >= 0 ? i : false;
+}
+
+//Supprime les espaces en début et fin de chaîne.
+function trim(myString)
+{
+	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
+} 
+
+//Vérifie une adresse email
+function check_mail_validity(mail)
+{
+	regex = new RegExp("^[a-z0-9._!#$%&\'*+/=?^|~-]+@([a-z0-9._-]{2,}\.)+[a-z]{2,4}$", "i");
+	return regex.test(trim(mail));
 }
 
 //Affichage/Masquage de la balise hide.
@@ -440,7 +460,7 @@ function XMLHttpRequest_search_members(searchid, theme, insert_mode, alert_empty
 	{
 		if( document.getElementById('search_img' + searchid) )
 			document.getElementById('search_img' + searchid).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
-		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?' + insert_mode + '=1');
+		var xhr_object = xmlhttprequest_init(PATH_TO_ROOT + '/kernel/framework/ajax/member_xmlhttprequest.php?token=' + TOKEN + '&' + insert_mode + '=1');
 		data = 'login=' + login + '&divid=' + searchid;
 		xhr_object.onreadystatechange = function() 
 		{
@@ -596,6 +616,13 @@ function isInteger(number)
     return i == number.length ;
 }
 
+
+/*#######Feeds menu gestion######*/
+var feed_menu_timeout_in = null;
+var feed_menu_timeout_out = null;
+var feed_menu_elt = null;
+var feed_menu_delay = 800; //Durée après laquelle le menu est caché lors du départ de la souris.
+
 // Print the syndication's choice menu
 function ShowSyndication(element) {
     if( feed_menu_elt )
@@ -609,11 +636,72 @@ function ShowSyndication(element) {
             break;
         }
     }
-    feed_menu_timeout_in = setTimeout('feed_menu_elt.style.visibility = \'visible\'', menu_delay_onmouseover);
+	feed_menu_elt.style.visibility = 'visible';
+    clearTimeout(feed_menu_timeout_out);
+}
+function ShowSyndicationMenu(element) {
+	element.style.visibility = 'visible';
     clearTimeout(feed_menu_timeout_out);
 }
 function HideSyndication(element) {
     feed_menu_elt = element;
-    feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', menu_delay);
+    feed_menu_timeout_out = setTimeout('feed_menu_elt.style.visibility = \'hidden\'', feed_menu_delay);
     clearTimeout(feed_menu_timeout_in);
+}
+
+//Pour savoir si une fonction existe
+function functionExists(function_name) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: Steve Clay
+    // +   improved by: Legaev Andrey
+    // *     example 1: function_exists('isFinite');
+    // *     returns 1: true 
+    if (typeof function_name == 'string'){
+        return (typeof window[function_name] == 'function');
+    } else{
+        return (function_name instanceof Function);
+    }
+}
+
+//Includes synchronously a js file
+function include(file)
+{
+	if (window.document.getElementsByTagName)
+	{
+		script = window.document.createElement("script");
+		script.type = "text/javascript";
+		script.src = file;
+		$("header").appendChild(script);
+	}
+}
+
+//Affiche le lecteur vidéo avec la bonne URL, largeur et hauteur
+playerflowPlayerRequired = false;
+function insertMoviePlayer(id) {
+	if (!playerflowPlayerRequired) {
+		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
+		playerflowPlayerRequired = true;
+	}
+	flowPlayerDisplay(id);
+}
+
+//Construit le lecteur à partir du moment où son code a été interprété par l'interpréteur javascript
+function flowPlayerDisplay(id)
+{
+	//Construit et affiche un lecteur vidéo de type flowplayer
+	//Si la fonction n'existe pas, on attend qu'elle soit interprétée
+	if (!functionExists('flowplayer'))
+	{
+		setTimeout('flowPlayerDisplay(\'' + id + '\')', 100);
+		return;
+	}
+	//On lance le flowplayer
+	flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.swf', { 
+		    clip: { 
+		        url: $(id).href,
+		        autoPlay: false 
+		    }
+	    }
+	);
 }

@@ -1,6 +1,10 @@
 		<script type="text/javascript">
 		<!--
 		function check_form_or(){
+			# IF C_BBCODE_TINYMCE_MODE #
+				tinyMCE.triggerSave();
+			# ENDIF #
+			
 			if(document.getElementById('guestbook_contents').value == "") {
 				alert("{L_ALERT_TEXT}");
 				return false;
@@ -11,7 +15,7 @@
 		function Confirm() {
 		return confirm("{L_DELETE_MSG}");
 		}
-					
+		
 		-->
 		</script>
 
@@ -25,7 +29,18 @@
 					<dt><label for="guestbook_pseudo">* {L_PSEUDO}</label></dt>
 					<dd><label><input type="text" size="25" maxlength="25" name="guestbook_pseudo" id="guestbook_pseudo" value="{PSEUDO}" class="text" /></label></dd>
 				</dl>
-				# ENDIF #			
+				# ENDIF #	
+				
+				# IF C_VERIF_CODE #
+				<dl>
+					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
+					<dd>
+						<label>
+							{VERIF_CODE}
+						</label>
+					</dd>			
+				</dl>
+				# ENDIF #
 				
 				<label for="guestbook_contents">* {L_MESSAGE}</label>
 				<div class="fieldset_mini">{KERNEL_EDITOR}</div>
@@ -44,7 +59,7 @@
 				<script type="text/javascript">
 				<!--				
 				document.getElementById('previs_guestbook').style.display = 'none';
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 				-->
 				</script>
 				

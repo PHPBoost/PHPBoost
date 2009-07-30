@@ -21,6 +21,11 @@
 					<br />
 					<a href="admin_faq.php?p=1" class="quick_link">{L_QUESTIONS_LIST}</a>
 				</li>
+				<li>
+					<a href="management.php?new=1"><img src="faq.png" alt="{L_ADD_QUESTION}" /></a>
+					<br />
+				<a href="management.php?new=1" class="quick_link">{L_ADD_QUESTION}</a>
+				</li>
 			</ul>
 		</div>
 

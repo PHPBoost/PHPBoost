@@ -17,7 +17,7 @@
         <link href="{item.U_LINK}"/>
         <id>{item.U_GUID}</id>
         <updated>{item.DATE_RFC3339}</updated>
-        <summary>{item.DESC}</summary>
+        <content type="html">{item.DESC}</content>
     </entry>
     # END item #
     

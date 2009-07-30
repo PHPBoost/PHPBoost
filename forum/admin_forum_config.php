@@ -40,7 +40,7 @@ $Cache->load('forum');
 //Si c'est confirmé on execute
 if (!empty($_POST['valid']))
 {
-	$CONFIG_FORUM['forum_name'] = retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum', TSTRING_UNSECURE);  
+	$CONFIG_FORUM['forum_name'] = stripslashes(retrieve(POST, 'forum_name', $CONFIG['site_name'] . ' forum'));  
 	$CONFIG_FORUM['pagination_topic'] = retrieve(POST, 'pagination_topic', 20);  
 	$CONFIG_FORUM['pagination_msg'] = retrieve(POST, 'pagination_msg', 15);
 	$CONFIG_FORUM['view_time'] = retrieve(POST, 'view_time', 30) * 3600 * 24;
@@ -50,15 +50,15 @@ if (!empty($_POST['valid']))
 	$CONFIG_FORUM['no_left_column'] = retrieve(POST, 'no_left_column', 0);
 	$CONFIG_FORUM['no_right_column'] = retrieve(POST, 'no_right_column', 0);
 	$CONFIG_FORUM['activ_display_msg']  = retrieve(POST, 'activ_display_msg', 0);
-	$CONFIG_FORUM['display_msg'] = retrieve(POST, 'display_msg', '', TSTRING_UNSECURE);
-	$CONFIG_FORUM['explain_display_msg'] = retrieve(POST, 'explain_display_msg', '', TSTRING_UNSECURE);	
-	$CONFIG_FORUM['explain_display_msg_bis'] = retrieve(POST, 'explain_display_msg_bis', '', TSTRING_UNSECURE);
+	$CONFIG_FORUM['display_msg'] = stripslashes(retrieve(POST, 'display_msg', ''));
+	$CONFIG_FORUM['explain_display_msg'] = stripslashes(retrieve(POST, 'explain_display_msg', ''));	
+	$CONFIG_FORUM['explain_display_msg_bis'] = stripslashes(retrieve(POST, 'explain_display_msg_bis', ''));
 	$CONFIG_FORUM['icon_activ_display_msg'] = retrieve(POST, 'icon_activ_display_msg', 0);
 	$CONFIG_FORUM['auth'] = serialize($CONFIG_FORUM['auth']);
 		
 	if (!empty($CONFIG_FORUM['forum_name']) && !empty($CONFIG_FORUM['pagination_topic']) && !empty($CONFIG_FORUM['pagination_msg']) && !empty($CONFIG_FORUM['view_time']))
 	{
-		$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_FORUM)) . "' WHERE name = 'forum'", __LINE__, __FILE__);
 			
 		###### Régénération du cache du forum ###### 
 		$Cache->Generate_module_file('forum');
@@ -71,7 +71,7 @@ if (!empty($_POST['valid']))
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {
 	$result = $Sql->query_while("SELECT id, id_left, id_right
-	FROM ".PREFIX."forum_cats
+	FROM " . PREFIX . "forum_cats
 	WHERE level > 0", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{	
@@ -79,15 +79,15 @@ elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 		if (($row['id_right'] - $row['id_left']) > 1)
 		{
 			$result2 = $Sql->query_while("SELECT id
-			FROM ".PREFIX."forum_cats
+			FROM " . PREFIX . "forum_cats
 			WHERE id_left >= '" . $row['id_left'] . "' AND id_right <= '" . $row['id_right'] ."'", __LINE__, __FILE__);
 			
 			while ($row2 = $Sql->fetch_assoc($result2))
 				$cat_list .=  ', ' . $row2['id'];
 		}
 		
-		$info_cat = $Sql->query_array("forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+		$info_cat = $Sql->query_array(PREFIX . "forum_topics", "COUNT(*) as nbr_topic", "SUM(nbr_msg) as nbr_msg", "WHERE idcat IN (" . $cat_list . ")", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "forum_cats SET nbr_topic = '" . $info_cat['nbr_topic'] . "', nbr_msg = '" . $info_cat['nbr_msg'] . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 	}
 	$Sql->query_close($result);
 	

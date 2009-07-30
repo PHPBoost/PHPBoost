@@ -3,7 +3,7 @@
  *                               admin_extend_field.php
  *                            -------------------
  *   begin                : June 16, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -40,19 +40,20 @@ $Template->set_filenames(array(
 	
 if ($del && !empty($id))
 {
-	$field_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$field_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	if (!empty($field_name)) 
 	{
-		$Sql->query_inject("DELETE FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend DROP " . $field_name, __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " DROP " . $field_name, __LINE__, __FILE__);
 	}
 	redirect(HOST . SCRIPT);
 }
 elseif (!empty($_POST['valid']))
 {
 	$name = retrieve(POST, 'name', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$contents = nl2br(retrieve(POST, 'contents', '', TSTRING));
 	$field = retrieve(POST, 'field', 0);
+	$required = retrieve(POST, 'required', 0);
 	$possible_values = retrieve(POST, 'possible_values', '');
 	$default_values = retrieve(POST, 'default_values', '');
 	
@@ -63,7 +64,7 @@ elseif (!empty($_POST['valid']))
 		$regex = retrieve(POST, 'regex2', '');
 
 	$array_field = array(
-		1 => 'VARCHAR(255) NOT NULL', 
+		1 => 'VARCHAR(255) NOT NULL DEFAULT = \'\'', 
 		2 => 'TEXT NOT NULL', 
 		3 => 'TEXT NOT NULL', 
 		4 => 'TEXT NOT NULL', 
@@ -82,14 +83,14 @@ elseif (!empty($_POST['valid']))
 		}
 		$field_name = rewrite_field($name);
 		
-		$check_name = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."member_extend_cat WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
+		$check_name = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE field_name = '" . $field_name . "' AND id <> '" . $id . "'", __LINE__, __FILE__);
 		if (empty($check_name)) 
 		{
 			$new_field_name = $field_name . ' ' . $array_field[$field];
-			$previous_name = $Sql->query("SELECT field_name FROM ".PREFIX."member_extend_cat WHERE id = '" . $id . "'", __LINE__, __FILE__);
+			$previous_name = $Sql->query("SELECT field_name FROM " . DB_TABLE_MEMBER_EXTEND_CAT . " WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			if ($previous_name != $field_name)
-				$Sql->query_inject("ALTER TABLE ".PREFIX."member_extend CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
 			redirect(HOST . DIR . '/admin/admin_extend_field.php');
 		}
@@ -105,9 +106,9 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{	
 		$idmoins = ($top - 1);
 			
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = 0 WHERE class='" . $top . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $top . " WHERE class = '" . $idmoins . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class=" . $idmoins . " WHERE class = 0", __LINE__, __FILE__);
 		
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
@@ -115,16 +116,16 @@ elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 	{
 		$idplus = ($bottom + 1);
 			
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member_extend_cat SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = 0 WHERE class = '" . $bottom . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $bottom . " WHERE class = '" . $idplus . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET class = " . $idplus . " WHERE class = 0", __LINE__, __FILE__);
 			
 		redirect(HOST . SCRIPT . '#e' . $id);
 	}
 }
 elseif (!empty($id))
 {	
-	$extend_field = $Sql->query_array("member_extend_cat", "id", "name", "contents", "field", "possible_values", "default_values", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$extend_field = $Sql->query_array(DB_TABLE_MEMBER_EXTEND_CAT, "id", "name", "contents", "field", "possible_values", "default_values", "required", "regex", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	$regex_checked = 2;
 	$predef_regex = false;
@@ -138,7 +139,7 @@ elseif (!empty($id))
 		'C_FIELD_EDIT' => true,
 		'ID' => $extend_field['id'],
 		'NAME' => $extend_field['name'],
-		'CONTENTS' => $extend_field['contents'],
+		'CONTENTS' => str_replace('<br />', '', $extend_field['contents']),
 		'POSSIBLE_VALUES' => $extend_field['possible_values'],
 		'DEFAULT_VALUES' => $extend_field['default_values'],
 		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
@@ -186,9 +187,11 @@ elseif (!empty($id))
 	}
 	
 	$Template->assign_vars(array(
-		'REGEX' => (!$predef_regex) ? $extend_field : '',
+		'REGEX' => (!$predef_regex) ? $extend_field['regex'] : '',
 		'OPTION_REGEX' => $option_regex,
 		'OPTION_FIELD' => $option_field,
+		'REQUIRED_FIELD_ENABLE' => $extend_field['required'] ? 'checked="checked"' : '',
+		'REQUIRED_FIELD_DISABLE' => !$extend_field['required'] ? 'checked="checked"' : '',
 		'L_REQUIRE_NAME' => $LANG['require_title'],
 		'L_DEFAULT_FIELD_VALUE' => $LANG['default_field_possible_values'],
 		'L_EXTEND_FIELD_MANAGEMENT' => $LANG['extend_field_management'],
@@ -199,6 +202,10 @@ elseif (!empty($id))
 		'L_NAME' => $LANG['name'],
 		'L_TYPE' => $LANG['type'],
 		'L_DESC' => $LANG['description'],		
+		'L_REQUIRED_FIELD' => $LANG['required_field'],
+		'L_REQUIRED_FIELD_EXPLAIN' => $LANG['required_field_explain'],
+		'L_REQUIRED' => $LANG['required'],
+		'L_NOT_REQUIRED' => $LANG['not_required'],
 		'L_SHORT_TEXT' => $LANG['short_text'],
 		'L_LONG_TEXT' => $LANG['long_text'],
 		'L_SEL_UNIQ' => $LANG['sel_uniq'],
@@ -235,16 +242,17 @@ else
 		'L_EXTEND_FIELD' => $LANG['extend_field'],
 		'L_NAME' => $LANG['name'],
 		'L_UPDATE' => $LANG['update'],
+		'L_REQUIRED' => $LANG['required'],
 		'L_POSITION' => $LANG['position'],
 		'L_DELETE' => $LANG['delete'],
 		'L_UPDATE' => $LANG['update'],
 	));
 	
-	$min_cat = $Sql->query("SELECT MIN(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
-	$max_cat = $Sql->query("SELECT MAX(class) FROM ".PREFIX."member_extend_cat", __LINE__, __FILE__);
+	$min_cat = $Sql->query("SELECT MIN(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
+	$max_cat = $Sql->query("SELECT MAX(class) FROM " . PREFIX . "member_extend_cat WHERE display = 1", __LINE__, __FILE__);
 	
-	$result = $Sql->query_while("SELECT id, class, name
-	FROM ".PREFIX."member_extend_cat
+	$result = $Sql->query_while("SELECT id, class, name, required
+	FROM " . PREFIX . "member_extend_cat
 	WHERE display = 1
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -258,6 +266,7 @@ else
 		$Template->assign_block_vars('field', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
+			'L_REQUIRED' => $row['required'] ? $LANG['yes'] : $LANG['no'],
 			'TOP' => $top_link,
 			'BOTTOM' => $bottom_link
 		));		

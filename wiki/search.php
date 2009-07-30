@@ -35,7 +35,7 @@ require_once('../wiki/wiki_bread_crumb.php');
 
 require_once('../kernel/header.php');
 
-if (!$User->check_level(USER_LEVEL))
+if (!$User->check_level(MEMBER_LEVEL))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 $search_string = retrieve(GET, 'search', '');
@@ -49,7 +49,7 @@ $Template->set_filenames(array('wiki_search'=> 'wiki/search.tpl'));
 $Template->assign_vars(array(
 	'L_SEARCH' => $LANG['wiki_search'],
 	'L_KEY_WORDS' => $LANG['wiki_search_key_words'],
-	'TARGET' => url('search.php'),
+	'TARGET' => url('search.php?token=' . $Session->get_token()),
 	'KEY_WORDS' => $search_string,
 	'L_SEARCH_RESULT' => $LANG['wiki_search_result'],
 	'ARTICLE_TITLE' => $LANG['title'],
@@ -57,33 +57,33 @@ $Template->assign_vars(array(
 	'SELECTED_TITLE' => $where_search == 'title' ? 'checked="checked"' : '',
 	'SELECTED_CONTENTS' => $where_search != 'title' ? 'checked="checked"' : '',
 	'L_TITLE' => $LANG['title'],
-	'L_CONTENTS' => $LANG['contents']
+	'L_CONTENTS' => $LANG['content']
 ));
 
 if (!empty($search_string)) //recherche
 {
 	$title_search = "SELECT title, encoded_title, MATCH(title) AGAINST('" . $search_string . "') AS relevance
-		FROM ".PREFIX."wiki_articles
+		FROM " . PREFIX . "wiki_articles
 		WHERE MATCH(title) AGAINST('" . $search_string . "') 
 		ORDER BY relevance DESC";
 	
 	$contents_search = "SELECT a.title, a.encoded_title, MATCH(c.content) AGAINST('" . $search_string . "') AS relevance
-		FROM ".PREFIX."wiki_articles a
-		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+		FROM " . PREFIX . "wiki_articles a
+		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "') 
 		ORDER BY relevance DESC";
 	
 	$query = ($where_search == 'title' ? $title_search : $contents_search);
 	
-	$query_rows = $where_search == 'title' ? "SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE MATCH(title) AGAINST('" . $search_string . "')" : "SELECT COUNT(*) 		FROM ".PREFIX."wiki_articles a
-		LEFT JOIN ".PREFIX."wiki_contents c ON c.id_contents = a.id
+	$query_rows = $where_search == 'title' ? "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE MATCH(title) AGAINST('" . $search_string . "')" : "SELECT COUNT(*) 		FROM " . PREFIX . "wiki_articles a
+		LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id
 		WHERE MATCH(c.content) AGAINST('" . $search_string . "')";
 	
 	$result = $Sql->query_while ($query, __LINE__, __FILE__);
 	
 	$num_rows = $Sql->num_rows($result, $query_rows, __LINE__, __FILE__);
 	
-	include_once('../kernel/framework/util/pagination.class.php'); 
+	import('util/pagination'); 
 	$Pagination = new Pagination();
 	$pages_links = $Pagination->display('search' . url('.php?search=' . $search_string . '&amp;where=' . $where_search . '&amp;page=%d'), $num_rows, 'page', 10, 3);
 	

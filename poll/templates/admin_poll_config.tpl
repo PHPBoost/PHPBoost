@@ -53,7 +53,7 @@
 		</div> 
 		
 		<div id="admin_contents">
-			<form action="admin_poll_config.php" method="post" class="fieldset_content">
+			<form action="admin_poll_config.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_POLL_CONFIG_MINI}</legend>
 					<dl>
@@ -94,7 +94,6 @@
 					&nbsp;&nbsp; 
 					<input type="reset" value="{L_RESET}" class="reset" />				
 				</fieldset>	
-			</table>
 			</form>
 		</div>
 		

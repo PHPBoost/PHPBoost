@@ -26,12 +26,17 @@
 ###################################################*/
 
 //Constantes de base.
-define('DELETE_ON_ERROR', true);
-define('NO_DELETE_ON_ERROR', false);
-define('UNIQ_NAME', true);
-define('CHECK_EXIST', true);
-define('NO_UNIQ_NAME', false);
+define('DELETE_ON_ERROR', 		true);
+define('NO_DELETE_ON_ERROR', 	false);
+define('UNIQ_NAME', 			true);
+define('CHECK_EXIST', 			true);
+define('NO_UNIQ_NAME', 			false);
 
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com
+ * @desc This class provides you methods to upload easily files to the ftp.
+ * @package io
+ */
 class Upload
 {
 	## Public Attributes ##
@@ -39,14 +44,24 @@ class Upload
 	
 	
 	## Public Methods ##	
-	//Constructeur
+	/**
+	 * @desc constructor
+	 * @param string $base_directory Set the directory to upload the files.
+	 */
 	function Upload($base_directory = 'upload')
 	{
 		$this->base_directory = $base_directory;
-		return;
 	}
 	
-	//Upload d'un fichier
+	/**
+	 * @desc Uploads a file.
+	 * @param string $filepostname Name in the input file formulary.
+	 * @param string $regexp Regular expression to specify file format.
+	 * @param boolean $uniq_name If true assign a new name if a file with same name already exist. Otherwise previous file is overwrite.
+	 * @param int $weight_max The maximum file size.
+	 * @param boolean $check_exist If true verify if a file with the same name exist on the ftp. Otherwise previous file is overwrite.
+	 * @return boolean True if the file has been succefully uploaded. Error code if an error occured.
+	 */
 	function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
 	{		
 		global $LANG;
@@ -86,7 +101,14 @@ class Upload
 		return false;
 	}
 		
-	//Validation des images, supprime l'image en cas d'erreur sir $delete à true.
+	/**
+	 * @desc Checks whether an image is compliant to an maximum width and height, otherwise is $delete value is true delete it. 
+	 * @param string $filepath Path to the image.
+	 * @param int $width_max Max width
+	 * @param int $height_max Max height
+	 * @param boolean $delete
+	 * @return string Error code.
+	 */
 	function validate_img($filepath, $width_max, $height_max, $delete = true)
 	{
 		$error = '';		
@@ -102,7 +124,12 @@ class Upload
 	
 	
 	## Private Methods ##	
-	//Vérification de la conformité du fichier
+	/**
+	 * @desc Checks the validity of a file with regular expression.
+	 * @param string $filename The file name
+	 * @param string $regexp Regular expression
+	 * @return boolean The result of the regular expression test.
+	 */
 	function _check_file($filename, $regexp)
 	{
 		if (!empty($regexp))
@@ -114,7 +141,11 @@ class Upload
 		return true;
 	}
 	
-	//Nettoie l'url de tous les caractères spéciaux, accents, etc....
+	/**
+	 * @desc Clean the url, replace special characters with underscore.
+	 * @param string The file name.
+	 * @return string The cleaned file name.
+	 */
 	function _clean_filename($string)
 	{
 		$string = strtolower($string);
@@ -126,31 +157,48 @@ class Upload
 		return $string;
 	}
 	
-	//Genère à partir du nom du fichier, un nom de fichier unique. Gère les colisions. Renseigne les informations du fichier à uploader.
+	/**
+	 * @desc Generates a unique file name. Completes informations on the file.
+	 * @param string $filename The filename
+	 * @param string $filepostname The filename in the input file formular
+	 * @param boolean $uniq_name
+	 */
 	function _generate_file_info($filename, $filepostname, $uniq_name)
 	{
 		$this->extension[$filepostname] = strtolower(substr(strrchr($filename, '.'), 1));
-		
-		$filename = substr($filename, 0, strrpos($filename, '.'));
+		if (strrpos($filename, '.') !== FALSE)
+		{
+			$filename = substr($filename, 0, strrpos($filename, '.'));
+		}
 		$filename = str_replace('.', '_', $filename);
 		$filename = $this->_clean_filename($filename);
 
 		if ($uniq_name)
 		{
 			$filename_tmp = $filename;
-			while (file_exists($this->base_directory . $filename_tmp . '.' . $this->extension[$filepostname]))
+			if (!empty($this->extension[$filepostname]))
+				$filename_tmp .= '.' . $this->extension[$filepostname];
+			$filename1 = $filename;
+			while (file_exists($this->base_directory . $filename_tmp))
 			{
-				$filename_tmp = $filename;
-				$filename_tmp .= '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
+				$filename1 = $filename . '_' . substr(strhash(uniqid(mt_rand(), true)), 0, 5);
+				$filename_tmp = $filename1;
+				if (!empty($this->extension[$filepostname]))
+					$filename_tmp .= '.' . $this->extension[$filepostname];
 			}
-			$filename = $filename_tmp;
+			$filename = $filename1;
 		}
-			
-		$filename .= '.' . $this->extension[$filepostname];		
-		$this->filename[$filepostname] = $filename;	
+
+		if (!empty($this->extension[$filepostname]))
+			$filename .= '.' . $this->extension[$filepostname];
+		$this->filename[$filepostname] = $filename;
 	}
 	
-	//Gestion des erreurs d'upload.
+	/**
+	 * @desc Manages error code during upload.
+	 * @param string $error
+	 * @return string Error code.
+	 */
 	function _error_manager($error)
 	{
 		switch ($error)

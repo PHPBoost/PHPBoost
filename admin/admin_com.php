@@ -45,7 +45,7 @@ $Cache->load('com');
 //On récupère le nombre de commentaires dans chaque modules.
 $array_com = array();
 $result = $Sql->query_while ("SELECT script, COUNT(*) as total
-FROM ".PREFIX."com 
+FROM " . DB_TABLE_COM . " 
 GROUP BY script", __LINE__, __FILE__);
 
 while ($row = $Sql->fetch_assoc($result))
@@ -54,7 +54,7 @@ while ($row = $Sql->fetch_assoc($result))
 $Sql->query_close($result);
 
 //On crée une pagination si le nombre de commentaires est trop important.
-include_once('../kernel/framework/util/pagination.class.php'); 
+import('util/pagination'); 
 $Pagination = new Pagination();
 
 $nbr_com = !empty($module) ? (!empty($array_com[$module]) ? $array_com[$module] : 0) : $Sql->count_table('com', __LINE__, __FILE__);
@@ -73,41 +73,34 @@ $Template->assign_vars(array(
 ));
 
 //Modules disponibles
-$root = '../';
-$i = 0;
-if (is_dir($root)) //Si le dossier existe
+import('io/filesystem/folder');
+$folder_path = new Folder('../');
+foreach ($folder_path->get_folders('`^[a-z0-9_ -]+$`i') as $modules)
 {
-	$dh = @opendir($root);
-	while (!is_bool($dir = readdir($dh)))
-	{	
-		//Si c'est un repertoire, on affiche.
-		if (strpos($dir, '.') === false)
+	$modulef = $modules->get_name();
+	//Désormais on vérifie que le fichier de configuration est présent.
+	if (@file_exists('../' . $modulef . '/lang/' . get_ulang() . '/config.ini'))
+	{
+		//Récupération des infos de config.
+		$info_module = load_ini_file('../' . $modulef . '/lang/', get_ulang());
+		if (isset($info_module['info']) && !empty($info_module['com']))
 		{
-			//Désormais on vérifie que le fichier de configuration est présent.
-			if (is_file($root . $dir . '/lang/' . get_ulang() . '/config.ini'))
-			{
-				//Récupération des infos de config.
-				$info_module = load_ini_file($root . $dir . '/lang/', get_ulang());
-				if (isset($info_module['info']) && !empty($info_module['com']))
-				{
-					$Template->assign_block_vars('modules_com', array(
-						'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
-						'U_MODULES' => $info_module['com']
-					));
-				}
-			}
+			$Template->assign_block_vars('modules_com', array(
+				'MODULES' => $info_module['name'] . (isset($array_com[$info_module['com']]) ? ' (' . $array_com[$info_module['com']] . ')' : ' (0)'),
+				'U_MODULES' => $info_module['com']
+			));
 		}
 	}
 }
 
-//Gestion des rangs.	
+//Gestion des rangs.
 $Cache->load('ranks');
 
 $cond = !empty($module) ? "WHERE script = '" . $module . "'" : '';
 $result = $Sql->query_while("SELECT c.idprov, c.idcom, c.login, c.user_id, c.timestamp, c.script, c.path, m.login as mlogin, m.level, m.user_mail, m.user_show_mail, m.timestamp AS registered, m.user_avatar, m.user_msg, m.user_local, m.user_web, m.user_sex, m.user_msn, m.user_yahoo, m.user_sign, m.user_warning, m.user_ban, m.user_groups, s.user_id AS connect, c.contents
-FROM ".PREFIX."com c
-LEFT JOIN ".PREFIX."member m ON m.user_id = c.user_id
-LEFT JOIN ".PREFIX."sessions s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
+FROM " . DB_TABLE_COM . " c
+LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = c.user_id
+LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = c.user_id AND s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "'
 " . $cond . "
 GROUP BY c.idcom
 ORDER BY c.timestamp DESC
@@ -153,7 +146,7 @@ while ($row = $Sql->fetch_assoc($result))
 	
 	//Image associée au rang.
 	$user_assoc_img = isset($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
-				
+	
 	//Affichage des groupes du membre.		
 	if (!empty($row['user_groups']) && $_array_groups_auth) 
 	{	
@@ -200,7 +193,7 @@ while ($row = $Sql->fetch_assoc($result))
 	$Template->assign_block_vars('com', array(
 		'ID' => $row['idcom'],
 		'CONTENTS' => ucfirst(second_parse($row['contents'])),
-		'COM_SCRIPT' => $row['script'],
+		'COM_SCRIPT' => 'anchor_' . $row['script'],
 		'DATE' => $LANG['on'] . ': ' . gmdate_format('date_format', $row['timestamp']),
 		'USER_ONLINE' => '<img src="../templates/' . get_utheme() . '/images/' . $user_online . '.png" alt="" class="valign_middle" />',
 		'USER_PSEUDO' => $com_pseudo,			
@@ -215,12 +208,12 @@ while ($row = $Sql->fetch_assoc($result))
 		'USER_MAIL' => (!empty($row['user_mail']) && ($row['user_show_mail'] == '1')) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail']  . '" title="' . $row['user_mail']  . '" /></a>' : '',			
 		'USER_MSN' => !empty($row['user_msn']) ? '<a href="mailto:' . $row['user_msn'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/msn.png" alt="' . $row['user_msn']  . '" title="' . $row['user_msn']  . '" /></a>' : '',
 		'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-		'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . $row['user_sign'] : '',
+		'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . second_parse($row['user_sign']) : '',
 		'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 		'U_PROV' => $row['path'],
 		'U_USER_PM' => '<a href="../member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
-		'U_EDIT_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&editcom=1',
-		'U_DEL_COM' => preg_replace('`i=[0-9]+`', 'i=' . $row['idcom'], $row['path']) . '&delcom=1',
+		'U_EDIT_COM' => preg_replace('`com=[0-9]+`', 'com=' . $row['idcom'], $row['path']) . '&editcom=1',
+		'U_DEL_COM' => preg_replace('`com=[0-9]+`', 'com=' . $row['idcom'], $row['path']) . '&delcom=1',
 	));
 }
 

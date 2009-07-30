@@ -6,10 +6,10 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<span style="float:left;">
+				<span class="forum_cat_title">
 					<a href="membermsg{U_FORUM_VIEW_MSG}">{L_VIEW_MSG_USER}</a>
 				</span>
-				<span style="float:right;">{PAGINATION}</span>&nbsp;
+				<span style="float:right;">{PAGINATION}</span>
 			</div>
 		</div>	
 
@@ -21,7 +21,7 @@
 						{list.USER_ONLINE} <a class="forum_link_pseudo" href="../member/member{list.U_USER_ID}">{list.USER_PSEUDO}</a>
 					</div>
 					<span style="float:left;">
-						<span id="m{list.ID}"></span><a href="../forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {list.DATE}
+						&nbsp;&nbsp;<span id="m{list.ID}"></span><a href="../forum/topic{list.U_VARS_ANCRE}#m{list.ID}" title=""><img src="../templates/{THEME}/images/ancre.png" alt="" /></a> {list.DATE}
 					</span>
 					<span style="float:right;">
 						{list.U_FORUM_CAT} &raquo; {list.U_TITLE_T}

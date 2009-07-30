@@ -17,7 +17,7 @@
 		<div id="admin_contents">
 		
 			# IF C_THEME_MAIN #
-			<form action="admin_themes.php?uninstall=1" method="post">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="7">
@@ -77,7 +77,7 @@
 					# START list #
 					<tr> 	
 						<td class="row2" style="text-align:center;">					
-							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
+							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong></span> <em>({list.VERSION})</em>				
 						</td>
 						<td class="row2">					
 							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
@@ -94,11 +94,11 @@
 						</td>
 						# IF list.C_THEME_NOT_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}'" /> {L_YES}
-							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}'" /> {L_NO}
+							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_YES}
+							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}'">'; 
+							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'"> 
 								{list.OPTIONS}
 							</select>
 						</td>
@@ -128,9 +128,12 @@
 					# END list #	
 					<tr> 
 						<th colspan="7">
-							<noscript>
-								<input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
-							</noscript>
+							<input type="submit" name="valid" id="submit_theme" value="{L_SUBMIT}" class="submit" />
+							<script type="text/javascript">
+							<!--				
+							document.getElementById('submit_theme').style.display = 'none';
+							-->
+							</script>
 							&nbsp;
 						</th>
 					</tr>	
@@ -140,7 +143,7 @@
 		
 		
 			# IF C_DEL_THEME #
-			<form action="admin_themes.php?uninstall=1" method="post" class="fieldset_content">
+			<form action="admin_themes.php?uninstall=1&amp;token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_DEL_THEME}</legend>
 					<dl>
@@ -159,7 +162,7 @@
 			
 			
 			# IF C_EDIT_THEME #			
-			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}" method="post" class="fieldset_content">	
+			<form action="admin_themes.php?edit=1&amp;id={IDTHEME}&amp;token={TOKEN}" method="post" class="fieldset_content">	
 				<fieldset> 
 				<legend>{L_THEME_MANAGEMENT}</legend>
 					<p>{L_THEME} <strong>{THEME_NAME}</strong></p>

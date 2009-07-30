@@ -41,10 +41,10 @@ if (!empty($_POST['valid']))
 	$config_web['nbr_column'] = retrieve(POST, 'nbr_column', 2);
 	$config_web['note_max'] = max(1, retrieve(POST, 'note_max', 5));
 	
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_web)) . "' WHERE name = 'web'", __LINE__, __FILE__);
 	
 	if ($CONFIG_WEB['note_max'] != $config_web['note_max'])
-		$Sql->query_inject("UPDATE ".PREFIX."web SET note = note * " . ($config_web['note_max']/$CONFIG_WEB['note_max']), __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "web SET note = note * " . ($config_web['note_max']/$CONFIG_WEB['note_max']), __LINE__, __FILE__);
 	
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('web');

@@ -6,14 +6,14 @@
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -27,7 +27,7 @@
 
 
 ####################################################
-#                                                          French                                                                        #
+#                      French                      #
 ####################################################
 
 //Admin
@@ -76,8 +76,8 @@ $LANG['note_max_explain'] = '5 par défaut';
 $LANG['img_protect'] = 'Protection des images';
 $LANG['activ_logo'] = 'Activer Logo';
 $LANG['activ_logo_explain'] = 'Incrustation sur la photo';
-$LANG['logo_url'] = 'Adresse du logo'; 
-$LANG['logo_url_explain'] = 'Mettre dans le dossier /gallery'; 
+$LANG['logo_url'] = 'Adresse du logo';
+$LANG['logo_url_explain'] = 'Mettre dans le dossier /gallery';
 $LANG['logo_trans'] = 'Transparence du logo';
 $LANG['logo_trans_explain'] = '40% par defaut';
 $LANG['width_bottom_right'] = 'Distance horizontale';
@@ -127,6 +127,7 @@ $LANG['nbr_pics_mini'] = 'Nombre de miniatures';
 $LANG['speed_mini_pics'] = 'Vitesse du défilement';
 $LANG['speed_mini_pics_explain'] = 'Vitesse max: 10';
 $LANG['scrool_type'] = 'Type de défilement';
+$LANG['no_scroll'] = 'Aucun défilement';
 $LANG['static_scroll'] = 'Défilement statique';
 $LANG['vertical_dynamic_scroll'] = 'Défilement dynamique vertical';
 $LANG['horizontal_dynamic_scroll'] = 'Défilement dynamique horizontal';
@@ -136,10 +137,10 @@ $LANG['column'] = 'Colonnes';
 $LANG['require_height'] = 'Veuillez entrer une hauteur maximale pour les miniatures!';
 $LANG['require_height_max'] = 'Veuillez entrer une hauteur maximale pour les photos!';
 $LANG['require_width_max'] = 'Veuillez entrer une largeur maximale pour les photos!';
-$LANG['require_width'] = 'Veuillez entrer une largeur maximale pour les miniatures!'; 
-$LANG['require_weight_max'] = 'Veuillez entrez un poids maximum pour la photo!'; 
-$LANG['require_row'] = 'Veuillez entrer un nombre de colonne(s) pour la galerie!'; 
-$LANG['require_img_p'] = 'Veuillez entrer le nombre de photos par page!'; 
+$LANG['require_width'] = 'Veuillez entrer une largeur maximale pour les miniatures!';
+$LANG['require_weight_max'] = 'Veuillez entrez un poids maximum pour la photo!';
+$LANG['require_row'] = 'Veuillez entrer un nombre de colonne(s) pour la galerie!';
+$LANG['require_img_p'] = 'Veuillez entrer le nombre de photos par page!';
 $LANG['require_quality'] = 'Veuillez entrer une qualité pour les miniatures!';
 
 //Erreurs

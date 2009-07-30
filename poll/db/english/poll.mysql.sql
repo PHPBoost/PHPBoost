@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS `phpboost_poll`;
 CREATE TABLE `phpboost_poll` (
 	`id` int(11) NOT NULL auto_increment,
 	`question` varchar(255) NOT NULL default '',
-	`answers` text NOT NULL,
-	`votes` text NOT NULL,
+	`answers` text,
+	`votes` text,
 	`type` tinyint(1) NOT NULL default '0',
 	`archive` tinyint(1) NOT NULL default '0',
 	`timestamp` int(11) NOT NULL default '0',

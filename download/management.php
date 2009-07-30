@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,8 +32,8 @@ $Cache->load('download');
 
 include_once('download_auth.php');
 
-include_once('../kernel/framework/util/date.class.php');
-include_once('../kernel/framework/util/mini_calendar.class.php');
+import('util/date');
+import('util/mini_calendar');
 
 include_once('download_cats.class.php');
 $download_categories = new DownloadCats();
@@ -45,11 +45,14 @@ $submit = retrieve(POST, 'submit', false);
 $selected_cat = retrieve(GET, 'idcat', 0);
 $delete_file = retrieve(GET, 'del', 0);
 
+if ($delete_file || ($submit && ($add_file || $edit_file_id > 0)))
+    $Session->csrf_get_protect();
+
 //Form variables
 $file_title = retrieve(POST, 'title', '');
 $file_image = retrieve(POST, 'image', '');
-$file_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
+$file_contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+$file_short_contents = retrieve(POST, 'short_contents', '', TSTRING_AS_RECEIVED);
 $file_url = retrieve(POST, 'url', '');
 $file_timestamp = retrieve(POST, 'timestamp', 0);
 $file_size = retrieve(POST, 'size', 0.0, TUNSIGNED_FLOAT);
@@ -58,33 +61,35 @@ $file_cat_id = retrieve(REQUEST, 'idcat', 0);
 $file_visibility = retrieve(POST, 'visibility', 0);
 $file_approved = retrieve(POST, 'approved', false);
 $ignore_release_date = retrieve(POST, 'ignore_release_date', false);
+$file_download_method = retrieve(POST, 'download_method', 'redirect', TSTRING);
 
 //Instanciations of objects required
-$file_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$file_creation_date = MiniCalendar::retrieve_date('creation');
 
 if (!$ignore_release_date)
-	$file_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNSECURE);
+	$file_release_date = MiniCalendar::retrieve_date('release_date');
 else
 	$file_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
-
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNSECURE), $LANG['date_format_short']);
+$begining_date = MiniCalendar::retrieve_date('begining_date');
+$end_date = MiniCalendar::retrieve_date('end_date');
 
 //Deleting a file
 if ($delete_file > 0)
 {
-	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);	
+    //Vérification de la valiité du jeton
+    $Session->csrf_get_protect();
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));
 	
 	if ($download_categories->check_auth($file_infos['idcat']))
 	{
-		$Sql->query_inject("DELETE FROM ".PREFIX."download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "download WHERE id = '" . $delete_file . "'", __LINE__, __FILE__);
 		//Deleting comments if the file has
 		if ($file_infos['nbr_com'] > 0)
 		{
-			include_once('../kernel/framework/content/comments.class.php');
+			import('content/comments');
 			$Comments = new Comments('download', $delete_file, url('download.php?id=' . $delete_file . '&amp;com=%s', 'download-' . $delete_file . '.php?com=%s'));
 			$Comments->delete_all($delete_file);
 		}
@@ -100,7 +105,8 @@ if ($delete_file > 0)
 //Editing a page
 elseif ($edit_file_id > 0)
 {
-	$file_infos = $Sql->query_array('download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);	
+	$file_infos = $Sql->query_array(PREFIX . 'download', '*', "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+	
 	if (empty($file_infos['title']))
 		redirect(HOST. DIR . url('/download/download.php'));
 	define('TITLE', $DOWNLOAD_LANG['file_management']);
@@ -147,8 +153,57 @@ $Template->set_filenames(array(
 	'file_management'=> 'download/file_management.tpl'
 ));
 
+$Template->assign_vars(array(
+	'KERNEL_EDITOR' => display_editor(),
+	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
+	'C_PREVIEW' => $preview,
+	'L_PAGE_TITLE' => TITLE,
+	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
+	'L_YES' => $LANG['yes'],
+	'L_NO' => $LANG['no'],
+	'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
+	'L_IGNORE_RELEASE_DATE' => $DOWNLOAD_LANG['ignore_release_date'],
+	'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
+	'L_FILE_VISIBILITY' => $DOWNLOAD_LANG['file_visibility'],
+	'L_APPROVED' => $DOWNLOAD_LANG['approved'],
+	'L_NOW' => $LANG['now'],
+	'L_HIDDEN' => $DOWNLOAD_LANG['hidden'],
+	'L_TO_DATE' => $LANG['to_date'],
+	'L_FROM_DATE' => $LANG['from_date'],
+	'L_DESC' => $LANG['description'],
+	'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
+	'L_SIZE' => $LANG['size'],
+	'L_URL' => $LANG['url'],
+	'L_FILE_IMAGE' => $DOWNLOAD_LANG['file_image'],
+	'L_TITLE' => $LANG['title'],
+	'L_CATEGORY' => $LANG['category'],
+	'L_REQUIRE' => $LANG['require'],
+	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
+	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
+	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
+	'L_UPDATE' => $LANG['update'],
+	'L_RESET' => $LANG['reset'],
+	'L_PREVIEW' => $LANG['preview'],
+	'L_UNIT_SIZE' => $LANG['unit_megabytes'],
+	'L_CONTENTS' => $DOWNLOAD_LANG['complete_contents'],
+	'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents'],
+	'L_SUBMIT' => $edit_file_id > 0 ? $DOWNLOAD_LANG['update_file'] : $DOWNLOAD_LANG['add_file'],
+	'L_WARNING_PREVIEWING' => $DOWNLOAD_LANG['warning_previewing'],
+	'L_REQUIRE_DESCRIPTION' => $DOWNLOAD_LANG['require_description'],
+	'L_REQUIRE_URL' => $DOWNLOAD_LANG['require_url'],
+	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
+	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
+	'L_REQUIRE_TITLE' => $LANG['require_title'],
+	'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+    'L_NUMBER_OF_HITS' => $DOWNLOAD_LANG['number_of_hits'],
+    'L_DOWNLOAD_METHOD' => $DOWNLOAD_LANG['download_method'],
+    'L_DOWNLOAD_METHOD_EXPLAIN' => $DOWNLOAD_LANG['download_method_explain'],
+    'L_FORCE_DOWNLOAD' => $DOWNLOAD_LANG['force_download'],
+    'L_REDIRECTION' => $DOWNLOAD_LANG['redirection_up_to_file']
+));
+
 if ($edit_file_id > 0)
-{	
+{
 	if ($submit)
 	{
 		//The form is ok
@@ -160,15 +215,17 @@ if ($edit_file_id > 0)
 			
 			switch ($file_visibility)
 			{
-				case 2:		
-					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
+				case 2:
+					if (($begining_date->get_timestamp() > $date_now->get_timestamp() || $end_date->get_timestamp() > $date_now->get_timestamp()) && $begining_date->get_timestamp() < $end_date->get_timestamp())
 					{
 						$start_timestamp = $begining_date->get_timestamp();
 						$end_timestamp = $end_date->get_timestamp();
+						
+						if ($begining_date->get_timestamp() > $date_now->get_timestamp())
+							$visible = 0;
 					}
 					else
-						$visible = 0;
-
+						list($start_timestamp, $end_timestamp) = array(0, 0);
 					break;
 				case 1:
 					list($start_timestamp, $end_timestamp) = array(0, 0);
@@ -177,12 +234,15 @@ if ($edit_file_id > 0)
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$file_properties = $Sql->query_array("download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
+			$file_properties = $Sql->query_array(PREFIX . "download", "visible", "approved", "WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
-			$Sql->query_inject("UPDATE ".PREFIX."download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_url . "', " . 
-				"size = '" . $file_size . "', count = '" . $file_hits . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " . 
-				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " . 
-				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = '" . $file_approved . "' " .
+			import('util/url');
+			$file_relative_url = new Url($file_url);
+			
+			$Sql->query_inject("UPDATE " . PREFIX . "download SET title = '" . $file_title . "', idcat = '" . $file_cat_id . "', url = '" . $file_relative_url->relative() . "', " .
+				"size = '" . $file_size . "', count = '" . $file_hits . "', force_download = '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', contents = '" . strparse($file_contents) . "', short_contents = '" . strparse($file_short_contents) . "', " .
+				"image = '" . $file_image . "', timestamp = '" . $file_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', " .
+				"start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "', approved = " . (int)$file_approved . " " .
 				"WHERE id = '" . $edit_file_id . "'", __LINE__, __FILE__);
 			
 			//Updating the number of subfiles in each category
@@ -190,7 +250,7 @@ if ($edit_file_id > 0)
 			{
 				$download_categories->Recount_sub_files();
 			}
-			
+
 			//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 			if ($file_approved && !$file_properties['approved'])
 			{
@@ -202,7 +262,7 @@ if ($edit_file_id > 0)
 				{
 					$file_contribution = $corresponding_contributions[0];
 					//The contribution is now processed
-					$file_contribution->set_status(CONTRIBUTION_STATUS_PROCESSED);
+					$file_contribution->set_status(EVENT_STATUS_PROCESSED);
 					
 					//We save the contribution
 					ContributionService::save_contribution($file_contribution);
@@ -232,11 +292,11 @@ if ($edit_file_id > 0)
 	}
 	//Previewing a file
 	elseif ($preview)
-	{		
+	{
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
 		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);		
+		$end_calendar->set_date($end_date);
 		$end_calendar->set_style('margin-left:150px;');
 
 		$Template->set_filenames(array('download' => 'download/download.tpl'));
@@ -274,6 +334,8 @@ if ($edit_file_id > 0)
 			'U_IMG' => $file_image,
 			'IMAGE_ALT' => str_replace('"', '\"', $file_title),
 			'LANG' => get_ulang(),
+		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
@@ -289,10 +351,10 @@ if ($edit_file_id > 0)
 
 		$Template->assign_vars(array(
 			'C_CONTRIBUTION' => false,
-			'TITLE' => $file_title,
+			'TITLE' => stripslashes($file_title),
 			'COUNT' => $file_hits,
-			'DESCRIPTION' => $file_contents,
-			'SHORT_DESCRIPTION' => $file_short_contents,
+			'DESCRIPTION' => stripslashes($file_contents),
+			'SHORT_DESCRIPTION' => stripslashes($file_short_contents),
 			'FILE_IMAGE' => $file_image,
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
@@ -328,7 +390,7 @@ if ($edit_file_id > 0)
 		
 		
 		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');		
+		$end_calendar = new MiniCalendar('end_date');
 		$end_calendar->set_style('margin-left:150px;');
 		
 		if (!empty($file_infos['start']) && !empty($file_infos['end']))
@@ -364,7 +426,9 @@ if ($edit_file_id > 0)
 			'VISIBLE_ENABLED' => $file_visibility == 1 ? ' checked="checked"' : '',
 			'VISIBLE_HIDDEN' => $file_visibility == 0 ? ' checked="checked"' : '',
 			'APPROVED' => $file_infos['approved'] ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_file_id)
+		    'FORCE_DOWNLOAD_SELECTED' => $file_infos['force_download'] == DOWNLOAD_FORCE_DL ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_infos['force_download'] == DOWNLOAD_REDIRECT ? ' selected="selected"' : '',
+			'U_TARGET' => url('management.php?edit=' . $edit_file_id . '&amp;token=' . $Session->get_token())
 		));
 	}
 }
@@ -374,8 +438,7 @@ else
 	$contribution_counterpart = retrieve(POST, 'counterpart', '', TSTRING_PARSE);
 	
 	//If we can't write, the file cannot be approved
-	if (!$auth_write)
-		$file_approved = false;
+	$file_approved = $auth_write;
 	
 	if ($submit)
 	{
@@ -385,7 +448,7 @@ else
 			$visible = 1;
 			
 			$date_now = new Date(DATE_NOW);
-			
+            
 			switch ($file_visibility)
 			{
 				//If it's a time interval
@@ -406,11 +469,13 @@ else
 					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
 			}
 			
-			$Sql->query_inject("INSERT INTO ".PREFIX."download (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved) " .
-				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_url . "', '" . $file_size . "', '" . $file_hits . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', " . 
-				"'" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "')", __LINE__, __FILE__);
+            import('util/url');
+            $file_relative_url = new Url($file_url);
 			
-			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."download");
+			$Sql->query_inject("INSERT INTO " . PREFIX . "download (title, idcat, url, size, count, force_download, contents, short_contents, image, timestamp, release_timestamp, start, end, visible, approved, users_note) " .
+				"VALUES ('" . $file_title . "', '" . $file_cat_id . "', '" . $file_relative_url->relative() . "', '" . $file_size . "', '" . $file_hits . "', '" . ($file_download_method == 'force_download' ? DOWNLOAD_FORCE_DL : DOWNLOAD_REDIRECT) . "', '" . strparse($file_contents) . "', '" . strparse($file_short_contents) . "', '" . $file_image . "', '" . $file_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $file_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "', '" . (int)$auth_write . "', '')", __LINE__, __FILE__);
+			
+			$new_id_file = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "download");
 			
 			//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 			if (!$auth_write)
@@ -435,7 +500,7 @@ else
 				$download_contribution->set_module('download');
 				
 				
-				//Assignation des autorisations d'écriture / Writing authorization assignation				
+				//Assignation des autorisations d'écriture / Writing authorization assignation
 				$download_contribution->set_auth(
 					//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
 					//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
@@ -445,7 +510,7 @@ else
 						//We merge the whole authorizations of the branch constituted by the selected category
 						Authorizations::merge_auth(
 							$CONFIG_DOWNLOAD['global_auth'],
-							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée							
+							//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
 							$download_categories->compute_heritated_auth($file_cat_id, DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY),
 							DOWNLOAD_WRITE_CAT_AUTH_BIT, AUTH_CHILD_PRIORITY
 						),
@@ -453,7 +518,7 @@ else
 					)
 				);
 
-				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved	
+				//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
 				ContributionService::save_contribution($download_contribution);
 				
 				//Redirection to the contribution confirmation page
@@ -461,10 +526,7 @@ else
 			}
 			
 			//Updating the number of subfiles in each category
-			if ($file_cat_id != $file_infos['idcat'])
-			{
-				$download_categories->Recount_sub_files();
-			}
+			$download_categories->Recount_sub_files();
             
             // Feeds Regeneration
             import('content/syndication/feed');
@@ -481,7 +543,7 @@ else
 	//Previewing a file
 	elseif ($preview)
 	{
-		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_UNCHANGE), HTML_PROTECT, ADDSLASHES_OFF);
+		$contribution_counterpart_source = strprotect(retrieve(POST, 'counterpart', '', TSTRING_AS_RECEIVED), HTML_PROTECT, ADDSLASHES_NONE);
 		
 		$begining_calendar = new MiniCalendar('begining_date');
 		$begining_calendar->set_date($begining_date);
@@ -526,6 +588,8 @@ else
 			'LANG' => get_ulang(),
 			'CONTRIBUTION_COUNTERPART' => $contribution_counterpart_source,
 			'CONTRIBUTION_COUNTERPART_PREVIEW' => second_parse(stripslashes($contribution_counterpart)),
+		    'FORCE_DOWNLOAD_SELECTED' => $file_download_method == 'force_download' ? ' selected="selected"' : '',
+			'REDIRECTION_SELECTED' => $file_download_method != 'force_download' ? ' selected="selected"' : '',
 			// Those langs are required by the template inclusion
 			'L_DATE' => $LANG['date'],
 			'L_SIZE' => $LANG['size'],
@@ -536,6 +600,7 @@ else
 			'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
 			'L_DOWNLOADED' => $DOWNLOAD_LANG['downloaded'],
 			'L_NOTE' => $LANG['note'],
+		    'APPROVED' => ' checked="checked"',
 			'U_DOWNLOAD_FILE' => url('count.php?id=' . $edit_file_id, 'file-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php')
 		));
 
@@ -549,7 +614,7 @@ else
 			'URL' => $file_url,
 			'SIZE_FORM' => $file_size,
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $auth_write ? 
+			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($file_short_contents))),
@@ -598,7 +663,7 @@ else
 			'URL' => '',
 			'SIZE_FORM' => '',
 			'DATE' => $file_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $auth_write ? 
+			'CATEGORIES_TREE' => $auth_write ?
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_WRITE_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH) :
 									$download_categories->build_select_form($file_cat_id, 'idcat', 'idcat', 0, DOWNLOAD_CONTRIBUTION_CAT_AUTH_BIT, $CONFIG_DOWNLOAD['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
 			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
@@ -612,7 +677,9 @@ else
 			'VISIBLE_ENABLED' => ' checked="checked"',
 			'VISIBLE_HIDDEN' => '',
 			'APPROVED' => $file_approved ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?new=1')
+			'FORCE_DOWNLOAD_SELECTED' => ' selected="selected"',
+			'REDIRECTION_SELECTED' => ' selected="selected"',
+			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
 		));
 	}
 	$Template->assign_vars(array(
@@ -622,50 +689,6 @@ else
 		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart')
 	));
 }
-
-$Template->assign_vars(array(
-	'KERNEL_EDITOR' => display_editor(),
-	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
-	'C_PREVIEW' => $preview,
-	'L_PAGE_TITLE' => TITLE,
-	'L_EDIT_FILE' => $DOWNLOAD_LANG['edit_file'],
-	'L_YES' => $LANG['yes'],
-	'L_NO' => $LANG['no'],
-	'L_DOWNLOAD_DATE' => $DOWNLOAD_LANG['download_date'],
-	'L_IGNORE_RELEASE_DATE' => $DOWNLOAD_LANG['ignore_release_date'],
-	'L_RELEASE_DATE' => $DOWNLOAD_LANG['release_date'],
-	'L_FILE_VISIBILITY' => $DOWNLOAD_LANG['file_visibility'],
-	'L_APPROVED' => $DOWNLOAD_LANG['approved'],
-	'L_NOW' => $LANG['now'],
-	'L_HIDDEN' => $DOWNLOAD_LANG['hidden'],
-	'L_TO_DATE' => $LANG['to_date'],
-	'L_FROM_DATE' => $LANG['from_date'],
-	'L_DESC' => $LANG['description'],
-	'L_DOWNLOAD' => $DOWNLOAD_LANG['download'],
-	'L_SIZE' => $LANG['size'],
-	'L_URL' => $LANG['url'],
-	'L_FILE_IMAGE' => $DOWNLOAD_LANG['file_image'],
-	'L_TITLE' => $LANG['title'],
-	'L_CATEGORY' => $LANG['category'],
-	'L_REQUIRE' => $LANG['require'],
-	'L_DOWNLOAD_ADD' => $DOWNLOAD_LANG['download_add'],
-	'L_DOWNLOAD_MANAGEMENT' => $DOWNLOAD_LANG['download_management'],
-	'L_DOWNLOAD_CONFIG' => $DOWNLOAD_LANG['download_config'],
-	'L_UPDATE' => $LANG['update'],
-	'L_RESET' => $LANG['reset'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_UNIT_SIZE' => $LANG['unit_megabytes'],
-	'L_CONTENTS' => $DOWNLOAD_LANG['complete_contents'],
-	'L_SHORT_CONTENTS' => $DOWNLOAD_LANG['short_contents'],
-	'L_SUBMIT' => $edit_file_id > 0 ? $DOWNLOAD_LANG['update_file'] : $DOWNLOAD_LANG['add_file'],
-	'L_WARNING_PREVIEWING' => $DOWNLOAD_LANG['warning_previewing'],
-	'L_REQUIRE_DESCRIPTION' => $DOWNLOAD_LANG['require_description'],
-	'L_REQUIRE_URL' => $DOWNLOAD_LANG['require_url'],
-	'L_REQUIRE_CREATION_DATE' => $DOWNLOAD_LANG['require_creation_date'],
-	'L_REQUIRE_RELEASE_DATE' => $DOWNLOAD_LANG['require_release_date'],
-	'L_REQUIRE_TITLE' => $LANG['require_title'],
-	'L_CONTRIBUTION_LEGEND' => $LANG['contribution']
-));
 
 $Template->pparse('file_management');
 require_once('../kernel/footer.php');

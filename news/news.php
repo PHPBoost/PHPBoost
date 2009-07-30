@@ -29,183 +29,23 @@ require_once('../kernel/begin.php');
 require_once('../news/news_begin.php');
 require_once('../kernel/header.php');
 
-$idnews = retrieve(GET, 'id', 0);	
-$idcat = retrieve(GET, 'cat', 0);
-$show_archive = retrieve(GET, 'arch', false);
+//$idnews, $idcat, $show_archive définies dans news_begin.php
 
 $is_admin = $User->check_level(ADMIN_LEVEL);
 if (empty($idnews) && empty($idcat)) // Accueil du module de news
 {
-	$tpl_news = new Template('news/news.tpl');
-
-	if ($CONFIG_NEWS['activ_edito'] == 1) //Affichage de l'édito
-	{
-		$tpl_news->assign_vars( array(
-			'C_NEWS_EDITO' => true,
-			'CONTENTS' => second_parse($CONFIG_NEWS['edito']),
-			'TITLE' => $CONFIG_NEWS['edito_title'],
-			'EDIT' => $is_admin ? '<a href="../news/admin_news_config.php" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" class="valign_middle" /></a>&nbsp;' : ''
-		));
-	}	
-
-	//On crée une pagination (si activé) si le nombre de news est trop important.
-	include_once('../kernel/framework/util/pagination.class.php'); 
-	$Pagination = new Pagination();
-		
-	//Pagination activée, sinon affichage lien vers les archives.
-	if ($CONFIG_NEWS['activ_pagin'] == '1')
-	{
-		$show_pagin = $Pagination->display('news' . url('.php?p=%d', '-0-0-%d.php'), $CONFIG_NEWS['nbr_news'], 'p', $CONFIG_NEWS['pagination_news'], 3);
-		$first_msg = $Pagination->get_first_msg($CONFIG_NEWS['pagination_news'], 'p'); 
-	}
-	elseif ($show_archive) //Pagination des archives.
-	{
-		$show_pagin = $Pagination->display('news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $CONFIG_NEWS['nbr_news'] - $CONFIG_NEWS['pagination_news'], 'p', $CONFIG_NEWS['pagination_arch'], 3);
-		$first_msg = $CONFIG_NEWS['pagination_news'] + $Pagination->get_first_msg($CONFIG_NEWS['pagination_arch'], 'p'); 
-		$CONFIG_NEWS['pagination_news'] = $CONFIG_NEWS['pagination_arch'];
-	}
-	else //Affichage du lien vers les archives.
-	{
-		$show_pagin = (($CONFIG_NEWS['nbr_news'] > $CONFIG_NEWS['pagination_news']) && ($CONFIG_NEWS['nbr_news'] != 0)) ? '<a href="news.php?arch=1" title="' . $LANG['display_archive'] . '">' . $LANG['display_archive'] . '</a>' : '';
-		$first_msg = 0;
-	}
-		
-	$tpl_news->assign_vars(array(
-	    'L_SYNDICATION' => $LANG['syndication'],
-		'PAGINATION' => $show_pagin,
-		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
-		'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
-        'PATH_TO_ROOT' => PATH_TO_ROOT,
-        'THEME' => get_utheme(),
-	    'FEED_MENU' => get_feed_menu(FEED_URL)
-	));
-	
-	//Si les news en block sont activées on recupère la page.
-	if ($CONFIG_NEWS['type'] == 1 && !$show_archive)
-	{		
-		$tpl_news->assign_vars(array(
-			'C_NEWS_BLOCK' => true
-		));
-		
-		$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
-		if ($column)
-		{
-			$i = 0;
-			$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
-			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
-			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
-			
-			$tpl_news->assign_vars(array(
-				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%">',
-				'END_TABLE_NEWS' => '</td></tr></table>'
-			));	
-		}
-		else
-			$new_row = '';
-		
-		$z = 0;
-		list($admin, $del) = array('', ''); 			
-		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, nc.id AS idcat, nc.icon, m.login
-		FROM ".PREFIX."news n
-		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
-		LEFT JOIN ".PREFIX."member m ON m.user_id = n.user_id		
-		WHERE '" . time() . "' >= n.start AND ('" . time() . "' <= n.end OR n.end = 0) AND n.visible = 1
-		ORDER BY n.timestamp DESC 
-		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			if ($is_admin)
-			{
-				$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $row['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
-				$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $row['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
-			}
-			
-			//Séparation des news en colonnes si activé.
-			if ($column)
-			{	
-				$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
-				$i++;
-			}
-				
-			$tpl_news->assign_block_vars('news', array(
-				'ID' => $row['id'],
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : ''),
-				'TITLE' => $row['title'],
-				'CONTENTS' => second_parse($row['contents']),
-				'EXTEND_CONTENTS' => (!empty($row['extend_contents']) ? '<a style="font-size:10px" href="news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $LANG['extend_contents'] . ']</a><br /><br />' : ''),
-				'IMG' => (!empty($row['img']) ? '<img src="' . $row['img'] . '" alt="' . $row['alt'] . '" title="' . $row['alt'] . '" class="img_right" />' : ''),
-				'PSEUDO' => $CONFIG_NEWS['display_author'] ? $row['login'] : '',				
-				'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $row['timestamp']) : '',
-				'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
-				'EDIT' => $admin,
-				'DEL' => $del,
-				'NEW_ROW' => $new_row,
-				'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'U_NEWS_LINK' => url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-                'FEED_MENU' => get_feed_menu(FEED_URL)
-			));
-			$z++;
-		}
-		$Sql->query_close($result);	
-		
-		if ($z == 0)
-		{
-			$tpl_news->assign_vars( array(
-				'C_NEWS_NO_AVAILABLE' => true,
-				'L_NO_NEWS_AVAILABLE' => $LANG['no_news_available']
-			));
-		}
-	}
-	else //News en liste
-	{
-		$column = ($CONFIG_NEWS['nbr_column'] > 1) ? true : false;
-		if ($column)
-		{
-			$i = 0;
-			$CONFIG_NEWS['nbr_column'] = ceil($CONFIG_NEWS['pagination_news']/$CONFIG_NEWS['nbr_column']);
-			$CONFIG_NEWS['nbr_column'] = !empty($CONFIG_NEWS['nbr_column']) ? $CONFIG_NEWS['nbr_column'] : 1;
-			$column_width = floor(100/$CONFIG_NEWS['nbr_column']);	
-			
-			$tpl_news->assign_vars(array(
-				'C_NEWS_LINK' => true,
-				'START_TABLE_NEWS' => '<table style="margin:auto;width:98%"><tr><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">',
-				'END_TABLE_NEWS' => '</ul></td></tr></table>'
-			));	
-		}
-		else
-		{	
-			$tpl_news->assign_vars(array(
-				'C_NEWS_LINK' => true,
-				'START_TABLE_NEWS' => '<ul style="margin:0;padding:0;list-style-type:none;">',
-				'END_TABLE_NEWS' => '</ul>'
-			));
-			$new_row = '';
-		}
-		
-		$result = $Sql->query_while("SELECT n.id, n.title, n.timestamp, nc.id AS idcat, nc.icon
-		FROM ".PREFIX."news n
-		LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
-		WHERE n.visible = 1
-		ORDER BY n.timestamp DESC 
-		" . $Sql->limit($first_msg, $CONFIG_NEWS['pagination_news']), __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{ 
-			//Séparation des news en colonnes si activé.
-			if ($column)
-			{	
-				$new_row = (($i%$CONFIG_NEWS['nbr_column']) == 0 && $i > 0) ? '</ul></td><td style="vertical-align:top;width:' . $column_width . '%"><ul style="margin:0;padding:0;list-style-type:none;">' : '';	
-				$i++;
-			}
-			
-			$tpl_news->assign_block_vars('list', array(
-				'ICON' => ((!empty($row['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php') . '"><img class="valign_middle" src="' . $row['icon'] . '" alt="" /></a>' : ''),
-				'DATE' => gmdate_format('date_format_tiny', $row['timestamp']),
-				'TITLE' => $row['title'],
-				'NEW_ROW' => $new_row, 
-				'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
-			));
-		}
-		$Sql->query_close($result);
+	import('modules/modules_discovery_service');
+	$modulesLoader = new ModulesDiscoveryService();
+	$module_name = 'news';
+	$module = $modulesLoader->get_module($module_name);
+	if ($module->has_functionality('get_home_page')) {
+		echo $module->functionality('get_home_page');
+		require_once('../kernel/footer.php');
+		exit;
+	} elseif (!$no_alert_on_error) {
+		global $Errorh;	
+		$Errorh->handler('Le module <strong>' . $module_name . '</strong> n\'a pas de fonction get_home_page!', E_USER_ERROR, __LINE__, __FILE__);
+		exit;
 	}
 }
 elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
@@ -213,66 +53,71 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 	if (empty($news['id']))
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 
+	import('content/comments');
+	import('content/syndication/feed');
+	
 	$tpl_news = new Template('news/news.tpl');
 	
-	//Initialisation
-	list($admin, $del) = array('', '');
-	if ($is_admin)
-	{
-		$admin = '&nbsp;&nbsp;<a href="../news/admin_news.php?id=' . $news['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>';
-		$del = '&nbsp;&nbsp;<a href="../news/admin_news.php?delete=1&amp;id=' . $news['id'] . '" title="' . $LANG['delete'] . '" onclick="javascript:return Confirm();"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" /></a>';
-	}
-
-	$next_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
-	$previous_news = $Sql->query_array("news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$next_news = $Sql->query_array(PREFIX . "news", "title", "id", "WHERE visible = 1 AND id > '" . $idnews . "' " . $Sql->limit(0, 1), __LINE__, __FILE__);
+	$previous_news = $Sql->query_array(PREFIX . "news", "title", "id", "WHERE visible = 1 AND id < '" . $idnews . "' ORDER BY id DESC " . $Sql->limit(0, 1), __LINE__, __FILE__);
 
 	$tpl_news->assign_vars(array(
-	    'L_SYNDICATION' => $LANG['syndication'],
+		'C_IS_ADMIN' => $is_admin,
 		'C_NEWS_BLOCK' => true,
 		'C_NEWS_NAVIGATION_LINKS' => true,
+		'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
+		'C_NEXT_NEWS' =>!empty($next_news['id']),
+		'TOKEN' => $Session->get_token(),
+		'PREVIOUS_NEWS' => $previous_news['title'],
+		'NEXT_NEWS' => $next_news['title'],
+		'U_PREVIOUS_NEWS' => url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php'),
+		'U_NEXT_NEWS' => url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php'),
+		'L_SYNDICATION' => $LANG['syndication'],
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on'],
-		'U_PREVIOUS_NEWS' => !empty($previous_news['id']) ? '<img src="../templates/' . get_utheme() . '/images/left.png" alt="" class="valign_middle" /> <a href="news' . url('.php?id=' . $previous_news['id'], '-0-' . $previous_news['id'] . '+' . url_encode_rewrite($previous_news['title']) . '.php') . '">' . $previous_news['title'] . '</a>' : '',
-		'U_NEXT_NEWS' => !empty($next_news['id']) ? '<a href="news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php') . '">' . $next_news['title'] . '</a> <img src="../templates/' . get_utheme() . '/images/right.png" alt="" class="valign_middle" />' : '',
-        'PATH_TO_ROOT' => PATH_TO_ROOT,
-        'THEME' => get_utheme()
+		'L_DELETE' => $LANG['delete'],
+		'L_EDIT' => $LANG['edit'],
 	));
 	
 	$tpl_news->assign_block_vars('news', array(
+		'C_IMG' => !empty($news['img']),
+		'C_ICON' => (!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1),
 		'ID' => $news['id'],
-		'ICON' => ((!empty($news['icon']) && $CONFIG_NEWS['activ_icon'] == 1) ? '<a href="news.php?cat=' . $news['idcat'] . '"><img class="valign_middle" src="' . $news['icon'] . '" alt="" /></a>' : ''),
+		'IDCAT' => $news['idcat'],
+		'ICON' => second_parse_url($news['icon']),
 		'TITLE' => $news['title'],
 		'CONTENTS' => second_parse($news['contents']),
 		'EXTEND_CONTENTS' => second_parse($news['extend_contents']) . '<br /><br />',
-		'IMG' => (!empty($news['img']) ? '<img src="' . $news['img'] . '" alt="' . $news['alt'] . '" title="' . $news['alt'] . '" class="img_right" />' : ''),
+		'IMG' => second_parse_url($news['img']),
+		'IMG_DESC' => $news['alt'],
 		'PSEUDO' => $CONFIG_NEWS['display_author'] ? $news['login'] : '',				
 		'DATE' => $CONFIG_NEWS['display_date'] ? $LANG['on'] . ': ' . gmdate_format('date_format_short', $news['timestamp']) : '',
-		'COM' => ($CONFIG_NEWS['activ_com'] == 1) ? com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
-		'EDIT' => $admin,
-		'DEL' => $del,
+		'U_COM' => ($CONFIG_NEWS['activ_com'] == 1) ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'U_USER_ID' => url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 		'U_NEWS_LINK' => url('.php?id=' . $news['id'], '-0-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
-	    'FEED_MENU' => get_feed_menu(FEED_URL)
+	    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 	));	
 }
 elseif (!empty($idcat))
 {
 	$tpl_news = new Template('news/news_cat.tpl');
 	
-	$cat = $Sql->query_array('news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query_array(PREFIX . 'news_cat', 'id', 'name', 'icon', "WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	if (empty($cat['id']))
 		$Errorh->handler('error_unexist_cat', E_USER_REDIRECT);
 	
 	$tpl_news->assign_vars(array(
+		'C_IS_ADMIN' => $is_admin,
 		'C_NEWS_LINK' => true,
 		'CAT_NAME' => $cat['name'],
-		'EDIT' => ($is_admin) ? '&nbsp;&nbsp;<a href="admin_news_cat.php?id=' . $cat['id'] . '" title="' . $LANG['edit'] . '"><img class="valign_middle" src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" /></a>' : '',
+		'IDCAT' => $cat['id'],
+		'L_EDIT' => $LANG['edit'],
 		'L_CATEGORY' => $LANG['category']
 	));
 		
 	$result = $Sql->query_while("SELECT n.id, n.title, n.nbr_com, nc.id AS idcat, nc.icon
-	FROM ".PREFIX."news n
-	LEFT JOIN ".PREFIX."news_cat nc ON nc.id = n.idcat
+	FROM " . PREFIX . "news n
+	LEFT JOIN " . PREFIX . "news_cat nc ON nc.id = n.idcat
 	WHERE n.visible = 1 AND n.idcat = '" . $idcat . "'
 	ORDER BY n.timestamp DESC", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

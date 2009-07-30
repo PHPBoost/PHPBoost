@@ -22,7 +22,7 @@
 		<div id="admin_contents">
 			# IF C_MODULES_LIST #	
 				<form action="admin_modules.php?uninstall=1" method="post">
-					<table class="module_table" style="width:99%">
+					<table class="module_table" style="width:99%;margin-bottom:30px;">
 						<tr> 
 							<th colspan="5">
 								{L_MODULES_INSTALLED}
@@ -78,15 +78,16 @@
 							<td class="row2">	
 								<strong>{L_AUTHOR}:</strong> {installed.AUTHOR} {installed.AUTHOR_WEBSITE}<br />
 								<strong>{L_DESC}:</strong> {installed.DESC}<br />
-								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}<br />
+								<strong>{L_COMPAT}:</strong> PHPBoost {installed.COMPAT}
+								<br /><br />
 								<strong>{L_ADMIN}:</strong> {installed.ADMIN}<br />
 								<strong>{L_USE_SQL}:</strong> {installed.USE_SQL} <em>{installed.SQL_TABLE}</em><br />
 								<strong>{L_USE_CACHE}:</strong> {installed.USE_CACHE}<br />
 								<strong>{L_ALTERNATIVE_CSS}:</strong> {installed.ALTERNATIVE_CSS}<br />
 							</td>
 							<td class="row2">								
-								<input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}
-								<input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}
+								<label><input type="radio" name="activ{installed.ID}" value="1" {installed.ACTIV_ENABLED} /> {L_YES}</label>
+								<label><input type="radio" name="activ{installed.ID}" value="0" {installed.ACTIV_DISABLED} /> {L_NO}</label>
 							</td>
 							<td class="row2">							
 								{installed.AUTH_MODULES}			
@@ -97,8 +98,6 @@
 						</tr>					
 						# END installed #
 					</table>
-					
-					<br /><br />
 					
 					<fieldset class="fieldset_submit">
 						<legend>{L_SUBMIT}</legend>

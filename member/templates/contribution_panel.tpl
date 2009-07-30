@@ -79,41 +79,41 @@
 				</tr>
 				# START contributions #
 				<tr>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						<a href="{contributions.U_CONSULT}">{contributions.ENTITLED}</a>
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{contributions.MODULE}
 					</td>
 					# IF contributions.C_FIXED #
-					<td class="row1" style="text-align:center; background-color:#7FFF9C;">
+					<td class="row2" style="text-align:center; background-color:#7FFF9C;">
 						{contributions.STATUS}
 					</td>
 					# ELSE #
 						# IF contributions.C_PROCESSING #
-						<td class="row1" style="text-align:center; background-color:#FFD86F;">
+						<td class="row2" style="text-align:center; background-color:#FFD86F;">
 							{contributions.STATUS}
 						</td>
 						# ELSE #
-						<td class="row1" style="text-align:center; background-color:#FF796F;">
+						<td class="row2" style="text-align:center; background-color:#FF796F;">
 							{contributions.STATUS}
 						</td>
 						# ENDIF #
 					# ENDIF #
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						{contributions.CREATION_DATE}
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						# IF contributions.C_FIXED #
 						{contributions.FIXING_DATE}
 						# ELSE #
 						-
 						# ENDIF #
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						<a href="{contributions.U_POSTER_PROFILE}">{contributions.POSTER}</a>
 					</td>
-					<td class="row1" style="text-align:center;">
+					<td class="row2" style="text-align:center;">
 						# IF contributions.C_FIXED #
 						<a href="{contributions.U_FIXER_PROFILE}">{contributions.FIXER}</a>
 						# ELSE #
@@ -123,7 +123,7 @@
 				</tr>	
 				# END contributions_list.item #
 				<tr>
-					<td class="row2" style="text-align:center;" colspan="7">
+					<td class="row1" style="text-align:center;" colspan="7">
 						{PAGINATION}
 					</td>
 				</tr>
@@ -269,7 +269,7 @@
 				<fieldset class="fieldset_submit">
 					<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}" />
 					<input type="submit" class="submit" value="{L_SUBMIT}" />
-					<input type="button" class="submit" value="{L_PREVIEW}" name="preview" onclick="XMLHttpRequest_preview(this.form);" />
+					<input type="button" class="submit" value="{L_PREVIEW}" name="preview" onclick="XMLHttpRequest_preview();" />
 					<input value="{L_RESET}" class="reset" type="reset" />
 				</fieldset>
 			</form>

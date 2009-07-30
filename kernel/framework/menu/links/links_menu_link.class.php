@@ -30,10 +30,10 @@ import('menu/links/links_menu_element');
 define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
 
 /**
- * @author Loïc Rouchon horn@phpboost.com
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc A Simple menu link
- * @package Menu
- * @subpackage LinksMenu
+ * @package menu
+ * @subpackage linksmenu
  */
 class LinksMenuLink extends LinksMenuElement
 {
@@ -63,10 +63,6 @@ class LinksMenuLink extends LinksMenuElement
             
         parent::_assign($template, $mode);
   		$template->assign_vars(array(
-            'ABSOLUTE_URL' => $this->get_url(false),
-            'ABSOLUTE_IMG' => $this->get_image(false),
-            'RELATIVE_URL' => $this->get_url(true),
-            'RELATIVE_IMG' => $this->get_image(true),
   			'C_LINK' => true
   		));
   		

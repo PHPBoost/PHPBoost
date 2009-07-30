@@ -251,6 +251,13 @@ function bb_display_block(divID, field)
 //Cache le bloc.
 function bb_hide_block(bbfield, field, stop)
 {
+	var nav = navigator.appName; //Recupère le nom du navigateur
+	if( nav == 'Microsoft Internet Explorer' ) // Internet Explorer
+	{
+		if (window.event.toElement == null) //Hack pour ie... encore une fois!
+			return;
+	}
+	
 	if( stop && timeout )
 	{	
 		clearTimeout(timeout);

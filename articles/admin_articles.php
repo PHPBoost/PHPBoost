@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                               admin_articles_management.php
+ *                      admin_articles_management.php
  *                            -------------------
  *   begin                : July 10, 2005
  *   copyright            : (C) 2005 Viarre Régis
@@ -37,10 +37,15 @@ $idcat = retrieve(GET, 'idcat', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
-if ($del && !empty($id)) //Suppresion de l'article.
-{
+if ($del && !empty($id)) //Suppression de l'article.
+{    
+	$Session->csrf_get_protect(); //Protection csrf
+	
+	//Visibilité de l'article.
+	$visible = $Sql->query("SELECT visible FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	
 	//On supprime dans la bdd.
-	$Sql->query_inject("DELETE FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
+	$Sql->query_inject("DELETE FROM " . PREFIX . "articles WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 	
 	$Cache->load('articles');
 	if (empty($idcat))//Racine.
@@ -48,13 +53,13 @@ if ($del && !empty($id)) //Suppresion de l'article.
 		$CAT_ARTICLES[0]['id_left'] = 0;
 		$CAT_ARTICLES[0]['id_right'] = 0;
 	}
+	
 	//Mise à jours du nombre d'articles des parents.
-	$visible = $Sql->query("SELECT visible FROM ".PREFIX."articles WHERE id = " . $id, __LINE__, __FILE__);	
-	$clause_update = ($visible == 1) ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
-	$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
+	$clause_update = ($visible == '1') ? 'nbr_articles_visible = nbr_articles_visible - 1' : 'nbr_articles_unvisible = nbr_articles_unvisible - 1';
+	$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $clause_update . " WHERE id_left <= '" . $CAT_ARTICLES[$idcat]['id_left'] . "' AND id_right >= '" . $CAT_ARTICLES[$idcat]['id_right'] . "'", __LINE__, __FILE__);
 	
 	//On supprimes les éventuels commentaires associés.
-	$Sql->query_inject("DELETE FROM ".PREFIX."com WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_COM . " WHERE idprov = " . $id . " AND script = 'articles'", __LINE__, __FILE__);
 	
 	// Feeds Regeneration
     import('content/syndication/feed');
@@ -68,7 +73,7 @@ elseif (!empty($id))
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
-	$articles = $Sql->query_array('articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
+	$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
 	$Template->assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
@@ -95,7 +100,7 @@ elseif (!empty($id))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_UNTIL' => $LANG['until'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_PREVIEW' => $LANG['preview'],
 		'L_UPDATE' => $LANG['update'],
@@ -105,7 +110,7 @@ elseif (!empty($id))
 	//Catégories.
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -180,19 +185,19 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
 	));
 
-	$title = retrieve(POST, 'title', '', TSTRING_UNSECURE);
-	$icon = retrieve(POST, 'icon', '', TSTRING_UNSECURE);
-	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNSECURE);
+	$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+	$icon = retrieve(POST, 'icon', '', TSTRING_UNCHANGE);
+	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNCHANGE);
 	$compt = retrieve(POST, 'views', 0);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+	$contents = retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED);
+	$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 	$user_id = retrieve(POST, 'user_id', 0);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	$start_timestamp = strtotimestamp($start, $LANG['date_format_short']);
 	$end_timestamp = strtotimestamp($end, $LANG['date_format_short']);
@@ -226,7 +231,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	$i = 0;	
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, level, name 
-	FROM ".PREFIX."articles_cats
+	FROM " . PREFIX . "articles_cats
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -287,7 +292,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'VISIBLE_UNAPROB' => (($visible == 0) ? 'checked="checked"' : '')
 	));
 	
-	$pseudo = $Sql->query("SELECT login FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 	$Template->assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => $title,
@@ -325,7 +330,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_IMMEDIATE' => $LANG['immediate'],
 		'L_UNAPROB' => $LANG['unaprob'],
 		'L_UNTIL' => $LANG['until'],
-		'L_TEXT' => $LANG['contents'],
+		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_UPDATE' => $LANG['update'],
 		'L_RESET' => $LANG['reset']
@@ -340,11 +345,11 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 	$icon_path = retrieve(POST, 'icon_path', '');
 	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
 	$idcat = retrieve(POST, 'idcat', 0);
-	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNSECURE);
-	$start = retrieve(POST, 'start', '', TSTRING_UNSECURE);
-	$end = retrieve(POST, 'end', '', TSTRING_UNSECURE);
-	$hour = retrieve(POST, 'hour', '', TSTRING_UNSECURE);
-	$min = retrieve(POST, 'min', '', TSTRING_UNSECURE);	
+	$current_date = retrieve(POST, 'current_date', '', TSTRING_UNCHANGE);
+	$start = retrieve(POST, 'start', '', TSTRING_UNCHANGE);
+	$end = retrieve(POST, 'end', '', TSTRING_UNCHANGE);
+	$hour = retrieve(POST, 'hour', '', TSTRING_UNCHANGE);
+	$min = retrieve(POST, 'min', '', TSTRING_UNCHANGE);	
 	$get_visible = retrieve(POST, 'visible', 0);
 	
 	if (!empty($icon_path))
@@ -392,19 +397,19 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		
 		$cat_clause = ' ';
 		//Changement de catégorie parente?
-		$articles_info = $Sql->query_array("articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
+		$articles_info = $Sql->query_array(PREFIX . "articles", "id", "idcat", "visible", "WHERE id = '" . $id_post . "'", __LINE__, __FILE__);		
 		if ($articles_info['idcat'] != $idcat && !empty($articles_info['id']))
 		{
 			if ($articles_info['visible'] == 1)
 				$is_visible = 'nbr_articles_visible';
 			else
 				$is_visible = 'nbr_articles_unvisible';
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $is_visible . " = " . $is_visible . " - 1 WHERE id = '" . $articles_info['idcat'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET " . $is_visible . " = " . $is_visible . " + 1 WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 			$cat_clause = " idcat = '" . $idcat . "', ";
 		}
 		
-		$Sql->query_inject("UPDATE ".PREFIX."articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . PREFIX . "articles SET" . $cat_clause . "title = '" . $title . "', contents = '" . str_replace('[page][/page]', '', $contents) . "', icon = '" . $icon . "', visible = '" . $visible . "', start = '" .  $start_timestamp . "', end = '" . $end_timestamp . "', timestamp = '" . $timestamp . "' WHERE id = '" . $id_post . "'", __LINE__, __FILE__);
 		
 		// Feeds Regeneration
         import('content/syndication/feed');
@@ -424,7 +429,7 @@ else
 	$nbr_articles = $Sql->count_table('articles', __LINE__, __FILE__);
 	
 	//On crée une pagination si le nombre d'articles est trop important.
-	include_once('../kernel/framework/util/pagination.class.php');
+	import('util/pagination');
 	$Pagination = new Pagination();
 	
 	$Template->assign_vars(array(
@@ -453,9 +458,9 @@ else
 	));
 	
 	$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
-	FROM ".PREFIX."articles a
-	LEFT JOIN ".PREFIX."articles_cats ac ON ac.id = a.idcat
-	LEFT JOIN ".PREFIX."member m ON a.user_id = m.user_id
+	FROM " . PREFIX . "articles a
+	LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
+	LEFT JOIN " . DB_TABLE_MEMBER . " m ON a.user_id = m.user_id
 	ORDER BY a.timestamp DESC " .
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))

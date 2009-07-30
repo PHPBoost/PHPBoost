@@ -1,13 +1,26 @@
 		# IF C_DISPLAY_ARTICLE #
+		<script type="text/javascript">
+		<!--
+		function Confirm_del_article() {
+		return confirm("{L_ALERT_DELETE_ARTICLE}");
+		}
+		-->
+		</script>		
+		
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<strong>{NAME}</strong>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>{NAME}</strong>
 				</div>
 				<div style="float:right">
-					{COM} {EDIT} {DEL}
+					{COM}
+					# IF C_IS_ADMIN #
+					&nbsp;&nbsp;<a href="../articles/admin_articles.php?id={IDART}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
+					&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id={IDART}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+					# ENDIF #
+					
 					&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
 				</div>
 			</div>
@@ -49,12 +62,12 @@
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
 			<div class="module_bottom">
-				<span style="float:left" class="text_small">
+				<div style="float:left" class="text_small">
 					{KERNEL_NOTATION}
-				</span>
-				<span style="float:right" class="text_small">
+				</div>
+				<div style="float:right" class="text_small">
 					{L_WRITTEN}: <a class="small_link" href="../member/member{U_USER_ID}">{PSEUDO}</a>, {L_ON}: {DATE}
-				</span>
+				</div>
 				<div class="spacer"></div>
 			</div>
 		</div>

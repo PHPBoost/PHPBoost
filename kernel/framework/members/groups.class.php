@@ -30,10 +30,18 @@ define('GROUP_DEFAULT_IDSELECT', '');
 define('GROUP_DISABLE_SELECT', 'disabled="disabled" ');
 define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations avancées.
 
+/**
+ * @author Régis VIARRE <crowkait@phpboost.com>
+ * @desc This class provides methods to manage user in groups.
+ * @package members
+ */
 class Group
 {
 	## Public methods ##
-	//Constructeur: Retourne les autorisations globales données par l'ensemble des groupes dont le membre fait partie.
+	/**
+	 * @desc Constructor. Loads informations groups.
+	 * @param array $groups_info Informations of all groups.
+	 */
 	function Group(&$groups_info)
 	{
 		$this->groups_name = array();
@@ -41,35 +49,44 @@ class Group
 			$this->groups_name[$idgroup] = $array_group_info['name'];
 	}
 
-	//Ajout du membre au groupe, retourne true si le membre est bien ajouté, false si le membre appartient déjà au groupe.
+	/**
+	 * @desc Adds a member in a group
+	 * @param int $user_id User id
+	 * @param int $idgroup Group id
+	 * @return boolean True if the member has been succefully added.
+	 */
 	function add_member($user_id, $idgroup)
 	{
 		global $Sql;
 
 		//On insère le groupe au champ membre.
-		$user_groups = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		if (strpos($user_groups, $idgroup . '|') === false) //Le membre n'appartient pas déjà au groupe.
-			$Sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . $user_groups . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . (!empty($user_groups) ? $user_groups : '') . $idgroup . "|' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		else
 			return false;
 
 		//On insère le membre dans le groupe.
-		$group_members = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$group_members = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		if (strpos($group_members, $user_id . '|') === false) //Le membre n'appartient pas déjà au groupe.
-			$Sql->query_inject("UPDATE ".PREFIX."group SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . $group_members . $user_id . "|' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 		else
 			return false;
 			
 		return true;
 	}
  
-	//Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
+	/**
+	 * @desc Edits the user groups, compute difference between previous and new groups.
+	 * @param int $user_id The user id
+	 * @param array $array_user_groups The new array of groups.
+	 */
 	function edit_member($user_id, $array_user_groups)
 	{
 		global $Sql;
 		
 		//Récupération des groupes précédent du membre.
-		$user_groups_old = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups_old = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 		$array_user_groups_old = explode('|', $user_groups_old);
 		
 		//Insertion du différentiel positif des groupes précédent du membre et ceux choisis dans la table des groupes.		
@@ -89,24 +106,31 @@ class Group
 		}
 	}
 	
-	//Retourne le tableau des groupes (id => nom)
+	/**
+	 * @desc Returns the array of user groups (id => name)
+	 * @return array The array groups
+	 */
 	function get_groups_array()
 	{
 		return $this->groups_name;
 	}
  
-	//Suppression d'un membre du groupe.
+	/**
+	 * @desc Removes a member in a group.
+	 * @param int $user_id The user id
+	 * @param int $idgroup The id group.
+	 */
 	function remove_member($user_id, $idgroup)
 	{
 		global $Sql;
 
 		//Suppression dans la table des membres.
-		$user_groups = $Sql->query("SELECT user_groups FROM ".PREFIX."member WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."member SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$user_groups = $Sql->query("SELECT user_groups FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_groups = '" . str_replace($idgroup . '|', '', $user_groups) . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 		//Suppression dans la table des groupes.
-		$members_group = $Sql->query("SELECT members FROM ".PREFIX."group WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
-		$Sql->query_inject("UPDATE ".PREFIX."group SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$members_group = $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET members = '" . str_replace($user_id . '|', '', $members_group) . "' WHERE id = '" . $idgroup . "'", __LINE__, __FILE__);
 	}
 	
 	var $groups_name; //Tableau contenant le nom des groupes disponibles.

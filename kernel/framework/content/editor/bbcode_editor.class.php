@@ -1,59 +1,70 @@
 <?php
 /*##################################################
-*                          bbcode_editor.class.php
-*                            -------------------
-*   begin                : July 5 2008
-*   copyright            : (C) 2008 Régis Viarre
-*   email                : crowkait@phpboost.com
-*
-*
-###################################################
-*
-*   This program is free software; you can redistribute it and/or modify
-*   it under the terms of the GNU General Public License as published by
-*   the Free Software Foundation; either version 2 of the License, or
-*   (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*
-###################################################*/
+ *                          bbcode_editor.class.php
+ *                            -------------------
+ *   begin                : July 5 2008
+ *   copyright            : (C) 2008 Régis Viarre
+ *   email                : crowkait@phpboost.com
+ *
+ *
+ ###################################################
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ ###################################################*/
 
 import('content/editor/editor');
 
+/**
+ * @author Régis Viarre <crowkait@phpboost.com>
+ * @desc This class provides an interface editor for contents.
+ * @package content
+ * @subpackage editor
+ */
 class BBCodeEditor extends ContentEditor
 {
-	function BBCodeEditor()
-	{
-		parent::ContentEditor();
-	}
-	
-	//Affiche le formulaire
-	function display()
-	{
-		global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS, $_array_smiley_code;
-		
-		$template = $this->get_template();
+    function BBCodeEditor()
+    {
+        parent::ContentEditor();
+    }
 
-		//Chargement de la configuration.
-		$Cache->load('uploads');
-		$Cache->load('smileys');
-		
-		$template->assign_vars(array(
+    /**
+	 * @desc Display the editor
+	 * @return string Formated editor.
+	 */
+ 	function display()
+    {
+        global $CONFIG, $Sql, $LANG, $Cache, $User, $CONFIG_UPLOADS, $_array_smiley_code;
+
+        $template = $this->get_template();
+
+        //Chargement de la configuration.
+        $Cache->load('uploads');
+        $Cache->load('smileys');
+
+        $template->assign_vars(array(
+        	'PAGE_PATH' => $_SERVER['PHP_SELF'],
 			'C_BBCODE_TINYMCE_MODE' => false,
 			'C_BBCODE_NORMAL_MODE' => true,
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !defined('EDITOR_ALREADY_INCLUDED'),
 			'EDITOR_NAME' => 'bbcode',
 			'FIELD' => $this->identifier,
 			'FORBIDDEN_TAGS' => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
-			'UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES) ? '<a style="font-size: 10px;" title="' . $LANG['bb_upload'] . '" href="#" onclick="window.open(\'' . PATH_TO_ROOT . '/member/upload.php?popup=1&amp;fd=' . $this->identifier  . '\', \'\', \'height=500,width=720,resizable=yes,scrollbars=yes\');return false;"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/upload/files_add.png" alt="" /></a>' : '',
+			'C_UPLOAD_MANAGEMENT' => $User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES),
 			'L_REQUIRE_TEXT' => $LANG['require_text'],
+			'L_BB_UPLOAD' => $LANG['bb_upload'],
 			'L_BB_SMILEYS' => $LANG['bb_smileys'],
 			'L_BB_BOLD' => $LANG['bb_bold'],
 			'L_BB_ITALIC' => $LANG['bb_italic'],
@@ -61,6 +72,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_STRIKE' => $LANG['bb_strike'],
 			'L_BB_TITLE' => $LANG['bb_title'],
 			'L_BB_CONTAINER' => $LANG['bb_container'],
+			'L_BB_HTML' => $LANG['bb_html'],
 			'L_BB_STYLE' => $LANG['bb_style'],
 			'L_BB_URL' => $LANG['bb_link'],
 			'L_BB_IMG' => $LANG['bb_picture'],
@@ -112,87 +124,92 @@ class BBCodeEditor extends ContentEditor
 			'L_INSERT_LIST' => $LANG['insert_list'],
 			'L_INSERT_TABLE' => $LANG['insert_table'],
 			'L_PHPBOOST_LANGUAGES' => $LANG['phpboost_languages']
-		));
-		
-		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
-		{
-			$template->assign_vars(array(
+        ));
+
+        foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
+        {
+            if ($forbidden_tag == 'fieldset')
+            	$forbidden_tag = 'block';
+            	
+        	$template->assign_vars(array(
 				'AUTH_' . strtoupper($forbidden_tag) => 'style="opacity:0.3;filter:alpha(opacity=30);cursor:default;"',
 				'DISABLED_' . strtoupper($forbidden_tag) => 'if (false) '
 			));
-		}
-		
-		//Inclusion du cache des smileys pour éviter une requête inutile.
-		$Cache->load('smileys');
-		
-		$smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
-		$smile_by_line = 5; //Smiley par ligne.
-		
-		$height_max = 50;
-		$width_max = 50;
-		$nbr_smile = count($_array_smiley_code);
-		$i = 1;
-		$z = 0;
-		foreach ($_array_smiley_code as $code_smile => $url_smile)
-		{
-			if ($z == $smile_max)
-			{
-				$z++;
-				break;
-			}
-			
-			$width_source = 18; //Valeur par défaut.
-			$height_source = 18;
-			
-			// On recupère la hauteur et la largeur de l'image.
-			list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
-			if ($width_source > $width_max || $height_source > $height_max)
-			{
-				if ($width_source > $height_source)
-				{
-					$ratio = $width_source / $height_source;
-					$width = $width_max;
-					$height = $width / $ratio;
-				}
-				else
-				{
-					$ratio = $height_source / $width_source;
-					$height = $height_max;
-					$width = $height / $ratio;
-				}
-			}
-			else
-			{
-				$width = $width_source;
-				$height = $height_source;
-			}
-			
-			$img = '<img src="' . PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
-						
-			$template->assign_block_vars('smiley', array(
+        }
+
+        //Inclusion du cache des smileys pour éviter une requête inutile.
+        $Cache->load('smileys');
+
+        $smile_max = 28; //Nombre de smiley maximim avant affichage d'un lien vers popup.
+        $smile_by_line = 5; //Smiley par ligne.
+
+        $height_max = 50;
+        $width_max = 50;
+        $nbr_smile = count($_array_smiley_code);
+        $i = 1;
+        $z = 0;
+        foreach ($_array_smiley_code as $code_smile => $url_smile)
+        {
+            if ($z == $smile_max)
+            {
+                $z++;
+                break;
+            }
+             
+            $width_source = 18; //Valeur par défaut.
+            $height_source = 18;
+             
+            // On recupère la hauteur et la largeur de l'image.
+            list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/images/smileys/' . $url_smile);
+            if ($width_source > $width_max || $height_source > $height_max)
+            {
+                if ($width_source > $height_source)
+                {
+                    $ratio = $width_source / $height_source;
+                    $width = $width_max;
+                    $height = $width / $ratio;
+                }
+                else
+                {
+                    $ratio = $height_source / $width_source;
+                    $height = $height_max;
+                    $width = $height / $ratio;
+                }
+            }
+            else
+            {
+                $width = $width_source;
+                $height = $height_source;
+            }
+             
+            $img = '<img src="' . TPL_PATH_TO_ROOT . '/images/smileys/' . $url_smile . '" height="' . $height . '" width="' . $width . '" alt="' . $code_smile . '" title="' . $code_smile . '" />';
+
+            $template->assign_block_vars('smiley', array(
 				'IMG' => $img,
 				'CODE' => addslashes($code_smile),
 				'END_LINE' => $i % $smile_by_line == 0 ? '<br />' : ''
-			));
-			
-			$i++;
-			$z++;
-		}
+				));
+					
+				$i++;
+				$z++;
+        }
 
-		if ($z > $smile_max) //Lien vers tous les smiley!
-		{
-			$template->assign_vars(array(
+        if ($z > $smile_max) //Lien vers tous les smiley!
+        {
+            $template->assign_vars(array(
 				'C_BBCODE_SMILEY_MORE' => true,
 				'L_ALL_SMILEY' => $LANG['all_smiley'],
 				'L_SMILEY' => $LANG['smiley']
-			));
-		}
-		
-		if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà includé.
-			define('EDITOR_ALREADY_INCLUDED', true);
-		
-		return $template->parse(TEMPLATE_STRING_MODE);
-	}
+            ));
+        }
+
+        if (!defined('EDITOR_ALREADY_INCLUDED')) //Editeur déjà includé.
+        {
+            define('EDITOR_ALREADY_INCLUDED', true);
+        }
+
+        return $template->parse(TEMPLATE_STRING_MODE);
+    }
 }
 
 ?>

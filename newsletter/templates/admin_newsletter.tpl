@@ -22,7 +22,7 @@
 		<div id="admin_contents">
 			# START select_type #
 
-			<form action="admin_newsletter.php" name="form" method="get">	
+			<form action="admin_newsletter.php?token={TOKEN}" name="form" method="get">	
 				<table  class="module_table">
 					<tr> 
 						<th colspan="3">
@@ -89,7 +89,7 @@
 			</div>
 			# ENDIF #
 			
-			<form action="admin_newsletter.php?type={write.TYPE}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_newsletter.php?type={write.TYPE}&amp;token={TOKEN}" name="form" method="post" style="margin:auto;" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_WRITE_TYPE}</legend>
 					<p>{L_NBR_SUBSCRIBERS} <strong>{write.NBR_SUBSCRIBERS}</strong></p>
@@ -109,7 +109,7 @@
 					{KERNEL_EDITOR}
 					<label><textarea rows="25" cols="40" id="contents" name="contents">{write.MESSAGE}</textarea></label>
 					<br /><br />
-					<p>{write.SUBSCRIBE_LINK}</label></p>
+					<p>{write.SUBSCRIBE_LINK}</p>
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
@@ -160,7 +160,7 @@
 				</div>
 			</div>
 			# ENDIF #
-			<form action="admin_newsletter_config.php" method="post" class="fieldset_content">
+			<form action="admin_newsletter_config.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWSLETTER}</legend>
 					<dl>

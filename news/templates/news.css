@@ -1,4 +1,26 @@
 /* News */
+/* Barre supérieur des news */
+.news_top_l{
+	float:left;
+}
+.news_top_r{
+	float:right;
+}
+.news_top{
+	height:18px;
+	font-size:12px;
+	font-weight:bold;
+	color:#E53B00;
+	border-bottom:2px solid #E53B00;
+}
+/* Titre et contenu de la news */
+.news_top a.com{
+}
+a.news_title{
+	font-size:12px;
+	font-weight:bold;
+	color:#E53B00;
+}
 /* Contenu de la news */
 .news_container{	
 	width:96%;
@@ -14,7 +36,6 @@
 	overflow:visible;
 	height:1%;
 }
-
 /* Barre inférieure des news */
 .news_bottom_l{
 	width:2px;

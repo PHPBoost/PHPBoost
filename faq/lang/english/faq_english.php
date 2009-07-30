@@ -36,7 +36,6 @@ $FAQ_LANG = array();
 //Généralités
 $FAQ_LANG['faq'] = 'FAQ';
 $FAQ_LANG['faq_no_question_here'] = 'There is no question in this category';
-$FAQ_LANG['all_cats'] = 'All categories';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Name of the category';
 $FAQ_LANG['num_questions_singular'] = '%d question';
@@ -44,7 +43,7 @@ $FAQ_LANG['num_questions_plural'] = '%d questions';
 $FAQ_LANG['url_of_question'] = 'Question URL';
 
 //Gestion
-$FAQ_LANG['cat_properties'] = 'Properties of the category';
+$FAQ_LANG['cat_properties'] = 'Category properties';
 $FAQ_LANG['cat_description'] = 'Description';
 $FAQ_LANG['go_back_to_cat'] = 'Come back to the category';
 $FAQ_LANG['display_mode'] = 'Display mode';
@@ -79,6 +78,7 @@ $FAQ_LANG['faq_configuration'] = 'FAQ configuration';
 $FAQ_LANG['faq_questions_list'] = 'Questions list';
 $FAQ_LANG['cats_management'] = 'Categories management';
 $FAQ_LANG['add_cat'] = 'Add a category';
+$FAQ_LANG['add_question'] = 'Add a question';
 $FAQ_LANG['show_all_answers'] = 'Show all answers';
 $FAQ_LANG['hide_all_answers'] = 'Hide all answers';
 $FAQ_LANG['move'] = 'Move';
@@ -97,7 +97,7 @@ $FAQ_LANG['category_name'] = 'Name of the category';
 $FAQ_LANG['category_location'] = 'Location of the category';
 $FAQ_LANG['category_image'] = 'Category picture';
 $FAQ_LANG['removing_category'] = 'Delete a category';
-$FAQ_LANG['explain_removing_category'] = 'You will delete this category. You have two solutions. You can move all its contents (questions and subcategories) in another category, or delete all the category.<strong>Be careful, this action is irreversible!</strong>';
+$FAQ_LANG['explain_removing_category'] = 'You will delete this category. You have two solutions. You can move all its contents (questions and subcategories) in another category, or delete all the category.<strong>Be careful, this action is final !</strong>';
 $FAQ_LANG['delete_category_and_its_content'] = 'Delete the category and its contents';
 $FAQ_LANG['move_category_content'] = 'Move its content in :';
 $FAQ_LANG['faq_name'] = 'FAQ name';

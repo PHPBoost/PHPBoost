@@ -52,7 +52,7 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
             $modules_args[$module->get_id()]['weight'] = !empty($SEARCH_CONFIG['modules_weighting'][$module->get_id()]) ? $SEARCH_CONFIG['modules_weighting'][$module->get_id()] : 1;
             // On rajoute l'identifiant de recherche comme parametre pour faciliter la requete
             $modules_args[$module->get_id()]['id_search'] = !empty($search->id_search[$module->get_id()]) ? $search->id_search[$module->get_id()] : 0;
-            $requests[$module->get_id()] = $module->functionnality('get_search_request', $modules_args[$module->get_id()]);
+            $requests[$module->get_id()] = $module->functionality('get_search_request', $modules_args[$module->get_id()]);
         }
     }
     
@@ -108,10 +108,10 @@ function get_html_results(&$results, &$html_results, &$results_name)
         $module = $modules->get_module(strtolower($results_name));
         
         $results_data = array();
-        $personnal_parse_results = $module->has_functionnality('compute_search_results') && $module->has_functionnality('parse_search_result');
+        $personnal_parse_results = $module->has_functionality('compute_search_results') && $module->has_functionality('parse_search_result');
         if ($personnal_parse_results && $results_name != 'all')
         {
-            $results_data = $module->functionnality('compute_search_results', array('results' => $results));
+            $results_data = $module->functionality('compute_search_results', array('results' => $results));
             $nb_results = min($nb_results, count($results_data));
         }
     }
@@ -159,7 +159,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
             else
             {
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $module->functionnality('parse_search_result', $results_data[$num_item])
+                    'result' => $module->functionality('parse_search_result', $results_data[$num_item])
                 ));
             }
         }

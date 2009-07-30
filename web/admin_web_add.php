@@ -41,7 +41,7 @@ if (!empty($_POST['valid']))
 
 	if (!empty($title) && !empty($url) && !empty($idcat) && isset($aprob))
 	{	
-		$Sql->query_inject("INSERT INTO ".PREFIX."web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
+		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
 		redirect(HOST . DIR . '/web/admin_web.php');
 	}
@@ -54,9 +54,9 @@ elseif (!empty($_POST['previs']))
 		'admin_web_add'=> 'web/admin_web_add.tpl'
 	));
 
-	$title = retrieve(POST, 'name', '', TSTRING_UNSECURE);
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
-	$url = retrieve(POST, 'url', '', TSTRING_UNSECURE);
+	$title = stripslashes(retrieve(POST, 'name', ''));
+	$contents = retrieve(POST, 'contents', '', TSTRING_PARSE);
+	$url = retrieve(POST, 'url', '', TSTRING_UNCHANGE);
 	$idcat = retrieve(POST, 'idcat', 0);
 	$compt = retrieve(POST, 'compt', 0);
 	$aprob = retrieve(POST, 'aprob', 0);
@@ -64,11 +64,11 @@ elseif (!empty($_POST['previs']))
 	$aprob_enable = ($aprob == 1) ? 'checked="checked"' : '';
 	$aprob_disable = ($aprob == 0) ? 'checked="checked"' : '';
 
-	$cat = $Sql->query("SELECT name FROM ".PREFIX."web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
+	$cat = $Sql->query("SELECT name FROM " . PREFIX . "web_cat WHERE id = '" . $idcat . "'", __LINE__, __FILE__);
 	
 	$Template->assign_block_vars('web', array(
 		'NAME' => $title,
-		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
+		'PREVIEWED_CONTENTS' => second_parse(stripslashes($contents)),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'CAT' => $cat,
@@ -83,10 +83,11 @@ elseif (!empty($_POST['previs']))
 	));
 
 	$Template->assign_vars(array(
+		'MODULE_DATA_PATH' => $Template->get_module_data_path('web'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'NAME' => $title,
-		'CONTENTS' => $contents,
+		'CONTENTS' => retrieve(POST, 'contents', '', TSTRING_UNCHANGE),
 		'URL' => $url,
 		'IDCAT' => $idcat,
 		'COMPT' => $compt,
@@ -118,7 +119,7 @@ elseif (!empty($_POST['previs']))
 	//Catégories.
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
@@ -170,7 +171,7 @@ else
 	//Catégories.	
 	$i = 0;
 	$result = $Sql->query_while("SELECT id, name 
-	FROM ".PREFIX."web_cat
+	FROM " . PREFIX . "web_cat
 	ORDER BY class", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{

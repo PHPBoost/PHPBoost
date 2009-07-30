@@ -37,16 +37,28 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 import('core/application');
 import('core/repository');
 
-
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc
+ * @package core
+ */
 class Updates
-{    
+{
+    /**
+	* @desc constructor of the class
+	* @param $checks
+	*/
     function Updates($checks = CHECK_ALL_UPDATES)
     {
         $this->_load_apps($checks);
         $this->_load_repositories();
         $this->_check_repositories();
     }
-    
+	
+    /**
+	* @desc Load Application Classes
+	* @param $checks
+	*/
     function _load_apps($checks = CHECK_ALL_UPDATES)
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -55,24 +67,27 @@ class Updates
             
             if ($checks & CHECK_KERNEL)
             {   // Add the kernel to the check list
-                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, $CONFIG['version'], PHPBOOST_OFFICIAL_REPOSITORY);
+                $this->apps[] = new Application('kernel', get_ulang(), APPLICATION_TYPE__KERNEL, phpboost_version(), PHPBOOST_OFFICIAL_REPOSITORY);
             }
             
-            if ($checks & CHECK_KERNEL)
+            if ($checks & CHECK_MODULES)
             {
                 global $MODULES;
                 // Add Modules
                 $kModules = array_keys($MODULES);
                 foreach ($kModules as $module)
                 {
-                    $infos = get_ini_config(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+                    $infos = load_ini_file(PATH_TO_ROOT . '/' . $module . '/lang/', get_ulang());
+                    $repository = !empty($infos['repository']) ? $infos['repository'] : PHPBOOST_OFFICIAL_REPOSITORY;
                     if (!empty($infos['repository']))
-                        $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $infos['repository']);
+                    {
+                        $this->apps[] = new Application($module, get_ulang(), APPLICATION_TYPE__MODULE, $infos['version'], $repository);
+                    }
                 }
             }
             
             if ($checks & CHECK_THEMES)
-            {   
+            {
                 global $THEME_CONFIG;
                 // Add Themes
                 $kThemes = array_keys($THEME_CONFIG);
@@ -80,12 +95,17 @@ class Updates
                 {
                     $infos = get_ini_config(PATH_TO_ROOT . '/templates/' . $theme . '/config/', get_ulang());
                     if (!empty($infos['repository']))
-                        $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['css_version'], $infos['repository']);
+                    {
+                        $this->apps[] = new Application($theme, get_ulang(), APPLICATION_TYPE__TEMPLATE, $infos['version'], $infos['repository']);
+                    }
                 }
             }
         }
     }
-    
+	
+    /**
+	* @desc Load Repository Classes
+	*/
     function _load_repositories()
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -98,7 +118,10 @@ class Updates
             }
         }
     }
-    
+
+    /**
+	* @desc Check Repository for Update Notification
+	*/
     function _check_repositories()
     {
         if (phpversion() > PHP_MIN_VERSION_UPDATES)
@@ -113,7 +136,10 @@ class Updates
             }
         }
     }
-    
+	
+    /**
+	* @desc Save an alert for Update Notification
+	*/
     function _add_update_alert(&$app)
     {
         import('events/administrator_alert_service');
@@ -129,7 +155,7 @@ class Updates
             else
                 $alert->set_entitled(sprintf($LANG['update_available'], $app->get_type(), $app->get_name(), $app->get_version()));
             
-            $alert->set_fixing_url('admin/admin_update_detail.php?identifier=' . $identifier);
+            $alert->set_fixing_url('admin/updates/detail.php?identifier=' . $identifier);
             $alert->set_priority($app->get_priority());
             $alert->set_properties(serialize($app));
             $alert->set_type('updates');

@@ -41,7 +41,7 @@ if (isset($_GET['cat']))
 	}
 	if (!empty($idart))
 	{
-		$articles = $Sql->query_array('articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
+		$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
@@ -58,7 +58,8 @@ if (isset($_GET['cat']))
 else
 {
 	$Bread_crumb->add($LANG['title_articles'], '');
-	define('TITLE', $LANG['title_articles']);
+	if (!defined('TITLE'))
+		define('TITLE', $LANG['title_articles']);
 }
 
 ?>

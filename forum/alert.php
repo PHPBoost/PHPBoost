@@ -3,7 +3,7 @@
  *                                alert.php
  *                            -------------------
  *   begin                : August 7, 2006
- *   copyright          : (C) 2006 Viarre Régis / Sautel Benoît
+ *   copyright            : (C) 2006 Viarre Régis / Sautel Benoît
  *   email                : crowkait@phpboost.com / ben.popeye@phpboost.com
  *
  *  
@@ -32,7 +32,7 @@ require_once('../forum/forum_tools.php');
 $alert = retrieve(GET, 'id', 0);	
 $alert_post = retrieve(POST, 'id', 0);	
 $topic_id = !empty($alert) ? $alert : $alert_post;
-$topic = $Sql->query_array('forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
+$topic = $Sql->query_array(PREFIX . 'forum_topics', 'idcat', 'title', 'subtitle', "WHERE id = '" . $topic_id . "'", __LINE__, __FILE__);
 
 $cat_name = !empty($CAT_FORUM[$topic['idcat']]['name']) ? $CAT_FORUM[$topic['idcat']]['name'] : '';
 $topic_name = !empty($topic['title']) ? $topic['title'] : '';
@@ -47,7 +47,7 @@ require_once('../kernel/header.php');
 if (empty($alert) && empty($alert_post) || empty($topic['idcat'])) 
 	redirect(HOST . DIR . '/forum/index' . url('.php'));  
 
-if (!$User->check_level(USER_LEVEL)) //Si c'est un invité
+if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
     $Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
 $Template->set_filenames(array(
@@ -60,7 +60,7 @@ $Template->set_filenames(array(
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$Template->assign_vars(array(
@@ -103,7 +103,7 @@ if (!empty($alert_post))
 	));
 	
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."forum_alerts WHERE idtopic = '" . $alert_post ."'", __LINE__, __FILE__);
+	$nbr_alert = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "forum_alerts WHERE idtopic = '" . $alert_post ."' AND status = 0", __LINE__, __FILE__);
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title = retrieve(POST, 'title', '');
@@ -129,39 +129,8 @@ if (!empty($alert_post))
 }
 
 //Listes les utilisateurs en lignes.
-list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
-$result = $Sql->query_while("SELECT s.user_id, s.level, m.login 
-FROM ".PREFIX."sessions s 
-LEFT JOIN ".PREFIX."member m ON m.user_id = s.user_id 
-WHERE s.session_time > '" . (time() - $CONFIG['site_session_invit']) . "' AND s.session_script LIKE '/forum/%'
-ORDER BY s.session_time DESC", __LINE__, __FILE__);
-while ($row = $Sql->fetch_assoc($result))
-{
-	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
-	{ 		
-		case -1:
-		$status = 'visiteur';
-		$total_visit++;
-		break;			
-		case 0:
-		$status = 'member';
-		$total_member++;
-		break;			
-		case 1: 
-		$status = 'modo';
-		$total_modo++;
-		break;			
-		case 2: 
-		$status = 'admin';
-		$total_admin++;
-		break;
-	} 
-	$coma = !empty($users_list) && $row['level'] != -1 ? ', ' : '';
-	$users_list .= (!empty($row['login']) && $row['level'] != -1) ?  $coma . '<a href="../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $status . '">' . $row['login'] . '</a>' : '';
-}
-$Sql->query_close($result);
-
-$total_online = $total_admin + $total_modo + $total_member + $total_visit;
+list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.session_script = '/forum/%'");
+	
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'] . ' : ' . $LANG['alert_topic'],
 	'SID' => SID,
@@ -176,6 +145,7 @@ $Template->assign_vars(array(
 	'U_FORUM_CAT' => '<a href="forum' . url('.php?id=' . $topic['idcat'], '-' . $topic['idcat'] . '.php') . '">' . $CAT_FORUM[$topic['idcat']]['name'] . '</a>',
 	'U_TITLE_T' => '<a href="topic' . url('.php?id=' . $topic_id, '-' . $topic_id . '.php') . '">' . $topic['title'] . '</a>',
 	'L_FORUM_INDEX' => $LANG['forum_index'],
+	'L_SUBMIT' => $LANG['submit'],
 	'L_PREVIEW' => $LANG['preview'],
 	'L_RESET' => $LANG['reset'],
 	'L_USER' => ($total_online > 1) ? $LANG['user_s'] : $LANG['user'],

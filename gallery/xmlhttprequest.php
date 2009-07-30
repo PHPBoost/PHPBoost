@@ -32,21 +32,50 @@ include_once('../gallery/gallery_begin.php');
 require_once('../kernel/header_no_display.php');
 
 //Notation.
-if (!empty($_GET['note']) && $User->check_level(USER_LEVEL)) //Utilisateur connecté.
-{	
-	$id = retrieve(POST, 'id', 0);
-	$note = retrieve(POST, 'note', 0);
-
-	//Initialisation  de la class de gestion des fichiers.
-	include_once('../kernel/framework/content/note.class.php');
-	$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
-	
-	if (!empty($note) && !empty($id))
-		echo $Note->add($note); //Ajout de la note.
+if (!empty($_GET['increment_view']))
+{
+	$g_idpics = retrieve(GET, 'id', 0);
+	$g_idcat = retrieve(GET, 'cat', 0);
+	if (empty($g_idpics))
+		exit;
+	elseif (!empty($g_idcat))
+	{
+		if (!isset($CAT_GALLERY[$g_idcat]) || $CAT_GALLERY[$g_idcat]['aprob'] == 0) 
+			exit;
+	}
+	else //Racine.
+	{
+		$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
+		$CAT_GALLERY[0]['aprob'] = 1;
+	}
+	//Niveau d'autorisation de la catégorie
+	if (!$User->check_auth($CAT_GALLERY[$g_idcat]['auth'], READ_CAT_GALLERY))
+		exit;
+		
+	//Mise à jour du nombre de vues.
+	$Sql->query_inject("UPDATE LOW_PRIORITY " . PREFIX . "gallery SET views = views + 1 WHERE idcat = '" . $g_idcat . "' AND id = '" . $g_idpics . "'", __LINE__, __FILE__);
 }
-	
-if ($User->check_level(MODO_LEVEL)) //Modo
+elseif (!empty($_GET['note']) ) //Utilisateur connecté.
 {	
+	if ($User->check_level(MEMBER_LEVEL))
+	{
+		$id = retrieve(POST, 'id', 0);
+		$note = retrieve(POST, 'note', 0);
+
+		//Initialisation  de la class de gestion des fichiers.
+		import('content/note');
+		$Note = new Note('gallery', $id, '', $CONFIG_GALLERY['note_max'], '', NOTE_DISPLAY_NOTE);
+		
+		if (!empty($note) && !empty($id))
+			echo $Note->add($note); //Ajout de la note.
+	}
+	else
+		echo -2;
+}
+elseif ($User->check_level(MODO_LEVEL)) //Modo
+{	
+	$Session->csrf_get_protect(); //Protection csrf
+	
 	if (!empty($_GET['rename_pics'])) //Renomme une image.
 	{
 		//Initialisation  de la class de gestion des fichiers.

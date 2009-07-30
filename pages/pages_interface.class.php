@@ -47,8 +47,8 @@ class PagesInterface extends ModuleInterface
 		$config = 'global $_PAGES_CATS;' . "\n";
 		$config .= '$_PAGES_CATS = array();' . "\n";
 		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
-		FROM ".PREFIX."pages_cats c
-		LEFT JOIN ".PREFIX."pages p ON p.id = c.id_page
+		FROM " . PREFIX . "pages_cats c
+		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
@@ -61,7 +61,7 @@ class PagesInterface extends ModuleInterface
 
 		//Configuration du module de pages
 		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'pages'", __LINE__, __FILE__));
+		$CONFIG_PAGES = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
 								
 		if (is_array($CONFIG_PAGES))
 			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
@@ -122,7 +122,7 @@ class PagesInterface extends ModuleInterface
             ( 2 * MATCH(p.title) AGAINST('".$args['search']."') + MATCH(p.contents) AGAINST('".$args['search']."') ) / 3 * " . $weight . " AS `relevance`,
             CONCAT('" . PATH_TO_ROOT . "/pages/pages.php?title=',p.encoded_title) AS `link`,
             p.auth AS `auth`
-            FROM ".PREFIX."pages p
+            FROM " . PREFIX . "pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
             .$Sql->limit(0, PAGES_MAX_SEARCH_RESULTS);
 

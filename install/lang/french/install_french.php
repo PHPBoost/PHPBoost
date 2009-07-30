@@ -42,7 +42,7 @@ $LANG['page_title'] = 'Installation de PHPBoost';
 $LANG['steps_list'] = 'Liste des étapes';
 $LANG['introduction'] = 'Préambule';
 $LANG['config_server'] = 'Configuration du serveur';
-$LANG['database_config'] = 'Configuration de la base de données';
+$LANG['database_config'] = 'Configuration base de données';
 $LANG['advanced_config'] = 'Configuration du site';
 $LANG['administrator_account_creation'] = 'Compte administrateur';
 $LANG['end'] = 'Fin de l\'installation';
@@ -60,7 +60,7 @@ $LANG['query_failure'] = 'Traitement échoué';
 $LANG['intro_title'] = 'Bienvenue dans l\'assistant d\'installation de PHPBoost';
 $LANG['intro_explain'] = '<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 <p>Pour installer PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
-<p>Cordialement l\'équipe PHPBoost</p>';
+<p>Cordialement, l\'équipe PHPBoost</p>';
 $LANG['intro_distribution'] = 'Distribution %s';
 $LANG['intro_distribution_intro'] = '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p>
 <p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>';
@@ -68,15 +68,16 @@ $LANG['start_install'] = 'Commencer l\'installation';
 
 //licence
 $LANG['license'] = 'Licence';
-$LANG['require_license_agreement'] = 'Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.';
+$LANG['require_license_agreement'] = '<p>Vous devez accepter les termes de la licence GNU/GPL pour installer PHPBoost.</p><p>Vous trouverez une traduction non officielle de cette licence en français <img src="../images/stats/countries/fr.png" alt="Français" /> <a href="http://www.linux-france.org/article/these/gpl.html">ici</a>.</p>';
 $LANG['license_agreement'] = 'Acceptation des termes de la licence';
 $LANG['license_terms'] = 'Termes de la licence';
-$LANG['please_agree_license'] = 'J\'ai pris connaissance et j\'accepte les termes de la licence.';
+$LANG['please_agree_license'] = 'J\'ai pris connaissance des termes de la licence et je les accepte';
 $LANG['alert_agree_license'] = 'Vous devez accepter la licence en cochant le formulaire associé pour pouvoir continuer !';
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Vérification de la configuration du serveur';
-$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost. Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</p>
+$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
+<div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>';
 $LANG['php_version'] = 'Version de PHP';
 $LANG['check_php_version'] = 'PHP supérieur à 4.1.0';
@@ -84,7 +85,7 @@ $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.';
 $LANG['gd_library'] = 'Librairie GD';
-$LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots';
+$LANG['gd_library_explain'] = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots, ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
 $LANG['url_rewriting'] = 'URL Rewriting';
 $LANG['url_rewriting_explain'] = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
 $LANG['auth_dir'] = 'Autorisations des dossiers';
@@ -95,12 +96,12 @@ $LANG['unexisting'] = 'Inexistant';
 $LANG['writable'] = 'Inscriptible';
 $LANG['unwritable'] = 'Non inscriptible';
 $LANG['unknown'] = 'Indéterminable';
-$LANG['config_server_dirs_not_ok'] = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour de pouvoir continuer.';
+$LANG['config_server_dirs_not_ok'] = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.';
 
 //Base de données
 $LANG['db_title'] = 'Paramètres de connexion à la base de données';
-$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébérgeur qui vous les transmettra.</p>';
-$LANG['dbms_paramters'] = 'Paramètres d\'accès au SGBD';
+$LANG['db_explain'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Les tables permettant de faire fonctionner PHPBoost seront automatiquement créées lors de cette étape. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>';
+$LANG['dbms_paramters'] = 'Paramètres d\'accès au <acronym title="Système de Gestion de Base de Données">SGBD</acronym>';
 $LANG['db_host_name'] = 'Nom de l\'hôte';
 $LANG['db_host_name_explain'] = 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.';
 $LANG['db_login'] = 'Identifiant';
@@ -122,7 +123,7 @@ $LANG['field_password'] = 'mot de passe';
 $LANG['field_database'] = 'nom de la base de données';
 $LANG['db_error_connexion'] = 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.';
 $LANG['db_error_selection_not_creable'] = 'La base de données que vous avez indiquée n\'existe pas et le système n\'a pas l\'autorisation de la créer.';
-$LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existe pas mais a pu être créée par le système.';
+$LANG['db_error_selection_but_created'] = 'La base de données que vous avez indiquée n\'existait pas mais a pu être créée par le système.';
 $LANG['db_error_tables_already_exist'] = 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.';
 $LANG['db_success'] = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
 $LANG['db_unknown_error'] = 'Une erreur inconnue a été rencontrée.';
@@ -130,6 +131,10 @@ $LANG['require_hostname'] = 'Vous devez renseigner le nom de l\'hôte !';
 $LANG['require_login'] = 'Vous devez renseigner l\'identifiant de connexion !';
 $LANG['require_db_name'] = 'Vous devez renseigner le nom de la base de données !';
 $LANG['db_result'] = 'Résultats du test';
+$LANG['already_installed'] = 'Installation existante';
+$LANG['already_installed_explain'] = '<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
+<p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>';
+$LANG['already_installed_overwrite'] = 'Je souhaite écraser l\'installation de PHPBoost déjà existante';
 
 //configuraton du site
 $LANG['site_config_title'] = 'Configuration du site';
@@ -171,19 +176,20 @@ $LANG['admin_mail'] = 'Courrier électronique';
 $LANG['admin_mail_explain'] = 'Doit être valide pour recevoir le code de déverrouillage';
 $LANG['admin_require_login'] = 'Vous devez entrer un pseudo';
 $LANG['admin_login_too_short'] = 'Votre pseudo est trop court (3 caractères minimum)';
-$LANG['admin_password_too_short'] = 'Votre mot de passe est trop court (3 caractères minimum)';
+$LANG['admin_password_too_short'] = 'Votre mot de passe est trop court (6 caractères minimum)';
 $LANG['admin_require_password'] = 'Vous devez entrer un mot de passe';
 $LANG['admin_require_password_repeat'] = 'Vous devez confirmer votre mot de passe';
 $LANG['admin_require_mail'] = 'Vous devez entrer une adresse de courier électronique';
 $LANG['admin_passwords_error'] = 'Les deux mots de passe que vous avez entrés ne correspondent pas';
 $LANG['admin_email_error'] = 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte';
+$LANG['admin_invalid_email_error'] = 'Mail invalide';
 $LANG['admin_create_session'] = 'Me connecter à la fin de l\'installation';
 $LANG['admin_auto_connection'] = 'Rester connecté systématiquement à chacune de mes visites';
 $LANG['admin_error'] = 'Erreur';
-$LANG['admin_mail_object'] = 'PHPBoost : message à conserver';
+$LANG['admin_mail_object'] = 'Identifiants de votre site créé avec PHPBoost (message à conserver)';
 $LANG['admin_mail_unlock_code'] = 'Cher %s,
 
-Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il repondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/index.php
+Tout d\'abord, merci d\'avoir choisi PHPBoost pour réaliser votre site, nous espérons qu\'il répondra au mieux à vos besoins. Pour tout problème n\'hésitez pas à vous rendre sur le forum http://www.phpboost.com/forum/index.php
 
 Voici vos identifiants (ne les perdez pas, ils vous seront utiles pour administrer votre site et ne pourront plus être récupérés).
 
@@ -192,7 +198,7 @@ Password: %s
 
 A conserver ce code (Il ne vous sera plus délivré) : %s
 
-Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin.php) 
+Ce code permet le déverrouillage de l\'administration en cas de tentative d\'intrusion dans l\'administration par un utilisateur mal intentionné, il vous sera demandé dans le formulaire de connexion directe à l\'administration (%s/admin/admin_index.php) 
 
 Cordialement l\'équipe PHPBoost.';
 
@@ -208,19 +214,21 @@ $LANG['end_installation'] = '<fieldset>
 						<fieldset>
 							<legend>Remerciements</legend>
 							<h2>Membres de la communauté</h2>
-							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 2.1 stable et efficace.</p>
-							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong> pour les graphismes et <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>akhenathon</strong> de l\'équipe de développement de modules.</p>
+							<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à une version 3.0 stable et efficace.</p>
+							<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>Ptithom</strong> et <strong>giliam</strong> de l\'équipe rédaction pour la documentation, <strong>KONA</strong>, <strong>Frenchbulldog</strong>, <strong>Grenouille</strong>, <strong>EnimSay</strong>, <strong>swan</strong> pour les graphismes, <strong>Gsgsd</strong>, <strong>Alain91</strong> et <strong>Crunchfamily</strong> de l\'équipe de développement de modules, <strong>PiJean</strong> et <strong>Beowulf</strong> pour la traduction anglaise et <strong>Shadow</strong> et <strong>Kak Miortvi Pengvin</strong> pour la modération de la communauté.</p>
 							<h2>Projets</h2>
 							<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
 							<ul>
 								<li><a href="http://notepad-plus.sourceforge.net">Notepad++</a> : Editeur de texte puissant très utilisé pour le développement de PHPBoost.</li>
-								<li><a href="http://www.eclipse.org/pdt/">Eclipse PDT</a> : <acronym title="Integrated Development Environment">IDE</acronym> PHP (outil de développement PHP) basé sur Eclipse et utilisant le plug in <acronym title="PHP Development Tools">PDT</acronym> développé par <a href="http://www.zend.com/fr/">Zend</a>.</li>
+								<li><a href="http://www.eclipse.org/pdt/">Eclipse <acronym title="PHP Development Tools">PDT</acronym></a> : <acronym title="Integrated Development Environment">IDE</acronym> PHP (outil de développement PHP) basé sur Eclipse.</li>
 								<li><a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango Desktop Project</a> : Ensemble d\'icônes diverses utilisées sur l\'ensemble de PHPBoost.</li>
 								<li><a href="http://www.phpconcept.net/pclzip/">PCLZIP</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
 								<li><a href="http://www.xm1math.net/phpmathpublisher/index_fr.html">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
 								<li><a href="http://tinymce.moxiecode.com/">TinyMCE</a> : Editeur <acronym title="What You See Is What You Get">WYSIWYG</acronym> permettant la mise en page à la volée.</li>
 								<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
-								<li><a href="http://script.aculo.us/">script.aculo.us</a> : Framework <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
+								<li><a href="http://script.aculo.us/">script.aculo.us</a> : Framework Javascript et <acronym title="Asynchronous Javascript And XML">AJAX</acronym></li>
+								<li><a href="http://www.alsacreations.fr/mp3-dewplayer.html">Dewplayer</a> : lecteur audio au format flash</li>
+								<li><a href="http://flowplayer.org">Flowplayer</a> : lecteur vidéo au format flash</li>
 							</ul>
 						</fieldset>
 						<fieldset>
@@ -244,5 +252,8 @@ $LANG['restart_installation'] = 'Recommencer l\'installation';
 $LANG['confirm_restart_installation'] = addslashes('Etes-vous certain de vouloir recommencer l\'installation ?');
 $LANG['change_lang'] = 'Changer de langue';
 $LANG['change'] = 'Changer';
-		
+
+$LANG['powered_by'] = 'Boosté par';
+$LANG['phpboost_right'] = '';
+
 ?>

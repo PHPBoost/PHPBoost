@@ -3,7 +3,7 @@
  *                               admin_pages.php
  *                            -------------------
  *   begin                : August 09, 2007
- *   copyright          : (C) 2007 Sautel Benoit
+ *   copyright            : (C) 2007 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -42,11 +42,11 @@ if (!empty($_POST['update']))  //Mise à jour
 	//Génération du tableau des droits.
 	$array_auth_all = Authorizations::build_auth_array_from_form(READ_PAGE, EDIT_PAGE, READ_COM);
 	
-	$_PAGES_CONFIG['auth'] = addslashes(serialize($array_auth_all));
+	$_PAGES_CONFIG['auth'] = serialize($array_auth_all);
 	$_PAGES_CONFIG['count_hits'] = $count_hits;
 	$_PAGES_CONFIG['activ_com'] = $activ_com;
 
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($_PAGES_CONFIG)) . "' WHERE name = 'pages'", __LINE__, __FILE__);
 	//Régénération du cache
 	$Cache->Generate_module_file('pages');
 	

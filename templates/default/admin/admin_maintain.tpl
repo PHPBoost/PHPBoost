@@ -17,7 +17,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_maintain.php" method="post" class="fieldset_content">
+			<form action="admin_maintain.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_SET_MAINTAIN}</legend>
 					<dl class="overflow_visible">
@@ -43,7 +43,7 @@
 								<div style="position:relative;z-index:100;top:6px;margin-left:155px;float:left;display:none;" id="calendar2">
 									<div id="end_date" class="calendar_block" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);"></div>
 								</div>
-								<a onclick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a></label>
+								<a onclick="document.getElementById('maintain_check2').checked = 'checked';xmlhttprequest_calendar('end_date', '?input_field=end&amp;field=end_date');display_calendar(2, 'end_date');" onmouseover="hide_calendar(2, 1);" onmouseout="hide_calendar(2, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgend_date" src="{PATH_TO_ROOT}/templates/{THEME}/images/calendar.png" alt="" /></a>
 							</label>
 						</dd>
 					</dl>
@@ -62,7 +62,7 @@
 					<label for="contents">{L_MAINTAIN_TEXT}</label>
 					<label>
 						{KERNEL_EDITOR}	
-						<textarea type="text" rows="14" cols="20" name="contents" id="contents">{MAINTAIN_CONTENTS}</textarea>
+						<textarea rows="14" cols="20" name="contents" id="contents">{MAINTAIN_CONTENTS}</textarea>
 					</label>
 				</fieldset>			
 				<fieldset class="fieldset_submit">
@@ -70,7 +70,7 @@
 					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(this.form);" type="button" class="submit" />');
+					document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
 					-->
 					</script>
 					&nbsp;&nbsp;

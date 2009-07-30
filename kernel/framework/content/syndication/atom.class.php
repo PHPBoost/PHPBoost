@@ -32,15 +32,32 @@ define('DEFAULT_ATOM_TEMPLATE', 'framework/content/syndication/atom.tpl');
 import('io/template');
 import('content/syndication/feed');
 
+/**
+ * @author Loïc Rouchon <horn@phpboost.com>
+ * @desc This class could load a feed by its url or by a FeedData element and
+ * export it to the ATOM format
+ * @package content
+ * @subpackage syndication
+ */
 class ATOM extends Feed
 {
     ## Public Methods ##
+    /**
+     * @desc Builds a new ATOM object
+     * @param string $module_id its module_id
+     * @param string $feed_name the feeds name / type. default is DEFAULT_FEED_NAME
+     * @param int $id_cat the feed category id
+     */
     function ATOM($module_id, $feed_name = DEFAULT_FEED_NAME, $id_cat = 0)
     {
         parent::Feed($module_id, $feed_name, $id_cat);
         $this->tpl = new Template(DEFAULT_ATOM_TEMPLATE);
     }
 
+    /**
+     * @desc Loads a feed by its url
+     * @param string $url the feed url
+     */
     function load_file($url)
     {
         if (($file = @file_get_contents_emulate($url)) !== false)

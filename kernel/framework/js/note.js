@@ -46,9 +46,9 @@ function select_stars(divid, note)
 			else
 				star_img = 'stars3.png';
 		}
-					
-		if( document.getElementById(divid + '_stars' + i) )
-			document.getElementById(divid + '_stars' + i).src = PATH_TO_ROOT + '/templates/' + theme + '/images/' + star_img;
+		
+		if( document.getElementById('n' + divid + '_stars' + i) )
+			document.getElementById('n' + divid + '_stars' + i).src = PATH_TO_ROOT + '/templates/' + theme + '/images/' + star_img;
 	}
 }
 function out_div(divid, note)
@@ -63,7 +63,7 @@ function over_div()
 	clearTimeout(note_timeout);
 	note_timeout = null;
 }
-function send_note(id, note)
+function send_note(id, note, token)
 {
 	var regex = /\/|\\|\||\?|<|>|\"/;
 	var get_nbrnote;
@@ -72,7 +72,7 @@ function send_note(id, note)
 	document.getElementById('noteloading' + id).innerHTML = '<img src="' + PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif" alt="" class="valign_middle" />';
 	
 	data = "id=" + id + "&note=" + note;
-	var xhr_object = xmlhttprequest_init('xmlhttprequest.php?note=1');
+	var xhr_object = xmlhttprequest_init('xmlhttprequest.php?note=1&token=' + token);
 	xhr_object.onreadystatechange = function() 
 	{
 		if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )

@@ -11,12 +11,12 @@
 					<br />
 					<p style="padding-left: 6px;text-align: left;">		
 						# START question.radio #
-						<label><input type="{question.radio.TYPE}" name="radio" value="{question.radio.NAME}" /> <span class="text_small">{question.radio.ANSWERS}</span></label>
+						<label><input type="radio" name="radio" value="{question.radio.NAME}" /> <span class="text_small">{question.radio.ANSWERS}</span></label>
 						<br /><br />	
 						# END question.radio #
 					
 						# START question.checkbox #
-						<label><input type="{question.checkbox.TYPE}" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}" /> <span class="text_small">{question.checkbox.ANSWERS}</span></label>
+						<label><input type="checkbox" name="{question.checkbox.NAME}" value="{question.checkbox.NAME}" /> <span class="text_small">{question.checkbox.ANSWERS}</span></label>
 						<br /><br />	
 						# END question.checkbox #
 					</p>

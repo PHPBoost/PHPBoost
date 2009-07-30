@@ -76,9 +76,9 @@
                 }
                 
                 function XMLHttpRequest_search_module(module)
-                // Affiche les rÃ©sultats de la recherche pour le module particulier <module>
+                // Affiche les résultats de la recherche pour le module particulier <module>
                 {
-                    var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php');
+                    var xhr_object = xmlhttprequest_init('../search/searchXMLHTTPRequest.php?token={TOKEN}');
                     xhr_object.onreadystatechange = function()
                     {
                         if( xhr_object.readyState == 1 )
@@ -124,7 +124,7 @@
                 # IF C_SIMPLE_SEARCH #
                     <div id="results_choices" class="resultsChoices" style="display:none">
                         <span>{L_PRINT}</span>
-                        <select id="results_choice" name="ResultsSelection" onChange="ChangeResults();">
+                        <select id="results_choice" name="ResultsSelection" onchange="ChangeResults();">
                             <option value="all">{L_TITLE_ALL_RESULTS}</option>
                             # START results #
                                 <option value="{results.MODULE_NAME}"> --&gt; {results.L_MODULE_NAME}</option>

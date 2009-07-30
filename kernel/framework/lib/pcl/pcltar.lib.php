@@ -1,5 +1,8 @@
 <?php
 if (defined('PHPBOOST') !== true)	exit;
+/**
+* @package lib
+*/
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Tar Module 1.3.1
@@ -34,7 +37,7 @@ if (!defined("PCL_TAR"))
   // ----- Configuration variable
   // Theses values may be changed by the user of PclTar library
   if (!isset($g_pcltar_lib_dir))
-    $g_pcltar_lib_dir = "includes";
+    $g_pcltar_lib_dir = PATH_TO_ROOT . '/kernel/framework/lib/pcl';
 
   // ----- Error codes
   //   -1 : Unable to open file in binary write mode
@@ -60,7 +63,7 @@ if (!defined("PCL_TAR"))
   $g_pcltar_version = "1.3.1";
 
   // ----- Extract extension type (.php3/.php/...)
-  $g_pcltar_extension = substr(strrchr(basename($PATH_TRANSLATED), '.'), 1);
+  $g_pcltar_extension = 'php';
 
   // ----- Include other libraries
   // This library should be called by each script before the include of PhpZip
@@ -310,7 +313,7 @@ if (!defined("PCL_TAR"))
   //    filename, size, mode, uid, gid, mtime, typeflag, status
   //  Exemple : $v_list = PclTarList("my.tar");
   //            for ($i=0; $i<sizeof($v_list); $i++)
-  //              echo "Filename :'".$v_list[$i][filename]."'<br>";
+  //              echo "Filename :'".$v_list[$i][filename]."'<br />";
   // --------------------------------------------------------------------------------
   function PclTarList($p_tarname, $p_mode="")
   {

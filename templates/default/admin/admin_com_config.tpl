@@ -43,7 +43,7 @@
 		
 		<div id="admin_contents">
 		
-			<form action="admin_com_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_com_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_COM_CONFIG}</legend>
 					<dl> 
@@ -64,6 +64,26 @@
 							<label><input type="radio" {COM_DISABLED} name="com_popup" value="1" /> {L_NEW_PAGE}</label>
 						</dd>
 					</dl>
+					<dl>
+						<dt><label for="verif_code">{L_VERIF_CODE}</label><br /><span>{L_VERIF_CODE_EXPLAIN}</span></dt>
+						<dd>
+							<label><input type="radio" {VERIF_CODE_ENABLED} name="verif_code" id="verif_code" value="1" {GD_DISABLED} /> {L_YES}</label>
+							&nbsp;&nbsp; 
+							<label><input type="radio" {VERIF_CODE_DISABLED} name="verif_code" value="0" {GD_DISABLED} /> {L_NO}</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt><label for="verif_code_difficulty">{L_CAPTCHA_DIFFICULTY}</label></dt>
+						<dd>
+							<label>
+								<select name="verif_code_difficulty" id="verif_code_difficulty">
+									# START difficulty #
+									<option value="{difficulty.VALUE}" {difficulty.SELECTED}>{difficulty.VALUE}</option>
+									# END difficulty #
+								</select>         
+							</label>
+						</dd>
+					</dl>
 					<dl> 
 						<dt><label for="com_max">{L_COM_MAX}</label></dt>
 						<dd><label><input type="text" size="3" id="com_max" name="com_max" value="{COM_MAX}" class="text" /></label></dd>
@@ -76,9 +96,9 @@
 								<select id="forbidden_tags" name="forbidden_tags[]" size="10" multiple="multiple">
 								# START tag #
 									# IF tag.C_ENABLED #
-									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" selected="selected" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ELSE #
-									<option id="tag{tag.IDENTIFIER}" value="{tag.TAG_NAME}">{tag.TAG_NAME}</option>
+									<option id="tag{tag.IDENTIFIER}" value="{tag.CODE}">{tag.TAG_NAME}</option>
 									# ENDIF #
 								# END tags #
 								</select>

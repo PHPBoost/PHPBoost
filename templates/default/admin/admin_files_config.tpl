@@ -36,12 +36,12 @@
 		</div>
 		
 		<div id="admin_contents">	
-			<form action="admin_files_config.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+			<form action="admin_files_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_FILES}</legend>
 					<dl> 
 						<dt><label>* {L_AUTH_FILES}</label></dt>
-						<dd><label>{AUTH_FILES}</label></dd>
+						<dd>{AUTH_FILES}</dd>
 					</dl>
 					<dl> 
 						<dt><label for="size_limit">* {L_SIZE_LIMIT}</label></dt>
@@ -50,21 +50,21 @@
 					<dl> 
 						<dt><label for="bandwidth_protect">{L_BANDWIDTH_PROTECT}</label><br /><span>{L_BANDWIDTH_PROTECT_EXPLAIN}</span></dt>
 						<dd>
-							<label><input type="radio" name="bandwidth_protect" id="bandwidth_protect" value="1"{BANDWIDTH_PROTECT_ENABLED} /> {L_ACTIV}</label>
+							<label><input type="radio" name="bandwidth_protect" id="bandwidth_protect" value="1" {BANDWIDTH_PROTECT_ENABLED} /> {L_ACTIV}</label>
 							&nbsp;
-							<label><input type="radio" name="bandwidth_protect" value="0"{BANDWIDTH_PROTECT_DISABLED} /> {L_UNACTIV}</label>
+							<label><input type="radio" name="bandwidth_protect" value="0" {BANDWIDTH_PROTECT_DISABLED} /> {L_UNACTIV}</label>
 						</dd>
 					</dl>
 					<dl> 
 						<dt><label>* {L_AUTH_EXTENSIONS}</label></dt>
-						<dd><label>
+						<dd>
 							<select id="auth_extensions" name="auth_extensions[]" size="25" multiple="multiple">
 								{AUTH_EXTENSIONS}
 							</select>	
 							<br />
 							<a class="small_link" href="javascript:check_select_multiple_ext('ext', true);">{L_SELECT_ALL}</a>/<a class="small_link" href="javascript:check_select_multiple_ext('ext', false);">{L_SELECT_NONE}</a>							
-						</label></dd>
-					<dl>
+						</dd>
+					</dl>
 					<dl> 
 						<dt><label for="auth_extensions_sup">{L_EXTEND_EXTENSIONS}</label><br /><span>{L_EXTEND_EXTENSIONS_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="35" id="auth_extensions_sup" name="auth_extensions_sup" value="{AUTH_EXTENSIONS_SUP}" class="text" /></label></dd>

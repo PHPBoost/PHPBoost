@@ -24,7 +24,7 @@
 		
 		<div id="admin_contents">
 		
-		<form action="admin_calendar.php" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+		<form action="admin_calendar.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
 			<fieldset>
 				<legend>{L_CALENDAR_CONFIG}</legend>
 				<dl>

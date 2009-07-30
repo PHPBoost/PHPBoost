@@ -58,7 +58,7 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 			//Galerie parente de la galerie cible.
 			$list_parent_cats = '';
 			$result = $Sql->query_while("SELECT id
-			FROM ".PREFIX."gallery_cats 
+			FROM " . PREFIX . "gallery_cats 
 			WHERE id_left <= '" . $CAT_GALLERY[$parent_category]['id_left'] . "' AND id_right >= '" . $CAT_GALLERY[$parent_category]['id_right'] . "'", __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
@@ -73,19 +73,19 @@ if (!empty($_POST['add'])) //Nouvelle galerie/catégorie.
 				$clause_parent = "id IN (" . $list_parent_cats . ")";
 				
 			$id_left = $CAT_GALLERY[$parent_category]['id_right'];
-			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
-			$Sql->query_inject("UPDATE ".PREFIX."gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + 2 WHERE " . $clause_parent, __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "gallery_cats SET id_right = id_right + 2, id_left = id_left + 2 WHERE id_left > '" . $id_left . "'", __LINE__, __FILE__);
 			$level = $CAT_GALLERY[$parent_category]['level'] + 1;
 			
 		}
 		else //Insertion galerie niveau 0.
 		{
-			$id_left = $Sql->query("SELECT MAX(id_right) FROM ".PREFIX."gallery_cats", __LINE__, __FILE__);
+			$id_left = $Sql->query("SELECT MAX(id_right) FROM " . PREFIX . "gallery_cats", __LINE__, __FILE__);
 			$id_left++;
 			$level = 0;
 		}
 			
-		$Sql->query_inject("INSERT INTO ".PREFIX."gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
+		$Sql->query_inject("INSERT INTO " . PREFIX . "gallery_cats (id_left, id_right, level, name, contents, nbr_pics_aprob, nbr_pics_unaprob, status, aprob, auth) VALUES('" . $id_left . "', '" . ($id_left + 1) . "', '" . $level . "', '" . $name . "', '" . $contents . "', 0, 0, '" . $status . "', '" . $aprob . "', '" . strprotect(serialize($array_auth_all), HTML_NO_PROTECT) . "')", __LINE__, __FILE__);	
 
 		###### Regénération du cache #######
 		$Cache->Generate_module_file('gallery');
@@ -104,7 +104,7 @@ else
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galleries = '<option value="0" checked="checked">' . $LANG['root'] . '</option>';
 	$result = $Sql->query_while("SELECT id, name, level
-	FROM ".PREFIX."gallery_cats 
+	FROM " . PREFIX . "gallery_cats 
 	ORDER BY id_left", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{	
@@ -122,7 +122,7 @@ else
 		'THEME' => get_utheme(),
 		'MODULE_DATA_PATH' => $Template->get_module_data_path('gallery'),
 		'CATEGORIES' => $galleries,
-		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(0 => true, 1 => true, 2 => true)),
+		'AUTH_READ' => Authorizations::generate_select(READ_CAT_GALLERY, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
 		'AUTH_WRITE' => Authorizations::generate_select(WRITE_CAT_GALLERY, array(), array(1 => true, 2 => true)),
 		'AUTH_EDIT' => Authorizations::generate_select(EDIT_CAT_GALLERY, array(), array(2 => true)),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],

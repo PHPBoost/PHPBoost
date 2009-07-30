@@ -26,10 +26,10 @@
 
 <div id="admin_contents">
     # IF C_INCOMPATIBLE_PHP_VERSION #
-        &nbsp;<div class="warning" style="width:300px;margin:auto;margin-top:100px;">{L_INCOMPATIBLE_PHP_VERSION}</div>
+        &nbsp;<div class="warning" style="width:450px;margin:auto;margin-top:100px;">{L_INCOMPATIBLE_PHP_VERSION}</div>
     # ELSE #
         # IF C_UPDATES #
-            <div class="warning" style="width:300px;margin:auto;">{L_UPDATES_ARE_AVAILABLE}</div>
+            <div class="warning" style="width:450px;margin:auto;">{L_UPDATES_ARE_AVAILABLE}</div>
             
             <table class="module_table">
                 <tr><th colspan="5">{L_AVAILABLES_UPDATES}</th></tr>
@@ -50,8 +50,10 @@
                     <td class="row1 {apps.priority_css_class}" >{apps.L_PRIORITY}</td>
                     <td class="row1" style="text-align:center;">
                         <a href="{apps.download_url}" title="{L_DOWNLOAD_THE_COMPLETE_PACK}">{L_DOWNLOAD_PACK}</a><br />
+                        # IF apps.update_url #
                         /<br />
                         <a href="{apps.update_url}" title="{L_DOWNLOAD_THE_UPDATE_PACK}">{L_UPDATE_PACK}</a>
+                        # END IF #
                     </td>
                 </tr>
                 # END apps #
@@ -59,5 +61,10 @@
         # ELSE #
             &nbsp;<div class="question" style="width:300px;margin:auto;margin-top:100px;">{L_NO_AVAILABLES_UPDATES}</div>
         # END IF #
+        <p class="center" style="margin-top:100px;">
+			<a href="{U_CHECK}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/updater.png" alt="" /></a>
+			<br />
+			<a href="{U_CHECK}">{L_CHECK_FOR_UPDATES_NOW}</a>
+		</p>
     # END IF #
 </div>

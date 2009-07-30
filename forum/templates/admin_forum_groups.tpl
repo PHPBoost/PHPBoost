@@ -1,4 +1,3 @@
-		<link href="{MODULE_DATA_PATH}/forum.css" rel="stylesheet" type="text/css" media="screen, handheld">
 		<script type="text/javascript">
 		<!--
 		function Confirm() {
@@ -35,7 +34,7 @@
 		</div>
 
 		<div id="admin_contents">
-			<form action="admin_forum_groups.php" method="post" class="fieldset_content">
+			<form action="admin_forum_groups.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_FORUM_GROUPS}</legend>
 					<p>{EXPLAIN_FORUM_GROUPS}</p>

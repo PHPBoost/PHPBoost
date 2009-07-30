@@ -18,15 +18,15 @@
 		
 		<div style="float:right;margin-right:8px;">
 			<form action="{U_CONNECT}" method="post" onsubmit="return check_connect();" style="text-align:right;display:inline;">
-				<label><input size="15" type="text" class="text" id="login" name="login" value="{L_PSEUDO}" onclick="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" /></label>
-				<label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label>
-				<label><input checked="checked" type="checkbox" name="auto" /></label>
-				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" />
+				<p style="display:inline"><input size="15" type="text" id="login" name="login" value="{L_PSEUDO}" class="connect_form" onfocus="if( this.value == '{L_PSEUDO}' ) this.value = '';" maxlength="25" />
+				<input size="15" type="password" id="password" name="password" class="connect_form" value="******" onfocus="if( this.value == '******' ) this.value = '';" maxlength="30" />
+				<input checked="checked" type="checkbox" name="auto" />
+				<input type="submit" name="connect" value="{L_CONNECT}" class="submit" /></p>
 			</form>
-				
+			
 			# IF C_USER_REGISTER #
 			<form action="{U_REGISTER}" method="post" style="display:inline;">
-				<input type="submit" name="register" value="{L_REGISTER}" class="submit" />
+				<p style="display:inline"><input type="submit" name="register" value="{L_REGISTER}" class="submit" /></p>
 			</form>
 			# ENDIF #
 		</div>
@@ -39,11 +39,7 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{IMG_PM}" class="valign_middle" alt="" /> <a href="{U_USER_PM}" class="small_link">{L_NBR_PM}</a>&nbsp;
 			
 			# IF C_ADMIN_AUTH #
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL}
-				# IF C_UNREAD_ALERT #
-					({NUMBER_UNREAD_ALERTS})
-				# ENDIF #
-			</a>&nbsp; 
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/ranks_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/admin/admin_index.php" class="small_link">{L_ADMIN_PANEL} # IF C_UNREAD_ALERT # ({NUMBER_UNREAD_ALERTS}) # ENDIF # </a>&nbsp; 
 			# ENDIF #
 			
 			# IF C_UNREAD_CONTRIBUTION #

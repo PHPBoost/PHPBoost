@@ -90,7 +90,7 @@
 				</fieldset>	
 			</form>
 			
-			<form action="admin_gallery_add.php" method="post">
+			<form action="admin_gallery_add.php?token={TOKEN}" method="post">
 				<table class="module_table">
 					<tr> 
 						<th colspan="2">
@@ -109,58 +109,49 @@
 					</tr>
 					<tr> 	
 						<td>
-							<table style="width:100%;margin:auto;border:0;border-spacing:0;border-collapse:collapse;">
-								# START list #
-									{list.TR_START}
-										<td class="row1" style="padding:2px;text-align:center;width:{COLUMN_WIDTH_PICS}%">
-											<table style="width:100%;margin:auto;border:0;border-spacing:0;border-collapse:collapse;">
-												<tr>
-													<td class="row2">												
-														<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle" /> <span class="text_small">{L_SELECT}</span>
-													</td>
-												</tr>
-												<tr>
-													<td class="row2" style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
-														{list.THUMNAILS}
-													</td>
-												</tr>
-												<tr>
-													<td class="row2">
-														<span class="text_small">{L_NAME}: </span>
-														<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle" />
+							# START list #
+								<div style="text-align:center;width:{COLUMN_WIDTH_PICS}%;float:left;">
+									<table class="module_table" style="width:100%;">
+										<tr>
+											<td class="row2">												
+												<input type="checkbox" checked="checked" name="{list.ID}activ" value="1" class="valign_middle" /> <span class="text_small">{L_SELECT}</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="row2" style="height:{IMG_HEIGHT_MAX}px;padding:3px;text-align:center;">
+												{list.THUMNAILS}
+											</td>
+										</tr>
+										<tr>
+											<td class="row2">
+												<span class="text_small">{L_NAME}: </span>
+												<input type="text" size="25" name="{list.ID}name" value="{list.NAME}" class="text valign_middle" />
+												
+												<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}" />
+											</td>
+										</tr>
+										<tr>
+											<td class="row2">
+												<span class="text_small">{L_CAT}:</span> 
+												<select name="{list.ID}cat" class="valign_middle">
+													{list.CATEGORIES}
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td class="row2">												
+												<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle" /> <span class="text_small">{L_DELETE}</span> 
+											</td>
+										</tr>
+									</table>	
+							</div>
+							# END list #
 														
-														<input type="hidden" name="{list.ID}uniq" value="{list.UNIQ_NAME}" />
-													</td>
-												</tr>
-												<tr>
-													<td class="row2">
-														<span class="text_small">{L_CAT}:</span> 
-														<select name="{list.ID}cat" class="valign_middle">
-															{list.CATEGORIES}
-														</select>
-													</td>
-												</tr>
-												<tr>
-													<td class="row2">												
-														<input type="checkbox" name="{list.ID}del" value="1" class="valign_middle" /> <span class="text_small">{L_DELETE}</span> 
-													</td>
-												</tr>
-											</table>	
-										</td>	
-									{list.TR_END}
-								# END list #
-								
-								# START end_td_pics #
-									{end_td_pics.TD_END}
-								{end_td_pics.TR_END}
-								# END end_td_pics #
-							
-								# START no_img #						
-								<p style="text-align:center" class="row1">
-									<strong>{no_img.L_NO_IMG}</strong>
-								</p>
-								# END no_img #
-							</table>
+							# START no_img #						
+							<p style="text-align:center" class="row1">
+								<strong>{no_img.L_NO_IMG}</strong>
+							</p>
+							# END no_img #
 						</td>
 					</tr>
 				</table>

@@ -20,7 +20,7 @@
 		-->
 		</script>
 
-				<div id="admin_quick_menu">
+		<div id="admin_quick_menu">
 			<ul>
 				<li class="title_menu">{L_WEB_MANAGEMENT}</li>
 				<li>
@@ -72,9 +72,7 @@
 											<strong>{web.L_VIEWS}:</strong> {COMPT}
 									</p>
 									<p style="text-align: center;">					
-										<a href="{web.URL}"><img src="{web.MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
-										<br />
-										{web.URL}
+										<a href="{web.URL}"><img src="{MODULE_DATA_PATH}/images/{LANG}/bouton_url.gif" alt="" title="" /></a>
 									</p>
 								</div>
 								<div class="module_bottom_l"></div>		
@@ -89,7 +87,7 @@
 			<br /><br /><br />
 			# END web #
 
-			<form action="admin_web.php" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
+			<form action="admin_web.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_EDIT_LINK}</legend>
 					<p>{L_REQUIRE}</p>
@@ -119,7 +117,7 @@
 					<label for="contents">{L_DESC}</label>
 					<label>
 						{KERNEL_EDITOR}
-						<textarea type="text" rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
+						<textarea rows="20" cols="90" id="contents" name="contents">{CONTENTS}</textarea> 
 						<br />
 					</label>
 					<dl>
@@ -127,7 +125,8 @@
 						<dd>
 							<label><input type="radio" {APROB_ENABLED} name="aprob" id="aprob" value="1" /> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {APROB_DISABLED}  name="aprob" value="0" /> {L_NO}</label></dd>
+							<label><input type="radio" {APROB_DISABLED}  name="aprob" value="0" /> {L_NO}</label>
+						</dd>
 					</dl>
 				</fieldset>		
 				

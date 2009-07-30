@@ -3,7 +3,7 @@
  *                              online_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class OnlineInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,15 +37,15 @@ class OnlineInterface extends ModuleInterface
         parent::ModuleInterface('online');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 			
 		$online_config = 'global $CONFIG_ONLINE;' . "\n";
 		
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_ONLINE = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'online'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_ONLINE = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'online'", __LINE__, __FILE__));
 		$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
 		
 		$online_config .= '$CONFIG_ONLINE = ' . var_export($CONFIG_ONLINE, true) . ';' . "\n";
@@ -53,7 +53,7 @@ class OnlineInterface extends ModuleInterface
 		return $online_config;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

@@ -3,7 +3,7 @@
  *                              poll_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class PollInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,32 +37,32 @@ class PollInterface extends ModuleInterface
         parent::ModuleInterface('poll');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 	
 		$code = 'global $CONFIG_POLL;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'poll'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
-		
+
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
 
 		$_array_poll = '';
-		if (is_array($CONFIG_POLL['poll_mini']))
+		if (!empty($CONFIG_POLL['poll_mini']) && is_array($CONFIG_POLL['poll_mini']))
 		{
 			foreach ($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 			{
-				$poll = $Sql->query_array('poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+				$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if (!empty($poll['id'])) //Sondage existant.
-				{	
+				{
 					$array_answer = explode('|', $poll['answers']);
 					$array_vote = explode('|', $poll['votes']);
 					
 					$total_vote = array_sum($array_vote);
-					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //EmpÃªche la division par 0.
+					$total_vote = ($total_vote == 0) ? 1 : $total_vote; //Empêche la division par 0.
 					
 					$array_votes = array_combine($array_answer, $array_vote);
 					foreach ($array_votes as $answer => $nbrvote)
@@ -73,29 +73,28 @@ class PollInterface extends ModuleInterface
 			}
 		}
 		
-		if (!empty($_array_poll))
-			$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
+		$code .= "\n" . 'global $_array_poll;' . "\n\n" . '$_array_poll = array(' . $_array_poll . ');';
 
 		return $code;
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalièe.
 	function on_changeday()
 	{
 		global $Sql;
 		
-		$Sql->query_inject("DELETE FROM ".PREFIX."poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . PREFIX . "poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
 
-		//Publication des news en attente pour la date donnÃ©e.
+		//Publication des news en attente pour la date donnéé.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM ".PREFIX."poll
+		FROM " . PREFIX . "poll
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
-		{ 
+		{
 			if ($row['start'] <= time() && $row['start'] != 0)
-				$Sql->query_inject("UPDATE ".PREFIX."poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
-				$Sql->query_inject("UPDATE ".PREFIX."poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 }

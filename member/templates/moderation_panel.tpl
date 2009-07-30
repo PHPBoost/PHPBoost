@@ -38,7 +38,7 @@
 						if( login != "" )
 						{
 							data = "login=" + login;
-							var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?{U_XMLHTTPREQUEST}=1');
+							var xhr_object = xmlhttprequest_init('../kernel/framework/ajax/member_xmlhttprequest.php?token={TOKEN}&{U_XMLHTTPREQUEST}=1');
 							xhr_object.onreadystatechange = function() 
 							{
 								if( xhr_object.readyState == 4 ) 
@@ -122,10 +122,13 @@
 				<!--
 				function change_textarea_level(replace_value, regex)
 				{
-					var contents = document.getElementById('action_contents').innerHTML;
-					{REPLACE_VALUE}		
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.activeEditor.save(); # ENDIF #
 					
-					document.getElementById('action_contents').innerHTML = contents;	
+					var contents = document.getElementById('action_contents').value;
+					{REPLACE_VALUE}		
+					document.getElementById('action_contents').value = contents;	
+					
+					# IF C_BBCODE_TINYMCE_MODE #  tinyMCE.getInstanceById('action_contents').getBody().innerHTML = contents;  # ENDIF #
 				}
 				-->
 				</script>

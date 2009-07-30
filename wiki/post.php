@@ -3,7 +3,7 @@
  *                               post.php
  *                            -------------------
  *   begin                : October 09, 2006
- *   copyright          : (C) 2006 Sautel Benoit
+ *   copyright            : (C) 2006 Sautel Benoit
  *   email                : ben.popeye@phpboost.com
  *
  *
@@ -41,8 +41,8 @@ $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
-$contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
-$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNSECURE);
+$contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
+$contents_preview = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
 $id_cat = retrieve(GET, 'id_parent', 0);
 $new_id_cat = retrieve(POST, 'id_cat', 0);
 $id_cat = $id_cat > 0 ? $id_cat : $new_id_cat;
@@ -64,20 +64,10 @@ if (!empty($contents)) //On enregistre un article
 	//Si on détecte la syntaxe des menus alors on lance les fonctions, sinon le menu sera vide et non affiché
 	if (preg_match('`[\-]{2,6}`isU', $contents))
 	{
-		$menu_to_make = html_entity_decode($contents);		
-		wiki_explode_menu($menu_to_make, 1); //On éclate le menu en tableaux
-		wiki_display_menu($menu_to_make, $menu, 1); //On affiche le menu
-		
-		 //On insère les paragraphes dans la page
-		for ($i = 1; $i <= 5; $i++)
-		{
-			$contents = preg_replace('`[\n\r]{1}[\-]{' . ($i + 1) . '}[\s]+(.+)[\s]+[\-]{' . ($i + 1) . '}(<br \/>|[\n\r]){1}`U', "\n" . '<div class="wiki_paragraph' .  $i . '" id="$1">$1</div><br />' . "\n", "\n" . $contents . "\n");
-			$contents = preg_replace_callback('`id="(.+)">`isU', 'wiki_make_anchors', $contents);
-		}
+		$menu_list = wiki_explode_menu($contents); //On éclate le menu en tableaux
+		$menu = wiki_display_menu($menu_list); //On affiche le menu
 	}
-	//On supprime les \n rajoutés en début et en fin
-	$contents = trim($contents);
-
+	
 	if ($preview)//Prévisualisation
 	{
 		$Template->assign_block_vars('preview', array(
@@ -85,31 +75,33 @@ if (!empty($contents)) //On enregistre un article
 			'TITLE' => stripslashes($title)
 		));
 		if (!empty($menu))
+		{
 			$Template->assign_block_vars('preview.menu', array(
-				'MENU' => stripslashes($menu)
+				'MENU' => $menu
 			));
+		}
 	}
 	else //Sinon on poste
 	{
 		if ($id_edit > 0)//On édite un article
 		{		
-			$article_infos = $Sql->query_array("wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
+			$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "auth", "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__); 
 			//Autorisations
 			$general_auth = empty($article_infos['auth']) ? true : false;
 			$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
 			if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
-			$previous_id_contents = $Sql->query("SELECT id_contents FROM ".PREFIX."wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$previous_id_contents = $Sql->query("SELECT id_contents FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 			//On met à jour l'ancien contenu (comme archive)
-			$Sql->query_inject("UPDATE ".PREFIX."wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = '" . $previous_id_contents . "'", __LINE__, __FILE__);
 			//On insère le contenu
-			$Sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . $menu . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_edit . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 			//Dernier id enregistré
-			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+			$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
             
 	 		//On donne le nouveau id de contenu
-			$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
         
             // Feeds Regeneration
             import('content/syndication/feed');
@@ -128,7 +120,7 @@ if (!empty($contents)) //On enregistre un article
 				$Errorh->handler('e_auth', E_USER_REDIRECT); 
 			
 			//On vérifie que le titre n'existe pas
-			$article_exists = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
+			$article_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . url_encode_rewrite($title) . "'", __LINE__, __FILE__);
 			
 			
 			//Si il existe: message d'erreur
@@ -136,30 +128,30 @@ if (!empty($contents)) //On enregistre un article
 				$errstr = $LANG['wiki_title_already_exists'];
 			else //On enregistre
 			{
-				$Sql->query_inject("INSERT INTO ".PREFIX."wiki_articles (title, encoded_title, id_cat, is_cat) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, id_cat, is_cat, undefined_status, auth) VALUES ('" . $title . "', '" . url_encode_rewrite($title) . "', '" . $new_id_cat . "', '" . $is_cat . "', '', '')", __LINE__, __FILE__);
 				//On récupère le numéro de l'article créé
-				$id_article = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+				$id_article = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 				//On insère le contenu
-				$Sql->query_inject("INSERT INTO ".PREFIX."wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . $menu . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_contents (id_article, menu, content, activ, user_id, user_ip, timestamp) VALUES ('" . $id_article . "', '" . addslashes($menu) . "', '" . $contents . "', 1, " . $User->get_attribute('user_id') . ", '" . USER_IP . "', " . time() . ")", __LINE__, __FILE__);
 				//On met à jour le numéro du contenu dans la table articles
-				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM ".PREFIX."wiki_contents");
+				$id_contents = $Sql->insert_id("SELECT MAX(id_contents) FROM " . PREFIX . "wiki_contents");
 				$cat_update = '';
 				if ($is_cat == 1)//si c'est une catégorie, on la crée
 				{
-					$Sql->query_inject("INSERT INTO ".PREFIX."wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
+					$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_cats (id_parent, article_id) VALUES (" . $new_id_cat . ", '" . $id_article . "')", __LINE__, __FILE__);
 					//on récupère l'id de la dernière catégorie créée
-					$id_created_cat = $Sql->insert_id("SELECT MAX(id) FROM ".PREFIX."wiki_articles");
+					$id_created_cat = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "wiki_articles");
 					$cat_update = ", id_cat = '" . $id_created_cat . "'";
 					//On régénère le cache
 					$Cache->Generate_module_file('wiki');
 				}
-				$Sql->query_inject("UPDATE ".PREFIX."wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
+				$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_contents = '" . $id_contents . "'" . $cat_update . " WHERE id = " . $id_article, __LINE__, __FILE__);
 				
                 // Feeds Regeneration
                 import('content/syndication/feed');
                 Feed::clear_cache('wiki');
                 
-				$redirect = $Sql->query("SELECT encoded_title FROM ".PREFIX."wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
+				$redirect = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_article . "'", __LINE__, __FILE__);
 				redirect(url('wiki.php?title=' . $redirect, $redirect, '' , '&'));
 			}
 		}
@@ -173,7 +165,7 @@ $Template->assign_vars(array(
 ));
 if ($id_edit > 0)//On édite
 {
-	$article_infos = $Sql->query_array('wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
+	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 	
 	//Autorisations
 	$general_auth = empty($article_infos['auth']) ? true : false;
@@ -181,7 +173,7 @@ if ($id_edit > 0)//On édite
 	if (!((!$general_auth || $User->check_auth($_WIKI_CONFIG['auth'], WIKI_EDIT)) && ($general_auth || $User->check_auth($article_auth , WIKI_EDIT))))
 		$Errorh->handler('e_auth', E_USER_REDIRECT); 
 	
-	$article_contents = $Sql->query_array('wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
+	$article_contents = $Sql->query_array(PREFIX . 'wiki_contents', '*', "WHERE id_contents = '" . $article_infos['id_contents'] . "'", __LINE__, __FILE__);
 	$contents = $article_contents['content'];
 	if (!empty($article_contents['menu'])) //On reforme les paragraphes
 	{
@@ -189,7 +181,7 @@ if ($id_edit > 0)//On édite
 		for ($i = 1; $i <= 5; $i++)
 		{
 			$string_regex .= '-';
-			$contents = preg_replace('`[\r\n]+<div class="wiki_paragraph' .  $i . '" id=".+">(.+)</div><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
+			$contents = preg_replace('`[\r\n]+<(?:div|h[1-5]) class="wiki_paragraph' .  $i . '" id=".+">(.+)</(?:div|h[1-5])><br />[\r\n]+`sU', "\n" . $string_regex . ' $1 '. $string_regex, "\n" . $contents . "\n");
 		}
 		$contents = trim($contents);
 	}
@@ -240,13 +232,13 @@ else
 		$Template->assign_block_vars('create', array());
 		$contents = '';
 		$result = $Sql->query_while("SELECT c.id, a.title, a.encoded_title
-		FROM ".PREFIX."wiki_cats c
-		LEFT JOIN ".PREFIX."wiki_articles a ON a.id = c.article_id
+		FROM " . PREFIX . "wiki_cats c
+		LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 		WHERE c.id_parent = 0
 		ORDER BY title ASC", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM ".PREFIX."wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(
@@ -273,7 +265,7 @@ else
 }
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
-$content_editor = new ContentManager(BBCODE_LANGUAGE);
+$content_editor = new ContentFormattingFactory(BBCODE_LANGUAGE);
 $editor =& $content_editor->get_editor();
 $editor->set_identifier('contents');
 
@@ -286,7 +278,7 @@ $Template->assign_vars(array(
 	'IS_CAT' => $is_cat,
 	'ID_CAT' => $id_cat,
 	'ARTICLE_TITLE' => !empty($encoded_title) ? $encoded_title : stripslashes($title),'L_TITLE_FIELD' => $LANG['title'],
-	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	'TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat&amp;token=' . $Session->get_token() : '?token=' . $Session->get_token())),
 	'L_CONTENTS' => $LANG['wiki_contents'],
 	'L_ALERT_CONTENTS' => $LANG['require_text'],
 	'L_ALERT_TITLE' => $LANG['require_title'],

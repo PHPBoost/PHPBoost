@@ -3,7 +3,7 @@
  *                              contact_interface.class.php
  *                            -------------------
  *   begin                : July 7, 2008
- *   copyright            : (C) 2008 RÃ©gis Viarre
+ *   copyright            : (C) 2008 Régis Viarre
  *   email                : crowkait@phpboost.com
  *
  *
@@ -28,7 +28,7 @@
 // Inclusion du fichier contenant la classe ModuleInterface
 import('modules/module_interface');
 
-// Classe ForumInterface qui hÃ©rite de la classe ModuleInterface
+// Classe ForumInterface qui hérite de la classe ModuleInterface
 class ContactInterface extends ModuleInterface
 {
     ## Public Methods ##
@@ -37,15 +37,15 @@ class ContactInterface extends ModuleInterface
         parent::ModuleInterface('contact');
     }
     
-    //RÃ©cupÃ©ration du cache.
+    //Récupération du cache.
 	function get_cache()
 	{
 		global $Sql;
 	
 		$contact_config = 'global $CONFIG_CONTACT;' . "\n";
 			
-		//RÃ©cupÃ©ration du tableau linÃ©arisÃ© dans la bdd.
-		$CONFIG_CONTACT = unserialize($Sql->query("SELECT value FROM ".PREFIX."configs WHERE name = 'contact'", __LINE__, __FILE__));
+		//Récupération du tableau linéarisé dans la bdd.
+		$CONFIG_CONTACT = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'contact'", __LINE__, __FILE__));
 		$CONFIG_CONTACT = is_array($CONFIG_CONTACT) ? $CONFIG_CONTACT : array();
 		
 		$contact_config .= '$CONFIG_CONTACT = ' . var_export($CONFIG_CONTACT, true) . ';' . "\n";
@@ -53,7 +53,7 @@ class ContactInterface extends ModuleInterface
 		return $contact_config;	
 	}
 
-	//Actions journaliÃ¨re.
+	//Actions journalière.
 	/*
 	function on_changeday()
 	{

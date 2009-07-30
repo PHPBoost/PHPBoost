@@ -10,7 +10,7 @@ require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 
 $lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';
 if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
-	include_once('lang/french/install.php');
+	include_once('lang/french/install_french.php');
 $chmod = retrieve(GET, 'chmod', false);
 $db = retrieve(GET, 'db', false);
 
@@ -19,7 +19,7 @@ if ($chmod)
 	//Mise à jour du cache.
 	@clearstatcache();
 	
-	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/auth', '../lang', '../menus', '../templates', '../upload');
+	$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/db', '../lang', '../menus', '../templates', '../upload');
 	
 	//Vérifications et le cas échéants changements des autorisations en écriture.
 	foreach ($chmod_dir as $dir)

@@ -37,7 +37,7 @@ if (!empty($_POST['valid']))
 	$config_online['online_displayed'] = retrieve(POST, 'online_displayed', 4);
 	$config_online['display_order_online'] = retrieve(POST, 'display_order_online', 's.level, s.session_time DESC');
 		
-	$Sql->query_inject("UPDATE ".PREFIX."configs SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
+	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_online)) . "' WHERE name = 'online'", __LINE__, __FILE__);
 	
 	###### Régénération du cache des online #######
 	$Cache->Generate_module_file('online');
