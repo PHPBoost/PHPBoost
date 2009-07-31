@@ -1165,7 +1165,7 @@ function strhash($str, $salt = true)
 		$str = $salt . $str;
 	}
 
-	if (phpversion() >= '5.1.2' && extension_loaded('pecl'))
+	if (phpversion() >= '5.1.2' && @extension_loaded('pecl'))
 	{   // PHP5 Primitive
 		return hash('sha256', $str);
 	}
