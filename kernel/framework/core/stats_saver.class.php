@@ -185,7 +185,7 @@ class StatsSaver
 			'hp-ux' => 'hp-ux', 
 			'os2|os/2' => 'os2',
 			'netbsd' => 'netbsd',
-			'samsung|sony|nokia' => 'phone'
+			'samsung|sony|nokia|blackberry|android|ipod|iphone|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
 		);
 		if (!empty($_SERVER['HTTP_USER_AGENT']) ) //On ignore si user agent vide.
 		{
