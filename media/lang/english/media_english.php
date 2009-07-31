@@ -3,25 +3,26 @@
  *                              media_english.php
  *                            -------------------
  *   begin               	: October 20, 2008
+ *   last modified		: July 31, 2009 - Forensic
  *   copyright        	    : (C) 2007 
- *   email               	: 
+ *   email               	: sgtforensic@gmail.com
  *
  *
  *
 ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
+ *  This program is distributed in hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
+ *  along with this program. If not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -66,7 +67,7 @@ $MEDIA_LANG = array(
 'recount_success' => 'Multimedia files number for each category was recounted successfully.',
 'remove_category_and_its_content' => 'Delete the category and its contents',
 'removing_category' => 'Delete a category',
-'removing_category_explain' => 'You will delete this category. You have two solutions. You can move all its contents (categories and subcategories) in another category, or delete all the category.<strong>Be careful, this action is final !</strong>',
+'removing_category_explain' => 'You will delete this category. You have two options. You can move all its contents (categories and subcategories) in another category, or delete all the category.<strong>Be careful, this action is final !</strong>',
 'required_fields' => 'The fields with an * are required!',
 'required_fields_empty' => 'Some required fields are missing, please restart the operation correctly',
 'special_auth' => 'Special authorizations',
@@ -100,7 +101,7 @@ $MEDIA_LANG = array(
 
 // contribution.php
 'contribution_confirmation' => 'Contribution confirmation',
-'contribution_confirmation_explain' => '<p>You will be able to follow the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
+'contribution_confirmation_explain' => '<p>You will be able to follow the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the validators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
 'contribution_success' => 'Your contribution has been saved.',
 
 // media.php
@@ -123,7 +124,7 @@ $MEDIA_LANG = array(
 'action_success' => 'The operation you asked for was successfully executed!',
 'add_success' => 'The file was successfully added!',
 'contribution_counterpart' => 'Contribution counterpart',
-'contribution_counterpart_explain' => 'Explain why you want to submit your file. This field is not compulsory but it can help the approbator who will take care of your contribution.',
+'contribution_counterpart_explain' => 'Explain why you want to submit your file. This field is not required but it can help the validators who will take care of your contribution.',
 'contribution_entitled' => '[Multimedia] %s',
 'contribute_media' => 'Contribute a multimedia file',
 'delete_media' => 'Delete a multimedia file',
@@ -139,7 +140,7 @@ $MEDIA_LANG = array(
 'media_name' => 'Title multimedia file',
 'media_url' => 'Link multimedia file',
 'media_width' => 'Width video',
-'notice_contribution' => 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an approbator, it will happen in the contribution panel.',
+'notice_contribution' => 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an validator. It will happen in the contribution panel.',
 'require_name' => 'Please enter a title for your multimedia file!',
 'require_url' => 'Please enter a link for your multimedia file!',
 
@@ -174,6 +175,6 @@ $MEDIA_LANG = array(
 $LANG['e_mime_disable_media'] = 'The type of multimedia is disabled!';
 $LANG['e_mime_unknow_media'] = 'The type of multimedia file could not be determined!';
 $LANG['e_link_empty_media'] = 'Please enter a link for your multimedia file!';
-$LANG['e_unexist_media'] = 'The multimedia file requested don\'t exist!';
+$LANG['e_unexist_media'] = 'The multimedia file requested doesn\'t exist!';
 
 ?>

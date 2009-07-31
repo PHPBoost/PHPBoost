@@ -3,24 +3,25 @@
  *                              gallery_french.php
  *                            -------------------
  *   begin                : July 27, 2005
+ *   last modified		: July 31, 2009 - Forensic
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -164,6 +165,9 @@ $LANG['gallery'] = 'Galerie';
 $LANG['gallery_index'] = 'Accueil Galerie';
 $LANG['upload_img'] = 'Uploader l\'image';
 $LANG['how_photo'] = 'Photo(s) dans la base de donnée!';
+$LANG['actual_note'] = 'Avis actuel';
+$LANG['give_note'] = 'Donner votre avis';
+$LANG['no_note'] = 'Aucun avis';
 $LANG['img_success'] = 'L\'image a bien été uploadée !';
 $LANG['img_format'] = 'Formats d\'image autorisés';
 $LANG['img_delete'] = 'Supprimer cette image';
@@ -173,7 +177,7 @@ $LANG['dimension'] = 'Dimension';
 $LANG['informations'] = 'Informations';
 $LANG['thumbnails'] = 'Miniatures';
 $LANG['view'] = 'Vue';
-$LANG['postor'] = 'Posteur';
+$LANG['au'] = 'Auteur';
 $LANG['image_quota'] = 'Limite d\'upload d\'images<br />%d / %s';
 $LANG['upload_limit'] = 'Limite d\'upload d\'image atteinte';
 $LANG['alert_action_delete'] = 'Suppression des miniatures impossible. Vous devez supprimer manuellement sur le ftp !';
