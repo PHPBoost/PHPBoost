@@ -311,8 +311,10 @@ class ArticlesInterface extends ModuleInterface
 		}
 
 		//Niveau d'autorisation de la catégorie
-		if (!$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES))
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES))
+		{
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		}
 
 		$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
 		$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles_cats ac " . $clause_cat, __LINE__, __FILE__);
