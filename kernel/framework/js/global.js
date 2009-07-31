@@ -680,7 +680,7 @@ function include(file)
 playerflowPlayerRequired = false;
 function insertMoviePlayer(id) {
 	if (!playerflowPlayerRequired) {
-		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.min.js');
+		include(PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.min.js');
 		playerflowPlayerRequired = true;
 	}
 	flowPlayerDisplay(id);
@@ -697,7 +697,7 @@ function flowPlayerDisplay(id)
 		return;
 	}
 	//On lance le flowplayer
-	flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.0.3.swf', { 
+	flowplayer(id, PATH_TO_ROOT + '/kernel/data/flowplayer/flowplayer-3.1.1.swf', { 
 		    clip: { 
 		        url: $(id).href,
 		        autoPlay: false 
