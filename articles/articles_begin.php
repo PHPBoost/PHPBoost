@@ -30,7 +30,7 @@ if (defined('PHPBOOST') !== true)
 
 require_once('articles_constants.php');
 	
-if (isset($_GET['cat']))
+if (isset($CAT_ARTICLES[$idartcat]) && isset($_GET['cat']))
 { 
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_articles'], url('articles.php'));
