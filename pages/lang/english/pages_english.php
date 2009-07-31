@@ -3,24 +3,25 @@
  *                              pages_english.php
  *                            -------------------
  *   begin                : August 18, 2007
+ *   last modified		: July 31, 2009 - Forensic
  *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -36,7 +37,7 @@ $LANG['pages'] = 'Pages';
 $LANG['page_hits'] = 'This page has been seen %d times';
 
 //Administration
-$LANG['pages_count_hits'] = 'Count hits';
+$LANG['pages_count_hits'] = 'Hits count';
 $LANG['pages_count_hits_explain'] = 'Can be changed for each page.';
 $LANG['pages_auth_read'] = 'Read page';
 $LANG['pages_auth_edit'] = 'Edit page';
@@ -63,7 +64,7 @@ $LANG['pages_parent_cat'] = 'Parent category';
 $LANG['pages_page_path'] = 'Path';
 $LANG['pages_properties'] = 'Properties';
 $LANG['pages_no_selected_cat'] = 'No selected category';
-$LANG['explain_select_multiple'] = 'Press Ctrl then click into the list to select several options';
+$LANG['explain_select_multiple'] = 'Press Ctrl then click in the list to select several options';
 $LANG['pages_previewing'] = 'Preview';
 $LANG['pages_contents_part'] = 'Page contents';
 $LANG['pages_delete_success'] = 'The page has been deleted successfully.';
@@ -82,9 +83,9 @@ $LANG['pages_page_com'] = 'Comments of the page %s';
 
 //Accueil
 $LANG['pages_explain'] = 'You are in the "pages" module control panel. Here you can manage your whole pages.
-<div class="question"><p>You will edit your page with the editor you choosed in your personal profile. You can insert some HTML code using the BBCode tag <span style="font-family:courier new;">[html]HTML code[/html]</span></p>
+<div class="question"><p>You will edit your page with the chosen editor in your personal profile. You can insert some HTML code using the BBCode tag <span style="font-family:courier new;">[html]HTML code[/html]</span></p>
 <p>You cannot insert some PHP code in you pages for security reason.</p>
-<p>To create links between different pages of this module you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p></div>';
+<p>To create links between different pages of this module, you have to use the <em>link</em> tag which doesn\'t appear in the BBCode toolbar, but the syntax is for instance : <span style="font-family:courier new;">[link=title-of-the-page]Link up to page[/link]</span>.</p></div>';
 $LANG['pages_redirections'] = 'Redirections';
 $LANG['pages_num_pages'] = '%d existing page(s)';
 $LANG['pages_num_coms'] = '%d comments on the whole pages, which corresponds to %1.1f commentary by page';
@@ -96,7 +97,7 @@ $LANG['pages_rename'] = 'Rename';
 $LANG['pages_redirection_management'] = 'Redirections management';
 $LANG['pages_rename_page'] = 'Rename the page <em>%s</em>';
 $LANG['pages_new_title'] = 'New title of this page';
-$LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the actual ?';
+$LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the actual?';
 $LANG['pages_explain_rename'] = 'You are just going to rename the page. You have to know that every link pointing up to that page will be broken. That\'s why you have the possibility of creating a redirection from the previous title to the new one, which won\'t break those links.';
 $LANG['pages_confirm_delete_redirection'] = addslashes('Are you sure you want to delete this redirection ?');
 $LANG['pages_delete_redirection'] = 'Delete this redirection';
@@ -111,8 +112,8 @@ $LANG['pages_creation_redirection'] = 'Creating a redirection';
 $LANG['pages_creation_redirection_title'] = 'Creating a redirection to %s';
 $LANG['pages_redirection_title'] = 'Redirection name';
 $LANG['pages_remove_this_cat'] = 'Deleting the category : <em>%s</em>';
-$LANG['pages_remove_all_contents'] = 'Delete its whole contents';
-$LANG['pages_move_all_contents'] = 'Move its whole contents into the folowing folder :';
+$LANG['pages_remove_all_contents'] = 'Delete its whole content';
+$LANG['pages_move_all_contents'] = 'Move its whole content into the folowing folder :';
 $LANG['pages_future_cat'] = 'Category in which you want to move those elements';
 $LANG['pages_change_cat'] = 'Change category';
 $LANG['pages_delete_cat'] = 'Deleting a category';
@@ -126,8 +127,8 @@ $LANG['pages_error_unactiv_com'] = 'Comments related to this page have been disa
 $LANG['page_alert_title'] = 'You have to enter a title';
 $LANG['page_alert_contents'] = 'You have to enter a contents for your page';
 $LANG['pages_already_exists'] = 'The title you have chosen already exists. You must choose another one, because titles must be uniques.';
-$LANG['pages_cat_contains_cat'] = 'The category you have selected to put this category is contained by herself or one of its sons, which is not possible. Please select another category.';
-$LANG['pages_notice_previewing'] = 'You are previewing the contents you have entered. No edition has been done into the database, you must submit your page if you want to take into consideration your edition.';
+$LANG['pages_cat_contains_cat'] = 'The category you have selected to put this category is contained by herself or one of its own, which is not possible. Please select another category.';
+$LANG['pages_notice_previewing'] = 'You are previewing the contents you have entered. No edition has been done into the database. You must submit your page if you want it to take effect.';
 
 //Admin
 $LANG['pages_config'] = 'Configuration';

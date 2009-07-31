@@ -34,11 +34,11 @@ global $DOWNLOAD_LANG, $LANG;
 $DOWNLOAD_LANG = array();
 
 //Gestion des fichiers
-$DOWNLOAD_LANG['files_management'] = 'Files management';
+$DOWNLOAD_LANG['files_management'] = 'Files management'; // ?
 $DOWNLOAD_LANG['file_management'] = 'File editing';
-$DOWNLOAD_LANG['file_addition'] = 'File addition';
-$DOWNLOAD_LANG['add_file'] = 'Add a file';
-$DOWNLOAD_LANG['update_file'] = 'Edit a file';
+$DOWNLOAD_LANG['file_addition'] = 'Add a file';
+$DOWNLOAD_LANG['add_file'] = 'Add this file';
+$DOWNLOAD_LANG['update_file'] = 'Edit this file';
 $DOWNLOAD_LANG['warning_previewing'] = 'Be careful, you are watching your file informations. As long as you don\'t valid your editings, they can\'t be applied.';
 $DOWNLOAD_LANG['file_image'] = 'File icon address';
 $DOWNLOAD_LANG['require_description'] = 'Please enter a description !';
@@ -140,16 +140,16 @@ $DOWNLOAD_LANG['read_feed'] = 'Download';
 $DOWNLOAD_LANG['posted_on'] = 'On';
 
 //Contribution
-$DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to create a file, however you can contribute by submitting a file. Your contribution will be processed by an approbator, it will happen in the contribution panel.';
+$DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to add a file, however you can contribute by submitting a one. Your contribution will be processed by an moderator.';
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Contribution counterpart';
-$DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Explain why you want to submit your file. This field is not compulsory but it can help the approbator who will take care of your contribution.';
+$DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Tell us why you want us to add this file. This field is not required, but it may help the moderator to take his decision.';
 $DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted: %s';
 $DOWNLOAD_LANG['contribution_confirmation'] = 'Contribution confirmation';
 $DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
 $DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
 
 //Erreurs
-$LANG['contribution_entitled'] = 'A file was suggested.';
+$LANG['contribution_entitled'] = 'A file has been suggested.';
 
 //Erreur
 $LANG['e_unexist_file_download'] = 'The file you asked for does not exist !';
