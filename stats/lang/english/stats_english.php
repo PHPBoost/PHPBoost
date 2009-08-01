@@ -3,6 +3,7 @@
  *                             stats_english.php
  *                            -------------------
  *   begin                :  September 27, 2007
+ *   last modified		: August 1st, 2009 - Forensic
  *   copyright          : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -32,7 +33,8 @@
 
 $LANG['stats'] = 'Statistics';
 $LANG['more_stats'] = 'More statistics';
-$LANG['last_member'] = 'Last member';
+$LANG['last_member'] = 'Latest member';
 $LANG['member_registered'] = '<strong>%d</strong> registered member';
 $LANG['member_registered_s'] = '<strong>%d</strong> registered members';
 
+?>
