@@ -3,6 +3,7 @@
 *                                stats.php
 *                            -------------------
 *   begin                : September 05, 2007
+*   last modified		: August 1st, 2009 - Forensic
 *   copyright          : (C) 2007 Viarre Régis
 *   email                : mickaelhemri@gmail.com
 *
@@ -34,7 +35,7 @@
 $LANG['title_stats'] = 'Statistics';
 
 //Error
-$LANG['error_gd'] = 'GD Library unloaded';
+$LANG['error_gd'] = 'GD Library is not loaded';
 
 //Stats
 $LANG['stats'] = 'Statistics';
@@ -45,15 +46,15 @@ $LANG['page_s'] = 'Displayed pages';
 $LANG['browser_s'] = 'Browsers';
 $LANG['keyword_s'] = 'Keywords';
 $LANG['os'] = 'Operating systems';
-$LANG['fai'] = 'Internet Access Providers';
-$LANG['all_fai'] = 'See all Internet Access Providers';
-$LANG['10_fai'] = 'See the 10 principal Internet Access Providers';
+$LANG['fai'] = 'Internet Service Providers';
+$LANG['all_fai'] = 'All Internet Service Providers';
+$LANG['10_fai'] = 'Internet Service Providers top 10';
 $LANG['other'] = 'Others';
 $LANG['number'] = 'Number';
 $LANG['start'] = 'Website creation';
-$LANG['stat_lang'] = 'Visitors countries';
-$LANG['all_langs'] = 'See all visitors countries';
-$LANG['10_langs'] = 'See the 10 principal countries of visitors';
+$LANG['stat_lang'] = 'Visitors locations';
+$LANG['all_langs'] = 'All visitors locations';
+$LANG['10_langs'] = 'Visitors locations top 10';
 $LANG['visits_year'] = 'See statistics of the year';
 $LANG['unknown'] = 'Unknown';
 $LANG['last_member'] = 'Last member registered';
