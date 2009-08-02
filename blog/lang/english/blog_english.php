@@ -33,13 +33,13 @@
 global $BLOG_LANGS;
 $BLOG_LANGS = array();
 $BLOG_LANGS['blogs_list'] = 'Blogs list';
-$BLOG_LANGS['create_new_blog'] = 'Create new blog';
+$BLOG_LANGS['create_new_blog'] = 'Create a new blog';
 $BLOG_LANGS['edit'] = 'Edit';
 $BLOG_LANGS['delete'] = 'Delete';
 $BLOG_LANGS['title'] = 'Title';
 $BLOG_LANGS['description'] = 'Description';
 $BLOG_LANGS['create'] = 'Create';
-$BLOG_LANGS['confirm_delete_blog'] = 'Delete this blog?';
-$BLOG_LANGS['missing_fields'] = 'Required fields (*) are missing. Please, fill in all those required fields';
+$BLOG_LANGS['confirm_delete_blog'] = 'Are you sure you want to delete this blog?';
+$BLOG_LANGS['missing_fields'] = 'Required fields (*) are missing. Please, fill in all the required fields';
 $BLOG_LANGS['edit_blog'] = '[Edition] %s';
 ?>
