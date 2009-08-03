@@ -298,8 +298,10 @@ class Cache
 
         //Récupération du tableau linéarisé dans la bdd
         $CONFIG = unserialize((string)$Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'config'", __LINE__, __FILE__));
-        foreach ($CONFIG as $key => $value)
-        $config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
+		foreach ($CONFIG as $key => $value)
+        {
+			$config .= '$CONFIG[\'' . $key . '\'] = ' . var_export($value, true) . ";\n";
+		}
 
         return $config;
     }
