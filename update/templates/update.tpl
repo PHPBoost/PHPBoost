@@ -776,7 +776,7 @@
 								</tr>
 								<tr>
 									<td style="width:50%">
-										<a href="{U_INDEX}">{L_SITE_INDEX}</a>
+										<a href="../member/member.php">{L_SITE_INDEX}</a>
 									</td>
 									<td style="padding:0 20px;">
 										<a href="{U_ADMIN_INDEX}">{L_ADMIN_INDEX}</a>
