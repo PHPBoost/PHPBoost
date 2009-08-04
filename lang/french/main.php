@@ -122,6 +122,7 @@ $LANG['bb_quote'] = 'Faire une citation [quote=pseudo]texte[/quote]';
 $LANG['bb_left'] = 'Positionner à gauche : [align=left]objet à gauche[/align]';
 $LANG['bb_center'] = 'Centrer : [align=center]objet centré[/align]';
 $LANG['bb_right'] = 'Positionner à droite : [align=right]objet à droite[/align]';
+$LANG['bb_justify'] = 'Justifier : [align=justify]objet justifié[/align]';
 $LANG['bb_code'] = 'Insérer du code [code]texte[/code]';
 $LANG['bb_math'] = 'Insérer du code mathématique [math]texte[/math]';
 $LANG['bb_swf'] = 'Insérer du flash [swf=largeur,hauteur]adresse animation[/swf]';
