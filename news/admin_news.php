@@ -276,6 +276,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post)) //Prévisualisation de la n
 		$current_date_timestamp = strtotimestamp($current_date, $LANG['date_format_short']);
 
 		$img_displays = $LANG['no_img'];
+		$img_preview = '';
 		if (!empty($img))
 		{
 			import('util/url');

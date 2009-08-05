@@ -102,11 +102,11 @@
 					<legend>{L_CONFIG_CONFIG}</legend>
 					<p>{L_REQUIRE}</p>
 					<dl>
-						<dt><label for="width_max">* {L_HEIGHT_MAX}</label><br /><span>{L_WIDTH_MAX_EXPLAIN}</span></dt>
+						<dt><label for="width_max">* {L_WIDTH_MAX}</label><br /><span>{L_WIDTH_MAX_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="5" id="width_max" name="width_max" value="{WIDTH_MAX}" class="text" /> {L_UNIT_PX}</label></dd>
 					</dl>
 					<dl>
-						<dt><label for="height_max">* {L_WIDTH_MAX}</label><br /><span>{L_HEIGHT_MAX_EXPLAIN}</span></dt>
+						<dt><label for="height_max">* {L_HEIGHT_MAX}</label><br /><span>{L_HEIGHT_MAX_EXPLAIN}</span></dt>
 						<dd><label><input type="text" size="5" id="height_max" name="height_max" value="{HEIGHT_MAX}" class="text" /> {L_UNIT_PX}</label></dd>
 					</dl>
 					<dl>

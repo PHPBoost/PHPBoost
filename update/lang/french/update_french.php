@@ -33,12 +33,12 @@
 $LANG = array();
 
 //Erreur générée par le moteur de template
-$LANG['cache_tpl_must_exist_and_be_writable'] = '<h1>Installation de PHPBoost</h1>
-<p><strong>Attention</strong> : le dossier cache/tpl n\'existe pas ou n\'est pas inscriptible. Veuillez le créer et/ou changer son CHMOD (mettre 777) pour pouvoir lancer l\'installation.</p>
+$LANG['cache_tpl_must_exist_and_be_writable'] = '<h1>Mise à jour de PHPBoost</h1>
+<p><strong>Attention</strong> : le dossier cache/tpl n\'existe pas ou n\'est pas inscriptible. Veuillez le créer et/ou changer son CHMOD (mettre 777) pour pouvoir lancer la mise à jour.</p>
 <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="">ici</a>.</p>';
 
 //Variables générales
-$LANG['page_title'] = 'Installation de PHPBoost';
+$LANG['page_title'] = 'Mise à jour de PHPBoost';
 $LANG['steps_list'] = 'Liste des étapes';
 $LANG['introduction'] = 'Préambule';
 $LANG['maj'] = 'Mise à jour';
@@ -65,7 +65,7 @@ $LANG['intro_explain'] = '<p>Merci d\'avoir accordé votre confiance à PHPBoost p
 $LANG['intro_distribution'] = 'Distribution %s';
 $LANG['intro_distribution_intro'] = '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p>
 <p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>';
-$LANG['start_install'] = 'Commencer l\'installation';
+$LANG['start_install'] = 'Commencer la mise à jour';
 
 //licence
 $LANG['license'] = 'Licence';
@@ -77,7 +77,7 @@ $LANG['alert_agree_license'] = 'Vous devez accepter la licence en cochant le for
 
 //Configuration du serveur
 $LANG['config_server_title'] = 'Vérification de la configuration du serveur';
-$LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
+$LANG['config_server_explain'] = '<p>Avant de commencer les étapes de mises à jour de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
 <div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>';
 $LANG['php_version'] = 'Version de PHP';
@@ -133,10 +133,10 @@ $LANG['require_hostname'] = 'Vous devez renseigner le nom de l\'hôte !';
 $LANG['require_login'] = 'Vous devez renseigner l\'identifiant de connexion !';
 $LANG['require_db_name'] = 'Vous devez renseigner le nom de la base de données !';
 $LANG['db_result'] = 'Résultats du test';
-$LANG['already_installed'] = 'Installation existante';
-$LANG['already_installed_explain'] = '<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
-<p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>';
-$LANG['already_installed_overwrite'] = 'Je souhaite écraser l\'installation de PHPBoost déjà existante';
+$LANG['already_installed'] = 'Mise à jour existante';
+$LANG['already_installed_explain'] = '<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une mise à jour de PHPBoost.</p>
+<p>Si vous effectuez l\'mise à jour sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>';
+$LANG['already_installed_overwrite'] = 'Je souhaite écraser l\'mise à jour de PHPBoost déjà existante';
 
 
 $LANG['db_update'] = 'Mise à jour du site';
@@ -192,7 +192,7 @@ $LANG['admin_require_mail'] = 'Vous devez entrer une adresse de courier électron
 $LANG['admin_passwords_error'] = 'Les deux mots de passe que vous avez entrés ne correspondent pas';
 $LANG['admin_email_error'] = 'L\'adresse de courier électronique que vous avez entrée n\'a pas une forme correcte';
 $LANG['admin_invalid_email_error'] = 'Mail invalide';
-$LANG['admin_create_session'] = 'Me connecter à la fin de l\'installation';
+$LANG['admin_create_session'] = 'Me connecter à la fin de la mise à jour';
 $LANG['admin_auto_connection'] = 'Rester connecté systématiquement à chacune de mes visites';
 $LANG['admin_error'] = 'Erreur';
 $LANG['admin_mail_object'] = 'Identifiants de votre site créé avec PHPBoost (message à conserver)';
@@ -214,9 +214,9 @@ Cordialement l\'équipe PHPBoost.';
 //Fin de l'installation
 $LANG['end_installation'] = '<fieldset>
 							<legend>PHPBoost est désormais installé !</legend>
-							<p class="success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+							<p class="success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
 							<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="http://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier install et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données !</p>
+							<p class="warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier update et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données !</p>
 							<p>N\'oubliez pas la <a href="http://www.phpboost.com/wiki/wiki.php">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="http://www.phpboost.com/faq/faq.php"><acronym title="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
 							<p>En cas de problème, rendez-vous sur le <a href="http://www.phpboost.com/forum/index.php">forum du support de PHPBoost</a>.</p>
 						</fieldset>
@@ -257,8 +257,8 @@ $LANG['no'] = 'Non';
 $LANG['appendices'] = 'Annexes';
 $LANG['documentation'] = 'Documentation';
 $LANG['documentation_link'] = 'http://www.phpboost.com/wiki/installer-phpboost';
-$LANG['restart_installation'] = 'Recommencer l\'installation';
-$LANG['confirm_restart_installation'] = addslashes('Etes-vous certain de vouloir recommencer l\'installation ?');
+$LANG['restart_installation'] = 'Recommencer la mise à jour';
+$LANG['confirm_restart_installation'] = addslashes('Etes-vous certain de vouloir recommencer la mise à jour ?');
 $LANG['change_lang'] = 'Changer de langue';
 $LANG['change'] = 'Changer';
 

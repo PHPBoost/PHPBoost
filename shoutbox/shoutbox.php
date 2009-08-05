@@ -304,7 +304,7 @@ else //Affichage.
 			foreach ($_array_groups_auth as $idgroup => $array_group_info)
 			{
 				if (is_numeric(array_search($idgroup, $array_user_groups)))
-					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];
+					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';
 			}
 		}
 		else

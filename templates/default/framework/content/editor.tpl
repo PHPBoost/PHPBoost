@@ -273,7 +273,7 @@
 							</td>
 						</tr>	
 					</table>
-					<table class="bbcode2" id="bbcode_more{FIELD}" style="display:none;margin-top:-1px;margin-left:-1px;">
+					<table class="bbcode2" id="bbcode_more{FIELD}">
 						<tr>
 							<td style="width:100%;padding:1px;">
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
@@ -281,6 +281,9 @@
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/left.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=left]', '[/align]', '{FIELD}');" alt="{L_BB_LEFT}" title="{L_BB_LEFT}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/center.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=center]', '[/align]', '{FIELD}');" alt="{L_BB_CENTER}" title="{L_BB_CENTER}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/right.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=right]', '[/align]', '{FIELD}');" alt="{L_BB_RIGHT}" title="{L_BB_RIGHT}" />	
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/justify.png" class="bbcode_hover" {AUTH_ALIGN} onclick="{DISABLED_ALIGN}insertbbcode('[align=justify]', '[/align]', '{FIELD}');" alt="{L_BB_JUSTIFY}" title="{L_BB_JUSTIFY}" />	
+								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/separate.png" alt="" />
+								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/float_left.png" class="bbcode_hover" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=left]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_LEFT}" title="{L_BB_FLOAT_LEFT}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/float_right.png" class="bbcode_hover" {AUTH_FLOAT} onclick="{DISABLED_FLOAT}insertbbcode('[float=right]', '[/float]', '{FIELD}');" alt="{L_BB_FLOAT_RIGHT}" title="{L_BB_FLOAT_RIGHT}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/sup.png" class="bbcode_hover" {AUTH_SUP} onclick="{DISABLED_SUP}insertbbcode('[sup]', '[/sup]', '{FIELD}');" alt="{L_BB_SUP}" title="{L_BB_SUP}" />
@@ -349,7 +352,6 @@
 								<a href="javascript:{DISABLED_CODE}bb_display_block('8', '{FIELD}');" onmouseout="{DISABLED_CODE}bb_hide_block('8', '{FIELD}', 0);" class="bbcode_hover" title="{L_BB_CODE}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/code.png" {AUTH_CODE} alt="{L_BB_CODE}" /></a>
 								
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/math.png" class="bbcode_hover" {AUTH_MATH} onclick="{DISABLED_MATH}insertbbcode('[math]', '[/math]', '{FIELD}');" alt="{L_BB_MATH}" title="{L_BB_MATH}" />	
-								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/anchor.png" class="bbcode_hover" {AUTH_ANCHOR} onclick="{DISABLED_ANCHOR}insertbbcode('[anchor]', '[/anchor]', '{FIELD}');" alt="{L_BB_ANCHOR}" title="{L_BB_ANCHOR}" />
 								<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/html.png" class="bbcode_hover" {AUTH_HTML} onclick="{DISABLED_HTML}insertbbcode('[html]', '[/html]', '{FIELD}');" alt="{L_BB_HTML}" title="{L_BB_HTML}" />
 							</td>
 							<td style="width:3px;">
