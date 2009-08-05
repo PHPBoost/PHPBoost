@@ -131,13 +131,13 @@ function pages_unparse($contents)
 function pages_second_parse($contents)
 {
 	global $CONFIG;
-	//On unparse d'abord la balise link, sinon c'est url qui la prendra
-	$contents = preg_replace_callback('`\[code\](.+)\[/code\]`isU', 'link_unparse', $contents);
-	$contents = second_parse($contents);
+	
 	if ($CONFIG['rewrite'] == 0) //Pas de rewriting	
-		return preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="pages.php?title=$1">$2</a>', $contents);
-	else
-		return $contents;
+	{
+			$contents = preg_replace('`<a href="/pages/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/pages/pages.php?title=$1">$2</a>', $contents);
+	}
+	$contents = second_parse($contents);
+	return $contents;
 }
 
 //On remplace la balise link

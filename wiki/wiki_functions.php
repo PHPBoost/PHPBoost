@@ -62,7 +62,7 @@ function wiki_no_rewrite($var)
 {
 	global $CONFIG;
 	if ($CONFIG['rewrite'] == 0) //Pas de rewriting	
-		return preg_replace('`<a href="([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="wiki.php?title=$1">$2</a>', $var);
+		return preg_replace('`<a href="/wiki/([a-z0-9+#-]+)">(.*)</a>`sU', '<a href="/wiki/wiki.php?title=$1">$2</a>', $var);
 	else
 		return $var;
 }
