@@ -3,24 +3,25 @@
  *                              news_english.php
  *                            -------------------
  *   begin                : June 20, 2005
+ *   last modified		: July 31, 2009 - Forensic
  *   copyright          : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -43,7 +44,7 @@ $LANG['img_desc'] = 'Picture description';
 $LANG['news_management'] = 'News management';
 $LANG['edit_news'] = 'Edit news';
 $LANG['edito'] = 'Editorial';
-$LANG['edito_where'] = 'Visible message in the top of the home page';
+$LANG['edito_where'] = 'Visible message for all at the top of home page';
 $LANG['config_news'] = 'News configuration';
 $LANG['nbr_news_p'] = 'Number of news per page';
 $LANG['nbr_news_p_explain'] = 'Default 6';
@@ -53,7 +54,7 @@ $LANG['module_management'] = 'Modules management';
 $LANG['activ_pagination'] = 'Activate pagination';
 $LANG['activ_pagination_explain'] = 'Else, show a link to archives';
 $LANG['activ_edito'] = 'Activate editorial';
-$LANG['activ_edito_explain'] = 'Visible message in top of the home page';
+$LANG['activ_edito_explain'] = 'Header of the news';
 $LANG['activ_news_block'] = 'Activate news in block';
 $LANG['activ_com_n'] = 'Activate news comments';
 $LANG['activ_icon_n'] = 'Show news category icon';
@@ -73,13 +74,13 @@ $LANG['e_unexist_news'] = 'This news doesn\'t exist';
 $LANG['title_news'] = 'News';
 
 //Alerts
-$LANG['alert_delete_news'] = 'Delete this piece of news??';
+$LANG['alert_delete_news'] = 'Delete this piece of news?';
 
 //News
 $LANG['news'] = 'News';
 $LANG['propose_news'] = 'Suggest an item of news';
 $LANG['xml_news_desc'] = 'Track the last news on';
-$LANG['add_succes_news'] = 'Item of news sent successfully, please wait approval';
+$LANG['add_succes_news'] = 'Item of news sent successfully. Please wait approval';
 $LANG['add_news'] = 'Add a item of news';
 $LANG['last_news'] = 'Last news';
 $LANG['extend_contents'] = 'Read the continuation...';

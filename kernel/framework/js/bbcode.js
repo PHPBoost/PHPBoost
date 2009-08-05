@@ -199,8 +199,8 @@ function getCookie(name)
 //Conserve la configuration de la barre bbcode.
 function set_bbcode_preference(divID)
 {
-	if( getCookie('hide_bbcode') == 1 )
-		document.getElementById(divID).style.display = 'block';
+	if( getCookie('hide_bbcode') == 0 )
+		document.getElementById(divID).style.display = 'none';
 }
 
 //Masquage du div.

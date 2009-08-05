@@ -3,24 +3,25 @@
  *                              wiki_english.php
  *                            -------------------
  *   begin                : October 14, 2007
+ *   last modified		: August 1st, 2009 - Forensic
  *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
  *  
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -74,7 +75,7 @@ $LANG['wiki_please_enter_a_link_name'] = 'Please enter a link name';
 $LANG['wiki_insert_a_link'] = 'Insert a link into the article';
 $LANG['wiki_insert_link'] = 'Insert a link';
 $LANG['wiki_title_link'] = 'Article title';
-$LANG['wiki_no_js_insert_link'] = 'If you want to insert a link up to an article you can use link tag : [link=a]b[/link] where a is the title of the article up to which you want to create a link (enough special characters) and b represents the name of the link.';
+$LANG['wiki_no_js_insert_link'] = 'If you want to insert a link to an article you can use the link tag : [link=a]b[/link] where a is the title of the article in which you want to create a link (enough special characters) and b represents the name of the link.';
 $LANG['wiki_explain_paragraph'] = 'Insert a paragraph of level %d';
 $LANG['wiki_help_tags'] = 'Know more about wiki specific tags';
 $LANG['wiki_help_url'] = 'http://www.phpboost.com/wiki/';
@@ -120,15 +121,15 @@ $LANG['wiki_status_management_article'] = 'Status management of the article <em>
 $LANG['wiki_defined_status'] = 'Defined status';
 $LANG['wiki_undefined_status'] = 'Personalized status';
 $LANG['wiki_no_status'] = 'No status';
-$LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and show a particular point of each article.<br />You can assign as well defined status to you articles than personalized one. To use a defined status let the personalized field empty.';
+$LANG['wiki_status_explain'] = 'Here you can select the status of this article. Several different status permit you to order your articles and to show a particular point for each article.<br />You can assign as well defined status to you articles or personalized one. To use a defined status let the personalized field empty.';
 $LANG['wiki_current_status'] = 'Current status';
 
 $LANG['wiki_status_list'] = array(
 	array('Quality article', '<span class="notice">This article is very good.</span>'),
 	array('Unachieved article', '<span class="question">This article lacks sources. <br />Your knowlegde is welcome to complete it.</span>'),
 	array('Article in transformation', '<span class="notice">This article is not complete, you can use your knowledge to complete it.</span>'),
-	array('Article to remake', '<span class="warning">This article must me write again. Its content is not reliable.</span>'),
-	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be not correct. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
+	array('Article to remake', '<span class="warning">This article must be writen again. Its content is not reliable.</span>'),
+	array('Article discussion', '<span class="error">This article was a subject of discussion and its content seems to be incorrect. You can eventually read discussions and maybe use your knowledge to complete it.</span>')
 );
 
 //Déplacement de l'article
@@ -141,7 +142,7 @@ $LANG['wiki_cat_contains_cat'] = 'You try to move this category in its sub-categ
 $LANG['wiki_renaming_article'] = 'Rename an article';
 $LANG['wiki_renaming_this_article'] = 'Rename the article: %s';
 $LANG['wiki_new_article_title'] = 'New title of the article';
-$LANG['wiki_explain_renaming'] = 'You will rename this article. Be careful, all links to this article will be broken. But you can ask to put a redirection for this article, so the links will not be break.';
+$LANG['wiki_explain_renaming'] = 'You will rename this article. Be careful, all links to this article will be broken. But you can ask to put a redirection for this article, so the links will not be broken.';
 $LANG['wiki_create_redirection_after_renaming'] = 'Create an automatic redirection from the old article to the new one';
 $LANG['wiki_title_already_exists'] = 'The title you want to choose already exists. Please choose another one';
 
@@ -181,7 +182,7 @@ $LANG['wiki_remove_this_cat'] = 'Delete the category: <em>%s</em>';
 $LANG['wiki_explain_remove_cat'] = 'You want to delete this category. You can delete all its content, or move its content somewhere else.The article will be delete anyway.';
 $LANG['wiki_remove_all_contents'] = 'Delete all its content (irreversible actions)';
 $LANG['wiki_move_all_contents'] = 'Move all its content in this folder:';
-$LANG['wiki_future_cat'] = 'Category which you want to move these element:';
+$LANG['wiki_future_cat'] = 'Category in which you want to move these element:';
 $LANG['wiki_alert_removing_cat'] = 'Are you sure you want to delete this category? (definitive)';
 $LANG['wiki_confirm_remove_article'] = 'Are you sure you want to delete this article?';
 $LANG['wiki_not_a_cat'] = 'You have not selected a valid category!';
@@ -197,14 +198,14 @@ $LANG['wiki_unwatch_this_topic'] = 'Don\'t track this topic anymore';
 $LANG['wiki_unwatch'] = 'Don\'t track anymore';
 $LANG['wiki_watch'] = 'Track this topic';
 $LANG['wiki_followed_articles'] = 'Favorites';
-$LANG['wiki_already_favorite'] = 'The topic you want to put in your favorites is already in your favorites';
+$LANG['wiki_already_favorite'] = 'The topic you want to put in your favorites is already in it';
 $LANG['wiki_article_is_not_a_favorite'] = 'The topic you want to delete of your favorites is not in your favorites';
 $LANG['wiki_no_favorite'] = 'No topic in favorites';
 $LANG['wiki_confirm_unwatch_this_topic'] = 'Are you sure you want to delete this article from your favorites?';
 
 //Administration
 $LANG['wiki_groups_config'] = 'Groups management';
-$LANG['explain_wiki_groups'] = 'You can configure here all it concerns authorizations. You can attribute authorizations to a level and specials persmissions to a group';
+$LANG['explain_wiki_groups'] = 'You can configure here everything concerning authorizations. You can attribute authorizations to a level and specials persmissions to a group';
 $LANG['wiki_auth_create_article'] = 'Create an article';
 $LANG['wiki_auth_create_cat'] = 'Create a category';
 $LANG['wiki_auth_restore_archive'] = 'Restore an archive';
@@ -214,7 +215,7 @@ $LANG['wiki_auth_delete'] = 'Delete an article';
 $LANG['wiki_auth_rename'] = 'Rename an article';
 $LANG['wiki_auth_redirect'] = 'Manage redirection to an article';
 $LANG['wiki_auth_move'] = 'Move an article';
-$LANG['wiki_auth_status'] = 'Edit an article\'s statut';
+$LANG['wiki_auth_status'] = 'Edit an article status';
 $LANG['wiki_auth_com'] = 'Comment an article';
 $LANG['wiki_auth_restriction'] = 'Edit restrictions level of an article';
 $LANG['wiki_auth_restriction_explain'] = 'It is advised to keep it for moderators only';
@@ -225,10 +226,10 @@ $LANG['wiki_config_whole'] = 'General configuration';
 $LANG['wiki_index'] = 'Wiki home';
 $LANG['wiki_count_hits'] = 'Count the number of time that articles has been seen';
 $LANG['wiki_name'] = 'Wiki name';
-$LANG['wiki_display_cats'] = 'Show principal categories\'list in home';
+$LANG['wiki_display_cats'] = 'Show principal categories list in home';
 $LANG['wiki_no_display'] = 'Don\'t show';
 $LANG['wiki_display'] = 'Show';
-$LANG['wiki_last_articles'] = 'Last articles\'number to show in home';
+$LANG['wiki_last_articles'] = 'Last articles number to show in home';
 $LANG['wiki_last_articles_explain'] = '0 to deactivate';
 $LANG['wiki_desc'] = 'Home text';
 

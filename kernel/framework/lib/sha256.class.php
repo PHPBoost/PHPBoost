@@ -178,7 +178,7 @@ class SHA256 extends hash
         }
         else
         {
-            $data =& new SHA256Data($str);
+            $data = new SHA256Data($str);
             
             SHA256::compute($data);
             

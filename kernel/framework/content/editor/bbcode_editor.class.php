@@ -85,6 +85,7 @@ class BBCodeEditor extends ContentEditor
 			'L_BB_LEFT' => $LANG['bb_left'],
 			'L_BB_CENTER' => $LANG['bb_center'],
 			'L_BB_RIGHT' => $LANG['bb_right'],
+			'L_BB_JUSTIFY' => $LANG['bb_justify'],
 			'L_BB_FLOAT_LEFT' => $LANG['bb_float_left'],
 			'L_BB_FLOAT_RIGHT' => $LANG['bb_float_right'],
 			'L_BB_SUP' => $LANG['bb_sup'],

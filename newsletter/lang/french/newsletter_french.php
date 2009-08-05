@@ -3,24 +3,25 @@
  *                             newsletter_french.php
  *                            -------------------
  *   begin                :  July 11 2006
+ *   last modified		: July 31, 2009 - Forensic
  *   copyright          : (C) 2006 ben.popeye
  *   email                : ben.popeye@phpboost.com
  *
  *  
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -39,6 +40,7 @@ $LANG['newsletter_select_type_bbcode_explain'] = '<span style="color:green;"><st
 $LANG['newsletter_select_type_html_explain'] = '<span style="color:red;"><strong>Utilisateurs expérimentés seulement</strong></span><br />Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';
 $LANG['newsletter_write_type'] = 'Rédiger une newsletter';
 $LANG['newsletter_unscubscribe_text'] = 'Pour se désinscrire de la newsletter, merci de cliquer ici. ';
+$LANG['newsletter_mail_from'] = 'E-mail qui envoit la newsletter';
 $LANG['newsletter_send'] = 'Envoyer';
 $LANG['newsletter_error'] = 'La newsletter n\'a pas pu être délivrée au destinataire suivant: ';
 $LANG['newsletter_go_to_archives'] = 'Cliquez ici pour voir les archives.';
@@ -51,7 +53,7 @@ $LANG['newsletter_sent_successful'] = 'La newsletter a été envoyée avec succès à
 $LANG['send_newsletter'] = 'Envoyer une newsletter';
 $LANG['newsletter_member_list'] = 'Liste des membres';
 $LANG['newsletter_test_sent'] = 'Une newsletter vous a été envoyée à l\'adresse %s pour avoir un aperçu de ce que vous envoyez.';
-$LANG['newsletter_bbcode_warning'] = 'Lorsque vous enverrez une newsletter en BBCode, ce dernier sera transformé en HTML lors de l\'envoi. Seulement toutes les balises ne seront pas acceptées chez les fournisseurs de messagerie, c\'est pourquoi nous vous invitons à envoyer un test de la newsletter en utilisant le bouton approprié pour voir le rendu chez votre fournisseur';
+$LANG['newsletter_bbcode_warning'] = 'Lorsque vous enverrez une newsletter en BBCode, cette dernière sera transformé en HTML lors de l\'envoi. Seulement toutes les balises ne seront pas acceptées chez les fournisseurs de messagerie, c\'est pourquoi nous vous invitons à envoyer un test de la newsletter en utilisant le bouton approprié pour voir le rendu chez votre fournisseur';
 
 //Newsletter
 $LANG['newsletter'] = 'Newsletter';

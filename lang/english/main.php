@@ -122,6 +122,7 @@ $LANG['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
 $LANG['bb_left'] = 'Align left: [align=left]object on left[/align]';
 $LANG['bb_center'] = 'Center : [align=center]center object[/align]';
 $LANG['bb_right'] = 'Align right: [align=right]object on right[/align]';
+$LANG['bb_justify'] = 'Justify : [align=justify]object justified[/align]';
 $LANG['bb_code'] = 'Insert code [code]text[/code]';
 $LANG['bb_math'] = 'Insert mathematics code [math]text[/math]';
 $LANG['bb_swf'] = 'Insert flash [swf=width,height]url animation[/swf]';

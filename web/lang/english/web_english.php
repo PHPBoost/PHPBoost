@@ -3,6 +3,7 @@
  *                             web_english.php
  *                            -------------------
  *   begin                :  July 28, 2005
+ *   last modified		: August 1st, 2009 - Forensic 
  *   copyright          : (C) 2006 CrowkaiT
  *   email                : crowkait@phpboost.com
  *
@@ -50,8 +51,8 @@ $LANG['propose_link'] = 'Suggest a link';
 $LANG['none_link'] = 'No links in this category';
 $LANG['how_link'] = 'Link(s) in the database!';
 $LANG['no_note'] = 'No note';
-$LANG['actual_note'] = 'Actual note';
-$LANG['vote'] = 'Vote';
+$LANG['actual_note'] = 'Current rating';
+$LANG['vote'] = 'Rate this link';
 $LANG['delete_link'] = 'Delete this link?';
 
 //Add web link.

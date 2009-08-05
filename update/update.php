@@ -385,6 +385,13 @@ switch($step)
 	case STEP_DB_MAJ :
 		if (retrieve(POST, 'submit', false))
         {
+			import('io/filesystem/folder');
+			$cache_folder_path = new Folder('../cache/');
+			foreach($cache_folder_path->get_files('`\.php$`')as $image)
+			{
+				$image->delete();
+			}
+
 			import('core/errors');
 			import('db/mysql');
 			import('core/cache');
@@ -402,35 +409,71 @@ switch($step)
 			
 			$Cache->load('modules'); //Cache des autorisations des modules
 			if (isset($MODULES['forum']))
+			{	
 				$Sql->parse('migration_forum_2.0_to_3.0.sql');
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (11, 'forum', 'a:15:{s:10:\"forum_name\";s:14:\"PHPBoost forum\";s:16:\"pagination_topic\";i:20;s:14:\"pagination_msg\";i:15;s:9:\"view_time\";i:2592000;s:11:\"topic_track\";i:40;s:9:\"edit_mark\";i:1;s:14:\"no_left_column\";i:0;s:15:\"no_right_column\";i:0;s:17:\"activ_display_msg\";i:1;s:11:\"display_msg\";s:21:\"[R&eacute;gl&eacute;]\";s:19:\"explain_display_msg\";s:26:\"Sujet r&eacute;gl&eacute;?\";s:23:\"explain_display_msg_bis\";s:30:\"Sujet non r&eacute;gl&eacute;?\";s:22:\"icon_activ_display_msg\";i:1;s:4:\"auth\";s:19:\"a:1:{s:2:\"r2\";i:7;}\";s:17:\"display_connexion\";i:0;}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['download']))
+			{	
 				$Sql->parse('migration_download_2.0_to_3.0.sql');
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (9, 'download', 'a:5:{s:12:\"nbr_file_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:13:\"root_contents\";s:50:\"Bienvenue dans l''espace de téléchargement du site!\";s:11:\"global_auth\";a:3:{s:3:\"r-1\";i:1;s:2:\"r0\";i:5;s:2:\"r1\";i:7;}}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['poll']))
 			{	
 				$Sql->query_inject("ALTER TABLE `phpboost_poll_ip` ADD `user_id` int(11) NOT NULL DEFAULT '0' AFTER `ip`", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (19, 'poll', 'a:4:{s:9:\"poll_auth\";i:-1;s:9:\"poll_mini\";a:1:{i:0;s:1:\"1\";}s:11:\"poll_cookie\";s:4:\"poll\";s:18:\"poll_cookie_lenght\";i:2592000;}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['articles']))
+			{
 				$Sql->parse('migration_articles_2.0_to_3.0.sql');
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (6, 'articles', 'a:5:{s:16:\"nbr_articles_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}\";}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['news']))
+			{
 				$Sql->parse('migration_news_2.0_to_3.0.sql');
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (15, 'news', 'a:13:{s:4:\"type\";i:1;s:11:\"activ_pagin\";i:1;s:11:\"activ_edito\";i:1;s:15:\"pagination_news\";i:5;s:15:\"pagination_arch\";i:10;s:9:\"activ_com\";i:1;s:10:\"activ_icon\";i:1;s:14:\"display_author\";i:1;s:12:\"display_date\";i:1;s:8:\"nbr_news\";s:1:\"2\";s:10:\"nbr_column\";i:1;s:5:\"edito\";s:22:\"Bienvenue sur le site!\";s:11:\"edito_title\";s:22:\"Bienvenue sur le site!\";}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['faq']))
+			{
 				$Sql->parse('migration_faq_2.0_to_3.0.sql');
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (10, 'faq', 'a:5:{s:8:\"faq_name\";s:12:\"FAQ PHPBoost\";s:8:\"num_cols\";i:4;s:13:\"display_block\";b:0;s:11:\"global_auth\";a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:3;s:2:\"r2\";i:3;}s:4:\"root\";a:3:{s:12:\"display_mode\";i:0;s:4:\"auth\";a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:3;s:2:\"r2\";i:3;}s:11:\"description\";s:23:\"Bienvenue dans la FAQ !\";}}')", __LINE__, __FILE__);
+				
+			}
 			if (isset($MODULES['calendar']))
+			{
 				$Sql->query_inject("ALTER TABLE `phpboost_calendar` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (7, 'calendar', 'a:1:{s:13:\"calendar_auth\";i:2;}')", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['contact']))
+			{
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (8, 'contact', 'a:2:{s:17:\"contact_verifcode\";i:1;s:28:\"contact_difficulty_verifcode\";i:2;}')", __LINE__, __FILE__);
+			}
+			if (isset($MODULES['online']))
+			{
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (17, 'online', 'a:2:{s:16:\"online_displayed\";i:4;s:20:\"display_order_online\";s:33:\"s.level DESC, s.session_time DESC\";}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['guestbook']))
+			{
 				$Sql->query_inject("ALTER TABLE `phpboost_guestbook` CHANGE `contents` `contents` text", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (13, 'guestbook', 'a:5:{s:14:\"guestbook_auth\";i:-1;s:24:\"guestbook_forbidden_tags\";s:52:\"a:3:{i:0;s:3:\"swf\";i:1;s:5:\"movie\";i:2;s:5:\"sound\";}\";s:18:\"guestbook_max_link\";i:2;s:19:\"guestbook_verifcode\";i:0;s:30:\"guestbook_difficulty_verifcode\";i:0;}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['newsletter']))
+			{
 				$Sql->query_inject("ALTER TABLE `phpboost_newsletter_arch` CHANGE `message` `message` text", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (16, 'newsletter', 'a:2:{s:11:\"sender_mail\";s:0:\"\";s:15:\"newsletter_name\";s:0:\"\";}')", __LINE__, __FILE__);
+			}
 			if (isset($MODULES['gallery']))
 			{
 				$Sql->query_inject("ALTER TABLE `phpboost_gallery` CHANGE `users_note` `users_note` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_gallery_cats` CHANGE `contents` `contents` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_gallery_cats` CHANGE `auth` `auth` text", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (12, 'gallery', 'a:27:{s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"width_max\";i:800;s:10:\"height_max\";i:600;s:10:\"weight_max\";i:1024;s:7:\"quality\";i:80;s:5:\"trans\";i:40;s:4:\"logo\";s:8:\"logo.jpg\";s:10:\"activ_logo\";i:1;s:7:\"d_width\";i:5;s:8:\"d_height\";i:5;s:10:\"nbr_column\";i:4;s:12:\"nbr_pics_max\";i:16;s:8:\"note_max\";i:5;s:11:\"activ_title\";i:1;s:9:\"activ_com\";i:1;s:10:\"activ_note\";i:1;s:15:\"display_nbrnote\";i:1;s:10:\"activ_view\";i:1;s:10:\"activ_user\";i:1;s:12:\"limit_member\";i:10;s:10:\"limit_modo\";i:25;s:12:\"display_pics\";i:3;s:11:\"scroll_type\";i:1;s:13:\"nbr_pics_mini\";i:6;s:15:\"speed_mini_pics\";i:6;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:3;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['shoutbox']))
 			{
 				$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` CHANGE `contents` `contents` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_shoutbox` ADD `level` tinyint(1) NOT NULL DEFAULT '0' AFTER `user_id`", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (21, 'shoutbox', 'a:5:{s:16:\"shoutbox_max_msg\";i:100;s:13:\"shoutbox_auth\";i:-1;s:23:\"shoutbox_forbidden_tags\";s:428:\"a:26:{i:0;s:5:\"title\";i:1;s:6:\"stitle\";i:2;s:5:\"style\";i:3;s:3:\"url\";i:4;s:3:\"img\";i:5;s:5:\"quote\";i:6;s:4:\"hide\";i:7;s:4:\"list\";i:8;s:5:\"color\";i:9;s:7:\"bgcolor\";i:10;s:4:\"font\";i:11;s:4:\"size\";i:12;s:5:\"align\";i:13;s:5:\"float\";i:14;s:3:\"sup\";i:15;s:3:\"sub\";i:16;s:6:\"indent\";i:17;s:3:\"pre\";i:18;s:5:\"table\";i:19;s:3:\"swf\";i:20;s:5:\"movie\";i:21;s:5:\"sound\";i:22;s:4:\"code\";i:23;s:4:\"math\";i:24;s:6:\"anchor\";i:25;s:7:\"acronym\";}\";s:17:\"shoutbox_max_link\";i:2;s:22:\"shoutbox_refresh_delay\";d:60000;}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['wiki']))
 			{	
@@ -438,6 +481,7 @@ switch($step)
 				$Sql->query_inject("ALTER TABLE `phpboost_wiki_articles` CHANGE `auth` `auth` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_wiki_contents` CHANGE `menu` `menu` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_wiki_contents` CHANGE `content` `content` mediumtext", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (23, 'wiki', 'a:6:{s:4:\"auth\";s:71:\"a:4:{s:3:\"r-1\";i:1041;s:2:\"r0\";i:1299;s:2:\"r1\";i:4095;s:2:\"r2\";i:4095;}\";s:9:\"wiki_name\";s:13:\"Wiki PHPBoost\";s:13:\"last_articles\";i:0;s:12:\"display_cats\";i:0;s:10:\"index_text\";s:22:\"Bienvenue sur le wiki.\";s:10:\"count_hits\";i:1;}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['web']))
 			{
@@ -446,6 +490,7 @@ switch($step)
 				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `users_note` `users_note` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `url` `url` text", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_web` CHANGE `note` `note` float NOT NULL DEFAULT '0'", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (22, 'web', 'a:4:{s:11:\"nbr_web_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['pages']))
 			{
@@ -454,8 +499,9 @@ switch($step)
 				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`title`)", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT (`contents`)", __LINE__, __FILE__);
 				$Sql->query_inject("ALTER TABLE `phpboost_pages` ADD FULLTEXT `all` (`title` ,`contents`)", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (18, 'pages', 'a:3:{s:10:\"count_hits\";i:1;s:9:\"activ_com\";i:1;s:4:\"auth\";s:59:\"a:4:{s:3:\"r-1\";i:5;s:2:\"r0\";i:7;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
 			}
-			
+
 			//Fermeture de la connexion BDD
 			$Sql->close();
 			
@@ -481,7 +527,7 @@ switch($step)
         {
             $server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
         }
-        $server_path = trim(str_replace('/install', '', dirname($server_path)));
+        $server_path = trim(str_replace('/update', '', dirname($server_path)));
         $server_path = ($server_path == '/') ? '' : $server_path;
         $server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
         
@@ -567,6 +613,8 @@ switch($step)
             
             // Ajout du menu de lien par défaut tout en haut à gauche
             import('core/menu_service');
+            MenuService::enable_all(true);
+			
             $modules_menu = MenuService::website_modules(VERTICAL_MENU);
             MenuService::move($modules_menu, BLOCK_POSITION__LEFT, false);
             MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
