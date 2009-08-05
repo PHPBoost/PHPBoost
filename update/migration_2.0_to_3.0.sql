@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_events` (
 
 ALTER TABLE `phpboost_group` ADD `color` varchar(6) NOT NULL DEFAULT '' AFTER `img` ;
 ALTER TABLE `phpboost_group` DROP `auth`;
-ALTER TABLE `phpboost_group` ADD `auth` varchar(255) NOT NULL DEFAULT '0' AFTER `color` ;
+ALTER TABLE `phpboost_group` ADD `auth` varchar(255) NOT NULL DEFAULT '' AFTER `color` ;
 ALTER TABLE `phpboost_group` CHANGE `members` `members` text; 
 
 DROP TABLE IF EXISTS `phpboost_links`;
