@@ -576,7 +576,7 @@ switch($step)
             $CONFIG['theme'] = DEFAULT_THEME_UPDATE;
             $CONFIG['editor'] = 'bbcode';
             $CONFIG['timezone'] = $site_timezone;
-            $CONFIG['start_page'] = './index.php';
+            $CONFIG['start_page'] = '/index.php';
             $CONFIG['maintain'] = 0;
             $CONFIG['maintain_delay'] = 1;
             $CONFIG['maintain_display_admin'] = 1;
