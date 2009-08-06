@@ -27,8 +27,8 @@
 
 //A personnaliser
 define('UPDATE_VERSION', '3.0b');
-define('DEFAULT_LANGUAGE', 'french');
-define('DEFAULT_THEME', 'base');
+define('DEFAULT_LANGUAGE_UPDATE', 'french');
+define('DEFAULT_THEME_UPDATE', 'base');
 define('STEPS_NUMBER', 6);
 define('STEP_INTRODUCTION', 1);
 define('STEP_SERVER_CONFIG', 2);
@@ -72,20 +72,19 @@ define('SID', '');
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
 
-$lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
+$lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE_UPDATE);
 
 //Inclusion du fichier langue
-include_once('lang/' . DEFAULT_LANGUAGE . '/update_' . DEFAULT_LANGUAGE . '.php');
+include_once('lang/' . DEFAULT_LANGUAGE_UPDATE . '/update_' . DEFAULT_LANGUAGE_UPDATE . '.php');
 
 //Création de l'utilisateur
-import('members/user');
 $user_data = array(
     'm_user_id' => 1,
     'login' => 'login',
     'level' => ADMIN_LEVEL,
     'user_groups' => '',
     'user_lang' => $lang,
-    'user_theme' => DEFAULT_THEME,
+    'user_theme' => DEFAULT_THEME_UPDATE,
     'user_mail' => '',
     'user_pm' => 0,
     'user_editor' => 'bbcode',
@@ -108,7 +107,7 @@ if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') |
 function add_lang($url, $header_location = false)
 {
 	global $lang;
-	if ($lang != DEFAULT_LANGUAGE)
+	if ($lang != DEFAULT_LANGUAGE_UPDATE)
 	{
 		if (strpos($url, '?') !== false)
 		{
@@ -274,8 +273,6 @@ switch($step)
             switch ($result)
             {
                 case DB_CONFIG_SUCCESS:
-                    import('core/errors');
-                    import('core/cache');
                     $Errorh = new Errors;
 
 					$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
@@ -565,7 +562,7 @@ switch($step)
             $CONFIG['start'] = time();
             $CONFIG['version'] = UPDATE_VERSION;
             $CONFIG['lang'] = $lang;
-            $CONFIG['theme'] = DEFAULT_THEME;
+            $CONFIG['theme'] = DEFAULT_THEME_UPDATE;
             $CONFIG['editor'] = 'bbcode';
             $CONFIG['timezone'] = $site_timezone;
             $CONFIG['start_page'] = './index.php';
@@ -611,7 +608,6 @@ switch($step)
             $Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
             
             //On génère le cache
-            include '../kernel/framework/core/cache.class.php';
             include '../lang/' . $lang . '/main.php';
             $Cache = new Cache;
             
@@ -670,7 +666,7 @@ switch($step)
         }
             
         $template->assign_vars(array(
-            'IMG_THEME' => DEFAULT_THEME,
+            'IMG_THEME' => DEFAULT_THEME_UPDATE,
             'U_PREVIOUS_STEP' => add_lang('update.php?step=4'),
             'U_CURRENT_STEP' => add_lang('update.php?step=5'),
             'L_SITE_CONFIG' => $LANG['site_config_title'],
@@ -699,7 +695,6 @@ switch($step)
         require_once('functions.php');
         load_db_connection();
         
-        import('core/cache');
         $Cache = new Cache;
         $Cache->load('config');
         $Cache->load('modules');
