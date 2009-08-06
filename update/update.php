@@ -49,7 +49,17 @@ header('Pragma: no-cache');
 //Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+
+import('core/errors');
 import('io/template');
+import('db/mysql');
+import('core/cache');
+import('members/session');
+import('members/user');
+import('members/groups');
+import('members/authorizations');
+import('core/breadcrumb');
+import('content/parser/content_formatting_factory');
 
 @error_reporting(ERROR_REPORTING);
 
@@ -392,9 +402,6 @@ switch($step)
 				$image->delete();
 			}
 
-			import('core/errors');
-			import('db/mysql');
-			import('core/cache');
 			$Errorh = new Errors;
 			$Sql = new Sql();
 			
