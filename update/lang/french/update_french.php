@@ -56,6 +56,7 @@ $LANG['query_sent'] = 'Requête envoyée au serveur, attente d\'une réponse';
 $LANG['query_processing'] = 'Traitement de la requête en cours';
 $LANG['query_success'] = 'Traitement terminé';
 $LANG['query_failure'] = 'Traitement échoué';
+$LANG['root'] = 'Racine';
 
 //Introduction
 $LANG['intro_title'] = 'Bienvenue dans l\'assistant de mise à jour de PHPBoost';
