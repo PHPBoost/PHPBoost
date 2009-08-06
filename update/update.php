@@ -517,6 +517,14 @@ switch($step)
 				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (18, 'pages', 'a:3:{s:10:\"count_hits\";i:1;s:9:\"activ_com\";i:1;s:4:\"auth\";s:59:\"a:4:{s:3:\"r-1\";i:5;s:2:\"r0\";i:7;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
 			}
 
+			//Installation de modules modules
+			import('modules/packages_manager');
+			PackagesManager::install_module('connect', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('database', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('faq', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('media', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('search', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			
 			//Fermeture de la connexion BDD
 			$Sql->close();
 			
@@ -634,6 +642,13 @@ switch($step)
             MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
             MenuService::save($modules_menu);
             
+			// Try to find out new mini-modules and delete old ones
+			MenuService::update_mini_modules_list(false);
+			// The same with the mini menus
+			MenuService::update_mini_menus_list();
+
+			$Sql->query_inject("UPDATE ".DB_TABLE_MENUS." SET enabled = 1", __LINE__, __FILE__);
+			
             $Cache->generate_all_files();
             
             $Cache->load('themes', RELOAD_CACHE);
