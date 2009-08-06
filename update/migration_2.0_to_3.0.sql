@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_menus` (
   KEY `block` (`block`),
   KEY `class` (`class`),
   KEY `enabled` (`enabled`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `phpboost_modules_mini`;
 
