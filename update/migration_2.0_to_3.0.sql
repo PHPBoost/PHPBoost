@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `phpboost_menus` (
 DROP TABLE IF EXISTS `phpboost_modules_mini`;
 
 ALTER TABLE `phpboost_modules` CHANGE `auth` `auth` text; 
+UPDATE `phpboost_modules` SET auth = 'a:4:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;s:2:"r2";i:1;}';
 
 ALTER TABLE `phpboost_pm_topic` DROP `visible`;
 ALTER TABLE `phpboost_pm_msg` CHANGE `contents` `contents` text; 
