@@ -394,9 +394,9 @@ switch($step)
         {
 			import('io/filesystem/folder');
 			$cache_folder_path = new Folder('../cache/');
-			foreach($cache_folder_path->get_files('`\.php$`')as $image)
+			foreach($cache_folder_path->get_files('`\.php$`')as $cache)
 			{
-				$image->delete();
+				$cache->delete();
 			}
 
 			$Errorh = new Errors;
@@ -421,6 +421,17 @@ switch($step)
 			{	
 				$Sql->parse('migration_download_2.0_to_3.0.sql');
 				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (9, 'download', 'a:5:{s:12:\"nbr_file_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:13:\"root_contents\";s:50:\"Bienvenue dans l''espace de téléchargement du site!\";s:11:\"global_auth\";a:3:{s:3:\"r-1\";i:1;s:2:\"r0\";i:5;s:2:\"r1\";i:7;}}')", __LINE__, __FILE__);
+				
+				//Récomptage du nombre de fichier
+				$Cache = new Cache;
+				$Cache->Generate_module_file('download');
+	
+				include_once(PATH_TO_ROOT.'/download/download_auth.php');
+				$Cache->load('download');
+				include_once(PATH_TO_ROOT.'/download/download_cats.class.php');
+				
+				$download_categories = new DownloadCats();
+				$download_categories->Recount_sub_files();
 			}
 			if (isset($MODULES['poll']))
 			{	
