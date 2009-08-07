@@ -408,6 +408,15 @@ switch($step)
 			
 			$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
 			
+			$MODULES = array();
+			$query = "SELECT name
+            FROM " . DB_TABLE_MODULES;
+			$result = $Sql->query_while ($query, __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$MODULES[$row['name']] = true;
+			}
+			
 			//On parse le fichier de mise à jour de la structure de la base de données
 			$Sql->parse('migration_2.0_to_3.0.sql');
 			
