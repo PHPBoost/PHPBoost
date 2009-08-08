@@ -206,9 +206,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	list($edit, $del, $cut, $moderator) = array(false, false, false, false);
 	if ($check_group_edit_auth || ($User->get_attribute('user_id') == $row['user_id'] && !$is_guest && !$first_message))
 	{
-		$edit = true;
-		$del = true;
-		
+		list($edit, $del) = array(true, true);
 		if ($check_group_edit_auth) //Fonctions réservées à ceux possédants les droits de modérateurs seulement.
 		{
 			$cut = (!$first_message) ? true : false;

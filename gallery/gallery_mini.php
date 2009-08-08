@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true) exit;
 
 function gallery_mini($position, $block)
 {
-    global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics;
+    global $Cache, $User, $CAT_GALLERY, $CONFIG_GALLERY, $LANG, $_array_random_pics, $Sql;
     $tpl = new Template('gallery/gallery_mini.tpl');
     import('core/menu_service');
     MenuService::assign_positions_conditions($tpl, $block);
@@ -37,7 +37,7 @@ function gallery_mini($position, $block)
     //Chargement de la langue du module.
     load_module_lang('gallery');
     $Cache->load('gallery'); //Requête des configuration générales (gallery), $CONFIG_ALBUM variable globale.
-
+	
     //Affichage des miniatures disponibles
     $i = 0;
     $array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
@@ -68,14 +68,13 @@ function gallery_mini($position, $block)
     	//Aucune photo ne correspond, on fait une requête pour vérifier.
     	if (count($gallery_mini) == 0)
     	{
-    		$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
+			$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
     		FROM " . PREFIX . "gallery g
     		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
     		WHERE g.aprob = 1 AND gc.aprob = 1
     		ORDER BY RAND()
     		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
     		$_array_random_pics = $Sql->fetch_assoc($result);
-    		
     		//Vérification des autorisations.
     		$break = 0;
     		foreach ($_array_random_pics as $key => $array_pics_info)
