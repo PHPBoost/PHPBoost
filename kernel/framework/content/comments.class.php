@@ -211,7 +211,7 @@ class Comments
 			import('util/captcha');
 			$captcha = new Captcha();
 			$captcha->set_difficulty($CONFIG_COM['com_verif_code_difficulty']);
-						
+
 			###########################Insertion##############################
 			if (retrieve(POST, 'valid_com', false) && !$updatecom)
 			{
@@ -489,8 +489,11 @@ class Comments
 				else
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
 				
+				$is_modo = $User->check_level(MODO_LEVEL);
+				
 				$Template->assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
+					'C_IS_MODERATOR' => $is_modo,
 					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
 					'LANG' => get_ulang(),
 					'IDCOM' => '',
@@ -510,6 +513,8 @@ class Comments
 					'L_VERIF_CODE' => $LANG['verif_code'],
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
 					'L_ADD_COMMENT' => $LANG['add_comment'],
+					'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
+					'L_WARNING_MANAGEMENT' => $LANG['warning_management'],
 					'L_LOGIN' => $LANG['pseudo'],
 					'L_MESSAGE' => $LANG['message'],
 					'L_QUOTE' => $LANG['quote'],
@@ -535,24 +540,13 @@ class Comments
 				" . $Sql->limit($pagination->get_first_msg($CONFIG_COM['com_max'], 'pc'), $CONFIG_COM['com_max']), __LINE__, __FILE__);
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					$edit = '';
-					$del = '';
-					
+					list($edit, $del) = array(false, false);
 					$is_guest = empty($row['user_id']);
-					$is_modo = $User->check_level(MODO_LEVEL);
-					$warning = '';
-					$readonly = '';
-					if ($is_modo && !$is_guest) //Modération.
-					{
-						$warning = '&nbsp;<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/admin/important.png" alt="' . $LANG['warning_management'] .  '" class="valign_middle" /></a>';
-						$readonly = '<a href="' . PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/readonly.png" alt="' . $LANG['punishment_management'] .  '" class="valign_middle" /></a>';
-					}
 					
 					//Edition/suppression.
-					if ($is_modo || ($row['user_id'] === $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
+					if ($is_modo || ($row['user_id'] == $User->get_attribute('user_id') && $User->get_attribute('user_id') !== -1))
 					{
-						$edit = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&amp;editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="' . $LANG['edit'] . '" title="' . $LANG['edit'] . '" class="valign_middle" /></a>';
-						$del = '&nbsp;&nbsp;<a href="' . $this->path . sprintf($this->vars, $row['idcom']) . '&amp;token=' . $Session->get_token() . '&amp;delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script . '" onclick="javascript:return Confirm();"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/delete.png" alt="' . $LANG['delete'] . '" title="' . $LANG['delete'] . '" class="valign_middle" /></a>';
+						list($edit, $del) = array(true, true);
 					}
 					
 					//Pseudo.
@@ -639,7 +633,7 @@ class Comments
 					//Correction des chemins du BBCode
 					if (!$integrated_in_environment && !empty($page_path_to_root))
 						$contents = str_replace('"' . $page_path_to_root . '/', '"' . PATH_TO_ROOT . '/', $contents);
-						
+				
 					$Template->assign_block_vars('com_list', array(
 						'ID' => $row['idcom'],
 						'CONTENTS' => $contents,
@@ -660,10 +654,13 @@ class Comments
 						'USER_YAHOO' => !empty($row['user_yahoo']) ? '<a href="mailto:' . $row['user_yahoo'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/yahoo.png" alt="' . $row['user_yahoo']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
 						'USER_SIGN' => !empty($row['user_sign']) ? '____________________<br />' . second_parse($row['user_sign']) : '',
 						'USER_WEB' => !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web']  . '" title="' . $row['user_yahoo']  . '" /></a>' : '',
-						'WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0') . '%' . $warning,
-						'PUNISHMENT' => $readonly,
-						'DEL' => $del,
-						'EDIT' => $edit,
+						'USER_WARNING' => (!empty($row['user_warning']) ? $row['user_warning'] : '0'),
+						'C_COM_MSG_EDIT' => $del,
+						'C_COM_MSG_DEL' => $edit,
+						'U_COM_EDIT' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;editcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script,
+						'U_COM_DEL' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;token=' . $Session->get_token() . '&amp;delcom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script,
+						'U_COM_WARNING' => ($is_modo && !$is_guest) ? PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=warning&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['warning_management'] : '',
+						'U_COM_PUNISHEMENT' => ($is_modo && !$is_guest) ? PATH_TO_ROOT . '/member/moderation_panel' . url('.php?action=punish&amp;id=' . $row['user_id'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')) . '" title="' . $LANG['punishment_management'] : '',
 						'U_USER_PM' => '<a href="' . PATH_TO_ROOT . '/member/pm' . url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '"><img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . get_ulang() . '/pm.png" alt="" /></a>',
 						'U_ANCHOR' => $this->path . $vars_simple . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#m' . $row['idcom'],
 						'U_QUOTE' => $this->path . sprintf($this->vars, $row['idcom']) . '&amp;quote=' . $row['idcom'] . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '#anchor_' . $this->script
@@ -696,7 +693,7 @@ class Comments
 	    $l_com = ($nbr_com > 1) ? $LANG['com_s'] : $LANG['com'];
 	    $l_com = !empty($nbr_com) ? $l_com . ' (' . $nbr_com . ')' : $LANG['post_com'];
 	
-	    $link_pop = "javascript:popup('" . HOST . DIR . url('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "&path_to_root=" . PATH_TO_ROOT . "', '" . $script . "')";
+	    $link_pop = "javascript:popup('" . HOST . DIR . url('/kernel/framework/ajax/pop_up_comments.php?com=' . $idprov . $script) . "', '" . $script . "')";
 	    $link_current = $path . '#anchor_' . $script;
 	
 	    $link .= '<a class="com" href="' . (($CONFIG['com_popup'] == '0') ? $link_current : $link_pop) . '">' . $l_com . '</a>';
