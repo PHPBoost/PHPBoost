@@ -12,7 +12,7 @@ ALTER TABLE `phpboost_download` ADD `force_download` tinyint(1) NOT NULL AFTER `
 ALTER TABLE `phpboost_download` ADD FULLTEXT (`title`);
 ALTER TABLE `phpboost_download` ADD FULLTEXT (`contents`);
 ALTER TABLE `phpboost_download` ADD FULLTEXT (`short_contents`);
-
+UPDATE `phpboost_download` SET approved = 1;
 
 ALTER TABLE `phpboost_download_cat` CHANGE `class` `c_order` int(11) NOT NULL DEFAULT '0';
 ALTER TABLE `phpboost_download_cat` CHANGE `contents` `contents` text;

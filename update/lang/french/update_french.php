@@ -56,6 +56,7 @@ $LANG['query_sent'] = 'Requête envoyée au serveur, attente d\'une réponse';
 $LANG['query_processing'] = 'Traitement de la requête en cours';
 $LANG['query_success'] = 'Traitement terminé';
 $LANG['query_failure'] = 'Traitement échoué';
+$LANG['root'] = 'Racine';
 
 //Introduction
 $LANG['intro_title'] = 'Bienvenue dans l\'assistant de mise à jour de PHPBoost';
@@ -142,7 +143,7 @@ $LANG['already_installed_overwrite'] = 'Je souhaite écraser l\'mise à jour de PH
 $LANG['db_update'] = 'Mise à jour du site';
 $LANG['db_update_explain'] = 'Cette étape va convertir votre site PHPBoost 2.0 vers PHPBoost 3.0.
 <br /><br />
-Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de donnnées au préalable !';
+Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !';
 
 
 //configuraton du site

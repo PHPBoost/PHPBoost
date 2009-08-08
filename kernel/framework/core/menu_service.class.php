@@ -508,7 +508,7 @@ class MenuService
             // Check the mini module file
             if (file_exists(PATH_TO_ROOT . '/' . $module . '/' . $filename))
             {
-                $file = split('\.', $filename, 2);
+                $file = explode('\.', $filename, 2);
                 if (!is_array($file) || count($file) < 1)
                 {
                     continue;

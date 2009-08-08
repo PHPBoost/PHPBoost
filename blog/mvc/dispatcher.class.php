@@ -88,7 +88,7 @@ class Dispatcher
 		}
 		if (strpos($url, '?') !== false)
 		{
-			$exploded = split('\?', $url, 2);
+			$exploded = explode('\?', $url, 2);
 			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $exploded[0] . '&amp;' . $exploded[1]);
 		}
 		return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);

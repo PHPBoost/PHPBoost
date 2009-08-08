@@ -26,9 +26,9 @@
 ###################################################*/
 
 //A personnaliser
-define('UPDATE_VERSION', '3.0b');
-define('DEFAULT_LANGUAGE', 'french');
-define('DEFAULT_THEME', 'base');
+define('UPDATE_VERSION', '3.0');
+define('DEFAULT_LANGUAGE_UPDATE', 'french');
+define('DEFAULT_THEME_UPDATE', 'base');
 define('STEPS_NUMBER', 6);
 define('STEP_INTRODUCTION', 1);
 define('STEP_SERVER_CONFIG', 2);
@@ -49,7 +49,17 @@ header('Pragma: no-cache');
 //Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+
+import('core/errors');
 import('io/template');
+import('db/mysql');
+import('core/cache');
+import('members/session');
+import('members/user');
+import('members/groups');
+import('members/authorizations');
+import('core/breadcrumb');
+import('content/parser/content_formatting_factory');
 
 @error_reporting(ERROR_REPORTING);
 
@@ -62,20 +72,19 @@ define('SID', '');
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
 
-$lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
+$lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE_UPDATE);
 
 //Inclusion du fichier langue
-include_once('lang/' . DEFAULT_LANGUAGE . '/update_' . DEFAULT_LANGUAGE . '.php');
+include_once('lang/' . DEFAULT_LANGUAGE_UPDATE . '/update_' . DEFAULT_LANGUAGE_UPDATE . '.php');
 
 //Création de l'utilisateur
-import('members/user');
 $user_data = array(
     'm_user_id' => 1,
     'login' => 'login',
     'level' => ADMIN_LEVEL,
     'user_groups' => '',
     'user_lang' => $lang,
-    'user_theme' => DEFAULT_THEME,
+    'user_theme' => DEFAULT_THEME_UPDATE,
     'user_mail' => '',
     'user_pm' => 0,
     'user_editor' => 'bbcode',
@@ -98,7 +107,7 @@ if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') |
 function add_lang($url, $header_location = false)
 {
 	global $lang;
-	if ($lang != DEFAULT_LANGUAGE)
+	if ($lang != DEFAULT_LANGUAGE_UPDATE)
 	{
 		if (strpos($url, '?') !== false)
 		{
@@ -264,8 +273,6 @@ switch($step)
             switch ($result)
             {
                 case DB_CONFIG_SUCCESS:
-                    import('core/errors');
-                    import('core/cache');
                     $Errorh = new Errors;
 
 					$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
@@ -387,14 +394,11 @@ switch($step)
         {
 			import('io/filesystem/folder');
 			$cache_folder_path = new Folder('../cache/');
-			foreach($cache_folder_path->get_files('`\.php$`')as $image)
+			foreach($cache_folder_path->get_files('`\.php$`')as $cache)
 			{
-				$image->delete();
+				$cache->delete();
 			}
 
-			import('core/errors');
-			import('db/mysql');
-			import('core/cache');
 			$Errorh = new Errors;
 			$Sql = new Sql();
 			
@@ -403,6 +407,15 @@ switch($step)
 			$Sql->connect($sql_host, $sql_login, $sql_pass, $sql_base, ERRORS_MANAGEMENT_BY_RETURN);
 			
 			$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
+			
+			$MODULES = array();
+			$query = "SELECT name
+            FROM " . DB_TABLE_MODULES;
+			$result = $Sql->query_while ($query, __LINE__, __FILE__);
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$MODULES[$row['name']] = true;
+			}
 			
 			//On parse le fichier de mise à jour de la structure de la base de données
 			$Sql->parse('migration_2.0_to_3.0.sql');
@@ -417,6 +430,17 @@ switch($step)
 			{	
 				$Sql->parse('migration_download_2.0_to_3.0.sql');
 				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (9, 'download', 'a:5:{s:12:\"nbr_file_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:13:\"root_contents\";s:50:\"Bienvenue dans l''espace de téléchargement du site!\";s:11:\"global_auth\";a:3:{s:3:\"r-1\";i:1;s:2:\"r0\";i:5;s:2:\"r1\";i:7;}}')", __LINE__, __FILE__);
+				
+				//Récomptage du nombre de fichier
+				$Cache = new Cache;
+				$Cache->Generate_module_file('download');
+	
+				include_once(PATH_TO_ROOT.'/download/download_auth.php');
+				$Cache->load('download');
+				include_once(PATH_TO_ROOT.'/download/download_cats.class.php');
+				
+				$download_categories = new DownloadCats();
+				$download_categories->Recount_sub_files();
 			}
 			if (isset($MODULES['poll']))
 			{	
@@ -502,6 +526,14 @@ switch($step)
 				$Sql->query_inject("INSERT INTO `phpboost_configs` (`id`, `name`, `value`) VALUES (18, 'pages', 'a:3:{s:10:\"count_hits\";i:1;s:9:\"activ_com\";i:1;s:4:\"auth\";s:59:\"a:4:{s:3:\"r-1\";i:5;s:2:\"r0\";i:7;s:2:\"r1\";i:7;s:2:\"r2\";i:7;}\";}')", __LINE__, __FILE__);
 			}
 
+			//Installation de modules modules
+			import('modules/packages_manager');
+			PackagesManager::install_module('connect', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('database', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('faq', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('media', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			PackagesManager::install_module('search', true, DO_NOT_GENERATE_CACHE_AFTER_THE_OPERATION);
+			
 			//Fermeture de la connexion BDD
 			$Sql->close();
 			
@@ -558,10 +590,10 @@ switch($step)
             $CONFIG['start'] = time();
             $CONFIG['version'] = UPDATE_VERSION;
             $CONFIG['lang'] = $lang;
-            $CONFIG['theme'] = DEFAULT_THEME;
+            $CONFIG['theme'] = DEFAULT_THEME_UPDATE;
             $CONFIG['editor'] = 'bbcode';
             $CONFIG['timezone'] = $site_timezone;
-            $CONFIG['start_page'] = './index.php';
+            $CONFIG['start_page'] = '/index.php';
             $CONFIG['maintain'] = 0;
             $CONFIG['maintain_delay'] = 1;
             $CONFIG['maintain_display_admin'] = 1;
@@ -604,7 +636,6 @@ switch($step)
             $Sql->query_inject("INSERT INTO " . DB_TABLE_THEMES . " (theme, activ, secure, left_column, right_column) VALUES ('" . strprotect($CONFIG['theme']) . "', 1, -1, '" . $info_theme['left_column'] . "', '" . $info_theme['right_column'] . "')", __LINE__, __FILE__);
             
             //On génère le cache
-            include '../kernel/framework/core/cache.class.php';
             include '../lang/' . $lang . '/main.php';
             $Cache = new Cache;
             
@@ -620,6 +651,13 @@ switch($step)
             MenuService::change_position($modules_menu, -$modules_menu->get_block_position());
             MenuService::save($modules_menu);
             
+			// Try to find out new mini-modules and delete old ones
+			MenuService::update_mini_modules_list(false);
+			// The same with the mini menus
+			MenuService::update_mini_menus_list();
+
+			$Sql->query_inject("UPDATE ".DB_TABLE_MENUS." SET enabled = 1", __LINE__, __FILE__);
+			
             $Cache->generate_all_files();
             
             $Cache->load('themes', RELOAD_CACHE);
@@ -663,7 +701,7 @@ switch($step)
         }
             
         $template->assign_vars(array(
-            'IMG_THEME' => DEFAULT_THEME,
+            'IMG_THEME' => DEFAULT_THEME_UPDATE,
             'U_PREVIOUS_STEP' => add_lang('update.php?step=4'),
             'U_CURRENT_STEP' => add_lang('update.php?step=5'),
             'L_SITE_CONFIG' => $LANG['site_config_title'],
@@ -692,7 +730,6 @@ switch($step)
         require_once('functions.php');
         load_db_connection();
         
-        import('core/cache');
         $Cache = new Cache;
         $Cache->load('config');
         $Cache->load('modules');
