@@ -170,7 +170,7 @@ class ContentFormattingFactory
                 return new BBCodeEditor();
             case TINYMCE_LANGUAGE:
                 import('content/editor/bbcode_editor');
-                return new BBCodeEditor();
+                return new TinyMCEEditor();
             default:
                 if ($this->get_user_editor() == TINYMCE_LANGUAGE)
                 {

@@ -1,4 +1,4 @@
-mvcimport('mvc/dao/mysql_dao');
+import('mvc/dao/mysql_dao');
 class {CLASSNAME}MySQLDAO extends MySQLDAO
 {
     public function __construct($model)

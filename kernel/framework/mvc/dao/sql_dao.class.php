@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/dao');
+import('mvc/dao/dao');
 
 abstract class SQLDAO extends DAO
 {

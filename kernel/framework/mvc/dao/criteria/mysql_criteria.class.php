@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/criteria/sql_criteria');
-mvcimport('mvc/dao/criteria/restriction/mysql_restriction');
+import('mvc/dao/criteria/sql_criteria');
+import('mvc/dao/criteria/restriction/mysql_restriction');
 
 class MySQLCriteria extends SQLCriteria
 {

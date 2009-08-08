@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-mvcimport('mvc/controller');
+import('mvc/controller');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -88,7 +88,7 @@ class Dispatcher
 		}
 		if (strpos($url, '?') !== false)
 		{
-			$exploded = explode('\?', $url, 2);
+			$exploded = explode('?', $url, 2);
 			return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $exploded[0] . '&amp;' . $exploded[1]);
 		}
 		return new Url($dispatcher_url->relative() . '/?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);

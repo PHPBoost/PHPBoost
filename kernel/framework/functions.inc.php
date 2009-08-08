@@ -1187,6 +1187,7 @@ function get_uid()
 }
 
 define('CLASS_IMPORT', '.class.php');
+define('INTERFACE_IMPORT', '.int.php');
 define('INC_IMPORT', '.inc.php');
 define('LIB_IMPORT', '.lib.php');
 
@@ -1247,6 +1248,17 @@ function of_class(&$object, $classname)
 
 	return strtolower(get_class($object)) == strtolower($classname) ||
 	is_subclass_of(strtolower(get_class($object)), strtolower($classname));
+}
+
+/**
+ * @desc Returns true if the object $object implements the interface named $interface_name
+ * @param object $object the object
+ * @param string $interface_name the interface
+ * @return boolean true if the object $object implements the interface named $interface_name
+ */
+function implements_interface($class, $interface_name)
+{
+    return in_array($interface_name, class_implements($class));
 }
 
 /**

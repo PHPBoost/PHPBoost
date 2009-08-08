@@ -1,7 +1,7 @@
 <?php
 
 import('util/date');
-mvcimport('mvc/abstract_dao_object');
+import('mvc/abstract_dao_object');
 
 mimport('blog/models/dao/blog_post_dao');
 

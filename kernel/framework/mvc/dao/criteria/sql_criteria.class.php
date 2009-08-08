@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           sql_restriction.class.php
+ *                           sql_criteria.class.php
  *                            -------------------
  *   begin                : June 13 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,31 +25,47 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/criteria/restriction/irestriction', INTERFACE_IMPORT);
-mvcimport('mvc/dao/criteria/restriction/irestriction', INTERFACE_IMPORT);
+import('mvc/dao/criteria/icriteria', INTERFACE_IMPORT);
 
-abstract class SQLRestriction implements IRestriction
+abstract class SQLCriteria implements ICriteria
 {
-	public function __construct($criteria)
-	{
-        $this->criteria = $criteria;		
-	}
-	
-	public function value($field_or_value)
+    public function __construct($model, $connection)
     {
-        if ($field_or_value instanceof ModelField)
-        {
-        	$this->criteria->add_external_table($field_or_value->table());
-            return $field_or_value->name();
-        }
-        else
-        {
-            return $this->escape($field_or_value);
-        }
+        $this->model = $model;
+        $this->connection = $connection;
+        $this->order_by = $model->primary_key()->name();
+        $this->tables[] = $this->model->table();
+    }
+
+    public function add($restriction)
+    {
+        $this->restrictions[] = $restriction;
     }
     
-    abstract protected static function escape($value); 
-    
-    private $criteria;
+    public function add_external_field($external_field)
+    {
+    	$this->extra_fields[] = $extra_field;
+    }
+    public function add_external_table($table_name)
+    {
+    	if (!in_array($table_name, $this->tables))
+    	{
+    	   $this->tables[] = $table_name;
+    	}
+    }
+
+    protected function fields($fields_options = null)
+    {
+        return '*';
+    }
+
+    protected $model;
+    protected $restrictions = array();
+    protected $offset = 0;
+    protected $max_results = 100;
+    protected $order_by;
+    protected $way = ICriteria::ASC;
+    protected $extra_fields = array();
+    protected $tables = array();
 }
 ?>

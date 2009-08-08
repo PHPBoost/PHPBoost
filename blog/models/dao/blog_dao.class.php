@@ -27,7 +27,7 @@
 
 define('BLOG_DAO__CLASS','blog_dao');
 
-mvcimport('mvc/dao/abstract_dao');
+import('mvc/dao/abstract_dao');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
