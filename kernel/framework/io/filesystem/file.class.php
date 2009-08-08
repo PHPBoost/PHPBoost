@@ -258,7 +258,7 @@ class File extends FileSystemElement
 			$this->open();
 		}
 
-		return flock($this->fd, LOCK_EX, $blocking);
+		return @flock($this->fd, LOCK_EX, $blocking);
 	}
 
 	/**
@@ -271,7 +271,7 @@ class File extends FileSystemElement
 			$this->open();
 		}
 
-		return flock($this->fd, LOCK_UN);
+		return @flock($this->fd, LOCK_UN);
 	}
 
 	/**
