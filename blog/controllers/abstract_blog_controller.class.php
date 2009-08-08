@@ -26,7 +26,7 @@
  ###################################################*/
 
 import('io/template');
-mvcimport('mvc/controller');
+import('mvc/controller');
 import('modules/modules_discovery_service');
 
 class AbstractBlogController extends AbstractController

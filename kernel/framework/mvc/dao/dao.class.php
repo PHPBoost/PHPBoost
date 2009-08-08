@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                        dao_builder_factory.class.php
+ *                           dao.class.php
  *                            -------------------
  *   begin                : June 13 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,15 +25,21 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/builder/sql_dao_builder');
+import('mvc/dao/idao', INTERFACE_IMPORT);
+import('mvc/model');
 
-class DAOBuilderFactory
+abstract class DAO implements IDAO
 {
-	public static function get_sql_dao($model, $cache = SQLDAOBuilder::cache_path)
+	public function __construct($model)
 	{
-		mvcimport('mvc/dao/builder/mysql_dao_builder');
-		$sql_dao_builder = new MySQLDAOBuilder($model, $cache);
-		return $sql_dao_builder->dao_instance();
+		$this->model = $model;
 	}
+	
+	public function get_model()
+	{
+		return $this->model;
+	}
+	
+	protected $model;
 }
 ?>

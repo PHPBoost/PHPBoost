@@ -1,6 +1,6 @@
 <?php
 
-mvcimport('mvc/dao/abstract_dao');
+import('mvc/dao/abstract_dao');
 
 class BlogPostDAO extends AbstractDAO
 {

@@ -32,7 +32,7 @@ require_once PATH_TO_ROOT . '/kernel/begin.php';
 // TODO remove this line (content will be in functions.inc.php already imported in begin.php
 require_once PATH_TO_ROOT . '/blog/func.inc.php';
 
-mvcimport('mvc/dispatcher');
+import('mvc/dispatcher');
 mimport('blog/controllers/blog_controller');
 mimport('blog/controllers/blog_post_controller');
 

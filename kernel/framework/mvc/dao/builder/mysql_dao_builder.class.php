@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           mysql_dao.class.php
+ *                           mysql_dao_builder.class.php
  *                            -------------------
  *   begin                : June 13 2009
  *   copyright            : (C) 2009 Loïc Rouchon
@@ -25,39 +25,39 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/sql_dao');
-mvcimport('mvc/dao/criteria/mysql_criteria');
+import('mvc/dao/builder/sql_dao_builder');
 
-abstract class MySQLDAO extends SQLDAO
+class MySQLDAOBuilder extends SQLDAOBuilder
 {
-	public function __construct($model)
-	{
-		parent::__construct($model);
-	}
-	
-	public function find_by_criteria($criteria, $start = 0, $max_results = 100)
-	{
-		$criteria->set_offset($start);
-		$criteria->set_max_results($max_results);
-		return $criteria->results_list();
-	}
+    public function __construct($model, $cache_path = SQLDAOBuilder::cache_path)
+    {
+        parent::__construct($model, $cache_path);
+    }
 
-	public function create_criteria()
-	{
-		return new MySQLCriteria($this->model);
-	}
-
-	public static function escape($value)
-	{
-		if ($value === null)
-		{
-			return 'NULL';
-		}
-		if (!MAGIC_QUOTES)
-		{
-			return '\'' . addslashes($value) . '\'';
-		}
-		return '\'' . $value . '\'';
-	}
+    protected function cache_classname()
+    {
+        return $this->model->name() . 'MySQLDAO';	
+    }
+    
+    protected function get_template_filename()
+    {
+    	return self::$template_filename;
+    }
+    protected function generate_content()
+    {
+    	$tpl = parent::generate_content($this->get_template_filename());
+    	$clauses = $this->model->joins();
+    	$join_clause = array();
+    	foreach ($clauses as $left_key => $right_field)
+    	{
+    	   $join_clause[] = $left_key . '=' . $right_field;
+    	}
+    	$tpl->assign_vars(array(
+            'TABLES_NAMES' => implode(',', $this->model->used_tables()),
+            'JOIN_CLAUSE' => implode(' AND ', $join_clause)
+    	));
+    	return $tpl->parse(TEMPLATE_STRING_MODE);
+    }
+    private static $template_filename = 'mysql_dao_builder';
 }
 ?>

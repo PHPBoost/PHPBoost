@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/builder/idao_builder', INTERFACE_IMPORT);
+import('mvc/dao/builder/idao_builder', INTERFACE_IMPORT);
 
 abstract class SQLDAOBuilder implements IDAOBuilder
 {
@@ -101,6 +101,7 @@ abstract class SQLDAOBuilder implements IDAOBuilder
 	{
 		$classname = $this->cache_classname();
 		$cache_file_path = $this->full_file_path();
+		
 		if (!file_exists($cache_file_path) ||
 		@filemtime(PATH_TO_ROOT . self::get_tpl_full_path($this->get_template_filename())) > @filemtime($cache_file_path) ||
 		@filesize($cache_file_path) === 0)
@@ -128,7 +129,7 @@ abstract class SQLDAOBuilder implements IDAOBuilder
 	protected $model;
 	private $cache_path;
 
-	const cache_path = '/blog/mvc/cache/';
-	const class_tpl_path = '/blog/mvc/dao/builder/';
+	const cache_path = '/kernel/framework/mvc/cache/';
+	const class_tpl_path = '/kernel/framework/mvc/dao/builder/';
 }
 ?>

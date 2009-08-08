@@ -25,8 +25,8 @@
  *
  ###################################################*/
 
-mvcimport('mvc/dao/dao');
-mvcimport('mvc/dao/builder/dao_builder_factory');
+import('mvc/dao/dao');
+import('mvc/dao/builder/dao_builder_factory');
 
 abstract class AbstractDAO extends DAO
 {

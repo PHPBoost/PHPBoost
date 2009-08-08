@@ -25,9 +25,9 @@
  *
  ###################################################*/
 
-mvcimport('mvc/model_field');
-mvcimport('mvc/dao/abstract_dao');
-mvcimport('mvc/exceptions');
+import('mvc/model_field');
+import('mvc/dao/abstract_dao');
+import('mvc/exceptions');
 
 class Model
 {
