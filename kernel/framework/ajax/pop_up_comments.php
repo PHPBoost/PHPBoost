@@ -44,10 +44,10 @@ if (!empty($_GET['com']))
 
     import('content/comments');
     $Comments = new Comments($array_get[2], $array_get[1], url('?com=' . $array_get[1] . $array_get[2] . '%s', ''), $array_get[2]);
-    $Comments->set_arg($idcom, PATH_TO_ROOT . '/kernel/framework/ajax/pop_up_comments.php'); //On met à jour les attributs de l'objet.
+    $Comments->set_arg($idcom, HOST . DIR . '/kernel/framework/ajax/pop_up_comments.php'); //On met à jour les attributs de l'objet.
 
     //On affiche les commentaires
-    echo $Comments->display(POP_UP_WINDOW, null, retrieve(REQUEST, 'path_to_root', TSTRING_UNCHANGE));
+    echo $Comments->display(POP_UP_WINDOW, null, '');
 }
 
 include_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
