@@ -55,5 +55,5 @@
 			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a>
 			&nbsp;&nbsp;&nbsp;
 		</p>
-		# END ENDIF #
+		# ENDIF #
 		
