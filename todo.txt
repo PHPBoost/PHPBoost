@@ -4,6 +4,8 @@
 
 ------------------------------------- NOYAU ------------------------------------
 
+Ajouter dans l'administration la liste des hôtes autororisés pour le proxy
+
 ------------------------------------ MODULES -----------------------------------
 
 
