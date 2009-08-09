@@ -163,7 +163,7 @@ class MediaInterface extends ModuleInterface
             f.id AS id_content,
             f.name AS title,
             ( 2 * MATCH(f.name) AGAINST('" . $args['search'] . "') + MATCH(f.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-            . $Sql->concat("'../media/media.php?id='","f.idcat","'&amp;name='","f.id","'#q'","f.id") . " AS link
+            . $Sql->concat("'../media/media.php?id='","f.id","'&amp;cat='","f.idcat") . " AS link
             FROM " . PREFIX . "media f
             WHERE ( MATCH(f.name) AGAINST('" . $args['search'] . "') OR MATCH(f.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
             . " ORDER BY relevance DESC " . $Sql->limit(0, MEDIA_MAX_SEARCH_RESULTS);
