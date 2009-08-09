@@ -58,7 +58,7 @@ class DownloadCats extends CategoriesManager
 		
 		$Cache->Generate_module_file('download', RELOAD_CACHE);
 		
-		$this->Recount_sub_files();
+		$this->recount_sub_files();
 	}
 	
 	//Method which deletes a category and move its content in another category
@@ -81,7 +81,7 @@ class DownloadCats extends CategoriesManager
 		
 		$Sql->query_inject("UPDATE " . PREFIX . "download SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
-		$this->Recount_sub_files();
+		$this->recount_sub_files();
 		
 		return true;
 	}
@@ -119,7 +119,7 @@ class DownloadCats extends CategoriesManager
 				else
 				{
 					$Cache->load('download', RELOAD_CACHE);
-					$this->Recount_sub_files(NOT_CACHE_GENERATION);
+					$this->recount_sub_files(NOT_GENERATE_CACHE);
 				}
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "download_cat SET name = '" . $name . "', icon = '" . $icon . "', contents = '" . $description . "', auth = '" . $auth . "', visible = '" . (int)$visible . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
@@ -136,7 +136,7 @@ class DownloadCats extends CategoriesManager
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 		if ($result)
-			$this->Recount_sub_files();
+			$this->recount_sub_files();
 		return $result;
 	}
 	
@@ -193,7 +193,7 @@ class DownloadCats extends CategoriesManager
 	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE);
-		$this->Recount_sub_files(NOT_GENERATE_CACHE);
+		$this->recount_sub_files(NOT_GENERATE_CACHE);
 		return $result;
 	}
 	
