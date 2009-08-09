@@ -182,7 +182,7 @@ class WikiInterface extends ModuleInterface
 		global $LANG, $Sql;
 
 		import('content/syndication/feeds_list');
-		$cats_tree = new FeedsCat('news', 0, $LANG['root']);
+		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
 
 		$result = $Sql->query_while("SELECT c.id, c.id_parent, a.title
             FROM " . PREFIX . "wiki_cats c, " . PREFIX . "wiki_articles a

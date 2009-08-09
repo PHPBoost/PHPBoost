@@ -8,7 +8,7 @@
  *
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 define('PATH_TO_ROOT', '../..');
 require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
@@ -41,38 +41,38 @@ $action_post = retrieve(POST, 'action', '');
 
 if ($action_post == 'save')
 {
-    // Save a Menu (New / Edit)
-    $menu = null;
-    
-    $menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
-    $menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
-    $matches = array();
-    preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
-    
-    if (!empty($id_post))
-    {   // Edit the Menu
-        $menu = MenuService::load($id_post);
-        $menu->set_title($menu_name);
-        $menu->set_module_id($matches[1]);
-        $menu->set_cat($matches[2]);
-        $menu->set_name($matches[3]);
-    }
-    else
-    {   // Add the new Menu
-        $menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3]);
-    }
-    
-    if (!of_class($menu, FEED_MENU__CLASS))
-        redirect('menus.php');
-    
-    $menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
-    if ($menu->is_enabled())
-        $menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
-    $menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
-    
-    MenuService::save($menu);
-    MenuService::generate_cache();
-	
+	// Save a Menu (New / Edit)
+	$menu = null;
+
+	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
+	$menu_url = retrieve(POST, 'feed_url', '', TSTRING_UNCHANGE);
+	$matches = array();
+	preg_match('`syndication\.php\?m=(.+)&cat=([0-9]+)&name=(.+)`', $menu_url, $matches);
+
+	if (!empty($id_post))
+	{   // Edit the Menu
+		$menu = MenuService::load($id_post);
+		$menu->set_title($menu_name);
+		$menu->set_module_id($matches[1]);
+		$menu->set_cat($matches[2]);
+		$menu->set_name($matches[3]);
+	}
+	else
+	{   // Add the new Menu
+		$menu = new FeedMenu($menu_name, $matches[1], $matches[2], $matches[3]);
+	}
+
+	if (!of_class($menu, FEED_MENU__CLASS))
+	redirect('menus.php');
+
+	$menu->enabled(retrieve(POST, 'activ', MENU_NOT_ENABLED));
+	if ($menu->is_enabled())
+	$menu->set_block(retrieve(POST, 'location', BLOCK_POSITION__NOT_ENABLED));
+	$menu->set_auth(Authorizations::build_auth_array_from_form(AUTH_MENUS));
+
+	MenuService::save($menu);
+	MenuService::generate_cache();
+
 	redirect('menus.php#m' . $id_post);
 }
 
@@ -109,27 +109,27 @@ $tpl->assign_vars(array(
 //Localisation possibles.
 $block = BLOCK_POSITION__HEADER;
 $array_location = array(
-    BLOCK_POSITION__HEADER => $LANG['menu_header'],
-    BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
-    BLOCK_POSITION__LEFT => $LANG['menu_left'],
-    BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
-    BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
-    BLOCK_POSITION__RIGHT => $LANG['menu_right'],
-    BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
-    BLOCK_POSITION__FOOTER => $LANG['menu_footer']
+BLOCK_POSITION__HEADER => $LANG['menu_header'],
+BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
+BLOCK_POSITION__LEFT => $LANG['menu_left'],
+BLOCK_POSITION__TOP_CENTRAL => $LANG['menu_top_central'],
+BLOCK_POSITION__BOTTOM_CENTRAL => $LANG['menu_bottom_central'],
+BLOCK_POSITION__RIGHT => $LANG['menu_right'],
+BLOCK_POSITION__TOP_FOOTER => $LANG['menu_top_footer'],
+BLOCK_POSITION__FOOTER => $LANG['menu_footer']
 );
 
 $feed_url = '';
 if ($edit)
 {
 	$menu = MenuService::load($id);
-	
-    if (!of_class($menu, FEED_MENU__CLASS))
-        redirect('menus.php');
-    
+
+	if (!of_class($menu, FEED_MENU__CLASS))
+	redirect('menus.php');
+
 	$block = $menu->get_block();
 	$feed_url = $menu->get_url(true);
-	
+
 	$tpl->assign_vars(array(
 		'IDMENU' => $id,
 		'NAME' => $menu->get_title(),
@@ -140,11 +140,11 @@ if ($edit)
 }
 else
 {
-    $tpl->assign_vars(array(
+	$tpl->assign_vars(array(
    	    'C_NEW' => true,
         'C_ENABLED' => true,
         'AUTH_MENUS' => Authorizations::generate_select(AUTH_MENUS, array(), array(-1 => true, 0 => true, 1 => true, 2 => true))
-    ));
+	));
 }
 
 import('util/url');
@@ -158,30 +158,30 @@ function build_feed_urls($elts, $module_id, &$feed_type, $level = 0)
 	$urls = array();
 	global $edit, $feed_url;
 	static $already_selected = false;
-	
+
 	foreach ($elts as $elt)
 	{
-    	$url = $elt->get_url($feed_type);
-    	
-    	if (!$already_selected && $edit && $feed_url == $url)
-    	{
-    		$selected = true;
-    		$already_selected = true;
-    	}
-    	else
-    	{
-    		$selected = false;
-    	}
-    	
-    	$urls[] = array(
+		$url = $elt->get_url($feed_type);
+		 
+		if (!$already_selected && $edit && $feed_url == $url)
+		{
+			$selected = true;
+			$already_selected = true;
+		}
+		else
+		{
+			$selected = false;
+		}
+		 
+		$urls[] = array(
     		'name' => $elt->get_category_name(),
     		'url' => $url,
     		'level' => $level,
     		'feed_name' => $feed_type,
     		'selected' => $selected
-    	);
-    	
-    	$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, $level + 1));
+		);
+		 
+		$urls = array_merge($urls, build_feed_urls($elt->get_children(), $module_id, $feed_type, $level + 1));
 	}
 	return $urls;
 }
@@ -201,29 +201,31 @@ foreach ($sorted_modules as $module)
 	$urls = array();
 	foreach ($list as $feed_type => $elt)
 	{
-	    $urls[] = build_feed_urls(array($elt), $module->get_id(), $feed_type);
+		$urls[] = build_feed_urls(array($elt), $module->get_id(), $feed_type);
 	}
 
 	$root_feed_url = $urls[0][0]['url'];
 	$tpl->assign_block_vars('modules', array('NAME' => $module->get_name(), 'URL' => $root_feed_url));
 	foreach ($urls as $url_type)
 	{
-	    foreach ($url_type as $url)
-	    {
-	        $tpl->assign_block_vars('modules.feeds_urls', array(
+		foreach ($url_type as $url)
+		{
+			$tpl->assign_block_vars('modules.feeds_urls', array(
     			'URL' => $url['url'],
     			'NAME' => $url['name'],
     			'SPACE' => '--' . str_repeat('------', $url['level']),
     			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
     			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-    		));
-	    }
+    			));
+		}
 	}
 }
 
 $locations = '';
 foreach ($array_location as $key => $name)
-    $locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+{
+	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
+}
 
 $tpl->assign_vars(array('LOCATIONS' => $locations));
 $tpl->parse();
