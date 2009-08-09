@@ -43,7 +43,7 @@ class Repository
 		$this->url = $url;
 		if (function_exists('simplexml_load_file'))
 		{
-			$this->xml = simplexml_load_file($this->url);
+			$this->xml = @simplexml_load_file($this->url);
 			if ($this->xml == false)
 			{
 				$this->xml = null;
