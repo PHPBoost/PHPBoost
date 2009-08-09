@@ -2,8 +2,6 @@ ALTER TABLE `phpboost_com` ADD `path` VARCHAR( 255 ) NOT NULL DEFAULT '' AFTER `
 ALTER TABLE `phpboost_com` ADD `user_ip` VARCHAR( 50 ) NOT NULL DEFAULT '' AFTER `path`; 
 ALTER TABLE `phpboost_com` CHANGE `contents` `contents` text; 
 
-DROP TABLE IF EXISTS `phpboost_compteur`;
-
 TRUNCATE `phpboost_themes`;
 
 TRUNCATE `phpboost_configs`;
