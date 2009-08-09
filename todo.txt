@@ -17,7 +17,7 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-
+- [color=red]Nouveauté:[/color] Interface de génération du titre/sous-titre (images ou texte) et du logo du site.
 ------------------------------------ MODULES -----------------------------------
 
 #################################################################################
@@ -48,6 +48,7 @@
 
 [b]Structure et fonctionnement:[/b]
 - [color=red]Nouveauté:[/color] Interface pour gérer intégralement la page de démarrage du site.
+- [color=red]Nouveauté:[/color] Interface de génération du titre/sous-titre (images ou texte) et du logo du site.
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail colaboratif.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un tpl à un menu.
 - [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
