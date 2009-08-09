@@ -49,6 +49,7 @@
 [b]Structure et fonctionnement:[/b]
 - [color=red]Nouveauté:[/color] Interface pour gérer intégralement la page de démarrage du site.
 - [color=red]Nouveauté:[/color] Pose de verrous sur les contenus lors de leur édition afin de faciliter le travail colaboratif.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un tpl à un menu.
 - [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
 - [color=red]Nouveauté:[/color] Possibilité d'associer un menu sur une catégorie/page donnée, une partie de site et non à l'ensemble.
 - [color=red]Nouveauté:[/color] Exportation en pdf (articles, wiki, pages).
@@ -56,18 +57,18 @@
 - [color=red]Nouveauté:[/color] Système de centralisation de mots clés, gestion de nuages de tags... A intégrer peut-être dans le module de recherche.
 - [color=red]Nouveauté:[/color] Nouvelle interface de déplacement des menus (drag and drop).
 - [color=red]Nouveauté:[/color] Nouvelle interface de déplacement les catégories (drag and drop).
-- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés.
+- [color=red]Nouveauté:[/color] Possibilité de créer des formulaires personnalisés avec contrôles sur les champs.
 - [color=red]Nouveauté:[/color] Interface de visualisation des valeurs des champs supplémentaires saisies par les membres.
 - [color=red]Nouveauté:[/color] Compression de la base de données à l'exportation, importation en fichier compressé ou non.
 - [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - [color=red]Nouveauté:[/color] Possibilité de mettre les champs à l'inscription en obligatoire.
-- [color=red]Nouveauté:[/color] Galerie d'avatar.
-- Possibilité d'envoyer des messages privés à tout les membres d'un groupe ou à tout les membres pour l'administrateur.
+- Possibilité d'envoyer des messages privés à tous les membres d'un groupe ou à tous les membres pour l'administrateur.
 - Possibilité de demander l'envoi d'un mail lors de l'envoi d'un mp.
 - Outils avancés de visualisation et gestion du cache.
 - Redimensionnement automatisé des avatars s'ils dépassent les dimensions maximales autorisées.
 - Ajout du tri sur les lettres de l'alphabet dans la liste des membres.
 - Etudier la possibilité de joindre les sessions et l'espace membre à un annuaire de type LDAP.
+- Ajout de l'upload d'images pour les groupes.
 
 
 [b]Forum[/b]
@@ -98,7 +99,7 @@
 - Possibilité de signaler les liens cassés.
 
 [b]Wiki:[/b]
-- [color=red]Nouveauté:[/color] Système d'enregistrement ligne par ligne des articles pour un encombrement réduit lors des éditions successives.
+- [color=red]Nouveauté:[/color] Système d'enregistrement des articles par différences, lignes par lignes pour un encombrement réduit lors des éditions successives.
 
 [b]Calendrier:[/b]
 - [color=red]Nouveauté:[/color] Possibilité d'ajouter des évenements sur plusieurs jours.
