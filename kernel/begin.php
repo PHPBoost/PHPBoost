@@ -173,7 +173,7 @@ if (isset($MODULES[MODULE_NAME]) )
 {
 	if ($MODULES[MODULE_NAME]['activ'] == 0 )
 	{
-		$Errorh->handler('e_uninstalled_module', E_USER_REDIRECT);
+		$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 	}
 	else if(!$User->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE)) //Accès non autorisé !
 	{
