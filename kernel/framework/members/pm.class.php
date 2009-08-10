@@ -194,7 +194,8 @@ class PrivateMsg
 		if (!empty($pm_max_id))
 		{
 			//Mise à jour de la conversation.
-			$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
+			$user_view_pm = $Sql->query("SELECT user_view_pm FROM " . DB_TABLE_PM_TOPIC . " WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_PM_TOPIC . "  SET nbr_msg = nbr_msg - 1, user_view_pm = '" . ($user_view_pm - 1) . "', last_user_id = '" . $pm_last_msg['user_id'] . "', last_msg_id = '" . $pm_max_id . "', last_timestamp = '" . $pm_last_msg['timestamp'] . "' WHERE id = '" . $pm_idconvers . "'", __LINE__, __FILE__);
 		
 			//Mise à jour du compteur de mp du destinataire.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET user_pm = user_pm - 1 WHERE user_id = '" . $pm_to . "'", __LINE__, __FILE__);
