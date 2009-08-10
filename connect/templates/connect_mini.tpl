@@ -70,17 +70,17 @@
 					# ENDIF #
 					
 					# IF C_MODERATOR_AUTH # 
-					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link">{L_MODO_PANEL}</a>&nbsp;
+					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/modo_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/moderation_panel.php" class="small_link">{L_MODO_PANEL}</a></li> 
 					# ENDIF #
 					
 					# IF C_UNREAD_CONTRIBUTION #
 						# IF C_KNOWN_NUMBER_OF_UNREAD_CONTRIBUTION #
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL} ({NUM_UNREAD_CONTRIBUTIONS})</a>&nbsp;
+							<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL} ({NUM_UNREAD_CONTRIBUTIONS})</a></li> 
 						# ELSE #
-							<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL}</a>&nbsp;
+							<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini_new.gif" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL}</a></li> 
 						# ENDIF #
 					# ELSE #
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL}</a>&nbsp;
+						<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/contribution_panel_mini.png" alt="" class="valign_middle" /> <a href="{PATH_TO_ROOT}/member/contribution_panel.php" class="small_link">{L_CONTRIBUTION_PANEL}</a></li> 
 					# ENDIF #
 					
 					<li><img src="{PATH_TO_ROOT}/templates/{THEME}/images/admin/home_mini.png" alt="" class="valign_middle" /> <a href="{U_DISCONNECT}" class="small_link">{L_DISCONNECT}</a></li>
