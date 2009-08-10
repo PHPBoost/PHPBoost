@@ -418,17 +418,17 @@ switch($step)
 			}
 			
 			//On parse le fichier de mise à jour de la structure de la base de données
-			$Sql->parse('migration_2.0_to_3.0.sql');
+			$Sql->parse('migration_2.0_to_3.0.sql', PREFIX);
 			
 			$Cache->load('modules'); //Cache des autorisations des modules
 			if (isset($MODULES['forum']))
 			{	
-				$Sql->parse('migration_forum_2.0_to_3.0.sql');
+				$Sql->parse('migration_forum_2.0_to_3.0.sql', PREFIX);
 				$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES (11, 'forum', 'a:15:{s:10:\"forum_name\";s:14:\"PHPBoost forum\";s:16:\"pagination_topic\";i:20;s:14:\"pagination_msg\";i:15;s:9:\"view_time\";i:2592000;s:11:\"topic_track\";i:40;s:9:\"edit_mark\";i:1;s:14:\"no_left_column\";i:0;s:15:\"no_right_column\";i:0;s:17:\"activ_display_msg\";i:1;s:11:\"display_msg\";s:21:\"[R&eacute;gl&eacute;]\";s:19:\"explain_display_msg\";s:26:\"Sujet r&eacute;gl&eacute;?\";s:23:\"explain_display_msg_bis\";s:30:\"Sujet non r&eacute;gl&eacute;?\";s:22:\"icon_activ_display_msg\";i:1;s:4:\"auth\";s:19:\"a:1:{s:2:\"r2\";i:7;}\";s:17:\"display_connexion\";i:0;}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['download']))
 			{	
-				$Sql->parse('migration_download_2.0_to_3.0.sql');
+				$Sql->parse('migration_download_2.0_to_3.0.sql', PREFIX);
 				$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES (9, 'download', 'a:5:{s:12:\"nbr_file_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:13:\"root_contents\";s:50:\"Bienvenue dans l''espace de téléchargement du site!\";s:11:\"global_auth\";a:3:{s:3:\"r-1\";i:1;s:2:\"r0\";i:5;s:2:\"r1\";i:7;}}')", __LINE__, __FILE__);
 				
 				//Récomptage du nombre de fichier
@@ -449,17 +449,17 @@ switch($step)
 			}
 			if (isset($MODULES['articles']))
 			{
-				$Sql->parse('migration_articles_2.0_to_3.0.sql');
+				$Sql->parse('migration_articles_2.0_to_3.0.sql', PREFIX);
 				$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES (6, 'articles', 'a:5:{s:16:\"nbr_articles_max\";i:10;s:11:\"nbr_cat_max\";i:10;s:10:\"nbr_column\";i:2;s:8:\"note_max\";i:5;s:9:\"auth_root\";s:59:\"a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:1;s:2:\"r2\";i:1;}\";}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['news']))
 			{
-				$Sql->parse('migration_news_2.0_to_3.0.sql');
+				$Sql->parse('migration_news_2.0_to_3.0.sql', PREFIX);
 				$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES (15, 'news', 'a:13:{s:4:\"type\";i:1;s:11:\"activ_pagin\";i:1;s:11:\"activ_edito\";i:1;s:15:\"pagination_news\";i:5;s:15:\"pagination_arch\";i:10;s:9:\"activ_com\";i:1;s:10:\"activ_icon\";i:1;s:14:\"display_author\";i:1;s:12:\"display_date\";i:1;s:8:\"nbr_news\";s:1:\"2\";s:10:\"nbr_column\";i:1;s:5:\"edito\";s:22:\"Bienvenue sur le site!\";s:11:\"edito_title\";s:22:\"Bienvenue sur le site!\";}')", __LINE__, __FILE__);
 			}
 			if (isset($MODULES['faq']))
 			{
-				$Sql->parse('migration_faq_2.0_to_3.0.sql');
+				$Sql->parse('migration_faq_2.0_to_3.0.sql', PREFIX);
 				$Sql->query_inject("INSERT INTO `" . PREFIX . "configs` (`id`, `name`, `value`) VALUES (10, 'faq', 'a:5:{s:8:\"faq_name\";s:12:\"FAQ PHPBoost\";s:8:\"num_cols\";i:4;s:13:\"display_block\";b:0;s:11:\"global_auth\";a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:3;s:2:\"r2\";i:3;}s:4:\"root\";a:3:{s:12:\"display_mode\";i:0;s:4:\"auth\";a:4:{s:3:\"r-1\";i:1;s:2:\"r0\";i:1;s:2:\"r1\";i:3;s:2:\"r2\";i:3;}s:11:\"description\";s:23:\"Bienvenue dans la FAQ !\";}}')", __LINE__, __FILE__);
 				
 			}
