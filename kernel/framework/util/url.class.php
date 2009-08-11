@@ -470,7 +470,7 @@ class Url
 		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
 		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
 		static $file_regex = '[a-z0-9-+_~:\.\%]+';
-		static $args_regex = '\?[a-z0-9-+=_~:&\.\?\'\%]+';
+		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-_~]+=[a-z0-9-_~]+)*)?';
 		static $anchor_regex = '\#[a-z0-9-_]+';
 
 		if ($forbid_js)
