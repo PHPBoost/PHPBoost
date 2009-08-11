@@ -367,7 +367,7 @@ else
 
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = new ContentFormattingFactory(BBCODE_LANGUAGE);
-$editor =& $content_editor->get_editor();
+$editor = $content_editor->get_editor();
 $editor->set_identifier('contents');
 	
 $Template->assign_vars(array(

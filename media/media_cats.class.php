@@ -29,7 +29,7 @@
 import('content/categories_manager');
 require_once('media_constant.php');
 
-// define('DO_NOT_GENERATE_CACHE', false);
+define('DO_NOT_GENERATE_CACHE', false);
 
 class MediaCats extends CategoriesManager
 {
@@ -147,7 +147,7 @@ class MediaCats extends CategoriesManager
 				else
 				{
 					$Cache->load('media', RELOAD_CACHE);
-					$this->recount_media_per_cat(NOT_CACHE_GENERATION);
+					$this->recount_media_per_cat(DO_NOT_GENERATE_CACHE);
 				}
 			}
 			

@@ -253,7 +253,7 @@ You asked a notify in case of answer on it.
 
 
 If you do not wish any more to be informed answers of this thread, click on the link below:
-' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
+[url]' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d[/url]
 
 ' . $CONFIG['sign'];
 
