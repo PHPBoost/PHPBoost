@@ -54,9 +54,9 @@ function gallery_mini($position, $block)
     	$CAT_GALLERY[0]['auth'] = $CONFIG_GALLERY['auth_root'];
     	//Vérification des autorisations.
     	$break = 0;
-    	foreach ($_array_random_pics as $key => $array_pics_info)
+    	foreach ($_array_random_pics as $array_pics_info)
     	{
-    		if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY))
+    		if ($User->check_auth($CAT_GALLERY[$_array_random_pics['idcat']]['auth'], READ_CAT_GALLERY))
     		{
     			$gallery_mini[] = $array_pics_info;
     			$break++;

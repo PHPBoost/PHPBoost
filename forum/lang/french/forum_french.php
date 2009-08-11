@@ -253,7 +253,7 @@ Vous avez demandé à être averti lors d\'une réponse à celui-ci.
 
 
 Si vous ne désirez plus être averti des réponses de ce sujet, cliquez sur le lien ci-dessous. 
-' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d
+[url]' . HOST . DIR . '/forum/action.php?ut=%d&trt=%d[/url]
 
 ' . $CONFIG['sign'];
 

@@ -55,7 +55,7 @@ class FaqCats extends CategoriesManager
 				$this->Delete_category_recursively($id_cat);
 		}
 		
-		$this->Recount_subquestions();
+		$this->recount_subquestions();
 	}
 	
 	//Method which deletes a category and move its content in another category
@@ -80,7 +80,7 @@ class FaqCats extends CategoriesManager
 		$max_q_order = $max_q_order > 0 ? $max_q_order : 1;
 		$Sql->query_inject("UPDATE " . PREFIX . "faq SET idcat = '" . $new_id_cat_content . "', q_order = q_order + " . $max_q_order . " WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 		
-		$this->Recount_subquestions();
+		$this->recount_subquestions();
 		
 		return true;
 	}
@@ -118,7 +118,7 @@ class FaqCats extends CategoriesManager
 				else
 				{
 					$Cache->load('faq', RELOAD_CACHE);
-					$this->Recount_subquestions(NOT_CACHE_GENERATION);
+					$this->recount_subquestions(DO_NOT_GENERATE_CACHE);
 				}
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
@@ -135,7 +135,7 @@ class FaqCats extends CategoriesManager
 	{
 		$result = parent::move_into_another($id, $new_id_cat, $position);
 		if ($result)
-			$this->Recount_subquestions();
+			$this->recount_subquestions();
 		return $result;
 	}
 	
@@ -143,7 +143,7 @@ class FaqCats extends CategoriesManager
 	function change_visibility($category_id, $visibility, $generate_cache = LOAD_CACHE)
 	{
 		$result = parent::change_visibility($category_id, $visibility, DO_NOT_LOAD_CACHE);
-		$this->Recount_subquestions($generate_cache);
+		$this->recount_subquestions($generate_cache);
 		return $result;
 	}
 	

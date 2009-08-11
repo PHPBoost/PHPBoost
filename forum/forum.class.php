@@ -87,7 +87,7 @@ class Forum
 
 			//Récupération des membres suivant le sujet.
 			$max_time = time() - $CONFIG['site_session_invit'];
-			$result = $Sql->query_while("SELECT m.user_id, m.user_mail, tr.pm, tr.mail, v.last_view_id
+			$result = $Sql->query_while("SELECT m.user_id, m.login, m.user_mail, tr.pm, tr.mail, v.last_view_id
 			FROM " . PREFIX . "forum_track tr
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id
 			LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = '" . $idtopic . "' AND v.user_id = tr.user_id
@@ -96,11 +96,11 @@ class Forum
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
-					$Mail->send_from_properties($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $User->get_attribute('login'), $title_subject, $pseudo, $preview_contents, $next_msg_link, $idtopic, 1), $CONFIG['mail_exp']);
+					$Mail->send_from_properties($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, $idtopic, 1), $CONFIG['mail_exp']);
 					
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
-					$Privatemsg->start_conversation($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $User->get_attribute('login'), $title_subject_pm, $pseudo_pm, $preview_contents, '[url]' . $next_msg_link . '[/url]', $idtopic, 2), '-1', SYSTEM_PM);
+					$Privatemsg->start_conversation($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', $idtopic, 2), '-1', SYSTEM_PM);
 			}
 				
 			forum_generate_feeds(); //Regénération du flux rss.
