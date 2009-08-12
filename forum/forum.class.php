@@ -96,11 +96,26 @@ class Forum
 			{
 				//Envoi un Mail à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['mail'] == '1')
-					$Mail->send_from_properties($row['user_mail'], $LANG['forum_mail_title_new_post'], sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, $idtopic, 1), $CONFIG['mail_exp']);
-					
+				{	
+					$Mail->send_from_properties(
+						$row['user_mail'], 
+						$LANG['forum_mail_title_new_post'], 
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject, $User->get_attribute('login'), $preview_contents, $next_msg_link, HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=1', 1), 
+						$CONFIG['mail_exp']
+					);
+				}	
+				
 				//Envoi un MP à ceux dont le last_view_id est le message précedent.
 				if ($row['last_view_id'] == $previous_msg_id && $row['pm'] == '1')
-					$Privatemsg->start_conversation($row['user_id'], addslashes($LANG['forum_mail_title_new_post']), sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', $idtopic, 2), '-1', SYSTEM_PM);
+				{
+					$Privatemsg->start_conversation(
+						$row['user_id'], 
+						addslashes($LANG['forum_mail_title_new_post']), 
+						sprintf($LANG['forum_mail_new_post'], $row['login'], $title_subject_pm, $User->get_attribute('login'), $preview_contents, '[url]'.$next_msg_link.'[/url]', '[url]' . HOST . DIR . '/forum/action.php?ut=' . $idtopic . '&trt=2[/url]'), 
+						'-1', 
+						SYSTEM_PM
+					);
+				}
 			}
 				
 			forum_generate_feeds(); //Regénération du flux rss.
