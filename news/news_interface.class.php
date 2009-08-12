@@ -228,7 +228,9 @@ class NewsInterface extends ModuleInterface
 			'PAGINATION' => $show_pagin,
 			'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 			'L_LAST_NEWS' => !$show_archive ? $LANG['last_news'] : $LANG['archive'],
-	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
+	        'L_EDIT' => $LANG['edit'],
+			'L_DELETE' => $LANG['delete'],
+			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 	        'THEME' => get_utheme(),
 		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 		));

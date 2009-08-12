@@ -76,7 +76,7 @@ elseif (!empty($idnews)) //On affiche la news correspondant à l'id envoyé.
 		'L_ALERT_DELETE_NEWS' => $LANG['alert_delete_news'],
 		'L_ON' => $LANG['on'],
 		'L_DELETE' => $LANG['delete'],
-		'L_EDIT' => $LANG['edit'],
+		'L_EDIT' => $LANG['edit']
 	));
 	
 	$tpl_news->assign_block_vars('news', array(
