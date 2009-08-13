@@ -87,6 +87,9 @@ class Gallery
 						$this->error = 'e_unabled_create_pics';
 				}
 				
+				ImageColorTransparent($thumbnail, imagecolorallocate($thumbnail, 0, 0, 0)); // make the new temp image all transparent
+				imagealphablending($thumbnail, false); // turn off the alpha blending to keep the alpha channel
+				
 				//Redimensionnement.
 				if (!function_exists('imagecopyresampled'))
 				{	
@@ -116,6 +119,9 @@ class Gallery
 	function Create_pics($thumbnail, $source, $path, $ext)
 	{
 		global $CONFIG_GALLERY;
+		
+		// Make the background transparent
+		imagecolortransparent($source, imagecolorallocate($source, 0, 0, 0));	
 		
 		$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 		if (function_exists('imagegif') && $ext === 'gif') 
