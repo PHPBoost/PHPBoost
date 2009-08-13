@@ -964,6 +964,7 @@ function delete_file($file)
  */
 function pages_displayed($no_update = false)
 {
+	$data = array();
 	if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+'))
 	{
 		$hour = gmdate_format('G');
