@@ -43,15 +43,22 @@ class MiniMenu extends Menu
         $this->function_name = 'menu_' . strtolower($title) . '_' . strtolower($filename);
         parent::Menu($title . '/' . $filename);
     }
+	
     /**
-     * @return string the string the string to write in the cache file
-     */
+	* @return string the string the string to write in the cache file
+	*/
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/menus/' . strtolower($this->title) . '.php\';';
         $cache_str.= 'if(function_exists(\'' . $this->function_name . '\')) { $__menu.=' . $this->function_name . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
+	
+	function get_title()
+    {
+		return strtolower($this->title);
+    }
+	
     var $function_name = '';
 }
 

@@ -39,9 +39,9 @@ class ModuleMiniMenu extends Menu
 {
     ## Public Methods ##
     /**
-     * @desc Build a ModuleMiniMenu element.
-     * @param string $title its name (according the the module folder name)
-     */
+	 * @desc Build a ModuleMiniMenu element.
+	 * @param string $title its name (according the the module folder name)
+	 */
     function ModuleMiniMenu($module, $filename)
     {
         parent::Menu($module);
@@ -49,8 +49,8 @@ class ModuleMiniMenu extends Menu
     }
     
     /**
-     * @return string the string the string to write in the cache file
-     */
+	 * @return string the string the string to write in the cache file
+	 */
     function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
@@ -60,7 +60,12 @@ class ModuleMiniMenu extends Menu
 
     function get_title()
     {
-        return $this->title . '/' . $this->filename;
+		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->title . '/lang/', get_ulang());
+		if (!empty($info_module) && is_array($info_module))
+		{
+			return isset($info_module['name']) ? $info_module['name'] : '';
+		}
+		return $this->title . '/' . $this->filename;
     }
     
     var $filename = '';
