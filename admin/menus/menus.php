@@ -119,10 +119,6 @@ MenuService::update_mini_modules_list(false);
 // The same with the mini menus
 MenuService::update_mini_menus_list();
 
-// Display the Menu dispositions
-include('lateral_menu.php');
-lateral_menu();
-
 $tpl = new Template('admin/menus/menus.tpl');
 $Cache->load('themes');
 
@@ -187,21 +183,25 @@ foreach ($menus_blocks as $block_id => $menus)
         $edit_link = menu_admin_link($menu, 'edit');
         $del_link = menu_admin_link($menu, 'delete');
         
+		$mini = in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT));
+		
         $menu_tpl->assign_vars(array(
             'NAME' => $menu->get_title(),
             'IDMENU' => $id,
-            'U_ONCHANGE_ENABLED' => to_js_string('menus.php?action=' . ($enabled ? 'disable' : 'enable') . '&amp;id=' . $id . '&amp;token=' . $Session->get_token() . '#m' . $id),
-            'SELECT_ENABLED' => $enabled ? 'selected="selected"' : '',
-            'SELECT_DISABLED' => !$enabled ? 'selected="selected"' : '',
             'CONTENTS' => $menu->admin_display(),
-           'C_MENU_ACTIVATED' => $enabled,
+            'ACTIV' => ($enabled ? 'disable' : 'enable'),
+            'UNACTIV' => ($enabled ? 'enable' : 'disable'),
+            'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
+			'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
-            'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
+			'C_UP' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i > 0,
             'C_DOWN' => $block_id != BLOCK_POSITION__NOT_ENABLED && $i < $max - 1,
-            'C_MINI' => in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT)),
-            'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
-            'U_EDIT' => menu_admin_link($menu, 'edit'),
+			'L_ACTIVATE' => $LANG['activate'],
+			'L_UNACTIVATE' => $LANG['unactivate'],
+			'L_DEL' => $LANG['delete'],
+			'L_EDIT' => $LANG['edit'],
+			'U_EDIT' => menu_admin_link($menu, 'edit'),
             'U_DELETE' => menu_admin_link($menu, 'delete'),
             'U_UP' => menu_admin_link($menu, 'up'),
             'U_DOWN' => menu_admin_link($menu, 'down'),
@@ -213,7 +213,14 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 }
 
-
+/*
+$LANG['menus_management'],
+        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
+        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
+        'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
+        'L_MANAGE_THEME_COLUMNS' => $LANG['manage_theme_columns']*/
+		
+		
 $tpl->assign_vars(array(
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'COLSPAN' => $colspan,
