@@ -45,9 +45,20 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	margin:10px 0px;
 	padding:5px;
 	padding-bottom:7px;
-	background:#ccc;
+	background:#e5e5e5;
 	border:1px solid #8F8F8F;
 	cursor:move;
+}
+.menus_block_add {
+	width:140px;
+	height:20px;
+	margin:10px auto;
+	margin-top:20px;
+	padding:0px;
+	background:#fff;
+	border:1px solid #8F8F8F;
+	cursor:pointer;
+	text-align:center;
 }
 
 

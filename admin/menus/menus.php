@@ -154,15 +154,6 @@ $menu_template->assign_vars(array(
     'I_FOOTER' => BLOCK_POSITION__FOOTER,
     'I_LEFT' => BLOCK_POSITION__LEFT,
     'I_RIGHT' => BLOCK_POSITION__RIGHT,
-    'L_HEADER' => $LANG['menu_header'],
-    'L_SUB_HEADER' => $LANG['menu_subheader'],
-    'L_LEFT_MENU' => $LANG['menu_left'],
-    'L_RIGHT_MENU' => $LANG['menu_right'],
-    'L_TOP_CENTRAL_MENU' => $LANG['menu_top_central'],
-    'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
-    'L_TOP_FOOTER' => $LANG['menu_top_footer'],
-    'L_FOOTER' => $LANG['menu_footer'],
-    'L_MOVETO' => $LANG['moveto'],
 	'U_TOKEN' => $Session->get_token()
 ));
 
@@ -215,17 +206,15 @@ foreach ($menus_blocks as $block_id => $menus)
 
 /*
 $LANG['menus_management'],
-        'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
-        'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
-        'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
+
         'L_MANAGE_THEME_COLUMNS' => $LANG['manage_theme_columns']*/
 		
 		
 $tpl->assign_vars(array(
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
     'COLSPAN' => $colspan,
-    'LEFT_COLUMN' => $left_column,
-    'RIGHT_COLUMN' => $right_column,
+    'C_LEFT_COLUMN' => $left_column,
+    'C_RIGHT_COLUMN' => $right_column,
     'START_PAGE' => get_start_page(),
 	'L_INDEX' => $LANG['home'],
     'L_CONFIRM_DEL_MENU' => $LANG['confirm_del_menu'],
@@ -243,6 +232,10 @@ $tpl->assign_vars(array(
     'L_BOTTOM_CENTRAL_MENU' => $LANG['menu_bottom_central'],
     'L_TOP_FOOTER' => $LANG['menu_top_footer'],
     'L_FOOTER' => $LANG['menu_footer'],
+    'L_ADD_MENU' => $LANG['menus_add'],
+	'L_ADD_CONTENT_MENUS' => $LANG['menus_content_add'],
+	'L_ADD_LINKS_MENUS' => $LANG['menus_links_add'],
+	'L_ADD_FEED_MENUS' => $LANG['menus_feed_add'],
 	'I_HEADER' => BLOCK_POSITION__HEADER,
     'I_SUBHEADER' => BLOCK_POSITION__SUB_HEADER,
     'I_TOPCENTRAL' => BLOCK_POSITION__TOP_CENTRAL,

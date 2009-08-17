@@ -56,7 +56,7 @@ class MiniMenu extends Menu
 	
 	function get_title()
     {
-		return strtolower($this->title);
+		return ucfirst(substr($this->title, 0, strpos($this->title, '/')));
     }
 	
     var $function_name = '';
