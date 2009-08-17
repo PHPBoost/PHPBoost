@@ -1,6 +1,6 @@
 /* --------------------------------------
 		admin_default.css
-Css par d√©faut commun √† tout les th√®mes, permet les ajouts n√©cessaires au framework et retrocompatibilit√©
+Css par dÈfaut commun ‡ tout les thËmes, permet les ajouts nÈcessaires au framework et retrocompatibilitÈ
 --------------------------------------*/ /* Titres */ /* Menus */
 .menu_link_list {
     list-style-type: none;
@@ -30,3 +30,24 @@ Css par d√©faut commun √† tout les th√®mes, permet les ajouts n√©cessaires au fr
 .menu_link_element:hover label {
     cursor: pointer;
 }
+
+/* Interface des menus */
+.menu_block_libelle {
+	width:150px;
+	margin:6px auto;
+	text-align:center;
+	font-weight:bold;
+	padding:6px;
+	border:1px dashed #8e727f;
+}
+.menus_block_container {
+	width:190px;
+	margin:10px 0px;
+	padding:5px;
+	padding-bottom:7px;
+	background:#ccc;
+	border:1px solid #8F8F8F;
+	cursor:move;
+}
+
+
