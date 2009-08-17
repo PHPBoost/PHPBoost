@@ -2,29 +2,26 @@
 {
 	width:98%;
 	margin:auto;
-	color:#000000;
-	font-size:16px;
+	color:#E53B00;
+	font-size:14px;
 	font-weight:bold;
 	margin-bottom:-15px;
-	padding:4px 5px;
-	background:#BBCDDC;	
-	border:1px solid #495967;
-	border-left:3px solid #495967;
-	border-right:3px solid #495967;
+	padding:0px 5px;
+	border-bottom:2px solid #E53B00;
 }
 .wiki_paragraph2
 {
 	display:inline;
-	color:#000000;
-	font-size:16px;
+	color:#333333;
+	font-size:14px;
 	font-weight:bold;
 	margin-left:45px;
 	margin-bottom:45px;
 	padding:2px 5px;
 	font-weight:bold;
 	background:#FFFFFF;	
-	border:1px solid #495967;
-	border-top:3px solid #495967;
+	border:1px solid #0578CC;
+	border-top:3px solid #0578CC;
 }
 .wiki_paragraph3
 {
@@ -71,7 +68,7 @@
 {
 	width:145px;	
 	height:20px;
-	background:#788EA0;	
+	background:#A7C7DF;	
 	font-weight:bold;
 	color:#edfff0;
 	text-align:center;
@@ -83,7 +80,7 @@
 }
  .wiki_selected_cat
  {
-	background:#788EA0;
+	background:#A7C7DF;
 	border:1px solid #5B6974;
  }
  ol{
