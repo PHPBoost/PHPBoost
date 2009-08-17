@@ -53,10 +53,10 @@ class Menu
 {
     ## Public Methods ##
     /**
-     * @desc Build a Menu element.
-     * @param string $title the Menu title
-     * @param int $id its id in the database
-     */
+	 * @desc Build a Menu element.
+	 * @param string $title the Menu title
+	 * @param int $id its id in the database
+	 */
     function Menu($title)
     {
        $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
@@ -64,59 +64,59 @@ class Menu
     
     ## Setters ##
     /**
-     * @param string $image the value to set
-     */
+	 * @param string $image the value to set
+	 */
     function set_title($title) { $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE); }
     /**
-     * @param array $url the authorisation array to set
-     */
+	 * @param array $url the authorisation array to set
+	 */
     function set_auth($auth) { $this->auth = $auth; }
     /**
-     * @param bool $enabled Enable or not the Menu
-     */
+	 * @param bool $enabled Enable or not the Menu
+	 */
     function enabled($enabled = MENU_ENABLED) { $this->enabled = $enabled; }
     /**
-     * @return int the Menu $block position
-     */
+	 * @return int the Menu $block position
+	 */
     function set_block($block) { $this->block = $block; }
     /**
-     * @param int $position the Menu position to set
-     */
+	 * @param int $position the Menu position to set
+	 */
     function set_block_position($position) { $this->position = $position; }
 
     ## Getters ##
     /**
-     * @return string the link $title
-     */
+	 * @return string the link $title
+	 */
     function get_title() { return $this->title; }
-    /**
-     * @return array the authorization array $auth
-     */
+	/**
+	 * @return array the authorization array $auth
+	 */
     function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => AUTH_MENUS, 'r0' => AUTH_MENUS, 'r1' => AUTH_MENUS); }
     /**
-     * @return int the $id of the menu in the database
-     */
+	 * @return int the $id of the menu in the database
+	 */
     function get_id() { return $this->id; }
     /**
-     * @return int the Menu $block position
-     */
+	 * @return int the Menu $block position
+	 */
     function get_block() { return $this->block; }
     /**
-     * @return int the Menu $position
-     */
+	 * @return int the Menu $position
+	 */
     function get_block_position() { return $this->position; }
     /**
-     * @return bool true if the Menu is enabled, false otherwise
-     */
+	 * @return bool true if the Menu is enabled, false otherwise
+	 */
     function is_enabled() { return $this->enabled; }
     
      
     /**
-     * @desc Display the menu
-     * @abstract
-     * @param Template $template the template to use
-     * @return string the menu parsed in xHTML
-     */
+	 * @desc Display the menu
+	 * @abstract
+	 * @param Template $template the template to use
+	 * @return string the menu parsed in xHTML
+	 */
     function display($tpl = false)
     {
         return '';
@@ -124,9 +124,9 @@ class Menu
 
     
     /**
-     * @desc Display the menu admin gui
-     * @return string the menu parsed in xHTML
-     */
+	 * @desc Display the menu admin gui
+	 * @return string the menu parsed in xHTML
+	 */
     function admin_display()
     {
         return $this->display();
@@ -134,14 +134,14 @@ class Menu
     
     
     /**
-     * @abstract
-     * @return string the string the string to write in the cache file
-     */
+	 * @abstract
+	 * @return string the string the string to write in the cache file
+	 */
     function cache_export()
     { }
     /**
-     * @return string the string to write in the cache file at the beginning of the Menu element;
-     */
+	 * @return string the string to write in the cache file at the beginning of the Menu element;
+	 */
     function cache_export_begin()
     {
         if (is_array($this->auth))
@@ -150,8 +150,8 @@ class Menu
     }
     
     /**
-     * @return string the string to write in the cache file at the end of the Menu element
-     */
+	 * @return string the string to write in the cache file at the end of the Menu element
+	 */
     function cache_export_end()
     {
         if (is_array($this->auth))
@@ -160,17 +160,17 @@ class Menu
     }
     
     /**
-     * @param int $id Set the Menu database id
-     */
+	 * @param int $id Set the Menu database id
+	 */
     function id($id) { $this->id = $id; }
     
     
     ## Private Methodss ##
     /**
-     * @desc Assign tpl vars
-     * @access protected
-     * @param Template $template the template on which we gonna assign vars
-     */
+	 * @desc Assign tpl vars
+	 * @access protected
+	 * @param Template $template the template on which we gonna assign vars
+	 */
     function _assign(&$template)
     {
     	import('core/menu_service');
@@ -178,9 +178,9 @@ class Menu
     }
     
     /**
-     * @desc Check the user authorization to see the LinksMenuElement
-     * @return bool true if the user is authorised, false otherwise
-     */
+	 * @desc Check the user authorization to see the LinksMenuElement
+	 * @return bool true if the user is authorised, false otherwise
+	 */
     function _check_auth()
     {
         global $User;
@@ -189,34 +189,34 @@ class Menu
     
     ## Private Attributes ##
     /**
-     * @access protected
-     * @var int the element identifier, only used by the service
-     */
+	 * @access protected
+	 * @var int the element identifier, only used by the service
+	 */
     var $id = 0;
-    /**
-     * @access protected
-     * @var string the Menu title
-     */
+	/**
+	 * @access protected
+	 * @var string the Menu title
+	 */
     var $title = '';
     /**
-     * @access protected
-     * @var int[string] Represents the Menu authorisations array
-     */
+	 * @access protected
+	 * @var int[string] Represents the Menu authorisations array
+	 */
     var $auth = null;
     /**
-     * @access protected
-     * @var bool true if the Menu is used
-     */
+	 * @access protected
+	 * @var bool true if the Menu is used
+	 */
     var $enabled = MENU_NOT_ENABLED;
     /**
-     * @access protected
-     * @var int The Menu block position
-     */
+	 * @access protected
+	 * @var int The Menu block position
+	 */
     var $block = BLOCK_POSITION__NOT_ENABLED;
     /**
-     * @access protected
-     * @var int The Menu position on the website
-     */
+	 * @access protected
+	 * @var int The Menu position on the website
+	 */
     var $position = -1;
 }
 
