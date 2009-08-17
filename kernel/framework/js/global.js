@@ -705,3 +705,17 @@ function flowPlayerDisplay(id)
 	    }
 	);
 }
+
+/*######### Fonction de vérification de formulaire ##########*/
+function checkForms(arrayChecks)
+{
+	for(var i = 0; i < arrayChecks.length; i += 2)
+	{
+		if (document.getElementById(arrayChecks[i]).value == '') 
+		{
+			alert(arrayChecks[i+1]);
+			return false;
+		}
+	}
+	return true;
+}
