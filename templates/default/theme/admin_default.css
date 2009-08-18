@@ -11,6 +11,14 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 
 .menu_link_element {
     margin-top: 10px;
+	background:#e5e5e5;
+	border:1px solid #8F8F8F;
+	padding:5px
+}
+.menu_link_menu {
+    margin-top: 15px;
+	background:#EFEFEF;
+	border:1px solid #8F8F8F;
 }
 
 

@@ -19,7 +19,7 @@
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/processed_mini.png" alt="{L_UNACTIVATE}" class="valign_middle" />
 	</a>
 	# ELSE #
-	<a href="menus.php?action={UNACTIV}&amp;id={IDMENU}&amp;token={TOKEN}#m{IDMENU}" title="{L_ACTIVATE}">
+	<a href="{U_EDIT}" title="{L_ACTIVATE}">
 		<img src="{PATH_TO_ROOT}/templates/{THEME}/images/not_processed_mini.png" alt="{L_ACTIVATE}" class="valign_middle" />
 	</a>
 	# ENDIF #

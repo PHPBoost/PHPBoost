@@ -1,5 +1,5 @@
-<script type="text/javascript"><!--
-
+<script type="text/javascript">
+<!--
 var idMax = {ID_MAX};
 
 function destroySortableMenu() {
@@ -42,13 +42,15 @@ function getAuthForm(id) {
 
 function addSubElement(menu_element_id) {
     var id = idMax++;
-    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'row2 menu_link_element', style: 'display:none;' }, [
+    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'menu_link_element', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle'}),
+			Builder.node('img', {src: '{PATH_TO_ROOT}/templates/default/images/drag.png', alt: 'plus', className: 'valign_middle', style: 'padding-left:5px;padding-right:5px;cursor:move'}),
+            ' ',
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png', alt: 'plus', className: 'valign_middle', style: 'cursor:move'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_ELEMENT}, onclick: "this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_ELEMENT};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
@@ -84,13 +86,15 @@ function addSubElement(menu_element_id) {
 
 function addSubMenu(menu_element_id) {
     var id = idMax++;
-    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'row1 menu_link_element', style: 'display:none;' }, [
+    var newDiv = Builder.node('li', {id: 'menu_element_' + id, className: 'menu_link_element menu_link_menu', style: 'display:none;' }, [
         Builder.node('div', {style: 'float:left;'}, [
-            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png', alt: 'folder', className: 'valign_middle'}),
+			Builder.node('img', {src: '{PATH_TO_ROOT}/templates/default/images/drag.png', alt: 'plus', className: 'valign_middle', style: 'padding-left:5px;padding-right:5px;cursor:move'}),
+            ' ',
+            Builder.node('img', {src: '{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png', alt: 'folder', className: 'valign_middle', style: 'cursor:move'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_name'}, {JL_NAME}),
             ' ',
-            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_MENU}, id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
+            Builder.node('input', {type: 'text', value: {JL_ADD_SUB_MENU}, onclick: "this.value=''", onblur: "if(this.value=='')this.value={JL_ADD_SUB_MENU};", id: 'menu_element_' + id + '_name', name: 'menu_element_' + id + '_name'}),
             ' ',
             Builder.node('label', {htmlFor: 'menu_element_' + id + '_url'}, {JL_URL}),
             ' ',
@@ -117,7 +121,7 @@ function addSubMenu(menu_element_id) {
         ]),
         Builder.node('hr', {style: 'background-color:#999999;margin-top:5px;'}),
         Builder.node('ul', {id: 'menu_element_' + id + '_list', className: 'menu_link_list'}),
-        Builder.node('fieldset', {className: 'fieldset_submit', style: 'margin-bottom:0px;padding-bottom:0px;'}, [
+        Builder.node('fieldset', {className: 'fieldset_submit', style: 'margin-bottom:7px;margin-top:0px;padding-bottom:0px;'}, [
             Builder.node('input', {type: 'button', id: 'menu_element_' + id + '_add_sub_element', name: 'menu_element_' + id + '_add_sub_element', value: {JL_ADD_SUB_ELEMENT}, onclick: 'addSubElement(\'menu_element_' + id + '\');', className: 'submit'}),
             ' ',
             Builder.node('input', {type: 'button', id: 'menu_element_' + id + '_add_sub_menu', name: 'menu_element_' + id + '_add_sub_menu', value: {JL_ADD_SUB_MENU}, onclick: 'addSubMenu(\'menu_element_' + id + '\');', className: 'submit'}),
@@ -141,7 +145,8 @@ function deleteElement(element_id)
     }
 }
 
---></script>
+-->
+</script>
 <div id="admin_contents">
 	<form action="links.php?action=save" method="post" class="fieldset_content" onsubmit="build_menu_elements_tree();">
 		<fieldset> 
@@ -197,7 +202,7 @@ function deleteElement(element_id)
 				</label></dd>
 			</dl>
 			<dl>
-				<dt>{L_AUTHS}</dt>
+				<dt><label>{L_AUTHS}</label></dt>
 				<dd>{AUTH_MENUS}</dd>
 			</dl>
 		</fieldset>
