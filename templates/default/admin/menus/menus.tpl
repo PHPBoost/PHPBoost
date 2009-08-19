@@ -42,10 +42,14 @@ function build_menu_tree() {
 }
 
 function createSortableMenu() {
-    Sortable.create('test', {tag:'div',containment:['test','test2'],scroll:window,format: /^menu_([0-9]+)$/});   
-}
-function createSortableMenu2() {
-    Sortable.create('test2', {tag:'div',containment:['test','test2'],scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_header_menu', {tag:'div',containment:['drag_header_menu','drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_subheader_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_left_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_right_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_topcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_bottomcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_topfooter_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_footer_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
 }
 -->
 </script>
@@ -56,9 +60,11 @@ function createSortableMenu2() {
 			<tr>
 				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#dfeade">
 					<p class="menu_block_libelle">{L_HEADER}</p>
-					# START mod_header #
-					{mod_header.MENU}
-					# END mod_header #
+					<div id="drag_header_menu">
+						# START mod_header #
+						{mod_header.MENU}
+						# END mod_header #
+					</div>
 					
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
@@ -80,10 +86,10 @@ function createSortableMenu2() {
 			<tr>
 				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#f1ffe3">
 					<p class="menu_block_libelle">{L_SUB_HEADER}</p>
-					<div id="test2">
-					# START mod_subheader #
-					{mod_subheader.MENU}
-					# END mod_subheader #
+					<div id="drag_subheader_menu">
+						# START mod_subheader #
+						{mod_subheader.MENU}
+						# END mod_subheader #
 					</div>
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
@@ -106,9 +112,11 @@ function createSortableMenu2() {
 				# IF C_LEFT_COLUMN #
 				<td style="width:185px;vertical-align:top;padding:4px;border:1px solid black;background:#e8eefd">
 					<p class="menu_block_libelle">{L_LEFT_MENU}</p>
-					<div id="test"># START mod_left #
-					{mod_left.MENU}
-					# END mod_left #</div>
+					<div id="drag_left_menu" style="min-height:150px;">
+						# START mod_left #
+						{mod_left.MENU}
+						# END mod_left #
+					</div>
 					
 					# IF NOT C_RIGHT_COLUMN #
 					<hr style="margin:10px 0px" />
@@ -138,10 +146,11 @@ function createSortableMenu2() {
 				<td style="vertical-align:top;border:1px solid black;background:#f4f4f4;">
 					<div style="padding:4px;border:1px solid black;background:#ffe1e1">
 						<p class="menu_block_libelle">{L_TOP_CENTRAL_MENU}</p>
-						# START mod_topcentral #
-						{mod_topcentral.MENU}
-						# END mod_topcentral #
-						
+						<div id="drag_topcentral_menu">
+							# START mod_topcentral #
+							{mod_topcentral.MENU}
+							# END mod_topcentral #
+						</div>
 						<div style="width:140px;margin:auto;">
 							<div style="position:relative;float:left;">
 								<div style="position:absolute;z-index:99;margin-top:133px;margin-left:0px;float:left;display:none;" id="moveaddmenu4">
@@ -167,10 +176,11 @@ function createSortableMenu2() {
 					</div>
 					<div style="padding:4px;border:1px solid black;background:#ffe1e1">
 						<p class="menu_block_libelle">{L_BOTTOM_CENTRAL_MENU}</p>
-						# START mod_bottomcentral #
-						{mod_bottomcentral.MENU}
-						# END mod_bottomcentral #
-						
+						<div id="drag_bottomcentral_menu">
+							# START mod_bottomcentral #
+							{mod_bottomcentral.MENU}
+							# END mod_bottomcentral #
+						</div>
 						<div style="width:140px;margin:auto;">
 							<div style="position:relative;float:left;">
 								<div style="position:absolute;z-index:99;margin-top:133px;margin-left:0px;float:left;display:none;" id="moveaddmenu5">
@@ -189,12 +199,15 @@ function createSortableMenu2() {
 					</div>						
 				</td>
 				
-				# IF RIGHT_COLUMN #
-				<td style="width:230px;vertical-align:top;padding:4px;border:1px solid black;background:#e8eefd">
+				# IF C_RIGHT_COLUMN #
+				<td style="width:185px;vertical-align:top;padding:4px;border:1px solid black;background:#e8eefd">
 					<p class="menu_block_libelle">{L_RIGHT_MENU}</p>
-					# START mod_right #
-					{mod_right.MENU}
-					# END mod_right #
+					<div id="drag_right_menu" style="min-height:150px;">
+						# START mod_right #
+						{mod_right.MENU}
+						# END mod_right #
+						<div class="spacer">&nbsp;</div>
+					</div>
 					
 					# IF NOT C_LEFT_COLUMN #
 					<hr /><br />
@@ -223,9 +236,11 @@ function createSortableMenu2() {
 			<tr>
 				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#e8ffe5">
 					<p class="menu_block_libelle">{L_TOP_FOOTER}</p>
-					# START mod_topfooter #
-					{mod_topfooter.MENU}
-					# END mod_topfooter #
+					<div id="drag_topfooter_menu">
+						# START mod_topfooter #
+						{mod_topfooter.MENU}
+						# END mod_topfooter #
+					</div>
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:133px;margin-left:0px;float:left;display:none;" id="moveaddmenu7">
@@ -246,9 +261,11 @@ function createSortableMenu2() {
 			<tr>
 				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#e6fffb">
 					<p class="menu_block_libelle">{L_FOOTER}</p>
-					# START mod_footer #
-					{mod_footer.MENU}
-					# END mod_footer #
+					<div id="drag_footer_menu">
+						# START mod_footer #
+						{mod_footer.MENU}
+						# END mod_footer #
+					</div>
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:133px;margin-left:0px;float:left;display:none;" id="moveaddmenu8">
@@ -271,7 +288,6 @@ function createSortableMenu2() {
 		<script type="text/javascript">
 		<!--
 		createSortableMenu();
-		createSortableMenu2();
 		-->
 		</script>
 			
