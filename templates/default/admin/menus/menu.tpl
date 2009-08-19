@@ -1,4 +1,4 @@
-<div class="menus_block_container" style="{STYLE}">
+<div class="menus_block_container" id="menu_{IDMENU}" style="{STYLE}">
 	<span id="m{IDMENU}"></span>
 	<h5 class="sub_title">{NAME}</h5>
 	
