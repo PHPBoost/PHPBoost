@@ -14,9 +14,10 @@
 # ENDIF #
 
 # IF C_NEXT_MENU #
-	<li class="row1 menu_link_element" id="menu_element_{ID}">
+	<li class="menu_link_element" id="menu_element_{ID}">
 		<div style="float:left;">
-			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" />
+			<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
+			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/folder.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name" />
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{ABSOLUTE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url" />
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{ABSOLUTE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
@@ -47,9 +48,10 @@
 # ENDIF #
 
 # IF C_LINK #
-    <li class="row2 menu_link_element" id="menu_element_{ID}">
+    <li class="menu_link_element" id="menu_element_{ID}">
    		<div style="float:left;">
-   			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="plus" class="valign_middle" />
+			<img src="{PATH_TO_ROOT}/templates/default/images/drag.png" alt="" class="valign_middle" style="padding-left:5px;padding-right:5px;cursor:move" />
+   			<img src="{PATH_TO_ROOT}/templates/{THEME}/images/form/url.png" alt="plus" class="valign_middle" style="cursor:move" />
 			<label for="menu_element_{ID}_name">{L_NAME}</label> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name" />
 			<label for="menu_element_{ID}_url">{L_URL}</label> <input type="text" value="{ABSOLUTE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url" />
 			<label for="menu_element_{ID}_image">{L_IMAGE}</label> <input type="text" value="{ABSOLUTE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" />
