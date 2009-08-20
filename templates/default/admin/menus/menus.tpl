@@ -1,9 +1,17 @@
 <script type="text/javascript">
 <!--
+function createSortableMenu() {
+    Sortable.create('menu_element_{ID}_list', {tree:true,scroll:window,format: /^menu_element_([0-9]+)$/});   
+}
+function build_menu_elements_tree() {
+    document.getElementById("menu_tree").value = Sortable.serialize('menu_element_{ID}_list');
+}
+
 function Confirm_menu() {
 	return confirm("{L_CONFIRM_DEL_MENU}");
 }
-var delay = 2000; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
+
+var delay = 1600; //Délai après lequel le bloc est automatiquement masqué, après le départ de la souris.
 var timeout;
 var displayed = false;
 var previous = '';
@@ -41,24 +49,55 @@ function build_menu_tree() {
     document.getElementById("menu_tree").value = Sortable.serialize('menu_{ID}_list');
 }
 
+function minimize_container(checkbox, container) {
+	if(checkbox.checked == '')
+	{
+		document.getElementById('container' + container).style.width = 0;
+		document.getElementById('container' + container).style.height = 0;
+		document.getElementById('container' + container).style.display = 'none';
+	}
+	else
+	{
+		document.getElementById('container' + container).style.width = 'auto';
+		document.getElementById('container' + container).style.height = 'auto';
+		document.getElementById('container' + container).style.display = 'block';
+	}
+}
+
 function createSortableMenu() {
-    Sortable.create('drag_header_menu', {tag:'div',containment:['drag_header_menu','drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_subheader_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_left_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_right_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_topcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_bottomcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_topfooter_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
-    Sortable.create('drag_footer_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_header_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu',],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_subheader_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_left_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_right_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_topcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_central_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_bottomcentral_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_topfooter_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
+    Sortable.create('drag_footer_menu', {tag:'div',containment:['drag_header_menu','drag_subheader_menu','drag_left_menu','drag_right_menu','drag_topcentral_menu','drag_central_menu','drag_bottomcentral_menu','drag_topfooter_menu','drag_footer_menu'],constraint:false,scroll:window,format: /^menu_([0-9]+)$/});   
 }
 -->
 </script>
 
+
 <div id="admin_contents admin_contents_no_column">
+	<div class="block_container">
+		<div class="block_top">Gestion des conteneurs de menus</div>
+		<div class="block_contents">
+			{L_HEADER} <input type="checkbox" name="{L_HEADER}" id="status_container{L_HEADER}" checked="checked" onclick="minimize_container(this, 'header')" />
+			&bull; {L_SUB_HEADER} <input type="checkbox" name="{L_SUB_HEADER}" id="status_container{L_SUB_HEADER}" checked="checked" onclick="minimize_container(this, 'subheader')" />
+			&bull; {L_LEFT_MENU} <input type="checkbox" name="{L_LEFT_MENU}" id="status_container{L_LEFT_MENU}" checked="checked" onclick="minimize_container(this, 'leftmenu')" />
+			&bull; {L_RIGHT_MENU} <input type="checkbox" name="{L_RIGHT_MENU}" id="status_container{L_RIGHT_MENU}" checked="checked" onclick="minimize_container(this, 'rightmenu')" />
+			&bull; {L_TOP_CENTRAL_MENU} <input type="checkbox" name="{L_TOP_CENTRAL_MENU}" id="status_container{L_TOP_CENTRAL_MENU}" checked="checked" onclick="minimize_container(this, 'topcentral')" />
+			&bull; {L_BOTTOM_CENTRAL_MENU} <input type="checkbox" name="{L_BOTTOM_CENTRAL_MENU}" id="status_container{L_BOTTOM_CENTRAL_MENU}" checked="checked" onclick="minimize_container(this, 'bottomcentral')" />
+			&bull; {L_TOP_FOOTER} <input type="checkbox" name="{L_TOP_FOOTER}" id="status_container{L_TOP_FOOTER}" checked="checked" onclick="minimize_container(this, 'topfooter')" />
+			&bull; {L_FOOTER} <input type="checkbox" name="{L_FOOTER}" id="status_container{L_FOOTER}" checked="checked" onclick="minimize_container(this, 'footer')" />
+		</div>
+	</div>
+	
 	<form action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 		<table class="module_table" style="background:#FFFFFF;width:100%;border:2px solid black;">
 			<tr>
-				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#dfeade">
+				<td id="container_header" colspan="{COLSPAN}">
 					<p class="menu_block_libelle">{L_HEADER}</p>
 					<div id="drag_header_menu">
 						# START mod_header #
@@ -84,7 +123,7 @@ function createSortableMenu() {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#f1ffe3">
+				<td id="container_subheader" colspan="{COLSPAN}">
 					<p class="menu_block_libelle">{L_SUB_HEADER}</p>
 					<div id="drag_subheader_menu">
 						# START mod_subheader #
@@ -110,20 +149,20 @@ function createSortableMenu() {
 			</tr>
 			<tr>				
 				# IF C_LEFT_COLUMN #
-				<td style="width:185px;vertical-align:top;padding:4px;border:1px solid black;background:#e8eefd">
+				<td id="container_leftmenu">
 					<p class="menu_block_libelle">{L_LEFT_MENU}</p>
-					<div id="drag_left_menu" style="min-height:150px;">
+					<div id="drag_left_menu">
 						# START mod_left #
 						{mod_left.MENU}
 						# END mod_left #
-					</div>
 					
-					# IF NOT C_RIGHT_COLUMN #
-					<hr style="margin:10px 0px" />
-					# START mod_right #
-					{mod_right.MENU}
-					# END mod_right #
-					# ENDIF # 
+						# IF NOT C_RIGHT_COLUMN #
+						<hr style="margin:10px 0px" />
+						# START mod_right #
+						{mod_right.MENU}
+						# END mod_right #
+						# ENDIF # 
+					</div>
 
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
@@ -144,7 +183,7 @@ function createSortableMenu() {
 				# ENDIF #
 				
 				<td style="vertical-align:top;border:1px solid black;background:#f4f4f4;">
-					<div style="padding:4px;border:1px solid black;background:#ffe1e1">
+					<div id="container_topcentral">
 						<p class="menu_block_libelle">{L_TOP_CENTRAL_MENU}</p>
 						<div id="drag_topcentral_menu">
 							# START mod_topcentral #
@@ -169,12 +208,14 @@ function createSortableMenu() {
 					</div>
 					<div style="padding:4px;border:1px solid black;">
 						<p class="menu_block_libelle">{L_MENUS_AVAILABLE}</p>
-						# START mod_main #
-						{mod_main.MENU}
-						# END mod_main #
-						<div class="spacer">&nbsp;</div>
+						<div id="drag_central_menu">
+							# START mod_main #
+							{mod_main.MENU}
+							# END mod_main #
+							<div class="spacer">&nbsp;</div>
+						</div>
 					</div>
-					<div style="padding:4px;border:1px solid black;background:#ffe1e1">
+					<div id="container_bottomcentral">
 						<p class="menu_block_libelle">{L_BOTTOM_CENTRAL_MENU}</p>
 						<div id="drag_bottomcentral_menu">
 							# START mod_bottomcentral #
@@ -200,21 +241,22 @@ function createSortableMenu() {
 				</td>
 				
 				# IF C_RIGHT_COLUMN #
-				<td style="width:185px;vertical-align:top;padding:4px;border:1px solid black;background:#e8eefd">
+				<td id="container_rightmenu">
 					<p class="menu_block_libelle">{L_RIGHT_MENU}</p>
-					<div id="drag_right_menu" style="min-height:150px;">
+					<div id="drag_right_menu">
 						# START mod_right #
 						{mod_right.MENU}
 						# END mod_right #
 						<div class="spacer">&nbsp;</div>
+					
+						# IF NOT C_LEFT_COLUMN #
+						<hr /><br />
+						# START mod_left #
+						{mod_left.MENU}
+						# END mod_left #
+						# ENDIF #
 					</div>
 					
-					# IF NOT C_LEFT_COLUMN #
-					<hr /><br />
-					# START mod_left #
-					{mod_left.MENU}
-					# END mod_left #
-					# ENDIF #
 					<div style="width:140px;margin:auto;">
 						<div style="position:relative;float:left;">
 							<div style="position:absolute;z-index:99;margin-top:133px;margin-left:0px;float:left;display:none;" id="moveaddmenu6">
@@ -234,7 +276,7 @@ function createSortableMenu() {
 				# ENDIF #
 			</tr>
 			<tr>
-				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#e8ffe5">
+				<td colspan="{COLSPAN}" id="container_topfooter">
 					<p class="menu_block_libelle">{L_TOP_FOOTER}</p>
 					<div id="drag_topfooter_menu">
 						# START mod_topfooter #
@@ -259,7 +301,7 @@ function createSortableMenu() {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="{COLSPAN}" style="padding:4px;border:1px solid black;background:#e6fffb">
+				<td colspan="{COLSPAN}" id="container_footer">
 					<p class="menu_block_libelle">{L_FOOTER}</p>
 					<div id="drag_footer_menu">
 						# START mod_footer #
@@ -290,12 +332,11 @@ function createSortableMenu() {
 		createSortableMenu();
 		-->
 		</script>
-			
-		<fieldset class="fieldset_submit" style="margin-top:15px;">
-			<legend>{L_UPDATE}</legend>
-			<input type="hidden" name="menu_tree" id="menu_tree" value="" />
-			<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />					
-		</fieldset>
+		
+		<div id="valid_position_menus">
+			Valider la position des menus : <input type="submit" name="valid" value="{L_SUBMIT}" class="submit" />
+		</div>
+		<input type="hidden" name="menu_tree" id="menu_tree" value="" />
 	</form>
 </div>
 

@@ -246,7 +246,7 @@ $tpl->assign_vars(array(
     'I_RIGHT' => BLOCK_POSITION__RIGHT,
     'L_MENUS_AVAILABLE' => count($menus_blocks[BLOCK_POSITION__NOT_ENABLED]) ? $LANG['available_menus'] : $LANG['no_available_menus'],
     'L_INSTALL' => $LANG['install'],
-    'L_UPDATE' => $LANG['update'],
+    'L_SUBMIT' => $LANG['submit'],
     'L_RESET' => $LANG['reset'],
 	'U_TOKEN' => $Session->get_token()
 ));
