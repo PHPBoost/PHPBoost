@@ -40,6 +40,21 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 }
 
 /* Interface des menus */
+#valid_position_menus {
+	position:fixed;
+	z-index:101;
+	width:200px;
+	bottom:5px;
+	right:0px;
+	margin-right:5px;
+	padding:6px;
+	border:1px solid #8e727f;
+	background:#e5e5e5;
+   	-moz-border-radius:5px;
+    -khtml-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
 .menu_block_libelle {
 	width:150px;
 	margin:6px auto;
@@ -67,6 +82,49 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	border:1px solid #8F8F8F;
 	cursor:pointer;
 	text-align:center;
+}
+
+/*Conteneur des menus*/
+#drag_header_menu,#drag_subheader_menu,#drag_left_menu,
+#drag_right_menu,#drag_topcentral_menu,
+#drag_central_menu,#drag_bottomcentral_menu,
+#drag_topfooter_menu,#drag_footer_menu {
+	min-height:50px;
+}
+
+#container_header,#container_subheader,#container_leftmenu,
+#container_rightmenu,#container_topcentral,#container_bottomcentral,
+#container_topfooter,#container_footer {
+	padding:4px;
+	border:1px solid black;
+}
+#container_header {
+	background:#dfeade;
+}
+#container_subheader {
+	background:#f1ffe3;
+}
+#container_leftmenu {
+	width:185px;
+	vertical-align:top;
+	background:#e8eefd
+}
+#container_rightmenu {
+	width:185px;
+	vertical-align:top;
+	background:#e8eefd;
+}
+#container_topcentral {
+	background:#ffe1e1;
+}
+#container_bottomcentral {
+	background:#ffe1e1;
+}
+#container_topfooter {
+	background:#e8ffe5;
+}
+#container_footer {
+	background:#e6fffb;
 }
 
 
