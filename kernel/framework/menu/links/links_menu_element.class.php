@@ -101,16 +101,9 @@ class LinksMenuElement extends Menu
     {
         if (!empty($this->url))
         {
-            if ($compute_relative_url)
-            {
-                global $CONFIG;
-                import('util/url');
-                return url(strpos($this->url, '://') > 0 ? $this->url : Url::compress($CONFIG['server_name'] . '/' . $CONFIG['server_path'] . '/' . $this->url));
-            }
-            else
-            {
-                return url($this->url);
-            }
+	    import('util/url');
+	    $url = new Url($this->url);
+	    return $url->relative();
         }
         return '';
     }

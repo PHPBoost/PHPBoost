@@ -277,7 +277,7 @@ class Mail
             	$recipients .= ', ';
             }
         }
-        $this->_add_header_field('To', $recipients);
+        //$this->_add_header_field('To', $recipients);
         
         //Subject
         $this->_add_header_field('Subject', $this->object);

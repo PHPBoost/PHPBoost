@@ -90,13 +90,13 @@ class Url
 				}
 
 			}
-			if (strpos($url, 'javascript:') === 0 || strpos($url, 'mailto:') === 0)
-			{   // This is a javascript command and we don't try to convert it.
+
+			if (preg_match('`^[a-z0-9]+\:.+`iU', $url) > 0)
+			{	// This is a special protocol link and we don't try to convert it.
 				$this->url = $url;
 				return;
 			}
-
-			if (strpos($url, 'www.') === 0)
+			else if (strpos($url, 'www.') === 0)
 			{   // If the url begins with 'www.', it's an absolute one
 				$url = 'http://' . $url;
 			}
