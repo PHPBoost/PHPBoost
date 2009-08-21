@@ -508,11 +508,13 @@ class Template
 
 			//Remplacement des includes.
 			$this->template = preg_replace('`# INCLUDE ([\w]+) #`', '\';'."\n".'$tplString .= $this->_include(\'$1\');'."\n".'$tplString .= \'', $this->template);
+            
+			$this->template = preg_replace_callback('`(?<!^)<\?php(.*)\?>(?!$)`isU', array($this, '_accept_php_block'), $this->template);
 		}
 		else
 		{
 			// Protection des tags XML
-			$this->template = preg_replace_callback('`\<\?(\s.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
+			$this->template = preg_replace_callback('`\<\?(?!php)(\s.*)\?\>`i', array($this, '_protect_from_inject'), $this->template);
 
 			//Remplacement des variables simples.
 			$this->template = preg_replace('`{([\w]+)}`i', '<?php if (isset($this->_var[\'$1\'])) echo $this->_var[\'$1\']; ?>', $this->template);
@@ -533,6 +535,11 @@ class Template
 		}
 	}
 
+	function _accept_php_block($mask)
+	{
+		return '\';' . str_replace(array('\\\\', '\\\''), array('\\', '\''), $mask[1]) . '$tplString.=\'';
+	}
+	
 	/**
 	 * @desc  Protects a string from PHP syntax errors.
 	 * @param string[] $mask Particular matched syntax element containing in the key 1 the string to protect.
