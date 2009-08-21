@@ -1308,7 +1308,7 @@ function phpboost_version() {
 	$file = new File(PATH_TO_ROOT . '/kernel/.build');
 	$build =  $file->get_contents();
 	$file->close();
-	return $CONFIG['version'] . trim($build);
+	return $CONFIG['version'] . '.' . trim($build);
 }
 
 ?>
