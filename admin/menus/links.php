@@ -252,8 +252,8 @@ $tpl->assign_vars(array(
 	'MENU_ID' => $menu->get_id(),
 	'MENU_TREE' => $menu->display($edit_menu_tpl, LINKS_MENU_ELEMENT__FULL_DISPLAYING),
 	'MENU_NAME' => $menu->get_title(),
-	'MENU_URL' => $menu->get_url(false),
-	'MENU_IMG' => $menu->get_image(false),
+	'MENU_URL' => $menu->get_url(true),
+	'MENU_IMG' => $menu->get_image(true),
     'ID' => $menu->get_uid()
 ));
 

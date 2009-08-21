@@ -72,6 +72,7 @@ class Url
 			{
 				$this->server_url = Url::server_url();
 			}
+			
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
@@ -101,7 +102,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url));
+			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url)); 
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -384,12 +385,10 @@ class Url
 
 		if ($only_match_relative)
 		{
-			//            echo '<pre>' . htmlentities(var_export($regex_only_match_relative, true)) . '</pre>';
 			return $regex_only_match_relative;
 		}
 		else
 		{
-			//			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
 			return $regex_match_all;
 		}
 	}

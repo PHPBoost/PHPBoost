@@ -8,9 +8,9 @@
     # ENDIF #
     # IF C_NEXT_MENU #
         <li class="# IF C_FIRST_LEVEL #first_level dynamic_menu# ELSE #extend# ENDIF #" onmouseover="showMenu('gmenu{ID}', {PARENT_DEPTH});" onmouseout="hideMenu({PARENT_DEPTH});">
-            # IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /> # ENDIF #
+            # IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /> # ENDIF #
             # IF C_URL #
-                <a href="{RELATIVE_URL}">{TITLE}</a>
+                <a href="{ABSOLUTE_URL}">{TITLE}</a>
             # ELSE #
                 <span>{TITLE}</span>
             # ENDIF #
@@ -18,5 +18,5 @@
         </li>
     # ENDIF #
 # ELSE #
-    <li# IF C_FIRST_LEVEL # class="first_level"# ENDIF #># IF C_IMG #<img src="{RELATIVE_IMG}" alt="" /> # ENDIF #<a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a></li>
+    <li# IF C_FIRST_LEVEL # class="first_level"# ENDIF #># IF C_IMG #<img src="{ABSOLUTE_IMG}" alt="" /> # ENDIF #<a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a></li>
 # ENDIF #
