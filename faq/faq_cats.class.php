@@ -27,7 +27,7 @@
 
 import('content/categories_manager');
 
-define('DO_NOT_GENERATE_CACHE', false);
+define('FAQ_DO_NOT_GENERATE_CACHE', false);
 
 class FaqCats extends CategoriesManager
 {
@@ -118,7 +118,7 @@ class FaqCats extends CategoriesManager
 				else
 				{
 					$Cache->load('faq', RELOAD_CACHE);
-					$this->recount_subquestions(DO_NOT_GENERATE_CACHE);
+					$this->recount_subquestions(FAQ_DO_NOT_GENERATE_CACHE);
 				}
 			}
 			$Sql->query_inject("UPDATE " . PREFIX . "faq_cats SET name = '" . $name . "', image = '" . $image . "', description = '" . $description . "' WHERE id = '" . $id_cat . "'", __LINE__, __FILE__);
