@@ -1243,8 +1243,10 @@ function inc($file, $once = true)
  */
 function of_class(&$object, $classname)
 {
-	if (!get_class($object)) //$object is not an object.
-	return false;
+	if (!is_object($object))
+	{
+		return false;
+	}
 
 	return strtolower(get_class($object)) == strtolower($classname) ||
 	is_subclass_of(strtolower(get_class($object)), strtolower($classname));
