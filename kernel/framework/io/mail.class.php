@@ -277,10 +277,7 @@ class Mail
             	$recipients .= ', ';
             }
         }
-        //$this->_add_header_field('To', $recipients);
         
-        //Subject
-        $this->_add_header_field('Subject', $this->object);
         $this->_add_header_field('MIME-Version',  '1.0');
         $this->_add_header_field('Content-type', $this->format . '; charset=ISO-8859-1');
     }
