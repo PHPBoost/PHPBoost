@@ -486,6 +486,7 @@ class Url
 		set_subregex_multiplicity($domain_regex, $domain) .
 		set_subregex_multiplicity($folders_regex, $folders) .
 		set_subregex_multiplicity($file_regex, $file) .
+        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
 		set_subregex_multiplicity($args_regex, $args) .
 		set_subregex_multiplicity($anchor_regex, $anchor);
 	}
