@@ -27,7 +27,7 @@
 ###################################################*/
 
 // Inclusion du fichier contenant la classe ModuleInterface
-require_once(PATH_TO_ROOT . '/kernel/framework/modules/module_interface.class.php');
+import('modules/module_interface');
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);
 
@@ -45,7 +45,7 @@ class MediaInterface extends ModuleInterface
 	{
 		global $Sql;
 		
-		require_once('media_constant.php');
+		require_once PATH_TO_ROOT . '/media/media_constant.php';
 
 		//Configuration
 		$i = 0;
@@ -152,7 +152,7 @@ class MediaInterface extends ModuleInterface
 		$Cache->load('media');
 		
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
+        require_once PATH_TO_ROOT . '/media/media_cats.class.php';
         $Cats = new MediaCats();
         $auth_cats = array();
         $Cats->build_children_id_list(0, $auth_cats);
@@ -177,7 +177,7 @@ class MediaInterface extends ModuleInterface
      */
     function get_feeds_list()
 	{
-        require_once(PATH_TO_ROOT . '/media/media_cats.class.php');
+        require_once PATH_TO_ROOT . '/media/media_cats.class.php';
         $media_cats = new MediaCats();
         return $media_cats->get_feeds_list();	    
 	}

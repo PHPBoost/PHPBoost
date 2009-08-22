@@ -964,6 +964,7 @@ function delete_file($file)
  */
 function pages_displayed($no_update = false)
 {
+	$data = array();
 	if ($file = @fopen(PATH_TO_ROOT . '/cache/pages.txt', 'r+'))
 	{
 		$hour = gmdate_format('G');
@@ -1243,8 +1244,10 @@ function inc($file, $once = true)
  */
 function of_class(&$object, $classname)
 {
-	if (!get_class($object)) //$object is not an object.
-	return false;
+	if (!is_object($object))
+	{
+		return false;
+	}
 
 	return strtolower(get_class($object)) == strtolower($classname) ||
 	is_subclass_of(strtolower(get_class($object)), strtolower($classname));
@@ -1317,7 +1320,7 @@ function phpboost_version() {
 	$file = new File(PATH_TO_ROOT . '/kernel/.build');
 	$build =  $file->get_contents();
 	$file->close();
-	return $CONFIG['version'] . trim($build);
+	return $CONFIG['version'] . '.' . trim($build);
 }
 
 ?>
