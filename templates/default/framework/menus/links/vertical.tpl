@@ -4,10 +4,10 @@
             <div class="module_mini_top">
                 <h3 class="menu_vertical_{DEPTH} menu_vertical">
                     # IF RELATIVE_URL #
-                        # IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a># ENDIF #
-                        <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
+                        # IF C_IMG #<a href="{ABSOLUTE_URL}" title="{TITLE}"><img src="{ABSOLUTE_IMG}" class="valign_middle" alt="" /></a># ENDIF #
+                        <a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a>
                     # ELSE #
-                        # IF C_IMG #<img src="{RELATIVE_IMG}" class="valign_middle" alt="" /># ENDIF #
+                        # IF C_IMG #<img src="{ABSOLUTE_IMG}" class="valign_middle" alt="" /># ENDIF #
                         {TITLE}
                     # ENDIF #
                 </h3>
@@ -23,8 +23,8 @@
         <li>
             <h3 class="menu_vertical_{DEPTH} menu_vertical">
                 # IF RELATIVE_URL #
-                    # IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF # 
-                    <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
+                    # IF C_IMG #<a href="{ABSOLUTE_URL}" title="{TITLE}"><img src="{ABSOLUTE_IMG}" class="valign_middle" alt="" /></a> # ENDIF # 
+                    <a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a>
                 # ELSE #
                     <span>{TITLE}</span>
                 # ENDIF #
@@ -34,7 +34,7 @@
     # ENDIF #
 # ELSE # <!-- Simple Menu Link -->
     <li>
-        # IF C_IMG #<a href="{RELATIVE_URL}" title="{TITLE}"><img src="{RELATIVE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
-        <a href="{RELATIVE_URL}" title="{TITLE}">{TITLE}</a>
+        # IF C_IMG #<a href="{ABSOLUTE_URL}" title="{TITLE}"><img src="{ABSOLUTE_IMG}" class="valign_middle" alt="" /></a> # ENDIF #
+        <a href="{ABSOLUTE_URL}" title="{TITLE}">{TITLE}</a>
     </li>
 # ENDIF #

@@ -72,6 +72,7 @@ class Url
 			{
 				$this->server_url = Url::server_url();
 			}
+			
 			$anchor = '';
 			if (($pos = strpos($url, '#')) !== false)
 			{
@@ -90,18 +91,18 @@ class Url
 				}
 
 			}
-			if (strpos($url, 'javascript:') === 0 || strpos($url, 'mailto:') === 0)
-			{   // This is a javascript command and we don't try to convert it.
+
+			if (preg_match('`^[a-z0-9]+\:.+`iU', $url) > 0)
+			{	// This is a special protocol link and we don't try to convert it.
 				$this->url = $url;
 				return;
 			}
-
-			if (strpos($url, 'www.') === 0)
+			else if (strpos($url, 'www.') === 0)
 			{   // If the url begins with 'www.', it's an absolute one
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url));
+			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url)); 
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -384,12 +385,10 @@ class Url
 
 		if ($only_match_relative)
 		{
-			//            echo '<pre>' . htmlentities(var_export($regex_only_match_relative, true)) . '</pre>';
 			return $regex_only_match_relative;
 		}
 		else
 		{
-			//			echo '<pre>' . htmlentities(var_export($regex_match_all, true)) . '</pre>';
 			return $regex_match_all;
 		}
 	}
