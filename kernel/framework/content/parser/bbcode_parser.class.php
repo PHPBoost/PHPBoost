@@ -194,8 +194,8 @@ class BBCodeParser extends ContentParser
 			'math' => '`\[math\](.+)\[/math\]`iU',
             'mail' => '`(?<=\s|^)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(?=\s|\n|\r|<|$)`iU',
             'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`iU',
-			'url1' => '`\[url\]((?!javascript:)[^"]+)\[/url\]`isU',
-			'url2' => '`\[url=((?!javascript:)[^"]+)\]([^\n\r\t\f]+)\[/url\]`isU',
+			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isU',
+			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]([^\n\r\t\f]+)\[/url\]`isU',
 			'url3' => '`(\s+)(' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isU',
 			'url4' => '`(\s+)(www\.' . Url::get_wellformness_regex(REGEX_MULTIPLICITY_NOT_USED) . ')(\s|<+)`isU'
 			);
