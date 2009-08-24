@@ -27,8 +27,10 @@
 
 function menu_themeswitcher_themeswitcher($position, $block)
 {
-   global $CONFIG, $THEME_CONFIG, $User, $LANG, $Session;
+	global $CONFIG, $THEME_CONFIG, $User, $LANG, $Session;
 
+	load_menu_lang('themeswitcher');
+	
 	$switchtheme = !empty($_GET['switchtheme']) ? urldecode($_GET['switchtheme']) : '';
     if (!empty($switchtheme))
     {
