@@ -1,6 +1,6 @@
 		<div class="module_mini_container">
 			<div class="module_mini_top">
-				<h5 class="sub_title">{L_SWITCHTHEME}</h5>
+				<h5 class="sub_title">{L_SWITCH_THEME}</h5>
 			</div>
 			<form action="" method="get">
 				<div class="module_mini_contents">
