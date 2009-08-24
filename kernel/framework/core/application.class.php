@@ -84,7 +84,7 @@ class Application
 		$pubdate = Application::_get_attribute($xml_desc, 'pubdate');
 		if (!empty($pubdate))
 		{
-			$this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate,'y/m/d');
+			$this->pubdate = new Date(DATE_FROM_STRING, TIMEZONE_SYSTEM, $pubdate, 'y/m/d');
 		}
 		else
 		{

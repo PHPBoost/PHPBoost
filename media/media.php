@@ -33,7 +33,7 @@ $Template->set_filenames(array('media' => 'media/media.tpl'));
 
 $id_media = retrieve(GET, 'id', 0);
 $id_cat = retrieve(GET, 'cat', 0);
-$level = array(0 => '', 1 => ' class="modo"', 2 => ' class="admin"');
+$level = array('', ' class="modo"', ' class="admin"');
 
 // Display caterories and media files.
 if (empty($id_media) && $id_cat >= 0)
