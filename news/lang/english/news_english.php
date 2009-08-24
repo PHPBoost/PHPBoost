@@ -71,7 +71,7 @@ $LANG['no_img'] = 'No picture';
 $LANG['e_unexist_news'] = 'This news doesn\'t exist';
 
 //Title
-$LANG['title_news'] = 'News';
+$LANG['news'] = 'News';
 
 //Alerts
 $LANG['alert_delete_news'] = 'Delete this piece of news?';

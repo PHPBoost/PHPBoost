@@ -1,44 +1,35 @@
 		<script type="text/javascript">
 		<!--
-		function check_msg(){
-			if(document.getElementById('nbr_column').value == "") {
-				alert("{L_REQUIRE}");
+		function check_form()
+		{
+			if(document.getElementById('pagination_news').value == "") {
+				new Effect.ScrollTo('pagination_news',{duration:1.2});
+				alert("{L_REQUIRE_PAGIN_NEWS}");
 				return false;
 			}
+			
+			if(document.getElementById('pagination_arch').value == "") {
+				new Effect.ScrollTo('pagination_arch',{duration:1.2});
+				alert("{L_REQUIRE_PAGIN_ARCH}");
+				return false;
+			}
+			
+			if(document.getElementById('nbr_column').value == "") {
+				new Effect.ScrollTo('nbr_column',{duration:1.2});
+				alert("{L_REQUIRE_NBR_COL}");
+				return false;
+			}
+
 			return true;
 		}
 		-->
 		</script>
 
-		<div id="admin_quick_menu">
-			<ul>
-				<li class="title_menu">{L_NEWS_MANAGEMENT}</li>
-				<li>
-					<a href="admin_news.php"><img src="news.png" alt="" /></a>
-					<br />
-					<a href="admin_news.php" class="quick_link">{L_NEWS_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_news_add.php"><img src="news.png" alt="" /></a>
-					<br />
-					<a href="admin_news_add.php" class="quick_link">{L_ADD_NEWS}</a>
-				</li>
-				<li>
-					<a href="admin_news_cat.php"><img src="news.png" alt="" /></a>
-					<br />
-					<a href="admin_news_cat.php" class="quick_link">{L_CAT_NEWS}</a>
-				</li>
-				<li>
-					<a href="admin_news_config.php"><img src="news.png" alt="" /></a>
-					<br />
-					<a href="admin_news_config.php" class="quick_link">{L_CONFIG_NEWS}</a>
-				</li>
-			</ul>
-		</div>
+		{ADMIN_MENU}
 		
 		<div id="admin_contents">
 
-			<form action="admin_news_config.php?token={TOKEN}" method="post" onsubmit="return check_msg();" class="fieldset_content">
+			<form action="admin_news_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_CONFIG_NEWS}</legend>
 					<p>{L_REQUIRE}</p>
@@ -57,61 +48,98 @@
 					<dl>
 						<dt><label for="activ_pagin">{L_ACTIV_PAGINATION}</label></dt>
 						<dd>
-							<label><input type="radio" {PAGIN_ENABLED} name="activ_pagin" id="activ_pagin" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="activ_pagin" id="activ_pagin" value="1" # IF PAGIN_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {PAGIN_DISABLED} name="activ_pagin" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="activ_pagin" value="0" # IF PAGIN_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="type">{L_ACTIV_NEWS_BLOCK}</label></dt>
 						<dd>
-							<label><input type="radio" {BLOCK_ENABLED} name="type" id="type" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="type" id="type" value="1" # IF BLOCK_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {BLOCK_DISABLED} name="type" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="type" value="0" # IF BLOCK_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="activ_com">{L_ACTIV_COM_NEWS}</label></dt>
 						<dd>
-							<label><input type="radio" {COM_ENABLED} name="activ_com" id="activ_com" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="activ_com" id="activ_com" value="1" # IF COM_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {COM_DISABLED} name="activ_com" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="activ_com" value="0" # IF COM_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="activ_icon">{L_ACTIV_ICON_NEWS}</label></dt>
 						<dd>
-							<label><input type="radio" {ICON_ENABLED} name="activ_icon" id="activ_icon" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="activ_icon" id="activ_icon" value="1" # IF ICON_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {ICON_DISABLED} name="activ_icon" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="activ_icon" value="0" # IF ICON_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="display_author">{L_DISPLAY_NEWS_AUTHOR}</label></dt>
 						<dd>
-							<label><input type="radio" {AUTHOR_ENABLED} name="display_author" id="display_author" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="display_author" id="display_author" value="1" # IF AUTHOR_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {AUTHOR_DISABLED} name="display_author" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="display_author" value="0" # IF AUTHOR_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
 						<dt><label for="display_date">{L_DISPLAY_NEWS_DATE}</label></dt>
 						<dd>
-							<label><input type="radio" {DATE_ENABLED} name="display_date" id="display_date" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="display_date" id="display_date" value="1" # IF DATE_ENABLED #checked="checked" # ENDIF #/>	{L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {DATE_DISABLED} name="display_date" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="display_date" value="0" # IF DATE_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
-				</fieldset>	
+				</fieldset>
 				
 				<fieldset>
+					<legend>{L_GLOBAL_AUTH}</legend>
+					<p>{L_GLOBAL_AUTH_EXPLAIN}</p>
+					<dl>
+						<dt>
+							<label for="auth_read">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_contribution">{L_AUTH_CONTRIBUTION}</label>
+						</dt>
+						<dd>
+							{AUTH_CONTRIBUTION}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_write">{L_AUTH_WRITE}</label>
+						</dt>
+						<dd>
+							{AUTH_WRITE}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_moderation">{L_AUTH_MODERATION}</label>
+						</dt>
+						<dd>
+							{AUTH_MODERATION}
+						</dd>
+					</dl>
+				</fieldset>
+				
+				<fieldset id="preview_description">
 					<legend>{L_EDITO_WHERE}</legend>
 					<dl>
 						<dt><label for="activ_edito">{L_ACTIV_EDITO}</label></dt>
 						<dd>
-							<label><input type="radio" {EDITO_ENABLED} name="activ_edito" id="activ_edito" value="1" />	{L_YES}</label>
+							<label><input type="radio" name="activ_edito" id="activ_edito" value="1" # IF EDITO_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
 							&nbsp;&nbsp; 
-							<label><input type="radio" {EDITO_DISABLED} name="activ_edito" value="0" /> {L_NO}</label>
+							<label><input type="radio" name="activ_edito" value="0" # IF EDITO_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 					<dl>
@@ -125,14 +153,14 @@
 						<textarea rows="20" cols="90" id="contents" name="edito">{CONTENTS}</textarea>
 					</label>
 					<br />
-				</fieldset>	
+				</fieldset>
 				
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="valid" value="{L_UPDATE}" class="submit" />					
+					<input type="submit" name="submit" value="{L_UPDATE}" class="submit" />					
 					<script type="text/javascript">
 					<!--				
-					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />&nbsp;&nbsp;');
+					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo(\'preview_description\',{duration:1.2}); return false;" type="button" class="submit" />&nbsp;&nbsp;');
 					-->
 					</script>
 					&nbsp;&nbsp; 

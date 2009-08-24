@@ -1,19 +1,19 @@
 <?php
 /*##################################################
- *                                news.php
+ *                              news_constant.php
  *                            -------------------
- *   begin                : June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   begin                : August 11, 2009
+ *   copyright            : (C) 2009 Roguelon Geoffrey
+ *   email                : liaght@gmail.com
  *
- *  
- ###################################################
+ *
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,11 +25,13 @@
  *
 ###################################################*/
 
-if (defined('PHPBOOST') !== true) exit;
+define('AUTH_NEWS_READ', 1);
+define('AUTH_NEWS_CONTRIBUTE', 2);
+define('AUTH_NEWS_WRITE', 4);
+define('AUTH_NEWS_MODERATE', 8);
 
-require_once PATH_TO_ROOT . '/news/news_constant.php';
 
-$user_id = (isset($Session) && is_object($Session) && $User->get_attribute('user_id') != '') ? $User->get_attribute('user_id') : 1;
-$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET user_id = '" . $user_id . "' WHERE id = 1", __LINE__, __FILE__);
-	
+define('DB_TABLE_NEWS', PREFIX . 'news');
+define('DB_TABLE_NEWS_CAT', PREFIX . 'news_cat');
+
 ?>
