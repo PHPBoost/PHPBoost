@@ -26,524 +26,368 @@
 ###################################################*/
 
 require_once('../kernel/begin.php');
-
-load_module_lang('news'); //Chargement de la langue du module.
-$Cache->load('news');
+require_once('news_begin.php');
+require_once('news_cats.class.php');
+$news_categories = new NewsCats();
+require_once('news.class.php');
+$news_class = new news();
 
 import('util/date');
+$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 import('util/mini_calendar');
 
-$edit_news_id = retrieve(GET, 'edit', 0);
-$add_news = retrieve(GET, 'new', false);
-$preview = retrieve(POST, 'preview', false);
-$submit = retrieve(POST, 'submit', false);
-$selected_cat = retrieve(GET, 'idcat', 0);
-$delete_news = retrieve(GET, 'del', 0);
+$new = retrieve(GET, 'new', 0);
+$edit = retrieve(GET, 'edit', 0);
+$delete = retrieve(GET, 'del', 0);
 
-//Form variables
-$news_title = retrieve(POST, 'title', '');
-$news_image = retrieve(POST, 'image', '');
-$news_contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-$news_short_contents = retrieve(POST, 'short_contents', '', TSTRING_UNCHANGE);
-$news_timestamp = retrieve(POST, 'timestamp', 0);
-$news_cat_id = retrieve(POST, 'idcat', 0);
-$news_visibility = retrieve(POST, 'visibility', 0);
-$ignore_release_date = retrieve(POST, 'ignore_release_date', false);
-
-//Instanciations of objects required
-$news_creation_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'creation', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
-
-if (!$ignore_release_date)
-	$news_release_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'release_date', ''), $LANG['date_format_short'], TSTRING_UNCHANGE);
-else
-	$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
-
-
-$begining_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'begining_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
-$end_date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(POST, 'end_date', '', TSTRING_UNCHANGE), $LANG['date_format_short']);
-
-//Deleting a news
-if ($delete_news > 0)
+if ($delete > 0)
 {
-	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
-	if (empty($news_infos['title']))
-		redirect(HOST. DIR . url('/news/news.php'));
+	$Session->csrf_get_protect();
+	$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 	
-	if ($news_categories->check_auth($news_infos['idcat']))
+	if (empty($news['id']))
 	{
-		$Sql->query_inject("DELETE FROM " . PREFIX . "news WHERE id = '" . $delete_news . "'", __LINE__, __FILE__);
-		//Deleting comments if the news has
-		if ($news_infos['nbr_com'] > 0)
-		{
-			import('content/comments');
-			$Comments = new Comments('news', $delete_news, url('news.php?id=' . $delete_news . '&amp;com=%s', 'news-' . $delete_news . '.php?com=%s'));
-			//$Comments->set_arg($news_id);
-			$Comments->delete_all($delete_news);
-		}
-		redirect(HOST. DIR . '/news/' . ($news_infos['idcat'] > 0 ? url('news.php?cat=' . $news_infos['idcat'], 'category-' . $news_infos['idcat'] . '+' . url_encode_rewrite($NEWS_CATS[$news_infos['idcat']]['name']) . '.php') : url('news.php')));
-        
-        // Feeds Regeneration
-        import('content/syndication/feed');
-        Feed::clear_cache('news');
+		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 	}
-	else
+	elseif (!$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-}
-elseif ($edit_news_id > 0)
-{
-	$news_infos = $Sql->query_array(PREFIX . 'news', '*', "WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
-	if (empty($news_infos['title']))
-		redirect(HOST. DIR . url('/news/news.php'));
-	define('TITLE', $NEWS_LANG['news_management']);
-	
-	//Barre d'arborescence
-	$auth_write = $User->check_auth($CONFIG_NEWS['global_auth'], WRITE_CAT_NEWS);
-	
-	$Bread_crumb->add($NEWS_LANG['news_management'], url('management.php?edit=' . $edit_news_id));
-	
-	$Bread_crumb->add($news_infos['title'], url('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_infos['title']) . '.php'));
-	
-	$id_cat = $news_infos['idcat'];
-
-	//Bread_crumb : we read categories list recursively
-	while ($id_cat > 0)
-	{
-		$Bread_crumb->add($NEWS_CATS[$id_cat]['name'], url('news.php?id=' . $id_cat, 'category-' . $id_cat . '+' . url_encode_rewrite($NEWS_CATS[$id_cat]['name']) . '.php'));
-		
-		if (!empty($NEWS_CATS[$id_cat]['auth']))
-			$auth_write = $User->check_auth($NEWS_CATS[$id_cat]['auth'], WRITE_CAT_NEWS);
-		
-		$id_cat = (int)$NEWS_CATS[$id_cat]['id_parent'];
 	}
 	
-	if (!$auth_write)
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+	
+	if ($news['nbr_com'] > 0)
+	{
+		import('content/comments');
+		$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
+		$Comments->delete_all($delete_news);
+	}
+	
+	// Feeds Regeneration
+    import('content/syndication/feed');
+    Feed::clear_cache('news');
+    
+	redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
+}
+elseif (!empty($_POST['submit']))
+{
+	$Session->csrf_get_protect();
+
+	$start = MiniCalendar::retrieve_date('start');
+	$end = MiniCalendar::retrieve_date('end');
+	$release = MiniCalendar::retrieve_date('release');
+
+	$news = array(
+		'id' => retrieve(POST, 'id', 0, TINTEGER),
+		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'title' => retrieve(POST, 'title', '', TSTRING),
+		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
+		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
+		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
+		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
+		'start' => $start->get_timestamp(),
+		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
+		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
+		'end' => $end->get_timestamp(),
+		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
+		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
+		'release' => $release->get_timestamp(),
+		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
+		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
+		'img' => retrieve(POST, 'img', '', TSTRING),
+		'alt' => retrieve(POST, 'alt', '', TSTRING),
+	);
+
+	if ($news['id'] == 0 && ($User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_WRITE) || $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+	{
+		// Errors.
+		if (empty($news['title']))
+		{
+			$Errorh->handler('e_require_title', E_USER_REDIRECT);
+		}
+		elseif (empty($news['idcat']) && $news['idcat'] == 0)
+		{
+			$Errorh->handler('e_require_cat', E_USER_REDIRECT);
+		}
+		elseif (empty($news['desc']))
+		{
+			$Errorh->handler('e_require_desc', E_USER_REDIRECT);
+		}
+		else
+		{
+
+			// $start & $end.
+			if ($news['visible'] == 2)
+			{
+				// Start.
+				$news['start'] += ($news['start_hour'] * 60 + $news['start_min']) * 60;
+				if ($news['start'] <= $now->get_timestamp())
+				{
+					$news['start'] = 0;
+				}
+
+				// End.
+				$news['end'] += ($news['end_hour'] * 60 + $news['end_min']) * 60;
+				if ($news['end'] <= $now->get_timestamp())
+				{
+					$news['end'] = 0;
+				}
+
+				$news['visible'] = 1;
+			}
+			else
+			{
+				$news['start'] = $news['end'] = 0;
+			}
+
+			// Release.
+			$news['release'] += ($news['release_hour'] * 60 + $news['release_min']) * 60;
+			if ($news['release'] == 0)
+			{
+				$news['release'] = $now->get_timestamp();
+			}
+
+			// Image.
+			$img = new Url($news['img']);
+			
+			if ($news['id'] > 0)
+			{
+				$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $news['idcat'] . "', title = '" . $news['title'] . "', contents = '" . $news['desc'] . "', extend_contents = '" . $news['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $news['alt'] . "', visible = '" . $news['visible'] . "', start = '" .  $news['start'] . "', end = '" . $news['end'] . "', timestamp = '" . $news['release'] . "'
+				WHERE id = '" . $news['id'] . "'", __LINE__, __FILE__);
+			}
+			else
+			{
+				$auth_contrib = !$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_WRITE) && $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_CONTRIBUTE);
+
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com)
+				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '0')", __LINE__, __FILE__);
+
+				$news['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_NEWS);
+
+				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
+				if ($auth_contrib)
+				{
+					//Importing the contribution classes
+					import('events/contribution');
+					import('events/contribution_service');
+					$news_contribution = new Contribution();
+
+					//The id of the file in the module. It's useful when the module wants to search a contribution (we will need it in the file edition)
+					$news_contribution->set_id_in_module($news['id']);
+					//The description of the contribution (the counterpart) to explain why did the contributor contributed
+					$news_contribution->set_description(stripslashes($news['counterpart']));
+					//The entitled of the contribution
+					$news_contribution->set_entitled(sprintf($NEWS_LANG['contribution_entitled'], $news['title']));
+					//The URL where a validator can treat the contribution (in the file edition panel)
+					$news_contribution->set_fixing_url('/news/management.php?edit=' . $news['id']);
+					//Who is the contributor?
+					$news_contribution->set_poster_id($User->get_attribute('user_id'));
+					//The module
+					$news_contribution->set_module('news');
+					//Assignation des autorisations d'écriture / Writing authorization assignation
+					$news_contribution->set_auth(
+						//On déplace le bit sur l'autorisation obtenue pour le mettre sur celui sur lequel travaille les contributions, à savoir CONTRIBUTION_AUTH_BIT
+						//We shift the authorization bit to the one with which the contribution class works, CONTRIBUTION_AUTH_BIT
+						Authorizations::capture_and_shift_bit_auth(
+							//On fusionne toutes les autorisations pour obtenir l'autorisation d'écriture dans la catégorie sélectionnée :
+							//C'est la fusion entre l'autorisation de la racine et de l'ensemble de la branche des catégories
+							//We merge the whole authorizations of the branch constituted by the selected category
+							Authorizations::merge_auth(
+								$NEWS_CONFIG['global_auth'],
+								//Autorisation de l'ensemble de la branche des catégories jusqu'à la catégorie demandée
+								$news_categories->compute_heritated_auth($news['idcat'], AUTH_NEWS_MODERATE, AUTH_CHILD_PRIORITY),
+								AUTH_NEWS_MODERATE, AUTH_CHILD_PRIORITY
+							),
+							AUTH_NEWS_MODERATE, CONTRIBUTION_AUTH_BIT
+						)
+					);
+
+					//Sending the contribution to the kernel. It will place it in the contribution panel to be approved
+					ContributionService::save_contribution($news_contribution);
+
+					//Redirection to the contribution confirmation page
+					redirect(HOST . DIR . '/news/contribution.php');
+				}
+			}
+
+			// Feeds Regeneration
+			import('content/syndication/feed');
+			Feed::clear_cache('news');
+
+			if ($news['visible'] && $news['start'] == 0)
+			{
+				redirect('news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
+			}
+			else
+			{
+				redirect(url('news.php'));
+			}
+		}
+	}
+	else
+	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
+	}
 }
 else
 {
-	$Bread_crumb->add($NEWS_LANG['news_addition'], url('management.php?new=1'));
-	define('TITLE', $NEWS_LANG['news_addition']);
-}
-
-
-$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
-
-$Bread_crumb->reverse();
+	$tpl = new Template('news/management.tpl');
 	
-
-require_once('../kernel/header.php');
-
-$Template->set_filenames(array(
-	'news_management'=> 'news/news_management.tpl'
-));
-
-if ($edit_news_id > 0)
-{
-	if ($submit)
+	if ($edit > 0)
 	{
-		//The form is ok
-		if (!empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents))
+		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
+		
+		if (empty($news['id']))
 		{
-			$visible = 1;
-			
-			$date_now = new Date(DATE_NOW);
-			
-			switch ($news_visibility)
-			{
-				case 2:
-					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
-					{
-						$start_timestamp = $begining_date->get_timestamp();
-						$end_timestamp = $end_date->get_timestamp();
-					}
-					else
-						$visible = 0;
-
-					break;
-				case 1:
-					list($start_timestamp, $end_timestamp) = array(0, 0);
-					break;
-				default:
-					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
-			}
-			
-			$Sql->query_inject("UPDATE " . PREFIX . "news SET title = '" . $news_title . "', idcat = '" . $news_cat_id . "', url = '" . $news_url . "', size = '" . $news_size . "', count = '" . $news_hits . "', contents = '" . strparse($news_contents) . "', short_contents = '" . strparse($news_short_contents) . "', image = '" . $news_image . "', timestamp = '" . $news_creation_date->get_timestamp() . "', release_timestamp = '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', start = '" . $start_timestamp . "', end = '" . $end_timestamp . "', visible = '" . $visible . "' WHERE id = '" . $edit_news_id . "'", __LINE__, __FILE__);
-			
-			//Updating the number of subnewss in each category
-			if ($news_cat_id != $news_infos['idcat'])
-			{
-				$news_categories->Recount_sub_newss();
-			}
-            
-            // Feeds Regeneration
-            import('content/syndication/feed');
-            Feed::clear_cache('news');
-            
-			redirect(HOST . DIR . '/news/' . url('news.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php'));
+			$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 		}
-		//Error (which souldn't happen because of the javascript checking)
+		elseif (!$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+		{
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		}
 		else
 		{
-			redirect(HOST . DIR . '/news/' . url('news.php'));
+			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . $news['title']);
+			$news_class->bread_crumb($news['idcat']);
+			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
+			$Bread_crumb->add($NEWS_LANG['edit_news'], url('management.php?edit=' . $news['id']));
+			
+			// Calendrier.
+			$start_calendar = new MiniCalendar('start');
+			$start = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['start'] > 0 ? $news['start'] : $now->get_timestamp()));
+			$start_calendar->set_date($start);
+			$end_calendar = new MiniCalendar('end');
+			$end = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['end'] > 0 ? $news['end'] : $now->get_timestamp()));
+			$end_calendar->set_date($end);
+			$end_calendar->set_style('margin-left:150px;');
+			$release_calendar = new MiniCalendar('release');
+			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($news['timestamp'] > 0 ? $news['timestamp'] : $now->get_timestamp()));
+			$release_calendar->set_date($release);
+
+			$tpl->assign_vars(array(
+				'C_CONTRIBUTION' => false,
+				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
+				'TITLE' => $news['title'],
+				'CONTENTS' => unparse($news['contents']),
+				'EXTEND_CONTENTS' => unparse($news['extend_contents']),
+				'VISIBLE_WAITING' => $news['visible'] && (!empty($news['start']) || !empty($news['end'])),
+				'VISIBLE_ENABLED' => $news['visible'],
+				'VISIBLE_UNAPROB' => !$news['visible'],
+				'START_CALENDAR' => $start_calendar->display(),
+				'START_HOUR' => !empty($news['start']) ? $start->get_hours() : '',
+				'START_MIN' => !empty($news['start']) ? $start->get_minutes() : '',
+				'END_CALENDAR' => $end_calendar->display(),
+				'END_HOUR' => !empty($news['end']) ? $end->get_hours() : '',
+				'END_MIN' => !empty($news['end']) ? $end->get_minutes() : '',
+				'RELEASE_CALENDAR' => $release_calendar->display(),
+				'RELEASE_HOUR' => !empty($news['timestamp']) ? $release->get_hours() : '',
+				'RELEASE_MIN' => !empty($news['timestamp']) ? $release->get_minutes() : '',
+				'IMG_PREVIEW' => second_parse_url($news['img']),
+				'IMG' => $news['img'],
+				'ALT' => $news['alt'],
+				'IDNEWS' => $news['id'],
+				'USER_ID' => $news['user_id']
+			));
+
+			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
-	}
-	//Previewing a news
-	elseif ($preview)
-	{
-		$begining_calendar = new MiniCalendar('begining_date');
-		$begining_calendar->set_date($begining_date);
-		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);
-		$end_calendar->set_style('margin-left:150px;');
-
-		$Template->set_filenames(array('news' => 'news/news.tpl'));
-		
-		if ($news_size > 1)
-			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
-		elseif ($news_size > 0)
-			$size_tpl = ($news_size * 1024) . ' ' . $LANG['unit_kilobytes'];
-		else
-			$size_tpl = $NEWS_LANG['unknown_size'];
-		
-		//Crï¿½ation des calendriers
-		$creation_calendar = new MiniCalendar('creation');
-		$creation_calendar->set_date($news_creation_date);
-		$release_calendar = new MiniCalendar('release_date');
-		$release_calendar->set_date($news_release_date);
-		
-		if ($news_visibility < 0 || $news_visibility > 2)
-			$news_visibility = 0;
-
-		$Template->assign_vars(array(
-			'C_DISPLAY_NEWS' => true,
-			'C_IMG' => !empty($news_image),
-			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
-			'NAME' => stripslashes($news_title),
-			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
-			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $news_release_date->get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
-			'SIZE' => $size_tpl,
-			'COUNT' => $news_hits,
-			'THEME' => get_utheme(),
-			'HITS' => sprintf($NEWS_LANG['n_times'], (int)$news_hits),
-			'NUM_NOTES' => sprintf($NEWS_LANG['num_notes'], 0),
-			'U_IMG' => $news_image,
-			'IMAGE_ALT' => str_replace('"', '\"', $news_title),
-			'LANG' => get_ulang(),
-			// Those langs are required by the template inclusion
-			'L_DATE' => $LANG['date'],
-			'L_SIZE' => $LANG['size'],
-			'L_NEWS' => $NEWS_LANG['news'],
-			'L_NEWS_FILE' => $NEWS_LANG['news_news'],
-			'L_FILE_INFOS' => $NEWS_LANG['news_infos'],
-			'L_INSERTION_DATE' => $NEWS_LANG['insertion_date'],
-			'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
-			'L_NEWSED' => $NEWS_LANG['newsed'],
-			'L_NOTE' => $LANG['note'],
-			'U_NEWS_FILE' => url('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
-		));
-
-		$Template->assign_vars(array(
-			'TITLE' => $news_title,
-			'COUNT' => $news_hits,
-			'DESCRIPTION' => $news_contents,
-			'SHORT_DESCRIPTION' => $news_short_contents,
-			'FILE_IMAGE' => $news_image,
-			'URL' => $news_url,
-			'SIZE_FORM' => $news_size,
-			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($news_short_contents))),
-			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
-			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
-			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
-			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
-			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->display(),
-			'END_CALENDAR' => $end_calendar->display(),
-		));
-	}
-	//Default formulary, with news infos from the database
-	else
-	{
-		$news_creation_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['timestamp']);
-		$news_release_date = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['release_timestamp']);
-		
-		$creation_calendar = new MiniCalendar('creation');
-		$creation_calendar->set_date($news_creation_date);
-		
-		$release_calendar = new MiniCalendar('release_date');
-		$ignore_release_date = ($news_release_date->get_timestamp() == 0);
-		if (!$ignore_release_date)
-			$release_calendar->set_date($news_release_date);
-		
-		
-		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_style('margin-left:150px;');
-		
-		if (!empty($news_infos['start']) && !empty($news_infos['end']))
-		{
-			$news_visibility = 2;
-			$begining_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['start']));
-			$end_calendar->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news_infos['end']));
-		}
-		elseif (!empty($news_infos['visible']))
-			$news_visibility = 1;
-		else
-			$news_visibility = 0;
-		
-		$Template->assign_vars(array(
-			'TITLE' => $news_infos['title'],
-			'COUNT' => !empty($news_infos['count']) ? $news_infos['count'] : 0,
-			'DESCRIPTION' => unparse($news_infos['contents']),
-			'SHORT_DESCRIPTION' => unparse($news_infos['short_contents']),
-			'FILE_IMAGE' => $news_infos['image'],
-			'URL' => $news_infos['url'],
-			'SIZE_FORM' => $news_infos['size'],
-			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->build_select_form($news_infos['idcat'], 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
-			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
-			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
-			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->display(),
-			'END_CALENDAR' => $end_calendar->display(),
-			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
-			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'U_TARGET' => url('management.php?edit=' . $edit_news_id . '&amp;token=' . $Session->get_token())
-		));
-	}
-}
-//Adding a news
-elseif ($add_news)
-{
-	if ($submit)
-	{
-		//The form is ok
-		if (!empty($news_title) && $news_categories->check_auth($news_cat_id) && !empty($news_url) && !empty($news_contents))
-		{
-			$visible = 1;
-			
-			$date_now = new Date(DATE_NOW);
-			
-			switch ($news_visibility)
-			{
-				case 2:
-					if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
-					{
-						$start_timestamp = $begining_date->get_timestamp();
-						$end_timestamp = $end_date->get_timestamp();
-					}
-					else
-						$visible = 0;
-
-					break;
-				case 1:
-					list($start_timestamp, $end_timestamp) = array(0, 0);
-					break;
-				default:
-					list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
-			}
-			
-			$Sql->query_inject("INSERT INTO " . PREFIX . "news (title, idcat, url, size, count, contents, short_contents, image, timestamp, release_timestamp, start, end, visible) VALUES ('" . $news_title . "', '" . $news_cat_id . "', '" . $news_url . "', '" . $news_size . "', '" . $news_hits . "', '" . strparse($news_contents) . "', '" . strparse($news_short_contents) . "', '" . $news_image . "', '" . $news_creation_date->get_timestamp() . "', '" . ($ignore_release_date ? 0 : $news_release_date->get_timestamp()) . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $visible . "')", __LINE__, __FILE__);
-			
-			$new_id_news = $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "news");
-			
-			//Updating the number of subnewss in each category
-			if ($news_cat_id != $news_infos['idcat'])
-			{
-				$news_categories->Recount_sub_newss();
-			}
-            
-            // Feeds Regeneration
-            import('content/syndication/feed');
-            Feed::clear_cache('news');
-            
-			redirect(HOST . DIR . '/news/' . url('news.php?id=' . $new_id_news, 'news-' . $new_id_news . '+' . url_encode_rewrite($news_title) . '.php'));
-		}
-		//Error (which souldn't happen because of the javascript checking)
-		else
-		{
-			redirect(HOST . DIR . '/news/' . url('news.php'));
-		}
-	}
-	//Previewing a news
-	elseif ($preview)
-	{
-		$begining_calendar = new MiniCalendar('begining_date');
-		$begining_calendar->set_date($begining_date);
-		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_date($end_date);
-		$end_calendar->set_style('margin-left:150px;');
-		
-		$Template->set_filenames(array('news' => 'news/news.tpl'));
-		
-		if ($news_size > 1)
-			$size_tpl = $news_size . ' ' . $LANG['unit_megabytes'];
-		elseif ($news_size > 0)
-			$size_tpl = ($news_size * 1024) . ' ' . $LANG['unit_kilobytes'];
-		else
-			$size_tpl = $NEWS_LANG['unknown_size'];
-		
-		//Crï¿½ation des calendriers
-		$creation_calendar = new MiniCalendar('creation');
-		$creation_calendar->set_date($news_creation_date);
-		$release_calendar = new MiniCalendar('release_date');
-		$release_calendar->set_date($news_release_date);
-		
-		if ($news_visibility < 0 || $news_visibility > 2)
-			$news_visibility = 0;
-
-		$Template->assign_vars(array(
-			'C_DISPLAY_NEWS' => true,
-			'C_IMG' => !empty($news_image),
-			'C_EDIT_AUTH' => false,
-			'MODULE_DATA_PATH' => $Template->get_module_data_path('news'),
-			'NAME' => stripslashes($news_title),
-			'CONTENTS' => second_parse(stripslashes(strparse($news_contents))),
-			'CREATION_DATE' => $news_creation_date->format(DATE_FORMAT_SHORT) ,
-			'RELEASE_DATE' => $news_release_date->get_timestamp() > 0 ? $news_release_date->format(DATE_FORMAT_SHORT) : $NEWS_LANG['unknown_date'],
-			'SIZE' => $size_tpl,
-			'COUNT' => $news_hits,
-			'THEME' => get_utheme(),
-			'HITS' => sprintf($NEWS_LANG['n_times'], (int)$news_hits),
-			'NUM_NOTES' => sprintf($NEWS_LANG['num_notes'], 0),
-			'U_IMG' => $news_image,
-			'IMAGE_ALT' => str_replace('"', '\"', $news_title),
-			'LANG' => get_ulang(),
-			// Those langs are required by the template inclusion
-			'L_DATE' => $LANG['date'],
-			'L_SIZE' => $LANG['size'],
-			'L_NEWS' => $NEWS_LANG['news'],
-			'L_NEWS_FILE' => $NEWS_LANG['news_news'],
-			'L_FILE_INFOS' => $NEWS_LANG['news_infos'],
-			'L_INSERTION_DATE' => $NEWS_LANG['insertion_date'],
-			'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
-			'L_NEWSED' => $NEWS_LANG['newsed'],
-			'L_NOTE' => $LANG['note'],
-			'U_NEWS_FILE' => url('count.php?id=' . $edit_news_id, 'news-' . $edit_news_id . '+' . url_encode_rewrite($news_title) . '.php')
-		));
-
-		$Template->assign_vars(array(
-			'TITLE' => stripslashes($news_title),
-			'COUNT' => $news_hits,
-			'DESCRIPTION' => $news_contents,
-			'SHORT_DESCRIPTION' => $news_short_contents,
-			'FILE_IMAGE' => $news_image,
-			'URL' => $news_url,
-			'SIZE_FORM' => $news_size,
-			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->build_select_form($news_cat_id, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'SHORT_DESCRIPTION_PREVIEW' => second_parse(stripslashes(strparse($news_short_contents))),
-			'VISIBLE_WAITING' => $news_visibility == 2 ? ' checked="checked"' : '',
-			'VISIBLE_ENABLED' => $news_visibility == 1 ? ' checked="checked"' : '',
-			'VISIBLE_UNAPROVED' => $news_visibility == 0 ? ' checked="checked"' : '',
-			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
-			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
-			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
-			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->display(),
-			'END_CALENDAR' => $end_calendar->display(),
-		));
 	}
 	else
 	{
-		$news_creation_date = new Date(DATE_NOW, TIMEZONE_AUTO);
-		$news_release_date = new Date(DATE_NOW, TIMEZONE_AUTO);
-		
-		$creation_calendar = new MiniCalendar('creation');
-		$creation_calendar->set_date($news_creation_date);
-		
-		$release_calendar = new MiniCalendar('release_date');
-		$ignore_release_date = false;
-		if (!$ignore_release_date)
-			$release_calendar->set_date($news_release_date);
-		
-		
-		$begining_calendar = new MiniCalendar('begining_date');
-		$end_calendar = new MiniCalendar('end_date');
-		$end_calendar->set_style('margin-left:150px;');
-		
-		$begining_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-		$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
-		$news_visibility = 0;
-		
-		$Template->assign_vars(array(
-			'TITLE' => '',
-			'COUNT' => 0,
-			'DESCRIPTION' => '',
-			'SHORT_DESCRIPTION' => '',
-			'FILE_IMAGE' => '',
-			'URL' => '',
-			'SIZE_FORM' => '',
-			'DATE' => $news_creation_date->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-			'CATEGORIES_TREE' => $news_categories->build_select_form($selected_cat, 'idcat', 'idcat', 0, WRITE_CAT_NEWS, $CONFIG_NEWS['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH),
-			'DATE_CALENDAR_CREATION' => $creation_calendar->display(),
-			'DATE_CALENDAR_RELEASE' => $release_calendar->display(),
-			'BOOL_IGNORE_RELEASE_DATE' => $ignore_release_date ? 'true' : 'false',
-			'STYLE_FIELD_RELEASE_DATE' => $ignore_release_date ? 'none' : 'block',
-			'IGNORE_RELEASE_DATE_CHECKED' => $ignore_release_date ? ' checked="checked"' : '',
-			'BEGINING_CALENDAR' => $begining_calendar->display(),
-			'END_CALENDAR' => $end_calendar->display(),
-			'VISIBLE_WAITING' => '',
-			'VISIBLE_ENABLED' => ' checked="checked"',
-			'VISIBLE_UNAPROVED' => '',
-			'U_TARGET' => url('management.php?new=1&amp;token=' . $Session->get_token())
-		));
+		if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) && !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
+		{
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
+		}
+		else
+		{
+			$auth_contrib = !$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE);
+
+			define('TITLE', $NEWS_LANG['add_news']);
+
+			// Calendrier.
+			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+			$start_calendar = new MiniCalendar('start');
+			$start_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$end_calendar = new MiniCalendar('end');
+			$end_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+			$end_calendar->set_style('margin-left:150px;');
+			$release_calendar = new MiniCalendar('release');
+			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
+
+			$tpl->assign_vars(array(
+				'C_CONTRIBUTION' => false,
+				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
+				'TITLE' => '',
+				'CONTENTS' => '',
+				'EXTEND_CONTENTS' => '',
+				'VISIBLE_WAITING' => 0,
+				'VISIBLE_ENABLED' => 1,
+				'VISIBLE_UNAPROB' => 0,
+				'START_CALENDAR' => $start_calendar->display(),
+				'START_HOUR' => '',
+				'START_MIN' => '',
+				'END_CALENDAR' => $end_calendar->display(),
+				'END_HOUR' => '',
+				'END_MIN' => '',
+				'RELEASE_CALENDAR' => $release_calendar->display(),
+				'RELEASE_HOUR' => $now->get_hours(),
+				'RELEASE_MIN' => $now->get_minutes(),
+				'IMG' => '',
+				'ALT' => '',
+				'IDNEWS' => '0',
+				'USER_ID' => $User->get_attribute('user_id')
+			));
+			
+			$news_categories->build_select_form(0, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			
+			if ($auth_contrib)
+			{
+				$tpl->assign_vars(array(
+					'C_CONTRIBUTION' => $auth_contrib,
+					'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+					'L_NOTICE_CONTRIBUTION' => $NEWS_LANG['notice_contribution'],
+					'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],
+					'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $NEWS_LANG['contribution_counterpart_explain'],
+				));
+			}
+		}
 	}
+	require_once('../kernel/header.php');
+
+	$tpl->assign_vars(array(
+		'L_ADD_NEWS' => $NEWS_LANG['add_news'],
+		'L_REQUIRE' => $LANG['require'],
+		'L_TITLE_NEWS' => $NEWS_LANG['title_news'],
+		'L_CATEGORY' => $NEWS_LANG['cat_news'],
+		'L_DESC' => $NEWS_LANG['desc_news'],
+		'L_DESC_EXTEND' => $NEWS_LANG['desc_extend_news'],
+		'KERNEL_EDITOR' => display_editor(),
+		'KERNEL_EDITOR_EXTEND' => display_editor('extend_contents'),
+		'CONTRIBUTION_COUNTERPART_EDITOR' => display_editor('counterpart'),
+		'L_TO_DATE' => $LANG['to_date'],
+		'L_FROM_DATE' => $LANG['from_date'],
+		'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
+		'L_NEWS_DATE' => $NEWS_LANG['news_date'],
+		'L_UNIT_HOUR' => strtolower($LANG['unit_hour']),
+		'L_IMMEDIATE' => $LANG['now'],
+		'L_UNAPROB' => $LANG['unaprob'],
+		'L_IMG_MANAGEMENT' => $NEWS_LANG['img_management'],
+		'L_PREVIEW_IMG' => $NEWS_LANG['preview_image'],
+		'L_PREVIEW_IMG_EXPLAIN' => $NEWS_LANG['preview_image_explain'],
+		'L_IMG_LINK' => $NEWS_LANG['img_link'],
+		'L_IMG_DESC' => $NEWS_LANG['img_desc'],
+		'L_BB_UPLOAD' => $LANG['bb_upload'],
+		'L_REQUIRE_TITLE' => $LANG['require_title'],
+		'L_REQUIRE_CAT' => $NEWS_LANG['require_cat'],
+		'L_REQUIRE_TEXT' => $LANG['require_text'],
+		'L_SUBMIT' => $LANG['submit'],
+		'L_PREVIEW' => $LANG['preview'],
+		'L_RESET' => $LANG['reset'],
+	));
+
+	$tpl->parse();
 }
 
-$Template->assign_vars(array(
-	'KERNEL_EDITOR' => display_editor(),
-	'KERNEL_EDITOR_SHORT' => display_editor('short_contents'),
-	'C_PREVIEW' => $preview,
-	'L_PAGE_TITLE' => TITLE,
-	'L_EDIT_FILE' => $NEWS_LANG['edit_news'],
-	'L_YES' => $LANG['yes'],
-	'L_NO' => $LANG['no'],
-	'L_NEWS_DATE' => $NEWS_LANG['news_date'],
-	'L_IGNORE_RELEASE_DATE' => $NEWS_LANG['ignore_release_date'],
-	'L_RELEASE_DATE' => $NEWS_LANG['release_date'],
-	'L_FILE_VISIBILITY' => $NEWS_LANG['news_visibility'],
-	'L_NOW' => $LANG['now'],
-	'L_UNAPPROVED' => $LANG['unapproved'],
-	'L_TO_DATE' => $LANG['to_date'],
-	'L_FROM_DATE' => $LANG['from_date'],
-	'L_DESC' => $LANG['description'],
-	'L_NEWS' => $NEWS_LANG['news'],
-	'L_SIZE' => $LANG['size'],
-	'L_URL' => $LANG['url'],
-	'L_FILE_IMAGE' => $NEWS_LANG['news_image'],
-	'L_TITLE' => $LANG['title'],
-	'L_CATEGORY' => $LANG['category'],
-	'L_REQUIRE' => $LANG['require'],
-	'L_NEWS_ADD' => $NEWS_LANG['news_add'],
-	'L_NEWS_MANAGEMENT' => $NEWS_LANG['news_management'],
-	'L_NEWS_CONFIG' => $NEWS_LANG['news_config'],
-	'L_UPDATE' => $LANG['update'],
-	'L_RESET' => $LANG['reset'],
-	'L_PREVIEW' => $LANG['preview'],
-	'L_UNIT_SIZE' => $LANG['unit_megabytes'],
-	'L_CONTENTS' => $NEWS_LANG['complete_contents'],
-	'L_SHORT_CONTENTS' => $NEWS_LANG['short_contents'],
-	'L_SUBMIT' => $edit_news_id > 0 ? $NEWS_LANG['update_news'] : $NEWS_LANG['add_news'],
-	'L_WARNING_PREVIEWING' => $NEWS_LANG['warning_previewing'],
-	'L_REQUIRE_DESCRIPTION' => $NEWS_LANG['require_description'],
-	'L_REQUIRE_URL' => $NEWS_LANG['require_url'],
-	'L_REQUIRE_CREATION_DATE' => $NEWS_LANG['require_creation_date'],
-	'L_REQUIRE_RELEASE_DATE' => $NEWS_LANG['require_release_date'],
-	'L_REQUIRE_TITLE' => $LANG['require_title']
-));
-	
-$Template->pparse('news_management');
 require_once('../kernel/footer.php');
 
 ?>
