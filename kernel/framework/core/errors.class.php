@@ -321,7 +321,7 @@ class Errors
 			$i = 1;
 			while (!feof($handle))
 			{
-				$buffer = fgets($handle, 4096);
+				$buffer = fgets($handle);
 				if ($i == 2)
 					$errinfo['errno'] = $buffer;
 				if ($i == 3)
