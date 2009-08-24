@@ -27,8 +27,10 @@
 
 function menu_langswitcher_langswitcher($position, $block)
 {
-   global $CONFIG, $LANGS_CONFIG, $User, $LANG, $Session;
+	global $CONFIG, $LANGS_CONFIG, $User, $LANG, $Session;
 
+	load_menu_lang('langswitcher');
+	
 	$switchlang = !empty($_GET['switchlang']) ? urldecode($_GET['switchlang']) : '';
     if (!empty($switchlang))
     {
