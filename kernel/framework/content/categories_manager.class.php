@@ -639,7 +639,7 @@ class CategoriesManager
 	 */
 	function _create_row_interface($id_cat, $level, $ajax_mode, &$reference_template)
 	{
-		global $CONFIG, $LANG;
+		global $CONFIG, $LANG, $Session;
 		
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
@@ -681,13 +681,13 @@ class CategoriesManager
 					'NAME' => $values['name'],
 					//If it's not the first of the category we can have it go downer
 					'C_NOT_FIRST_CAT' => $values['order'] > 1,
-					'ACTION_GO_UP' => $ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
+					'ACTION_GO_UP' => $ajax_mode ? $this->display_config['administration_file_name'] . '?id_up=' . $id . '&amp;token=' . $Session->get_token() . '" id="up_' . $id : 'javascript:ajax_move_cat(' . $id . ', \'up\');',
 					//If it's not the last we can have it go upper
 					'C_NOT_LAST_CAT' => $i != $num_cats  - 1 && $this->cache_var[$id_categories[$i + 1]]['id_parent'] == $id_cat,
-					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
+					'ACTION_GO_DOWN' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?id_down=' . $id . '&amp;token=' . $Session->get_token() . '" id="down_' . $id) : 'javascript:ajax_move_cat(' . $id . ', \'down\');',
 					'C_VISIBLE' => $values['visible'],
-					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
-					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
+					'ACTION_HIDE' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?hide=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'hide\');',
+					'ACTION_SHOW' => $ajax_mode ? url($this->display_config['administration_file_name'] . '?show=' . $id . '&amp;token=' . $Session->get_token()) : 'javascript:ajax_change_cat_visibility(' . $id . ', \'show\');',
 					'ACTION_EDIT' => url($this->display_config['administration_file_name'] . '?edit=' . $id),
 					'ACTION_DELETE' => url($this->display_config['administration_file_name'] . '?del=' . $id),
 					'CONFIRM_DELETE' => $LANG['cats_management_confirm_delete'],
