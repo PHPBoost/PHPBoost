@@ -16,8 +16,13 @@
 					<h3 class="title">{TITLE}</h3>
 				</div>
                 <div style="float:right;">
+					# IF C_ADD #
+					<a href="management.php?new=1" title="{L_ADD}">
+						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
+					</a>
+					# ENDIF #
 					# IF C_IS_ADMIN #
-					<a href="admin_news_config.php" title="{L_EDIT}">
+					<a href="admin_news_config.php#preview_description" title="{L_EDIT}">
 						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" />
 					</a>
 					# ENDIF #
@@ -30,6 +35,12 @@
             <div class="news_bottom_r"></div>
             <div class="news_bottom"></div>
         </div>
+		# ELSEIF C_ADD #
+		<div style="text-align:center;margin:25px auto;">
+			<a href="management.php?new=1" title="{L_ADD}">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
+			</a>
+		</div>
         # ENDIF #
 
 		# IF C_NEWS_BLOCK #
@@ -76,7 +87,7 @@
             	</div>
        		</div>
 		# END news #
-
+		
        	# IF C_NEWS_NAVIGATION_LINKS #
        		<div style="width:90%;padding:20px;margin:auto;margin-top:-15px;">
            		# IF C_PREVIOUS_NEWS #
