@@ -5,6 +5,7 @@
 ------------------------------------- NOYAU ------------------------------------
 
 Ajouter dans l'administration la liste des hôtes autororisés pour le proxy
+Reprendre la gestion du formulaire des autorisations qui est super mal foutue. Faire ça proprement en objet avec possibilité de générer un élément de formulaire pour insérer das le builder
 
 ------------------------------------ MODULES -----------------------------------
 
