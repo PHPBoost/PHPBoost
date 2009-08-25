@@ -140,31 +140,49 @@ class NewsInterface extends ModuleInterface
         // Load the new's config
         $Cache->load('news');
         
-        // Last news
-        $result = $Sql->query_while("SELECT id, title, contents, timestamp, img
-            FROM " . DB_TABLE_NEWS . "
-            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1
-            ORDER BY timestamp DESC"
-			. $Sql->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+		$array_cat = array();
+		if (!empty($NEWS_CAT))
+		{
+			foreach($NEWS_CAT as $id => $value)
+			{
+				if ($User->check_auth($news_cat->auth($id), AUTH_NEWS_READ))
+				{
+					$array_cat[] = $id;
+				}
+			}
+		}
+
+		$where = !empty($array_cat) ? " AND idcat IN('" . implode(", ", $array_cat) . "')" : '';
+		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1" . $where, __LINE__, __FILE__) : 0;
+		
+		if ($NEWS_CONFIG['nbr_news'] > 0)
+		{
+	        // Last news
+	        $result = $Sql->query_while("SELECT id, title, contents, timestamp, img
+	            FROM " . DB_TABLE_NEWS . "
+	            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1" . $where . "
+	            ORDER BY timestamp DESC"
+				. $Sql->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
         
-        // Generation of the feed's items
-        while ($row = $Sql->fetch_assoc($result))
-        {
-            $item = new FeedItem();
+	        // Generation of the feed's items
+	        while ($row = $Sql->fetch_assoc($result))
+	        {
+	            $item = new FeedItem();
             
-            $item->set_title($row['title']);
-            // Rewriting
-            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
-            $item->set_link($link);
-            $item->set_guid($link);
-            $item->set_desc(second_parse($row['contents']));
-            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
-            $item->set_image_url($row['img']);
+	            $item->set_title($row['title']);
+	            // Rewriting
+	            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
+	            $item->set_link($link);
+	            $item->set_guid($link);
+	            $item->set_desc(second_parse($row['contents']));
+	            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
+	            $item->set_image_url($row['img']);
             
-            $data->add_item($item);
+	            $data->add_item($item);
+	        }
+	        $Sql->query_close($result);
         }
-        $Sql->query_close($result);
-        
+
         return $data;
     }
 	
@@ -205,7 +223,24 @@ class NewsInterface extends ModuleInterface
 		import('util/pagination');
 		$Pagination = new Pagination();
 		
-		$NEWS_CONFIG['nbr_news'] = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1", __LINE__, __FILE__);
+		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
+		$news_cat = new NewsCats();
+		
+		$array_cat = array();
+		if (!empty($NEWS_CAT))
+		{
+			foreach($NEWS_CAT as $id => $value)
+			{
+				if ($User->check_auth($news_cat->auth($id), AUTH_NEWS_READ))
+				{
+					$array_cat[] = $id;
+				}
+			}
+		}
+
+		$where = !empty($array_cat) ? " AND idcat IN('" . implode(", ", $array_cat) . "')" : '';
+
+		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1" . $where, __LINE__, __FILE__) : 0;
 		
 		//Pagination activée, sinon affichage lien vers les archives.
 		if ($NEWS_CONFIG['activ_pagin'] == '1')
@@ -272,7 +307,7 @@ class NewsInterface extends ModuleInterface
 				$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 					FROM " . DB_TABLE_NEWS . " n
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-					WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1
+					WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1" . $where . "
 					ORDER BY n.timestamp DESC
 					" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
@@ -319,51 +354,64 @@ class NewsInterface extends ModuleInterface
 		}
 		else //News en liste
 		{
-			$tpl_news->assign_vars(array(
-				'C_NEWS_LINK' => true,
-				'NAME_NEWS' => $NEWS_LANG['last_news'],
-			));
-
-			$column = ($NEWS_CONFIG['nbr_column'] > 1) ? true : false;
-			if ($column)
+			if ($NEWS_CONFIG['nbr_news'] == 0)
 			{
-				$i = 0;
-				$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
-				$column_width = floor(100/$NEWS_CONFIG['nbr_column']);
-
-				$tpl_news->assign_vars(array(
-					'C_NEWS_LINK_COLUMN' => true,
-					'COLUMN_WIDTH' => $column_width
+				$tpl_news->assign_vars( array(
+					'C_NEWS_NO_AVAILABLE' => true,
+					'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
 				));
 			}
-			
-			$result = $Sql->query_while("SELECT id, idcat, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1 ORDER BY timestamp DESC" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
-
-			while ($row = $Sql->fetch_assoc($result))
+			else
 			{
-				//Séparation des news en colonnes si activé.
-				$new_row = false;
+				$tpl_news->assign_vars(array(
+					'C_NEWS_LINK' => true,
+					'NAME_NEWS' => $NEWS_LANG['last_news'],
+				));
+
+				$column = ($NEWS_CONFIG['nbr_column'] > 1) ? true : false;
 				if ($column)
 				{
-					$new_row = (($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0);
-					$i++;
+					$i = 0;
+					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
+					$column_width = floor(100/$NEWS_CONFIG['nbr_column']);
+
+					$tpl_news->assign_vars(array(
+						'C_NEWS_LINK_COLUMN' => true,
+						'COLUMN_WIDTH' => $column_width
+					));
+				}
+			
+				$result = $Sql->query_while("SELECT id, idcat, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1" . $where . " ORDER BY timestamp DESC" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+
+				while ($row = $Sql->fetch_assoc($result))
+				{
+					if ($User->check_auth($news_cat->auth($row['idcat']), AUTH_NEWS_READ))
+					{
+						//Séparation des news en colonnes si activé.
+						$new_row = false;
+						if ($column)
+						{
+							$new_row = (($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0);
+							$i++;
+						}
+
+						$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+
+						$tpl_news->assign_block_vars('list', array(
+							'C_NEWS_ROW' => $new_row,
+							'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
+							'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php'),
+							'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
+							'TITLE' => $row['title'],
+							'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+							'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
+							'COM' => $row['nbr_com']
+						));
+					}
 				}
 
-				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
-
-				$tpl_news->assign_block_vars('list', array(
-					'C_NEWS_ROW' => $new_row,
-					'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
-					'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php'),
-					'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
-					'TITLE' => $row['title'],
-					'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-					'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
-					'COM' => $row['nbr_com']
-				));
+				$Sql->query_close($result);
 			}
-
-			$Sql->query_close($result);
 		}
 
 		return $tpl_news->parse(true);

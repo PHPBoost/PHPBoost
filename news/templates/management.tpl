@@ -8,16 +8,22 @@
 			tinyMCE.triggerSave();
 			# ENDIF #
 
-			if(document.getElementById('title').value == "") {
+			if (document.getElementById('title').value == "")
+			{
 				alert("{L_REQUIRE_TITLE}");
+				new Effect.ScrollTo('title',{duration:1.2});
 				return false;
 			}
-			if(document.getElementById('idcat').value == 0) {
+			if (document.getElementById('idcat').value == 0)
+			{
 				alert("{L_REQUIRE_CAT}");
+				new Effect.ScrollTo('idcat',{duration:1.2});
 				return false;
 			}
-			if(document.getElementById('contents').value == "") {
+			if (document.getElementById('contents').value == "")
+			{
 				alert("{L_REQUIRE_TEXT}");
+				new Effect.ScrollTo('scroll_contents',{duration:1.2});
 				return false;
 			}
 			return true;
@@ -59,7 +65,7 @@
 		}
 		function ajax_preview()
 		{
-			if( document.getElementById('counterpart').value != '' )
+			if({JS_CONTRIBUTION} && document.getElementById('counterpart').value != '')
 			{
 				XMLHttpRequest_preview('counterpart');
 			}
@@ -94,16 +100,12 @@
 					}
 				);
 			}
-			else
-			{
-				return false;
-			}
+			return false;
 		}
 		-->
 		</script>
 		
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
-			<div id="preview"></div>
 			<fieldset>
 				<legend>{L_ADD_NEWS}</legend>
 				<p>{L_REQUIRE}</p>
@@ -122,8 +124,7 @@
 						</select>
 					</label></dd>
 				</dl>
-				
-				<label for="contents">* {L_DESC}</label>
+				<label for="contents" id="scroll_contents">* {L_DESC}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
 				<br /><br />
@@ -198,6 +199,8 @@
 			</fieldset>
 			# ENDIF #
 			
+			<div id="preview"></div>
+			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" id="id" name="id" value="{IDNEWS}" class="submit" />
@@ -205,7 +208,7 @@
 				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				<script type="text/javascript">
 				<!--				
-				document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="ajax_preview();new Effect.ScrollTo(\'main\',{duration:1.2});" type="button" class="submit" />');
+				document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="ajax_preview();" type="button" class="submit" />');
 				-->
 				</script>
 				&nbsp;&nbsp; 
