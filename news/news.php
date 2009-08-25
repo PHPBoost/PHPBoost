@@ -29,6 +29,8 @@ require_once('../kernel/begin.php');
 require_once('news_begin.php');
 require_once('news.class.php');
 $news_class = new news();
+require_once('news_cats.class.php');
+$news_cat = new NewsCats();
 
 import('util/date');
 import('content/comments');
@@ -52,7 +54,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	{
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ))
+	elseif (!$User->check_auth($news_cat->auth($news['idcat']), AUTH_NEWS_READ))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
@@ -83,7 +85,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		'L_SYNDICATION' => $LANG['syndication'],
 		'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 		'L_DELETE' => $LANG['delete'],
-		'L_EDIT' => $LANG['edit'],
+		'L_EDIT' => $LANG['edit']
 	));
 
 	$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
@@ -105,6 +107,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 		'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : '',
 		'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
+		'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
 		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 	    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 	));
@@ -125,7 +128,7 @@ elseif (!empty($idcat))
 	{
 		$Errorh->handler('e_unexist_cat_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
+	elseif (!$User->check_auth($news_cat->auth($idcat), AUTH_NEWS_READ))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
@@ -167,7 +170,7 @@ elseif (!empty($idcat))
 				'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 				'TITLE' => $row['title'],
 				'CONTENTS' => second_parse($row['contents']),
-				'EXTEND_CONTENTS' => second_parse($row['extend_contents']),
+				'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 				'IMG' => second_parse_url($row['img']),
 				'IMG_DESC' => $row['alt'],
 				'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : $LANG['guest'],
@@ -175,6 +178,7 @@ elseif (!empty($idcat))
 				'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 				'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 				'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+				'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
 				'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 			    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 			));
@@ -190,12 +194,12 @@ elseif (!empty($idcat))
 
 			$tpl_news->assign_block_vars('list', array(
 				'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$idcat]['image']) : 0,
-				'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '.php'),
+				'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
 				'DATE' => $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 				'TITLE' => $row['title'],
 				'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
 				'COM' => $row['nbr_com'],
-				'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
+				'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $idcat . '-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
 			));
 		}
 	}

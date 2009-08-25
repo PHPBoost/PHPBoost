@@ -95,7 +95,7 @@ elseif (!empty($_POST['submit']))
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
 		'img' => retrieve(POST, 'img', '', TSTRING),
-		'alt' => retrieve(POST, 'alt', '', TSTRING),
+		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
 
 	if ($news['id'] == 0 && ($User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_WRITE) || $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
@@ -266,6 +266,7 @@ else
 
 			$tpl->assign_vars(array(
 				'C_CONTRIBUTION' => false,
+				'JS_CONTRIBUTION' => 'false',
 				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
 				'TITLE' => $news['title'],
 				'CONTENTS' => unparse($news['contents']),
@@ -315,7 +316,8 @@ else
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
 			$tpl->assign_vars(array(
-				'C_CONTRIBUTION' => false,
+				'C_CONTRIBUTION' => $auth_contrib,
+				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
 				'TITLE' => '',
 				'CONTENTS' => '',
@@ -339,17 +341,6 @@ else
 			));
 			
 			$news_categories->build_select_form(0, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
-			
-			if ($auth_contrib)
-			{
-				$tpl->assign_vars(array(
-					'C_CONTRIBUTION' => $auth_contrib,
-					'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
-					'L_NOTICE_CONTRIBUTION' => $NEWS_LANG['notice_contribution'],
-					'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],
-					'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $NEWS_LANG['contribution_counterpart_explain'],
-				));
-			}
 		}
 	}
 	require_once('../kernel/header.php');
@@ -377,12 +368,16 @@ else
 		'L_IMG_LINK' => $NEWS_LANG['img_link'],
 		'L_IMG_DESC' => $NEWS_LANG['img_desc'],
 		'L_BB_UPLOAD' => $LANG['bb_upload'],
+		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+		'L_NOTICE_CONTRIBUTION' => $NEWS_LANG['notice_contribution'],
+		'L_CONTRIBUTION_COUNTERPART' => $NEWS_LANG['contribution_counterpart'],
+		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $NEWS_LANG['contribution_counterpart_explain'],
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_CAT' => $NEWS_LANG['require_cat'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset'],
+		'L_RESET' => $LANG['reset']
 	));
 
 	$tpl->parse();
