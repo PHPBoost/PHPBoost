@@ -214,6 +214,14 @@ class NewsInterface extends ModuleInterface
 				'CONTENTS' => second_parse($NEWS_CONFIG['edito'])
 			));
 		}
+		
+		if ($User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
+		{
+			$tpl_news->assign_vars( array(
+				'C_ADD' => true,
+				'L_ADD' => $NEWS_LANG['add_news']
+			));
+		}
 
 		import('util/date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -241,7 +249,7 @@ class NewsInterface extends ModuleInterface
 		$where = !empty($array_cat) ? " AND idcat IN('" . implode(", ", $array_cat) . "')" : '';
 
 		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE start <= '" . $now->get_timestamp() . "' AND (end >= '" . $now->get_timestamp() . "' OR end = 0) AND visible = 1" . $where, __LINE__, __FILE__) : 0;
-		
+
 		//Pagination activée, sinon affichage lien vers les archives.
 		if ($NEWS_CONFIG['activ_pagin'] == '1')
 		{
