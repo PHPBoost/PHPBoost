@@ -28,6 +28,7 @@
 			}
 			return true;
 		}
+
 		function ajax_img_preview()
 		{
  			document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
@@ -63,6 +64,7 @@
 			}
 			xmlhttprequest_sender(xhr_object_url, null);
 		}
+
 		function ajax_preview()
 		{
 			if({JS_CONTRIBUTION} && document.getElementById('counterpart').value != '')

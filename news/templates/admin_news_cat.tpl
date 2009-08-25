@@ -72,6 +72,29 @@
 				return true;
 			}
 			
+			function ajax_img_preview()
+			{
+	 			document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+				var img = document.getElementById('image').value;
+				var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + img + '&token={TOKEN}');
+
+				xhr_object.onreadystatechange = function() 
+				{
+					//Transfert finished and successful
+					if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+					{
+						document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
+					}
+					else
+					{
+						document.getElementById('img_preview').innerHTML = "";
+					}
+				}
+				xmlhttprequest_sender(xhr_object, null);
+				
+				return true;
+			}
+			
 			var global_auth = {edition_interface.JS_SPECIAL_AUTH};
 			function change_status_global_auth()
 			{
@@ -114,7 +137,8 @@
 							</label>
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" />
+							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" onblur="javascript:ajax_img_preview();" />
+							<span id="img_preview"># IF edition_interface.IMG_PREVIEW #<img src="{edition_interface.IMG_PREVIEW}" alt="" class="valign_middle" /># ENDIF #</span>
 						</dd>
 					</dl>
 					<label for="description">
