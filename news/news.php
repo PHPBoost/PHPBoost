@@ -27,14 +27,13 @@
 
 require_once('../kernel/begin.php');
 require_once('news_begin.php');
-require_once('news.class.php');
-$news_class = new news();
-require_once('news_cats.class.php');
-$news_cat = new NewsCats();
 
 import('util/date');
 import('content/comments');
 import('content/syndication/feed');
+
+require_once('news_cats.class.php');
+$news_categories = new NewsCats();
 
 $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
@@ -54,13 +53,13 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	{
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($news_cat->auth($news['idcat']), AUTH_NEWS_READ))
+	elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 
 	// Bread crumb.
-	$news_class->bread_crumb($news['idcat']);
+	$news_categories->bread_crumb($news['idcat']);
 	$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
 
 	// Title of page
@@ -128,13 +127,13 @@ elseif (!empty($idcat))
 	{
 		$Errorh->handler('e_unexist_cat_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($news_cat->auth($idcat), AUTH_NEWS_READ))
+	elseif (!$User->check_auth($NEWS_CAT[$idcat]['auth'], AUTH_NEWS_READ))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 
 	// Bread crumb.
-	$news_class->bread_crumb($idcat);
+	$news_categories->bread_crumb($idcat);
 
 	// Title of page
 	define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($NEWS_CAT[$idcat]['name']));

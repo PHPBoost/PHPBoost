@@ -29,8 +29,6 @@ require_once('../kernel/begin.php');
 require_once('news_begin.php');
 require_once('news_cats.class.php');
 $news_categories = new NewsCats();
-require_once('news.class.php');
-$news_class = new news();
 
 import('util/date');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -49,7 +47,7 @@ if ($delete > 0)
 	{
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+	elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
@@ -96,7 +94,7 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
 
-	if ($news['id'] == 0 && ($User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_WRITE) || $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+	if ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
 	{
 		// Errors.
 		if (empty($news['title']))
@@ -154,7 +152,7 @@ elseif (!empty($_POST['submit']))
 			}
 			else
 			{
-				$auth_contrib = !$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_WRITE) && $User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_CONTRIBUTE);
+				$auth_contrib = !$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE);
 
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_NEWS . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com)
 				VALUES('" . $news['idcat'] . "', '" . $news['title'] . "', '" . $news['desc'] . "', '" . $news['extend_desc'] . "', '" . $news['release'] . "', '" . $news['visible'] . "', '" . $news['start'] . "', '" . $news['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $news['alt'] . "', '0')", __LINE__, __FILE__);
@@ -238,14 +236,14 @@ else
 		{
 			$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 		}
-		elseif (!$User->check_auth($news_categories->auth($news['idcat']), AUTH_NEWS_MODERATE))
+		elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
 		{
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 		}
 		else
 		{
 			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . addslashes($news['title']));
-			$news_class->bread_crumb($news['idcat']);
+			$news_categories->bread_crumb($news['idcat']);
 			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
 			$Bread_crumb->add($NEWS_LANG['edit_news'], url('management.php?edit=' . $news['id']));
 			

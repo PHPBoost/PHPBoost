@@ -137,16 +137,23 @@ class NewsCats extends CategoriesManager
 		return $result;
 	}
 
-	// Return auth
-	function auth($idcat = 0)
+	// Genrerate the bread crumb from a category.
+	function bread_crumb($id = 0)
 	{
-		global $NEWS_CAT, $NEWS_CONFIG;
+		global $Bread_crumb, $User, $NEWS_LANG, $NEWS_CAT;
 		
-		if ($idcat > 0 && !empty($NEWS_CAT[$idcat]['auth']))
-			return $NEWS_CAT[$idcat]['auth'];
-		else
-			return $NEWS_CONFIG['global_auth'];
+		while ($id > 0)
+		{
+			if ($User->check_auth($NEWS_CAT[$id]['auth'], AUTH_NEWS_READ))
+				$Bread_crumb->add($NEWS_CAT[$id]['name'], url('news.php?cat=' . $id, 'news-' . $id . '+' . url_encode_rewrite($NEWS_CAT[$id]['name']) . '.php'));
+			$id = $NEWS_CAT[$id]['id_parent'];
+		}
+
+		$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
+
+		$Bread_crumb->reverse();
 	}
+
 	## Private methods ##
 	
 	//method which deletes a category and its content (not recursive)
