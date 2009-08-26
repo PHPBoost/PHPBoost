@@ -91,6 +91,9 @@ class NewsInterface extends ModuleInterface
 		import('util/date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		
+		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
+		$news_cat = new NewsCats();
+
 		// Build array with the children categories.
 		$array_cat = array();
 		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
