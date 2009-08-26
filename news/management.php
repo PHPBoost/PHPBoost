@@ -71,8 +71,6 @@ if ($delete > 0)
 }
 elseif (!empty($_POST['submit']))
 {
-	$Session->csrf_get_protect();
-
 	$start = MiniCalendar::retrieve_date('start');
 	$end = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
@@ -115,7 +113,6 @@ elseif (!empty($_POST['submit']))
 		}
 		else
 		{
-
 			// $start & $end.
 			if ($news['visible'] == 2)
 			{
@@ -247,7 +244,7 @@ else
 		}
 		else
 		{
-			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . $news['title']);
+			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . addslashes($news['title']));
 			$news_class->bread_crumb($news['idcat']);
 			$Bread_crumb->add($news['title'], 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'));
 			$Bread_crumb->add($NEWS_LANG['edit_news'], url('management.php?edit=' . $news['id']));
