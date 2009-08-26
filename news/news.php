@@ -140,71 +140,84 @@ elseif (!empty($idcat))
 	define('TITLE', $NEWS_LANG['news'] . ' - ' . addslashes($NEWS_CAT[$idcat]['name']));
 	require_once('../kernel/header.php');
 
-	$tpl_news->assign_vars(array(
-		'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
-		'C_NEWS_BLOCK' => $NEWS_CONFIG['type'] ? true : false,
-		'C_NEWS_LINK' => $NEWS_CONFIG['type'] ? false : true,
-		'NAME_NEWS' => $NEWS_CAT[$idcat]['name'],
-		'IDCAT' => $idcat,
-		'L_EDIT' => $LANG['edit'],
-		'L_CATEGORY' => $LANG['category'],
-		'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
-	));
+	$NEWS_CONFIG['nbr_news'] = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE visible = 1 AND idcat = '" . $idcat . "' AND start <= '" . $now->get_timestamp() . "'", __LINE__, __FILE__);
 
-	if ($NEWS_CONFIG['type'])
+	if ($NEWS_CONFIG['nbr_news'] > 0)
 	{
-		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
-			FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-			WHERE n.visible = 1 AND n.idcat = '" . $idcat . "' AND n.start <= '" . $now->get_timestamp() . "'", __LINE__, __FILE__);
+		$tpl_news->assign_vars(array(
+			'C_IS_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'C_NEWS_BLOCK' => $NEWS_CONFIG['type'] ? true : false,
+			'C_NEWS_LINK' => $NEWS_CONFIG['type'] ? false : true,
+			'NAME_NEWS' => $NEWS_CAT[$idcat]['name'],
+			'IDCAT' => $idcat,
+			'L_EDIT' => $LANG['edit'],
+			'L_CATEGORY' => $LANG['category'],
+			'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+		));
 
-		while ($row = $Sql->fetch_assoc($result))
+		if ($NEWS_CONFIG['type'])
 		{
-			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+			$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.visible, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+				FROM " . DB_TABLE_NEWS . " n LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+				WHERE n.visible = 1 AND n.idcat = '" . $idcat . "' AND n.start <= '" . $now->get_timestamp() . "' ORDER BY timestamp DESC", __LINE__, __FILE__);
 
-			$tpl_news->assign_block_vars('news', array(
-				'C_NEWS_ROW' => false,
-				'C_IMG' => !empty($row['img']),
-				'C_ICON' => $NEWS_CONFIG['activ_icon'],
-				'ID' => $row['id'],
-				'IDCAT' => $row['idcat'],
-				'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
-				'TITLE' => $row['title'],
-				'CONTENTS' => second_parse($row['contents']),
-				'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
-				'IMG' => second_parse_url($row['img']),
-				'IMG_DESC' => $row['alt'],
-				'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : $LANG['guest'],
-				'LEVEL' =>	$level[$row['level']],
-				'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
-				'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
-				'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
-				'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-			    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
-			));
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+
+				$tpl_news->assign_block_vars('news', array(
+					'C_NEWS_ROW' => false,
+					'C_IMG' => !empty($row['img']),
+					'C_ICON' => $NEWS_CONFIG['activ_icon'],
+					'ID' => $row['id'],
+					'IDCAT' => $row['idcat'],
+					'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
+					'TITLE' => $row['title'],
+					'CONTENTS' => second_parse($row['contents']),
+					'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
+					'IMG' => second_parse_url($row['img']),
+					'IMG_DESC' => $row['alt'],
+					'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : $LANG['guest'],
+					'LEVEL' =>	$level[$row['level']],
+					'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
+					'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
+					'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
+					'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
+					'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+				));
+			}
 		}
+		else
+		{
+			$result = $Sql->query_while("SELECT id, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE visible = 1 AND idcat = '" . $idcat . "' AND n.start <= '" . $now->get_timestamp() . "' ORDER BY timestamp DESC", __LINE__, __FILE__);
+	
+			while ($row = $Sql->fetch_assoc($result))
+			{
+				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+
+				$tpl_news->assign_block_vars('list', array(
+					'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$idcat]['image']) : 0,
+					'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
+					'DATE' => $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+					'TITLE' => $row['title'],
+					'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
+					'COM' => $row['nbr_com'],
+					'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $idcat . '-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
+				));
+			}
+		}
+
+		$Sql->query_close($result);
 	}
 	else
 	{
-		$result = $Sql->query_while("SELECT id, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE visible = 1 AND idcat = '" . $idcat . "' AND n.start <= '" . $now->get_timestamp() . "' ORDER BY timestamp DESC", __LINE__, __FILE__);
-	
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
-
-			$tpl_news->assign_block_vars('list', array(
-				'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$idcat]['image']) : 0,
-				'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
-				'DATE' => $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
-				'TITLE' => $row['title'],
-				'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
-				'COM' => $row['nbr_com'],
-				'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $idcat . '-' . $row['id'] . '+'  . url_encode_rewrite($row['title']) . '.php')
-			));
-		}
+		$tpl_news->assign_vars(array(
+			'C_NEWS_NO_AVAILABLE' => true,
+			'L_LAST_NEWS' => $NEWS_LANG['last_news'] . ' : ' . $NEWS_CAT[$idcat]['name'],
+			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
+		));
 	}
-
-	$Sql->query_close($result);
 }
 else
 {

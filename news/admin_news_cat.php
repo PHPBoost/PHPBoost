@@ -85,6 +85,7 @@ elseif ($cat_to_del > 0)
 		'L_MOVE_CONTENT' => $NEWS_LANG['move_category_content'],
 		'L_SUBMIT' => $LANG['delete']
 	));
+
 	$tpl->assign_block_vars('removing_interface', array(
 		'CATEGORY_TREE' => $news_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
 		'IDCAT' => $cat_to_del,
@@ -125,6 +126,10 @@ elseif (!empty($_POST['submit']))
 		else
 			$error_string = $news_categories->add($id_parent, $name, $description, $image, $auth);
 	}
+	
+	// Feeds Regeneration
+	import('content/syndication/feed');
+	Feed::clear_cache('news');
 
 	$Cache->Generate_module_file('news');
 	
@@ -153,6 +158,10 @@ elseif ($new_cat XOR $id_edit > 0)
 	));
 		
 	if ($id_edit > 0 && array_key_exists($id_edit, $NEWS_CAT))	
+	{
+		$special_auth = $NEWS_CAT[$id_edit]['auth'] !== $NEWS_CONFIG['global_auth'] ? true : false;
+		$NEWS_CAT[$id_edit]['auth'] = $special_auth ? $NEWS_CAT[$id_edit]['auth'] : $NEWS_CONFIG['global_auth'];
+
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $NEWS_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($NEWS_CAT[$id_edit]['description']),
@@ -160,22 +169,25 @@ elseif ($new_cat XOR $id_edit > 0)
 			'IMG_PREVIEW' => second_parse_url($NEWS_CAT[$id_edit]['image']),
 			'CATEGORIES_TREE' => $news_categories->build_select_form($NEWS_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
-			'JS_SPECIAL_AUTH' => !empty($NEWS_CAT[$id_edit]['auth']) ? 'true' : 'false',
-			'DISPLAY_SPECIAL_AUTH' => !empty($NEWS_CAT[$id_edit]['auth']) ? 'block' : 'none',
-			'SPECIAL_CHECKED' => !empty($NEWS_CAT[$id_edit]['auth']) ? 'checked="checked"' : '',
-			'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $news_categories->auth($id_edit)),
-			'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $news_categories->auth($id_edit)),
-			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $news_categories->auth($id_edit)),
-			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $news_categories->auth($id_edit)),
+			'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
+			'DISPLAY_SPECIAL_AUTH' => $special_auth ? 'block' : 'none',
+			'SPECIAL_CHECKED' => $special_auth ? 'checked="checked"' : '',
+			'AUTH_READ' => Authorizations::generate_select(AUTH_NEWS_READ, $NEWS_CAT[$id_edit]['auth']),
+			'AUTH_WRITE' => Authorizations::generate_select(AUTH_NEWS_WRITE, $NEWS_CAT[$id_edit]['auth']),
+			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_NEWS_CONTRIBUTE, $NEWS_CAT[$id_edit]['auth']),
+			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_NEWS_MODERATE, $NEWS_CAT[$id_edit]['auth']),
 		));
+	}
 	else
 	{
 		$id_edit = 0;
+		$img_default = '/news/news.png';
+
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMAGE' => '',
-			'IMG_PREVIEW' => second_parse_url('/news/news.png'),
+			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $news_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => 'false',
