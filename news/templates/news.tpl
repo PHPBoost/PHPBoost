@@ -51,7 +51,11 @@
 				<div class="news_top_r"></div>
             	<div class="news_top">
                 	<span style="float:left;">
-                		<a href="../syndication.php?m=news" title="Rss">
+                		# IF news.IDCAT #
+						<a href="../syndication.php?m=news&amp;cat={news.IDCAT}" title="Syndication">
+						# ELSE #
+						<a href="../syndication.php?m=news" title="Syndication">
+						# ENDIF #
 							<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/rss.png" alt="Rss" title="Rss" />
 						</a>
                 		<a class="news_title" href="{news.U_NEWS_LINK}">{news.TITLE}</a>

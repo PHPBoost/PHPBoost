@@ -153,7 +153,7 @@ class NewsInterface extends ModuleInterface
 		
 		// Build array with the children categories.
 		$array_cat = array();
-		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
 		if (!empty($array_cat))
 		{
@@ -292,7 +292,7 @@ class NewsInterface extends ModuleInterface
 				$tpl_news->assign_vars(array(
 					'C_NEWS_BLOCK' => true
 				));
-			
+
 				$column = ($NEWS_CONFIG['nbr_column'] > 1) ? true : false;
 				if ($column)
 				{
@@ -327,7 +327,7 @@ class NewsInterface extends ModuleInterface
 					}
 
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
-
+					
 					$tpl_news->assign_block_vars('news', array(
 						'C_NEWS_ROW' => $new_row,
 						'C_IMG' => !empty($row['img']),
@@ -335,7 +335,7 @@ class NewsInterface extends ModuleInterface
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 						'ID' => $row['id'],
-						'IDCAT' => $row['idcat'],
+						'IDCAT' => 0,
 						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 						'TITLE' => $row['title'],
 						'CONTENTS' => second_parse($row['contents']),

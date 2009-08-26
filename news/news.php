@@ -189,7 +189,7 @@ elseif (!empty($idcat))
 		}
 		else
 		{
-			$result = $Sql->query_while("SELECT id, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE visible = 1 AND idcat = '" . $idcat . "' AND n.start <= '" . $now->get_timestamp() . "' ORDER BY timestamp DESC", __LINE__, __FILE__);
+			$result = $Sql->query_while("SELECT id, title, timestamp, nbr_com FROM " . DB_TABLE_NEWS . " WHERE visible = 1 AND idcat = '" . $idcat . "' AND start <= '" . $now->get_timestamp() . "' ORDER BY timestamp DESC", __LINE__, __FILE__);
 	
 			while ($row = $Sql->fetch_assoc($result))
 			{

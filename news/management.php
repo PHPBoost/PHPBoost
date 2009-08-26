@@ -260,6 +260,7 @@ else
 			$release_calendar->set_date($release);
 
 			$tpl->assign_vars(array(
+				'C_ADD' => true,
 				'C_CONTRIBUTION' => false,
 				'JS_CONTRIBUTION' => 'false',
 				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
@@ -267,7 +268,7 @@ else
 				'CONTENTS' => unparse($news['contents']),
 				'EXTEND_CONTENTS' => unparse($news['extend_contents']),
 				'VISIBLE_WAITING' => $news['visible'] && (!empty($news['start']) || !empty($news['end'])),
-				'VISIBLE_ENABLED' => $news['visible'],
+				'VISIBLE_ENABLED' => $news['visible'] && empty($news['start']) && empty($news['end']),
 				'VISIBLE_UNAPROB' => !$news['visible'],
 				'START_CALENDAR' => $start_calendar->display(),
 				'START_HOUR' => !empty($news['start']) ? $start->get_hours() : '',
@@ -311,6 +312,7 @@ else
 			$release_calendar->set_date(new Date(DATE_NOW, TIMEZONE_AUTO));
 
 			$tpl->assign_vars(array(
+				'C_ADD' => false,
 				'C_CONTRIBUTION' => $auth_contrib,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
@@ -341,6 +343,9 @@ else
 	require_once('../kernel/header.php');
 
 	$tpl->assign_vars(array(
+		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
+		'NOW_HOUR' => $now->get_hours(),
+		'NOW_MIN' => $now->get_minutes(),
 		'L_ADD_NEWS' => $NEWS_LANG['add_news'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_TITLE_NEWS' => $NEWS_LANG['title_news'],
