@@ -279,56 +279,56 @@ class Date
 	
 	/**
 	 * @desc Returns the year of the date
-	 * @return int The year
+	 * @return string The year
 	 */
 	function get_year()
 	{
-		return (int)date('Y', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('Y', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 
 	/**
 	 * @desc Returns the month of the date
-	 * @return int The month
+	 * @return string The month
 	 */
 	function get_month()
 	{
-		return (int)date('m', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('m', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the day of the date
-	 * @return int The day
+	 * @return string The day
 	 */
 	function get_day()
 	{
-		return (int)date('d', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('d', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the hours of the date
-	 * @return int The hours
+	 * @return string The hours
 	 */
 	function get_hours()
 	{
-		return (int)date('H', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('H', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the minutes of the date
-	 * @return int The minutes
+	 * @return string The minutes
 	 */
 	function get_minutes()
 	{
-		return (int)date('i', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('i', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the seconds of the date
-	 * @return int The seconds
+	 * @return string The seconds
 	 */
 	function get_seconds()
 	{
-		return (int)date('s', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('s', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
