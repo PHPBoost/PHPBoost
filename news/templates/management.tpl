@@ -104,6 +104,21 @@
 			}
 			return false;
 		}
+		
+		# IF C_ADD #
+		function value_now(id_date, id_hour, id_min)
+		{
+			var date = "{NOW_DATE}";
+			var hour = "{NOW_HOUR}";
+			var min = "{NOW_MIN}";
+			
+			document.getElementById(id_date).value = date;
+			document.getElementById(id_hour).value = hour;
+			document.getElementById(id_min).value = min;
+			
+			return true;
+		}
+		# ENDIF #
 		-->
 		</script>
 		
@@ -167,6 +182,10 @@
 						<input type="text" size="2" maxlength="2" id="release_hour" name="release_hour" value="{RELEASE_HOUR}" class="text" />
 						&nbsp;{L_UNIT_HOUR}&nbsp;
 						<input type="text" size="2" maxlength="2" id="release_min" name="release_min" value="{RELEASE_MIN}" class="text" />
+						# IF C_ADD #
+						&nbsp;
+						<input type="button" id="button_new" value="{L_IMMEDIATE}" class="submit" onclick="javascript:value_now('calendar_{JS_INSTANCE_RELEASE}', 'release_hour', 'release_min')" />
+						# ENDIF #
 					</dd>
 				</dl>
 			</fieldset>	
