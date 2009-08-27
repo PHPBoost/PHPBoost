@@ -38,6 +38,7 @@ $news_categories = new NewsCats();
 $idnews = retrieve(GET, 'id', 0);
 $idcat = retrieve(GET, 'cat', 0);
 $arch = retrieve(GET, 'arch', false);
+$user = retrieve(GET, 'user', false, TBOOL);
 $level = array('', ' class="modo"', ' class="admin"');
 $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
@@ -49,7 +50,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	if (!empty($news['id']) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())))
+	if (!empty($news['id']) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp()) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Bread crumb.
 		$news_categories->bread_crumb($news['idcat']);
@@ -83,6 +84,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
 
 		$tpl_news->assign_block_vars('news', array(
+			'C_EDIT' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'),
+			'C_DELETE' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE),
 			'C_NEWS_ROW' => false,
 			'C_IMG' => !empty($news['img']),
 			'C_ICON' => $NEWS_CONFIG['activ_icon'],
@@ -163,6 +166,8 @@ elseif (!empty($idcat))
 				$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 
 				$tpl_news->assign_block_vars('news', array(
+					'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
+					'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
 					'C_NEWS_ROW' => false,
 					'C_IMG' => !empty($row['img']),
 					'C_ICON' => $NEWS_CONFIG['activ_icon'],
@@ -212,6 +217,72 @@ elseif (!empty($idcat))
 		$tpl_news->assign_vars(array(
 			'C_NEWS_NO_AVAILABLE' => true,
 			'L_LAST_NEWS' => $NEWS_LANG['last_news'] . ' : ' . $NEWS_CAT[$idcat]['name'],
+			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
+		));
+	}
+}
+elseif ($user)
+{
+	// Bread crumb.
+	$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
+	$Bread_crumb->add($User->get_attribute('login'), url('news.php?user=1'));
+
+	// Title of page
+	define('TITLE', $NEWS_LANG['news']);
+	require_once('../kernel/header.php');
+
+	$tpl_news = new Template('news/news.tpl');
+	
+	$tpl_news->assign_vars(array(
+		'C_NEWS_BLOCK' => true
+	));
+
+	$i = 0;
+
+	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+		FROM " . DB_TABLE_NEWS . " n
+		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
+		WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "'
+		ORDER BY n.timestamp DESC", __LINE__, __FILE__);
+		
+	while ($row = $Sql->fetch_assoc($result))
+	{
+		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
+		
+		$tpl_news->assign_block_vars('news', array(
+			'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
+			'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
+			'C_NEWS_ROW' => false,
+			'C_IMG' => !empty($row['img']),
+			'C_ICON' => $NEWS_CONFIG['activ_icon'],
+			'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
+			'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+			'ID' => $row['id'],
+			'IDCAT' => 0,
+			'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
+			'TITLE' => $row['title'],
+			'CONTENTS' => second_parse($row['contents']),
+			'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
+			'IMG' => second_parse_url($row['img']),
+			'IMG_DESC' => $row['alt'],
+			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
+			'LEVEL' =>	$level[$row['level']],
+			'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),					
+			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
+			'U_COM' => ($NEWS_CONFIG['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
+		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+		));
+		
+		$i++;
+	}
+
+	$Sql->query_close($result);
+	
+	if ($i == 0)
+	{
+		$tpl_news->assign_vars(array(
+			'C_NEWS_NO_AVAILABLE' => true,
+			'L_LAST_NEWS' => $NEWS_LANG['last_news'],
 			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
 		));
 	}

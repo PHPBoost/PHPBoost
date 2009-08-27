@@ -332,6 +332,8 @@ class NewsInterface extends ModuleInterface
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 					
 					$tpl_news->assign_block_vars('news', array(
+						'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
+						'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
 						'C_NEWS_ROW' => $new_row,
 						'C_IMG' => !empty($row['img']),
 						'C_ICON' => $NEWS_CONFIG['activ_icon'],
