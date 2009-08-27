@@ -49,7 +49,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] > $now->get_timestamp())) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ))
+	if (!empty($news['id']) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())))
 	{
 		// Bread crumb.
 		$news_categories->bread_crumb($news['idcat']);

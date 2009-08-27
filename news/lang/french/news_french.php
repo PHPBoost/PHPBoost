@@ -63,6 +63,7 @@ $NEWS_LANG = array(
 	'contribution_counterpart' => 'Complément de contribution',
 	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cette news au site). Ce champ est facultatif.',
 	'contribution_entitled' => '[News] %s',
+	'contribution_success' => 'Votre contribution a bien été enregistrée.',
 
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
 	'desc_extend_news' => 'Description étendue',

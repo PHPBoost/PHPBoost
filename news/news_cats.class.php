@@ -46,14 +46,17 @@ class NewsCats extends CategoriesManager
 	//Method which removes all subcategories and their content
 	function delete_category_recursively($id)
 	{
+		global $Cache;
 		//We delete the category
 		$this->_delete_category_with_content($id);
 		//Then its content
 		foreach ($this->cache_var as $id_cat => $properties)
 		{
 			if ($id_cat != 0 && $properties['id_parent'] == $id)
-				$this->Delete_category_recursively($id_cat);
+				$this->delete_category_recursively($id_cat);
 		}
+		
+		$Cache->Generate_module_file('news', RELOAD_CACHE);
 	}
 	
 	//Method which deletes a category and move its content in another category
@@ -73,6 +76,8 @@ class NewsCats extends CategoriesManager
 			if ($id_cat != 0 && $properties['id_parent'] == $id_category)
 				parent::move_into_another($id_cat, $new_id_cat_content);			
 		}
+
+		$Sql->query_inject("UPDATE " . DB_TABLE_NEWS . " SET idcat = '" . $new_id_cat_content . "' WHERE idcat = '" . $id_category . "'", __LINE__, __FILE__);
 
 		return true;
 	}
