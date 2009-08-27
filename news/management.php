@@ -233,15 +233,7 @@ else
 	{
 		$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $edit . "'", __LINE__, __FILE__);
 		
-		if (empty($news['id']))
-		{
-			$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
-		}
-		elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
-		{
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
-		}
-		else
+		if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 		{
 			define('TITLE', $NEWS_LANG['edit_news'] . ' : ' . addslashes($news['title']));
 			$news_categories->bread_crumb($news['idcat']);
@@ -288,6 +280,10 @@ else
 			));
 
 			$news_categories->build_select_form($news['idcat'], 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+		}
+		else
+		{
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 		}
 	}
 	else
