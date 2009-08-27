@@ -36,8 +36,8 @@ if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE))
 
 define('TITLE', $NEWS_LANG['contribution_confirmation']);
 
-$Bread_crumb->add($DOWNLOAD_LANG['download'], url('download.php'));
-$Bread_crumb->add($DOWNLOAD_LANG['contribution_confirmation'], url('contribution.php'));
+$Bread_crumb->add($NEWS_LANG['news'], url('news.php'));
+$Bread_crumb->add($NEWS_LANG['contribution_confirmation'], url('contribution.php'));
 
 require_once('../kernel/header.php');
 
@@ -45,9 +45,9 @@ require_once('../kernel/header.php');
 $download_template = new Template('download/contribution.tpl');
 
 $download_template->assign_vars(array(
-	'L_CONTRIBUTION_CONFIRMATION' => $DOWNLOAD_LANG['contribution_confirmation'],
-	'L_CONTRIBUTION_SUCCESS' => $DOWNLOAD_LANG['contribution_success'],
-	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $DOWNLOAD_LANG['contribution_confirmation_explain']
+	'L_CONTRIBUTION_CONFIRMATION' => $NEWS_LANG['contribution_confirmation'],
+	'L_CONTRIBUTION_SUCCESS' => $NEWS_LANG['contribution_success'],
+	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $NEWS_LANG['contribution_confirmation_explain']
 ));
 
 $download_template->parse();

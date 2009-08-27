@@ -102,11 +102,11 @@ elseif (!empty($_POST['submit']))
 		
 		if ($delete_content)
 		{
-			$news_categories->Delete_category_recursively($cat_to_del_post);
+			$news_categories->delete_category_recursively($cat_to_del_post);
 		}
 		else
 		{
-			$news_categories->Delete_category_and_move_content($cat_to_del_post, $id_parent);
+			$news_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
 		}
 	}
 	else
