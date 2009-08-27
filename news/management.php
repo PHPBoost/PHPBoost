@@ -77,6 +77,7 @@ elseif (!empty($_POST['submit']))
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'title' => retrieve(POST, 'title', '', TSTRING),
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
 		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
@@ -95,7 +96,7 @@ elseif (!empty($_POST['submit']))
 		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
 
-	if ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
+	if ($news['id'] == 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_CONTRIBUTE)) || $news['id'] > 0 && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Errors.
 		if (empty($news['title']))

@@ -64,10 +64,12 @@
 						# IF news.U_COM #
 							<img src="{PATH_TO_ROOT}/news/templates/images/comments.png" alt="" class="valign_middle" /> {news.U_COM}
 						# ENDIF #
-						# IF C_IS_ADMIN #
+						# IF news.C_EDIT #
 							<a href="management.php?edit={news.ID}" title="{L_EDIT}">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_EDIT}" />
 							</a>
+						# ENDIF #
+						# IF news.C_DELETE #
 							<a href="management.php?del={news.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm();">
 								<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" />
 							</a>
