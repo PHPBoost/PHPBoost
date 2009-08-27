@@ -3,8 +3,8 @@
  *                             news_french.php
  *                            -------------------
  *   begin                :  June 20, 2005
- *   copyright          : (C) 2005 Viarre Régis
- *   email                : crowkait@phpboost.com
+ *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
+ *   email                : crowkait@phpboost.com, liaght@gmail.com
  *
  *  
  ###################################################
