@@ -170,6 +170,10 @@ class NewsCats extends CategoriesManager
 		if ($test = parent::delete($id))
 		{
 			//We remove its whole content
+			//Suppression des évènements des news.
+			$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module IN(
+				SELECT id FROM " . DB_TABLE_NEWS . " WHERE idcat = '" . $id . "')", __LINE__, __FILE__);
+			//Suppression des news.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE idcat = '" . $id . "'", __LINE__, __FILE__);
 			return true;
 		}
