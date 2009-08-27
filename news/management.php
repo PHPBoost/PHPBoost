@@ -53,6 +53,7 @@ if ($delete > 0)
 	}
 	
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
 	
 	if ($news['nbr_com'] > 0)
 	{

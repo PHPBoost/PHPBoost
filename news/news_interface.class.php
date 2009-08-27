@@ -76,10 +76,13 @@ class NewsInterface extends ModuleInterface
 	}
 
 	//Actions journalière.
-	/*function on_changeday()
+	function on_changeday()
 	{
-	
-	}*/
+		global $Sql;
+		
+		// Nettoyage de la table events.
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module NOT IN(SELECT id FROM " . DB_TABLE_NEWS . ")", __LINE__, __FILE__);
+	}
 	
 	function get_search_request($args)
     /**
