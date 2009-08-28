@@ -86,7 +86,11 @@ class Menu
 
     ## Getters ##
     /**
-	 * @return string the link $title
+	 * @return string the displayable Menu $title
+	 */
+    function get_formated_title() { return $this->title; }
+	/**
+	 * @return string the Menu $title
 	 */
     function get_title() { return $this->title; }
 	/**

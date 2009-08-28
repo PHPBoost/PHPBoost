@@ -572,7 +572,7 @@ class MenuService
                 $modules[] = $module_id;
         }
         
-        $result = $Sql->query_while ($query . ";", __LINE__, __FILE__);
+        $result = $Sql->query_while ($query, __LINE__, __FILE__);
         while ($row = $Sql->fetch_assoc($result))
         {
             // Build the module name from the mini module file_path
