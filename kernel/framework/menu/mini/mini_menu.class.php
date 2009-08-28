@@ -54,7 +54,7 @@ class MiniMenu extends Menu
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
 	
-	function get_title()
+	function get_formated_title()
     {
 		return ucfirst(substr($this->title, 0, strpos($this->title, '/')));
     }

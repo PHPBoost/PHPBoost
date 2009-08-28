@@ -60,12 +60,16 @@ class ModuleMiniMenu extends Menu
 
     function get_title()
     {
-		$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->title . '/lang/', get_ulang());
+		return $this->title . '/' . $this->filename;
+    }
+    
+    function get_formated_title()
+    {
+    	$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->title . '/lang/', get_ulang());
 		if (!empty($info_module) && is_array($info_module))
 		{
 			return isset($info_module['name']) ? $info_module['name'] : '';
 		}
-		return $this->title . '/' . $this->filename;
     }
     
     var $filename = '';

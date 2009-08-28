@@ -177,7 +177,7 @@ foreach ($menus_blocks as $block_id => $menus)
 		$mini = in_array($block_id, array(BLOCK_POSITION__LEFT, BLOCK_POSITION__NOT_ENABLED, BLOCK_POSITION__RIGHT));
 		
         $menu_tpl->assign_vars(array(
-            'NAME' => $menu->get_title(),
+            'NAME' => $menu->get_formated_title(),
             'IDMENU' => $id,
             'CONTENTS' => $menu->admin_display(),
             'ACTIV' => ($enabled ? 'disable' : 'enable'),
