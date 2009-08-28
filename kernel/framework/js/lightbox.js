@@ -46,8 +46,8 @@
 //  Configurationl
 //
 LightboxOptions = Object.extend({
-    fileLoadingImage:        'templates/images/loading.gif',     
-    fileBottomNavCloseImage: 'templates/images/closelabel.gif',
+    fileLoadingImage:        PATH_TO_ROOT + '/templates/default/images/lightbox/loading.gif',     
+    fileBottomNavCloseImage: PATH_TO_ROOT + '/templates/default/images/lightbox/closelabel.gif',
 
     overlayOpacity: 0.8,   // controls transparency of shadow overlay
 
@@ -91,42 +91,6 @@ Lightbox.prototype = {
         // If animations are turned off, it will be hidden as to prevent a flicker of a
         // white 250 by 250 box.
         var size = (LightboxOptions.animate ? 250 : 1) + 'px';
-        
-
-        // Code inserts html at the bottom of the page that looks similar to this:
-        //
-        //  <div id="overlay"></div>
-        //  <div id="lightbox">
-        //      <div id="outerImageContainer">
-        //          <div id="imageContainer">
-        //              <img id="lightboxImage">
-        //              <div style="" id="hoverNav">
-        //                  <a href="#" id="prevLink"></a>
-        //                  <a href="#" id="nextLink"></a>
-        //              </div>
-        //              <div id="loading">
-        //                  <a href="#" id="loadingLink">
-        //                      <img src="images/loading.gif">
-        //                  </a>
-        //              </div>
-        //          </div>
-        //      </div>
-        //      <div id="imageDataContainer">
-        //          <div id="imageData">
-        //              <div id="imageDetails">
-        //                  <span id="caption"></span>
-        //                  <span id="numberDisplay"></span>
-        //              </div>
-        //              <div id="bottomNav">
-        //                  <a href="#" id="bottomNavClose">
-        //                      <img src="images/close.gif">
-        //                  </a>
-        //              </div>
-        //          </div>
-        //      </div>
-        //  </div>
-
-
         var objBody = $$('body')[0];
 
 		objBody.appendChild(Builder.node('div',{id:'overlay'}));

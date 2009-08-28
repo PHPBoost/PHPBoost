@@ -1,4 +1,4 @@
-		<script type="text/javascript" src="{MODULE_DATA_PATH}/images/js/lightbox.js"></script>
+		<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/lightbox.js"></script>
 
 		<script type="text/javascript">
 		<!--		
