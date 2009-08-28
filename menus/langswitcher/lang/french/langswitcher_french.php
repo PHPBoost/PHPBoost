@@ -31,6 +31,6 @@
 ####################################################
 
 $LANG['switch_lang'] = 'Changer de langue';
-$LANG['defaut_lang'] = 'Langue par défaut';
+$LANG['default_lang'] = 'Langue par défaut';
 
 ?>

@@ -1,15 +1,3 @@
-		<script type="text/javascript">
-		<!--	
-		var array_identifier = new Array();
-		{JS_LANG_IDENTIFIER}
-		function change_img_lang(id, lang)
-		{
-			if( array_identifier[lang] && document.getElementById(id) ) 
-				document.getElementById(id).src = '{PATH_TO_ROOT}/images/stats/countries/' + array_identifier[lang] + '.png';
-		}
-		-->
-		</script>
-			
 		<div class="module_mini_container">
 			<div class="module_mini_top">
 				<h5 class="sub_title">{L_SWITCH_LANG}</h5>
@@ -22,7 +10,7 @@
 								<option value="{langs.IDNAME}"{langs.SELECTED}>{langs.NAME}</option>
 							# END langs #
 						</select>
-						<img id="img_lang" src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
+						<img src="{IMG_LANG_IDENTIFIER}" alt="" class="valign_middle" />
 						
 						<input style="display: none;" value="{L_SUBMIT}" name="valid" id="switchlang_valid" class="submit" type="submit" />
 						<script type="text/javascript">
