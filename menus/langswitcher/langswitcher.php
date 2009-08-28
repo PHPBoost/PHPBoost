@@ -61,7 +61,6 @@ function menu_langswitcher_langswitcher($position, $block)
     	{
     		$info_lang = load_ini_file('../lang/', $lang);
     		
-			$array_js_identifier .= 'array_identifier[\'' . $lang . '\'] = \'' . $info_lang['identifier'] . '\';' . "\n";
 			$selected = ($ulang == $lang) ? ' selected="selected"' : '';
     		$tpl->assign_block_vars('langs', array(
     			'NAME' => $info_lang['name'],
@@ -71,10 +70,10 @@ function menu_langswitcher_langswitcher($position, $block)
     	}
     }
     
+    $lang_identifier = str_replace('en', 'uk', $LANG['xml_lang']);
     $tpl->assign_vars(array(
     	'DEFAULT_LANG' => $CONFIG['lang'],
-    	'IMG_LANG_IDENTIFIER' => '../images/stats/countries/' . $CONFIG['lang'] . '.png',
-    	'JS_LANG_IDENTIFIER' => $array_js_identifier,
+    	'IMG_LANG_IDENTIFIER' => PATH_TO_ROOT . '/images/stats/countries/' . $lang_identifier . '.png',
     	'L_SWITCH_LANG' => $LANG['switch_lang'],
     	'L_DEFAULT_LANG' => $LANG['default_lang'],
     	'L_SUBMIT' => $LANG['submit']
