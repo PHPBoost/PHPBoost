@@ -68,18 +68,23 @@ function gallery_mini($position, $block)
     	//Aucune photo ne correspond, on fait une requête pour vérifier.
     	if (count($gallery_mini) == 0)
     	{
+			$_array_random_pics = array();
 			$result = $Sql->query_while("SELECT g.id, g.name, g.path, g.width, g.height, g.idcat, gc.auth
     		FROM " . PREFIX . "gallery g
     		LEFT JOIN " . PREFIX . "gallery_cats gc on gc.id = g.idcat
     		WHERE g.aprob = 1 AND gc.aprob = 1
     		ORDER BY RAND()
     		" . $Sql->limit(0, $CONFIG_GALLERY['nbr_pics_mini']), __LINE__, __FILE__);
-    		$_array_random_pics = $Sql->fetch_assoc($result);
+    		while($row = $Sql->fetch_assoc($result))
+			{
+				$_array_random_pics[] = $row;
+			}
+			
     		//Vérification des autorisations.
     		$break = 0;
     		foreach ($_array_random_pics as $key => $array_pics_info)
     		{
-    			if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY))
+				if ($User->check_auth($CAT_GALLERY[$array_pics_info['idcat']]['auth'], READ_CAT_GALLERY))
     			{
     				$gallery_mini[] = $array_pics_info;
     				$break++;
