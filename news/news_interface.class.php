@@ -196,8 +196,6 @@ class NewsInterface extends ModuleInterface
 	{
 		global $User, $Sql, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
-		import('content/syndication/feed');
-		Feed::clear_cache('news');
 		// Begin
 		//Chargement de la langue du module.
 		load_module_lang('news');
