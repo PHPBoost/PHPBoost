@@ -232,11 +232,6 @@ elseif ($user)
 	require_once('../kernel/header.php');
 
 	$tpl_news = new Template('news/news.tpl');
-	
-	$tpl_news->assign_vars(array(
-		'C_NEWS_BLOCK' => true
-	));
-
 	$i = 0;
 
 	$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
@@ -277,13 +272,19 @@ elseif ($user)
 	}
 
 	$Sql->query_close($result);
-	
+
 	if ($i == 0)
 	{
 		$tpl_news->assign_vars(array(
 			'C_NEWS_NO_AVAILABLE' => true,
 			'L_LAST_NEWS' => $NEWS_LANG['last_news'],
 			'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
+		));
+	}
+	else
+	{
+		$tpl_news->assign_vars(array(
+			'C_NEWS_BLOCK' => true
 		));
 	}
 }
