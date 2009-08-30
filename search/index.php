@@ -25,7 +25,6 @@
  *
 ###################################################*/
 
-header('Location:search.php');
-exit;
+require 'search.php';
 
 ?>
