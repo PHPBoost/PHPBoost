@@ -3,24 +3,25 @@
  *                            download_english.php
  *                            -------------------
  *   begin                : July 27, 2005
+ *   last modified		: August 30, 2009 - Forensic 
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *  
  ###################################################
  *
- *   This program is free software; you can redistribute it and/or modify
+ *   This program is a free software. You can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  * 
- * This program is distributed in the hope that it will be useful,
+ * This program is distributed in hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
+ * along with this program. If not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
@@ -51,7 +52,7 @@ $DOWNLOAD_LANG['download_config'] = 'Download configuration';
 $DOWNLOAD_LANG['file_list'] = 'Files list';
 $DOWNLOAD_LANG['edit_file'] = 'File editing';
 $DOWNLOAD_LANG['nbr_download_max'] = 'Maximum number of files displayed per page';
-$DOWNLOAD_LANG['nbr_columns_for_cats'] = 'Columns number in which are presented categories';
+$DOWNLOAD_LANG['nbr_columns_for_cats'] = 'Number of columns in which are presented the categories';
 $DOWNLOAD_LANG['download_date'] = 'File addition date';
 $DOWNLOAD_LANG['release_date'] = 'File release (or update) date';
 $DOWNLOAD_LANG['ignore_release_date'] = 'Ignore the file release date';
@@ -63,8 +64,8 @@ $DOWNLOAD_LANG['approved'] = 'Approved';
 $DOWNLOAD_LANG['hidden'] = 'Hidden';
 $DOWNLOAD_LANG['number_of_hits'] = 'Number of hits';
 $DOWNLOAD_LANG['download_method'] = 'Download method';
-$DOWNLOAD_LANG['download_method_explain'] = 'You should choose to make a redirection to the file, unless the file is displayed in the web browser instead of being downloaded. In that case you have to choose to force download but the file must be stored on the server.';
-$DOWNLOAD_LANG['force_download'] = 'Force downloas';
+$DOWNLOAD_LANG['download_method_explain'] = 'You should do a redirection to the file, unless the it is displayed in the web browser instead of being downloaded. In that case you have to choose to force download it but the file must be stored on the server.';
+$DOWNLOAD_LANG['force_download'] = 'Force downloads';
 $DOWNLOAD_LANG['redirection_up_to_file'] = 'Redirect to file';
 
 //Titre
@@ -129,7 +130,7 @@ $DOWNLOAD_LANG['global_auth_explain'] = 'Here you can define overall permissions
 
 //Erreurs
 $DOWNLOAD_LANG['successful_operation'] = 'The operation that you have asked for has been made successfully';
-$DOWNLOAD_LANG['required_fields_empty'] = 'Whole required files are not be typed, please correctly redo the operation';
+$DOWNLOAD_LANG['required_fields_empty'] = 'Some required fields are not answered, please correctly redo the operation';
 $DOWNLOAD_LANG['unexisting_category'] = 'The category you have selected does not exist';
 $DOWNLOAD_LANG['new_cat_does_not_exist'] = 'The target category does not exist';
 $DOWNLOAD_LANG['infinite_loop'] = 'You want to move the category in one of its subcategories or in itself, that makes no sense. Please choose another category';
@@ -140,12 +141,12 @@ $DOWNLOAD_LANG['read_feed'] = 'Download';
 $DOWNLOAD_LANG['posted_on'] = 'On';
 
 //Contribution
-$DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to add a file, however you can contribute by submitting a one. Your contribution will be processed by an moderator.';
+$DOWNLOAD_LANG['notice_contribution'] = 'You aren\'t authorized to add a file, however you can contribute by submitting one. Your contribution will be processed by a moderator.';
 $DOWNLOAD_LANG['contribution_counterpart'] = 'Contribution counterpart';
 $DOWNLOAD_LANG['contribution_counterpart_explain'] = 'Tell us why you want us to add this file. This field is not required, but it may help the moderator to take his decision.';
 $DOWNLOAD_LANG['contribution_entitled'] = 'A file has been submitted: %s';
 $DOWNLOAD_LANG['contribution_confirmation'] = 'Contribution confirmation';
-$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
+$DOWNLOAD_LANG['contribution_confirmation_explain'] = '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. Eventually, you will be able to chat with the validators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>';
 $DOWNLOAD_LANG['contribution_success'] = 'Your contribution has been saved.';
 
 //Erreurs

@@ -38,4 +38,4 @@ CREATE TABLE `phpboost_gallery_cats` (
 	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpboost_gallery_cats` VALUES (1, 1, 2, 0, 'Test', 'Test gallery', 1, 0, 1, 1, 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;}');
+INSERT INTO `phpboost_gallery_cats` VALUES (1, 1, 2, 0, 'First Category', 'Demonstration of a Gallery Category', 1, 0, 1, 1, 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:3;}');

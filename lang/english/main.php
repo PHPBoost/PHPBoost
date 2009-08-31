@@ -3,24 +3,25 @@
 *                                main.php
 *                            -------------------
 *   begin                : November 20, 2005
+*   last modified		: August 30, 2009 - Forensic 
 *   copyright            : (C) 2005 Viarre Régis
 *   email                : mickaelhemri@gmail.com
 *
 *
 ###################################################
 *
-*   This program is free software; you can redistribute it and/or modify
+*   This program is a free software; You can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
 *   the Free Software Foundation; either version 2 of the License, or
 *   (at your option) any later version.
 *
-* This program is distributed in the hope that it will be useful,
+* This program is distributed in hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
+* along with this program. If not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *
 ###################################################*/
@@ -83,9 +84,9 @@ $LANG['go'] = 'Go';
 $LANG['pseudo'] = 'Nickname';
 $LANG['message'] = 'Message';
 $LANG['message_s'] = 'Messages';
-$LANG['forget_pass'] = 'Password forgotten';
+$LANG['forget_pass'] = 'Forgotten password';
 
-$LANG['require'] = 'The * marked fields are obligatory !';
+$LANG['require'] = 'The fields marked with an * are required !';
 $LANG['required_field'] = 'The field \"%s\" is required !';
 
 //Alert Form
@@ -122,7 +123,7 @@ $LANG['bb_quote'] = 'Quote [quote=pseudo]text[/quote]';
 $LANG['bb_left'] = 'Align left: [align=left]object on left[/align]';
 $LANG['bb_center'] = 'Center : [align=center]center object[/align]';
 $LANG['bb_right'] = 'Align right: [align=right]object on right[/align]';
-$LANG['bb_justify'] = 'Justify : [align=justify]object justified[/align]';
+$LANG['bb_justify'] = 'Justify : [align=justify]justified object[/align]';
 $LANG['bb_code'] = 'Insert code [code]text[/code]';
 $LANG['bb_math'] = 'Insert mathematics code [math]text[/math]';
 $LANG['bb_swf'] = 'Insert flash [swf=width,height]url animation[/swf]';
@@ -134,11 +135,11 @@ $LANG['bb_container'] = 'Container';
 $LANG['bb_block'] = 'Block';
 $LANG['bb_fieldset'] = 'Fieldset';
 $LANG['bb_style'] = 'Style [style=x]text[/style]';
-$LANG['bb_hide'] = 'Hide text, show it on click [hide]text[/hide]';
+$LANG['bb_hide'] = 'Hide text, shown on click [hide]text[/hide]';
 $LANG['bb_float_left'] = 'Float objet on left [float=left]text[/float]';
 $LANG['bb_float_right'] = 'Float objet on right [float=right]text[/float]';
 $LANG['bb_list'] = 'List [list][*]text1[*]text2[/list]';
-$LANG['bb_table'] = 'Table [table][row][col]text[/col][col]texte[/col][/row][/table]';
+$LANG['bb_table'] = 'Table [table][row][col]text[/col][col]text[/col][/row][/table]';
 $LANG['bb_indent'] = 'Indent [indent]text[/indent]';
 $LANG['bb_sup'] = 'Sup [sup]text[/sup]';
 $LANG['bb_sub'] = 'Sub [sub]text[/sub]';
@@ -154,8 +155,8 @@ $LANG['bb_web'] = 'Web';
 $LANG['bb_prog'] = 'Programming';
 $LANG['lines'] = 'Number of rows';
 $LANG['cols'] = 'Number of columns';
-$LANG['head_table'] = 'Head';
-$LANG['head_add'] = 'Add table head';
+$LANG['head_table'] = 'Table header';
+$LANG['head_add'] = 'Add table header';
 $LANG['insert_table'] = 'Insert table';
 $LANG['ordered_list'] = 'Ordered list';
 $LANG['insert_list'] = 'Insert list';
@@ -203,7 +204,7 @@ $LANG['printable_version'] = 'Printable version';
 
 //Connection
 $LANG['private_messaging'] = 'Private message';
-$LANG['my_private_profile'] = 'Personnal profile';
+$LANG['my_private_profile'] = 'My profile';
 
 //Maintain
 $LANG['maintain'] = 'The website is under maintenance, only the administrators are authorized to log in.';
@@ -240,7 +241,7 @@ $LANG['properties'] = 'Properties';
 $LANG['image'] = 'Picture';
 $LANG['note'] = 'Note';
 $LANG['notes'] = 'Notes';
-$LANG['valid_note'] = 'Noter';
+$LANG['valid_note'] = 'Note';
 $LANG['no_note'] = 'No note';
 $LANG['previous'] = 'Previous';
 $LANG['next'] = 'Next';
@@ -310,7 +311,7 @@ $LANG['vote'] = 'Poll';
 $LANG['votes'] = 'Polls';
 $LANG['already_vote'] = 'You have already voted';
 $LANG['miscellaneous'] = 'Miscellaneous';
-$LANG['unknow'] = 'Unknow';
+$LANG['unknow'] = 'Unknown';
 $LANG['yes'] = 'Yes';
 $LANG['no'] = 'No';
 $LANG['orderby'] = 'Order by';
@@ -346,7 +347,7 @@ $LANG['by'] = 'By';
 
 //Authorized forms management.
 $LANG['authorizations'] = 'Authorizations';
-$LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make multiple choose';
+$LANG['explain_select_multiple'] = 'Hold ctrl and click in the list to make multiple choices';
 $LANG['advanced_authorization'] = 'Advanced authorizations';
 $LANG['select_all'] = 'Select all';
 $LANG['select_none'] = 'Unselect all';
@@ -381,7 +382,7 @@ $LANG['edit_comment'] = 'Edit the comment';
 //Members
 $LANG['member_area'] = 'Member Area';
 $LANG['profile'] = 'Profile';
-$LANG['profile_edition'] = 'Edit the profile';
+$LANG['profile_edition'] = 'Edit my profile';
 $LANG['previous_password'] = 'Previous password';
 $LANG['fill_only_if_modified'] = 'Fill only in case of modification';
 $LANG['new_password'] = 'New password';
@@ -400,7 +401,7 @@ $LANG['age'] = 'Age';
 $LANG['biography'] = 'Biography';
 $LANG['years_old'] = 'Years old';
 $LANG['sign'] = 'Signature';
-$LANG['sign_where'] = 'Appears under each one of your messages';
+$LANG['sign_where'] = 'Appears under each of your messages';
 $LANG['contact'] = 'Contact';
 $LANG['avatar'] = 'Avatar';
 $LANG['avatar_gestion'] = 'Avatar management';
@@ -416,8 +417,8 @@ $LANG['registered_s'] = 'Signed up';
 $LANG['registered_on'] = 'Signed up since';
 $LANG['last_connect'] = 'Last logging in';
 $LANG['private_message'] = 'Private message';
-$LANG['member_msg_display'] = 'Display member messages';
-$LANG['member_msg'] = 'Member messages';
+$LANG['member_msg_display'] = 'Display member\'s messages';
+$LANG['member_msg'] = 'Member\'s messages';
 $LANG['nbr_message'] = 'Total posts';
 $LANG['member_online'] = 'Members online';
 $LANG['no_member_online'] = 'No member online';
@@ -438,34 +439,34 @@ $LANG['display'] = 'Display';
 //Register
 $LANG['pseudo_how'] = 'Minimal login length: 3 characters';
 $LANG['password_how'] = 'Minimal password length: 6 characters';
-$LANG['confirm_register'] = '%s, thank you to have signed up. An e-mail will be sent to you to confirm your registration.';
+$LANG['confirm_register'] = '%s, thank you for your registration. An e-mail will be sent to you to confirm your registration.';
 $LANG['register_terms'] = 'Registration Agreement Terms';
 $LANG['register_accept'] = 'I accept';
 $LANG['register_have_to_accept'] = 'You have to accept the registration terms to suscribe on the website!';
-$LANG['activ_mbr_mail'] = 'You will have to activate your account in the e-mail which will be sent to you before being able to connect!';
-$LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before being able to connect you ';
-$LANG['member_registered_to_approbate'] = 'A new member has registered itself. Its account must be approved to be used.';
+$LANG['activ_mbr_mail'] = 'You will have to activate your account via the e-mail that have been sent to you before you are able to connect!';
+$LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before you are able to connect';
+$LANG['member_registered_to_approbate'] = 'A new member has registered himself. Its account must be approved to be used.';
 $LANG['activ_mbr_mail_success'] = 'Your account is activated, you can now log in to your account!';
 $LANG['activ_mbr_mail_error'] = 'Account activation error';
-$LANG['weight_max'] = 'Weight max';
-$LANG['height_max'] = 'Height max';
-$LANG['width_max'] = 'Width max';
+$LANG['weight_max'] = 'Maximum weight';
+$LANG['height_max'] = 'Maximum height';
+$LANG['width_max'] = 'Maximum width';
 $LANG['verif_code'] = 'Verification code';
-$LANG['verif_code_explain'] = 'Enter the image code, warning for case';
+$LANG['verif_code_explain'] = 'Enter the image code, warning for capital letter';
 $LANG['require_verif_code'] = 'Please enter the verification code!';
 $LANG['timezone_choose'] = 'Choose timezone';
-$LANG['timezone_choose_explain'] = 'Ajust hour according to your localisation';
+$LANG['timezone_choose_explain'] = 'Adjust hour according to your location';
 $LANG['register_title_mail'] = 'Confirm signing up on %s';
 $LANG['register_ready'] = ' You can now connect to your account directly on the site.';
-$LANG['register_valid_email_confirm'] = 'You will have to activate your account in the confirmation e-mail before being able to connect.';
+$LANG['register_valid_email_confirm'] = 'You will have to activate your account via the confirmation e-mail before you are able to connect.';
 $LANG['register_valid_email'] = 'You have to click on this link to activate your account: %s';
 $LANG['register_valid_admin'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience';
 $LANG['register_mail'] = 'Dear %s,
 
-First, thank you to have been signed up on %s. You are now member of the site.
-By signing up you on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.
+First, thank you for your registration on %s. You are now member of the site.
+By signing you up on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.
 
-To log in yourself, don\'t forget your login and your password (we can find them).
+To log yourself in, don\'t forget your login and your password (we can find them).
 
 Here are your identifiers.
 
@@ -490,12 +491,12 @@ $LANG['no_pm'] = 'No message';
 $LANG['quote_last_msg'] = 'Repost of the preceding message';
 
 //Forgot
-$LANG['forget_pass'] = 'Forgot password';
+$LANG['forget_pass'] = 'Forgotten password';
 $LANG['forget_pass_send'] = 'Valid to receive a new password by mail, with an activation key to confirm change';
 $LANG['forget_mail_activ_pass'] = 'Activate password';
 $LANG['forget_mail_pass'] = 'Dear %s
 
-You have received this email because you (or someone who pretends to be you) asked a new password for your account on %s. If you have not asked this new password, please ignore this mail. If you receive another message, contact the website administrator.
+You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. If you have not ask this new password, please ignore this mail. If you receive another message, contact the website administrator.
 
 To use the new password, you have to confirm it. Click on the link bellow:
 
@@ -505,7 +506,7 @@ After that you will be able to log in with the new password:
 
 Password: %s
 
-Anyway, you can change this password later in your member account. If you encountered some issues contact the administrator.
+Anyway, you can change this password later in your member account. If you encounter some issues, contact the administrator.
 
 %s';
 
@@ -525,11 +526,11 @@ $LANG['folder_new'] = 'New folder';
 $LANG['empty_folder'] = 'This folder is empty';
 $LANG['empty_member_folder'] = 'Empty folder?';
 $LANG['del_folder'] = 'Delete folder?';
-$LANG['folder_already_exist'] = 'Folder already exists!';
+$LANG['folder_already_exist'] = 'Folder already exist!';
 $LANG['empty'] = 'Empty';
 $LANG['root'] = 'Root';
 $LANG['files'] = 'Files';
-$LANG['files_del_failed'] = 'Delete files procedure had failed, please manually remove the files';
+$LANG['files_del_failed'] = 'Delete files procedure has failed, please manually remove the files';
 $LANG['folder_size'] = 'Folder size';
 $LANG['file_type'] = 'File %s';
 $LANG['image_type'] = 'Image %s';
@@ -553,20 +554,19 @@ $LANG['cats_management_show_cat'] = 'Make category visible';
 ##########Moderation panel##########
 $LANG['moderation_panel'] = 'Moderation panel';
 $LANG['user_contact_pm'] = 'Contact by private message';
-$LANG['user_alternative_pm'] = 'Private message to send to the member <span class="text_small">(Leave empty for no private message)</span>. The ùember won\'t be able to reply to this message, he won\'t know who sent it';
-
+$LANG['user_alternative_pm'] = 'Private message sent to the member <span class="text_small">(Leave empty for no private message)</span>. The member won\'t be able to reply to this message, he won\'t know who sent it';
 
 //Punishment management
 $LANG['punishment'] = 'Punishment';
 $LANG['punishment_management'] = 'Punishment management';
 $LANG['user_punish_until'] = 'Punishment until';
 $LANG['no_punish'] = 'No member punished';
-$LANG['user_readonly_explain'] = 'User in read only, he cant read but can\'t post on the whole website (comments, etc...)';
+$LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
 $LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
 $LANG['readonly_user'] = 'Member on read only';
 $LANG['read_only_title'] = 'Punishement';
-$LANG['user_readonly_changed'] = 'You have been set on read only status by a member of moderator team, you can\'t post during %date%.
+$LANG['user_readonly_changed'] = 'You have been set on read only status by a member of the moderator team, you can\'t post during %date%.
 
 
 This is a semi-automatic message.';
@@ -576,10 +576,10 @@ $LANG['warning'] = 'Warning';
 $LANG['warning_management'] = 'Warning management';
 $LANG['user_warning_level'] = 'Warning level';
 $LANG['no_user_warning'] = 'No warned users';
-$LANG['user_warning_explain'] = 'Member warning level. You can update it, but at 100% member is banned';
+$LANG['user_warning_explain'] = 'Member warning level. You can update it, but at 100% the member is banned';
 $LANG['change_user_warning'] = 'Change warning level';
 $LANG['warning_title'] = 'Warning';
-$LANG['user_warning_level_changed'] = 'You have been warn by member of moderation team, you warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be definitively banned.
+$LANG['user_warning_level_changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be definitively banned.
 
 
 This is a semi-automatic message.';
@@ -626,7 +626,7 @@ $LANG['contribute_in_module_name'] = 'Contribute in %s';
 $LANG['no_module_to_contribute'] = 'No module in which you can contribute is installed.';
 
 //Loading bar.
-$LANG['query_loading'] = 'Sending of the query to server';
+$LANG['query_loading'] = 'Sending the query to server';
 $LANG['query_sent'] = 'Query loaded successful, waiting for the answer of your server';
 $LANG['query_processing'] = 'Proccessing the query';
 $LANG['query_success'] = 'Processing succed';
@@ -648,7 +648,7 @@ $LANG['enabled'] = 'Enabled';
 $LANG['disabled'] = 'Disabled';
 
 //Dictionnaire pour le captcha.
-$LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'genre', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
+$LANG['_code_dictionnary'] = array('image', 'php', 'query', 'azerty', 'exit', 'verif', 'gender', 'search', 'design', 'exec', 'web', 'inter', 'extern', 'cache', 'media', 'cms', 'cesar', 'watt', 'data', 'site', 'mail', 'email', 'spam', 'index', 'rand', 'text', 'inner', 'over', 'under', 'users', 'visitor', 'member', 'home', 'date', 'today', 'month', 'year', 'name', 'picture', 'notes', 'next', 'subject', 'content', 'options', 'title', 'valid', 'list', 'place', 'quote', 'hide', 'default', 'type', 'status', 'replies', 'back', 'close', 'smiley', 'total', 'average', 'page', 'minute', 'week', 'group', 'size', 'theme', 'online', 'modules', 'result', 'during', 'until', 'lock', 'style', 'notice', 'warning', 'success', 'unknow', 'other', 'final', 'code');
 
 $LANG['csrf_attack'] = '<p>You have potentially been the target of a <acronym title="Cross-Site Request Forgery">CSRF</acronym> attack which has been blocked by PHPBoost.</p>
 <p>For futher informations, see <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" title="CSRF Attacks" class="wikipedia_link">Wikipedia</a></p>';
