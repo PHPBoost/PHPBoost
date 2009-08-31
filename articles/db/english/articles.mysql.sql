@@ -15,7 +15,7 @@ CREATE TABLE `phpboost_articles_cats` (
 	KEY `id_left` (`id_left`)
 ) ENGINE=MyISAM;
 
-INSERT INTO phpboost_articles_cats (`id`, `id_left`, `id_right`, `level`, `name`, `contents`, `nbr_articles_visible`, `nbr_articles_unvisible`, `icon`, `aprob`, `auth`) VALUES ('1', '1', '2', '0', 'Test category', 'Demonstration articles', '0', '0', 'articles.png', '1', 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;}');
+INSERT INTO phpboost_articles_cats (`id`, `id_left`, `id_right`, `level`, `name`, `contents`, `nbr_articles_visible`, `nbr_articles_unvisible`, `icon`, `aprob`, `auth`) VALUES ('1', '1', '2', '0', 'First category', 'Demonstration of an article', '0', '0', 'articles.png', '1', 'a:3:{s:3:"r-1";i:1;s:2:"r0";i:1;s:2:"r1";i:1;}');
 
 DROP TABLE IF EXISTS `phpboost_articles`;
 CREATE TABLE `phpboost_articles` (
