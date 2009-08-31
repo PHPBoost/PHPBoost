@@ -353,7 +353,66 @@ class WikiInterface extends ModuleInterface
 			$tmp = $Template->pparse('wiki', TRUE);
 			return $tmp;
 	}
-
+	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
+	{
+		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG, $Cache;
+		
+		import('content/sitemap/module_map');
+		import('util/url');
+		
+		load_module_lang('wiki');
+		$Cache->load('wiki');
+		
+		$wiki_link = new SiteMapLink($LANG['wiki'], new Url('wiki/wiki.php'), SITE_MAP_FREQ_DEFAULT, SITE_MAP_PRIORITY_LOW);
+		$module_map = new ModuleMap($wiki_link);
+		
+		$id_cat = 0;
+	    $keys = array_keys($_WIKI_CATS);
+		$num_cats = count($_WIKI_CATS);
+		$properties = array();
+		
+		for ($j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $_WIKI_CATS[$id];
+			if ($id != 0 && $properties['id_parent'] == $id_cat)
+			{
+				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
+			}
+		}
+		
+		return $module_map; 
+	}
+	
+	function _create_module_map_sections($id_cat, $auth_mode)
+	{
+		global $_WIKI_CATS, $LANG, $User, $_WIKI_CONFIG;
+		
+		$this_category = new SiteMapLink($_WIKI_CATS[$id_cat]['name'], new Url('/wiki/' . url('wiki.php?title='.url_encode_rewrite($_WIKI_CATS[$id_cat]['name']), url_encode_rewrite($_WIKI_CATS[$id_cat]['name']))));
+			
+		$category = new SiteMapSection($this_category);
+		
+		$i = 0;
+		
+		$keys = array_keys($_WIKI_CATS);
+		$num_cats = count($_WIKI_CATS);
+		$properties = array();
+		for ($j = 0; $j < $num_cats; $j++)
+		{
+			$id = $keys[$j];
+			$properties = $_WIKI_CATS[$id];
+			if ($id != 0 && $properties['id_parent'] == $id_cat)
+			{
+				$category->add($this->_create_module_map_sections($id, $auth_mode));
+				$i++;
+			}
+		}
+		
+		if ($i == 0	)
+			$category = $this_category;
+		
+		return $category;
+	} 
 }
 
 ?>
