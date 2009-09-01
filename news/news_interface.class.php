@@ -130,7 +130,7 @@ class NewsInterface extends ModuleInterface
     
     function get_feed_data_struct($idcat = 0, $name = '')
     {
-        global $Cache, $Sql, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_LANG;
+        global $Cache, $Sql, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
 		
         import('content/syndication/feed_data');
         import('util/date');
@@ -182,7 +182,7 @@ class NewsInterface extends ModuleInterface
 	            $item->set_desc(second_parse($row['contents']) . (!empty($row['extend_contents']) ? '<br /><br /><a href="' . $link->absolute() . '">' . $NEWS_LANG['extend_contents'] . '</a><br /><br />' : ''));
 	            $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
 	            $item->set_image_url($row['img']);
-            	$item->set_auth($news_cat->compute_heritated_auth($row['idcat'], AUTH_NEWS_READ, AUTH_PARENT_PRIORITY));
+            	$item->set_auth($NEWS_CAT[$row['idcat']]['auth']);
 
 	            $data->add_item($item);
 	        }
