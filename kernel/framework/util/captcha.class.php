@@ -312,7 +312,7 @@ class Captcha
 		imagedestroy($img);
 		
 		//Enregistrement du code pour l'utilisateur dans la base de données;
-		$this->_update_code($this->code);
+		$this->_update_code();
 	}
 	
 	## Private Methods ##
