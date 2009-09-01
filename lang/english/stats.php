@@ -129,7 +129,7 @@ $stats_array_os = array(
    'linux' => array('Linux', 'linux.png'),
    'windowsseven' => array('Windows Seven', 'windowsseven.png'),
    'windowsvista' => array('Windows Vista', 'windowsvista.png'),
-   'windowsserver2003' => array('Windows Serveur 2003', 'windowsxp.png'),
+   'windowsserver2003' => array('Windows Server 2003', 'windowsxp.png'),
    'windowsxp' => array('Windows XP', 'windowsxp.png'),
    'windows2000' => array('Windows 2000', 'windowsold.png'),
    'windowsnt' => array('Windows NT', 'windowsold.png'),
@@ -149,7 +149,7 @@ $stats_array_os = array(
    'psp' => array('Psp', 'psp.png'),
    'playstation3' => array('Playstation 3', 'ps3.png'),
    'phone' => array('Phone', '../phone.png'),
-   'other' => array('Autres', '../other.png')
+   'other' => array('Others', '../other.png')
 );
 
 //Pays.

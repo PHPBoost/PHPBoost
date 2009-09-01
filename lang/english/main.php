@@ -391,7 +391,7 @@ $LANG['hide_mail'] = 'Hide your email address';
 $LANG['hide_mail_who'] = 'To the other users';
 $LANG['mail_track_topic'] = 'Send me an email when a reply is posted in a tracked topic';
 $LANG['web_site'] = 'Web site';
-$LANG['localisation'] = 'Localization';
+$LANG['localisation'] = 'Location';
 $LANG['job'] = 'Job';
 $LANG['hobbies'] = 'Hobbies';
 $LANG['sex'] = 'Sex';
@@ -485,9 +485,9 @@ $LANG['post_new_convers'] = 'Create a new conversation';
 $LANG['read'] = 'Read';
 $LANG['not_read'] = 'Not read';
 $LANG['last_message'] = 'Last message';
-$LANG['mark_pm_as_read'] = 'Mark all private message as read';
+$LANG['mark_pm_as_read'] = 'Mark all privates messages as read';
 $LANG['participants'] = 'Participant(s)';
-$LANG['no_pm'] = 'No message';
+$LANG['no_pm'] = 'No messages';
 $LANG['quote_last_msg'] = 'Repost of the preceding message';
 
 //Forgot

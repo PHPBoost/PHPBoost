@@ -68,7 +68,7 @@ $LANG['e_unauth_poll'] = 'Vous n\'êtes pas autorisé à voter !';
 $LANG['title_poll'] = 'Sondage';
 
 //polls
-$LANG['poll'] = 'Sondage';
+$LANG['poll'] = 'Sondages';
 $LANG['mini_poll'] = 'Mini sondage';
 $LANG['poll_main'] = 'Voici l\'espace de sondages du site, profitez en pour donner votre avis.';
 $LANG['poll_back'] = 'Retour au(x) sondage(s)';

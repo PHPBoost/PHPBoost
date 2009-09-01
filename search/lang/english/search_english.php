@@ -38,7 +38,7 @@ $LANG['warning_length_string_searched'] = 'The size of the string you\'re search
 $LANG['search_keywords'] = 'Keywords';
 $LANG['search_min_length'] = 'at least 4 characters';
 $LANG['search_in_modules'] = 'Search in the following modules';
-$LANG['search_in_modules_explain'] = 'Hold ctrl then click in the list to do multiple choice';
+$LANG['search_in_modules_explain'] = 'Hold ctrl then click in the list to select multiple options';
 $LANG['search_specialized_form'] = 'Specialized search in the following module';
 $LANG['search_specialized_form_explain'] = 'Set the search\'s parameters';
 $LANG['title_all_results'] = 'All results';
@@ -71,3 +71,4 @@ $LANG['unauthorized_modules'] = 'Forbidden modules';
 $LANG['unauthorized_modules_explain'] = 'Select modules in which you want to forbid research';
 $LANG['update'] = 'Update';
 $LANG['reset'] = 'Reset';
+?>
