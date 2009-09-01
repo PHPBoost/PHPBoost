@@ -69,9 +69,9 @@ $LANG['e_unauth_poll'] = 'You aren\'t authorized to vote !';
  $LANG['title_poll'] = 'Polls';
  
 //Poll
-$LANG['poll'] = 'Poll';
+$LANG['poll'] = 'Polls';
 $LANG['mini_poll'] = 'Mini Poll';
-$LANG['poll_main'] = 'This is the website "polls" module, so tell your opinion.';
+$LANG['poll_main'] = 'This is the website "polls" module, so tell us your opinion.';
 $LANG['poll_back'] = 'Return to the poll(s)';
 $LANG['redirect_none'] = 'No poll available';
 $LANG['confirm_vote'] = 'Your vote was taken into account';
