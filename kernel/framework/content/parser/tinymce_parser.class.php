@@ -339,8 +339,6 @@ class TinyMCEParser extends ContentParser
 		    import('util/url');
 			array_push($array_preg, '`&lt;a href="(' . Url::get_wellformness_regex() . ')"&gt;(.+)&lt;/a&gt;`isU');
 			array_push($array_preg_replace, '<a href="$1">$2</a>');
-			//array_push($array_preg, '`&lt;a href="((?:www\.(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*)"&gt;(.+)&lt;/a&gt;`isU');
-			//array_push($array_preg_replace, '<a href="$1">$2</a>');
 		}
 		//Sub tag
 		if (!in_array('sub', $this->forbidden_tags))
