@@ -395,7 +395,9 @@ class Session
 
 			$this->data['modules_parameters'] = serialize($modules_parameters);
 			
-			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" . $this->data['modules_parameters'] . "' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_SESSIONS . " SET modules_parameters = '" .
+				strprotect($this->data['modules_parameters'], false) .
+				"' WHERE user_id = '" . (int)$this->data['user_id'] . "'", __LINE__, __FILE__);
 		}
 		else
 		{
