@@ -104,7 +104,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
 			'U_CAT' => 'news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+'  . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'),
 			'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
-		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat'])
 		));
 
 		//Affichage commentaires.
@@ -186,7 +186,7 @@ elseif (!empty($idcat))
 					'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 					'U_CAT' => 'news' . url('.php?cat=' . $idcat, '-' . $idcat . '+'  . url_encode_rewrite($NEWS_CAT[$idcat]['name']) . '.php'),
 					'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-				    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+				    'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $idcat)
 				));
 			}
 		}
@@ -265,7 +265,7 @@ elseif ($user)
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),					
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'U_COM' => ($NEWS_CONFIG['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
-		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $row['idcat'])
 		));
 		
 		$i++;
