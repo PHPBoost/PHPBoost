@@ -25,13 +25,16 @@
  *
 ###################################################*/
 
+// Authorizations of categories.
 define('AUTH_NEWS_READ', 1);
 define('AUTH_NEWS_CONTRIBUTE', 2);
 define('AUTH_NEWS_WRITE', 4);
 define('AUTH_NEWS_MODERATE', 8);
 
-
+// Name of table from database
 define('DB_TABLE_NEWS', PREFIX . 'news');
 define('DB_TABLE_NEWS_CAT', PREFIX . 'news_cat');
 
+// Name of syndication file.
+define('NEWS_MASTER_0', PATH_TO_ROOT . '/cache/syndication/news_master_0.php');
 ?>

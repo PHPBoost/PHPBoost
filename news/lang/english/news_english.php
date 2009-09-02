@@ -120,7 +120,7 @@ $NEWS_LANG = array(
 	'until_1' => '(Until %s)',
 	'until_2' => '(%s until %s)',
 	
-	'xml_news_desc' => 'Track the last news on',
+	'xml_news_desc' => 'News - ',
 );
 
 ?>

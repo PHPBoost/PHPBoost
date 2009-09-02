@@ -120,7 +120,7 @@ $NEWS_LANG = array(
 	'until_1' => '(Jusqu\'au %s)',
 	'until_2' => '(%s jusqu\'au %s)',
 	
-	'xml_news_desc' => 'Suivez les dernières actualités sur',
+	'xml_news_desc' => 'Actualités - ',
 );
 
 ?>
