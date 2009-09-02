@@ -524,7 +524,7 @@ class CategoriesManager
 		//Boolean variable which is true when we can stop the loop : optimization
 		$end_of_category = false;
 		
-		if ($add_this && ($category_id == 0 || ($num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
+		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
 			$list[] = $category_id;
 		
 		$id_categories = array_keys($this->cache_var);
@@ -535,7 +535,8 @@ class CategoriesManager
 		{
 			$id = $id_categories[$i];
 			$value =& $this->cache_var[$id];
-			if ($id != 0 && $value['id_parent'] == $category_id && ($num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth)))
+			if ($id != 0 && $value['id_parent'] == $category_id &&
+				(empty($this->cache_var[$id]['auth']) || $num_auth == 0 || ($num_auth > 0 && $User->check_auth($this->cache_var[$id]['auth'], $num_auth))))
 			{
 				$list[] = $id;
 				if ($recursive_exploration)
