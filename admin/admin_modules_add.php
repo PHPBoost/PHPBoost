@@ -162,8 +162,7 @@ else
 	$i = 0;
 	$installed_modules = array();
 	$result = $Sql->query_while("SELECT id, name
-	FROM " . PREFIX . "modules
-	WHERE activ = 1", __LINE__, __FILE__);
+	FROM " . PREFIX . "modules", __LINE__, __FILE__);
 	
 	while ($row = $Sql->fetch_assoc($result))
 		$installed_modules[] = $row['name'];
