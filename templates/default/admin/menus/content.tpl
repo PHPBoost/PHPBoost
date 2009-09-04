@@ -32,7 +32,8 @@ function CheckForm() {
 				<dd><select name="location" id="location">{LOCATIONS}</select></dd>
 			</dl>
 			{KERNEL_EDITOR}
-			<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea> 
+			<textarea rows="15" cols="5" id="contents" name="contents">{CONTENTS}</textarea>
+			<br />
 			<dl>
 				<dt><label for="activ">{L_STATUS}</label></dt>
 				<dd>
