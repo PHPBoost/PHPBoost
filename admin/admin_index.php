@@ -113,6 +113,8 @@ $Template->assign_vars(array(
     'L_RESET' => $LANG['reset']
 ));
 
+import('core/stats_saver');
+
 //Liste des personnes en lignes.
 $result = $Sql->query_while("SELECT s.user_id, s.level, s.session_ip, s.session_time, s.session_script, s.session_script_get, 
 s.session_script_title, m.login 
@@ -123,7 +125,7 @@ ORDER BY s.session_time DESC", __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {
 	//On vérifie que la session ne correspond pas à un robot.
-	$robot = $Session->_check_bot($row['session_ip']);
+	$robot = StatsSaver::check_bot($row['session_ip']);
 
 	switch ($row['level']) //Coloration du membre suivant son level d'autorisation. 
 	{ 		
@@ -152,7 +154,7 @@ while ($row = $Sql->fetch_assoc($result))
 		'USER_IP' => $row['session_ip'],
 		'WHERE' => '<a href="' . HOST . DIR . $row['session_script'] . $row['session_script_get'] . '">' . stripslashes($row['session_script_title']) . '</a>',
 		'TIME' => gmdate_format('date_format_long', $row['session_time'])
-	));	
+	));
 }
 $Sql->query_close($result);
 	
