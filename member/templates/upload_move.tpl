@@ -66,7 +66,11 @@
 							<table style="border:0;width:210px;">
 								<tr>
 									<td style="width:100px;vertical-align:top;">
-										<img src="{file.U_IMG_MOVE}" alt="" style="width:100px;" />
+										# IF file.C_DISPLAY_REAL_IMG #
+										<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
+										# ELSE #
+										<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{file.FILE_ICON}" alt="" />
+										# ENDIF #
 									</td>
 									<td style="padding-top:8px;">						
 										{file.NAME}	
