@@ -104,42 +104,51 @@
 			
 			<div style="clear:right;"></div>
 			
-			<table class="module_table" style="margin-top:25px;margin-bottom:15px;">
+			<table class="module_table" style="width:99%">
 				<tr> 
 					<th colspan="4">
 						{L_USER_ONLINE}
 					</th>
 				</tr>
 				<tr> 
-					<td class="row1" style="text-align:center;">
+					<td class="row1" style="text-align:center;width:145px">
 						{L_USER_ONLINE}
 					</td>
-					<td  class="row1" style="text-align:center;">
+					<td  class="row1" style="text-align:center;width:135px">
 						{L_USER_IP}
 					</td>
 					<td  class="row1" style="text-align:center;">
 						{L_LOCALISATION}
 					</td>
-					<td  class="row1" style="text-align:center;">
+					<td  class="row1" style="text-align:center;width:170px">
 						{L_LAST_UPDATE}
 					</td>
-				</tr>				
-				# START user #
+				</tr>	
 				<tr> 
-					<td class="row2" style="text-align:center;">
-						{user.USER}
+					<td colspan="4" class="row2" style="padding:0;">
+						<div style="height:200px;overflow:auto;">
+							<table style="width:100%">
+								# START user #
+								<tr> 
+									<td class="row2" style="text-align:center;width:145px">
+										{user.USER}
+									</td>
+									<td class="row2" style="text-align:center;width:135px">
+										{user.USER_IP}
+									</td>
+									<td class="row2" style="text-align:center;">
+										{user.WHERE}
+									</td>
+									<td class="row2" style="text-align:center;width:170px">
+										{user.TIME}
+									</td>					
+								</tr>
+								# END user #
+							</table>
+						</div>
+						&nbsp;
 					</td>
-					<td class="row2" style="text-align:center;">
-						{user.USER_IP}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{user.WHERE}
-					</td>
-					<td class="row2" style="text-align:center;">
-						{user.TIME}
-					</td>					
 				</tr>
-				# END user #
 			</table>
 		</div>
 			
