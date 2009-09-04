@@ -43,7 +43,11 @@ function menu_langswitcher_langswitcher($position, $block)
     	{
     		$User->update_user_lang($switchlang); //Mise à jour du thème du membre.
     		if (QUERY_STRING != '')
-    			redirect(trim(HOST . SCRIPT . '?' . preg_replace('`switchlang=[^&]+`', '', QUERY_STRING), '?'));
+    		{
+				$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
+				$query_string = preg_replace('`&switchlang=[^&]+`', '', $query_string);
+				redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+    		}
     		else
     			redirect(HOST . SCRIPT);
     	}

@@ -43,8 +43,12 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	{
     		$User->update_user_theme($switchtheme); //Mise à jour du thème du membre.
     		if (QUERY_STRING != '')
-    			redirect(trim(HOST . SCRIPT . '?' . preg_replace('`switchtheme=[^&]+`', '', QUERY_STRING), '?'));
-    		else
+    		{
+				$query_string = preg_replace('`token=[^&]+`', '', QUERY_STRING);
+				$query_string = preg_replace('`&switchtheme=[^&]+`', '', $query_string);
+				redirect(trim(HOST . SCRIPT . (!empty($query_string) ? '?' . $query_string : '')));
+    		}
+			else
     			redirect(HOST . SCRIPT);
     	}
     }
