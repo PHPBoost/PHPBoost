@@ -21,7 +21,7 @@
 	padding:6px 4px;
 	background:#87A6BE;
 	border:1px solid #2C5169;
-	bottom:28px; 
+	bottom:2px; 
 	z-index:100;
 }
 /* Affichage des smiley */
@@ -219,6 +219,7 @@ html>body .question, html>body .notice, html>body .warning, html>body .error, ht
 a.wikipedia_link:before{
    content:url(../images/wikipedia_icon.png);
    vertical-align:middle;
+   padding-right:2px;
 }
 
 a.wikipedia_link{
