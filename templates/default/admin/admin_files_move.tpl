@@ -33,7 +33,7 @@
 							{L_URL}
 						</div>
 						<div style="float:right;width:90%;padding:2px;background:#f3f3ee;padding-left:6px;color:black;border:1px solid #7f9db9;">
-								<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
+							<img src="../templates/{THEME}/images/upload/folder_mini.png" class="valign_middle" alt="" /> <a href="admin_files.php">{L_ROOT}</a>{URL}
 						</div>
 					</td>
 				</tr>			
@@ -71,8 +71,12 @@
 									# START file #							
 									<table style="border:0;width:210px;">
 										<tr>
-											<td style="width:100px;vertical-align:top;">
-												<img src="{file.U_IMG_MOVE}" alt="" style="width:100px;height:auto;" />
+											<td style="width:100px;text-align:center;vertical-align:top;">
+												# IF file.C_DISPLAY_REAL_IMG #
+												<img src="{PATH_TO_ROOT}/upload/{file.FILE_ICON}" alt="" style="width:100px;height:auto;" />
+												# ELSE #
+												<img src="{PATH_TO_ROOT}/templates/{THEME}/images/upload/{file.FILE_ICON}" alt="" />
+												# ENDIF #
 											</td>
 											<td style="padding-top:8px;">						
 												{file.NAME}	
