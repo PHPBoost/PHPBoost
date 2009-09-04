@@ -387,7 +387,7 @@
 					<dd><label>
 						<input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" /> 
 						
-						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+						<div style="position:relative;z-index:100;top:26px;margin-left:25px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);"></div>
 						</div>
 						<a onclick="xmlhttprequest_calendar('calendar', '?input_field=user_born&amp;field=calendar&amp;lyear=1');display_calendar(1);" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);" style="cursor:pointer;"><img class="valign_middle" id="imgcalendar" src="../templates/{THEME}/images/calendar.png" alt="" /></a>

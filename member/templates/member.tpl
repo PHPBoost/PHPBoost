@@ -268,7 +268,7 @@
 					<dt><label for="user_born">{L_DATE_OF_BIRTH}</label><br /><span>{L_DATE_FORMAT}</span></dt>
 					<dd>
 						<label><input size="10" maxlength="10" type="text" class="text" id="user_born" name="user_born" value="{USER_BORN}" /></label>
-						<div style="position:relative;z-index:100;top:6px;float:left;display:none;" id="calendar1">
+						<div style="position:relative;z-index:100;top:26px;margin-left:25px;float:left;display:none;" id="calendar1">
 							<div id="calendar" class="calendar_block" onmouseover="hide_calendar(1, 1);" onmouseout="hide_calendar(1, 0);">							
 							</div>
 						</div>
@@ -464,63 +464,51 @@
 			</tr>	
 			<tr style="font-weight:bold;text-align: center;">
 				<td class="row3">
-					<a href="member{U_USER_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 					{L_PSEUDO} 
-					<a href="member{U_USER_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 				</td>
 				<td class="row3">
 					{L_MAIL}
 				</td>
 				<td class="row3">
-					<a href="member{U_USER_TIME_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_TIME_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 					{L_REGISTERED}
-					<a href="member{U_USER_TIME_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_TIME_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 				</td>
 				<td class="row3">
-					<a href="member{U_USER_MSG_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_MSG_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 					{L_MESSAGE}
-					<a href="member{U_USER_MSG_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>	
+					<a href="member{U_USER_MSG_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>	
 				</td>
 				<td class="row3">
-					{L_LOCALISATION}
-				</td>
-				<td class="row3">
-					<a href="member{U_USER_LAST_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" /></a>
+					<a href="member{U_USER_LAST_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 					{L_LAST_CONNECT}
-					<a href="member{U_USER_LAST_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" /></a>
+					<a href="member{U_USER_LAST_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 				</td>
 				<td class="row3">
 					{L_PRIVATE_MESSAGE}
 				</td>
-				<td class="row3">
-					{L_WEB_SITE}
-				</td>
 			</tr>
 			# START member_list #
 			<tr> 
-				<td class="row2" style="text-align:center;padding:4px 0px;">
+				<td class="row2" style="text-align:center;">
 					<a href="member{member_list.U_USER_ID}">{member_list.PSEUDO}</a>
 				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
+				<td class="row2" style="text-align:center;"> 
 					{member_list.MAIL}
 				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
+				<td class="row2" style="text-align:center;"> 
 					{member_list.DATE}
 				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
+				<td class="row2" style="text-align:center;"> 
 					{member_list.MSG}
 				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{member_list.LOCAL}
-				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
+				<td class="row2" style="text-align:center;"> 
 					{member_list.LAST_CONNECT}
 				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
+				<td class="row2" style="text-align:center;"> 
 					<a href="pm{member_list.U_USER_PM}"><img src="../templates/{THEME}/images/{LANG}/pm.png" alt="{L_PRIVATE_MESSAGE}" /></a>
-				</td>
-				<td class="row2" style="text-align:center;padding:4px 0px;"> 
-					{member_list.WEB}
 				</td>
 			</tr>
 			# END member_list #
