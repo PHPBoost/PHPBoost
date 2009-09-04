@@ -150,8 +150,10 @@ class Session
 		$session_script_get = preg_replace('`&token=[^&]+`', '', QUERY_STRING);
 		
 		########Insertion dans le compteur si l'ip est inconnue.########
+		import('core/stats_saver');
+		
 		$check_ip = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VISIT_COUNTER . " WHERE ip = '" . USER_IP . "'", __LINE__, __FILE__);
-		$_include_once = empty($check_ip) && (Session::_check_bot(USER_IP) === false);
+		$_include_once = empty($check_ip) && (StatsSaver::check_bot() === false);
 		if ($_include_once)
 		{
 			//Récupération forcée de la valeur du total de visites, car problème de CAST avec postgresql.
@@ -164,7 +166,6 @@ class Session
 		}
 		
 		//On lance les stats.
-		import('core/stats_saver');
 		StatsSaver::compute_referer();
 		if ($_include_once)
 			StatsSaver::compute_users();
@@ -549,103 +550,6 @@ class Session
 		FROM " . DB_TABLE_SESSIONS . "
 		WHERE session_time < '" . (time() - $CONFIG['site_session']) . "'
 		OR (session_time < '" . (time() - $CONFIG['site_session_invit']) . "' AND user_id = -1)", __LINE__, __FILE__);
-	}
-	
-	/**
-	 * @static
-	 * @desc Detect the most commons bots used by search engines. Store the number of hits and hour of last visit for each search engines.
-	 * @param string $user_ip
-	 * @return mixed The name of the bot if detected, false if it's a normal user.
-	 */
-	function _check_bot($user_ip)
-	{
-		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-		
-		if (preg_match('`(w3c|http:\/\/|bot|spider|Gigabot|gigablast.com)+`i', $_SERVER['HTTP_USER_AGENT']))
-			return 'unknow_bot';
-			
-		//Chaque ligne représente une plage ip.
-		$plage_ip = array(
-			'66.249.64.0' => '66.249.95.255',
-			'209.85.128.0' => '209.85.255.255',
-			'65.52.0.0' => '65.55.255.255',
-			'207.68.128.0' => '207.68.207.255',
-			'66.196.64.0' => '66.196.127.255',
-			'68.142.192.0' => '68.142.255.255',
-			'72.30.0.0' => '72.30.255.255',
-			'193.252.148.0' => '193.252.148.255',
-			'66.154.102.0' => '66.154.103.255',
-			'209.237.237.0' => '209.237.238.255',
-			'193.47.80.0' => '193.47.80.255'
-		);
-
-		//Nom des bots associés.
-		$array_robots = array(
-			'Google bot',
-			'Google bot',
-			'Msn bot',
-			'Msn bot',
-			'Yahoo Slurp',
-			'Yahoo Slurp',
-			'Yahoo Slurp',
-			'Voila',
-			'Gigablast',
-			'Ia archiver',
-			'Exalead'
-		);
-		
-		//Ip de l'utilisateur au format numérique.
-		$user_ip = ip2long($user_ip);
-
-		//On explore le tableau pour identifier les robots
-		$r = 0;
-		foreach ($plage_ip as $start_ip => $end_ip)
-		{
-			$start_ip = ip2long($start_ip);
-			$end_ip = ip2long($end_ip);
-			
-			//Comparaison pour chaque partie de l'ip, si l'une d'entre elle est fausse l'instruction est stopée.
-			if ($user_ip >= $start_ip && $user_ip <= $end_ip)
-			{
-				//Insertion dans le fichier texte des visites des robots.
-				$file_path = PATH_TO_ROOT . '/cache/robots.txt';
-				if (!file_exists($file_path))
-				{
-					$file = @fopen($file_path, 'w+'); //Si le fichier n'existe pas on le crée avec droit d'écriture et lecture.
-					@fwrite($file, serialize(array())); //On insère un tableau vide.
-					@fclose($file);
-				}
-
-				if (is_file($file_path) && is_writable($file_path)) //Fichier accessible en écriture.
-				{
-					$robot = $array_robots[$r]; //Nom du robot.
-					$time = gmdate_format('YmdHis', time(), TIMEZONE_SYSTEM); //Date et heure du dernier passage!
-					
-					$line = file($file_path);
-					$data = unserialize($line[0]); //Renvoi la première ligne du fichier (le array précédement crée).
-					
-					if (!isset($data[$robot]))
-						$data[$robot] = $robot . '/1/' . $time; //Création du array contenant les valeurs.
-						
-					$array_info = explode('/', $data[$robot]); //Récuperation des valeurs.
-					if ($array_robots[$r] === $array_info[0]) //Robo repasse.
-					{
-						$array_info[1]++; //Nbr de  visite.
-						$array_info[2] = $time; //Date Dernière visite
-						$data[$robot] = implode('/', $array_info);
-					}
-					else
-						$data[$robot] = $robot . '/1/' . $time; //Création du array contenant les valeurs.
-					
-					$file = @fopen($file_path, 'r+');
-					fwrite($file, serialize($data)); //On stock le tableau dans le fichier de données
-					fclose($file);
-				}
-				return $array_robots[$r]; //On retourne le nom du robot d'exploration.
-			}
-			$r++;
-		}
-		return false;
 	}
 	
 	/**
