@@ -204,7 +204,7 @@ $tpl->assign_vars(array(
 ));
 
 //Localisation possibles.
-$block = BLOCK_POSITION__HEADER;
+$block = retrieve(GET, 's', BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
     BLOCK_POSITION__HEADER => $LANG['menu_header'],
     BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
@@ -236,13 +236,14 @@ if ($menu_id > 0)
 	
     if (!of_class($menu, LINKS_MENU__CLASS))
         redirect('menus.php');
+	
+	$block = $menu->get_block();
 }
 else
 {   // Create a new generic menu
     $menu = new LinksMenu('', '', '', VERTICAL_MENU);
 }
 
-$block = $menu->get_block();
 $tpl->assign_vars(array(
 	'IDMENU' => $menu_id,
 	'AUTH_MENUS' => Authorizations::generate_select(

@@ -107,7 +107,7 @@ $tpl->assign_vars(array(
 ));
 
 //Localisation possibles.
-$block = BLOCK_POSITION__HEADER;
+$block = retrieve(GET, 's', BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 BLOCK_POSITION__HEADER => $LANG['menu_header'],
 BLOCK_POSITION__SUB_HEADER => $LANG['menu_subheader'],
@@ -216,7 +216,7 @@ foreach ($sorted_modules as $module)
     			'SPACE' => '--' . str_repeat('------', $url['level']),
     			'FEED_NAME' => $url['feed_name'] != 'master' ? $url['feed_name'] : null,
     			'SELECTED' => $url['selected'] ? ' selected="selected"' : ''
-    			));
+    		));
 		}
 	}
 }

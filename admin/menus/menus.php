@@ -59,15 +59,6 @@ function menu_admin_link(&$menu, $mode)
             else
             	return '';
             break;
-        case 'up':
-            $link = 'menus.php?action=up&amp;';
-            break;
-        case 'down':
-            $link = 'menus.php?action=down&amp;';
-            break;
-        case 'move':
-            $link = 'menus.php?';
-            break;
     }
     global $Session;
     return $link . 'id=' . $menu->get_id() . '&amp;token=' . $Session->get_token();
@@ -84,7 +75,7 @@ if (!empty($id))
         
     switch ($action)
     {
-        case 'enable':
+    	case 'enable':
             MenuService::enable($menu);
         	break;
         case 'disable':
@@ -92,14 +83,6 @@ if (!empty($id))
             break;
         case 'delete':
             MenuService::delete($id);
-            break;
-        case 'up':
-        case 'down':
-            // Move up or down a Menu in a block
-        	if ($action == 'up')
-        	   MenuService::change_position($menu, MOVE_UP);
-        	else
-               MenuService::change_position($menu, MOVE_DOWN);
             break;
         default:
             if (!empty($move))
@@ -119,13 +102,11 @@ MenuService::update_mini_modules_list(false);
 // The same with the mini menus
 MenuService::update_mini_menus_list();
 
-$tpl = new Template('admin/menus/menus.tpl');
 $Cache->load('themes');
 
 // Compute the column number
 $right_column = $THEME_CONFIG[get_utheme()]['right_column'];
 $left_column = $THEME_CONFIG[get_utheme()]['left_column'];
-$colspan = 1 + (int) $right_column + (int) $left_column;
 
 // Retrieves all the menu
 $menus_blocks = MenuService::get_menus_map();
@@ -140,6 +121,93 @@ $blocks = array(
    BLOCK_POSITION__RIGHT => 'mod_right',
    BLOCK_POSITION__NOT_ENABLED => 'mod_main'
 );
+
+if ($action == 'save') //Save menus positions.
+{
+	// We build the array representing the tree
+    $menu_tree = array();
+    preg_match_all('`([a-z_]+)\[\]=([0-9]+)`', retrieve(POST, 'menu_tree', '', TSTRING_HTML), $matches);
+    if (is_array($matches[1]))
+    {
+    	foreach($matches[1] as $key => $container)
+	    {
+	    	$menu_tree[$matches[2][$key]] = $container;
+	    }
+    }
+    
+    //Update all menus.
+    $changes = 0;
+   	$rebuild_block_list = array();
+    foreach ($menus_blocks as $block_id => $menus)
+	{   
+		// For each block
+	    foreach ($menus as $menu)
+	    {
+			$new_block = $menu_tree[$menu->get_id()];
+       		$enabled = $menu->is_enabled();
+        	
+       		if ($enabled && $new_block == 'mod_central') //Disable menu
+       		{
+       			MenuService::disable($menu);
+       			$changes++;
+       		}
+       		elseif(!$enabled && $new_block != 'mod_central') //Enable menu
+       		{
+       			MenuService::enable($menu);
+       			$rebuild_block_list[$new_block] = true; //We add a marker to rebuild this container.
+       			$changes++;
+       		}
+       		
+       		if ($new_block != $blocks[$menu->get_block()]) //Move the menu if enabled
+       		{
+       			$new_block_id = array_search($new_block, $blocks);
+       			if ($new_block_id !== false)
+       			{
+       				MenuService::move($menu, $new_block_id);
+       				$rebuild_block_list[$new_block] = true; //We add a marker to rebuild this container.
+       				$changes++;
+       			}
+       		}
+	    }
+	}
+	
+	/*//We build all modified blocks.
+	foreach ($rebuild_block_list as $block_to_build => $value)
+	{
+		foreach ($menu_tree as $block_id => $block_in_tree) //Retrieve position's menu in the sorted tree.
+		{
+			if ($block_to_build == $block_in_tree)
+			{
+				//Update position's menus in the modified block.
+				foreach($menus_blocks[array_search($block_to_build, $blocks)] as $menu)
+				{
+					echo $menu->get_id()."\n";
+				}
+			}
+		}
+	}
+	print_r($menu_tree);
+	print_r(array_flip($menu_tree));
+    exit;*/
+    
+	if ($changes > 0) //Update cache if necessary.
+	{
+	    MenuService::generate_cache();
+	    $Cache->Generate_file('css');
+	}
+
+	/*
+	$left_column = !empty($_POST['left_column_enabled']) ? 1 : 0; 
+	$right_column = !empty($_POST['right_column_enabled']) ? 1 : 0; 
+	$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
+	$Cache->Generate_file('themes'); //Régénération du cache.
+	*/
+	
+	redirect('menus.php');
+}
+
+
+$tpl = new Template('admin/menus/menus.tpl');
 
 $menu_template = new Template('admin/menus/menu.tpl');
 $menu_template->assign_vars(array(
@@ -158,7 +226,8 @@ $menu_template->assign_vars(array(
 ));
 
 foreach ($menus_blocks as $block_id => $menus)
-{   // For each block
+{   
+	// For each block
     $i = 0;
     $max = count($menus);
     foreach ($menus as $menu)
@@ -182,7 +251,6 @@ foreach ($menus_blocks as $block_id => $menus)
             'CONTENTS' => $menu->admin_display(),
             'ACTIV' => ($enabled ? 'disable' : 'enable'),
             'UNACTIV' => ($enabled ? 'enable' : 'disable'),
-            'STYLE' => $block_id == BLOCK_POSITION__NOT_ENABLED ? 'margin:5px;margin-top:0px;float:left' : '',
 			'C_MENU_ACTIVATED' => $enabled,
             'C_EDIT' => !empty($edit_link),
             'C_DEL' => !empty($del_link),
@@ -204,15 +272,8 @@ foreach ($menus_blocks as $block_id => $menus)
     }
 }
 
-/*
-$LANG['menus_management'],
-
-        'L_MANAGE_THEME_COLUMNS' => $LANG['manage_theme_columns']*/
-		
-		
 $tpl->assign_vars(array(
     'L_MENUS_MANAGEMENT' => $LANG['menus_management'],
-    'COLSPAN' => $colspan,
     'C_LEFT_COLUMN' => $left_column,
     'C_RIGHT_COLUMN' => $right_column,
     'START_PAGE' => get_start_page(),
