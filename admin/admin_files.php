@@ -236,6 +236,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
 		$get_img_mimetype = $Uploads->get_img_mimetype($info_move['type']);
 		$size_img = '';
+		$display_real_img = false;
 		switch ($info_move['type'])
 		{
 			//Images
@@ -245,15 +246,22 @@ elseif (!empty($move_folder) || !empty($move_file))
 			case 'bmp':
 			list($width_source, $height_source) = @getimagesize('../upload/' . $info_move['path']);
 			$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+			
+			//On affiche l'image réelle si elle n'est pas trop grande.
+			if ($width_source < 350 && $height_source < 350) 
+			{
+				$display_real_img = true;
+			}
 		}
 		
 		$cat_explorer = display_cat_explorer($info_move['idcat'], $cats, 1, $folder_member);
 		
 		$Template->assign_block_vars('file', array(
+			'C_DISPLAY_REAL_IMG' => $display_real_img,		
 			'NAME' => $info_move['name'],
 			'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 			'SIZE' => ($info_move['size'] > 1024) ? number_round($info_move['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($info_move['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-			'U_IMG_MOVE'=> PATH_TO_ROOT . '/upload/' . $info_move['path']
+			'FILE_ICON' => $display_real_img ? $info_move['path'] : $get_img_mimetype['img']
 		));
 		$Template->assign_vars(array(
 			'SELECTED_CAT' => $info_move['idcat'],
@@ -430,34 +438,38 @@ else
 				case 'png':
 				case 'gif':
 				case 'bmp':
-				list($width_source, $height_source) = @getimagesize('../upload/' . $row['path']);
+				list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
 				$size_img = ' (' . $width_source . 'x' . $height_source . ')';
 				$width_source = !empty($width_source) ? $width_source + 30 : 0;
 				$height_source = !empty($height_source) ? $height_source + 30 : 0;
 				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-				$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', ' . $width_source . ', ' . $height_source . ', \'yes\')">';
+				$link = PATH_TO_ROOT . '/upload/' . $row['path'];
+				break;
+				//Image svg
+				case 'svg':
+				$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 0, 0, \'no\')';
 				break;
 				//Sons
 				case 'mp3':
 				$bbcode = '[sound]/upload/' . $row['path'] . '[/sound]';
-				$link = '<a class="com" href="javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')">';
+				$link = 'javascript:popup_upload(\'' . $row['id'] . '\', 220, 10, \'no\')';
 				break;
 				default:
 				$bbcode = '[url=/upload/' . $row['path'] . ']' . $row['name'] . '[/url]';				
-				$link = '<a class="com" href="../upload/' . $row['path'] . '">';
+				$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 			}
 			
 			$Template->assign_block_vars('files', array(
 				'ID' => $row['id'],
-				'IMG' => '<img src="../templates/' . get_utheme() . '/images/upload/' . $get_img_mimetype['img'] . '" alt="" />',
+				'IMG' => $get_img_mimetype['img'],
 				'URL' => $link,
 				'NAME' => $name_cut,
 				'RENAME_FILE' => '<span id="fihref' . $row['id'] . '"><a href="javascript:display_rename_file(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" title="' . $LANG['edit'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/edit.png" alt="" style="vertical-align:middle;" /></a></span>',
 				'FILETYPE' => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE' => '<input size="25" type="text" class="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" style="margin-top:2px;cursor:pointer;" value="' . $bbcode . '" />',
 				'SIZE' => ($row['size'] > 1024) ? number_round($row['size']/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($row['size'], 0) . ' ' . $LANG['unit_kilobytes'],
-				'DATE' => gmdate_format('date_format', $row['timestamp']),
-				'LOGIN' => '<a href="../member/member.php?id=' . $row['user_id'] . '">' . $row['login'] . '</a>',
+				'LIGHTBOX' => !empty($size_img) ? ' rel="lightbox[1]"' : '',
 				'U_MOVE' => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
 				
 			));
