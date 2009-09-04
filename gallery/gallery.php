@@ -654,10 +654,10 @@ else
 			import('util/pagination');
 			$Pagination = new Pagination();
 			
+			$sort = retrieve(GET, 'sort', '');
 			$Template->assign_vars(array(
 				'C_GALLERY_MODO' => $is_modo ? true : false,
-				
-				'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
+				'PAGINATION_PICS' => $Pagination->display('gallery' . url('.php?pp=%d' . (!empty($sort) ? '&amp;sort=' . $sort : '') . '&amp;cat=' . $g_idcat, '-' . $g_idcat . '+' . $rewrite_title . '.php?pp=%d'), $nbr_pics, 'pp', $CONFIG_GALLERY['nbr_pics_max'], 3),
 				'L_EDIT' => $LANG['edit'],
 				'L_VIEW' => $LANG['view'],
 				'L_VIEWS' => $LANG['views']
