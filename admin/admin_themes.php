@@ -53,7 +53,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
+elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
@@ -246,7 +246,8 @@ else
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$z = 0;
 	$result = $Sql->query_while("SELECT id, theme, activ, secure 
-	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
+	FROM " . DB_TABLE_THEMES . "
+	ORDER BY theme", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On selectionne le theme suivant les valeurs du tableau. 
