@@ -111,41 +111,43 @@
 				</tr>
 				<tr style="text-align:center;">
 					<td class="row1">
-						<a href="admin_members.php?sort=alph&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
-						{L_PSEUDO} 
-						<a href="admin_members.php?sort=alph&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
-						<a href="admin_members.php?sort=rank&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=alph&amp;mode=desc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
+						{L_PSEUDO} 
+						<a href="admin_members.php?sort=alph&amp;mode=asc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
+					</td>
+					<td class="row1">
+						<a href="admin_members.php?sort=rank&amp;mode=desc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_RANK}
-						<a href="admin_members.php?sort=rank&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=rank&amp;mode=asc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
 						{L_MAIL}
 					</td>
 					<td class="row1">
-						{L_WEBSITE}
-					</td>
-					<td class="row1">
-						<a href="admin_members.php?sort=time&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=time&amp;mode=desc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_REGISTERED}
-						<a href="admin_members.php?sort=time&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
+						<a href="admin_members.php?sort=time&amp;mode=asc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 					<td class="row1">
-						<a href="admin_members.php?sort=aprob&amp;mode=desc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
+						<a href="admin_members.php?sort=last&amp;mode=desc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
+						{L_LAST_CONNECT}
+						<a href="admin_members.php?sort=last&amp;mode=asc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
+					</td>
+					<td class="row1">
+						<a href="admin_members.php?sort=aprob&amp;mode=desc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/top.png" alt="" /></a>
 						{L_APROB}
-						<a href="admin_members.php?sort=aprob&amp;mode=asc"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
-					</td>
-					<td class="row1">
-						{L_UPDATE}
-					</td>
-					<td class="row1">
-						{L_DELETE}
+						<a href="admin_members.php?sort=aprob&amp;mode=asc"><img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/bottom.png" alt="" /></a>
 					</td>
 				</tr>
 				
 				# START member #
 				<tr style="text-align:center;"> 
+					<td class="row1"> 
+						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
+						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}&amp;token={TOKEN}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
+					</td>
 					<td class="row2">
 						<a href="{PATH_TO_ROOT}/member/member.php?id={member.IDMBR}">{member.NAME}</a>				
 					</td>
@@ -156,19 +158,13 @@
 						<a href="mailto:{member.MAIL}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/email.png" alt="{member.MAIL}" title="{member.MAIL}" /></a>
 					</td>
 					<td class="row2">
-						{member.WEB}
+						{member.DATE}
 					</td>
 					<td class="row2">
-						{member.DATE}
+						{member.LAST_CONNECT}
 					</td>			
 					<td class="row2">
 						{member.APROB}
-					</td>
-					<td class="row2"> 
-						<a href="admin_members.php?id={member.IDMBR}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
-					</td>
-					<td class="row2">
-						<a href="admin_members.php?delete=1&amp;id={member.IDMBR}&amp;token={TOKEN}" onclick="javascript:return Confirm({member.LEVEL});"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/delete.png" alt="{L_DELETE}" title="{L_DELETE}" /></a>
 					</td>
 				</tr>
 				# END member #
