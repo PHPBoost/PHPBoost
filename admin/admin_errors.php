@@ -60,7 +60,7 @@ if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lect
 		$i = 1;
 		while (!feof($handle)) 
 		{
-			$buffer = fgets($handle, 4096);
+			$buffer = fgets($handle);
 			switch ($i)
 			{
 				case 1:
