@@ -223,6 +223,101 @@ class StatsSaver
 		}
 	}
 
+	/**
+	 * @static
+	 * @desc Detect the most commons bots used by search engines. Store the number of hits for each search engines.
+	 * @param string [optional] User ip
+	 * @return mixed The name of the bot if detected, false if it's a normal user.
+	 */
+	function check_bot($user_ip = '')
+	{
+		$_SERVER['HTTP_USER_AGENT'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+
+		//Détection par user agent.
+		if (preg_match('`(w3c|http:\/\/|bot|spider|Gigabot|gigablast.com)+`i', $_SERVER['HTTP_USER_AGENT']))
+		{
+			return 'unknow_bot';
+		}
+		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Google') !== false)
+		{
+			StatsSaver::_write_stats('robots', 'Google bot');
+			return 'Google bot';
+		}
+		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Bing') !== false)
+		{
+			StatsSaver::_write_stats('robots', 'Bing bot');
+			return 'Bing bot';
+		}
+		elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Yahoo') !== false)
+		{
+			StatsSaver::_write_stats('robots', 'Yahoo Slurp');
+			return 'Yahoo Slurp';
+		}
+		
+		//Chaque ligne représente une plage ip.
+		$plage_ip = array(
+			'66.249.64.0' => '66.249.95.255',
+			'209.85.128.0' => '209.85.255.255',
+			'65.52.0.0' => '65.55.255.255',
+			'207.68.128.0' => '207.68.207.255',
+			'66.196.64.0' => '66.196.127.255',
+			'68.142.192.0' => '68.142.255.255',
+			'72.30.0.0' => '72.30.255.255',
+			'193.252.148.0' => '193.252.148.255',
+			'66.154.102.0' => '66.154.103.255',
+			'209.237.237.0' => '209.237.238.255',
+			'193.47.80.0' => '193.47.80.255'
+		);
+		$array_robots = array( //Nom des bots associés.
+			'Google bot',
+			'Google bot',
+			'Bing bot',
+			'Bing bot',
+			'Yahoo Slurp',
+			'Yahoo Slurp',
+			'Yahoo Slurp',
+			'Voila',
+			'Gigablast',
+			'Ia archiver',
+			'Exalead'
+		);
+		
+		//Ip de l'utilisateur au format numérique.
+		$user_ip = !empty($user_ip) ? $user_ip : USER_IP;
+		$user_ip = ip2long($user_ip);
+
+		//On explore le tableau pour identifier les robots
+		$r = 0;
+		foreach ($plage_ip as $start_ip => $end_ip)
+		{
+			$start_ip = ip2long($start_ip);
+			$end_ip = ip2long($end_ip);
+			
+			//Comparaison pour chaque partie de l'ip, si l'une d'entre elle est fausse l'instruction est stopée.
+			if ($user_ip >= $start_ip && $user_ip <= $end_ip)
+			{
+				StatsSaver::_write_stats('robots', $array_robots[$r]);
+				return $array_robots[$r]; //On retourne le nom du robot d'exploration.
+			}
+			$r++;
+		}
+		return false;
+	}
+	
+	/**
+	 * @desc Retrieve stats from file
+	 * @param string $file_path The path to the stats file.
+	 */
+	function retrieve_stats($file_path)
+	{
+		$file = @fopen(PATH_TO_ROOT . '/cache/' . $file_path . '.txt', 'r');
+		$stats_array = @fgets($file);
+		$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
+		@fclose($file);
+		
+		return $stats_array;
+	}
+	
 	## Private Methods ##
     /**
 	 * @desc Save stats to file
