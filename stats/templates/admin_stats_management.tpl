@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<td class="row1">
-					{L_VERSION} PHPBoost: <strong>{VERSION}</strong>
+					{L_KERNEL_VERSION} : <strong>{VERSION}</strong>
 				</td>		
 			</tr>	
 		</table>
@@ -136,7 +136,7 @@
 					</table>
 				</td>
 				<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-					<img src="{PATH_TO_ROOT}/kernel/framework/ajax/display_stats.php?theme=1" alt="" />
+					<img src="display_stats.php?theme=1" alt="" />
 				</td>
 			</tr>
 		</table>
@@ -637,41 +637,34 @@
 					<td style="width:50%;padding-top:30px;vertical-align:top" class="row1">
 						<table class="module_table">						
 							<tr>
-								<th class="text_center">			
-									{L_VIEW_NUMBER}
+								<th style="text-align:center">
+									{L_ROBOTS} 
 								</th>
-								<th class="text_center">			
-									{L_LAST_UPDATE}
-								</th>
-								<th class="text_center" style="width:30px;">		
+								<th style="text-align:center">
 									{L_COLORS}
 								</th>
-								<th class="text_center">
-									{L_ROBOTS} 
+								<th style="text-align:center">		
+									{L_VIEW_NUMBER}
 								</th>				
 							</tr>
 							
 							# START list #	
 							<tr style="height:35px;">
-								<td style="text-align:center;" class="row2">			
-									{list.VIEWS}
+								<td class="text_center row2">
+									 {list.L_NAME}  <span class="text_small">({list.PERCENT}%)</span>
 								</td>
-								<td style="text-align:center;" class="row2">			
-									{list.DATE}
-								</td>
-								
-								<td style="text-align:center;" class="row2">			
+								<td class="text_center row2">			
 									<div style="margin:auto;width:10px;margin:auto;height:10px;background:{list.COLOR}"></div>
 								</td>
-								<td style="text-align:center;" class="row2">
-									 {list.L_NAME}  <span class="text_small">({list.PERCENT}%)</span>
+								<td class="text_center row2">			
+									{list.VIEWS}
 								</td>				
 							</tr>
 							# END list #		
 						</table>
 					</td>
 					<td style="text-align:center;padding-top:30px;vertical-align:top" class="row1">
-						<img src="{PATH_TO_ROOT}/kernel/framework/ajax/display_stats.php?bot=1" alt="" />
+						<img src="display_stats.php?bot=1" alt="" />
 					</td>
 				</tr>
 			</table>
