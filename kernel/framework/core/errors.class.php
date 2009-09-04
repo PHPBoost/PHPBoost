@@ -204,6 +204,7 @@ class Errors
 				//Erreur fatale.
 				case E_USER_ERROR:
 				case E_ERROR:
+				case E_RECOVERABLE_ERROR:
     				//Enregistrement de l'erreur fatale dans tout les cas.
     				$error_id = $this->_error_log($errfile, $errline, $errno, $errstr, true);
     				
@@ -364,6 +365,7 @@ class Errors
 			//Erreur fatale.
 			case E_USER_ERROR:
 			case E_ERROR:
+			case E_RECOVERABLE_ERROR:
 			$class = 'error_fatal';
 			break;
 			//Erreur inconnue.
