@@ -949,10 +949,8 @@ else //Show all member!
 		'L_MAIL' => $LANG['mail'],
 		'L_REGISTERED' => $LANG['registered_on'],
 		'L_MESSAGE' => $LANG['message'],
-		'L_LOCALISATION' => $LANG['localisation'],
 		'L_LAST_CONNECT' => $LANG['last_connect'],
 		'L_PRIVATE_MESSAGE' => $LANG['private_message'],
-		'L_WEB_SITE' => $LANG['web_site'],
 		'U_SELECT_SHOW_GROUP' => "'member.php?g=' + this.options[this.selectedIndex].value",
 		'U_USER_ALPHA_TOP' => url('.php?sort=alph&amp;mode=desc', '-0.php?sort=alph&amp;mode=desc'),
 		'U_USER_ALPHA_BOTTOM' => url('.php?sort=alph&amp;mode=asc', '-0.php?sort=alph&amp;mode=asc'),
@@ -1005,16 +1003,14 @@ else //Show all member!
 		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
 	));
 
-	$result = $Sql->query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, user_local, user_web, last_connect
+	$result = $Sql->query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, last_connect
 	FROM " . PREFIX . "member
 	WHERE user_aprob = 1
 	ORDER BY " . $sort . " " . $mode .
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$user_web = !empty($row['user_web']) ? '<a href="' . $row['user_web'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/user_web.png" alt="' . $row['user_web'] . '" title="' . $row['user_web'] . '" /></a>' : '&nbsp;';
 		$user_msg = !empty($row['user_msg']) ? $row['user_msg'] : '0';
-		
 		$user_mail = ( $row['user_show_mail'] == 1 ) ? '<a href="mailto:' . $row['user_mail'] . '"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/email.png" alt="' . $row['user_mail'] . '" /></a>' : '&nbsp;';
 		
 		$row['last_connect'] = !empty($row['last_connect']) ? $row['last_connect'] : $row['timestamp'];
@@ -1023,9 +1019,7 @@ else //Show all member!
 			'PSEUDO' => $row['login'],
 			'MAIL' => $user_mail,
 			'MSG' => $user_msg,
-			'LOCAL' => !empty($row['user_local']) ? $row['user_local'] : '&nbsp;',
 			'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
-			'WEB' => $user_web,
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'U_USER_ID' => url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 			'U_USER_PM' => url('.php?pm=' . $row['user_id'], '-' . $row['user_id'] . '.php')
