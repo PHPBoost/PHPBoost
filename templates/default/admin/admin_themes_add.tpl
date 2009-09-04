@@ -57,22 +57,13 @@
 					# ENDIF #
 					# IF C_THEME_PRESENT #
 					<tr>
-						<td class="row2" style="width:120px;text-align:center;">
+						<td class="row2" style="text-align:center;">
 							{L_THEME}
 						</td>
-						<td class="row2" style="width:160px;text-align:center;">
-							{L_PREVIEW}
+						<td class="row2" style="text-align:center;">
+							{L_IMAGE}
 						</td>
 						<td class="row2" style="text-align:center;">
-							{L_DESC}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
-							{L_ACTIV}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
-							{L_RANK}
-						</td>
-						<td class="row2" style="width:100px;text-align:center;">
 							{L_INSTALL}
 						</td>
 					</tr>
@@ -80,13 +71,11 @@
 					
 					# START list #
 					<tr> 	
-						<td class="row2" style="text-align:center;">					
-							<strong>{list.THEME}</strong> <em>({list.VERSION})</em>				
-						</td>
 						<td class="row2">					
-							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
-						</td>
-						<td class="row2" style="vertical-align:top">
+							<strong>{list.THEME}</strong> <em>({list.VERSION})</em>	
+							<br />
+							<br />
+							<br />
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
 							<strong>{L_DESC}:</strong> {list.DESC}<br />
 							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
@@ -94,19 +83,28 @@
 							<strong>{L_CSS}:</strong> {list.CSS_VERSION}<br />
 							<strong>{L_MAIN_COLOR}:</strong> {list.MAIN_COLOR}<br />
 							<strong>{L_VARIABLE_WIDTH}:</strong> {list.VARIABLE_WIDTH}<br />
-							<strong>{L_WIDTH}:</strong> {list.WIDTH}				
+							<strong>{L_WIDTH}:</strong> {list.WIDTH}						
+						</td>
+						<td class="row2">					
+							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
 						</td>
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDTHEME}activ" value="1" checked="checked" /> {L_YES}
-							<input type="radio" name="{list.IDTHEME}activ" value="0" /> {L_NO}
-						</td>
-						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure">								
-								{list.OPTIONS}
-							</select>
-						</td>
-						<td class="row2" style="text-align:center;">
-							<input type="submit" name="{list.IDTHEME}" value="{L_INSTALL}" class="submit" />
+							<p>
+								<strong>{L_ACTIV} :</strong>
+								<label><input type="radio" name="{list.IDTHEME}activ" value="1" checked="checked" /> {L_YES}</label>
+								<label><input type="radio" name="{list.IDTHEME}activ" value="0" /> {L_NO}</label>
+							</p>
+							<p>
+								<strong>{L_RANK} :</strong>
+								<select name="{list.IDTHEME}secure">								
+									{list.OPTIONS}
+								</select>
+							</p>
+							<p>
+								<br />
+								<br />
+								<input type="submit" name="{list.IDTHEME}" value="{L_INSTALL}" class="submit" />
+							</p>
 						</td>
 					</tr>
 					# END list #

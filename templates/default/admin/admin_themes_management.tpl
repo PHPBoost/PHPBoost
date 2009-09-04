@@ -50,39 +50,26 @@
 					# ENDIF #
 					# IF C_THEME_PRESENT #
 					<tr>
-						<th style="width:120px;text-align:center;">
+						<td class="row2" style="text-align:center;">
 							{L_THEME}
-						</th>
-						<th style="width:160px;text-align:center;">
-							{L_PREVIEW}
-						</th>
-						<th style="text-align:center;">
-							{L_DESC}
-						</th>
-						<th style="width:80px;text-align:center;">
-							{L_ACTIV}
-						</th>
-						<th style="width:100px;text-align:center;">
-							{L_RANK}
-						</th>
-						<th style="width:80px;text-align:center;">
-							{L_EDIT}
-						</th>
-						<th style="width:100px;text-align:center;">
-							{L_UNINSTALL}
-						</th>
+						</td>
+						<td class="row2" style="text-align:center;">
+							{L_IMAGE}
+						</td>
+						<td class="row2" style="text-align:center;">
+							{L_INSTALL}
+						</td>
 					</tr>
 					# ENDIF #
 					
 					# START list #
 					<tr> 	
-						<td class="row2" style="text-align:center;">					
-							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong></span> <em>({list.VERSION})</em>				
-						</td>
-						<td class="row2">					
-							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
-						</td>
-						<td class="row2" style="vertical-align:top">	
+						<td class="row2">				
+							<span id="t{list.IDTHEME}"><strong>{list.THEME}</strong></span> <em>({list.VERSION})</em>
+							&nbsp;<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>	
+							<br />
+							<br />
+							<br />
 							<strong>{L_AUTHOR}:</strong> {list.AUTHOR} {list.AUTHOR_WEBSITE}<br />
 							<strong>{L_DESC}:</strong> {list.DESC}<br />
 							<strong>{L_COMPAT}:</strong> PHPBoost {list.COMPAT}<br />
@@ -90,38 +77,42 @@
 							<strong>{L_CSS}:</strong> {list.CSS_VERSION}<br />
 							<strong>{L_MAIN_COLOR}:</strong> {list.MAIN_COLOR}<br />
 							<strong>{L_VARIABLE_WIDTH}:</strong> {list.VARIABLE_WIDTH}<br />
-							<strong>{L_WIDTH}:</strong> {list.WIDTH}				
+							<strong>{L_WIDTH}:</strong> {list.WIDTH}						
+						</td>
+						<td class="row2">					
+							<img src="{PATH_TO_ROOT}/templates/{list.ICON}/theme/images/theme.jpg" alt="" />
 						</td>
 						# IF list.C_THEME_NOT_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							<input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_YES}
-							<input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}
-						</td>
-						<td class="row2" style="text-align:center;">	
-							<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'"> 
-								{list.OPTIONS}
-							</select>
-						</td>
-						<td class="row2" style="text-align:center;">
-							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
-						</td>
-						<td class="row2" style="text-align:center;">
-							<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
+							<p>
+								<strong>{L_ACTIV} :</strong>
+								<label><input type="radio" name="{list.IDTHEME}activ" value="1" {list.THEME_ACTIV} onchange="document.location = 'admin_themes.php?activ=1&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_YES}</label>
+								<label><input type="radio" name="{list.IDTHEME}activ" value="0" {list.THEME_UNACTIV} onchange="document.location = 'admin_themes.php?activ=0&amp;id={list.IDTHEME}&amp;token={TOKEN}'" /> {L_NO}</label>
+							</p>
+							<p>
+								<strong>{L_RANK} :</strong>
+								<select name="{list.IDTHEME}secure" onchange="document.location = 'admin_themes.php?secure=' + this.options[this.selectedIndex].value + '&amp;id={list.IDTHEME}&amp;token={TOKEN}'"> 
+									{list.OPTIONS}
+								</select>
+							</p>
+							<p>
+								<br />
+								<br />
+								<input type="submit" name="{list.IDTHEME}" value="{L_UNINSTALL}" class="submit" />
+							</p>
 						</td>
 						# ENDIF #
 						
 						# IF list.C_THEME_DEFAULT #
 						<td class="row2" style="text-align:center;">	
-							{L_YES}
-						</td>
-						<td class="row2" style="text-align:center;">	
-							{L_GUEST}
-						</td>
-						<td class="row2" style="text-align:center;">
-							<a href="admin_themes.php?edit=1&amp;id={list.IDTHEME}"><img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="" /></a>
-						</td>
-						<td class="row2" style="text-align:center;">
-							-
+							<p>
+								<strong>{L_ACTIV} :</strong>
+								{L_YES}
+							</p>
+							<p>
+								<strong>{L_RANK} :</strong>
+								{L_GUEST}
+							</p>
 						</td>
 						# ENDIF #
 					</tr>
