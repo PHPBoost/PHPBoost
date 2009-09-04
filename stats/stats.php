@@ -29,6 +29,8 @@ require_once('../kernel/begin.php');
 require_once('../stats/stats_begin.php');
 require_once('../kernel/header.php');
 
+import('core/stats_saver');
+
 $Template->set_filenames(array('stats'=> 'stats/stats.tpl'));
 
 $Template->assign_vars(array(
@@ -63,8 +65,8 @@ if ($members)
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
 		'USERS' => $nbr_member,
-		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
-		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/framework/ajax/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
+		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
+		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 		'L_LAST_USER' => $LANG['last_member'],
 		'L_TEMPLATES' => $LANG['theme_s'],
 		'L_PSEUDO' => $LANG['pseudo'],
@@ -227,7 +229,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -383,7 +385,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -578,7 +580,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -738,7 +740,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'STATS_DAY' => $days,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years,
-			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+			'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
 		));
 		
 		//On fait la liste des visites journalières
@@ -810,7 +812,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -1040,7 +1042,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	{
 		$Template->assign_vars(array(
 			'C_STATS_BROWSERS' => true,
-			'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="../kernel/framework/ajax/display_stats.php?browsers=1" alt="" />' : '<img src="../cache/browsers.png" alt="" />',
+			'GRAPH_RESULT' => !file_exists('../cache/browsers.png') ? '<img src="display_stats.php?browsers=1" alt="" />' : '<img src="../cache/browsers.png" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
 		));
 		$stats_menu = 'browsers';
@@ -1051,7 +1053,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	{
 		$Template->assign_vars(array(
 			'C_STATS_OS' => true,
-			'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="../kernel/framework/ajax/display_stats.php?os=1" alt="" />' : '<img src="../cache/os.png" alt="" />',
+			'GRAPH_RESULT' => !file_exists('../cache/os.png') ? '<img src="display_stats.php?os=1" alt="" />' : '<img src="../cache/os.png" alt="" />',
 			'L_OS' => $LANG['os']
 		));
 		$stats_menu = 'os';
@@ -1062,7 +1064,7 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 	{
 		$Template->assign_vars(array(
 			'C_STATS_LANG' => true,
-			'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="../kernel/framework/ajax/display_stats.php?lang=1" alt="" />' : '<img src="../cache/lang.png" alt="" />',
+			'GRAPH_RESULT' => !file_exists('../cache/lang.png') ? '<img src="display_stats.php?lang=1" alt="" />' : '<img src="../cache/lang.png" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
 		));
 		$stats_menu = 'lang';
@@ -1070,15 +1072,10 @@ elseif ($browser || $os || $user_lang) //Graphiques camenbert.
 		$path = '../images/stats/countries/';
 	}
 	
-	//On lit le fichier
-	$file = @fopen('../cache/' . $stats_menu . '.txt', 'r');
-	$stats_array = @fgets($file);
-	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
-	@fclose($file);
 	import('util/images_stats');
 	$Stats = new Stats();
 		
-	$Stats->load_data($stats_array, 'ellipse', 5);
+	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
 	
 	//Tri décroissant.
 	arsort($Stats->data_stats);

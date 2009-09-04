@@ -30,6 +30,8 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 include_once('../lang/' . get_ulang() . '/stats.php'); //Chargement de la langue.
 
+import('core/stats_saver');
+
 $Template->set_filenames(array(
 	'admin_stats_management'=> 'stats/admin_stats_management.tpl'
 ));
@@ -74,8 +76,8 @@ if (!empty($members))
 		'LAST_USER' => $last_user['login'],
 		'U_LAST_USER_ID' => url('.php?id=' . $last_user['user_id'], '-' . $last_user['user_id'] . '.php'),
 		'USERS' => $nbr_member,
-		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="../kernel/framework/ajax/display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
-		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="../kernel/framework/ajax/display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
+		'GRAPH_RESULT_THEME' => !file_exists('../cache/theme.png') ? '<img src="display_stats.php?theme=1" alt="" />' : '<img src="../cache/theme.png" alt="" />',
+		'GRAPH_RESULT_SEX' => !file_exists('../cache/sex.png') ? '<img src="display_stats.php?sex=1" alt="" />' : '<img src="../cache/sex.png" alt="" />',
 		'L_LAST_USER' => $LANG['last_member'],
 		'L_TEMPLATES' => $LANG['theme_s'],
 		'L_PSEUDO' => $LANG['pseudo'],
@@ -238,7 +240,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?visit_year=1&amp;year=' . $visit_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -394,7 +396,7 @@ elseif ($visit || $visit_year) //Visites par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?visit_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -586,7 +588,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?pages_year=1&amp;year=' . $pages_year . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -743,7 +745,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 			'STATS_DAY' => $days,
 			'STATS_MONTH' => $months,
 			'STATS_YEAR' => $years,
-			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
+			'GRAPH_RESULT' => '<img src="display_stats.php?pages_day=1&amp;year=' . $year . '&amp;month=' . $month . '&amp;day=' . $day . '" alt="" />'
 		));
 		
 		//On fait la liste des visites journalières
@@ -816,7 +818,7 @@ elseif ($pages || $pages_year) //Pages par jour classées par mois.
 		if (@extension_loaded('gd'))
 		{
 			$Template->assign_vars(array(
-				'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
+				'GRAPH_RESULT' => '<img src="display_stats.php?pages_month=1&amp;year=' . $year . '&amp;month=' . $month . '" alt="" />'
 			));
 			
 			//On fait la liste des visites journalières
@@ -1045,7 +1047,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	{
 		$Template->assign_vars(array(
 			'C_STATS_BROWSERS' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?browsers=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="display_stats.php?browsers=1" alt="" />',
 			'L_BROWSERS' => $LANG['browser_s']
 		));
 		$stats_menu = 'browsers';
@@ -1056,7 +1058,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	{
 		$Template->assign_vars(array(
 			'C_STATS_OS' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?os=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="display_stats.php?os=1" alt="" />',
 			'L_OS' => $LANG['os']
 		));
 		$stats_menu = 'os';
@@ -1067,7 +1069,7 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 	{
 		$Template->assign_vars(array(
 			'C_STATS_LANG' => true,
-			'GRAPH_RESULT' => '<img src="../kernel/framework/ajax/display_stats.php?lang=1" alt="" />',
+			'GRAPH_RESULT' => '<img src="display_stats.php?lang=1" alt="" />',
 			'L_LANG' => $LANG['stat_lang']
 		));
 		$stats_menu = 'lang';
@@ -1075,15 +1077,10 @@ elseif (!empty($browser) || !empty($os) || !empty($user_lang)) //Graphiques came
 		$path = '../images/stats/countries/';
 	}
 	
-	//On lit le fichier
-	$file = @fopen('../cache/' . $stats_menu . '.txt', 'r');
-	$stats_array = @fgets($file);
-	$stats_array = !empty($stats_array) ? unserialize($stats_array) : array();
-	@fclose($file);
 	import('util/images_stats');
 	$Stats = new Stats();
 		
-	$Stats->load_data($stats_array, 'ellipse', 5);
+	$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
 	
 	//Tri décroissant.
 	arsort($Stats->data_stats);
@@ -1138,44 +1135,22 @@ elseif ($bot)
 		'L_LAST_UPDATE' => $LANG['last_update']
 	));
 
-	//On lit le fichier
-	$file = @fopen('../cache/robots.txt', 'r');
-	$robot_serial = @fgets($file);
-	$array_robot = !empty($robot_serial) ? unserialize($robot_serial) : array('other' => 0);
-	$stats_array = array();
-	$array_date = array(0 => 0, 1 => 0, 2 => 0);
-	if (is_array($array_robot))
-	{
-		foreach ($array_robot as $key => $value)
-		{
-			$array_info = explode('/', $value);
-			if (isset($array_info[0]) && isset($array_info[1]))
-			{
-				$stats_array[$array_info[0]] = $array_info[1];
-				$array_date[$array_info[0]] = array(substr($array_info[2], 2, 2), substr($array_info[2], 4, 2), substr($array_info[2], 6, 2));
-			}
-		}
-	}
-
 	import('util/images_stats');
 	$Stats = new Stats();
 		
-	$Stats->load_data($stats_array, 'ellipse');
+	$Stats->load_data(StatsSaver::retrieve_stats('robots'), 'ellipse');
 
-	$stats_info = array('Google bot' => 'google.gif', 'Yahoo Slurp' => 'yahoo.gif', 'Msn bot' => 'msn.gif', 'Voila' => 'voila.gif', 'Gigablast' => 'gigablast.gif', 'Ia archiver' => 'ia_archiver.gif', 'Exalead' => 'exalead.gif');
-
+	$stats_info = array('google bot', 'yahoo Slurp', 'bing bot', 'voila', 'gigablast', 'ia archiver', 'exalead');
 	foreach ($Stats->data_stats as $key => $angle_value)
 	{
-		if (isset($stats_info[$key]))
+		if (in_array($key, $stats_info))
 		{
 			$array_color = $Stats->array_allocated_color[$Stats->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-			$name = ucfirst(str_replace(array('_', '.gif'), array(' ', ' '), $stats_info[$key]));
+			$name = ucfirst($key);
 			$Template->assign_block_vars('list', array(
 				'COLOR' => 'RGB(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-				'IMG' => !empty($stats_info[$key]) ? '<img src="../images/stats/bot/' . $stats_info[$key] . '" alt="' . $name . '" />' : '',
 				'VIEWS' => number_round(($angle_value * $Stats->nbr_entry)/360, 0),
 				'PERCENT' => number_round(($angle_value/3.6), 1),
-				'DATE' => gmdate_format('date_format_short', mktime(0, 0, 0, $array_date[$key][1], $array_date[$key][2], $array_date[$key][0])),
 				'L_NAME' => ($name == 'Other') ? $LANG['other'] : $name
 			));
 		}
@@ -1186,12 +1161,12 @@ else
 	$Template->assign_vars(array(
 		'C_STATS_SITE' => true,
 		'START' => gmdate_format('date_format_short', $CONFIG['start']),
-		'VERSION' => $CONFIG['version'],
+		'VERSION' => phpboost_version(),
+		'BUILD' => $CONFIG['version'],
 		'L_START' => $LANG['start'],
-		'L_VERSION' => $LANG['version']
+		'L_KERNEL_VERSION' => $LANG['kernel_version']
 	));
 }
-
 
 $Template->pparse('admin_stats_management');
 
