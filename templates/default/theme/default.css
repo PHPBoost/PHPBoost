@@ -1,66 +1,66 @@
 /* --------------------------------------
 		default.css
-Css par dÃ©faut commun Ã  tout les thÃ¨mes, permet les ajouts nÃ©cessaires au framework et retrocompatibilitÃ©
---------------------------------------*/ /* Titres */ /* SÃ©curitÃ© */
+Css par défaut commun * tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
+--------------------------------------*/ /* Titres */ /* Sécurité */
 .row_priority_very_high {
-    text-align: center;
-    background: #F3A29B !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
+    text-align:center;
+    background:#F3A29B !important;
+    color:#ffffff !important;
+    font-weight:bold !important;
 }
 
 .row_priority_high {
-    text-align: center;
-    background: #FFD5D1 !important;
+    text-align:center;
+    background:#FFD5D1 !important;
 }
 
 .row_priority_medium {
-    text-align: center;
-    background: #F5D5C6 !important;
+    text-align:center;
+    background:#F5D5C6 !important;
 }
 
 .row_priority_low {
-    text-align: center;
-    background: #ECDBB7 !important;
+    text-align:center;
+    background:#ECDBB7 !important;
 }
 
 .row_priority_very_low {
-    text-align: center;
-    background: #FFFFFF !important;
+    text-align:center;
+    background:#FFFFFF !important;
 }
 
 /* Imite l'affichage fieldset / legend */
 .fieldset_content {
-    width: 95%;
-    margin: auto;
-    margin-top: 20px;
+    width:95%;
+    margin:auto;
+    margin-top:20px;
 }
 
 div.block_title span {
-    border: 1px solid;
-    padding: 2px 8px;
-    padding: 1px 0;
-    vertical-align: middle;
-    position: relative;
-    margin-top: -0.4em;
-    padding-left: 10px;
-    padding-right: 10px;
-    line-height: 1.2em;
+    border:1px solid;
+    padding:2px 8px;
+    padding:1px 0;
+    vertical-align:middle;
+    position:relative;
+    margin-top:-0.4em;
+    padding-left:10px;
+    padding-right:10px;
+    line-height:1.2em;
 }
 
 div.block_title {
 }
 
 div.block_content {
-    width: 95%;
-    margin: auto;
-    margin: 20px auto;
-    padding: 6px;
-    border: 1px solid;
+    width:95%;
+    margin:auto;
+    margin:20px auto;
+    padding:6px;
+    border:1px solid;
 }
 
 div.block_content ul {
-    padding-left: 20px;
+    padding-left:20px;
 }
 
 /*Menu dynamique des liens
@@ -107,7 +107,7 @@ div.block_content ul {
     cursor:default;
 }
 
-/* SÃ©parateur */
+/* Séparateur */
 .dynamic_menu ul li.separator {
     background:#104069;
     height:2px;
@@ -186,34 +186,34 @@ div.block_content ul {
 
 /* Menu Vertical - Scrolling */
 ul.vertical_scrolling_menu li {
-    /*list-style: none;*/
-    padding-left: 5px;
-    padding-right: 5px;
+    /*list-style:none;*/
+    padding-left:5px;
+    padding-right:5px;
 }
 
 ul.vertical_scrolling_menu li ul {
-    /*list-style: none;*/
-    margin-left: 155px;
+    /*list-style:none;*/
+    margin-left:155px;
 }
 
 ul.vertical_scrolling_menu li.first_level {
-    padding-left: 20px;
+    padding-left:20px;
 }
 
 /* Menu Horizontal - Scrolling */
 ul.horizontal_scrolling_menu li {
-    display: inline;
-    padding-left: 5px;
-    padding-right: 5px;
+    display:inline;
+    padding-left:5px;
+    padding-right:5px;
 }
 
 ul.horizontal_scrolling_menu li.first_level {
-    padding-left: 20px;
+    padding-left:20px;
 }
 
 /* Menu Horizontal */
 div.menu_horizontal {
-    padding: 10px;
+    padding:10px;
 }
 
 ul.menu_horizontal {
@@ -221,36 +221,36 @@ ul.menu_horizontal {
 }
 
 ul.menu_horizontal li {
-    display: inline;
+    display:inline;
 }
 
 /* Menu Vertical */
 h3.menu_vertical_0 {
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: -2px;
-    padding-bottom: 2px;
+    text-align:center;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:-2px;
+    padding-bottom:2px;
 }
 
 ul.menu_vertical a {
-    color: #445766;
+    color:#445766;
 }
 
 ul.menu_vertical {
-    text-align: left;
+    text-align:left;
 }
 
 ul.menu_vertical li {
-    margin-top: 3px;
-    margin-left: 10px;
-    list-style: none;
-    margin-left: 10px;
+    margin-top:3px;
+    margin-left:10px;
+    list-style:none;
+    margin-left:10px;
 }
 
 ul.menu_vertical li span {
-    font-size: 11px;
-    font-weight: bold;
+    font-size:11px;
+    font-weight:bold;
 }
 
 ul.menu_vertical_0 {
@@ -262,7 +262,7 @@ ul.menu_vertical li_0 {
 }
 
 ul.menu_vertical_0 li a,ul.menu_vertical_0 li span {
-    color: #334455;
+    color:#334455;
 }
 
 ul.menu_vertical_1 {
@@ -274,7 +274,7 @@ ul.menu_vertical_1 li {
 }
 
 ul.menu_vertical_1 li a,ul.menu_vertical_1 li span {
-    color: #445566;
+    color:#445566;
 }
 
 ul.menu_vertical_2 {
@@ -282,11 +282,11 @@ ul.menu_vertical_2 {
 }
 
 ul.menu_vertical_2 li {
-    font-style: italic;
+    font-style:italic;
 }
 
 ul.menu_vertical_2 li a,ul.menu_vertical_2 li span {
-    color: #556677;
+    color:#556677;
 }
 
 ul.menu_vertical_3 {
@@ -294,40 +294,40 @@ ul.menu_vertical_3 {
 }
 
 ul.menu_vertical_3 li {
-    font-style: normal;
+    font-style:normal;
 }
 
 ul.menu_vertical_3 li a,ul.menu_vertical_3 li span {
-    color: #778899;
-    font-size: 80%;
+    color:#778899;
+    font-size:80%;
 }
 
 
 /* Lightbox*/
-#lightbox{	position: absolute;	left: 0; width: 100%; z-index: 100; text-align: center; line-height: 0;}
-#lightbox img{ width: auto; height: auto;}
-#lightbox a img{ border: none; }
+#lightbox{	position:absolute;	left:0; width:100%; z-index:100; text-align:center; line-height:0;}
+#lightbox img{ width:auto; height:auto;}
+#lightbox a img{ border:none; }
 
-#outerImageContainer{ position: relative; background-color: #fff; width: 250px; height: 250px; margin: 0 auto; }
-#imageContainer{ padding: 10px; }
+#outerImageContainer{ position:relative; background-color:#fff; width:250px; height:250px; margin:0 auto; }
+#imageContainer{ padding:10px; }
 
-#loading{ position: absolute; top: 40%; left: 0%; height: 25%; width: 100%; text-align: center; line-height: 0; }
-#hoverNav{ position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 10; }
-#imageContainer>#hoverNav{ left: 0;}
-#hoverNav a{ outline: none;}
+#loading{ position:absolute; top:40%; left:0%; height:25%; width:100%; text-align:center; line-height:0; }
+#hoverNav{ position:absolute; top:0; left:0; height:100%; width:100%; z-index:10; }
+#imageContainer>#hoverNav{ left:0;}
+#hoverNav a{ outline:none;}
 
-#prevLink, #nextLink{ width: 49%; height: 100%; background-image: url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display: block; }
-#prevLink { left: 0; float: left;}
-#nextLink { right: 0; float: right;}
-#prevLink:hover, #prevLink:visited:hover { background: url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
-#nextLink:hover, #nextLink:visited:hover { background: url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
+#prevLink, #nextLink{ width:49%; height:100%; background-image:url(data:image/gif;base64,AAAA); /* Trick IE into showing hover */ display:block; }
+#prevLink { left:0; float:left;}
+#nextLink { right:0; float:right;}
+#prevLink:hover, #prevLink:visited:hover { background:url(../images/lightbox/prevlabel.gif) left 15% no-repeat; }
+#nextLink:hover, #nextLink:visited:hover { background:url(../images/lightbox/nextlabel.gif) right 15% no-repeat; }
 
-#imageDataContainer{ font: 10px Verdana, Helvetica, sans-serif; background-color: #fff; margin: 0 auto; line-height: 1.4em; overflow: auto; width: 100%	; }
+#imageDataContainer{ font:10px Verdana, Helvetica, sans-serif; background-color:#fff; margin:0 auto; line-height:1.4em; overflow:auto; width:100%	; }
 
-#imageData{	padding:0 10px; color: #666; }
-#imageData #imageDetails{ width: 70%; float: left; text-align: left; }	
-#imageData #caption{ font-weight: bold;	}
-#imageData #numberDisplay{ display: block; clear: left; padding-bottom: 1.0em;	}			
-#imageData #bottomNavClose{ width: 66px; float: right;  padding-bottom: 0.7em; outline: none;}	 	
+#imageData{	padding:0 10px; color:#666; }
+#imageData #imageDetails{ width:70%; float:left; text-align:left; }	
+#imageData #caption{ font-weight:bold;	}
+#imageData #numberDisplay{ display:block; clear:left; padding-bottom:1.0em;	}			
+#imageData #bottomNavClose{ width:66px; float:right;  padding-bottom:0.7em; outline:none;}	 	
 
-#overlay{ position: absolute; top: 0; left: 0; z-index: 90; width: 100%; height: 500px; background-color: #000; }
+#overlay{ position:absolute; top:0; left:0; z-index:90; width:100%; height:500px; background-color:#000; }
