@@ -871,6 +871,8 @@ else
 		case 'time' : 
 		$sort = 'timestamp';
 		break;		
+		case 'last' : 
+		$sort = 'last_connect';
 		break;		
 		case 'alph' : 
 		$sort = 'login';
@@ -919,12 +921,12 @@ else
 		'L_SEARCH_USER' => $LANG['search_member'],
 		'L_JOKER' => $LANG['joker'],
 		'L_SEARCH' => $LANG['search'],
-		'L_WEBSITE' => $LANG['website'],
+		'L_LAST_CONNECT' => $LANG['last_connect'],
 		'L_REGISTERED' => $LANG['registered'],
 		'L_DELETE' => $LANG['delete']
 	));
 		
-	$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, user_web, level, user_aprob
+	$result = $Sql->query_while("SELECT login, user_id, user_mail, timestamp, last_connect, level, user_aprob
 	FROM " . DB_TABLE_MEMBER . " 
 	ORDER BY " . $sort . " " . $mode . 
 	$Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
@@ -954,7 +956,7 @@ else
 			'NAME' => $row['login'],
 			'RANK' => $rank,
 			'MAIL' => $row['user_mail'],
-			'WEB' => $user_web,
+			'LAST_CONNECT' => gmdate_format('date_format_short', $row['last_connect']),
 			'LEVEL' => $row['level'],
 			'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 			'APROB' => ($row['user_aprob'] == 0) ? $LANG['no'] : $LANG['yes']		
