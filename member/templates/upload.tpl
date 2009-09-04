@@ -1,4 +1,5 @@
 	{HEADER}
+	<script type="text/javascript" src="{PATH_TO_ROOT}/kernel/framework/js/lightbox.js"></script>
 	<script type="text/javascript">
 	<!--
 	function insert_popup(code) 
@@ -357,10 +358,10 @@
 						<table style="border:0;">
 							<tr>
 								<td style="width:34px;vertical-align:top;">
-									{files.IMG}
+									<img src="../templates/{THEME}/images/upload/{files.IMG}" alt="" />
 								</td>
 								<td style="padding-top:8px;">	
-									<a class="com" href="{files.URL}" title="{files.TITLE}"><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
+									<a class="com" href="{files.URL}" title="{files.TITLE}"{files.LIGHTBOX}><span id="fi1{files.ID}">{files.NAME}</span></a><span id="fi{files.ID}"></span><br />
 									{files.BBCODE}<br />							
 									<span class="text_small">{files.FILETYPE}</span><br />
 									<span class="text_small">{files.SIZE}</span><br />
