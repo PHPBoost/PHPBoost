@@ -3,128 +3,155 @@
 Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framework et retrocompatibilité
 --------------------------------------*/ /* Titres */ /* Menus */
 .menu_link_list {
-    list-style-type: none;
-    list-style-position: outside;
-    margin-left: 20px;
-    padding: 10px 0;
+    list-style-type:none;
+    list-style-position:outside;
+    margin-left:20px;
+    padding:10px 0;
 }
 
 .menu_link_element {
-    margin-top: 10px;
+    margin-top:10px;
 	background:#e5e5e5;
 	border:1px solid #8F8F8F;
 	padding:5px
 }
 .menu_link_menu {
-    margin-top: 15px;
+    margin-top:15px;
 	background:#EFEFEF;
 	border:1px solid #8F8F8F;
 }
 
 
 .menu_link_element:hover {
-    border-color: #aaaaaa;
-    cursor: move;
+    border-color:#aaaaaa;
+    cursor:move;
 }
 
+.menu_link_element label {
+    color:#1F507F;
+}
 .menu_link_element:hover label {
-    cursor: move;
+    cursor:move;
 }
 
 .menu_link_element:hover img {
-    cursor: pointer;
+    cursor:pointer;
 }
 
 .menu_link_element:hover label {
-    cursor: pointer;
+    cursor:pointer;
 }
 
 /* Interface des menus */
 #valid_position_menus {
+	color:#0E2A48;
 	position:fixed;
 	z-index:101;
-	width:200px;
+	width:180px;
 	bottom:5px;
 	right:0px;
 	margin-right:5px;
 	padding:6px;
 	border:1px solid #8e727f;
 	background:#e5e5e5;
-   	-moz-border-radius:5px;
-    -khtml-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+   	-moz-border-radius:4px;
+    -khtml-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
 }
 .menu_block_libelle {
-	width:150px;
-	margin:6px auto;
+	color:#0E2A48;
+	width:145px;
+	height:15px;
+	margin:0px;
 	text-align:center;
 	font-weight:bold;
-	padding:6px;
-	border:1px dashed #8e727f;
+	background:#f9f9f9;
+	border:1px solid #8F8F8F;
+	border-bottom:none;
+	-moz-border-radius:4px 4px 0px 0px;
+	-khtml-border-radius-topleft:5px;
+	-webkit-border-top-left-radius:5px;
+    border-radius:5px;
+}
+.menus_block_add {
+	color:#0E2A48;
+	width:145px;
+	height:20px;
+	margin:0px;
+	background:#f9f9f9;
+	border:1px solid #8F8F8F;
+	border-top:none;
+	cursor:pointer;
+	text-align:center;
+	-moz-border-radius:0px 0px 4px 4px;
+	-khtml-border-radius-bottomleft:5px;
+	-webkit-border-bottom-left-radius:5px;
+    border-radius:5px;
 }
 .menus_block_container {
 	width:190px;
-	margin:10px 0px;
+	margin:0px;
+	margin-bottom:6px;
 	padding:5px;
 	padding-bottom:7px;
-	background:#e5e5e5;
+	background:#c7c7c7;
 	border:1px solid #8F8F8F;
 	cursor:move;
+   	-moz-border-radius:3px;
+    -khtml-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
 }
-.menus_block_add {
-	width:140px;
-	height:20px;
-	margin:10px auto;
-	margin-top:20px;
-	padding:0px;
-	background:#fff;
-	border:1px solid #8F8F8F;
-	cursor:pointer;
-	text-align:center;
+.menus_block_top {
+	margin-bottom:5px;
+}
+.menus_block_title {
+	color:#515C68;
+}
+.menu_spacer {
+	width:99%;
+	padding:0px 5px;
+	margin:0;
+	height:15px;
 }
 
 /*Conteneur des menus*/
-#drag_header_menu,#drag_subheader_menu,#drag_left_menu,
-#drag_right_menu,#drag_topcentral_menu,
-#drag_central_menu,#drag_bottomcentral_menu,
-#drag_topfooter_menu,#drag_footer_menu {
-	min-height:50px;
+#mod_header,#mod_subheader,#mod_left,
+#mod_right,#mod_topcentral,
+#mod_central,#mod_bottomcentral,
+#mod_topfooter,#mod_footer {
+	min-height:55px;
+	padding:10px;
+	padding-top:30px;
+	border:2px dashed #8F8F8F;
+	margin-top:20px;
+   	-moz-border-radius:3px;
+    -khtml-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+	background:#dedede;
 }
 
+/* Container */
 #container_header,#container_subheader,#container_leftmenu,
-#container_rightmenu,#container_topcentral,#container_bottomcentral,
-#container_topfooter,#container_footer {
-	padding:4px;
-	border:1px solid black;
+#container_rightmenu,#container_topcentral,#container_central,
+#container_bottomcentral,#container_topfooter,#container_footer {
+	padding:5px; 
+	vertical-align:top;
+	padding-bottom:5px;
 }
 #container_header {
-	background:#dfeade;
+	padding-top:10px;
 }
-#container_subheader {
-	background:#f1ffe3;
+#container_central .menus_block_container {
+	margin:5px;
+	margin-top:0px;
+	float:left
 }
 #container_leftmenu {
-	width:185px;
-	vertical-align:top;
-	background:#e8eefd
+	width:226px;
 }
 #container_rightmenu {
-	width:185px;
-	vertical-align:top;
-	background:#e8eefd;
+	width:226px;
 }
-#container_topcentral {
-	background:#ffe1e1;
-}
-#container_bottomcentral {
-	background:#ffe1e1;
-}
-#container_topfooter {
-	background:#e8ffe5;
-}
-#container_footer {
-	background:#e6fffb;
-}
-
-
