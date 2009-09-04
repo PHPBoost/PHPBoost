@@ -132,7 +132,7 @@ else
 		'L_UPLOAD' => $LANG['upload'],
 		'L_THEME_MANAGEMENT' => $LANG['theme_management'],
 		'L_THEME' => $LANG['theme'],
-		'L_PREVIEW' => $LANG['preview'],
+		'L_IMAGE' => $LANG['image'],
 		'L_NO_THEME_ON_SERV' => $LANG['no_theme_on_serv'],
 		'L_RANK' => $LANG['rank'],
 		'L_AUTHOR' => $LANG['author'],
@@ -178,6 +178,9 @@ else
 			unset($tpl_array[$key]); //On supprime ces clées du tableau.
 	}
 	$Sql->query_close($result);
+	
+	//Tri du tableau.
+	sort($tpl_array);
 	
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	foreach ($tpl_array as $theme_array => $value_array) //On effectue la recherche dans le tableau.
