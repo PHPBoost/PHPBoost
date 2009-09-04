@@ -1002,7 +1002,7 @@ else //Show all member!
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
-		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
+		'PAGINATION' => '&nbsp;<strong>' . $LANG['page'] . ' :</strong> ' . $Pagination->display('member' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'p=%d', '-0-%d.php' . $unget), $nbr_member, 'p', 25, 3)
 	));
 
 	$result = $Sql->query_while("SELECT user_id, login, user_mail, user_show_mail, timestamp, user_msg, user_local, user_web, last_connect
