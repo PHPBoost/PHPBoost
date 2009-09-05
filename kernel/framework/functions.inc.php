@@ -1213,13 +1213,20 @@ function req($file, $once = true)
 {
 	if ($once)
 	{
-		require_once(PATH_TO_ROOT . $file) !== false;
+		if (!DEBUG)
+			@require_once PATH_TO_ROOT . $file ;
+		else
+			require_once PATH_TO_ROOT . $file ;
 	}
 	else
 	{
-		return (require PATH_TO_ROOT . $file) !== false;
+		if (!DEBUG)
+			@require PATH_TO_ROOT . $file ;
+		else
+			require PATH_TO_ROOT . $file ;
 	}
 }
+
 
 /**
  * @desc Includes a file
@@ -1231,10 +1238,20 @@ function inc($file, $once = true)
 {
 	if ($once)
 	{
-		return include_once(PATH_TO_ROOT . $file) !== false;
+		if (!DEBUG)
+			return (@include_once(PATH_TO_ROOT . $file)) !== false;
+		else
+			return (include_once(PATH_TO_ROOT . $file)) !== false;
 	}
-	return (include PATH_TO_ROOT . $file) !== false;
+	else
+	{
+		if (!DEBUG)
+			return (@include(PATH_TO_ROOT . $file)) !== false;
+		else
+			return (include(PATH_TO_ROOT . $file)) !== false;
+	}
 }
+
 
 /**
  * @desc Tells if an object is an instance of a class

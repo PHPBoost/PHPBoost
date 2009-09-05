@@ -993,7 +993,7 @@ else //Show all member!
 	
 	$get_mode = retrieve(GET, 'mode', '', TSTRING_UNCHANGE);
 	$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
-	$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
+	$unget = (!empty($sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 	//On crée une pagination si le nombre de membre est trop important.
 	import('util/pagination');

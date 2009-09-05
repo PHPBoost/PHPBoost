@@ -10,4 +10,4 @@ CREATE TABLE `phpboost_shoutbox` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM;
 
-INSERT INTO `phpboost_shoutbox` VALUES (1, 'PHPBoost Team', -1, -1, 'l''équipe de PHPBoost vous souhaite la bienvenue!', unix_timestamp(current_timestamp));
+INSERT INTO `phpboost_shoutbox` VALUES (1, 'PHPBoost Team', -1, -1, 'PHPBoost Team welcomes you on your website!', unix_timestamp(current_timestamp));
