@@ -43,3 +43,9 @@ CREATE TABLE `phpboost_download` (
   FULLTEXT KEY `contents` (`contents`),
   FULLTEXT KEY `short_contents` (`short_contents`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO `phpboost_download_cat` (`id`, `c_order`, `id_parent`, `name`, `contents`, `icon`, `visible`, `auth`, `num_files`) VALUES
+(1, 1, 0, 'First category', 'Demonstration of a download module category', 'download.png', 1, '', 1);
+
+INSERT INTO `phpboost_download` (`id`, `idcat`, `title`, `short_contents`, `contents`, `url`, `image`, `size`, `count`, `timestamp`, `release_timestamp`, `visible`, `approved`, `start`, `end`, `user_id`, `users_note`, `nbrnote`, `note`, `nbr_com`, `lock_com`, `force_download`) VALUES
+(1, 1, 'PHPBoost 3.0 Poster', '', 'Presentation of PHPBoost 3.0 Poster.', '/templates/base/theme/images/phpboost3.jpg', '', 14.9, 11, 1242424801, 1242424801, 1, 1, 0, 0, 0, '', 0, 0, 0, 0, 1);

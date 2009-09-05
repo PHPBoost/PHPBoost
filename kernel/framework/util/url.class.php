@@ -79,7 +79,7 @@ class Url
 				// Backup url arguments in order to restore them after compression
 				if ($pos == 0)
 				{
-					// acnhor to the current page
+					// anchor to the current page
 					$this->url = $url;
 					$this->is_relative = false; // forbids all url transformations
 					return;
@@ -89,10 +89,9 @@ class Url
 					$anchor = substr($url, $pos);
 					$url = substr($url, 0, $pos);
 				}
-
 			}
 
-			if (preg_match('`^[a-z0-9]+\:.+`iU', $url) > 0)
+			if (preg_match('`^[a-z0-9]+\:(?!//).+`iU', $url) > 0)
 			{	// This is a special protocol link and we don't try to convert it.
 				$this->url = $url;
 				return;
@@ -470,7 +469,7 @@ class Url
 		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
 		static $file_regex = '[a-z0-9-+_~:\.\%]+';
 		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=_~:;/\.\?\'\%]+=[a-z0-9-+=_~:;/\.\?\'\%]+)*)?';
-                static $anchor_regex = '\#[a-z0-9-_/]+';
+        static $anchor_regex = '\#[a-z0-9-_/]*';
 
 		if ($forbid_js)
 		{
@@ -486,6 +485,7 @@ class Url
 		set_subregex_multiplicity($domain_regex, $domain) .
 		set_subregex_multiplicity($folders_regex, $folders) .
 		set_subregex_multiplicity($file_regex, $file) .
+        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
 		set_subregex_multiplicity($args_regex, $args) .
 		set_subregex_multiplicity($anchor_regex, $anchor);
 	}

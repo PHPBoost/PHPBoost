@@ -27,3 +27,11 @@ CREATE TABLE `phpboost_faq_cats` (
   `num_questions` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
+
+INSERT INTO `phpboost_faq_cats` (`id`, `id_parent`, `c_order`, `auth`, `name`, `visible`, `display_mode`, `description`, `image`, `num_questions`) VALUES
+(1, 0, 1, NULL, 'PHPBoost', 1, 0, 'Any question about PHPBoost?', 'faq.png', 1),
+(2, 0, 2, NULL, 'Dictionary', 1, 0, '', 'faq.png', 1);
+
+INSERT INTO `phpboost_faq` (`id`, `idcat`, `q_order`, `question`, `answer`, `user_id`, `timestamp`) VALUES
+(1, 2, 1, 'What is a CMS ?', 'A content management system (CMS) is a computer application used to manage work flow needed to collaboratively create, edit, review, index, search, publish and archive various kinds of digital media and electronic text', 1, 1242496334),
+(2, 1, 1, 'What is PHPBoost ?', 'PHPBoost is a french CMS (Content Management System). This software allows anybody to create their website easily. Designed to satisfy beginners, it should also delight users who would like to push its functionning or develop theirn own modules.', 1, 1242496518);

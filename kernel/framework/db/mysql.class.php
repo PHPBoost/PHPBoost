@@ -616,8 +616,8 @@ class Sql
 	function create_database($db_name)
 	{
 		$db_name = Sql::clean_database_name($db_name);
-        mysql_query("CREATE DATABASE " . $db_name);
-        return $db_name;
+		mysql_query("CREATE DATABASE `" . $db_name . "`");
+	        return $db_name;
 	}
 	
 	/**
@@ -713,7 +713,7 @@ class Sql
 	 */
 	function clean_database_name($db_name)
 	{
-		return str_replace('-', '_', url_encode_rewrite($db_name));
+		return str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $db_name);
 	}
 	
 	
