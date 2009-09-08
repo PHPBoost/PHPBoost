@@ -272,12 +272,12 @@
 		<br />		
 		# ENDIF #
 		<span id="quote"></span>			
-		<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
-		{KERNEL_EDITOR}		
 		<form action="pm{post_pm.U_PM_ACTION_POST}" method="post" onsubmit="return check_form_msg();" style="width:80%;margin:auto">						
 			<div>					
+				<div style="font-size: 10px;text-align:center;padding-bottom: 2px;">{L_RESPOND}</div>
+				{KERNEL_EDITOR}		
 				<textarea class="post" rows="15" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
-				<fieldset class="fieldset_submit">
+				<fieldset class="fieldset_submit" style="padding-top:17px;margin-bottom:0px;">
 				<legend>{L_SUBMIT}</legend>
 					<input type="submit" name="pm" value="{L_SUBMIT}" class="submit" />
 					&nbsp;&nbsp; 									
