@@ -892,7 +892,7 @@ else //Liste des conversation, dans la boite du membre.
 			'TITLE' => $row['title'],
 			'MSG' => ($row['nbr_msg'] - 1),
 			'U_PARTICIPANTS' => (($row['user_convers_status'] != 0) ? '<strike>' . $participants . '</strike>' : $participants),
-			'U_CONVERS'	=> url('.php?id=' . $row['id'] . '&amp;token=' . $Session->get_token(), '-0-' . $row['id'] . '.php?token=' . $Session->get_token()),
+			'U_CONVERS'	=> url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php'),
 			'U_AUTHOR' => $LANG['by'] . ' ' . $author,
 			'U_LAST_MSG' => $last_msg
 		));
