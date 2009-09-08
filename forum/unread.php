@@ -152,11 +152,12 @@ if ($nbr_topics == 0)
 
 $l_topic = ($nbr_topics > 1) ? $LANG['topic_s'] : $LANG['topic'];
 
+$cat_filter = !empty($idcat_unread) ? '&amp;cat=' . $idcat_unread : '';
 $Template->assign_vars(array(
 	'FORUM_NAME' => $CONFIG_FORUM['forum_name'],
 	'SID' => SID,
 	'MODULE_DATA_PATH' => $Template->get_module_data_path('forum'),
-	'PAGINATION' => $Pagination->display('unread' . url('.php?p=%d'), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
+	'PAGINATION' => $Pagination->display('unread' . url('.php?p=%d' . $cat_filter), $nbr_topics, 'p', $CONFIG_FORUM['pagination_topic'], 3),
 	'LANG' => get_ulang(),
 	'U_CHANGE_CAT'=> 'unread.php' . SID . '&amp;token=' . $Session->get_token(),
 	'U_ONCHANGE' => url(".php?id=' + this.options[this.selectedIndex].value + '", "-' + this.options[this.selectedIndex].value + '.php"),
