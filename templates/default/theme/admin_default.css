@@ -95,7 +95,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
 	margin-bottom:6px;
 	padding:5px;
 	padding-bottom:7px;
-	background:#c7c7c7;
+	background:#d1d1d1;
 	border:1px solid #8F8F8F;
 	cursor:move;
    	-moz-border-radius:3px;
@@ -130,7 +130,7 @@ Css par défaut commun à tout les thèmes, permet les ajouts nécessaires au framew
     -khtml-border-radius:3px;
     -webkit-border-radius:3px;
     border-radius:3px;
-	background:#dedede;
+	background:#E5E5E5;
 }
 
 /* Container */
