@@ -280,120 +280,138 @@ class NewsInterface extends ModuleInterface
 		return $category;
 	}
 	
-	function get_home_page()
+	function get_home_page($cat = 0)
 	{
 		global $User, $Sql, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
-		// Begin
-		//Chargement de la langue du module.
+		// Begin.
 		load_module_lang('news');
-		//Chargement du cache
 		$Cache->load('news');
-		//Css alternatif.
-		defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
-		defined('FEED_URL') or define('FEED_URL', '/syndication.php?m=news');
 
-		$arch = retrieve(GET, 'arch', false);
-		$level = array('', ' class="modo"', ' class="admin"');
-		$is_admin = $User->check_level(ADMIN_LEVEL);
-
-		$tpl_news = new Template('news/news.tpl');
-
-		//Affichage de l'édito
-		if ($NEWS_CONFIG['activ_edito'] == 1)
+		// Vérification de la présence des constantes.
+		if (!defined('INCLUDE_CONSTANTS_NEWS'))
 		{
-			$tpl_news->assign_vars( array(
-				'C_NEWS_EDITO' => true,
-				'TITLE' => $NEWS_CONFIG['edito_title'],
-				'CONTENTS' => second_parse($NEWS_CONFIG['edito'])
-			));
+			require_once PATH_TO_ROOT . '/news/news_constant.php';
 		}
 		
-		if ($User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE))
-		{
-			$tpl_news->assign_vars( array(
-				'C_ADD' => true,
-				'L_ADD' => $NEWS_LANG['add_news']
-			));
-		}
-
+		// Import.
 		import('util/date');
-		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		import('content/comments');
 		import('content/syndication/feed');
-		//On crée une pagination (si activé) si le nombre de news est trop important.
 		import('util/pagination');
+		
+		// Initialisation des imports.
+		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new Pagination();
 		
+		// Classe des catégories.
 		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
-		
-		// Build array with the children categories.
-		$array_cat = array();
-		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
+		// Variables.
+		$arch = retrieve(GET, 'arch', false);
+		$level = array('', ' class="modo"', ' class="admin"');
+
+		// Gestion du tpl en fonction du type d'affichage.
+		$tpl_path = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' : 'news/news_list.tpl';
+		$tpl = new Template($tpl_path);
+		
+		// Affichage de l'édito
+		if ($NEWS_CONFIG['activ_edito'] && $cat == 0)
+		{
+			$tpl->assign_vars(array(
+				'C_EDITO' => true,
+				'EDITO_NAME' => $NEWS_CONFIG['edito_title'],
+				'EDITO_CONTENTS' => second_parse($NEWS_CONFIG['edito'])
+			));
+		}
+		elseif ($cat > 0)
+		{
+			$tpl->assign_vars(array(
+				'C_EDITO' => !empty($NEWS_CAT[$cat]['desc']) ? true : false,
+				'C_CAT' => true,
+				'EDITO_NAME' => $NEWS_CAT[$cat]['name'],
+				'EDITO_CONTENTS' => !empty($NEWS_CAT[$cat]['desc']) ? second_parse($NEWS_CAT[$cat]['desc']) : ''
+			));
+		}
+		else
+		{
+			$tpl->assign_vars(array('C_EDITO' => false));
+		}
+		
+		$tpl->assign_vars( array(
+			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
+			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
+			'L_SYNDICATION' => $LANG['syndication'],
+			'C_ADD' => $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE),
+			'U_ADD' => url(PATH_TO_ROOT . '/news/management.php?new=1'),
+			'L_ADD' => $NEWS_LANG['add_news'],
+			'C_WRITER' => $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE),
+			'L_WRITER' => $NEWS_LANG['waiting_news'],
+			'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
+			'U_ADMIN' => $cat > 0 ? url('admin_news_cat.php?edit=' . $cat) : url('admin_news_config.php#preview_description'),
+			'L_ADMIN' => $LANG['edit'],
+			'L_EDIT' => $LANG['edit'],
+			'L_DELETE' => $LANG['delete'],
+			'L_LAST_NEWS' => $NEWS_LANG['last_news'],
+		    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
+		));
+
+		// Construction du tableau des catégories.
+		$array_cat = array();
+		if ($cat > 0)
+			$array_cat[] = $cat;
+		else
+			$news_cat->build_children_id_list($cat, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
+
+		// Gestion du where.
 		$last_release = 0;
 		$where = "WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1 AND n.idcat IN(" . implode(", ", $array_cat) . ")";
+		
+		// Comptage des news.
 		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
 
+		// Affichage d'un message d'erreur en cas d'absence de news.
 		if ($NEWS_CONFIG['nbr_news'] == 0)
 		{
-			$tpl_news->assign_vars(array(
+			$tpl->assign_vars(array(
 				'C_NEWS_NO_AVAILABLE' => true,
 				'L_LAST_NEWS' => $NEWS_LANG['last_news'],
 				'L_NO_NEWS_AVAILABLE' => $NEWS_LANG['no_news_available']
 			));
 		}
+		// Sinon affichage des news.
 		else
 		{
-			//Pagination activée, sinon affichage lien vers les archives.
-			if ($NEWS_CONFIG['activ_pagin'] == '1')
+			if ($NEWS_CONFIG['activ_pagin']) // Pagination activée, sinon affichage lien vers les archives.
 			{
 				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?p=%d', '-0-0-%d.php'), $NEWS_CONFIG['nbr_news'], 'p', $NEWS_CONFIG['pagination_news'], 3);
 				$first_msg = $Pagination->get_first_msg($NEWS_CONFIG['pagination_news'], 'p');
 			}
-			elseif ($arch) //Pagination des archives.
+			elseif ($arch) // Pagination des archives.
 			{
 				$show_pagin = $Pagination->display(PATH_TO_ROOT . '/news/news' . url('.php?arch=1&amp;p=%d', '-0-0-%d.php?arch=1'), $NEWS_CONFIG['nbr_news'] - $NEWS_CONFIG['pagination_news'], 'p', $NEWS_CONFIG['pagination_arch'], 3);
 				$first_msg = $NEWS_CONFIG['pagination_news'] + $Pagination->get_first_msg($NEWS_CONFIG['pagination_arch'], 'p');
 				$NEWS_CONFIG['pagination_news'] = $NEWS_CONFIG['pagination_arch'];
 			}
-			else //Affichage du lien vers les archives.
+			else // Affichage du lien vers les archives.
 			{
 				$show_pagin = (($NEWS_CONFIG['nbr_news'] > $NEWS_CONFIG['pagination_news']) && ($NEWS_CONFIG['nbr_news'] != 0)) ? '<a href="' . PATH_TO_ROOT . '/news/news.php' . '?arch=1" title="' . $NEWS_LANG['display_archive'] . '">' . $NEWS_LANG['display_archive'] . '</a>' : '';
 				$first_msg = 0;
 			}
-			
-			$tpl_news->assign_vars(array(
-				'C_IS_ADMIN' => $is_admin,
-				'C_NEWS_NAVIGATION_LINKS' => false,
-				'L_SYNDICATION' => $LANG['syndication'],
-				'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
-				'L_LAST_NEWS' => !$arch ? $NEWS_LANG['last_news'] : $NEWS_LANG['archive'],
-		        'L_EDIT' => $LANG['edit'],
-				'L_DELETE' => $LANG['delete'],
-				'PAGINATION' => $show_pagin,
-		        'THEME' => get_utheme(),
-				'TOKEN' => $Session->get_token(),
-			    'FEED_MENU' => Feed::get_feed_menu(FEED_URL),
-				'PATH_TO_ROOT' => TPL_PATH_TO_ROOT
-			));
 
-			//Si les news en block sont activées on recupère la page.
-			if ($NEWS_CONFIG['type'] == 1 && !$arch)
+			$tpl->assign_vars(array('PAGINATION' => $show_pagin));
+
+			if ($NEWS_CONFIG['type']) // Si les news en block sont activées on recupère la page.
 			{
-				$tpl_news->assign_vars(array(
-					'C_NEWS_BLOCK' => true
-				));
-
-				$column = ($NEWS_CONFIG['nbr_column'] > 1) ? true : false;
+				$column = $NEWS_CONFIG['nbr_column'] > 1 ? true : false;
 				if ($column)
 				{
 					$i = 0;
 					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
 					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
 
-					$tpl_news->assign_vars(array(
+					$tpl->assign_vars(array(
 						'C_NEWS_BLOCK_COLUMN' => true,
 						'COLUMN_WIDTH' => $column_width
 					));
@@ -408,7 +426,7 @@ class NewsInterface extends ModuleInterface
 
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					//Séparation des news en colonnes si activé.
+					// Séparation des news en colonnes si activé.
 					if ($column)
 					{
 						$new_row = (($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0);
@@ -422,48 +440,43 @@ class NewsInterface extends ModuleInterface
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 					$last_release = max($last_release, $row['start']);
 					
-					$tpl_news->assign_block_vars('news', array(
+					$tpl->assign_block_vars('news', array(
+						'ID' => $row['id'],
+						'C_NEWS_ROW' => $new_row,
+						'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
+						'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+						'TITLE' => $row['title'],
+						'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
 						'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 						'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
-						'C_NEWS_ROW' => $new_row,
 						'C_IMG' => !empty($row['img']),
-						'C_ICON' => $NEWS_CONFIG['activ_icon'],
-						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
-						'U_NEWS_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-						'ID' => $row['id'],
-						'IDCAT' => 0,
-						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
-						'TITLE' => $row['title'],
-						'CONTENTS' => second_parse($row['contents']),
-						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 						'IMG' => second_parse_url($row['img']),
 						'IMG_DESC' => $row['alt'],
+						'C_ICON' => $NEWS_CONFIG['activ_icon'],						
+						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
+						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
+						'CONTENTS' => second_parse($row['contents']),
+						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 						'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
+						'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
 						'LEVEL' =>	$level[$row['level']],
-						'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),					
 						'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
-						'U_COM' => ($NEWS_CONFIG['activ_com'] == 1) ? Comments::com_display_link($row['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : '',
 					    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 					));
 				}
 
 				$Sql->query_close($result);
 			}
-			else //News en liste
+			else // News en liste
 			{
-				$tpl_news->assign_vars(array(
-					'C_NEWS_LINK' => true,
-					'NAME_NEWS' => $NEWS_LANG['last_news'],
-				));
-
-				$column = ($NEWS_CONFIG['nbr_column'] > 1) ? true : false;
+				$column = $NEWS_CONFIG['nbr_column'] > 1 ? true : false;
 				if ($column)
 				{
 					$i = 0;
 					$NEWS_CONFIG['nbr_column'] = !empty($NEWS_CONFIG['nbr_column']) ? $NEWS_CONFIG['nbr_column'] : 1;
 					$column_width = floor(100 / $NEWS_CONFIG['nbr_column']);
 
-					$tpl_news->assign_vars(array(
+					$tpl->assign_vars(array(
 						'C_NEWS_LINK_COLUMN' => true,
 						'COLUMN_WIDTH' => $column_width
 					));
@@ -475,25 +488,28 @@ class NewsInterface extends ModuleInterface
 
 				while ($row = $Sql->fetch_assoc($result))
 				{
-					//Séparation des news en colonnes si activé.
-					$new_row = false;
+					// Séparation des news en colonnes si activé.
 					if ($column)
 					{
-						$new_row = (($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0);
+						$new_row = ($i % $NEWS_CONFIG['nbr_column']) == 0 && $i > 0;
 						$i++;
+					}
+					else
+					{
+						$new_row = false;
 					}
 
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 					$last_release = max($last_release, $row['start']);
 
-					$tpl_news->assign_block_vars('list', array(
+					$tpl->assign_block_vars('list', array(
 						'C_NEWS_ROW' => $new_row,
 						'ICON' => $NEWS_CONFIG['activ_icon'] ? second_parse_url($NEWS_CAT[$row['idcat']]['image']) : 0,
-						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '.php'),
+						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'DATE' => $timestamp->format(DATE_FORMAT_TINY, TIMEZONE_AUTO),
-						'TITLE' => $row['title'],
 						'U_NEWS' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
-						'C_COM' => $NEWS_CONFIG['activ_com'] ? 1 : 0,
+						'TITLE' => $row['title'],
+						'C_COM' => $NEWS_CONFIG['activ_com'] ? true : false,
 						'COM' => $row['nbr_com']
 					));
 				}
@@ -514,7 +530,7 @@ class NewsInterface extends ModuleInterface
 			}
 		}
 
-		return $tpl_news->parse(true);
+		return $tpl->parse(true);
 	}
 }
 
