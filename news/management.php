@@ -35,6 +35,7 @@ $now = new Date(DATE_NOW, TIMEZONE_AUTO);
 import('util/mini_calendar');
 
 $new = retrieve(GET, 'new', 0);
+$cat = retrieve(GET, 'cat', 0);
 $edit = retrieve(GET, 'edit', 0);
 $delete = retrieve(GET, 'del', 0);
 
@@ -43,30 +44,32 @@ if ($delete > 0)
 	$Session->csrf_get_protect();
 	$news = $Sql->query_array(DB_TABLE_NEWS, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
 	
-	if (empty($news['id']))
+	if (!empty($news['id']) && ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
+	{
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+		$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
+
+		if ($news['nbr_com'] > 0)
+		{
+			import('content/comments');
+			$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
+			$Comments->delete_all($delete_news);
+		}
+
+		// Feeds Regeneration
+	    import('content/syndication/feed');
+	    Feed::clear_cache('news');
+
+		redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
+	}
+	elseif (empty($news['id']))
 	{
 		$Errorh->handler('e_unexist_news', E_USER_REDIRECT);
 	}
-	elseif (!$User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE))
+	else
 	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
-	
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_NEWS . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'news' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
-	
-	if ($news['nbr_com'] > 0)
-	{
-		import('content/comments');
-		$Comments = new Comments('news', $delete, url('news.php?id=' . $delete . '&amp;com=%s', 'news-' . $news['idcat'] . '-' . $delete . '.php?com=%s'));
-		$Comments->delete_all($delete_news);
-	}
-	
-	// Feeds Regeneration
-    import('content/syndication/feed');
-    Feed::clear_cache('news');
-    
-	redirect('news' . url('.php?cat=' . $news['idcat'], '-' . $news['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$news['idcat']]['name']) . '.php'));
 }
 elseif (!empty($_POST['submit']))
 {
@@ -335,7 +338,8 @@ else
 				'USER_ID' => $User->get_attribute('user_id')
 			));
 			
-			$news_categories->build_select_form(0, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$cat = $cat > 0 && ($User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE)) ? $cat : 0;
+			$news_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_NEWS_READ, $NEWS_CONFIG['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');

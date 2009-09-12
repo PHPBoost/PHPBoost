@@ -120,6 +120,8 @@ $NEWS_LANG = array(
 	'until_1' => '(Jusqu\'au %s)',
 	'until_2' => '(%s jusqu\'au %s)',
 	
+	'waiting_news' => 'News en attente',
+
 	'xml_news_desc' => 'Actualités - ',
 );
 

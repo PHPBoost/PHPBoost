@@ -34,8 +34,4 @@ $Cache->load('news');
 
 require_once('news_constant.php');
 
-//Css alternatif.
-defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
-defined('FEED_URL') or define('FEED_URL', '/syndication.php?m=news');
-
 ?>

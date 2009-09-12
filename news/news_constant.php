@@ -25,6 +25,8 @@
  *
 ###################################################*/
 
+define('INCLUDE_CONSTANTS_NEWS', true);
+
 // Authorizations of categories.
 define('AUTH_NEWS_READ', 1);
 define('AUTH_NEWS_CONTRIBUTE', 2);
@@ -37,4 +39,9 @@ define('DB_TABLE_NEWS_CAT', PREFIX . 'news_cat');
 
 // Name of syndication file.
 define('NEWS_MASTER_0', PATH_TO_ROOT . '/cache/syndication/news_master_0.php');
+
+// Css alternatif.
+defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'news');
+defined('FEED_URL') or define('FEED_URL', '/syndication.php?m=news');
+
 ?>

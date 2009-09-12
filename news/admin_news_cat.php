@@ -95,7 +95,7 @@ elseif (!empty($_POST['submit']))
 {
 	$error_string = 'e_success';
 	//Deleting a category
-	if (!empty( $cat_to_del_post))
+	if (!empty($cat_to_del_post))
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0);
