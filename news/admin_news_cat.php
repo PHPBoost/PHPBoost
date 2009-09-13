@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -99,7 +99,7 @@ elseif (!empty($_POST['submit']))
 	{
 		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
 		$id_parent = retrieve(POST, 'id_parent', 0);
-		
+
 		if ($delete_content)
 		{
 			$news_categories->delete_category_recursively($cat_to_del_post);
@@ -120,19 +120,19 @@ elseif (!empty($_POST['submit']))
 
 		if (empty($name))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
-		
+
 		if ($id_cat > 0)
 			$error_string = $news_categories->Update_category($id_cat, $id_parent, $name, $description, $image, $auth);
 		else
 			$error_string = $news_categories->add($id_parent, $name, $description, $image, $auth);
 	}
-	
+
 	// Feeds Regeneration
 	import('content/syndication/feed');
 	Feed::clear_cache('news');
 
 	$Cache->Generate_module_file('news');
-	
+
 	redirect(url(HOST . SCRIPT . '?error=' . $error_string  . '#errorh'), '', '&');
 }
 elseif ($new_cat XOR $id_edit > 0)
@@ -156,8 +156,8 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
 		'L_REQUIRE_TITLE' => sprintf($LANG['required_field'], $NEWS_LANG['category_name'])
 	));
-		
-	if ($id_edit > 0 && array_key_exists($id_edit, $NEWS_CAT))	
+
+	if ($id_edit > 0 && array_key_exists($id_edit, $NEWS_CAT))
 	{
 		$special_auth = $NEWS_CAT[$id_edit]['auth'] !== $NEWS_CONFIG['global_auth'] ? true : false;
 		$NEWS_CAT[$id_edit]['auth'] = $special_auth ? $NEWS_CAT[$id_edit]['auth'] : $NEWS_CONFIG['global_auth'];
@@ -223,7 +223,7 @@ else
 				break;
 		}
 	}
-	
+
 	$cat_config = array(
 		'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 		'administration_file_name' => 'admin_news_cat.php',
@@ -231,9 +231,9 @@ else
 			'unrewrited' => 'news.php?cat=%d',
 			'rewrited' => 'news-%d+%s.php'),
 		);
-		
+
 	$news_categories->set_display_config($cat_config);
-	
+
 	$tpl->assign_block_vars('categories_management', array(
 		'L_CATS_MANAGEMENT' => $NEWS_LANG['category_news'],
 		'CATEGORIES' => $news_categories->build_administration_interface()

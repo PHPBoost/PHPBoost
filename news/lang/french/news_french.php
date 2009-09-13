@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
  *   email                : crowkait@phpboost.com, liaght@gmail.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software, you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY, without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -107,7 +107,7 @@ $NEWS_LANG = array(
 	'release_date' => 'Date de parution',
 	'removing_category' => 'Suppression d\'une catégorie',
 	'require_cat' => 'Veuillez choisir une catégorie !',
-	'required_fields_empty' => 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement',	
+	'required_fields_empty' => 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement',
 
 	'special_auth' => 'Permissions spéciales',
 	'special_auth_explain' => 'Par défaut la catégorie aura la configuration générale du module. Vous pouvez lui appliquer des permissions particulières.',
@@ -116,10 +116,10 @@ $NEWS_LANG = array(
 	'title_news' => 'Titre de la news',
 
 	'unexisting_category' => 'La catégorie que vous avez sélectionnée n\'existe pas',
-	
+
 	'until_1' => '(Jusqu\'au %s)',
 	'until_2' => '(%s jusqu\'au %s)',
-	
+
 	'waiting_news' => 'News en attente',
 
 	'xml_news_desc' => 'Actualités - ',

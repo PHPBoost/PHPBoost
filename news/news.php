@@ -13,7 +13,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -51,8 +51,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 	$news = $Sql->fetch_assoc($result);
 	$Sql->query_close($result);
 
-	if (!empty($news['id']) && !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ) 
-		&& ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp()) 
+	if (!empty($news['id']) && !empty($NEWS_CAT[$news['idcat']]) && $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_READ)
+		&& ($User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || ($news['visible'] && $news['start'] < $now->get_timestamp())
 		|| $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id')))
 	{
 		// Bread crumb.
@@ -64,14 +64,14 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		require_once('../kernel/header.php');
 
 		$tpl = new Template('news/news.tpl');
-		
+
 		// Construction de l'arbre des catégories pour les news précédentes, suivantes et suggestion de news.
 		$array_cat = array();
 		$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_READ);
 
 		// News suivante.
 		$next_news = $Sql->query_array(DB_TABLE_NEWS, "title", "id", "WHERE visible = 1 AND timestamp > '" . $news['timestamp'] . "' AND start <= '" . $now->get_timestamp() . "' AND idcat IN (" . implode(', ', $array_cat) . ") ORDER BY timestamp ASC" . $Sql->limit(0, 1), __LINE__, __FILE__);
-		
+
 		// News précédente
 		$previous_news = $Sql->query_array(DB_TABLE_NEWS, "title", "id", "WHERE visible = 1 AND timestamp < '" . $news['timestamp'] . "' AND start <= '" . $now->get_timestamp() . "' AND idcat IN (" . implode(', ', $array_cat) . ") ORDER BY timestamp DESC" . $Sql->limit(0, 1), __LINE__, __FILE__);
 
@@ -112,7 +112,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s')) : '',
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat'])
 		));
-		
+
 		$tpl->parse();
 	}
 	else
@@ -132,11 +132,11 @@ elseif ($user)
 
 	$tpl = new Template('news/news_cat.tpl');
 	$i = 0;
-	
+
 	// Build array with the children categories.
 	$array_cat = array();
 	$news_cat->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_NEWS_WRITE);
-	
+
 	if (!empty($array_cat))
 	{
 		$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
@@ -144,11 +144,11 @@ elseif ($user)
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 			WHERE (n.start > '" . $now->get_timestamp() . "' OR n.visible = '0') AND n.user_id = '" . $User->get_attribute('user_id') . "' AND idcat IN (" . implode(', ', $array_cat) . ")
 			ORDER BY n.timestamp DESC", __LINE__, __FILE__);
-		
+
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
-		
+
 			$tpl->assign_block_vars('news', array(
 				'ID' => $row['id'],
 				'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
@@ -159,7 +159,7 @@ elseif ($user)
 				'C_IMG' => !empty($row['img']),
 				'IMG' => second_parse_url($row['img']),
 				'IMG_DESC' => $row['alt'],
-				'C_ICON' => $NEWS_CONFIG['activ_icon'],						
+				'C_ICON' => $NEWS_CONFIG['activ_icon'],
 				'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 				'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 				'CONTENTS' => second_parse($row['contents']),
@@ -170,7 +170,7 @@ elseif ($user)
 				'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 			));
-		
+
 			$i++;
 		}
 
@@ -187,7 +187,7 @@ elseif ($user)
 				'L_ADD' => $NEWS_LANG['add_news']
 			));
 		}
-	
+
 		$tpl->parse();
 	}
 	else

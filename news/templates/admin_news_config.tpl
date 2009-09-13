@@ -7,13 +7,13 @@
 				alert("{L_REQUIRE_PAGIN_NEWS}");
 				return false;
 			}
-			
+
 			if(document.getElementById('pagination_arch').value == "") {
 				new Effect.ScrollTo('pagination_arch',{duration:1.2});
 				alert("{L_REQUIRE_PAGIN_ARCH}");
 				return false;
 			}
-			
+
 			if(document.getElementById('nbr_column').value == "") {
 				new Effect.ScrollTo('nbr_column',{duration:1.2});
 				alert("{L_REQUIRE_NBR_COL}");
@@ -26,7 +26,7 @@
 		</script>
 
 		{ADMIN_MENU}
-		
+
 		<div id="admin_contents">
 
 			<form action="admin_news_config.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
@@ -49,7 +49,7 @@
 						<dt><label for="activ_pagin">{L_ACTIV_PAGINATION}</label></dt>
 						<dd>
 							<label><input type="radio" name="activ_pagin" id="activ_pagin" value="1" # IF PAGIN_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="activ_pagin" value="0" # IF PAGIN_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -57,7 +57,7 @@
 						<dt><label for="type">{L_ACTIV_NEWS_BLOCK}</label></dt>
 						<dd>
 							<label><input type="radio" name="type" id="type" value="1" # IF BLOCK_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="type" value="0" # IF BLOCK_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -65,7 +65,7 @@
 						<dt><label for="activ_com">{L_ACTIV_COM_NEWS}</label></dt>
 						<dd>
 							<label><input type="radio" name="activ_com" id="activ_com" value="1" # IF COM_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="activ_com" value="0" # IF COM_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -73,7 +73,7 @@
 						<dt><label for="activ_icon">{L_ACTIV_ICON_NEWS}</label></dt>
 						<dd>
 							<label><input type="radio" name="activ_icon" id="activ_icon" value="1" # IF ICON_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="activ_icon" value="0" # IF ICON_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -81,7 +81,7 @@
 						<dt><label for="display_author">{L_DISPLAY_NEWS_AUTHOR}</label></dt>
 						<dd>
 							<label><input type="radio" name="display_author" id="display_author" value="1" # IF AUTHOR_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="display_author" value="0" # IF AUTHOR_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -89,12 +89,12 @@
 						<dt><label for="display_date">{L_DISPLAY_NEWS_DATE}</label></dt>
 						<dd>
 							<label><input type="radio" name="display_date" id="display_date" value="1" # IF DATE_ENABLED #checked="checked" # ENDIF #/>	{L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="display_date" value="0" # IF DATE_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
 				</fieldset>
-				
+
 				<fieldset>
 					<legend>{L_GLOBAL_AUTH}</legend>
 					<p>{L_GLOBAL_AUTH_EXPLAIN}</p>
@@ -131,14 +131,14 @@
 						</dd>
 					</dl>
 				</fieldset>
-				
+
 				<fieldset id="preview_description">
 					<legend>{L_EDITO_WHERE}</legend>
 					<dl>
 						<dt><label for="activ_edito">{L_ACTIV_EDITO}</label></dt>
 						<dd>
 							<label><input type="radio" name="activ_edito" id="activ_edito" value="1" # IF EDITO_ENABLED #checked="checked" # ENDIF #/> {L_YES}</label>
-							&nbsp;&nbsp; 
+							&nbsp;&nbsp;
 							<label><input type="radio" name="activ_edito" value="0" # IF EDITO_DISABLED #checked="checked" # ENDIF #/> {L_NO}</label>
 						</dd>
 					</dl>
@@ -154,18 +154,17 @@
 					</label>
 					<br />
 				</fieldset>
-				
+
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
-					<input type="submit" name="submit" value="{L_UPDATE}" class="submit" />					
+					<input type="submit" name="submit" value="{L_UPDATE}" class="submit" />
 					<script type="text/javascript">
-					<!--				
+					<!--
 					document.write('&nbsp;&nbsp; <input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview(); new Effect.ScrollTo(\'preview_description\',{duration:1.2}); return false;" type="button" class="submit" />&nbsp;&nbsp;');
 					-->
 					</script>
-					&nbsp;&nbsp; 
-					<input type="reset" value="{L_RESET}" class="reset" />				
-				</fieldset>	
+					&nbsp;&nbsp;
+					<input type="reset" value="{L_RESET}" class="reset" />
+				</fieldset>
 			</form>
 		</div>
-		

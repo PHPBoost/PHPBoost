@@ -40,7 +40,7 @@ class NewsInterface extends ModuleInterface
     {
         parent::ModuleInterface('news');
     }
-    
+
     //Récupération du cache.
 	function get_cache()
 	{
@@ -49,7 +49,7 @@ class NewsInterface extends ModuleInterface
 		//Récupération du tableau linéarisé dans la bdd.
 		$news_config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
-		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";		
+		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";
 		$string .= '$NEWS_CONFIG = ' . var_export($news_config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
@@ -79,7 +79,7 @@ class NewsInterface extends ModuleInterface
 	// function on_changeday()
 	// {
 	// }
-	
+
 	function get_search_request($args)
     /**
      *  Renvoie la requête de recherche
@@ -89,7 +89,7 @@ class NewsInterface extends ModuleInterface
 
 		import('util/date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
-		
+
 		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
 
@@ -99,7 +99,7 @@ class NewsInterface extends ModuleInterface
 		$where = !empty($array_cat) ? " AND idcat IN(" . implode(", ", $array_cat) . ")" : " AND idcat = '0'";
 
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
-        
+
         $request = "SELECT " . $args['id_search'] . " AS id_search,
             n.id AS id_content,
             n.title AS title,
@@ -109,25 +109,25 @@ class NewsInterface extends ModuleInterface
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
             ORDER BY relevance DESC " . $Sql->limit(0, NEWS_MAX_SEARCH_RESULTS);
-        
+
         return $request;
     }
-    
+
 	/**
-     * @desc Return the list of the feeds available for this module. 
+     * @desc Return the list of the feeds available for this module.
      * @return FeedsList The list
      */
     function get_feeds_list()
 	{
         require_once PATH_TO_ROOT . '/news/news_cats.class.php';
         $news_cats = new NewsCats();
-        return $news_cats->get_feeds_list();	    
+        return $news_cats->get_feeds_list();
 	}
-    
+
     function get_feed_data_struct($idcat = 0, $name = '')
     {
         global $Cache, $Sql, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
-		
+
 		// Load the new's config
         $Cache->load('news');
 
@@ -137,13 +137,13 @@ class NewsInterface extends ModuleInterface
         import('util/date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
         import('util/url');
-        
+
         load_module_lang('news');
 
 		$site_name = $idcat > 0 ? $CONFIG['site_name'] . ' : ' . $NEWS_CAT[$idcat]['name'] : $CONFIG['site_name'];
 
         $data = new FeedData();
-        
+
         $data->set_title($NEWS_LANG['xml_news_desc'] . $site_name);
         $data->set_date(new Date());
         $data->set_link(new Url('/syndication.php?m=news&amp;cat=' . $idcat));
@@ -151,10 +151,10 @@ class NewsInterface extends ModuleInterface
         $data->set_desc($NEWS_LANG['xml_news_desc'] . $site_name);
         $data->set_lang($LANG['xml_lang']);
 		$data->set_auth_bit(AUTH_NEWS_READ);
-		
+
 		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
-		
+
 		// Build array with the children categories.
 		$array_cat = array();
 		$news_cat->build_children_id_list($idcat, $array_cat, RECURSIVE_EXPLORATION, ($idcat == 0 ? DO_NOT_ADD_THIS_CATEGORY_IN_LIST : ADD_THIS_CATEGORY_IN_LIST));
@@ -167,14 +167,14 @@ class NewsInterface extends ModuleInterface
 	            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1 AND idcat IN(" . implode(", ", $array_cat) . ")
 	            ORDER BY timestamp DESC"
 				. $Sql->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
-        
+
 	        // Generation of the feed's items
 	        while ($row = $Sql->fetch_assoc($result))
 	        {
 				// Rewriting
 	            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
 
-	            $item = new FeedItem();            
+	            $item = new FeedItem();
 	            $item->set_title($row['title']);
 	            $item->set_link($link);
 	            $item->set_guid($link);
@@ -193,24 +193,24 @@ class NewsInterface extends ModuleInterface
 
 	// Returns the module map objet to build the global sitemap
     /**
-	 * @desc 
+	 * @desc
 	 * @param $auth_mode
 	 * @return unknown_type
      */
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG, $Cache;
-		
+
 		import('content/sitemap/module_map');
 		import('util/url');
-		
+
 		require_once PATH_TO_ROOT . '/news/news_begin.php';
-		
+
 		$news_link = new SiteMapLink($NEWS_LANG['news'], new Url('/news/news.php'), SITE_MAP_FREQ_DAILY, SITE_MAP_PRIORITY_MAX);
-		
+
 		$module_map = new ModuleMap($news_link);
 		$module_map->set_description('<em>Test</em>');
-		
+
 		$id_cat = 0;
 	    $keys = array_keys($NEWS_CAT);
 		$num_cats = count($NEWS_CAT);
@@ -234,7 +234,7 @@ class NewsInterface extends ModuleInterface
 				$module_map->add($this->_create_module_map_sections($id, $auth_mode));
 			}
 		}
-		
+
 		return $module_map;
 	}
 
@@ -242,13 +242,13 @@ class NewsInterface extends ModuleInterface
 	function _create_module_map_sections($id_cat, $auth_mode)
 	{
 		global $NEWS_CAT, $NEWS_LANG, $LANG, $User, $NEWS_CONFIG;
-		
+
 		$this_category = new SiteMapLink($NEWS_CAT[$id_cat]['name'], new Url('/news/' . url('news.php?cat=' . $id_cat, 'news-' . $id_cat . '+' . url_encode_rewrite($NEWS_CAT[$id_cat]['name']) . '.php')), SITE_MAP_FREQ_WEEKLY);
-			
+
 		$category = new SiteMapSection($this_category);
-		
+
 		$i = 0;
-		
+
 		$keys = array_keys($NEWS_CAT);
 		$num_cats = count($NEWS_CAT);
 		$properties = array();
@@ -271,15 +271,15 @@ class NewsInterface extends ModuleInterface
 				$i++;
 			}
 		}
-		
+
 		if ($i == 0)
 		{
 			$category = $this_category;
 		}
-		
+
 		return $category;
 	}
-	
+
 	function get_home_page($cat = 0)
 	{
 		global $User, $Sql, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
@@ -293,17 +293,17 @@ class NewsInterface extends ModuleInterface
 		{
 			require_once PATH_TO_ROOT . '/news/news_constant.php';
 		}
-		
+
 		// Import.
 		import('util/date');
 		import('content/comments');
 		import('content/syndication/feed');
 		import('util/pagination');
-		
+
 		// Initialisation des imports.
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 		$Pagination = new Pagination();
-		
+
 		// Classe des catégories.
 		require_once PATH_TO_ROOT . '/news/news_cats.class.php';
 		$news_cat = new NewsCats();
@@ -315,7 +315,7 @@ class NewsInterface extends ModuleInterface
 		// Gestion du tpl en fonction du type d'affichage.
 		$tpl_path = $NEWS_CONFIG['type'] ? 'news/news_cat.tpl' : 'news/news_list.tpl';
 		$tpl = new Template($tpl_path);
-		
+
 		// Affichage de l'édito
 		if ($NEWS_CONFIG['activ_edito'] && $cat == 0)
 		{
@@ -338,7 +338,7 @@ class NewsInterface extends ModuleInterface
 		{
 			$tpl->assign_vars(array('C_EDITO' => false));
 		}
-		
+
 		$tpl->assign_vars( array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
@@ -367,7 +367,7 @@ class NewsInterface extends ModuleInterface
 		// Gestion du where.
 		$last_release = 0;
 		$where = "WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1 AND n.idcat IN(" . implode(", ", $array_cat) . ")";
-		
+
 		// Comptage des news.
 		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
 
@@ -439,7 +439,7 @@ class NewsInterface extends ModuleInterface
 
 					$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $row['timestamp']);
 					$last_release = max($last_release, $row['start']);
-					
+
 					$tpl->assign_block_vars('news', array(
 						'ID' => $row['id'],
 						'C_NEWS_ROW' => $new_row,
@@ -452,7 +452,7 @@ class NewsInterface extends ModuleInterface
 						'C_IMG' => !empty($row['img']),
 						'IMG' => second_parse_url($row['img']),
 						'IMG_DESC' => $row['alt'],
-						'C_ICON' => $NEWS_CONFIG['activ_icon'],						
+						'C_ICON' => $NEWS_CONFIG['activ_icon'],
 						'U_CAT' => 'news' . url('.php?cat=' . $row['idcat'], '-' . $row['idcat'] . '+' . url_encode_rewrite($NEWS_CAT[$row['idcat']]['name']) . '.php'),
 						'ICON' => second_parse_url($NEWS_CAT[$row['idcat']]['image']),
 						'CONTENTS' => second_parse($row['contents']),
@@ -481,8 +481,8 @@ class NewsInterface extends ModuleInterface
 						'COLUMN_WIDTH' => $column_width
 					));
 				}
-			
-				$result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com 
+
+				$result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
 					FROM " . DB_TABLE_NEWS . " n " . $where . "
 					ORDER BY n.timestamp DESC" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
@@ -523,7 +523,7 @@ class NewsInterface extends ModuleInterface
 		{
 			$date_cache = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, filemtime(NEWS_MASTER_0));
 			$date_release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $last_release);
-		
+
 			if ($date_cache->get_timestamp() < $date_release->get_timestamp())
 			{
 				Feed::clear_cache('news');

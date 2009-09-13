@@ -6,14 +6,14 @@
  *   copyright            : (C) 2009 Roguelon Geoffrey
  *   email                : liaght@gmail.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -46,7 +46,7 @@ elseif (isset($_POST['preview']))
 	$Cache->load('news');
 	//Chargement de la langue du module.
 	load_module_lang('news');
-	
+
 	$news = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -60,9 +60,9 @@ elseif (isset($_POST['preview']))
 		'img' => retrieve(POST, 'img', '', TSTRING),
 		'alt' => retrieve(POST, 'alt', '', TSTRING)
 	);
-	
+
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $news['user_id'] . "'", __LINE__, __FILE__);
-	
+
 	if (!empty($news['date']))
 	{
 		$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $news['date'], $LANG['date_format_short']);
@@ -78,7 +78,7 @@ elseif (isset($_POST['preview']))
 	}
 
 	$preview->assign_vars(array('C_NEWS_BLOCK' => true));
-	
+
 	$preview->assign_block_vars('news', array(
 		'C_NEWS_ROW' => false,
 		'C_IMG' => !empty($news['img']),

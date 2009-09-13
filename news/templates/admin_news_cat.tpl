@@ -16,14 +16,14 @@
 					-->
 					</script>
 			# ENDIF #
-			
+
 			# START categories_management #
 				<table class="module_table" style="width:99%;">
-					<tr>			
+					<tr>
 						<th colspan="3">
 							{categories_management.L_CATS_MANAGEMENT}
 						</th>
-					</tr>							
+					</tr>
 					<tr>
 						<td style="padding-left:20px;" class="row2">
 							<br />
@@ -33,13 +33,13 @@
 					</tr>
 				</table>
 			# END categories_management #
-			
+
 			# START removing_interface #
 			<form action="admin_news_cat.php?token={TOKEN}" method="post" class="fieldset_content">
 				<fieldset>
 					<legend>{L_REMOVING_CATEGORY}</legend>
 					<p>{L_EXPLAIN_REMOVING}</p>
-					
+
 					<label>
 						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
 					</label>
@@ -50,11 +50,11 @@
 					&nbsp;
 					{removing_interface.CATEGORY_TREE}
 				</fieldset>
-				
+
 				<fieldset class="fieldset_submit">
 					<legend>{L_SUBMIT}</legend>
 					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
-					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				</fieldset>
 			</form>
 			# END removing_interface #
@@ -72,7 +72,7 @@
 
 				return true;
 			}
-			
+
 			function ajax_img_preview()
 			{
 				if (document.getElementById('image').value != '')
@@ -81,7 +81,7 @@
 					var img = document.getElementById('image').value;
 					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + img + '&token={TOKEN}');
 
-					xhr_object.onreadystatechange = function() 
+					xhr_object.onreadystatechange = function()
 					{
 						//Transfert finished and successful
 						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -97,7 +97,7 @@
 				}
 				return true;
 			}
-			
+
 			var global_auth = {edition_interface.JS_SPECIAL_AUTH};
 			function change_status_global_auth()
 			{
@@ -161,7 +161,7 @@
 						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
 						<dd>
 							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {edition_interface.SPECIAL_CHECKED} />
-						</dd>					
+						</dd>
 					</dl>
 					<div id="hide_special_auth" style="display:{edition_interface.DISPLAY_SPECIAL_AUTH};">
 						<dl>
@@ -206,10 +206,9 @@
 					&nbsp;&nbsp;
 					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
 					&nbsp;&nbsp;
-					<input type="reset" value="{L_RESET}" class="reset" />				
+					<input type="reset" value="{L_RESET}" class="reset" />
 				</fieldset>
 			</form>
 			# END edition_interface #
-			
+
 		</div>
-		

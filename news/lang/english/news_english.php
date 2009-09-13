@@ -6,14 +6,14 @@
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- *  
+ *
  ###################################################
  *
  *   This program is free software, you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY, without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -107,7 +107,7 @@ $NEWS_LANG = array(
 	'release_date' => 'Release date',
 	'removing_category' => 'Removing category',
 	'require_cat' => 'Please choice a category!',
-	'required_fields_empty' => 'Whole required files are not be typed, please correctly redo the operation',	
+	'required_fields_empty' => 'Whole required files are not be typed, please correctly redo the operation',
 
 	'special_auth' => 'Special permissions',
 	'special_auth_explain' => 'The category will have the general configuration of the module. You can apply particular permissions.',
@@ -116,10 +116,10 @@ $NEWS_LANG = array(
 	'title_news' => 'Title of the news',
 
 	'unexisting_category' => 'The category you have selected does not exist',
-	
+
 	'until_1' => '(Until %s)',
 	'until_2' => '(%s until %s)',
-	
+
 	'waiting_news' => 'Waiting news',
 
 	'xml_news_desc' => 'News - ',

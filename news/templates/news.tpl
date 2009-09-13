@@ -1,6 +1,6 @@
         <script type="text/javascript">
         <!--
-        	function Confirm() 
+        	function Confirm()
 			{
 				return confirm("{L_ALERT_DELETE_NEWS}");
         	}
@@ -34,7 +34,7 @@
            	</div>
            	<div class="news_content">
                	# IF C_IMG #<img src="{IMG}" alt="{IMG_DESC}" title="{IMG_DESC}" class="img_right" /># ENDIF #
-				# IF C_ICON #<a href="{U_CAT}"><img class="valign_middle" src="{ICON}" alt="" /></a># ENDIF #                
+				# IF C_ICON #<a href="{U_CAT}"><img class="valign_middle" src="{ICON}" alt="" /></a># ENDIF #
 				{CONTENTS}
 				<br /><br />
                	{EXTEND_CONTENTS}

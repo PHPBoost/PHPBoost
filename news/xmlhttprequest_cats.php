@@ -6,14 +6,14 @@
  *   copyright          : (C) 2008 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
- *   
+ *
 ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,18 +30,18 @@ require_once('../kernel/begin.php');
 require_once('../kernel/header_no_display.php');
 
 if ($User->check_level(ADMIN_LEVEL)) //Admin
-{	
+{
 	$Session->csrf_get_protect();
 
 	require_once('news_cats.class.php');
 	$news_categories = new NewsCats();
-	
+
 	$id_up = retrieve(GET, 'id_up', 0);
 	$id_down = retrieve(GET, 'id_down', 0);
 	$id_show = retrieve(GET, 'show', 0);
 	$id_hide = retrieve(GET, 'hide', 0);
 	$cat_to_del = retrieve(GET, 'del', 0);
-	
+
 	$result = false;
 
 	if ($id_up > 0)
@@ -52,7 +52,7 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 		$result = $news_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif ($id_hide > 0)
 		$result = $news_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
-	
+
 	//Operation was successfully
 	if ($result)
 	{
@@ -63,11 +63,11 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 				'unrewrited' => 'news.php?cat=%d',
 				'rewrited' => 'news-%d+%s.php')
 		);
-		
+
 		$news_categories->set_display_config($cat_config);
 
 		$Cache->load('news', RELOAD_CACHE);
-		
+
 		echo $news_categories->build_administration_interface(AJAX_MODE);
 	}
 }
