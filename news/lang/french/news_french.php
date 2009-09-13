@@ -66,8 +66,8 @@ $NEWS_LANG = array(
 	'contribution_success' => 'Votre contribution a bien été enregistrée.',
 
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
-	'desc_extend_news' => 'Description étendue',
-	'desc_news' => 'Description',
+	'desc_extend_news' => 'News étendue',
+	'desc_news' => 'News',
 	'display_archive' => 'Afficher les archives',
 	'display_news_author' => 'Afficher l\'auteur de la news',
 	'display_news_date' => 'Afficher la date de la news',
