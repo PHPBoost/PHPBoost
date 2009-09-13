@@ -34,7 +34,7 @@
  			document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
 			var img = document.getElementById('img_field').value;
 			var xhr_object_url = xmlhttprequest_init('xmlhttprequest.php?img_url=' + img + '&token={TOKEN}');
-			
+
 			xhr_object_url.onreadystatechange = function()
 			{
 				//Transfert finished and successful
@@ -42,8 +42,8 @@
 				{
 					document.getElementById('img_field').value = xhr_object_url.responseText;
 					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + xhr_object_url.responseText + '&token={TOKEN}');
-			
-					xhr_object.onreadystatechange = function() 
+
+					xhr_object.onreadystatechange = function()
 					{
 						//Transfert finished and successful
 						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
@@ -104,24 +104,24 @@
 			}
 			return false;
 		}
-		
+
 		# IF C_ADD #
 		function value_now(id_date, id_hour, id_min)
 		{
 			var date = "{NOW_DATE}";
 			var hour = "{NOW_HOUR}";
 			var min = "{NOW_MIN}";
-			
+
 			document.getElementById(id_date).value = date;
 			document.getElementById(id_hour).value = hour;
 			document.getElementById(id_min).value = min;
-			
+
 			return true;
 		}
 		# ENDIF #
 		-->
 		</script>
-		
+
 		<form action="management.php?token={TOKEN}" name="form" method="post" onsubmit="return check_form();" class="fieldset_content" id="form">
 			<fieldset>
 				<legend>{L_ADD_NEWS}</legend>
@@ -188,8 +188,8 @@
 						# ENDIF #
 					</dd>
 				</dl>
-			</fieldset>	
-			
+			</fieldset>
+
 			<fieldset>
 				<legend>{L_IMG_MANAGEMENT}</legend>
 				<dl>
@@ -205,7 +205,7 @@
 					<dd><label><input type="text" size="60" name="alt" id="alt" value="{ALT}" class="text" /></label></dd>
 				</dl>
 			</fieldset>
-			
+
 			# IF C_CONTRIBUTION #
 			<fieldset>
 				<legend>{L_CONTRIBUTION_LEGEND}</legend>
@@ -219,20 +219,20 @@
 				<br />
 			</fieldset>
 			# ENDIF #
-			
+
 			<div id="preview"></div>
-			
+
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
 				<input type="hidden" id="id" name="id" value="{IDNEWS}" class="submit" />
 				<input type="hidden" id="user_id" name="user_id" value="{USER_ID}" class="submit" />
 				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				<script type="text/javascript">
-				<!--				
+				<!--
 				document.write('&nbsp;&nbsp;<input value="{L_PREVIEW}" onclick="ajax_preview();" type="button" class="submit" />');
 				-->
 				</script>
-				&nbsp;&nbsp; 
-				<input type="reset" value="{L_RESET}" class="reset" />				
-			</fieldset>	
+				&nbsp;&nbsp;
+				<input type="reset" value="{L_RESET}" class="reset" />
+			</fieldset>
 		</form>

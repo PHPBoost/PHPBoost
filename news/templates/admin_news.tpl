@@ -1,5 +1,5 @@
 		{ADMIN_MENU}
-		
+
 		<div id="admin_contents">
 			<script type="text/javascript">
 			<!--
@@ -38,8 +38,8 @@
 					</tr>
 				# ELSE #
 				# START news #
-				<tr style="text-align:center;"> 
-					<td class="row2"> 
+				<tr style="text-align:center;">
+					<td class="row2">
 						<a href="{news.U_NEWS}">{news.TITLE}</a>
 					</td>
 					<td class="row2">
@@ -56,11 +56,11 @@
 						{news.DATE}
 					</td>
 					<td class="row2">
-						{news.APROBATION} 
+						{news.APROBATION}
 						<br />
 						<span class="text_small">{news.VISIBLE}</span>
 					</td>
-					<td class="row2"> 
+					<td class="row2">
 						<a href="management.php?edit={news.IDNEWS}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="{L_UPDATE}" title="{L_UPDATE}" /></a>
 					</td>
 					<td class="row2">

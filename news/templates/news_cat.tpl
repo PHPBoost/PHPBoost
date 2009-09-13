@@ -1,6 +1,6 @@
 		<script type="text/javascript">
 		<!--
-			function Confirm() 
+			function Confirm()
 			{
 				return confirm("{L_ALERT_DELETE_NEWS}");
 			}
@@ -47,7 +47,7 @@
     		<div class="news_bottom"></div>
 		</div>
 		# ENDIF #
-		
+
 		# IF C_NEWS_NO_AVAILABLE #
 		<div class="news_container edito">
     		<div class="news_top_l"></div>
@@ -85,7 +85,7 @@
     		<div class="news_bottom_r"></div>
     		<div class="news_bottom"></div>
 		</div>
-		# ELSE #		
+		# ELSE #
 			# START news #
 			# IF news.C_NEWS_ROW #<div class="spacer"></div># ENDIF #
 			# IF C_NEWS_BLOCK_COLUMN #<div class="news_container" style="float:left;width:{COLUMN_WIDTH}%"># ELSE #<div class="news_container"># ENDIF #
@@ -120,7 +120,7 @@
 	    		</div>
 	    		<div class="news_content">
 	        		# IF news.C_IMG #<img src="{news.IMG}" alt="{news.IMG_DESC}" title="{news.IMG_DESC}" class="img_right" /># ENDIF #
-					# IF news.C_ICON #<a href="{news.U_CAT}"><img class="valign_middle" src="{news.ICON}" alt="" /></a># ENDIF #                
+					# IF news.C_ICON #<a href="{news.U_CAT}"><img class="valign_middle" src="{news.ICON}" alt="" /></a># ENDIF #
 					{news.CONTENTS}
 					<br /><br />
 	        		{news.EXTEND_CONTENTS}

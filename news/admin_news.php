@@ -42,7 +42,7 @@ $Pagination = new Pagination();
 $result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.user_id, n.timestamp, n.start, n.end, n.visible, m.login, m.level
 	FROM " . DB_TABLE_NEWS . " n
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
-	ORDER BY n.timestamp DESC 
+	ORDER BY n.timestamp DESC
 	" . $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 
 $nbr_news = 0;
@@ -51,7 +51,7 @@ $level = array(0 => '', 1 => ' class="modo"', 2 => ' class="admin"');
 while ($row = $Sql->fetch_assoc($result))
 {
 	if ($row['visible'] && $row['start'] > $now->get_timestamp())
-	{	
+	{
 		$aprob = $LANG['waiting'];
 	}
 	elseif ($row['visible'] && $row['start'] < $now->get_timestamp() && ($row['end'] > $now->get_timestamp() || empty($row['end'])))

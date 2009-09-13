@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Viarre Régis, Roguelon Geoffrey
  *   email                : crowkait@phpboost.com, liaght@gmail.com
  *
- *  
+ *
  *
 ###################################################
  *
@@ -14,7 +14,7 @@
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,21 +50,21 @@ if (!empty($_POST['submit']))
 		'edito_title' => stripslashes(retrieve(POST, 'edito_title', '')),
 		'edito' => stripslashes(retrieve(POST, 'edito', '', TSTRING_PARSE))
 	);
-		
+
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_news)) . "' WHERE name = 'news'", __LINE__, __FILE__);
-	
+
 	###### Régénération du cache des news #######
 	$Cache->Generate_module_file('news');
-	
-	redirect(HOST . SCRIPT);	
+
+	redirect(HOST . SCRIPT);
 }
 //Sinon on rempli le formulaire
-else	
-{	
+else
+{
 	$tpl = new Template('news/admin_news_config.tpl');
-	
+
 	$Cache->load('news');
-	
+
 	// Chargement du menu de l'administration.
 	require_once('admin_news_menu.php');
 
@@ -127,8 +127,8 @@ else
 		'L_AUTH_MODERATION' => $NEWS_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $NEWS_LANG['auth_contribute']
 	));
-	
-	$tpl->parse(); // traitement du modele	
+
+	$tpl->parse(); // traitement du modele
 }
 
 require_once('../admin/admin_footer.php');
