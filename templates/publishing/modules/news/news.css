@@ -13,15 +13,12 @@
 	float:right;
 }
 .news_top{
-	padding:8px;
-	padding-top:0px;
+	padding:0 8px 2px;
 	width:100%;
-	margin-left:-7px;
 	height:18px;
 	font-size:12px;
 	font-weight:bold;
 	color:#515C68;
-	padding-bottom:2px;
 }
 /* Titre et contenu de la news */
 .news_top a.com{
@@ -32,14 +29,9 @@ a.news_title{
 	color:#515C68;
 }
 .news_content{
-	padding:8px;
+	padding:8px 8px 15px;
 	width:100%;
-	margin-left:-7px;
 	text-align:justify;
-	background: url(images/cont_white.png) repeat-x;
-	background-position:bottom;
-	padding-bottom:15px;
-	border-top:none
 }
 
 /* Barre inférieure des news */
