@@ -339,14 +339,18 @@ class NewsInterface extends ModuleInterface
 			$tpl->assign_vars(array('C_EDITO' => false));
 		}
 
+		$c_add = $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE);
+		$c_writer = $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE);
+
 		$tpl->assign_vars( array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'U_SYNDICATION' => url('../syndication.php?m=news' . ($cat > 0  ? '&amp;cat=' . $cat : '')),
 			'L_SYNDICATION' => $LANG['syndication'],
-			'C_ADD' => $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE) || $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE),
+			'C_ADD_OR_WRITER' => $c_add || $c_writer,
+			'C_ADD' => $c_add,
 			'U_ADD' => url(PATH_TO_ROOT . '/news/management.php?new=1'),
 			'L_ADD' => $NEWS_LANG['add_news'],
-			'C_WRITER' => $cat > 0 ? $User->check_auth($NEWS_CAT[$cat]['auth'], AUTH_NEWS_WRITE) : $User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_WRITE),
+			'C_WRITER' => $c_writer,
 			'L_WRITER' => $NEWS_LANG['waiting_news'],
 			'C_ADMIN' => $User->check_level(ADMIN_LEVEL),
 			'U_ADMIN' => $cat > 0 ? url('admin_news_cat.php?edit=' . $cat) : url('admin_news_config.php#preview_description'),
