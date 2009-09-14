@@ -192,7 +192,7 @@ elseif ($user)
 	}
 	else
 	{
-		redirect('../index.php');
+		redirect(get_start_page());
 		exit;
 	}
 }

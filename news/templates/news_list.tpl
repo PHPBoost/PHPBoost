@@ -7,6 +7,23 @@
 		-->
 		</script>
 
+		# IF C_ADD_OR_WRITER #
+		<div class="float_right" style="margin:0 10px 15px;">
+			# IF C_ADD #
+			<a href="{U_ADD}" title="{L_ADD}">
+				<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
+			</a>
+			# ENDIF #
+			&nbsp;
+			# IF C_WRITER #
+			<a href="news.php?user=1" title="{L_WRITER}">
+				<img src="news_mini.png" class="valign_middle" alt="{L_WRITER}" />
+			</a>
+			# ENDIF #
+		</div>
+		<div class="spacer"></div>
+		# ENDIF #
+
 		# IF C_EDITO #
 		<div class="news_container edito">
 			<div class="news_top_l"></div>
@@ -19,16 +36,6 @@
 					<h3 class="title">{EDITO_NAME}</h3>
 				</div>
 				<div class="float_right">
-					# IF C_ADD #
-					<a href="{U_ADD}" title="{L_ADD}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
-					</a>
-					# ENDIF #
-					# IF C_WRITER #
-					<a href="news.php?user=1" title="{L_WRITER}">
-						<img src="news_mini.png" class="valign_middle" alt="{L_WRITER}" />
-					</a>
-					# ENDIF #
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -63,16 +70,6 @@
 					</h3>
 				</div>
 				<div class="float_right">
-					# IF C_ADD #
-					<a href="{U_ADD}" title="{L_ADD}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
-					</a>
-					# ENDIF #
-					# IF C_WRITER #
-					<a href="news.php?user=1" title="{L_WRITER}">
-						<img src="news_mini.png" class="valign_middle" alt="{L_WRITER}" />
-					</a>
-					# ENDIF #
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
@@ -103,16 +100,6 @@
 					</h3>
 				</div>
 				<div class="float_right">
-					# IF C_ADD #
-					<a href="{U_ADD}" title="{L_ADD}">
-						<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
-					</a>
-					# ENDIF #
-					# IF C_WRITER #
-					<a href="news.php?user=1" title="{L_WRITER}">
-						<img src="news_mini.png" class="valign_middle" alt="{L_WRITER}" />
-					</a>
-					# ENDIF #
 					# IF C_ADMIN #
 					<a href="{U_ADMIN}" title="{L_ADMIN}">
 						<img class="valign_middle" src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/edit.png" alt="{L_ADMIN}" />
