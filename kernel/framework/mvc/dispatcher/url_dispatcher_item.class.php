@@ -130,11 +130,6 @@ class UrlDispatcherItem
 			{
 				define('TITLE', $title);
 			}
-			if ($this->controller->get_bread_crumb() !== null)
-			{
-				global $Bread_crumb;
-				$Bread_crumb = $this->controller->get_bread_crumb();
-			}
 			require_once PATH_TO_ROOT . '/kernel/header.php';
 		}
 	}

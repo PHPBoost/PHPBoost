@@ -53,7 +53,8 @@ abstract class AbstractController implements Controller
 	
 	public function get_bread_crumb()
 	{
-		return $this->bread_crumb;
+		global $Bread_crumb;
+		return $Bread_crumb;
 	}
 	
 	public function is_display_enabled()
@@ -76,11 +77,6 @@ abstract class AbstractController implements Controller
 		$this->title = $title;
 	}
 	
-	protected function set_bread_crumb($bread_crumb)
-	{
-		$this->bread_crumb = $bread_crumb;
-	}
-	
 	protected function check_token()
 	{
 		global $Session;
@@ -89,6 +85,5 @@ abstract class AbstractController implements Controller
 	
 	var $display = true;
 	var $title = 'Controller';
-	var $bread_crumb = null;
 }
 ?>
