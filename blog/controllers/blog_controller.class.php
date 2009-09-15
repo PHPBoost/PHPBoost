@@ -36,6 +36,8 @@ class BlogController extends AbstractBlogController
 {
 	public function blogs()
 	{
+		$this->set_title('Liste des blogs');
+		
 		$view = new View('blog/list.tpl');
 		$this->init_env($view);
 		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', ICriteria::DESC);
@@ -90,7 +92,7 @@ class BlogController extends AbstractBlogController
 			));
 		}
 
-		$view->parse();
+		return $view;
 	}
 
 	public function create($blog = null, $error_message = null)
@@ -135,7 +137,7 @@ class BlogController extends AbstractBlogController
 	            'DESCRIPTION' => $blog->get_description()
 			));
 		}
-		$view->parse();
+		return $view;
 	}
 
 	public function create_valid($blog_id = -1)
@@ -153,7 +155,7 @@ class BlogController extends AbstractBlogController
 		}
 		catch (BlogValidationExceptionMissingFields $ex)
 		{
-			$this->create($blog, $this->lang['missing_fields']);
+			return $this->create($blog, $this->lang['missing_fields']);
 		}
 		catch (ValidationException $ex)
 		{
@@ -169,12 +171,12 @@ class BlogController extends AbstractBlogController
 		$blog = BlogDAO::instance()->find_by_id($blog_id);
         $_POST['title'] = $blog->get_title();
         $_POST['description'] = $blog->get_description();
-		$this->create($blog, null, $blog_id);
+		return $this->create($blog, null, $blog_id);
 	}
 	
 	public function edit_valid($blog_id)
 	{
-		$this->create_valid($blog_id);
+		return $this->create_valid($blog_id);
 	}
 	
 	public function delete($blog_id)

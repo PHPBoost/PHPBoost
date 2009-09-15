@@ -33,33 +33,33 @@ class AbstractBlogController extends AbstractController
 {
 	protected function init_env($view = null, $items = null)
 	{
-		//global $Bread_crumb;
 		if ($view !== null)
 		{
 			$view->add_lang($this->lang);
 		}
-		/* $Bread_crumb->add($this->interface->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
+		
 		if ($items !== null)
 		{
 			foreach ($items as $item => $target)
 			{
-				$Bread_crumb->add($item, $target);
+				$this->get_bread_crumb()->add($item, $target);
 			}
-		} */
+		}
 	}
 
 	public function init()
 	{
 		global $BLOG_LANGS;
 		load_module_lang('blog');
-
+		
 		$this->lang = $BLOG_LANGS;
 		$this->module_discovery_service = new ModulesDiscoveryService();
-		$this->interface = $this->module_discovery_service->get_module('blog');
+		$this->module = $this->module_discovery_service->get_module('blog');
+		$this->get_bread_crumb()->add($this->module->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
 	}
 	
 	protected $lang;
-	protected $interface;
+	protected $module;
 	protected $module_discovery_service;
 }
 ?>
