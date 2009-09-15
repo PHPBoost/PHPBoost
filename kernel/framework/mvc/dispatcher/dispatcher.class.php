@@ -26,6 +26,7 @@
  ###################################################*/
  
 import('mvc/dispatcher/url_dispatcher_item');
+import('mvc/dispatcher/dispatcher_exception');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -61,7 +62,11 @@ class Dispatcher
 				return;
 			}
 		}
-		throw new NoUrlMatchException($url);
+		
+		if (!$this->default_dispatcher_item($url))
+		{
+			throw new NoUrlMatchException($url);
+		}
 	}
 
 	/**
@@ -97,6 +102,55 @@ class Dispatcher
 		}
 	}
 
+	private function default_dispatcher_item(&$url)
+	{
+		// /controller/controller/controller/action/(?:resource_id)
+		
+		$params = array();
+		$match = preg_match('`^(/(?:[a-z_]+/)+)([a-z_]+/)((?:[0-9]+)?)/?$`i', $url, $params);
+		
+		if ($match)
+		{
+			$controller_full_name = $params[1];
+			$method = $params[2];
+			$resource_id = $params[3];
+			
+			if ($this->include_controller_files($controller_full_name))
+			{
+				$this->build_dispatcher_item();
+			}
+		}
+		return false;
+	}
+	
+	private function include_controller_files($controller_full_name)
+	{
+		$params = array();
+		
+		preg_match('`^/((?:[^/]+/)*)([a-z_]+)/?$`i', $controller_full_name, $params);
+		$controller_path = $params[1];
+		$controller_classname = $params[2] . 'Controller';
+		$raw_controller_filename = strtolower(preg_replace('`(?<=[a-z])(?=[A-Z])`', '_', $params[2]));
+		
+		if (empty($controller_path))
+		{
+			$controller_path = $raw_controller_filename . '/';
+		}
+		
+		$full_path = PATH_TO_ROOT . '/' . $controller_path . $raw_controller_filename. '_controller.class.php';
+		
+		echo 'full name ' . $controller_full_name . '<br />';
+		var_export($params); echo '<br />';
+		echo 'PATH : |' . $full_path . '|<br />';
+		
+		return (@include_once $full_path) !== false;
+	}
+	
+	private function build_dispatcher_item()
+	{
+		
+	}
+	
 	// Changing this value will result in a crash in rewrite mode.
 	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
 	const URL_PARAM_NAME = 'url';
