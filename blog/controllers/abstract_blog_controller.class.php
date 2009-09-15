@@ -26,28 +26,26 @@
  ###################################################*/
 
 import('io/template');
-import('mvc/controller');
+import('mvc/controller/abstract_controller');
 import('modules/modules_discovery_service');
 
 class AbstractBlogController extends AbstractController
 {
 	protected function init_env($view = null, $items = null)
 	{
-		global $Bread_crumb;
+		//global $Bread_crumb;
 		if ($view !== null)
 		{
 			$view->add_lang($this->lang);
 		}
-		$Bread_crumb->add($this->interface->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
+		/* $Bread_crumb->add($this->interface->get_name(), Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute());
 		if ($items !== null)
 		{
 			foreach ($items as $item => $target)
 			{
 				$Bread_crumb->add($item, $target);
 			}
-		}
-		require_once PATH_TO_ROOT . '/kernel/header.php';
-		$this->initialized = true;
+		} */
 	}
 
 	public function init()
@@ -59,18 +57,9 @@ class AbstractBlogController extends AbstractController
 		$this->module_discovery_service = new ModulesDiscoveryService();
 		$this->interface = $this->module_discovery_service->get_module('blog');
 	}
-
-	public function destroy()
-	{
-		if ($this->initialized)
-		{
-			require_once PATH_TO_ROOT . '/kernel/footer.php';
-		}
-	}
-
+	
 	protected $lang;
 	protected $interface;
 	protected $module_discovery_service;
-	private $initialized = false;
 }
 ?>

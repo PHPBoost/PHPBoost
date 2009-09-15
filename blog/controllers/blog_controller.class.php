@@ -56,7 +56,7 @@ class BlogController extends AbstractBlogController
                 'USER' => $blog->get_property('member_login')
 			));
 		}
-		$view->parse();
+		return $view;
 	}
 
 	public function view($blog_id, $page = 1)

@@ -25,14 +25,11 @@
  *
  ###################################################*/
 
-define('TITLE', 'Blog');
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
-// TODO remove this line (content will be in functions.inc.php already imported in begin.php
-require_once PATH_TO_ROOT . '/blog/func.inc.php';
 
-import('mvc/dispatcher');
+import('mvc/dispatcher/dispatcher');
 mimport('blog/controllers/blog_controller');
 mimport('blog/controllers/blog_post_controller');
 
@@ -56,7 +53,6 @@ try
 	new UrlDispatcherItem('BlogPostController', 'edit_valid', '`^/[0-9]+/post/([0-9]+)/edit/valid/?$`'),
 	new UrlDispatcherItem('BlogPostController', 'delete', '`^/[0-9]+/post/delete/([0-9]+)/?$`')
 	));
-
 	try
 	{
 		$my_dispatcher->dispatch();
@@ -83,17 +79,5 @@ catch (NoSuchControllerException $ex)
 	echo $ex->getMessage();
 	require_once PATH_TO_ROOT . '/kernel/footer.php';
 }
-
-//echo '<hr />';
-//$url = Dispatcher::get_url('/blog', ''); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-//$url = Dispatcher::get_url('/blog', '/'); $url = $url->absolute(); echo '<a href="' . $url . '">Blog</a><br />';
-//$url = Dispatcher::get_url('/blog', '/view/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog', '/view/42'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog', '/view/37/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog/', '/view'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog/', '/none/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog/', '/test/'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog/', '/special/42/?param1=42&amp;param2=37'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
-//$url = Dispatcher::get_url('/blog/', '/special/256/?param1=007&amp;param2=128'); $url = $url->absolute(); echo '<a href="' . $url . '">' . $url . '</a><br />';
 
 ?>
