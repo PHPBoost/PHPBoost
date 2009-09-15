@@ -45,7 +45,7 @@ $Template->set_filenames(array(
 //Gestion de la maintenance du site.
 if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 {
-    if (!$User->check_level(ADMIN_LEVEL)) //Non admin.
+    if (!$User->check_level(ADMIN_LEVEL) && !$User->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN)) //Non admin et utilisateurs autorisés.
     {
         if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
         {

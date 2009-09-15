@@ -49,6 +49,7 @@ if (!empty($_POST['valid']))
 			$maintain = '0';
 	}
 	
+	$CONFIG['maintain_auth'] = Authorizations::build_auth_array_from_form(AUTH_MAINTAIN);
 	$CONFIG['maintain_text'] = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
 	$CONFIG['maintain_delay'] = retrieve(POST, 'display_delay', 0);
 	$CONFIG['maintain_display_admin'] = retrieve(POST, 'maintain_display_admin', 0);
@@ -103,6 +104,7 @@ else //Sinon on rempli le formulaire
 	$Template->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'DELAY_MAINTAIN_OPTION' => $delay_maintain_option,
+		'AUTH_WEBSITE' => Authorizations::generate_select(AUTH_MAINTAIN, (!empty($CONFIG['maintain_auth']) ? $CONFIG['maintain_auth'] : array())),
 		'MAINTAIN_CONTENTS' => !empty($CONFIG['maintain_text']) ? unparse($CONFIG['maintain_text']) : '',
 		'DISPLAY_DELAY_ENABLED' => ($CONFIG['maintain_delay'] == 1) ? 'checked="checked"' : '',
 		'DISPLAY_DELAY_DISABLED' => ($CONFIG['maintain_delay'] == 0) ? 'checked="checked"' : '',
@@ -118,6 +120,7 @@ else //Sinon on rempli le formulaire
 		'L_SET_MAINTAIN' => $LANG['maintain_for'],
 		'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
 		'L_MAINTAIN_DISPLAY_ADMIN' => $LANG['maintain_display_admin'],
+		'L_AUTH_WEBSITE' => $LANG['maintain_auth'],
 		'L_MAINTAIN_TEXT' => $LANG['maintain_text'],
 		'L_YES' => $LANG['yes'],
 		'L_NO' => $LANG['no'],

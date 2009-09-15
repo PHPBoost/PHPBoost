@@ -79,6 +79,7 @@ define('HTML_UNPROTECT', 	false); //Non protection de l'html.
 ### Autorisations ###
 define('AUTH_MENUS', 		0x01); //Autorisations en lecture des menus.
 define('AUTH_FILES', 		0x01); //Configuration générale des fichiers
+define('AUTH_MAINTAIN', 		0x01); //Autorisations d'accès du site maintenance.
 define('ACCESS_MODULE', 	0x01); //Accès à un module.
 define('AUTH_FLOOD', 		'auth_flood'); //Droit de flooder.
 define('PM_GROUP_LIMIT', 	'pm_group_limit'); //Aucune limite de messages privés.
