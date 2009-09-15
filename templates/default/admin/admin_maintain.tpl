@@ -64,6 +64,11 @@
 						{KERNEL_EDITOR}	
 						<textarea rows="14" cols="20" name="contents" id="contents">{MAINTAIN_CONTENTS}</textarea>
 					</label>
+					<br /><br />
+					<dl>
+						<dt><label for="auth_read">{L_AUTH_WEBSITE}</label></dt>
+						<dd>{AUTH_WEBSITE}</dd>
+					</dl>
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>

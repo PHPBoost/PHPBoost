@@ -371,6 +371,7 @@ Il vous sera demandé dans le formulaire de connexion directe à l\'administration
 ' . $CONFIG['sign'];
 
 //Maintain
+$LANG['maintain_auth'] = 'Autorisation d\'accès au site durant la maintenance';
 $LANG['maintain_for'] = 'Mettre le site en maintenance';
 $LANG['maintain_delay'] = 'Afficher la durée de la maintenance';
 $LANG['maintain_display_admin'] = 'Afficher la durée de la maintenance à l\'administrateur';
