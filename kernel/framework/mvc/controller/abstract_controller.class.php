@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           controller.class.php
+ *                           abstract_controller.class.php
  *                            -------------------
- *   begin                : June 09 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   begin                : September 15 2009
+ *   copyright         : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -25,33 +25,9 @@
  *
  ###################################################*/
 
-define('ICONTROLER__INTERFACE', 'IController');
+import('mvc/controller/controller');
 
-/**
- * @author loic rouchon <loic.rouchon@phpboost.com>
- * @desc This interface declares the minimalist controler pattern
- * with no actions.
- *
- */
-interface IController
-{
-	/**
-	 * @desc This method will always be called just before the controler action
-	 */
-	public function init();
-	/**
-	 * @desc This method will always be called just after the controler action
-	 */
-	public function destroy();
-	
-	/**
-	 * @desc Catch all non-catched exceptions thrown by the controller method
-	 * matching the current url
-	 * @param Exception $exception the thrown exception
-	 * @throws Exception
-	 */
-	public function exception_handler($exception);
-}
+define('ABSTRACT_CONTROLLER__CLASS', 'AbstractController');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -60,7 +36,7 @@ interface IController
  * init() and destroy() method for controlers that doesn't need
  * this functionality
  */
-abstract class AbstractController implements IController
+abstract class AbstractController implements Controller
 {
 	public function init() {}
 	public function destroy() {}
@@ -70,10 +46,49 @@ abstract class AbstractController implements IController
 		throw $exception;
 	}
 	
+	public function get_title()
+	{
+		return $this->title;
+	}
+	
+	public function get_bread_crumb()
+	{
+		return $this->bread_crumb;
+	}
+	
+	public function is_display_enabled()
+	{
+		return $this->display;
+	}
+	
+	protected function disable_display()
+	{
+		$this->display = false;
+	}
+	
+	protected function enable_display()
+	{
+		$this->display = true;
+	}
+	
+	protected function set_title($title)
+	{
+		$this->title = $title;
+	}
+	
+	protected function set_bread_crumb($bread_crumb)
+	{
+		$this->bread_crumb = $bread_crumb;
+	}
+	
 	protected function check_token()
 	{
 		global $Session;
 		$Session->csrf_get_protect();
 	}
+	
+	var $display = true;
+	var $title = 'Controller';
+	var $bread_crumb = null;
 }
 ?>

@@ -25,6 +25,9 @@
  *
  ###################################################*/
 
+
+global $LANG, $Session, $CONFIG, $User;
+
 if (defined('PHPBOOST') !== true)
 {
     exit;
@@ -38,12 +41,6 @@ if (!defined('TITLE'))
 $Session->check(TITLE); //Vérification de la session.
 
 //Gestion de la maintenance du site.
-if (($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time()) && !$User->check_level(ADMIN_LEVEL))
-{
-    if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
-    {
-        redirect(HOST . DIR . '/member/maintain.php');
-    }
-}
+check_for_maintain_redirect();
 
 ?>
