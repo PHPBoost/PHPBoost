@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           url_dispatcher_item.class.php
+ *                           url_controller_mapper.class.php
  *                            -------------------
  *   begin                : June 08 2009
  *   copyright         : (C) 2009 Loïc Rouchon
@@ -26,12 +26,13 @@
  ###################################################*/
 
 import('mvc/controller/controller');
+import('mvc/dispatcher/controller_method_caller');
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
  * @desc Call the controller method matching an url
  */
-class UrlDispatcherItem
+class UrlControllerMapper
 {
 	/**
 	 * @desc build a new UrlDispatcherItem
@@ -59,10 +60,10 @@ class UrlDispatcherItem
 	 */
 	public function match(&$url)
 	{
-		$this->params = array();
-		$match = preg_match($this->capture_regex, $url, $this->params);
+		$this->parameters = array();
+		$match = preg_match($this->capture_regex, $url, $this->parameters);
 		// Remove the global url from the parameters that the controller will receive
-		unset($this->params[0]);
+		unset($this->parameters[0]);
 		return $match;
 	}
 
@@ -74,83 +75,13 @@ class UrlDispatcherItem
 	 */
 	public function call(&$url)
 	{	
-        $this->init_environment();
-		$this->check_controller_method();
-		$this->run();
-		$this->destroy();
-	}
-
-	private function init_environment()
-	{
-        check_for_maintain_redirect();
-		$this->init_controller();
-	}
-	
-	private function check_controller_method()
-	{
-		if (!method_exists($this->controller, $this->method_name))
-		{
-			$this->destroy();
-			throw new NoSuchControllerMethodException($this->controller, $this->method_name);
-		}
-	}
-	
-	private function run()
-	{
-		try
-		{
-            $this->response = call_user_func_array(array($this->controller, $this->method_name), $this->params);
-			$this->header();
-            $this->response->parse();
-		}
-		catch (Exception $ex)
-		{
-			$this->controller->exception_handler($ex);
-		}
-		$this->footer();
-	}
-	
-	private function destroy()
-	{
-		$this->controller->destroy();
-	}
-	
-	private function init_controller()
-	{
-        $this->controller = new $this->controller_name();
-        $this->controller->init();
-	}
-	
-	private function header()
-	{
-		if ($this->controller->is_display_enabled())
-		{
-			$title = $this->controller->get_title();
-			if (!empty($title))
-			{
-				define('TITLE', $title);
-			}
-			require_once PATH_TO_ROOT . '/kernel/header.php';
-		}
-	}
-	
-	private function footer()
-	{
-		if ($this->controller->is_display_enabled())
-		{
-			require_once PATH_TO_ROOT . '/kernel/footer.php';
-		}
-		else
-		{
-			require_once PATH_TO_ROOT . '/kernel/footer_no_display.php';
-		}
+		$controller_method_mapper = new ControllerMethodCaller();
+		$controller_method_mapper->call($this->controller_name, $this->method_name, $this->parameters);
 	}
 	
 	private $method_name;
 	private $controller_name;
-	private $controller;
 	private $params_capture_regex;
-	private $params;
-	private $response;
+	private $parameters;
 }
 ?>

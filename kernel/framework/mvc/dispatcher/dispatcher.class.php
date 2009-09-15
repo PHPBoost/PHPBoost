@@ -25,7 +25,8 @@
  *
  ###################################################*/
  
-import('mvc/dispatcher/url_dispatcher_item');
+import('mvc/dispatcher/url_controller_method_mapper');
+import('mvc/dispatcher/url_controller_mapper');
 import('mvc/dispatcher/dispatcher_exception');
 
 /**
@@ -40,9 +41,10 @@ class Dispatcher
 	 * @param UrlDispatcherItem[] the list of the UrlDispatcherItem
 	 * that could be applied on an url for that module
 	 */
-	public function __construct($dispatch_urls_list)
+	public function __construct($url_controller_mappers, $url_controller_method_mappers = array())
 	{
-		$this->dispatch_urls_list =& $dispatch_urls_list;
+		$this->url_controller_mappers =& $url_controller_mappers;
+		$this->url_controller_method_mappers =& $url_controller_method_mappers;
 	}
 
 	/**
@@ -54,11 +56,19 @@ class Dispatcher
 	public function dispatch()
 	{
 		$url = retrieve(GET, Dispatcher::URL_PARAM_NAME, '');
-		foreach ($this->dispatch_urls_list as $url_dispatcher_item)
+		foreach ($this->url_controller_method_mappers as $url_controller_method_mapper)
 		{
-			if ($url_dispatcher_item->match($url))
+			if ($url_controller_method_mapper->match($url))
 			{
-				$url_dispatcher_item->call($url);
+				$url_controller_method_mapper->call($url);
+				return;
+			}
+		}
+		foreach ($this->url_controller_mappers as $url_controller_mapper)
+		{
+			if ($url_controller_mapper->match($url))
+			{
+				$url_controller_mapper->call($url);
 				return;
 			}
 		}
@@ -102,7 +112,8 @@ class Dispatcher
 	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
 	const URL_PARAM_NAME = 'url';
 
-	private $dispatch_urls_list = array();
+	private $url_controller_mappers = array();
+	private $url_controller_method_mappers = array();
 }
 
 ?>
