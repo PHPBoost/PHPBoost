@@ -57,6 +57,12 @@ class BlogController extends AbstractBlogController
                 'U_DELETE' => $blog->action_url(Blog::ACTION_DELETE)->absolute(),
                 'USER' => $blog->get_property('member_login')
 			));
+			for ($i = 0; $i < 3; $i++) {
+				$view->assign_block_vars('blogs.boucle1', array('VARBOUCLE_1' => 'coucou' . $i));
+				for ($j = 0; $j < 3; $j++) {
+					$view->assign_block_vars('blogs.boucle1.boucle2', array('VARBOUCLE_2' => 'hoboux' . $j));
+				}
+			}
 		}
 		return $view;
 	}

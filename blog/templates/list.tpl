@@ -23,6 +23,12 @@
             <div class="module_contents">
                 {blogs.DESCRIPTION}
                 <div class="spacer"></div>
+				# START blogs.boucle1 # 
+					Code répété dans la boucle 1: {blogs.boucle1.E_VARBOUCLE_1}<br />
+				    # START blogs.boucle1.boucle2 # 
+						Code répété dans la boucle 2: {blogs.boucle1.boucle2.J_VARBOUCLE_2}<br />
+				    # END blogs.boucle1.boucle2 #
+				# END blogs.boucle1 #
             </div>
             <div class="module_bottom_l"></div>
             <div class="module_bottom_r"><span style="float:right">{blogs.USER}</span></div>
