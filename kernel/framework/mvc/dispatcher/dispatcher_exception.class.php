@@ -76,4 +76,31 @@ class NoSuchControllerMethodException extends DispatcherException
 		parent::__construct('Controller "' . $controller . '" doesn\'t have a method called "' . $method_name . '"');
 	}
 }
+
+class MalformedUrlMapperRegex extends DispatcherException
+{
+	public function __construct($controller, $regex, $url, $message)
+	{
+		parent::__construct('Controller "' . $controller . '" matching "' . $url . '" regular expression is malformed: "' . $regex .
+			'"<br />' . $message);
+	}
+}
+
+class MalformedUrlControllerMapperRegex extends MalformedUrlMapperRegex
+{
+	public function __construct($controller, $regex, $url)
+	{
+		parent::__construct($controller, $regex, $url,
+			'The regular expression must capture the method and parameters part (for example : "`^/foo/(.*)`")');
+	}
+}
+
+/*class MalformedUrlControllerMethodMapperRegex extends MalformedUrlMapperRegex
+{
+	public function __construct($controller, $regex, $url)
+	{
+		parent::__construct($controller, $regex, $url,
+			'The regular expression must capture the parameters part (for example : "`^/foo/bar/([0-9]+)/([\w]+)/?$`")');
+	}
+}*/
 ?>

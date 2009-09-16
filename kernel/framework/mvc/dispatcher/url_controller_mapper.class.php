@@ -42,14 +42,13 @@ class UrlControllerMapper
 	 * and capturing the controller method parameters
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($controller_name, $method_name, $capture_regex)
+	public function __construct($controller_name, $capture_regex)
 	{
 		if (!implements_interface($controller_name, CONTROLLER__INTERFACE))
 		{
 			throw new NoSuchControllerException($controller_name);
 		}
 		$this->controller_name =& $controller_name;
-		$this->method_name = $method_name;
 		$this->capture_regex = $capture_regex;
 	}
 
@@ -60,10 +59,19 @@ class UrlControllerMapper
 	 */
 	public function match(&$url)
 	{
-		$this->parameters = array();
-		$match = preg_match($this->capture_regex, $url, $this->parameters);
-		// Remove the global url from the parameters that the controller will receive
-		unset($this->parameters[0]);
+		$params = array();
+		$match = preg_match($this->capture_regex, $url, $params);
+		if ($match)
+		{
+			if (count($params) == 2)
+			{
+				$this->url = $params[1];
+			}
+			else
+			{
+				throw new MalformedUrlControllerMapperRegex($this->controller_name, $this->capture_regex, $url);
+			}
+		}
 		return $match;
 	}
 
@@ -73,15 +81,38 @@ class UrlControllerMapper
 	 * @throws NoUrlMatchException
 	 * @throws NoSuchControllerMethodException
 	 */
-	public function call(&$url)
+	public function call()
 	{	
+		$this->build_method();
+		$this->build_parameters();
+		$this->do_call();
+	}
+	
+	private function build_method()
+	{
+		$matches = array();
+		preg_match(UrlControllerMapper::method_regex, $this->url, $matches);
+		$this->method_name = $matches[1];
+	}
+	
+	private function build_parameters()
+	{
+		$this->parameters = explode('/', $this->url);
+		unset($this->parameters[0]);
+	}
+	
+	private function do_call()
+	{
+		//die('$' . $this->controller_name . '-&gt;' . $this->method_name . '(' . implode(',', $this->parameters) . ')');
 		$controller_method_mapper = new ControllerMethodCaller();
 		$controller_method_mapper->call($this->controller_name, $this->method_name, $this->parameters);
 	}
 	
-	private $method_name;
 	private $controller_name;
-	private $params_capture_regex;
+	private $method_name;
 	private $parameters;
+	private $capture_regex;
+	private $url;
+	const method_regex = '`^([^/]+)/?`';
 }
 ?>
