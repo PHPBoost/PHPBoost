@@ -60,7 +60,7 @@ class Dispatcher
 		{
 			if ($url_controller_method_mapper->match($url))
 			{
-				$url_controller_method_mapper->call($url);
+				$url_controller_method_mapper->call();
 				return;
 			}
 		}
@@ -68,7 +68,7 @@ class Dispatcher
 		{
 			if ($url_controller_mapper->match($url))
 			{
-				$url_controller_mapper->call($url);
+				$url_controller_mapper->call();
 				return;
 			}
 		}
@@ -114,6 +114,52 @@ class Dispatcher
 
 	private $url_controller_mappers = array();
 	private $url_controller_method_mappers = array();
+	
+	public static function do_dispatch($url_controller_mappers, $url_controller_method_mappers = array())
+	{
+		try
+		{
+			$dispatcher = new Dispatcher($url_controller_mappers, $url_controller_method_mappers);
+			$dispatcher->dispatch();
+		}
+		catch (NoUrlMatchException $ex)
+		{
+			Dispatcher::handle_dispatch_exception($ex);
+		}
+		catch (NoSuchControllerMethodException $ex)
+		{
+			Dispatcher::handle_dispatch_exception($ex);
+		}
+		catch (NoSuchControllerException $ex)
+		{
+			Dispatcher::show_error($ex);
+		}
+		catch (MalformedUrlMapperRegex $ex)
+		{
+			Dispatcher::show_error($ex);
+		}
+	}
+	
+	private function handle_dispatch_exception($exception)
+	{
+		if (DEBUG) {
+			Dispatcher::show_error($exception);
+		} else {
+			Dispatcher::redirect404();
+		}
+	}
+	
+	private static function redirect404()
+	{
+		redirect(PATH_TO_ROOT . '/member/404.php');
+	}
+	
+	private static function show_error($exception)
+	{
+		require_once PATH_TO_ROOT . '/kernel/header.php';
+		echo '<div class="error">' . $exception->getMessage() . '</div>';
+		require_once PATH_TO_ROOT . '/kernel/footer.php';
+	}
 }
 
 ?>

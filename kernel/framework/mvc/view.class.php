@@ -50,7 +50,7 @@ class View extends Template
 			$varname = substr($varname, 2);
 			if (!empty($this->_var[$varname]))
 			{
-				return htmlspecialchars($this->_var[$varname]);
+				return $this->register_var($varname, htmlspecialchars($this->_var[$varname]));
 			}
 		}
 		else if (strpos($varname, 'J_') === 0)
@@ -58,7 +58,7 @@ class View extends Template
 			$varname = substr($varname, 2);
 			if (!empty($this->_var[$varname]))
 			{
-				return to_js_string($this->_var[$varname]);
+				return $this->register_var($varname, to_js_string($this->_var[$varname]));
 			}
 		}
 		else if (strpos($varname, 'L_') === 0)
@@ -66,7 +66,7 @@ class View extends Template
 			$var = $this->find_var(strtolower(substr($varname, 2)));
 			if (!empty($var))
 			{
-				return $var;
+				return $this->register_var($varname, $var);
 			}
 		}
 		else if (strpos($varname, 'EL_') === 0)
@@ -74,7 +74,7 @@ class View extends Template
 			$var = $this->find_var(strtolower(substr($varname, 3)));
 			if (!empty($var))
 			{
-				return htmlspecialchars($var);
+				return $this->register_var($varname, htmlspecialchars($var));
 			}
 		}
 		else if (strpos($varname, 'JL_') === 0)
@@ -82,13 +82,13 @@ class View extends Template
 			$var = $this->find_var(strtolower(substr($varname, 3)));
 			if (!empty($var))
 			{
-				return to_js_string($var);
+				return $this->register_var($varname, to_js_string($var));
 			}
 		}
 		return '';
 	}
 
-	protected function find_var($varname)
+	protected function find_var(&$varname)
 	{
 		foreach ($this->langs as $lang)
 		{
@@ -98,6 +98,12 @@ class View extends Template
 			}
 		}
 		return '';
+	}
+	
+	private function register_var(&$name, &$value)
+	{
+		$this->_var[$name] = $value;
+		return $value;
 	}
 
 	/**

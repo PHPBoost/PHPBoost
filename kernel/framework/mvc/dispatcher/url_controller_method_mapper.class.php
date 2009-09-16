@@ -73,7 +73,7 @@ class UrlControllerMethodMapper
 	 * @throws NoUrlMatchException
 	 * @throws NoSuchControllerMethodException
 	 */
-	public function call(&$url)
+	public function call()
 	{	
 		$controller_method_mapper = new ControllerMethodCaller();
 		$controller_method_mapper->call($this->controller_name, $this->method_name, $this->parameters);
