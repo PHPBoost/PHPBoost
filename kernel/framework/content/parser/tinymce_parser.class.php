@@ -595,7 +595,7 @@ class TinyMCEParser extends ContentParser
 		//Remplacement : on parse les balises classiques
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 		
-		##Parsage des balises imbriqu�es.
+		##Nested tags
 		//Hide tag
 		if (!in_array('hide', $this->forbidden_tags))
 		{
@@ -625,6 +625,13 @@ class TinyMCEParser extends ContentParser
 		if (!in_array('hide', $this->forbidden_tags))
 		{
 			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`sU', '<span class="text_hide">' . $LANG['hide'] . ':</span><div class="hide" onclick="bb_hide(this)"><div class="hide2">$1</div></div>', $this->content);
+		}
+		
+		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
+		if (!in_array('quote', $this->forbidden_tags))
+		{
+		    $this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`sU', '<span class="text_blockquote">' . $LANG['quotation'] . ':</span><div class="blockquote">$1</div>', $this->content);
+		    $this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`sU', '<span class="text_blockquote">$1:</span><div class="blockquote">$2</div>', $this->content);
 		}
 	}
 	
