@@ -52,7 +52,7 @@ header('Pragma: no-cache');
 require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
 require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
 import('core/errors');
-import('io/template');
+import('io/template/template');
 
 @error_reporting(ERROR_REPORTING);
 

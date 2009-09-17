@@ -240,7 +240,7 @@ class Feed
 		}
 		else
 		{
-			import('io/template');
+			import('io/template/template');
 			$template = new Template($module_id . '/framework/content/syndication/feed.tpl');
 			if (gettype($tpl) == 'array')
 			$template->assign_vars($tpl);
@@ -309,7 +309,7 @@ class Feed
 	    
 	    $feed_menu->assign_vars(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'PATH_TO_MENU' => dirname($feed_menu->tpl),
+			'PATH_TO_MENU' => dirname($feed_menu->get_template_filepath()),
 	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,
 	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',

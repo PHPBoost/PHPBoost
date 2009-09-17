@@ -50,7 +50,8 @@ require_once PATH_TO_ROOT . '/kernel/constant.php'; //Constante utiles.
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
 import('core/errors');
-import('io/template');
+import('io/template/deprecated_template');
+import('io/template/template');
 import('db/mysql');
 import('core/cache');
 import('members/session');
@@ -61,8 +62,8 @@ import('core/breadcrumb');
 import('content/parser/content_formatting_factory');
 
 //Instanciation des objets indispensables au noyau.
-$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
-$Template = new Template; //!\\Initialisation des templates//!\\
+$Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
+$Template = new DeprecatedTemplate(); //!\\Initialisation des templates//!\\
 
 //Création de l'objet qui gère les requêtes SQL
 $Sql = new Sql();

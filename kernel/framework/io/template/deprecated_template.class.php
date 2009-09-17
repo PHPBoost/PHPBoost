@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                            template.class.php
+ *                            deprecated_template.class.php
  *                            -------------------
  *   begin                : Februar 12, 2006
  *   copyright            : (C) 2006 Régis Viarre, Loïc Rouchon
@@ -77,7 +77,7 @@ define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', false);
  * otherwise /templates/default/framework/package/file.tpl will be used.
  */
 
-class Template
+class DeprecatedTemplate
 {
 	/**
 	 * @desc Builds a Template object.
@@ -85,7 +85,7 @@ class Template
 	 * @param bool $auto_load_vars AUTO_LOAD_FREQUENT_VARS if you want to assign the frequent vars (user lang, user theme, CSRF token,
 	 * current path to root, user logged in or not...). DO_NOT_AUTO_LOAD_FREQUENT_VARS if you don't want.
 	 */
-	function Template($tpl = '', $auto_load_vars = AUTO_LOAD_FREQUENT_VARS)
+	function DeprecatedTemplate($tpl = '', $auto_load_vars = AUTO_LOAD_FREQUENT_VARS)
 	{
 		if (!empty($tpl))
 		{
