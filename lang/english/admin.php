@@ -372,7 +372,7 @@ It will be asked of you in the direct administration connexion form  (yourserver
 ' . $CONFIG['sign'];
 
 //Maintain
-$LANG['maintain_auth'] = 'Leave access to website during the maintain';
+$LANG['maintain_auth'] = 'Leave access to the website during maintenance';
 $LANG['maintain_for'] = 'Set website in maintenance';
 $LANG['maintain_delay'] = 'Display maintenance delay';
 $LANG['maintain_display_admin'] = 'Display maintenance delay to the administrator';
