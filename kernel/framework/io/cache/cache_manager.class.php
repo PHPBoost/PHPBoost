@@ -26,6 +26,7 @@
  ###################################################*/
 
 import('io/filesystem/file');
+import('io/cache/cache_data');
 
 /**
  * This class manages data loading. It makes a two-level lazy loading:
@@ -53,23 +54,23 @@ class CacheManager
 	 * 	it must be the module name.
 	 * @return CacheData The loaded data
 	 */
-	public static function load(string $name)
+	public static function load($name)
 	{
-		if (self::_is_memory_cached($name))
+		if (self::is_memory_cached($name))
 		{
-			return self::_get_memory_cached_data($name);
+			return self::get_memory_cached_data($name);
 		}
-		else if(self::_is_file_cached($name))
+		else if (self::is_file_cached($name))
 		{
-            $data = self::_get_file_cached_data($name);
-            self::_memory_cache_data($name, $data);
-            return $data;		    
+            $data = self::get_file_cached_data($name);
+            self::memory_cache_data($name, $data);
+            return $data;
 		}
 		else
 		{
-			$data = self::_load_in_db($name);
-			self::_file_cache_data($name, $data);
-			self::_memory_cache_data($name, $data);
+			$data = self::load_in_db($name);
+			self::file_cache_data($name, $data);
+			self::memory_cache_data($name, $data);
 			return $data;
 		}
 	}
@@ -79,14 +80,14 @@ class CacheManager
 	 * @param string $name Name of the entry in which to save it.
 	 * @param CacheData $data Data to save
 	 */
-	public static function save(string $name, CacheData $data)
+	public static function save($name, CacheData $data)
 	{
 		self::save_in_db($name, $data);
-		self::_file_cache_data($name, $data);
-		self::_memory_cache_data($name, $value);
+		self::file_cache_data($name, $data);
+		self::memory_cache_data($name, $value);
 	}
 	
-	private static function _load_in_db(string $name)
+	private static function load_in_db($name)
 	{
 		global $Sql;
 		$result = $Sql->query_array(DB_TABLE_CONFIGS, "value", "WHERE name = '" . 
@@ -95,16 +96,19 @@ class CacheManager
 		return $required_value;
 	}
 	
-	private static function _save_in_db(string $name, CacheData $data)
+	private static function save_in_db($name, CacheData $data)
 	{
 		global $Sql;
 		$serialized_data = serialize($data);
-		$result = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
+		echo "UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
+			 . addslashes($serialized_data) . "' WHERE name = '" . 
+			 $name . "'";
+		$resource = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
 			 . addslashes($serialized_data) . "' WHERE name = '" . 
 			 $name . "'", __LINE__, __FILE__);
-		
+		die('ici ' . $Sql->affected_rows($resource));
 		// If no entry exists in the data base, we create it
-		if ($Sql->affected_rows($result) == 0)
+		if ($Sql->affected_rows($resource) == 0)
 		{
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
 				"VALUES('" . addslashes($name) . "', '" . addslashes($serialized_data) . "')",
@@ -113,43 +117,43 @@ class CacheManager
 	}
 	
 	//Top-level (memory) cache management
-	private static function _is_memory_cached(string $name)
+	private static function is_memory_cached($name)
 	{
 		return !empty(self::$cached_data);
 	}
 	
-	private static function _get_memory_cached_data(string $name)
+	private static function get_memory_cached_data($name)
 	{
 		return self::$cached_data[$name];
 	}
 	
-	private static function _memory_cache_data(string $name, CacheData  $value)
+	private static function memory_cache_data($name, CacheData  $value)
 	{
 		self::$cached_data[$name] = $value;
 	}
 	
 	//Filesystem cache
-	private static function _get_file(string $name)
+	private static function get_file($name)
 	{
 	    return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
 	}
 	
-    private static function _is_file_cached(string $name)
+    private static function is_file_cached($name)
 	{
-	    $file = self::_get_file($name);
+	    $file = self::get_file($name);
 	    return $file->exists();
 	}
 	
-	private static function _get_file_cached_data(string $name)
+	private static function get_file_cached_data($name)
 	{
-	    $file = self::_get_file($name);
+	    $file = self::get_file($name);
 		$content = $file->get_contents();
 	}
 	
-	private static function _file_cache_data(string $name, CacheData $value)
+	private static function file_cache_data($name, CacheData $value)
 	{
-		$file = self::_get_file($name);
-		$data_to_write = serialiaze($value);
+		$file = self::get_file($name);
+		$data_to_write = serialize($value);
 		$file->write($data_to_write, ERASE);
 	}
 }

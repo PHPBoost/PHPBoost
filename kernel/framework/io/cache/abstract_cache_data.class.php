@@ -25,13 +25,14 @@
  *
  ###################################################*/
 
-import('io/cache/property_not_found_exception.class.php');
+import('io/cache/property_not_found_exception');
+import('io/cache/cache_data');
 
 abstract class AbstractCacheData implements CacheData
 {
 	private $properties_map = array();
 	
-	public function get_property(string $name)
+	public function get_property($name)
 	{
 		if (!empty($this->properties_map[$name]))
 		{
@@ -39,11 +40,11 @@ abstract class AbstractCacheData implements CacheData
 		}
 		else
 		{
-			throw new PropertyNotFoundException();
+			throw new PropertyNotFoundException($name);
 		}
 	}
 	
-	public function set_property(string $name, string $value)
+	public function set_property($name, $value)
 	{
 		$this->properties_map[$name] = $value;
 	}
