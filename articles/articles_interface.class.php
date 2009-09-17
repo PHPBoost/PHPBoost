@@ -31,7 +31,7 @@ if (defined('PHPBOOST') !== true) exit;
 import('modules/module_interface');
 
 define('ARTICLES_MAX_SEARCH_RESULTS', 100);
-
+require_once PATH_TO_ROOT . '/articles/articles_constants.php';
 // Classe ForumInterface qui hérite de la classe ModuleInterface
 class ArticlesInterface extends ModuleInterface
 {
@@ -46,36 +46,32 @@ class ArticlesInterface extends ModuleInterface
 	{
 		global $Sql;
 
-		$config_articles = 'global $CONFIG_ARTICLES;' . "\n";
+		$config_articles = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
 
-		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_ARTICLES = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
-		$CONFIG_ARTICLES = is_array($CONFIG_ARTICLES) ? $CONFIG_ARTICLES : array();
+		$string = 'global $CONFIG_ARTICLES, $ARTICLES_CAT;' . "\n\n" . '$CONFIG_ARTICLES = $ARTICLES_CAT = array();' . "\n\n";		
+		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
-		if (isset($CONFIG_ARTICLES['auth_root']))
-		$CONFIG_ARTICLES['auth_root'] = unserialize($CONFIG_ARTICLES['auth_root']);
+		//List of categories and their own properties
+		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
+			FROM " . DB_TABLE_ARTICLES_CAT . "
+			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		$config_articles .= '$CONFIG_ARTICLES = ' . var_export($CONFIG_ARTICLES, true) . ';' . "\n";
-
-		$cat_articles = 'global $CAT_ARTICLES;' . "\n";
-		$result = $Sql->query_while("SELECT id, id_left, id_right, level, name, aprob, auth
-		FROM " . PREFIX . "articles_cats
-		ORDER BY id_left", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
-			if (empty($row['auth']))
-			$row['auth'] = serialize(array());
-
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'id_left\'] = ' . var_export($row['id_left'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'id_right\'] = ' . var_export($row['id_right'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'level\'] = ' . var_export($row['level'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'aprob\'] = ' . var_export($row['aprob'], true) . ';' . "\n";
-			$cat_articles .= '$CAT_ARTICLES[\'' . $row['id'] . '\'][\'auth\'] = ' . var_export(unserialize($row['auth']), true) . ';' . "\n";
+			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
+				var_export(array(
+					'id_parent' => (int)$row['id_parent'],
+					'order' => (int)$row['c_order'],
+					'name' => $row['name'],
+					'desc' => $row['description'],
+					'visible' => (bool)$row['visible'],
+					'image' => !empty($row['image']) ? $row['image'] : '/articles/articles.png',
+					'description' => $row['description'],
+					'auth' => !empty($row['auth']) ? unserialize($row['auth']) : $config_articles['global_auth']
+				), true) . ';' . "\n\n";
 		}
-		$Sql->query_close($result);
+		return $string;
 
-		return $config_articles . "\n" . $cat_articles;
 	}
 
 	//Changement de jour.
@@ -261,7 +257,7 @@ class ArticlesInterface extends ModuleInterface
             $item->set_desc(preg_replace('`\[page\](.+)\[/page\]`U', '<br /><strong>$1</strong><hr />', second_parse($row['contents'])));
             $item->set_date(new Date(DATE_TIMESTAMP, TIMEZONE_SYSTEM, $row['timestamp']));
             $item->set_image_url($row['icon']);
-            $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth_root'] : unserialize($row['auth']));
+            $item->set_auth($row['idcat'] == 0 ? $CONFIG_ARTICLES['auth'] : unserialize($row['auth']));
 
             $data->add_item($item);
 		}

@@ -53,9 +53,45 @@
 				</li>
 			</ul>
 		</div>
-		
+
 		<div id="admin_contents">
 			<form action="admin_articles_config.php?token={TOKEN}" method="post" onsubmit="return check_form_conf();" class="fieldset_content">
+						<fieldset>
+					<legend>{L_GLOBAL_AUTH}</legend>
+					<p>{L_GLOBAL_AUTH_EXPLAIN}</p>
+					<dl>
+						<dt>
+							<label for="auth_read">{L_AUTH_READ}</label>
+						</dt>
+						<dd>
+							{AUTH_READ}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_contribution">{L_AUTH_CONTRIBUTION}</label>
+						</dt>
+						<dd>
+							{AUTH_CONTRIBUTION}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_write">{L_AUTH_WRITE}</label>
+						</dt>
+						<dd>
+							{AUTH_WRITE}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="auth_moderation">{L_AUTH_MODERATION}</label>
+						</dt>
+						<dd>
+							{AUTH_MODERATION}
+						</dd>
+					</dl>
+				</fieldset>
 				<fieldset>
 					<legend>{L_ARTICLES_CONFIG}</legend>
 					<dl>

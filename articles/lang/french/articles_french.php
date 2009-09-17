@@ -39,7 +39,7 @@ $LANG['select_page'] = 'Sélectionnez une page';
 $LANG['articles_management'] = 'Gestion des articles';
 $LANG['articles_add'] = 'Ajouter un article';
 $LANG['articles_config'] = 'Configuration des articles';
-$LANG['articles_cats_add'] = 'Ajouter une catégorie';
+
 $LANG['edit_article'] = 'Editer l\'article';
 $LANG['cat_edit'] = 'Editer la catégorie';
 $LANG['nbr_articles_max'] = 'Nombre maximum d\'articles affichés';
@@ -96,4 +96,47 @@ Rendez-vous dans le panneau gestion des articles de l\'administration, pour l\'a
 
 $LANG['read_feed'] = 'Lire l\'article';
 $LANG['posted_on'] = 'Le';
+
+global $ARTICLES_LANG;
+// contribution
+$ARTICLES_LANG = array(
+	'contribution_confirmation' => 'Confirmation de contribution',
+	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
+	'contribution_counterpart' => 'Complément de contribution',
+	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet article au site). Ce champ est facultatif.',
+	'contribution_entitled' => '[Articles] %s',
+	'contribution_success' => 'Votre contribution a bien été enregistrée.',
+	'global_auth' => 'Permissions globales',
+	'global_auth_explain' => 'Vous définissez ici les permissions globales du module. Vous pourrez changer ces permissions localement sur chaque catégorie',
+	'auth_contribute' => 'Permissions de contribution',
+	'auth_moderate' => 'Permissions de modération des contributions',
+	'auth_read' => 'Permissions de lecture',
+	'auth_write' => 'Permissions d\'écriture',
+	'add_articles' => 'Ajouter un article',
+	'release_date' => 'Date de parution',
+	'removing_category' => 'Suppression d\'une catégorie',
+	'require_cat' => 'Veuillez choisir une catégorie !',
+	'articles_date' => 'Date de l\'article',
+	'required_fields_empty' => 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement',	
+	'category_name' => 'Nom de la catégorie',
+	'category_location' => 'Emplacement de la catégorie',
+	'category_desc' => 'Description de la catégorie',
+	'category_image' => 'Image de la catégorie',
+	'special_auth' => 'Permissions spéciales',
+	'special_auth_explain' => 'Par défaut la catégorie aura la configuration générale du module. Vous pouvez lui appliquer des permissions particulières.',
+	'articles_management' => 'Gestion des articles',
+	'add_category' => 'Ajouter une catégorie',
+	'configuration_articles' => 'Configuration des articles',
+	'category_articles' => 'Gestion des catégories',
+	'required_fields_empty' => 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement',
+	'unexisting_category' => 'La catégorie que vous avez sélectionnée n\'existe pas',
+		'new_cat_does_not_exist' => 'La catégorie cible n\'existe pas',
+			'infinite_loop' => 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie',
+	'successful_operation' => 'L\'opération que vous avez demandée a été effectuée avec succès',
+	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>',
+'removing_category' => 'Suppression d\'une catégorie',
+	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
+		'move_category_content' => 'Déplacer son contenu dans :',
+	);
+
 ?>
