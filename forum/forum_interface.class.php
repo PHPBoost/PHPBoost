@@ -117,7 +117,7 @@ class ForumInterface extends ModuleInterface
 	{
 		global $User, $MODULES, $Errorh, $CONFIG, $CONFIG_FORUM, $Cache, $CAT_FORUM, $LANG, $Sql;
 
-		import('io/template');
+		import('io/template/template');
 		$Tpl = new Template('forum/forum_search_form.tpl');
 
 		//Autorisation sur le module.

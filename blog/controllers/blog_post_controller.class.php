@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/template');
+import('io/template/template');
 import('modules/modules_discovery_service');
 
 mimport('blog/controllers/abstract_blog_controller');
