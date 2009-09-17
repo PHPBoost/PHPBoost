@@ -31,9 +31,9 @@ import('io/cache/cache_data');
 /**
  * This class manages data loading. It makes a two-level lazy loading:
  * <ul>
- * 	<li>A static cache if a data already loaded is asked. It's read directly in the memory.
- * This cache is very powerful but is invalidated by the PHP interpreter at the end of 
- * the page execution.</li>
+ * 	<li>A top-level cache which avoids loading a data if it has already been done since the 
+ * beginning of the current page generation. This cache has a short life span: it's flushed
+ * as of the PHP interpreter reaches the end of the page generation.</li>
  * 	<li>A filesystem cache to avoid querying the database every time to obtain the same value.
  * This cache is less powerful than the previous but has an infinite life span. Indeed, it's 
  * valid until the value changes and the manager is asked to store it</li>
@@ -84,7 +84,7 @@ class CacheManager
 	{
 		self::save_in_db($name, $data);
 		self::file_cache_data($name, $data);
-		self::memory_cache_data($name, $value);
+		self::memory_cache_data($name, $data);
 	}
 	
 	private static function load_in_db($name)
@@ -100,13 +100,11 @@ class CacheManager
 	{
 		global $Sql;
 		$serialized_data = serialize($data);
-		echo "UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
-			 . addslashes($serialized_data) . "' WHERE name = '" . 
-			 $name . "'";
+		
 		$resource = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
 			 . addslashes($serialized_data) . "' WHERE name = '" . 
 			 $name . "'", __LINE__, __FILE__);
-		die('ici ' . $Sql->affected_rows($resource));
+
 		// If no entry exists in the data base, we create it
 		if ($Sql->affected_rows($resource) == 0)
 		{
