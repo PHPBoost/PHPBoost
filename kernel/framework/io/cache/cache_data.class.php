@@ -33,7 +33,7 @@ interface CacheData
 	 * @return string the read value
 	 * @throws PropertyNotFoundException If the property if not found
 	 */
-	public function get_property(string $name);
+	public function get_property($name);
 	
 	/**
 	 * Sets a property value. If the property exists, it overrides its value,
@@ -41,7 +41,7 @@ interface CacheData
 	 * @param string $name Name of the property
 	 * @param string $value Value of the property
 	 */
-	public function set_property(string $name, string $value);
+	public function set_property($name, $value);
 	
 	/**
 	 * Restore the default values of the properties.
