@@ -25,8 +25,10 @@
  *
  ###################################################*/
 
-if (!defined('PATH_TO_ROOT')) //Chemin vers la racine.
+if (!defined('PATH_TO_ROOT'))
+{	//Chemin vers la racine.
 	define('PATH_TO_ROOT', '..');
+}
 
 //Gestion du mode debug
 if (@include(PATH_TO_ROOT . '/cache/debug.php'))
@@ -50,8 +52,8 @@ require_once PATH_TO_ROOT . '/kernel/constant.php'; //Constante utiles.
 require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
 
 import('core/errors');
-import('io/template/deprecated_template');
 import('io/template/template');
+import('io/template/deprecated_template');
 import('db/mysql');
 import('core/cache');
 import('members/session');
