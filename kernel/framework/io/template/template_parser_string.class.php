@@ -113,14 +113,17 @@ class TemplateParserString extends AbstractTemplateParser
 	{
 		$second_param = '';
 		$blockname =& $blocks[1];
+		$method = 'get_block';
 		if (strpos($blockname, '.') !== false) //Contient un bloc imbriqué.
 		{
 			$array_block = explode('.', $blockname);
 			$current_block = array_pop($array_block);
 			$blockname = array_pop($array_block);
+			
 			$second_param =', $_tmp_' . $previous_block . '_value';
+			$method .= '_from_list';
 		}
-		return '\'; foreach ($this->template->get_block(\'' . $blockname. '\'' . $second_param .') as $_tmp_' . $blockname . '_value) {' . self::TPL_VAR_STRING . ' .= \'';
+		return '\'; foreach ($this->template->' . $method .'(\'' . $blockname. '\'' . $second_param .') as $_tmp_' . $blockname . '_value) {' . self::TPL_VAR_STRING . ' .= \'';
 	}
 	
 	private function callback_parse_if_blocks($blocks)
@@ -137,6 +140,7 @@ class TemplateParserString extends AbstractTemplateParser
 	{
 		$varname = $blocks[2];
 		$second_param = '';
+		$method = 'is_true';
 		$not = ($blocks[1] == 'NOT ' ? '!' : '');
 		if (strpos($blocks[2], '.') !== false) //Contient un bloc imbriqué.
 		{
@@ -145,8 +149,9 @@ class TemplateParserString extends AbstractTemplateParser
 			$last_block = array_pop($array_block);
 			
 			$second_param = ', $_tmp_' . $last_block . '_value';
+			$method .= '_from_list';
 		}
-		return '\'; ' . $block_type . ' ($this->template->is_true(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
+		return '\'; ' . $block_type . ' ($this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
 	}
 }
 
