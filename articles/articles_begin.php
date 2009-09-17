@@ -29,7 +29,7 @@ if (defined('PHPBOOST') !== true)
     exit;
 
 require_once('articles_constants.php');
-	
+load_module_lang('articles');	
 if (isset($CAT_ARTICLES[$idartcat]) && isset($_GET['cat']))
 { 
 	//Création de l'arborescence des catégories.

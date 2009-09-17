@@ -1,311 +1,214 @@
 		<link href="{MODULE_DATA_PATH}/articles.css" rel="stylesheet" type="text/css" media="screen, handheld">
-		<script type="text/javascript">
-		<!--
-		function Confirm() {
-		return confirm("{L_CONFIRM_DEL_ENTRY}");
-		}
-		
-		var list_cats = new Array({LIST_CATS});
-		var array_cats = new Array();
-		{ARRAY_JS}
-			
-		function XMLHttpRequest_get_parent(divid, direction)
-		{
-			document.getElementById('l' + divid).innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&g_' + direction + '=' + divid);
-			xhr_object.onreadystatechange = function() 
-			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-					XMLHttpRequest_articles_cats_move(xhr_object.responseText, divid, direction);
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-					document.getElementById('l' + divid).innerHTML = '';
-			}
-			xmlhttprequest_sender(xhr_object, null);
-		}
-		
-		function XMLHttpRequest_articles_cats_move(change_cat, divid, direction)
-		{
-			var xhr_object = xmlhttprequest_init('admin_xmlhttprequest.php?token={TOKEN}&id=' + divid + '&move=' + direction);
-			xhr_object.onreadystatechange = function() 
-			{
-				if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-				{	
-					articles_cats_move(change_cat, divid, direction);
-					eval(xhr_object.responseText);
-					document.getElementById('l' + divid).innerHTML = '';
-				}
-				else if( xhr_object.readyState == 4 && xhr_object.responseText == '' )
-					document.getElementById('l' + divid).innerHTML = '';
-			}
-			xmlhttprequest_sender(xhr_object, null);
-		}
-		
-		function articles_cats_move(change_cat, divid, direction)
-		{		 
-			var i;
-			var id_left = array_cats[divid]['id_left'];
-			var id_right = array_cats[divid]['id_right'];
-			var id = array_cats[divid]['i'];
-			var tmp_list_cats = list_cats;		
-			var id_parent;
-			var pos_parent;
-			var parents_end = 0;
-			var check_change_cat = false;
-			var tmp;
 
-			if( change_cat.substring(0, 1) == 's' )
-			{	
-				change_cat = change_cat.substring(1, change_cat.length);
-				check_change_cat = true;
-			}
-			id_parent = parseInt(change_cat);
-			pos_parent = array_cats[id_parent]['i'];
-			parents_end = pos_parent + ((array_cats[id_parent]['id_right'] - array_cats[id_parent]['id_left']) - 1)/2;
-				
-			if( direction == 'up' )
-			{
-				if( !check_change_cat ) 
-				{
-					var parent_cats = new Array();
-					var parent_cats_id = new Array();
-					for(i = pos_parent; i <= parents_end; i++)
-					{
-						parent_cats.push(document.getElementById('c' + i).innerHTML);
-						parent_cats_id.push(list_cats[i]);
-					}
-					var child_cats = new Array();
-					var child_cats_id = new Array();
-					var child_end = id + (((id_right - id_left) - 1)/2);
-					for(i = id; i <= child_end; i++)
-					{	
-						child_cats.push(document.getElementById('c' + i).innerHTML);
-						child_cats_id.push(list_cats[i]);
-					}
-					var z = 0;
-					var child_length = pos_parent + child_cats.length;
-					for(i = pos_parent; i < child_length; i++)
-					{
-						document.getElementById('c' + i).innerHTML = child_cats[z];
-						tmp_list_cats[i] = child_cats_id[z];
-						z++;
-					}
-					z = 0;
-					var parent_length = pos_parent + child_cats.length + parent_cats.length;
-					for(i = pos_parent + child_cats.length; i < parent_length; i++)
-					{				
-						document.getElementById('c' + i).innerHTML = parent_cats[z];
-						tmp_list_cats[i] = parent_cats_id[z];
-						z++;
-					}
-				}
-				else
-				{
-					var parent_cats = new Array();
-					var child_cats = new Array();
-					var parent_end;
-					var nbr_child = (((id_right - id_left) - 1)/2);
-					var child_end = id + nbr_child;
-					
-					for(i = pos_parent; i < id; i++)
-						parent_cats.push(document.getElementById('c' + i).innerHTML);
-					
-					for(i = id; i <= child_end; i++)
-						child_cats.push(document.getElementById('c' + i).innerHTML);
-					
-					var z = 0;
-					child_end = pos_parent + child_cats.length;
-					for(i = pos_parent; i < child_end; i++)
-					{	
-						document.getElementById('c' + i).innerHTML = child_cats[z];
-						z++;
-					}
-					
-					parent_end = pos_parent + child_cats.length + parent_cats.length;
-					var z = 0;
-					for(i = pos_parent + child_cats.length; i < parent_end; i++)
-					{	
-						document.getElementById('c' + i).innerHTML = parent_cats[z];
-						z++;
-					}
-				}
-			}
-			else
-			{
-				if( !check_change_cat ) 
-				{
-					var parent_cats = new Array();
-					var parent_cats_id = new Array();
-					for(i = pos_parent; i <= parents_end; i++)
-					{	
-						parent_cats.push(document.getElementById('c' + i).innerHTML);
-						parent_cats_id.push(list_cats[i]);
-					}
-					var child_cats = new Array();
-					var child_cats_id = new Array();
-					var child_end = id + ((id_right - id_left) - 1)/2;
-					for(i = id; i <= child_end; i++)
-					{	
-						child_cats.push(document.getElementById('c' + i).innerHTML);
-						child_cats_id.push(list_cats[i]);
-					}
-					
-					var z = 0;
-					var child_length = id + parent_cats.length + child_cats.length;
-					for(i = id + parent_cats.length; i < child_length; i++)
-					{
-						document.getElementById('c' + i).innerHTML = child_cats[z];
-						tmp_list_cats[i] = child_cats_id[z];
-						z++;
-					}
-					z = 0;
-					var parent_length = id + parent_cats.length;
-					for(i = id; i < parent_length; i++)
-					{				
-						document.getElementById('c' + i).innerHTML = parent_cats[z];
-						tmp_list_cats[i] = parent_cats_id[z];
-						z++;
-					}
-				}
-				else
-				{
-					var parent_cats = new Array();
-					var child_cats = new Array();
-					var parent_end;
-					var nbr_child = (((id_right - id_left) - 1)/2);
-					
-					for(i = id + nbr_child + 1; i <= pos_parent; i++)
-						parent_cats.push(document.getElementById('c' + i).innerHTML);
-						
-					var child_end = id + nbr_child;
-					for(i = id; i <= child_end; i++)
-						child_cats.push(document.getElementById('c' + i).innerHTML);
-						
-					var z = 0;
-					child_end = id + child_cats.length + parent_cats.length;
-					for(i = id + parent_cats.length; i < child_end; i++)
-					{	
-						document.getElementById('c' + i).innerHTML = child_cats[z];
-						z++;
-					}
 
-					z = 0;
-					parent_end = id + parent_cats.length;
-					for(i = id; i < parent_end; i++)
-					{	
-						document.getElementById('c' + i).innerHTML = parent_cats[z];
-						z++;
-					}
-				}
-			}
-		}
-		function Confirm() {
-			return confirm("{L_CONFIRM_DEL}");
-		}
-		-->
-		</script>
-
-		<div id="admin_quick_menu">
-			<ul>
-				<li class="title_menu">{L_ARTICLES_MANAGEMENT}</li>
-				<li>
-					<a href="admin_articles.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles.php" class="quick_link">{L_ARTICLES_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_articles_add.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_add.php" class="quick_link">{L_ARTICLES_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_articles_cat.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_cat.php" class="quick_link">{L_ARTICLES_CAT}</a>
-				</li>
-				<li>
-					<a href="admin_articles_cat_add.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_cat_add.php" class="quick_link">{L_ARTICLES_CAT_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_articles_config.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_config.php" class="quick_link">{L_ARTICLES_CONFIG}</a>
-				</li>
-			</ul>
-		</div>
-		
+	{ADMIN_MENU}
 		<div id="admin_contents">
-
-			<table class="module_table" style="width:99%;">
-				<tr>			
-					<th colspan="3">
-						{L_ARTICLES_CAT}
-					</th>
-				</tr>	
-				# IF C_ERROR_HANDLER #
-				<tr> 
-					<td class="row1" colspan="2" style="text-align:center;">
-						<span id="errorh"></span>
+		# IF C_ERROR_HANDLER #
+					<span id="errorh"></span>
+					<div id="error_msg">
 						<div class="{ERRORH_CLASS}" style="width:500px;margin:auto;padding:15px;">
 							<img src="../templates/{THEME}/images/{ERRORH_IMG}.png" alt="" style="float:left;padding-right:6px;" /> {L_ERRORH}
-							<br />	
 						</div>
-						<br />		
-					</td>
-				</tr>
-				# ENDIF #
+					<br />
+					</div>
+					<script type="text/javascript">
+					<!--
+						//Javascript timeout to hide this message
+						setTimeout('Effect.Fade("error_msg");', 4000);
+					-->
+					</script>
+			# ENDIF #
+			# START removing_interface #
+			<form action="admin_articles_cat.php?token={TOKEN}" method="post" class="fieldset_content">
+				<fieldset>
+					<legend>{L_REMOVING_CATEGORY}</legend>
+					<p>{L_EXPLAIN_REMOVING}</p>
+					
+					<label>
+						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
+					</label>
+					<br /> <br />
+					<label>
+						<input type="radio" name="action" value="move" checked="checked" /> {L_MOVE_CONTENT}
+					</label>
+					&nbsp;
+					{removing_interface.CATEGORY_TREE}
+				</fieldset>
 				
-				<tr>
-					<td class="row2">
-						<span id="display"></span>
-						<br />
-						<div style="width:98%;margin:auto;">						
-							<div>
-								<div class="row3 articles_cat_admin">
-									<span style="float:left;">
-										&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> &nbsp;<a href="articles.php" class="articles_link_cat">{L_ROOT}</a>
-									</span>
-									<span style="float:right;">
-										<a href="admin_articles_cat.php?root=1"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
-									</span>&nbsp;
-								</div>	
-							</div>
-							
-							# START list #	
-							<span id="c{list.I}">
-								<div style="margin-left:{list.INDENT}px;">
-									<div class="row3 articles_cat_admin">
-										<span style="float:left;">
-											&nbsp;&nbsp;<img src="{MODULE_DATA_PATH}/images/folder.png" alt="" style="vertical-align:middle" /> {list.LOCK} &nbsp;<a href="articles{list.U_ARTICLES_VARS}" class="articles_link_cat">{list.NAME}</a>
-										</span>
-										<span style="float:right;">
-											<span id="l{list.ID}"></span> 
-											<script type="text/javascript">
-											<!--
-											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'up\');"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>');
-											-->
-											</script>
-											<noscript><a href="admin_articles_cat.php?id={list.ID}&amp;move=up"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a></noscript>
-											
-											<script type="text/javascript">
-											<!--
-											document.write('<a href="javascript:XMLHttpRequest_get_parent(\'{list.ID}\', \'down\');"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>');
-											-->
-											</script>										
-											<noscript><a href="admin_articles_cat.php?id={list.ID}&amp;move=down"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a></noscript>
-											
-											<a href="admin_articles_cat.php?id={list.ID}"><img src="../templates/{THEME}/images/{LANG}/edit.png" alt="" class="valign_middle" /></a> <a href="admin_articles_cat.php?del={list.ID}&amp;token={TOKEN}" onclick="javascript:return Confirm();"><img src="../templates/{THEME}/images/{LANG}/delete.png" alt="" class="valign_middle" /></a>&nbsp;&nbsp;
-										</span>&nbsp;
-									</div>	
-								</div>
-							</span>					
-							# END list #
+				<fieldset class="fieldset_submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="cat_to_del" value="{removing_interface.IDCAT}" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />	
+				</fieldset>
+			</form>
+			# END removing_interface #
+			# START categories_management #
+				<table class="module_table" style="width:99%;">
+					<tr>			
+						<th colspan="3">
+							{categories_management.L_CATS_MANAGEMENT}
+						</th>
+					</tr>							
+					<tr>
+						<td style="padding-left:20px;" class="row2">
 							<br />
-						</div>
-					</td>
-				</tr>
-			</table>
+							{categories_management.CATEGORIES}
+							<br />
+						</td>
+					</tr>
+				</table>
+			# END categories_management #
+			# START edition_interface #
+			<script type="text/javascript">
+			<!--
+			function check_form()
+			{
+				if (document.getElementById('name').value == "")
+				{
+					alert("{L_REQUIRE_TITLE}");
+					return false;
+			    }
+
+				return true;
+			}
+			
+			function ajax_img_preview()
+			{
+				if (document.getElementById('image').value != '')
+				{
+	 				document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
+					var img = document.getElementById('image').value;
+					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + img + '&token={TOKEN}');
+
+					xhr_object.onreadystatechange = function() 
+					{
+						//Transfert finished and successful
+						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
+						{
+							document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
+						}
+						else
+						{
+							document.getElementById('img_preview').innerHTML = "";
+						}
+					}
+					xmlhttprequest_sender(xhr_object, null);
+				}
+				return true;
+			}
+			
+			var global_auth = {edition_interface.JS_SPECIAL_AUTH};
+			function change_status_global_auth()
+			{
+				if( global_auth )
+					hide_div("hide_special_auth");
+				else
+					show_div("hide_special_auth");
+				global_auth = !global_auth;
+			}
+			-->
+			</script>
+			<form action="admin_articles_cat.php?token={TOKEN}" method="post" onsubmit="return check_form();" class="fieldset_content">
+				<fieldset>
+					<legend>{L_CATEGORY}</legend>
+					<p>{L_REQUIRE}</p>
+					<dl>
+						<dt>
+							<label for="name">
+								* {L_NAME}
+							</label>
+						</dt>
+						<dd>
+							<input type="text" size="65" maxlength="100" id="name" name="name" value="{edition_interface.NAME}" class="text" />
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="id_parent">
+								* {L_LOCATION}
+							</label>
+						</dt>
+						<dd>
+							{edition_interface.CATEGORIES_TREE}
+						</dd>
+					</dl>
+					<dl>
+						<dt>
+							<label for="image">
+								{L_IMAGE}
+							</label>
+						</dt>
+						<dd>
+							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" onblur="javascript:ajax_img_preview();" />
+							<span id="img_preview"># IF edition_interface.IMG_PREVIEW #<img src="{edition_interface.IMG_PREVIEW}" alt="" class="valign_middle" /># ENDIF #</span>
+						</dd>
+					</dl>
+					<label for="description">
+						{L_DESCRIPTION}
+					</label>
+					{KERNEL_EDITOR}
+					<textarea id="contents" rows="15" cols="40" name="description">{edition_interface.DESCRIPTION}</textarea>
+				</fieldset>
+
+				<fieldset>
+					<legend>
+						{L_SPECIAL_AUTH}
+					</legend>
+					<dl>
+						<dt><label for="special_auth">{L_SPECIAL_AUTH}</label>
+						<br />
+						<span class="text_small">{L_SPECIAL_AUTH_EXPLAIN}</span></dt>
+						<dd>
+							<input type="checkbox" name="special_auth" id="special_auth" onclick="javascript: change_status_global_auth();" {edition_interface.SPECIAL_CHECKED} />
+						</dd>					
+					</dl>
+					<div id="hide_special_auth" style="display:{edition_interface.DISPLAY_SPECIAL_AUTH};">
+						<dl>
+							<dt>
+								<label for="auth_read">{L_AUTH_READ}</label>
+							</dt>
+							<dd>
+								{edition_interface.AUTH_READ}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_contribution">{L_AUTH_CONTRIBUTION}</label>
+							</dt>
+							<dd>
+								{edition_interface.AUTH_CONTRIBUTION}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_write">{L_AUTH_WRITE}</label>
+							</dt>
+							<dd>
+								{edition_interface.AUTH_WRITE}
+							</dd>
+						</dl>
+						<dl>
+							<dt>
+								<label for="auth_moderation">{L_AUTH_MODERATION}</label>
+							</dt>
+							<dd>
+								{edition_interface.AUTH_MODERATION}
+							</dd>
+						</dl>
+					</div>
+				</fieldset>
+
+				<fieldset class="fieldset_submit">
+					<legend>{L_SUBMIT}</legend>
+					<input type="hidden" name="idcat" value="{edition_interface.IDCAT}" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
+					&nbsp;&nbsp;
+					<input type="button" name="preview" value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" class="submit" />
+					&nbsp;&nbsp;
+					<input type="reset" value="{L_RESET}" class="reset" />				
+				</fieldset>
+			</form>
+			# END edition_interface #
+			
 		</div>
 		

@@ -28,19 +28,23 @@
 if (defined('PHPBOOST') !== true)
     exit;
 
-define('READ_CAT_ARTICLES', 0x01);
-define('WRITE_CAT_ARTICLES', 0x02);
-define('EDIT_CAT_ARTICLES', 0x04);
+define('AUTH_ARTICLES_READ', 1);
+define('AUTH_ARTICLES_CONTRIBUTE', 2);
+define('AUTH_ARTICLES_WRITE', 4);
+define('AUTH_ARTICLES_MODERATE', 8);
+
+define('DB_TABLE_ARTICLES', PREFIX . 'articles');
+define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
 
 $Cache->load('articles');
-load_module_lang('articles'); //Chargement de la langue du module.
+//load_module_lang('articles'); //Chargement de la langue du module.
 
 $idartcat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);
 
 if (empty($idartcat))//Racine.
 {
-    $CAT_ARTICLES[0]['auth'] = $CONFIG_ARTICLES['auth_root'];
+    $CAT_ARTICLES[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
     $CAT_ARTICLES[0]['aprob'] = 1;
     $CAT_ARTICLES[0]['name'] = $LANG['root'];
     $CAT_ARTICLES[0]['level'] = -1;

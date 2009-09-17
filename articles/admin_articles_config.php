@@ -27,31 +27,34 @@
 ###################################################*/
 
 require_once('../admin/admin_begin.php');
+require_once('articles_constants.php');
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
 ##########################admin_news_config.tpl###########################
-if (!empty($_POST['valid']) && empty($_POST['valid_edito']))
+if (!empty($_POST['valid']))
 {
 	$Cache->load('articles');
-	
-	$config_articles = array();
-	$config_articles['nbr_articles_max'] = retrieve(POST, 'nbr_articles_max', 10);
-	$config_articles['nbr_cat_max'] = retrieve(POST, 'nbr_cat_max', 10);
-	$config_articles['nbr_column'] = retrieve(POST, 'nbr_column', 2);
-	$config_articles['note_max'] = max(1, retrieve(POST, 'note_max', 5));
-	$config_articles['auth_root'] = isset($CONFIG_ARTICLES['auth_root']) ? serialize($CONFIG_ARTICLES['auth_root']) : serialize(array());
-		
+	//echo "dsds  ".AUTH_ARTICLES_READ;
+	$config_articles = array(
+		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
+		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
+		'nbr_column' => retrieve(POST, 'nbr_column', 2),
+		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
+		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
+	);
+
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
 		$Sql->query_inject("UPDATE " . PREFIX . "articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
-	
-	###### Régénération du cache des news #######
+
+
+	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
 	
-	redirect(HOST . SCRIPT);	
+	redirect(HOST . SCRIPT);		
 }
 elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de chaque catégories
 {
@@ -107,12 +110,16 @@ else
 	));
 	
 	$Cache->load('articles');
-	
+	print_r($CONFIG_ARTICLES);
 	$Template->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
 		'NOTE_MAX' => !empty($CONFIG_ARTICLES['note_max']) ? $CONFIG_ARTICLES['note_max'] : '10',
+		'AUTH_READ' => Authorizations::generate_select(AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth']),
+		'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
+		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
+		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
 		'L_REQUIRE' => $LANG['require'],		
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
 		'L_ARTICLES_ADD' => $LANG['articles_add'],
@@ -126,9 +133,15 @@ else
 		'L_EXPLAIN_ARTICLES_COUNT' => $LANG['explain_articles_count'],
 		'L_RECOUNT' => $LANG['recount'],
 		'L_UPDATE' => $LANG['update'],
-		'L_RESET' => $LANG['reset']
+		'L_RESET' => $LANG['reset'],
+		'L_GLOBAL_AUTH' => $ARTICLES_LANG['global_auth'],
+		'L_GLOBAL_AUTH_EXPLAIN' => $ARTICLES_LANG['global_auth_explain'],
+		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
+		'L_AUTH_WRITE' => $ARTICLES_LANG['auth_write'],
+		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
+		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute']
 	));
-		
+
 	$Template->pparse('admin_articles_config'); // traitement du modele	
 }
 
