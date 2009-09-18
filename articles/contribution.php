@@ -31,7 +31,7 @@ require_once('../kernel/begin.php');
 require_once 'articles_begin.php';
 
 
-if (!$User->check_auth($NEWS_CONFIG['global_auth'], AUTH_NEWS_CONTRIBUTE))
+if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 define('TITLE', $ARTICLES_LANG['contribution_confirmation']);

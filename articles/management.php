@@ -37,7 +37,7 @@ import('util/mini_calendar');
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
 $delete = retrieve(GET, 'del', 0);
-
+$file_approved = retrieve(POST, 'visible', false);
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
@@ -70,10 +70,10 @@ if ($delete > 0)
 }
 elseif (!empty($_POST['submit']))
 {
-	$start = MiniCalendar::retrieve_date('start');
-	$end = MiniCalendar::retrieve_date('end');
+	$begining_date  = MiniCalendar::retrieve_date('start');
+	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
-
+	
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
@@ -83,10 +83,10 @@ elseif (!empty($_POST['submit']))
 		'extend_desc' => retrieve(POST, 'extend_contents', '', TSTRING_PARSE),
 		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE),
 		'visible' => retrieve(POST, 'visible', 0, TINTEGER),
-		'start' => $start->get_timestamp(),
+		'start' => $begining_date->get_timestamp(),
 		'start_hour' => retrieve(POST, 'start_hour', 0, TINTEGER),
 		'start_min' => retrieve(POST, 'start_min', 0, TINTEGER),
-		'end' => $end->get_timestamp(),
+		'end' => $end_date->get_timestamp(),
 		'end_hour' => retrieve(POST, 'end_hour', 0, TINTEGER),
 		'end_min' => retrieve(POST, 'end_min', 0, TINTEGER),
 		'release' => $release->get_timestamp(),
@@ -148,8 +148,55 @@ elseif (!empty($_POST['submit']))
 
 			if ($articles['id'] > 0)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img->relative() . "',  visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
+				$visible = 1;
+				
+				$date_now = new Date(DATE_NOW);
+				
+				switch ($articles['visible'])
+				{
+					//If it's a time interval
+					case 2:
+						if ($begining_date->get_timestamp() < $date_now->get_timestamp() &&  $end_date->get_timestamp() > $date_now->get_timestamp())
+						{
+							$start_timestamp = $begining_date->get_timestamp();
+							$end_timestamp = $end_date->get_timestamp();
+						}
+						else
+							$visible = 0;
+						
+						break;
+					//If it's always visible
+					case 1:
+						list($start_timestamp, $end_timestamp) = array(0, 0);
+						break;
+					default:
+						list($visible, $start_timestamp, $end_timestamp) = array(0, 0, 0);
+				}
+				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
+				
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img->relative() . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
+				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
+				
+				if ($file_approved && !$articles_properties['visible'])
+				{
+					import('events/contribution');
+					import('events/contribution_service');
+					
+					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
+					if (count($corresponding_contributions) > 0)
+					{
+				
+						$file_contribution = $corresponding_contributions[0];
+						//The contribution is now processed
+						$file_contribution->set_status(EVENT_STATUS_PROCESSED);
+						
+						//We save the contribution
+						ContributionService::save_contribution($file_contribution);
+					}
+				}
+            
+				$Cache->Generate_module_file('articles');
 			}
 			else
 			{
@@ -222,6 +269,8 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
+
+		
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }
@@ -378,7 +427,11 @@ else
 		'L_TEXT' => $LANG['content'],
 		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
-		'L_RESET' => $LANG['reset']
+		'L_RESET' => $LANG['reset'],
+		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],
+		'L_NOTICE_CONTRIBUTION' => $ARTICLES_LANG['notice_contribution'],
+		'L_CONTRIBUTION_COUNTERPART' => $ARTICLES_LANG['contribution_counterpart'],
+		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],
 	));
 		
 	//Gestion erreur.

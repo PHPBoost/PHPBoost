@@ -61,7 +61,7 @@ class ArticlesInterface extends ModuleInterface
 			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
 				var_export(array(
 					'id_parent' => (int)$row['id_parent'],
-					'c_order' => (int)$row['c_order'],
+					'order' => (int)$row['c_order'],
 					'name' => $row['name'],
 					'desc' => $row['description'],
 					'visible' => (bool)$row['visible'],
@@ -108,7 +108,7 @@ class ArticlesInterface extends ModuleInterface
 			{
 				if (!$User->check_auth($ARTICLES_CAT[$idcat]['auth'], AUTH_ARTICLES_READ))
 				{
-					$clause_level = !empty($g_idcat) ? ($ARTICLES_CAT[$idcat]['c_order'] == ($ARTICLES_CAT[$g_idcat]['c_order'] + 1)) : ($ARTICLES_CAT[$idcat]['c_order'] == 0);
+					$clause_level = !empty($g_idcat) ? ($ARTICLES_CAT[$idcat]['order'] == ($ARTICLES_CAT[$g_idcat]['order'] + 1)) : ($ARTICLES_CAT[$idcat]['order'] == 0);
 					if ($clause_level)
 					$unauth_cats_sql[] = $idcat;
 				}
@@ -296,7 +296,7 @@ class ArticlesInterface extends ModuleInterface
 			$cat_links = '';
 			foreach ($ARTICLES_CAT as $id => $array_info_cat)
 			{
-				if ($ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent'] &&  $array_info_cat['c_order'] <= $ARTICLES_CAT[$idartcat]['c_order'])
+				if ($ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent'] &&  $array_info_cat['order'] <= $ARTICLES_CAT[$idartcat]['order'])
 				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
 			}
 			$clause_cat = " WHERE ac.id_parent > '" . $ARTICLES_CAT[$idartcat]['id_parent'] . "'  AND ac.visible = 1";

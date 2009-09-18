@@ -31,13 +31,25 @@ if (defined('PHPBOOST') !== true)
 require_once('articles_constants.php');
 load_module_lang('articles');	
 
+$Cache->load('articles');
+if (empty($idartcat))//Racine.
+{
+
+
+   $ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
+   $ARTICLES_CAT[0]['visible'] = 1;
+    $ARTICLES_CAT[0]['name'] = $LANG['root'];
+   $ARTICLES_CAT[0]['c_order'] = -1;
+    $ARTICLES_CAT[0]['id_parent'] = 0;
+}
+
 if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
 { 
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_articles'], url('articles.php'));
 	foreach ($ARTICLES_CAT as $id => $array_info_cat)
 	{
-		if (!empty($idartcat) && $ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent']  && $array_info_cat['c_order'] <= $ARTICLES_CAT[$idartcat]['c_order'])
+		if (!empty($idartcat) && $ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent']  && $array_info_cat['order'] <= $ARTICLES_CAT[$idartcat]['order'])
 			$Bread_crumb->add($array_info_cat['name'], 'articles' . url('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 	if (!empty($idart))
