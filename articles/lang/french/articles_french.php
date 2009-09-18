@@ -138,7 +138,15 @@ $ARTICLES_LANG = array(
 	'removing_category' => 'Suppression d\'une catégorie',
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
 	'move_category_content' => 'Déplacer son contenu dans :',
-	'edit_articles' => 'Éditer l\'article'
+	'edit_articles' => 'Éditer l\'article',
+	'contribution_confirmation' => 'Confirmation de contribution',
+	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
+	'contribution_counterpart' => 'Complément de contribution',
+	'contribution_counterpart_explain' => 'Expliquez les raisons de votre contribution (pourquoi vous souhaitez proposer cet article au site). Ce champ est facultatif.',
+	'contribution_entitled' => '[Articles] %s',
+	'contribution_success' => 'Votre contribution a bien été enregistrée.',
+	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer un article, cependant vous pouvez proposer un article. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
+
 	);
 
 ?>
