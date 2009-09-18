@@ -84,10 +84,11 @@ class CacheManager
 	 */
 	public static function save($name, CacheData $data)
 	{
+	    $data->synchronize();
+	    
 		self::save_in_db($name, $data);
 		self::file_cache_data($name, $data);
 		self::memory_cache_data($name, $data);
-		// TODO when to call the synchronize method?
 	}
 	
 	private static function load_in_db($name)
