@@ -25,6 +25,14 @@
  *
  ###################################################*/
 
+/**
+ * This interface represents data which are stored automatically by the cache manager.
+ * The storage mode is very powerful, it uses a two-level cache and the database.
+ * <p>The cache manager is able to manager very well configuration values. They are stored
+ * in a map associating a value to a property</p>
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 interface CacheData
 {
 	/**
@@ -47,6 +55,13 @@ interface CacheData
 	 * Restore the default values of the properties.
 	 */
 	public function restore_default();
+	
+	/**
+	 * This method is called when the data needs to be sychronized.
+	 * For instance, if your data contains values from tables of the database, 
+	 * you can update them in this method.
+	 */
+	public function synchronize();
 }
 
 ?>

@@ -25,6 +25,11 @@
  *
  ###################################################*/
 
+/**
+ * This exception is raised when a not existing property is asked in a CacheData object.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 class PropertyNotFoundException extends Exception
 {
 	public function __construct($property_name)
