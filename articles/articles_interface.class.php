@@ -299,7 +299,8 @@ class ArticlesInterface extends ModuleInterface
 				if ($ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent'] &&  $array_info_cat['c_order'] <= $ARTICLES_CAT[$idartcat]['c_order'])
 				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
 			}
-			$clause_cat = " WHERE ac.id_parent > '" . $ARTICLES_CAT[$idartcat]['id_parent'] . "'  AND ac.c_order = '" . ($ARTICLES_CAT[$idartcat]['c_order'] + 1) . "' AND ac.visible = 1";
+			$clause_cat = " WHERE ac.id_parent > '" . $ARTICLES_CAT[$idartcat]['id_parent'] . "'  AND ac.visible = 1";
+
 		}
 		else //Racine.
 		{
@@ -397,6 +398,7 @@ class ArticlesInterface extends ModuleInterface
 		##### Catégories disponibles #####
 		if ($total_cat > 0)
 		{
+		
 			$tpl->assign_vars(array(
 				'C_ARTICLES_CAT' => true,
 				'PAGINATION_CAT' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;pcat=%d', '-' . $idartcat . '-0+' . $rewrite_title . '.php?pcat=%d' . $unget), $total_cat , 'pcat', $CONFIG_ARTICLES['nbr_cat_max'], 3)

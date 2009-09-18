@@ -145,7 +145,7 @@ elseif (!empty($_POST['submit']))
 
 			// Image.
 			$img = new Url($articles['icon']);
-			echo "tete : ".$articles['id'];
+
 			if ($articles['id'] > 0)
 			{
 				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img->relative() . "',  visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
@@ -332,7 +332,7 @@ else
 				'IDARTICLES' => '0',
 				'USER_ID' => $User->get_attribute('user_id')
 			));
-			print_r($CONFIG_ARTICLES['global_auth']);
+
 			$articles_categories->build_select_form(0, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}

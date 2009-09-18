@@ -39,7 +39,7 @@ if (!empty($idart) && isset($_GET['cat']))
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
 		{$Errorh->handler('e_auth', E_USER_REDIRECT);
-	echo "tete : ".$ARTICLES_CAT[$idartcat]['auth'];
+
 		}
 		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
