@@ -29,7 +29,9 @@ import('io/cache/property_not_found_exception');
 import('io/cache/cache_data');
 
 /**
- * This is a default and minimal implementation of the CacheData interface. 
+ * @package io
+ * @subpackage cache 
+ * @desc This is a default and minimal implementation of the CacheData interface. 
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */

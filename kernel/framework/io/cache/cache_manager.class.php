@@ -29,7 +29,9 @@ import('io/filesystem/file');
 import('io/cache/cache_data');
 
 /**
- * This class manages data loading. It makes a two-level lazy loading:
+ * @package io
+ * @subpackage cache 
+ * @desc This class manages data loading. It makes a two-level lazy loading:
  * <ul>
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the 
  * beginning of the current page generation. This cache has a short life span: it's flushed
@@ -78,13 +80,14 @@ class CacheManager
 	/**
 	 * Saves in the data base (DB_TABLE_CONFIGS table) the data and has it become persistent.
 	 * @param string $name Name of the entry in which to save it.
- 	* @param CacheData $data Data to save
+ 	 * @param CacheData $data Data to save
 	 */
 	public static function save($name, CacheData $data)
 	{
 		self::save_in_db($name, $data);
 		self::file_cache_data($name, $data);
 		self::memory_cache_data($name, $data);
+		// TODO when to call the synchronize method?
 	}
 	
 	private static function load_in_db($name)
