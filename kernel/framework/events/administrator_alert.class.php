@@ -55,10 +55,20 @@ define('ADMIN_ALERT_STATUS_PROCESSED', EVENT_STATUS_PROCESSED);
  */
 class AdministratorAlert extends Event
 {
+     /**
+     * @var int Priority of the alert
+     */
+    private $priority = ADMIN_ALERT_MEDIUM_PRIORITY;
+    
+    /**
+     * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
+     */
+    private $properties = '';
+    
     /**
      * @desc Builds an AdministratorAlert object.
      */
-    function AdministratorAlert()
+    public function AdministratorAlert()
     {
         parent::Event();
         $this->priority = ADMIN_ALERT_MEDIUM_PRIORITY;
@@ -78,7 +88,7 @@ class AdministratorAlert extends Event
      * @param string $type Type of the alert.
      * @param int $priority Priority of the alert.
      */
-    function build($id, $entitled, $properties, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type, $priority)
+    public function build($id, $entitled, $properties, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type, $priority)
     {
         parent::build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type);
         $this->set_priority($priority);
@@ -96,7 +106,7 @@ class AdministratorAlert extends Event
      * 	<li>ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
      * </ul>
      */
-    function get_priority()
+    public function get_priority()
     {
         return $this->priority;
     }
@@ -105,7 +115,7 @@ class AdministratorAlert extends Event
      * @desc Gets the alert properties.
      * @return string The properties.
      */
-    function get_properties()
+    public function get_properties()
     {
         return $this->properties;
     }
@@ -121,7 +131,7 @@ class AdministratorAlert extends Event
      * 	<li>ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
      * </ul>
      */
-    function set_priority($priority)
+    public function set_priority($priority)
     {
         $priority = intval($priority);
         if ($priority >= ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= ADMIN_ALERT_VERY_HIGH_PRIORITY)
@@ -138,7 +148,7 @@ class AdministratorAlert extends Event
      * @desc Sets the properties of the alert. 
      * @param string $properties Properties.
      */
-    function set_properties($properties)
+    public function set_properties($properties)
     {
         //If properties has the good type
         if (is_string($properties))
@@ -151,7 +161,7 @@ class AdministratorAlert extends Event
      * @desc Gets the priority name. It's automatically translater to the user language, ready to be displayed. 
      * @return string The priority name.
      */
-    function get_priority_name()
+    public function get_priority_name()
     {
         global $LANG;
         switch ($this->priority)
@@ -175,19 +185,6 @@ class AdministratorAlert extends Event
                 return $LANG['normal'];
         }
     }
-
-    ## Private ##
-    /**
-     * @access protected
-     * @var int Priority of the alert
-     */
-    var $priority = ADMIN_ALERT_MEDIUM_PRIORITY;
-    
-    /**
-     * @access protected
-     * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
-     */
-    var $properties = '';
 }
 
 ?>

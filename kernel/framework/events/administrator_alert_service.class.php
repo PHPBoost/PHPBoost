@@ -31,7 +31,6 @@ import('events/administrator_alert');
 define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 /**
- * @static
  * @package events
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This static class allows you to handler easily the administrator alerts which can be made in PHPBoost.
@@ -39,12 +38,11 @@ define('ADMINISTRATOR_ALERT_TYPE', 1);
 class AdministratorAlertService
 {
 	/**
-	 * @static
 	 * @desc Builds an alert knowing its id.
 	 * @param int $alert_id Id of the alert.
 	 * @return AdministratorAlert The wanted alert. If it's not found, it returns null.
 	 */
-	function find_by_id($alert_id)
+	public static function find_by_id($alert_id)
 	{
 		global $Sql;
 		
@@ -70,7 +68,6 @@ class AdministratorAlertService
 	}
 	
 	/**
-	 * @static
 	 * @desc Builds a list of alerts matching the required criteria(s). You can specify many criterias. When you use several of them, it's a AND condition.
 	 * It will only return the alert which match all the criterias.
 	 * @param int $id_in_module Id in the module. 
@@ -78,7 +75,7 @@ class AdministratorAlertService
 	 * @param string $identifier Alert identifier.
 	 * @return AdministratorAlert[] The list of the matching alerts.
 	 */
-	function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
+	public static function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
 	{
 		global $Sql;
 		$criterias = array();
@@ -124,13 +121,12 @@ class AdministratorAlertService
 	}
 	
  	/**
- 	 * @static
 	 * @desc Finds an alert knowing its identifier and maybe its type.
 	 * @param string $identifier The identifier of the alerts you look for.
 	 * @param string $type The type of the alert you look for.
 	 * @return AdministratorAlert[] The list of the matching alerts.
  	 */
-	function find_by_identifier($identifier, $type = '')
+	public static function find_by_identifier($identifier, $type = '')
 	{
         global $Sql;
         
@@ -153,7 +149,6 @@ class AdministratorAlertService
 	}
 	
 	/**
-	 * @static
 	 * @desc Lists all the alerts of the site. You can order them. You can also choose how much alerts you want.
 	 * @param string $criteria The criteria according to which you want to order. It can be id, entitled, fixing_url, 
 	 * current_status, creation_date, identifier, id_in_module, type, priority, description.
@@ -162,7 +157,7 @@ class AdministratorAlertService
 	 * @param int $number The number of alerts you want.
 	 * @return AdministratorAlerts[] The list of the alerts.
 	 */
-	function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
+	public static function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
 	{
 		global $Sql;
 		
@@ -187,11 +182,10 @@ class AdministratorAlertService
 	}
 	
 	/**
-	 * @static
      * @desc Create or updates an alert in the database. It creates it whether it doesn't exist or updates it if it already exists.
      * @param AdministratorAlert $alert The alert to create or update.
 	 */
-    function save_alert(&$alert)
+    public static function save_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
@@ -225,7 +219,7 @@ class AdministratorAlertService
  	 * @desc Deletes an alert from the database.
  	 * @param AdministratorAlert $alert The alert to delete.
 	 */
-	function delete_alert(&$alert)
+	public static function delete_alert(&$alert)
 	{
 		global $Sql, $Cache;
 		
@@ -240,7 +234,6 @@ class AdministratorAlertService
 	}
 	
 	/**
-	 * @static
 	 * @desc Counts the number of unread alerts.
 	 * @return int[] An associative map:
 	 * <ul>	
@@ -248,7 +241,7 @@ class AdministratorAlertService
 	 * 	<li>all => the number of all the alerts of the site</li>
 	 * </ul>
 	 */
-	function compute_number_unread_alerts()
+	public static function compute_number_unread_alerts()
 	{
 		global $Sql;
 		
@@ -258,22 +251,20 @@ class AdministratorAlertService
 	}
 	
 	/**
-	 * @static
 	 * @desc Returns the number of unread alerts.
 	 * @return int The number of unread alerts.
 	 */
-	function get_number_unread_alerts()
+	public static function get_number_unread_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['unread'];
 	}
 	
 	/**
-	 * @static
 	 * @desc Returns the number of alerts.
 	 * @return int The number of alerts.
 	 */
-	function get_number_alerts()
+	public static function get_number_alerts()
 	{
 		global $ADMINISTRATOR_ALERTS;
 		return $ADMINISTRATOR_ALERTS['all'];

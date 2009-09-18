@@ -31,7 +31,6 @@ import('events/contribution');
 define('CONTRIBUTION_TYPE', 0);
 
 /**
- * @static
  * @package events
  * @author Benoît Sautel <ben.popeye@phpboost.com>
  * @desc This service allows developers to manage their contributions.
@@ -39,12 +38,11 @@ define('CONTRIBUTION_TYPE', 0);
 class ContributionService
 {
 	/**
-	 * @static
      * @desc Finds a contribution with its identifier.
      * @param int $id_contrib Id of the contribution.
      * @return Contribution The contribution you wanted. If it doesn't exist, it will return null.
 	 */
-    function find_by_id($id_contrib)
+    public static function find_by_id($id_contrib)
 	{
 		global $Sql;
 		
@@ -68,7 +66,6 @@ class ContributionService
 	}
 	
 	/**
-	 * @static
 	 * @desc Gets all the contributions of the table. You can sort the list.
 	 * @param string $criteria Criteria according to which they are ordered. 
 	 * It can be id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, 
@@ -76,7 +73,7 @@ class ContributionService
 	 * @param string $order desc or asc.
 	 * @return Contribution[] The list of the contributions.
 	 */
-	function get_all_contributions($criteria = 'creation_date', $order = 'desc')
+	public static function get_all_contributions($criteria = 'creation_date', $order = 'desc')
 	{
 		global $Sql;
 		
@@ -103,7 +100,6 @@ class ContributionService
 	}
 	
 	/**
-	 * @static
 	 * @desc Builds a list of the contributions matching the required criteria(s). All the parameters represent the criterias you can use.
 	 * If you don't want to use a criteria, let the null value. The returned contribution match all the criterias (it's a AND condition).
 	 * @param string $module The module identifier.
@@ -114,7 +110,7 @@ class ContributionService
 	 * @param int $fixer_id The fixer.
 	 * @return Contribution[] The list of the contributions matching all the criterias.
 	 */
-	function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
+	public static function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
 	{
 		global $Sql;
 		$criterias = array();
@@ -160,11 +156,10 @@ class ContributionService
 	}
 	
 	/**
-	 * @static
      * @desc Create or update a contribution in the database.
      * @param Contribution $contribution The contribution to synchronize with the data base.
 	 */
-	function save_contribution(&$contribution)
+	public static function save_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -197,7 +192,7 @@ class ContributionService
      * @desc Deletes a contribution in the database.
      * @param Contribution $contribution The contribution to delete in the data base.
 	 */
-	function delete_contribution(&$contribution)
+	public static function delete_contribution(&$contribution)
 	{
 		global $Sql, $Cache;
 		
@@ -214,17 +209,15 @@ class ContributionService
 	}
 	
 	/**
-	 * @static
 	 * @desc Generates the contribution cache file.
 	 */
-	function generate_cache()
+	public static function generate_cache()
 	{
 		global $Cache;
 		$Cache->generate_file('member');
 	}
 	
 	/**
-	 * @static 
 	 * @desc Computes the number of contributions available for each profile.
 	 * It will count the contributions for the administrator, the moderators, the members, for each group and for each member who can have some special authorizations.
 	 * @return int[] A map containing the values for each profile:
@@ -236,7 +229,7 @@ class ContributionService
 	 * 	<li>mi => for the member whose id is i</li>
 	 * </ul>
 	 */
-	function compute_number_contrib_for_each_profile()
+	public static function compute_number_contrib_for_each_profile()
 	{
 		global $Sql;
 		

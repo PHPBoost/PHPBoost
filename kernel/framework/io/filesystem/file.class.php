@@ -261,7 +261,7 @@ class File extends FileSystemElement
 	}
 
 	/**
-	 * @desc forces a write of all buffered output.
+	 * @desc Forces the system to write all the buffered output.
 	 */
 	function flush()
 	{
@@ -297,8 +297,13 @@ class File extends FileSystemElement
 	function frequire($once = true)
 	{
 		if ($once)
+		{
 		return require_once $this->path;
-		return require $this->path;
+		}
+		else
+		{
+		    return require $this->path;
+		}
 	}
 
 	/**

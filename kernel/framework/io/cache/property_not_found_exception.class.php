@@ -26,7 +26,9 @@
  ###################################################*/
 
 /**
- * This exception is raised when a not existing property is asked in a CacheData object.
+ * @package io
+ * @subpackage cache 
+ * @desc This exception is raised when a not existing property is asked in a CacheData object.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */

@@ -49,10 +49,56 @@ define('EVENT_STATUS_PROCESSED', 2);
 
 class Event
 {
+       /**
+     * @protected int Numerical identifier of the event (in DB).
+     */
+    protected $id = 0;
+    
+    /**
+     * @protected string Entitled (title or name) of the event.
+     */
+    protected $entitled = '';
+    
+    /**
+     * @protected string URL where you can process the event (relative from the website root).
+     */
+    protected $fixing_url = '';
+    
+    /**
+     * @protected int The event status.
+     */
+    protected $current_status = EVENT_STATUS_UNREAD;
+    
+    /**
+     * @protected Date The event creation date.
+     */
+    protected $creation_date;
+
+    //The following attributes are used by the module developper to recognize his events
+    /**
+     * @protected int Id corresponding to the event in the module (optionnal).
+     */
+    protected $id_in_module = 0;
+    
+    /**
+     * @protected string Identifier to recognize the entry (optionnal).
+     */
+    protected $identifier = '';
+
+    /**
+     * @protected string Event type (optionnal).
+     */
+    protected $type = '';
+
+    /**
+     * @protected bool To know if the modifications implies to regenerate the cache (for instance whether the status has been changed).
+     */
+    protected $must_regenerate_cache = true;
+    
     /**
      * @desc Builds an Event object.
      */
-    function Event()
+    public function Event()
     {
         $this->current_status = EVENT_STATUS_UNREAD;
         $this->creation_date = new Date();
@@ -62,7 +108,7 @@ class Event
      * @desc Sets the id of the event. The id is the corresponding data base entry one.
      * @param int $id Id of the event.
      */
-    function set_id($id)
+    public function set_id($id)
     {
         if (is_int($id) && $id > 0)
         $this->id = $id;
@@ -72,7 +118,7 @@ class Event
      * @desc Sets the entitled of the event. The entitled can be considered as the name, it must be explicit.
      * @param string $entitled The event entitiled.
      */
-    function set_entitled($entitled)
+    public function set_entitled($entitled)
     {
         $this->entitled = $entitled;
     }
@@ -81,7 +127,7 @@ class Event
      * @desc Sets the URL corresponding to the event. For the contributions and the administrator alerts it's the number URL at which the problem can be solved.
      * @param string $fixing_url Relative URL (the first character must be / for the root of the site).
      */
-    function set_fixing_url($fixing_url)
+    public function set_fixing_url($fixing_url)
     {
         $this->fixing_url = $fixing_url;
     }
@@ -95,7 +141,7 @@ class Event
      * 	<li>EVENT_STATUS_PROCESSED if the event is processed.
      * </ul>
      */
-    function set_status($new_current_status)
+    public function set_status($new_current_status)
     {
         if (in_array($new_current_status, array(EVENT_STATUS_UNREAD, EVENT_STATUS_BEING_PROCESSED, EVENT_STATUS_PROCESSED), TRUE))
         {
@@ -112,7 +158,7 @@ class Event
      * @desc Sets the creation date of the event.
      * @param Date $date The creation date
      */
-    function set_creation_date($date)
+    public function set_creation_date($date)
     {
         if (is_object($date) && strtolower(get_class($date)) == 'date')
         $this->creation_date = $date;
@@ -123,7 +169,7 @@ class Event
      * For example, il you use the events to allow user to purpose some news in your web site, it will be the id of the news added.
      * @param int $id Id in the module
      */
-    function set_id_in_module($id)
+    public function set_id_in_module($id)
     {
         $this->id_in_module = $id;
     }
@@ -133,7 +179,7 @@ class Event
      * It's that identifier which can be used to filter the events. You don't have to use it, you can let it blank.
      * @param string $identifier Identifier of the event.
      */
-    function set_identifier($identifier)
+    public function set_identifier($identifier)
     {
         $this->identifier = $identifier;
     }
@@ -142,7 +188,7 @@ class Event
      * @desc Sets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
      * @param string $type The type of your event.
      */
-    function set_type($type)
+    public function set_type($type)
     {
         $this->type = $type;
     }
@@ -151,7 +197,7 @@ class Event
      * @desc Sets a private property indicating if the changes made on this event imply the regeneration of the events cache.
      * @param bool $must true if we must generate the events cache, otherwise false.
      */
-    function set_must_regenerate_cache($must)
+    public function set_must_regenerate_cache($must)
     {
         if (is_bool($must))
         $this->must_regenerate_cache = $must;
@@ -161,7 +207,7 @@ class Event
      * @desc Gets the id of the event (in the event data base).
      * @return int The id.
      */
-    function get_id()
+    public function get_id()
     {
         return $this->id;
     }
@@ -170,7 +216,7 @@ class Event
      * @desc Returns the entitled of the event.
      * @return string The entitled.
      */
-    function get_entitled()
+    public function get_entitled()
     {
         return $this->entitled;
     }
@@ -179,7 +225,7 @@ class Event
      * @desc Returns the URL corresponding to the alert.
      * @return string Relative URL whose first character is / for the website root.
      */
-    function get_fixing_url()
+    public function get_fixing_url()
     {
         return $this->fixing_url;
     }
@@ -193,7 +239,7 @@ class Event
      * </ul>
      * @return int Status
      */
-    function get_status()
+    public function get_status()
     {
         return $this->current_status;
     }
@@ -202,7 +248,7 @@ class Event
      * @desc Returns the creation date of the event.
      * @return Date Creation date
      */
-    function get_creation_date()
+    public function get_creation_date()
     {
         return $this->creation_date;
     }
@@ -211,7 +257,7 @@ class Event
      * @desc Gets the id in the module. This value corresponds to the id of the daba base entry associated to the event.
      * @return int The id in the module.
      */
-    function get_id_in_module()
+    public function get_id_in_module()
     {
         return $this->id_in_module;
     }
@@ -221,7 +267,7 @@ class Event
      * It's that identifier which can be used to filter the events.
      * @return string The identifier of the event.
      */
-    function get_identifier()
+    public function get_identifier()
     {
         return $this->identifier;
     }
@@ -230,7 +276,7 @@ class Event
      * @desc Gets the type of the event. To retrieve your event, you might need to have a type of event, for example if your module has differents kinds of events. With this field, you can specify it.
      * @return string The type.
      */
-    function get_type()
+    public function get_type()
     {
         return $this->type;
     }
@@ -239,7 +285,7 @@ class Event
      * @desc Gets the value indicating if the cache must be generated.
      * @return bool true if the cache has to be generated, false else.
      */
-    function get_must_regenerate_cache()
+    public function get_must_regenerate_cache()
     {
         return $this->must_regenerate_cache;
     }
@@ -248,7 +294,7 @@ class Event
      * @desc Gets the event status name. It's automatically translated in the user language.
      * @return The name of the event status, ready to be displayed.
      */
-    function get_status_name()
+    public function get_status_name()
     {
         global $LANG;
 
@@ -274,7 +320,7 @@ class Event
      * @param string $identifier The event identifier. 
      * @param string $type The event type.
      */
-    function build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
+    public function build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type)
     {
         $this->id = $id;
         $this->entitled = $entitled;
@@ -286,62 +332,6 @@ class Event
         $this->type = $type;
         $this->must_regenerate_cache = false;
     }
-
-    ## Protected ##
-    /**
-     * @access protected
-     * @var int Numerical identifier of the event (in DB).
-     */
-    var $id = 0;
-    
-    /**
-     * @access protected
-     * @var string Entitled (title or name) of the event.
-     */
-    var $entitled = '';
-    
-    /**
-     * @access protected 
-     * @var string URL where you can process the event (relative from the website root).
-     */
-    var $fixing_url = '';
-    
-    /**
-     * @access protected
-     * @var int The event status.
-     */
-    var $current_status = EVENT_STATUS_UNREAD;
-    
-    /**
-     * @access protected
-     * @var Date The event creation date.
-     */
-    var $creation_date;
-
-    //The following attributes are used by the module developper to recognize his events
-    /**
-     * @access protected
-     * @var int Id corresponding to the event in the module (optionnal).
-     */
-    var $id_in_module = 0;
-    
-    /**
-     * @access protected
-     * @var string Identifier to recognize the entry (optionnal).
-     */
-    var $identifier = '';
-
-    /**
-     * @access protected
-     * @var string Event type (optionnal).
-     */
-    var $type = '';
-
-    /**
-     * @access protected
-     * @var bool To know if the modifications implies to regenerate the cache (for instance whether the status has been changed).
-     */
-    var $must_regenerate_cache = true;
 }
 
 ?>
