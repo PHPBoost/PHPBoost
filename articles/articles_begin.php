@@ -30,13 +30,14 @@ if (defined('PHPBOOST') !== true)
 
 require_once('articles_constants.php');
 load_module_lang('articles');	
-if (isset($CAT_ARTICLES[$idartcat]) && isset($_GET['cat']))
+
+if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
 { 
 	//Création de l'arborescence des catégories.
 	$Bread_crumb->add($LANG['title_articles'], url('articles.php'));
-	foreach ($CAT_ARTICLES as $id => $array_info_cat)
+	foreach ($ARTICLES_CAT as $id => $array_info_cat)
 	{
-		if (!empty($idartcat) && $CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'])
+		if (!empty($idartcat) && $ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent']  && $array_info_cat['c_order'] <= $ARTICLES_CAT[$idartcat]['c_order'])
 			$Bread_crumb->add($array_info_cat['name'], 'articles' . url('.php?cat=' . $id, '-' . $id . '.php'));
 	}
 	if (!empty($idart))
@@ -53,7 +54,7 @@ if (isset($CAT_ARTICLES[$idartcat]) && isset($_GET['cat']))
 			$Bread_crumb->add($LANG['com'], '');
 	}
 	else
-		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($CAT_ARTICLES[$idartcat]['name']));
+		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
 }
 else
 {

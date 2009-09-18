@@ -128,7 +128,7 @@
 				<p>{L_REQUIRE}</p>
 				<dl>
 					<dt><label for="title">* {L_TITLE}</label></dt>
-					<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE}" class="text" /></label></dd>
+					<dd><label><input type="text" size="65" maxlength="100" id="title" name="title" value="{TITLE_ART}" class="text" /></label></dd>
 				</dl>
 				<dl>
 					<dt><label for="idcat">* {L_CATEGORY}</label></dt>
@@ -207,7 +207,7 @@
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>
-				<input type="hidden" id="id" name="id" value="{IDNEWS}" class="submit" />
+				<input type="hidden" id="id" name="id" value="{IDARTICLES}" class="submit" />
 				<input type="hidden" id="user_id" name="user_id" value="{USER_ID}" class="submit" />
 				<input type="submit" name="submit" value="{L_SUBMIT}" class="submit" />
 				<script type="text/javascript">
