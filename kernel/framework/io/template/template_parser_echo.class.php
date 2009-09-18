@@ -88,7 +88,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 	private function parse_includes()
 	{
 		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '<?php $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
-			'if ($_subtemplate !== null) {$_subtemplate->parse(TEMPLATE_STRING_MODE);} ?>', $this->content);
+			'if ($_subtemplate !== null) {$_subtemplate->parse();} ?>', $this->content);
 	}
 	
 	private function callback_accept_xml($mask)
