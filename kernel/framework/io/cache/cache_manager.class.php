@@ -78,7 +78,7 @@ class CacheManager
 	/**
 	 * Saves in the data base (DB_TABLE_CONFIGS table) the data and has it become persistent.
 	 * @param string $name Name of the entry in which to save it.
-	 * @param CacheData $data Data to save
+ 	* @param CacheData $data Data to save
 	 */
 	public static function save($name, CacheData $data)
 	{
@@ -90,7 +90,7 @@ class CacheManager
 	private static function load_in_db($name)
 	{
 		global $Sql;
-		$result = $Sql->query_array(DB_TABLE_CONFIGS, "value", "WHERE name = '" . 
+		$result = $Sql->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" . 
 			$name . "'", __LINE__, __FILE__);
 		$required_value = unserialize($result['value']);
 		return $required_value;
@@ -99,18 +99,23 @@ class CacheManager
 	private static function save_in_db($name, CacheData $data)
 	{
 		global $Sql;
-		$serialized_data = serialize($data);
+		$serialized_data = addslashes(serialize($data));
+		$secure_name = addslashes($name);
 		
 		$resource = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
-			 . addslashes($serialized_data) . "' WHERE name = '" . 
-			 $name . "'", __LINE__, __FILE__);
+			 . $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 
 		// If no entry exists in the data base, we create it
 		if ($Sql->affected_rows($resource) == 0)
 		{
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
-				"VALUES('" . addslashes($name) . "', '" . addslashes($serialized_data) . "')",
-				__LINE__, __FILE__);
+		    $count = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS . 
+		    	" WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
+		    if ($count == 0)
+		    {
+			    $Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
+    				"VALUES('" . $secure_name . "', '" . $serialized_data . "')",
+	    			__LINE__, __FILE__);
+		    }
 		}
 	}
 	
@@ -146,6 +151,8 @@ class CacheManager
 	{
 	    $file = self::get_file($name);
 		$content = $file->get_contents();
+		$data = unserialize($content);
+		return $data;
 	}
 	
 	private static function file_cache_data($name, CacheData $value)

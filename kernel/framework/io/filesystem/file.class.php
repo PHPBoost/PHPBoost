@@ -58,24 +58,10 @@ class File extends FileSystemElement
 
 		$this->mode = $mode;
 
-		if (@file_exists($this->path))
+		if (@file_exists($this->path) && $whenopen == OPEN_NOW)
 		{
-			if (!@is_file($this->path))
-			{
-				return false;
-			}
-
-			if ($whenopen == OPEN_NOW)
-			{
-				$this->open();
-			}
+			$this->open();
 		}
-		else if (!@touch($this->path))
-		{
-			return false;
-		}
-			
-		return true;
 	}
 
 	/**

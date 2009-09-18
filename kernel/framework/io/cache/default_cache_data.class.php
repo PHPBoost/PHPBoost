@@ -28,7 +28,12 @@
 import('io/cache/property_not_found_exception');
 import('io/cache/cache_data');
 
-abstract class AbstractCacheData implements CacheData
+/**
+ * This is a default and minimal implementation of the CacheData interface. 
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
+class DefaultCacheData implements CacheData
 {
 	private $properties_map = array();
 	
@@ -47,6 +52,14 @@ abstract class AbstractCacheData implements CacheData
 	public function set_property($name, $value)
 	{
 		$this->properties_map[$name] = $value;
+	}
+	
+	public function restore_default()
+	{
+	}
+	
+	public function synchronize()
+	{
 	}
 }
 
