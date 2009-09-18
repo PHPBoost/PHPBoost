@@ -32,6 +32,7 @@ class DeprecatedTemplate extends Template
 {
 	public function __construt()
 	{
+		$this->auto_load_frequent_vars();
 	}
 
 	/**
@@ -42,9 +43,11 @@ class DeprecatedTemplate extends Template
 	 */
 	public function set_filenames($array_tpl)
 	{
-		foreach ($array_tpl as $parse_name => $filename)
+		foreach ($array_tpl as $identifier => $filename)
 		{
-			$this->subtemplates[$parse_name] = new Template($filename);
+			$new_template = new Template($filename, DO_NOT_AUTO_LOAD_FREQUENT_VARS);
+			$this->bind_vars($new_template);
+			$this->add_subtemplate($identifier, $new_template);
 		}
 	}
 	
@@ -54,13 +57,11 @@ class DeprecatedTemplate extends Template
 	 * variable it will be usable in every file handled by this object).
 	 * @param string $parse_name The identifier of the file you want to parse.
 	 */
-	public function pparse($parse_name)
+	public function pparse($identifier)
 	{
-		if (isset($this->subtemplates[$parse_name]))
+		$template =& $this->get_subtemplate($identifier);
+		if ($template != null)
 		{
-			$template =& $this->subtemplates[$parse_name];
-			
-			$this->bind_vars($template);
 			$template->parse();
 		}
 	}
