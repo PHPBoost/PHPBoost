@@ -1,34 +1,4 @@
-		<div id="admin_quick_menu">
-			<ul>
-				<li class="title_menu">{L_ARTICLES_MANAGEMENT}</li>
-				<li>
-					<a href="admin_articles.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles.php" class="quick_link">{L_ARTICLES_MANAGEMENT}</a>
-				</li>
-				<li>
-					<a href="admin_articles_add.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_add.php" class="quick_link">{L_ARTICLES_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_articles_cat.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_cat.php" class="quick_link">{L_ARTICLES_CAT}</a>
-				</li>
-				<li>
-					<a href="admin_articles_cat_add.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_cat_add.php" class="quick_link">{L_ARTICLES_CAT_ADD}</a>
-				</li>
-				<li>
-					<a href="admin_articles_config.php"><img src="articles.png" alt="" /></a>
-					<br />
-					<a href="admin_articles_config.php" class="quick_link">{L_ARTICLES_CONFIG}</a>
-				</li>
-			</ul>
-		</div>
-		
+{ADMIN_MENU}
 		<div id="admin_contents">
 
 			# START list #

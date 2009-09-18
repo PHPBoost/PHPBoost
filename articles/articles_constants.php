@@ -45,11 +45,10 @@ $idart = retrieve(GET, 'id', 0);
 if (empty($idartcat))//Racine.
 {
     $CAT_ARTICLES[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
-    $CAT_ARTICLES[0]['aprob'] = 1;
+    $CAT_ARTICLES[0]['visible'] = 1;
     $CAT_ARTICLES[0]['name'] = $LANG['root'];
-    $CAT_ARTICLES[0]['level'] = -1;
-    $CAT_ARTICLES[0]['id_left'] = 0;
-    $CAT_ARTICLES[0]['id_right'] = 0;
+    $CAT_ARTICLES[0]['c_order'] = -1;
+    $CAT_ARTICLES[0]['id_parent'] = 0;
 }
 
 ?>

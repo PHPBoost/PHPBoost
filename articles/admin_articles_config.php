@@ -32,11 +32,13 @@ load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 
-##########################admin_news_config.tpl###########################
+require_once('admin_articles_menu.php');
+
+
 if (!empty($_POST['valid']))
 {
 	$Cache->load('articles');
-	//echo "dsds  ".AUTH_ARTICLES_READ;
+
 	$config_articles = array(
 		'nbr_articles_max' => retrieve(POST, 'nbr_articles_max', 10),
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
@@ -105,13 +107,13 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 //Sinon on rempli le formulaire
 else	
 {		
-	$Template->set_filenames(array(
-		'admin_articles_config'=> 'articles/admin_articles_config.tpl'
-	));
+	$tpl = new Template('articles/admin_articles_config.tpl');
+	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+
 	
 	$Cache->load('articles');
-	print_r($CONFIG_ARTICLES);
-	$Template->assign_vars(array(
+
+	$tpl->assign_vars(array(
 		'NBR_ARTICLES_MAX' => !empty($CONFIG_ARTICLES['nbr_articles_max']) ? $CONFIG_ARTICLES['nbr_articles_max'] : '10',
 		'NBR_CAT_MAX' => !empty($CONFIG_ARTICLES['nbr_cat_max']) ? $CONFIG_ARTICLES['nbr_cat_max'] : '10',
 		'NBR_COLUMN' => !empty($CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : '2',
@@ -121,11 +123,6 @@ else
 		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
 		'L_REQUIRE' => $LANG['require'],		
-		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
-		'L_ARTICLES_ADD' => $LANG['articles_add'],
-		'L_ARTICLES_CAT' => $LANG['cat_management'],
-		'L_ARTICLES_CONFIG' => $LANG['articles_config'],
-		'L_ARTICLES_CAT_ADD' => $LANG['articles_cats_add'],
 		'L_NBR_ARTICLES_MAX' => $LANG['nbr_articles_max'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
 		'L_NBR_COLUMN_MAX' => $LANG['nbr_column_max'],
@@ -141,10 +138,10 @@ else
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute']
 	));
-
-	$Template->pparse('admin_articles_config'); // traitement du modele	
+	$tpl->parse();
+	
 }
-
+	
 require_once('../admin/admin_footer.php');
 
 ?>

@@ -37,6 +37,8 @@ $idcat = retrieve(GET, 'idcat', 0);
 $id_post = retrieve(POST, 'id', 0);
 $del = !empty($_GET['delete']) ? true : false;
 
+
+
 if ($del && !empty($id)) //Suppression de l'article.
 {    
 	$Session->csrf_get_protect(); //Protection csrf
@@ -69,22 +71,18 @@ if ($del && !empty($id)) //Suppression de l'article.
 }	
 elseif (!empty($id))
 {
-	$Template->set_filenames(array(
-		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
-	));
+	$tpl = new Template('articles/articles/admin_articles_management.tpl');
+	require_once('admin_articles_menu.php');
+	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+	
 
 	$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);	
 
-	$Template->assign_vars(array(	
+	$tpl->assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $LANG['require_cat'],
-		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
-		'L_ARTICLES_ADD' => $LANG['articles_add'],
-		'L_ARTICLES_CAT' => $LANG['cat_management'],
-		'L_ARTICLES_CONFIG' => $LANG['articles_config'],
-		'L_ARTICLES_CAT_ADD' => $LANG['articles_cats_add'],
 		'L_EDIT_ARTICLE' => $LANG['edit_article'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_PAGE_PROMPT' => $LANG['page_prompt'],
@@ -142,7 +140,7 @@ elseif (!empty($id))
 		}
 	}
 
-	$Template->assign_block_vars('articles', array(
+	$tpl->assign_block_vars('articles', array(
 		'TITLE' => $articles['title'],
 		'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',
 		'IMG_LIST' => $image_list,
@@ -177,7 +175,7 @@ elseif (!empty($id))
 	if ($get_error == 'incomplete')
 		$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
 	
-	$Template->pparse('admin_articles_management'); 
+	$tpl->parse();
 }	
 elseif (!empty($_POST['previs']) && !empty($id_post))
 {
@@ -422,9 +420,10 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 }		
 else
 {
-	$Template->set_filenames(array(
-		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
-	));
+	$tpl = new Template('articles/admin_articles_management.tpl');
+	require_once('admin_articles_menu.php');
+	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
+
 	
 	$nbr_articles = $Sql->count_table('articles', __LINE__, __FILE__);
 	
@@ -432,17 +431,13 @@ else
 	import('util/pagination');
 	$Pagination = new Pagination();
 	
-	$Template->assign_vars(array(
+	$tpl->assign_vars(array(
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
 		'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
 		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
-		'L_ARTICLES_ADD' => $LANG['articles_add'],
-		'L_ARTICLES_CAT' => $LANG['cat_management'],
-		'L_ARTICLES_CONFIG' => $LANG['articles_config'],
-		'L_ARTICLES_CAT_ADD' => $LANG['articles_cats_add'],
 		'L_NAME' => $LANG['name'],
 		'L_TITLE' => $LANG['title'],
 		'L_CATEGORY' => $LANG['category'],
@@ -454,7 +449,7 @@ else
 		'L_SHOW' => $LANG['show']
 	));
 
-	$Template->assign_block_vars('list', array(
+	$tpl->assign_block_vars('list', array(
 	));
 	
 	$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
@@ -483,7 +478,7 @@ else
 		elseif ($row['end'] > 0)
 			$visible .= $LANG['until'] . ' ' . gmdate_format('date_format_short', $row['end']);
 		
-		$Template->assign_block_vars('list.articles', array(
+		$tpl->assign_block_vars('list.articles', array(
 			'TITLE' => $title,
 			'IDCAT' => $row['idcat'],
 			'ID' => $row['id'],
@@ -496,7 +491,7 @@ else
 	}
 	$Sql->query_close($result);
 	
-	$Template->pparse('admin_articles_management');
+	$tpl->parse();
 }
 
 require_once('../admin/admin_footer.php');
