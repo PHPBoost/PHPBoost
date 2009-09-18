@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           template_parser.class.php
+ *                          template_loader.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright         : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -24,8 +24,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-interface TemplateParser
+
+interface TemplateLoader
 {
-	public function parse($template_object, $template_loader);
+	public function is_cache_file_valid($cache_filepath);
+
+	public function get_identifier();
+	
+	public function load();
+	
+	public function get_resource_as_string();
 }
 ?>

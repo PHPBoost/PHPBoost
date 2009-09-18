@@ -38,13 +38,13 @@ class TemplateParserString extends AbstractTemplateParser
 		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
 			array('/', '.', '..', 'tpl', 'templates'),
 			array('_', '', '', '', 'tpl'),
-			$this->filepath
+			$this->loader->get_identifier()
 		), '_') . '_str.php';
 	}
 	
-	public function parse($template_object, $filepath)
+	public function parse($template_object, $template_loader)
 	{
-		parent::parse($template_object, $filepath);
+		parent::parse($template_object, $template_loader);
 		return $this->result;
 	}
 	
@@ -76,7 +76,7 @@ class TemplateParserString extends AbstractTemplateParser
 	
 	private function parse_vars()
 	{
-		$this->content = preg_replace('`{([\w]+)}`i', '\' . $this->template->get_var(\'$1\') . \'', $this->content);
+		$this->content = preg_replace_callback('`{([\w]+)}`i', array($this, 'callback_parse_vars'), $this->content);
 		$this->content = preg_replace_callback('`{([\w\.]+)}`i', array($this, 'callback_parse_blocks_vars'), $this->content);
 	}
 	
@@ -100,13 +100,18 @@ class TemplateParserString extends AbstractTemplateParser
 			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING . '.=$_subtemplate->parse(TEMPLATE_STRING_MODE);}' . self::TPL_VAR_STRING . '.=\'', $this->content);
 	}
 	
+	private function callback_parse_vars($varname)
+	{
+		return '\' . $this->template->' . $this->get_getvar_method_name($varname[1]) . '(\'' . $varname[1] . '\') . \'';
+	}
+	
 	private function callback_parse_blocks_vars($blocks)
 	{
 		$array_block = explode('.', $blocks[1]);
 		$varname = array_pop($array_block);
 		$last_block = array_pop($array_block);
 		
-		return '\' . $this->template->get_var_from_list(\'' . $varname . '\', $_tmp_' . $last_block . '_value) . \'';
+		return '\' . $this->template->' . $this->get_getvar_method_name($varname) . '_from_list(\'' . $varname . '\', $_tmp_' . $last_block . '_value) . \'';
 	}
 	
 	private function callback_parse_blocks($blocks)

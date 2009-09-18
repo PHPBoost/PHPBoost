@@ -70,8 +70,8 @@ class DeprecatedTemplate extends Template
 	{
 		$template->vars =& $this->vars;
 		$template->blocks =& $this->blocks;
-		$template->subtemplates =& $this->subtemplates;
 		$template->langs =& $this->langs;
+		$template->subtemplates =& $this->subtemplates;
 	}
 }
 ?>

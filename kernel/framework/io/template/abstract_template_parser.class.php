@@ -29,17 +29,17 @@ import('io/template/template_parser');
 
 abstract class AbstractTemplateParser implements TemplateParser
 {
-	protected $filepath;
 	protected $cache_filepath;
 	protected $content;
+	protected $loader;
 	protected $template;
 	
-	public function parse($template_object, $filepath)
+	public function parse($template_object, $template_loader)
 	{
 		$this->template = $template_object;
-		$this->filepath = $filepath;
+		$this->loader = $template_loader;
 		$this->compute_cache_filepath();
-		if (!$this->is_in_cache())
+		if (!$this->is_cache_valid())
 		{
 			$this->generate_cache();
 		}
@@ -48,13 +48,9 @@ abstract class AbstractTemplateParser implements TemplateParser
 	
 	protected abstract function compute_cache_filepath();
 	
-	private function is_in_cache()
+	private function is_cache_valid()
 	{	
-		if (file_exists($this->cache_filepath))
-		{
-			return @filemtime($this->filepath) <= @filemtime($this->cache_filepath) && @filesize($this->cache_filepath) !== 0;
-		}
-		return false;
+		return $this->loader->is_cache_file_valid($this->cache_filepath);
 	}
 	
 	private function generate_cache()
@@ -70,17 +66,8 @@ abstract class AbstractTemplateParser implements TemplateParser
 	
 	private function load()
 	{
-		$this->content = @file_get_contents_emulate($this->filepath);
-		if ($this->content === false)
-		{
-			die('Template::load(): The ' . $this->filepath . ' template loading failed.');
-		}
-		if (empty($this->content))
-		{
-			die('Template::load(): The ' . $this->filepath . ' template is empty.');
-		}
-		
-		return true;
+		$this->loader->load();
+		$this->content =& $this->loader->get_resource_as_string();
 	}
 	
 	protected abstract function do_parse();
@@ -96,6 +83,40 @@ abstract class AbstractTemplateParser implements TemplateParser
 	
 	protected function optimize()
 	{
+	}
+	
+	protected function get_getvar_method_name($varname)
+	{
+		$method = 'var';
+		
+		$split_index = strpos($varname, '_');
+		if ($split_index > 0)
+		{
+			$prefix = substr($varname, 0, $split_index - 1);
+			switch ($prefix)
+			{
+				case 'L':
+					$method = 'lang_var';
+					break;
+				case 'E':
+					$method = 'htmlescaped_var';
+					break;
+				case 'J':
+					$method = 'js_var';
+					break;
+				case 'EL':
+					$method = 'htmlescaped_lang_var';
+					break;
+				case 'JL':
+					$method = 'js_lang_var';
+					break;
+				default:
+					$method = 'var';
+					break;
+			}
+		}
+		
+		return 'get_' . $method;
 	}
 	
 	private function save()

@@ -1,9 +1,9 @@
 <?php
 /*##################################################
- *                           template_parser.class.php
+ *                          template_loader.class.php
  *                            -------------------
  *   begin                : June 18 2009
- *   copyright            : (C) 2009 Loïc Rouchon
+ *   copyright         : (C) 2009 Loïc Rouchon
  *   email                : loic.rouchon@phpboost.com
  *
  *
@@ -24,8 +24,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-interface TemplateParser
+
+class TemplateException extends Exception
 {
-	public function parse($template_object, $template_loader);
+}
+
+class TemplateLoaderException extends TemplateException
+{
+	public function __construct($template_identifier, $reason)
+	{
+		parent::__construct('Template loading failed for template "' . $identifier . '"<br />' . $reason);
+	}
 }
 ?>
