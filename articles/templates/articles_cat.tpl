@@ -5,7 +5,7 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a> <a href="../articles/articles.php{SID}">{L_ARTICLES_INDEX}</a> &raquo; {U_ARTICLES_CAT_LINKS} 
-				# IF C_IS_ADMIN # <a href="admin_articles_cat.php?id={IDCAT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
+				# IF C_IS_ADMIN # <a href="admin_articles_cat.php?edit={IDCAT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
 				{EDIT} 
 				{ADD_ARTICLES}
 			</div>

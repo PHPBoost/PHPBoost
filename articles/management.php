@@ -92,8 +92,7 @@ elseif (!empty($_POST['submit']))
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
-		'img' => retrieve(POST, 'img', '', TSTRING),
-		'alt' => retrieve(POST, 'alt', '', TSTRING)
+		'icon' => retrieve(POST, 'img', '', TSTRING),
 	);
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -145,19 +144,19 @@ elseif (!empty($_POST['submit']))
 			}
 
 			// Image.
-			$img = new Url($articles['img']);
-			
+			$img = new Url($articles['icon']);
+			echo "tete : ".$articles['id'];
 			if ($articles['id'] > 0)
 			{
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "', extend_contents = '" . $articles['extend_desc'] . "', img = '" . $img->relative() . "', alt = '" . $articles['alt'] . "', visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img->relative() . "',  visible = '" . $articles['visible'] . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 			}
 			else
 			{
 				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE);
 
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents, extend_contents, timestamp, visible, start, end, user_id, img, alt, nbr_com)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['extend_desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '" . $articles['alt'] . "', '0')", __LINE__, __FILE__);
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com)
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '0')", __LINE__, __FILE__);
 
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 
@@ -258,7 +257,7 @@ else
 				'C_CONTRIBUTION' => false,
 				'JS_CONTRIBUTION' => 'false',
 				'JS_INSTANCE_RELEASE' => $release_calendar->num_instance,
-				'TITLE' => $articles['title'],
+				'TITLE_ART' => $articles['title'],
 				'CONTENTS' => unparse($articles['contents']),
 				'EXTEND_CONTENTS' => unparse($articles['extend_contents']),
 				'VISIBLE_WAITING' => $articles['visible'] && (!empty($articles['start']) || !empty($articles['end'])),
@@ -275,7 +274,6 @@ else
 				'RELEASE_MIN' => !empty($articles['timestamp']) ? $release->get_minutes() : '',
 				'IMG_PREVIEW' => second_parse_url($articles['img']),
 				'IMG' => $articles['img'],
-				'ALT' => $articles['alt'],
 				'IDARTICLES' => $articles['id'],
 				'USER_ID' => $articles['user_id']
 			));

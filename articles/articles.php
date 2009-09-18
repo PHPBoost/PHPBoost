@@ -26,21 +26,32 @@
 ###################################################*/
 
 require_once('../kernel/begin.php'); 
-require_once('../articles/articles_begin.php');
+require_once('articles_begin.php');
 require_once('../kernel/header.php');
 
+require_once('articles_cats.class.php');
+$articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
-
+$idart = retrieve(GET, 'id', 0);	
 if (!empty($idart) && isset($_GET['cat']))
 {
 	//Niveau d'autorisation de la catégorie
-	if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
-		$Errorh->handler('e_auth', E_USER_REDIRECT); 
+	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
+		{$Errorh->handler('e_auth', E_USER_REDIRECT);
+	echo "tete : ".$ARTICLES_CAT[$idartcat]['auth'];
+		}
+		
+	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
+		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+		WHERE a.id = '" . $idart . "'", __LINE__, __FILE__);
+	$articles = $Sql->fetch_assoc($result);
+	$Sql->query_close($result);
+	
 	if (empty($articles['id']))
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT); 
 	
-	$Template->set_filenames(array('articles'=> 'articles/articles.tpl'));		
+	$tpl = new Template('articles/articles.tpl');
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
@@ -79,7 +90,7 @@ if (!empty($idart) && isset($_GET['cat']))
 	
 	import('content/comments');
 	
-	$Template->assign_vars(array(
+	$tpl->assign_vars(array(
 		'C_IS_ADMIN' => ($User->check_level(ADMIN_LEVEL)),
 		'C_DISPLAY_ARTICLE' => true,
 		'IDART' => $articles['id'],
@@ -87,7 +98,7 @@ if (!empty($idart) && isset($_GET['cat']))
 		'NAME' => $articles['title'],
 		'PSEUDO' => $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__),		
 		'CONTENTS' => isset($array_contents[$page]) ? second_parse($array_contents[$page]) : '',
-		'CAT' => $CAT_ARTICLES[$idartcat]['name'],
+		'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 		'DATE' => gmdate_format('date_format_short', $articles['timestamp']),
 		'PAGES_LIST' => $page_list,
 		'PAGINATION_ARTICLES' => $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS),
@@ -112,12 +123,12 @@ if (!empty($idart) && isset($_GET['cat']))
 	//Affichage commentaires.
 	if (isset($_GET['com']))
 	{
-		$Template->assign_vars(array(
+		$tpl->assign_vars(array(
 			'COMMENTS' => display_comments('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;com=%s', 'articles-' . $idartcat . '-' . $idart . '.php?com=%s'))
 		));
 	}	
 
-	$Template->pparse('articles');	
+	$tpl->parse();
 }
 else
 {

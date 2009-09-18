@@ -82,7 +82,7 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 		
 	$Sql->query_close($result);
 	
-	$result = $Sql->query_while("SELECT id, id_left, id_right
+	$result = $Sql->query_while("SELECT id, id_parent
 	FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{			
@@ -90,10 +90,11 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 		$nbr_articles_unvisible = 0;
 		foreach ($info_cat as $key => $value)
 		{			
-			if ($CAT_ARTICLES[$key]['id_left'] >= $row['id_left'] && $CAT_ARTICLES[$key]['id_right'] <= $row['id_right'])
+			if ($ARTICLES_CAT[$key]['id_parent'] >= $row['id_parent'])
 			{	
 				$nbr_articles_visible += isset($info_cat[$key]['visible']) ? $info_cat[$key]['visible'] : 0;
 				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0; 
+			
 			}
 		}
 		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	

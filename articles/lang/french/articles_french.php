@@ -100,6 +100,7 @@ $LANG['posted_on'] = 'Le';
 global $ARTICLES_LANG;
 // contribution
 $ARTICLES_LANG = array(
+	'articles' => 'Articles',
 	'contribution_confirmation' => 'Confirmation de contribution',
 	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 	'contribution_counterpart' => 'Complément de contribution',
@@ -130,13 +131,14 @@ $ARTICLES_LANG = array(
 	'category_articles' => 'Gestion des catégories',
 	'required_fields_empty' => 'Des champs requis n\'ont pas été renseignés, merci de renouveler l\'opération correctement',
 	'unexisting_category' => 'La catégorie que vous avez sélectionnée n\'existe pas',
-		'new_cat_does_not_exist' => 'La catégorie cible n\'existe pas',
-			'infinite_loop' => 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie',
+	'new_cat_does_not_exist' => 'La catégorie cible n\'existe pas',
+	'infinite_loop' => 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie',
 	'successful_operation' => 'L\'opération que vous avez demandée a été effectuée avec succès',
 	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>',
-'removing_category' => 'Suppression d\'une catégorie',
+	'removing_category' => 'Suppression d\'une catégorie',
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
-		'move_category_content' => 'Déplacer son contenu dans :',
+	'move_category_content' => 'Déplacer son contenu dans :',
+	'edit_articles' => 'Éditer l\'article'
 	);
 
 ?>

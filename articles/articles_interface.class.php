@@ -61,7 +61,7 @@ class ArticlesInterface extends ModuleInterface
 			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
 				var_export(array(
 					'id_parent' => (int)$row['id_parent'],
-					'order' => (int)$row['c_order'],
+					'c_order' => (int)$row['c_order'],
 					'name' => $row['name'],
 					'desc' => $row['description'],
 					'visible' => (bool)$row['visible'],
@@ -94,7 +94,7 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_search_request($args = null)
 	{
-		global $Sql, $Cache, $CONFIG_ARTICLES, $CAT_ARTICLES, $User, $LANG;
+		global $Sql, $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $User, $LANG;
 		$Cache->load('articles');
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 
@@ -102,13 +102,13 @@ class ArticlesInterface extends ModuleInterface
 
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
-		foreach ($CAT_ARTICLES as $idcat => $key)
+		foreach ($ARTICLES_CAT as $idcat => $key)
 		{
-			if ($CAT_ARTICLES[$idcat]['aprob'] == 1)
+			if ($ARTICLES_CAT[$idcat]['visible'] == 1)
 			{
-				if (!$User->check_auth($CAT_ARTICLES[$idcat]['auth'], READ_CAT_ARTICLES))
+				if (!$User->check_auth($ARTICLES_CAT[$idcat]['auth'], AUTH_ARTICLES_READ))
 				{
-					$clause_level = !empty($g_idcat) ? ($CAT_ARTICLES[$idcat]['level'] == ($CAT_ARTICLES[$g_idcat]['level'] + 1)) : ($CAT_ARTICLES[$idcat]['level'] == 0);
+					$clause_level = !empty($g_idcat) ? ($ARTICLES_CAT[$idcat]['c_order'] == ($ARTICLES_CAT[$g_idcat]['c_order'] + 1)) : ($ARTICLES_CAT[$idcat]['c_order'] == 0);
 					if ($clause_level)
 					$unauth_cats_sql[] = $idcat;
 				}
@@ -125,7 +125,7 @@ class ArticlesInterface extends ModuleInterface
             FROM " . PREFIX . "articles a
             LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
             WHERE
-            	a.visible = 1 AND ((ac.aprob = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
+            	a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
             	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
             ORDER BY relevance DESC " . $Sql->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
@@ -138,36 +138,36 @@ class ArticlesInterface extends ModuleInterface
 	 */
 	function _get_cats_tree()
 	{
-		global $LANG, $CAT_ARTICLES;
+		global $LANG, $ARTICLES_CAT;
 		Cache::load('articles');
 
-		if (!(isset($CAT_ARTICLES) && is_array($CAT_ARTICLES)))
+		if (!(isset($ARTICLES_CAT) && is_array($ARTICLES_CAT)))
 		{
-			$CAT_ARTICLES = array();
+			$ARTICLES_CAT = array();
 		}
 		
         $ordered_cats = array();
-		foreach ($CAT_ARTICLES as $id => $cat)
+		foreach ($ARTICLES_CAT as $id => $cat)
 		{   // Sort by id_left
 			$cat['id'] = $id;
-			$ordered_cats[numeric($cat['id_left'])] = array('this' => $cat, 'children' => array());
+			$ordered_cats[numeric($cat['id_parent'])] = array('this' => $cat, 'children' => array());
 		}
 
 		$level = 0;
 		$cats_tree = array(array('this' => array('id' => 0, 'name' => $LANG['root']), 'children' => array()));
 		$parent =& $cats_tree[0]['children'];
-		$nb_cats = count($CAT_ARTICLES);
+		$nb_cats = count($ARTICLES_CAT);
 		foreach ($ordered_cats as $cat)
 		{
-			if (($cat['this']['level'] == $level + 1) && count($parent) > 0)
+			if (($cat['this']['c_order'] == $level + 1) && count($parent) > 0)
 			{   // The new parent is the previous cat
 				$parent =& $parent[count($parent) - 1]['children'];
 			}
-			elseif ($cat['this']['level'] < $level)
+			elseif ($cat['this']['c_order'] < $level)
 			{   // Find the new parent (an ancestor)
 				$j = 0;
 				$parent =& $cats_tree[0]['children'];
-				while ($j < $cat['this']['level'])
+				while ($j < $cat['this']['c_order'])
 				{
 					$parent =& $parent[count($parent) - 1]['children'];
 					$j++;
@@ -176,7 +176,7 @@ class ArticlesInterface extends ModuleInterface
 
 			// Add the current cat at the good level
 			$parent[] = $cat;
-			$level = $cat['this']['level'];
+			$level = $cat['this']['c_order'];
 		}
 		return $cats_tree[0];
 	}
@@ -215,7 +215,7 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $CAT_ARTICLES;
+		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT;
 		$Cache->load('articles');
 
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
@@ -231,13 +231,13 @@ class ArticlesInterface extends ModuleInterface
 		$data->set_host(HOST);
 		$data->set_desc($LANG['xml_articles_desc']);
 		$data->set_lang($LANG['xml_lang']);
-		$data->set_auth_bit(READ_CAT_ARTICLES);
+		$data->set_auth_bit(AUTH_ARTICLES_READ);
 
 		$cat_clause = !empty($idcat) ? " AND a.idcat = '". $idcat . "'" : '';
 		$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM " . PREFIX . "articles a
         LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
-        WHERE a.visible = 1 AND (ac.aprob = 1 OR a.idcat = 0) " . $cat_clause . "
+        WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) " . $cat_clause . "
         ORDER BY a.timestamp DESC
         " . $Sql->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
@@ -282,40 +282,44 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_home_page()
 	{
-		global $Sql, $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $CAT_ARTICLES, $CONFIG_ARTICLES, $LANG;
+		global $Sql, $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG;
 		require_once('../articles/articles_begin.php');
 
 		$tpl = new Template('articles/articles_cat.tpl');
 
 		if ($idartcat > 0)
 		{
-			if (!isset($CAT_ARTICLES[$idartcat]) || $CAT_ARTICLES[$idartcat]['aprob'] == 0)
+		
+			if (!isset($ARTICLES_CAT[$idartcat]) || $ARTICLES_CAT[$idartcat]['visible'] == 0)
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 			$cat_links = '';
-			foreach ($CAT_ARTICLES as $id => $array_info_cat)
+			foreach ($ARTICLES_CAT as $id => $array_info_cat)
 			{
-				if ($CAT_ARTICLES[$idartcat]['id_left'] >= $array_info_cat['id_left'] && $CAT_ARTICLES[$idartcat]['id_right'] <= $array_info_cat['id_right'] && $array_info_cat['level'] <= $CAT_ARTICLES[$idartcat]['level'])
+				if ($ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent'] &&  $array_info_cat['c_order'] <= $ARTICLES_CAT[$idartcat]['c_order'])
 				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
 			}
-			$clause_cat = " WHERE ac.id_left > '" . $CAT_ARTICLES[$idartcat]['id_left'] . "' AND ac.id_right < '" . $CAT_ARTICLES[$idartcat]['id_right'] . "' AND ac.level = '" . ($CAT_ARTICLES[$idartcat]['level'] + 1) . "' AND ac.aprob = 1";
+			$clause_cat = " WHERE ac.id_parent > '" . $ARTICLES_CAT[$idartcat]['id_parent'] . "'  AND ac.c_order = '" . ($ARTICLES_CAT[$idartcat]['c_order'] + 1) . "' AND ac.visible = 1";
 		}
 		else //Racine.
 		{
+			
 			$cat_links = '';
-			$clause_cat = " WHERE ac.level = '0' AND ac.aprob = 1";
+			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
 
 		//Niveau d'autorisation de la catégorie
-		if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES))
+		if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ))
 		{
+
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
+
 		}
 
 		$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
 		$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles_cats ac " . $clause_cat, __LINE__, __FILE__);
 			
-		$rewrite_title = url_encode_rewrite($CAT_ARTICLES[$idartcat]['name']);
+		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
 		//Colonnes des catégories.
 		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
@@ -336,7 +340,7 @@ class ArticlesInterface extends ModuleInterface
 			'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($LANG['nbr_articles_info'], $nbr_articles) : '',
 			'L_NO_ARTICLES' => ($nbr_articles == 0) ? $LANG['none_article'] : '',
 			'L_ARTICLES_INDEX' => $LANG['title_articles'],
-			'L_CATEGORIES' => ($CAT_ARTICLES[$idartcat]['level'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],
+			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['c_order'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],
 			'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
@@ -382,9 +386,9 @@ class ArticlesInterface extends ModuleInterface
 
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
-		foreach ($CAT_ARTICLES as $id => $key)
+		foreach ($ARTICLES_CAT as $id => $key)
 		{
-			if (!$User->check_auth($CAT_ARTICLES[$id]['auth'], READ_CAT_ARTICLES))
+			if (!$User->check_auth($ARTICLES_CAT[$id]['auth'], AUTH_ARTICLES_READ))
 			$unauth_cats_sql[] = $id;
 		}
 		$nbr_unauth_cats = count($unauth_cats_sql);
@@ -399,19 +403,19 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			$i = 0;
-			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.contents, ac.icon, ac.nbr_articles_visible AS nbr_articles
+			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 			FROM " . PREFIX . "articles_cats ac
 			" . $clause_cat . $clause_unauth_cats . "
-			ORDER BY ac.id_left
+			ORDER BY ac.id_parent
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
 			while ($row = $Sql->fetch_assoc($result))
 			{
 				$tpl->assign_block_vars('cat_list', array(
 					'IDCAT' => $row['id'],
 					'CAT' => $row['name'],
-					'DESC' => $row['contents'],
-					'ICON_CAT' => !empty($row['icon']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a><br />' : '',
-					'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?id=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
+					'DESC' => $row['description'],
+					'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
+					'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?edit=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
 					'L_NBR_ARTICLES' => sprintf($LANG['nbr_articles_info'], $row['nbr_articles']),
 					'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 				));
@@ -425,7 +429,7 @@ class ArticlesInterface extends ModuleInterface
 			$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' => true,
 				'PAGINATION' => $Pagination->display('articles' . url('.php' . (!empty($unget) ? $unget . '&amp;' : '?') . 'cat=' . $idartcat . '&amp;p=%d', '-' . $idartcat . '-0-%d+' . $rewrite_title . '.php' . $unget), $nbr_articles , 'p', $CONFIG_ARTICLES['nbr_articles_max'], 3),
-				'CAT' => $CAT_ARTICLES[$idartcat]['name']
+				'CAT' => $ARTICLES_CAT[$idartcat]['name']
 			));
 
 			import('content/note');
@@ -442,7 +446,7 @@ class ArticlesInterface extends ModuleInterface
 				$tpl->assign_block_vars('articles', array(
 					'NAME' => $row['title'],
 					'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
-					'CAT' => $CAT_ARTICLES[$idartcat]['name'],
+					'CAT' => $ARTICLES_CAT[$idartcat]['name'],
 					'DATE' => gmdate_format('date_format_short', $row['timestamp']),
 					'COMPT' => $row['views'],
 					'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
