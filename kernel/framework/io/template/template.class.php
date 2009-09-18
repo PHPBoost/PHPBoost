@@ -31,6 +31,9 @@ define('TEMPLATE_STRING_MODE', 0x02);
 define('AUTO_LOAD_FREQUENT_VARS', true);
 define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', false);
 
+import('io/template/template_exception');
+import('io/template/file_template_loader');
+
 /**
  * @package io
  * @author Loïc Rouchon <horn@phpboost.com> Régis Viarre <crowkait@phpboost.com>
@@ -78,7 +81,6 @@ define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', false);
  */
 class Template
 {
-	protected $template_filepath = '';
 	protected $module_data_path = array();
 	protected $langs = array();
 	protected $vars = array();
@@ -89,16 +91,29 @@ class Template
 	 * @desc Builds a Template object.
 	 * @param string $tpl Path of your TPL file. See the class description to know you you have to write this path.
 	 */
-	public function __construct($tpl = null, $auto_load_vars = AUTO_LOAD_FREQUENT_VARS)
+	public function __construct($tpl = null, $auto_load_vars = AUTO_LOAD_FREQUENT_VARS, $loader = null)
 	{
 		if ($tpl != null)
 		{
-			$this->template_filepath = $this->check_file($tpl);
+			if ($loader !== null)
+			{
+				$this->set_loader($loader);
+			}
+			else
+			{
+				$this->set_loader(new FileTemplateLoader($tpl));
+			}
+			
 			if ($auto_load_vars)
 			{
 				$this->auto_load_frequent_vars();
 			}
 		}
+	}
+	
+	public function set_loader($loader)
+	{
+		$this->loader = $loader;
 	}
 	
 	/**
@@ -162,7 +177,7 @@ class Template
 	{
 		$copy = new Template();
 		
-		$copy->template_filepath = $this->template_filepath;
+		$copy->loader = $this->loader;
 		$copy->module_data_path = $this->module_data_path;
 		$copy->langs = $this->langs;
 		$copy->vars = $this->vars;
@@ -178,7 +193,7 @@ class Template
 	  */
 	public function get_template_filepath()
 	{
-		return $this->template_filepath;
+		return $this->loader->get_identifier();;
 	}
 	
 	/**
@@ -193,13 +208,13 @@ class Template
 		{
 			import('io/template/template_parser_echo');
 			$parser = new TemplateParserEcho();
-			$parser->parse($this, $this->template_filepath);
+			$parser->parse($this,$this->loader);
 		}
 		else
 		{
 			import('io/template/template_parser_string');
 			$parser = new TemplateParserString();
-			return $parser->parse($this, $this->template_filepath);
+			return $parser->parse($this, $this->loader);
 		}
 	}
 	
@@ -285,11 +300,6 @@ class Template
 	  * @return string the $varname variable content
 	  * @see get_var_from_list($varname, &$list)
 	  */
-	public function get_var($varname)
-	{
-		return $this->get_var_from_list($varname, $this->vars);
-	}
-	
 	/**
 	  * @desc Returns the $varname variable content searched in from the $list
 	  * Special operations will be done if the variable is not registered in $list. If $varname begins with
@@ -305,181 +315,120 @@ class Template
 	  * @param mixed[] &$list the list in which the variable will be searched for
 	  * @return string the $varname variable content 
 	  */
+	
+	public function get_var($varname)
+	{
+		return $this->get_var_from_list($varname, $this->vars);
+	}
+	
 	public function get_var_from_list($varname, &$list)
 	{
 		if (!empty($list[$varname]))
 		{
 			return $list[$varname];
 		}
-		else if (strpos($varname, 'E_') === 0)
-		{
-			$varname = substr($varname, 2);
-			if (!empty($list[$varname]))
-			{
-				return $this->register_var($varname, htmlspecialchars($list[$varname]), $list);
-			}
-		}
-		else if (strpos($varname, 'J_') === 0)
-		{
-			$varname = substr($varname, 2);
-			if (!empty($list[$varname]))
-			{
-				return $this->register_var($varname, to_js_string($list[$varname]), $list);
-			}
-		}
-		else if (strpos($varname, 'L_') === 0)
-		{
-			$var = $this->find_lang_var(strtolower(substr($varname, 2)));
-			if (!empty($var))
-			{
-				return $this->register_var($varname, $var, $list);
-			}
-		}
-		else if (strpos($varname, 'EL_') === 0)
-		{
-			$var = $this->find_lang_var(strtolower(substr($varname, 3)));
-			if (!empty($var))
-			{
-				return $this->register_var($varname, htmlspecialchars($var), $list);
-			}
-		}
-		else if (strpos($varname, 'JL_') === 0)
-		{
-			$var = $this->find_lang_var(strtolower(substr($varname, 3)));
-			if (!empty($var))
-			{
-				return $this->register_var($varname, to_js_string($var), $list);
-			}
-		}
-		return '';
+		$empty_value = '';
+		return $this->register_var($varname, $empty_value, $list);
 	}
 	
-	protected function check_file(&$filepath)
+	public function get_js_var($varname)
 	{
-		/*
-		 Samples :
-		 $filepath = /forum/forum_topic.tpl
-		 $filepath = forum/forum_topic.tpl
-		 $module = forum
-		 $filename = forum_topic.tpl
-		 $file = forum_topic.tpl
-		 $folder =
-
-
-		 $filepath = /news/framework/content/syndication/last_news.tpl
-		 $filepath = news/framework/content/syndication/menu.tpl
-		 $module = news
-		 $filename = menu.tpl
-		 $file = framework/content/syndication/menu.tpl
-		 $folder = framework/content/syndication
-		 */
-		
-		if (strpos($filepath, '/') === 0)
-		{
-			// Load the file from its absolute location
-			// (Not overlaodable)
-			if (file_exists(PATH_TO_ROOT . $filepath))
-			{
-				return PATH_TO_ROOT . $filepath;
-			}
-		}
-		
-		$i = strpos($filepath, '/');
-		$module = substr($filepath, 0, $i);
-		$file = trim(substr($filepath, $i), '/');
-		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
-		$filename = trim(substr($filepath, strrpos($filepath, '/')));
-
-		$default_templates_folder = PATH_TO_ROOT . '/templates/default/';
-		$theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
-		if (empty($module) || in_array($module, array('admin') ))
-		{   // Kernel - Templates priority order
-			//      /templates/$theme/.../$file.tpl
-			//      /templates/default/.../$file.tpl
-			if (file_exists($file_path = $theme_templates_folder . $filepath))
-			{
-				return $file_path;
-			}
-			return $default_templates_folder . $filepath;
-		}
-		elseif ($module == 'framework')
-		{   // Framework - Templates priority order
-			//      /templates/$theme/framework/.../$file.tpl
-			//      /templates/default/framework/.../$file.tpl
-			if (file_exists($file_path = $theme_templates_folder . $filepath))
-			{
-				return $file_path;
-			}
-
-			return $default_templates_folder . $filepath;
-		}
-		elseif ($module == 'menus')
-		{   // Framework - Templates priority order
-			//      /templates/$theme/menus/$menu/filename.tpl
-			//      /menus/$menu/default/framework/.../$file.tpl
-			$menu = substr($folder, 0, strpos($folder, '/'));
-			if (empty($menu))
-			{
-				$menu = $folder;
-			}
-			if (file_exists($file_path = $theme_templates_folder . '/menus/' . $menu . '/' . $filename))
-			{
-				return $file_path;
-			}
-
-			return PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $filename;
-		}
-		else
-		{   // Module - Templates
-			$theme_module_templates_folder = $theme_templates_folder . 'modules/' . $module . '/';
-			$module_templates_folder = PATH_TO_ROOT . '/' . $module . '/templates/';
-
-			if ($folder == 'framework')
-			{   // Framework - Templates priority order
-				//      /templates/$theme/modules/$module/framework/.../$file.tpl
-				//      /templates/$theme/framework/.../$file.tpl
-				//      /$module/templates/framework/.../$file.tpl
-				//      /templates/default/framework/.../$file.tpl
-				if (file_exists($file_path = $theme_module_templates_folder . $file))
-				{
-					return $file_path;
-				}
-				if (file_exists($file_path = $theme_templates_folder . $filepath))
-				{
-					return $file_path;
-				}
-				if (file_exists($file_path = ($module_templates_folder . 'framework/' . $file)))
-				{
-					return $file_path;
-				}
-				return $default_templates_folder . $file;
-			}
-
-			//module data path
-			if (!isset($this->module_data_path[$module]))
-			{
-				if (is_dir($theme_module_templates_folder . '/images'))
-				{
-					$this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/' . 'modules/' . $module;
-				}
-				else
-				{
-					$this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/' . trim($module . '/templates/', '/');
-				}
-			}
-
-			if (file_exists($file_path = $theme_module_templates_folder . $file))
-			{
-				return $file_path;
-			}
-			else
-			{
-				return $module_templates_folder . $file;
-			}
-		}
+		return $this->get_js_var_from_list($varname, $this->vars);
 	}
 	
-	protected function auto_load_frequent_vars()
+	public function get_js_var_from_list($varname, &$list)
+	{
+		$full_varname = 'J_' . $varname;
+		if (!empty($list[$full_varname]))
+		{
+			return $list[$full_varname];
+		}
+		
+		if (!isset($list[$varname]))
+		{
+			$list[$varname] = '';
+		}
+		return $this->register_var($full_varname, to_js_string($list[$varname]), $list);
+	}
+	
+	public function get_js_lang_var($varname)
+	{
+		return $this->get_js_lang_var_from_list($varname, $this->vars);
+	}
+	
+	public function get_js_lang_var_from_list($varname, &$list)
+	{
+		$full_varname = 'JL_' . $varname;
+		if (!empty($list[$full_varname]))
+		{
+			return $list[$full_varname];
+		}
+		
+		$lang_var = $this->get_lang_var_from_list($varname, $list);
+		return $this->register_var($full_varname, to_js_string($lang_var), $list);
+	}
+	
+	public function get_htmlescaped_lang_var($varname)
+	{
+		return $this->get_htmlescaped_lang_var_from_list($varname, $this->vars);
+	}
+	
+	public function get_htmlescaped_lang_var_from_list($varname, &$list)
+	{
+		$full_varname = 'JL_' . $varname;
+		if (!empty($list[$full_varname]))
+		{
+			return $list[$full_varname];
+		}
+		
+		$lang_var = $this->get_lang_var_from_list($varname, $list);
+		return $this->register_var($full_varname, htmlspecialchars($lang_var), $list);
+	}
+	
+	public function get_htmlescaped_var($varname)
+	{
+		return $this->get_htmlescaped_var_from_list($varname, $this->vars);
+	}
+	
+	public function get_htmlescaped_var_from_list($varname, &$list)
+	{
+		$full_varname = 'E_' . $varname;
+		if (!empty($list[$full_varname]))
+		{
+			return $list[$full_varname];
+		}
+		
+		if (!isset($list[$varname]))
+		{
+			$list[$varname] = '';
+		}
+		return $this->register_var($full_varname, htmlspecialchars($list[$varname]), $list);
+	}
+	
+	public function get_lang_var($varname)
+	{
+		return $this->get_lang_var_from_list($varname, $this->vars);
+	}
+	
+	public function get_lang_var_from_list($varname, &$list)
+	{
+		$full_varname = 'L_' . $varname;
+		if (!empty($list[$full_varname]))
+		{
+			return $list[$full_varname];
+		}
+		$varname= strtolower($varname);
+		foreach ($this->langs as $lang)
+		{
+			if (isset($lang[$varname]))
+			{
+				return $this->register_var($full_varname, $lang[$varname], $list);
+			}
+		}
+		return $this->register_var($full_varname, '', $list);
+	}
+	
+	private function auto_load_frequent_vars()
 	{
 		global $User, $Session;
 		$member_connected = $User->check_level(MEMBER_LEVEL);
@@ -495,7 +444,7 @@ class Template
 		));
 	}
 
-	protected function find_lang_var(&$varname)
+	private function find_lang_var(&$varname)
 	{
 		foreach ($this->langs as $lang)
 		{
@@ -507,7 +456,7 @@ class Template
 		return '';
 	}
 	
-	protected function register_var(&$name, &$value, &$list)
+	private function register_var(&$name, &$value, &$list)
 	{
 		$list[$name] = $value;
 		return $value;
