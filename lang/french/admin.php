@@ -353,9 +353,9 @@ $LANG['admin_sign'] = 'Signature du mail';
 $LANG['email_admin_explain'] = 'Séparez les mails par ;';
 $LANG['admin_sign_explain'] = 'En bas de tous les mails envoyés par le site';
 $LANG['cache_success'] = 'Le cache a été régénéré avec succès!';
-$LANG['explain_site_cache'] = 'Rénégération totale du cache du site à partir de la base de données.
+$LANG['explain_site_cache'] = 'Régénération totale du cache du site à partir de la base de données.
 <br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
-$LANG['explain_site_cache_syndication'] = 'Rénégération totale du cache des flux RSS et ATOM du site à partir de la base de données.
+$LANG['explain_site_cache_syndication'] = 'Régénération totale du cache des flux RSS et ATOM du site à partir de la base de données.
 <br /><br />Le cache permet d\'améliorer notablement la vitesse d\'exécution des pages, et allège le travail du serveur SQL. A noter que si vous faites des modifications vous-même dans la base de données, elles ne seront visibles qu\'après avoir régénéré le cache';
 $LANG['confirm_unlock_admin'] = 'Un email va vous être envoyé avec le code de déverrouillage';
 $LANG['unlock_admin_confirm'] = 'Le code de déverrouillage a été renvoyé avec succès';
@@ -612,7 +612,7 @@ $LANG['pm_group_limit_explain'] = 'Mettre -1 pour illimité';
 $LANG['data_group_limit'] = 'Limite de données uploadables';
 $LANG['data_group_limit_explain'] = 'Mettre -1 pour illimité';
 $LANG['color_group'] = 'Couleur';
-$LANG['color_group_explain'] = 'Couleur associée au groupe en héxadécimal (ex: #FF6600)';
+$LANG['color_group_explain'] = 'Couleur associée au groupe en hexadécimal (ex: #FF6600)';
 $LANG['img_assoc_group'] = 'Image associée au groupe';
 $LANG['img_assoc_group_explain'] = 'Mettre dans le dossier images/group/';
 $LANG['add_mbr_group'] = 'Ajouter un membre au groupe';

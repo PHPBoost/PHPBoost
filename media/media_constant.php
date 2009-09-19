@@ -81,13 +81,13 @@ $mime_type_tpl = array(
 
 // Host de confiance!
 $host_ok = array(
-	'audio' => array(
+	'video' => array(
 		'www.dailymotion.com',
 		'www.youtube.com',
 		'video.google.fr',
 		'www.wat.tv'
 	),
-	'video' => array(
+	'audio' => array(
 		'www.deezer.com',
 		'widgets.jamendo.com'
 	)
