@@ -83,14 +83,14 @@ if ($calendar_type == 'date')
         $selected = ($month == $i) ? 'selected="selected"' : '';
         $Template->assign_block_vars('month', array(
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . htmlentities($array_l_month[$i - 1]) . '</option>'
-			));
+		));
     }
     for ($i = 1900; $i <= 2037; $i++)
     {
         $selected = ($year == $i) ? 'selected="selected"' : '';
         $Template->assign_block_vars('year', array(
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
-			));
+		));
     }
     	
     //Génération des jours du calendrier.
@@ -100,7 +100,7 @@ if ($calendar_type == 'date')
     {
         $Template->assign_block_vars('day', array(
 			'L_DAY' => '<td style="width:25px;border-top:1px solid black;border-bottom:1px solid black"><span class="text_small">' . $l_day . '</span></td>'
-			));
+		));
     }
 
     //Premier jour du mois.
