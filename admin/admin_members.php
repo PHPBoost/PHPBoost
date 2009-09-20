@@ -287,7 +287,6 @@ if (!empty($_POST['valid']) && !empty($id_post))
 							$Sql->query_inject("INSERT INTO " . DB_TABLE_MEMBER_EXTEND . " (user_id, " . trim($req_field, ', ') . ") VALUES ('" . $id_post . "', " . trim($req_insert, ', ') . ")", __LINE__, __FILE__);
 					}
 				}	
-				
 				redirect(HOST . SCRIPT);	
 			}
 			else
