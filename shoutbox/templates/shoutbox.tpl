@@ -1,56 +1,13 @@
 		<script type="text/javascript">
 		<!--
-		function check_form(){
-			# IF C_BBCODE_TINYMCE_MODE #
-				tinyMCE.triggerSave();
-			# ENDIF #
-			
-			if(document.getElementById('shout_contents').value == "") {
-				alert("{L_ALERT_TEXT}");
-				return false;
-		    }
-			return true;
-		}
 		function Confirm_shout() {
 		return confirm("{L_DELETE_MSG}");
 		}
-
 		-->
 		</script>
 
-		<form action="shoutbox.php{UPDATE}" method="post" onsubmit="return check_form();" class="fieldset_mini">
-			<fieldset>
-				<legend>{L_ADD_MSG}{L_UPDATE_MSG}</legend>
-				<p>{L_REQUIRE}</p>
-				
-				# IF C_VISIBLE_SHOUT #
-				<dl>
-					<dt><label for="shout_pseudo">* {L_PSEUDO}</label></dt>
-					<dd><label><input type="text" size="25" maxlength="25" name="shout_pseudo" id="shout_pseudo" value="{SHOUTBOX_PSEUDO}" class="text" /></label></dd>
-				</dl>
-				# ENDIF #
-
-				<label for="shout_contents">* {L_MESSAGE}</label>
-				<div class="fieldset_mini">{KERNEL_EDITOR}</div>
-				<label><textarea rows="10" cols="50" id="shout_contents" name="shout_contents">{CONTENTS}</textarea></label>
-			</fieldset>
-			<fieldset class="fieldset_submit">
-				<legend>{L_SUBMIT}</legend>
-				# IF C_HIDDEN_SHOUT #
-					<input size="16" maxlength="25" type="hidden" class="text" name="shout_pseudo" value="{SHOUTBOX_PSEUDO}" />
-				# ENDIF #
-				
-				<input type="hidden" name="shout_contents_ftags" id="shout_contents_ftags" value="{FORBIDDEN_TAGS}" />
-				<input type="submit" name="shoutbox" value="{L_SUBMIT}" class="submit" />
-				<script type="text/javascript">
-				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
-				-->
-				</script>
-				<input type="reset" value="{L_RESET}" class="reset" />			
-			</fieldset>	
-		</form>
-
+		{SHOUTBOX_FORM}
+		
 		<br />
 		# IF C_ERROR_HANDLER #
 		<span id="errorh"></span>

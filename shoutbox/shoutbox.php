@@ -30,15 +30,16 @@ require_once('../shoutbox/shoutbox_begin.php');
 require_once('../kernel/header.php');
 	
 $shout_id = retrieve(GET, 'id', 0);
-$shoutbox = retrieve(POST, 'shoutbox', false);
+$shoutbox = retrieve(POST, 'shoutboxForm', false);
 if ($shoutbox && empty($shout_id)) //Insertion
 {		
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time()) 
 		$Errorh->handler('e_readonly', E_USER_REDIRECT); 
 	
-	$shout_pseudo = substr(retrieve(POST, 'shout_pseudo', $LANG['guest']), 0, 25); //Pseudo posté.
-		$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);
+	$shout_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : substr(retrieve(POST, 'shoutbox_pseudo', $LANG['guest']), 0, 25);  //Pseudo posté.
+	$shout_contents = retrieve(POST, 'shoutbox_contents', '', TSTRING_UNCHANGE);
+	
 	if (!empty($shout_pseudo) && !empty($shout_contents))
 	{		
 		//Accès pour poster.		
@@ -98,41 +99,38 @@ elseif (!empty($shout_id)) //Edition + suppression!
 				'shoutbox'=> 'shoutbox/shoutbox.tpl'
 			));
 			
-			//Pseudo du membre connecté.
-			if ($User->get_attribute('user_id') !== -1)
-				$Template->assign_vars(array(
-					'SHOUTBOX_PSEUDO' => $row['login'],
-					'C_HIDDEN_SHOUT' => true
+			//Update form
+			import('builder/form/form_builder');
+			$form = new FormBuilder('shoutboxForm', 'shoutbox.php?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token());
+			$fieldset = new FormFieldset($LANG['update_msg']);
+			
+			if ($row['user_id'] == -1) //Visiteur
+			{
+				$fieldset->add_field(new FormTextEdit(
+					'shoutbox_pseudo', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
+					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
-			else
-				$Template->assign_vars(array(
-					'SHOUTBOX_PSEUDO' => $LANG['guest'],
-					'C_VISIBLE_SHOUT' => true
-				));
+			}
+			$fieldset->add_field(new FormTextarea(
+				'shoutbox_contents', array('forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
+				'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+			));
+			$form->add_fieldset($fieldset);
+			$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
+			$form->set_form_submit($LANG['update']);	
 			
 			$Template->assign_vars(array(
-				'UPDATE' => url('?update=1&amp;id=' . $row['id'] . '&amp;token=' . $Session->get_token()),
-				'SID' => '',
-				'CONTENTS' => unparse($row['contents']),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'THEME' => get_utheme(),
-				'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
-				'L_ALERT_TEXT' => $LANG['require_text'],
-				'L_UPDATE_MSG' => $LANG['update_msg'],
-				'L_REQUIRE' => $LANG['require'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_PSEUDO' => $LANG['pseudo'],
-				'L_SUBMIT' => $LANG['update'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset']
+				'SHOUTBOX_FORM' =>  $form->display()
 			));
 			
 			$Template->pparse('shoutbox'); 
 		}
 		elseif ($update_message)
 		{
-			$shout_contents = retrieve(POST, 'shout_contents', '', TSTRING_UNCHANGE);			
-			$shout_pseudo = retrieve(POST, 'shout_pseudo', '');			
+			$shout_contents = retrieve(POST, 'shoutbox_contents', '', TSTRING_UNCHANGE);			
+			$shout_pseudo = retrieve(POST, 'shoutbox_pseudo', $LANG['guest']);
+			$shout_pseudo = empty($shout_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $shout_pseudo;
+			
 			if (!empty($shout_contents) && !empty($shout_pseudo))
 			{
 				//Vérifie que le message ne contient pas du flood de lien.
@@ -198,27 +196,32 @@ else //Affichage.
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
-	$Template->assign_vars(array(
-		'KERNEL_EDITOR' => display_editor('shout_contents', $CONFIG_SHOUTBOX['shoutbox_forbidden_tags']),
-		'L_ON' => $LANG['on'],
-		'L_ALERT_TEXT' => $LANG['require_text'],
-		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
-		'L_ADD_MSG' => $LANG['add_msg'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_MESSAGE' => $LANG['message'],
-		'L_PSEUDO' => $LANG['pseudo'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset']
+	//Post form
+	import('builder/form/form_builder');
+	$form = new FormBuilder('shoutboxForm', 'shoutbox.php?token=' . $Session->get_token());
+	$fieldset = new FormFieldset($LANG['add_msg']);
+	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
+	{
+		$fieldset->add_field(new FormTextEdit(
+			'shoutbox_pseudo', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 
+			'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
+		));
+	}
+	$fieldset->add_field(new FormTextarea(
+		'shoutbox_contents', array('forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
+		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 	));
-	
-	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
+	$form->add_fieldset($fieldset);
+	$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
 	
 	//On crée une pagination si le nombre de messages est trop important.
+	$nbr_shout = $Sql->count_table('shoutbox', __LINE__, __FILE__);
 	import('util/pagination'); 
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
+		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
+		'SHOUTBOX_FORM' =>  $form->display(),
 		'PAGINATION' => $Pagination->display('shoutbox' . url('.php?p=%d'), $nbr_shout, 'p', 10, 3)
 	));
 	
