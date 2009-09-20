@@ -19,53 +19,7 @@
 		-->
 		</script>
 
-		<form action="guestbook.php{UPDATE}" method="post" onsubmit="return check_form_or();" class="fieldset_mini">
-			<fieldset>
-				<legend>{L_ADD_MSG}{L_UPDATE_MSG}</legend>
-				<p>{L_REQUIRE}</p>
-				
-				# IF C_VISIBLE_GUESTBOOK #
-				<dl>
-					<dt><label for="guestbook_pseudo">* {L_PSEUDO}</label></dt>
-					<dd><label><input type="text" size="25" maxlength="25" name="guestbook_pseudo" id="guestbook_pseudo" value="{PSEUDO}" class="text" /></label></dd>
-				</dl>
-				# ENDIF #	
-				
-				# IF C_VERIF_CODE #
-				<dl>
-					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
-					<dd>
-						<label>
-							{VERIF_CODE}
-						</label>
-					</dd>			
-				</dl>
-				# ENDIF #
-				
-				<label for="guestbook_contents">* {L_MESSAGE}</label>
-				<div class="fieldset_mini">{KERNEL_EDITOR}</div>
-				<label><textarea rows="10" cols="47" id="guestbook_contents" name="guestbook_contents">{CONTENTS}</textarea></label>
-			</fieldset>
-			<fieldset class="fieldset_submit">
-				<legend>{L_SUBMIT}</legend>
-				# IF C_HIDDEN_GUESTBOOK #
-					<input type="hidden" size="25" maxlength="25" name="guestbook_pseudo" value="{PSEUDO}" class="text" />
-				# ENDIF #
-				
-				<input type="hidden" name="guestbook_contents_ftags" id="guestbook_contents_ftags" value="{FORBIDDEN_TAGS}" />
-				<input type="submit" name="guestbook" value="{L_SUBMIT}" class="submit" />
-				
-				<input value="{L_PREVIEW}" type="submit" name="previs" id="previs_guestbook" class="submit" />
-				<script type="text/javascript">
-				<!--				
-				document.getElementById('previs_guestbook').style.display = 'none';
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();" type="button" class="submit" />');
-				-->
-				</script>
-				
-				<input type="reset" value="{L_RESET}" class="reset" />			
-			</fieldset>	
-		</form>
+		{GUESTBOOK_FORM}
 
 		<br />
 		# IF C_ERROR_HANDLER #

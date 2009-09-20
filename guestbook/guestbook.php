@@ -30,7 +30,7 @@ require_once('../guestbook/guestbook_begin.php');
 require_once('../kernel/header.php');
 
 $id_get = retrieve(GET, 'id', 0);
-$guestbook = retrieve(POST, 'guestbook', false);
+$guestbook = retrieve(POST, 'guestbookForm', false);
 //Chargement du cache
 $Cache->load('guestbook');
 
@@ -41,11 +41,13 @@ $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);
 if ($guestbook && empty($id_get)) //Enregistrement
 {
 	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
-	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
+	$guestbook_pseudo = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
 	
 	//Membre en lecture seule?
 	if ($User->get_attribute('user_readonly') > time())
+	{
 		$Errorh->handler('e_readonly', E_USER_REDIRECT);
+	}
 	
 	if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 	{
@@ -82,57 +84,6 @@ if ($guestbook && empty($id_get)) //Enregistrement
 	else
 		redirect(HOST . SCRIPT . url('?error=incomplete', '', '&') . '#errorh');
 }
-elseif (retrieve(POST, 'previs', false)) //Prévisualisation.
-{
-	$Template->set_filenames(array(
-		'guestbook'=> 'guestbook/guestbook.tpl'
-	));
-
-	$user_id = (int)$Sql->query("SELECT user_id FROM " . PREFIX . "guestbook WHERE id = '" . $id_get . "'", __LINE__, __FILE__);
-	
-	$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_AS_RECEIVED);
-	$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
-
-	//Pseudo du membre connecté.
-	if ($user_id !== -1)
-		$Template->assign_block_vars('hidden_guestbook', array(
-			'PSEUDO' => $guestbook_pseudo
-		));
-	else
-		$Template->assign_block_vars('visible_guestbook', array(
-			'PSEUDO' => stripslashes($guestbook_pseudo)
-		));
-
-	$Template->assign_block_vars('guestbook', array(
-		'CONTENTS' => second_parse(stripslashes(strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']))),
-		'PSEUDO' => stripslashes($guestbook_pseudo),
-		'DATE' => gmdate_format('date_format_short')
-	));
-
-	//On met à jour en cas d'édition après prévisualisation du message
-	$update = retrieve(GET, 'update', false);
-	$update = (!empty($id_get) ? '?update=1&amp;id=' . $id_get . '&amp;' : '?') . 'token=' . $Session->get_token();
-	
-	$Template->assign_vars(array(
-		'CONTENTS' => $guestbook_contents,
-		'PSEUDO' => stripslashes($guestbook_pseudo),
-		'DATE' => gmdate_format('date_format_short'),
-		'UPDATE' => url($update),
-		'ERROR' => '',
-		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
-		'L_ALERT_TEXT' => $LANG['require_text'],
-		'L_UPDATE_MSG' => $LANG['update_msg'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_MESSAGE' => $LANG['message'],
-		'L_PSEUDO' => $LANG['pseudo'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset'],
-		'L_ON' => $LANG['on']
-	));
-	
-	$Template->pparse('guestbook');
-}
 elseif (!empty($id_get)) //Edition + suppression!
 {
 	$del = retrieve(GET, 'del', false);
@@ -161,33 +112,28 @@ elseif (!empty($id_get)) //Edition + suppression!
 				'guestbook'=> 'guestbook/guestbook.tpl'
 			));
 
-			if ($row['user_id'] !== -1)
-				$Template->assign_vars(array(
-					'C_HIDDEN_GUESTBOOK' => true,
-					'PSEUDO' => $row['login']
+			//Update form
+			import('builder/form/form_builder');
+			$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()));
+			$fieldset = new FormFieldset($LANG['update_msg']);
+			
+			if ($row['user_id'] == -1) //Visiteur
+			{
+				$fieldset->add_field(new FormTextEdit(
+					'guestbook_pseudo', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
+					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
-			else
-				$Template->assign_vars(array(
-					'C_VISIBLE_GUESTBOOK' => true,
-					'PSEUDO' => $row['login']
-				));
+			}
+			$fieldset->add_field(new FormTextarea(
+				'guestbook_contents', array('forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
+				'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+			));
+			$form->add_fieldset($fieldset);
+			$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
+			$form->set_form_submit($LANG['update']);	
 			
 			$Template->assign_vars(array(
-				'UPDATE' => url('?update=1&amp;id=' . $id_get . '&amp;token=' . $Session->get_token()),
-				'CONTENTS' => unparse($row['contents']),
-				'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
-				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
-				'THEME' => get_utheme(),
-				'DISPLAY_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? '[' . str_replace(', ', '], [', $forbidden_tags) . ']' : '',
-				'L_FORBIDDEN_TAGS' => !empty($forbidden_tags) ? $LANG['forbidden_tags'] : '',
-				'L_ALERT_TEXT' => $LANG['require_text'],
-				'L_UPDATE_MSG' => $LANG['update_msg'],
-				'L_REQUIRE' => $LANG['require'],
-				'L_MESSAGE' => $LANG['message'],
-				'L_PSEUDO' => $LANG['pseudo'],
-				'L_SUBMIT' => $LANG['update'],
-				'L_PREVIEW' => $LANG['preview'],
-				'L_RESET' => $LANG['reset']
+				'GUESTBOOK_FORM' =>  $form->display()
 			));
 			
 			$Template->pparse('guestbook');
@@ -198,6 +144,8 @@ elseif (!empty($id_get)) //Edition + suppression!
 			
 			$guestbook_contents = retrieve(POST, 'guestbook_contents', '', TSTRING_UNCHANGE);
 			$guestbook_pseudo = retrieve(POST, 'guestbook_pseudo', $LANG['guest']);
+			$guestbook_pseudo = empty($guestbook_pseudo) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $guestbook_pseudo;
+			
 			if (!empty($guestbook_contents) && !empty($guestbook_pseudo))
 			{
 				$guestbook_contents = strparse($guestbook_contents, $CONFIG_GUESTBOOK['guestbook_forbidden_tags']);
@@ -224,18 +172,6 @@ else //Affichage.
 	$Template->set_filenames(array(
 		'guestbook'=> 'guestbook/guestbook.tpl'
 	));
-	
-	//Pseudo du membre connecté.
-	if ($User->get_attribute('user_id') !== -1)
-		$Template->assign_vars(array(
-			'C_HIDDEN_GUESTBOOK' => true,
-			'PSEUDO' => $User->get_attribute('login')
-		));
-	else
-		$Template->assign_vars(array(
-			'C_VISIBLE_GUESTBOOK' => true,
-			'PSEUDO' => $LANG['guest']
-		));
 	
 	//Gestion erreur.
 	$get_error = retrieve(GET, 'error', '');
@@ -265,36 +201,39 @@ else //Affichage.
 	if (!empty($errstr))
 		$Errorh->handler($errstr, E_USER_NOTICE);
 	
-	//Code de vérification, anti-bots.
-	if ($captcha->is_available() && $CONFIG_GUESTBOOK['guestbook_verifcode'])
+	$is_guest = !$User->check_level(MEMBER_LEVEL);
+	
+	//Post form
+	import('builder/form/form_builder');
+	$form = new FormBuilder('guestbookForm', 'guestbook.php' . url('?token=' . $Session->get_token()));
+	$fieldset = new FormFieldset($LANG['add_msg']);
+	if ($is_guest) //Visiteur
 	{
-		$Template->assign_vars(array(
-			'C_VERIF_CODE' => true,
-			'VERIF_CODE' => $captcha->display_form(),
-			'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
+		$fieldset->add_field(new FormTextEdit(
+			'guestbook_pseudo', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 'required' => true, 
+			'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 		));
 	}
-
-	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
+	$fieldset->add_field(new FormTextarea(
+		'guestbook_contents', array('forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
+		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+	));
+	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.
+	{
+		$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+	}
+	$form->add_fieldset($fieldset);
+	$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
+	
 	//On crée une pagination si le nombre de msg est trop important.
+	$nbr_guestbook = $Sql->count_table('guestbook', __LINE__, __FILE__);
 	import('util/pagination');
 	$Pagination = new Pagination();
 		
 	$Template->assign_vars(array(
-		'UPDATE' => url('?token=' . $Session->get_token()),
 		'PAGINATION' => $Pagination->display('guestbook' . url('.php?p=%d'), $nbr_guestbook, 'p', 10, 3),
-		'KERNEL_EDITOR' => display_editor('guestbook_contents', $CONFIG_GUESTBOOK['guestbook_forbidden_tags']),
-		'L_ALERT_TEXT' => $LANG['require_text'],
+		'GUESTBOOK_FORM' =>  $form->display(),
 		'L_DELETE_MSG' => $LANG['alert_delete_msg'],
-		'L_ADD_MSG' => $LANG['add_msg'],
-		'L_REQUIRE' => $LANG['require'],
-		'L_MESSAGE' => $LANG['message'],
-		'L_VERIF_CODE' => $LANG['verif_code'],
-		'L_PSEUDO' => $LANG['pseudo'],
-		'L_SUBMIT' => $LANG['submit'],
-		'L_PREVIEW' => $LANG['preview'],
-		'L_RESET' => $LANG['reset'],
-		'L_ON' => $LANG['on']
 	));
 		
 	//Création du tableau des rangs.

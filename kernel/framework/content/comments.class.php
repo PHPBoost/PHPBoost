@@ -202,8 +202,7 @@ class Comments
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/content/com.tpl');
 		
-		//Commentaires chargés?
-		if ($this->is_loaded())
+		if ($this->is_loaded()) //Commentaires chargés?
 		{
 			//Chargement du cache
 			$Cache->load('com');
@@ -213,14 +212,14 @@ class Comments
 			$captcha->set_difficulty($CONFIG_COM['com_verif_code_difficulty']);
 
 			###########################Insertion##############################
-			if (retrieve(POST, 'valid_com', false) && !$updatecom)
+			if (retrieve(POST, 'comForm', false) && !$updatecom)
 			{
 				//Membre en lecture seule?
 				if ($User->get_attribute('user_readonly') > time())
 					$Errorh->handler('e_auth', E_USER_REDIRECT);
 				
-				$login = retrieve(POST, 'login', ''); //Pseudo posté.
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+				$login = $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : retrieve(POST, $this->script . 'login', $LANG['guest']);
+				$contents = addslashes(retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE));
 				
 				if (!empty($login) && !empty($contents))
 				{
@@ -244,7 +243,6 @@ class Comments
 						{
 							redirect($path_redirect . '&errorh=verif#errorh');
 						}
-						
 						$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
 						
 						if (!check_nbr_links($login, 0)) //Nombre de liens max dans le pseudo.
@@ -292,45 +290,45 @@ class Comments
 							'AUTH_POST_COM' => true
 						));
 						
-						//Pseudo du membre connecté.
-						if ($row['user_id'] !== -1)
-							$Template->assign_vars(array(
-								'C_HIDDEN_COM' => true,
-								'LOGIN' => $User->get_attribute('login')
+						$is_guest = $row['user_id'] == -1;
+						
+						//Post form
+						import('builder/form/form_builder');
+						$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . '&amp;token=' . $Session->get_token() . '&amp;updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : ''));
+						$fieldset = new FormFieldset($LANG['edit_comment']);
+						if ($is_guest) //Visiteur
+						{
+							$fieldset->add_field(new FormTextEdit(
+								$this->script . 'login', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
+								'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 							));
-						else
-							$Template->assign_vars(array(
-								'C_VISIBLE_COM' => true,
-								'LOGIN' => $row['login']
-							));
+						}
+						$fieldset->add_field(new FormTextarea(
+							$this->script . 'contents', array('forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+							'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+						));
+						$fieldset->add_field(new FormHiddenField('idprov', array('value' => $row['idprov'])));
+						$fieldset->add_field(new FormHiddenField('idcom', array('value' => $row['idcom'])));
+						$fieldset->add_field(new FormHiddenField('script', array('value' => $this->script)));
+				
+						$form->add_fieldset($fieldset);
+						$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
+						$form->set_form_submit($LANG['update']);	
 						
 						$Template->assign_vars(array(
-							'IDPROV' => $row['idprov'],
-							'IDCOM' => $row['idcom'],
+							'COM_FORM' =>  $form->display(),
 							'SCRIPT' => $this->script,
-							'CONTENTS' => unparse($row['contents']),
-							'DATE' => gmdate_format('date_format', $row['timestamp']),
-							'THEME' => get_utheme(),
-							'KERNEL_EDITOR' => display_editor('contents', $CONFIG_COM['forbidden_tags']),
-							'L_LANGUAGE' => substr(get_ulang(), 0, 2),
-							'L_EDIT_COMMENT' => $LANG['edit_comment'],
-							'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
-							'L_REQUIRE_TEXT' => $LANG['require_text'],
+							'L_XML_LANGUAGE' => $LANG['xml_lang'],
+							'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
 							'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-							'L_LOGIN' => $LANG['pseudo'],
-							'L_MESSAGE' => $LANG['message'],
-							'L_RESET' => $LANG['reset'],
-							'L_PREVIEW' => $LANG['preview'],
-							'L_PREVIEW' => $LANG['preview'],
-							'L_SUBMIT' => $LANG['update'],
-							'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . '&amp;token=' . $Session->get_token() . '&amp;updatecom=1' . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '')
 						));
 					}
 					elseif ($updatecom) //Mise à jour du commentaire.
 					{
-						$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-						$login = retrieve(POST, 'login', '');
-						
+						$contents = addslashes(retrieve(POST, $this->script . 'contents', '', TSTRING_UNCHANGE));
+						$login = retrieve(POST, $this->script . 'login', $LANG['guest']);
+						$login = empty($login) && $User->check_level(MEMBER_LEVEL) ? $User->get_attribute('login') : $login;
+			
 						if (!empty($contents) && !empty($login))
 						{
 							$contents = strparse($contents, $CONFIG_COM['forbidden_tags']);
@@ -375,16 +373,6 @@ class Comments
 					$contents = '[quote=' . $info_com['login'] . ']' . $info_com['contents'] . '[/quote]';
 				}
 
-				//On crée une pagination si le nombre de commentaires est trop important.
-				import('util/pagination');
-				$pagination = new Pagination();
-
-				$Template->assign_vars(array(
-					'ERROR_HANDLER' => '',
-					'CURRENT_PAGE_COM' => $integrated_in_environment,
-					'POPUP_PAGE_COM' => !$integrated_in_environment
-				));
-				
 				//Affichage du lien de verrouillage/déverrouillage.
 				if ($User->check_level(MODO_LEVEL))
 				{
@@ -436,16 +424,6 @@ class Comments
 				//Affichage du formulaire pour poster si les commentaires ne sont pas vérrouillé
 				if (!$this->lock_com || $User->check_level(MODO_LEVEL))
 				{
-					//Code de vérification, anti-bots.
-					if ($captcha->is_available() && $CONFIG_COM['com_verif_code'])
-					{
-					    $Template->assign_vars(array(
-							'C_VERIF_CODE' => true,
-							'VERIF_CODE' => $captcha->display_form(),
-							'L_REQUIRE_VERIF_CODE' => $captcha->js_require()
-					    ));
-					}
-
 					if ($User->check_level($CONFIG_COM['com_auth']))
 					{	
 						$Template->assign_vars(array(
@@ -458,22 +436,6 @@ class Comments
 							'ERROR_HANDLER' => $Errorh->display($LANG['e_unauthorized'], E_USER_NOTICE)
 						));
 					}
-					
-					//Pseudo du membre connecté.
-					if ($User->get_attribute('user_id') !== -1)
-					{	
-						$Template->assign_vars(array(
-							'C_HIDDEN_COM' => true,
-							'LOGIN' => $User->get_attribute('login')
-						));
-					}
-					else
-					{	
-						$Template->assign_vars(array(
-							'C_VISIBLE_COM' => true,
-							'LOGIN' => $LANG['guest']
-						));
-					}
 				}
 				else
 				{	
@@ -483,45 +445,61 @@ class Comments
 				}
 					
 				$get_pos = strpos($_SERVER['QUERY_STRING'], '&pc');
-				
 				if ($get_pos)
 					$get_page = substr($_SERVER['QUERY_STRING'], 0, $get_pos) . '&amp;pc';
 				else
 					$get_page = $_SERVER['QUERY_STRING'] . '&amp;pc';
 				
 				$is_modo = $User->check_level(MODO_LEVEL);
+				$is_guest = !$User->check_level(MEMBER_LEVEL);
+						
+				//Post form
+				import('builder/form/form_builder');
+				$form = new FormBuilder('comForm', $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token());
+				$fieldset = new FormFieldset($LANG['add_comment']);
+				if ($is_guest) //Visiteur
+				{
+					$fieldset->add_field(new FormTextEdit(
+						$this->script . 'login', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 'required' => true, 
+						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
+					));
+				}
+				$fieldset->add_field(new FormTextarea(
+					$this->script . 'contents', array('forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+					'value' => unparse($contents), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+				));
+				if ($is_guest && $CONFIG_COM['com_verif_code']) //Code de vérification, anti-bots.
+				{
+					$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+				}
+				$fieldset->add_field(new FormHiddenField('idprov', array('value' => $this->idprov)));
+				$fieldset->add_field(new FormHiddenField('idcom', array('value' => '')));
+				$fieldset->add_field(new FormHiddenField('script', array('value' => $this->script)));
+				
+				$form->add_fieldset($fieldset);
+				$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
+				
+				//On crée une pagination si le nombre de commentaires est trop important.
+				import('util/pagination');
+				$pagination = new Pagination();
 				
 				$Template->assign_vars(array(
 					'C_COM_DISPLAY' => $this->get_attribute('nbr_com') > 0 ? true : false,
 					'C_IS_MODERATOR' => $is_modo,
+					'COM_FORM' => $form->display(),
+					'CURRENT_PAGE_COM' => $integrated_in_environment,
+					'POPUP_PAGE_COM' => !$integrated_in_environment,
 					'PAGINATION_COM' => $pagination->display($this->path . $vars_simple . '&amp;pc=%d#anchor_' . $this->script, $this->nbr_com, 'pc', $CONFIG_COM['com_max'], 3),
-					'LANG' => get_ulang(),
-					'IDCOM' => '',
-					'IDPROV' => $this->idprov,
 					'SCRIPT' => $this->script,
 					'PATH' => SCRIPT,
-					'UPDATE' => ($integrated_in_environment == true) ? SID : '',
 					'VAR' => $vars_simple,
-					'KERNEL_EDITOR' => display_editor($this->script . 'contents', $CONFIG_COM['forbidden_tags']),
 					'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 					'L_XML_LANGUAGE' => $LANG['xml_lang'],
 					'L_TITLE' => ($CONFIG['com_popup'] == 0 || $integrated_in_environment === true) ? $LANG['title_com'] : '',
-					'THEME' => get_utheme(),
-					'CONTENTS' => unparse($contents),
-					'L_REQUIRE_LOGIN' => $LANG['require_pseudo'],
-					'L_REQUIRE_TEXT' => $LANG['require_text'],
-					'L_VERIF_CODE' => $LANG['verif_code'],
 					'L_DELETE_MESSAGE' => $LANG['alert_delete_msg'],
-					'L_ADD_COMMENT' => $LANG['add_comment'],
 					'L_PUNISHMENT_MANAGEMENT' => $LANG['punishment_management'],
 					'L_WARNING_MANAGEMENT' => $LANG['warning_management'],
-					'L_LOGIN' => $LANG['pseudo'],
-					'L_MESSAGE' => $LANG['message'],
-					'L_QUOTE' => $LANG['quote'],
-					'L_RESET' => $LANG['reset'],
-					'L_PREVIEW' => $LANG['preview'],
-					'L_SUBMIT' => $LANG['submit'],
-					'U_ACTION' => $this->path . sprintf($this->vars, $this->idcom) . ((!empty($page_path_to_root) && !$integrated_in_environment) ? '&amp;path_to_root=' . $page_path_to_root : '') . '&amp;token=' . $Session->get_token()
+					'L_QUOTE' => $LANG['quote']
 				));
 				
 				//Création du tableau des rangs.
