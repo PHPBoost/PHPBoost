@@ -41,12 +41,12 @@ class FormRadioChoice extends FormField
 	 * @param array $fieldOptions Option for the field.
 	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
 	 */
-	function FormRadioChoice()
+	public function __construct()
 	{
 		$fieldId = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		parent::FormField($fieldId, $field_options);
+		$this->fillAttributes($fieldId, $field_options);
 		foreach($field_options as $attribute => $value)
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		
@@ -55,7 +55,7 @@ class FormRadioChoice extends FormField
 		{
 			$option = func_get_arg($i);
 			$this->add_errors($option->get_errors());
-			$this->field_options[] = $option;
+			$this->options[] = $option;
 		}
 	}
 	
@@ -63,29 +63,29 @@ class FormRadioChoice extends FormField
 	 * @desc Add an option for the radio field.
 	 * @param FormRadioChoiceOption option The new option. 
 	 */
-	function add_option(&$option)
+	public function add_option(&$option)
 	{
-		$this->field_options[] = $option;
+		$this->options[] = $option;
 	}
 	
 	/**
 	 * @return string The html code for the radio input.
 	 */
-	function display()
+	public function display()
 	{
 		$Template = new Template('framework/builder/forms/field_box.tpl');
 			
 		$Template->assign_vars(array(
-			'ID' => $this->field_id,
-			'FIELD' => $this->field_options,
-			'L_FIELD_TITLE' => $this->field_title,
-			'L_EXPLAIN' => $this->field_sub_title,
-			'L_REQUIRE' => $this->field_required ? '* ' : ''
+			'ID' => $this->id,
+			'FIELD' => $this->options,
+			'L_FIELD_TITLE' => $this->title,
+			'L_EXPLAIN' => $this->sub_title,
+			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		foreach($this->field_options as $Option)
+		foreach($this->options as $Option)
 		{
-			$Option->field_name = $this->field_name; //Set the same field name for each option.
+			$Option->name = $this->name; //Set the same field name for each option.
 			$Template->assign_block_vars('field_options', array(
 				'OPTION' => $Option->display(),
 			));	
@@ -94,7 +94,7 @@ class FormRadioChoice extends FormField
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 	
-	var $field_options = array(); //Array of FormRadioChoiceOption
+	private $options = array(); //Array of FormRadioChoiceOption
 }
 
 ?>

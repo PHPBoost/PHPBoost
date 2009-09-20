@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_input_file.class.php
+ *                             form_file_uploader.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -38,9 +38,9 @@ import('builder/form/form_field');
  */
 class FormFileUploader extends FormField
 {
-	function FormFileUploader($fieldId, $field_options)
+	public function __construct($fieldId, $field_options = array())
 	{
-		parent::FormField($fieldId, $field_options);
+		$this->fillAttributes($fieldId, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -48,8 +48,11 @@ class FormFileUploader extends FormField
 			switch ($attribute)
 			{
 				case 'size' :
-					$this->field_size = $value;
+					$this->size = $value;
 				break;
+				case 'extended_text':
+					$this->extended_text = $value;
+				break; 
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
@@ -64,25 +67,27 @@ class FormFileUploader extends FormField
 		$Template = new Template('framework/builder/forms/field.tpl');
 			
 		$field = '<input type="file" ';
-		$field .= !empty($this->field_size) ? 'size="' . $this->field_size . '" ' : '';
-		$field .= !empty($this->field_name) ? 'name="' . $this->field_name . '" ' : '';
-		$field .= !empty($this->field_id) ? 'id="' . $this->field_id . '" ' : '';
-		$field .= !empty($this->field_css_class) ? 'class="' . $this->field_css_class . '" ' : '';
+		$field .= 'name="' . $this->name . '" ';
+		$field .= !empty($this->size) ? 'size="' . $this->size . '" ' : '';
+		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
+		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
 		$field .= '/>
-		<input name="max_file_size" value="2000000" type="hidden">';
+		<input name="max_file_size" value="2000000" type="hidden">'
+		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
 		
 		$Template->assign_vars(array(
-			'ID' => $this->field_id,
+			'ID' => $this->id,
 			'FIELD' => $field,
-			'L_FIELD_TITLE' => $this->field_title,
-			'L_EXPLAIN' => $this->field_sub_title,
-			'L_REQUIRE' => $this->field_required ? '* ' : ''
+			'L_FIELD_TITLE' => $this->title,
+			'L_EXPLAIN' => $this->sub_title,
+			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	var $field_size = '';
+	private $size = '';
+	private $extended_text = '';
 }
 
 ?>

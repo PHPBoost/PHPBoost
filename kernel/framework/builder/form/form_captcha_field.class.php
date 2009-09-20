@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_input_checkbox.class.php
+ *                             field_captcha_field.class.php
  *                            -------------------
- *   begin                : April 28, 2009
+ *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -25,70 +25,60 @@
 ###################################################*/
 
 import('builder/form/form_field');
-import('builder/form/form_checkbox_option');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manages checkbox input fields.
+ * @desc This class manage captcha validation fields to avoid bot spam.
  * @package builder
  * @subpackage form
  */
-class FormCheckbox extends FormField
+class FormCaptchaField extends FormField
 {
-	public function __construct()
-	{
-		$fieldId = func_get_arg(0);
-		$field_options = func_get_arg(1);
-
-		$this->fillAttributes($fieldId, $field_options);
-		foreach($field_options as $attribute => $value)
-			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
-		
-		$nbr_arg = func_num_args() - 1;		
-		for ($i = 2; $i <= $nbr_arg; $i++)
-		{
-			$option = func_get_arg($i);
-			$this->add_errors($option->get_errors());
-			$this->options[] = $option;
-		}
-	}
-
 	/**
-	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option. 
+	 * @param $fieldId string The html field identifier
+	 * @param $Captcha Captcha The captcha object
+	 * @param $fieldOptions array Field's options
 	 */
-	public function add_option(&$option)
+	public function __construct($fieldId, &$Captcha, $fieldOptions = array())
 	{
-		$this->options[] = $option;
+		global $LANG;
+		
+		$this->title = $LANG['verif_code'];
+		$this->required_alert = $LANG['require_verif_code'];
+		$this->required = true;
+		
+		$this->fillAttributes($fieldId . $Captcha->get_instance(), $fieldOptions);
+		$this->Captcha = $Captcha;
+		foreach($fieldOptions as $attribute => $value)
+		{
+			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
+		}
 	}
 	
 	/**
-	 * @return string The html code for the checkbox input.
+	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
-		$Template = new Template('framework/builder/forms/field_box.tpl');
+		$this->Captcha->save_user();
+		
+		$Template = new Template('framework/builder/forms/field_captcha.tpl');
 			
 		$Template->assign_vars(array(
 			'ID' => $this->id,
-			'FIELD' => $this->options,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
-			'L_REQUIRE' => $this->required ? '* ' : ''
+			'CAPTCHA_INSTANCE' => $this->Captcha->get_instance(),
+			'CAPTCHA_WIDTH' => $this->Captcha->get_width(),
+			'CAPTCHA_HEIGHT' => $this->Captcha->get_height(),
+			'CAPTCHA_FONT' => $this->Captcha->get_font(),
+			'CAPTCHA_DIFFICULTY' => $this->Captcha->get_difficulty()
 		));	
-		
-		foreach($this->options as $Option)
-		{
-			$Option->name = $this->name; //Set the same field name for each option.
-			$Template->assign_block_vars('field_options', array(
-				'OPTION' => $Option->display(),
-			));	
-		}
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-	
-	private $options = array();
+
+	private $Captcha = ''; //Captcha object
 }
 
 ?>
