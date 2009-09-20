@@ -44,5 +44,4 @@
 			<div class="module_mini_bottom">
 			</div>
 		</div>
-		<span id="test"></span>
 		
