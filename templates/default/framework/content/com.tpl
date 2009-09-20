@@ -31,17 +31,6 @@
 	
 		<script type="text/javascript">
 		<!--
-		function check_form_com(){
-			if(document.getElementById('{SCRIPT}login').value == "") {
-				alert("{L_REQUIRE_LOGIN}");
-				return false;
-			}
-			if(document.getElementById('{SCRIPT}contents').value == "") {
-				alert("{L_REQUIRE_TEXT}");
-				return false;
-			}
-			return true;
-		}
 		function Confirm_com_del() {
 			return confirm("{L_DELETE_MESSAGE}");
 		}
@@ -50,51 +39,7 @@
 
 		# IF AUTH_POST_COM #
 		<span id="anchor_{SCRIPT}"></span>
-		<form action="{U_ACTION}" method="post" onsubmit="return check_form_com();" class="fieldset_mini">
-			<fieldset>
-				<legend>{L_EDIT_COMMENT}{L_ADD_COMMENT}</legend>
-				
-				# IF C_VISIBLE_COM #
-				<dl>
-					<dt><label for="{SCRIPT}login">* {L_LOGIN}</label></dt>
-					<dd><input type="text" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" /></dd>
-				</dl>
-				# ENDIF #
-				
-				# IF C_VERIF_CODE #
-				<dl>
-					<dt><label for="verif_code">* {L_VERIF_CODE}</label></dt>
-					<dd>
-						<label>
-							{VERIF_CODE}
-						</label>
-					</dd>			
-				</dl>
-				# ENDIF #
-				<br />
-				<label for="contents">* {L_MESSAGE}</label>
-				{KERNEL_EDITOR}
-				<label><textarea rows="10" cols="40" id="{SCRIPT}contents" name="contents">{CONTENTS}</textarea> </label>
-			</fieldset>			
-			<fieldset class="fieldset_submit">
-				<legend>{L_SUBMIT}</legend>
-				# IF C_HIDDEN_COM #
-				<input type="hidden" maxlength="25" size="25" id="{SCRIPT}login" name="login" value="{LOGIN}" class="text" />
-				# ENDIF #
-				<input type="hidden" name="contents_ftags" id="contents_ftags" value="{FORBIDDEN_TAGS}" />
-				<input type="hidden" name="idprov" value="{IDPROV}" />
-				<input type="hidden" name="idcom" value="{IDCOM}" />
-				<input type="hidden" name="script" value="{SCRIPT}" />
-				<input type="submit" name="valid_com" value="{L_SUBMIT}" class="submit" />
-				&nbsp;&nbsp; 						
-				<script type="text/javascript">
-				<!--				
-				document.write('<input value="{L_PREVIEW}" onclick="XMLHttpRequest_preview();hide_div(\'xmlhttprequest_result\')" type="button" class="submit" />&nbsp;&nbsp; ');
-				-->
-				</script>						
-				<input type="reset" value="{L_RESET}" class="reset" />
-			</fieldset>
-		</form>
+		{COM_FORM}
 		# ENDIF #
 		
 		{ERROR_HANDLER}
