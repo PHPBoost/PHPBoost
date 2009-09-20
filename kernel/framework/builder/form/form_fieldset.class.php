@@ -42,21 +42,21 @@ class FormFieldset
 	 * @param string $form_title The tite displayed for the form.
 	 * @param string $form_action The url where the form send the data.
 	 */
-	function FormFieldset($fieldset_title)
+	public function __construct($title)
 	{
-		$this->fieldset_title = $fieldset_title;
+		$this->title = $title;
 	}
 	
 	/**
 	 * @desc Store fields in the fieldset.
 	 * @param FormField $form_field
 	 */
-	function add_field($form_field)
+	public function add_field($form_field)
 	{
-		if (isset($this->fieldset_fields[$form_field->field_id]))
-			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->field_id), E_USER_WARNING);
+		if (isset($this->fields[$form_field->get_id()]))
+			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->get_id()), E_USER_WARNING);
 		else
-			$this->fieldset_fields[$form_field->field_id] = $form_field;
+			$this->fields[$form_field->get_id()] = $form_field;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class FormFieldset
 	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
-	function display($Template = false)
+	public function display($Template = false)
 	{
 		global $LANG, $Errorh;
 		
@@ -72,13 +72,13 @@ class FormFieldset
 			$Template = new Template('framework/builder/forms/fieldset.tpl');
 			
 		$Template->assign_vars(array(
-			'C_DISPLAY_WARNING_REQUIRED_FIELDS' => $this->fieldset_display_required,
-			'L_FORMTITLE' => $this->fieldset_title,
+			'C_DISPLAY_WARNING_REQUIRED_FIELDS' => $this->display_required,
+			'L_FORMTITLE' => $this->title,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
 		));	
 		
 		//On liste les éventuelles erreurs du fieldset.
-		foreach($this->fieldset_errors as $error) 
+		foreach($this->errors as $error) 
 		{
 			$Template->assign_block_vars('errors', array(
 				'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
@@ -86,7 +86,7 @@ class FormFieldset
 		}
 		
 		//On affiche les champs		
-		foreach($this->fieldset_fields as $Field)
+		foreach($this->fields as $Field)
 		{
 			foreach($Field->get_errors() as $error) //On liste les éventuelles erreurs du champs.
 			{
@@ -104,50 +104,44 @@ class FormFieldset
 	}
 
 	/**
-	 * @desc Store all erros in the field construct process.
-	 * @param string $errstr  Error message description
-	 * @param int $errno Error type, use php constants.
-	 */	
-	function throw_error($errstr, $errno)
-	{
-		$this->fieldset_errors[] = array('errstr' => $errstr, 'errno' => $errno);
-	}
+	 * @param string $title The fieldset title
+	 */
+	public function set_title($title) { $this->title = $title; }
 	
 	/**
-	 * @desc Display a preview button for the specified field.
-	 * @param string $fieldset_title The fieldset title
+	 * @param boolean $display_required
 	 */
-	function display_preview_button($field_identifier_preview) { $this->field_identifier_preview = $field_identifier_preview; }
-	
-	/**
-	 * @param string $fieldset_title The fieldset title
-	 */
-	function set_title($fieldset_title) { $this->fieldset_title = $fieldset_title; }
-	
-	/**
-	 * @param boolean $fieldset_display_required
-	 */
-	function set_display_required($fieldset_display_required) { $this->fieldset_display_required = $fieldset_display_required; }
+	public function set_display_required($display_required) { $this->display_required = $display_required; }
 	
 	/**
 	 * @return string The fieldset title
 	 */
-	function get_title() { return $this->fieldset_title; }
+	public function get_title() { return $this->title; }
 	
 	/**
 	 * @return array All fields in the fieldset.
 	 */
-	function get_fields() { return $this->fieldset_fields; }
+	public function get_fields() { return $this->fields; }
 	
 	/**
 	 * @return boolean True if the fieldset has to display a warning for required fields.
 	 */
-	function get_display_required() { return $this->fieldset_display_required; }
+	public function get_display_required() { return $this->display_required; }
 	
-	var $fieldset_title = '';
-	var $fieldset_fields = array();
-	var $fieldset_errors = array();
-	var $fieldset_display_required = false;
+	/**
+	 * @desc Store all erros in the field construct process.
+	 * @param string $errstr  Error message description
+	 * @param int $errno Error type, use php constants.
+	 */	
+	private function throw_error($errstr, $errno)
+	{
+		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
+	}
+	
+	private $title = '';
+	private $fields = array();
+	private $errors = array();
+	private $display_required = false;
 }
 
 ?>

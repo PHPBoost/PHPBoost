@@ -43,20 +43,20 @@
 *	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
 *	//Radio button field
 *	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
-*		new FormRadioChoiceOption(array('optiontitle' => 'Choix1', 'value' => 1)), 
-*		new FormRadioChoiceOption(array('optiontitle' => 'Choix2', 'value' => 2, 'checked' => true))
+*		new FormRadioChoiceOption(array('label' => 'Choix1', 'value' => 1)), 
+*		new FormRadioChoiceOption(array('label' => 'Choix2', 'value' => 2, 'checked' => true))
 *	));
 *	
 *	//Checkbox button field
 *	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
-*		new FormCheckboxOption(array('optiontitle' => 'Choix3', 'value' => 1)), 
-*		new FormCheckboxOption(array('optiontitle' => 'Choix4', 'value' => 2, 'checked' => true)) 
+*		new FormCheckboxOption(array('label' => 'Choix3', 'value' => 1)), 
+*		new FormCheckboxOption(array('label' => 'Choix4', 'value' => 2, 'checked' => true)) 
 *	));
 *	//Select field
 *	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
-*		new FormSelectOption(array('optiontitle' => 'Men', 'value' => 1)), 
-*		new FormSelectOption(array('optiontitle' => 'Women', 'value' => 2)), 
-*		new FormSelectOption(array('optiontitle' => '?', 'value' => -1, 'selected' => true))
+*		new FormSelectOption(array('label' => 'Men', 'value' => 1)), 
+*		new FormSelectOption(array('label' => 'Women', 'value' => 2)), 
+*		new FormSelectOption(array('label' => '?', 'value' => -1, 'selected' => true))
 *	));
 *	
 *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
@@ -68,6 +68,11 @@
 *	//Radio button field
 *	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
 *	
+*	//Captcha
+*	import('util/captcha');
+*	$captcha = new Captcha();
+*	$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+*
 *	$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
 *	
 *	$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
@@ -77,22 +82,17 @@
  * @subpackage form
  */ 
 
-define('FIELD_INPUT__TEXT', 'text');
-define('FIELD_INPUT__RADIO', 'radio');
-define('FIELD_INPUT__CHECKBOX', 'checkbox');
-define('FIELD_INPUT__HIDDEN', 'hidden');
-define('FIELD_INPUT__FILE', 'file');
-define('FIELD__TEXTAREA', 'textarea');
-define('FIELD__SELECT', 'select');
-
 import('builder/form/form_fieldset');
 import('builder/form/form_text_edit');
-import('builder/form/form_hidden_field');
-import('builder/form/form_file_uploader');
 import('builder/form/form_textarea');
+import('builder/form/form_select');
 import('builder/form/form_radio_choice');
 import('builder/form/form_checkbox');
-import('builder/form/form_select');
+import('builder/form/form_captcha_field');
+import('builder/form/form_free_field');
+import('builder/form/form_file_uploader');
+import('builder/form/form_text_date');
+import('builder/form/form_hidden_field');
 
 class FormBuilder
 {
@@ -102,7 +102,7 @@ class FormBuilder
 	 * @param string $form_title The tite displayed for the form.
 	 * @param string $form_action The url where the form send the data.
 	 */
-	function FormBuilder($form_name, $form_action = '')
+	public function __construct($form_name, $form_action = '')
 	{
 		global $LANG;
 		
@@ -115,7 +115,7 @@ class FormBuilder
 	 * @desc Add fieldset in the form.
 	 * @param FormFieldset The fieldset object.
 	 */
-	function add_fieldset($fieldset)
+	public function add_fieldset($fieldset)
 	{
 		$this->form_fieldsets[] = $fieldset;
 	}
@@ -125,9 +125,9 @@ class FormBuilder
 	 * @param Template $Template Optionnal template
 	 * @return string
 	 */
-	function display($Template = false)
+	public function display($Template = false)
 	{
-		global $LANG;
+		global $LANG, $User;
 		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/builder/forms/form.tpl');
@@ -135,6 +135,7 @@ class FormBuilder
 		$Template->assign_vars(array(
 			'C_DISPLAY_PREVIEW' => $this->display_preview,
 			'C_DISPLAY_RESET' => $this->display_reset, 
+			'C_BBCODE_TINYMCE_MODE' => $User->get_attribute('user_editor') == 'tinymce',
 			'FORMCLASS' => $this->form_class,
 			'U_FORMACTION' => $this->form_action,
 			'L_FORMNAME' => $this->form_name,
@@ -144,6 +145,7 @@ class FormBuilder
 			'L_RESET' => $LANG['reset'],
 		));	
 		
+		$i = 0;
 		foreach($this->form_fieldsets as $Fieldset)
 		{
 			foreach($Fieldset->get_fields() as $Field)
@@ -152,6 +154,7 @@ class FormBuilder
 				if (!empty($field_required_alert))
 				{
 					$Template->assign_block_vars('check_form', array(
+						'COMA' => ($i++ > 0) ? ',' : '',
 						'FIELD_ID' => $Field->get_id(),
 						'FIELD_REQUIRED_ALERT' => str_replace('"', '\"', $field_required_alert)
 					));
@@ -170,7 +173,7 @@ class FormBuilder
 	 * @desc Display a preview button for the specified field.
 	 * @param string $fieldset_title The fieldset title
 	 */
-	function display_preview_button($field_identifier_preview) 
+	public function display_preview_button($field_identifier_preview) 
 	{ 
 		$this->display_preview = true;
 		$this->field_identifier_preview = $field_identifier_preview; 
@@ -180,32 +183,31 @@ class FormBuilder
 	 * @desc Display a reset button for the form.
 	 * @param boolean $value True to display, false to hide.
 	 */
-	function display_reset($value)
+	public function display_reset($value)
 	{
 		$this->display_reset = $value;
 	}
 	
 	//Setteurs
-	function set_form_name($form_name) { $this->form_name = $form_name; }
-	function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
-	function set_form_action($form_action) { $this->form_action = $form_action; }
-	function set_form_class($form_class) { $this->form_class = $form_class; }
+	public function set_form_name($form_name) { $this->form_name = $form_name; }
+	public function set_form_submit($form_submit) { $this->form_submit = $form_submit; }
+	public function set_form_action($form_action) { $this->form_action = $form_action; }
+	public function set_form_class($form_class) { $this->form_class = $form_class; }
 	
 	//Getteurs
-	function get_form_name() { return $this->form_name; }
-	function get_form_submit() { return $this->form_submit; }
-	function get_form_action() { return $this->form_action; }
-	function get_form_class() { return $this->form_class; }
+	public function get_form_name() { return $this->form_name; }
+	public function get_form_submit() { return $this->form_submit; }
+	public function get_form_action() { return $this->form_action; }
+	public function get_form_class() { return $this->form_class; }
 
-	var $form_fieldsets = array(); //Fieldsets stored
-	var $form_name = '';
-	var $form_submit = '';
-	var $form_action = '';
-	var $form_class = 'fieldset_mini';
-	var $display_preview = false; //Field identifier of textarea for preview.
-	var $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
-
-	var $display_reset = true;
+	private $form_fieldsets = array(); //Fieldsets stored
+	private $form_name = '';
+	private $form_submit = '';
+	private $form_action = '';
+	private $form_class = 'fieldset_mini';
+	private $display_preview = false; //Field identifier of textarea for preview.
+	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
+	private $display_reset = true;
 }
 
 ?>

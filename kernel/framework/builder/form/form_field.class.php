@@ -40,17 +40,18 @@
  * @package builder
  * @subpackage form
  */
-class FormField
+abstract class FormField
 {
+	public abstract function display();
+	
 	/**
-	 * @desc constructor
 	 * @param string $fieldId Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	function FormField($fieldId, &$fieldOptions)
+	public function fillAttributes($fieldId, &$fieldOptions)
 	{
-		$this->field_name = $fieldId;
-		$this->field_id = $fieldId;
+		$this->name = $fieldId;
+		$this->id = $fieldId;
 		
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -58,35 +59,35 @@ class FormField
 			switch ($attribute)
 			{
 				case 'title' :
-					$this->field_title = $value;
+					$this->title = $value;
 					unset($fieldOptions['title']);
 				break;
 				case 'subtitle' :
-					$this->field_sub_title = $value;
+					$this->sub_title = $value;
 					unset($fieldOptions['subtitle']);
 				break;
 				case 'value' :
-					$this->field_value = $value;
+					$this->value = $value;
 					unset($fieldOptions['value']);
 				break;
 				case 'id' :
-					$this->field_id = $value;
+					$this->id = $value;
 					unset($fieldOptions['id']);
 				break;
 				case 'class' :
-					$this->field_css_class = $value;
+					$this->css_class = $value;
 					unset($fieldOptions['class']);
 				break;
 				case 'required' :
-					$this->field_required = $value;
+					$this->required = $value;
 					unset($fieldOptions['required']);
 				break;
 				case 'required_alert' :
-					$this->field_required_alert = $value;
+					$this->required_alert = $value;
 					unset($fieldOptions['required_alert']);
-				break;
+				break;		
 				case 'onblur' :
-					$this->field_maxlength = $value;
+					$this->maxlength = $value;
 					unset($fieldOptions['onblur']);
 				break;
 			}
@@ -98,47 +99,47 @@ class FormField
 	 * @param string $errstr  Error message description
 	 * @param int $errno Error type, use php constants.
 	 */	
-	function throw_error($errstr, $errno)
+	protected function throw_error($errstr, $errno)
 	{
-		$this->field_errors[] = array('errstr' => $errstr, 'errno' => $errno);
+		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
 	}
 	
 	/**
 	 * @desc Merge errors.
 	 * @param array $array_errors
 	 */	
-	function add_errors(&$array_errors)
+	protected function add_errors(&$array_errors)
 	{
-		$this->field_errors = array_merge($this->field_errors, $array_errors);
+		$this->errors = array_merge($this->errors, $array_errors);
 	}
 	
 	/**
 	 * @desc  Get all errors occured in the field construct process.
 	 * @return array All errors
 	 */	
-	function get_errors() { return $this->field_errors; }
+	public function get_errors() { return $this->errors; }
 	
 	/**
 	 * @return string The fied identifier.
 	 */
-	function get_id() { return $this->field_id;}
+	public function get_id() { return $this->id;}
 	
 	/**
 	 * @return string Text displayed if field is empty.
 	 */
-	function get_required_alert() { return $this->field_required_alert;}
+	public function get_required_alert() { return $this->required_alert;}
 	
 	
-	var $field_title = '';
-	var $field_sub_title = '';
-	var $field_name = '';
-	var $field_value = '';
-	var $field_id = '';
-	var $field_css_class = '';
-	var $field_required = false;
-	var $field_required_alert = '';
-	var $field_on_blur = '';
-	var $field_errors = array();
+	protected $title = '';
+	protected $sub_title = '';
+	protected $name = '';
+	protected $value = '';
+	protected $id = '';
+	protected $css_class = '';
+	protected $required = false;
+	protected $required_alert = '';
+	protected $on_blur = '';
+	protected $errors = array();
 }
 
 ?>

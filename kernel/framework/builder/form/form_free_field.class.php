@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                             field_input_radio_option.class.php
+ *                             field_free_field.class.php
  *                            -------------------
- *   begin                : May 01, 2009
+ *   begin                : September 19, 2009
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -28,54 +28,60 @@ import('builder/form/form_field');
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage radio input field options.
+ * @desc This class manage free contents fields.
  * It provides you additionnal field options :
  * <ul>
- * 	<li>optiontitle : The option title</li>
- * 	<li>checked : Specify if the option has to be checked.</li>
+ * 	<li>template : A template object to personnalize the field</li>
+ * 	<li>content : The field html content if you don't use a personnal template</li>
  * </ul>
  * @package builder
  * @subpackage form
  */
-class FormRadioChoiceOption extends FormField
+class FormFreeField extends FormField
 {
-	public function __construct($field_options)
+	public function __construct($fieldId, $fieldOptions)
 	{
-		$this->fillAttributes('', $field_options);		
-		
-		foreach($field_options as $attribute => $value)
+		$this->fillAttributes($fieldId, $fieldOptions);
+		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
-				case 'label' :
-					$this->label = $value;
+				case 'template' :
+					$this->template = $value;
 				break;
-				case 'checked' :
-					$this->checked = $value;
+				case 'content' :
+					$this->content = $value;
 				break;
 				default :
-					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
+					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
 	
 	/**
-	 * @return string The html code for the radio input.
+	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
-		$option = '<label><input type="radio" ';
-		$option .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
-		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
-		$option .= '/> ' . $this->label . '</label><br />' . "\n";
+		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template') //Optionnal template
+			$Template = $this->template;
+		else
+			$Template = new Template('framework/builder/forms/field.tpl');
+			
+		$Template->assign_vars(array(
+			'ID' => $this->id,
+			'FIELD' => $this->content,
+			'L_FIELD_TITLE' => $this->title,
+			'L_EXPLAIN' => $this->sub_title,
+			'L_REQUIRE' => $this->required ? '* ' : ''
+		));	
 		
-		return $option;
+		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
 
-	private $label = '';
-	private $checked = false;
+	private $content = ''; //Content of the free field
+	private $template = ''; //Optionnal template
 }
 
 ?>
