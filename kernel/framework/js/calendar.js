@@ -33,11 +33,11 @@ var association_name_id = new Array();
 //Affiche le bloc.
 function display_calendar(divID)
 {
-	if( timeout_calendar )
+	if (timeout_calendar)
 		clearTimeout(timeout_calendar);
 	
 	var block = document.getElementById('calendar' + divID );
-	if( block.style.display == 'none' )
+	if (block.style.display == 'none')
 	{
 		if( previous_calendar != '' && document.getElementById(previous_calendar) )
 			document.getElementById(previous_calendar).style.display = 'none';
@@ -55,11 +55,11 @@ function display_calendar(divID)
 //Cache le bloc.
 function hide_calendar(id, stop)
 {
-	if( stop && timeout_calendar )
+	if (stop && timeout_calendar)
 	{	
 		clearTimeout(timeout_calendar);
 	}
-	else if( displayed )
+	else if (displayed)
 	{
 		clearTimeout(timeout_calendar);
 		timeout_calendar = setTimeout('display_calendar(\'' + id + '\')', delay_calendar);
@@ -69,7 +69,7 @@ function hide_calendar(id, stop)
 //Insertion de la date.
 function insert_date(field, date) 
 {
-	if( document.getElementById(field) )
+	if (document.getElementById(field))
 		document.getElementById(field).value = date;
 }
 
@@ -80,12 +80,12 @@ function xmlhttprequest_calendar(field, vars)
 	var data = null;
 	var filename = PATH_TO_ROOT + '/kernel/framework/ajax/mini_calendar_xmlhttprequest.php' + vars;
 	
-	if( document.getElementById('img' + field) )
+	if (document.getElementById('img' + field))
 		document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/loading_mini.gif';
 
-	if(window.XMLHttpRequest) // Firefox
+	if (window.XMLHttpRequest) // Firefox
 	   xhr_object = new XMLHttpRequest();
-	else if(window.ActiveXObject) // Internet Explorer
+	else if (window.ActiveXObject) // Internet Explorer
 	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 	else // XMLHttpRequest non supporté par le navigateur
 		return;
@@ -93,11 +93,11 @@ function xmlhttprequest_calendar(field, vars)
 	xhr_object.open('POST', filename, true);
 	xhr_object.onreadystatechange = function() 
 	{
-		if( xhr_object.readyState == 4 ) 
+		if (xhr_object.readyState == 4) 
 		{
 			document.getElementById(field).innerHTML = xhr_object.responseText;
 			show_div(field);
-			if( document.getElementById('img' + field) )
+			if (document.getElementById('img' + field))
 				document.getElementById('img' + field).src = PATH_TO_ROOT + '/templates/' + theme + '/images/calendar.png';
 		}
 	}
