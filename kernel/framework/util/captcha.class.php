@@ -42,9 +42,9 @@ class Captcha
 	/**
 	 * @desc Captcha constructor. It allows you to create multiple instance of captcha, and check if GD is loaded.
 	 */
-	function Captcha()
+	public function __construct()
 	{
-		Captcha::update_instance(); //Mise à jour de l'instance.
+		$this->update_instance(); //Mise à jour de l'instance.
 		if (@extension_loaded('gd'))
 			$this->gd_loaded = true;
 	}
@@ -54,91 +54,22 @@ class Captcha
 	 * @desc Checks if captcha is loaded, disabled for members.
 	 * @return boolean true if is loaded, false otherwise
 	 */
-	function is_available()
+	public function is_available()
 	{
-		global $User;
-		
-		if ($this->gd_loaded && $User->get_attribute('level') == -1)
+		if ($this->gd_loaded)
 			return true;
 		return false;
-	}
-	
-	/**
-	 * @desc Updates the object instance.
-	 */
-	function update_instance()
-	{
-		static $instance = 0;
-		
-		$this->instance = ++$instance;
-	}
-
-	/**
-	 * @desc Modifies the level of difficulty to decrypt the code on the captcha image.
-	 * @param int $difficulty The difficulty :
-	 *  0: Dictionnary words, regular background, horizontal text.
-	 *	1: blended word, regular background.
-	 *	2: blended word + figures, irregular background.
-	 *	3: blended word + figures, shadows.
-	 *	4: blended word + figures, shadows.
-	 */
-	function set_difficulty($difficulty)
-	{
-		/* 
-		0: Mot du dictionnaire, fond uni, texte à l'horizontal.
-		1: Mot mélangé, fond uni.
-		2: Mot mélangé + chiffres, fond brouillé.
-		3: Mot mélangé + chiffres, identification par contour, faible ombrage.
-		4: Mot mélangé + chiffres, identification par contour, faible ombrage.
-		*/
-		$this->difficulty = max(0, $difficulty);		
-	}
-	
-	/**
-	 * @desc Modify instance number.
-	 * @param int $instance
-	 */
-	function set_instance($instance)
-	{
-		$this->instance = $instance;
-	}
-	
-	/**
-	 * @desc Modify width of the image.
-	 * @param float $width Width of the image.
-	 */
-	function set_width($width)
-	{
-		$this->width = $width;
-	}
-	
-	/**
-	 * @desc Modify height of the image.
-	 * @param float $height Height of the image.
-	 */
-	function set_height($height)
-	{
-		$this->height = $height;
-	}
-	
-	/**
-	 * @desc Modify font used for the text on the image.
-	 * @param string $font Font used for the text on the image.
-	 */
-	function set_font($font)
-	{
-		$this->font = $font;
 	}
 	
 	/**
 	 * @desc Check if the code is valid, then delete it in the database to avoid multiple attempts.
 	 * @return boolean true if is valid, false otherwise.
 	 */
-	function is_valid()
+	public function is_valid()
 	{
-		global $Sql;
+		global $Sql, $User;
 		
-		if (!$this->is_available()) //Non activé, retourne vrai.
+		if (!$this->is_available() || $User->check_level(MEMBER_LEVEL)) //Non activé, retourne vrai.
 			return true;
 			
 		$get_code = retrieve(POST, 'verif_code' . $this->instance, '', TSTRING_UNCHANGE);
@@ -158,7 +89,7 @@ class Captcha
 	/**
 	 * @desc Javascript alert if the formular of the captcha code is empty.
 	 */
-	function js_require()
+	public function js_require()
 	{
 		global $LANG;
 		
@@ -173,11 +104,11 @@ class Captcha
 	 * @param object $Template (optional) The template used to create and display the captcha formular.
 	 * @return string The parsed template.
 	 */
-	function display_form($Template = false)
+	public function display_form($Template = false)
 	{
 		global $CONFIG;
 		
-		$this->_save_user();
+		$this->save_user();
 		
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
 			$Template = new Template('framework/captcha.tpl');
@@ -189,7 +120,7 @@ class Captcha
 				'CAPTCHA_WIDTH' => $this->width,
 				'CAPTCHA_HEIGHT' => $this->height,
 				'CAPTCHA_FONT' => $this->font,
-				'CAPTCHA_DIFFICULTY' => $this->difficulty,
+				'CAPTCHA_DIFFICULTY' => $this->difficulty
 			));
 			return $Template->parse(TEMPLATE_STRING_MODE);
 		}
@@ -199,9 +130,9 @@ class Captcha
 	/**
 	 * @desc Display the captcha image to the user, and set the code to decrypt in the database.
 	 */
-	function display()
+	public function display()
 	{
-		$this->_generate_code(); //Mise à jour du code.
+		$this->generate_code(); //Mise à jour du code.
 		
 		$rand = rand(0,1);
 
@@ -219,6 +150,9 @@ class Captcha
 				break;
 		}
 		
+		//Enregistrement du code pour l'utilisateur dans la base de données;
+		$this->update_code();
+		
 		##Création de l'image##
 		if (!function_exists('imagecreatetruecolor'))
 			$img = @imagecreate($this->width, $this->height);
@@ -227,7 +161,7 @@ class Captcha
 
 		//Choix aléatoire de couleur, et suppression du tableau pour éviter une réutilisation pour le texte.
 		$bg_bis_index_color = array_rand($array_color);	
-		list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
+		list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$bg_bis_index_color], 150, 0.70); //Assombrissement de la couleur de fond.
 		$bg_img = @imagecolorallocate($img, $r, $g, $b);
 		if ($this->difficulty < 3)
 			unset($array_color[$bg_bis_index_color]);
@@ -265,7 +199,7 @@ class Captcha
 		##Attribut du code à écrire##	
 		//Centrage du texte.	
 		$global_font_size = 24;
-		$array_size_ttf = @imagettfbbox($global_font_size + 2, 0, $this->font, $this->code);
+		$array_size_ttf = imagettfbbox($global_font_size + 2, 0, $this->font, $this->code);
 		$text_width = abs($array_size_ttf[2] - $array_size_ttf[0]);
 		$text_height = abs($array_size_ttf[7] - $array_size_ttf[1]);
 		$text_x = ($this->width/2) - ($text_width/2);
@@ -278,7 +212,7 @@ class Captcha
 			$index_color = array_rand($array_color);
 			list($r, $g, $b) = $array_color[$index_color];
 			$text_color = @imagecolorallocate($img, $r, $g, $b);
-			list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$index_color]);
+			list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$index_color]);
 			$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			$font_size = rand($global_font_size - 4, $global_font_size);
 			$angle = rand(-15, 15);
@@ -292,14 +226,14 @@ class Captcha
 			//Ajout de l'ombre.
 			if ($this->difficulty == 4)
 			{
-				list($r, $g, $b) = $this->_image_color_allocate_dark($array_color[$index_color], 90, 0.50);
+				list($r, $g, $b) = Captcha::image_color_allocate_dark($array_color[$index_color], 90, 0.50);
 				$text_color_dark = @imagecolorallocate($img, $r, $g, $b);
 			}
-			@imagettftext($img, $font_size, $angle, ($text_x + 1), ($move_y + 1), $text_color_dark, $this->font, $letter);	
+			imagettftext($img, $font_size, $angle, ($text_x + 1), ($move_y + 1), $text_color_dark, $this->font, $letter);	
 			
 			//Ecriture du code.
-			@imagettftext($img, $font_size, $angle, $text_x, $move_y, $text_color, $this->font, $letter);
-			$array_size_ttf = @imagettfbbox($font_size, $angle, $this->font, $this->code);
+			imagettftext($img, $font_size, $angle, $text_x, $move_y, $text_color, $this->font, $letter);
+			$array_size_ttf = imagettfbbox($font_size, $angle, $this->font, $this->code);
 			$text_width = max(abs($array_size_ttf[2] - $array_size_ttf[0]), 5);
 			$text_x += $global_font_size - 6;
 		}
@@ -310,16 +244,31 @@ class Captcha
 		##Envoi de l'image##
 		imagejpeg($img);
 		imagedestroy($img);
+	}
+	
+	/**
+	 * @desc Set the captcha code in the database.
+	 */
+	public function save_user()
+	{
+		global $Sql;
 		
-		//Enregistrement du code pour l'utilisateur dans la base de données;
-		$this->_update_code();
+		$this->generate_code(); //Mise à jour du code.
+		
+		$code = substr(md5(uniqid(mt_rand(), true)), 0, 20);
+		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
+		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		if ($check_user_id == 1)
+			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+		else
+			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
 	}
 	
 	## Private Methods ##
 	/**
 	 * @desc Génère un code aléatoire dépendant de la difficulté.
 	*/
-	function _generate_code()
+	private function generate_code()
 	{
 		global $LANG;
 		
@@ -354,27 +303,9 @@ class Captcha
 	}	
 	
 	/**
-	 * @desc Set the captcha code in the database.
-	 */
-	function _save_user()
-	{
-		global $Sql;
-		
-		$this->_generate_code(); //Mise à jour du code.
-		
-		$code = substr(md5(uniqid(mt_rand(), true)), 0, 20);
-		$user_id = substr(strhash(USER_IP), 0, 13) . $this->instance;
-		$check_user_id = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_VERIF_CODE . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		if ($check_user_id == 1)
-			$Sql->query_inject("UPDATE " . DB_TABLE_VERIF_CODE . " SET code = '" . $code . "', difficulty = '" . $this->difficulty . "' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-		else
-			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $this->code . "', '" . $this->difficulty . "', '" . time() . "')", __LINE__, __FILE__);
-	}
-	
-	/**
 	 * @desc Set the captcha's code in the database.
 	 */
-	function _update_code()
+	private function update_code()
 	{
 		global $Sql;
 		
@@ -385,7 +316,15 @@ class Captcha
 		else
 			$Sql->query_inject("INSERT INTO " . DB_TABLE_VERIF_CODE . " (user_id, code, difficulty, timestamp) VALUES ('" . $user_id . "', '" . $this->code . "', '4', '" . time() . "')", __LINE__, __FILE__);
 	}
-	
+
+	/**
+	 * @desc Update captcha's instance to allow multiple instance.
+	 */
+	private function update_instance()
+	{
+		static $instance = 0;
+		$this->instance = ++$instance;
+	}
 	
 	/**
 	 * @desc Return the darker version of a color passed in argument.
@@ -395,7 +334,7 @@ class Captcha
 	 * @param $similar_color
 	 * @return array The new darker color.
 	 */
-	function _image_color_allocate_dark($array_color, $mask_color = 0, $similar_color = 0.40)
+	private static function image_color_allocate_dark($array_color, $mask_color = 0, $similar_color = 0.40)
 	{
 		list($r, $g, $b) = $array_color;
 		$rd = round($r * $similar_color) + round($mask_color * (1 - $similar_color));
@@ -405,14 +344,52 @@ class Captcha
 		return array($rd, $gd, $bd);
 	}
 	
+	## Setters and getters ##
+	/**
+	 * @desc Modifies the level of difficulty to decrypt the code on the captcha image.
+	 * @param int $difficulty The difficulty :
+	 *  0: Dictionnary words, regular background, horizontal text.
+	 *	1: blended word, regular background.
+	 *	2: blended word + figures, irregular background.
+	 *	3: blended word + figures, shadows.
+	 *	4: blended word + figures, shadows.
+	 */
+	public function set_difficulty($difficulty)	{$this->difficulty = max(0, $difficulty);}	
+	/**
+	 * @desc Modify instance number.
+	 * @param int $instance
+	 */
+	public function set_instance($instance)	{$this->instance = $instance;}	
+	/**
+	 * @desc Modify width of the image.
+	 * @param float $width Width of the image.
+	 */
+	public function set_width($width) {$this->width = $width;}	
+	/**
+	 * @desc Modify height of the image.
+	 * @param float $height Height of the image.
+	 */
+	public function set_height($height)	{$this->height = $height;}	
+	/**
+	 * @desc Modify font used for the text on the image.
+	 * @param string $font Font used for the text on the image.
+	 */
+	public function set_font($font) {$this->font = $font;}
+	
+	public function get_instance() {return $this->instance;}
+	public function get_width() {return $this->width;}
+	public function get_height() {return $this->height;}
+	public function get_font() {return $this->font;}
+	public function get_difficulty() {return $this->difficulty;}
+	
 	## Private Attributes ##
-	var $instance = 0; //Numéro d'instance.
-	var $gd_loaded = false; //Chargement de la librairie GD.
-	var $width = 160; //Largeur de l'image générée.
-	var $code = ''; //Code captcha.
-	var $height = 50; //Largeur de l'image générée.
-	var $font = '../kernel/data/fonts/impact.ttf'; //Police
-	var $difficulty = 2; //Difficulté du code. 
+	private $instance = 0; //Numéro d'instance.
+	private $gd_loaded = false; //Chargement de la librairie GD.
+	private $width = 160; //Largeur de l'image générée.
+	private $code = ''; //Code captcha.
+	private $height = 50; //Largeur de l'image générée.
+	private $font = '../../../kernel/data/fonts/impact.ttf'; //Police
+	private $difficulty = 2; //Difficulté du code. 
 }
 
 ?>
