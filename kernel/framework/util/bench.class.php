@@ -25,24 +25,34 @@
 ###################################################*/
 
 /**
- * @author loic
+ * @author Loïc Rouchon <horn@phpboost.com>
  * @desc This class is done to time a process easily. You choose when to start and when to stop.
  * @package util
  */
 class Bench
 {
-    ## Public Methods ##
+    /**
+	 * @access protected
+	 * @var int start microtime
+	 */
+    private $start = 0;
+    /**
+	 * @access protected
+	 * @var int duration microtime
+	 */
+    private $duration = 0;
+    
     /**
 	 * @desc starts the bench now
 	 */
-    function Bench()
+    public function __construct()
     {
-    	$this->start = Bench::get_microtime();
+    	$this->start = self::get_microtime();
     }
     /**
 	 * @desc stops the bench now
 	 */
-    function stop()
+    public function stop()
     {
     	$this->duration = Bench::get_microtime() - $this->start; 
     }
@@ -52,36 +62,23 @@ class Bench
 	 * @param int $digits the desired display precision
 	 * @return string the formatted duration
 	 */
-    function to_string($digits = 3) 
+    public function to_string($digits = 3) 
     {
     	$this->stop();
     	return number_round($this->duration, $digits); 
     }
     
-    ## Private Methods ##
     /**
 	 * @static
 	 * @desc computes the time with a microsecond precision
 	 * @access protected
 	 * @return float
 	 */
-    function get_microtime()
+    private function get_microtime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return ((float)$usec + (float)$sec);
     }
-    
-    ## Private Attributes ##
-    /**
-	 * @access protected
-	 * @var int start microtime
-	 */
-    var $start = 0;
-    /**
-	 * @access protected
-	 * @var int duration microtime
-	 */
-    var $duration = 0;
 }
 
 ?>

@@ -37,11 +37,15 @@ define('LINK_START_PAGE', false); //Lien sur la première page.
  */
 class Pagination
 {
-	## Public Methods ##
+	private $page; //Valeur courante de la page.
+	private $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
+	private $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.
+	private $var_page;
+	
 	/**
 	* @desc Buils a Pagination.
 	*/
-	function Pagination()
+	public function __construct()
 	{
 	}
 
@@ -59,21 +63,21 @@ class Pagination
 	 * @param string $link_start_page Underline link to the current page.
 	 * @return string Pagination links.
 	 */
-	function display($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
+	public function display($path, $total_msg, $var_page, $nbr_msg_page, $nbr_max_link, $font_size = 11, $previous_next = true, $link_start_page = true)
 	{
 		if ($total_msg > $nbr_msg_page)
 		{
 			//Initialisations.
 			$links = ''; //Chaîne à retourner.
 
-			$this->page = $this->_get_var_page($var_page);
+			$this->page = $this->get_var_page($var_page);
 			$nbr_page = ceil($total_msg / $nbr_msg_page); //Calcul du nombre page.
 			if ($nbr_page == 1)
 			{
 				return '';
 			}
 
-			$this->page = $this->_check_page($nbr_page); //Page valide.
+			$this->page = $this->check_page($nbr_page); //Page valide.
 
 			//Affichage lien suivant « (si activé !)
 			if ($this->page != 1 && $nbr_page > 1 && $previous_next === true) //Plus qu'une page, et page différente de celle par défaut => affichage du lien.
@@ -132,7 +136,7 @@ class Pagination
 	 * @param string $var_page The variable name used to get the page in the adress (in most case "p" is used).
 	 * @return int the first message of the current page displayed.
 	 */
-	function get_first_msg($nbr_msg_page, $var_page)
+	public function get_first_msg($nbr_msg_page, $var_page)
 	{
 		$page = !empty($_GET[$var_page]) ? numeric($_GET[$var_page]) : 1;
 		$page = $page > 0 ? $page : 1;
@@ -142,17 +146,16 @@ class Pagination
 	/**
 	 * @return int Return the current page
 	 */
-	function get_current_page()
+	public function get_current_page()
 	{
-		return $this->_get_var_page($this->var_page);
+		return $this->get_var_page($this->var_page);
 	}
 
-	## Private Methods ##
 	/**
 	* @param string $var_page The var name used to get the page in the adress (in most case "p" is used).
 	* @return int Return the value of the var page
 	*/
-	function _get_var_page($var_page)
+	private function get_var_page($var_page)
 	{
 		$_GET[$var_page] = isset($_GET[$var_page]) ? numeric($_GET[$var_page]) : 0;
 		if (!empty($_GET[$var_page]))
@@ -170,7 +173,7 @@ class Pagination
 	 * @param int $nbr_page Number total of page.
 	 * @return int Return current page if exist, otherwise redirect to an error page.
 	 */
-	function _check_page($nbr_page)
+	private function check_page($nbr_page)
 	{
 		global $Errorh;
 
@@ -185,12 +188,6 @@ class Pagination
 
 		return $this->page;
 	}
-
-	## Private Attribute ##
-	var $page; //Valeur courante de la page.
-	var $nbr_start_links = 3; //Nombre de liens affichés en début de chaîne.
-	var $nbr_end_links = 3; //Nombre de liens affichés en fin de chaîne.
-	var $var_page;
 }
 
 ?>

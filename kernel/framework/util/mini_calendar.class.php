@@ -62,7 +62,7 @@ class MiniCalendar
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
-	public function MiniCalendar($form_name)
+	public function __construct($form_name)
 	{
 		$this->form_name = $form_name;
 		$this->num_instance = ++self::$num_instances;

@@ -43,6 +43,11 @@ define('SERVER_URL', $_SERVER['PHP_SELF']);
  */
 class Url
 {
+	private $url = '';
+	private $is_relative = false;
+	private $path_to_root = '';
+	private $server_url = '';
+	
 	/**
 	 * @desc Build a Url object. By default, builds an Url object representing the current path.
 	 * If the url is empty, no computation is done and an empty string will be returned
@@ -51,7 +56,7 @@ class Url
 	 * to the website root if beginning with a "/" or an absolute url
 	 * @param string $path_to_root url context. default is PATH_TO_ROOT
 	 */
-	function Url($url = '.', $path_to_root = null, $server_url = null)
+	public function __construct($url = '.', $path_to_root = null, $server_url = null)
 	{
 		if (!empty($url))
 		{
@@ -61,7 +66,7 @@ class Url
 			}
 			else
 			{
-				$this->path_to_root = Url::path_to_root();
+				$this->path_to_root = self::path_to_root();
 			}
 
 			if ($server_url !== null)
@@ -70,7 +75,7 @@ class Url
 			}
 			else
 			{
-				$this->server_url = Url::server_url();
+				$this->server_url = self::server_url();
 			}
 			
 			$anchor = '';
@@ -101,7 +106,7 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = str_replace(Url::get_absolute_root() . '/', '/', Url::compress($url)); 
+			$url = str_replace(self::get_absolute_root() . '/', '/', self::compress($url)); 
 			if (!strpos($url, '://'))
 			{
 				$this->is_relative = true;
@@ -119,14 +124,14 @@ class Url
 				$this->is_relative = false;
 				$this->url = $url;
 			}
-			$this->url = Url::compress($this->url) . $anchor;
+			$this->url = self::compress($this->url) . $anchor;
 		}
 	}
 
 	/**
 	 * @return bool true if the url is a relative one
 	 */
-	function is_relative()
+	public function is_relative()
 	{
 		return $this->is_relative;
 	}
@@ -135,7 +140,7 @@ class Url
 	 * @desc Returns the relative url if defined, else the absolute one
 	 * @return string the relative url if defined, else the absolute one
 	 */
-	function relative()
+	public function relative()
 	{
 		if ($this->is_relative())
 		{
@@ -151,11 +156,11 @@ class Url
 	 * @desc Returns the absolute url
 	 * @return string the absolute url
 	 */
-	function absolute()
+	public function absolute()
 	{
 		if ($this->is_relative())
 		{
-			return Url::compress($this->get_absolute_root() . $this->url);
+			return self::compress($this->get_absolute_root() . $this->url);
 		}
 		else
 		{
@@ -165,12 +170,11 @@ class Url
 
 
 	/**
-	 * @static
 	 * @desc Compress a url by removing all "folder/.." occurrences
 	 * @param string $url the url to compress
 	 * @return string the compressed url
 	 */
-	/* static */ function compress($url)
+	public static function compress($url)
 	{
 		$args = '';
 		if (($pos = strpos($url, '?')) !== false)
@@ -194,7 +198,7 @@ class Url
 	 * @desc Returns the relative path from the website root to the current path if working on a relative url
 	 * @return string the relative path from the website root to the current path if working on a relative url
 	 */
-	function root_to_local()
+	public function root_to_local()
 	{
 		global $CONFIG;
 
@@ -210,18 +214,16 @@ class Url
 	}
 
 	/**
-	 * @static
 	 * @desc Returns the absolute website root Url
 	 * @return string the absolute website root Url
 	 */
-	/* static */ function get_absolute_root()
+	public static function get_absolute_root()
 	{
 		global $CONFIG;
 		return trim(trim($CONFIG['server_name'], '/') . '/' . trim($CONFIG['server_path'], '/'), '/');
 	}
 
 	/**
-	 * @static
 	 * @desc Returns the HTML text with only absolutes urls
 	 * @param string $html_text The HTML text in which we gonna search for
 	 * root relatives urls (only those beginning by '/') to convert into absolutes ones.
@@ -229,80 +231,197 @@ class Url
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The HTML text with only absolutes urls
 	 */
-	/* static */ function html_convert_root_relative2absolute($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	public static function html_convert_root_relative2absolute($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = Url::path_to_root();
-		$server_url_bak = Url::server_url();
+		$path_to_root_bak = self::path_to_root();
+		$server_url_bak = self::server_url();
 
-		Url::path_to_root($path_to_root);
-		Url::server_url($server_url);
+		self::path_to_root($path_to_root);
+		self::server_url($server_url);
 
-		$result = preg_replace_callback(Url::_build_html_match_regex(true),
-		array('Url', '_convert_url_to_absolute'), $html_text);
+		$result = preg_replace_callback(self::build_html_match_regex(true),
+		array('Url', 'convert_url_to_absolute'), $html_text);
 
-		Url::path_to_root($path_to_root_bak);
-		Url::server_url($server_url_bak);
+		self::path_to_root($path_to_root_bak);
+		self::server_url($server_url_bak);
 
 		return $result;
 	}
 
 	/**
-	 * @static
 	 * @desc Returns the HTML text with only relatives urls
 	 * @param string $html_text The HTML text in which we gonna search for absolutes urls to convert into relatives ones.
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The HTML text with only absolutes urls
 	 */
-	/* static */ function html_convert_absolute2root_relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	public static function html_convert_absolute2root_relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = Url::path_to_root();
-		$server_url_bak = Url::server_url();
+		$path_to_root_bak = self::path_to_root();
+		$server_url_bak = self::server_url();
 
-		Url::path_to_root($path_to_root);
-		Url::server_url($server_url);
+		self::path_to_root($path_to_root);
+		self::server_url($server_url);
 
-		$result = preg_replace_callback(Url::_build_html_match_regex(),
-		  array('Url', '_convert_url_to_root_relative'), $html_text);
+		$result = preg_replace_callback(self::build_html_match_regex(),
+		  array('Url', 'convert_url_to_root_relative'), $html_text);
 
-		Url::path_to_root($path_to_root_bak);
-		Url::server_url($server_url_bak);
+		self::path_to_root($path_to_root_bak);
+		self::server_url($server_url_bak);
 
 		return $result;
 	}
 
 	/**
-	 * @static
 	 * @desc Transforms the relative URL whose base is the site root (for instance /images/mypic.png) to the real relative path fited to the current page.
 	 * @param string $html_text The HTML text in which you want to replace the paths
 	 * @param string $path_to_root Path to root of the page to which you want to fit the URL.
 	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
 	 * @return string The transformed string
 	 */
-	/* static */ function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
+	public static function html_convert_root_relative2relative($html_text, $path_to_root = PATH_TO_ROOT, $server_url = SERVER_URL)
 	{
-		$path_to_root_bak = Url::path_to_root();
-		$server_url_bak = Url::server_url();
+		$path_to_root_bak = self::path_to_root();
+		$server_url_bak = self::server_url();
 
-		Url::path_to_root($path_to_root);
-		Url::server_url($server_url);
+		self::path_to_root($path_to_root);
+		self::server_url($server_url);
 
-		$result = preg_replace_callback(Url::_build_html_match_regex(true),
-		array('Url', '_convert_url_to_relative'), $html_text);
+		$result = preg_replace_callback(self::build_html_match_regex(true),
+		array('Url', 'convert_url_to_relative'), $html_text);
 
-		Url::path_to_root($path_to_root_bak);
-		Url::server_url($server_url_bak);
+		self::path_to_root($path_to_root_bak);
+		self::server_url($server_url_bak);
 
 		return $result;
 	}
 
 	/**
-	 * @static
+	 * @param string $url the url to "relativize"
+	 * @param string $path_to_root Path to root of the page to which you want to fit the URL
+	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
+	 * @return string the relative url of the $url parameter
+	 */
+	public static function get_relative($url, $path_to_root = null, $server_url = null)
+	{
+		$o_url = new Url($url, $path_to_root, $server_url);
+		return $o_url->relative();
+	}
+
+	/**
+	 * @desc Overrides the used PATH_TO_ROOT. if the argument is null, the value is only returned.
+	 * Please note this is a PHP4 hack to allow a Class variable.
+	 * @param string $path the new PATH_TO_ROOT to use
+	 * @return string the used PATH_TO_ROOT
+	 */
+	public static function path_to_root($path = null)
+	{
+		static $path_to_root = PATH_TO_ROOT;
+		if ($path != null)
+		{
+			$path_to_root = $path;
+		}
+		return $path_to_root;
+	}
+
+	/**
+	 * @desc Overrides the used SERVER URL. if the argument is null, the value is only returned.
+	 * Please note this is a PHP4 hack to allow a Class variable.
+	 * @param string $path the new SERVER URL to use
+	 * @return string the used SERVER URL
+	 */
+	public static function server_url($url = null)
+	{
+		static $server_url = SERVER_URL;
+		if ($url !== null)
+		{
+			$server_url = $url;
+		}
+		return $server_url;
+	}
+
+	/**
+	 * @desc Returns the regex matching the requested url form
+	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
+	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
+	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
+	 * @param int $folders REGEX_MULTIPLICITY_OPTION for the folders sub-regex
+	 * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
+	 * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
+	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
+	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
+	 * @return the regex matching the requested url form
+	 * @see REGEX_MULTIPLICITY_OPTIONNAL
+	 * @see REGEX_MULTIPLICITY_NEEDED
+	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
+	 * @see REGEX_MULTIPLICITY_ALL
+	 * @see REGEX_MULTIPLICITY_NOT_USED
+	 */
+	public static function get_wellformness_regex($protocol = REGEX_MULTIPLICITY_OPTIONNAL,
+	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
+	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
+	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
+	{
+		static $forbid_js_regex = '(?!javascript:)';
+		static $protocol_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)*://';
+		static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
+		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
+		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
+		static $file_regex = '[a-z0-9-+_~:\.\%]+';
+		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=_~:;/\.\?\'\%]+=[a-z0-9-+=_~:;/\.\?\'\%]+)*)?';
+        static $anchor_regex = '\#[a-z0-9-_/]*';
+
+		if ($forbid_js)
+		{
+			$protocol_regex_secured = $forbid_js_regex . $protocol_regex;
+		}
+		else
+		{
+			$protocol_regex_secured = $protocol_regex;
+		}
+
+		return set_subregex_multiplicity($protocol_regex_secured, $protocol) .
+		set_subregex_multiplicity($user_regex, $user) .
+		set_subregex_multiplicity($domain_regex, $domain) .
+		set_subregex_multiplicity($folders_regex, $folders) .
+		set_subregex_multiplicity($file_regex, $file) .
+        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
+		set_subregex_multiplicity($args_regex, $args) .
+		set_subregex_multiplicity($anchor_regex, $anchor);
+	}
+
+	/**
+	 * @desc Returns true if the url match the requested url form
+	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
+	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
+	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
+	 * @param int $folders REGEX_MULTIPLICITY_OPTION for the folders sub-regex
+	 * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
+	 * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
+	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
+	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
+	 * @return true if the url match the requested url form
+	 * @see REGEX_MULTIPLICITY_OPTIONNAL
+	 * @see REGEX_MULTIPLICITY_NEEDED
+	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
+	 * @see REGEX_MULTIPLICITY_ALL
+	 * @see REGEX_MULTIPLICITY_NOT_USED
+	 */
+	public static function check_wellformness($url, $protocol = REGEX_MULTIPLICITY_OPTIONNAL,
+	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
+	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
+	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
+	{
+		return preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain,
+		$folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
+	}
+	
+	/**
 	 * @desc replace a relative url by the corresponding absolute one
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
-	/* static */ function _convert_url_to_absolute($url_params)
+	private static function convert_url_to_absolute($url_params)
 	{
 		$url = new Url($url_params[2]);
 		$url_params[2] = $url->absolute();
@@ -310,12 +429,11 @@ class Url
 	}
 
 	/**
-	 * @static
 	 * @desc replace an absolute url by the corresponding root relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
-	/* static */ function _convert_url_to_root_relative($url_params)
+	private static function convert_url_to_root_relative($url_params)
 	{
 		$url = new Url($url_params[2]);
 		$url_params[2] = $url->relative();
@@ -323,23 +441,22 @@ class Url
 	}
 
 	/**
-	 * @static
 	 * @desc replace an absolute url by the corresponding relative one if possible
 	 * @param string[] $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
-	/* static */ function _convert_url_to_relative($url_params)
+	private static function convert_url_to_relative($url_params)
 	{
 		$url = new Url($url_params[2]);
 		if ($url->is_relative())
 		{
-			$url_params[2] = Url::compress(Url::path_to_root() . $url->relative());
+			$url_params[2] = self::compress(self::path_to_root() . $url->relative());
 		}
 		return $url_params[1] . $url_params[2] . $url_params[3];
 	}
 
 
-	/* static */ function _build_html_match_regex($only_match_relative = false)
+	private static function build_html_match_regex($only_match_relative = false)
 	{
 		static $regex_match_all = null;
 		static $regex_only_match_relative = null;
@@ -391,135 +508,5 @@ class Url
 			return $regex_match_all;
 		}
 	}
-
-	/**
-	 * @static
-	 * @param string $url the url to "relativize"
-	 * @param string $path_to_root Path to root of the page to which you want to fit the URL
-	 * @param string $server_url Path from the site root of the page to which you want to fit the URL.
-	 * @return string the relative url of the $url parameter
-	 */
-	/* static */ function get_relative($url, $path_to_root = null, $server_url = null)
-	{
-		$o_url = new Url($url, $path_to_root, $server_url);
-		return $o_url->relative();
-	}
-
-	/**
-	 * @static
-	 * @desc Overrides the used PATH_TO_ROOT. if the argument is null, the value is only returned.
-	 * Please note this is a PHP4 hack to allow a Class variable.
-	 * @param string $path the new PATH_TO_ROOT to use
-	 * @return string the used PATH_TO_ROOT
-	 */
-	function path_to_root($path = null)
-	{
-		static $path_to_root = PATH_TO_ROOT;
-		if ($path != null)
-		{
-			$path_to_root = $path;
-		}
-		return $path_to_root;
-	}
-
-	/**
-	 * @static
-	 * @desc Overrides the used SERVER URL. if the argument is null, the value is only returned.
-	 * Please note this is a PHP4 hack to allow a Class variable.
-	 * @param string $path the new SERVER URL to use
-	 * @return string the used SERVER URL
-	 */
-	function server_url($url = null)
-	{
-		static $server_url = SERVER_URL;
-		if ($url !== null)
-		{
-			$server_url = $url;
-		}
-		return $server_url;
-	}
-
-	/**
-	 * @desc Returns the regex matching the requested url form
-	 * @static
-	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
-	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
-	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
-	 * @param int $folders REGEX_MULTIPLICITY_OPTION for the folders sub-regex
-	 * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
-	 * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
-	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
-	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
-	 * @return the regex matching the requested url form
-	 * @see REGEX_MULTIPLICITY_OPTIONNAL
-	 * @see REGEX_MULTIPLICITY_NEEDED
-	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
-	 * @see REGEX_MULTIPLICITY_ALL
-	 * @see REGEX_MULTIPLICITY_NOT_USED
-	 */
-	/* static */ function get_wellformness_regex($protocol = REGEX_MULTIPLICITY_OPTIONNAL,
-	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
-	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
-	{
-		static $forbid_js_regex = '(?!javascript:)';
-		static $protocol_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)*://';
-		static $user_regex = '[a-z0-9-_]+(?::[a-z0-9-_]+)?@';
-		static $domain_regex = '(?:[a-z0-9-_~]+\.)*[a-z0-9-_~]+(?::[0-9]{1,5})?/';
-		static $folders_regex = '/*(?:[a-z0-9~_\.-]+/+)*';
-		static $file_regex = '[a-z0-9-+_~:\.\%]+';
-		static $args_regex = '(?:\?(?!&)(?:(?:&amp;|&)?[a-z0-9-+=_~:;/\.\?\'\%]+=[a-z0-9-+=_~:;/\.\?\'\%]+)*)?';
-        static $anchor_regex = '\#[a-z0-9-_/]*';
-
-		if ($forbid_js)
-		{
-			$protocol_regex_secured = $forbid_js_regex . $protocol_regex;
-		}
-		else
-		{
-			$protocol_regex_secured = $protocol_regex;
-		}
-
-		return set_subregex_multiplicity($protocol_regex_secured, $protocol) .
-		set_subregex_multiplicity($user_regex, $user) .
-		set_subregex_multiplicity($domain_regex, $domain) .
-		set_subregex_multiplicity($folders_regex, $folders) .
-		set_subregex_multiplicity($file_regex, $file) .
-        set_subregex_multiplicity($anchor_regex, REGEX_MULTIPLICITY_OPTIONNAL) .
-		set_subregex_multiplicity($args_regex, $args) .
-		set_subregex_multiplicity($anchor_regex, $anchor);
-	}
-
-	/**
-	 * @desc Returns true if the url match the requested url form
-	 * @static
-	 * @param int $protocol REGEX_MULTIPLICITY_OPTION for the protocol sub-regex
-	 * @param int $user REGEX_MULTIPLICITY_OPTION for the user:password@ sub-regex
-	 * @param int $domain REGEX_MULTIPLICITY_OPTION for the domain sub-regex
-	 * @param int $folders REGEX_MULTIPLICITY_OPTION for the folders sub-regex
-	 * @param int $file REGEX_MULTIPLICITY_OPTION for the file sub-regex
-	 * @param int $args REGEX_MULTIPLICITY_OPTION for the arguments sub-regex
-	 * @param int $anchor REGEX_MULTIPLICITY_OPTION for the anchor sub-regex
-	 * @param bool $forbid_js true if you want to forbid javascript uses in urls
-	 * @return true if the url match the requested url form
-	 * @see REGEX_MULTIPLICITY_OPTIONNAL
-	 * @see REGEX_MULTIPLICITY_NEEDED
-	 * @see REGEX_MULTIPLICITY_AT_LEAST_ONE
-	 * @see REGEX_MULTIPLICITY_ALL
-	 * @see REGEX_MULTIPLICITY_NOT_USED
-	 */
-	/* static */ function check_wellformness($url, $protocol = REGEX_MULTIPLICITY_OPTIONNAL,
-	$user = REGEX_MULTIPLICITY_OPTIONNAL, $domain = REGEX_MULTIPLICITY_OPTIONNAL,
-	$folders = REGEX_MULTIPLICITY_OPTIONNAL, $file = REGEX_MULTIPLICITY_OPTIONNAL,
-	$args = REGEX_MULTIPLICITY_OPTIONNAL, $anchor = REGEX_MULTIPLICITY_OPTIONNAL, $forbid_js = true)
-	{
-		return preg_match('`^' . Url::get_wellformness_regex($protocol, $user, $domain,
-		$folders, $file, $args, $anchor, $forbid_js) . '$`i', $url);
-	}
-
-	var $url = '';
-	var $is_relative = false;
-	var $path_to_root = '';
-	var $server_url = '';
 }
 ?>

@@ -39,6 +39,16 @@ define('CAPTCHA_VERY_HARD', 4);
  */
 class Captcha
 {
+    private $instance = 0; //Numéro d'instance.
+	private $gd_loaded = false; //Chargement de la librairie GD.
+	private $width = 160; //Largeur de l'image générée.
+	private $code = ''; //Code captcha.
+	private $height = 50; //Largeur de l'image générée.
+	private $font = '../../../kernel/data/fonts/impact.ttf'; //Police
+	private $difficulty = 2; //Difficulté du code. 
+	
+	private static $intance_number = 0;
+	
 	/**
 	 * @desc Captcha constructor. It allows you to create multiple instance of captcha, and check if GD is loaded.
 	 */
@@ -49,7 +59,6 @@ class Captcha
 			$this->gd_loaded = true;
 	}
 	
-	## Public Methods ##
 	/**
 	 * @desc Checks if captcha is loaded, disabled for members.
 	 * @return boolean true if is loaded, false otherwise
@@ -57,7 +66,9 @@ class Captcha
 	public function is_available()
 	{
 		if ($this->gd_loaded)
+		{
 			return true;
+		}
 		return false;
 	}
 	
@@ -85,7 +96,6 @@ class Captcha
 			return false;
 	}
 	
-	//Alerte javascript
 	/**
 	 * @desc Javascript alert if the formular of the captcha code is empty.
 	 */
@@ -322,8 +332,7 @@ class Captcha
 	 */
 	private function update_instance()
 	{
-		static $instance = 0;
-		$this->instance = ++$instance;
+		$this->instance = ++self::$intance_number;
 	}
 	
 	/**
@@ -381,15 +390,6 @@ class Captcha
 	public function get_height() {return $this->height;}
 	public function get_font() {return $this->font;}
 	public function get_difficulty() {return $this->difficulty;}
-	
-	## Private Attributes ##
-	private $instance = 0; //Numéro d'instance.
-	private $gd_loaded = false; //Chargement de la librairie GD.
-	private $width = 160; //Largeur de l'image générée.
-	private $code = ''; //Code captcha.
-	private $height = 50; //Largeur de l'image générée.
-	private $font = '../../../kernel/data/fonts/impact.ttf'; //Police
-	private $difficulty = 2; //Difficulté du code. 
 }
 
 ?>
