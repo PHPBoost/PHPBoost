@@ -1,14 +1,16 @@
 <script type="text/javascript">
 <!--
-	function check_generated_form_{L_FORMNAME}(){
-		# START check_form #
-		if (document.getElementById('{check_form.FIELD_ID}').value == "") {
-			alert("{check_form.FIELD_REQUIRED_ALERT}");
-			return false;
-		}
-		# END check_form #
+	function check_generated_form_{L_FORMNAME}()
+	{
+		# IF C_BBCODE_TINYMCE_MODE #
+		tinyMCE.triggerSave();
+		# ENDIF #
 		
-		return true;
+		return checkForms(new Array(
+			# START check_form #
+			{check_form.COMA} '{check_form.FIELD_ID}', "{check_form.FIELD_REQUIRED_ALERT}" 
+			# END check_form #
+		));
 	}
 -->
 </script>
