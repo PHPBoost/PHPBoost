@@ -36,17 +36,36 @@ import('util/date');
  */
 class MiniCalendar
 {
+    /**
+	 * @var int The number of calendars created in that page (used to know if we have to load the javascript code)
+	 */
+	private $num_instance = 0;
+	/**
+	 * @var string The CSS properties of the calendar
+	 */
+	private $style = '';
+	/**
+	 * @var string The calendar name
+	 */
+	private $form_name = '';
+	/**
+	 * @var Date The date it displays
+	 */
+	private $date;
+	
+    private static $num_instances = 0;
+    
+    private static $js_inclusion_already_done = false;
+    
 	/**
 	 * @desc Builds a calendar which will be displayable.
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
-	function MiniCalendar($form_name)
+	public function MiniCalendar($form_name)
 	{
-		// Feinte pour PHP 4, en PHP 5 on mettra un attribut static à la classe
-		static $num_instance = 0;
 		$this->form_name = $form_name;
-		$this->num_instance = ++$num_instance;
+		$this->num_instance = ++self::$num_instances;
 		$this->date = new Date(DATE_NOW);
 	}
 	
@@ -54,7 +73,7 @@ class MiniCalendar
 	 * @desc Sets the date at which will be initialized the calendar.
 	 * @param Date $date Date
 	 */
-	function set_date($date)
+	public function set_date($date)
 	{
 		$this->date = $date;
 	}
@@ -65,7 +84,7 @@ class MiniCalendar
 	 * The template used is framework/mini_calendar.tpl.
 	 * @param string $style The CSS properties
 	 */
-	function set_style($style)
+	public function set_style($style)
 	{
 		$this->style = $style;
 	}
@@ -74,7 +93,7 @@ class MiniCalendar
 	 * @desc Returns the date
 	 * @return Date the date
 	 */
-	function get_date()
+	public function get_date()
 	{
 		return $this->date;
 	}
@@ -83,12 +102,9 @@ class MiniCalendar
 	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
 	 * @return string The code to write in the HTML page.
 	 */
-	function display()
+	public function display()
 	{
 		global $CONFIG;
-		
-		// Feinte pour PHP 4, en PHP 5 ce sera un attribut static
-		static $js_inclusion_already_done = false;
 		
 		//On crée le code selon le template
 		$template = new Template('framework/mini_calendar.tpl');
@@ -102,10 +118,10 @@ class MiniCalendar
 			'YEAR' => $this->date->get_year(),
 			'FORM_NAME' => $this->form_name,
 			'CALENDAR_STYLE' => $this->style,
-			'C_INCLUDE_JS' => !$js_inclusion_already_done
+			'C_INCLUDE_JS' => !self::$js_inclusion_already_done
 		));
 		
-		$js_inclusion_already_done = true;
+		self::$js_inclusion_already_done = true;
 		
 		return $template->parse(TEMPLATE_STRING_MODE);
 	}
@@ -116,30 +132,11 @@ class MiniCalendar
 	 * @param string $calendar_name Name of the calendar (HTML identifier).
 	 * @return Date The date of the calendar.
 	 */
-	function retrieve_date($calendar_name)
+	public function retrieve_date($calendar_name)
 	{
 		global $LANG;
 		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);
 	}
-	
-	# Private #	
-	/**
-	 * @var int The number of calendars created in that page (used to know if we have to load the javascript code)
-	 */
-	var $num_instance = 0;
-	/**
-	 * @var string The CSS properties of the calendar
-	 */
-	var $style = '';
-	/**
-	 * @var string The calendar name
-	 */
-	var $form_name = '';
-	/**
-	 * @var Date The date it displays
-	 */
-	var $date;
 }
-
 
 ?>
