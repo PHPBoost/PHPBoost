@@ -168,6 +168,24 @@ class Url
 		}
 	}
 
+	/**
+	 * @desc Returns the relative path from the website root to the current path if working on a relative url
+	 * @return string the relative path from the website root to the current path if working on a relative url
+	 */
+	public function root_to_local()
+	{
+		global $CONFIG;
+
+		$local_path = $this->server_url;
+		$local_path = substr(trim($local_path, '/'), strlen(trim($CONFIG['server_path'], '/')));
+		$file_begun = strrpos($local_path, '/');
+		if ($file_begun >= 0)
+		{
+			$local_path = substr($local_path, 0, $file_begun) . '/';
+		}
+
+		return '/' . ltrim($local_path, '/');
+	}
 
 	/**
 	 * @desc Compress a url by removing all "folder/.." occurrences
@@ -192,25 +210,6 @@ class Url
 		}
 		while (preg_match('`/?[^/]+/\.\.`', $url) > 0);
 		return preg_replace('`^//`', '/', $url) . $args;
-	}
-
-	/**
-	 * @desc Returns the relative path from the website root to the current path if working on a relative url
-	 * @return string the relative path from the website root to the current path if working on a relative url
-	 */
-	public function root_to_local()
-	{
-		global $CONFIG;
-
-		$local_path = $this->server_url;
-		$local_path = substr(trim($local_path, '/'), strlen(trim($CONFIG['server_path'], '/')));
-		$file_begun = strrpos($local_path, '/');
-		if ($file_begun >= 0)
-		{
-			$local_path = substr($local_path, 0, $file_begun) . '/';
-		}
-
-		return '/' . ltrim($local_path, '/');
 	}
 
 	/**
