@@ -41,9 +41,16 @@ define('FRANKLINBC_TTF', PATH_TO_ROOT . '/kernel/data/fonts/franklinbc.ttf');
  *
  */
 class Stats
-{		
-	## Public Methods ##
-	function Stats() 
+{
+	private $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
+	private $nbr_color = 14;
+	private $data_stats; //Tableau des données.
+	private $nbr_entry; //Nombre d'entrée à traiter.
+	private $array_allocated_color = array(); //Tableau des couleurs allouées.
+	private $color_index = 0; //Couleur courante.
+	private $decimal = 1; //Arrondi
+	
+	public function __construct()
 	{
 	}
 	
@@ -53,7 +60,7 @@ class Stats
 	 * @param string $draw_type Type of chart.
 	 * @param int $decimal Round precision.
 	 */
- 	function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
+ 	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		global $LANG;
 		
@@ -70,7 +77,7 @@ class Stats
 				arsort($array_stats);
 					
 				//Conversion valeur vers angle.
-				$this->data_stats = array_map(array($this, '_value_to_angle'), $array_stats);
+				$this->data_stats = array_map(array($this, 'value_to_angle'), $array_stats);
 			}
 		}
 		elseif ($draw_type == 'histogram')
@@ -94,7 +101,7 @@ class Stats
 	 * @param string $font Font type used for the legend.
 	 * @return Return true if image has been succefully created, false otherwise and create an error image.
 	 */
-	function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	public function draw_ellipse($w_arc, $h_arc, $img_cache = '', $height_3d = 20, $draw_percent = true, $draw_legend = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd') && version_compare(phpversion(), '4.0.6', '>='))
 		{			
@@ -131,7 +138,7 @@ class Stats
 				$this->color_index = 0;
 				foreach ($this->data_stats as $name_value => $angle_value)
 				{					
-					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image) . 'dark'];
+					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark($image) . 'dark'];
 					if ($angle_value > 5)
 						imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
 					$angle += $angle_value;
@@ -146,9 +153,9 @@ class Stats
 			{					
 				if ($angle_value > 5 && $draw_percent)
 				{
-					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					$this->color_index--;
-					$get_shadow_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
+					$get_shadow_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
 					
@@ -159,7 +166,7 @@ class Stats
 					$y_string = ($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse;				
 					
 					//Texte
-					$text = ($angle_value != 360) ? $this->_number_round(($angle_value/3.6), 1) . '%' : '100%';
+					$text = ($angle_value != 360) ? self::number_round(($angle_value/3.6), 1) . '%' : '100%';
 					
 					//Centrage du texte.	
 					$array_size_ttf = imagettfbbox($font_size, 0, $font, $text);
@@ -178,9 +185,9 @@ class Stats
 			
 			if (!empty($angle_other))
 			{
-				$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+				$get_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 				$this->color_index--;
-				$get_shadow_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
+				$get_shadow_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
 				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_color, IMG_ARC_PIE);
 				imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_other), $get_shadow_color, IMG_ARC_NOFILL);
 			}
@@ -202,7 +209,7 @@ class Stats
 				$i = 0;
 				foreach ($this->data_stats as $name_value => $angle_value)
 				{					
-					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
+					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					if ($i < 8)
 					{					
 						//Carré de couleur.
@@ -210,7 +217,7 @@ class Stats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 						
 						//Texte
-						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? $this->_number_round(($angle_value/3.6), 1) . '%' : '100%') . ')';
+						$text = ucfirst(substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? self::number_round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 						
 						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
 						$i++;
@@ -231,7 +238,7 @@ class Stats
 		}
 		else
 		{	
-			$this->_create_pics_error($w_arc, $h_arc, $font_size, $font);
+			$this->create_pics_error($w_arc, $h_arc, $font_size, $font);
 			return false;
 		}
 	}
@@ -248,7 +255,7 @@ class Stats
 	 * @param string $font Font type used for the legend.
 	 * @return Return true if image has been succefully created, false otherwise and create an error image.
 	 */
-	 function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	 public function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd'))
 		{					
@@ -286,7 +293,7 @@ class Stats
 				$i = 0;
 				foreach ($this->data_stats as $name_value => $value)
 				{					
-					$get_color = $this->array_allocated_color[$this->_image_color_allocate_dark($image)];
+					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark($image)];
 					if ($i < 8)
 					{					
 						//Carré de couleur.
@@ -319,9 +326,9 @@ class Stats
 
 			//Echelle verticale de l'histogramme.
 			$array_scale = array();
-			$this->_generate_scale($array_scale, $max_element);
+			$this->generate_scale($array_scale, $max_element);
 			$scale_pos = $margin;
-			$scale_iteration = $this->_number_round(($h_histo_content+1)/15, 2);
+			$scale_iteration = self::number_round(($h_histo_content+1)/15, 2);
 			$j = 0;
 			for ($i = 0; $i < 16; $i++)
 			{
@@ -355,7 +362,7 @@ class Stats
 			$this->color_index = 5;
 			$color_bar = imagecolorallocate($image, 68, 113, 165);
 			$color_bar_dark = imagecolorallocate($image, 99, 136, 177);
-			$space_bar = $this->_number_round(($w_histo_content - 4)/count($this->data_stats), 0);
+			$space_bar = self::number_round(($w_histo_content - 4)/count($this->data_stats), 0);
 			$margin_bar = $space_bar*18/100;
 			$width_bar = $space_bar - (2*$margin_bar);
 			$max_height = ($h_histo_content * 80)/100;
@@ -442,7 +449,7 @@ class Stats
 		}
 		else
 		{	
-			$this->_create_pics_error($w_histo, $h_histo, $font_size, $font);
+			$this->create_pics_error($w_histo, $h_histo, $font_size, $font);
 			return false;
 		}
 	}
@@ -450,22 +457,18 @@ class Stats
 	/**
 	 * @desc Draw graph, not yet implemented.
 	 */
-	function draw_graph()
+	public function draw_graph()
 	{
-	
-	
 	}
 	
-	
-	## Private Methods ##
 	/**
 	 * @desc convert value to angle
 	 * @param int $value the value to convert.
 	 * @return int angle
 	 */
-	function _value_to_angle($value)
+	private function value_to_angle($value)
 	{
-		return $this->_number_round(($value * 360)/$this->nbr_entry, $this->decimal);
+		return self::number_round(($value * 360)/$this->nbr_entry, $this->decimal);
 	}
 		
 	/**
@@ -475,7 +478,7 @@ class Stats
 	 * @param resource $similar_color Set 0.40 for a different color and 0.99 for a very similar.
 	 * @return int angle
 	 */
-	function _image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
+	private function image_color_allocate_dark($image, $allocate = true, $mask_color = 0, $similar_color = 0.50)
 	{
 		if ($this->color_index == $this->nbr_color)
 			$this->color_index = 0;
@@ -500,7 +503,7 @@ class Stats
 	 * @param array $array_scale List of element
 	 * @param resource $max_element Maximal element int the array_scale list
 	 */
-	function _generate_scale(&$array_scale, $max_element)
+	private function generate_scale(&$array_scale, $max_element)
 	{
 		$max_element += ($max_element * 20/100);
 		while (($max_element%3) != 0)
@@ -510,7 +513,7 @@ class Stats
 		$scale_iteration = $max_element/3;
 		for ($i = 0; $i < 4; $i++)
 		{	
-			$array_scale[$i] = $this->_number_round(abs($scale), 0);
+			$array_scale[$i] = self::number_round(abs($scale), 0);
 			$scale -= $scale_iteration;
 		}
 	}
@@ -521,10 +524,10 @@ class Stats
 	 * @param boolean $demi_dozen Round to the half dozen.
 	 * @return int The number rounded.
 	 */
-	 function _number_round_dozen($number, $demi_dozen = true)
+	 private function number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
-		$number = $this->_number_round($number, 1) * 10;
+		$number = self::number_round($number, 1) * 10;
 		$decimal = $unit + ($number % 10)/10;
 		$number /= 10;
 
@@ -545,7 +548,7 @@ class Stats
 				$number = $number - $decimal + 10;
 		}
 		
-		return $this->_number_round($number, 0);
+		return self::number_round($number, 0);
 	}
 	
 	/**
@@ -555,7 +558,7 @@ class Stats
 	 * @param int $font_size Font size used on the image.
 	 * @param int $font Font type used on the image.
 	 */
-	function _create_pics_error($width, $height, $font_size, $font)
+	private function create_pics_error($width, $height, $font_size, $font)
 	{
 		$thumbtail = @imagecreate($width, $height);
 		$background = @imagecolorallocate($thumbtail, 255, 255, 255);
@@ -583,19 +586,10 @@ class Stats
 	 * @param int $dec Number of decimal used to round.
 	 * @return int The number rounded.
 	 */
-	function _number_round($number, $dec)
+	private static function number_round($number, $dec)
 	{
 		return trim(number_format($number, $dec, '.', ''));
 	}
-	
-	## Private attribute ##
-	var $array_color_stats = array(array(224, 118, 27), array(48, 149, 53), array(254, 249, 52), array(102, 133, 237), array(204, 42, 38), array(53, 144, 189), array(102, 102, 153), array(236, 230, 208), array(213, 171, 1), array(182, 0, 51), array(193, 73, 0), array(25, 119, 128), array(182, 181, 177), array(102, 133, 237));	//Tableau des couleurs.
-	var $nbr_color = 14;
-	var $data_stats; //Tableau des données.
-	var $nbr_entry; //Nombre d'entrée à traiter.
-	var $array_allocated_color = array(); //Tableau des couleurs allouées.
-	var $color_index = 0; //Couleur courante.
-	var $decimal = 1; //Arrondi
 }
 
 ?>

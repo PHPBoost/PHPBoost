@@ -57,6 +57,11 @@ define('TIMEZONE_AUTO', 		TIMEZONE_USER);
 class Date
 {
 	/**
+	 * @var int The timestamp of the current date
+	 */
+	private $timestamp = 0;
+	
+	/**
 	 * @desc Builds and initializes a date. It admits a variable number of parameters depending on the value of the first one.
 	 * The second parameter allows us to chose what time referential we use to create the date:
 	 * <ul>
@@ -96,7 +101,7 @@ class Date
 	 * Here are the rules:
 	 * 
 	 */
-	function Date()
+	public function __construct()
 	{
 		global $CONFIG;
 		
@@ -116,7 +121,7 @@ class Date
 			else
 				$referencial_timezone = TIMEZONE_USER;
 			
-			$time_difference = $this->_compute_server_user_difference($referencial_timezone);
+			$time_difference = self::compute_server_user_difference($referencial_timezone);
 		}
 		
 		switch ($format)
@@ -195,7 +200,7 @@ class Date
 			    }
 
 			    //Vérification du format de la date.
-			    if ($this->Check_date($month, $day, $year))
+			    if (self::check_date($month, $day, $year))
 			        $this->timestamp = @mktime(0, 0, 1, $month, $day, $year) - $time_difference * 3600;
 				else
 			        $this->timestamp = time();
@@ -225,11 +230,11 @@ class Date
 	 * </ul>
 	 * @return string The formatted date
 	 */
-	function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
+	public function format($format = DATE_FORMAT_TINY, $referencial_timezone = TIMEZONE_USER)
 	{
 		global $LANG, $CONFIG;
 		
-		$timestamp = $this->timestamp + $this->_compute_server_user_difference($referencial_timezone) * 3600;
+		$timestamp = $this->timestamp + self::compute_server_user_difference($referencial_timezone) * 3600;
 		
 		if ($timestamp <= 0)
 			return '';
@@ -272,7 +277,7 @@ class Date
 	 * @desc Returns the timestamp associated to the date
 	 * @return int The timestamp
 	 */
-	function get_timestamp()
+	public function get_timestamp()
 	{
 		return $this->timestamp;
 	}
@@ -281,86 +286,82 @@ class Date
 	 * @desc Returns the year of the date
 	 * @return string The year
 	 */
-	function get_year()
+	public function get_year()
 	{
-		return date('Y', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('Y', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 
 	/**
 	 * @desc Returns the month of the date
 	 * @return string The month
 	 */
-	function get_month()
+	public function get_month()
 	{
-		return date('m', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('m', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the day of the date
 	 * @return string The day
 	 */
-	function get_day()
+	public function get_day()
 	{
-		return date('d', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('d', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the hours of the date
 	 * @return string The hours
 	 */
-	function get_hours()
+	public function get_hours()
 	{
-		return date('H', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('H', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the minutes of the date
 	 * @return string The minutes
 	 */
-	function get_minutes()
+	public function get_minutes()
 	{
-		return date('i', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('i', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Returns the seconds of the date
 	 * @return string The seconds
 	 */
-	function get_seconds()
+	public function get_seconds()
 	{
-		return date('s', $this->timestamp + $this->_compute_server_user_difference(TIMEZONE_USER) * 3600);
+		return date('s', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
 	/**
 	 * @desc Exports the date according to the format YYYY-mm-dd
 	 * @return string The formatted date
 	 */
-	function to_date()
+	public function to_date()
 	{
 		return date('Y-m-d', $this->timestamp);
 	}
 	
-	# This should be static#
 	/**
-	 * @static
 	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
 	 * @param int $day The day
 	 * @param int $year The year
 	 * @return bool true if the date is correct and false otherwise.
 	 */
-	function check_date($month, $day, $year)
+	private static function check_date($month, $day, $year)
 	{
 		return checkdate($month, $day, $year);
 	}
 	
-	## Private ##
 	/**
-	 * @static
 	 * @desc Computes the time difference between the server and the current user
 	 * @return int The time difference (in hours)
 	 */
-	function _compute_server_user_difference($referencial_timezone = 0)
+	private static function compute_server_user_difference($referencial_timezone = 0)
 	{
 		global $CONFIG, $User;
 		
@@ -388,10 +389,5 @@ class Date
 		}
 	    return $timezone;
 	}
-	
-	/**
-	 * @var int The timestamp of the current date
-	 */
-	var $timestamp = 0;
 }
 ?>
