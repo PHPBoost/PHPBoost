@@ -132,6 +132,7 @@ if (!empty($idart) && isset($_GET['cat']))
 }
 else
 {
+
 	import('modules/modules_discovery_service');
 	$modulesLoader = new ModulesDiscoveryService();
 	$module_name = 'articles';

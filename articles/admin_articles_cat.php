@@ -138,11 +138,11 @@ elseif ($new_cat XOR $id_edit > 0)
 	else
 	{
 		$id_edit = 0;
-		$img_default = '/articles/articles.png';
+		$img_default = '../articles/articles.png';
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
-			'IMAGE' => '',
+			'IMAGE' => $img_default,
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,

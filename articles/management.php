@@ -268,9 +268,7 @@ elseif (!empty($_POST['submit']))
 		}
 	}
 	else
-	{
-
-		
+	{	
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }

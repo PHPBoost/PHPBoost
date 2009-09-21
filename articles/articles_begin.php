@@ -45,19 +45,18 @@ if (empty($idartcat))//Racine.
 
 if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
 { 
-	//Création de l'arborescence des catégories.
-	$Bread_crumb->add($LANG['title_articles'], url('articles.php'));
-	foreach ($ARTICLES_CAT as $id => $array_info_cat)
-	{
-		if (!empty($idartcat) && $ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent']  && $array_info_cat['order'] <= $ARTICLES_CAT[$idartcat]['order'])
-			$Bread_crumb->add($array_info_cat['name'], 'articles' . url('.php?cat=' . $id, '-' . $id . '.php'));
-	}
+	require_once('articles_cats.class.php');
+	$articles_categories = new ArticlesCats();
+	$articles_categories->bread_crumb($_GET['cat']);
+
 	if (!empty($idart))
 	{
 		$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
+
+		
 		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
 		
 		if (!empty($get_note))
@@ -70,7 +69,7 @@ if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
 }
 else
 {
-	$Bread_crumb->add($LANG['title_articles'], '');
+	$Bread_crumb->add($LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
 		define('TITLE', $LANG['title_articles']);
 }
