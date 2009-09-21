@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                             field_select_option.class.php
+ *                             form_field_composite.class.php
  *                            -------------------
  *   begin                : April 28, 2009
  *   copyright            : (C) 2009 Viarre Régis
@@ -24,44 +24,19 @@
  *
 ###################################################*/
 
-import('builder/form/form_field_composite');
-
-define('FORM__SELECT_SELECTED', true);
-
-/**
- * @author Régis Viarre <crowkait@phpboost.com>
- * @desc This class manage select field options.
- * @package builder
- * @subpackage form
- */
-class FormSelectOption extends FormFieldComposite
+abstract class FormFieldComposite
 {
-	private $selected = false;
+	protected $label = '';
+	protected $name = '';
+	protected $value = '';
+	protected $id = '';
+	protected $errors = array();
+
+	public abstract function display();
+
+	public function set_name($var) { $this->name = $var; }
+	public function get_errors() { return array(); }
 	
-	/**
-	 * @param $label string The label for the select option
-	 * @param $value string The value for the select option
-	 * @param $checked boolean set to FORM__SELECT_SELECTED to select the option
-	 */
-	public function __construct($label, $value = '', $selected = false)
-	{
-		$this->label = $label;
-		$this->value = $value;
-		$this->selected = $selected;
-	}
-		
-	/**
-	 * @return string The html code for the select.
-	 */
-	public function display()
-	{
-		$option = '<option ';
-		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
-		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
-		$option .= '>' . $this->label . '</option>' . "\n";
-		
-		return $option;
-	}
 }
 
 ?>
