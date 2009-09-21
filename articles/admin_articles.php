@@ -71,7 +71,7 @@ if ($del && !empty($id)) //Suppression de l'article.
 }	
 elseif (!empty($id))
 {
-	$tpl = new Template('articles/articles/admin_articles_management.tpl');
+	$tpl = new Template('articles/admin_articles_management.tpl');
 	require_once('admin_articles_menu.php');
 	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
 	
@@ -179,10 +179,9 @@ elseif (!empty($id))
 }	
 elseif (!empty($_POST['previs']) && !empty($id_post))
 {
-	$Template->set_filenames(array(
-		'admin_articles_management'=> 'articles/admin_articles_management.tpl'
-	));
 
+	$tpl = new Template('articles/admin_articles_management.tpl');
+	
 	$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
 	$icon = retrieve(POST, 'icon', '', TSTRING_UNCHANGE);
 	$icon_path = retrieve(POST, 'icon_path', '', TSTRING_UNCHANGE);
@@ -262,7 +261,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		}
 	}
 	
-	$Template->assign_block_vars('articles', array(
+	$tpl->assign_block_vars('articles', array(
 		'IDARTICLES' => $id_post,
 		'TITLE' => $title,
 		'CATEGORIES' => $categories,
@@ -291,7 +290,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 	));
 	
 	$pseudo = $Sql->query("SELECT login FROM " . DB_TABLE_MEMBER . " WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
-	$Template->assign_block_vars('articles.preview', array(
+	$tpl->assign_block_vars('articles.preview', array(
 		'USER_ID' => $user_id,
 		'TITLE' => $title,
 		'CONTENTS' => second_parse(stripslashes(strparse($contents))),
@@ -299,7 +298,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'DATE' => gmdate_format('date_format_short')
 	));
 	
-	$Template->assign_vars(array(	
+	$tpl->assign_vars(array(	
 		'KERNEL_EDITOR' => display_editor(),
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
@@ -334,7 +333,7 @@ elseif (!empty($_POST['previs']) && !empty($id_post))
 		'L_RESET' => $LANG['reset']
 	));
 	
-	$Template->pparse('admin_articles_management'); 
+	$tpl->parse();
 }
 elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 {
