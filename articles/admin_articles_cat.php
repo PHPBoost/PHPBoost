@@ -128,6 +128,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		{
 			$image = $images->get_name();
 			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+			
 		}
 		
 		$tpl->assign_block_vars('edition_interface', array(
@@ -150,20 +151,21 @@ elseif ($new_cat XOR $id_edit > 0)
 	{
 		$id_edit = 0;
 		$img_default = '../articles/articles.png';
-		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default.'</option>';
+		$img_default_name = 'articles.png';
+		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default_name.'</option>';
 		import('io/filesystem/folder');
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
 			$image = $images->get_name();
-			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+			if($image != $img_default_name){
+			$image_list .= '<option value="' . $image . '">' . $image . '</option>';}
 		}
 		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
 			'IMG_LIST' => $image_list,
-			//'IMAGE' => $img_default,
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,

@@ -34,12 +34,12 @@ $Cache->load('articles');
 $idart = retrieve(GET, 'id', '', TSTRING);
 if ($idart > 0)
 {
-	$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
+	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
 	
 	$idartcat = $articles['idcat'];
 	
 	//Niveau d'autorisation de la catégorie
-	if (!isset($CAT_ARTICLES[$idartcat]) || !$User->check_auth($CAT_ARTICLES[$idartcat]['auth'], READ_CAT_ARTICLES) || $CAT_ARTICLES[$idartcat]['aprob'] == 0) 
+	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
 	if (empty($articles['id']))
