@@ -139,7 +139,7 @@ class ArticlesInterface extends ModuleInterface
 	function _get_cats_tree()
 	{
 		global $LANG, $ARTICLES_CAT;
-		Cache::load('articles');
+		$Cache->load('articles');
 
 		if (!(isset($ARTICLES_CAT) && is_array($ARTICLES_CAT)))
 		{
@@ -286,7 +286,7 @@ class ArticlesInterface extends ModuleInterface
 		require_once('../articles/articles_begin.php');
 
 		$tpl = new Template('articles/articles_cat.tpl');
-
+		
 		if ($idartcat > 0)
 		{
 		
@@ -294,18 +294,17 @@ class ArticlesInterface extends ModuleInterface
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 
 			$cat_links = '';
-			foreach ($ARTICLES_CAT as $id => $array_info_cat)
-			{
-				if ($ARTICLES_CAT[$idartcat]['id_parent'] >= $array_info_cat['id_parent'] &&  $array_info_cat['order'] <= $ARTICLES_CAT[$idartcat]['order'])
-				$cat_links .= ' <a href="articles' . url('.php?cat=' . $id, '-' . $id . '.php') . '">' . $array_info_cat['name'] . '</a> &raquo;';
-			}
-			$clause_cat = " WHERE ac.id_parent > '" . $ARTICLES_CAT[$idartcat]['id_parent'] . "'  AND ac.visible = 1";
-
+	
+			
+			$cat_links .= ' <a href="articles' . url('.php?cat=' . $idartcat, '-' . $idartcat . '.php') . '">' . $ARTICLES_CAT[$idartcat]['name'] . '</a>';
+			
+			$clause_cat = " WHERE ac.id_parent = '" . $idartcat . "'  AND ac.visible = 1";
+			
 		}
 		else //Racine.
 		{
 			
-			$cat_links = '';
+			$cat_links = ' <a href="articles.php">' . $LANG['title_articles'] . '</a>';
 			$clause_cat = " WHERE ac.id_parent = '0' AND ac.visible = 1";
 		}
 
@@ -332,7 +331,7 @@ class ArticlesInterface extends ModuleInterface
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,
-			'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '&raquo; ' : '') . '<a href="../articles/admin_articles_add.php"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+			'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '' : '') . '<a href="../articles/management.php?new=1"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
 			'L_ARTICLES' => $LANG['articles'],
 			'L_DATE' => $LANG['date'],
 			'L_VIEW' => $LANG['views'],
@@ -341,7 +340,7 @@ class ArticlesInterface extends ModuleInterface
 			'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($LANG['nbr_articles_info'], $nbr_articles) : '',
 			'L_NO_ARTICLES' => ($nbr_articles == 0) ? $LANG['none_article'] : '',
 			'L_ARTICLES_INDEX' => $LANG['title_articles'],
-			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['c_order'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],
+			'L_CATEGORIES' => ($ARTICLES_CAT[$idartcat]['order'] >= 0) ? $LANG['sub_categories'] : $LANG['categories'],
 			'U_ARTICLES_CAT_LINKS' => trim($cat_links, ' &raquo;'),
 			'U_ARTICLES_ALPHA_TOP' => url('.php?sort=alpha&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=desc'),
 			'U_ARTICLES_ALPHA_BOTTOM' => url('.php?sort=alpha&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=alpha&amp;mode=asc'),
