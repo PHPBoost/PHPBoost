@@ -37,11 +37,11 @@ class FormCaptchaField extends FormField
 	private $Captcha = ''; //Captcha object
 	
 	/**
-	 * @param $fieldId string The html field identifier
+	 * @param $field_id string The html field identifier
 	 * @param $Captcha Captcha The captcha object
 	 * @param $fieldOptions array Field's options
 	 */
-	public function __construct($fieldId, &$Captcha, $fieldOptions = array())
+	public function __construct($field_id, &$Captcha, $fieldOptions = array())
 	{
 		global $LANG;
 		
@@ -49,7 +49,7 @@ class FormCaptchaField extends FormField
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
 		
-		$this->fill_attributes($fieldId . $Captcha->get_instance(), $fieldOptions);
+		$this->fill_attributes($field_id . $Captcha->get_instance(), '', $fieldOptions);
 		$this->Captcha = $Captcha;
 		foreach($fieldOptions as $attribute => $value)
 		{

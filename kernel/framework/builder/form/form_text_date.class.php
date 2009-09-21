@@ -44,11 +44,11 @@ class FormTextDate extends FormField
 	private $num_instance = 0;
 	private static $num_instances = 0;
 	
-	public function __construct($fieldId, $field_options = array())
+	public function __construct($field_id, $field_options = array())
 	{
 		$this->num_instance = ++self::$num_instances;
 
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);

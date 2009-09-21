@@ -41,9 +41,9 @@ class FormFileUploader extends FormField
 	private $size = '';
 	private $extended_text = '';
 	
-	public function __construct($fieldId, $field_options = array())
+	public function __construct($field_id, $field_options = array())
 	{
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, '', $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{

@@ -56,13 +56,14 @@ abstract class FormField
 	public abstract function display();
 	
 	/**
-	 * @param string $fieldId Name of the field.
+	 * @param string $field_id Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	public function fill_attributes($fieldId, &$fieldOptions)
+	public function fill_attributes($field_id, $value, &$fieldOptions)
 	{
-		$this->name = $fieldId;
-		$this->id = $fieldId;
+		$this->name = $field_id;
+		$this->id = $field_id;
+		$this->value = $value;
 		
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -76,10 +77,6 @@ abstract class FormField
 				case 'subtitle' :
 					$this->sub_title = $value;
 					unset($fieldOptions['subtitle']);
-				break;
-				case 'value' :
-					$this->value = $value;
-					unset($fieldOptions['value']);
 				break;
 				case 'id' :
 					$this->id = $value;
@@ -124,6 +121,7 @@ abstract class FormField
 		$this->errors = array_merge($this->errors, $array_errors);
 	}
 	
+	## Getters and Setters ##
 	/**
 	 * @desc  Get all errors occured in the field construct process.
 	 * @return array All errors
@@ -134,11 +132,13 @@ abstract class FormField
 	 * @return string The fied identifier.
 	 */
 	public function get_id() { return $this->id;}
-	
 	/**
 	 * @return string Text displayed if field is empty.
 	 */
 	public function get_required_alert() { return $this->required_alert;}
+	public function get_value() { return $this->value; }
+	
+	public function set_value() { return $this->value; }
 }
 
 ?>

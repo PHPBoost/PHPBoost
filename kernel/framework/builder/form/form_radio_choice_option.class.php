@@ -26,8 +26,6 @@
 
 import('builder/form/form_field_composite');
 
-define('FORM__RADIO_CHECKED', true);
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage radio input field options.
@@ -42,6 +40,8 @@ define('FORM__RADIO_CHECKED', true);
 class FormRadioChoiceOption extends FormFieldComposite
 {
 	private $checked = false;
+	
+	const CHECKED = true;
 	
 	/**
 	 * @param $label string The label for the radio option

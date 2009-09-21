@@ -35,12 +35,14 @@ import('builder/form/form_checkbox_option');
  */
 class FormCheckbox extends FormField
 {
+	private $options = array();
+	
 	public function __construct()
 	{
-		$fieldId = func_get_arg(0);
+		$field_id = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		
@@ -87,8 +89,6 @@ class FormCheckbox extends FormField
 		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
-	
-	private $options = array();
 }
 
 ?>

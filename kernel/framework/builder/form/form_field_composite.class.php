@@ -36,7 +36,6 @@ abstract class FormFieldComposite
 
 	public function set_name($var) { $this->name = $var; }
 	public function get_errors() { return array(); }
-	
 }
 
 ?>

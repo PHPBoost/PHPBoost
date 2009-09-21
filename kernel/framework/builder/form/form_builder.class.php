@@ -37,26 +37,26 @@
 *	//####### First fieldset ######//
 *	$fieldset = new FormFieldset('Form Test');
 *	
-*	$fieldset->add_field(new FormTextEdit('login', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
+*	$fieldset->add_field(new FormTextEdit('login', 'Default value', array('title' => 'Login', 'subtitle' => 'Enter your login', 'class' => 'text', 'required' => true, 'required_alert' => 'Login field has to be filled')));
 *	//Textarea field
-*	$fieldset->add_field(new FormTextarea('contents', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
-*	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
+*	$fieldset->add_field(new FormTextarea('contents', '', array('title' => 'Description', 'subtitle' => 'Enter a description', 'rows' => 10, 'cols' => 10, 'required' => true, 'required_alert' => 'Content field has to be filled')));
+*	$fieldset->add_field(new FormTextarea('comments', '', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
 *	//Radio button field
 *	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
 *		new FormRadioChoiceOption('Choix1', 1), 
-*		new FormRadioChoiceOption('Choix2', 2, FORM__RADIO_CHECKED)
+*		new FormRadioChoiceOption('Choix2', 2, FormRadioChoiceOption::CHECKED)
 *	));
 *	
 *	//Checkbox button field
 *	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
 *		new FormCheckboxOption('Choix3', 1), 
-*		new FormCheckboxOption('Choix4', 2, FORM__CHECKBOX_CHECKED) 
+*		new FormCheckboxOption('Choix4', 2, FormCheckboxOption::CHECKED) 
 *	));
 *	//Select field
 *	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
 *		new FormSelectOption('Men', 1), 
 *		new FormSelectOption('Women', 2), 
-*		new FormSelectOption('?', -1, FORM__SELECT_SELECTED)
+*		new FormSelectOption('?', -1, FormSelectOption::SELECTED)
 *	));
 *	
 *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
