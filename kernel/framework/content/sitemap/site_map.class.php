@@ -155,7 +155,7 @@ class SiteMap
 				'CODE' => $element->export($export_config)
             ));
         }
-        return $template->parse(TEMPLATE_STRING_MODE);
+        return $template->parse(Template::TEMPLATE_PARSER_STRING);
     }
 
     /**

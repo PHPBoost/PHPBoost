@@ -77,7 +77,7 @@ class FormCaptchaField extends FormField
 			'CAPTCHA_DIFFICULTY' => $this->Captcha->get_difficulty()
 		));	
 		
-		return $Template->parse(TEMPLATE_STRING_MODE);
+		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

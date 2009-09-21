@@ -97,7 +97,7 @@ class WikiInterface extends ModuleInterface
             'L_CONTENTS' => $LANG['wiki_search_where_contents']
 		));
 
-		return $Tpl->parse(TEMPLATE_STRING_MODE);
+		return $Tpl->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
 	function get_search_args()

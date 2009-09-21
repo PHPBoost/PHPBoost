@@ -29,9 +29,7 @@ import('io/template/abstract_template_parser');
 
 class TemplateParserString extends AbstractTemplateParser
 {
-	private $result;
-	
-	const TPL_VAR_STRING = '$tplString';
+	const TPL_VAR_STRING = '$this->resource';
 	
 	protected function compute_cache_filepath()
 	{
@@ -42,11 +40,11 @@ class TemplateParserString extends AbstractTemplateParser
 		), '_') . '_str.php';
 	}
 	
-	public function parse($template_object, $template_loader)
+	/* public function parse($template_object, $template_loader)
 	{
 		parent::parse($template_object, $template_loader);
 		return $this->result;
-	}
+	} */
 	
 	protected function do_parse()
 	{
@@ -60,7 +58,6 @@ class TemplateParserString extends AbstractTemplateParser
 	protected function execute()
 	{
 		include($this->cache_filepath);
-		$this->result = $tplString;
 	}
 	
 	protected function optimize()
@@ -97,12 +94,13 @@ class TemplateParserString extends AbstractTemplateParser
 	private function parse_includes()
 	{
 		$this->content = preg_replace('`# INCLUDE ([\w]+) #`', '\'; $_subtemplate = $this->template->get_subtemplate(\'$1\');' . "\n" .
-			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING . '.=$_subtemplate->parse(TEMPLATE_STRING_MODE);}' . self::TPL_VAR_STRING . '.=\'', $this->content);
+			'if ($_subtemplate !== null){' . self::TPL_VAR_STRING . '.=$_subtemplate->parse(Template::TEMPLATE_PARSER_STRING);}' . self::TPL_VAR_STRING . '.=\'', $this->content);
 	}
 	
 	private function callback_parse_vars($varname)
 	{
-		return '\' . $this->template->' . $this->get_getvar_method_name($varname[1]) . '(\'' . $varname[1] . '\') . \'';
+		$method_var = $this->get_getvar_method_name($varname[1]);
+		return '\' . $this->template->' . $method_var['method'] . '(\'' . $method_var['varname'] . '\') . \'';
 	}
 	
 	private function callback_parse_blocks_vars($blocks)
@@ -111,7 +109,8 @@ class TemplateParserString extends AbstractTemplateParser
 		$varname = array_pop($array_block);
 		$last_block = array_pop($array_block);
 		
-		return '\' . $this->template->' . $this->get_getvar_method_name($varname) . '_from_list(\'' . $varname . '\', $_tmp_' . $last_block . '_value) . \'';
+		$method_var = $this->get_getvar_method_name($varname);
+		return '\' . $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value) . \'';
 	}
 	
 	private function callback_parse_blocks($blocks)

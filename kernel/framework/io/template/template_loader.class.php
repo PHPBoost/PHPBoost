@@ -27,12 +27,14 @@
 
 interface TemplateLoader
 {
-	public function is_cache_file_valid($cache_filepath);
+	function is_cache_file_valid($cache_filepath);
 
-	public function get_identifier();
+	function get_identifier();
 	
-	public function load();
+	function load();
 	
-	public function get_resource_as_string();
+	function get_resource_as_string();
+	
+	function get_data_path();
 }
 ?>

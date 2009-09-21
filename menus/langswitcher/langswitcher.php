@@ -83,7 +83,7 @@ function menu_langswitcher_langswitcher($position, $block)
     	'L_SUBMIT' => $LANG['submit']
     ));
     
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 
 ?>

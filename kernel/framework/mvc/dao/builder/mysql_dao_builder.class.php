@@ -56,7 +56,7 @@ class MySQLDAOBuilder extends SQLDAOBuilder
             'TABLES_NAMES' => implode(',', $this->model->used_tables()),
             'JOIN_CLAUSE' => implode(' AND ', $join_clause)
     	));
-    	return $tpl->parse(TEMPLATE_STRING_MODE);
+    	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     private static $template_filename = 'mysql_dao_builder';
 }

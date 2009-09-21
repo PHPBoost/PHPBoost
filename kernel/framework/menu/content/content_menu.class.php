@@ -80,7 +80,7 @@ class ContentMenu extends Menu
             'TITLE' => $this->title,
         	'CONTENT' => second_parse($this->content)
         ));
-        return $tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
     function cache_export()

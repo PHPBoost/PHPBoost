@@ -113,7 +113,7 @@ function online_mini($position, $block)
     		'L_ONLINE' => $LANG['online'],
     		'L_TOTAL' => $LANG['total']
     	));
-		return $tpl->parse(TEMPLATE_STRING_MODE);
+		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
 	
     return '';

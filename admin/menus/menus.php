@@ -267,7 +267,7 @@ foreach ($menus_blocks as $block_id => $menus)
             'U_MOVE' => menu_admin_link($menu, 'move'),
         ));
         
-        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(TEMPLATE_STRING_MODE)));
+        $tpl->assign_block_vars($blocks[$block_id], array('MENU' => $menu_tpl->parse(Template::TEMPLATE_PARSER_STRING)));
         $i++;
     }
 }

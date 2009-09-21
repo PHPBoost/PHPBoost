@@ -153,7 +153,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
                 ));
                 
                 $tpl_results->assign_block_vars('page.results', array(
-                    'result' => $tpl_result->parse(TEMPLATE_STRING_MODE)
+                    'result' => $tpl_result->parse(Template::TEMPLATE_PARSER_STRING)
                 ));
             }
             else
@@ -164,7 +164,7 @@ function get_html_results(&$results, &$html_results, &$results_name)
             }
         }
     }
-    $html_results = $tpl_results->parse(TEMPLATE_STRING_MODE);
+    $html_results = $tpl_results->parse(Template::TEMPLATE_PARSER_STRING);
 }
 
 ?>

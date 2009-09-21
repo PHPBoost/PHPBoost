@@ -26,6 +26,6 @@
  ###################################################*/
 interface TemplateParser
 {
-	public function parse($template_object, $template_loader);
+	function parse($template_object, $template_loader);
 }
 ?>

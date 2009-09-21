@@ -50,6 +50,6 @@ function stats_mini($position, $block)
     	'L_LAST_REGISTERED_USER' => $LANG['last_member'],
     	'U_LINK_LAST_USER' => '<a href="' . HOST . DIR . '/member/member' . url('.php?id=' . $last_member_id, '-' . $last_member_id  . '.php') . '">' . $last_member_login . '</a>'
     ));
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 ?>

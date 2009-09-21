@@ -98,7 +98,8 @@ class TemplateParserEcho extends AbstractTemplateParser
 	
 	private function callback_parse_vars($varname)
 	{
-		return '<?php echo $this->template->' . $this->get_getvar_method_name($varname[1]) . '(\'' . $varname[1] . '\'); ?>';
+		$method_var = $this->get_getvar_method_name($varname[1]);
+		return '<?php echo $this->template->' . $method_var['method'] . '(\'' . $method_var['varname'] . '\'); ?>';
 	}
 	
 	private function callback_parse_blocks_vars($blocks)
@@ -107,7 +108,8 @@ class TemplateParserEcho extends AbstractTemplateParser
 		$varname = array_pop($array_block);
 		$last_block = array_pop($array_block);
 		
-		return '<?php echo $this->template->' . $this->get_getvar_method_name($varname) . '_from_list(\'' . $varname . '\', $_tmp_' . $last_block . '_value); ?>';
+		$method_var = $this->get_getvar_method_name($varname);
+		return '<?php echo $this->template->' . $method_var['method'] . '_from_list(\'' . $method_var['varname'] . '\', $_tmp_' . $last_block . '_value); ?>';
 	}
 	
 	private function callback_parse_blocks($blocks)

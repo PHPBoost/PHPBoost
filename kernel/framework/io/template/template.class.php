@@ -24,13 +24,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
-
-define('TEMPLATE_WRITE_MODE', 0x01);
-define('TEMPLATE_STRING_MODE', 0x02);
-
-define('AUTO_LOAD_FREQUENT_VARS', true);
-define('DO_NOT_AUTO_LOAD_FREQUENT_VARS', false);
-
+ 
 import('io/template/template_exception');
 import('io/template/file_template_loader');
 
@@ -81,21 +75,29 @@ import('io/template/file_template_loader');
  */
 class Template
 {
-	protected $module_data_path = array();
+	protected $data_path = '';
 	protected $langs = array();
 	protected $vars = array();
 	protected $blocks = array();
 	protected $subtemplates = array();
+	protected $loader;
+	
+	const AUTO_LOAD_FREQUENT_VARS = true;
+	const DO_NOT_LOAD_FREQUENT_VARS = false;
+	
+	const DEFAULT_FILE_TEMPLATE_LOADER = null;
+	const TEMPLATE_PARSER_ECHO = 0x01;
+	const TEMPLATE_PARSER_STRING = 0x02;
 	
 	/**
 	 * @desc Builds a Template object.
 	 * @param string $tpl Path of your TPL file. See the class description to know you you have to write this path.
 	 */
-	public function __construct($tpl = null, $auto_load_vars = AUTO_LOAD_FREQUENT_VARS, $loader = null)
+	public function __construct($tpl = null, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS, $loader = self::DEFAULT_FILE_TEMPLATE_LOADER)
 	{
 		if ($tpl != null)
 		{
-			if ($loader !== null)
+			if ($loader !== self::DEFAULT_FILE_TEMPLATE_LOADER)
 			{
 				$this->set_loader($loader);
 			}
@@ -104,7 +106,7 @@ class Template
 				$this->set_loader(new FileTemplateLoader($tpl));
 			}
 			
-			if ($auto_load_vars)
+			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
 			{
 				$this->auto_load_frequent_vars();
 			}
@@ -117,17 +119,12 @@ class Template
 	}
 	
 	/**
-	 * @desc Retrieves the path of the module. This path will be used to write the relative paths in your templates.
-	 * @param string $module Name of the module for which you want to know the data path.
+	 * @desc Retrieves the data path. This path will be used to write the relative paths in your templates.
 	 * @return string The relative path.
 	 */
-	public function get_module_data_path($module)
+	public function get_data_path()
 	{
-		if (isset($this->module_data_path[$module]))
-		{
-			return $this->module_data_path[$module];
-		}
-		return '';
+		return $this->loader->get_data_path();
 	}
 
 	/**
@@ -178,7 +175,7 @@ class Template
 		$copy = new Template();
 		
 		$copy->loader = $this->loader;
-		$copy->module_data_path = $this->module_data_path;
+		$copy->data_path = $this->data_path;
 		$copy->langs = $this->langs;
 		$copy->vars = $this->vars;
 		$copy->blocks = $this->blocks;
@@ -193,29 +190,34 @@ class Template
 	  */
 	public function get_template_filepath()
 	{
-		return $this->loader->get_identifier();;
+		return $this->loader->get_identifier();
 	}
 	
 	/**
 	 * @desc Parses the file. It will use the variables you assigned.
-	 * @param bool $return_mode In its default behaviour (TEMPLATE_WRITE_MODE), this class write what it parses in the PHP standard output.
-	 * If you want to retrieve the parsed content and not to write it, use the TEMPLATE_STRING_MODE variable.
-	 * @return string The parsed content if you used the TEMPLATE_STRING_MODE, otherwise it doesn't return anything.
+	 * @param mixed $parser In its default behaviour (self::TEMPLATE_PARSER_ECHO), this class write what it parses in the PHP standard output.
+	 * If you want to retrieve the parsed content and not to write it, use the self::TEMPLATE_PARSER_STRING variable.
+	 * @return string The TemplateParser resource (depends of the template parser)
 	 */
-	public function parse($return_mode = TEMPLATE_WRITE_MODE)
+	public function parse($parser = self::TEMPLATE_PARSER_ECHO)
 	{
-		if ($return_mode == TEMPLATE_WRITE_MODE)
+		if (!is_object($parser))
 		{
-			import('io/template/template_parser_echo');
-			$parser = new TemplateParserEcho();
-			$parser->parse($this,$this->loader);
+			switch ($parser)
+			{
+				case self::TEMPLATE_PARSER_STRING:
+					import('io/template/template_parser_string');
+					$parser = new TemplateParserString();
+					break;
+				case self::TEMPLATE_PARSER_ECHO:
+				default:
+					import('io/template/template_parser_echo');
+					$parser = new TemplateParserEcho();
+					break;
+			}
 		}
-		else
-		{
-			import('io/template/template_parser_string');
-			$parser = new TemplateParserString();
-			return $parser->parse($this, $this->loader);
-		}
+		
+		return $parser->parse($this, $this->loader);
 	}
 	
 	
@@ -323,7 +325,7 @@ class Template
 	
 	public function get_var_from_list($varname, &$list)
 	{
-		if (!empty($list[$varname]))
+		if (isset($list[$varname]))
 		{
 			return $list[$varname];
 		}
@@ -375,7 +377,7 @@ class Template
 	
 	public function get_htmlescaped_lang_var_from_list($varname, &$list)
 	{
-		$full_varname = 'JL_' . $varname;
+		$full_varname = 'EL_' . $varname;
 		if (!empty($list[$full_varname]))
 		{
 			return $list[$full_varname];
@@ -425,7 +427,8 @@ class Template
 				return $this->register_var($full_varname, $lang[$varname], $list);
 			}
 		}
-		return $this->register_var($full_varname, '', $list);
+		$empty_string = '';
+		return $this->register_var($full_varname, $empty_string, $list);
 	}
 	
 	private function auto_load_frequent_vars()

@@ -46,6 +46,6 @@ function newsletter_mini($position, $block)
     	'L_ARCHIVES' => $LANG['archives']
     ));
     
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 ?>

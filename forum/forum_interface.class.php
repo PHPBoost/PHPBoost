@@ -179,7 +179,7 @@ class ForumInterface extends ModuleInterface
 				}
 			}
 		}
-		return $Tpl->parse(TEMPLATE_STRING_MODE);
+		return $Tpl->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
 	function get_search_args()
@@ -339,7 +339,7 @@ class ForumInterface extends ModuleInterface
             'USER_AVATAR' => '<img src="' . ($CONFIG_USER['activ_avatar'] == '1' && !empty($result_data['avatar']) ? $result_data['avatar'] : PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' .  $CONFIG_USER['avatar_url']) . '" alt="" />'
             ));
 
-            return $tpl->parse(TEMPLATE_STRING_MODE);
+            return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
 	function _feeds_add_category(&$cat_tree, &$category)

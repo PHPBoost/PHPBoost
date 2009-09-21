@@ -192,7 +192,7 @@ class DownloadInterface extends ModuleInterface
             'L_MARK' => $result_data['note'] > 0 ? Note::display_img($result_data['note'], $CONFIG_DOWNLOAD['note_max'], 5) : ('<em>' . $LANG['no_note'] . '</em>')
         ));
         
-        return $tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
 	

@@ -166,6 +166,6 @@ function gallery_mini($position, $block)
     	'L_NO_RANDOM_PICS' => ($i == 0) ? '<br /><span class="text_small"><em>' . $LANG['no_random_img']  . '</em></span><br />' : '',
     	'L_GALLERY' => $LANG['gallery']
     ));
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 ?>

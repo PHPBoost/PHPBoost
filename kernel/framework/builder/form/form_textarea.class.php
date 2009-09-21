@@ -90,7 +90,7 @@ class FormTextarea extends FormField
 			'L_REQUIRE' => $this->required ? '* ' : ''
 		));	
 		
-		return $Template->parse(TEMPLATE_STRING_MODE);
+		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
