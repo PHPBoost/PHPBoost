@@ -34,6 +34,8 @@ import('builder/form/form_field');
  */
 class FormCaptchaField extends FormField
 {
+	private $Captcha = ''; //Captcha object
+	
 	/**
 	 * @param $fieldId string The html field identifier
 	 * @param $Captcha Captcha The captcha object
@@ -47,7 +49,7 @@ class FormCaptchaField extends FormField
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
 		
-		$this->fillAttributes($fieldId . $Captcha->get_instance(), $fieldOptions);
+		$this->fill_attributes($fieldId . $Captcha->get_instance(), $fieldOptions);
 		$this->Captcha = $Captcha;
 		foreach($fieldOptions as $attribute => $value)
 		{
@@ -77,8 +79,6 @@ class FormCaptchaField extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $Captcha = ''; //Captcha object
 }
 
 ?>

@@ -37,12 +37,18 @@ import('builder/form/form_field');
  * @subpackage form
  */
 class FormTextDate extends FormField
-{
+{	
+	private $calendar_day = 1;
+	private $calendar_month = 1;
+	private $calendar_year = 2009;
+	private $num_instance = 0;
+	private static $num_instances = 0;
+	
 	public function __construct($fieldId, $field_options = array())
 	{
-		$this->update_instance();
+		$this->num_instance = ++self::$num_instances;
 
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -71,8 +77,8 @@ class FormTextDate extends FormField
 		$Template = new Template('framework/builder/forms/field_date.tpl');
 		
 		$Template->assign_vars(array(
-			'C_NOT_ALREADY_INCLUDED' => $this->instance == 1,
-			'INSTANCE' => $this->instance,
+			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
+			'INSTANCE' => $this->num_instance,
 			'ID' => $this->id,
 			'NAME' => $this->name,
 			'VALUE' => $this->value,
@@ -88,17 +94,6 @@ class FormTextDate extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-	
-	private function update_instance()
-	{
-		static $instance = 0;
-		$this->instance = ++$instance;
-	}
-
-	private $instance = 0;
-	private $calendar_day = 1;
-	private $calendar_month = 1;
-	private $calendar_year = 2009;
 }
 
 ?>

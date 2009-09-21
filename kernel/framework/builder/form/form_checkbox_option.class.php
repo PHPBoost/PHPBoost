@@ -37,27 +37,18 @@ import('builder/form/form_field');
  * @package builder
  * @subpackage form
  */
-class FormCheckboxOption extends FormField
+class FormCheckboxOption
 {
-	public function __construct($field_options)
+	private $name = '';
+	private $label = '';
+	private $value = '';
+	private $checked = false;
+	
+	public function __construct($label, $value = '', $checked = false)
 	{
-		$this->fillAttributes('', $field_options);
-
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'label' :
-					$this->label = $value;
-				break;
-				case 'checked' :
-					$this->checked = $value;
-				break;
-				default :
-					$this->throw_error(sprintf('Unsupported option %s in field option type ' . __CLASS__, $attribute), E_USER_NOTICE);
-			}
-		}
+		$this->label = $label;
+		$this->value = $value;
+		$this->checked = $checked;
 	}
 	
 	/**
@@ -66,16 +57,15 @@ class FormCheckboxOption extends FormField
 	public function display()
 	{
 		$option = '<label><input type="checkbox" ';
-		$option .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
+		$option .= 'name="' . $this->name . '" ';
 		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
 		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
 		$option .= '/> ' . $this->label . '</label><br />' . "\n";
 		
 		return $option;
 	}
-
-	private $label = '';
-	private $checked = false;
+	
+	public function set_name($var) { $this->name = $var; }
 }
 
 ?>

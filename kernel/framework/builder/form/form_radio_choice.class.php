@@ -35,6 +35,8 @@ import('builder/form/form_radio_choice_option');
  */
 class FormRadioChoice extends FormField
 {
+	private $options = array(); //Array of FormRadioChoiceOption
+	
 	/**
 	 * @desc constructor It takes a variable number of parameters. The first two are required. 
 	 * @param string $fieldId Name of the field.
@@ -46,7 +48,7 @@ class FormRadioChoice extends FormField
 		$fieldId = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 		foreach($field_options as $attribute => $value)
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		
@@ -85,7 +87,7 @@ class FormRadioChoice extends FormField
 		
 		foreach($this->options as $Option)
 		{
-			$Option->name = $this->name; //Set the same field name for each option.
+			$Option->set_name($this->name); //Set the same field name for each option.
 			$Template->assign_block_vars('field_options', array(
 				'OPTION' => $Option->display(),
 			));	
@@ -93,8 +95,6 @@ class FormRadioChoice extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-	
-	private $options = array(); //Array of FormRadioChoiceOption
 }
 
 ?>

@@ -39,12 +39,15 @@ import('builder/form/form_select_option');
  */
 class FormSelect extends FormField
 {
+	private $options = array();
+	private $multiple = false;
+	
 	public function __construct()
 	{
 		$fieldId = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -99,7 +102,6 @@ class FormSelect extends FormField
 		
 		foreach($this->options as $Option)
 		{
-			$Option->name = $this->name; //Set the same field name for each option.
 			$Template->assign_block_vars('field_options', array(
 				'OPTION' => $Option->display(),
 			));	
@@ -107,9 +109,6 @@ class FormSelect extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $options = array();
-	private $multiple = false;
 }
 
 ?>

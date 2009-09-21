@@ -36,6 +36,11 @@ import('builder/form/form_builder');
  */
 class FormFieldset
 {
+	private $title = '';
+	private $fields = array();
+	private $errors = array();
+	private $display_required = false;
+	
 	/**
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
@@ -137,11 +142,6 @@ class FormFieldset
 	{
 		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
 	}
-	
-	private $title = '';
-	private $fields = array();
-	private $errors = array();
-	private $display_required = false;
 }
 
 ?>

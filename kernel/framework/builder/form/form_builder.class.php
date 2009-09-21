@@ -96,6 +96,15 @@ import('builder/form/form_hidden_field');
 
 class FormBuilder
 {
+	private $form_fieldsets = array(); //Fieldsets stored
+	private $form_name = '';
+	private $form_submit = '';
+	private $form_action = '';
+	private $form_class = 'fieldset_mini';
+	private $display_preview = false; //Field identifier of textarea for preview.
+	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
+	private $display_reset = true;
+	
 	/**
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
@@ -199,15 +208,6 @@ class FormBuilder
 	public function get_form_submit() { return $this->form_submit; }
 	public function get_form_action() { return $this->form_action; }
 	public function get_form_class() { return $this->form_class; }
-
-	private $form_fieldsets = array(); //Fieldsets stored
-	private $form_name = '';
-	private $form_submit = '';
-	private $form_action = '';
-	private $form_class = 'fieldset_mini';
-	private $display_preview = false; //Field identifier of textarea for preview.
-	private $field_identifier_preview = 'contents'; //Field identifier of textarea for preview.
-	private $display_reset = true;
 }
 
 ?>
