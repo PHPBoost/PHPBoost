@@ -35,6 +35,8 @@ require_once('../kernel/header.php');
 
 $Template->set_filenames(array('pages_explorer'=> 'pages/explorer.tpl'));
 
+$module_data_path = $Template->get_module_data_path('pages');
+
 //Liste des dossiers de la racine
 $root = '';
 foreach ($_PAGES_CATS as $key => $value)
@@ -46,7 +48,7 @@ foreach ($_PAGES_CATS as $key => $value)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
-			$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+			$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/closed_cat.png" alt="" style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 		}
 	}
 }
@@ -63,13 +65,13 @@ while ($row = $Sql->fetch_assoc($result))
 	//Vérification de l'autorisation d'éditer la page
 	if (($special_auth && $User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 	{
-		$root .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+		$root .= '<tr><td class="row2"><img src="' . $module_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 	}
 }
 $Sql->query_close($result);
 
 $Template->assign_vars(array(
-	'PAGES_PATH' => $Template->get_module_data_path('pages'),
+	'PAGES_PATH' => $module_data_path,
 	'TITLE' => $LANG['pages_explorer'],
 	'L_ROOT' => $LANG['pages_root'],
 	'SELECTED_CAT' => $cat > 0 ? $cat : 0,
@@ -89,14 +91,14 @@ while ($row = $Sql->fetch_assoc($result))
 	if ($sub_cats_number > 0)
 	{	
 		$Template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+			<a href="javascript:show_cat_contents(' . $row['id'] . ', 0);"><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 	else
 	{
 		$Template->assign_block_vars('list', array(
-			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+			'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:open_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 		));
 	}
 }

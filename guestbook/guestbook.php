@@ -34,6 +34,15 @@ $guestbook = retrieve(POST, 'guestbookForm', false);
 //Chargement du cache
 $Cache->load('guestbook');
 
+//Captcha
+import('util/captcha');
+$captcha = new Captcha();
+$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
+
+$form->add_fieldset($fieldset_up);  //Add fieldset to the form.
+
+$form->display_preview_button('contents'); //Display a preview button for the textarea field(ajax).
+echo $form->display(); //Display form.
 import('util/captcha');
 $captcha = new Captcha();
 $captcha->set_difficulty($CONFIG_GUESTBOOK['guestbook_difficulty_verifcode']);

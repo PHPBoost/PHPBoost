@@ -62,7 +62,7 @@ $template = new Template('faq/faq.tpl');
 
 $template->assign_vars(array(
 	'TITLE' => $TITLE,
-	'MODULE_DATA_PATH' => $template->get_module_data_path('faq')
+	'MODULE_DATA_PATH' => $template->get_data_path()
 ));
 
 if (!empty($FAQ_CATS[$id_faq]['description']))
