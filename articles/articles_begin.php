@@ -38,9 +38,9 @@ if (empty($idartcat))//Racine.
 
    $ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
    $ARTICLES_CAT[0]['visible'] = 1;
-    $ARTICLES_CAT[0]['name'] = $LANG['root'];
-   $ARTICLES_CAT[0]['c_order'] = -1;
-    $ARTICLES_CAT[0]['id_parent'] = 0;
+   $ARTICLES_CAT[0]['name'] = $LANG['root'];
+   $ARTICLES_CAT[0]['order'] = -1;
+   $ARTICLES_CAT[0]['id_parent'] = 0;
 }
 
 if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
