@@ -24,7 +24,9 @@
  *
 ###################################################*/
 
-import('builder/form/form_field');
+import('builder/form/form_field_composite');
+
+define('FORM__CHECKBOX_CHECKED', true);
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -37,13 +39,15 @@ import('builder/form/form_field');
  * @package builder
  * @subpackage form
  */
-class FormCheckboxOption
+class FormCheckboxOption extends FormFieldComposite
 {
-	private $name = '';
-	private $label = '';
-	private $value = '';
 	private $checked = false;
 	
+	/**
+	 * @param $label string The label for the checkbox option
+	 * @param $value string The value for the checkbox option
+	 * @param $checked boolean set to FORM__CHECKBOX_CHECKED to check the option
+	 */
 	public function __construct($label, $value = '', $checked = false)
 	{
 		$this->label = $label;
@@ -64,8 +68,6 @@ class FormCheckboxOption
 		
 		return $option;
 	}
-	
-	public function set_name($var) { $this->name = $var; }
 }
 
 ?>

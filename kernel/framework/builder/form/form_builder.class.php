@@ -43,20 +43,20 @@
 *	$fieldset->add_field(new FormTextarea('comments', array('title' => 'Comments', 'subtitle' => '', 'rows' => 4, 'cols' => 5, 'editor' => false)));
 *	//Radio button field
 *	$fieldset->add_field(new FormRadioChoice('choice', array('title' => 'Answer'),
-*		new FormRadioChoiceOption(array('label' => 'Choix1', 'value' => 1)), 
-*		new FormRadioChoiceOption(array('label' => 'Choix2', 'value' => 2, 'checked' => true))
+*		new FormRadioChoiceOption('Choix1', 1), 
+*		new FormRadioChoiceOption('Choix2', 2, FORM__RADIO_CHECKED)
 *	));
 *	
 *	//Checkbox button field
 *	$fieldset->add_field(new FormCheckbox('multiplechoice', array('title' => 'Answer2'),
-*		new FormCheckboxOption(array('label' => 'Choix3', 'value' => 1)), 
-*		new FormCheckboxOption(array('label' => 'Choix4', 'value' => 2, 'checked' => true)) 
+*		new FormCheckboxOption('Choix3', 1), 
+*		new FormCheckboxOption('Choix4', 2, FORM__CHECKBOX_CHECKED) 
 *	));
 *	//Select field
 *	$fieldset->add_field(new FormSelect('sex', array('title' => 'Sex'),
-*		new FormSelectOption(array('label' => 'Men', 'value' => 1)), 
-*		new FormSelectOption(array('label' => 'Women', 'value' => 2)), 
-*		new FormSelectOption(array('label' => '?', 'value' => -1, 'selected' => true))
+*		new FormSelectOption('Men', 1), 
+*		new FormSelectOption('Women', 2), 
+*		new FormSelectOption('?', -1, FORM__SELECT_SELECTED)
 *	));
 *	
 *	$form->add_fieldset($fieldset);  //Add fieldset to the form.
@@ -66,7 +66,7 @@
 *	//File field
 *	$fieldset_up->add_field(new FormFileUploader('avatar', array('title' => 'Avatar', 'subtitle' => 'Upload a file', 'class' => 'file', 'size' => 30)));
 *	//Radio button field
-*	$fieldset_up->add_field(new FormHiddenField('test', array('value' => 1)));
+*	$fieldset_up->add_field(new FormHiddenField('test', 1));
 *	
 *	//Captcha
 *	import('util/captcha');

@@ -34,9 +34,11 @@ import('builder/form/form_field');
  */
 class FormHiddenField extends FormField
 {
-	public function __construct($fieldId, $field_options = array())
+	public function __construct($name, $value, $id = '')
 	{
-		$this->fill_attributes($fieldId, $field_options);
+		$this->name = $name;
+		$this->value = $value;
+		$this->id = $id;
 	}
 	
 	public function display()
