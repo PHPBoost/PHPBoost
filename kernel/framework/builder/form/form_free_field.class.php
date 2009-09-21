@@ -39,9 +39,12 @@ import('builder/form/form_field');
  */
 class FormFreeField extends FormField
 {
+	private $content = ''; //Content of the free field
+	private $template = ''; //Optionnal template
+	
 	public function __construct($fieldId, $fieldOptions)
 	{
-		$this->fillAttributes($fieldId, $fieldOptions);
+		$this->fill_attributes($fieldId, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -79,9 +82,6 @@ class FormFreeField extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $content = ''; //Content of the free field
-	private $template = ''; //Optionnal template
 }
 
 ?>

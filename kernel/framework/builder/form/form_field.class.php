@@ -42,13 +42,24 @@
  */
 abstract class FormField
 {
+	protected $title = '';
+	protected $sub_title = '';
+	protected $name = '';
+	protected $value = '';
+	protected $id = '';
+	protected $css_class = '';
+	protected $required = false;
+	protected $required_alert = '';
+	protected $on_blur = '';
+	protected $errors = array();
+	
 	public abstract function display();
 	
 	/**
 	 * @param string $fieldId Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	public function fillAttributes($fieldId, &$fieldOptions)
+	public function fill_attributes($fieldId, &$fieldOptions)
 	{
 		$this->name = $fieldId;
 		$this->id = $fieldId;
@@ -128,18 +139,6 @@ abstract class FormField
 	 * @return string Text displayed if field is empty.
 	 */
 	public function get_required_alert() { return $this->required_alert;}
-	
-	
-	protected $title = '';
-	protected $sub_title = '';
-	protected $name = '';
-	protected $value = '';
-	protected $id = '';
-	protected $css_class = '';
-	protected $required = false;
-	protected $required_alert = '';
-	protected $on_blur = '';
-	protected $errors = array();
 }
 
 ?>

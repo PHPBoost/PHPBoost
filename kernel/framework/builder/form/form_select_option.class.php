@@ -32,29 +32,19 @@ import('builder/form/form_field');
  * @package builder
  * @subpackage form
  */
-class FormSelectOption extends FormField
+class FormSelectOption
 {
-	public function __construct($field_options)
-	{
-		$this->fillAttributes('', $field_options);
-		
-		foreach($field_options as $attribute => $value)
-		{
-			$attribute = strtolower($attribute);
-			switch ($attribute)
-			{
-				case 'label' :
-					$this->label = $value;
-				break;
-				case 'selected' :
-					$this->selected = $value;
-				break;
-				default :
-					$this->throw_error(sprintf('Unsupported option %s with field option ' . __CLASS__, $attribute), E_USER_NOTICE);
-			}
-		}
-	}
+	private $label = '';
+	private $value = '';
+	private $selected = false;
 	
+	public function __construct($label, $value = '', $selected = false)
+	{
+		$this->label = $label;
+		$this->value = $value;
+		$this->selected = $selected;
+	}
+		
 	/**
 	 * @return string The html code for the select.
 	 */
@@ -63,13 +53,10 @@ class FormSelectOption extends FormField
 		$option = '<option ';
 		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
 		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
-		$option .= '> ' . $this->label . '</option>' . "\n";
+		$option .= '>' . $this->label . '</option>' . "\n";
 		
 		return $option;
 	}
-
-	private $label = '';
-	private $selected = false;
 }
 
 ?>

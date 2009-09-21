@@ -34,9 +34,14 @@ import('builder/form/form_field');
  */
 class FormTextarea extends FormField
 {
+	private $rows = 10; //Rows for the textarea.
+	private $cols = 47; //Cols for the textarea.
+	private $editor = true; //Allow to hide the editor.
+	private $forbidden_tags = array(); //Forbiddend tags in the content.
+	
 	public function __construct($fieldId, $fieldOptions = array())
 	{
-		$this->fillAttributes($fieldId, $fieldOptions);
+		$this->fill_attributes($fieldId, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -87,11 +92,6 @@ class FormTextarea extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $rows = 10; //Rows for the textarea.
-	private $cols = 47; //Cols for the textarea.
-	private $editor = true; //Allow to hide the editor.
-	private $forbidden_tags = array(); //Forbiddend tags in the content.
 }
 
 ?>

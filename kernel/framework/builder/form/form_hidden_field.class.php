@@ -36,7 +36,7 @@ class FormHiddenField extends FormField
 {
 	public function __construct($fieldId, $field_options = array())
 	{
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 	}
 	
 	public function display()

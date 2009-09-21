@@ -38,9 +38,12 @@ import('builder/form/form_field');
  */
 class FormFileUploader extends FormField
 {
+	private $size = '';
+	private $extended_text = '';
+	
 	public function __construct($fieldId, $field_options = array())
 	{
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -85,9 +88,6 @@ class FormFileUploader extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $size = '';
-	private $extended_text = '';
 }
 
 ?>

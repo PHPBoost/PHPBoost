@@ -40,9 +40,12 @@ import('builder/form/form_field');
  */
 class FormTextEdit extends FormField
 {
+	private $size = '';
+	private $maxlength = '';
+	
 	public function __construct($fieldId, $field_options = array())
 	{
-		$this->fillAttributes($fieldId, $field_options);
+		$this->fill_attributes($fieldId, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -88,9 +91,6 @@ class FormTextEdit extends FormField
 		
 		return $Template->parse(TEMPLATE_STRING_MODE);
 	}
-
-	private $size = '';
-	private $maxlength = '';
 }
 
 ?>
