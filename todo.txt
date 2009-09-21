@@ -41,6 +41,10 @@ Corriger les problèmes de la classe de catégories. Problème avec l'héritage des 
 - Voir les images plus vues/mieux notées, affichage sur l'ensemble de la galerie et non sur une catégorie.
 - Possibilité de télécharger l'image.
 
+[b]Forum[/b]
+- Suppression d'un sondage impossible
+- Bug du nombre de sujet/messages lors du déplacement d'un forum (qui devient un sous-forum) dans un autre forum avec déjà des messages/sujets.
+
 
 
 ################################################################################

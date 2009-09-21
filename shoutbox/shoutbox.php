@@ -106,14 +106,14 @@ elseif (!empty($shout_id)) //Edition + suppression!
 			
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormTextEdit(
-					'shoutbox_pseudo', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
+				$fieldset->add_field(new FormTextEdit('shoutbox_pseudo', $row['login'], array(
+					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
 			}
-			$fieldset->add_field(new FormTextarea(
-				'shoutbox_contents', array('forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
-				'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+			$fieldset->add_field(new FormTextarea('shoutbox_contents', unparse($row['contents']), array(
+				'forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
+				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
 			$form->display_preview_button('shoutbox_contents'); //Display a preview button for the textarea field(ajax).
@@ -202,13 +202,12 @@ else //Affichage.
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if (!$User->check_level(MEMBER_LEVEL)) //Visiteur
 	{
-		$fieldset->add_field(new FormTextEdit(
-			'shoutbox_pseudo', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 
-			'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
+		$fieldset->add_field(new FormTextEdit('shoutbox_pseudo', $LANG['guest'], array(
+			'title' => $LANG['pseudo'], 'class' => 'text', 'maxlength' => 25, 'required' => true, 'required_alert' => $LANG['require_pseudo'])
 		));
 	}
-	$fieldset->add_field(new FormTextarea(
-		'shoutbox_contents', array('forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
+	$fieldset->add_field(new FormTextarea('shoutbox_contents', '', array(
+		'forbiddentags' => $CONFIG_SHOUTBOX['shoutbox_forbidden_tags'], 'title' => $LANG['message'], 
 		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 	));
 	$form->add_fieldset($fieldset);
