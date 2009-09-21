@@ -118,11 +118,22 @@ elseif ($new_cat XOR $id_edit > 0)
 	{
 		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $CONFIG_ARTICLES['global_auth'] ? true : false;
 		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $CONFIG_ARTICLES['global_auth'];
+		
 
+		$image_list = '<option value="" selected="selected">--</option>';
+		import('io/filesystem/folder');
+		$image_list = '<option value="'.$ARTICLES_CAT[$id_edit]['image'].'">'.$ARTICLES_CAT[$id_edit]['image'].'</option>';
+		$image_folder_path = new Folder('./');
+		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
+		{
+			$image = $images->get_name();
+			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
-			'IMAGE' => $ARTICLES_CAT[$id_edit]['image'],
+			'IMG_LIST' => $image_list,
 			'IMG_PREVIEW' => second_parse_url($ARTICLES_CAT[$id_edit]['image']),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($ARTICLES_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
@@ -139,10 +150,20 @@ elseif ($new_cat XOR $id_edit > 0)
 	{
 		$id_edit = 0;
 		$img_default = '../articles/articles.png';
+		$image_list = '<option value="'.$img_default.'" selected="selected">'.$img_default.'</option>';
+		import('io/filesystem/folder');
+		$image_folder_path = new Folder('./');
+		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
+		{
+			$image = $images->get_name();
+			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
-			'IMAGE' => $img_default,
+			'IMG_LIST' => $image_list,
+			//'IMAGE' => $img_default,
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
 			'IDCAT' => $id_edit,

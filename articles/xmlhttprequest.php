@@ -44,6 +44,10 @@ if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur con
 	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
+elseif (isset($_GET['img_preview'])) // Prévisualisation des images.
+{
+	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
+}
 else
 	echo -2;
 

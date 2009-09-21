@@ -136,10 +136,15 @@
 						<dt>
 							<label for="image">
 								{L_IMAGE}
+								
 							</label>
+							
 						</dt>
 						<dd>
-							<input type="text" size="65" maxlength="100" id="image" name="image" value="{edition_interface.IMAGE}" class="text" onblur="javascript:ajax_img_preview();" />
+							<select name="image"  id="image" onblur="javascript:ajax_img_preview();">
+								{edition_interface.IMG_LIST}
+							</select>
+						
 							<span id="img_preview"># IF edition_interface.IMG_PREVIEW #<img src="{edition_interface.IMG_PREVIEW}" alt="" class="valign_middle" /># ENDIF #</span>
 						</dd>
 					</dl>
