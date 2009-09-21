@@ -282,10 +282,10 @@ else
 		
 		if (!empty($articles['id']) && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
 		{
-			define('TITLE', $ARTICLES_LANG['edit_articles'] . ' : ' . addslashes($articles['title']));
-			$articles_categories->bread_crumb($articles['idcat']);
+			//define('TITLE', $ARTICLES_LANG['edit_articles'] . ' : ' . addslashes($articles['title']));
+			//$articles_categories->bread_crumb($articles['idcat']);
 			$Bread_crumb->add($articles['title'], 'articles' . url('.php?id=' . $articles['id'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
-			$Bread_crumb->add($ARTICLES_LANG['edit_articles'], url('management.php?edit=' . $articles['id']));
+			//$Bread_crumb->add($ARTICLES_LANG['edit_articles'], url('management.php?edit=' . $articles['id']));
 			
 			// Calendrier.
 			$start_calendar = new MiniCalendar('start');

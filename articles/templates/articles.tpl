@@ -18,7 +18,7 @@
 					{COM}
 					# IF C_IS_ADMIN #
 					&nbsp;&nbsp;<a href="../articles/management.php?edit={IDART}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
-					&nbsp;&nbsp;<a href="../articles/admin_articles.php?delete=1&amp;id={IDART}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+					&nbsp;&nbsp;<a href="../articles/management.php?del=1&amp;id={IDART}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
 					# ENDIF #
 					
 					&nbsp;&nbsp;<a href="{U_PRINT_ARTICLE}" title="{L_PRINTABLE_VERSION}"><img src="../templates/{THEME}/images/print_mini.png" alt="{L_PRINTABLE_VERSION}" class="valign_middle" /></a>
