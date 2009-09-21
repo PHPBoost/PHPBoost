@@ -30,6 +30,8 @@ import('io/template/template');
 
 class DeprecatedTemplate extends Template
 {
+	private $modules = array();
+	
 	public function __construt()
 	{
 		$this->auto_load_frequent_vars();
@@ -45,10 +47,26 @@ class DeprecatedTemplate extends Template
 	{
 		foreach ($array_tpl as $identifier => $filename)
 		{
-			$new_template = new Template($filename, DO_NOT_AUTO_LOAD_FREQUENT_VARS);
+			$new_template = new Template($filename, Template::DO_NOT_LOAD_FREQUENT_VARS);
 			$this->bind_vars($new_template);
 			$this->add_subtemplate($identifier, $new_template);
+			$this->find_module($identifier);
 		}
+	}
+	
+	/**
+	 * @deprecated
+	 * @desc Retrieves the path of the module. This path will be used to write the relative paths in your templates.
+	 * @param string $module Name of the module for which you want to know the data path.
+	 * @return string The relative path.
+	 */
+	public function get_module_data_path($module)
+	{
+		if (isset($this->modules[$module]))
+		{
+			return $this->modules[$module]->get_data_path();
+		}
+		return '';
 	}
 	
 	/**
@@ -72,6 +90,25 @@ class DeprecatedTemplate extends Template
 		$template->blocks =& $this->blocks;
 		$template->langs =& $this->langs;
 		$template->subtemplates =& $this->subtemplates;
+	}
+
+	private function find_module($identifier)
+	{
+		$trimmed_identifier = trim($identifier, '/');
+		$module = null;
+		if (($idx = strpos($trimmed_identifier, '/')) > 0)
+		{
+			$module = substr($trimmed_identifier, 0, $idx - 1);
+		}
+		else
+		{
+			$module =& $trimmed_identifier;
+		}
+		
+		if (!isset($this->modules[$module]))
+		{
+			$this->modules[$module] =& $this->subtemplates[$identifier];
+		}
 	}
 }
 ?>

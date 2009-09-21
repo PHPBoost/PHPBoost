@@ -34,6 +34,8 @@ abstract class AbstractTemplateParser implements TemplateParser
 	protected $loader;
 	protected $template;
 	
+	protected $resource = null;
+	
 	public function parse($template_object, $template_loader)
 	{
 		$this->template = $template_object;
@@ -44,6 +46,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 			$this->generate_cache();
 		}
 		$this->execute();
+		return $this->resource;
 	}
 	
 	protected abstract function compute_cache_filepath();
@@ -88,35 +91,43 @@ abstract class AbstractTemplateParser implements TemplateParser
 	protected function get_getvar_method_name($varname)
 	{
 		$method = 'var';
+		$tiny_varname = $varname;
 		
 		$split_index = strpos($varname, '_');
+		
 		if ($split_index > 0)
 		{
-			$prefix = substr($varname, 0, $split_index - 1);
+			$prefix = substr($varname, 0, $split_index);
+			$tiny_var = substr($varname, $split_index + 1);
 			switch ($prefix)
 			{
 				case 'L':
 					$method = 'lang_var';
+					$tiny_varname =& $tiny_var;
 					break;
 				case 'E':
 					$method = 'htmlescaped_var';
+					$tiny_varname =& $tiny_var;
 					break;
 				case 'J':
 					$method = 'js_var';
+					$tiny_varname =& $tiny_var;
 					break;
 				case 'EL':
 					$method = 'htmlescaped_lang_var';
+					$tiny_varname =& $tiny_var;
 					break;
 				case 'JL':
 					$method = 'js_lang_var';
+					$tiny_varname =& $tiny_var;
 					break;
 				default:
-					$method = 'var';
 					break;
 			}
 		}
 		
-		return 'get_' . $method;
+		//echo 'get_' . $method . '(' . $varname . ', ' . $tiny_varname . ', ' . $prefix . ')<br />';
+		return array('method' => 'get_' . $method, 'varname' => $tiny_varname);
 	}
 	
 	private function save()

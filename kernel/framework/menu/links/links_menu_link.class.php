@@ -66,7 +66,7 @@ class LinksMenuLink extends LinksMenuElement
   			'C_LINK' => true
   		));
   		
-		return $template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ class LinksMenuLink extends LinksMenuElement
         $template->assign_vars(array(
             'C_LINK' => true
         ));
-        return parent::cache_export_begin() . $template->parse(TEMPLATE_STRING_MODE) . parent::cache_export_end();
+        return parent::cache_export_begin() . $template->parse(Template::TEMPLATE_PARSER_STRING) . parent::cache_export_end();
 	}
 	
 	## Private Methods ##

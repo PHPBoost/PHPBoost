@@ -70,7 +70,7 @@ function guestbook_mini($position, $block)
 	    		'L_BY' => $LANG['by']
 	    	));
 		}
-		return $tpl->parse(TEMPLATE_STRING_MODE);
+		return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
 	return '';
 }

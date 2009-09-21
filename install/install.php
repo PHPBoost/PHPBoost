@@ -150,7 +150,7 @@ if (retrieve(GET, 'restart', false))
 }
 
 //Template d'installation
-$template = new Template('install/install.tpl', DO_NOT_AUTO_LOAD_FREQUENT_VARS);
+$template = new Template('install/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)

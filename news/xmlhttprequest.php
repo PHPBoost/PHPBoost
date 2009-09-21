@@ -99,7 +99,7 @@ elseif (isset($_POST['preview']))
 		'U_NEWS_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php')
 	));
 
-	echo $preview->parse(TEMPLATE_STRING_MODE);
+	echo $preview->parse(Template::TEMPLATE_PARSER_STRING);
 }
 
 require_once('../kernel/footer_no_display.php');

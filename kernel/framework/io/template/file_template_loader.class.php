@@ -31,6 +31,7 @@ class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
 	private $real_filepath;
+	private $data_path = '';
 
 	public function __construct($template_identifier)
 	{
@@ -65,6 +66,11 @@ class FileTemplateLoader implements TemplateLoader
 	public function get_resource_as_string()
 	{
 		return $this->template_resource;
+	}
+	
+	public function get_data_path()
+	{
+		return $this->data_path;
 	}
 	
 	/**
@@ -173,16 +179,14 @@ class FileTemplateLoader implements TemplateLoader
 			}
 
 			//module data path
-			if (!isset($this->module_data_path[$module]))
+			
+			if (is_dir($theme_module_templates_folder . '/images'))
 			{
-				if (is_dir($theme_module_templates_folder . '/images'))
-				{
-					$this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/' . 'modules/' . $module;
-				}
-				else
-				{
-					$this->module_data_path[$module] = TPL_PATH_TO_ROOT . '/' . trim($module . '/templates/', '/');
-				}
+				$this->data_path = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/' . 'modules/' . $module;
+			}
+			else
+			{
+				$this->data_path = TPL_PATH_TO_ROOT . '/' . trim($module . '/templates/', '/');
 			}
 
 			if (file_exists($file_path = $theme_module_templates_folder . $file))

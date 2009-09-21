@@ -172,7 +172,7 @@ class Note
 			if (!defined('HANDLE_NOTE'))
 				define('HANDLE_NOTE', true);
             
-			return $template->parse(TEMPLATE_STRING_MODE);
+			return $template->parse(Template::TEMPLATE_PARSER_STRING);
 		}
 		else
         {

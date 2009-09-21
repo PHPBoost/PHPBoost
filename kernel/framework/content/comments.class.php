@@ -647,7 +647,7 @@ class Comments
 				}
 				$Sql->query_close($result);
 			}
-			return $Template->parse(TEMPLATE_STRING_MODE);
+			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 		}
 		else
 			return 'error : class Comments loaded uncorrectly';

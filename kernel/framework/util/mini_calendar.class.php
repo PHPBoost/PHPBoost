@@ -123,7 +123,7 @@ class MiniCalendar
 		
 		self::$js_inclusion_already_done = true;
 		
-		return $template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 	
 	/**

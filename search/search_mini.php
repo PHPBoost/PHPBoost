@@ -48,7 +48,7 @@ function search_mini($position, $block)
         'U_ADVANCED_SEARCH' => url(TPL_PATH_TO_ROOT . '/search/search.php'),
     ));
     
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 
 ?>

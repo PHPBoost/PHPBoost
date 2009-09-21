@@ -458,7 +458,7 @@ class CategoriesManager
 				'L_NO_EXISTING_CATEGORY' => $LANG['cats_managment_no_category_existing'],
 				'C_NO_CATEGORY' => true
 			));
-			return $template->parse(TEMPLATE_STRING_MODE);
+			return $template->parse(Template::TEMPLATE_PARSER_STRING);
 		}
 		
 		$template->assign_vars(array(
@@ -470,7 +470,7 @@ class CategoriesManager
 			'NESTED_CATEGORIES' => $this->_create_row_interface(0, 0, $ajax_mode, $category_template)
 		));
 				
-		return $template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 	
 	/**
@@ -506,7 +506,7 @@ class CategoriesManager
 				
 		$this->_create_select_row(0, 1, $selected_id, $current_id_cat, $recursion_mode, $num_auth, $general_auth, $template);
 
-		return $template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 	
 	/**
@@ -701,7 +701,7 @@ class CategoriesManager
 					break;
 			}
 		}
-		return $template->parse(TEMPLATE_STRING_MODE);
+		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 	
 	/**

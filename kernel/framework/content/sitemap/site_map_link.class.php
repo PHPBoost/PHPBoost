@@ -226,7 +226,7 @@ class SiteMapLink extends SiteMapElement
             'C_LINK' => true
         ));
 
-        return $template->parse(TEMPLATE_STRING_MODE);
+        return $template->parse(Template::TEMPLATE_PARSER_STRING);
     }
 
     ## Private elements ##

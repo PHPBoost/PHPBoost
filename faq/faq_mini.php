@@ -51,7 +51,7 @@ function faq_mini($position, $block)
     if (empty($RANDOM_QUESTIONS))
     {
     	$tpl->assign_vars($no_random_question);
-    	return $tpl->parse(TEMPLATE_STRING_MODE);
+    	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
     $random_question = $RANDOM_QUESTIONS[array_rand($RANDOM_QUESTIONS)];
@@ -83,6 +83,6 @@ function faq_mini($position, $block)
     	$tpl->assign_vars($no_random_question);
     }
     //On retourne le contenu du bloc
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 ?>

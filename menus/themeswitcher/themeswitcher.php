@@ -79,7 +79,7 @@ function menu_themeswitcher_themeswitcher($position, $block)
     	'L_SUBMIT' => $LANG['submit']
     ));
     
-    return $tpl->parse(TEMPLATE_STRING_MODE);
+    return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
 }
 
 ?>

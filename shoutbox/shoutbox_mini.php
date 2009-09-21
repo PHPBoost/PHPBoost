@@ -141,7 +141,7 @@ function shoutbox_mini($position, $block)
     	}
     	$Sql->query_close($result);
     	
-    	return $tpl->parse(TEMPLATE_STRING_MODE);
+    	return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     return '';
 }

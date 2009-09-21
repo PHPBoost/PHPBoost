@@ -167,7 +167,7 @@ class FaqInterface extends ModuleInterface
             'ANSWER' => second_parse($result_data['answer'])
         ));
         
-        return $tpl->parse(TEMPLATE_STRING_MODE);
+        return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
     // Returns the module map objet to build the global sitemap
