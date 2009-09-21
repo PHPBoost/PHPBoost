@@ -120,14 +120,13 @@ elseif (!empty($id_get)) //Edition + suppression!
 			
 			if ($row['user_id'] == -1) //Visiteur
 			{
-				$fieldset->add_field(new FormTextEdit(
-					'guestbook_pseudo', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
-					'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
+				$fieldset->add_field(new FormTextEdit('guestbook_pseudo', $row['login'], array(
+					'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 				));
 			}
-			$fieldset->add_field(new FormTextarea(
-				'guestbook_contents', array('forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
-				'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+			$fieldset->add_field(new FormTextarea('guestbook_contents', unparse($row['contents']), array(
+				'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
+				'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 			));
 			$form->add_fieldset($fieldset);
 			$form->display_preview_button('guestbook_contents'); //Display a preview button for the textarea field(ajax).
@@ -210,13 +209,13 @@ else //Affichage.
 	$fieldset = new FormFieldset($LANG['add_msg']);
 	if ($is_guest) //Visiteur
 	{
-		$fieldset->add_field(new FormTextEdit(
-			'guestbook_pseudo', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 'required' => true, 
+		$fieldset->add_field(new FormTextEdit('guestbook_pseudo', $LANG['guest'], array(
+			'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 			'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 		));
 	}
-	$fieldset->add_field(new FormTextarea(
-		'guestbook_contents', array('forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
+	$fieldset->add_field(new FormTextarea('guestbook_contents', '', array(
+		'forbiddentags' => $CONFIG_GUESTBOOK['guestbook_forbidden_tags'], 'title' => $LANG['message'], 
 		'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 	));
 	if ($is_guest && $CONFIG_GUESTBOOK['guestbook_verifcode']) //Code de vérification, anti-bots.

@@ -298,18 +298,18 @@ class Comments
 						$fieldset = new FormFieldset($LANG['edit_comment']);
 						if ($is_guest) //Visiteur
 						{
-							$fieldset->add_field(new FormTextEdit(
-								$this->script . 'login', array('title' => $LANG['pseudo'], 'value' => $row['login'], 'class' => 'text', 'required' => true, 
+							$fieldset->add_field(new FormTextEdit($this->script . 'login', $row['login'], array(
+								'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 								'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 							));
 						}
-						$fieldset->add_field(new FormTextarea(
-							$this->script . 'contents', array('forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
-							'value' => unparse($row['contents']), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+						$fieldset->add_field(new FormTextarea($this->script . 'contents', unparse($row['contents']), array(
+							'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+							'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 						));
-						$fieldset->add_field(new FormHiddenField('idprov', array('value' => $row['idprov'])));
-						$fieldset->add_field(new FormHiddenField('idcom', array('value' => $row['idcom'])));
-						$fieldset->add_field(new FormHiddenField('script', array('value' => $this->script)));
+						$fieldset->add_field(new FormHiddenField('idprov', $row['idprov']));
+						$fieldset->add_field(new FormHiddenField('idcom', $row['idcom']));
+						$fieldset->add_field(new FormHiddenField('script', $this->script));
 				
 						$form->add_fieldset($fieldset);
 						$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
@@ -459,22 +459,22 @@ class Comments
 				$fieldset = new FormFieldset($LANG['add_comment']);
 				if ($is_guest) //Visiteur
 				{
-					$fieldset->add_field(new FormTextEdit(
-						$this->script . 'login', array('title' => $LANG['pseudo'], 'value' => $LANG['guest'], 'class' => 'text', 'required' => true, 
+					$fieldset->add_field(new FormTextEdit($this->script . 'login', $LANG['guest'], array(
+						'title' => $LANG['pseudo'], 'class' => 'text', 'required' => true, 
 						'maxlength' => 25, 'required_alert' => $LANG['require_pseudo'])
 					));
 				}
-				$fieldset->add_field(new FormTextarea(
-					$this->script . 'contents', array('forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
-					'value' => unparse($contents), 'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
+				$fieldset->add_field(new FormTextarea($this->script . 'contents', unparse($contents), array(
+					'forbiddentags' => $CONFIG_COM['forbidden_tags'], 'title' => $LANG['message'], 
+					'rows' => 10, 'cols' => 47, 'required' => true, 'required_alert' => $LANG['require_text'])
 				));
 				if ($is_guest && $CONFIG_COM['com_verif_code']) //Code de vérification, anti-bots.
 				{
 					$fieldset->add_field(new FormCaptchaField('verif_code', $captcha));
 				}
-				$fieldset->add_field(new FormHiddenField('idprov', array('value' => $this->idprov)));
-				$fieldset->add_field(new FormHiddenField('idcom', array('value' => '')));
-				$fieldset->add_field(new FormHiddenField('script', array('value' => $this->script)));
+				$fieldset->add_field(new FormHiddenField('idprov', $this->idprov));
+				$fieldset->add_field(new FormHiddenField('idcom', ''));
+				$fieldset->add_field(new FormHiddenField('script', $this->script));
 				
 				$form->add_fieldset($fieldset);
 				$form->display_preview_button($this->script . 'contents'); //Display a preview button for the textarea field(ajax).
