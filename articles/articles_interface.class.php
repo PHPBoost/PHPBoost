@@ -235,8 +235,8 @@ class ArticlesInterface extends ModuleInterface
 
 		$cat_clause = !empty($idcat) ? " AND a.idcat = '". $idcat . "'" : '';
 		$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
-        FROM " . PREFIX . "articles a
-        LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
+        FROM " . DB_TABLE_ARTICLES . " a
+        LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
         WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) " . $cat_clause . "
         ORDER BY a.timestamp DESC
         " . $Sql->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
