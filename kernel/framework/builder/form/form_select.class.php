@@ -44,10 +44,10 @@ class FormSelect extends FormField
 	
 	public function __construct()
 	{
-		$fieldId = func_get_arg(0);
+		$field_id = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);

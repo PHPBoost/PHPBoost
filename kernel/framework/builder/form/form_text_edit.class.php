@@ -43,9 +43,9 @@ class FormTextEdit extends FormField
 	private $size = '';
 	private $maxlength = '';
 	
-	public function __construct($fieldId, $field_options = array())
+	public function __construct($field_id, $field_value, $field_options = array())
 	{
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, $field_value, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
@@ -76,7 +76,7 @@ class FormTextEdit extends FormField
 		$field .= !empty($this->maxlength) ? 'maxlength="' . $this->maxlength . '" ' : '';
 		$field .= !empty($this->name) ? 'name="' . $this->name . '" ' : '';
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
-		$field .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
+		$field .= 'value="' . $this->value . '" ';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
 		$field .= !empty($this->on_blur) ? 'onblur="' . $this->on_blur . '" ' : '';
 		$field .= '/>';

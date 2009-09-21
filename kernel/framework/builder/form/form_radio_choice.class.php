@@ -39,16 +39,16 @@ class FormRadioChoice extends FormField
 	
 	/**
 	 * @desc constructor It takes a variable number of parameters. The first two are required. 
-	 * @param string $fieldId Name of the field.
+	 * @param string $field_id Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
 	 */
 	public function __construct()
 	{
-		$fieldId = func_get_arg(0);
-		$field_options = func_get_arg(1);
+		$field_id = func_get_arg(0);
+		$field_options = func_get_arg(2);
 
-		$this->fill_attributes($fieldId, $field_options);
+		$this->fill_attributes($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		

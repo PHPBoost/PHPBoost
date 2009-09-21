@@ -26,8 +26,6 @@
 
 import('builder/form/form_field_composite');
 
-define('FORM__CHECKBOX_CHECKED', true);
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manages the checkbox fields.
@@ -43,6 +41,8 @@ class FormCheckboxOption extends FormFieldComposite
 {
 	private $checked = false;
 	
+	const CHECKED = true;
+
 	/**
 	 * @param $label string The label for the checkbox option
 	 * @param $value string The value for the checkbox option

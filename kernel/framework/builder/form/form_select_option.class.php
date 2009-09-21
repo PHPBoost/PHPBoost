@@ -26,8 +26,6 @@
 
 import('builder/form/form_field_composite');
 
-define('FORM__SELECT_SELECTED', true);
-
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc This class manage select field options.
@@ -37,6 +35,8 @@ define('FORM__SELECT_SELECTED', true);
 class FormSelectOption extends FormFieldComposite
 {
 	private $selected = false;
+	
+	const SELECTED = true;
 	
 	/**
 	 * @param $label string The label for the select option

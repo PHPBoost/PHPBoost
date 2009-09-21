@@ -39,9 +39,9 @@ class FormTextarea extends FormField
 	private $editor = true; //Allow to hide the editor.
 	private $forbidden_tags = array(); //Forbiddend tags in the content.
 	
-	public function __construct($fieldId, $fieldOptions = array())
+	public function __construct($field_id, $field_value, $fieldOptions = array())
 	{
-		$this->fill_attributes($fieldId, $fieldOptions);
+		$this->fill_attributes($field_id, $field_value, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -78,7 +78,7 @@ class FormTextarea extends FormField
 		$field .= 'name="' . $this->name . '" ';
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '"> ' : '>';
-		$field .= !empty($this->value) ? $this->value : '';
+		$field .= $this->value;
 		$field .= '</textarea>';
 		
 		$Template->assign_vars(array(

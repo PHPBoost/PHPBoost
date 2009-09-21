@@ -42,9 +42,9 @@ class FormFreeField extends FormField
 	private $content = ''; //Content of the free field
 	private $template = ''; //Optionnal template
 	
-	public function __construct($fieldId, $fieldOptions)
+	public function __construct($field_id, $fieldOptions)
 	{
-		$this->fill_attributes($fieldId, $fieldOptions);
+		$this->fill_attributes($field_id, '', $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
