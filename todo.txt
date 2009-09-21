@@ -3,7 +3,6 @@
 ################################################################################
 
 ------------------------------------- NOYAU ------------------------------------
-- [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 - [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - Ajouter dans l'administration la liste des hôtes autorisés pour le proxy
 - Reprendre la gestion du formulaire des autorisations qui est super mal foutue. Faire ça proprement en objet avec possibilité de générer un élément de formulaire pour insérer dans le builder
@@ -29,11 +28,8 @@ Corriger les problèmes de la classe de catégories. Problème avec l'héritage des 
 - Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - [color=red]Nouveauté:[/color] Nouveau thème Base2 pour la distribution complete.
-- [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
-- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
-- [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.
-- [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Interface de personnalisation graphique du site, modification du titre/sous-titre, logo et couleurs du site.
+- [color=red]Nouveauté:[/color] Interface de personnalisation de la page de démarrage du site.
 ------------------------------------ MODULES -----------------------------------
 
 #################################################################################
@@ -53,6 +49,10 @@ Corriger les problèmes de la classe de catégories. Problème avec l'héritage des 
 
 ------------------------------------- NOYAU ------------------------------------
 - [color=red]Nouveauté:[/color] Framework MVC.
+- [color=red]Nouveauté:[/color] Possibilité de choisir une disposition des menus par thème.
+- [color=red]Nouveauté:[/color] Possibilité d'associer un template à un menu pour pouvoir le personnaliser.
+- [color=red]Nouveauté:[/color] Possibilité de masquer les menus sur un module ou une catégorie/page donnée.
+- [color=red]Nouveauté:[/color] Possibilité de masquer indépendamment tous les conteneurs suivant les thèmes.
 - [color=red]Nouveauté:[/color] Gestionnaire d'évenements permettant au noyau de communiquer avec les modules.
 ------------------------------------ MODULES -----------------------------------
 
