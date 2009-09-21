@@ -138,7 +138,7 @@ abstract class FormField
 	public function get_required_alert() { return $this->required_alert;}
 	public function get_value() { return $this->value; }
 	
-	public function set_value() { return $this->value; }
+	public function set_value($var) { $this->value = $var; }
 }
 
 ?>
