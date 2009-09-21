@@ -160,9 +160,11 @@ if (!empty($contents)) //On enregistre un article
 
 //On propose le formulaire
 $Template->set_filenames(array('wiki_edit'=> 'wiki/post.tpl'));
+$module_data_path = $module_data_path;
 $Template->assign_vars(array(
-	'WIKI_PATH' => $Template->get_module_data_path('wiki'),
+	'WIKI_PATH' => $module_data_path
 ));
+
 if ($id_edit > 0)//On édite
 {
 	$article_infos = $Sql->query_array(PREFIX . 'wiki_articles', '*', "WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
@@ -242,14 +244,14 @@ else
 			if ($sub_cats_number > 0)
 			{	
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->get_module_data_path('wiki') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
-					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $module_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '"  style="vertical-align:middle" /></a> 
+					<a href="javascript:show_cat_contents(' . $row['id'] . ', 1);"><img src="' . $module_data_path . '/images/closed_cat.png" id ="img_' . $row['id'] . '" alt="" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 			else
 			{
 				$Template->assign_block_vars('create.list', array(
-					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('wiki') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
+					'DIRECTORY' => '<li style="padding-left:17px;"><img src="' . $module_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:select_cat(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>'
 				));
 			}
 		}

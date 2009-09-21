@@ -14,6 +14,7 @@ $root = !empty($_GET['root']) ? 1 : 0;
 
 //Chargement d'un fichier template pour connaître l'emplacement du template
 $Template->set_filenames(array('pages'=> 'pages/pages.tpl'));
+$pages_data_path = $Template->get_module_data_path('pages');
 
 //Listage des répertoires dont le répertoire parent est connu
 if ($id_cat != 0)
@@ -37,9 +38,9 @@ if ($id_cat != 0)
 			$sub_cats_number = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "pages_cats WHERE id_parent = '" . $row['id'] . "'", __LINE__, __FILE__);
 			//Si cette catégorie contient des sous catégories, on propose de voir son contenu
 			if ($sub_cats_number > 0)
-				echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
+				echo '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $pages_data_path . '/images/plus.png" alt="" id="img2_' . $row['id'] . '" style="vertical-align:middle" /></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');"><img src="' . $pages_data_path . '/images/closed_cat.png" alt="" id="img_' . $row['id'] . '" style="vertical-align:middle" /></a>&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
 			else //Sinon on n'affiche pas le "+"
-				echo '<li style="padding-left:17px;"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span></li>';
+				echo '<li style="padding-left:17px;"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<span id="class_' . $row['id'] . '" class=""><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['title'] . '</a></span></li>';
 		}
 	}
 	$Sql->query_close($result);
@@ -82,7 +83,7 @@ elseif (!empty($open_cat) || $root == 1)
 			//Vérification de l'autorisation d'éditer la page
 			if (($special_auth && $User->check_auth($value['auth'], READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 			{
-				$return .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
+				$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/closed_cat.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="javascript:open_cat(' . $key . '); show_cat_contents(' . $value['id_parent'] . ', 0);">' . $value['name'] . '</a></td></tr>';
 			}
 		}
 	}
@@ -97,7 +98,7 @@ elseif (!empty($open_cat) || $root == 1)
 		//Vérification de l'autorisation d'éditer la page
 		if (($special_auth && $User->check_auth(unserialize($row['auth']), READ_PAGE)) || (!$special_auth && $User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)))
 		{
-			$return .= '<tr><td class="row2"><img src="' . $Template->get_module_data_path('pages') . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
+			$return .= '<tr><td class="row2"><img src="' . $pages_data_path . '/images/page.png" alt=""  style="vertical-align:middle" />&nbsp;<a href="' . url('pages.php?title=' . $row['encoded_title'], $row['encoded_title']) . '">' . $row['title'] . '</a></td></tr>';
 		}
 	}
 	$Sql->query_close($result);

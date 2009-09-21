@@ -153,7 +153,6 @@ function gallery_mini($position, $block)
    
     $tpl->assign_vars(array(
     	'SID' => SID,
-    	'MODULE_DATA_PATH' => $tpl->get_module_data_path('gallery'),
     	'ARRAY_PICS' => $array_pics_mini,
     	'HEIGHT_DIV' => $CONFIG_GALLERY['height'],
     	'SUM_HEIGHT' => $sum_height + 10,
