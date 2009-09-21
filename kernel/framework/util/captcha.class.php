@@ -47,7 +47,7 @@ class Captcha
 	private $font = '../../../kernel/data/fonts/impact.ttf'; //Police
 	private $difficulty = 2; //Difficulté du code. 
 	
-	private static $intance_number = 0;
+	private static $instance_number = 0;
 	
 	/**
 	 * @desc Captcha constructor. It allows you to create multiple instance of captcha, and check if GD is loaded.
@@ -332,7 +332,7 @@ class Captcha
 	 */
 	private function update_instance()
 	{
-		$this->instance = ++self::$intance_number;
+		$this->instance = ++self::$instance_number;
 	}
 	
 	/**
