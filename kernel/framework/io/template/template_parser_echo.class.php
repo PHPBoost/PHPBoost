@@ -34,7 +34,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 		$this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . trim(str_replace(
 			array('/', '.', '..', 'tpl', 'templates'),
 			array('_', '', '', '', 'tpl'),
-			$this->loader->get_identifier()
+			$this->template->get_identifier()
 		), '_') . '.php';
 	}
 	

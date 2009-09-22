@@ -30,13 +30,22 @@ import('io/template/template_loader');
 class FileTemplateLoader implements TemplateLoader
 {
 	private $filepath;
-	private $real_filepath;
-	private $data_path = '';
+	private $real_filepath = '';
+	private $pictures_data_path = '';
 
-	public function __construct($template_identifier)
+	private $module;
+	private $file;
+	private $folder;
+	private $filename;
+
+	private $default_templates_folder;
+	private $theme_templates_folder;
+	
+	public function __construct(Template $template)
 	{
-		$this->filepath = $template_identifier;
-		$this->real_filepath = $this->check_file();
+		$this->filepath = $template->get_identifier();
+		$this->check_file();
+		$template->assign_vars(array('PICTURES_DATA_PATH' => $this->pictures_data_path));
 	}
 	
 	public function is_cache_file_valid($cache_filepath)
@@ -68,11 +77,6 @@ class FileTemplateLoader implements TemplateLoader
 		return $this->template_resource;
 	}
 	
-	public function get_data_path()
-	{
-		return $this->data_path;
-	}
-	
 	/**
 	  * @desc Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
 	  * @return string The path to load.
@@ -87,8 +91,6 @@ class FileTemplateLoader implements TemplateLoader
 		 $filename = forum_topic.tpl
 		 $file = forum_topic.tpl
 		 $folder =
-
-
 		 $this->filepath = /news/framework/content/syndication/last_news.tpl
 		 $this->filepath = news/framework/content/syndication/menu.tpl
 		 $module = news
@@ -103,101 +105,116 @@ class FileTemplateLoader implements TemplateLoader
 			// (Not overlaodable)
 			if (file_exists(PATH_TO_ROOT . $this->filepath))
 			{
-				return PATH_TO_ROOT . $this->filepath;
+				$this->get_template_real_filepaths_and_data_path(array(PATH_TO_ROOT . $this->filepath));
 			}
 		}
 		
 		$i = strpos($this->filepath, '/');
-		$module = substr($this->filepath, 0, $i);
-		$file = trim(substr($this->filepath, $i), '/');
-		$folder = trim(substr($file, 0, strpos($file, '/')), '/');
-		$filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
+		$this->module = substr($this->filepath, 0, $i);
+		$this->file = trim(substr($this->filepath, $i), '/');
+		$this->folder = trim(substr($this->file, 0, strpos($this->file, '/')), '/');
+		$this->filename = trim(substr($this->filepath, strrpos($this->filepath, '/')));
 
-		$default_templates_folder = PATH_TO_ROOT . '/templates/default/';
-		$theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
-		if (empty($module) || in_array($module, array('admin') ))
+		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
+		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
+		
+		if (empty($this->module) || in_array($this->module, array('admin', 'framework') ))
 		{   // Kernel - Templates priority order
 			//      /templates/$theme/.../$file.tpl
 			//      /templates/default/.../$file.tpl
-			if (file_exists($file_path = $theme_templates_folder . $this->filepath))
-			{
-				return $file_path;
-			}
-			return $default_templates_folder . $this->filepath;
+			$this->get_kernel_paths();
 		}
-		elseif ($module == 'framework')
-		{   // Framework - Templates priority order
-			//      /templates/$theme/framework/.../$file.tpl
-			//      /templates/default/framework/.../$file.tpl
-			if (file_exists($file_path = $theme_templates_folder . $this->filepath))
-			{
-				return $file_path;
-			}
-
-			return $default_templates_folder . $this->filepath;
-		}
-		elseif ($module == 'menus')
+		elseif ($this->module == 'menus')
 		{   // Framework - Templates priority order
 			//      /templates/$theme/menus/$menu/filename.tpl
 			//      /menus/$menu/default/framework/.../$file.tpl
-			$menu = substr($folder, 0, strpos($folder, '/'));
-			if (empty($menu))
-			{
-				$menu = $folder;
-			}
-			if (file_exists($file_path = $theme_templates_folder . '/menus/' . $menu . '/' . $filename))
-			{
-				return $file_path;
-			}
-
-			return PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $filename;
+			$this->get_menus_paths();
 		}
 		else
 		{   // Module - Templates
-			$theme_module_templates_folder = $theme_templates_folder . 'modules/' . $module . '/';
-			$module_templates_folder = PATH_TO_ROOT . '/' . $module . '/templates/';
+			$this->get_module_paths();
+		}
+	}
+	
+	private function get_kernel_paths()
+	{
+		$this->get_template_real_filepaths_and_data_path(array(
+			$this->theme_templates_folder . $this->filepath,
+			$this->default_templates_folder . $this->filepath
+		));
+	}
+	
+	private function get_menus_paths()
+	{
+		$menu = substr($folder, 0, strpos($folder, '/'));
+		if (empty($menu))
+		{
+			$menu = $folder;
+		}
+		
+		$this->get_template_real_filepaths_and_data_path(array(
+			$this->theme_templates_folder . '/menus/' . $menu . '/' . $this->filename,
+			PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $this->filename
+		));
+	}
+	
+	private function get_module_paths()
+	{
+		$theme_module_templates_folder = $this->theme_templates_folder . 'modules/' . $this->module . '/';
+		$module_templates_folder = PATH_TO_ROOT . '/' . $this->module . '/templates/';
 
-			if ($folder == 'framework')
-			{   // Framework - Templates priority order
-				//      /templates/$theme/modules/$module/framework/.../$file.tpl
-				//      /templates/$theme/framework/.../$file.tpl
-				//      /$module/templates/framework/.../$file.tpl
-				//      /templates/default/framework/.../$file.tpl
-				if (file_exists($file_path = $theme_module_templates_folder . $file))
-				{
-					return $file_path;
-				}
-				if (file_exists($file_path = $theme_templates_folder . $this->filepath))
-				{
-					return $file_path;
-				}
-				if (file_exists($file_path = ($module_templates_folder . 'framework/' . $file)))
-				{
-					return $file_path;
-				}
-				return $default_templates_folder . $file;
-			}
-
-			//module data path
+		if ($this->folder == 'framework')
+		{   // Framework - Templates priority order
+			//      /templates/$theme/modules/$module/framework/.../$file.tpl
+			//      /templates/$theme/framework/.../$file.tpl
+			//      /$module/templates/framework/.../$file.tpl
+			//      /templates/default/framework/.../$file.tpl
 			
-			if (is_dir($theme_module_templates_folder . '/images'))
+			$this->get_template_real_filepaths_and_data_path(array(
+				$theme_module_templates_folder . $this->file,
+				$module_templates_folder . 'framework/' . $this->file,
+				$theme_templates_folder . $this->filepath,
+				$default_templates_folder . $this->file
+			));
+		}
+		else
+		{
+			$this->get_template_real_filepaths_and_data_path(array(
+				$theme_module_templates_folder . $this->file,
+				$module_templates_folder . $this->file
+			));
+		}
+	}
+	
+	private function get_template_real_filepaths_and_data_path($paths)
+	{
+		foreach ($paths as $path)
+		{
+			if ($dirpath = (file_exists(dirname($path) . '/images')))
 			{
-				$this->data_path = TPL_PATH_TO_ROOT . '/templates/' . get_utheme() . '/' . 'modules/' . $module;
-			}
-			else
-			{
-				$this->data_path = TPL_PATH_TO_ROOT . '/' . trim($module . '/templates/', '/');
-			}
-
-			if (file_exists($file_path = $theme_module_templates_folder . $file))
-			{
-				return $file_path;
-			}
-			else
-			{
-				return $module_templates_folder . $file;
+				$this->pictures_data_path = $this->convert_to_tpl_path($dirpath);
+				break;
 			}
 		}
+		
+		foreach ($paths as $path)
+		{
+			if (file_exists($path))
+			{
+				$this->real_filepath = $path;
+				break;
+			}
+		}
+		
+		if (empty($this->real_filepath) && count($paths) > 0)
+		{	// Adds the default path looking for in the exception trace
+			$this->real_filepath = $paths[count($paths) - 1];
+		}
+	}
+	
+	private function convert_to_tpl_path($path_to_root_filepath)
+	{
+		return TPL_PATH_TO_ROOT . substr($path_to_root_filepath, strlen(PATH_TO_ROOT));
 	}
 }
 ?>

@@ -309,7 +309,6 @@ class Feed
 	    
 	    $feed_menu->assign_vars(array(
 	        'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
-			'PATH_TO_MENU' => dirname($feed_menu->get_template_filepath()),
 	        'THEME' => get_utheme(),
 	        'U_FEED' => $feed_absolut_url,
 	        'SEPARATOR' => strpos($feed_absolut_url, '?') !== false ? '&amp;' : '?',
