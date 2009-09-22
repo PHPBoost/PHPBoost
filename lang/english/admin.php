@@ -298,8 +298,8 @@ $LANG['admin_alert_unfix'] = 'Consider the alert as not fixed';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 	
 //Config
-$LANG['config_main'] = 'Main configs';
-$LANG['config_advanced'] = 'Advanced configs';
+$LANG['config_main'] = 'Main configurations';
+$LANG['config_advanced'] = 'Advanced configurations';
 $LANG['serv_name'] = 'Server name';
 $LANG['serv_path'] = 'PHPBoost path, empty by default';
 $LANG['serv_path_explain'] = 'Website, on the server root';
