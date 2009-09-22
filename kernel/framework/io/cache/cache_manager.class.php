@@ -52,12 +52,14 @@ class CacheManager
 	
 	/**
 	 * Load the data whose key is $name.
-	 * @param $name Name of the entry in the DB_TABLE_CONFIGS table. For modules
-	 * 	it must be the module name.
+	 * @param $module_name Name of the module owning the entry to load
+	 * @param $entry_name If the module wants to manage several entries, 
+	 * it's the name of the entry you want to load
 	 * @return CacheData The loaded data
 	 */
-	public static function load($name)
+	public static function load($module_name, $entry_name = '')
 	{
+	    $name = self::compute_entry_name($module_name, $entry_name);
 		if (self::is_memory_cached($name))
 		{
 			return self::get_memory_cached_data($name);
@@ -79,11 +81,14 @@ class CacheManager
 	
 	/**
 	 * Saves in the data base (DB_TABLE_CONFIGS table) the data and has it become persistent.
-	 * @param string $name Name of the entry in which to save it.
+	 * @param string $module_name Name of the module owning this entry
  	 * @param CacheData $data Data to save
+ 	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
-	public static function save($name, CacheData $data)
+	public static function save($module_name, CacheData $data, $entry_name)
 	{
+	    $name = self::compute_entry_name($module_name, $entry_name);
+	    
 	    $data->synchronize();
 	    
 		self::save_in_db($name, $data);
@@ -121,6 +126,18 @@ class CacheManager
 	    			__LINE__, __FILE__);
 		    }
 		}
+	}
+	
+	private static function compute_entry_name($module_name, $entry_name)
+	{
+	    if (!empty($entry_name))
+	    {
+    	    return url_encode_rewrite($module_name . '-' . $entry_name);
+	    }
+	    else
+	    {
+	        return url_encode_rewrite($module_name);
+	    }
 	}
 	
 	//Top-level (memory) cache management
