@@ -75,7 +75,7 @@ import('io/template/file_template_loader');
  */
 class Template
 {
-	protected $data_path = '';
+	protected $identifier = '';
 	protected $langs = array();
 	protected $vars = array();
 	protected $blocks = array();
@@ -85,30 +85,32 @@ class Template
 	const AUTO_LOAD_FREQUENT_VARS = true;
 	const DO_NOT_LOAD_FREQUENT_VARS = false;
 	
-	const DEFAULT_FILE_TEMPLATE_LOADER = null;
+	const FILE_TEMPLATE_LOADER = 0x01;
 	const TEMPLATE_PARSER_ECHO = 0x01;
 	const TEMPLATE_PARSER_STRING = 0x02;
 	
 	/**
 	 * @desc Builds a Template object.
-	 * @param string $tpl Path of your TPL file. See the class description to know you you have to write this path.
+	 * @param string $identifier Path of your TPL file.  Uses depends of the TemplateLoader that will be used. By default its represent the template file path
 	 */
-	public function __construct($tpl = null, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS, $loader = self::DEFAULT_FILE_TEMPLATE_LOADER)
+	public function __construct($identifier = null, $auto_load_vars = self::AUTO_LOAD_FREQUENT_VARS, $loader = self::FILE_TEMPLATE_LOADER)
 	{
-		if ($tpl != null)
+		if ($identifier != null)
 		{
-			if ($loader !== self::DEFAULT_FILE_TEMPLATE_LOADER)
+			$this->identifier = $identifier;
+			
+			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
+			{
+				$this->auto_load_frequent_vars();
+			}
+			
+			if ($loader !== self::FILE_TEMPLATE_LOADER)
 			{
 				$this->set_loader($loader);
 			}
 			else
 			{
-				$this->set_loader(new FileTemplateLoader($tpl));
-			}
-			
-			if ($auto_load_vars === self::AUTO_LOAD_FREQUENT_VARS)
-			{
-				$this->auto_load_frequent_vars();
+				$this->set_loader(new FileTemplateLoader($this));
 			}
 		}
 	}
@@ -116,15 +118,6 @@ class Template
 	public function set_loader($loader)
 	{
 		$this->loader = $loader;
-	}
-	
-	/**
-	 * @desc Retrieves the data path. This path will be used to write the relative paths in your templates.
-	 * @return string The relative path.
-	 */
-	public function get_data_path()
-	{
-		return $this->loader->get_data_path();
 	}
 
 	/**
@@ -174,8 +167,8 @@ class Template
 	{
 		$copy = new Template();
 		
+		$copy->identifier = $this->identifier;
 		$copy->loader = $this->loader;
-		$copy->data_path = $this->data_path;
 		$copy->langs = $this->langs;
 		$copy->vars = $this->vars;
 		$copy->blocks = $this->blocks;
@@ -185,12 +178,12 @@ class Template
 	}
 	
 	/**
-	  * @desc Returns the filepath used for the template
-	  * @return string the filepath used for the template
+	  * @desc Returns the template identifier
+	  * @return string the template identifier
 	  */
-	public function get_template_filepath()
+	public function get_identifier()
 	{
-		return $this->loader->get_identifier();
+		return $this->identifier;
 	}
 	
 	/**

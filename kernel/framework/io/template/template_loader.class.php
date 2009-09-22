@@ -34,7 +34,5 @@ interface TemplateLoader
 	function load();
 	
 	function get_resource_as_string();
-	
-	function get_data_path();
 }
 ?>

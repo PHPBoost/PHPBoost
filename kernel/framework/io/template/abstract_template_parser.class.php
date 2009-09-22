@@ -40,6 +40,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 	{
 		$this->template = $template_object;
 		$this->loader = $template_loader;
+		
 		$this->compute_cache_filepath();
 		if (!$this->is_cache_valid())
 		{

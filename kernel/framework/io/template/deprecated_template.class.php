@@ -51,6 +51,10 @@ class DeprecatedTemplate extends Template
 			$this->bind_vars($new_template);
 			$this->add_subtemplate($identifier, $new_template);
 			$this->find_module($identifier);
+			
+			// Auto assign the module data path
+			// Use of MODULE_DATA_PATH is deprecated
+			$new_template->assign_vars(array('MODULE_DATA_PATH' => $new_template->get_var('PICTURES_DATA_PATH')));
 		}
 	}
 	
