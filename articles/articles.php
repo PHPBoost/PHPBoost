@@ -54,7 +54,7 @@ if (!empty($idart) && isset($_GET['cat']))
 	$tpl = new Template('articles/articles.tpl');
 	
 	//MAJ du compteur.
-	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . PREFIX . "articles SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
+	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
 	
 	
 	//On crée une pagination si il y plus d'une page.

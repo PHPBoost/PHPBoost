@@ -81,14 +81,14 @@ class ArticlesInterface extends ModuleInterface
 
 		//Publication des articles en attente pour la date donnée.
 		$result = $Sql->query_while("SELECT id, start, end
-		FROM " . PREFIX . "articles
+		FROM " . DB_TABLE_ARTICLES . "
 		WHERE visible != 0", __LINE__, __FILE__);
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			if ($row['start'] <= time() && $row['start'] != 0)
-			$Sql->query_inject("UPDATE " . PREFIX . "articles SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
-			$Sql->query_inject("UPDATE " . PREFIX . "articles SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -271,7 +271,7 @@ class ArticlesInterface extends ModuleInterface
 		global $Sql;
 
 		$result = $Sql->query_while("SELECT *
-	            FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
+	            FROM " . DB_TABLE_ARTICLES_CAT, __LINE__, __FILE__);
 		$data = array();
 		while ($row = $Sql->fetch_assoc($result)) {
 			$data[$row['id']] = $row['name'];
@@ -316,8 +316,8 @@ class ArticlesInterface extends ModuleInterface
 
 		}
 
-		$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
-		$total_cat = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "articles_cats ac " . $clause_cat, __LINE__, __FILE__);
+		$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
+		$total_cat = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
 			
 		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
@@ -405,7 +405,7 @@ class ArticlesInterface extends ModuleInterface
 
 			$i = 0;
 			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
-			FROM " . PREFIX . "articles_cats ac
+			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
 			" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
@@ -435,7 +435,7 @@ class ArticlesInterface extends ModuleInterface
 
 			import('content/note');
 			$result = $Sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
-			FROM " . PREFIX . "articles
+			FROM " . DB_TABLE_ARTICLES . "
 			WHERE visible = 1 AND idcat = '" . $idartcat .	"'
 			ORDER BY " . $sort . " " . $mode .
 			$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
