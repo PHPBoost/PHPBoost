@@ -29,42 +29,7 @@
 			return true;
 		}
 
-		function ajax_img_preview()
-		{
- 			document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-			var img = document.getElementById('img_field').value;
-			var xhr_object_url = xmlhttprequest_init('xmlhttprequest.php?img_url=' + img + '&token={TOKEN}');
-			
-			xhr_object_url.onreadystatechange = function()
-			{
-				//Transfert finished and successful
-				if( xhr_object_url.readyState == 4 && xhr_object_url.status == 200 && xhr_object_url.responseText != '' )
-				{
-					document.getElementById('img_field').value = xhr_object_url.responseText;
-					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + xhr_object_url.responseText + '&token={TOKEN}');
-			
-					xhr_object.onreadystatechange = function() 
-					{
-						//Transfert finished and successful
-						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-						{
-							document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
-						}
-						else
-						{
-							document.getElementById('img_preview').innerHTML = "";
-						}
-					}
-					xmlhttprequest_sender(xhr_object, null);
-				}
-				else
-				{
-					document.getElementById('img_preview').innerHTML = "";
-				}
-			}
-			xmlhttprequest_sender(xhr_object_url, null);
-		}
-
+		
 		function ajax_preview()
 		{
 			if({JS_CONTRIBUTION} && document.getElementById('counterpart').value != '')
@@ -87,18 +52,16 @@
 							title: document.getElementById('title').value,
 							idcat: document.getElementById('idcat').value,
 							desc: document.getElementById('contents').value,
-							extend_desc: document.getElementById('extend_contents').value,
 							user_id: document.getElementById('user_id').value,
 							date: document.getElementById('calendar_{JS_INSTANCE_RELEASE}').value,
 							hour: document.getElementById('release_hour').value,
-							min: document.getElementById('release_min').value,
-							img: document.getElementById('img_field').value,
-							alt: document.getElementById('alt').value
+							min: document.getElementById('release_min').value
 						 },
 						onSuccess: function(response)
 						{
 							document.getElementById('preview').innerHTML = response.responseText;
 						}
+						
 					}
 				);
 			}

@@ -34,23 +34,20 @@ require_once 'articles_begin.php';
 if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-define('TITLE', $ARTICLES_LANG['contribution_confirmation']);
-
-$Bread_crumb->add($ARTICLES_LANG['articles'], url('articles.php'));
 $Bread_crumb->add($ARTICLES_LANG['contribution_confirmation'], url('contribution.php'));
 
 require_once('../kernel/header.php');
 
 //Template
-$download_template = new Template('articles/contribution.tpl');
+$tpl = new Template('articles/contribution.tpl');
 
-$download_template->assign_vars(array(
+$tpl->assign_vars(array(
 	'L_CONTRIBUTION_CONFIRMATION' => $ARTICLES_LANG['contribution_confirmation'],
 	'L_CONTRIBUTION_SUCCESS' => $ARTICLES_LANG['contribution_success'],
 	'L_CONTRIBUTION_CONFIRMATION_EXPLAIN' => $ARTICLES_LANG['contribution_confirmation_explain']
 ));
 
-$download_template->parse();
+$tpl->parse();
 
 require_once('../kernel/footer.php'); 
 

@@ -50,19 +50,19 @@ if (empty($articles['title']))
 	exit;
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
+	$tpl = new Template('framework/content/print.tpl');
 
-$template = new Template('framework/content/print.tpl');
 
 $contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
 
-$template->assign_vars(array(
+$tpl->assign_vars(array(
 	'PAGE_TITLE' => $articles['title'] . ' - ' . $CONFIG['site_name'],
 	'TITLE' => $articles['title'],
 	'L_XML_LANGUAGE' => $LANG['xml_lang'],
 	'CONTENT' => second_parse($contents)
 ));
 
-$template->parse();
+$tpl->parse();
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 ?>
