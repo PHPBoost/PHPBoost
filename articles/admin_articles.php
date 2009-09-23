@@ -107,12 +107,12 @@ elseif (!empty($id))
 		
 	//Catégories.
 	$categories = '<option value="0">' . $LANG['root'] . '</option>';
-	$result = $Sql->query_while("SELECT id, level, name 
+	$result = $Sql->query_while("SELECT id, c_order, name 
 	FROM " . DB_TABLE_ARTICLES_CAT . "
 	ORDER BY id_parent", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
-		$margin = ($row['level'] > 0) ? str_repeat('--------', $row['level']) : '--';
+		$margin = ($row['c_order'] > 0) ? str_repeat('--------', $row['c_order']) : '--';
 		$selected = ($row['id'] == $articles['idcat']) ? 'selected="selected"' : '';
 		$categories .= '<option value="' . $row['id'] . '" ' . $selected . '>' . $margin . ' ' . $row['name'] . '</option>';
 	}
