@@ -137,7 +137,8 @@ else
 		'L_AUTH_READ' => $ARTICLES_LANG['auth_read'],
 		'L_AUTH_WRITE' => $ARTICLES_LANG['auth_write'],
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
-		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute']
+		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
+		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles']
 	));
 	$tpl->parse();
 	
