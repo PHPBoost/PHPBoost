@@ -50,7 +50,7 @@ if (!empty($_POST['valid']))
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($config_articles)) . "' WHERE name = 'articles'", __LINE__, __FILE__);
 	
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
-		$Sql->query_inject("UPDATE " . PREFIX . "articles SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
+		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 
 
 	###### Régénération du cache des articles #######
@@ -64,7 +64,7 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 	
 	$info_cat = array();
 	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_visible 
-	FROM " . PREFIX . "articles 
+	FROM " . DB_TABLE_ARTICLES . "
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
 	
@@ -74,7 +74,7 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 	$Sql->query_close($result);
 	
 	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_unvisible 
-	FROM " . PREFIX . "articles 
+	FROM " . DB_TABLE_ARTICLES . " 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
@@ -83,7 +83,7 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 	$Sql->query_close($result);
 	
 	$result = $Sql->query_while("SELECT id, id_parent
-	FROM " . PREFIX . "articles_cats", __LINE__, __FILE__);
+	FROM " . DB_TABLE_ARTICLES_CAT, __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{			
 		$nbr_articles_visible = 0;
@@ -97,7 +97,7 @@ elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de cha
 			
 			}
 		}
-		$Sql->query_inject("UPDATE " . PREFIX . "articles_cats SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
+		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
 	}
 	$Sql->query_close($result);
 	

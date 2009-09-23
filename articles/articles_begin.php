@@ -51,7 +51,7 @@ if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
 
 	if (!empty($idart))
 	{
-		$articles = $Sql->query_array(PREFIX . 'articles', '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
+		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
 		
 		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));

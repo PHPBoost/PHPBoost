@@ -15,7 +15,7 @@ $get_parent_down = retrieve(GET, 'g_down', 0);
 //Récupération de la catégorie d'échange.
 if (!empty($get_parent_up))
 {
-	$switch_id_cat = $Sql->query("SELECT id FROM " . PREFIX . "articles_cats WHERE '" . $CAT_ARTICLES[$get_parent_up]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);
+	$switch_id_cat = $Sql->query("SELECT id FROM " . DB_TABLE_ARTICLES_CAT . " WHERE '" . $CAT_ARTICLES[$get_parent_up]['id_left'] . "' - id_right = 1", __LINE__, __FILE__);
 	if (!empty($switch_id_cat))
 		echo $switch_id_cat;
 	else
