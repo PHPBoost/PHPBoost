@@ -33,6 +33,7 @@
 					</label>
 					&nbsp;
 					{removing_interface.CATEGORY_TREE}
+						
 				</fieldset>
 				
 				<fieldset class="fieldset_submit">
