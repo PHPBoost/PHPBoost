@@ -43,11 +43,12 @@ if (empty($idartcat))//Racine.
    $ARTICLES_CAT[0]['id_parent'] = 0;
 }
 
-if (isset($ARTICLES_CAT[$idartcat]) && isset($_GET['cat']))
+
+if (isset($ARTICLES_CAT[$idartcat]) && !empty($idartcat))
 { 
 	require_once('articles_cats.class.php');
 	$articles_categories = new ArticlesCats();
-	$articles_categories->bread_crumb($_GET['cat']);
+	$articles_categories->bread_crumb($idartcat);
 
 	if (!empty($idart))
 	{

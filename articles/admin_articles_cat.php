@@ -31,16 +31,16 @@ define('TITLE', $LANG['administration']);
 require_once('../admin/admin_header.php');
 require_once('articles_constants.php');	
 	
-$id = retrieve(GET, 'id', 0);
-$cat_to_del = retrieve(GET, 'del', 0);
-$cat_to_del_post = retrieve(POST, 'cat_to_del', 0);
-$id_up = retrieve(GET, 'id_up', 0);
-$id_down = retrieve(GET, 'id_down', 0);
-$id_show = retrieve(GET, 'show', 0);
-$id_hide = retrieve(GET, 'hide', 0);
+$id = retrieve(GET, 'id', 0,TINTEGER);
+$cat_to_del = retrieve(GET, 'del', 0,TINTEGER);
+$cat_to_del_post = retrieve(POST, 'cat_to_del', 0,TINTEGER);
+$id_up = retrieve(GET, 'id_up', 0,TINTEGER);
+$id_down = retrieve(GET, 'id_down', 0,TINTEGER);
+$id_show = retrieve(GET, 'show', 0,TINTEGER);
+$id_hide = retrieve(GET, 'hide', 0,TINTEGER);
 
 $new_cat = retrieve(GET, 'new', false);
-$id_edit = retrieve(GET, 'edit', 0);
+$id_edit = retrieve(GET, 'edit', 0,TINTEGER);
 
 $error = retrieve(GET, 'error', '');
 
@@ -179,15 +179,18 @@ elseif ($new_cat XOR $id_edit > 0)
 		));
 	}
 }
-elseif (!empty($_POST['submit']))
+elseif (retrieve(POST,'submit',false))
 {
 	$error_string = 'e_success';
 	//Deleting a category
 
 	if (!empty($cat_to_del_post))
 	{
-		$delete_content = (!empty($_POST['action']) && $_POST['action'] == 'move') ? false : true;
-		$id_parent = retrieve(POST, 'id_parent', 0);
+		
+
+		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
+		//echo $delete_content;
+		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		
 		if ($delete_content)
 		{
@@ -200,8 +203,8 @@ elseif (!empty($_POST['submit']))
 	}
 	else
 	{
-		$id_cat = retrieve(POST, 'idcat', 0);
-		$id_parent = retrieve(POST, 'id_parent', 0);
+		$id_cat = retrieve(POST, 'idcat', 0,TINTEGER);
+		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');
 		$image = retrieve(POST, 'image', '');
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);

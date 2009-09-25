@@ -34,7 +34,9 @@ $articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
-if (!empty($idart) && isset($_GET['cat']))
+
+
+if (!empty($idart) && !empty($cat) )
 {
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
@@ -121,6 +123,7 @@ if (!empty($idart) && isset($_GET['cat']))
 	));
 
 	//Affichage commentaires.
+	
 	if (isset($_GET['com']))
 	{
 		$tpl->assign_vars(array(
