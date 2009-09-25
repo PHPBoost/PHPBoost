@@ -56,6 +56,17 @@ if ($delete > 0)
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	
+	$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
+	if($articles['visible'] == 1)
+	{
+		$nb=$articles_cat_info['nbr_articles_visible'] - 1;
+		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
+	}
+	else
+	{
+		$nb=$articles_cat_info['nbr_articles_unvisible'] - 1;
+		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
+	}
 	if ($articles['nbr_com'] > 0)
 	{
 		import('content/comments');
@@ -77,7 +88,7 @@ elseif(retrieve(POST,'submit',false))
 	
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
-		'idcat' => retrieve(POST, 'idcat', 0, TINTEGER),
+		'idcat' => retrieve(POST, 'idcat', 0),
 		'user_id' => retrieve(POST, 'user_id', 0, TINTEGER),
 		'title' => retrieve(POST, 'title', '', TSTRING),
 		'desc' => retrieve(POST, 'contents', '', TSTRING_PARSE),
@@ -102,10 +113,6 @@ elseif(retrieve(POST,'submit',false))
 		if (empty($articles['title']))
 		{
 			$Errorh->handler('e_require_title', E_USER_REDIRECT);
-		}
-		elseif (empty($articles['idcat']) && $articles['idcat'] == 0)
-		{
-			$Errorh->handler('e_require_cat', E_USER_REDIRECT);
 		}
 		elseif (empty($articles['desc']))
 		{
@@ -187,7 +194,11 @@ elseif(retrieve(POST,'submit',false))
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
-				
+						echo "salut'";
+						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
+						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;			
+						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
+						$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb_visible. "',nbr_articles_unvisible = '".$nb_unvisible."' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
 						$file_contribution = $corresponding_contributions[0];
 						//The contribution is now processed
 						$file_contribution->set_status(EVENT_STATUS_PROCESSED);
@@ -205,8 +216,23 @@ elseif(retrieve(POST,'submit',false))
 
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com)
 				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '0')", __LINE__, __FILE__);
-
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
+				
+				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
+						
+				if($articles['visible'] == 1)
+				{
+					$nb=$articles_cat_info['nbr_articles_visible'] + 1;
+					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
+				}
+				else
+				{
+					$nb=$articles_cat_info['nbr_articles_unvisible'] + 1;
+					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
+				
+				}
+				
+			
 
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
@@ -414,21 +440,21 @@ else
 		'L_REQUIRE_TITLE' => $LANG['require_title'],
 		'L_REQUIRE_TEXT' => $LANG['require_text'],
 		'L_REQUIRE_CAT' => $ARTICLES_LANG['require_cat'],
-		'L_PAGE_PROMPT' => $LANG['page_prompt'],
+		'L_PAGE_PROMPT' => $ARTICLES_LANG['page_prompt'],
 		'L_PREVIEW' => $LANG['preview'],
-		'L_ARTICLES_ADD' => $LANG['articles_add'],
+		'L_ARTICLES_ADD' => $ARTICLES_LANG['articles_add'],
 		'L_REQUIRE' => $LANG['require'],
 		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
 		'L_CATEGORY' => $LANG['categories'],
 		'L_TITLE' => $LANG['title'],
-		'L_ARTICLE_ICON' => $LANG['article_icon'],
+		'L_ARTICLE_ICON' => $ARTICLES_LANG['article_icon'],
 		'L_UNTIL' => $LANG['until'],
 		'L_RELEASE_DATE' => $ARTICLES_LANG['release_date'],
 		'L_IMMEDIATE' => $LANG['now'],
 		'L_UNAPROB' => $LANG['unaprob'],
-		'L_ARTICLES_DATE' => $LANG['articles_date'],
+		'L_ARTICLES_DATE' => $ARTICLES_LANG['articles_date'],
 		'L_TEXT' => $LANG['content'],
-		'L_EXPLAIN_PAGE' => $LANG['explain_page'],
+		'L_EXPLAIN_PAGE' => $ARTICLES_LANG['explain_page'],
 		'L_SUBMIT' => $LANG['submit'],
 		'L_RESET' => $LANG['reset'],
 		'L_CONTRIBUTION_LEGEND' => $LANG['contribution'],

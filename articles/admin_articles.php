@@ -49,7 +49,7 @@ require_once('articles_constants.php');
 		'PAGINATION' => $Pagination->display('admin_articles.php?p=%d', $nbr_articles, 'p', 25, 3),
 		'CHEMIN' => SCRIPT,
 		'L_CONFIRM_DEL_ARTICLE' => $LANG['confirm_del_article'],
-		'L_ARTICLES_MANAGEMENT' => $LANG['articles_management'],
+		'L_ARTICLES_MANAGEMENT' => $ARTICLES_LANG['articles_management'],
 		'L_NAME' => $LANG['name'],
 		'L_TITLE' => $LANG['title'],
 		'L_CATEGORY' => $LANG['category'],
