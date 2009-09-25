@@ -104,6 +104,10 @@
 						</select>
 					</label></dd>
 				</dl>
+				
+				<div id="preview">
+
+				</div>
 				<label for="contents" id="scroll_contents">* {L_TEXT}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
@@ -166,7 +170,7 @@
 			</fieldset>
 			# ENDIF #
 			
-			<div id="preview"></div>
+			
 			
 			<fieldset class="fieldset_submit">
 				<legend>{L_SUBMIT}</legend>

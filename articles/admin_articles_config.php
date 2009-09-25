@@ -35,7 +35,7 @@ require_once('../admin/admin_header.php');
 require_once('admin_articles_menu.php');
 
 
-if (!empty($_POST['valid']))
+if (retrieve(POST,'valid',false))
 {
 	$Cache->load('articles');
 
@@ -58,7 +58,7 @@ if (!empty($_POST['valid']))
 	
 	redirect(HOST . SCRIPT);		
 }
-elseif (!empty($_POST['articles_count'])) //Recompte le nombre d'articles de chaque catégories
+elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles de chaque catégories
 {
 	$Cache->load('articles');
 	

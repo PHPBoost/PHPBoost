@@ -76,7 +76,7 @@
 							{articles.NOTE}
 						</td>
 						<td class="row2" style="text-align: center;">
-							{articles.COM} 
+							<a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
 						</td>
 					</tr>
 					# END articles #

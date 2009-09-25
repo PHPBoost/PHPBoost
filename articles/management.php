@@ -37,11 +37,12 @@ import('util/mini_calendar');
 $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
 $delete = retrieve(GET, 'del', 0);
+$id = retrieve(GET, 'id', 0);
 $file_approved = retrieve(POST, 'visible', false);
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
-	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $delete . "'", __LINE__, __FILE__);
+	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (empty($articles['id']))
 	{
@@ -52,13 +53,13 @@ if ($delete > 0)
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 	
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $delete . "'", __LINE__, __FILE__);
-	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $delete . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
+	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	
 	if ($articles['nbr_com'] > 0)
 	{
 		import('content/comments');
-		$Comments = new Comments('articles', $delete, url('articles.php?id=' . $delete . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $delete . '.php?com=%s'));
+		$Comments = new Comments('articles', $articles['id'], url('articles.php?id=' . $articles['id'] . '&amp;com=%s', 'articles-' . $articles['idcat'] . '-' . $articles['id'] . '.php?com=%s'));
 		$Comments->delete_all($delete_articles);
 	}
 	
@@ -68,7 +69,7 @@ if ($delete > 0)
     
 	redirect('articles' . url('.php?cat=' . $articles['idcat'], '-' . $articles['idcat'] . '+' . url_encode_rewrite($ARTICLES_CAT[$articles['idcat']]['name']) . '.php'));
 }
-elseif (!empty($_POST['submit']))
+elseif(retrieve(POST,'submit',false))
 {
 	$begining_date  = MiniCalendar::retrieve_date('start');
 	$end_date = MiniCalendar::retrieve_date('end');
@@ -257,7 +258,7 @@ elseif (!empty($_POST['submit']))
 			import('content/syndication/feed');
 			Feed::clear_cache('articles');
 
-			if ($articles['visible'] && $articles['start'] == 0)
+			if ($articles['visible'])
 			{
 				redirect('articles' . url('.php?id=' . $articles['id'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
 			}

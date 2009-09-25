@@ -31,8 +31,9 @@ require_once('../kernel/begin.php');
 include_once('../articles/articles_begin.php');
 require_once('../kernel/header_no_display.php');
 
+$note=retrieve(GET,'note',0);
 //Notation.
-if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
+if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
@@ -44,11 +45,11 @@ if (!empty($_GET['note']) && $User->check_level(MEMBER_LEVEL)) //Utilisateur con
 	if (!empty($note) && !empty($id))
 		echo $Note->add($note); //Ajout de la note.
 }
-elseif (isset($_GET['img_preview'])) // Prévisualisation des images.
+elseif (retrieve(GET,'img_preview',false)) // Prévisualisation des images.
 {
 	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 }
-elseif (isset($_POST['preview']))
+elseif (retrieve(POST,'preview',false))
 {
 	import('util/date');
 	$level = array('', ' class="modo"', ' class="admin"');
