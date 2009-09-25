@@ -111,7 +111,7 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
-		'L_REQUIRE_TITLE' => sprintf($LANG['required_field'], $ARTICLES_LANG['category_name'])
+		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name']
 	));
 		
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))	
@@ -161,7 +161,8 @@ elseif ($new_cat XOR $id_edit > 0)
 			if($image != $img_default_name){
 			$image_list .= '<option value="' . $image . '">' . $image . '</option>';}
 		}
-		
+	
+
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
@@ -177,6 +178,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
 		));
+
 	}
 }
 elseif (retrieve(POST,'submit',false))
