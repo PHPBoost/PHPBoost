@@ -36,12 +36,13 @@ $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
 
 
-if (!empty($idart) && !empty($cat) )
+if (!empty($idart) && isset($cat) )
 {
+
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
-		{$Errorh->handler('e_auth', E_USER_REDIRECT);
-
+		{
+			$Errorh->handler('e_auth', E_USER_REDIRECT);
 		}
 		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
@@ -73,7 +74,7 @@ if (!empty($idart) && !empty($cat) )
 	$array_contents = preg_split('`\[page\].+\[/page\](.*)`Us', $articles['contents'], -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 	//Récupération de la liste des pages.
 	preg_match_all('`\[page\]([^[]+)\[/page\]`U', $articles['contents'], $array_page);
-	$page_list = '<option value="1">' . $LANG['select_page'] . '</option>';
+	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
 	foreach ($array_page[1] as $page_name)
@@ -112,8 +113,8 @@ if (!empty($idart) && !empty($cat) )
 		'U_USER_ID' => url('.php?id=' . $articles['user_id'], '-' . $articles['user_id'] . '.php'),
 		'U_ONCHANGE_ARTICLE' => "'" . url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart . '&amp;p=\' + this.options[this.selectedIndex].value', 'articles-' . $idartcat . '-' . $idart . '-\'+ this.options[this.selectedIndex].value + \'+' . url_encode_rewrite($articles['title']) . '.php' . "'"),
 		'U_PRINT_ARTICLE' => url('print.php?id=' . $idart),
-		'L_ALERT_DELETE_ARTICLE' => $LANG['alert_delete_article'],
-		'L_SUMMARY' => $LANG['summary'],
+		'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
+		'L_SUMMARY' => $ARTICLES_LANG['summary'],
 		'L_DELETE' => $LANG['delete'],
 		'L_EDIT' => $LANG['edit'],
 		'L_SUBMIT' => $LANG['submit'],

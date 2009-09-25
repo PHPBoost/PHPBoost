@@ -87,7 +87,7 @@ elseif (retrieve(POST,'preview',false))
 
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,
-		'L_WRITTEN' =>  $LANG['written_by'],
+		'L_WRITTEN' =>  $ARTICLES_LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'ID' => $articles['id'],
 		'IDCAT' => $articles['idcat'],

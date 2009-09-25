@@ -55,7 +55,7 @@ if (isset($ARTICLES_CAT[$idartcat]) && !empty($idartcat))
 		$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "' AND idcat = " . $idartcat, __LINE__, __FILE__);
 		$idartcat = $articles['idcat'];
 		
-		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($articles['title']));
+		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($articles['title']));
 
 		
 		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
@@ -66,13 +66,13 @@ if (isset($ARTICLES_CAT[$idartcat]) && !empty($idartcat))
 			$Bread_crumb->add($LANG['com'], '');
 	}
 	else
-		define('TITLE', $LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
+		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
 }
 else
 {
-	$Bread_crumb->add($LANG['title_articles'], 'articles.php');
+	$Bread_crumb->add($ARTICLES_LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
-		define('TITLE', $LANG['title_articles']);
+		define('TITLE', $ARTICLES_LANG['title_articles']);
 }
 
 ?>
