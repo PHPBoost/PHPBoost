@@ -331,7 +331,10 @@ class ArticlesInterface extends ModuleInterface
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,
-			'ADD_ARTICLES' => $is_admin ? (!empty($idartcat) ? '' : '') . '<a href="../articles/management.php?new=1"><img src="../templates/' . get_utheme() . '/images/' . get_ulang() . '/add.png" alt="" class="valign_middle" /></a>' : '',
+			'C_ADD' => $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE),
+			'U_ADD' => url('management.php?new=1'),
+			'C_EDIT' => $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ,
+			'U_EDIT'=> url('management.php?edit='.$idartcat),
 			'L_ARTICLES' => $ARTICLES_LANG['articles'],
 			'L_DATE' => $LANG['date'],
 			'L_VIEW' => $LANG['views'],
@@ -404,7 +407,7 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			$i = 0;
-			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
+			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
@@ -416,7 +419,6 @@ class ArticlesInterface extends ModuleInterface
 					'CAT' => $row['name'],
 					'DESC' => $row['description'],
 					'ICON_CAT' => !empty($row['image']) ? '<a href="articles' . url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php') . '"><img src="' . $row['image'] . '" alt="" class="valign_middle" /></a><br />' : '',
-					'EDIT' => $is_admin ? '<a href="admin_articles_cat.php?edit=' . $row['id'] . '"><img class="valign_middle" src="../templates/' . get_utheme() .  '/images/' . get_ulang() . '/edit.png" alt="" /></a>' : '',
 					'L_NBR_ARTICLES' => sprintf($ARTICLES_LANG['nbr_articles_info'], $row['nbr_articles']),
 					'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 				));

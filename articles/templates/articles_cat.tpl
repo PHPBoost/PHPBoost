@@ -4,10 +4,20 @@
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
-				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>{U_ARTICLES_CAT_LINKS} 
-				# IF C_IS_ADMIN # <a href="admin_articles_cat.php?edit={IDCAT}"><img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" /></a> # ENDIF #
-				{EDIT} 
-				{ADD_ARTICLES}
+				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>&nbsp;{U_ARTICLES_CAT_LINKS} 			
+				# IF C_EDIT #
+				&nbsp;
+				<a href="{U_EDIT}" title="{L_EDIT}">
+					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+				</a>
+				# ENDIF #
+				# IF C_ADD #
+				<a href="{U_ADD}" title="{L_ADD}">
+					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
+				</a>
+				&nbsp;
+				# ENDIF #
+			
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
