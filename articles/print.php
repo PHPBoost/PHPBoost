@@ -27,7 +27,7 @@
 
 require_once('../kernel/begin.php');
 require_once('articles_constants.php'); 
-
+require_once('articles_begin.php');
 $Cache->load('articles');
 
 //Titre de l'article à afficher en version imprimable
@@ -37,7 +37,7 @@ if ($idart > 0)
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE visible = 1 AND id = '" . $idart . "'", __LINE__, __FILE__);
 	
 	$idartcat = $articles['idcat'];
-	
+
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT);

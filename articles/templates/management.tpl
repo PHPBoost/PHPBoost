@@ -67,7 +67,12 @@
 			}
 			return false;
 		}
-		
+		function bbcode_page()
+		{
+			var page = prompt("{L_PAGE_PROMPT}");
+			if( page != null && page != '' )
+				insertbbcode('[page]' + page, '[/page]', 'contents');
+		}
 		# IF C_ADD #
 		function value_now(id_date, id_hour, id_min)
 		{
@@ -111,6 +116,12 @@
 				<label for="contents" id="scroll_contents">* {L_TEXT}</label>
 				{KERNEL_EDITOR}
 				<label><textarea rows="20" cols="86" id="contents" name="contents">{CONTENTS}</textarea></label>
+					<p class="text_center" style="margin-top:8px;">
+							<a href="javascript:bbcode_page();"><img src="../articles/articles.png" alt="{L_EXPLAIN_PAGE}" title="{L_EXPLAIN_PAGE}" /></a>
+						</p>
+						<p class="text_center" style="margin-top:-15px;">
+							<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
+						</p>
 				<br /><br />
 
 				# IF NOT C_CONTRIBUTION #
