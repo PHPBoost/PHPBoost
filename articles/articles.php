@@ -77,11 +77,17 @@ if (!empty($idart) && isset($cat) )
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
+	
 	$c_tab=$CONFIG_ARTICLES['tab'];
+		//Nombre de pages
+	$nbr_page = count($array_page[1]);
+	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
+	
 	foreach ($array_page[1] as $page_name)
 	{
-		if($c_tab)
+		if($c_tab && $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS) )
 		{
+			$c_tab=true;
 			$display = ( $i == 1 )? "yes" : "none";
 			$style = ($i ==1)? 'style="margin-left: 1px"' : '';
 			$id_tab1= ($i == 1)?'Active' : $i;
@@ -91,19 +97,20 @@ if (!empty($idart) && isset($cat) )
 				'DISPLAY' => $display,
 				'STYLE' => $style,
 				'ID_TAB1' =>$id_tab1,
-				'TOTAL_TAB'=> count($array_page) + 1,
-				'PAGE_NAME'=>$page_name,
+				'TOTAL_TAB'=> count($array_page[1]),
+				'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : Trim($page_name) ,
 			));
+		}
+		else
+		{
+			$c_tab=false;
 		}
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
 		
 	}
 	
-	//Nombre de pages
-	$nbr_page = count($array_page[1]);
-	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
-	
+
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
