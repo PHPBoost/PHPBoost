@@ -44,6 +44,7 @@ if (retrieve(POST,'valid',false))
 		'nbr_cat_max' => retrieve(POST, 'nbr_cat_max', 10),
 		'nbr_column' => retrieve(POST, 'nbr_column', 2),
 		'note_max' => max(1, retrieve(POST, 'note_max', 5)),
+		'tab'=>retrieve(POST, 'tab', 0),
 		'global_auth' => Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE),
 	);
 
@@ -123,6 +124,8 @@ else
 		'AUTH_WRITE' => Authorizations::generate_select(AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 		'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
+		'TAB'=> $CONFIG_ARTICLES['tab'] == 1 ? 'checked="checked"' : '',
+		'NO_TAB'=>  $CONFIG_ARTICLES['tab'] != 1 ? 'checked="checked"' : '',
 		'L_REQUIRE' => $LANG['require'],		
 		'L_NBR_ARTICLES_MAX' => $ARTICLES_LANG['nbr_articles_max'],
 		'L_NBR_CAT_MAX' => $LANG['nbr_cat_max'],
@@ -138,7 +141,10 @@ else
 		'L_AUTH_WRITE' => $ARTICLES_LANG['auth_write'],
 		'L_AUTH_MODERATION' => $ARTICLES_LANG['auth_moderate'],
 		'L_AUTH_CONTRIBUTION' => $ARTICLES_LANG['auth_contribute'],
-		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles']
+		'L_ARTICLES_CONFIG'=>$ARTICLES_LANG['configuration_articles'],
+		'L_ENABLED'=>$LANG['enabled'],
+		'L_DISABLED'=>$LANG['disabled'],
+		'L_USE_TAB'=>$ARTICLES_LANG['use_tab']
 	));
 	$tpl->parse();
 	
