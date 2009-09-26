@@ -96,6 +96,7 @@ if (!empty($idart) && isset($cat) )
 	$tpl->assign_vars(array(
 		'C_IS_ADMIN' => ($User->check_level(ADMIN_LEVEL)),
 		'C_DISPLAY_ARTICLE' => true,
+		'C_PRINT' => true,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],

@@ -215,10 +215,13 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
+		
 		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
+		
 		$Cache->load('articles');
-
+		
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
+		
 		import('content/syndication/feed_data');
 		import('util/date');
 		import('util/url');
