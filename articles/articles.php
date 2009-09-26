@@ -77,10 +77,27 @@ if (!empty($idart) && isset($cat) )
 	$page_list = '<option value="1">' . $ARTICLES_LANG['select_page'] . '</option>';
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
+	$c_tab=$CONFIG_ARTICLES['tab'];
 	foreach ($array_page[1] as $page_name)
 	{
+		if($c_tab)
+		{
+			$display = ( $i == 1 )? "yes" : "none";
+			$style = ($i ==1)? 'style="margin-left: 1px"' : '';
+			$id_tab1= ($i == 1)?'Active' : $i;
+			$tpl->assign_block_vars('tab', array(
+				'CONTENTS_TAB'=>$array_contents[$i] ,
+				'ID_TAB' =>$i,
+				'DISPLAY' => $display,
+				'STYLE' => $style,
+				'ID_TAB1' =>$id_tab1,
+				'TOTAL_TAB'=> count($array_page) + 1,
+				'PAGE_NAME'=>$page_name,
+			));
+		}
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
+		
 	}
 	
 	//Nombre de pages
@@ -97,6 +114,7 @@ if (!empty($idart) && isset($cat) )
 		'C_IS_ADMIN' => ($User->check_level(ADMIN_LEVEL)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_PRINT' => true,
+		'C_TAB'=>$c_tab,
 		'IDART' => $articles['id'],
 		'IDCAT' => $idartcat,
 		'NAME' => $articles['title'],
@@ -122,6 +140,7 @@ if (!empty($idart) && isset($cat) )
 		'L_WRITTEN' =>  $LANG['written_by'],
 		'L_ON' => $LANG['on'],
 		'L_PRINTABLE_VERSION' => $LANG['printable_version'],
+
 	));
 
 	//Affichage commentaires.

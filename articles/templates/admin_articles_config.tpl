@@ -81,6 +81,12 @@
 						<dt><label for="note_max">* {L_NOTE_MAX}</label></dt>
 						<dd><label><input type="text" size="2" maxlength="2" id="note_max" name="note_max" value="{NOTE_MAX}" class="text" /></label></dd>
 					</dl>
+					<dl>
+						<dt><label for="note_max">* {L_USE_TAB}</label></dt>
+						<dd><label><input type="radio" {TAB} name="tab" value="1" /> {L_ENABLED}</label>
+									&nbsp;&nbsp; 
+									<label><input type="radio" {NO_TAB} name="tab" value="0" />{L_DISABLED}</label></dd>	
+					</dl>
 				</fieldset>			
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPDATE}</legend>
