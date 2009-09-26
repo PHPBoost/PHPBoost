@@ -5,8 +5,8 @@
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>&nbsp;{U_ARTICLES_CAT_LINKS} 			
-				# IF C_EDIT #
 				&nbsp;
+				# IF C_EDIT #			
 				<a href="{U_EDIT}" title="{L_EDIT}">
 					<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 				</a>
