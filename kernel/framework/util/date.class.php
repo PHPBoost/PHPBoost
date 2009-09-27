@@ -346,6 +346,15 @@ class Date
 	}
 	
 	/**
+	 * @desc Adjust the timestamp with the parameter.
+	 * @param int $timestamp Value timestamp to add to the timestamp.
+	 */
+	public function adjust_timestamp($timestamp)
+	{
+		$this->timestamp += $timestamp;
+	}
+	
+	/**
 	 * @desc Determines whether a date is correct. For example the february 31st is not correct.
 	 * @param int $month The month
 	 * @param int $day The day
