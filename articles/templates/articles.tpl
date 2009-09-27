@@ -1,81 +1,140 @@
-		# IF C_DISPLAY_ARTICLE #
+	# IF C_DISPLAY_ARTICLE #
 			
 		<script type="text/javascript">
 		<!--
-		function Confirm_del_article() {
-		return confirm("{L_ALERT_DELETE_ARTICLE}");
-		}
+			function Confirm_del_article() {
+			return confirm("{L_ALERT_DELETE_ARTICLE}");
+			}
 		-->
-		</script>		
-		<style>
-		#tabs{
-        margin-left: 4px;
-        padding: 0;
-        background: transparent;
-        voice-family: "\"}\"";
-        voice-family: inherit;
-        padding-left: 5px;
-    }
-    #tabs ul{
-        font: bold 11px Arial, Verdana, sans-serif;
-        margin:0;
-        padding:0;
-        list-style:none;
-
-    }
-    #tabs li{
-        display:inline;
-        margin:0 2px 0 0;
-        padding:0;
-        text-transform:uppercase;
-				
-    }
-    #tabs a{
-        float:left;
-		background:#FFFFFF url(../templates/base/theme/images/contentbg.png) repeat-x;
-		min-width:100px;
-		 border:1px #cccccc solid;
-		-moz-border-radius-topleft:4px;
-		-khtml-border-radius-topleft:5px;
-		-webkit-border-top-left-radius:5px;
-	
-		-moz-border-radius-topright:4px;
-		-khtml-border-radius-topright:5px;
-		-webkit-border-top-right-radius:5px;
-		border-radius:5px;
-        margin:0 2px 0 0;
-        padding:0 0 1px 3px;
-        text-decoration:none;
-    }
-    #tabs a span{
-        float:left;
-        display:block;
-        background: transparent url(images/tabs_right.gif) no-repeat right top;
-        padding:4px 9px 2px 6px;
-    }
-    #tabs a span{float:none;}
-    #tabs a:hover{background-color: #cccccc;color: white;}
-    #tabs a:hover span{margin-left:-4px;padding-bottom:-2px;background-color: #cccccc;}
-	
-    #tabHeaderActive span, #tabHeaderActive a { 
-		background-color: #cccccc; 
-		color:#000;
-	
-	}
-    .tabContent {
-        clear:both;
-        border:2px solid #42577B;
-        padding-top:2px;
-        background-color:#FFF;
-		padding-left:5px;
-    }
-		</style>
+		</script>	
+		# IF C_TAB #
+			<script type="text/javascript">
+			<!--
+				function getParam(name)
+				{
+					var str_location = String(location);
+					if(str_location.search('/articles-') != -1)
+					{
+						url=String(location).substr(str_location.search('/articles-') + 12);
+						tab=url.split('-');
+						if(tab.length > 2 )
+						{
+							tab1=tab[1].split('+');
+							return tab1[0];
+						}
+						else
+						{
+							return false;
+						}	
+					}
+					else
+					{
+						var start=location.search.indexOf("?"+name+"=" );
+						if (start<0) start=location.search.indexOf("&"+name+"=" );
+						if (start<0) return '';
+						start += name.length+2;
+						var end=location.search.indexOf("&",start)-1;
+						if (end<0) end=location.search.length;
+						var result='';
+						for(var i=start;i<=end;i++) 
+						{
+							var c=location.search.charAt(i);
+							result=result+(c=='+'?' ':c);
+						}
+						if(result == "")
+						{
+							return false;
+						}
+						else
+						{
+							return unescape(result);
+						}
+					}
+					
+					
+				}
+				function start_tab(param)
+				{
+					if(param != false)
+					{
+						toggleTab(param,{TOTAL_TAB},0,false);
+					}
+				}
+					
+								
+							/*-----------------------------------------------------------
+						Toggles element's display value
+						Input: any number of element id's
+						Output: none 
+						---------------------------------------------------------*/
+					function toggleDisp() {
+						for (var i=0;i<arguments.length;i++){
+							var d = $(arguments[i]);
+							if (d.style.display == 'none')
+								d.style.display = 'block';
+							else
+								d.style.display = 'none';
+						}
+					}
+					/*-----------------------------------------------------------
+						Toggles tabs - Closes any open tabs, and then opens current tab
+						Input:     1.The number of the current tab
+										2.The number of tabs
+										3.(optional)The number of the tab to leave open
+										4.(optional)Pass in true or false whether or not to animate the open/close of the tabs
+						Output: none 
+						---------------------------------------------------------*/
+					function toggleTab(num,numelems,opennum,animate) {
+						if ($('tabContent'+num).style.display == 'none'){
+							for (var i=1;i<=numelems;i++){
+								if ((opennum == null) || (opennum != i)){
+									var temph = 'tabHeader'+i;
+									var h = $(temph);
+									if (!h){
+										var h = $('tabHeaderActive');
+										h.id = temph;
+									}
+									var tempc = 'tabContent'+i;
+									var c = $(tempc);
+									if(c.style.display != 'none'){
+										if (animate || typeof animate == 'undefined')
+											Effect.toggle(tempc,'blind',{duration:0.5, queue:{scope:'menus', limit: 3}});
+										else
+											toggleDisp(tempc);
+									}
+								}
+							}
+							var h = $('tabHeader'+num);
+							if (h)
+								h.id = 'tabHeaderActive';
+							h.blur();
+							var c = $('tabContent'+num);
+							c.style.marginTop = '2px';
+							if (animate || typeof animate == 'undefined'){
+								Effect.toggle('tabContent'+num,'blind',{duration:0.5, queue:{scope:'menus', position:'end', limit: 3}});
+							}else{
+								toggleDisp('tabContent'+num);
+							}
+						}
+					}
+					-->
+			</script>
+		
+			<style>
+				.module_contents
+				{
+					border-left:1px #5D7C94 solid;
+					border-right:1px #5D7C94 solid;
+					border-bottom:1px #5D7C94 solid;
+				}
+			</style>
+		# ENDIF #
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
 			<div class="module_top">
 				<div style="float:left">
-					<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>
+					<a href="{PATH_TO_ROOT}/syndication.php?m=articles&amp;cat={IDCAT}" title="Rss"><img style="vertical-align:middle;margin-top:-2px;" src="../templates/{THEME}/images/rss.png" alt="Rss" title="Rss" /></a>  <strong>&nbsp;{NAME}</strong>	
 				</div>
 				<div style="float:right">
 					{COM}
@@ -88,6 +147,15 @@
 					# ENDIF #
 				</div>
 			</div>
+			# IF C_TAB #
+			<div id="tabs">
+				<ul>
+					# START tab #
+					 <li {tab.STYLE} id="tabHeader{tab.ID_TAB1}"><a href="javascript:void(0)" onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
+					# END tab #
+				</ul>
+			</div>	
+			# ENDIF #
 			<div class="module_contents">
 				# IF NOT C_TAB #
 					# IF PAGINATION_ARTICLES #
@@ -121,92 +189,23 @@
 					<div style="float:left;width:33%;text-align:right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>
 					<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
 					<div style="float:left;width:33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
-					# ENDIF #
-					
+					# ENDIF #		
 				# ENDIF #
-				
 				# IF C_TAB #	
-					<script type="text/javascript">
-							<!--
-							
-							
-						/*-----------------------------------------------------------
-					Toggles element's display value
-					Input: any number of element id's
-					Output: none 
-					---------------------------------------------------------*/
-				function toggleDisp() {
-					for (var i=0;i<arguments.length;i++){
-						var d = $(arguments[i]);
-						if (d.style.display == 'none')
-							d.style.display = 'block';
-						else
-							d.style.display = 'none';
-					}
-				}
-				/*-----------------------------------------------------------
-					Toggles tabs - Closes any open tabs, and then opens current tab
-					Input:     1.The number of the current tab
-									2.The number of tabs
-									3.(optional)The number of the tab to leave open
-									4.(optional)Pass in true or false whether or not to animate the open/close of the tabs
-					Output: none 
-					---------------------------------------------------------*/
-				function toggleTab(num,numelems,opennum,animate) {
-					if ($('tabContent'+num).style.display == 'none'){
-						for (var i=1;i<=numelems;i++){
-							if ((opennum == null) || (opennum != i)){
-								var temph = 'tabHeader'+i;
-								var h = $(temph);
-								if (!h){
-									var h = $('tabHeaderActive');
-									h.id = temph;
-								}
-								var tempc = 'tabContent'+i;
-								var c = $(tempc);
-								if(c.style.display != 'none'){
-									if (animate || typeof animate == 'undefined')
-										Effect.toggle(tempc,'blind',{duration:0.5, queue:{scope:'menus', limit: 3}});
-									else
-										toggleDisp(tempc);
-								}
-							}
-						}
-						var h = $('tabHeader'+num);
-						if (h)
-							h.id = 'tabHeaderActive';
-						h.blur();
-						var c = $('tabContent'+num);
-						c.style.marginTop = '2px';
-						if (animate || typeof animate == 'undefined'){
-							Effect.toggle('tabContent'+num,'blind',{duration:0.5, queue:{scope:'menus', position:'end', limit: 3}});
-						}else{
-							toggleDisp('tabContent'+num);
-						}
-					}
-				}
-				-->
-				</script>
-
-				<div id="tabs">
-					<ul>
-
-						# START tab #
-						 <li {tab.STYLE} id="tabHeader{tab.ID_TAB1}"><a href="javascript:void(0)" onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
-
-						# END tab #
-					</ul>
-				</div>
 					<div id="tabscontent">
 						# START tab #
 							<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
 								<br /><div>{tab.CONTENTS_TAB}</div>
 							</div>
 						# END tab #
-					</div>
-			
+					</div>					
+					<script type="text/javascript">
+					<!--
+						start_tab(getParam('p'));
+					-->
+					</script>
 			# ENDIF #
-				<div class="spacer">&nbsp;</div>
+			<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>
@@ -222,6 +221,5 @@
 		</div>
 		<br /><br />
 		{COMMENTS}
-	
-		# ENDIF #
+	# ENDIF #
 		

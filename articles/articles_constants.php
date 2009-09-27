@@ -40,8 +40,8 @@ define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
 
 //load_module_lang('articles'); //Chargement de la langue du module.
 
-$idartcat = retrieve(GET, 'cat', 0);
+$idartcat = retrieve(GET, 'cat',0);
 $idart = retrieve(GET, 'id', 0);
 
-
+defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'articles');
 ?>
