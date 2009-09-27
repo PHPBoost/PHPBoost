@@ -35,16 +35,16 @@ $Cache->load('articles');
 if (empty($idartcat))//Racine.
 {
 
-
    $ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
    $ARTICLES_CAT[0]['visible'] = 1;
    $ARTICLES_CAT[0]['name'] = $LANG['root'];
    $ARTICLES_CAT[0]['order'] = -1;
    $ARTICLES_CAT[0]['id_parent'] = 0;
+   $idartcat=0;
 }
 
 
-if (isset($ARTICLES_CAT[$idartcat]) && !empty($idartcat))
+if (isset($ARTICLES_CAT[$idartcat]) )
 { 
 	require_once('articles_cats.class.php');
 	$articles_categories = new ArticlesCats();
@@ -70,6 +70,7 @@ if (isset($ARTICLES_CAT[$idartcat]) && !empty($idartcat))
 }
 else
 {
+
 	$Bread_crumb->add($ARTICLES_LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
 		define('TITLE', $ARTICLES_LANG['title_articles']);
