@@ -111,7 +111,8 @@ elseif ($new_cat XOR $id_edit > 0)
 		'L_PREVIEW' => $LANG['preview'],
 		'L_RESET' => $LANG['reset'],
 		'L_SUBMIT' => $id_edit > 0 ? $LANG['edit'] : $LANG['add'],
-		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name']
+		'L_REQUIRE_TITLE' => $LANG['required_field'].' : '.$ARTICLES_LANG['category_name'],
+		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
 	));
 		
 	if ($id_edit > 0 && array_key_exists($id_edit, $ARTICLES_CAT))	
@@ -119,23 +120,23 @@ elseif ($new_cat XOR $id_edit > 0)
 		$special_auth = $ARTICLES_CAT[$id_edit]['auth'] !== $CONFIG_ARTICLES['global_auth'] ? true : false;
 		$ARTICLES_CAT[$id_edit]['auth'] = $special_auth ? $ARTICLES_CAT[$id_edit]['auth'] : $CONFIG_ARTICLES['global_auth'];
 		
-
-		$image_list = '<option value="" selected="selected">--</option>';
+		$img_direct_path = (strpos($ARTICLES_CAT[$id_edit]['image'], '/') !== false);
+		$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 		import('io/filesystem/folder');
-		$image_list = '<option value="'.$ARTICLES_CAT[$id_edit]['image'].'">'.$ARTICLES_CAT[$id_edit]['image'].'</option>';
+		$image_list = '<option value="">--</option>';
 		$image_folder_path = new Folder('./');
 		foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
 		{
 			$image = $images->get_name();
-			$image_list .= '<option value="' . $image . '">' . $image . '</option>';
-			
+			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
+			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
-		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
-			'IMG_LIST' => $image_list,
-			'IMG_PREVIEW' => second_parse_url($ARTICLES_CAT[$id_edit]['image']),
+			'IMG_PATH' => $img_direct_path ? $ARTICLES_CAT[$id_edit]['image'] : '',
+			'IMG_ICON' => !empty($ARTICLES_CAT[$id_edit]['image']) ? '<img src="' . $ARTICLES_CAT[$id_edit]['image'] . '" alt="" class="valign_middle" />' : '',		
+			'IMG_LIST'=>$image_list,
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($ARTICLES_CAT[$id_edit]['id_parent'], 'id_parent', 'id_parent', $id_edit),
 			'IDCAT' => $id_edit,
 			'JS_SPECIAL_AUTH' => $special_auth ? 'true' : 'false',
@@ -166,6 +167,8 @@ elseif ($new_cat XOR $id_edit > 0)
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
+			'IMG_PATH' => '',
+			'IMG_ICON' => '',	
 			'IMG_LIST' => $image_list,
 			'IMG_PREVIEW' => second_parse_url($img_default),
 			'CATEGORIES_TREE' => $articles_categories->build_select_form($id_edit, 'id_parent', 'id_parent'),
@@ -208,7 +211,11 @@ elseif (retrieve(POST,'submit',false))
 		$id_cat = retrieve(POST, 'idcat', 0,TINTEGER);
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');
-		$image = retrieve(POST, 'image', '');
+		$icon=retrieve(POST, 'icon', '', TSTRING);
+		if(retrieve(POST,'icon_path',false))
+		{
+			$icon=retrieve(POST,'icon_path','');
+		}
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
@@ -216,9 +223,9 @@ elseif (retrieve(POST,'submit',false))
 			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
 		
 		if ($id_cat > 0)
-			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $image, $auth);
+			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth);
 		else
-			$error_string = $articles_categories->add($id_parent, $name, $description, $image, $auth);
+			$error_string = $articles_categories->add($id_parent, $name, $description, $icon, $auth);
 	}
 	
 	// Feeds Regeneration
