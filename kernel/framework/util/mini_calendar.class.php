@@ -127,7 +127,6 @@ class MiniCalendar
 	}
 	
 	/**
-	 * @static
 	 * @desc Retrieves a date entered in a mini calendar.
 	 * @param string $calendar_name Name of the calendar (HTML identifier).
 	 * @return Date The date of the calendar.
@@ -136,6 +135,15 @@ class MiniCalendar
 	{
 		global $LANG;
 		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);
+	}
+	
+	/**
+	 * @desc Return the number of instance.
+	 * @return int The number of instance.
+	 */
+	public function get_num_instance()
+	{
+		return $this->num_instance;
 	}
 }
 

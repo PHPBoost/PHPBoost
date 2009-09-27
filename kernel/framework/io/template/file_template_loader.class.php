@@ -146,10 +146,10 @@ class FileTemplateLoader implements TemplateLoader
 	
 	private function get_menus_paths()
 	{
-		$menu = substr($folder, 0, strpos($folder, '/'));
+		$menu = substr($this->folder, 0, strpos($this->folder, '/'));
 		if (empty($menu))
 		{
-			$menu = $folder;
+			$menu = $this->folder;
 		}
 		
 		$this->get_template_real_filepaths_and_data_path(array(
