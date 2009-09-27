@@ -28,8 +28,8 @@ require_once '../admin/admin_begin.php';
 define('TITLE', $LANG['administration']);
 require_once '../admin/admin_header.php';
 	
-$uninstall = isset($_GET['uninstall']) ? true : false;	
-$edit = isset($_GET['edit']) ? true : false;	
+$uninstall = retrieve(GET, 'uninstall', false, TBOOL);
+$edit = retrieve(GET, 'edit', false, TBOOL);
 $id = retrieve(GET, 'id', 0);
 $name = retrieve(GET, 'name', '');
 
@@ -53,10 +53,8 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
-{
-	$Session->csrf_get_protect(); //Protection csrf
-	
+elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
+{	
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM " . DB_TABLE_THEMES . "
 	WHERE activ = 1 AND theme != '" . $CONFIG['theme'] . "'", __LINE__, __FILE__);
@@ -82,10 +80,8 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 	}
 	if (isset($_POST['valid_edit'])) //Modication de la configuration du thème.
 	{
-		$Session->csrf_get_protect(); //Protection csrf
-		
-		$left_column = !empty($_POST['left_column']) ? 1 : 0; 
-		$right_column = !empty($_POST['right_column']) ? 1 : 0; 
+		$left_column = retrieve(POST, 'left_column', false, TBOOL);
+		$right_column = retrieve(POST, 'right_column', false, TBOOL);
 		
 		$Sql->query_inject("UPDATE " . DB_TABLE_THEMES . " SET left_column = '" . $left_column . "', right_column = '" . $right_column . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 		
@@ -127,11 +123,9 @@ elseif ($edit && (!empty($id) || !empty($name))) //Edition
 elseif ($uninstall) //Désinstallation.
 {
 	if (!empty($_POST['valid_del']))
-	{		
-		$Session->csrf_get_protect(); //Protection csrf
-		
+	{
 		$idtheme = retrieve(POST, 'idtheme', 0); 
-		$drop_files = !empty($_POST['drop_files']) ? true : false;
+		$drop_files = retrieve(POST, 'drop_files', false, TBOOL);
 		
 		$previous_theme = $Sql->query("SELECT theme FROM " . DB_TABLE_THEMES . " WHERE id = '" . $idtheme . "'", __LINE__, __FILE__);
 		if ($previous_theme != $CONFIG['theme'] && !empty($idtheme))
@@ -246,8 +240,7 @@ else
 	$array_ranks = array(-1 => $LANG['guest'], 0 => $LANG['member'], 1 => $LANG['modo'], 2 => $LANG['admin']);
 	$z = 0;
 	$result = $Sql->query_while("SELECT id, theme, activ, secure 
-	FROM " . DB_TABLE_THEMES . "
-	ORDER BY theme", __LINE__, __FILE__);
+	FROM " . DB_TABLE_THEMES . "", __LINE__, __FILE__);
 	while ($row = $Sql->fetch_assoc($result))
 	{
 		//On selectionne le theme suivant les valeurs du tableau. 
