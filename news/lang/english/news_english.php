@@ -96,6 +96,7 @@ $NEWS_LANG = array(
 	'nbr_news_p' => 'Number of news per page',
 	'new_cat_does_not_exist' => 'The target category does not exist',
 	'news_management' => 'News management',
+	'news_suggested' => 'News suggested:',
 	'no_news_available' => 'No news currently available',
 	'notice_contribution' => 'You aren\'t authorized to add a news, however you can contribute by submitting a one. Your contribution will be processed by an moderator.',
 

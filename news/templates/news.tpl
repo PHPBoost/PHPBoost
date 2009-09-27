@@ -49,6 +49,17 @@
 				<div class="spacer"></div>
            	</div>
 		</div>
+		
+		# IF C_NEWS_SUGGESTED #
+			<div id="news_suggested">
+				<b>{L_NEWS_SUGGESTED}</b><br />
+				<ul class="bb_ul">
+					# START suggested #
+						<li class="bb_li"><a href="{suggested.URL}">{suggested.TITLE}</a></li>
+					# END suggested #
+				</ul>
+			</div>
+		# ENDIF #
 
 		# IF C_NEWS_NAVIGATION_LINKS #
        	<div class="navigation_link">
