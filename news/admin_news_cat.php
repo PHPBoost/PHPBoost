@@ -78,18 +78,39 @@ elseif ($id_hide > 0)
 }
 elseif ($cat_to_del > 0)
 {
-	$tpl->assign_vars(array(
-		'L_REMOVING_CATEGORY' => $NEWS_LANG['removing_category'],
-		'L_EXPLAIN_REMOVING' => $NEWS_LANG['explain_removing_category'],
-		'L_DELETE_CATEGORY_AND_CONTENT' => $NEWS_LANG['delete_category_and_its_content'],
-		'L_MOVE_CONTENT' => $NEWS_LANG['move_category_content'],
-		'L_SUBMIT' => $LANG['delete']
-	));
+	$array_cat = array();
+	$nbr_cat = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " WHERE idcat = '" . $cat_to_del . "'", __LINE__, __FILE__);
+	$news_categories->build_children_id_list($cat_to_del, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST);
 
-	$tpl->assign_block_vars('removing_interface', array(
-		'CATEGORY_TREE' => $news_categories->build_select_form(0, 'id_parent', 'id_parent', $cat_to_del),
-		'IDCAT' => $cat_to_del,
-	));
+	if (empty($array_cat) && $nbr_cat === 0)
+	{
+		$Session->csrf_get_protect();
+		$news_categories->delete($cat_to_del);
+		
+		// Feeds Regeneration
+		import('content/syndication/feed');
+		Feed::clear_cache('news');
+
+		redirect(url(HOST . SCRIPT . '?error=e_success#errorh'), '', '&');
+	}
+	else
+	{
+		$tpl->assign_vars(array(
+			'EMPTY_CATS' => count($NEWS_CAT) < 2 ? true : false,
+			// 'EMPTY_CATS' => false,
+			'L_REMOVING_CATEGORY' => $NEWS_LANG['removing_category'],
+			'L_EXPLAIN_REMOVING' => $NEWS_LANG['explain_removing_category'],
+			'L_DELETE_CATEGORY_AND_CONTENT' => $NEWS_LANG['delete_category_and_its_content'],
+			'L_MOVE_CONTENT' => $NEWS_LANG['move_category_content'],
+			'L_SUBMIT' => $LANG['delete']
+		));
+
+		$tpl->assign_block_vars('removing_interface', array(
+			'IDCAT' => $cat_to_del,
+		));
+		
+		$news_categories->build_select_form(0, 'idcat', 'idcat', $cat_to_del, 0, array(), RECURSIVE_EXPLORATION, $tpl);
+	}
 }
 elseif (!empty($_POST['submit']))
 {

@@ -450,7 +450,7 @@ class NewsInterface extends ModuleInterface
 						'U_SYNDICATION' => url('../syndication.php?m=news&amp;cat=' . $row['idcat']),
 						'U_LINK' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
 						'TITLE' => $row['title'],
-						'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=0&amp;id=' . $row['id'] . '&amp;com=0', '-0-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
+						'U_COM' => $NEWS_CONFIG['activ_com'] == 1 ? Comments::com_display_link($row['nbr_com'], 'news' . url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php?com=0'), $row['id'], 'news') : false,
 						'C_EDIT' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_WRITE) && $row['user_id'] == $User->get_attribute('user_id'),
 						'C_DELETE' => $User->check_auth($NEWS_CAT[$row['idcat']]['auth'], AUTH_NEWS_MODERATE),
 						'C_IMG' => !empty($row['img']),
@@ -463,7 +463,7 @@ class NewsInterface extends ModuleInterface
 						'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 						'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 						'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-						'LEVEL' =>	$level[$row['level']],
+						'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
 						'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 					    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 					));

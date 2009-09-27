@@ -61,7 +61,7 @@ $NEWS_LANG = array(
 	'contribution_confirmation' => 'Confirmation of the contribution',
 	'contribution_confirmation_explain' => '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
 	'contribution_counterpart' => 'Contribution counterpart',
-	'contribution_counterpart_explain' => 'Tell us why you want us to add this file. This field is not required, but it may help the moderator to take his decision.',
+	'contribution_counterpart_explain' => 'Tell us why you want us to add this news. This field is not required, but it may help the moderator to take his decision.',
 	'contribution_entitled' => '[News] %s',
 	'contribution_success' => 'Your contribution has been saved.',
 
@@ -74,7 +74,7 @@ $NEWS_LANG = array(
 
 	'edit_news' => 'Edit news',
 	'edito_where' => 'Visible message for all at the top of news page',
-	'explain_removing_category' => 'You will delete the category. You have two choices : you can move its contents (files and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>',
+	'explain_removing_category' => 'You will delete the category. You have two choices : you can move its contents (news and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>',
 	'extend_contents' => 'Read the continuation...',
 
 	'global_auth' => 'Overall permissions',
@@ -97,7 +97,7 @@ $NEWS_LANG = array(
 	'new_cat_does_not_exist' => 'The target category does not exist',
 	'news_management' => 'News management',
 	'no_news_available' => 'No news currently available',
-	'notice_contribution' => 'You aren\'t authorized to add a file, however you can contribute by submitting a one. Your contribution will be processed by an moderator.',
+	'notice_contribution' => 'You aren\'t authorized to add a news, however you can contribute by submitting a one. Your contribution will be processed by an moderator.',
 
 	'on' => 'The: %s',
 
