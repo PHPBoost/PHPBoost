@@ -31,58 +31,11 @@
 ####################################################
 
 //Admin
-$LANG['written_by'] = 'Written by';
-$LANG['explain_page'] = 'Insert a new page';
-$LANG['page_prompt'] = 'New page title';
-$LANG['summary'] = 'Summary';
-$LANG['select_page'] = 'Select a page';
-$LANG['articles_management'] = 'Articles management';
-$LANG['articles_add'] = 'Add an article';
-$LANG['articles_config'] = 'Articles configuration';
-$LANG['articles_cats_add'] = 'Add a category';
-$LANG['edit_article'] = 'Edit the article';
-$LANG['cat_edit'] = 'Edit the category';
-$LANG['nbr_articles_max'] = 'Maximum number of displayed articles';
-$LANG['articles_date'] = 'Article date <span class="text_small">(mm/dd/yy)</span> <br />
-<span class="text_small">(Leave empty to set today date)</span>';
-$LANG['icon_cat'] = 'Icon category';
-$LANG['icon_cat_explain'] = 'Put it in the /articles folder';
-$LANG['parent_category'] = 'Parent category';
-$LANG['explain_article'] = 'The category you wish to delete contains <strong>1</strong> article, do you want to save it by transferring it in another category, or delete this article?';
-$LANG['explain_articles'] = 'The category you wish to delete contains <strong>%d</strong> articles, do you want to save them by transferring them in another category, or delete these articles?';
-$LANG['explain_subcat'] = 'The category you wish to delete contains <strong>1</strong> subcategory, do you want to save it by transferring it in another category, or delete it and its content?';
-$LANG['explain_subcats'] = 'The category you wish to delete contains <strong>%d</strong> subcategories, do you want to save them by transferring them in another category, or delete them and their contents?';
-$LANG['keep_articles'] = 'Keep article(s)';
-$LANG['keep_subcat'] = 'Keep subcategory(ies)';
-$LANG['move_articles_to'] = 'Move article(s) to';
-$LANG['move_subcat_to'] = 'Move subcategories to';
-$LANG['cat_target'] = 'Target category';
-$LANG['del_all'] = 'Complete removal';
-$LANG['del_articles_contents'] = 'Delete the category "<strong>%s</strong>", its <strong>subcategories</strong> and <strong>all</strong> its content.';
-$LANG['article_icon'] = 'Article icon';
-$LANG['article_icon_explain'] = 'Put it in the /articles folder';
-$LANG['explain_articles_count'] = 'Recount the number of articles per category';
-$LANG['recount'] = 'Recount';
 
 //Error
 $LANG['e_unexist_articles'] = 'This article doesn\'t exist';
 
-//Title
-$LANG['title_articles'] = 'Articles';
-
-//Articles
-$LANG['articles'] = 'Articles';
-$LANG['alert_delete_article'] = 'Delete this article?';
-$LANG['propose_article'] = 'Suggest an article';
-$LANG['none_article'] = 'No article in this category';
-$LANG['xml_articles_desc'] = 'Last articles';
-$LANG['no_note'] = 'No note';
-$LANG['actual_note'] = 'Current note';
-$LANG['vote'] = 'Vote';
-$LANG['nbr_articles_info'] = '%d article(s) in this category';
-$LANG['sub_categories'] = 'Subcategories';
-
-//Add article.
+//Add articles
 $MAIL['new_article_website'] = 'New article on your website';
 $MAIL['new_article'] = 'A new article was added on your website ' . HOST . ',
 it will have to be approved before being readable by everyone.
@@ -94,6 +47,67 @@ Posted by: %s
 Go into the articles management panel of the administration, and approve it.
 ' . HOST . DIR . '/admin/admin_articles_gestion.php';
 
-$LANG['read_feed'] = 'Read the Article';
-$LANG['posted_on'] = 'Posted on';
+
+global $ARTICLES_LANG;
+// contribution
+$ARTICLES_LANG = array(
+	'articles_management' => 'Articles management',
+	'configuration_articles' => 'Articles configuration',
+	'recount' => 'Recount',
+	'explain_articles_count' => 'Recount the number of articles per category',
+	'nbr_articles_max' => 'Maximum number of displayed articles',
+	'alert_delete_article' => 'Delete this article ?',
+	'select_page' => 'Select a page',
+	'summary' => 'Summary',
+	'articles' => 'Articles',
+	'title_articles' => 'Articles',
+	'xml_articles_desc' => 'Last articles',
+	'nbr_articles_info' => '%d article(s) in this category',
+	'none_article' => 'No article in this category',
+	'sub_categories' => 'Subcategories',
+	'written_by' => 'Written by',
+	'page_prompt' => 'New page title',
+	'articles_add' =>  'Add an article',
+	'article_icon' => 'Icon category',
+	'articles_date' =>'Article date <span class="text_small">(dd/mm/yy)</span> <br />
+<span class="text_small">(Leave empty to set today date)</span>',
+	'explain_page' => 'Insert a new page',
+	'contribution_confirmation' =>  'Confirmation of the contribution',
+	'contribution_confirmation_explain' => '<p>You will be able to follow the evolution of the validation process of your contribution in the <a href="' . url('../member/contribution_panel.php') . '">contribution panel of PHPBoost</a>. You also will manage to chat with the approbators if they are skeptical about your participation.</p><p>Thanks for having participated to the website life!</p>',
+	'contribution_counterpart' => 'Contribution counterpart',
+	'contribution_counterpart_explain' => 'Tell us why you want us to add this article. This field is not required, but it may help the moderator to take his decision.',
+	'contribution_entitled' => '[Articles] %s',
+	'contribution_success' => 'Your contribution has been saved.',	
+	'notice_contribution' => 'You aren\'t authorized to add an article, however you can contribute by submitting a one. Your contribution will be processed by an moderator.',
+	'global_auth' => 'Overall permissions',
+	'global_auth_explain' => 'Here you can define overall permissions of the module. You can change these permissions locally in each category',
+	'auth_contribute' => 'Contribution permissions',
+	'auth_moderate' => 'Moderating contributions permissions',
+	'auth_read' => 'Reading permissions',
+	'auth_write' => 'Writing permissions',
+	'add_articles' => 'Add an article',
+	'release_date' => 'Release date',
+	'removing_category' => 'Removing category',
+	'require_cat' => 'Please choice a category!',
+	'required_fields_empty' => 'Whole required files are not be typed, please correctly redo the operation',	
+	'category_name' => 'Name of the category',
+	'category_desc' => 'Description of the category',
+	'category_image' => 'Icon of the category',
+	'category_location' => 'Location of the category',
+	'special_auth' => 'Special permissions',
+	'special_auth_explain' => 'The category will have the general configuration of the module. You can apply particular permissions.',
+	'add_category' => 'Add a category',
+	'category_articles' => 'Categories management',
+	'unexisting_category' => 'The category you have selected does not exist',
+	'new_cat_does_not_exist' => 'The target category does not exist',
+	'infinite_loop' => 'You want to move the category in one of its subcategories or in itself, that makes no sense. Please choose another category',
+	'successful_operation' => 'The operation that you have asked for has been made successfully',
+	'explain_removing_category' => 'You will delete the category. You have two choices : you can move its contents (articles and sub-categories) in another category or delete the whole category. <strong>Be careful, this action is irreversible !</strong>',
+	'delete_category_and_its_content' => 'Delete the category and all its contents',
+	'move_category_content' => 'Move its contents in:',
+	'edit_articles' =>  'Edit articles',
+	'use_tab'=>"Use tab for articles pagination",
+	'or_direct_path' => 'Or direct path',
+	);
+
 ?>

@@ -69,7 +69,6 @@ $ARTICLES_LANG = array(
 	'articles_date' => 'Date de l\'article <span class="text_small">(jj/mm/aa)</span> <br />
 	<span class="text_small">(Laisser vide pour mettre la date d\'aujourd\'hui)',
 	'explain_page' => 'Insérer une nouvelle page',
-	'articles' => 'Articles',
 	'contribution_confirmation' => 'Confirmation de contribution',
 	'contribution_confirmation_explain' => '<p>Vous pourrez la suivre dans le <a href="' . url('../member/contribution_panel.php') . '">panneau de contribution de PHPBoost</a> et éventuellement discuter avec les validateurs si leur choix n\'est pas franc.</p><p>Merci d\'avoir participé à la vie du site !</p>',
 	'contribution_counterpart' => 'Complément de contribution',
@@ -103,8 +102,7 @@ $ARTICLES_LANG = array(
 	'new_cat_does_not_exist' => 'La catégorie cible n\'existe pas',
 	'infinite_loop' => 'Vous voulez déplacer la catégorie dans une de ses catégories filles ou dans elle-même, ce qui n\'a pas de sens. Merci de choisir une autre catégorie',
 	'successful_operation' => 'L\'opération que vous avez demandée a été effectuée avec succès',
-	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (fichiers et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>',
-	'removing_category' => 'Suppression d\'une catégorie',
+	'explain_removing_category' => 'Vous êtes sur le point de supprimer la catégorie. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (articles et sous catégories) dans une autre catégorie soit supprimer l\'ensemble de son catégorie. <strong>Attention, cette action est irréversible !</strong>',
 	'delete_category_and_its_content' => 'Supprimer la catégorie et tout son contenu',
 	'move_category_content' => 'Déplacer son contenu dans :',
 	'edit_articles' => 'Éditer l\'article',
@@ -115,7 +113,7 @@ $ARTICLES_LANG = array(
 	'contribution_entitled' => '[Articles] %s',
 	'contribution_success' => 'Votre contribution a bien été enregistrée.',
 	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer un article, cependant vous pouvez proposer un article. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
-	'use_tab'=>"Utilisation des onglets pour la pagination",
+	'use_tab'=>"Utilisation des onglets pour la pagination des articles",
 	'or_direct_path' => 'Ou chemin direct',
 	);
 
