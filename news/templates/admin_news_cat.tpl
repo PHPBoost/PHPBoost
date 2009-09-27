@@ -41,14 +41,19 @@
 					<p>{L_EXPLAIN_REMOVING}</p>
 
 					<label>
-						<input type="radio" name="action" value="delete" /> {L_DELETE_CATEGORY_AND_CONTENT}
+						<input type="radio" name="action" value="delete"# IF EMPTY_CATS # checked="checked"# ENDIF # /> {L_DELETE_CATEGORY_AND_CONTENT}
 					</label>
 					<br /> <br />
 					<label>
-						<input type="radio" name="action" value="move" checked="checked" /> {L_MOVE_CONTENT}
+						<input type="radio" name="action" value="move"# IF EMPTY_CATS # disabled="disabled"# ELSE # checked="checked"# ENDIF # /> {L_MOVE_CONTENT}
 					</label>
 					&nbsp;
-					{removing_interface.CATEGORY_TREE}
+					<select id="{FORM_ID}" name="{FORM_NAME}">
+						<option value="0" disabled="disabled">{L_ROOT}</option>
+					# START options #
+						<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
+					# END options #
+					</select>
 				</fieldset>
 
 				<fieldset class="fieldset_submit">

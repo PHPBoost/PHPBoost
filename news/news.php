@@ -77,7 +77,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 		// Gestion du timezone pour la date de la news.
 		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
-
+unset($news['level']);
 		$tpl->assign_vars(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'ID' => $news['id'],
@@ -100,7 +100,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'EXTEND_CONTENTS' => second_parse($news['extend_contents']),
 			'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($news['login']) ? $news['login'] : false,
 			'U_USER_ID' => '../member/member' . url('.php?id=' . $news['user_id'], '-' . $news['user_id'] . '.php'),
-			'LEVEL' =>	$level[$news['level']],
+			'LEVEL' =>	isset($news['level']) ? $level[$news['level']] : '',
 			'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			'C_NEWS_NAVIGATION_LINKS' => !empty($previous_news['id']) || !empty($next_news['id']),
 			'C_PREVIOUS_NEWS' => !empty($previous_news['id']),
@@ -166,7 +166,7 @@ elseif ($user)
 				'EXTEND_CONTENTS' => !empty($row['extend_contents']) ? '<a style="font-size:10px" href="' . PATH_TO_ROOT . '/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] . '.php') . '">[' . $NEWS_LANG['extend_contents'] . ']</a><br /><br />' : '',
 				'PSEUDO' => $NEWS_CONFIG['display_author'] && !empty($row['login']) ? $row['login'] : '',
 				'U_USER_ID' => '../member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php'),
-				'LEVEL' =>	$level[$row['level']],
+				'LEVEL' =>	isset($row['level']) ? $level[$row['level']] : '',
 				'DATE' => $NEWS_CONFIG['display_date'] ? sprintf($NEWS_LANG['on'], $timestamp->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO)) : '',
 			    'FEED_MENU' => Feed::get_feed_menu(FEED_URL)
 			));

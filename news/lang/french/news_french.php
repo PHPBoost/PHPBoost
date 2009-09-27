@@ -97,7 +97,7 @@ $NEWS_LANG = array(
 	'new_cat_does_not_exist' => 'La catégorie cible n\'existe pas',
 	'news_management' => 'Gestion des news',
 	'no_news_available' => 'Aucune news disponible pour le moment',
-	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer un fichier, cependant vous pouvez proposer un fichier. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
+	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer une news, cependant vous pouvez proposer une news. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 
 	'on' => 'Le : %s',
 
