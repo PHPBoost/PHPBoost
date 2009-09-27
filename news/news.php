@@ -77,7 +77,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 
 		// Gestion du timezone pour la date de la news.
 		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
-unset($news['level']);
+
 		$tpl->assign_vars(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
 			'ID' => $news['id'],
