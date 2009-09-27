@@ -53,7 +53,7 @@ elseif (isset($_GET['secure']) && !empty($id)) //Niveau d'autorisation du thème.
 		
 	redirect(HOST . SCRIPT . '#t' . $id);	
 }
-elseif (isset($_POST['valid'])) //Modification de tout les thèmes.	
+elseif (isset($_POST['valid'])) //Modification de tous les thèmes.	
 {	
 	$result = $Sql->query_while("SELECT id, name, activ, secure
 	FROM " . DB_TABLE_THEMES . "
