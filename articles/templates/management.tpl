@@ -67,6 +67,10 @@
 			}
 			return false;
 		}
+		function change_icon(img_path)
+		{
+			document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
+		}
 		function bbcode_page()
 		{
 			var page = prompt("{L_PAGE_PROMPT}");
@@ -109,7 +113,17 @@
 						</select>
 					</label></dd>
 				</dl>
-				
+				<dl>
+					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
+						<dd><label>
+							<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
+								{IMG_LIST}
+							</select>
+							<span id="icon_img">{IMG_ICON}</span>
+							<br />
+							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input size="40" type="text" class="text" name="icon_path" value="{IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
+						</label></dd>
+					</dl>
 				<div id="preview">
 
 				</div>

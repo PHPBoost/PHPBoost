@@ -73,30 +73,10 @@
 				return true;
 			}
 			
-			function ajax_img_preview()
-			{
-				if (document.getElementById('image').value != '')
-				{
-	 				document.getElementById('img_preview').innerHTML = '<img src="../templates/{THEME}/images/loading_mini.gif" alt="" class="valign_middle" />';
-					var img = document.getElementById('image').value;
-					var xhr_object = xmlhttprequest_init('xmlhttprequest.php?img_preview=' + img + '&token={TOKEN}');
-
-					xhr_object.onreadystatechange = function() 
-					{
-						//Transfert finished and successful
-						if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '' )
-						{
-							document.getElementById('img_preview').innerHTML = '<img src="' + xhr_object.responseText + '" alt="" class="valign_middle" />';
-						}
-						else
-						{
-							document.getElementById('img_preview').innerHTML = "";
-						}
-					}
-					xmlhttprequest_sender(xhr_object, null);
-				}
-				return true;
-			}
+		function change_icon(img_path)
+		{
+			document.getElementById('icon_img').innerHTML = '<img src="' + img_path + '" alt="" class="valign_middle" />';
+		}
 			
 			var global_auth = {edition_interface.JS_SPECIAL_AUTH};
 			function change_status_global_auth()
@@ -133,21 +113,16 @@
 							{edition_interface.CATEGORIES_TREE}
 						</dd>
 					</dl>
-					<dl>
-						<dt>
-							<label for="image">
-								{L_IMAGE}
-								
-							</label>
-							
-						</dt>
-						<dd>
-							<select name="image"  id="image" onblur="javascript:ajax_img_preview();">
+<dl>
+					<dt><label for="icon">{L_ARTICLE_ICON}</label></dt>
+						<dd><label>
+							<select name="icon" onchange="change_icon(this.options[this.selectedIndex].value)" onclick="change_icon(this.options[this.selectedIndex].value)">
 								{edition_interface.IMG_LIST}
 							</select>
-						
-							<span id="img_preview"># IF edition_interface.IMG_PREVIEW #<img src="{edition_interface.IMG_PREVIEW}" alt="" class="valign_middle" /># ENDIF #</span>
-						</dd>
+							<span id="icon_img">{edition_interface.IMG_ICON}</span>
+							<br />
+							<span class="text_small">{L_OR_DIRECT_PATH}</span> <input size="40" type="text" class="text" name="icon_path" value="{edition_interface.IMG_PATH}" onblur="if( this.value != '' )change_icon(this.value)" />
+						</label></dd>
 					</dl>
 					<label for="description">
 						{L_DESCRIPTION}

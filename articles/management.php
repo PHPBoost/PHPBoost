@@ -38,6 +38,7 @@ $new = retrieve(GET, 'new', 0);
 $edit = retrieve(GET, 'edit', 0);
 $delete = retrieve(GET, 'del', 0);
 $id = retrieve(GET, 'id', 0);
+$cat = retrieve(GET, 'cat', 0);
 $file_approved = retrieve(POST, 'visible', false);
 if ($delete > 0)
 {
@@ -85,7 +86,11 @@ elseif(retrieve(POST,'submit',false))
 	$begining_date  = MiniCalendar::retrieve_date('start');
 	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
-	
+	$icon=retrieve(POST, 'icon', '', TSTRING);
+	if(retrieve(POST,'icon_path',false))
+	{
+		$icon=retrieve(POST,'icon_path','');
+	}
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0),
@@ -104,7 +109,7 @@ elseif(retrieve(POST,'submit',false))
 		'release' => $release->get_timestamp(),
 		'release_hour' => retrieve(POST, 'release_hour', 0, TINTEGER),
 		'release_min' => retrieve(POST, 'release_min', 0, TINTEGER),
-		'icon' => retrieve(POST, 'img', '', TSTRING),
+		'icon' => $icon,		
 	);
 
 	if ($articles['id'] == 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)) || $articles['id'] > 0 && ($User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE) || $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $articles['user_id'] == $User->get_attribute('user_id')))
@@ -152,7 +157,7 @@ elseif(retrieve(POST,'submit',false))
 			}
 
 			// Image.
-			$img = new Url($articles['icon']);
+			$img = $articles['icon'];
 
 			if ($articles['id'] > 0)
 			{
@@ -182,7 +187,7 @@ elseif(retrieve(POST,'submit',false))
 				}
 				$articles_properties = $Sql->query_array(PREFIX . "articles", "visible", "WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 				
-				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img->relative() . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
+				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 				
@@ -194,7 +199,7 @@ elseif(retrieve(POST,'submit',false))
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
 					{
-						echo "salut'";
+						
 						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
 						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;			
 						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
@@ -215,7 +220,7 @@ elseif(retrieve(POST,'submit',false))
 				$auth_contrib = !$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE);
 
 				$Sql->query_inject("INSERT INTO " . DB_TABLE_ARTICLES . " (idcat, title, contents,timestamp, visible, start, end, user_id, icon, nbr_com)
-				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img->relative() . "', '0')", __LINE__, __FILE__);
+				VALUES('" . $articles['idcat'] . "', '" . $articles['title'] . "', '" . $articles['desc'] . "', '" . $articles['release'] . "', '" . $articles['visible'] . "', '" . $articles['start'] . "', '" . $articles['end'] . "', '" . $User->get_attribute('user_id') . "', '" . $img . "', '0')", __LINE__, __FILE__);
 				$articles['id'] = $Sql->insert_id("SELECT MAX(id) FROM " . DB_TABLE_ARTICLES);
 				
 				$articles_cat_info= $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
@@ -326,6 +331,19 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
+			
+			
+			$img_direct_path = (strpos($articles['icon'], '/') !== false);
+			$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
+			import('io/filesystem/folder');
+			$image_list = '<option value="">--</option>';
+			$image_folder_path = new Folder('./');
+			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
+			{
+				$image = $images->get_name();
+				$selected = $image == $articles['icon'] ? ' selected="selected"' : '';
+				$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
+			}
 
 			$tpl->assign_vars(array(
 				'C_ADD' => true,
@@ -347,8 +365,9 @@ else
 				'RELEASE_CALENDAR' => $release_calendar->display(),
 				'RELEASE_HOUR' => !empty($articles['timestamp']) ? $release->get_hours() : '',
 				'RELEASE_MIN' => !empty($articles['timestamp']) ? $release->get_minutes() : '',
-				'IMG_PREVIEW' => second_parse_url($articles['img']),
-				'IMG' => $articles['img'],
+				'IMG_PATH' => $img_direct_path ? $articles['icon'] : '',
+				'IMG_ICON' => !empty($articles['icon']) ? '<img src="' . $articles['icon'] . '" alt="" class="valign_middle" />' : '',		
+				'IMG_LIST'=>$image_list,
 				'IDARTICLES' => $articles['id'],
 				'USER_ID' => $articles['user_id']
 			));
@@ -369,8 +388,18 @@ else
 		else
 		{
 			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);
-
-			//define('TITLE', $ARTICLES_LANG['add_articles']);
+			
+			$Bread_crumb->add($ARTICLES_LANG['articles_add'],url('management.php?new=1&amp;cat=' . $cat));
+			//Images disponibles
+			$image_list = '<option value="" selected="selected">--</option>';
+			import('io/filesystem/folder');
+			$image_list = '<option value="">--</option>';
+			$image_folder_path = new Folder('./');
+			foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
+			{
+				$image = $images->get_name();
+				$image_list .= '<option value="' . $image . '">' . $image . '</option>';
+			}
 
 			// Calendrier.
 			$now = new Date(DATE_NOW, TIMEZONE_AUTO);
@@ -405,10 +434,14 @@ else
 				'IMG' => '',
 				'ALT' => '',
 				'IDARTICLES' => '0',
-				'USER_ID' => $User->get_attribute('user_id')
+				'USER_ID' => $User->get_attribute('user_id'),
+				'IMG_PATH' => '',
+				'IMG_ICON' => '',	
+				'IMG_LIST' => $image_list,
 			));
 
-			$articles_categories->build_select_form(0, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+			$cat = $cat > 0 && ($User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_CONTRIBUTE) || $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE)) ? $cat : 0;
+			$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 	}
 	require_once('../kernel/header.php');
@@ -416,23 +449,11 @@ else
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
 	
 	
-	//Images disponibles
-	$image_list = '<option value="" selected="selected">--</option>';
-	import('io/filesystem/folder');
-	$image_list = '<option value="">--</option>';
-	$image_folder_path = new Folder('./');
-	foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif|jpeg|tiff)$`i') as $images)
-	{
-		$image = $images->get_name();
-		$image_list .= '<option value="' . $image . '">' . $image . '</option>';
-	}
+	
 	
 	$tpl->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
-		'TITLE' => '',
-		'IMG_PATH' => '',
-		'IMG_ICON' => '',		
-		'IMG_LIST' => $image_list,
+		'TITLE' => '',	
 		'NOW_DATE' => $now->format(DATE_FORMAT_SHORT, TIMEZONE_AUTO),
 		'NOW_HOUR' => $now->get_hours(),
 		'NOW_MIN' => $now->get_minutes(),
@@ -461,6 +482,7 @@ else
 		'L_NOTICE_CONTRIBUTION' => $ARTICLES_LANG['notice_contribution'],
 		'L_CONTRIBUTION_COUNTERPART' => $ARTICLES_LANG['contribution_counterpart'],
 		'L_CONTRIBUTION_COUNTERPART_EXPLAIN' => $ARTICLES_LANG['contribution_counterpart_explain'],
+		'L_OR_DIRECT_PATH' => $ARTICLES_LANG['or_direct_path'],
 	));
 		
 	//Gestion erreur.
