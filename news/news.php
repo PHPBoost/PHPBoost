@@ -64,6 +64,9 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		require_once('../kernel/header.php');
 
 		$tpl = new Template('news/news.tpl');
+		
+		// Gestion du timezone pour la date de la news.
+		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
 
 		// Construction de l'arbre des catégories pour les news précédentes, suivantes et suggestion de news.
 		$array_cat = array();
@@ -75,8 +78,28 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 		// News précédente
 		$previous_news = $Sql->query_array(DB_TABLE_NEWS, "title", "id", "WHERE visible = 1 AND timestamp < '" . $news['timestamp'] . "' AND start <= '" . $now->get_timestamp() . "' AND idcat IN (" . implode(', ', $array_cat) . ") ORDER BY timestamp DESC" . $Sql->limit(0, 1), __LINE__, __FILE__);
 
-		// Gestion du timezone pour la date de la news.
-		$timestamp = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, $news['timestamp']);
+		// Suggestion de news.
+		$nbr_suggested = 0;
+		$result = $Sql->query_while("SELECT id, idcat, title, 
+			((2 * MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+			+ (MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+			+ MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) / 2) / 3) AS relevance
+			FROM " . DB_TABLE_NEWS . "
+			WHERE (MATCH(title) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+			OR MATCH(contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "')) 
+			OR MATCH(extend_contents) AGAINST(CONCAT_WS(', ', '" . addslashes($news['title']) . "', '" . addslashes(strip_tags($news['contents'])) . "', '" . addslashes(strip_tags($news['extend_contents'])) . "'))) 
+			AND id <> '" . $news['id'] . "'
+			ORDER BY relevance DESC LIMIT 0, 100", __LINE__, __FILE__);
+
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$tpl->assign_block_vars('suggested', array(
+				'TITLE' => $row['title'],
+				'URL' => 'news' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php')
+			));
+
+			$nbr_suggested++;
+		}
 
 		$tpl->assign_vars(array(
 			'L_ALERT_DELETE_NEWS' => $NEWS_LANG['alert_delete_news'],
@@ -85,7 +108,7 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'L_SYNDICATION' => $LANG['syndication'],
 			'U_LINK' => 'news' . url('.php?id=' . $news['id'], '-' . $news['idcat'] . '-' . $news['id'] . '+' . url_encode_rewrite($news['title']) . '.php'),
 			'TITLE' => $news['title'],
-			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?cat=0&amp;id=' . $idnews . '&amp;com=0', '-0-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
+			'U_COM' => $NEWS_CONFIG['activ_com'] ? Comments::com_display_link($news['nbr_com'], '../news/news' . url('.php?id=' . $idnews . '&amp;com=0', '-' . $row['idcat'] . '-' . $idnews . '+' . url_encode_rewrite($news['title']) . '.php?com=0'), $idnews, 'news') : 0,
 			'C_EDIT' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE) || $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_WRITE) && $news['user_id'] == $User->get_attribute('user_id'),
 			'L_EDIT' => $LANG['edit'],
 			'C_DELETE' => $User->check_auth($NEWS_CAT[$news['idcat']]['auth'], AUTH_NEWS_MODERATE),
@@ -110,6 +133,8 @@ if (!empty($idnews)) // On affiche la news correspondant à l'id envoyé.
 			'NEXT_NEWS' => $next_news['title'],
 			'U_NEXT_NEWS' => 'news' . url('.php?id=' . $next_news['id'], '-0-' . $next_news['id'] . '+' . url_encode_rewrite($next_news['title']) . '.php'),
 			'COMMENTS' => isset($_GET['com']) && $NEWS_CONFIG['activ_com'] == 1 ? display_comments('news', $idnews, url('news.php?id=' . $idnews . '&amp;com=%s', 'news-0-' . $idnews . '.php?com=%s')) : '',
+			'C_NEWS_SUGGESTED' => $nbr_suggested > 0 ? 1 : 0,
+			'L_NEWS_SUGGESTED' => $NEWS_LANG['news_suggested'],
 			'FEED_MENU' => Feed::get_feed_menu(FEED_URL . '&amp;cat=' . $news['idcat'])
 		));
 
