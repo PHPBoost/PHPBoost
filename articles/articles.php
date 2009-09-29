@@ -82,26 +82,24 @@ if (!empty($idart) && isset($cat) )
 		//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
-		$tpl->assign_vars( array(
+	$tpl->assign_vars( array(
 		'TOTAL_TAB'=> count($array_page[1]),
 	));
+
 	foreach ($array_page[1] as $page_name)
 	{
 		if($c_tab && $Pagination->display('articles' . url('.php?cat=' . $idartcat . '&amp;id='. $idart . '&amp;p=%d', '-' . $idartcat . '-'. $idart . '-%d+' . url_encode_rewrite($articles['title']) . '.php'), $nbr_page, 'p', 1, 3, 11, NO_PREVIOUS_NEXT_LINKS) )
-		{
-			$c_tab=true;
-			$display = ( $i == 1 )? "yes" : "none";
-			$style = ($i ==1)? 'style="margin-left: 1px"' : '';
-			$id_tab1= ($i == 1)?'Active' : $i;
-			$tpl->assign_block_vars('tab', array(
-				'CONTENTS_TAB'=>$array_contents[$i] ,
-				'ID_TAB' =>$i,
-				'DISPLAY' => $display,
-				'STYLE' => $style,
-				'ID_TAB1' =>$id_tab1,
-				'TOTAL_TAB'=> count($array_page[1]),
-				'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : Trim($page_name) ,
-			));
+		{	
+				$c_tab=true;
+				$tpl->assign_block_vars('tab', array(
+					'CONTENTS_TAB'=>isset($array_contents[$i]) ? second_parse($array_contents[$i]) : '',
+					'ID_TAB' =>$i,
+					'DISPLAY' => ( $i == 1 )? "yes" : "none",
+					'STYLE' => ($i == 1)? 'style="margin-left: 1px"' : '',
+					'ID_TAB_ACT' =>($i == 1)?'Active' : $i,
+					'TOTAL_TAB'=> count($array_page[1]),
+					'PAGE_NAME'=> Trim($page_name) == '' ? $LANG['page']." : ".$i : Trim($page_name),
+				));
 		}
 		else
 		{
