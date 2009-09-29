@@ -12,8 +12,8 @@
 	background: transparent;
 	voice-family: "\"}\"";
 	voice-family: inherit;
-	padding-left: 10px;
-	height:20px;
+	padding-left: 7px;
+	height:24px;
 	border-bottom:1px solid #5D7C94;
 }
 #tabs ul{
@@ -25,15 +25,18 @@
 }
 #tabs li{
 	display:inline;
-	margin:0 4px 0 0;
+	margin:0 0px 0 0;
 	padding:0;
 	text-transform:uppercase;
+	margin-right:7px;
 			
 }
-#tabs a{
+
+#tabs .tab_a{
 	float:left;	
-	background:#FFFFFF url('images/contentbg.png') repeat-x;
-	min-width:100px;
+	color:#FFFFFF;
+	background:#FFFFFF url('images/msg_top_row.png') repeat-x;
+	width:100px;
 	border-top:1px #5D7C94 solid;
 	border-left:1px #5D7C94 solid;
 	border-right:1px #5D7C94 solid;
@@ -47,11 +50,14 @@
 	margin:0 2px 0 0;
 	padding:0 0 1px 3px;
 	text-decoration:none;
+	height:24px;
 }
-#tabs a:hover{
+
+
+#tabs .tab_a:hover{
 	float:left;	
-	color:#FFFFFF;
-	background:#FFFFFF url('images/msg_top_row.png') repeat-x;
+	color:#000000;
+	background:#FFFFFF url('images/contentbg.png') repeat-x;
 }
 #tabs a span{
 	float:left;
@@ -63,11 +69,11 @@
 /*  #tabs a:hover{background-color: #cccccc;color: white;}
 #tabs a:hover span{margin-left:-4px;padding-bottom:-2px;background-color: #cccccc;}
 */
-#tabHeaderActive span, #tabHeaderActive a {
-background:#FFFFFF url('images/msg_top_row.png') repeat-x;
-	background-color: #EAEAEA; 
-	color:#FFFFFF;
 
+#tabHeaderActive span, #tabHeaderActive .tab_a {
+	background:#FFFFFF url('images/contentbg.png') repeat-x;
+	background-color: #EAEAEA; 
+	color:#000000;
 
 }
 .tabContent {
@@ -77,4 +83,76 @@ background:#FFFFFF url('images/msg_top_row.png') repeat-x;
 	background-color:#FFF;
 	padding-left:5px;
 
+}
+
+.carouseljs ol,
+.carouseljs ul {
+  width: 670px;
+}
+.carouseljs ol li,
+.carouseljs ul li {
+  width: 100px;
+  height: 24px;
+}
+
+
+.carouseljs .cjs-left {
+  background: url('images/carrouselle_left.png') no-repeat #fff;
+ height:24px;
+  height: 100%;
+  cursor: pointer;
+  width:25px;
+}
+.carouseljs .cjs-right {
+  background: url('images/carrouselle_right.png') no-repeat #fff;
+ height:24px;
+  height: 100%;
+  cursor: pointer;
+  width:25px;
+}
+.carouseljs .cjs-disabled {
+  background-position: 0 0px;
+  cursor: default;
+ height:25px;
+  border:0px;
+ border-bottom:1px #5D7C94 solid;
+}
+
+
+.carouseljs .cjs-enabled {
+  background-position: 0 -24px;
+  cursor: pointer;
+  width:25px;
+ height:24px;
+  border:0px;
+ border-bottom:1px #5D7C94 solid;
+}
+/* Only edit these rules if you know what you're doing */
+
+.carouseljs {
+  overflow: hidden;
+  position: relative;
+}
+
+.carouseljs a.cjs-left,
+.carouseljs a.cjs-right {
+  float: left;
+  overflow: hidden;
+  text-indent: -9999em;
+
+}
+
+.carouseljs ol,
+.carouseljs ul {
+  float: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+ 
+}
+
+.carouseljs ol li,
+.carouseljs ul li {
+  float: left;
+  display: inline;
 }
