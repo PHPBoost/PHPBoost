@@ -30,8 +30,8 @@ import('io/cache/cache_data');
 
 /**
  * @package io
- * @subpackage cache 
- * @desc This class manages data loading. It makes a two-level lazy loading:
+ * @subpackage config
+ * @desc This class manages config loading and saving. It makes a two-level lazy loading:
  * <ul>
  * 	<li>A top-level cache which avoids loading a data if it has already been done since the 
  * beginning of the current page generation. This cache has a short life span: it's flushed
@@ -43,7 +43,7 @@ import('io/cache/cache_data');
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class CacheManager
+class ConfigManager
 {
     /**
      * @var The top-level cache which associates a name to the corresponding data. 
@@ -55,7 +55,7 @@ class CacheManager
 	 * @param $module_name Name of the module owning the entry to load
 	 * @param $entry_name If the module wants to manage several entries, 
 	 * it's the name of the entry you want to load
-	 * @return CacheData The loaded data
+	 * @return ConfigData The loaded data
 	 */
 	public static function load($module_name, $entry_name = '')
 	{
@@ -82,10 +82,10 @@ class CacheManager
 	/**
 	 * Saves in the data base (DB_TABLE_CONFIGS table) the data and has it become persistent.
 	 * @param string $module_name Name of the module owning this entry
- 	 * @param CacheData $data Data to save
+ 	 * @param ConfigData $data Data to save
  	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
-	public static function save($module_name, CacheData $data, $entry_name)
+	public static function save($module_name, ConfigData $data, $entry_name)
 	{
 	    $name = self::compute_entry_name($module_name, $entry_name);
 	    
@@ -105,7 +105,7 @@ class CacheManager
 		return $required_value;
 	}
 	
-	private static function save_in_db($name, CacheData $data)
+	private static function save_in_db($name, ConfigData $data)
 	{
 		global $Sql;
 		$serialized_data = addslashes(serialize($data));
@@ -151,7 +151,7 @@ class CacheManager
 		return self::$cached_data[$name];
 	}
 	
-	private static function memory_cache_data($name, CacheData  $value)
+	private static function memory_cache_data($name, ConfigData  $value)
 	{
 		self::$cached_data[$name] = $value;
 	}
@@ -176,7 +176,7 @@ class CacheManager
 		return $data;
 	}
 	
-	private static function file_cache_data($name, CacheData $value)
+	private static function file_cache_data($name, ConfigData $value)
 	{
 		$file = self::get_file($name);
 		$data_to_write = serialize($value);

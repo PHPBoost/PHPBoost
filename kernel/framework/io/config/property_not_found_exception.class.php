@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      abstract_cache_data.class.php
+ *                 property_not_found_exception.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,43 +25,18 @@
  *
  ###################################################*/
 
-import('io/cache/property_not_found_exception');
-import('io/cache/cache_data');
-
 /**
  * @package io
- * @subpackage cache 
- * @desc This is a default and minimal implementation of the CacheData interface. 
+ * @subpackage config
+ * @desc This exception is raised when a not existing property is asked in a ConfigData object.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class DefaultCacheData implements CacheData
+class PropertyNotFoundException extends Exception
 {
-	private $properties_map = array();
-	
-	public function get_property($name)
+	public function __construct($property_name)
 	{
-		if (!empty($this->properties_map[$name]))
-		{
-			return $this->properties_map[$name];
-		}
-		else
-		{
-			throw new PropertyNotFoundException($name);
-		}
-	}
-	
-	public function set_property($name, $value)
-	{
-		$this->properties_map[$name] = $value;
-	}
-	
-	public function restore_default()
-	{
-	}
-	
-	public function synchronize()
-	{
+	    parent::__construct('The property "' . $property_name . '" was not found');
 	}
 }
 
