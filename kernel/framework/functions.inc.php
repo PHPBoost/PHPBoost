@@ -231,8 +231,8 @@ function numeric($var, $type = 'int')
  */
 function get_utheme()
 {
-	global $User;
-	return !empty($User) ? $User->get_attribute('user_theme') : 'default';
+	$user = Environment::get_instance()->get_user();
+	return $user->get_attribute('user_theme');
 }
 
 /**
@@ -241,8 +241,8 @@ function get_utheme()
  */
 function get_ulang()
 {
-	global $User;
-	return $User->get_attribute('user_lang');
+	$user = Environment::get_instance()->get_user();
+	return $user->get_attribute('user_lang');
 }
 
 /**
@@ -734,7 +734,7 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
 	}
 	else
 	{
-		$session_mod = $Session->session_mod;
+		$session_mod = $Session->supports_cookies();
 	}
 
 	if ($session_mod == 0)
