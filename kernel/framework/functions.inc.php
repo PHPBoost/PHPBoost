@@ -821,7 +821,7 @@ function gmdate_format($format, $timestamp = false, $timezone_system = 0)
 	}
 	else //Timestamp utilisateur dépendant de la localisation de l'utilisateur par rapport à serveur.
 	{
-		$timezone = $User->get_attribute('user_timezone') - $serveur_hour;
+		$timezone = Environment::get_instance()->get_user()->get_attribute('user_timezone') - $serveur_hour;
 	}
 
 	if ($timezone != 0)

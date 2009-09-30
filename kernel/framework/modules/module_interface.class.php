@@ -43,6 +43,8 @@ define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
  */
 class ModuleInterface
 {
+	protected $db_connection;
+	
     //-------------------------------------------------------------- CONSTRUCTOR
     /**
      * @desc ModuleInterface constructor
@@ -91,6 +93,8 @@ class ModuleInterface
             $this->functionalities[] = 'none';
         }
         $this->errors = $error;
+        
+        $this->db_connection = Environment::get_instance()->get_db_connection();
     }
 
     //----------------------------------------------------------- PUBLIC METHODS

@@ -41,12 +41,12 @@ class DownloadInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql, $LANG, $Cache;
+		global $LANG, $Cache;
 	
 		$code = 'global $DOWNLOAD_CATS;' . "\n" . 'global $CONFIG_DOWNLOAD;' . "\n\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_DOWNLOAD = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
+		$CONFIG_DOWNLOAD = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'download'", __LINE__, __FILE__));
 		
 		$code .= '$CONFIG_DOWNLOAD = ' . var_export($CONFIG_DOWNLOAD, true) . ';' . "\n";
 		
@@ -56,10 +56,10 @@ class DownloadInterface extends ModuleInterface
 		//Racine
 		$code .= '$DOWNLOAD_CATS[0] = ' . var_export(array('name' => $LANG['root'], 'auth' => $CONFIG_DOWNLOAD['global_auth']) ,true) . ';' . "\n\n";
 		
-		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
+		$result = $this->db_connection->query_while("SELECT id, id_parent, c_order, auth, name, visible, icon, num_files, contents
 		FROM " . PREFIX . "download_cat
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$code .= '$DOWNLOAD_CATS[' . $row['id'] . '] = ' .
 			var_export(array(
@@ -82,22 +82,20 @@ class DownloadInterface extends ModuleInterface
 	//Changement de jour.
 	function on_changeday()
 	{
-		global $Sql;
-		
 		//Publication des téléchargements en attente pour la date donnée.
-		$result = $Sql->query_while("SELECT id, start, end
+		$result = $this->db_connection->query_while("SELECT id, start, end
 		FROM " . PREFIX . "download
 		WHERE start > 0 AND end > 0", __LINE__, __FILE__);
 		$time = time();
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			//If the file wasn't visible and it becomes visible
 			if ($row['start'] <= $time && $row['end'] >= $time && $row['visible'] = 0)
-				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . PREFIX . "download SET visible = 1 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			
 			//If it's not visible anymore
 			if (($row['start'] >= $time || $row['end'] <= $time) && $row['visible'] = 1)
-				$Sql->query_inject("UPDATE " . PREFIX . "download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . PREFIX . "download SET visible = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 
@@ -106,7 +104,7 @@ class DownloadInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
-        global $Sql, $Cache;
+        global $Cache;
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 		
 		$Cache->load('download');
@@ -122,10 +120,10 @@ class DownloadInterface extends ModuleInterface
             d.id AS id_content,
             d.title AS title,
             ( 3 * MATCH(d.title) AGAINST('" . $args['search'] . "') + 2 * MATCH(d.short_contents) AGAINST('" . $args['search'] . "') + MATCH(d.contents) AGAINST('" . $args['search'] . "') ) / 6 * " . $weight . " AS relevance, "
-            . $Sql->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
+            . $this->db_connection->concat("'" . PATH_TO_ROOT . "/download/download.php?id='","d.id") . " AS link
             FROM " . PREFIX . "download d
             WHERE ( MATCH(d.title) AGAINST('" . $args['search'] . "') OR MATCH(d.short_contents) AGAINST('" . $args['search'] . "') OR MATCH(d.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY relevance DESC " . $Sql->limit(0, DOWNLOAD_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $this->db_connection->limit(0, DOWNLOAD_MAX_SEARCH_RESULTS);
         
         return $request;
 
@@ -138,7 +136,7 @@ class DownloadInterface extends ModuleInterface
      */
     function compute_search_results(&$args)
     {
-        global $CONFIG, $Sql;
+        global $CONFIG;
         
         $results_data = array();
         
@@ -153,12 +151,12 @@ class DownloadInterface extends ModuleInterface
             FROM " . PREFIX . "download
             WHERE id IN (" . implode(',', $ids) . ")";
         
-        $request_results = $Sql->query_while ($request, __LINE__, __FILE__);
-        while ($row = $Sql->fetch_assoc($request_results))
+        $request_results = $this->db_connection->query_while ($request, __LINE__, __FILE__);
+        while ($row = $this->db_connection->fetch_assoc($request_results))
         {
             $results_data[] = $row;
         }
-        $Sql->query_close($request_results);
+        $this->db_connection->query_close($request_results);
         
         return $results_data;
     }
@@ -205,7 +203,7 @@ class DownloadInterface extends ModuleInterface
         import('util/date');
         import('util/url');
         
-        global $Cache, $Sql, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
+        global $Cache, $LANG, $DOWNLOAD_LANG, $CONFIG, $CONFIG_DOWNLOAD, $DOWNLOAD_CATS;
 		load_module_lang('download');
         $Cache->load('download');
         $data = new FeedData();
@@ -228,11 +226,11 @@ class DownloadInterface extends ModuleInterface
         $req = "SELECT id, idcat, title, contents, timestamp, image
         FROM " . PREFIX . "download
         WHERE visible = 1 AND idcat IN (" . implode($children_cats, ','). " )
-        ORDER BY timestamp DESC" . $Sql->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
-        $result = $Sql->query_while ($req, __LINE__, __FILE__);
+        ORDER BY timestamp DESC" . $this->db_connection->limit(0, $CONFIG_DOWNLOAD['nbr_file_max']);
+        $result = $this->db_connection->query_while ($req, __LINE__, __FILE__);
         
         // Generation of the feed's items
-        while ($row = $Sql->fetch_assoc($result))
+        while ($row = $this->db_connection->fetch_assoc($result))
         {
             $item = new FeedItem();
             
@@ -249,7 +247,7 @@ class DownloadInterface extends ModuleInterface
             // Adding the item to the list
             $data->add_item($item);
         }
-        $Sql->query_close($result);
+        $this->db_connection->query_close($result);
         
         return $data;
     }
@@ -313,15 +311,13 @@ class DownloadInterface extends ModuleInterface
 	
 	function get_cat()
 	{
-		global $Sql;
-		
-		$result = $Sql->query_while("SELECT *
+		$result = $this->db_connection->query_while("SELECT *
 	            FROM " . PREFIX . "download_cat", __LINE__, __FILE__);
 			$data = array();
-		while ($row = $Sql->fetch_assoc($result)) {
+		while ($row = $this->db_connection->fetch_assoc($result)) {
 			$data[$row['id']] = $row['name'];
 		}
-		$Sql->query_close($result);
+		$this->db_connection->query_close($result);
 		return $data;
 	}
 }

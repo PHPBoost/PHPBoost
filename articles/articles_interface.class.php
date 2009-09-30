@@ -44,19 +44,17 @@ class ArticlesInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-
-		$config_articles = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
+		$config_articles = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'articles'", __LINE__, __FILE__));
 
 		$string = 'global $CONFIG_ARTICLES, $ARTICLES_CAT;' . "\n\n" . '$CONFIG_ARTICLES = $ARTICLES_CAT = array();' . "\n\n";		
 		$string .= '$CONFIG_ARTICLES = ' . var_export($config_articles, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
+		$result = $this->db_connection->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_ARTICLES_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$string .= '$ARTICLES_CAT[' . $row['id'] . '] = ' .
 				var_export(array(
@@ -77,36 +75,37 @@ class ArticlesInterface extends ModuleInterface
 	//Changement de jour.
 	function on_changeday()
 	{
-		global $Sql;
-
 		//Publication des articles en attente pour la date donnée.
-		$result = $Sql->query_while("SELECT id, start, end
+		$result = $this->db_connection->query_while("SELECT id, start, end
 		FROM " . DB_TABLE_ARTICLES . "
 		WHERE visible != 0", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			if ($row['start'] <= time() && $row['start'] != 0)
-			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$this->db_connection->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
-			$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+			$this->db_connection->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 
 	function get_search_request($args = null)
 	{
-		global $Sql, $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $User, $LANG,$ARTICLES_LANG;
+		global $Cache, $CONFIG_ARTICLES, $ARTICLES_CAT, $User, $LANG, $ARTICLES_LANG;
+		
 		$Cache->load('articles');
 		require_once(PATH_TO_ROOT . '/articles/articles_constants.php');
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
+		$user = Environment::get_instance()->get_user();
+		
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();
 		foreach ($ARTICLES_CAT as $idcat => $key)
 		{
 			if ($ARTICLES_CAT[$idcat]['visible'] == 1)
 			{
-				if (!$User->check_auth($ARTICLES_CAT[$idcat]['auth'], AUTH_ARTICLES_READ))
+				if (!$user->check_auth($ARTICLES_CAT[$idcat]['auth'], AUTH_ARTICLES_READ))
 				{
 					$clause_level = !empty($g_idcat) ? ($ARTICLES_CAT[$idcat]['order'] == ($ARTICLES_CAT[$g_idcat]['order'] + 1)) : ($ARTICLES_CAT[$idcat]['order'] == 0);
 					if ($clause_level)
@@ -121,13 +120,13 @@ class ArticlesInterface extends ModuleInterface
 	             a.id AS id_content,
 	             a.title AS title,
 	             ( 2 * MATCH(a.title) AGAINST('" . $args['search'] . "') + MATCH(a.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-	             . $Sql->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
+	             . $this->db_connection->concat("'" . PATH_TO_ROOT . "/articles/articles.php?id='","a.id","'&amp;cat='","a.idcat") . " AS link
             FROM " . PREFIX . "articles a
             LEFT JOIN " . PREFIX . "articles_cats ac ON ac.id = a.idcat
             WHERE
             	a.visible = 1 AND ((ac.visible = 1 AND ac.auth LIKE '%s:3:\"r-1\";i:1;%') OR a.idcat = 0)
             	AND (MATCH(a.title) AGAINST('" . $args['search'] . "') OR MATCH(a.contents) AGAINST('" . $args['search'] . "'))
-            ORDER BY relevance DESC " . $Sql->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
+            ORDER BY relevance DESC " . $this->db_connection->limit(0, $CONFIG_ARTICLES['nbr_articles_max']);
 
 	             return $request;
 	}
@@ -216,7 +215,7 @@ class ArticlesInterface extends ModuleInterface
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
 		
-		global $Cache, $Sql, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
+		global $Cache, $LANG, $CONFIG, $CONFIG_ARTICLES, $ARTICLES_CAT,$ARTICLES_LANG;
 		
 		$Cache->load('articles');
 		
@@ -237,15 +236,15 @@ class ArticlesInterface extends ModuleInterface
 		$data->set_auth_bit(AUTH_ARTICLES_READ);
 
 		$cat_clause = !empty($idcat) ? " AND a.idcat = '". $idcat . "'" : '';
-		$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
+		$result = $this->db_connection->query_while("SELECT a.id, a.idcat, a.title, a.contents, a.timestamp, a.icon, ac.auth
         FROM " . DB_TABLE_ARTICLES . " a
         LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
         WHERE a.visible = 1 AND (ac.visible = 1 OR a.idcat = 0) " . $cat_clause . "
         ORDER BY a.timestamp DESC
-        " . $Sql->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+        " . $this->db_connection->limit(0, 2 * $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 
 		// Generation of the feed's items
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$item = new FeedItem();
 
@@ -264,28 +263,26 @@ class ArticlesInterface extends ModuleInterface
 
             $data->add_item($item);
 		}
-		$Sql->query_close($result);
+		$this->db_connection->query_close($result);
 
 		return $data;
 	}
 
 	function get_cat()
 	{
-		global $Sql;
-
-		$result = $Sql->query_while("SELECT *
+		$result = $this->db_connection->query_while("SELECT *
 	            FROM " . DB_TABLE_ARTICLES_CAT, __LINE__, __FILE__);
 		$data = array();
-		while ($row = $Sql->fetch_assoc($result)) {
+		while ($row = $this->db_connection->fetch_assoc($result)) {
 			$data[$row['id']] = $row['name'];
 		}
-		$Sql->query_close($result);
+		$this->db_connection->query_close($result);
 		return $data;
 	}
 
 	function get_home_page()
 	{
-		global $Sql, $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
+		global $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
 		$tpl = new Template('articles/articles_cat.tpl');
@@ -319,8 +316,8 @@ class ArticlesInterface extends ModuleInterface
 
 		}
 
-		$nbr_articles = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
-		$total_cat = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
+		$nbr_articles = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
+		$total_cat = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
 			
 		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
@@ -410,12 +407,12 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			$i = 0;
-			$result = $Sql->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
+			$result = $this->db_connection->query_while("SELECT ac.id, ac.name, ac.auth,ac.description, ac.image, ac.nbr_articles_visible AS nbr_articles
 			FROM " . DB_TABLE_ARTICLES_CAT . " ac
 			" . $clause_cat . $clause_unauth_cats . "
 			ORDER BY ac.id_parent
-			" . $Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
+			" . $this->db_connection->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_cat_max'], 'pcat'), $CONFIG_ARTICLES['nbr_cat_max']), __LINE__, __FILE__);
+			while ($row = $this->db_connection->fetch_assoc($result))
 			{
 				$tpl->assign_block_vars('cat_list', array(
 					'IDCAT' => $row['id'],
@@ -426,7 +423,7 @@ class ArticlesInterface extends ModuleInterface
 					'U_CAT' => url('.php?cat=' . $row['id'], '-' . $row['id'] . '+' . url_encode_rewrite($row['name']) . '.php')
 				));
 			}
-			$Sql->query_close($result);
+			$this->db_connection->query_close($result);
 		}
 
 		##### Affichage des articles #####
@@ -439,12 +436,12 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			import('content/note');
-			$result = $Sql->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
+			$result = $this->db_connection->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
 			FROM " . DB_TABLE_ARTICLES . "
 			WHERE visible = 1 AND idcat = '" . $idartcat .	"'
 			ORDER BY " . $sort . " " . $mode .
-			$Sql->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
-			while ($row = $Sql->fetch_assoc($result))
+			$this->db_connection->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+			while ($row = $this->db_connection->fetch_assoc($result))
 			{
 				//On reccourci le lien si il est trop long.
 				$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -462,7 +459,7 @@ class ArticlesInterface extends ModuleInterface
 				));
 
 			}
-			$Sql->query_close($result);
+			$this->db_connection->query_close($result);
 		}
 			
 		return $tpl->parse(TRUE);

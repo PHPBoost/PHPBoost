@@ -44,20 +44,18 @@ class NewsInterface extends ModuleInterface
     //Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-
 		//Récupération du tableau linéarisé dans la bdd.
-		$news_config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
+		$news_config = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'news'", __LINE__, __FILE__));
 
 		$string = 'global $NEWS_CONFIG, $NEWS_CAT;' . "\n\n" . '$NEWS_CONFIG = $NEWS_CAT = array();' . "\n\n";
 		$string .= '$NEWS_CONFIG = ' . var_export($news_config, true) . ';' . "\n\n";
 
 		//List of categories and their own properties
-		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
+		$result = $this->db_connection->query_while("SELECT id, id_parent, c_order, auth, name, visible, image, description
 			FROM " . DB_TABLE_NEWS_CAT . "
 			ORDER BY id_parent, c_order", __LINE__, __FILE__);
 
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$string .= '$NEWS_CAT[' . $row['id'] . '] = ' .
 				var_export(array(
@@ -85,8 +83,6 @@ class NewsInterface extends ModuleInterface
      *  Renvoie la requête de recherche
      */
     {
-        global $Sql;
-
 		import('util/date');
 		$now = new Date(DATE_NOW, TIMEZONE_AUTO);
 
@@ -104,11 +100,11 @@ class NewsInterface extends ModuleInterface
             n.id AS id_content,
             n.title AS title,
             ( 2 * MATCH(n.title) AGAINST('" . $args['search'] . "') + (MATCH(n.contents) AGAINST('" . $args['search'] . "') + MATCH(n.extend_contents) AGAINST('" . $args['search'] . "')) / 2 ) / 3 * " . $weight . " AS relevance, "
-            . $Sql->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
+            . $this->db_connection->concat("'" . PATH_TO_ROOT . "/news/news.php?id='","n.id") . " AS link
             FROM " . DB_TABLE_NEWS . " n
             WHERE ( MATCH(n.title) AGAINST('" . $args['search'] . "') OR MATCH(n.contents) AGAINST('" . $args['search'] . "') OR MATCH(n.extend_contents) AGAINST('" . $args['search'] . "') )
                 AND n.start <= '" . $now->get_timestamp() . "' AND n.visible = 1" . $where . "
-            ORDER BY relevance DESC " . $Sql->limit(0, NEWS_MAX_SEARCH_RESULTS);
+            ORDER BY relevance DESC " . $this->db_connection->limit(0, NEWS_MAX_SEARCH_RESULTS);
 
         return $request;
     }
@@ -126,7 +122,7 @@ class NewsInterface extends ModuleInterface
 
     function get_feed_data_struct($idcat = 0, $name = '')
     {
-        global $Cache, $Sql, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
+        global $Cache, $LANG, $CONFIG, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG;
 
 		// Load the new's config
         $Cache->load('news');
@@ -162,14 +158,14 @@ class NewsInterface extends ModuleInterface
 		if (!empty($array_cat))
 		{
 	        // Last news
-	        $result = $Sql->query_while("SELECT id, idcat, title, contents, extend_contents, timestamp, img
+	        $result = $this->db_connection->query_while("SELECT id, idcat, title, contents, extend_contents, timestamp, img
 	            FROM " . DB_TABLE_NEWS . "
 	            WHERE start <= '" . $now->get_timestamp() . "' AND visible = 1 AND idcat IN(" . implode(", ", $array_cat) . ")
 	            ORDER BY timestamp DESC"
-				. $Sql->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+				. $this->db_connection->limit(0, 2 * $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
 	        // Generation of the feed's items
-	        while ($row = $Sql->fetch_assoc($result))
+	        while ($row = $this->db_connection->fetch_assoc($result))
 	        {
 				// Rewriting
 	            $link = new Url('/news/news' . url('.php?id=' . $row['id'], '-0-' . $row['id'] .  '+' . url_encode_rewrite($row['title']) . '.php'));
@@ -185,7 +181,7 @@ class NewsInterface extends ModuleInterface
 
 	            $data->add_item($item);
 	        }
-	        $Sql->query_close($result);
+	        $this->db_connection->query_close($result);
         }
 
         return $data;
@@ -282,7 +278,7 @@ class NewsInterface extends ModuleInterface
 
 	function get_home_page($cat = 0)
 	{
-		global $User, $Sql, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
+		global $User, $Cache, $Bread_crumb, $NEWS_CONFIG, $NEWS_CAT, $NEWS_LANG, $LANG, $Session;
 
 		// Begin.
 		load_module_lang('news');
@@ -373,7 +369,7 @@ class NewsInterface extends ModuleInterface
 		$where = "WHERE n.start <= '" . $now->get_timestamp() . "' AND (n.end >= '" . $now->get_timestamp() . "' OR n.end = 0) AND n.visible = 1 AND n.idcat IN(" . implode(", ", $array_cat) . ")";
 
 		// Comptage des news.
-		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
+		$NEWS_CONFIG['nbr_news'] = !empty($array_cat) ? $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_NEWS . " n " . $where, __LINE__, __FILE__) : 0;
 
 		// Affichage d'un message d'erreur en cas d'absence de news.
 		if ($NEWS_CONFIG['nbr_news'] == 0)
@@ -421,14 +417,14 @@ class NewsInterface extends ModuleInterface
 					));
 				}
 
-				$result = $Sql->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
+				$result = $this->db_connection->query_while("SELECT n.contents, n.extend_contents, n.title, n.id, n.idcat, n.timestamp, n.start, n.user_id, n.img, n.alt, n.nbr_com, m.login, m.level
 					FROM " . DB_TABLE_NEWS . " n
 					LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = n.user_id
 					" . $where . "
 					ORDER BY n.timestamp DESC
-					" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					" . $this->db_connection->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
-				while ($row = $Sql->fetch_assoc($result))
+				while ($row = $this->db_connection->fetch_assoc($result))
 				{
 					// Séparation des news en colonnes si activé.
 					if ($column)
@@ -469,7 +465,7 @@ class NewsInterface extends ModuleInterface
 					));
 				}
 
-				$Sql->query_close($result);
+				$this->db_connection->query_close($result);
 			}
 			else // News en liste
 			{
@@ -486,11 +482,11 @@ class NewsInterface extends ModuleInterface
 					));
 				}
 
-				$result = $Sql->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
+				$result = $this->db_connection->query_while("SELECT n.id, n.idcat, n.title, n.timestamp, n.start, n.nbr_com
 					FROM " . DB_TABLE_NEWS . " n " . $where . "
-					ORDER BY n.timestamp DESC" . $Sql->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
+					ORDER BY n.timestamp DESC" . $this->db_connection->limit($first_msg, $NEWS_CONFIG['pagination_news']), __LINE__, __FILE__);
 
-				while ($row = $Sql->fetch_assoc($result))
+				while ($row = $this->db_connection->fetch_assoc($result))
 				{
 					// Séparation des news en colonnes si activé.
 					if ($column)
@@ -518,7 +514,7 @@ class NewsInterface extends ModuleInterface
 					));
 				}
 
-				$Sql->query_close($result);
+				$this->db_connection->query_close($result);
 			}
 		}
 

@@ -203,7 +203,7 @@ class Session
 		$this->data['token'] = strhash(uniqid(mt_rand(), true), false);
 
 		########Session existe t-elle?#########
-		Session::garbage_collector(); //On nettoie avant les sessions périmées.
+		$this->garbage_collector(); //On nettoie avant les sessions périmées.
 
 		if ($user_id !== '-1')
 		{
@@ -428,7 +428,7 @@ class Session
 			setcookie($CONFIG['site_cookie'].'_autoconnect', '', time() - 31536000, '/'); //On supprime le cookie.
 		}
 
-		Session::garbage_collector();
+		$this->garbage_collector();
 	}
 
 	/**
@@ -609,7 +609,7 @@ class Session
 	/**
 	 * @desc Deletes all the existing sessions
 	 */
-	public static function garbage_collector()
+	public function garbage_collector()
 	{
 		global $CONFIG;
 			
