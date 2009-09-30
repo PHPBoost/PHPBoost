@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-import('io/filesystem/file');
 import('io/config/config_data');
 
 /**
@@ -43,13 +42,15 @@ import('io/config/config_data');
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class ConfigManager
+class ConfigManager extends CacheManager
 {
 	/**
-	 * @var The top-level cache which associates a name to the corresponding data.
+	 * @var ConfigManager
 	 */
-	private static $cached_data = array();
+	private static $config_manager_instance = null;
 
+	private $db_connection;
+	
 	/**
 	 * Load the data whose key is $name.
 	 * @param $module_name Name of the module owning the entry to load
@@ -59,24 +60,7 @@ class ConfigManager
 	 */
 	public static function load($module_name, $entry_name = '')
 	{
-		$name = self::compute_entry_name($module_name, $entry_name);
-		if (self::is_memory_cached($name))
-		{
-			return self::get_memory_cached_data($name);
-		}
-		else if (self::is_file_cached($name))
-		{
-			$data = self::get_file_cached_data($name);
-			self::memory_cache_data($name, $data);
-			return $data;
-		}
-		else
-		{
-			$data = self::load_in_db($name);
-			self::file_cache_data($name, $data);
-			self::memory_cache_data($name, $data);
-			return $data;
-		}
+		return self::get_config_manager_instance()->load_config($module_name, $entry_name);
 	}
 
 	/**
@@ -87,19 +71,56 @@ class ConfigManager
 	 */
 	public static function save($module_name, ConfigData $data, $entry_name = '')
 	{
-		$name = self::compute_entry_name($module_name, $entry_name);
-	  
-		$data->synchronize();
-	  
-		self::save_in_db($name, $data);
-		self::file_cache_data($name, $data);
-		self::memory_cache_data($name, $data);
+		self::get_config_manager_instance()->save_config($module_name, $data, $entry_name);
+	}
+	
+	/**
+	 * @return ConfigManager
+	 */
+	private static function get_config_manager_instance()
+	{
+		if (self::$config_manager_instance === null)
+		{
+			self::$config_manager_instance = new ConfigManager();
+			self::$config_manager_instance->db_connection = Environment::get_instance()->get_db_connection();
+		}
+		return self::$config_manager_instance;
+	}
+	
+	private function load_config($module_name, $entry_name = '')
+	{
+		$name = $this->compute_entry_name($module_name, $entry_name);
+		if ($this->is_memory_cached($name))
+		{
+			return $this->get_memory_cached_data($name);
+		}
+		else if ($this->is_file_cached($name))
+		{
+			$data = $this->get_file_cached_data($name);
+			$this->memory_cache_data($name, $data);
+			return $data;
+		}
+		else
+		{
+			$data = $this->load_in_db($name);
+			$this->file_cache_data($name, $data);
+			$this->memory_cache_data($name, $data);
+			return $data;
+		}
 	}
 
-	private static function load_in_db($name)
+	private function save_config($module_name, ConfigData $data, $entry_name = '')
 	{
-		global $Sql;
-		$result = $Sql->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" .
+		$name = $this->compute_entry_name($module_name, $entry_name);
+			
+		$this->save_in_db($name, $data);
+		$this->file_cache_data($name, $data);
+		$this->memory_cache_data($name, $data);
+	}
+
+	private function load_in_db($name)
+	{
+		$result = $this->db_connection->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" .
 		$name . "'", __LINE__, __FILE__);
 
 		if ($result === false)
@@ -110,82 +131,31 @@ class ConfigManager
 		return $required_value;
 	}
 
-	private static function save_in_db($name, ConfigData $data)
+	private function save_in_db($name, ConfigData $data)
 	{
-		global $Sql;
 		$serialized_data = addslashes(serialize($data));
 		$secure_name = addslashes($name);
 
-		$resource = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
+		$resource = $this->db_connection->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
 		. $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 
 		// If no entry exists in the data base, we create it
-		if ($Sql->affected_rows($resource) == 0)
+		if ($this->db_connection->affected_rows($resource) == 0)
 		{
-			$count = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
+			$count = (int) $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
 		    	" WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 			if ($count == 0)
 			{
-				$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
+				$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
     				"VALUES('" . $secure_name . "', '" . $serialized_data . "')",
 				__LINE__, __FILE__);
 			}
 		}
 	}
 
-	private static function compute_entry_name($module_name, $entry_name)
+	protected function get_file($name)
 	{
-		if (!empty($entry_name))
-		{
-			return url_encode_rewrite($module_name . '-' . $entry_name);
-		}
-		else
-		{
-			return url_encode_rewrite($module_name);
-		}
-	}
-
-	//Top-level (memory) cache management
-	private static function is_memory_cached($name)
-	{
-		return !empty(self::$cached_data);
-	}
-
-	private static function get_memory_cached_data($name)
-	{
-		return self::$cached_data[$name];
-	}
-
-	private static function memory_cache_data($name, ConfigData  $value)
-	{
-		self::$cached_data[$name] = $value;
-	}
-
-	//Filesystem cache
-	private static function get_file($name)
-	{
-		return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
-	}
-
-	private static function is_file_cached($name)
-	{
-		$file = self::get_file($name);
-		return $file->exists();
-	}
-
-	private static function get_file_cached_data($name)
-	{
-		$file = self::get_file($name);
-		$content = $file->get_contents();
-		$data = unserialize($content);
-		return $data;
-	}
-
-	private static function file_cache_data($name, ConfigData $value)
-	{
-		$file = self::get_file($name);
-		$data_to_write = serialize($value);
-		$file->write($data_to_write, ERASE);
+		return new File(PATH_TO_ROOT . '/cache/' . $name . '.cfg');
 	}
 }
 

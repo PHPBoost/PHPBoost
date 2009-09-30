@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                           cache_data.class.php
+ *                      default_config_data.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,25 +25,54 @@
  *
  ###################################################*/
 
-import('io/cache/cache_manager');
+import('io/config/config_data');
+import('io/config/config_manager');
+import('io/config/config_exceptions');
 
 /**
  * @package io
- * @subpackage cache
- * @desc This interface represents data which are stored automatically by the cache manager.
- * The storage mode is very powerful, it uses a two-level cache and the database.
- * <p>The cache manager is able to manager very well configuration values. They are stored
- * in a map associating a value to a property</p>
+ * @subpackage config
+ * @desc This is a default and minimal implementation of the ConfigData interface.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-interface CacheData
-{	
-	/**
-	 * This method is called when the data needs to be sychronized.
-	 * For instance, 
-	 */
-	function synchronize();
+class DefaultConfigData implements ConfigData
+{
+	private $properties_map = array();
+
+	public function synchronize() {}
+	
+	public function get_property($name)
+	{
+		if (!empty($this->properties_map[$name]))
+		{
+			return $this->properties_map[$name];
+		}
+		else
+		{
+			throw new PropertyNotFoundException($name);
+		}
+	}
+
+	public function set_property($name, $value)
+	{
+		$this->properties_map[$name] = $value;
+	}
+	
+	public static function load($config_name, $default_config_classname)
+	{
+		try
+		{
+			return ConfigManager::load($default_config_classname, $config_name);
+		}
+		catch(ConfigNotFoundException $e)
+		{
+			$config = new $default_config_classname();
+			$config->restore_default();
+			ConfigManager::save($config_name, $config);
+			return $config;
+		}
+	}
 }
 
 ?>
