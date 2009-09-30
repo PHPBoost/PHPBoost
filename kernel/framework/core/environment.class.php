@@ -156,7 +156,6 @@ class Environment
 		import('core/breadcrumb');
 		import('core/cache');
 		import('core/errors');
-		import('core/cache/groups_cache_data');
 		import('db/mysql');
 		import('io/template/template');
 		import('io/template/deprecated_template');

@@ -184,7 +184,7 @@ class Authorizations
         }
        
         //Liste des groupes.
-        foreach (Group::get_groups_names() as $idgroup => $group_name)
+        foreach (GroupsService::get_groups_names() as $idgroup => $group_name)
         {
             $selected = '';
             if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))

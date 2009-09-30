@@ -3,7 +3,7 @@
  *                                groups.class.php
  *                            -------------------
  *   begin                : May 18, 2007
- *   copyright          : (C) 2007 Viarre Régis
+ *   copyright            : (C) 2007 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
  *
@@ -24,6 +24,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  ###################################################*/
+
+import('core/cache/groups_cache_data');
 
 define('ADMIN_NOAUTH_DEFAULT', false); //Admin non obligatoirement sélectionné.
 define('GROUP_DEFAULT_IDSELECT', '');
