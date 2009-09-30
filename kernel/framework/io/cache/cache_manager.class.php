@@ -48,14 +48,15 @@ class CacheManager
 	 * @var CacheManager
 	 */
 	private static $cache_manager_instance = null;
-	
+
 	/**
 	 * @var The top-level cache which associates a name to the corresponding data.
 	 */
 	protected $cached_data = array();
 
 	/**
-	 * Load the data whose key is $name.
+	 * Loads the data which is identified by the parameters
+	 * @param $classname Name of the class of which the result will be an instance
 	 * @param $module_name Name of the module owning the entry to load
 	 * @param $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to load
@@ -65,12 +66,13 @@ class CacheManager
 	{
 		return self::get_cache_manager_instance()->load_data($classname, $module_name, $entry_name);
 	}
-	
+
 	/**
-	 * invalidate the cache whose key is $name.
-	 * @param $module_name Name of the module owning the entry to load
+	 * Invalidates an entry which is cached. If the corresponding data are loaded agin,
+	 * they will be regenerated.
+	 * @param $module_name Name of the module owning the entry to invalidate
 	 * @param $entry_name If the module wants to manage several entries,
-	 * it's the name of the entry you want to load
+	 * it's the name of the entry you want to invalidate
 	 */
 	public static function invalidate($module_name, $entry_name = '')
 	{
@@ -89,7 +91,10 @@ class CacheManager
 		}
 		return self::$cache_manager_instance;
 	}
-	
+
+	/**
+	 * @return CacheData
+	 */
 	protected function load_data($classname, $module_name, $entry_name = '')
 	{
 		$name = $this->compute_entry_name($module_name, $entry_name);
@@ -112,17 +117,20 @@ class CacheManager
 			return $data;
 		}
 	}
-	
+
 	protected function invalidate_file_cache($module_name, $entry_name = '')
 	{
 		$this->get_file($this->compute_entry_name($module_name, $entry_name))->delete();
 	}
-	
+
 	protected function invalidate_memory_cache($module_name, $entry_name = '')
 	{
 		unset($this->cached_data[$this->compute_entry_name($module_name, $entry_name)]);
 	}
-	
+
+	/**
+	 * @return string
+	 */
 	protected function compute_entry_name($module_name, $entry_name)
 	{
 		if (!empty($entry_name))
@@ -134,13 +142,19 @@ class CacheManager
 			return url_encode_rewrite($module_name);
 		}
 	}
-	
+
 	//Top-level (memory) cache management
+	/**
+	 * @return bool
+	 */
 	protected function is_memory_cached($name)
 	{
 		return !empty($this->cached_data);
 	}
 
+	/**
+	 * @return CacheData
+	 */
 	protected function get_memory_cached_data($name)
 	{
 		return $this->cached_data[$name];
@@ -152,17 +166,26 @@ class CacheManager
 	}
 
 	//Filesystem cache
+	/**
+	 * @return File
+	 */
 	protected function get_file($name)
 	{
 		return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function is_file_cached($name)
 	{
 		$file = $this->get_file($name);
 		return $file->exists();
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function get_file_cached_data($name)
 	{
 		$file = $this->get_file($name);

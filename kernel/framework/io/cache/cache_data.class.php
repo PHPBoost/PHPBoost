@@ -38,10 +38,10 @@ import('io/cache/cache_manager');
  *
  */
 interface CacheData
-{	
+{
 	/**
 	 * This method is called when the data needs to be sychronized.
-	 * For instance, 
+	 * For instance,
 	 */
 	function synchronize();
 }

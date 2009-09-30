@@ -49,10 +49,13 @@ class ConfigManager extends CacheManager
 	 */
 	private static $config_manager_instance = null;
 
-	private $db_connection;
-	
 	/**
-	 * Load the data whose key is $name.
+	 * @var Sql
+	 */
+	private $db_connection;
+
+	/**
+	 * Loads the data identified by the parameters.
 	 * @param $module_name Name of the module owning the entry to load
 	 * @param $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to load
@@ -73,7 +76,7 @@ class ConfigManager extends CacheManager
 	{
 		self::get_config_manager_instance()->save_config($module_name, $data, $entry_name);
 	}
-	
+
 	/**
 	 * @return ConfigManager
 	 */
@@ -86,7 +89,10 @@ class ConfigManager extends CacheManager
 		}
 		return self::$config_manager_instance;
 	}
-	
+
+	/**
+	 * @return ConfigData
+	 */
 	private function load_config($module_name, $entry_name = '')
 	{
 		$name = $this->compute_entry_name($module_name, $entry_name);
@@ -118,6 +124,9 @@ class ConfigManager extends CacheManager
 		$this->memory_cache_data($name, $data);
 	}
 
+	/**
+	 * @return ConfigData
+	 */
 	private function load_in_db($name)
 	{
 		$result = $this->db_connection->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" .
@@ -153,6 +162,10 @@ class ConfigManager extends CacheManager
 		}
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/cache/CacheManager#get_file($name)
+	 */
 	protected function get_file($name)
 	{
 		return new File(PATH_TO_ROOT . '/cache/' . $name . '.cfg');
