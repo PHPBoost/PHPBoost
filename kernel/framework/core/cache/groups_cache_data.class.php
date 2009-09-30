@@ -27,12 +27,22 @@
 
 import('io/cache/cache_data');
 
+
+/**
+ * This class contains the cache data of the groups which group users having common criteria.
+ * @author Benoit Sautel <ben.popeye@phpboost.com>
+ *
+ */
 class GroupsCacheData implements CacheData
 {
 	private static $default_groups_value = array();
 	
 	private $groups = array();
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 */
 	public function synchronize()
 	{
 		$this->groups = array();
@@ -55,23 +65,37 @@ class GroupsCacheData implements CacheData
 		$db_connection->query_close($result);
 	}
 
+	/**
+	 * Returns the list of the groups
+	 * @return array id_group => group properties (map)
+	 */
 	public function get_groups()
 	{
 			return $this->groups;
 	}
 	
+	/**
+	 * Returns a group
+	 * @param $group_id Id of the group
+	 * @return string[] A map of the properties of the group
+	 */
 	public function get_group($group_id)
 	{
-		return $this->groups[$idgroup];
+		return $this->groups[$group_id];
 	}
 	
+	/**
+	 * Sets the groups list
+	 * @param $groups_list The groups list
+	 */
 	public function set_groups($groups_list)
 	{
 		$this->groups = $groups_list;
 	}
 	
 	/**
-	 * @return GroupsCacheData
+	 * Loads and returns the groups cached data.
+	 * @return GroupsCacheData The cached data
 	 */
 	public static function load()
 	{
@@ -79,10 +103,10 @@ class GroupsCacheData implements CacheData
 	}
 	
 	/**
-	 * @return GroupsCacheData
+	 * Invalidates the current groups cached data.
 	 */
 	public static function invalidate()
 	{
-		return CacheManager::invalidate('kernel', 'groups');
+		CacheManager::invalidate('kernel', 'groups');
 	}
 }

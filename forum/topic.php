@@ -321,7 +321,7 @@ while ( $row = $Sql->fetch_assoc($result) )
 	{	
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['user_groups']);
-		foreach (GroupsConfigData::get_groups() as $idgroup => $array_group_info)
+		foreach (GroupsService::get_groups() as $idgroup => $array_group_info)
 		{
 			if (is_numeric(array_search($idgroup, $array_user_groups)))
 				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';

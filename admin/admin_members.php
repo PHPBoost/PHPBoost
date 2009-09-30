@@ -119,7 +119,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			
 			//Gestion des groupes.				
 			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : array();
-			Group::edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
+			GroupsService::edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
 			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);

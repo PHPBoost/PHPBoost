@@ -91,11 +91,14 @@ class User
 		$user_groups = explode('|', $user_groups);
 		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
 		$i = 0;
+		
+		$groups_cache = GroupsCacheData::load();
+		
 		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
 		{
 			if ($i++ == 0)
 			{
-				$group = GroupsConfigData::get_group($idgroup);
+				$group = $groups_cache->get_group($idgroup);
 				return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
 			}
 		}
