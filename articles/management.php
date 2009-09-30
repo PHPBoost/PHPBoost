@@ -40,6 +40,7 @@ $delete = retrieve(GET, 'del', 0);
 $id = retrieve(GET, 'id', 0);
 $cat = retrieve(GET, 'cat', 0);
 $file_approved = retrieve(POST, 'visible', false);
+
 if ($delete > 0)
 {
 	$Session->csrf_get_protect();
@@ -291,17 +292,24 @@ elseif(retrieve(POST,'submit',false))
 
 			if ($articles['visible'])
 			{
-				redirect('articles' . url('.php?id=' . $articles['id'], '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
+				redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
 			}
 			else
 			{
 				redirect(url('articles.php'));
 			}
 		}
+
 	}
 	else
 	{	
-		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		echo " articles id ".$articles['id']."<br>";
+		echo " write ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE)."<br>";
+		echo " contribute ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)."<br>";
+		echo " moderate ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE)."<br>";
+		echo " articles user_id ".$articles['user_id']."<br>";
+		echo " user_id ".$User->get_attribute('user_id')."<br>";
+		//$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }
 else

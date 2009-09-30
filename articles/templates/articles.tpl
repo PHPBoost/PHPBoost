@@ -21,12 +21,13 @@
 					var str_location = String(location);
 					if(str_location.search('/articles-') != -1)
 					{
-						url=String(location).substr(str_location.search('/articles-') + 12);
-						tab=url.split('-');
-						if(tab.length > 2 )
+						url=String(location).substr(str_location.search('/articles-') + 10);
+						
+						tab=url.split('+');
+						tab1=tab[0].split('-');
+						if(tab1.length > 2 )
 						{
-							tab1=tab[1].split('+');
-							return tab1[0];
+							return tab1[2];
 						}
 						else
 						{
@@ -158,7 +159,7 @@
 			<div id="tabs">
 				<ul>
 				 <div style="overflow: hidden; height: 24px; width: 900px; position: relative;" class="carouseljs">
-					<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">sssssssssssssssssssssssprevious</a>
+					<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
 					<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
 					# START tab #
 					 <li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}" style="display:{tab.DISPLAY_TAB}"><a href="javascript:void(0)" class="tab_a"onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
