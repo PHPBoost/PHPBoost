@@ -424,7 +424,7 @@ class Template
 		return $this->register_var($full_varname, $empty_string, $list);
 	}
 	
-	private function auto_load_frequent_vars()
+	protected function auto_load_frequent_vars()
 	{
 		global $User, $Session;
 		$member_connected = $User->check_level(MEMBER_LEVEL);

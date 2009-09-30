@@ -32,7 +32,7 @@ class DeprecatedTemplate extends Template
 {
 	private $modules = array();
 	
-	public function __construt()
+	public function __construct()
 	{
 		$this->auto_load_frequent_vars();
 	}
