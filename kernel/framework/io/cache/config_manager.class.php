@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                         cache_manager.class.php
+ *                         config_manager.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -26,18 +26,18 @@
  ###################################################*/
 
 import('io/filesystem/file');
-import('io/cache/cache_data');
+import('io/config/config_data');
 
 /**
  * @package io
  * @subpackage config
  * @desc This class manages config loading and saving. It makes a two-level lazy loading:
  * <ul>
- * 	<li>A top-level cache which avoids loading a data if it has already been done since the 
+ * 	<li>A top-level cache which avoids loading a data if it has already been done since the
  * beginning of the current page generation. This cache has a short life span: it's flushed
  * as of the PHP interpreter reaches the end of the page generation.</li>
  * 	<li>A filesystem cache to avoid querying the database every time to obtain the same value.
- * This cache is less powerful than the previous but has an infinite life span. Indeed, it's 
+ * This cache is less powerful than the previous but has an infinite life span. Indeed, it's
  * valid until the value changes and the manager is asked to store it</li>
  * </ul>
  * @author Benoit Sautel <ben.popeye@phpboost.com>
@@ -45,30 +45,30 @@ import('io/cache/cache_data');
  */
 class ConfigManager
 {
-    /**
-     * @var The top-level cache which associates a name to the corresponding data. 
-     */
+	/**
+	 * @var The top-level cache which associates a name to the corresponding data.
+	 */
 	private static $cached_data = array();
-	
+
 	/**
 	 * Load the data whose key is $name.
 	 * @param $module_name Name of the module owning the entry to load
-	 * @param $entry_name If the module wants to manage several entries, 
+	 * @param $entry_name If the module wants to manage several entries,
 	 * it's the name of the entry you want to load
 	 * @return ConfigData The loaded data
 	 */
 	public static function load($module_name, $entry_name = '')
 	{
-	    $name = self::compute_entry_name($module_name, $entry_name);
+		$name = self::compute_entry_name($module_name, $entry_name);
 		if (self::is_memory_cached($name))
 		{
 			return self::get_memory_cached_data($name);
 		}
 		else if (self::is_file_cached($name))
 		{
-            $data = self::get_file_cached_data($name);
-            self::memory_cache_data($name, $data);
-            return $data;
+			$data = self::get_file_cached_data($name);
+			self::memory_cache_data($name, $data);
+			return $data;
 		}
 		else
 		{
@@ -78,104 +78,109 @@ class ConfigManager
 			return $data;
 		}
 	}
-	
+
 	/**
 	 * Saves in the data base (DB_TABLE_CONFIGS table) the data and has it become persistent.
 	 * @param string $module_name Name of the module owning this entry
- 	 * @param ConfigData $data Data to save
- 	 * @param string $entry_name The name of the entry if the module uses several entries
+	 * @param ConfigData $data Data to save
+	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
-	public static function save($module_name, ConfigData $data, $entry_name)
+	public static function save($module_name, ConfigData $data, $entry_name = '')
 	{
-	    $name = self::compute_entry_name($module_name, $entry_name);
-	    
-	    $data->synchronize();
-	    
+		$name = self::compute_entry_name($module_name, $entry_name);
+	  
+		$data->synchronize();
+	  
 		self::save_in_db($name, $data);
 		self::file_cache_data($name, $data);
 		self::memory_cache_data($name, $data);
 	}
-	
+
 	private static function load_in_db($name)
 	{
 		global $Sql;
-		$result = $Sql->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" . 
-			$name . "'", __LINE__, __FILE__);
+		$result = $Sql->query_array(DB_TABLE_CONFIGS, 'value', "WHERE name = '" .
+		$name . "'", __LINE__, __FILE__);
+
+		if ($result === false)
+		{
+			throw new ConfigNotFoundException($name);
+		}
 		$required_value = unserialize($result['value']);
 		return $required_value;
 	}
-	
+
 	private static function save_in_db($name, ConfigData $data)
 	{
 		global $Sql;
 		$serialized_data = addslashes(serialize($data));
 		$secure_name = addslashes($name);
-		
+
 		$resource = $Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '"
-			 . $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
+		. $serialized_data . "' WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
 
 		// If no entry exists in the data base, we create it
 		if ($Sql->affected_rows($resource) == 0)
 		{
-		    $count = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS . 
+			$count = (int)$Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_CONFIGS .
 		    	" WHERE name = '" . $secure_name . "'", __LINE__, __FILE__);
-		    if ($count == 0)
-		    {
-			    $Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
+			if ($count == 0)
+			{
+				$Sql->query_inject("INSERT INTO " . DB_TABLE_CONFIGS . " (name, value) " .
     				"VALUES('" . $secure_name . "', '" . $serialized_data . "')",
-	    			__LINE__, __FILE__);
-		    }
+				__LINE__, __FILE__);
+			}
 		}
 	}
-	
+
 	private static function compute_entry_name($module_name, $entry_name)
 	{
-	    if (!empty($entry_name))
-	    {
-    	    return url_encode_rewrite($module_name . '-' . $entry_name);
-	    }
-	    else
-	    {
-	        return url_encode_rewrite($module_name);
-	    }
+		if (!empty($entry_name))
+		{
+			return url_encode_rewrite($module_name . '-' . $entry_name);
+		}
+		else
+		{
+			return url_encode_rewrite($module_name);
+		}
 	}
-	
+
 	//Top-level (memory) cache management
 	private static function is_memory_cached($name)
 	{
 		return !empty(self::$cached_data);
 	}
-	
+
 	private static function get_memory_cached_data($name)
 	{
 		return self::$cached_data[$name];
 	}
-	
+
 	private static function memory_cache_data($name, ConfigData  $value)
 	{
 		self::$cached_data[$name] = $value;
 	}
-	
+
 	//Filesystem cache
 	private static function get_file($name)
 	{
-	    return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
+		return new File(PATH_TO_ROOT . '/cache/' . $name . '.data');
 	}
-	
-    private static function is_file_cached($name)
+
+	private static function is_file_cached($name)
 	{
-	    $file = self::get_file($name);
-	    return $file->exists();
+		$file = self::get_file($name);
+		return $file->exists();
 	}
-	
+
 	private static function get_file_cached_data($name)
 	{
-	    $file = self::get_file($name);
+		$file = self::get_file($name);
 		$content = $file->get_contents();
 		$data = unserialize($content);
 		return $data;
 	}
-	
+
 	private static function file_cache_data($name, ConfigData $value)
 	{
 		$file = self::get_file($name);
