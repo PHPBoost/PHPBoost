@@ -42,10 +42,8 @@ class FaqInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-	
 		//Configuration
-		$config = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'faq'", __LINE__, __FILE__));
+		$config = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'faq'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		$root_config['auth'] = $config['global_auth'];
 		unset($config['root']);
@@ -56,10 +54,10 @@ class FaqInterface extends ModuleInterface
 		$string .= '$FAQ_CATS = array();' . "\n\n";
 		$string .= '$FAQ_CATS[0] = ' . var_export($root_config, true) . ';' . "\n";
 		$string .= '$FAQ_CATS[0][\'name\'] = \'\';' . "\n";
-		$result = $Sql->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
+		$result = $this->db_connection->query_while("SELECT id, id_parent, c_order, auth, name, visible, display_mode, image, num_questions, description
 		FROM " . PREFIX . "faq_cats
 		ORDER BY id_parent, c_order", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$string .= '$FAQ_CATS[' . $row['id'] . '] = ' .
 				var_export(array(
@@ -79,9 +77,9 @@ class FaqInterface extends ModuleInterface
 		}
 		
 		//Random questions
-		$query = $Sql->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20", __LINE__, __FILE__);
+		$query = $this->db_connection->query_while ("SELECT id, question, idcat FROM " . PREFIX . "faq LIMIT 0, 20", __LINE__, __FILE__);
 		$questions = array();
-		while ($row = $Sql->fetch_assoc($query))
+		while ($row = $this->db_connection->fetch_assoc($query))
 			$questions[] = array('id' => $row['id'], 'question' => $row['question'], 'idcat' => $row['idcat']);
 		
 		$string .= "\n" . '$RANDOM_QUESTIONS = ' . var_export($questions, true) . ';';
@@ -96,7 +94,7 @@ class FaqInterface extends ModuleInterface
 	 */
 	function get_search_request($args)
     {
-        global $Sql, $Cache;
+        global $Cache;
 		$Cache->load('faq');
 		
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
@@ -111,10 +109,10 @@ class FaqInterface extends ModuleInterface
             f.id AS id_content,
             f.question AS title,
             ( 2 * MATCH(f.question) AGAINST('" . $args['search'] . "') + MATCH(f.answer) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-            . $Sql->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS link
+            . $this->db_connection->concat("'../faq/faq.php?id='","f.idcat","'&amp;question='","f.id","'#q'","f.id") . " AS link
             FROM " . PREFIX . "faq f
             WHERE ( MATCH(f.question) AGAINST('" . $args['search'] . "') OR MATCH(f.answer) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY relevance DESC " . $Sql->limit(0, FAQ_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $this->db_connection->limit(0, FAQ_MAX_SEARCH_RESULTS);
         
         return $request;
     }
@@ -127,7 +125,7 @@ class FaqInterface extends ModuleInterface
      */
     function compute_search_results(&$args)
     {
-        global $CONFIG, $Sql;
+        global $CONFIG;
         
         $results_data = array();
         
@@ -142,12 +140,12 @@ class FaqInterface extends ModuleInterface
             FROM " . PREFIX . "faq
             WHERE id IN (" . implode(',', $ids) . ")";
         
-        $request_results = $Sql->query_while ($request, __LINE__, __FILE__);
-        while ($row = $Sql->fetch_assoc($request_results))
+        $request_results = $this->db_connection->query_while ($request, __LINE__, __FILE__);
+        while ($row = $this->db_connection->fetch_assoc($request_results))
         {
             $results_data[] = $row;
         }
-        $Sql->query_close($request_results);
+        $this->db_connection->query_close($request_results);
         
         return $results_data;
     }

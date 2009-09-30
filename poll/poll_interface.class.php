@@ -40,12 +40,10 @@ class PollInterface extends ModuleInterface
     //Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-	
 		$code = 'global $CONFIG_POLL;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_POLL = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
+		$CONFIG_POLL = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'poll'", __LINE__, __FILE__));
 		$CONFIG_POLL = is_array($CONFIG_POLL) ? $CONFIG_POLL : array();
 
 		$code .= '$CONFIG_POLL = ' . var_export($CONFIG_POLL, true) . ';' . "\n";
@@ -55,7 +53,7 @@ class PollInterface extends ModuleInterface
 		{
 			foreach ($CONFIG_POLL['poll_mini'] as $key => $idpoll)
 			{
-				$poll = $Sql->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
+				$poll = $this->db_connection->query_array(PREFIX . 'poll', 'id', 'question', 'votes', 'answers', 'type', "WHERE id = '" . $idpoll . "' AND archive = 0 AND visible = 1", __LINE__, __FILE__);
 				if (!empty($poll['id'])) //Sondage existant.
 				{
 					$array_answer = explode('|', $poll['answers']);
@@ -81,20 +79,18 @@ class PollInterface extends ModuleInterface
 	//Actions journalièe.
 	function on_changeday()
 	{
-		global $Sql;
-		
-		$Sql->query_inject("DELETE FROM " . PREFIX . "poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
+		$this->db_connection->query_inject("DELETE FROM " . PREFIX . "poll_ip WHERE timestamp < '" . (time() - (3600 * 24)) . "' AND user_id = -1", __LINE__, __FILE__);
 
 		//Publication des news en attente pour la date donnéé.
-		$result = $Sql->query_while("SELECT id, start, end
+		$result = $this->db_connection->query_while("SELECT id, start, end
 		FROM " . PREFIX . "poll
 		WHERE visible != 0", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			if ($row['start'] <= time() && $row['start'] != 0)
-				$Sql->query_inject("UPDATE " . PREFIX . "poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . PREFIX . "poll SET visible = 1, start = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 			if ($row['end'] <= time() && $row['end'] != 0)
-				$Sql->query_inject("UPDATE " . PREFIX . "poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
+				$this->db_connection->query_inject("UPDATE " . PREFIX . "poll SET visible = 0, start = 0, end = 0 WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);
 		}
 	}
 }

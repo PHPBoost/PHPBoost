@@ -40,11 +40,11 @@ class NewsletterInterface extends ModuleInterface
     //Récupération du cache.
 	function get_cache()
 	{
-		global $Sql, $CONFIG;
+		global $CONFIG;
 		
 		//Configuration de la newsletter
 		$code = 'global $_NEWSLETTER_CONFIG;' . "\n" . '$_NEWSLETTER_CONFIG = array();' . "\n";
-		$NEWSLETTER_CONFIG = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'newsletter'", __LINE__, __FILE__));
+		$NEWSLETTER_CONFIG = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'newsletter'", __LINE__, __FILE__));
 		if (is_array($NEWSLETTER_CONFIG))
 		{
 			$mails = explode(';', $CONFIG['mail']);
@@ -54,13 +54,6 @@ class NewsletterInterface extends ModuleInterface
 		
 		return $code;
 	}
-
-	//Actions journalière.
-	/*
-	function on_changeday()
-	{
-	}
-	*/
 }
 
 ?>

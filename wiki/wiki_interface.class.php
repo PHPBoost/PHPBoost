@@ -40,23 +40,21 @@ class WikiInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-
 		//Catégories du wiki
 		$config = 'global $_WIKI_CATS;' . "\n";
 		$config .= '$_WIKI_CATS = array();' . "\n";
-		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
+		$result = $this->db_connection->query_while("SELECT c.id, c.id_parent, c.article_id, a.title
 			FROM " . PREFIX . "wiki_cats c
 			LEFT JOIN " . PREFIX . "wiki_articles a ON a.id = c.article_id
 			ORDER BY a.title", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$config .= '$_WIKI_CATS[\'' . $row['id'] . '\'] = array(\'id_parent\' => ' . ( !empty($row['id_parent']) ? $row['id_parent'] : '0') . ', \'name\' => ' . var_export($row['title'], true) . ');' . "\n";
 		}
 
 		//Configuration du wiki
 		$code = 'global $_WIKI_CONFIG;' . "\n" . '$_WIKI_CONFIG = array();' . "\n";
-		$CONFIG_WIKI = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'wiki'", __LINE__, __FILE__));
+		$CONFIG_WIKI = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'wiki'", __LINE__, __FILE__));
 
 		$CONFIG_WIKI = is_array($CONFIG_WIKI) ? $CONFIG_WIKI : array();
 		$CONFIG_WIKI['auth'] = unserialize($CONFIG_WIKI['auth']);
@@ -65,13 +63,6 @@ class WikiInterface extends ModuleInterface
 
 		return $config . "\n\r" . $code;
 	}
-
-	//Actions journalière.
-	/*
-	function on_changeday()
-	{
-	}
-	*/
 
 	// Recherche
 	function get_search_form($args=null)
@@ -179,21 +170,21 @@ class WikiInterface extends ModuleInterface
 
 	function get_feeds_list()
 	{
-		global $LANG, $Sql;
+		global $LANG;
 
 		import('content/syndication/feeds_list');
 		$cats_tree = new FeedsCat('wiki', 0, $LANG['root']);
 
-		$result = $Sql->query_while("SELECT c.id, c.id_parent, a.title
+		$result = $this->db_connection->query_while("SELECT c.id, c.id_parent, a.title
             FROM " . PREFIX . "wiki_cats c, " . PREFIX . "wiki_articles a
             WHERE c.article_id = a.id", __LINE__, __FILE__
 		);
 		$results = array();
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$results[] = $row;
 		}
-		$Sql->query_close($result);
+		$this->db_connection->query_close($result);
 
 		WikiInterface::_build_wiki_cat_children($cats_tree, $results);
 		$feeds = new FeedsList();
@@ -203,7 +194,7 @@ class WikiInterface extends ModuleInterface
 
 	function get_feed_data_struct($idcat = 0, $name = '')
 	{
-		global $Cache, $Sql, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
+		global $Cache, $LANG, $CONFIG, $_WIKI_CATS, $_WIKI_CONFIG;
 
 		load_module_lang('wiki');
 		$Cache->load('wiki');
@@ -236,15 +227,15 @@ class WikiInterface extends ModuleInterface
 		$Cache->load('wiki');
 
 		// Last news
-		$result = $Sql->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp
+		$result = $this->db_connection->query_while("SELECT a.title, a.encoded_title, c.content, c.timestamp
             FROM " . PREFIX . "wiki_articles a
             LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
             WHERE a.redirect = 0 " . $where . "
             ORDER BY c.timestamp DESC
-            " . $Sql->limit(0, 2 * 10), __LINE__, __FILE__);
+            " . $this->db_connection->limit(0, 2 * 10), __LINE__, __FILE__);
 
 		// Generation of the feed's items
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$item = new FeedItem();
 
@@ -257,14 +248,14 @@ class WikiInterface extends ModuleInterface
 
 			$data->add_item($item);
 		}
-		$Sql->query_close($result);
+		$this->db_connection->query_close($result);
 
 		return $data;
 	}
 
 	function get_home_page()
 	{
-		global $Sql, $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
+		global $User, $Template, $Cache, $Bread_crumb, $_WIKI_CONFIG, $_WIKI_CATS, $LANG;
 
 		load_module_lang('wiki');
 		include_once('../wiki/wiki_functions.php');
@@ -283,13 +274,13 @@ class WikiInterface extends ModuleInterface
 
 			if ($_WIKI_CONFIG['last_articles'] > 1)
 			{
-				$result = $Sql->query_while("SELECT a.title, a.encoded_title, a.id
+				$result = $this->db_connection->query_while("SELECT a.title, a.encoded_title, a.id
 			FROM " . PREFIX . "wiki_articles a
 			LEFT JOIN " . PREFIX . "wiki_contents c ON c.id_contents = a.id_contents
 			WHERE a.redirect = 0
 			ORDER BY c.timestamp DESC
 			LIMIT 0, " . $_WIKI_CONFIG['last_articles'], __LINE__, __FILE__);
-				$articles_number = $Sql->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
+				$articles_number = $this->db_connection->num_rows($result, "SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
 					
 				$Template->assign_block_vars('last_articles', array(
 				'L_ARTICLES' => $LANG['wiki_last_articles_list'],
@@ -297,7 +288,7 @@ class WikiInterface extends ModuleInterface
 				));
 					
 				$i = 0;
-				while ($row = $Sql->fetch_assoc($result))
+				while ($row = $this->db_connection->fetch_assoc($result))
 				{
 					$Template->assign_block_vars('last_articles.list', array(
 					'ARTICLE' => $row['title'],

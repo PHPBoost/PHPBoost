@@ -41,16 +41,14 @@ class PagesInterface extends ModuleInterface
 	//Récupération du cache.
 	function get_cache()
 	{
-		global $Sql;
-		
 		//Catégories des pages
 		$config = 'global $_PAGES_CATS;' . "\n";
 		$config .= '$_PAGES_CATS = array();' . "\n";
-		$result = $Sql->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+		$result = $this->db_connection->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
+		while ($row = $this->db_connection->fetch_assoc($result))
 		{
 			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
 				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
@@ -61,7 +59,7 @@ class PagesInterface extends ModuleInterface
 
 		//Configuration du module de pages
 		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = unserialize($Sql->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
+		$CONFIG_PAGES = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
 								
 		if (is_array($CONFIG_PAGES))
 			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
@@ -97,7 +95,7 @@ class PagesInterface extends ModuleInterface
         $search = $args['search'];
         $weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
         
-        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache, $Sql;
+        global $_PAGES_CATS, $CONFIG_PAGES, $User, $Cache;
         require_once(PATH_TO_ROOT . '/pages/pages_defines.php');
         $Cache->load('pages');
         
@@ -124,10 +122,10 @@ class PagesInterface extends ModuleInterface
             p.auth AS `auth`
             FROM " . PREFIX . "pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
-            .$Sql->limit(0, PAGES_MAX_SEARCH_RESULTS);
+            .$this->db_connection->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
-        $result = $Sql->query_while ($request, __LINE__, __FILE__);
-        while ($row = $Sql->fetch_assoc($result))
+        $result = $this->db_connection->query_while ($request, __LINE__, __FILE__);
+        while ($row = $this->db_connection->fetch_assoc($result))
         {
             if ( !empty($row['auth']) )
             {
@@ -144,10 +142,11 @@ class PagesInterface extends ModuleInterface
                 array_push($results, $row);
             }
         }
-        $Sql->query_close($result);
+        $this->db_connection->query_close($result);
         
         return $results;
     }
+    
 	function get_module_map($auth_mode = SITE_MAP_AUTH_GUEST)
 	{
 		global $_PAGES_CATS, $LANG, $User, $_PAGES_CONFIG, $Cache;
