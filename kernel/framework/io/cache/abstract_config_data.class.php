@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                      abstract_cache_data.class.php
+ *                      abstract_config_data.class.php
  *                            -------------------
  *   begin                : September 16, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -25,7 +25,6 @@
  *
  ###################################################*/
 
-import('io/cache/property_not_found_exception');
 import('io/cache/cache_data');
 
 /**
@@ -35,10 +34,21 @@ import('io/cache/cache_data');
  * @author Benoit Sautel <ben.popeye@phpboost.com>
  *
  */
-class DefaultConfigData implements ConfigData
-{
+class AbstractConfigData implements CacheData
+{	
 	private $properties_map = array();
 	
+	public function __construct()
+	{
+		
+	}
+	
+	/**
+	 * Reads a property's value.
+	 * @param string $name Name of the property to read
+	 * @return string the read value
+	 * @throws PropertyNotFoundException If the property if not found
+	 */
 	public function get_property($name)
 	{
 		if (!empty($this->properties_map[$name]))
@@ -51,6 +61,13 @@ class DefaultConfigData implements ConfigData
 		}
 	}
 	
+	
+	/**
+	 * Sets a property value. If the property exists, it overrides its value,
+	 * otherwise, it creates an entry for this property.
+	 * @param string $name Name of the property
+	 * @param string $value Value of the property
+	 */
 	public function set_property($name, $value)
 	{
 		$this->properties_map[$name] = $value;
@@ -62,6 +79,22 @@ class DefaultConfigData implements ConfigData
 	
 	public function synchronize()
 	{
+		
+	}
+	
+	public static function load($config_name, $default_config_classname = DEFAULT_CONFIG_CLASSNAME)
+	{
+		try
+		{
+			return ConfigManager::load($config_name);
+		}
+		catch(ConfigNotFoundException $e)
+		{
+			$config = new $default_config_classname();
+			$config->restore_default();
+			ConfigManager::save($config_name, $config);
+			return $config;
+		}
 	}
 }
 
