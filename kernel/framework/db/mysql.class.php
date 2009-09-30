@@ -644,7 +644,7 @@ class Sql
 	 * @desc Gets the version of MySQL used.
 	 * @return string The version used.
 	 */
-	public static function get_dbms_version()
+	public function get_dbms_version()
 	{
 		return 'MySQL ' . mysql_get_server_info($this->link);
 	}	
