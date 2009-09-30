@@ -73,13 +73,13 @@ if (!empty($_POST['valid'])) //Insertion du nouveau champs.
 			$field_name = $field_name . ' ' . $array_field[$field];
 			$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " ADD " . $field_name, __LINE__, __FILE__);
 			
-			redirect(HOST . DIR . '/admin/admin_extend_field.php');
+			redirect('/admin/admin_extend_field.php');
 		}
 		else
-			redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
+			redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=incomplete#errorh');
+		redirect('/admin/admin_extend_field_add.php?error=incomplete#errorh');
 }
 else
 {

@@ -47,10 +47,10 @@ if (!empty($_POST['add']))
 		###### Régénération du cache des rangs #######
 		$Cache->Generate_file('ranks');
 		
-		redirect(HOST . DIR . '/admin/admin_ranks.php');	
+		redirect('/admin/admin_ranks.php');	
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_ranks_add.php?error=incomplete#errorh');
+		redirect('/admin/admin_ranks_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {

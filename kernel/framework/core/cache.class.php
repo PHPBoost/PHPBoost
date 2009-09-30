@@ -484,28 +484,6 @@ class Cache
 	}
 
 	/**
-	 * @desc Method which is called to generate the groups file cache.
-	 * @return The content of the groups file cache.
-	 */
-	function _get_groups()
-	{
-		global $Sql;
-
-		$code = 'global $_array_groups_auth;' . "\n" . '$_array_groups_auth = array(' . "\n";
-		$result = $Sql->query_while("SELECT id, name, img, color, auth
-		FROM " . PREFIX . "group
-		ORDER BY id", __LINE__, __FILE__);
-		while ($row = $Sql->fetch_assoc($result))
-		{
-			$code .= $row['id'] . ' => array(\'name\' => ' . var_export($row['name'], true) . ', \'img\' => ' . var_export($row['img'], true) . ', \'color\' => ' . var_export($row['color'], true) . ', \'auth\' => ' . var_export(unserialize($row['auth']), true) . '),' . "\n";
-		}
-		$Sql->query_close($result);
-		$code .= ');';
-
-		return $code;
-	}
-
-	/**
 	 * @desc Method which is called to generate the members file cache.
 	 * @return The content of the members file cache.
 	 */
@@ -666,7 +644,7 @@ class Cache
 	* @static
 	* @var string[] List of all the cache files of the kernel.
 	*/
-	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'groups', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
+	var $files = array('config', 'debug', 'modules', 'menus', 'htaccess', 'themes', 'langs', 'css', 'day', 'member', 'uploads', 'com', 'ranks', 'writingpad', 'smileys', 'stats');
 }
 
 ?>

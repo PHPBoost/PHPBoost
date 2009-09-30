@@ -277,17 +277,17 @@ if ($edit_file_id > 0)
             if (!$visible || !$file_approved)
             {
             	if ($$file_cat_id > 0)
-					redirect(HOST . DIR . '/download/' . url('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
+					redirect('/download/' . url('download.php?cat=' . $file_cat_id, 'category-' . $file_cat_id . '+' . url_encode_rewrite($DOWNLOAD_CATS[$file_cat_id]['name']) . '.php'));
 				else
-					redirect(HOST . DIR . '/download/' . url('download.php'));
+					redirect('/download/' . url('download.php'));
             }
 			else
-				redirect(HOST . DIR . '/download/' . url('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
+				redirect('/download/' . url('download.php?id=' . $edit_file_id, 'download-' . $edit_file_id . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/download/' . url('download.php'));
+			redirect('/download/' . url('download.php'));
 		}
 	}
 	//Previewing a file
@@ -522,7 +522,7 @@ else
 				ContributionService::save_contribution($download_contribution);
 				
 				//Redirection to the contribution confirmation page
-				redirect(HOST . DIR . '/download/contribution.php');
+				redirect('/download/contribution.php');
 			}
 			
 			//Updating the number of subfiles in each category
@@ -532,12 +532,12 @@ else
             import('content/syndication/feed');
             Feed::clear_cache('download');
             
-			redirect(HOST . DIR . '/download/' . url('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
+			redirect('/download/' . url('download.php?id=' . $new_id_file, 'download-' . $new_id_file . '+' . url_encode_rewrite($file_title) . '.php'));
 		}
 		//Error (which souldn't happen because of the javascript checking)
 		else
 		{
-			redirect(HOST . DIR . '/download/' . url('download.php'));
+			redirect('/download/' . url('download.php'));
 		}
 	}
 	//Previewing a file

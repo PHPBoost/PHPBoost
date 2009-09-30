@@ -187,7 +187,7 @@
 				</div>
 			# ENDIF #
 			
-			<form action="admin_groups.php?id={GROUP_ID}&amp;token={TOKEN}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
+			<form action="admin_groups.php?id={GROUP_ID}" method="post" onsubmit="return check_form_add_mbr();" class="fieldset_content">
 				<fieldset>
 					<legend>{L_ADD_MBR_GROUP}</legend>
 					<dl>
@@ -207,6 +207,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_ADD}</legend>
 					<input type="submit" name="add_mbr" value="{L_ADD}" class="submit" />
+					<input type="hidden" value="{TOKEN}" name="token" />
 				</fieldset>
 			</form>
 			
@@ -256,6 +257,7 @@
 				<fieldset class="fieldset_submit">
 					<legend>{L_UPLOAD}</legend>
 					<input type="submit" value="{L_UPLOAD}" class="submit" />
+					<input type="hidden" value="{TOKEN}" name="token" />
 				</fieldset>
 			</form>
 			
@@ -305,6 +307,7 @@
 					<legend>{L_ADD}</legend>
 					<input type="hidden" name="add" value="1" />
 					<input type="submit" name="valid" value="{L_ADD}" class="submit" />
+					<input type="hidden" value="{TOKEN}" name="token" />
 				</fieldset>
 			</form>
 			# ENDIF #

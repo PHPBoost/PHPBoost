@@ -189,14 +189,14 @@ elseif ($id_com > 0)
 {
 	//Commentaires activés pour cette page ?
 	if ($page_infos['activ_com'] == 0)
-		redirect(HOST . DIR . '/pages/pages.php?error=e_unactiv_com');
+		redirect('/pages/pages.php?error=e_unactiv_com');
 		
 	//Autorisation particulière ?
 	$special_auth = !empty($page_infos['auth']);
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de voir la page
 	if (($special_auth && !$User->check_auth($array_auth, READ_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_PAGE)) && ($special_auth && !$User->check_auth($array_auth, READ_COM)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], READ_COM)))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth_com');
+		redirect('/pages/pages.php?error=e_auth_com');
 	
 	$Template->set_filenames(array('com'=> 'pages/com.tpl'));
 	

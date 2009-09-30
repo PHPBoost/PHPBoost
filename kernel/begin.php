@@ -25,70 +25,22 @@
  *
  ###################################################*/
 
-if (!defined('PATH_TO_ROOT'))
-{	//Chemin vers la racine.
-	define('PATH_TO_ROOT', '..');
-}
 
-//Gestion du mode debug
-if (@include(PATH_TO_ROOT . '/cache/debug.php'))
-{
-	define('DEBUG', (bool)$DEBUG['debug_mode']);
-}
-else
-{
-	define('DEBUG', false);
-}
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
-header('Content-type: text/html; charset=iso-8859-1');
-header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
-header('Pragma: no-cache');
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment.class.php';
+Environment::load_imports();
 
-//Inclusion des fichiers
-require_once PATH_TO_ROOT . '/kernel/framework/util/bench.class.php';
-$Bench = new Bench(); //Début du benchmark
+/* DEPRECATED VARS */
+$Errorh = new Errors();
+$Cache = new Cache();
+/* END DEPRECATED */
 
-require_once PATH_TO_ROOT . '/kernel/constant.php'; //Constante utiles.
-require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php'; //Fonctions de base.
+Environment::get_instance()->init();
 
-import('core/errors');
-import('io/template/template');
-import('io/template/deprecated_template');
-import('db/mysql');
-import('core/cache');
-import('members/session');
-import('members/user');
-import('members/groups');
-import('members/authorizations');
-import('core/breadcrumb');
-import('content/parser/content_formatting_factory');
-
-//Instanciation des objets indispensables au noyau.
-$Errorh = new Errors(); //!\\Initialisation  de la class des erreurs//!\\
-$Template = new DeprecatedTemplate(); //!\\Initialisation des templates//!\\
-
-//Création de l'objet qui gère les requêtes SQL
-$Sql = new Sql();
-//Autoconnexion (lecture du fichier de connexion et ouverture de connexion avec le serveur)
-$Sql->auto_connect();
-
-$Cache = new Cache(); //!\\Initialisation  de la class de gestion du cache//!\\
-$Bread_crumb = new BreadCrumb(); //!\\Initialisation  de la class de la speed bar//!\\
-
-//Chargement ddes fichiers cache, indispensables au noyau.
-$CONFIG = array();
-$Cache->load('config'); //Requête des configuration générales, $CONFIG variable globale.
-$Cache->load('groups'); //Cache des groupes.
-$Cache->load('member'); //Chargement de la configuration des membres.
-$Cache->load('modules'); //Cache des autorisations des modules
-$Cache->load('themes'); //Récupération de la configuration des thèmes.
-$Cache->load('langs'); //Récupération de la configuration des thèmes.
-
-define('DIR', $CONFIG['server_path']);
-define('HOST', $CONFIG['server_name']);
-define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '');
-
-$Session = new Session(); //!\\Initialisation  de la class des sessions//!\\
+$Sql = Environment::get_instance()->get_db_connection();
+$Bread_crumb = Environment::get_instance()->get_breadcrumb();
+$Session = Environment::get_instance()->get_session();
 
 //Activation de la bufférisation de sortie
 if ($CONFIG['ob_gzhandler'] == 1)
@@ -100,11 +52,8 @@ else
 	ob_start();
 }
 
-$Session->load(); //Récupération des informations sur le membre.
-$Session->act(); //Action de connexion/déconnexion.
+$User = new User($Session->data);
 
-$Group = new Group($_array_groups_auth); //!\\Initialisation  de la class de gestion des groupes//!\\
-$User = new User($Session->data, $_array_groups_auth); //!\\Initialisation  de la class de gestion des membres//!\\
 
 //Définition de la constante de transmission des infos de session.
 if ($Session->session_mod)
@@ -197,5 +146,7 @@ if ($User->check_level(MEMBER_LEVEL))
 {
 	$Session->csrf_post_protect();
 }
+
+$Template = new DeprecatedTemplate(); // This has to be done after the environment initialization
 
 ?>

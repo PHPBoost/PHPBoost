@@ -181,7 +181,7 @@ class Comments
 	 */
 	function display($integrated_in_environment = INTEGRATED_IN_ENVIRONMENT, $Template = false, $page_path_to_root = '')
 	{
-		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $_array_groups_auth, $Session;
+		global $Cache, $User, $Errorh, $Sql, $LANG, $CONFIG, $CONFIG_USER, $CONFIG_COM, $_array_rank, $Session;
 		
 		if ($integrated_in_environment)
 		{
@@ -566,11 +566,11 @@ class Comments
 					$user_assoc_img = !empty($user_rank_icon) ? '<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 					
 					//Affichage des groupes du membre.
-					if (!empty($row['user_groups']) && $_array_groups_auth)
+					if (!empty($row['user_groups']))
 					{
 						$user_groups = '';
 						$array_user_groups = explode('|', $row['user_groups']);
-						foreach ($_array_groups_auth as $idgroup => $array_group_info)
+						foreach (GroupsService::get_groups_names() as $idgroup => $array_group_info)
 						{
 							if (is_numeric(array_search($idgroup, $array_user_groups)))
 								$user_groups .= !empty($array_group_info['img']) ? '<img src="' . PATH_TO_ROOT . '/images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];

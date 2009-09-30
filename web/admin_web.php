@@ -211,7 +211,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		redirect(HOST . SCRIPT);
 	}
 	else
-		redirect(HOST . DIR . '/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
+		redirect('/web/admin_web.php?id= ' . $id_post . '&error=incomplete#errorh');
 }
 elseif ($del && !empty($id)) //Suppresion du lien web.
 {

@@ -206,7 +206,7 @@ elseif (!empty($_POST['submit']))
 					ContributionService::save_contribution($news_contribution);
 
 					//Redirection to the contribution confirmation page
-					redirect(HOST . DIR . '/news/contribution.php');
+					redirect('/news/contribution.php');
 				}
 			}
 

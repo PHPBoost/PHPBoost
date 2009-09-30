@@ -62,9 +62,9 @@ if (!empty($_POST['valid']) && !empty($id_post))
 		$check_user = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND user_id <> '" . $id_post . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_id <> '" . $id_post . "' AND user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
+			redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pseudo_auth') . '#errorh');
 		elseif ($check_mail >= 1) 
-			redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
+			redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=auth_mail') . '#errorh');
 		else
 		{
 			//Vérification des password.
@@ -82,10 +82,10 @@ if (!empty($_POST['valid']) && !empty($id_post))
 						$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET password = '" . $password_hash . "' WHERE user_id = '" . $id_post . "'", __LINE__, __FILE__);
                     }
 					else //Longueur minimale du password
-						redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
+						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_mini') . '#errorh');
 				}
 				else
-					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
+					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=pass_same') . '#errorh');
 			}
 			
 			$MEMBER_LEVEL = retrieve(POST, 'level', -1);  
@@ -119,7 +119,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 			
 			//Gestion des groupes.				
 			$array_user_groups = isset($_POST['user_groups']) ? $_POST['user_groups'] : array();
-			$Group->edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
+			Group::edit_member($id_post, $array_user_groups); //Change les groupes du membre, calcul la différence entre les groupes précédent et nouveaux.
 			
 			//Gestion de la date de naissance.
 			$user_born = strtodate($_POST['user_born'], $LANG['date_birth_parse']);
@@ -152,13 +152,13 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				{
 					$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 					if (!empty($Upload->error)) //Erreur, on arrête ici
-						redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
+						redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $Upload->error) . '#errorh');
 					else
 					{
 						$path = $dir . $Upload->filename['avatars'];
 						$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 						if (!empty($error)) //Erreur, on arrête ici
-							redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+							redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 						else
 						{
 							//Suppression de l'ancien avatar (sur le serveur) si il existe!
@@ -179,7 +179,7 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				$path = strprotect($_POST['avatar']);
 				$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-					redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
+					redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&erroru=' . $error) . '#errorh');
 				else
 					$user_avatar = $path; //Avatar posté et validé.
 			}
@@ -290,11 +290,11 @@ if (!empty($_POST['valid']) && !empty($id_post))
 				redirect(HOST . SCRIPT);	
 			}
 			else
-				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+				redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 		}
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
+		redirect('/admin/admin_members' . url('.php?id=' .  $id_post . '&error=incomplete') . '#errorh');
 }
 elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 {
@@ -311,9 +311,9 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 		$check_user = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 		$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $mail . "'", __LINE__, __FILE__);
 		if ($check_user >= 1) 
-			redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
+			redirect('/admin/admin_members' . url('.php?error=pseudo_auth&add=1') . '#errorh');
 		elseif ($check_mail >= 1) 
-			redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
+			redirect('/admin/admin_members' . url('.php?error=auth_mail&add=1') . '#errorh');
 		else
 		{
 			if (strlen($password) >= 6 && strlen($password_bis) >= 6)
@@ -330,14 +330,14 @@ elseif ($add && !empty($_POST['add'])) //Ajout du membre.
 					redirect(HOST . SCRIPT); 	
 				}
 				else
-					redirect(HOST . DIR . '/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
+					redirect('/member/member' . url('.php?error=incomplete&add=1') . '#errorh');
 			}
 			else //Longueur minimale du password
-				redirect(HOST . DIR . '/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
+				redirect('/admin/admin_members' . url('.php?id=' .  $id_get . '&error=pass_mini&add=1') . '#errorh');
 		}
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
+		redirect('/admin/admin_members' . url('.php?error=invalid_mail&add=1') . '#errorh');
 }
 elseif (!empty($id) && $delete) //Suppression du membre.
 {

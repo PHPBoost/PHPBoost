@@ -94,7 +94,7 @@ if (!empty($id_topic_get))
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
 	$rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['title']) : '';
 
-	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
+	redirect('/forum/forum' . url('.php?id=' . $id_topic_get, '-' . $id_topic_get . $rewrited_cat_title . '.php', '&'));
 }
 
 if ($action == 'alert') //Gestion des alertes
@@ -128,7 +128,7 @@ if ($action == 'alert') //Gestion des alertes
 		else
 			$get_id = '&id=' . $id_get;
 			
-		redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
+		redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
 	}
 	
 	$Template->assign_vars(array(
@@ -232,7 +232,7 @@ if ($action == 'alert') //Gestion des alertes
 				$Forumfct = new Forum;
 			
 				$Forumfct->Del_alert_topic($id_get);
-				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=alert', '', '&'));
+				redirect('/forum/moderation_forum' . url('.php?action=alert', '', '&'));
 			}
 		
 			if ($row['status'] == 0)
@@ -302,7 +302,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			forum_history_collector(H_READONLY_USER, $info_mbr['user_id'], 'moderation_forum.php?action=punish&id=' . $info_mbr['user_id']);
 		}
 		
-		redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=punish', '', '&'));
+		redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 	}
 	
 	$Template->assign_vars(array(
@@ -324,9 +324,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_mbr', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
+				redirect('/forum/moderation_forum' . url('.php?action=punish&id=' . $user_id, '', '&'));
 			else
-				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=punish', '', '&'));
+				redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 		}
 		
 		$Template->assign_vars(array(
@@ -485,7 +485,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 		}
 		
-		redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=warning', '', '&'));
+		redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 	}
 	
 	$Template->assign_vars(array(
@@ -507,9 +507,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$login = retrieve(POST, 'login_member', '');
 			$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login LIKE '%" . $login . "%'", __LINE__, __FILE__);
 			if (!empty($user_id) && !empty($login))
-				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
+				redirect('/forum/moderation_forum' . url('.php?action=warning&id=' . $user_id, '', '&'));
 			else
-				redirect(HOST . DIR . '/forum/moderation_forum' . url('.php?action=warning', '', '&'));
+				redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 		}
 		
 		$Template->assign_vars(array(
@@ -587,7 +587,7 @@ elseif (retrieve(GET, 'del_h', false) && $User->check_level(ADMIN_LEVEL)) //Supp
 {
 	$Sql->query_inject("DELETE FROM " . PREFIX . "forum_history");
 	
-	redirect(HOST . DIR . '/forum/moderation_forum' . url('.php', '', '&'));
+	redirect('/forum/moderation_forum' . url('.php', '', '&'));
 }
 else //Panneau de modération
 {

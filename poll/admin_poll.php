@@ -139,7 +139,7 @@ elseif (!empty($_POST['valid']) && !empty($id_post)) //inject
 		redirect(HOST . SCRIPT);
 	}
 	else
-		redirect(HOST . DIR . '/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
+		redirect('/poll/admin_poll.php?id= ' . $id_post . '&error=incomplete#errorh');
 }	
 elseif (!empty($id))
 {

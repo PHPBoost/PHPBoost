@@ -67,10 +67,10 @@ elseif ($uninstall) //Désinstallation du module
 		switch (PackagesManager::uninstall_module($idmodule, $drop_files))
 		{
 			case NOT_INSTALLED_MODULE:
-				redirect(HOST . DIR . '/admin/admin_modules.php?error=incomplete#errorh');
+				redirect('/admin/admin_modules.php?error=incomplete#errorh');
 				break;
 			case MODULE_FILES_COULD_NOT_BE_DROPPED:
-				redirect(HOST . DIR . '/admin/admin_modules.php?error=files_del_failed#errorh');
+				redirect('/admin/admin_modules.php?error=files_del_failed#errorh');
 				break;
 			case MODULE_UNINSTALLED:
 			default:

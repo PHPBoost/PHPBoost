@@ -84,7 +84,7 @@ if (!empty($_POST['valid']) && empty($_POST['cache']))
 	}
 	else
 	{
-		redirect(HOST . DIR . '/admin/admin_config.php?error=incomplete#errorh');
+		redirect('/admin/admin_config.php?error=incomplete#errorh');
 	}
 }
 elseif ($check_advanced && empty($_POST['advanced']))
@@ -224,7 +224,7 @@ elseif (!empty($_POST['advanced']))
 	}
 	else
 	{
-		redirect(HOST . DIR . '/admin/admin_config.php?adv=1&error=incomplete#errorh');
+		redirect('/admin/admin_config.php?adv=1&error=incomplete#errorh');
 	}
 }
 else //Sinon on rempli le formulaire	 
@@ -428,7 +428,7 @@ if (!empty($_GET['unlock']))
 	
 	$Mail->send_from_properties($User->get_attribute('user_mail'), $LANG['unlock_title_mail'], sprintf($LANG['unlock_mail'], $unlock_admin_clean), $CONFIG['mail_exp']);	
 
-	redirect(HOST . DIR . '/admin/admin_config.php?adv=1&mail=1');
+	redirect('/admin/admin_config.php?adv=1&mail=1');
 }
 
 require_once('../admin/admin_footer.php');

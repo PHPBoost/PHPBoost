@@ -49,7 +49,7 @@ if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
     {
         if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
         {
-            redirect(HOST . DIR . '/member/maintain.php');
+            redirect('/member/maintain.php');
         }
     }
     elseif ($CONFIG['maintain_display_admin']) //Affichage du message d'alerte à l'administrateur.

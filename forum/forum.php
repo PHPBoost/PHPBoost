@@ -60,7 +60,7 @@ $rewrited_title = ($CONFIG['rewrite'] == 1 && !empty($CAT_FORUM[$id_get]['name']
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
-	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
+	redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 	
 if (!empty($id_get))
 {
@@ -365,7 +365,7 @@ if (!empty($id_get))
 	$Template->pparse('forum_forum');
 }
 else
-	redirect(HOST . DIR . '/forum/index.php' . SID2);
+	redirect('/forum/index.php' . SID2);
 
 include('../kernel/footer.php');
 

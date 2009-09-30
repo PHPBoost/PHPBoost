@@ -131,7 +131,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 	$Template->pparse('membermsg');
 }
 else
-	redirect(HOST . DIR . '/forum/index.php');
+	redirect('/forum/index.php');
 
 require_once('../kernel/footer.php');
 

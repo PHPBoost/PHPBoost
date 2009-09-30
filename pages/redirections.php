@@ -49,7 +49,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($new_title);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $encoded_title . "'", __LINE__, __FILE__);
@@ -75,7 +75,7 @@ if (!empty($new_title) && $id_rename_post > 0)
 		redirect(url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect(HOST . DIR . '/pages/redirections.php?rename=' . $id_rename_post . '&error=title_already_exists');
+		redirect('/pages/redirections.php?rename=' . $id_rename_post . '&error=title_already_exists');
 }
 //on poste une redirection
 elseif (!empty($redirection_name) && $id_new_post > 0)
@@ -87,7 +87,7 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 	
 	$encoded_title = url_encode_rewrite($redirection_name);
 	$num_rows_same_title = $Sql->query("SELECT COUNT(*) AS rows FROM " . PREFIX . "pages WHERE encoded_title = '" . $redirection_name . "'", __LINE__, __FILE__);
@@ -96,10 +96,10 @@ elseif (!empty($redirection_name) && $id_new_post > 0)
 	if ($num_rows_same_title == 0)
 	{
 		$Sql->query_inject("INSERT INTO " . PREFIX . "pages (title, encoded_title, redirect) VALUES ('" . $redirection_name . "', '" . $encoded_title . "', '" . $id_new_post . "')", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+		redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 	}
 	else
-		redirect(HOST . DIR . '/pages/redirections.php?new=' . $id_new_post . '&error=title_already_exists');
+		redirect('/pages/redirections.php?new=' . $id_new_post . '&error=title_already_exists');
 }
 //Suppression des redirections
 elseif ($del_redirection > 0)
@@ -111,7 +111,7 @@ elseif ($del_redirection > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 		
 	//On supprime la redirection
 	if ($page_infos['redirect'] > 0)
@@ -128,7 +128,7 @@ if ($id_page > 0)
 	$array_auth = unserialize($page_infos['auth']);
 	//Vérification de l'autorisation de renommer la page
 	if (($special_auth && !$User->check_auth($array_auth, EDIT_PAGE)) || (!$special_auth && !$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE)))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 	
 	if ($id_redirection > 0)
 		$Bread_crumb->add($LANG['pages_redirection_management'], url('redirections.php?id=' . $id_redirection));
@@ -225,7 +225,7 @@ elseif ($id_redirection > 0)
 else
 {
 	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 
 	$Template->assign_block_vars('redirections', array());
 	

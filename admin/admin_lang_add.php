@@ -56,7 +56,7 @@ if ($install)
 		redirect(HOST . SCRIPT);
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
+		redirect('/admin/admin_modules_add.php?error=e_lang_already_exist#errorh');
 }
 elseif (!empty($_FILES['upload_lang']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

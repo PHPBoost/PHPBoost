@@ -52,14 +52,14 @@ if (isset($_GET['fup'])) //Changement de dossier
 	$parent_folder = $Sql->query_array(PREFIX . "upload_cat", "id_parent", "user_id", "WHERE id = '" . $parent_folder . "'", __LINE__, __FILE__);
 	
 	if (!empty($folder_member)) 
-		redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
+		redirect('/admin/admin_files.php?showm=1');
 	elseif ($parent_folder['user_id'] != -1 && empty($parent_folder['id_parent']))
-		redirect(HOST . DIR . '/admin/admin_files.php?fm=' . $parent_folder['user_id']);
+		redirect('/admin/admin_files.php?fm=' . $parent_folder['user_id']);
 	else
-		redirect(HOST . DIR . '/admin/admin_files.php?f=' . $parent_folder['id_parent']);
+		redirect('/admin/admin_files.php?f=' . $parent_folder['id_parent']);
 }
 elseif ($home_folder) //Retour à la racine.
-	redirect(HOST . DIR . '/admin/admin_files.php');
+	redirect('/admin/admin_files.php');
 elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'un fichier.
 {
 	//Si le dossier n'est pas en écriture on tente un CHMOD 777
@@ -80,7 +80,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		$Upload->file('upload_file', '`([a-z0-9()_-])+\.(' . implode('|', array_map('preg_quote', $CONFIG_UPLOADS['auth_extensions'])) . ')+$`i', UNIQ_NAME);
 		
 		if (!empty($Upload->error)) //Erreur, on arrête ici
-			redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
+			redirect('/admin/admin_files.php?f=' . $folder . '&erroru=' . $Upload->error . '#errorh');
 		else //Insertion dans la bdd
 		{
 			$check_user_folder = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $folder . "'", __LINE__, __FILE__);
@@ -94,7 +94,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 		$error = 'e_upload_failed_unwritable';
 	
 	$error = !empty($error) ? '&error=' . $error . '#errorh' : '';
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
+	redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : '') . $error);
 }
 elseif (!empty($del_folder)) //Supprime un dossier.
 {
@@ -104,9 +104,9 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 	$Uploads->Del_folder($del_folder);
 	
 	if (!empty($folder_member))
-		redirect(HOST . DIR . '/admin/admin_files.php?fm=' . $folder_member);
+		redirect('/admin/admin_files.php?fm=' . $folder_member);
 	else
-		redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder);
+		redirect('/admin/admin_files.php?f=' . $folder);
 }
 elseif (!empty($empty_folder)) //Vide un dossier membre.
 {
@@ -115,7 +115,7 @@ elseif (!empty($empty_folder)) //Vide un dossier membre.
 	//Suppression de tout les dossiers enfants.
 	$Uploads->Empty_folder_member($empty_folder);
 
-	redirect(HOST . DIR . '/admin/admin_files.php?showm=1');
+	redirect('/admin/admin_files.php?showm=1');
 }
 elseif (!empty($del_file)) //Suppression d'un fichier
 {
@@ -124,7 +124,7 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	//Suppression d'un fichier.
 	$Uploads->Del_file($del_file, -1, ADMIN_NO_CHECK);
 	
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
+	redirect('/admin/admin_files.php?f=' . $folder . ($folder_member > 0 ? '&fm=' . $folder_member : ''));
 }
 elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 {
@@ -147,9 +147,9 @@ elseif (!empty($move_folder) && $to != -1) //Déplacement d'un dossier
 	if (!in_array($to, $array_child_folder)) //Dossier de destination non sous-dossier du dossier source.
 		$Uploads->Move_folder($move_folder, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
-		redirect(HOST . DIR . '/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
+		redirect('/admin/admin_files.php?movefd=' . $move_folder . '&f=0&error=folder_contains_folder');
 			
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
+	redirect('/admin/admin_files.php?f=' . $to);
 }
 elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 {
@@ -157,7 +157,7 @@ elseif (!empty($move_file) && $to != -1) //Déplacement d'un fichier
 	
 	$Uploads->Move_file($move_file, $to, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	
-	redirect(HOST . DIR . '/admin/admin_files.php?f=' . $to);
+	redirect('/admin/admin_files.php?f=' . $to);
 }
 elseif (!empty($move_folder) || !empty($move_file))
 {

@@ -85,7 +85,7 @@ elseif ($uninstall) //Désinstallation.
 			$Sql->query_inject("DELETE FROM " . DB_TABLE_LANG . " WHERE id = '" . $idlang . "'", __LINE__, __FILE__);
 		}
 		else
-			redirect(HOST . DIR . '/admin/admin_lang.php?error=incomplete#errorh');
+			redirect('/admin/admin_lang.php?error=incomplete#errorh');
 		
 		//Suppression des fichiers du module
 		if ($drop_files && !empty($previous_lang))

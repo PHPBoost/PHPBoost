@@ -38,7 +38,7 @@ if (empty($cache_mode))    // Génération du cache de la configuration
     if (!empty($_POST['cache']))
     {
         $Cache->Generate_all_files();
-        redirect(HOST . DIR . '/admin/admin_cache.php?s=1');
+        redirect('/admin/admin_cache.php?s=1');
     }
     else //Sinon on rempli le formulaire
     {
@@ -69,7 +69,7 @@ else    // Génération du cache des rss
         import('content/syndication/feed');
         Feed::clear_cache();
         
-        redirect(HOST . DIR . '/admin/admin_cache.php?cache=syndication&s=1');
+        redirect('/admin/admin_cache.php?cache=syndication&s=1');
     }
     else //Sinon on rempli le formulaire
     {

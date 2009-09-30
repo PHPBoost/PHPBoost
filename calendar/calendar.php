@@ -70,10 +70,10 @@ if ($checkdate === true && empty($id) && !$add)
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
-			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
+			redirect('/calendar/calendar' . url('.php?e=fu&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fu', '&'));
 	}
 	elseif ($get_event == 'down')
 	{
@@ -90,10 +90,10 @@ if ($checkdate === true && empty($id) && !$add)
 			$month = substr($time, 4, 2);
 			$day = substr($time, 6, 2);
 			
-			redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
+			redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&'));
 		}
 		else
-			redirect(HOST . DIR . '/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
+			redirect('/calendar/calendar' . url('.php?e=fd&d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php?e=fd', '&'));
 	}
 	
 	$Template->set_filenames(array(
@@ -331,7 +331,7 @@ elseif (!empty($id))
 					$month = gmdate_format('m', $timestamp);
 					$year = gmdate_format('Y', $timestamp);
 					
-					redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+					redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 				}
 				else
 					redirect(HOST . SCRIPT . url('?edit=1&error=incomplete', '', '&') . '#errorh');
@@ -425,7 +425,7 @@ elseif ($add) //Ajout d'un évenement
 				$month = gmdate_format('m', $timestamp);
 				$year = gmdate_format('Y', $timestamp);
 				
-				redirect(HOST . DIR . '/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
+				redirect('/calendar/calendar' . url('.php?d=' . $day . '&m=' . $month . '&y=' . $year, '-' . $day . '-' . $month . '-' . $year . '.php', '&') . '#act');
 			}
 			else //Champs incomplet!
 				redirect(HOST . SCRIPT . url('?add=1&error=incomplete', '', '&') . '#errorh');

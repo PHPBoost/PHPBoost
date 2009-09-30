@@ -90,7 +90,7 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 	$limit_group = $User->check_max_value(PM_GROUP_LIMIT, $CONFIG['pm_max']);
 	//Vérification de la boite de l'expéditeur.
 	if ($Privatemsg->count_conversations($User->get_attribute('user_id')) >= $limit_group && (!$User->check_level(MODO_LEVEL) && !($limit_group === -1))) //Boîte de l'expéditeur pleine.
-		redirect(HOST . DIR . '/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
+		redirect('/member/pm' . url('.php?post=1&error=e_pm_full_post', '', '&') . '#errorh');
 		
 	if (!empty($title) && !empty($contents) && !empty($login))
 	{
@@ -101,13 +101,13 @@ if ($convers && empty($pm_edit) && empty($pm_del)) //Envoi de conversation.
 			//Envoi de la conversation, vérification de la boite si pleine => erreur
 			$Privatemsg->start_conversation($user_id_dest, $title, $contents, $User->get_attribute('user_id'));
 			//Succès redirection vers la conversation.
-			redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $Privatemsg->pm_convers_id, '-0-' . $Privatemsg->pm_convers_id . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
+			redirect('/member/pm' . url('.php?id=' . $Privatemsg->pm_convers_id, '-0-' . $Privatemsg->pm_convers_id . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
 		}
 		else //Destinataire non trouvé.
-			redirect(HOST . DIR . '/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
+			redirect('/member/pm' . url('.php?post=1&error=e_unexist_user', '', '&') . '#errorh');
 	}
 	else //Champs manquants.
-		redirect(HOST . DIR . '/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
+		redirect('/member/pm' . url('.php?post=1&error=e_incomplete', '', '&') . '#errorh');
 }
 elseif (!empty($post) || (!empty($pm_get) && $pm_get != $User->get_attribute('user_id')) && $pm_get > '0') //Interface pour poster la conversation.
 {
@@ -285,13 +285,13 @@ elseif (!empty($_POST['pm']) && !empty($pm_id_get) && empty($pm_edit) && empty($
 			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 			$last_page = ($last_page > 1) ? '&p=' . $last_page : '';
 			
-			redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
+			redirect('/member/pm' . url('.php?id=' . $pm_id_get . $last_page, '-0-' . $pm_id_get . $last_page_rewrite . '.php', '&') . '#m' . $Privatemsg->pm_msg_id);
 		}
 		else //Le destinataire a supprimé la conversation.
-			redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
+			redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_pm_del', '-0-' . $pm_id_get . '-0.php?error=e_pm_del', '&') . '#errorh');
 	}
 	else //Champs manquants.
-		redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
+		redirect('/member/pm' . url('.php?id=' . $pm_id_get . '&error=e_incomplete', '-0-' . $pm_id_get . '-0-e_incomplete.php', '&') . '#errorh');
 }
 elseif ($pm_del_convers) //Suppression de conversation.
 {
@@ -347,7 +347,7 @@ elseif ($pm_del_convers) //Suppression de conversation.
 		}
 	}
 	
-	redirect(HOST . DIR . '/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
+	redirect('/member/pm' . url('.php?pm=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php', '&'));
 }
 elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne la pas encore lu.
 {
@@ -383,12 +383,12 @@ elseif (!empty($pm_del)) //Suppression du message privé, si le destinataire ne l
 				if ($pm_del > $id_first) //Suppression du message.
 				{
 					$pm_last_msg = $Privatemsg->delete($pm_to, $pm_del, $pm['idconvers']);
-					redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
+					redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_last_msg);
 				}
 				elseif ($pm_del == $id_first) //Suppression de la conversation.
 				{
 					$Privatemsg->delete_conversation($pm_to, $pm['idconvers'], $expd, DEL_PM_CONVERS, UPDATE_MBR_PM);
-					redirect(HOST . DIR . '/member/pm.php' . SID2);
+					redirect('/member/pm.php' . SID2);
 				}
 			}
 			else //Le membre a déjà lu le message on ne peux plus le supprimer.
@@ -443,7 +443,7 @@ elseif (!empty($pm_edit)) //Edition du message privé, si le destinataire ne la p
 					$Errorh->handler('e_incomplete', E_USER_REDIRECT);
 				
 				//Succès redirection vers la conversation.
-				redirect(HOST . DIR . '/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
+				redirect('/member/pm' . url('.php?id=' . $pm['idconvers'], '-0-' . $pm['idconvers'] . '.php', '&') . '#m' . $pm_edit);
 			}
 			else //Interface d'édition
 			{
@@ -617,11 +617,11 @@ elseif (!empty($pm_id_get)) //Messages associés à la conversation.
 		$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 		
 		//Affichage des groupes du membre.
-		if (!empty($row['user_groups']) && $_array_groups_auth)
+		if (!empty($row['user_groups']))
 		{
 			$user_groups = '';
 			$array_user_groups = explode('|', $row['user_groups']);
-			foreach ($_array_groups_auth as $idgroup => $array_group_info)
+			foreach (GroupsConfigData::get_groups() as $idgroup => $array_group_info)
 			{
 				if (is_numeric(array_search($idgroup, $array_user_groups)))
 					$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'];

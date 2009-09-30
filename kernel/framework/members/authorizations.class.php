@@ -111,7 +111,7 @@ class Authorizations
 	 */
 	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
-        global $Sql, $LANG, $CONFIG, $array_ranks, $Group;
+        global $Sql, $LANG, $CONFIG, $array_ranks;
 		
         //Récupération du tableau des rangs.
 		$array_ranks = is_array($array_ranks) ?
@@ -184,7 +184,7 @@ class Authorizations
         }
        
         //Liste des groupes.
-        foreach ($Group->get_groups_array() as $idgroup => $group_name)
+        foreach (Group::get_groups_names() as $idgroup => $group_name)
         {
             $selected = '';
             if (array_key_exists($idgroup, $array_auth) && ((int)$array_auth[$idgroup] & (int)$auth_bit) !== 0 && empty($disabled))

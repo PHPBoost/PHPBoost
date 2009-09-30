@@ -104,7 +104,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 	
 	$Cache->Generate_module_file('articles');
 	
-	redirect(HOST . DIR . '/articles/admin_articles_config.php'); 
+	redirect('/articles/admin_articles_config.php'); 
 }
 //Sinon on rempli le formulaire
 else	

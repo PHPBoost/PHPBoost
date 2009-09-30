@@ -109,7 +109,7 @@ if ($update) //Mise à jour du module
 		redirect(HOST . SCRIPT);	
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_modules_update.php?error=incomplete#errorh');
+		redirect('/admin/admin_modules_update.php?error=incomplete#errorh');
 }			
 elseif (!empty($_FILES['upload_module']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

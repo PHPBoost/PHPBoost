@@ -180,9 +180,9 @@ if (!empty($_POST['valid']) && !empty($id))
 		$Cache->Generate_module_file('gallery');
 	}
 	else
-		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php?id=' . $id . '&error=incomplete');
+		redirect('/gallery/admin_gallery_cat.php?id=' . $id . '&error=incomplete');
 
-	redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
+	redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la racine.
 {
@@ -195,7 +195,7 @@ elseif (!empty($_POST['valid_root'])) //Modification des autorisations de la rac
 	$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_GALLERY)) . "' WHERE name = 'gallery'", __LINE__, __FILE__);
 	$Cache->Generate_module_file('gallery');
 	
-	redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
+	redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
@@ -507,11 +507,11 @@ elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 			###### Regénération du cache #######
 			$Cache->Generate_module_file('gallery');
 			
-			redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
+			redirect('/gallery/admin_gallery_cat.php');
 		}		
 	}
 	else
-		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
+		redirect('/gallery/admin_gallery_cat.php');
 }
 elseif (!empty($id) && !empty($move)) //Monter/descendre.
 {
@@ -521,7 +521,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	
 	//Catégorie existe?
 	if (!isset($CAT_GALLERY[$id]))
-		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php');
+		redirect('/gallery/admin_gallery_cat.php');
 	
 	//Galeries parentes de la galerie à déplacer.
 	$list_parent_cats = '';
@@ -693,7 +693,7 @@ elseif (!empty($id)) //Edition des catégories.
 	$gallery_info = $Sql->query_array(PREFIX . "gallery_cats", "id_left", "id_right", "level", "name", "contents", "status", "aprob", "auth", "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (!isset($CAT_GALLERY[$id]))
-		redirect(HOST . DIR . '/gallery/admin_gallery_cat.php?error=unexist_cat');
+		redirect('/gallery/admin_gallery_cat.php?error=unexist_cat');
 	
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.			
 	$galeries = '<option value="0">' . $LANG['root'] . '</option>';

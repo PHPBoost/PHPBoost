@@ -62,7 +62,7 @@ if ($install)
 		redirect(HOST . SCRIPT); 
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_themes_add.php?error=e_theme_already_exist#errorh');
+		redirect('/admin/admin_themes_add.php?error=e_theme_already_exist#errorh');
 }
 elseif (!empty($_FILES['upload_theme']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

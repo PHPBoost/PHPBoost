@@ -41,14 +41,16 @@ class User
 	 * @param array $session_data
 	 * @param array $groups_info
 	 */
-	function User($session_data, &$groups_info)
+	function User($session_data)
 	{
 		$this->user_data = $session_data; //Informations sur le membre.
 		
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();
-		foreach ($groups_info as $idgroup => $array_info)
+		foreach (GroupsService::get_groups() as $idgroup => $array_info)
+		{
 			$groups_auth[$idgroup] = $array_info['auth'];
+		}
 		$this->groups_auth = $groups_auth;
 		
 		//Groupes du membre.
@@ -85,16 +87,17 @@ class User
 	 * @static
 	 */
 	/* static */ function get_group_color($user_groups, $level = 0)
-	{
-		global $_array_groups_auth;
-		
+	{		
 		$user_groups = explode('|', $user_groups);
 		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
 		$i = 0;
 		foreach ($user_groups as $idgroup) //Récupération du premier groupe.
 		{
 			if ($i++ == 0)
-				return (!empty($_array_groups_auth[$idgroup]['color']) && $level == 0) ? '#' . $_array_groups_auth[$idgroup]['color'] : '';
+			{
+				$group = GroupsConfigData::get_group($idgroup);
+				return (!empty($group['color']) && $level == 0) ? '#' . $group['color'] : '';
+			}
 		}
 	}
 	

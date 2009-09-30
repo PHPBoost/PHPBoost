@@ -66,7 +66,7 @@ if (!empty($_POST['valid']))
 		redirect(HOST . SCRIPT);	
 	}
 	else
-		redirect(HOST . DIR . '/forum/admin_forum_config.php?error=incomplete#errorh');
+		redirect('/forum/admin_forum_config.php?error=incomplete#errorh');
 }
 elseif ($update_cached) //Mise à jour des données stockées en cache dans la bdd.
 {

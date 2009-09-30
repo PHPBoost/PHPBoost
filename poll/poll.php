@@ -96,7 +96,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 		
 		//Si le cookie n'existe pas et l'ip n'est pas connue on enregistre.
 		if ($check_bdd || $check_cookie)
-			redirect(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
+			redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_already_vote', '-' . $poll['id'] . '.php?error=e_already_vote', '&') . '#errorh');
 		
 		//Récupération du vote.
 		$check_answer = false;
@@ -138,7 +138,7 @@ if (!empty($_POST['valid_poll']) && !empty($poll['id']) && !$archives)
 			redirect_confirm(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'], '-' . $poll['id'] . '.php'), $LANG['no_vote'], 2);
 	}
 	else
-		redirect(HOST . DIR . '/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
+		redirect('/poll/poll' . url('.php?id=' . $poll['id'] . '&error=e_unauth_poll', '-' . $poll['id'] . '.php?error=e_unauth_poll', '&') . '#errorh');
 }
 elseif (!empty($poll['id']) && !$archives) //Affichage du sondage.
 {

@@ -123,7 +123,7 @@ elseif (!empty($entitled) && !empty($answer))
 		if ($auth_write)//If authorized user
 		{			
 			$Sql->query_inject("UPDATE " . PREFIX . "faq SET question = '" . $entitled . "', answer = '" . $answer . "' WHERE id = '" . $id_question . "'", __LINE__, __FILE__);
-			redirect(HOST . DIR . '/faq/' . url('faq.php?id=' . $faq_infos['idcat'] . '&question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
+			redirect('/faq/' . url('faq.php?id=' . $faq_infos['idcat'] . '&question=' . $id_question, 'faq-' . $faq_infos['idcat'] . '+' . url_encode_rewrite($FAQ_CATS[$faq_infos['idcat']]['name']) . '.php?question=' . $id_question, '&') . '#q' . $id_question);
 			
 		}
 		else
@@ -154,7 +154,7 @@ elseif (!empty($entitled) && !empty($answer))
 			//On recupère les informations.
 			$Cache->load('faq', RELOAD_CACHE);
 	
-			redirect(HOST . DIR . '/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
+			redirect('/faq/' . url('faq.php?id=' . $new_id_cat . '&question=' . $new_question_id, 'faq-' . $new_id_cat . '+' . url_encode_rewrite($FAQ_CATS[$new_id_cat]['name']) . '.php?question=' . $new_question_id, '&') . '#q' . $new_question_id);
 		}
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT);

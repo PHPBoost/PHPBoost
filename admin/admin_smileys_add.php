@@ -46,13 +46,13 @@ if (!empty($_POST['add']))
 			###### Régénération du cache des smileys #######	
 			$Cache->Generate_file('smileys');	
 		
-			redirect(HOST . DIR . '/admin/admin_smileys.php');
+			redirect('/admin/admin_smileys.php');
 		}
 		else
-			redirect(HOST . DIR . '/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
+			redirect('/admin/admin_smileys_add.php?error=e_smiley_already_exist#errorh');
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_smileys_add.php?error=incomplete#errorh');
+		redirect('/admin/admin_smileys_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_FILES['upload_smiley']['name'])) //Upload et décompression de l'archive Zip/Tar
 {

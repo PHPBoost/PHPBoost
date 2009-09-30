@@ -34,15 +34,13 @@ include_once(PATH_TO_ROOT . '/lang/' . $CONFIG['lang'] . '/stats.php');
   * @package core
   */
 class StatsSaver
-{
+{	
 	## Public Methods ##
     /**
 	 * @desc Compute Stats of Site Referers
 	 */
 	function compute_referer()
 	{
-		global $Sql;
-		
 		$referer = !empty($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : '';
 		if (!empty($referer))
 		{
@@ -69,13 +67,13 @@ class StatsSaver
 				$keyword = strtolower(preg_replace('`(?:.*)(?:q|p|query|rdata)=([^&]+)(?:.*)`i', '$1', $query));
 				$keyword = addslashes(str_replace('+', ' ', urldecode($keyword)));
 				
-				$check_search_engine = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS_REFERER . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
+				$check_search_engine = Environment::get_instance()->get_db_connection()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS_REFERER . " WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);
 				if (!empty($keyword))
 				{
 					if (!empty($check_search_engine))
-						$Sql->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
+						Environment::get_instance()->get_db_connection()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'", __LINE__, __FILE__);			
 					else
-						$Sql->query_inject("INSERT INTO " . DB_TABLE_STATS_REFERER . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
+						Environment::get_instance()->get_db_connection()->query_inject("INSERT INTO " . DB_TABLE_STATS_REFERER . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $search_engine . "', '" . $keyword . "', 1, 1, 1, 1, '" . time() . "', 1)", __LINE__, __FILE__);
 				}
 			}
 			elseif (!empty($referer['host']))
@@ -88,11 +86,11 @@ class StatsSaver
 					$referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
 					$relative_url = addslashes(((substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 					
-					$check_url = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS_REFERER . " WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
+					$check_url = Environment::get_instance()->get_db_connection()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS_REFERER . " WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);
 					if (!empty($check_url))
-						$Sql->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);			
+						Environment::get_instance()->get_db_connection()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'", __LINE__, __FILE__);			
 					else
-						$Sql->query_inject("INSERT INTO " . DB_TABLE_STATS_REFERER . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 1, 1, '" . time() . "', 0)", __LINE__, __FILE__);
+						Environment::get_instance()->get_db_connection()->query_inject("INSERT INTO " . DB_TABLE_STATS_REFERER . " (url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update, type) VALUES ('" . $url . "', '" . $relative_url . "', 1, 1, 1, 1, '" . time() . "', 0)", __LINE__, __FILE__);
 				}
 			}
 		}

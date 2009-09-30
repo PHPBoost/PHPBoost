@@ -193,7 +193,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						$Forumfct->Add_poll($last_topic_id, $question, $answers, $nbr_votes, $poll_type); //Ajout du sondage.
 					}
 					
-					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
+					redirect('/forum/topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&') . '#m' . $last_msg_id);
 				}
 				else
 					redirect(url(HOST . SCRIPT . '?error=incomplete_t&id=' . $id_get, '', '&') . '#errorh');
@@ -424,7 +424,7 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 				$last_msg_id = $Forumfct->Add_msg($idt_get, $topic['idcat'], $contents, $topic['title'], $last_page, $last_page_rewrite);
 				
 				//Redirection après post.
-				redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
+				redirect('/forum/topic' . url('.php?id=' . $idt_get . $last_page, '-' . $idt_get . $last_page_rewrite . '.php', '&') . '#m' . $last_msg_id);
 			}
 			else
 				redirect(url(HOST . SCRIPT . '?error=incomplete&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#errorh');
@@ -504,10 +504,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 						$Forumfct->Del_poll($idt_get);
 					
 					//Redirection après post.
-					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
+					redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php', '&'));
 				}
 				else
-					redirect(HOST . DIR . '/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
+					redirect('/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete_t', '', '&') . '#errorh');
 			}
 			elseif (!empty($preview_topic))
 			{
@@ -774,10 +774,10 @@ if ($User->check_auth($CAT_FORUM[$id_get]['auth'], READ_CAT_FORUM))
 					$msg_page = ($msg_page > 1) ? '&pt=' . $msg_page : '';
 					
 					//Redirection après édition.
-					redirect(HOST . DIR . '/forum/topic' . url('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
+					redirect('/forum/topic' . url('.php?id=' . $idt_get . $msg_page, '-' . $idt_get .  $msg_page_rewrite . '.php', '&') . '#m' . $id_m);
 				}
 				else
-					redirect(HOST . DIR . '/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
+					redirect('/forum/post' . url('.php?new=msg&idm=' . $id_m . '&id=' . $id_get . '&idt=' . $idt_get . '&errore=incomplete', '', '&') . '#errorh');
 			}
 			else
 			{

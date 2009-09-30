@@ -152,7 +152,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 			{
 				if ($Upload->error == 'e_upload_max_weight')
 					$Upload->error = 'e_max_data_reach';
-				redirect(HOST . DIR . '/member/upload.php?f=' . $folder . '&erroru=' . $Upload->error . '&' . $popup_noamp . '#errorh');
+				redirect('/member/upload.php?f=' . $folder . '&erroru=' . $Upload->error . '&' . $popup_noamp . '#errorh');
 			}
 			else //Insertion dans la bdd
 			{

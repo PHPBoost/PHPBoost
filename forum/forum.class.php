@@ -143,7 +143,7 @@ class Forum
 	//Edition d'un message.
 	function Update_msg($idtopic, $idmsg, $contents, $user_id_msg, $history = true)
 	{
-		global $Sql, $User, $Group, $CONFIG_FORUM;
+		global $Sql, $User, $CONFIG_FORUM;
 
 		//Marqueur d'édition du message?
 		$edit_mark = (!$User->check_auth($CONFIG_FORUM['auth'], EDIT_MARK_FORUM)) ? ", timestamp_edit = '" . time() . "', user_id_edit = '" . $User->get_attribute('user_id') . "'" : '';
@@ -275,7 +275,7 @@ class Forum
 	//Suivi d'un sujet.
 	function Track_topic($idtopic, $tracking_type = 0)
 	{
-		global $Sql, $Group, $User, $CONFIG_FORUM;
+		global $Sql, $User, $CONFIG_FORUM;
 
 		list($mail, $pm, $track) = array(0, 0, 0);
 		if ($tracking_type == 0) //Suivi par email.

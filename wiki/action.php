@@ -59,7 +59,7 @@ if ($id_auth > 0)
 
 	$encoded_title = $Sql->query("SELECT encoded_title FROM " . PREFIX . "wiki_articles WHERE id = '" . $id_auth . "'", __LINE__, __FILE__);
 	if (empty($encoded_title))
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 		
 	if (!empty($_POST['default'])) //Configuration par défaut
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET auth = '' WHERE id= '" . $id_auth . "'", __LINE__, __FILE__);
@@ -71,7 +71,7 @@ if ($id_auth > 0)
 	}
 
 	//Redirection vers l'article
-	redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
+	redirect('/wiki/' . url('wiki.php?title=' . $encoded_title, $encoded_title, '&'));
 }
 if ($id_change_status > 0)
 {
@@ -101,14 +101,14 @@ if ($id_change_status > 0)
 		//On met à jour dans la base de données
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET defined_status = '" . $id_status . "', undefined_status = '" . $contents . "' WHERE id = '" . $id_change_status . "'", __LINE__, __FILE__);
 		//Redirection vers l'article
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
 elseif ($move > 0) //Déplacement d'un article
 {
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "is_cat", "encoded_title", "id_cat", "auth", "WHERE id = '" . $move . "'", __LINE__, __FILE__);
 	if ( empty($article_infos['encoded_title']))//Ce n'est pas un article ou une catégorie
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 		
 	$general_auth = empty($article_infos['auth']) ? true : false;
 	$article_auth = !empty($article_infos['auth']) ? unserialize($article_infos['auth']) : array();
@@ -123,7 +123,7 @@ elseif ($move > 0) //Déplacement d'un article
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET id_cat = '" . $new_cat . "' WHERE id = '" . $move . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('wiki');
 		}
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	//Catégorie: on vérifie qu'on ne la place pas dans elle-même ou dans une de ses catégories filles
 	elseif ($article_infos['is_cat'] == 1)
@@ -138,10 +138,10 @@ elseif ($move > 0) //Déplacement d'un article
 			$Sql->query_inject("UPDATE " . PREFIX . "wiki_cats SET id_parent = '" . $new_cat . "' WHERE id = '" . $article_infos['id_cat'] . "'", __LINE__, __FILE__);
 			$Cache->Generate_module_file('wiki');
 			//on redirige vers l'article
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+			redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 		}
 		else //On redirige vers une page d'erreur
-			redirect(HOST . DIR . '/wiki/' .  url('property.php?move=' . $move  . '&error=e_cat_contains_cat', '', '&') . '#errorh');
+			redirect('/wiki/' .  url('property.php?move=' . $move  . '&error=e_cat_contains_cat', '', '&') . '#errorh');
 	}
 }
 elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
@@ -158,14 +158,14 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 	$already_exists = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_articles WHERE encoded_title = '" . url_encode_rewrite($new_title) . "'", __LINE__, __FILE__);
 
 	if (empty($article_infos['encoded_title']))//L'article n'existe pas
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 	elseif (url_encode_rewrite($new_title) == $article_infos['encoded_title'])//Si seul le titre change mais pas le titre encodé
 	{
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_articles SET title = '" . $new_title . "' WHERE id = '" . $id_to_rename . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	elseif ($already_exists > 0) //Si le titre existe déjà erreur, on le signale
-		redirect(HOST . DIR . '/wiki/' . url('property.php?rename=' . $id_to_rename  . '&error=title_already_exists', '', '&') . '#errorh');
+		redirect('/wiki/' . url('property.php?rename=' . $id_to_rename  . '&error=title_already_exists', '', '&') . '#errorh');
 	elseif ($already_exists == 0)
 	{
 		if ($create_redirection_while_renaming) //On crée un nouvel article
@@ -189,7 +189,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
     		 // Feeds Regeneration
              import('content/syndication/feed');
              Feed::clear_cache('wiki');
-		   redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
+		   redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
 		}
 		else //On met à jour l'article
 		{
@@ -199,7 +199,7 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
             import('content/syndication/feed');
             Feed::clear_cache('wiki');
             
-            redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
+            redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($new_title), url_encode_rewrite($new_title), '&'));
 		}
 	}
 }
@@ -220,7 +220,7 @@ elseif ($del_redirection > 0)//Supprimer une redirection
 			$Errorh->handler('e_auth', E_USER_REDIRECT); 
 		
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_articles WHERE id = '" . $del_redirection . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 }
 elseif ($create_redirection > 0 && !empty($redirection_title))
@@ -240,10 +240,10 @@ elseif ($create_redirection > 0 && !empty($redirection_title))
 		if ($num_title == 0) //Si aucun article existe
 		{
 			$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_articles (title, encoded_title, redirect, undefined_status, auth) VALUES ('" . $redirection_title . "', '" . url_encode_rewrite($redirection_title) . "', '" . $create_redirection . "', '', '')", __LINE__, __FILE__);
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($redirection_title), url_encode_rewrite($redirection_title), '&'));
+			redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($redirection_title), url_encode_rewrite($redirection_title), '&'));
 		}
 		else
-			redirect(HOST . DIR . '/wiki/' . url('property.php?create_redirection=' . $create_redirection  . '&error=title_already_exists', '', '&') . '#errorh');
+			redirect('/wiki/' . url('property.php?create_redirection=' . $create_redirection  . '&error=title_already_exists', '', '&') . '#errorh');
 	}
 }
 //Restauration d'une archive
@@ -270,7 +270,7 @@ elseif (!empty($restore)) //on restaure un ancien article
 		$Sql->query_inject("UPDATE " . PREFIX . "wiki_contents SET activ = 0 WHERE id_contents = " . $article_infos['id_contents'], __LINE__, __FILE__);
 	}
 	
-	redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
+	redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'] , '&'));
 }
 //Suppression d'une archive
 elseif ($del_archive > 0)
@@ -290,7 +290,7 @@ elseif ($del_archive > 0)
 	if ($is_activ == 0) //C'est une archive -> on peut supprimer
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_contents WHERE id_contents = '" . $del_archive . "'", __LINE__, __FILE__);
 	if (!empty($article_infos['encoded_title'])) //on redirige vees l'article
-		redirect(HOST . DIR . '/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
+		redirect('/wiki/' . url('history.php?id=' . $contents_infos['id_article'], '', '&'));
 }
 elseif ($del_article > 0) //Suppression d'un article
 {
@@ -315,9 +315,9 @@ elseif ($del_article > 0) //Suppression d'un article
      Feed::clear_cache('wiki');
 	
 	if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS))//Si elle  a une catégorie parente
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), url_encode_rewrite($_WIKI_CATS[$article_infos['id_cat']]['name']), '&'));
 	else
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 }
 elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 {
@@ -337,17 +337,17 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 	$sub_cats[] = $article_infos['id_cat']; //On rajoute la catégorie que l'on supprime
 	
 	if (empty($article_infos['encoded_title'])) //si l'article n'existe pas on redirige vers l'index
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 	
 	if ($remove_action == 'move_all') //Vérifications préliminaires si on va tout supprimer
 	{	
 		//Si la nouvelle catégorie n'est pas une catégorie
 		if (!array_key_exists($report_cat, $_WIKI_CATS) && $report_cat > 0)
-			redirect(HOST . DIR . '/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#errorh', '', '&'));
+			redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_not_a_cat#errorh', '', '&'));
 			
 		//Si on ne la déplace pas dans une de ses catégories filles
 		if (($report_cat > 0 && in_array($report_cat, $sub_cats)) || $report_cat == $article_infos['id_cat'])//Si on veut reporter dans une catégorie parente
-			redirect(HOST . DIR . '/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_cat_contains_cat#errorh', '','&'));
+			redirect('/wiki/' . url('property.php?del=' . $del_to_remove . '&error=e_cat_contains_cat#errorh', '','&'));
 	}
 
 	//Quoi qu'il arrive on supprime l'article associé
@@ -383,10 +383,10 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		if (array_key_exists($article_infos['id_cat'], $_WIKI_CATS) && $_WIKI_CATS[$article_infos['id_cat']]['id_parent'] > 0)
 		{
 			$title = $_WIKI_CATS[$_WIKI_CATS[$article_infos['id_cat']]['id_parent']]['name'];
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
+			redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
 		}
 		else
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+			redirect('/wiki/' . url('wiki.php', '', '&'));
 	}
 	elseif ($remove_action == 'move_all') //On déplace le contenu de la catégorie
 	{
@@ -397,14 +397,14 @@ elseif ($del_to_remove > 0 && $report_cat >= 0) //Suppression d'une catégorie
 		if (array_key_exists($report_cat, $_WIKI_CATS))
 		{
 			$title = $_WIKI_CATS[$report_cat]['name'];
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
+			redirect('/wiki/' . url('wiki.php?title=' . url_encode_rewrite($title), url_encode_rewrite($title), '&'));
 		}
 		else
-			redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+			redirect('/wiki/' . url('wiki.php', '', '&'));
 	}
 }
 
 //On redirige vers l'index si on n'est rentré dans aucune des conditions ci-dessus
-redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+redirect('/wiki/' . url('wiki.php', '', '&'));
 
 ?>

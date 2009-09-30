@@ -112,7 +112,7 @@ if (!empty($contents))
 				//On met à jour la table
 				$Sql->query_inject("UPDATE " . PREFIX . "pages SET contents = '" . pages_parse($contents) . "', count_hits = '" . $count_hits . "', activ_com = '" . $enable_com . "', auth = '" . $page_auth . "', id_cat = '" . $id_cat . "' WHERE id = '" . $id_edit . "'", __LINE__, __FILE__);
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 			//catégories : risque de boucle infinie
 			elseif ($page_infos['is_cat'] == 1 && empty($error))
@@ -127,7 +127,7 @@ if (!empty($contents))
 				//Régénération du cache
 				$Cache->Generate_module_file('pages');
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
+				redirect('/pages/' . url('pages.php?title=' . $page_infos['encoded_title'], $page_infos['encoded_title'], '&'));
 			}
 		}
 		//Création d'une page
@@ -154,7 +154,7 @@ if (!empty($contents))
 					$Cache->Generate_module_file('pages');
 				}
 				//On redirige vers la page mise à jour
-				redirect(HOST . DIR . '/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
+				redirect('/pages/' . url('pages.php?title=' . $encoded_title, $encoded_title, '&'));
 			}
 			//Sinon, message d'erreur
 			else
@@ -236,7 +236,7 @@ else
 {
 	//Autorisations
 	if (!$User->check_auth($_PAGES_CONFIG['auth'], EDIT_PAGE))
-		redirect(HOST . DIR . '/pages/pages.php?error=e_auth');
+		redirect('/pages/pages.php?error=e_auth');
 		
 	//La page existe déjà !
 	if ($error == 'page_already_exists')
