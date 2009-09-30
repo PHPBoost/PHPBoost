@@ -101,7 +101,7 @@ if (!empty($memberId)) //Affichage de tous les messages du membre
 	$Template->pparse('membermsg');
 }
 else
-	redirect(HOST . DIR . '/member/member.php');
+	redirect('/member/member.php');
 
 require_once('../kernel/footer.php');
 

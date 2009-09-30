@@ -135,7 +135,7 @@ elseif (!empty($_POST['add'])) //Ajout du lien.
 		redirect(HOST . SCRIPT);
 	}
 	else
-		redirect(HOST . DIR . '/web/admin_web_cat.php?error=incomplete#errorh');
+		redirect('/web/admin_web_cat.php?error=incomplete#errorh');
 }
 //Sinon on rempli le formulaire
 else	

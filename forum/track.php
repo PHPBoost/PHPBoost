@@ -38,9 +38,9 @@ $page = retrieve(GET, 'p', 1);
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
-	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
+	redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_title . '.php', '&'));
 if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
-	redirect(HOST . DIR . '/member/error.php');
+	redirect('/member/error.php');
 	
 if (!empty($_POST['valid']))
 {
@@ -65,7 +65,7 @@ if (!empty($_POST['valid']))
 	}
 	$Sql->query_close($result);
 	
-	redirect(HOST . DIR . '/forum/track.php' . SID2);
+	redirect('/forum/track.php' . SID2);
 }
 elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
@@ -232,7 +232,7 @@ elseif ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) d
 	$Template->pparse('forum_track');
 }
 else
-	redirect(HOST . DIR . '/forum/index.php' . SID2);
+	redirect('/forum/index.php' . SID2);
 
 include('../kernel/footer.php');
 

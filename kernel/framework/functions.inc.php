@@ -555,12 +555,8 @@ function get_module_name()
  */
 function redirect($url)
 {
-	global $Sql, $CONFIG;
+	global $CONFIG;
 
-	if (!empty($Sql) && is_object($Sql)) //Coupure de la connexion mysql.
-	{
-		$Sql->close();
-	}
 	if (!empty($CONFIG) && is_array($CONFIG))
 	{
 		import('util/url');
@@ -1362,7 +1358,7 @@ function check_for_maintain_redirect()
 	{
 	    if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
 	    {
-	        redirect(HOST . DIR . '/member/maintain.php');
+	        redirect('/member/maintain.php');
 	    }
 	}
 }

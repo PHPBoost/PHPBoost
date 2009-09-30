@@ -45,7 +45,7 @@ define('TITLE', $LANG['title_forum'] . ' - ' . $LANG['alert_topic']);
 require_once('../kernel/header.php');
 
 if (empty($alert) && empty($alert_post) || empty($topic['idcat'])) 
-	redirect(HOST . DIR . '/forum/index' . url('.php'));  
+	redirect('/forum/index' . url('.php'));  
 
 if (!$User->check_level(MEMBER_LEVEL)) //Si c'est un invité
     $Errorh->handler('e_auth', E_USER_REDIRECT); 

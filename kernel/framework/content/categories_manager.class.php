@@ -526,7 +526,7 @@ class CategoriesManager
 		
 		if ($add_this && ($category_id == 0 || (empty($this->cache_var[$category_id]['auth'])  || $num_auth == 0 || $num_auth > 0 && $User->check_auth($this->cache_var[$category_id]['auth'], $num_auth))))
 			$list[] = $category_id;
-		
+
 		$id_categories = array_keys($this->cache_var);
 		$num_cats =	count($id_categories);
 		

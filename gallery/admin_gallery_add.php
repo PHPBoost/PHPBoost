@@ -53,24 +53,24 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 		{
 			$Upload->file('gallery', '`([a-z0-9()_-])+\.(jpg|gif|png)+$`i', UNIQ_NAME, $CONFIG_GALLERY['weight_max']);
 			if (!empty($Upload->error)) //Erreur, on arrête ici
-				redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
+				redirect('/gallery/admin_gallery_add.php?error=' . $Upload->error . '#errorh');
 			else
 			{
 				$path = $dir . $Upload->filename['gallery'];
 				$error = $Upload->validate_img($path, $CONFIG_GALLERY['width_max'], $CONFIG_GALLERY['height_max'], DELETE_ON_ERROR);
 				if (!empty($error)) //Erreur, on arrête ici
-					redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
+					redirect('/gallery/admin_gallery_add.php?error=' . $error . '#errorh');
 				else
 				{					
 					//Enregistrement de l'image dans la bdd.
 					$Gallery->Resize_pics($path);		
 					if (!empty($Gallery->error))
-						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
+						redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					$name = !empty($_POST['name']) ? strprotect($_POST['name']) : '';
 					$idpic = $Gallery->Add_pics($idcat_post, $name, $Upload->filename['gallery'], $User->get_attribute('user_id'));
 					if (!empty($Gallery->error))
-						redirect(HOST . DIR . '/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
+						redirect('/gallery/admin_gallery_add.php?error=' . $Gallery->error . '#errorh');
 					
 					//Régénération du cache des photos aléatoires.
 					$Cache->Generate_module_file('gallery');
@@ -79,7 +79,7 @@ if (isset($_FILES['gallery']) && isset($_POST['idcat_post'])) //Upload
 		}
 	}
 	
-	redirect(HOST . DIR . '/gallery/admin_gallery_add.php?add=' . $idpic);
+	redirect('/gallery/admin_gallery_add.php?add=' . $idpic);
 }
 elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'images par ftp.
 {
@@ -103,7 +103,7 @@ elseif (!empty($_POST['valid']) && !empty($nbr_pics_post)) //Ajout massif d'imag
 	//Régénération du cache des photos aléatoires.
 	$Cache->Generate_module_file('gallery');
 
-	redirect(HOST . DIR . '/gallery/admin_gallery_add.php');
+	redirect('/gallery/admin_gallery_add.php');
 }
 else
 {

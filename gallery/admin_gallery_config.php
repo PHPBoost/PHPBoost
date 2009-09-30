@@ -87,7 +87,7 @@ elseif (!empty($_POST['gallery_cache'])) //Suppression des miniatures.
 	
 	$Cache->Generate_module_file('gallery');
 	
-	redirect(HOST . DIR . '/gallery/admin_gallery_config.php'); 
+	redirect('/gallery/admin_gallery_config.php'); 
 }
 else 
 {		

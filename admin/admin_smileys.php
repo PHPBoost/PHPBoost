@@ -49,7 +49,7 @@ if (!empty($_POST['valid']) && !empty($id_post)) //Mise à jour.
 		redirect(HOST . SCRIPT);
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
+		redirect('/admin/admin_smileys.php?id=' . $id_post . '&edit=1&error=incomplete#errorh');
 }
 elseif (!empty($id) && $del) //Suppression.
 {

@@ -389,7 +389,7 @@ elseif (!empty($_POST['submit']))
 
 			ContributionService::save_contribution($media_contribution);
 
-			redirect(HOST . DIR . '/media/contribution.php?cat=' . $media['idcat']);
+			redirect('/media/contribution.php?cat=' . $media['idcat']);
 		}
 		else
 		{

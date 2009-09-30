@@ -50,9 +50,9 @@ if (!empty($_POST['valid']) && !empty($idgroup_post)) //Modification du groupe.
 	$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 	$Sql->query_inject("UPDATE " . DB_TABLE_GROUP . " SET name = '" . $name . "', img = '" . $img . "', color = '" . $color_group . "', auth = '" . serialize($group_auth) . "' WHERE id = '" . $idgroup_post . "'", __LINE__, __FILE__);
 	
-	$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
+	GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
 	
-	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup_post);
+	redirect('/admin/admin_groups.php?id=' . $idgroup_post);
 }
 elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 {
@@ -69,24 +69,26 @@ elseif (!empty($_POST['valid']) && $add_post) //ajout  du groupe.
 		$group_auth = array('auth_flood' => $auth_flood, 'pm_group_limit' => $pm_group_limit, 'data_group_limit' => $data_group_limit);
 		$Sql->query_inject("INSERT INTO " . DB_TABLE_GROUP . " (name, img, color, auth, members) VALUES ('" . $name . "', '" . $img . "', '" . $color_group . "', '" . serialize($group_auth) . "', '')", __LINE__, __FILE__);
 		
-		$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
+		GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
 		
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
+		redirect('/admin/admin_groups.php?id=' . $Sql->insert_id("SELECT MAX(id) FROM " . PREFIX . "group"));
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_groups.php?error=incomplete#errorh');
+	{
+		redirect('/admin/admin_groups.php?error=incomplete#errorh');
+	}
 }
 elseif (!empty($idgroup) && $del_group) //Suppression du groupe.
-{
-	$Session->csrf_get_protect(); //Protection csrf
-	
+{	
 	$array_members = explode('|', $Sql->query("SELECT members FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__));
 	foreach ($array_members as $key => $user_id)
-		$Group->remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+	{
+		GroupsService::remove_member($user_id, $idgroup); //Mise à jour des membres étant dans le groupe supprimé.
+	}
 
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_GROUP . " WHERE id = '" . $idgroup . "'", __LINE__, __FILE__); //On supprime dans la bdd.
 		
-	$Cache->Generate_file('groups'); //On régénère le fichier de cache des groupes
+	GroupsCacheData::invalidate(); //On régénère le fichier de cache des groupes
 	
 	redirect(HOST . SCRIPT);
 }
@@ -98,20 +100,28 @@ elseif (!empty($idgroup) && $add_mbr) //Ajout du membre au groupe.
 	$user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "'", __LINE__, __FILE__);
 	if (!empty($user_id))
 	{
-		if ($Group->add_member($user_id, $idgroup)) //Succès.
-			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
+		if (GroupsService::add_member($user_id, $idgroup)) //Succès.
+		{
+			GroupsCacheData::invalidate();
+			redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
+		}
 		else
-			redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
+		{
+			redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=already_group#errorh');
+		}
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
+	{
+		redirect('/admin/admin_groups.php?id=' . $idgroup . '&error=incomplete#errorh');
+	}
 }
 elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) //Suppression du membre du groupe.
 {
 	$Session->csrf_get_protect(); //Protection csrf
 	
-	$Group->remove_member($user_id, $idgroup);
-	redirect(HOST . DIR . '/admin/admin_groups.php?id=' . $idgroup . '#add');
+	GroupsService::remove_member($user_id, $idgroup);
+	GroupsCacheData::invalidate();
+	redirect('/admin/admin_groups.php?id=' . $idgroup . '#add');
 }
 elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 {
@@ -119,7 +129,9 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 	@clearstatcache();
 	$dir = '../images/group/';
 	if (!is_writable($dir))
+	{
 		$is_writable = (@chmod($dir, 0777)) ? true : false;
+	}
 	
 	@clearstatcache();
 	$error = '';
@@ -128,7 +140,9 @@ elseif (!empty($_FILES['upload_groups']['name'])) //Upload
 		import('io/upload');
 		$Upload = new Upload($dir);
 		if (!$Upload->file('upload_groups', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i'))
+		{
 			$error = $Upload->error;
+		}
 	}
 	else
 		$error = 'e_upload_failed_unwritable';
@@ -148,9 +162,13 @@ elseif (!empty($idgroup)) //Interface d'édition du groupe.
 		//Gestion erreur.
 		$get_error = retrieve(GET, 'error', '');
 		if ($get_error == 'incomplete')
+		{
 			$Errorh->handler($LANG['e_incomplete'], E_USER_NOTICE);
+		}
 		elseif ($get_error == 'already_group')
+		{
 			$Errorh->handler($LANG['e_already_group'], E_USER_NOTICE);
+		}
 		
 		$nbr_member_group = $Sql->query("SELECT COUNT(*) FROM " . DB_TABLE_MEMBER . " WHERE user_groups = '" . $group['id'] . "'", __LINE__, __FILE__);
 		//On crée une pagination si le nombre de membre est trop important.

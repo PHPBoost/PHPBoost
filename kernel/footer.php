@@ -31,7 +31,7 @@ if (defined('PHPBOOST') !== true)
 }
 global $Sql, $Template, $MENUS, $LANG, $THEME, $CONFIG, $Bench;
 
-$Sql->close(); //Fermeture de mysql
+
 
 $Template->set_filenames(array(
 	'footer'=> 'footer.tpl'

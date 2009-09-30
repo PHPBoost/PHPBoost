@@ -92,13 +92,13 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 						$Upload->file('avatars', '`([a-z0-9()_-])+\.(jpg|gif|png|bmp)+$`i', UNIQ_NAME, $CONFIG_USER['weight_max']*1024);
 						
 						if (!empty($Upload->error)) //Erreur, on arrête ici
-							redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $Upload->error) . '#errorh');
+							redirect('/member/register' . url('.php?erroru=' . $Upload->error) . '#errorh');
 						else
 						{
 							$path = $dir . $Upload->filename['avatars'];
 							$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 							if (!empty($error)) //Erreur, on arrête ici
-								redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $error) . '#errorh');
+								redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 							else
 								$user_avatar = $path; //Avatar uploadé et validé.
 						}
@@ -110,7 +110,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				{
 					$error = $Upload->validate_img($path, $CONFIG_USER['width_max'], $CONFIG_USER['height_max'], DELETE_ON_ERROR);
 					if (!empty($error)) //Erreur, on arrête ici
-						redirect(HOST . DIR . '/member/register' . url('.php?erroru=' . $error) . '#errorh');
+						redirect('/member/register' . url('.php?erroru=' . $error) . '#errorh');
 					else
 						$user_avatar = $path; //Avatar posté et validé.
 				}
@@ -121,9 +121,9 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				$check_mail = $Sql->query("SELECT COUNT(*) as compt FROM " . DB_TABLE_MEMBER . " WHERE user_mail = '" . $user_mail . "'", __LINE__, __FILE__);
 			
 				if ($check_user >= 1)
-					redirect(HOST . DIR . '/member/register' . url('.php?error=pseudo_auth') . '#errorh');
+					redirect('/member/register' . url('.php?error=pseudo_auth') . '#errorh');
 				elseif ($check_mail >= 1)
-					redirect(HOST . DIR . '/member/register' . url('.php?error=mail_auth') . '#errorh');
+					redirect('/member/register' . url('.php?error=mail_auth') . '#errorh');
 				else //Succes.
 				{
 					$user_aprob = ($CONFIG_USER['activ_mbr'] == 0) ? 1 : 0;
@@ -174,7 +174,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 							
 							//Champs requis, si vide redirection.
 							if ($row['required'] && $row['field'] != 6 && empty($field))
-								redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
+								redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 							
 							//Validation par expressions régulières.
 							if (is_numeric($row['regex']) && $row['regex'] >= 1 && $row['regex'] <= 5)
@@ -218,7 +218,7 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 									$i++;
 								}
 								if ($row['required'] && empty($field))
-									redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
+									redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 							}
 							else
 								$field = strprotect($field);
@@ -278,18 +278,18 @@ if ($valid && !empty($user_mail) && check_mail($user_mail))
 				}
 			}
 			elseif (!empty($_POST['register_valid']) && $password !== $password_bis)
-				redirect(HOST . DIR . '/member/register' . url('.php?error=pass_same') . '#errorh');
+				redirect('/member/register' . url('.php?error=pass_same') . '#errorh');
 			else
-				redirect(HOST . DIR . '/member/register' . url('.php?error=incomplete') . '#errorh');
+				redirect('/member/register' . url('.php?error=incomplete') . '#errorh');
 		}
 		else
-			redirect(HOST . DIR . '/member/register' . url('.php?error=lenght_mini') . '#errorh');
+			redirect('/member/register' . url('.php?error=lenght_mini') . '#errorh');
 	}
 	else
-		redirect(HOST . DIR . '/member/register' . url('.php?error=verif_code') . '#errorh');
+		redirect('/member/register' . url('.php?error=verif_code') . '#errorh');
 }
 elseif (!empty($user_mail))
-	redirect(HOST . DIR . '/member/register' . url('.php?error=invalid_mail') . '#errorh');
+	redirect('/member/register' . url('.php?error=invalid_mail') . '#errorh');
 else
 	redirect(get_start_page());
 	

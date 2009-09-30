@@ -61,7 +61,7 @@ $rewrited_title = ($CONFIG['rewrite'] == 1) ? '+' . url_encode_rewrite($topic['t
 
 //Redirection changement de catégorie.
 if (!empty($_POST['change_cat']))
-	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
+	redirect('/forum/forum' . url('.php?id=' . $_POST['change_cat'], '-' . $_POST['change_cat'] . $rewrited_cat_title . '.php', '&'));
 	
 //Autorisation en lecture.
 if (!$User->check_auth($CAT_FORUM[$topic['idcat']]['auth'], READ_CAT_FORUM) || !empty($CAT_FORUM[$topic['idcat']]['url']))
@@ -317,11 +317,11 @@ while ( $row = $Sql->fetch_assoc($result) )
 	$user_assoc_img = !empty($user_rank_icon) ? '<img src="../templates/' . get_utheme() . '/images/ranks/' . $user_rank_icon . '" alt="" />' : '';
 	
 	//Affichage des groupes du membre.		
-	if (!empty($row['user_groups']) && $_array_groups_auth) 
+	if (!empty($row['user_groups'])) 
 	{	
 		$user_groups = '';
 		$array_user_groups = explode('|', $row['user_groups']);
-		foreach ($_array_groups_auth as $idgroup => $array_group_info)
+		foreach (GroupsConfigData::get_groups() as $idgroup => $array_group_info)
 		{
 			if (is_numeric(array_search($idgroup, $array_user_groups)))
 				$user_groups .= !empty($array_group_info['img']) ? '<img src="../images/group/' . $array_group_info['img'] . '" alt="' . $array_group_info['name'] . '" title="' . $array_group_info['name'] . '"/><br />' : $LANG['group'] . ': ' . $array_group_info['name'] . '<br />';

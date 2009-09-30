@@ -46,16 +46,16 @@ if ($add_favorite > 0)//Ajout d'un favori
 	//on vérifie que l'article existe
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . $User->get_attribute('user_id') . "' AND id_article = '" . $add_favorite . "'", __LINE__, __FILE__);
 	if ($is_favorite == 0)
 	{
 		$Sql->query_inject("INSERT INTO " . PREFIX . "wiki_favorites (id_article, user_id) VALUES ('" . $add_favorite . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-		redirect(HOST . DIR . '/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
+		redirect('/wiki/' . url('favorites.php?error=e_already_favorite', '', '&') . '#errorh');
 }
 elseif ($remove_favorite > 0)
 {
@@ -65,7 +65,7 @@ elseif ($remove_favorite > 0)
 	//on vérifie que l'article existe
 	$article_infos = $Sql->query_array(PREFIX . "wiki_articles", "encoded_title", "WHERE id = '" . $remove_favorite . "'", __LINE__, __FILE__);
 	if (empty($article_infos['encoded_title'])) //L'article n'existe pas
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php', '', '&'));
+		redirect('/wiki/' . url('wiki.php', '', '&'));
 		
 	//On regarde que le sujet n'est pas en favoris
 	$is_favorite = $Sql->query("SELECT COUNT(*) FROM " . PREFIX . "wiki_favorites WHERE user_id = '" . $User->get_attribute('user_id') . "' AND id_article = '" . $remove_favorite . "'", __LINE__, __FILE__);
@@ -73,10 +73,10 @@ elseif ($remove_favorite > 0)
 	if ($is_favorite > 0)
 	{
 		$Sql->query_inject("DELETE FROM " . PREFIX . "wiki_favorites WHERE id_article = '" . $remove_favorite . "' AND user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
-		redirect(HOST . DIR . '/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
+		redirect('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'], '&'));
 	}
 	else //Erreur: l'article est déjà en favoris
-		redirect(HOST . DIR . '/wiki/' . url('favorites.php?error=e_no_favorite', '', '&') . '#errorh');
+		redirect('/wiki/' . url('favorites.php?error=e_no_favorite', '', '&') . '#errorh');
 }
 else
 {

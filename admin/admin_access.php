@@ -68,16 +68,16 @@ if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 				$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
 			}
 			else //plus d'essais
-				redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
+				redirect('/admin/admin_index.php?flood=0');
 		}
 		elseif ($info_connect['user_aprob'] == '0')
-			redirect(HOST . DIR . '/member/error.php?activ=1');
+			redirect('/member/error.php?activ=1');
 		elseif ($info_connect['user_warning'] == '100')
-			redirect(HOST . DIR . '/member/error.php?ban_w=1');
+			redirect('/member/error.php?ban_w=1');
 		else
 		{
 			$delay_ban = ceil((0 - $delay_ban)/60);
-			redirect(HOST . DIR . '/member/error.php?ban=' . $delay_ban);
+			redirect('/member/error.php?ban=' . $delay_ban);
 		}
 		
 		if (!empty($error_report)) //Erreur
@@ -85,18 +85,18 @@ if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
 			$info_connect['test_connect']++;
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
-			redirect(HOST . DIR . '/admin/admin_index.php?flood=' . $info_connect['test_connect']);
+			redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
 		}
 		elseif (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
 		{
 			$Session->end(); //Suppression de la session.
-			redirect(HOST . DIR . '/admin/admin_index.php?flood=0');
+			redirect('/admin/admin_index.php?flood=0');
 		}
 		else //Succès redonne tous les essais.
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
 	}
 	else
-		redirect(HOST . DIR . '/member/error.php?unexist=1');
+		redirect('/member/error.php?unexist=1');
 	
 	redirect(HOST . SCRIPT);
 }

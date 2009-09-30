@@ -55,6 +55,6 @@ $start_page = get_start_page();
 if ($start_page != HOST . DIR . '/index.php' && $start_page != './index.php') //Empêche une boucle de redirection.
 	redirect($start_page);
 else
-	redirect(HOST . DIR . '/member/member.php');
+	redirect('/member/member.php');
 
 ?>

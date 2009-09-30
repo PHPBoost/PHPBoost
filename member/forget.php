@@ -62,7 +62,7 @@ if (!$User->check_level(MEMBER_LEVEL))
 					$Mail->send_from_properties($user_mail, $LANG['forget_mail_activ_pass'], sprintf($LANG['forget_mail_pass'], $login, HOST, (HOST . DIR), $user_id, $activ_pass, $new_pass, $CONFIG['sign']), $CONFIG['mail_exp']);
 
 					//Affichage de la confirmation.
-					redirect(HOST . DIR . '/member/forget.php?error=forget_mail_send');
+					redirect('/member/forget.php?error=forget_mail_send');
 				}
 				else
 					$Errorh->handler($LANG['e_mail_forget'], E_USER_NOTICE);
@@ -116,13 +116,13 @@ if (!$User->check_level(MEMBER_LEVEL))
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET activ_pass = '', new_pass = '' WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
 			
 			//Affichage de la confirmation de réussite.
-			redirect(HOST . DIR . '/member/error.php?e=e_forget_confirm_change');
+			redirect('/member/error.php?e=e_forget_confirm_change');
 		}
 		else //Affichage de l'echec.
-			redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
+			redirect('/member/forget.php?error=forget_echec_change');
 	}	
 	else //Affichage de l'echec.
-		redirect(HOST . DIR . '/member/forget.php?error=forget_echec_change');
+		redirect('/member/forget.php?error=forget_echec_change');
 }
 else
 	redirect(get_start_page());

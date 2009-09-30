@@ -38,9 +38,9 @@ require_once('../kernel/header.php');
 //Redirection changement de catégorie.
 $change_cat = retrieve(POST, 'change_cat', '');
 if (!empty($change_cat))
-	redirect(HOST . DIR . '/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
+	redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . $rewrited_title . '.php', '&'));
 if (!$User->check_level(MEMBER_LEVEL)) //Réservé aux membres.
-	redirect(HOST . DIR . '/member/error.php'); 
+	redirect('/member/error.php'); 
 
 if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du membre.
 {
@@ -186,7 +186,7 @@ if ($User->check_level(MEMBER_LEVEL)) //Affichage des message()s non lu(s) du me
 	$Template->pparse('forum_topics');
 }
 else
-	redirect(HOST . DIR . '/forum/index.php' . SID2);
+	redirect('/forum/index.php' . SID2);
 
 include('../kernel/footer.php');
 

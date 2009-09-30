@@ -96,10 +96,10 @@ if (!empty($_POST['valid']))
 
 		$Sql->query_inject("INSERT INTO " . PREFIX . "poll (question,answers,votes,type,archive,timestamp,visible,start,end,user_id) VALUES ('" . $question . "', '" . substr($answers, 0, strlen($answers) - 1) . "', '" . substr($votes, 0, strlen($votes) - 1) . "', '" . $type . "', '" . $archive . "', '" . $timestamp . "', '" . $visible . "', '" . $start_timestamp . "', '" . $end_timestamp . "', '" . $User->get_attribute('user_id') . "')", __LINE__, __FILE__);
 				
-		redirect(HOST . DIR . '/poll/admin_poll.php');
+		redirect('/poll/admin_poll.php');
 	}
 	else
-		redirect(HOST . DIR . '/poll/admin_poll_add.php?error=incomplete#errorh');
+		redirect('/poll/admin_poll_add.php?error=incomplete#errorh');
 }
 else	
 {		

@@ -116,10 +116,10 @@ if (!empty($_POST['valid']) && !empty($id))
 			$Cache->Generate_module_file('forum'); //Régénération du cache.
 	}
 	else
-		redirect(HOST . DIR . '/forum/admin_forum.php?id=' . $id . '&error=incomplete');
+		redirect('/forum/admin_forum.php?id=' . $id . '&error=incomplete');
 	
     forum_generate_feeds();
-	redirect(HOST . DIR . '/forum/admin_forum.php');
+	redirect('/forum/admin_forum.php');
 }
 elseif (!empty($del)) //Suppression de la catégorie/sous-catégorie.
 {
@@ -242,7 +242,7 @@ elseif (!empty($id) && !empty($move)) //Monter/descendre.
 	
 	//Catégorie existe?
 	if (!isset($CAT_FORUM[$id]))
-		redirect(HOST . DIR . '/forum/admin_forum.php');
+		redirect('/forum/admin_forum.php');
 	
 	require_once('../forum/admin_forum.class.php');
 	$admin_forum = new Admin_forum();

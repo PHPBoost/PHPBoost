@@ -282,7 +282,7 @@ elseif(retrieve(POST,'submit',false))
 					ContributionService::save_contribution($articles_contribution);
 
 					//Redirection to the contribution confirmation page
-					redirect(HOST . DIR . '/articles/contribution.php');
+					redirect('/articles/contribution.php');
 				}
 			}
 

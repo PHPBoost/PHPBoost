@@ -92,13 +92,13 @@ elseif (!empty($_POST['valid']))
 				$Sql->query_inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTEND . " CHANGE " . $previous_name . " " . $new_field_name, __LINE__, __FILE__);
 			$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER_EXTEND_CAT . " SET name = '" . $name . "', field_name = '" . $field_name . "', contents = '" . $contents . "', field = '" . $field . "', possible_values = '" . $possible_values . "', default_values = '" . $default_values . "', required = '" . $required . "', regex = '" . $regex . "' WHERE id = '" . $id . "'", __LINE__, __FILE__);
 			
-			redirect(HOST . DIR . '/admin/admin_extend_field.php');
+			redirect('/admin/admin_extend_field.php');
 		}
 		else
-			redirect(HOST . DIR . '/admin/admin_extend_field_add.php?error=exist_field#errorh');
+			redirect('/admin/admin_extend_field_add.php?error=exist_field#errorh');
 	}
 	else
-		redirect(HOST . DIR . '/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
+		redirect('/admin/admin_extend_field.php?id=' . $id . '&error=incomplete#errorh');
 }
 elseif ((!empty($top) || !empty($bottom)) && !empty($id)) //Monter/descendre.
 {

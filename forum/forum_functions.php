@@ -69,7 +69,7 @@ function forum_list_user_online($sql_condition)
 //Liste des catégories du forum.
 function forum_list_cat($id_select, $level)
 {
-	global $Group, $CAT_FORUM, $AUTH_READ_FORUM;
+	global $CAT_FORUM, $AUTH_READ_FORUM;
 	
 	$select = '';
 	foreach ($CAT_FORUM as $idcat => $array_cat)

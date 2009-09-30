@@ -43,10 +43,10 @@ if (!empty($_POST['valid']))
 	{	
 		$Sql->query_inject("INSERT INTO " . PREFIX . "web (idcat,title,contents,url,compt,aprob,timestamp,users_note,nbrnote,note,nbr_com) VALUES('" . $idcat . "', '" . $title . "', '" . $contents . "', '" . $url . "', '" . $compt . "', '" . $aprob . "', '" . time() . "', '0', '0', '0', '0')", __LINE__, __FILE__);
 		
-		redirect(HOST . DIR . '/web/admin_web.php');
+		redirect('/web/admin_web.php');
 	}
 	else
-		redirect(HOST . DIR . '/web/admin_web_add.php?error=incomplete#errorh');
+		redirect('/web/admin_web_add.php?error=incomplete#errorh');
 }
 elseif (!empty($_POST['previs']))
 {

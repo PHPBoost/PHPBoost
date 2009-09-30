@@ -129,10 +129,10 @@ if (!empty($_POST['add'])) //Nouveau forum/catégorie.
 		$Cache->Generate_module_file('forum');
 		
 		forum_generate_feeds();
-		redirect(HOST . DIR . '/forum/admin_forum.php');
+		redirect('/forum/admin_forum.php');
 	}
 	else
-		redirect(HOST . DIR . '/forum/admin_forum_add.php?error=incomplete#errorh');
+		redirect('/forum/admin_forum_add.php?error=incomplete#errorh');
 }
 else
 {
