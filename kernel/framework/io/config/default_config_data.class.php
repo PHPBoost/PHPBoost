@@ -40,8 +40,26 @@ class DefaultConfigData implements ConfigData
 {
 	private $properties_map = array();
 
+	/**
+	 * This method is not used in the configuration context.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/cache/CacheData#synchronize()
+	 */
 	public function synchronize() {}
-	
+
+	/**
+	 * Redefine this method if you want to avoid getting errors while asking values.
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/config/ConfigData#set_default_values()
+	 */
+	public function set_default_values()
+	{
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/config/ConfigData#get_property($name)
+	 */
 	public function get_property($name)
 	{
 		if (!empty($this->properties_map[$name]))
@@ -54,21 +72,33 @@ class DefaultConfigData implements ConfigData
 		}
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see kernel/framework/io/config/ConfigData#set_property($name, $value)
+	 */
 	public function set_property($name, $value)
 	{
 		$this->properties_map[$name] = $value;
 	}
-	
-	public static function load($config_name, $default_config_classname)
+
+	/**
+	 * Loads a config entry and creates it if it doesn't already exists.
+	 * @param $config_name The name of the module owning the configuration
+	 * @param $default_config_classname The name of the class of which the expected result
+	 * is an instance. It's used to create the default value if it doesn't already exists.
+	 * @param $entry_name Name of the entry if the module has many entries.
+	 * @return ConfigData
+	 */
+	public static function load($config_name, $default_config_classname, $entry_name = '')
 	{
 		try
 		{
-			return ConfigManager::load($default_config_classname, $config_name);
+			return ConfigManager::load($config_name, $entry_name);
 		}
 		catch(ConfigNotFoundException $e)
 		{
 			$config = new $default_config_classname();
-			$config->restore_default();
+			$config->set_default_values();
 			ConfigManager::save($config_name, $config);
 			return $config;
 		}
