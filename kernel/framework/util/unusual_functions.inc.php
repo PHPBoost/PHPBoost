@@ -1,16 +1,10 @@
 <?php
-/**
-* @package util
-*/
-
 /*##################################################
- *                                constant.php
+ *                         unusual_functions.inc.php
  *                            -------------------
  *   begin                : April 26, 2008
  *   copyright            : (C) 2008 Viarre Régis
  *   email                : crowkait@phpboost.com
- *
- *   Constantes utiles
  *
 ###################################################
  *
@@ -29,6 +23,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
 ###################################################*/
+
+/**
+* @package util
+*/
 
 /**
  * @desc Unsets all the variables automatically set by the register_globals option.

@@ -97,7 +97,7 @@ class ArticlesInterface extends ModuleInterface
 
 		$weight = isset($args['weight']) && is_numeric($args['weight']) ? $args['weight'] : 1;
 
-		$user = Environment::get_instance()->get_user();
+		$user = EnvironmentServices::get_user();
 		
 		//Catégories non autorisées.
 		$unauth_cats_sql = array();

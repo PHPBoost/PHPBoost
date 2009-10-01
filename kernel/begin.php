@@ -36,12 +36,12 @@ $Errorh = new Errors();
 $Cache = new Cache();
 /* END DEPRECATED */
 
-Environment::get_instance()->init();
+Environment::init();
 
-$Sql = Environment::get_instance()->get_db_connection();
-$Bread_crumb = Environment::get_instance()->get_breadcrumb();
-$Session = Environment::get_instance()->get_session();
-$User = Environment::get_instance()->get_user();
+$Sql = EnvironmentServices::get_db_connection();
+$Bread_crumb = EnvironmentServices::get_breadcrumb();
+$Session = EnvironmentServices::get_session();
+$User = EnvironmentServices::get_user();
 
 // This is also a deprecated variable and has to be created
 // after the environment initialization
