@@ -56,10 +56,10 @@ $Template->assign_vars(array(
 
 if ($CONFIG['bench'])
 {
-	$Bench->stop(); //On arrête le bench.
+	EnvironmentServices::get_bench()->stop(); //On arrête le bench.
 	$Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
-		'BENCH' => $Bench->to_string(), //Fin du benchmark
+		'BENCH' => EnvironmentServices::get_bench()->to_string(), //Fin du benchmark
 		'REQ' => $Sql->get_executed_requests_number(),
 		'L_UNIT_SECOND' => HOST,
 		'L_REQ' => $LANG['sql_req'],

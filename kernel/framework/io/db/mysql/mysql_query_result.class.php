@@ -43,7 +43,7 @@ class MysqlQueryResult implements QueryResult
     /**
      * @var bool
      */
-    private $has_next = false;
+    private $has_next = true;
     
     /**
      * @var bool
@@ -66,7 +66,7 @@ class MysqlQueryResult implements QueryResult
     
     public function has_next()
     {
-        if ($this->move_intern_resource)
+        if ($this->has_next && $this->move_intern_resource)
         {
             $next = mysql_fetch_assoc($this->resource);
             $this->has_next = ($next !== false);
@@ -78,13 +78,16 @@ class MysqlQueryResult implements QueryResult
     
     public function next()
     {
+        if (!$this->has_next)
+        {
+            $this->dispose();
+        }
         $this->move_intern_resource = true;
         return $this->next;
     }
     
     public function dispose()
     {
-        die('dispose...');
         if (is_resource($this->resource))
         {
 			if (!@mysql_free_result($this->resource))

@@ -71,7 +71,7 @@ class MySQLDBConnection implements DBConnection
 
     public function __destruct()
     {
-        $this->close();
+        $this->disconnect();
     }
 
     public function is_connected()
@@ -101,7 +101,7 @@ class MySQLDBConnection implements DBConnection
         return $this->link;
     }
 
-    public function close()
+    public function disconnect()
     {
         if ($this->is_connected())
         {
