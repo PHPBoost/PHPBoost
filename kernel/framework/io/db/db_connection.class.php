@@ -43,14 +43,14 @@ interface DBConnection
     
     /**
      * @desc
-     * @return DBLink
      */
-    function get_link();
+    function disconnect();
     
     /**
      * @desc
+     * @return DBLink
      */
-    function close();
+    function get_link();
 }
 
 ?>

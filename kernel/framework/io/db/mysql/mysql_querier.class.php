@@ -31,63 +31,80 @@ import('io/db/mysql/mysql_query_result');
 
 class MySQLQuerier implements SQLQuerier
 {
-    /**
-     * @var int
-     */
-    private $executed_resquests_count;
+	/**
+	 * @var int
+	 */
+	private $executed_resquests_count;
 
-    /**
-     * @var DBConnection
-     */
-    private $connection;
+	/**
+	 * @var DBConnection
+	 */
+	private $connection;
 
-    public function __construct(DBConnection $connection)
-    {
-        if (!$connection->is_connected())
-        {
-            $connection->connect();
-        }
-        $this->connection = $connection;
-    }
+	public function __construct(DBConnection $connection)
+	{
+		if (!$connection->is_connected())
+		{
+			$connection->connect();
+		}
+		$this->connection = $connection;
+	}
 
-    public function select($query)
-    {
-        $query = $this->translate_query($query);
-        $this->inc_executed_resquests_count();
-        $resource = mysql_query($query, $this->connection->get_link());
-        return new MysqlQueryResult($resource);
-    }
+	public function select($query, $parameters = array())
+	{
+		$query = $this->transform_query($query, $parameters);
+		$this->inc_executed_resquests_count();
+		$resource = mysql_query($query, $this->connection->get_link());
+		return new MysqlQueryResult($resource);
+	}
 
-    public function inject($query)
-    {
-        $query = $this->translate_query($query);
-        $this->inc_executed_resquests_count();
-        $resource = mysql_query($query, $this->connection->get_link());
-        if ($resource === false)
-        {
-            throw new MySQLQuerierException('invalid inject request');
-        }
-    }
+	public function inject($query, $parameters = array())
+	{
+		$query = $this->transform_query($query, $parameters);
+		$this->inc_executed_resquests_count();
+		$resource = mysql_query($query, $this->connection->get_link());
+		if ($resource === false)
+		{
+			throw new MySQLQuerierException('invalid inject request');
+		}
+	}
 
-    public function get_executed_requests_count()
-    {
-        return $this->executed_resquests_count;
-    }
+	public function get_executed_requests_count()
+	{
+		return $this->executed_resquests_count;
+	}
 
-    public function get_last_inserted_id()
-    {
-        return mysql_insert_id();
-    }
+	public function get_last_inserted_id()
+	{
+		return mysql_insert_id();
+	}
 
-    private function translate_query(&$query)
-    {
-        return $query;
-    }
+	private function transform_query(&$query, &$parameters)
+	{
+		return $this->set_parameters($this->translate_query($query), $parameters);
+	}
 
-    private function inc_executed_resquests_count()
-    {
-        $this->executed_resquests_count++;
-    }
+	private function set_parameters(&$query, &$parameters)
+	{
+		foreach ($parameters as $parameter_name => $value)
+		{
+			$query = str_replace(
+			self::QUERY_VAR_PREFIX . $parameter_name,
+			mysql_real_escape_string($value),
+			$query);
+		}
+		return $query;
+	}
+
+	private function translate_query(&$query)
+	{
+		return $query;
+	}
+
+	private function inc_executed_resquests_count()
+	{
+		$this->executed_resquests_count++;
+	}
 }
 
 ?>

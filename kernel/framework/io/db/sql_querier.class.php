@@ -29,18 +29,20 @@ import('io/db/sql_querier_exception');
 
 interface SQLQuerier
 {
+	const QUERY_VAR_PREFIX = ':';
+	
     /**
      * @desc
      * @param string $query
      * @return QueryResult
      */
-    function select($query);
+    function select($query, $parameters = array());
     
     /**
      * @desc
      * @param string $query
      */
-    function inject($query);
+    function inject($query, $parameters = array());
     
     /**
      * @desc
