@@ -592,6 +592,15 @@ class Environment
 				$ip = getenv('REMOTE_ADDR');
 			}
 		}
+
+		if (preg_match('`[a-z0-9:.]{7,}`', $ip))
+		{
+			return $ip;
+		}
+		else
+		{
+			return '0.0.0.0';
+		}
 	}
 }
 
