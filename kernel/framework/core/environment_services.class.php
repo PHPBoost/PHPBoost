@@ -1,10 +1,10 @@
 <?php
 /*##################################################
- *                          environment.class.php
+ *                     environment_services.class.php
  *                            -------------------
- *   begin                : September 28, 2009
- *   copyright            : (C) 2009 Benoit Sautel, Loïc Rouchon
- *   email                : ben.popeye@phpboost.com, horn@phpboost.com
+ *   begin                : October 01, 2009
+ *   copyright            : (C) 2009 Benoit Sautel
+ *   email                : ben.popeye@phpboost.com
  *
  *
  ###################################################
@@ -26,10 +26,10 @@
  ###################################################*/
 
 /**
+ * @desc This class manages all the environment services.
+ * It's able to create each of them and return them.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
- *
  */
-
 class EnvironmentServices
 {
 	/**
