@@ -35,7 +35,7 @@
  * This function must be called only if the register_globals option is enable, otherwise it is useless.
  * @author PHPBB 3 <http://www.phpbb.com/>
  */
-function securit_register_globals()
+function cancel_register_globals_effect()
 {
     $not_unset = array(
         'GLOBALS'   => true,

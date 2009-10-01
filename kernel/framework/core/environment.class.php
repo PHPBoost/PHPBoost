@@ -227,7 +227,7 @@ class Environment
 		strtolower(@ini_get('register_globals')) == 'on')
 		{
 			require_once PATH_TO_ROOT . '/kernel/framework/util/unusual_functions.inc.php';
-			securit_register_globals();
+			cancel_register_globals_effect();
 		}
 
 		if (get_magic_quotes_gpc())
