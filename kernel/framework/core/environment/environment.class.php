@@ -26,6 +26,8 @@
  ###################################################*/
 
 /**
+ * @package core
+ * @subpackage environment
  * This class manages all the environment that PHPBoost need to run.
  * <p>It's able to initialize the environment that contains services (database,
  * users management...) as well as the graphical environment.</p>
@@ -37,63 +39,28 @@ class Environment
 	/**
 	 * @var string
 	 */
-	private static $title = '';
+	private static $page_title = '';
 	/**
-	 * @var bool
+	 * @var GraphicalEnvironment
 	 */
-	private static $display_enabled = true;
+	private static $graphical_environment = null;
 
 	/**
 	 * Sets the page title
 	 * @param $title The current page's title
 	 */
-	public static function set_title($title)
+	public static function set_page_title($title)
 	{
-		self::$title = $title;
+		self::$page_title = $title;
 	}
 
 	/**
 	 * Returns the current page's title
 	 * @return string The title
 	 */
-	public static function get_title()
+	public static function get_page_title()
 	{
-		return self::$title;
-	}
-
-	/**
-	 * Enables the graphical environment display. By default, it's displayed.
-	 */
-	public static function enable_display()
-	{
-		self::$display_enabled = true;
-	}
-
-	/**
-	 * Disables the graphical environment display. By default, it's displayed.
-	 */
-	public static function disable_display()
-	{
-		self::$display_enabled = false;
-	}
-
-	/**
-	 * Tells whether the graphical environment has to be displayed.
-	 * @return bool true if it has, false otherwise.
-	 */
-	public static function is_display_enabled()
-	{
-		return self::$display_enabled;
-	}
-
-	private static function init_services()
-	{
-		EnvironmentServices::init_bench();
-		EnvironmentServices::init_breadcrumb();
-		EnvironmentServices::init_db_connection();
-		EnvironmentServices::get_db_connection()->auto_connect();
-
-		EnvironmentServices::init_session();
+		return self::$page_title;
 	}
 
 	/**
@@ -107,7 +74,8 @@ class Environment
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');
-		import('core/environment_services');
+		import('core/environment/environment_services');
+		import('core/environment/graphical_environment');
 		import('core/errors');
 		import('db/mysql');
 		import('io/template/template');
@@ -136,6 +104,16 @@ class Environment
 		self::process_changeday_tasks_if_needed();
 		self::check_current_page_auth();
 		self::csrf_protect_post_requests();
+	}
+
+	private static function init_services()
+	{
+		EnvironmentServices::init_bench();
+		EnvironmentServices::init_breadcrumb();
+		EnvironmentServices::init_db_connection();
+		EnvironmentServices::get_db_connection()->auto_connect();
+
+		EnvironmentServices::init_session();
 	}
 
 	private static function fit_to_php_configuration()
@@ -593,7 +571,7 @@ class Environment
 			}
 		}
 
-		if (preg_match('`[a-z0-9:.]{7,}`', $ip))
+		if (preg_match('`^[a-z0-9:.]{7,}$`', $ip))
 		{
 			return $ip;
 		}
@@ -601,6 +579,45 @@ class Environment
 		{
 			return '0.0.0.0';
 		}
+	}
+
+	/**
+	 * Displays the top of the page.
+	 */
+	public static function display_header()
+	{
+		self::get_graphical_environment()->display_header();
+	}
+
+	/**
+	 * Displays the bottom of the page.
+	 */
+	public static function display_footer()
+	{
+		self::get_graphical_environment()->display_footer();
+	}
+
+	/**
+	 * @return GraphicalEnvironment
+	 */
+	private static function get_graphical_environment()
+	{
+		if (self::$graphical_environment === null)
+		{
+			//Default graphical environment
+			import('core/environment/site_display_graphical_environment');
+			self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
+		}
+		return self::$graphical_environment;
+	}
+
+	public static function set_graphical_environment(GraphicalEnvironment $env)
+	{
+		self::$graphical_environment = $env;
+	}
+
+	public static function destroy()
+	{
 	}
 }
 
