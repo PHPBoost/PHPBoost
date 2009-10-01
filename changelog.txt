@@ -10,6 +10,9 @@
 - [color=red]Nouveauté:[/color] Possibilité d'utiliser un serveur smtp pour l'envoi de mails.
 - [color=red]Nouveauté:[/color] Système d'alertes (javascript) utilisateur évolué.
 - [color=red]Nouveauté:[/color] Nouveau thème pour la distribution complete.
+- [color=red]Nouveauté:[/color] Refonte complète du gestionnaire de cache
+- [color=red]Nouveauté:[/color] Création d'un gestionnaire de configuration, stockant de façon autonome les données et s'appuyant sur le gestionnaire de cache pour le rendre plus performant.
+- [color=red]Nouveauté:[/color] Regroupement de toutes les notions du noyau dans une classe Environment de façon à rendre le code considérablement plus maintenable.
 - Possibilité de spécifier le niveau d'accès pour voir la liste des membres.
 - Amélioration de la génération du formulaire d'autorisation.
 [*] Amélioration de la récupération des erreurs.
