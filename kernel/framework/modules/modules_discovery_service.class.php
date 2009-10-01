@@ -167,7 +167,7 @@ class ModulesDiscoveryService
             if (in_array($module_id, $this->availables_modules))
             {   // The interface is available
                 global $MODULES;
-				$user = Environment::get_instance()->get_user();
+				$user = EnvironmentServices::get_user();
                 if (!$user->check_auth($MODULES[$module_id]['auth'], ACCESS_MODULE))
                 {   // ACCESS DENIED
                     $module->set_error(ACCES_DENIED);

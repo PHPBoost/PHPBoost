@@ -35,144 +35,65 @@
 class Environment
 {
 	/**
-	 * @var Environment
-	 */
-	private static $instance = null;
-	/**
 	 * @var string
 	 */
-	private $title = '';
+	private static $title = '';
 	/**
 	 * @var bool
 	 */
-	private $display_enabled = true;
-	/**
-	 * @var BreadCrumb
-	 */
-	private $breadcrumb;
-	/**
-	 * @var Bench
-	 */
-	private $bench;
-	/**
-	 * @var Sql
-	 */
-	private $db_connection;
-	/**
-	 * @var Session
-	 */
-	private $session;
-	/**
-	 * @var User
-	 */
-	private $user;
-
-	/**
-	 * Returns the instance of the Environment object (singleton design pattern)
-	 * @return Environment
-	 */
-	public static function get_instance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new Environment();
-			self::$instance->init_services();
-		}
-		return self::$instance;
-	}
-
-	protected function __construct()
-	{
-		$this->bench = new Bench();
-		$this->breadcrumb = new BreadCrumb();
-
-		$this->db_connection = new Sql();
-	}
+	private static $display_enabled = true;
 
 	/**
 	 * Sets the page title
 	 * @param $title The current page's title
 	 */
-	public function set_title($title)
+	public static function set_title($title)
 	{
-		$this->title = $title;
+		self::$title = $title;
 	}
 
 	/**
 	 * Returns the current page's title
 	 * @return string The title
 	 */
-	public function get_title()
+	public static function get_title()
 	{
-		return $this->title;
+		return self::$title;
 	}
 
 	/**
 	 * Enables the graphical environment display. By default, it's displayed.
 	 */
-	public function enable_display()
+	public static function enable_display()
 	{
-		$this->display_enabled = true;
+		self::$display_enabled = true;
 	}
 
 	/**
 	 * Disables the graphical environment display. By default, it's displayed.
 	 */
-	public function disable_display()
+	public static function disable_display()
 	{
-		$this->display_enabled = false;
+		self::$display_enabled = false;
 	}
 
 	/**
 	 * Tells whether the graphical environment has to be displayed.
 	 * @return bool true if it has, false otherwise.
 	 */
-	public function is_display_enabled()
+	public static function is_display_enabled()
 	{
-		return $this->display_enabled;
+		return self::$display_enabled;
 	}
 
-	/**
-	 * Returns the current page's bread crumb/
-	 * @return BreadCrumb
-	 */
-	public function get_breadcrumb()
+	private static function init_services()
 	{
-		return $this->breadcrumb;
-	}
+		EnvironmentServices::init_bench();
+		EnvironmentServices::init_breadcrumb();
+		EnvironmentServices::init_db_connection();
+		EnvironmentServices::get_db_connection()->auto_connect();
 
-	/**
-	 * Returns the data base connection
-	 * @return Sql
-	 */
-	public function get_db_connection()
-	{
-		return $this->db_connection;
-	}
-
-	/**
-	 * Returns the current user's session
-	 * @return Session
-	 */
-	public function get_session()
-	{
-		return $this->session;
-	}
-
-	/**
-	 * Returns the current user
-	 * @return User
-	 */
-	public function get_user()
-	{
-		return $this->user;
-	}
-
-	private function init_services()
-	{
-		$this->db_connection->auto_connect();
-
-		$this->session = new Session();
+		EnvironmentServices::init_session();
 	}
 
 	/**
@@ -186,6 +107,7 @@ class Environment
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');
+		import('core/environment_services');
 		import('core/errors');
 		import('db/mysql');
 		import('io/template/template');
@@ -200,19 +122,20 @@ class Environment
 	/**
 	 * Inits the environment and all its services.
 	 */
-	public function init()
+	public static function init()
 	{
+		self::init_services();
 		self::fit_to_php_configuration();
 		self::load_static_constants();
 		self::write_http_headers();
 		self::load_cache();
 		self::load_dynamic_constants();
-		$this->init_session();
+		self::init_session();
 		self::init_output_bufferization();
 		self::load_lang_files();
-		$this->process_changeday_tasks_if_needed();
-		$this->check_current_page_auth();
-		$this->csrf_protect_post_requests();
+		self::process_changeday_tasks_if_needed();
+		self::check_current_page_auth();
+		self::csrf_protect_post_requests();
 	}
 
 	private static function fit_to_php_configuration()
@@ -336,7 +259,7 @@ class Environment
 		header('Pragma: no-cache');
 	}
 
-	private function load_cache()
+	private static function load_cache()
 	{
 		global $Cache;
 		$CONFIG = array();
@@ -357,21 +280,21 @@ class Environment
 		define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '');
 	}
 
-	private function init_session()
+	private static function init_session()
 	{
 		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG, $CONFIG_USER;
-		$this->session->load();
-		$this->session->act();
+		EnvironmentServices::get_session()->load();
+		EnvironmentServices::get_session()->act();
 
-		$this->user = new User();
+		EnvironmentServices::init_user();
 
 		// TODO do we need to keep that feature? It's not supported every where
-		if ($this->session->supports_cookies())
+		if (EnvironmentServices::get_session()->supports_cookies())
 		{
-			define('SID', 'sid=' . $this->user->get_attribute('session_id') .
-				'&amp;suid=' . $this->user->get_attribute('user_id'));
-			define('SID2', 'sid=' . $this->user->get_attribute('session_id') .
-				'&suid=' . $this->user->get_attribute('user_id'));
+			define('SID', 'sid=' . EnvironmentServices::get_user()->get_attribute('session_id') .
+				'&amp;suid=' . EnvironmentServices::get_user()->get_attribute('user_id'));
+			define('SID2', 'sid=' . EnvironmentServices::get_user()->get_attribute('session_id') .
+				'&suid=' . EnvironmentServices::get_user()->get_attribute('user_id'));
 		}
 		else
 		{
@@ -379,26 +302,26 @@ class Environment
 			define('SID2', '');
 		}
 
-		$user_theme = $this->user->get_attribute('user_theme');
+		$user_theme = EnvironmentServices::get_user()->get_attribute('user_theme');
 		//Is that theme authorized for this member? If not, we assign it the default theme
 		if ($CONFIG_USER['force_theme'] == 1 || !isset($THEME_CONFIG[$user_theme]['secure'])
-		|| !$this->user->check_level($THEME_CONFIG[$user_theme]['secure']))
+		|| !EnvironmentServices::get_user()->check_level($THEME_CONFIG[$user_theme]['secure']))
 		{
 			$user_theme = $CONFIG['theme'];
 		}
 		//If the user's theme doesn't exist, we assign it a default one which exists
 		$user_theme = find_require_dir(PATH_TO_ROOT . '/templates/', $user_theme);
-		$this->user->set_user_theme($user_theme);
+		EnvironmentServices::get_user()->set_user_theme($user_theme);
 
-		$user_lang = $this->user->get_attribute('user_lang');
+		$user_lang = EnvironmentServices::get_user()->get_attribute('user_lang');
 		//Is that member authorized to use this lang? If not, we assign it the default lang
 		if (!isset($LANGS_CONFIG[$user_lang]['secure']) ||
-		!$this->user->check_level($LANGS_CONFIG[$user_lang]['secure']))
+		!EnvironmentServices::get_user()->check_level($LANGS_CONFIG[$user_lang]['secure']))
 		{
 			$user_lang = $CONFIG['lang'];
 		}
 		$user_lang = find_require_dir(PATH_TO_ROOT . '/lang/', $user_lang);
-		$this->user->set_user_lang($user_lang);
+		EnvironmentServices::get_user()->set_user_lang($user_lang);
 	}
 
 	private static function init_output_bufferization()
@@ -422,9 +345,9 @@ class Environment
 		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php');
 	}
 
-	private function process_changeday_tasks_if_needed()
+	private static function process_changeday_tasks_if_needed()
 	{
-		global $_record_day;
+		global $_record_day, $Cache;
 		//If the day changed compared to the last request, we execute the daily tasks
 		if (gmdate_format('j', time(), TIMEZONE_SITE) != $_record_day && !empty($_record_day))
 		{
@@ -439,7 +362,7 @@ class Environment
 			{
 				$yesterday_timestamp = self::get_yesterday_timestamp();
 
-				$num_entry_today = $this->db_connection->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
+				$num_entry_today = EnvironmentServices::get_db_connection()->query("SELECT COUNT(*) FROM " . DB_TABLE_STATS
 				. " WHERE stats_year = '" . gmdate_format('Y', $yesterday_timestamp,
 				TIMEZONE_SYSTEM) . "' AND stats_month = '" . gmdate_format('m',
 				$yesterday_timestamp, TIMEZONE_SYSTEM) . "' AND stats_day = '" . gmdate_format(
@@ -449,50 +372,50 @@ class Environment
 				{
 					$Cache->generate_file('day');
 
-					$this->perform_changeday();
+					self::perform_changeday();
 				}
 			}
 			$lock_file->close();
 		}
 	}
 
-	private function perform_changeday()
+	private static function perform_changeday()
 	{
 		global $CONFIG_USER;
 
-		$this->perform_stats_changeday();
+		self::perform_stats_changeday();
 
-		$this->clear_all_temporary_cache_files();
+		self::clear_all_temporary_cache_files();
 
-		$this->execute_modules_changedays_tasks();
+		self::execute_modules_changedays_tasks();
 
-		$this->remove_old_unactivated_member_accounts();
+		self::remove_old_unactivated_member_accounts();
 
-		$this->remove_captcha_entries();
+		self::remove_captcha_entries();
 
-		$this->check_updates();
+		self::check_updates();
 	}
 
-	private function perform_stats_changeday()
+	private static function perform_stats_changeday()
 	{
 		$yesterday_timestamp =self::get_yesterday_timestamp();
 
 		//We insert today's entry in the stats table
-		$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
+		EnvironmentServices::get_db_connection()->query_inject("INSERT INTO " . DB_TABLE_STATS . " (stats_year, stats_month, " .
 		"stats_day, nbr, pages, pages_detail) VALUES ('" . gmdate_format('Y',
 		$yesterday_timestamp, TIMEZONE_SYSTEM) . "', '" . gmdate_format('m', $yesterday_timestamp,
 		TIMEZONE_SYSTEM) . "', '" . gmdate_format('d', $yesterday_timestamp, TIMEZONE_SYSTEM) .
 		"', 0, 0, '')", __LINE__, __FILE__);
 
 		//We retrieve the id we just come to create
-		$last_stats = $this->db_connection->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
+		$last_stats = EnvironmentServices::get_db_connection()->insert_id("SELECT MAX(id) FROM " . PREFIX . "stats");
 
-		$this->db_connection->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		EnvironmentServices::get_db_connection()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET yesterday_visit = today_visit", __LINE__, __FILE__);
-		$this->db_connection->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
+		EnvironmentServices::get_db_connection()->query_inject("UPDATE " . DB_TABLE_STATS_REFERER .
 			" SET today_visit = 0, nbr_day = nbr_day + 1", __LINE__, __FILE__);
 		//We delete the referer entries older than one week
-		$this->db_connection->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
+		EnvironmentServices::get_db_connection()->query_inject("DELETE FROM " . DB_TABLE_STATS_REFERER .
 		" WHERE last_update < '" . (self::get_yesterday_timestamp()) . "'", __LINE__, __FILE__);
 
 		//We retrieve the number of pages seen until now
@@ -504,31 +427,31 @@ class Environment
 		$pages_file->delete();
 
 		//How much visitors were there today?
-		$total_visit = $this->db_connection->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
+		$total_visit = EnvironmentServices::get_db_connection()->query("SELECT total FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id = 1", __LINE__, __FILE__);
 		//We truncate the table containing the visitors of today
-		$this->db_connection->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
+		EnvironmentServices::get_db_connection()->query_inject("DELETE FROM " . DB_TABLE_VISIT_COUNTER .
 			" WHERE id <> 1", __LINE__, __FILE__);
 		//We update the last changeday date
-		$this->db_connection->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
+		EnvironmentServices::get_db_connection()->query_inject("UPDATE " . DB_TABLE_VISIT_COUNTER .
 			" SET time = '" . gmdate_format('Y-m-d', time(), TIMEZONE_SYSTEM) . 
 				"', total = 1 WHERE id = 1", __LINE__, __FILE__);
 		//We insert this visitor as a today visitor
-		$this->db_connection->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
+		EnvironmentServices::get_db_connection()->query_inject("INSERT INTO " . DB_TABLE_VISIT_COUNTER .
 			" (ip, time, total) VALUES('" . USER_IP . "', '" . gmdate_format('Y-m-d', time(), 
 		TIMEZONE_SYSTEM) . "', '0')", __LINE__, __FILE__);
 
 		//We update the stats table: the number of visits today
-		$this->db_connection->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
+		EnvironmentServices::get_db_connection()->query_inject("UPDATE " . DB_TABLE_STATS . " SET nbr = '" . $total_visit .
 		"', pages = '" . array_sum($pages_displayed) . "', pages_detail = '" . 
 		addslashes(serialize($pages_displayed)) . "' WHERE id = '" . $last_stats . "'",
 		__LINE__, __FILE__);
 
 		//Deleting all the invalid sessions
-		$this->session->garbage_collector();
+		EnvironmentServices::get_session()->garbage_collector();
 	}
 
-	private function clear_all_temporary_cache_files()
+	private static function clear_all_temporary_cache_files()
 	{
 		//We delete all the images generated by the LaTeX formatter
 		import('io/filesystem/folder');
@@ -542,7 +465,7 @@ class Environment
 		}
 	}
 
-	private function execute_modules_changedays_tasks()
+	private static function execute_modules_changedays_tasks()
 	{
 		import('modules/modules_discovery_service');
 		$modules_loader = new ModulesDiscoveryService();
@@ -556,33 +479,33 @@ class Environment
 		}
 	}
 
-	private function remove_old_unactivated_member_accounts()
+	private static function remove_old_unactivated_member_accounts()
 	{
 		global $CONFIG_USER;
 		$delay_unactiv_max = (int)($CONFIG_USER['delay_unactiv_max'] * 3600 * 24);
 		//If the user configured a delay and member accounts must be activated
 		if ($delay_unactiv_max > 0 && $CONFIG_USER['activ_mbr'] != 2)
 		{
-			$this->db_connection->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
+			EnvironmentServices::get_db_connection()->query_inject("DELETE FROM " . DB_TABLE_MEMBER .
 				" WHERE timestamp < '" . (time() - $delay_unactiv_max) . 
 				"' AND user_aprob = 0", __LINE__, __FILE__);
 		}
 	}
 
-	private function remove_captcha_entries()
+	private static function remove_captcha_entries()
 	{
-		$this->db_connection->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
+		EnvironmentServices::get_db_connection()->query_inject("DELETE FROM " . DB_TABLE_VERIF_CODE .
 			" WHERE timestamp < '" . (self::get_yesterday_timestamp()) . "'", 
 		__LINE__, __FILE__);
 	}
 
-	private function check_updates()
+	private static function check_updates()
 	{
 		import('core/updates');
 		new Updates();
 	}
 
-	private function check_current_page_auth()
+	private static function check_current_page_auth()
 	{
 		global $MODULES, $Errorh;
 		//We verify if the user can display this page
@@ -596,7 +519,7 @@ class Environment
 				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 			}
 			//Is the module forbidden?
-			else if(!$this->user->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE))
+			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE))
 			{
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
@@ -618,12 +541,12 @@ class Environment
 		}
 	}
 
-	private function csrf_protect_post_requests()
+	private static function csrf_protect_post_requests()
 	{
 		// Verify that the user really wanted to do this POST (only for the registered ones)
-		if ($this->user->check_level(MEMBER_LEVEL))
+		if (EnvironmentServices::get_user()->check_level(MEMBER_LEVEL))
 		{
-			$this->session->csrf_post_protect();
+			EnvironmentServices::get_session()->csrf_post_protect();
 		}
 	}
 

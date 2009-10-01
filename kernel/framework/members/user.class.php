@@ -48,7 +48,7 @@ class User
 	 */
 	public function __construct()
 	{
-		$this->user_data = Environment::get_instance()->get_session()->get_data();
+		$this->user_data = EnvironmentServices::get_session()->get_data();
 
 		//Autorisations des groupes disponibles.
 		$groups_auth = array();
@@ -268,8 +268,6 @@ class User
 	 */
 	private function array_group_intersect($array_auth_groups)
 	{
-		global $User;
-
 		$array_user_auth_groups = array();
 		foreach ($array_auth_groups as $idgroup => $auth_group)
 		{
@@ -282,14 +280,14 @@ class User
 			}
 			elseif (substr($idgroup, 0, 1) == 'r') //Rang
 			{
-				if ($User->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
+				if ($this->get_attribute('level') >= (int)str_replace('r', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}
 			}
 			else //Membre
 			{
-				if ($User->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
+				if ($this->get_attribute('user_id') == (int)str_replace('m', '', $idgroup))
 				{
 					$array_user_auth_groups[$idgroup] = $auth_group;
 				}

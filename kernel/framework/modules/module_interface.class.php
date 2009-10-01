@@ -94,7 +94,7 @@ class ModuleInterface
         }
         $this->errors = $error;
         
-        $this->db_connection = Environment::get_instance()->get_db_connection();
+        $this->db_connection = EnvironmentServices::get_db_connection();
     }
 
     //----------------------------------------------------------- PUBLIC METHODS
