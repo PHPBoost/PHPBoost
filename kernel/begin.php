@@ -28,7 +28,7 @@
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
 
-require_once PATH_TO_ROOT . '/kernel/framework/core/environment.class.php';
+require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
 Environment::load_imports();
 
 /* DEPRECATED VARS */

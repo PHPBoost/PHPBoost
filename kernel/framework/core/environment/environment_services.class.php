@@ -26,6 +26,8 @@
  ###################################################*/
 
 /**
+ * @package core
+ * @subpackage environment
  * @desc This class manages all the environment services.
  * It's able to create each of them and return them.
  * @author Benoit Sautel <ben.popeye@phpboost.com>
