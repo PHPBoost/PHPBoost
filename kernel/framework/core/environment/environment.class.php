@@ -106,16 +106,15 @@ class Environment
 		self::csrf_protect_post_requests();
 	}
 
-	private static function init_services()
+	public static function init_services()
 	{
 		EnvironmentServices::init_bench();
 		EnvironmentServices::init_breadcrumb();
 		EnvironmentServices::init_sql_querier();
-		EnvironmentServices::init_sql();
 		EnvironmentServices::init_session();
 	}
 
-	private static function fit_to_php_configuration()
+	public static function fit_to_php_configuration()
 	{
 		@ini_set('open_basedir', NULL);
 
@@ -155,9 +154,12 @@ class Environment
 		{
 			define('MAGIC_QUOTES', false);
 		}
+		
+		define('ERROR_REPORTING', 	E_ALL | E_NOTICE);
+		@error_reporting(ERROR_REPORTING);
 	}
 
-	private static function load_static_constants()
+	public static function load_static_constants()
 	{
 		if (@include(PATH_TO_ROOT . '/cache/debug.php'))
 		{
@@ -179,7 +181,6 @@ class Environment
 		//Get parameters
 		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
 		define('PHPBOOST', 			true);
-		define('ERROR_REPORTING', 	E_ALL | E_NOTICE);
 		define('E_TOKEN', 			-3);
 		define('E_USER_REDIRECT', 	-1);
 		define('E_USER_SUCCESS', 	-2);
@@ -229,14 +230,14 @@ class Environment
 		define('REGEX_MULTIPLICITY_ALL', 0x05);
 	}
 
-	private static function write_http_headers()
+	public static function write_http_headers()
 	{
 		header('Content-type: text/html; charset=iso-8859-1');
 		header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 		header('Pragma: no-cache');
 	}
 
-	private static function load_cache()
+	public static function load_cache()
 	{
 		global $Cache;
 		$CONFIG = array();
@@ -248,7 +249,7 @@ class Environment
 		$Cache->load('day');
 	}
 
-	private static function load_dynamic_constants()
+	public static function load_dynamic_constants()
 	{
 		global $CONFIG;
 
@@ -257,7 +258,7 @@ class Environment
 		define('TPL_PATH_TO_ROOT', !empty($CONFIG['server_path']) ? $CONFIG['server_path'] : '');
 	}
 
-	private static function init_session()
+	public static function init_session()
 	{
 		global $CONFIG, $THEME_CONFIG, $LANGS_CONFIG, $CONFIG_USER;
 		EnvironmentServices::get_session()->load();
@@ -301,7 +302,7 @@ class Environment
 		EnvironmentServices::get_user()->set_user_lang($user_lang);
 	}
 
-	private static function init_output_bufferization()
+	public static function init_output_bufferization()
 	{
 		global $CONFIG;
 		if ($CONFIG['ob_gzhandler'] == 1)
@@ -314,7 +315,7 @@ class Environment
 		}
 	}
 
-	private static function load_lang_files()
+	public static function load_lang_files()
 	{
 		global $LANG;
 		$LANG = array();
@@ -322,7 +323,7 @@ class Environment
 		require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/errors.php');
 	}
 
-	private static function process_changeday_tasks_if_needed()
+	public static function process_changeday_tasks_if_needed()
 	{
 		global $_record_day, $Cache;
 		//If the day changed compared to the last request, we execute the daily tasks
@@ -482,7 +483,7 @@ class Environment
 		new Updates();
 	}
 
-	private static function check_current_page_auth()
+	public static function check_current_page_auth()
 	{
 		global $MODULES, $Errorh;
 		//We verify if the user can display this page
@@ -518,7 +519,7 @@ class Environment
 		}
 	}
 
-	private static function csrf_protect_post_requests()
+	public static function csrf_protect_post_requests()
 	{
 		// Verify that the user really wanted to do this POST (only for the registered ones)
 		if (EnvironmentServices::get_user()->check_level(MEMBER_LEVEL))

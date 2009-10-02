@@ -37,7 +37,8 @@ interface DBConnection
     
     /**
      * @desc
-     * @return unknown_type
+     * @throws DBConnectionException
+     * @throws UnexistingDatabaseException
      */
     function connect();
     
@@ -45,6 +46,13 @@ interface DBConnection
      * @desc
      */
     function disconnect();
+    
+    /**
+     * @desc
+     * @param $database_name
+     * @throws UnexistingDatabaseException
+     */
+    function select_database($database_name);
     
     /**
      * @desc

@@ -87,7 +87,8 @@ class MySQLDBConnection implements DBConnection
             if ($mysql_link)
             {
                 $this->link = $mysql_link;
-                $this->select_database();
+       			$this->connected = true;
+                $this->select_database($this->database);
             }
             else
             {
@@ -113,13 +114,13 @@ class MySQLDBConnection implements DBConnection
         }
     }
 
-    private function select_database()
+    public function select_database($database_name)
     {
-        if (!@mysql_select_db($this->database, $this->link))
+        if (!@mysql_select_db($database_name, $this->link))
         {
             throw new MySQLUnexistingDatabaseException();
         }
-        $this->connected = true;
+        $this->database_name = $database_name;
     }
 }
 

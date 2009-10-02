@@ -102,9 +102,9 @@ class EnvironmentServices
 	/**
 	 * Inits the db connection
 	 */
-	public static function init_sql()
+	public static function init_sql($db_name)
 	{
-		self::$sql = new Sql(self::$db_connection);
+		self::$sql = new Sql(self::$db_connection, $db_name);
 	}
 
 	/**
@@ -135,6 +135,8 @@ class EnvironmentServices
 		self::$db_connection = new MySQLDBConnection($sql_host, $sql_login, $sql_pass, $sql_base);
 		self::$db_connection->connect();
 		self::$sql_querier = new MySQLQuerier(self::$db_connection);
+		
+		self::init_sql($sql_base);
 	}
 
 	/**
