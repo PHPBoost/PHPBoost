@@ -29,8 +29,6 @@
 
 ########################admin_body_footer.tpl#######################
 
-$Sql->close(); //Fermeture de mysql.
-
 $Template->set_filenames(array(
 	'admin_footer'=> 'admin/admin_footer.tpl'
 ));
@@ -69,6 +67,8 @@ if ($CONFIG['bench'])
 }
 
 $Template->pparse('admin_footer'); // traitement du modele
+
+EnvironmentServices::close_sql_querier();
 
 ob_end_flush();
 

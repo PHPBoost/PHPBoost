@@ -38,7 +38,7 @@ $Cache = new Cache();
 
 Environment::init();
 
-$Sql = EnvironmentServices::get_db_connection();
+$Sql = EnvironmentServices::get_sql();
 $Bread_crumb = EnvironmentServices::get_breadcrumb();
 $Session = EnvironmentServices::get_session();
 $User = EnvironmentServices::get_user();

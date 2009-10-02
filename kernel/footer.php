@@ -76,6 +76,8 @@ if ($CONFIG['bench'])
 
 $Template->pparse('footer');
 
+EnvironmentServices::close_sql_querier();
+
 ob_end_flush();
 
 ?>

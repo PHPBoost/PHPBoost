@@ -43,9 +43,17 @@ class EnvironmentServices
 	 */
 	private static $bench;
 	/**
-	 * @var Sql
+	 * @var SqlQuerier
+	 */
+	private static $sql_querier;
+	/**
+	 * @var DBConnection
 	 */
 	private static $db_connection;
+	/**
+	 * @var Sql
+	 */
+	private static $sql;
 	/**
 	 * @var Session
 	 */
@@ -54,14 +62,7 @@ class EnvironmentServices
 	 * @var User
 	 */
 	private static $user;
-	
-	/**
-	 * Inits the breadcrumb
-	 */
-	public static function init_breadcrumb()
-	{
-		self::$breadcrumb = new BreadCrumb();
-	}
+
 
 	/**
 	 * Inits the bench
@@ -72,11 +73,85 @@ class EnvironmentServices
 	}
 
 	/**
+	 * Returns the current page's bench
+	 * @return BreadCrumb
+	 */
+	public static function get_bench()
+	{
+		return self::$bench;
+	}
+
+
+	/**
+	 * Inits the breadcrumb
+	 */
+	public static function init_breadcrumb()
+	{
+		self::$breadcrumb = new BreadCrumb();
+	}
+
+	/**
+	 * Returns the current page's bread crumb
+	 * @return BreadCrumb
+	 */
+	public static function get_breadcrumb()
+	{
+		return self::$breadcrumb;
+	}
+
+	/**
 	 * Inits the db connection
 	 */
-	public static function init_db_connection()
+	public static function init_sql()
 	{
-		self::$db_connection = new Sql();
+		self::$sql = new Sql(self::$db_connection);
+	}
+
+	/**
+	 * Returns the data base connection
+	 * @return Sql
+	 */
+	public static function get_sql()
+	{
+		return self::$sql;
+	}
+
+	/**
+	 * Inits the database querier
+	 */
+	public static function init_sql_querier()
+	{
+		//Configuration file
+		@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
+
+		//If PHPBoost is not installed, we redirect the user to the installation page
+		if (!defined('PHPBOOST_INSTALLED'))
+		{
+			import('util/unusual_functions', INC_IMPORT);
+			redirect(get_server_url_page('install/install.php'));
+		}
+
+		import('io/db/mysql/mysql_querier');
+		self::$db_connection = new MySQLDBConnection($sql_host, $sql_login, $sql_pass, $sql_base);
+		self::$db_connection->connect();
+		self::$sql_querier = new MySQLQuerier(self::$db_connection);
+	}
+
+	/**
+	 * Returns the sql querier
+	 * @return SqlQuerier
+	 */
+	public static function get_sql_querier()
+	{
+		return self::$sql_querier;
+	}
+
+	/**
+	 * Closes the SqlQuerier
+	 */
+	public static function close_sql_querier()
+	{
+		self::$db_connection->disconnect();
 	}
 
 	/**
@@ -88,47 +163,20 @@ class EnvironmentServices
 	}
 
 	/**
-	 * Inits the user
-	 */
-	public static function init_user()
-	{
-		self::$user = new User();
-	}
-	
-	/**
-	 * Returns the current page's bread crumb
-	 * @return BreadCrumb
-	 */
-	public static function get_breadcrumb()
-	{
-		return self::$breadcrumb;
-	}
-	
-	/**
-	 * Returns the current page's bench
-	 * @return BreadCrumb
-	 */
-	public static function get_bench()
-	{
-		return self::$bench;
-	}
-
-	/**
-	 * Returns the data base connection
-	 * @return Sql
-	 */
-	public static function get_db_connection()
-	{
-		return self::$db_connection;
-	}
-
-	/**
 	 * Returns the current user's session
 	 * @return Session
 	 */
 	public static function get_session()
 	{
 		return self::$session;
+	}
+
+	/**
+	 * Inits the user
+	 */
+	public static function init_user()
+	{
+		self::$user = new User();
 	}
 
 	/**
