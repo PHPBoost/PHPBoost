@@ -99,6 +99,15 @@ class MiniCalendar
 	}
 	
 	/**
+	 * Returns the html ID of the element.
+	 * @return string The ID
+	 */
+	public function get_html_id()
+	{
+		return 'calendar_' . $this->num_instance;
+	}
+	
+	/**
 	 * @desc Displays the mini calendar. You must call the display method in the same order as the calendars are displayed, because it requires a javascript code loading.
 	 * @return string The code to write in the HTML page.
 	 */
@@ -135,15 +144,6 @@ class MiniCalendar
 	{
 		global $LANG;
 		return new Date(DATE_FROM_STRING, TIMEZONE_AUTO, retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE), $LANG['date_format_short']);
-	}
-	
-	/**
-	 * @desc Return the number of instance.
-	 * @return int The number of instance.
-	 */
-	public function get_num_instance()
-	{
-		return $this->num_instance;
 	}
 }
 

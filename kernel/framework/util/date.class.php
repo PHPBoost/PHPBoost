@@ -290,6 +290,11 @@ class Date
 	{
 		return date('Y', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
+	
+	public function set_year()
+	{
+		
+	}
 
 	/**
 	 * @desc Returns the month of the date
@@ -298,6 +303,11 @@ class Date
 	public function get_month()
 	{
 		return date('m', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
+	}
+	
+	public function set_month()
+	{
+		
 	}
 	
 	/**
@@ -309,6 +319,11 @@ class Date
 		return date('d', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
 	
+	public function set_day()
+	{
+		
+	}
+	
 	/**
 	 * @desc Returns the hours of the date
 	 * @return string The hours
@@ -316,6 +331,11 @@ class Date
 	public function get_hours()
 	{
 		return date('H', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
+	}
+	
+	public function set_hours()
+	{
+		
 	}
 	
 	/**
@@ -326,6 +346,11 @@ class Date
 	{
 		return date('i', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
 	}
+
+	public function set_minutes()
+	{
+		
+	}
 	
 	/**
 	 * @desc Returns the seconds of the date
@@ -334,6 +359,11 @@ class Date
 	public function get_seconds()
 	{
 		return date('s', $this->timestamp + self::compute_server_user_difference(TIMEZONE_USER) * 3600);
+	}
+	
+	public function set_seconds()
+	{
+		
 	}
 	
 	/**
