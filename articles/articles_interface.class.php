@@ -318,11 +318,14 @@ class ArticlesInterface extends ModuleInterface
 		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
 		$column_width_cats = floor(100/$nbr_column_cats);
-
+		
+		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
+		$array_class = array('member', 'modo', 'admin');
+			
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
 			'C_WAITING'=> false,
-			'U_ARTICLES_WAITING'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>',
+			'U_ARTICLES_WAITING'=>' <a href="articles.php?user='.$User->get_attribute('user_id').'">' . $ARTICLES_LANG['waiting_articles'] . '</a>&nbsp;<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php') . '" class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</a><br />',
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,

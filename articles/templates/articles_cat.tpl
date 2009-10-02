@@ -22,10 +22,11 @@
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 				</a>
 				&nbsp;
+					# IF NOT C_WAITING #
+						<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>
+					# ENDIF #
 				# ENDIF #
-				# IF NOT C_WAITING #
-					<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>
-				# ENDIF #
+
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #

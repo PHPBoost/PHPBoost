@@ -206,11 +206,15 @@ elseif ($user)
 			$tpl->assign_vars(array(
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
-				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . ' : '.$ARTICLES_LANG['no_articles_available'].'</a>',
+				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user='.$User->get_attribute('user_id').'">' . $ARTICLES_LANG['waiting_articles'] . ' : '.$ARTICLES_LANG['no_articles_available'].'</a>',
 			));
 		}
 		else
 		{
+		
+			$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
+		    $array_class = array('member', 'modo', 'admin');
+			
 			$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' =>true,
 				'C_WAITING'=> true,
@@ -219,7 +223,7 @@ elseif ($user)
 				'L_VIEW' => $LANG['views'],
 				'L_NOTE' => $LANG['note'],
 				'L_COM' => $LANG['com'],
-				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>',
+				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user='.$User->get_attribute('user_id').'">' . $ARTICLES_LANG['waiting_articles'] . '</a>&nbsp;<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php') . '" class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</a><br />',
 				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
 				'L_DELETE' => $LANG['delete'],
 				'L_EDIT' => $LANG['edit'],
