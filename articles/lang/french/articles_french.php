@@ -117,6 +117,8 @@ $ARTICLES_LANG = array(
 	'or_direct_path' => 'Ou chemin direct',
 	'waiting_articles' => 'Articles en attente pour :',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
+	
+	'all_waiting_articles'=>'Tous les articles en attentes'
 	);
 
 ?>

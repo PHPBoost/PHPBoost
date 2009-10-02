@@ -57,17 +57,53 @@ $tpl->assign_vars(array(
 	'L_APROB' => $LANG['aprob'],
 	'L_UPDATE' => $LANG['update'],
 	'L_DELETE' => $LANG['delete'],
-	'L_SHOW' => $LANG['show']
+	'L_SHOW' => $LANG['show'],
+	'U_ARTICLES_TITLE_TOP' => url('.php?sort=title&amp;mode=desc'),
+	'U_ARTICLES_TITLE_BOTTOM' => url('.php?sort=title&amp;mode=asc'),
+	'U_ARTICLES_DATE_TOP' => url('.php?sort=date&amp;mode=desc'),
+	'U_ARTICLES_DATE_BOTTOM' => url('.php?sort=date&amp;mode=asc'),
+	'U_ARTICLES_CAT_TOP' => url('.php?sort=cat&amp;mode=desc'),
+	'U_ARTICLES_CAT_BOTTOM' => url('.php?sort=cat&amp;mode=asc'),
+	'U_ARTICLES_PSEUDO_TOP' => url('.php?sort=user_id&amp;mode=desc'),
+	'U_ARTICLES_PSEUDO_BOTTOM' => url('.php?sort=user_id&amp;mode=asc'),
+	'U_ARTICLES_APPROB_TOP' => url('.php?sort=visible&amp;mode=desc'),
+	'U_ARTICLES_APPROB_BOTTOM' => url('.php?sort=visible&amp;mode=asc')
 ));
 
 $tpl->assign_block_vars('list', array(
 ));
 
-$result = $Sql->query_while("SELECT a.id, a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
+$get_sort = retrieve(GET, 'sort', '');
+switch ($get_sort)
+{
+	case 'alpha' :
+		$sort = 'title';
+		break;
+	case 'date' :
+		$sort = 'timestamp';
+		break;
+	case 'cat' :
+		$sort = 'idcat';
+		break;
+	case 'user_id' :
+		$sort = 'user_id';
+		break;
+	case 'visible' :
+		$sort = 'visible';
+		break;
+	default :
+		$sort = 'timestamp';
+}
+
+$get_mode = retrieve(GET, 'mode', '');
+$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+
+		
+$result = $Sql->query_while("SELECT a.id, a.user_id,a.idcat, a.title, a.timestamp, a.visible, a.start, a.end, ac.name, m.login 
 FROM " . DB_TABLE_ARTICLES . " a
 LEFT JOIN " . DB_TABLE_ARTICLES_CAT . " ac ON ac.id = a.idcat
 LEFT JOIN " . DB_TABLE_MEMBER . " m ON a.user_id = m.user_id
-ORDER BY a.timestamp DESC " .
+ORDER BY " . $sort . " " . $mode .
 $Sql->limit($Pagination->get_first_msg(25, 'p'), 25), __LINE__, __FILE__);
 while ($row = $Sql->fetch_assoc($result))
 {

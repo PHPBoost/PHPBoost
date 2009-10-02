@@ -1,6 +1,5 @@
 {ADMIN_MENU}
 		<div id="admin_contents">
-
 			# START list #
 			<script type="text/javascript">
 			<!--
@@ -11,20 +10,30 @@
 			</script>
 			<table  class="module_table">
 				<tr style="text-align:center;">
-					<th style="width:35%">
+					<th style="width:28%;text-align:center">
+						<a href="../articles/admin_articles{U_ARTICLES_TITLE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_TITLE}
+						<a href="../articles/admin_articles{U_ARTICLES_TITLE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th>
+						<a href="../articles/admin_articles{U_ARTICLES_CAT_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_CATEGORY}
+						<a href="../articles/admin_articles{U_ARTICLES_CAT_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>						
 					</th>
 					<th>
+						<a href="../articles/admin_articles{U_ARTICLES_PSEUDO_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_PSEUDO}
+						<a href="../articles/admin_articles{U_ARTICLES_PSEUDO_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th>
+						<a href="../articles/admin_articles{U_ARTICLES_DATE_TOP}}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_DATE}
+						<a href="../articles/admin_articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th>
+						<a href="../articles/admin_articles{U_ARTICLES_APPROB_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
 						{L_APROB}
+						<a href="../articles/admin_articles{U_ARTICLES_APPROB_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 					</th>
 					<th>
 						{L_UPDATE}
