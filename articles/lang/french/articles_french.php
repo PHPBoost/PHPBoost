@@ -115,8 +115,7 @@ $ARTICLES_LANG = array(
 	'notice_contribution' => 'Vous n\'êtes pas autorisé à créer un article, cependant vous pouvez proposer un article. Votre contribution suivra le parcours classique et sera traitée dans le panneau de contribution de PHPBoost. Vous pouvez, dans le champ suivant, justifier votre contribution de façon à expliquer votre démarche à un approbateur.',
 	'use_tab'=>"Utilisation des onglets pour la pagination des articles",
 	'or_direct_path' => 'Ou chemin direct',
-	
-	'waiting_articles' => 'Articles en attente',
+	'waiting_articles' => 'Articles en attente pour :',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
 	);
 

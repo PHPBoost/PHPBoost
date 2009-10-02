@@ -108,6 +108,8 @@ $ARTICLES_LANG = array(
 	'edit_articles' =>  'Edit articles',
 	'use_tab'=>"Use tab for articles pagination",
 	'or_direct_path' => 'Or direct path',
+	'waiting_articles' => 'Waiting articles of :',
+	'no_articles_available' => 'No articles avaible',
 	);
 
 ?>
