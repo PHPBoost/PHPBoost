@@ -40,14 +40,15 @@ class FileTemplateLoader implements TemplateLoader
 
 	private $default_templates_folder;
 	private $theme_templates_folder;
-	
+
 	public function __construct(Template $template)
 	{
+
 		$this->filepath = $template->get_identifier();
 		$this->check_file();
 		$template->assign_vars(array('PICTURES_DATA_PATH' => $this->pictures_data_path));
 	}
-	
+
 	public function is_cache_file_valid($cache_filepath)
 	{
 		if (file_exists($cache_filepath))
@@ -56,13 +57,13 @@ class FileTemplateLoader implements TemplateLoader
 		}
 		return false;
 	}
-	
-	
+
+
 	public function get_identifier()
 	{
 		return $this->real_filepath;
 	}
-	
+
 	public function load()
 	{
 		$this->template_resource = @file_get_contents_emulate($this->real_filepath);
@@ -71,18 +72,29 @@ class FileTemplateLoader implements TemplateLoader
 			throw new TemplateLoaderException($this->filepath, $this->real_filepath . ' template loading failed.');
 		}
 	}
-	
+
 	public function get_resource_as_string()
 	{
 		return $this->template_resource;
 	}
-	
+
 	/**
-	  * @desc Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
-	  * @return string The path to load.
-	  */
+	 * @desc Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
+	 * @return string The path to load.
+	 */
 	private function check_file()
 	{
+		if (strpos($this->filepath, '/') === 0)
+		{
+			// Load the file from its absolute location
+			// (Not overlaodable)
+			if (file_exists(PATH_TO_ROOT . $this->filepath))
+			{
+				$this->get_template_real_filepaths_and_data_path(array(PATH_TO_ROOT . $this->filepath));
+				return;
+			}
+		}
+
 		/*
 		 Samples :
 		 $this->filepath = /forum/forum_topic.tpl
@@ -98,17 +110,7 @@ class FileTemplateLoader implements TemplateLoader
 		 $file = framework/content/syndication/menu.tpl
 		 $folder = framework/content/syndication
 		 */
-		
-		if (strpos($this->filepath, '/') === 0)
-		{
-			// Load the file from its absolute location
-			// (Not overlaodable)
-			if (file_exists(PATH_TO_ROOT . $this->filepath))
-			{
-				$this->get_template_real_filepaths_and_data_path(array(PATH_TO_ROOT . $this->filepath));
-			}
-		}
-		
+
 		$i = strpos($this->filepath, '/');
 		$this->module = substr($this->filepath, 0, $i);
 		$this->file = trim(substr($this->filepath, $i), '/');
@@ -117,7 +119,7 @@ class FileTemplateLoader implements TemplateLoader
 
 		$this->default_templates_folder = PATH_TO_ROOT . '/templates/default/';
 		$this->theme_templates_folder = PATH_TO_ROOT . '/templates/' . get_utheme() . '/';
-		
+
 		if (empty($this->module) || in_array($this->module, array('admin', 'framework') ))
 		{   // Kernel - Templates priority order
 			//      /templates/$theme/.../$file.tpl
@@ -135,15 +137,15 @@ class FileTemplateLoader implements TemplateLoader
 			$this->get_module_paths();
 		}
 	}
-	
+
 	private function get_kernel_paths()
 	{
 		$this->get_template_real_filepaths_and_data_path(array(
-			$this->theme_templates_folder . $this->filepath,
-			$this->default_templates_folder . $this->filepath
+		$this->theme_templates_folder . $this->filepath,
+		$this->default_templates_folder . $this->filepath
 		));
 	}
-	
+
 	private function get_menus_paths()
 	{
 		$menu = substr($this->folder, 0, strpos($this->folder, '/'));
@@ -151,13 +153,13 @@ class FileTemplateLoader implements TemplateLoader
 		{
 			$menu = $this->folder;
 		}
-		
+
 		$this->get_template_real_filepaths_and_data_path(array(
-			$this->theme_templates_folder . '/menus/' . $menu . '/' . $this->filename,
-			PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $this->filename
+		$this->theme_templates_folder . '/menus/' . $menu . '/' . $this->filename,
+		PATH_TO_ROOT . '/menus/' . $menu . '/templates/' . $this->filename
 		));
 	}
-	
+
 	private function get_module_paths()
 	{
 		$theme_module_templates_folder = $this->theme_templates_folder . 'modules/' . $this->module . '/';
@@ -169,23 +171,23 @@ class FileTemplateLoader implements TemplateLoader
 			//      /templates/$theme/framework/.../$file.tpl
 			//      /$module/templates/framework/.../$file.tpl
 			//      /templates/default/framework/.../$file.tpl
-			
+				
 			$this->get_template_real_filepaths_and_data_path(array(
-				$theme_module_templates_folder . $this->file,
-				$module_templates_folder . 'framework/' . $this->file,
-				$theme_templates_folder . $this->filepath,
-				$default_templates_folder . $this->file
+			$theme_module_templates_folder . $this->file,
+			$module_templates_folder . 'framework/' . $this->file,
+			$theme_templates_folder . $this->filepath,
+			$default_templates_folder . $this->file
 			));
 		}
 		else
 		{
 			$this->get_template_real_filepaths_and_data_path(array(
-				$theme_module_templates_folder . $this->file,
-				$module_templates_folder . $this->file
+			$theme_module_templates_folder . $this->file,
+			$module_templates_folder . $this->file
 			));
 		}
 	}
-	
+
 	private function get_template_real_filepaths_and_data_path($paths)
 	{
 		foreach ($paths as $path)
@@ -196,7 +198,7 @@ class FileTemplateLoader implements TemplateLoader
 				break;
 			}
 		}
-		
+
 		foreach ($paths as $path)
 		{
 			if (file_exists($path))
@@ -205,13 +207,13 @@ class FileTemplateLoader implements TemplateLoader
 				break;
 			}
 		}
-		
+
 		if (empty($this->real_filepath) && count($paths) > 0)
 		{	// Adds the default path looking for in the exception trace
 			$this->real_filepath = $paths[count($paths) - 1];
 		}
 	}
-	
+
 	private function convert_to_tpl_path($path_to_root_filepath)
 	{
 		return TPL_PATH_TO_ROOT . substr($path_to_root_filepath, strlen(PATH_TO_ROOT));

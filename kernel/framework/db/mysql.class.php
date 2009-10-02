@@ -57,9 +57,10 @@ class Sql
 	/**
 	 * @desc Builds a MySQL connection.
 	 */
-	public function __construct(DBConnection  $db_connection)
+	public function __construct(DBConnection  $db_connection, $db_name)
 	{
 		$this->link = $db_connection->get_link();
+		$this->base_name = $db_name;
 	}
 
 	/**

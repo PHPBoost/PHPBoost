@@ -33,9 +33,11 @@
  */
 class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 {
+	private $user;
+	
 	public function __construct()
 	{
-
+$this->user = EnvironmentServices::get_user();
 	}
 
 	/**
@@ -46,76 +48,12 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 	{
 		global $CONFIG, $LANG, $Errorh, $Template, $Cache, $THEME_CONFIG;
 
-		$user = EnvironmentServices::get_user();
-
 		$Template->set_filenames(array(
 		'header' => 'header.tpl'
 		));
 
-		//Gestion de la maintenance du site.
-		if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
-		{
-			if (!$user->check_level(ADMIN_LEVEL) && !$user->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN)) //Non admin et utilisateurs autorisés.
-			{
-				if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
-				{
-					redirect('/member/maintain.php');
-				}
-			}
-			elseif ($CONFIG['maintain_display_admin']) //Affichage du message d'alerte à l'administrateur.
-			{
-				//Durée de la maintenance.
-				$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
-				$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], '6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week']);
-				//Retourne le délai de maintenance le plus proche.
-				if ($CONFIG['maintain'] != -1)
-				{
-					$key_delay = 0;
-					$current_time = time();
-					$array_size = count($array_time) - 1;
-					for ($i = $array_size; $i >= 1; $i--)
-					{
-						if (($CONFIG['maintain'] - $current_time) - $array_time[$i] < 0 &&  ($CONFIG['maintain'] - $current_time) - $array_time[$i-1] > 0)
-						{
-							$key_delay = $i-1;
-							break;
-						}
-					}
+		$this->process_site_maintenance();
 
-					//Calcul du format de la date
-					$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
-					$array_release = array(
-					gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE),
-					gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
-
-					$seconds = gmdate_format('s', time(), TIMEZONE_SITE);
-					$array_now = array(
-					gmdate_format('Y', time(), TIMEZONE_SITE), (gmdate_format('n', time(), TIMEZONE_SITE) - 1), gmdate_format('j', time(), TIMEZONE_SITE),
-					gmdate_format('G', time(), TIMEZONE_SITE), gmdate_format('i', time(), TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
-				}
-				else //Délai indéterminé.
-				{
-					$key_delay = 0;
-					$array_release = array('0', '0', '0', '0', '0', '0');
-					$array_now = array('0', '0', '0', '0', '0', '0');
-				}
-
-				$Template->assign_vars(array(
-					'C_ALERT_MAINTAIN' => true,
-					'C_MAINTAIN_DELAY' => true,
-					'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
-					'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
-					'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
-					'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
-					'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
-					'L_LOADING' => $LANG['loading'],
-					'L_DAYS' => $LANG['days'],
-					'L_HOURS' => $LANG['hours'],
-					'L_MIN' => $LANG['minutes'],
-					'L_SEC' => $LANG['seconds'],
-				));
-			}
-		}
 
 		//Ajout des éventuels css alternatifs du module.
 		$alternative_css = '';
@@ -162,6 +100,7 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 
 		//On ajoute les css associés aux mini-modules.
 		$Cache->load('css');
+		print_r($CSS);exit;
 		if (isset($CSS[get_utheme()]))
 		{
 			foreach ($CSS[get_utheme()] as $css_mini_module)
@@ -173,7 +112,7 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 		//On récupère la configuration du thème actuel, afin de savoir si il faut placer les séparateurs de colonnes (variable sur chaque thème).
 		$THEME = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
-		$member_connected = $user->check_level(MEMBER_LEVEL);
+		$member_connected = $this->user->check_level(MEMBER_LEVEL);
 		$Template->assign_vars(array(
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'SID' => SID,
@@ -185,11 +124,11 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 			'THEME' => get_utheme(),
 			'LANG' => get_ulang(),
 			'ALTERNATIVE_CSS' => $alternative_css,
-			'C_ADMIN_AUTH' => $user->check_level(ADMIN_LEVEL),
-			'C_MODERATOR_AUTH' => $user->check_level(MODERATOR_LEVEL),
+			'C_ADMIN_AUTH' => $this->user->check_level(ADMIN_LEVEL),
+			'C_MODERATOR_AUTH' => $this->user->check_level(MODERATOR_LEVEL),
 			'C_USER_CONNECTED' => $member_connected,
 			'C_USER_NOTCONNECTED' => !$member_connected,
-			'C_BBCODE_TINYMCE_MODE' => $user->get_attribute('user_editor') == 'tinymce',
+			'C_BBCODE_TINYMCE_MODE' => $this->user->get_attribute('user_editor') == 'tinymce',
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
 			'L_VISIT' => $LANG['guest_s'],
 			'L_TODAY' => $LANG['today'],
@@ -282,6 +221,76 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 		));
 
 		$Template->pparse('header');
+	}
+
+	public function process_site_maintenance()
+	{
+		global $CONFIG, $Template;
+		
+		//Gestion de la maintenance du site.
+		if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
+		{
+			if (!$this->user->check_level(ADMIN_LEVEL) && !$this->user->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN)) //Non admin et utilisateurs autorisés.
+			{
+				if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
+				{
+					redirect('/member/maintain.php');
+				}
+			}
+			elseif ($CONFIG['maintain_display_admin']) //Affichage du message d'alerte à l'administrateur.
+			{
+				//Durée de la maintenance.
+				$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
+				$array_delay = array($LANG['unspecified'], '1 ' . $LANG['minute'], '5 ' . $LANG['minutes'], '10 ' . $LANG['minutes'], '15 ' . $LANG['minutes'], '30 ' . $LANG['minutes'], '1 ' . $LANG['hour'], '2 ' . $LANG['hours'], '3 ' . $LANG['hours'], '4 ' . $LANG['hours'], '5 ' . $LANG['hours'], '6 ' . $LANG['hours'], '7 ' . $LANG['hours'], '8 ' . $LANG['hours'], '16 ' . $LANG['hours'], '1 ' . $LANG['day'], '2 ' . $LANG['days'], '1 ' . $LANG['week']);
+				//Retourne le délai de maintenance le plus proche.
+				if ($CONFIG['maintain'] != -1)
+				{
+					$key_delay = 0;
+					$current_time = time();
+					$array_size = count($array_time) - 1;
+					for ($i = $array_size; $i >= 1; $i--)
+					{
+						if (($CONFIG['maintain'] - $current_time) - $array_time[$i] < 0 &&  ($CONFIG['maintain'] - $current_time) - $array_time[$i-1] > 0)
+						{
+							$key_delay = $i-1;
+							break;
+						}
+					}
+
+					//Calcul du format de la date
+					$seconds = gmdate_format('s', $CONFIG['maintain'], TIMEZONE_SITE);
+					$array_release = array(
+					gmdate_format('Y', $CONFIG['maintain'], TIMEZONE_SITE), (gmdate_format('n', $CONFIG['maintain'], TIMEZONE_SITE) - 1), gmdate_format('j', $CONFIG['maintain'], TIMEZONE_SITE),
+					gmdate_format('G', $CONFIG['maintain'], TIMEZONE_SITE), gmdate_format('i', $CONFIG['maintain'], TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+
+					$seconds = gmdate_format('s', time(), TIMEZONE_SITE);
+					$array_now = array(
+					gmdate_format('Y', time(), TIMEZONE_SITE), (gmdate_format('n', time(), TIMEZONE_SITE) - 1), gmdate_format('j', time(), TIMEZONE_SITE),
+					gmdate_format('G', time(), TIMEZONE_SITE), gmdate_format('i', time(), TIMEZONE_SITE), ($seconds < 10) ? trim($seconds, 0) : $seconds);
+				}
+				else //Délai indéterminé.
+				{
+					$key_delay = 0;
+					$array_release = array('0', '0', '0', '0', '0', '0');
+					$array_now = array('0', '0', '0', '0', '0', '0');
+				}
+
+				$Template->assign_vars(array(
+					'C_ALERT_MAINTAIN' => true,
+					'C_MAINTAIN_DELAY' => true,
+					'UNSPECIFIED' => $CONFIG['maintain'] != -1 ? 1 : 0,
+					'DELAY' => isset($array_delay[$key_delay]) ? $array_delay[$key_delay] : '0',
+					'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release),
+					'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
+					'L_MAINTAIN_DELAY' => $LANG['maintain_delay'],
+					'L_LOADING' => $LANG['loading'],
+					'L_DAYS' => $LANG['days'],
+					'L_HOURS' => $LANG['hours'],
+					'L_MIN' => $LANG['minutes'],
+					'L_SEC' => $LANG['seconds'],
+				));
+			}
+		}
 	}
 
 	/**

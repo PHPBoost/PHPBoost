@@ -37,105 +37,26 @@ define('STEP_SITE_CONFIG', 5);
 define('STEP_ADMIN_ACCOUNT', 6);
 define('STEP_END', 7);
 
-define('DEBUG', false);
-
-ob_start();
-
 define('PATH_TO_ROOT', '..');
-define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
+require_once PATH_TO_ROOT . '/install/install_environment.class.php';
 
-header('Content-type: text/html; charset=iso-8859-1');
-header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
-header('Pragma: no-cache');
+InstallEnvironment::load_imports();
 
-//Inclusion des fichiers
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
-require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+/* Deprecated */
 import('core/errors');
-import('io/template/template');
-
-@error_reporting(ERROR_REPORTING);
-
 $Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
+/* End deprecated */
 
-define('HOST', 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST')));
-$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-define('FILE', $server_path);
-define('DIR', str_replace('/install/install.php', '', $server_path));
-define('SID', '');
+InstallEnvironment::init();
 
 $step = retrieve(GET, 'step', 1, TUNSIGNED_INT);
 $step = $step > STEPS_NUMBER ? 1 : $step;
 
 $lang = retrieve(GET, 'lang', DEFAULT_LANGUAGE);
 
-//Inclusion du fichier langue
-if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
-{
-	include_once('lang/' . DEFAULT_LANGUAGE . '/install_' . DEFAULT_LANGUAGE . '.php');
-	$lang = DEFAULT_LANGUAGE;
-}
-@include_once('../lang/' . $lang . '/errors.php'); //Inclusion fichier d'erreur.
+InstallEnvironment::load_lang($lang);
 
-//Chargement de la configuration de la distribution
-if (is_file('distribution/distribution_' . $lang . '.php'))
-{
-	include('distribution/distribution_' . $lang . '.php');
-}
-else
-{
-	import('io/filesystem/folder');
-	$distribution_folder = new Folder('distribution');
-	$distribution_files = $distribution_folder->get_files('`distribution_[a-z_-]+\.php`i');
-	if (count($distribution_files) > 0)
-	{
-		{
-			include('distribution/distribution_' . $distribution_files[0]->get_name() . '.php');
-		}
-	}
-	else
-	{
-		//Distribution par défaut
-		//Nom de la distribution
-		define('DISTRIBUTION_NAME', 'Default distribution');
-		
-		//Description de la distribution
-		define('DISTRIBUTION_DESCRIPTION', 'This distribution is the default distribution. You will manage to install PHPBoost with the default configuration but it will install only the kernel without any module.');
-		
-		//Thème de la distribution
-		define('DISTRIBUTION_THEME', 'base');
-		
-		//Page de démarrage de la distribution (commencer à la racine du site avec /)
-		define('DISTRIBUTION_START_PAGE', '/member/member.php');
-		
-		//Espace membre activé ? (Est-ce que les membres peuvent s'inscrire et participer au site ?)
-		define('DISTRIBUTION_ENABLE_USER', false);
-		
-		//Liste des modules
-		$DISTRIBUTION_MODULES = array();
-	}
-}
-
-//Création de l'utilisateur
-import('members/user');
-$user_data = array(
-	'm_user_id' => 1,
-	'login' => 'login',
-	'level' => ADMIN_LEVEL,
-	'user_groups' => '',
-	'user_lang' => $lang,
-	'user_theme' => DISTRIBUTION_THEME,
-	'user_mail' => '',
-	'user_pm' => 0,
-	'user_editor' => 'bbcode',
-	'user_timezone' => 1,
-	'avatar' => '',
-	'user_readonly' => 0,
-	'user_id' => 1,
-	'session_id' => ''
-);
-$user_groups = array();
-$User = new User($user_data, $user_groups);
+InstallEnvironment::load_distribution_properties($lang);
 
 //On vérifie que le dossier cache/tpl existe et est inscriptible, sans quoi on ne peut pas mettre en cache les fichiers et donc afficher l'installateur
 if (!is_dir('../cache') || !is_writable('../cache') || !is_dir('../cache/tpl') || !is_writable('../cache/tpl'))
@@ -150,7 +71,7 @@ if (retrieve(GET, 'restart', false))
 }
 
 //Template d'installation
-$template = new Template('install/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
+$template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
@@ -973,6 +894,6 @@ for ($i = 1; $i <= STEPS_NUMBER; $i++)
 
 $template->parse();
 
-ob_end_flush();
+InstallEnvironment::destroy();
 
 ?>
