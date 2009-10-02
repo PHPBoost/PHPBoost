@@ -25,8 +25,7 @@
  *
  ###################################################*/
 
-class DBConnectionException extends Exception
-{
-}
+class DBConnectionException extends Exception {}
+class UnexistingDatabaseException extends DBConnectionException {}
 
 ?>
