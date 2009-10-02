@@ -30,6 +30,7 @@ if (defined('PHPBOOST') !== true)
     exit;
 }
 
-$Sql->close(); //Fermeture de mysql
+EnvironmentServices::close_sql_querier();
+
 ob_end_flush();
 ?>

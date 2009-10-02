@@ -57,98 +57,9 @@ class Sql
 	/**
 	 * @desc Builds a MySQL connection.
 	 */
-	public function __construct()
+	public function __construct(DBConnection  $db_connection)
 	{
-	}
-
-	/**
-	 * @desc Destructs and closes the connection
-	 */
-	public function __destruct()
-	{
-		$this->close();
-	}
-
-	/**
-	 * @desc This method enables you to connect to the DBMS when you have the data base access informations.
-	 * @param string $sql_host Name or IP address of the server on which is the DBMS you want to use.
-	 * @param string $sql_login Login enabling PHPBoost to connect itselft to the DBMS (the MySQL login).
-	 * @param string $sql_pass Password enabling PHPBoost to connect itself to the DMBS.
-	 * @param $base_name string Name of the data base PHPBoost must join an work on.
-	 * @param $errors_management bool The way according to which you want to manage the data base connection errors :
-	 * <ul>
-	 * 	<li>ERRORS_MANAGEMENT_BY_RETURN will return the error</li>
-	 * 	<li>EXPLICIT_ERRORS_MANAGEMENT will stop the script execution and display the error message</li>
-	 * </ul>
-	 * @return int If you chose to manage the errors by a return value (ERRORS_MANAGEMENT_BY_RETURN),
-	 * it will return the state of the connection:
-	 * <ul>
-	 * 	<li>CONNECTED_TO_DATABASE if the connection succed</li>
-	 * 	<li>UNEXISTING_DATABASE if the host could be joined but the data base on which PHPBoost must work doesn't exists</li>
-	 * 	<li>CONNECTION_FAILED if the host is unreachable or the login and the password weren't correct</li>
-	 * </ul>
-	 * Otherwise, it won't return anything.
-	 */
-	public function connect($sql_host, $sql_login, $sql_pass, $base_name, $errors_management = EXPLICIT_ERRORS_MANAGEMENT)
-	{
-		//Identification sur le serveur
-		if ($this->link = @mysql_connect($sql_host, $sql_login, $sql_pass))
-		{
-			//Sélection de la base de données
-			if (@mysql_select_db($base_name, $this->link))
-			{
-				$this->connected = true;
-				$this->base_name = $base_name;
-				return CONNECTED_TO_DATABASE;
-			}
-			else
-			{
-				//Traitement des erreurs
-				if ($errors_management)
-				{
-					$this->_error('', 'Can \'t select database!', __LINE__, __FILE__);
-				}
-				else
-				{
-					return UNEXISTING_DATABASE;
-				}
-			}
-		}
-		//La connexion a échoué
-		else
-		{
-			if ($errors_management)
-			{
-				$this->_error('', 'Can\'t connect to database!', __LINE__, __FILE__);
-			}
-			else
-			{
-				return CONNECTION_FAILED;
-			}
-		}
-	}
-
-	/**
-	 * @desc Connects automatically the application to the DBMS by reading the database configuration file
-	 * whose path is /kernel/db/config.php.
-	 * If an error occures while connecting to the server, the script execution will be stopped and the error
-	 * will be written in the page.
-	 */
-	public function auto_connect()
-	{
-		//Lecture du fichier de configuration.
-		@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
-
-		//Si PHPBoost n'est pas installé, redirection manuelle car chemin non connu.
-		if (!defined('PHPBOOST_INSTALLED'))
-		{
-			import('util/unusual_functions', INC_IMPORT);
-			redirect(get_server_url_page('install/install.php'));
-		}
-
-		//Connexion à la base de données
-		$result =  $this->connect($sql_host, $sql_login, $sql_pass, $sql_base);
-		$this->base_name = $sql_base;
+		$this->link = $db_connection->get_link();
 	}
 
 	/**
@@ -360,23 +271,6 @@ class Sql
 	{
 		if (is_resource($resource))
 		return mysql_free_result($resource);
-	}
-
-	/**
-	 * @desc Closes the current MySQL connection if it is open.
-	 * @return bool true if the connection could be closed, false otherwise.
-	 */
-	public function close()
-	{
-		if ($this->connected) // si la connexion est établie
-		{
-			$this->connected = false;
-			return mysql_close($this->link); // on ferme la connexion ouverte.
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	/**
