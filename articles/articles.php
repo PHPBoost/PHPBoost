@@ -200,13 +200,16 @@ elseif ($user)
 		}
 		
 		$Sql->query_close($result);
-
+		
 		if ($i == 0)
 		{
 			$tpl->assign_vars(array(
+				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
 				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . ' : '.$ARTICLES_LANG['no_articles_available'].'</a>',
+				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
+				'L_ALL_WAITING_ARTICLES'=>$ARTICLES_LANG['all_waiting_articles'],
 			));
 		}
 		else
@@ -218,6 +221,9 @@ elseif ($user)
 			$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' =>true,
 				'C_WAITING'=> true,
+				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
+				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
+				'L_ALL_WAITING_ARTICLES'=>$ARTICLES_LANG['all_waiting_articles'],
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_DATE' => $LANG['date'],
 				'L_VIEW' => $LANG['views'],

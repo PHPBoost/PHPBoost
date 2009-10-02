@@ -26,7 +26,7 @@
 						<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>
 					# ENDIF #
 				# ENDIF #
-
+				
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
@@ -112,6 +112,9 @@
 					</tr>
 				</table>
 				<br />
+					# IF C_WAITING_ADMIN #
+						<p style="text-align:center;padding-top:10px;"><a href="../articles/admin_articles{U_ALL_WAITING_ARTICLES}">{L_ALL_WAITING_ARTICLES}</a></p>
+					# ENDIF #
 				# ENDIF #
 				
 				<p style="text-align:center;padding-top:10px;" class="text_small">
