@@ -50,6 +50,11 @@ class MysqlQueryResult implements QueryResult
      */
     private $move_intern_resource = true;
     
+    /**
+     * @var bool
+     */
+    private $is_disposed = false;
+    
     public function __construct($resource)
     {
         if (!is_resource($resource) || $resource === false)
@@ -88,12 +93,13 @@ class MysqlQueryResult implements QueryResult
     
     public function dispose()
     {
-        if (is_resource($this->resource))
+        if (!$this->is_disposed && is_resource($this->resource))
         {
 			if (!@mysql_free_result($this->resource))
 			{
 			    throw new MySQLQuerierException('can\'t close sql resource');
 			}
+			$this->is_disposed = true;
         }
     }
 }

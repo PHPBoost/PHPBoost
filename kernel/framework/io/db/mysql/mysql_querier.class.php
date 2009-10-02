@@ -28,6 +28,7 @@
 import('io/db/sql_querier');
 import('io/db/mysql/mysql_db_connection');
 import('io/db/mysql/mysql_query_result');
+import('io/db/mysql/sql2mysql_query_translator');
 
 class MySQLQuerier implements SQLQuerier
 {
@@ -98,7 +99,7 @@ class MySQLQuerier implements SQLQuerier
 
 	private function translate_query(&$query)
 	{
-		return $query;
+		return SQL2MySQLQueryTranslator::translate($query);
 	}
 
 	private function inc_executed_resquests_count()
