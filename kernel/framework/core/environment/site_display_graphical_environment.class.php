@@ -46,7 +46,7 @@ $this->user = EnvironmentServices::get_user();
 	 */
 	function display_header()
 	{
-		global $CONFIG, $LANG, $Errorh, $Template, $Cache, $THEME_CONFIG;
+		global $CONFIG, $LANG, $Errorh, $Template, $Cache, $THEME_CONFIG, $CSS;
 
 		$Template->set_filenames(array(
 		'header' => 'header.tpl'
@@ -100,7 +100,6 @@ $this->user = EnvironmentServices::get_user();
 
 		//On ajoute les css associés aux mini-modules.
 		$Cache->load('css');
-		print_r($CSS);exit;
 		if (isset($CSS[get_utheme()]))
 		{
 			foreach ($CSS[get_utheme()] as $css_mini_module)
