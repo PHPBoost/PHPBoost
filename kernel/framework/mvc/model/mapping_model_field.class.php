@@ -29,6 +29,8 @@
 class MappingModelField
 {
     const DEFAULT_PROPERTY_NAME = 0x01;
+    const GETTER_PREFIX = 'get_';
+    const SETTER_PREFIX = 'set_';
 
     /**
      * @var string
@@ -45,6 +47,16 @@ class MappingModelField
      */
     private $property_name;
 
+    /**
+     * @var string
+     */
+    private $getter;
+
+    /**
+     * @var string
+     */
+    private $setter;
+
     public function __construct($property_name,
     $db_field_name = self::DEFAULT_PROPERTY_NAME, $db_table = null)
     {
@@ -58,6 +70,9 @@ class MappingModelField
             $this->db_field_name = $this->property_name;
         }
         $this->db_table = $db_table;
+        
+        $this->getter = self::GETTER_PREFIX . $property_name;
+        $this->setter = self::SETTER_PREFIX . $property_name;
     }
 
     /**
@@ -86,6 +101,22 @@ class MappingModelField
     public function get_property_name()
     {
         return $this->property_name;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getter()
+    {
+        return $this->getter;
+    }
+    
+    /**
+     * @return string
+     */
+    public function setter()
+    {
+        return $this->setter;
     }
 }
 
