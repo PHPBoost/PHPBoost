@@ -30,7 +30,6 @@ require_once('../kernel/begin.php');
 // Définition des constantes des autorisations
 require_once 'articles_begin.php';
 
-
 if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 

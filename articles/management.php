@@ -47,13 +47,9 @@ if ($delete > 0)
 	$articles = $Sql->query_array(DB_TABLE_ARTICLES, '*', "WHERE id = '" . $id . "'", __LINE__, __FILE__);
 	
 	if (empty($articles['id']))
-	{
 		$Errorh->handler('e_unexist_articles', E_USER_REDIRECT);
-	}
 	elseif (!$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE))
-	{
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
-	}
 	
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_ARTICLES . " WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
 	$Sql->query_inject("DELETE FROM " . DB_TABLE_EVENTS . " WHERE module = 'articles' AND id_in_module = '" . $articles['id'] . "'", __LINE__, __FILE__);
@@ -88,10 +84,10 @@ elseif(retrieve(POST,'submit',false))
 	$end_date = MiniCalendar::retrieve_date('end');
 	$release = MiniCalendar::retrieve_date('release');
 	$icon=retrieve(POST, 'icon', '', TSTRING);
+	
 	if(retrieve(POST,'icon_path',false))
-	{
 		$icon=retrieve(POST,'icon_path','');
-	}
+		
 	$articles = array(
 		'id' => retrieve(POST, 'id', 0, TINTEGER),
 		'idcat' => retrieve(POST, 'idcat', 0),
@@ -117,13 +113,9 @@ elseif(retrieve(POST,'submit',false))
 	{
 		// Errors.
 		if (empty($articles['title']))
-		{
 			$Errorh->handler('e_require_title', E_USER_REDIRECT);
-		}
 		elseif (empty($articles['desc']))
-		{
 			$Errorh->handler('e_require_desc', E_USER_REDIRECT);
-		}
 		else
 		{
 			// $start & $end.
@@ -132,30 +124,21 @@ elseif(retrieve(POST,'submit',false))
 				// Start.
 				$articles['start'] += ($articles['start_hour'] * 60 + $articles['start_min']) * 60;
 				if ($articles['start'] <= $now->get_timestamp())
-				{
 					$articles['start'] = 0;
-				}
-
 				// End.
 				$articles['end'] += ($articles['end_hour'] * 60 + $articles['end_min']) * 60;
 				if ($articles['end'] <= $now->get_timestamp())
-				{
 					$articles['end'] = 0;
-				}
 
 				$articles['visible'] = 1;
 			}
 			else
-			{
 				$articles['start'] = $articles['end'] = 0;
-			}
 
 			// Release.
 			$articles['release'] += ($articles['release_hour'] * 60 + $articles['release_min']) * 60;
 			if ($articles['release'] == 0)
-			{
 				$articles['release'] = $now->get_timestamp();
-			}
 
 			// Image.
 			$img = $articles['icon'];
@@ -163,7 +146,6 @@ elseif(retrieve(POST,'submit',false))
 			if ($articles['id'] > 0)
 			{
 				$visible = 1;
-				
 				$date_now = new Date(DATE_NOW);
 				
 				switch ($articles['visible'])
@@ -190,8 +172,8 @@ elseif(retrieve(POST,'submit',false))
 				
 				$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES . " SET idcat = '" . $articles['idcat'] . "', title = '" . $articles['title'] . "', contents = '" . $articles['desc'] . "',  icon = '" . $img . "',  visible = '" . $visible . "', start = '" .  $articles['start'] . "', end = '" . $articles['end'] . "', timestamp = '" . $articles['release'] . "'
 				WHERE id = '" . $articles['id'] . "'", __LINE__, __FILE__);
-				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed
 				
+				//If it wasn't approved and now it's, we try to consider the corresponding contribution as processed			
 				if ($file_approved && !$articles_properties['visible'])
 				{
 					import('events/contribution');
@@ -199,8 +181,7 @@ elseif(retrieve(POST,'submit',false))
 					
 					$corresponding_contributions = ContributionService::find_by_criteria('articles', $articles['id']);
 					if (count($corresponding_contributions) > 0)
-					{
-						
+					{	
 						$articles_cat_info = $Sql->query_array(DB_TABLE_ARTICLES_CAT, "id", "nbr_articles_visible", "nbr_articles_unvisible","WHERE id = '".$articles['idcat']."'", __LINE__, __FILE__);
 						$nb_visible = $articles_cat_info['nbr_articles_visible'] + 1 ;			
 						$nb_unvisible = $articles_cat_info['nbr_articles_unvisible'] - 1;
@@ -208,12 +189,10 @@ elseif(retrieve(POST,'submit',false))
 						$file_contribution = $corresponding_contributions[0];
 						//The contribution is now processed
 						$file_contribution->set_status(EVENT_STATUS_PROCESSED);
-						
 						//We save the contribution
 						ContributionService::save_contribution($file_contribution);
 					}
 				}
-            
 				$Cache->Generate_module_file('articles');
 			}
 			else
@@ -235,11 +214,8 @@ elseif(retrieve(POST,'submit',false))
 				{
 					$nb=$articles_cat_info['nbr_articles_unvisible'] + 1;
 					$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_unvisible = '" . $nb. "' WHERE id = '" . $articles['idcat'] . "'", __LINE__, __FILE__);
-				
 				}
 				
-			
-
 				//If the poster couldn't write, it's a contribution and we put it in the contribution panel, it must be approved
 				if ($auth_contrib)
 				{
@@ -282,7 +258,7 @@ elseif(retrieve(POST,'submit',false))
 					ContributionService::save_contribution($articles_contribution);
 
 					//Redirection to the contribution confirmation page
-					redirect('/articles/contribution.php');
+					redirect(HOST . DIR . '/articles/contribution.php');
 				}
 			}
 
@@ -291,25 +267,15 @@ elseif(retrieve(POST,'submit',false))
 			Feed::clear_cache('articles');
 
 			if ($articles['visible'])
-			{
 				redirect('./articles' . url('.php?id=' . $articles['id'].'&cat='.$articles['idcat'] , '-' . $articles['idcat'] . '-' . $articles['id'] . '+' . url_encode_rewrite($articles['title']) . '.php'));
-			}
 			else
-			{
 				redirect(url('articles.php'));
-			}
 		}
 
 	}
 	else
 	{	
-		echo " articles id ".$articles['id']."<br>";
-		echo " write ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_WRITE)."<br>";
-		echo " contribute ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_CONTRIBUTE)."<br>";
-		echo " moderate ".$User->check_auth($ARTICLES_CAT[$articles['idcat']]['auth'], AUTH_ARTICLES_MODERATE)."<br>";
-		echo " articles user_id ".$articles['user_id']."<br>";
-		echo " user_id ".$User->get_attribute('user_id')."<br>";
-		//$Errorh->handler('e_auth', E_USER_REDIRECT);
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
 }
 else
@@ -339,8 +305,7 @@ else
 			$release_calendar = new MiniCalendar('release');
 			$release = new Date(DATE_TIMESTAMP, TIMEZONE_AUTO, ($articles['timestamp'] > 0 ? $articles['timestamp'] : $now->get_timestamp()));
 			$release_calendar->set_date($release);
-			
-			
+				
 			$img_direct_path = (strpos($articles['icon'], '/') !== false);
 			$image_list = '<option value=""' . ($img_direct_path ? ' selected="selected"' : '') . '>--</option>';
 			import('io/filesystem/folder');
@@ -383,16 +348,12 @@ else
 			$articles_categories->build_select_form($articles['idcat'], 'idcat', 'idcat', 0, AUTH_ARTICLES_READ, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 		}
 		else
-		{
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
-		}
 	}
 	else
 	{
 		if (!$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE) && !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE))
-		{
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
-		}
 		else
 		{
 			$auth_contrib = !$User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_WRITE) && $User->check_auth($CONFIG_ARTICLES['global_auth'], AUTH_ARTICLES_CONTRIBUTE);
@@ -455,10 +416,7 @@ else
 	require_once('../kernel/header.php');
 
 	$user_pseudo = !empty($user_pseudo) ? $user_pseudo : '';
-	
-	
-	
-	
+
 	$tpl->assign_vars(array(
 		'KERNEL_EDITOR' => display_editor(),
 		'TITLE' => '',	

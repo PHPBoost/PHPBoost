@@ -30,7 +30,7 @@ require_once('articles_constants.php');
 require_once('articles_begin.php');
 $Cache->load('articles');
 
-//Titre de l'article à afficher en version imprimable
+//Article title to display in print version 
 $idart = retrieve(GET, 'id', '', TSTRING);
 if ($idart > 0)
 {
@@ -38,7 +38,7 @@ if ($idart > 0)
 	
 	$idartcat = $articles['idcat'];
 
-	//Niveau d'autorisation de la catégorie
+	//category level authorization
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
 		$Errorh->handler('e_auth', E_USER_REDIRECT);
 	
@@ -50,8 +50,7 @@ if (empty($articles['title']))
 	exit;
 
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
-	$tpl = new Template('framework/content/print.tpl');
-
+$tpl = new Template('framework/content/print.tpl');
 
 $contents = preg_replace('`\[page\](.*)\[/page\]`', '<h2>$1</h2>', $articles['contents']);
 

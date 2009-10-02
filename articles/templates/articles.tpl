@@ -158,21 +158,33 @@
 			# IF C_TAB #
 			<div id="tabs">
 				<ul>
-				 <div style="overflow: hidden; height: 24px; width: 900px; position: relative;" class="carouseljs">
-					<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
-					<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
-					# START tab #
-					 <li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}" style="display:{tab.DISPLAY_TAB}"><a href="javascript:void(0)" class="tab_a"onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
-					# END tab #
-					</ol>
-					<a style="position: absolute; z-index: 2; right: 0px;" class="cjs-right cjs-enabled" title="Double-click to skip to end.">next</a>
-				</div>
-				
+					 <div style="overflow: hidden; height: 24px; width: 900px; position: relative;" class="carouseljs">
+						<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
+						<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
+							# START tab #
+								<li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}" style="display:{tab.DISPLAY_TAB}"><a href="javascript:void(0)" class="tab_a"onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
+							# END tab #
+						</ol>
+						<a style="position: absolute; z-index: 2; right: 0px;" class="cjs-right cjs-enabled" title="Double-click to skip to end.">next</a>
+					</div>
 				</ul>
 			</div>	
+			<div class="module_contents">				
+				<div id="tabscontent">
+					# START tab #
+						<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
+							<br /><div>{tab.CONTENTS_TAB}</div>
+						</div>
+					# END tab #
+				</div>					
+				<script type="text/javascript">
+					<!--
+					start_tab(getParam('p'));
+					-->
+				</script>
 			# ENDIF #
+			# IF NOT C_TAB #
 			<div class="module_contents">
-				# IF NOT C_TAB #
 					# IF PAGINATION_ARTICLES #
 					<div style="float:right;margin-right:35px;width:250px;">
 						<form action="" method="post">
@@ -205,22 +217,8 @@
 					<div style="float:left;width:33%" class="text_center">{PAGINATION_ARTICLES}</div>
 					<div style="float:left;width:33%;">{PAGE_NEXT_ARTICLES}&nbsp;</div>
 					# ENDIF #		
-				# ENDIF #
-				# IF C_TAB #	
-					<div id="tabscontent">
-						# START tab #
-							<div id="tabContent{tab.ID_TAB}" class="tabContent" style="display:{tab.DISPLAY};">
-								<br /><div>{tab.CONTENTS_TAB}</div>
-							</div>
-						# END tab #
-					</div>					
-					<script type="text/javascript">
-					<!--
-						start_tab(getParam('p'));
-					-->
-					</script>
 			# ENDIF #
-			<div class="spacer">&nbsp;</div>
+				<div class="spacer">&nbsp;</div>
 			</div>
 			<div class="module_bottom_l"></div>		
 			<div class="module_bottom_r"></div>

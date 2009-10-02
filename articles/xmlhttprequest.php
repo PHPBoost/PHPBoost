@@ -26,26 +26,26 @@
  *
 ###################################################*/
 
-define('NO_SESSION_LOCATION', true); //Permet de ne pas mettre jour la page dans la session.
+define('NO_SESSION_LOCATION', true); // Permet de ne pas mettre jour la page dans la session.
 require_once('../kernel/begin.php');
 include_once('../articles/articles_begin.php');
 require_once('../kernel/header_no_display.php');
 
 $note=retrieve(GET,'note',0);
 //Notation.
-if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //Utilisateur connecté.
+if (!empty($note) && $User->check_level(MEMBER_LEVEL)) //connected user
 {	
 	$id = retrieve(POST, 'id', 0);
 	$note = retrieve(POST, 'note', 0);
 
-	//Initialisation  de la class de gestion des fichiers.
+	// intialize management system class
 	import('content/note');
 	$Note = new Note('articles', $id, '', $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
 	
 	if (!empty($note) && !empty($id))
-		echo $Note->add($note); //Ajout de la note.
+		echo $Note->add($note); //add a note
 }
-elseif (retrieve(GET,'img_preview',false)) // Prévisualisation des images.
+elseif (retrieve(GET,'img_preview',false)) // image preview
 {
 	echo second_parse_url(retrieve(GET, 'img_preview', '/articles/articles.png', TSTRING));
 }
@@ -55,7 +55,7 @@ elseif (retrieve(POST,'preview',false))
 	$level = array('', ' class="modo"', ' class="admin"');
 	$preview = new Template('articles/articles.tpl');
 	$Cache->load('articles');
-	//Chargement de la langue du module.
+	//loading module language
 	load_module_lang('articles');
 
 	$articles = array(
@@ -72,18 +72,12 @@ elseif (retrieve(POST,'preview',false))
 	$user = $Sql->query_array(DB_TABLE_MEMBER, 'level', 'login', "WHERE user_id = '" . $articles['user_id'] . "'", __LINE__, __FILE__);
 
 	if (!empty($articles['date']))
-	{
 		$date = new Date(DATE_FROM_STRING, TIMEZONE_AUTO, $articles['date'], $LANG['date_format_short']);
-	}
 	else
-	{
 		$date = new Date(DATE_NOW, TIMEZONE_AUTO);
-	}
 
 	if (!empty($articles['date']) && !empty($articles['hour']) && !empty($articles['min']))
-	{
 		$date->timestamp += ($articles['hour'] * 60 + $articles['min']) * 60;
-	}
 
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,

@@ -52,11 +52,10 @@ if ($User->check_level(ADMIN_LEVEL)) //Admin
 		$result = $articles_categories->change_visibility($id_show, CAT_VISIBLE, LOAD_CACHE);
 	elseif ($id_hide > 0)
 		$result = $articles_categories->change_visibility($id_hide, CAT_UNVISIBLE, LOAD_CACHE);
+		
 	//Operation was successfully
-
 	if ($result)
 	{
-	
 		$cat_config = array(
 			'xmlhttprequest_file' => 'xmlhttprequest_cats.php',
 			'administration_file_name' => 'admin_articles_cat.php',

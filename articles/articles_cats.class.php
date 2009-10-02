@@ -153,7 +153,6 @@ class ArticlesCats extends CategoriesManager
 		}
 
 		$Bread_crumb->add($ARTICLES_LANG['articles'], url('articles.php'));
-
 		$Bread_crumb->reverse();
 	}
 

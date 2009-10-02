@@ -38,10 +38,8 @@ $id_up = retrieve(GET, 'id_up', 0,TINTEGER);
 $id_down = retrieve(GET, 'id_down', 0,TINTEGER);
 $id_show = retrieve(GET, 'show', 0,TINTEGER);
 $id_hide = retrieve(GET, 'hide', 0,TINTEGER);
-
 $new_cat = retrieve(GET, 'new', false);
 $id_edit = retrieve(GET, 'edit', 0,TINTEGER);
-
 $error = retrieve(GET, 'error', '');
 
 require_once('articles_cats.class.php');
@@ -131,6 +129,7 @@ elseif ($new_cat XOR $id_edit > 0)
 			$selected = $image == $ARTICLES_CAT[$id_edit]['image'] ? ' selected="selected"' : '';
 			$image_list .= '<option value="' . $image . '"' . ($img_direct_path ? '' : $selected) . '>' . $image . '</option>';
 		}
+		
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => $ARTICLES_CAT[$id_edit]['name'],
 			'DESCRIPTION' => unparse($ARTICLES_CAT[$id_edit]['description']),
@@ -163,7 +162,6 @@ elseif ($new_cat XOR $id_edit > 0)
 			$image_list .= '<option value="' . $image . '">' . $image . '</option>';}
 		}
 	
-
 		$tpl->assign_block_vars('edition_interface', array(
 			'NAME' => '',
 			'DESCRIPTION' => '',
@@ -181,30 +179,21 @@ elseif ($new_cat XOR $id_edit > 0)
 			'AUTH_CONTRIBUTION' => Authorizations::generate_select(AUTH_ARTICLES_CONTRIBUTE, $CONFIG_ARTICLES['global_auth']),
 			'AUTH_MODERATION' => Authorizations::generate_select(AUTH_ARTICLES_MODERATE, $CONFIG_ARTICLES['global_auth']),
 		));
-
 	}
 }
 elseif (retrieve(POST,'submit',false))
 {
 	$error_string = 'e_success';
 	//Deleting a category
-
 	if (!empty($cat_to_del_post))
 	{
-		
-
 		$delete_content =(retrieve(POST,'action','move') == 'move') ? false : true;
-		//echo $delete_content;
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		
 		if ($delete_content)
-		{
 			$articles_categories->delete_category_recursively($cat_to_del_post);
-		}
 		else
-		{
 			$articles_categories->delete_category_and_move_content($cat_to_del_post, $id_parent);
-		}
 	}
 	else
 	{
@@ -212,16 +201,15 @@ elseif (retrieve(POST,'submit',false))
 		$id_parent = retrieve(POST, 'id_parent', 0,TINTEGER);
 		$name = retrieve(POST, 'name', '');
 		$icon=retrieve(POST, 'icon', '', TSTRING);
+		
 		if(retrieve(POST,'icon_path',false))
-		{
 			$icon=retrieve(POST,'icon_path','');
-		}
+			
 		$description = retrieve(POST, 'description', '', TSTRING_PARSE);
 		$auth = !empty($_POST['special_auth']) ? addslashes(serialize(Authorizations::build_auth_array_from_form(AUTH_ARTICLES_READ, AUTH_ARTICLES_CONTRIBUTE, AUTH_ARTICLES_WRITE, AUTH_ARTICLES_MODERATE))) : '';
 
 		if (empty($name))
-			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');
-		
+			redirect(url(HOST . SCRIPT . '?error=e_required_fields_empty#errorh'), '', '&');		
 		if ($id_cat > 0)
 			$error_string = $articles_categories->Update_category($id_cat, $id_parent, $name, $description, $icon, $auth);
 		else
@@ -276,7 +264,7 @@ else
 	));
 }
 
-	$tpl->parse();
+$tpl->parse();
 require_once('../admin/admin_footer.php');
 
 ?>
