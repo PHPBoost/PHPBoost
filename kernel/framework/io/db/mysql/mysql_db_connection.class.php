@@ -117,7 +117,7 @@ class MySQLDBConnection implements DBConnection
     {
         if (!@mysql_select_db($this->database, $this->link))
         {
-            throw new MySQLDBConnectionException('can\'t select database "' . $this->database . '"');
+            throw new MySQLUnexistingDatabaseException();
         }
         $this->connected = true;
     }

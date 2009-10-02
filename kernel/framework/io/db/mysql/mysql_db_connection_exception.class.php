@@ -35,4 +35,13 @@ class MySQLDBConnectionException extends DBConnectionException
     }
 }
 
+
+class MySQLUnexistingDatabaseException extends UnexistingDatabaseException
+{
+    public function __construct()
+    {
+        parent::__construct('(ERRNO ' . mysql_errno() . ') ' . mysql_error());
+    }
+}
+
 ?>
