@@ -34,7 +34,6 @@ load_module_lang('articles');
 $Cache->load('articles');
 if (empty($idartcat))//Racine.
 {
-
    $ARTICLES_CAT[0]['auth'] = $CONFIG_ARTICLES['global_auth'];
    $ARTICLES_CAT[0]['visible'] = 1;
    $ARTICLES_CAT[0]['name'] = $LANG['root'];
@@ -42,7 +41,6 @@ if (empty($idartcat))//Racine.
    $ARTICLES_CAT[0]['id_parent'] = 0;
    $idartcat=0;
 }
-
 
 if (isset($ARTICLES_CAT[$idartcat]) )
 { 
@@ -56,21 +54,20 @@ if (isset($ARTICLES_CAT[$idartcat]) )
 		$idartcat = $articles['idcat'];
 		
 		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($articles['title']));
-
-		
+	
 		$Bread_crumb->add($articles['title'], 'articles' . url('.php?cat=' . $idartcat . '&amp;id=' . $idart, '-' . $idartcat . '-' . $idart . '+' . url_encode_rewrite($articles['title']) . '.php'));
 		
 		if (!empty($get_note))
 			$Bread_crumb->add($LANG['note'], '');
 		elseif (!empty($_GET['i']))
 			$Bread_crumb->add($LANG['com'], '');
+			
 	}
 	else
 		define('TITLE', $ARTICLES_LANG['title_articles'] . ' - ' . addslashes($ARTICLES_CAT[$idartcat]['name']));
 }
 else
 {
-
 	$Bread_crumb->add($ARTICLES_LANG['title_articles'], 'articles.php');
 	if (!defined('TITLE'))
 		define('TITLE', $ARTICLES_LANG['title_articles']);

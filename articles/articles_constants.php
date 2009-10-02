@@ -33,12 +33,8 @@ define('AUTH_ARTICLES_CONTRIBUTE', 2);
 define('AUTH_ARTICLES_WRITE', 4);
 define('AUTH_ARTICLES_MODERATE', 8);
 
-
 define('DB_TABLE_ARTICLES', PREFIX . 'articles');
 define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
-
-
-//load_module_lang('articles'); //Chargement de la langue du module.
 
 $idartcat = retrieve(GET, 'cat',0);
 $idart = retrieve(GET, 'id', 0);

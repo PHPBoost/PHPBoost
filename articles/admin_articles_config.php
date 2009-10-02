@@ -28,12 +28,12 @@
 
 require_once('../admin/admin_begin.php');
 require_once('articles_constants.php');
+
 load_module_lang('articles'); //Chargement de la langue du module.
 define('TITLE', $LANG['administration']);
+
 require_once('../admin/admin_header.php');
-
 require_once('admin_articles_menu.php');
-
 
 if (retrieve(POST,'valid',false))
 {
@@ -53,7 +53,6 @@ if (retrieve(POST,'valid',false))
 	if ($CONFIG_ARTICLES['note_max'] != $config_articles['note_max'])
 		$Sql->query_inject("UPDATE " .DB_TABLE_ARTICLES . " SET note = note * '" . ($config_articles['note_max']/$CONFIG_ARTICLES['note_max']) . "'", __LINE__, __FILE__);
 
-
 	###### Régénération du cache des articles #######
 	$Cache->Generate_module_file('articles');
 	
@@ -63,12 +62,12 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 {
 	$Cache->load('articles');
 	
-	$info_cat = array();
 	$result = $Sql->query_while ("SELECT idcat, COUNT(*) as nbr_articles_visible 
 	FROM " . DB_TABLE_ARTICLES . "
 	WHERE visible = 1 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
 	
+	$info_cat = array();
 	while ($row = $Sql->fetch_assoc($result))
 		$info_cat[$row['idcat']]['visible'] = $row['nbr_articles_visible'];
 		
@@ -78,6 +77,7 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 	FROM " . DB_TABLE_ARTICLES . " 
 	WHERE visible = 0 AND idcat > 0
 	GROUP BY idcat", __LINE__, __FILE__);
+	
 	while ($row = $Sql->fetch_assoc($result))
 		$info_cat[$row['idcat']]['unvisible'] = $row['nbr_articles_unvisible'];
 		
@@ -91,11 +91,10 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 		$nbr_articles_unvisible = 0;
 		foreach ($info_cat as $key => $value)
 		{			
-			if ($ARTICLES_CAT[$key]['id_parent'] >= $row['id_parent'])
+			if ($key == $row['id'])
 			{	
 				$nbr_articles_visible += isset($info_cat[$key]['visible']) ? $info_cat[$key]['visible'] : 0;
 				$nbr_articles_unvisible += isset($info_cat[$key]['unvisible']) ? $info_cat[$key]['unvisible'] : 0; 
-			
 			}
 		}
 		$Sql->query_inject("UPDATE " . DB_TABLE_ARTICLES_CAT. " SET nbr_articles_visible = '" . $nbr_articles_visible . "', nbr_articles_unvisible = '" . $nbr_articles_unvisible . "' WHERE id = '" . $row['id'] . "'", __LINE__, __FILE__);	
@@ -104,14 +103,13 @@ elseif (retrieve(POST,'articles_count',false)) //Recompte le nombre d'articles d
 	
 	$Cache->Generate_module_file('articles');
 	
-	redirect('/articles/admin_articles_config.php'); 
+	redirect(HOST . DIR . '/articles/admin_articles_config.php'); 
 }
 //Sinon on rempli le formulaire
 else	
 {		
 	$tpl = new Template('articles/admin_articles_config.tpl');
 	$tpl->assign_vars(array('ADMIN_MENU' => $admin_menu));
-
 	
 	$Cache->load('articles');
 
@@ -147,7 +145,6 @@ else
 		'L_USE_TAB'=>$ARTICLES_LANG['use_tab']
 	));
 	$tpl->parse();
-	
 }
 	
 require_once('../admin/admin_footer.php');

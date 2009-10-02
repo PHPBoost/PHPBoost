@@ -34,16 +34,13 @@ $articles_categories = new ArticlesCats();
 $page = retrieve(GET, 'p', 1, TUNSIGNED_INT);
 $cat = retrieve(GET, 'cat', 0);
 $idart = retrieve(GET, 'id', 0);	
-
+$user = retrieve(GET, 'user', false, TBOOL);
 
 if (!empty($idart) && isset($cat) )
 {
-
 	//Niveau d'autorisation de la catégorie
 	if (!isset($ARTICLES_CAT[$idartcat]) || !$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) || $ARTICLES_CAT[$idartcat]['visible'] == 0) 
-		{
-			$Errorh->handler('e_auth', E_USER_REDIRECT);
-		}
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
 		
 	$result = $Sql->query_while("SELECT a.contents, a.title, a.id, a.idcat, a.timestamp, a.start, a.visible, a.user_id, a.icon, a.nbr_com, m.login, m.level
 		FROM " . DB_TABLE_ARTICLES . " a LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
@@ -58,7 +55,6 @@ if (!empty($idart) && isset($cat) )
 	
 	//MAJ du compteur.
 	$Sql->query_inject("UPDATE " . LOW_PRIORITY . " " . DB_TABLE_ARTICLES . " SET views = views + 1 WHERE id = " . $idart, __LINE__, __FILE__); 
-	
 	
 	//On crée une pagination si il y plus d'une page.
 	import('util/pagination'); 
@@ -78,8 +74,9 @@ if (!empty($idart) && isset($cat) )
 	$page_list .= '<option value="1"></option>';
 	$i = 1;
 	
+	// If tab pagination is active
 	$c_tab=$CONFIG_ARTICLES['tab'];
-		//Nombre de pages
+	//Nombre de pages
 	$nbr_page = count($array_page[1]);
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	$tpl->assign_vars( array(
@@ -102,15 +99,13 @@ if (!empty($idart) && isset($cat) )
 				));
 		}
 		else
-		{
 			$c_tab=false;
-		}
+			
 		$selected = ($i == $page) ? 'selected="selected"' : '';
 		$page_list .= '<option value="' . $i++ . '"' . $selected . '>' . $page_name . '</option>';
 		
 	}
 	
-
 	//Affichage notation
 	import('content/note'); 
 	$Note = new Note('articles', $idart, url('articles.php?cat=' . $idartcat . '&amp;id=' . $idart, 'articles-' . $idartcat . '-' . $idart . '.php'), $CONFIG_ARTICLES['note_max'], '', NOTE_DISPLAY_NOTE);
@@ -151,7 +146,6 @@ if (!empty($idart) && isset($cat) )
 	));
 
 	//Affichage commentaires.
-	
 	if (isset($_GET['com']))
 	{
 		$tpl->assign_vars(array(
@@ -160,6 +154,87 @@ if (!empty($idart) && isset($cat) )
 	}	
 
 	$tpl->parse();
+}
+elseif ($user)
+{
+
+	$tpl = new Template('articles/articles_cat.tpl');
+	$i = 0;
+
+	$now = new Date(DATE_NOW, TIMEZONE_AUTO);
+	$array_cat = array();
+	
+	$articles_categories->build_children_id_list(0, $array_cat, RECURSIVE_EXPLORATION, DO_NOT_ADD_THIS_CATEGORY_IN_LIST, AUTH_ARTICLES_WRITE);
+	
+	if (!empty($array_cat))
+	{
+		$result = $Sql->query_while("SELECT a.contents, a.note,a.views,a.nbr_com,a.title, a.id, a.idcat, a.timestamp, a.user_id, a.icon, a.nbr_com,a.start,a.visible, m.login, m.level
+			FROM " . DB_TABLE_ARTICLES . " a
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+			WHERE (a.start > '" . $now->get_timestamp() . "' OR a.visible = '0') AND a.user_id = '" . $User->get_attribute('user_id') . "'
+			ORDER BY a.timestamp DESC", __LINE__, __FILE__);
+			
+		while ($row = $Sql->fetch_assoc($result))
+		{
+			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+			
+			$tpl->assign_block_vars('articles', array(
+				'ID' => $row['id'],
+				'U_SYNDICATION' => url('../syndication.php?m=articles&amp;cat=' . $row['idcat']),
+				'U_LINK' => 'articles' . url('.php?id=' . $row['id'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($row['title']) . '.php'),
+				'NAME' => $row['title'],
+				'C_IMG' => !empty($row['icon']),
+				'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['idcat'], '-' . $row['idcat'] . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
+				'CONTENTS' => second_parse($row['contents']),
+				'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+			    'FEED_MENU' => Feed::get_feed_menu('syndication.php?m=articles'),
+				'COMPT'=>$row['views'],
+				'NOTE'=>$row['note'],
+				'COM'=>$row['nbr_com'],
+				'U_EDIT'=> url('admin_articles_cat.php?edit='.$row['id']),
+				'U_ARTICLES_LINK' => url('.php'),
+				'U_ARTICLES_LINK_COM'=>url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0')
+			));
+
+			$i++;
+		}
+		
+		$Sql->query_close($result);
+
+		if ($i == 0)
+		{
+			$tpl->assign_vars(array(
+				'L_ARTICLES' => $ARTICLES_LANG['articles'],
+				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . ' : '.$ARTICLES_LANG['no_articles_available'].'</a>',
+			));
+		}
+		else
+		{
+			$tpl->assign_vars(array(
+				'C_ARTICLES_LINK' =>true,
+				'C_WAITING'=> true,
+				'L_ARTICLES' => $ARTICLES_LANG['articles'],
+				'L_DATE' => $LANG['date'],
+				'L_VIEW' => $LANG['views'],
+				'L_NOTE' => $LANG['note'],
+				'L_COM' => $LANG['com'],
+				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>',
+				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+				'L_DELETE' => $LANG['delete'],
+				'L_EDIT' => $LANG['edit'],
+				'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
+
+			));	
+		}
+
+		$tpl->parse();
+	}
+	else
+	{
+		redirect(get_start_page());
+		exit;
+	}
 }
 else
 {

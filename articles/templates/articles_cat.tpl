@@ -1,5 +1,11 @@
 		{JAVA} 
-
+		<script type="text/javascript">
+		<!--
+			function Confirm_del_article() {
+			return confirm("{L_ALERT_DELETE_ARTICLE}");
+			}
+		-->
+		</script>	
 		<div class="module_position">					
 			<div class="module_top_l"></div>		
 			<div class="module_top_r"></div>
@@ -17,7 +23,9 @@
 				</a>
 				&nbsp;
 				# ENDIF #
-			
+				# IF NOT C_WAITING #
+					<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>
+				# ENDIF #
 			</div>
 			<div class="module_contents">
 				# IF C_ARTICLES_CAT #
@@ -75,6 +83,12 @@
 					<tr>	
 						<td class="row2" style="padding-left:25px">
 							{articles.ICON} &nbsp;&nbsp;<a href="../articles/articles{articles.U_ARTICLES_LINK}">{articles.NAME}</a>
+							# IF C_WAITING #
+							<div style="display:inline;float:right">
+							&nbsp;&nbsp;<a href="../articles/management.php?edit={articles.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
+							&nbsp;&nbsp;<a href="../articles/management.php?del=1&amp;id={articles.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+							</div>
+							# ENDIF #
 						</td>
 						<td class="row2" style="text-align: center;">
 							{articles.DATE}
