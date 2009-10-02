@@ -77,7 +77,8 @@ elseif (retrieve(POST,'preview',false))
 		$date = new Date(DATE_NOW, TIMEZONE_AUTO);
 
 	if (!empty($articles['date']) && !empty($articles['hour']) && !empty($articles['min']))
-		$date->timestamp += ($articles['hour'] * 60 + $articles['min']) * 60;
+		$date->set_hours($articles['hour']);
+		$date->set_minutes($articles['min']);
 
 	$preview->assign_vars(array(
 		'C_DISPLAY_ARTICLE'=>true,

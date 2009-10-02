@@ -53,7 +53,7 @@
 							idcat: document.getElementById('idcat').value,
 							desc: document.getElementById('contents').value,
 							user_id: document.getElementById('user_id').value,
-							date: document.getElementById('calendar_{JS_INSTANCE_RELEASE}').value,
+							date: document.getElementById('{RELEASE_CALENDAR_ID}').value,
 							hour: document.getElementById('release_hour').value,
 							min: document.getElementById('release_min').value
 						 },
@@ -173,7 +173,7 @@
 						<input type="text" size="2" maxlength="2" id="release_min" name="release_min" value="{RELEASE_MIN}" class="text" />
 						# IF C_ADD #
 						&nbsp;
-						<input type="button" id="button_new" value="{L_IMMEDIATE}" class="submit" onclick="javascript:value_now('calendar_{JS_INSTANCE_RELEASE}', 'release_hour', 'release_min')" />
+						<input type="button" id="button_new" value="{L_IMMEDIATE}" class="submit" onclick="javascript:value_now('{RELEASE_CALENDAR_ID}', 'release_hour', 'release_min')" />
 						# ENDIF #
 					</dd>
 				</dl>
