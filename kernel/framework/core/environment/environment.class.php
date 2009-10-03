@@ -70,7 +70,7 @@ class Environment
 	{
 		require_once PATH_TO_ROOT . '/kernel/framework/functions.inc.php';
 
-		//Now we have the import function, we can user it :)
+		// Now we have the import classes, we can user it :)
 		import('content/parser/content_formatting_factory');
 		import('core/breadcrumb');
 		import('core/cache');
@@ -84,7 +84,8 @@ class Environment
 		import('members/groups_service');
 		import('members/session');
 		import('members/user');
-		import('util/bench');
+        import('util/bench');
+        import('util/debug');
 	}
 
 	/**

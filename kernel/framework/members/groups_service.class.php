@@ -118,7 +118,7 @@ class GroupsService
 		static $groups_names = null;
 		if ($groups_names === null)
 		{
-			$groups_name = array();
+			$groups_names = array();
 			$group_config_data = GroupsCacheData::load();
 			foreach ($group_config_data->get_groups() as $idgroup => $array_group_info)
 			{
