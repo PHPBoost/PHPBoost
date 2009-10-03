@@ -5,7 +5,8 @@ require_once PATH_TO_ROOT . '/test/header.php';
 
 import('util/bench');
 
-class UTBench extends PHPBoostUnitTestCase {
+class UTBench extends PHPBoostUnitTestCase
+{
 
 	private $result_format_regex = '`[0-9]+\.[0-9]{%d}`';
 	

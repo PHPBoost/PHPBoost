@@ -23,7 +23,8 @@ class MySampleTestObject extends BusinessObject
     public function set_user_id($value) { $this->user_id = $value; }
 }
 
-class UTMappingModel extends PHPBoostUnitTestCase {
+class UTMappingModel extends PHPBoostUnitTestCase
+{
 
 	private $model;
 
