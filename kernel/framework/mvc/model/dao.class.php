@@ -27,12 +27,17 @@
 
 interface DAO
 {
-    public function delete($object);
-    public function save($object);
+    const ORDER_BY_ASC = 0x01;
+    const ORDER_BY_DESC = 0x01;
+	
+	public function delete($object);
+	public function save(PropertiesMapInterface $object);
 
-    public function find_by_id($id);
-    public function find_by_criteria($criteria);
-    public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC);
+	public function find_by_id($id);
+	public function find_by_criteria($criteria, $parameters = array());
+	public function find_all($limit = 100, $offset = 0, $order_by = null, $way = self::ORDER_BY_ASC);
 }
+
+class ValidationException extends Exception {}
 
 ?>

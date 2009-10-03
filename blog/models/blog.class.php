@@ -25,9 +25,7 @@
  *
  ###################################################*/
 
-define('BLOG__CLASS','blog');
-
-import('mvc/abstract_dao_object');
+import('mvc/model/business_object');
 
 mimport('blog/models/dao/blog_dao');
 mimport('blog/models/blog_post');
@@ -36,7 +34,7 @@ mimport('blog/models/blog_post');
  * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  */
-class Blog extends AbstractDAOObject
+class Blog extends BusinessObject
 {
 	public function __construct($title = '', $description = '')
 	{

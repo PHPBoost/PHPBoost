@@ -71,7 +71,7 @@ abstract class SQLDAO implements DAO
 		$this->cache_model();
 	}
 
-	public function delete(PropertiesMapInterface $object)
+	public function delete($object)
 	{
 		static $prepared_query = null;
 		if ($prepared_query === null)
@@ -106,14 +106,24 @@ abstract class SQLDAO implements DAO
 
 	}
 
-	public function find_by_criteria($criteria)
+	public function find_by_criteria($criteria, $parameters = array())
 	{
 
 	}
 
-	public function find_all($offset = 0, $limit = 100, $order_by = null, $way = ICriteria::ASC)
+	public function find_all($limit = 100, $offset = 0, $order_by = null, $way = DAO::ORDER_BY_ASC)
 	{
-
+        $parameters = array('limit' => $limit,'offset' => $offset);
+        
+		$query = "LIMIT :limit OFFSET :offset";
+		if (!empty($order_by))
+		{
+			$query .= " ORDER BY :order_column :order_by_way";
+            $parameters['order_column'] = $order_by;
+            $parameters['order_by_way'] = $way;
+		}
+		
+        return $this->find_by_criteria($query, $parameters);
 	}
 
 	private function cache_model()

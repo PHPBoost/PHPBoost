@@ -27,36 +27,38 @@
 
 define('BLOG_DAO__CLASS','blog_dao');
 
-import('mvc/dao/abstract_dao');
+import('mvc/model/sql_dao');
+import('mvc/model/mapping_model');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
  * @desc
  */
-class BlogDAO extends AbstractDAO
+class BlogDAO extends SQLDAO
 {
-    public static function instance()
-    {
-        if (self::$instance === null)
-        {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-    
-	public function __construct()
+	public static function instance()
 	{
-		parent::__construct(
-			new Model('Blog', new ModelField('id', 'integer', 12), array(
-	        new ModelField('title', 'string', 64),
-	        new ModelField('description', 'string', 65535),
-	        new ModelField('user_id', 'integer', 12)),
-	        array(new ModelField(DB_TABLE_MEMBER . '.login', 'string', 255, 'member_login')),
-	        array(DB_TABLE_MEMBER . '.user_id' => 'user_id')
-        ));
+		if (self::$instance === null)
+		{
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
-	public function save($blog)
+	public function __construct()
+	{
+		$classname = 'Blog';
+		$tablename = 'blog';
+		$primary_key = new MappingModelField('id');
+		$fields = array(new MappingModelField('title'), new MappingModelField('description'), new MappingModelField('user_id'));
+		$joins = array();
+		
+		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
+		
+		parent::__construct(EnvironmentServices::get_sql_querier(), $model);
+	}
+
+	public function save(PropertiesMapInterface $blog)
 	{
 		parent::save($blog);
 		$posts = $blog->get_added_posts();
@@ -69,23 +71,23 @@ class BlogDAO extends AbstractDAO
 			}
 		}
 	}
-	
+
 	public function before_save($blog)
 	{
 		$title = $blog->get_title();
 		$description = $blog->get_description();
 		if (empty($title) || empty($description))
 		{
-            throw new BlogValidationExceptionMissingFields();		
+			throw new BlogValidationExceptionMissingFields();
 		}
 	}
-	
+
 	public function delete($blog)
 	{
 		BlogPostDAO::instance()->delete_all_blog_post(is_numeric($blog) ? $blog : $blog->get_id());
 		parent::delete($blog);
 	}
-	
+
 	private static $instance;
 }
 

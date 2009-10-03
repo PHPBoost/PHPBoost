@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+import('mvc/model/properties_map_interface');
 
 abstract class BusinessObject implements PropertiesMapInterface
 {

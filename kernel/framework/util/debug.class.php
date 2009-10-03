@@ -88,7 +88,7 @@ class Debug
 	{
 		if (!empty($trace['file']))
 		{
-			return substr($trace['file'], strlen(FILE_SYSTEM_DIRECTORY)) . ':' . $trace['line'];
+			return get_free_phpboost_root_directory_path($trace['file']) . ':' . $trace['line'];
 		}
 		return 'Internal';
 	}
@@ -100,7 +100,12 @@ class Debug
 		{
 			$prototype = $call['class'] . $call['type'];
 		}
-		$prototype .= $call['function'] . '(' . self::get_args($call['args']) . ')';
+		$prototype .= $call['function'] . '(';
+        if (!empty($call['args']))
+        {
+        	$prototype .= self::get_args($call['args']);
+        }
+		$prototype .= ')';
 		return $prototype;
 	}
 	

@@ -43,7 +43,7 @@ if (!defined('TITLE'))
 
 Environment::set_page_title(TITLE);
 
-$Session->check(TITLE);
+EnvironmentServices::get_session()->check(TITLE);
 
 Environment::display_header();
 

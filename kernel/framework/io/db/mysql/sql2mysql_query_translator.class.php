@@ -50,6 +50,7 @@ class SQL2MySQLQueryTranslator
         echo '<hr />' . self::$query . '<hr />';
         self::translate_operators();
         self::translate_functions();
+        self::translate_clause();
         echo '<hr />' . self::$query . '<hr />';
         return self::$query;
     }
@@ -66,6 +67,12 @@ class SQL2MySQLQueryTranslator
         'match($1) against($2)', self::$query);
         self::$query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
         'match($1) against($2)', self::$query);
+    }
+    
+    private static function translate_clause()
+    {
+        self::$query = preg_replace('`limit\s+([^\s;]+)\s+offset\s+([^\s;]+)`iU',
+        'limit $2 $1', self::$query);
     }
     
     private static function concat_callback($matches)
