@@ -47,14 +47,7 @@ class Bench
 	 */
     public function __construct()
     {
-    	$this->start = self::get_microtime();
-    }
-    /**
-	 * @desc stops the bench now
-	 */
-    public function stop()
-    {
-    	$this->duration = Bench::get_microtime() - $this->start; 
+    	$this->start = $this->get_microtime();
     }
     
     /**
@@ -66,6 +59,14 @@ class Bench
     {
     	$this->stop();
     	return number_round($this->duration, $digits); 
+    }
+
+    /**
+     * @desc stops the bench now
+     */
+    private function stop()
+    {
+        $this->duration = Bench::get_microtime() - $this->start; 
     }
     
     /**

@@ -171,7 +171,7 @@ class TestOfGenericAssertionsInWebTester extends WebTestCase {
     }
 }
 
-    $test = &new GroupTest('All tests');
+    $test = new GroupTest('All tests');
     $test->run(new ShowPasses());
 
 
