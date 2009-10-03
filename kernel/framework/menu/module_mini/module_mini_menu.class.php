@@ -42,9 +42,9 @@ class ModuleMiniMenu extends Menu
 	 * @desc Build a ModuleMiniMenu element.
 	 * @param string $title its name (according the the module folder name)
 	 */
-    function ModuleMiniMenu($module, $filename)
+    public function __construct($module, $filename)
     {
-        parent::Menu($module);
+        parent::__construct($module);
         $this->filename = strprotect($filename);
     }
     

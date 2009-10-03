@@ -15,7 +15,7 @@
  * 2006/10/27 (1.0.0)
  *    -    First Release
  *
- * TODO (updated 2006/10/27)
+ * TO_DO (updated 2006/10/27)
  * -------------------------
  * * Add < and > to brackets
  * * Remove symbols which are also comment delimiters / quote marks?

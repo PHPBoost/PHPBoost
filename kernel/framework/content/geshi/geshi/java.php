@@ -26,7 +26,7 @@
  * 2004/07/14 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TO_DO (updated 2004/11/27)
  * -------------------------
  * * Compact the class names like the first few have been
  *   and eliminate repeats

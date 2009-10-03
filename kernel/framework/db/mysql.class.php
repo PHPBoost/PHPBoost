@@ -57,7 +57,7 @@ class Sql
 	/**
 	 * @desc Builds a MySQL connection.
 	 */
-	public function __construct(DBConnection  $db_connection, $db_name)
+	public function __construct(DBConnection $db_connection, $db_name = '')
 	{
 		$this->link = $db_connection->get_link();
 		$this->base_name = $db_name;
@@ -542,8 +542,8 @@ class Sql
 	public function get_dbms_version()
 	{
 		return 'MySQL ' . mysql_get_server_info($this->link);
-	}	
-	
+	}
+
 	/**
 	 * @desc Escapes the dangerous characters in the string you inject in your requests.
 	 * @param string $value String to escape
@@ -564,7 +564,7 @@ class Sql
 			return $value;
 		}
 	}
-	
+
 	/**
 	 * @desc Highlights a SQL query to be more readable by a human.
 	 * @param string $query Query to highlight

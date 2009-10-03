@@ -30,8 +30,19 @@ import('io/db/mysql/mysql_db_connection');
 import('io/db/mysql/mysql_query_result');
 import('io/db/mysql/sql2mysql_query_translator');
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package sql
+ * @subpackage mysql
+ * @desc
+ */
 class MySQLQuerier implements SQLQuerier
 {
+	/**
+	 * @var string
+	 */
+	private $query;
+	
 	/**
 	 * @var int
 	 */
@@ -53,23 +64,46 @@ class MySQLQuerier implements SQLQuerier
 
 	public function select($query, $parameters = array())
 	{
-		$query = $this->transform_query($query, $parameters);
+		$this->query = $this->transform_query($query, $parameters);
 		$this->inc_executed_resquests_count();
-		$resource = mysql_query($query, $this->connection->get_link());
+		$resource = mysql_query($this->query, $this->connection->get_link());
 		return new MysqlQueryResult($resource);
 	}
 
 	public function inject($query, $parameters = array())
 	{
-		$query = $this->transform_query($query, $parameters);
+		$this->query = $this->transform_query($query, $parameters);
 		$this->inc_executed_resquests_count();
-		$resource = mysql_query($query, $this->connection->get_link());
+		$resource = mysql_query($this->query, $this->connection->get_link());
 		if ($resource === false)
 		{
 			throw new MySQLQuerierException('invalid inject request');
 		}
 	}
-
+	
+	public function get_last_executed_query_string()
+	{
+		return $this->query;
+	}
+	
+    public function start_transaction()
+    {
+    	$this->query = "start transaction;";
+        $this->inject($this->query);
+    }
+    
+    public function commit()
+    {
+        $this->query = "commit;";
+        $this->inject($this->query);
+    }
+    
+    public function rollback()
+    {
+        $this->query = "rollback;";
+        $this->inject($this->query);
+    }
+    
 	public function get_executed_requests_count()
 	{
 		return $this->executed_resquests_count;

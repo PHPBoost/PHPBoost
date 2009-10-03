@@ -62,7 +62,7 @@ class PackagesManager
 	 * 	<li>CONFIG_CONFLICT: the configuration field is already used</i>
 	 * </ul>
 	 */
-	function install_module($module_identifier, $enable_module = true, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)
+	public static function install_module($module_identifier, $enable_module = true, $generate_cache = GENERATE_CACHE_AFTER_THE_OPERATION)
 	{
 		global $Cache, $Sql, $CONFIG, $MODULES;
 
@@ -188,7 +188,7 @@ class PackagesManager
 	 * 	<li>NOT_INSTALLED_MODULE: the module to uninstall doesn't exist!</li>
 	 * </ul>
 	 */
-	function uninstall_module($module_id, $drop_files)
+	public static function uninstall_module($module_id, $drop_files)
 	{
 		global $Cache, $Sql, $CONFIG, $MODULES;
 		//Suppression du module dans la bdd => module désinstallé.

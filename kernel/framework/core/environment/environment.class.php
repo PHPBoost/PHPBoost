@@ -92,8 +92,8 @@ class Environment
 	 */
 	public static function init()
 	{
+        self::fit_to_php_configuration();
 		self::init_services();
-		self::fit_to_php_configuration();
 		self::load_static_constants();
 		self::write_http_headers();
 		self::load_cache();
@@ -116,6 +116,9 @@ class Environment
 
 	public static function fit_to_php_configuration()
 	{
+        define('ERROR_REPORTING',   E_ALL | E_NOTICE);
+        @error_reporting(ERROR_REPORTING);
+        
 		@ini_set('open_basedir', NULL);
 
 		//Disabling magic quotes if possible
@@ -154,9 +157,6 @@ class Environment
 		{
 			define('MAGIC_QUOTES', false);
 		}
-		
-		define('ERROR_REPORTING', 	E_ALL | E_NOTICE);
-		@error_reporting(ERROR_REPORTING);
 	}
 
 	public static function load_static_constants()

@@ -38,9 +38,9 @@ define('CONTENT_MENU__CLASS','ContentMenu');
 class ContentMenu extends Menu
 {
     ## Public Methods ##
-    function ContentMenu($title)
+    public function __construct($title)
     {
-       parent::Menu($title);
+       parent::__construct($title);
     }
     
     ## Setters ##
@@ -71,9 +71,12 @@ class ContentMenu extends Menu
      * @desc Display the content menu.
      * @return a string of the parsed template ready to be displayed
      */
-    function display()
+    function display($tpl = false)
     {
-		$tpl = new Template('framework/menus/content/display.tpl');
+		if ($tpl === false)
+		{
+			$tpl = new Template('framework/menus/content/display.tpl');
+		}
         $tpl->assign_vars(array(
             'C_DISPLAY_TITLE' => $this->display_title,
 			'C_VERTICAL_BLOCK' => ($this->get_block() == BLOCK_POSITION__LEFT || $this->get_block() == BLOCK_POSITION__RIGHT),
@@ -83,7 +86,7 @@ class ContentMenu extends Menu
         return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
-    function cache_export()
+    function cache_export($template = false)
     {
         return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
     }

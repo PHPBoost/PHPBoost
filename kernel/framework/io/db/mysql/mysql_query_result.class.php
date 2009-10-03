@@ -28,6 +28,12 @@
 import('io/db/query_result');
 import('io/db/mysql/mysql_querier_exception');
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package sql
+ * @subpackage mysql
+ * @desc
+ */
 class MysqlQueryResult implements QueryResult
 {
     /**

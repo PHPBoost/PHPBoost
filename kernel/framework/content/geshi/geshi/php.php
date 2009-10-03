@@ -23,7 +23,7 @@
  * 2004/07/14 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/07/14)
+ * TO_DO (updated 2004/07/14)
  * -------------------------
  * * Remove more functions that are hardly used
  *

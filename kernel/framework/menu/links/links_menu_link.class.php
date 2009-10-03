@@ -7,7 +7,7 @@
  *   email                : crowkait@phpboost.com; horn@phpboost.com
  *
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('menu/links/links_menu_element');
 
@@ -39,52 +39,50 @@ class LinksMenuLink extends LinksMenuElement
 {
 	## Public Methods ##
 	/**
-     * @desc Constructor
-     * @param string $title Menu title
-     * @param string $url Destination url
-     * @param string $image Menu's image url relative to the website root or absolute
-     * @param int $id The Menu's id in the database
-	 */
-	function LinksMenuLink($title, $url, $image = '')
+	* @desc Constructor
+	* @param string $title Menu title
+	* @param string $url Destination url
+	* @param string $image Menu's image url relative to the website root or absolute
+	* @param int $id The Menu's id in the database
+	*/
+	public function __construct($title, $url, $image = '')
 	{
-		parent::LinksMenuElement($title, $url, $image);
+		parent::__construct($title, $url, $image);
 	}
-	
+
 	/**
-     * @desc Display the menu
-     * @param Template $template the template to use
-     * @return string the menu parsed in xHTML
-     */
-	function display($template, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	 * @desc Display the menu
+	 * @param Template $template the template to use
+	 * @return string the menu parsed in xHTML
+	 */
+	function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
-        // Stop if the user isn't authorised
-        if (!$this->_check_auth())
-            return '';
-            
-        parent::_assign($template, $mode);
-  		$template->assign_vars(array(
+		// Stop if the user isn't authorised
+		if (!$this->_check_auth())
+		{
+			return '';
+		}
+
+		parent::_assign($template, $mode);
+		$template->assign_vars(array(
   			'C_LINK' => true
-  		));
-  		
+		));
+
 		return $template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
-	
+
 	/**
-     * @param Template $template the template to use to display the link
-     * @return string the string to write in the cache file
-     */
-    function cache_export($template)
+	 * @param Template $template the template to use to display the link
+	 * @return string the string to write in the cache file
+	 */
+	function cache_export($template = false)
 	{
-        parent::_assign($template);
-        $template->assign_vars(array(
+		parent::_assign($template);
+		$template->assign_vars(array(
             'C_LINK' => true
-        ));
-        return parent::cache_export_begin() . $template->parse(Template::TEMPLATE_PARSER_STRING) . parent::cache_export_end();
+		));
+		return parent::cache_export_begin() . $template->parse(Template::TEMPLATE_PARSER_STRING) . parent::cache_export_end();
 	}
-	
-	## Private Methods ##
-	
-	## Private attributes ##
 }
 
 ?>

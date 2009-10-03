@@ -25,7 +25,12 @@
  *
  ###################################################*/
 
-
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package sql
+ * @subpackage mysql
+ * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+ */
 class SQL2MySQLQueryTranslator
 {
     /**
@@ -33,6 +38,11 @@ class SQL2MySQLQueryTranslator
      */
     private static $query;
 
+    /**
+     * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+     * @param string $query the query to translate
+     * @return string the translated query
+     */
     public static function translate($query)
     {
         self::$query = $query;

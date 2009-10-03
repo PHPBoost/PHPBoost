@@ -55,8 +55,7 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	
 	try
 	{
-		$db_connection->connect();
-		
+		$db_connection->connect();	
 	}
 	catch (DBConnectionException $ex)
 	{
@@ -107,10 +106,9 @@ function load_db_connection()
 	global $Sql, $Errorh;
 
 	import('core/errors');
+    
 	$Errorh = new Errors;
-	import('db/mysql');
-	$Sql = new Sql;
-	$Sql->auto_connect();
+    return $Sql;
 }
 
 ?>

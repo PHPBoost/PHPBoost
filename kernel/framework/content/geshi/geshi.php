@@ -6,7 +6,7 @@
  * documentation at http://qbnz.com/highlighter/documentation.php for more
  * information about how to use this class.
  *
- * For changes, release notes, TODOs etc, see the relevant files in the docs/
+ * For changes, release notes, TO_DOs etc, see the relevant files in the docs/
  * directory.
  *
  *   This file is part of GeSHi.
@@ -2046,7 +2046,7 @@ class GeSHi {
         $endresult        = '';
 
         // "Important" selections are handled like multiline comments
-        // @todo GET RID OF THIS SHIZ
+        // @to_do GET RID OF THIS SHIZ
         if ($this->enable_important_blocks) {
             $this->language_data['COMMENT_MULTI'][GESHI_START_IMPORTANT] = GESHI_END_IMPORTANT;
         }
@@ -2707,7 +2707,7 @@ class GeSHi {
                             $comment = $comment_regexp_cache_per_key[$next_comment_regexp_key];
                             $test_str = $this->hsc(substr($part, $i, $comment['length']));
 
-                            //@todo If remove important do remove here
+                            //@to_do If remove important do remove here
                             if ($this->lexic_permissions['COMMENTS']['MULTI']) {
                                 if (!$this->use_classes) {
                                     $attributes = ' style="' . $this->language_data['STYLES']['COMMENTS'][$comment['key']] . '"';
@@ -2772,7 +2772,7 @@ class GeSHi {
                                 $close_strlen = strlen($close);
                                 $COMMENT_MATCHED = true;
                                 $test_str_match = $open;
-                                //@todo If remove important do remove here
+                                //@to_do If remove important do remove here
                                 if ($this->lexic_permissions['COMMENTS']['MULTI'] ||
                                     $open == GESHI_START_IMPORTANT) {
                                     if ($open != GESHI_START_IMPORTANT) {
@@ -3393,7 +3393,7 @@ class GeSHi {
         //
         // Highlight brackets. Yes, I've tried adding a semi-colon to this list.
         // You try it, and see what happens ;)
-        // TODO: Fix lexic permissions not converting entities if shouldn't
+        // TO_DO: Fix lexic permissions not converting entities if shouldn't
         // be highlighting regardless
         //
         if ($this->lexic_permissions['BRACKETS']) {
@@ -3693,7 +3693,7 @@ class GeSHi {
     function finalise(&$parsed_code) {
         // Remove end parts of important declarations
         // This is BUGGY!! My fault for bad code: fix coming in 1.2
-        // @todo Remove this crap
+        // @to_do Remove this crap
         if ($this->enable_important_blocks &&
             (strpos($parsed_code, $this->hsc(GESHI_START_IMPORTANT)) === false)) {
             $parsed_code = str_replace($this->hsc(GESHI_END_IMPORTANT), '', $parsed_code);
@@ -3827,7 +3827,7 @@ class GeSHi {
                     // get linenumbers
                     // we don't merge it with the for below, since it should be better for
                     // memory consumption this way
-                    // @todo: but... actually it would still be somewhat nice to merge the two loops
+                    // @to_do: but... actually it would still be somewhat nice to merge the two loops
                     //        the mem peaks are at different positions
                     for ($i = 0; $i < $n; ++$i) {
                         $close = 0;
@@ -4574,7 +4574,7 @@ class GeSHi {
             // (?:p)? => p?
             $list = preg_replace('#\(\?\:(.)\)\?#', '\1?', $list);
             // (?:a|b|c|d|...)? => [abcd...]?
-            // TODO: a|bb|c => [ac]|bb
+            // TO_DO: a|bb|c => [ac]|bb
             static $callback_2;
             if (!isset($callback_2)) {
                 $callback_2 = create_function('$matches', 'return "[" . str_replace("|", "", $matches[1]) . "]";');

@@ -53,9 +53,9 @@ class LinksMenuElement extends Menu
 	 * @param $image
 	 * @param int $id The Menu's id in the database
 	 */
-	function LinksMenuElement($title, $url, $image = '')
+	public function __construct($title, $url, $image = '')
 	{
-		parent::Menu($title);
+		parent::__construct($title);
 		$this->set_url($url);
 		$this->set_image($image);
 		$this->uid = get_uid();
@@ -163,7 +163,7 @@ class LinksMenuElement extends Menu
 	 * @desc returns the string to write in the cache file
 	 * @return string the string to write in the cache file
 	 */
-	function cache_export()
+	function cache_export($template = false)
 	{
 		return parent::cache_export();
 	}
