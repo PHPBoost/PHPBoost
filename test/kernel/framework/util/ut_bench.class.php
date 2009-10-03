@@ -11,10 +11,9 @@ class UTBench extends PHPBoostUnitTestCase {
 	
 	public function test()
 	{
-		$bench = new Bench();
-		$this->check_methods($bench);
+		$this->check_methods('Bench');
 	}
-
+	
 	public function test_constructor()
 	{
 		$bench = new Bench();
@@ -22,6 +21,12 @@ class UTBench extends PHPBoostUnitTestCase {
 	}
 
 	public function test_to_string()
+	{
+        $this->_test_to_string();
+        $this->_test_to_string5digits();
+	}
+	
+	private function _test_to_string()
 	{
 		$bench = new Bench();
 		$this->random_usleep();
@@ -31,7 +36,7 @@ class UTBench extends PHPBoostUnitTestCase {
 		$time . ' is not formatted with 3 digits');
 	}
 
-	public function test_to_string5digits()
+	private function _test_to_string5digits()
 	{
 		$digits = 5;
 		

@@ -60,8 +60,9 @@ class MappingModel
      * @param mixed[string] $properties_map
      * @return PropertiesMapInterface
      */
-    public function new_instance($properties_map)
+    public function new_instance($properties_map = array())
     {
+        /* @var PropertiesMapInterface */
         $instance = new $this->classname();
         $instance->populate($properties_map);
         return $instance;
