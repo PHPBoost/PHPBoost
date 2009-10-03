@@ -57,7 +57,7 @@ class Menu
 	 * @param string $title the Menu title
 	 * @param int $id its id in the database
 	 */
-    function Menu($title)
+    public function __construct($title)
     {
        $this->title = strprotect($title, HTML_PROTECT, ADDSLASHES_NONE);
     }

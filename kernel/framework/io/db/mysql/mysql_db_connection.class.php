@@ -28,6 +28,12 @@
 import('io/db/db_connection');
 import('io/db/mysql/mysql_db_connection_exception');
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package sql
+ * @subpackage mysql
+ * @desc
+ */
 class MySQLDBConnection implements DBConnection
 {
     /**

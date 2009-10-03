@@ -38,10 +38,10 @@ define('MINI_MENU__CLASS','MiniMenu');
 class MiniMenu extends Menu
 {
     ## Public Methods ##
-    function MiniMenu($title, $filename)
+    public function __construct($title, $filename)
     {
         $this->function_name = 'menu_' . strtolower($title) . '_' . strtolower($filename);
-        parent::Menu($title . '/' . $filename);
+        parent::__construct($title . '/' . $filename);
     }
 	
     /**

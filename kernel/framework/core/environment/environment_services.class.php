@@ -25,6 +25,8 @@
  *
  ###################################################*/
 
+import('io/db/db_factory');
+
 /**
  * @package core
  * @subpackage environment
@@ -107,36 +109,40 @@ class EnvironmentServices
 		self::$sql = new Sql(self::$db_connection, $db_name);
 	}
 
-	/**
-	 * Returns the data base connection
-	 * @return Sql
-	 */
-	public static function get_sql()
-	{
-		return self::$sql;
-	}
+    /**
+     * Returns the data base connection
+     * @return Sql
+     */
+    public static function get_sql()
+    {
+        return self::$sql;
+    }
+    /**
+     * @deprecated de merde pour toi benoit
+     */
+    public static function set_sql($sql)
+    {
+        // TODO ben, supprime ça, mais casse pas l'installateur (étape 6)
+        self::$sql = $sql;
+    }
 
 	/**
 	 * Inits the database querier
 	 */
 	public static function init_sql_querier()
 	{
-		//Configuration file
-		@include_once(PATH_TO_ROOT . '/kernel/db/config.php');
-
-		//If PHPBoost is not installed, we redirect the user to the installation page
-		if (!defined('PHPBOOST_INSTALLED'))
-		{
-			import('util/unusual_functions', INC_IMPORT);
-			redirect(get_server_url_page('install/install.php'));
-		}
-
-		import('io/db/mysql/mysql_querier');
-		self::$db_connection = new MySQLDBConnection($sql_host, $sql_login, $sql_pass, $sql_base);
+	    self::$db_connection = DBFactory::new_db_connection();
 		self::$db_connection->connect();
-		self::$sql_querier = new MySQLQuerier(self::$db_connection);
+		self::$sql_querier = DBFactory::new_sql_querier(self::$db_connection);
 		
-		self::init_sql($sql_base);
+		// TODO @ben, refactor this, find another way to retrieve the $sql_base
+		//Configuration file
+        @include PATH_TO_ROOT . '/kernel/db/config.php';
+        //If PHPBoost is not installed, we redirect the user to the installation page
+        if (defined('PHPBOOST_INSTALLED'))
+        {
+		    self::init_sql($sql_base);
+        }
 	}
 
 	/**
@@ -185,10 +191,16 @@ class EnvironmentServices
 	 * Returns the current user
 	 * @return User
 	 */
-	public static function get_user()
-	{
-		return self::$user;
-	}
+    public static function get_user()
+    {
+        return self::$user;
+    }
+    
+    public static function set_user($user)
+    {
+    	// TODO ben, supprime ça, mais casse pas l'installateur
+        self::$user = $user;
+    }
 }
 
 ?>

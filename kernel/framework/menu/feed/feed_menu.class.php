@@ -39,9 +39,9 @@ define('FEED_MENU__CLASS','FeedMenu');
 class FeedMenu extends Menu
 {
 	## Public Methods ##
-	function FeedMenu($title, $module_id, $category = 0, $name = DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
+	public function __construct($title, $module_id, $category = 0, $name = DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
-		parent::Menu($title);
+		parent::__construct($title);
 		$this->module_id = $module_id;
 		$this->category = $category;
 		$this->name = $name;
@@ -85,14 +85,14 @@ class FeedMenu extends Menu
 	 */
 	function set_name($value) { $this->name = $value; }
 
-	function display()
+	function display($template = false)
 	{
 		return Feed::get_parsed($this->module_id, $this->name, $this->category,
 		    FeedMenu::get_template($this->get_title(), $this->get_block()), $this->number, $this->begin_at
 		);
 	}
 
-	function cache_export()
+	function cache_export($template = false)
 	{
         return parent::cache_export_begin() .
             '\';import(\'content/syndication/feed\');$__menu=Feed::get_parsed(' .

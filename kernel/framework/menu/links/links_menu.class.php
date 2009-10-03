@@ -55,13 +55,13 @@ class LinksMenu extends LinksMenuElement
     * @param string $type Menu's type
     * @param int $id The Menu's id in the database
     */
-    function LinksMenu($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
+    public function __construct($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
     {
         // Set the menu type
         $this->type = in_array($type, LinksMenu::get_menu_types_list()) ? $type : VERTICAL_SCROLLING_MENU;
         
         // Build the menu element on witch is based the menu
-        parent::LinksMenuElement($title, $url, $image);
+        parent::__construct($title, $url, $image);
     }
     
     /**

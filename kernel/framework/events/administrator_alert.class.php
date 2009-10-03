@@ -90,6 +90,7 @@ class AdministratorAlert extends Event
      */
     public function build($id, $entitled, $properties, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type, $priority)
     {
+    	// TODO refactor the prototype, reason : "Declaration of AdministratorAlert::build() should be compatible with that of Event::build()"
         parent::build($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type);
         $this->set_priority($priority);
         $this->set_properties($properties);

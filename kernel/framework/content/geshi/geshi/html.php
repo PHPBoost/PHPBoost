@@ -23,7 +23,7 @@
  * 2004/07/14 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TO_DO (updated 2004/11/27)
  * -------------------------
  * * Check that only HTML4 strict attributes are highlighted
  * * Eliminate empty tags that aren't allowed in HTML4 strict

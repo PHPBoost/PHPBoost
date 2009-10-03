@@ -20,7 +20,7 @@
  * 2004/10/27 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TO_DO (updated 2004/11/27)
  * -------------------------
  * * Check regexps work and correctly highlight XML stuff and nothing else
  *

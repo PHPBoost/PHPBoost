@@ -25,20 +25,34 @@
  *
  ###################################################*/
 
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage sql
+ * @desc this class encapsulate a query result set
+ * usage is:
+ * <code>
+ * while ($my_query_result->has_next()) {
+ *   $row = $my_query_result->next();
+ * }
+ * </code> 
+ */
 interface QueryResult
 {
     /**
-     * @return bool
+     * @desc returns true if there is a next row
+     * @return bool true if there is a next row
      */
     function has_next();
     
     /**
-     * @return string[string]
+     * @desc returns the next row as a properties map
+     * @return string[string] the next row
      */
     function next();
     
     /**
-     * @desc
+     * @desc free the resource. If not done manually, this is done in the destructor
      */
     function dispose();
 }

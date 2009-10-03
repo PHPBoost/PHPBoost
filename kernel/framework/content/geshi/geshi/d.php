@@ -16,7 +16,7 @@
  * 2005/04/20 (0.0.1)
  *  -  First release
  *
- * TODO (updated 2005/04/22)
+ * TO_DO (updated 2005/04/22)
  * -------------------------
  * * nested comments
  * * correct handling of r"" and ``

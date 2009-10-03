@@ -29,7 +29,7 @@
  * 2004/07/14 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2009/02/08)
+ * TO_DO (updated 2009/02/08)
  * -------------------------
  *  -  Get a list of inbuilt functions to add (and explore C more
  *     to complete this rather bare language file

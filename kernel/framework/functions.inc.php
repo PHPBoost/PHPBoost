@@ -1363,4 +1363,36 @@ function check_for_maintain_redirect()
 	}
 }
 
+/**
+ * @desc returns the current stacktrace
+ * @return string the current stacktrace
+ */
+function get_stacktrace()
+{
+	try
+	{
+		throw new Exception();
+	}
+	catch (Exception $ex)
+	{
+		return $ex->getTraceAsString();
+	}
+}
+
+/**
+ * @desc print the current stacktrace
+ */
+function print_stacktrace()
+{
+    try
+    {
+        throw new Exception();
+    }
+    catch (Exception $ex)
+    {
+        // Does not use get_stacktrace() in order to have one more trace line
+        echo str_replace("\n", '<br />', $ex->getTraceAsString()) . '<br />';
+    }
+}
+
 ?>

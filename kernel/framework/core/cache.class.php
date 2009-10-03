@@ -132,7 +132,8 @@ class Cache
 	 */
 	function generate_file($file)
 	{
-		$this->write($file, $this->{'_get_' . $file}());
+		$content = $this->{'_get_' . $file}();
+		$this->write($file, $content);
 	}
 
 	/**

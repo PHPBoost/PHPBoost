@@ -24,7 +24,7 @@
  * 2004/07/14 (1.0.0)
  *  -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TO_DO (updated 2004/11/27)
  * -------------------------
  * * Add all keywords
  * * Split this to several sql files - mysql-sql, ansi-sql etc

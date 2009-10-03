@@ -81,13 +81,19 @@ class Errors
 	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
-		
+//        print_stacktrace(); echo $errstr . ' ' . $errfile . ':' . $errline . '<br />'; // Prints all errors
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
+		{
 			return true;
+		}
 		
 		//Si une erreur est supprimé par un @ alors on passe
 		if (!DISPLAY_ALL_ERROR && error_reporting() == 0)
+		{
 			return true;
+		}
+		print_stacktrace();		
+		die($errstr);
 		
 		switch ($errno)
 		{
@@ -391,7 +397,7 @@ class Errors
 			
 		    $error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
 		    $error .= $errno . "\n";
-		    $error .= $errstr . "\n";
+		    $error .= print_stacktrace() . "\n" . $errstr . "\n";
 		    $error .= basename($errfile) . "\n";
 		    $error .= $errline . "\n";
 		   

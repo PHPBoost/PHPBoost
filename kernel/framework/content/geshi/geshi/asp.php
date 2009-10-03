@@ -20,7 +20,7 @@
  * 2004/08/13 (1.0.0)
  *   -  First Release
  *
- * TODO (updated 2004/11/27)
+ * TO_DO (updated 2004/11/27)
  * -------------------------
  * * Include all the functions, keywords etc that I have missed
  *
