@@ -561,9 +561,9 @@ function redirect($url)
 	{
 		import('util/url');
 		$url = new Url($url);
-        $url = $url->absolute();
+		$url = $url->absolute();
 	}
-    header('Location:' . $url);
+	header('Location:' . $url);
 	exit;
 }
 
@@ -1225,16 +1225,16 @@ function req($file, $once = true)
 	if ($once)
 	{
 		if (!DEBUG)
-			@require_once PATH_TO_ROOT . $file ;
+		@require_once PATH_TO_ROOT . $file ;
 		else
-			require_once PATH_TO_ROOT . $file ;
+		require_once PATH_TO_ROOT . $file ;
 	}
 	else
 	{
 		if (!DEBUG)
-			@require PATH_TO_ROOT . $file ;
+		@require PATH_TO_ROOT . $file ;
 		else
-			require PATH_TO_ROOT . $file ;
+		require PATH_TO_ROOT . $file ;
 	}
 }
 
@@ -1250,16 +1250,16 @@ function inc($file, $once = true)
 	if ($once)
 	{
 		if (!DEBUG)
-			return (@include_once(PATH_TO_ROOT . $file)) !== false;
+		return (@include_once(PATH_TO_ROOT . $file)) !== false;
 		else
-			return (include_once(PATH_TO_ROOT . $file)) !== false;
+		return (include_once(PATH_TO_ROOT . $file)) !== false;
 	}
 	else
 	{
 		if (!DEBUG)
-			return (@include(PATH_TO_ROOT . $file)) !== false;
+		return (@include(PATH_TO_ROOT . $file)) !== false;
 		else
-			return (include(PATH_TO_ROOT . $file)) !== false;
+		return (include(PATH_TO_ROOT . $file)) !== false;
 	}
 }
 
@@ -1289,7 +1289,7 @@ function of_class(&$object, $classname)
  */
 function implements_interface($class, $interface_name)
 {
-    return in_array($interface_name, class_implements($class));
+	return in_array($interface_name, class_implements($class));
 }
 
 /**
@@ -1356,43 +1356,11 @@ function check_for_maintain_redirect()
 	global $CONFIG, $User;
 	if (($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time()) && !$User->check_level(ADMIN_LEVEL))
 	{
-	    if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
-	    {
-	        redirect('/member/maintain.php');
-	    }
+		if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
+		{
+			redirect('/member/maintain.php');
+		}
 	}
-}
-
-/**
- * @desc returns the current stacktrace
- * @return string the current stacktrace
- */
-function get_stacktrace()
-{
-	try
-	{
-		throw new Exception();
-	}
-	catch (Exception $ex)
-	{
-		return $ex->getTraceAsString();
-	}
-}
-
-/**
- * @desc print the current stacktrace
- */
-function print_stacktrace()
-{
-    try
-    {
-        throw new Exception();
-    }
-    catch (Exception $ex)
-    {
-        // Does not use get_stacktrace() in order to have one more trace line
-        echo str_replace("\n", '<br />', $ex->getTraceAsString()) . '<br />';
-    }
 }
 
 ?>

@@ -27,6 +27,7 @@
 
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
+define('FILE_SYSTEM_DIRECTORY', preg_replace('`^(.+)[\\\\/]kernel[\\\\/]begin\.php$`i', '$1', __FILE__));
 
 require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
 Environment::load_imports();

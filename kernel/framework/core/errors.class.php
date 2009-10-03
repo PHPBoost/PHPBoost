@@ -92,8 +92,6 @@ class Errors
 		{
 			return true;
 		}
-		print_stacktrace();		
-		die($errstr);
 		
 		switch ($errno)
 		{
@@ -126,12 +124,14 @@ class Errors
 				$errclass = 'error_unknow';
 		}
 
+		$stacktrace = Debug::get_stacktrace_as_string();
+		$errstr = $errstr . "\n<hr />\n" . substr($stacktrace, strpos($stacktrace, '#2'));
 		//On affiche l'erreur
 		echo '
 		<span id="errorh"></span>
-		<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
+		<div class="' . $errclass . '" style="width:80%;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
-			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<strong>' . $errdesc . '</strong> : <br />' . str_replace("\n", '<br />', $errstr) . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />
 		</div>';
 		
@@ -397,7 +397,7 @@ class Errors
 			
 		    $error = gmdate_format('Y-m-d H:i:s', time(), TIMEZONE_SYSTEM) . "\n";
 		    $error .= $errno . "\n";
-		    $error .= print_stacktrace() . "\n" . $errstr . "\n";
+		    $error .= $errstr . "\n";
 		    $error .= basename($errfile) . "\n";
 		    $error .= $errline . "\n";
 		   
