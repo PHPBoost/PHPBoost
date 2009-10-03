@@ -504,7 +504,7 @@ class Environment
 			}
 		}
 		//Otherwise it can be a kernel page (they are in specific folders) => it's ok
-		elseif (in_array(MODULE_NAME, array('member', 'admin', 'kernel', '')))
+		elseif (in_array(MODULE_NAME, array('member', 'admin', 'kernel', 'test')))
 		{
 		}
 		//It's maybe a forbidden page!
