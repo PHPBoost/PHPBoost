@@ -10,7 +10,7 @@ class PHPBoostUnitTestCase extends UnitTestCase
         foreach ($methods as $method) {
             $tmp = 'test_' . $method;
             if (!in_array($tmp, $tests_methods)) {
-                if ($method == '__construct' || strtolower($method) == strtolower(get_class($class))) {
+                if ($method == '__construct' || strtolower($method) == strtolower($class)) {
                     $tmp = 'test_constructor';
                     if (in_array($tmp, $tests_methods)) {
                         continue;
