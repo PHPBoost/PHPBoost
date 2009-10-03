@@ -63,7 +63,6 @@ pages_displayed();
 
 if ($CONFIG['bench'])
 {
-    EnvironmentServices::get_bench()->stop(); //On arrête le bench.
     $Template->assign_vars(array(
 		'C_DISPLAY_BENCH' => true,
 		'BENCH' => EnvironmentServices::get_bench()->to_string(), //Fin du benchmark
