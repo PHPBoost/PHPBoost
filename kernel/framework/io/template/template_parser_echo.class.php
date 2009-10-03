@@ -154,7 +154,7 @@ class TemplateParserEcho extends AbstractTemplateParser
 			$second_param = ', $_tmp_' . $last_block . '_value';
 			$method .= '_from_list';
 		}
-		return '<?php ' . $block_type . ' ($this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) { ?>';
+		return '<?php ' . $block_type . ' (' . $not . '$this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) { ?>';
 	}
 }
 

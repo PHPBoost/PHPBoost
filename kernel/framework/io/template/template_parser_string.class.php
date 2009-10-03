@@ -155,7 +155,7 @@ class TemplateParserString extends AbstractTemplateParser
 			$second_param = ', $_tmp_' . $last_block . '_value';
 			$method .= '_from_list';
 		}
-		return '\'; ' . $block_type . ' ($this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
+		return '\'; ' . $block_type . ' (' . $not . '$this->template->' . $method .'(\'' . $varname . '\'' . $second_param . ')) {' . self::TPL_VAR_STRING . ' .= \'';
 	}
 }
 
