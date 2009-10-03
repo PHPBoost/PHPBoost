@@ -40,12 +40,12 @@ class BlogController extends AbstractBlogController
 		
 		$view = new View('blog/list.tpl');
 		$this->init_env($view);
-		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', ICriteria::DESC);
+		$blogs = BlogDAO::instance()->find_all(0, 20, 'creation_date', DAO::ORDER_BY_DESC);
 		$view->assign_vars(array(
             'U_CREATE' => Blog::global_action_url(Blog::GLOBAL_ACTION_CREATE)->absolute(),
             'U_LIST' => Blog::global_action_url(Blog::GLOBAL_ACTION_LIST)->absolute()
 		));
-
+        return $view;
 		foreach ($blogs as $blog)
 		{
 			$view->assign_block_vars('blogs', array(

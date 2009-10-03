@@ -1363,4 +1363,15 @@ function check_for_maintain_redirect()
 	}
 }
 
+/**
+ * @desc returns the file path from the phpboost root directory
+ * @param string $path the path to clean. <code>$path</code> must be
+ * an absolute file path for the file system
+ * @return string the file path from the phpboost root directory
+ */
+function get_free_phpboost_root_directory_path($path)
+{
+	return str_replace('\\', '/', substr($path, strlen(FILE_SYSTEM_DIRECTORY)));
+}
+
 ?>

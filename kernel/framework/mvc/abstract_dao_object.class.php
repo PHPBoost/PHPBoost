@@ -44,7 +44,6 @@ abstract class AbstractDAOObject implements DAOObject
 		{
 			return $this->property[$property];
 		}
-		// TODO Throw special exception
 		throw new UnknownPropertyException($property);
 	}
 	

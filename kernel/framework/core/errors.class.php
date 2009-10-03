@@ -124,14 +124,14 @@ class Errors
 				$errclass = 'error_unknow';
 		}
 
-		$stacktrace = Debug::get_stacktrace_as_string();
-		$errstr = $errstr . "\n<hr />\n" . substr($stacktrace, strpos($stacktrace, '#2'));
+		$stacktrace = Debug::get_stacktrace_as_string(1);
+		$errstr = $errstr . "\n<br /><br /><hr /><br />\n" . substr($stacktrace, strpos($stacktrace, '#2'));
 		//On affiche l'erreur
 		echo '
 		<span id="errorh"></span>
 		<div class="' . $errclass . '" style="width:80%;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
-			<strong>' . $errdesc . '</strong> : <br />' . str_replace("\n", '<br />', $errstr) . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<strong>' . $errdesc . '</strong>:<br />' . $errstr . '<br /><hr /><br />' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />
 		</div>';
 		
