@@ -25,9 +25,15 @@
  *
  ###################################################*/
 
+define('FS_ROOT_DIRECTORY', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]kernel[\\\\/]?$`i',
+    '$1', __DIR__)));
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '..');
-define('FILE_SYSTEM_DIRECTORY', preg_replace('`^(.+)[\\\\/]kernel[\\\\/]begin\.php$`i', '$1', __FILE__));
+if (!defined('PATH_TO_ROOT'))
+{
+    $script = str_replace(FS_ROOT_DIRECTORY, '', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']));
+	$path_to_root = rtrim(str_repeat('../', substr_count(ltrim($script, '/'), '/')), '/');
+	define('PATH_TO_ROOT', !empty($path_to_root) ? $path_to_root : '.');
+}
 
 require_once PATH_TO_ROOT . '/kernel/framework/core/environment/environment.class.php';
 Environment::load_imports();

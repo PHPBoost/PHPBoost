@@ -95,17 +95,17 @@ class Debug
 
 	private static function get_method_prototype($call)
 	{
-		$prototype = '';
+		$prototype = '<b>';
 		if (!empty($call['class']))
 		{
-			$prototype = $call['class'] . $call['type'];
+			$prototype .= $call['class'] . $call['type'];
 		}
-		$prototype .= $call['function'] . '(';
+		$prototype .= $call['function'] . '(</b>';
         if (!empty($call['args']))
         {
         	$prototype .= self::get_args($call['args']);
         }
-		$prototype .= ')';
+		$prototype .= '<b>)</b>';
 		return $prototype;
 	}
 	

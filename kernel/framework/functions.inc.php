@@ -1225,16 +1225,24 @@ function req($file, $once = true)
 	if ($once)
 	{
 		if (!DEBUG)
-		@require_once PATH_TO_ROOT . $file ;
+		{
+			@require_once PATH_TO_ROOT . $file ;
+		}
 		else
-		require_once PATH_TO_ROOT . $file ;
+		{
+			require_once PATH_TO_ROOT . $file ;
+		}
 	}
 	else
 	{
 		if (!DEBUG)
-		@require PATH_TO_ROOT . $file ;
+		{
+			@require PATH_TO_ROOT . $file ;
+		}
 		else
-		require PATH_TO_ROOT . $file ;
+		{
+			require PATH_TO_ROOT . $file ;
+		}
 	}
 }
 
@@ -1371,7 +1379,7 @@ function check_for_maintain_redirect()
  */
 function get_free_phpboost_root_directory_path($path)
 {
-	return str_replace('\\', '/', substr($path, strlen(FILE_SYSTEM_DIRECTORY)));
+	return str_replace('\\', '/', substr($path, strlen(FS_ROOT_DIRECTORY)));
 }
 
 ?>

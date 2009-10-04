@@ -121,9 +121,9 @@ class DefaultReporter extends SimpleReporterDecorator {
         } else {
             $reporter = new SelectiveReporter(
                     SimpleTest::preferred('HtmlReporter'),
-                    @$_GET['c'],
-                    @$_GET['t']);
-            if (@$_GET['skips'] == 'no' || @$_GET['show-skips'] == 'no') {
+                    isset($_GET['c']) ? $_GET['c'] : null,
+                    isset($_GET['t']) ? $_GET['t'] : null);
+            if ((isset($_GET['skips']) ? $_GET['skips'] : null) == 'no' || (isset($_GET['show-skips']) ? $_GET['show-skips'] : null) == 'no') {
                 $reporter = new NoSkipsReporter($reporter);
             }
         }
