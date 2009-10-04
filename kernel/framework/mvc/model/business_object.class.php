@@ -29,7 +29,7 @@ import('mvc/model/properties_map_interface');
 
 abstract class BusinessObject implements PropertiesMapInterface
 {
-    function populate($properties_map)
+    public function populate($properties_map)
     {
         foreach ($properties_map as $property => $value)
         {
@@ -38,7 +38,7 @@ abstract class BusinessObject implements PropertiesMapInterface
         }
     }
     
-    function get_raw_value($properties_list)
+    public function get_raw_value($properties_list)
     {
         $properties_map = array();
         foreach ($properties_list as $property)

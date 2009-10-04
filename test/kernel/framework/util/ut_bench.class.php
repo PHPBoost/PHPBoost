@@ -1,7 +1,6 @@
 <?php
 
-define('PATH_TO_ROOT', '../../../..');
-require_once PATH_TO_ROOT . '/test/header.php';
+require_once '../../../../test/header.php';
 
 import('util/bench');
 

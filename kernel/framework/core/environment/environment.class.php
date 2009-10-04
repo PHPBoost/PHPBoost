@@ -126,8 +126,7 @@ class Environment
 		@set_magic_quotes_runtime(0);
 
 		//If the register globals option is enabled, we clear the automatically assigned variables
-		if (@ini_get('register_globals') == '1' ||
-		strtolower(@ini_get('register_globals')) == 'on')
+		if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on')
 		{
 			require_once PATH_TO_ROOT . '/kernel/framework/util/unusual_functions.inc.php';
 			cancel_register_globals_effect();

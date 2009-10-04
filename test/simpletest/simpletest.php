@@ -66,7 +66,7 @@ class SimpleTest {
      *    @static
      *    @access public
      */
-    function ignoreParentsIfIgnored($classes) {
+    static function ignoreParentsIfIgnored($classes) {
         $registry = &SimpleTest::_getRegistry();
         foreach ($classes as $class) {
             if (SimpleTest::isIgnored($class)) {
@@ -102,7 +102,7 @@ class SimpleTest {
      *   @return array|object|null
      *   @see prefer()
      */
-    function &preferred($classes) {
+    static function &preferred($classes) {
         if (! is_array($classes)) {
             $classes = array($classes);
         }
@@ -128,7 +128,7 @@ class SimpleTest {
      *    @access public
      *    @static
      */
-    function isIgnored($class) {
+    static function isIgnored($class) {
         $registry = &SimpleTest::_getRegistry();
         return isset($registry['IgnoreList'][strtolower($class)]);
     }
@@ -171,7 +171,7 @@ class SimpleTest {
      *    @return string       Proxy URL.
      *    @access public
      */
-    function getDefaultProxy() {
+    static function getDefaultProxy() {
         $registry = &SimpleTest::_getRegistry();
         return $registry['DefaultProxy'];
     }
@@ -181,7 +181,7 @@ class SimpleTest {
      *    @return string    Proxy username for authentication.
      *    @access public
      */
-    function getDefaultProxyUsername() {
+    static function getDefaultProxyUsername() {
         $registry = &SimpleTest::_getRegistry();
         return $registry['DefaultProxyUsername'];
     }
@@ -191,7 +191,7 @@ class SimpleTest {
      *    @return string    Proxy password for authentication.
      *    @access public
      */
-    function getDefaultProxyPassword() {
+    static function getDefaultProxyPassword() {
         $registry = &SimpleTest::_getRegistry();
         return $registry['DefaultProxyPassword'];
     }
@@ -202,7 +202,7 @@ class SimpleTest {
      *    @access private
      *    @static
      */
-    function &_getRegistry() {
+    static function &_getRegistry() {
         static $registry = false;
         if (! $registry) {
             $registry = SimpleTest::_getDefaults();
@@ -217,7 +217,7 @@ class SimpleTest {
      *    @access public
      *    @static
      */
-    function &getContext() {
+    static function &getContext() {
         static $context = false;
         if (! $context) {
             $context = new SimpleTestContext();
@@ -231,7 +231,7 @@ class SimpleTest {
      *    @access private
      *    @static
      */
-    function _getDefaults() {
+    static function _getDefaults() {
         return array(
                 'StubBaseClass' => 'SimpleStub',
                 'MockBaseClass' => 'SimpleMock',
@@ -429,7 +429,7 @@ class SimpleTestOptions extends SimpleTest {
     /**
      *    @deprecated
      */
-    function isIgnored($class) {
+    static function isIgnored($class) {
         return Simpletest::isIgnored($class);
     }
 
@@ -457,21 +457,21 @@ class SimpleTestOptions extends SimpleTest {
     /**
      *    @deprecated
      */
-    function getDefaultProxy() {
+    static function getDefaultProxy() {
         return Simpletest::getDefaultProxy();
     }
 
     /**
      *    @deprecated
      */
-    function getDefaultProxyUsername() {
+    static function getDefaultProxyUsername() {
         return Simpletest::getDefaultProxyUsername();
     }
 
     /**
      *    @deprecated
      */
-    function getDefaultProxyPassword() {
+    static function getDefaultProxyPassword() {
         return Simpletest::getDefaultProxyPassword();
     }
 }
