@@ -340,13 +340,13 @@ switch($step)
 					$file_path = '../kernel/db/config.php';
 
 					$db_config_content = '<?php' . "\n" .
-                        '$sql_host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address' . "\n" .
-                        '$sql_login = "' . $login . '"; //Login' . "\n" .
-                        '$sql_pass = "' . $password . '"; //Mot de passe - Password' . "\n" .
-                        '$sql_base = "' . $database . '"; //Nom de la base de données - Database name' . "\n" .
+                        '$host = "' . $host . '"; //Adresse serveur MySQL - MySQL server address' . "\n" .
+                        '$login = "' . $login . '"; //Login' . "\n" .
+                        '$password = "' . $password . '"; //Mot de passe - Password' . "\n" .
+                        '$database = "' . $database . '"; //Nom de la base de données - Database name' . "\n" .
                         'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix' . "\n" .
                         'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
-                        'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
+                        'require_once FS_ROOT_DIRECTORY . \'/kernel/db/tables.php\';' . "\n" .
                         '?>';
 
 					//Ouverture du fichier kernel/db/config.php

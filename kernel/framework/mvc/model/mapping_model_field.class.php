@@ -61,7 +61,7 @@ class MappingModelField
 	$db_table = null)
 	{
 		$this->property_name = $property_name;
-		if ($db_field_name === self::DEFAULT_PROPERTY_NAME)
+		if ($db_field_name !== self::DEFAULT_PROPERTY_NAME)
 		{
 			$this->db_field_name = $db_field_name;
 		}

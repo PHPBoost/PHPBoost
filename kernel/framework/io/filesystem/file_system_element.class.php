@@ -79,18 +79,7 @@ class FileSystemElement
             $this->open();
         }
     }
-
-    /**
-     * @abstract
-     * @desc Does the necessary treatment to apply at each writing operation
-     * @return unknown_type
-     */
-    function write()
-    {
-        $this->is_open = false;
-        $this->open();
-    }
-
+    
     /**
      * @desc Returns the element name.
      * @param bool $full_path True if you want the full path or false if you just want a relative path.

@@ -41,7 +41,7 @@ class DBFactory
     public static function new_db_connection()
     {
     	//Configuration file
-        @include PATH_TO_ROOT . '/kernel/db/config.php';
+        include FS_ROOT_DIRECTORY . '/kernel/db/config.php';
 
         //If PHPBoost is not installed, we redirect the user to the installation page
         if (!defined('PHPBOOST_INSTALLED'))
@@ -51,7 +51,7 @@ class DBFactory
         }
         
         import('io/db/mysql/mysql_db_connection');
-        return new MySQLDBConnection($sql_host, $sql_login, $sql_pass, $sql_base);
+        return new MySQLDBConnection($host, $login, $password, $database);
     }
     
     /**

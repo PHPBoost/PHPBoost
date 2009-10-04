@@ -6,7 +6,6 @@ import('util/bench');
 
 class UTBench extends PHPBoostUnitTestCase
 {
-
 	private $result_format_regex = '`[0-9]+\.[0-9]{%d}`';
 	
 	public function test()
@@ -14,7 +13,7 @@ class UTBench extends PHPBoostUnitTestCase
 		$this->check_methods('Bench');
 	}
 	
-	public function test_constructor()
+	public function test___construct()
 	{
 		$bench = new Bench();
 		$this->assertNotNull($bench, 'bench is null');

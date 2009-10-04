@@ -25,7 +25,7 @@
  *
  ###################################################*/
 
-import('io/db/sql_querier');
+import('io/db/abstract_sql_querier');
 import('io/db/mysql/mysql_db_connection');
 import('io/db/mysql/mysql_query_result');
 import('io/db/mysql/sql2mysql_query_translator');
@@ -36,7 +36,7 @@ import('io/db/mysql/sql2mysql_query_translator');
  * @subpackage mysql
  * @desc
  */
-class MySQLQuerier implements SQLQuerier
+class MySQLQuerier extends AbstractSQLQuerier
 {
 	/**
 	 * @var string
@@ -64,7 +64,7 @@ class MySQLQuerier implements SQLQuerier
 
 	public function select($query, $parameters = array())
 	{
-		$this->query = $this->transform_query($query, $parameters);
+		$this->transform_query($query, $parameters);
 		$this->inc_executed_resquests_count();
 		$resource = mysql_query($this->query, $this->connection->get_link());
 		return new MysqlQueryResult($resource);
@@ -72,7 +72,7 @@ class MySQLQuerier implements SQLQuerier
 
 	public function inject($query, $parameters = array())
 	{
-		$this->query = $this->transform_query($query, $parameters);
+		$this->transform_query($query, $parameters);
 		$this->inc_executed_resquests_count();
 		$resource = mysql_query($this->query, $this->connection->get_link());
 		if ($resource === false)
@@ -114,21 +114,15 @@ class MySQLQuerier implements SQLQuerier
 		return mysql_insert_id();
 	}
 
+    protected function escape(&$value)
+    {
+        return mysql_real_escape_string($value);
+    }
+    
 	private function transform_query(&$query, &$parameters)
 	{
-		return $this->set_parameters($this->translate_query($query), $parameters);
-	}
-
-	private function set_parameters(&$query, &$parameters)
-	{
-		foreach ($parameters as $parameter_name => $value)
-		{
-			$query = str_replace(
-			self::QUERY_VAR_PREFIX . $parameter_name,
-			mysql_real_escape_string($value),
-			$query);
-		}
-		return $query;
+		$this->query = $this->replace_query_vars($this->translate_query($query), $parameters);
+		echo '<hr />' . $this->query . '<hr />';
 	}
 
 	private function translate_query(&$query)

@@ -1,12 +1,11 @@
 <?php
 
-define('PATH_TO_ROOT', '../../../../..');
-require_once PATH_TO_ROOT . '/test/header.php';
+include_once '../../../../../test/header.php';
 
 import('mvc/model/mapping_model');
 import('mvc/model/business_object');
 
-class MySampleTestObject extends BusinessObject
+class MyUTMappingModelTestObject extends BusinessObject
 {
 	private $id;
 	private $title;
@@ -17,38 +16,45 @@ class MySampleTestObject extends BusinessObject
 	public function get_title() { return $this->title; }
 	public function get_description() { return $this->description; }
 	public function get_user_id() { return $this->user_id; }
-    public function set_id($value) { $this->id = $value; }
+	public function set_id($value) { $this->id = $value; }
 	public function set_title($value) { $this->title = $value; }
-    public function set_description($value) { $this->description = $value; }
-    public function set_user_id($value) { $this->user_id = $value; }
+	public function set_description($value) { $this->description = $value; }
+	public function set_user_id($value) { $this->user_id = $value; }
 }
 
 class UTMappingModel extends PHPBoostUnitTestCase
 {
 
+	private $classname;
+	private $tablename;
+	private $primary_key;
+	private $fields;
+	private $joins;
 	private $model;
 
 	public function test()
 	{
-		$classname = 'MySampleTestObject';
-		$tablename = 'MySampleTestTable';
-		$primary_key = new MappingModelField('id');
-		$fields = array(new MappingModelField('title'), new MappingModelField('description'), new MappingModelField('user_id'));
-		$joins = array();
+		$this->classname = 'MyUTMappingModelTestObject';
+		$this->tablename = 'MySampleTestTable';
+		$this->primary_key = new MappingModelField('id');
+		$this->fields = array(new MappingModelField('title'), new MappingModelField('description'),
+		new MappingModelField('user_id'));
+		$this->joins = array();
 
-		$this->model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
+		$this->model = new MappingModel($this->classname, $this->tablename, $this->primary_key,
+		$this->fields, $this->joins);
 		$this->check_methods('MappingModel');
 	}
 
-	public function test_constructor()
+	public function test___construct()
 	{
-		$this->_test_constructor_without_exception();
-		$this->_test_constructor_with_model_mapping_exception();
+		$this->_test___construct_without_exception();
+		$this->_test___construct_with_model_mapping_exception();
 	}
 
-	private function _test_constructor_without_exception()
+	private function _test___construct_without_exception()
 	{
-		$classname = 'MySampleTestObject';
+		$classname = 'MyUTMappingModelTestObject';
 		$tablename = 'MySampleTestTable';
 		$primary_key = new MappingModelField('id');
 		$fields = array(new MappingModelField('title'), new MappingModelField('description'), new MappingModelField('user_id'));
@@ -57,9 +63,9 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 	}
 
-	private function _test_constructor_with_model_mapping_exception()
+	private function _test___construct_with_model_mapping_exception()
 	{
-		$classname = 'MySampleTestObject';
+		$classname = 'MyUTMappingModelTestObject';
 		$tablename = 'MySampleTestTable';
 		$primary_key = new MappingModelField('id');
 		$fields = array();
@@ -78,7 +84,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
 	{
 		$this->_test_new_instance_with_no_properties();
 		$this->_test_new_instance_with_properties();
-//		$this->_test_new_instance_with_properties_without_setter();
+		//		$this->_test_new_instance_with_properties_without_setter();
 	}
 
 	private function _test_new_instance_with_no_properties()
@@ -109,43 +115,74 @@ class UTMappingModel extends PHPBoostUnitTestCase
             'is not null');
 	}
 
-    public function test_get_raw_value()
-    {
-        $this->_test_get_raw_value_with_empty_object();
-        $this->_test_get_raw_value_with_filled_object();
-    }
+	public function test_get_raw_value()
+	{
+		$this->_test_get_raw_value_with_empty_object();
+		$this->_test_get_raw_value_with_filled_object();
+	}
 
-    private function _test_get_raw_value_with_empty_object()
-    {
-        $object = new MySampleTestObject();
-        
-        $properties = $this->model->get_raw_value($object);
-        
-        $this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
-        $this->assertNull($properties['title'], 'title ' . $properties['title'] . 'is not null');
-        $this->assertNull($properties['description'], 'description ' . $properties['description'] .
-            'is not null');
-        $this->assertNull($properties['user_id'], 'user_id ' . $properties['user_id'] .
-            'is not null');
-    }
+	private function _test_get_raw_value_with_empty_object()
+	{
+		$object = new MyUTMappingModelTestObject();
 
-    private function _test_get_raw_value_with_filled_object()
-    {
-    	$object = new MySampleTestObject();
-    	$title = 'coucou';
-        $object->set_title($title);
-        $user_id = 42;
-        $object->set_user_id($user_id);
-        
-        $properties = $this->model->get_raw_value($object);
-        
-        $this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
-        $this->assertEqual($properties['title'], $title,
+		$properties = $this->model->get_raw_value($object);
+
+		$this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
+		$this->assertNull($properties['title'], 'title ' . $properties['title'] . 'is not null');
+		$this->assertNull($properties['description'], 'description ' . $properties['description'] .
+            'is not null');
+		$this->assertNull($properties['user_id'], 'user_id ' . $properties['user_id'] .
+            'is not null');
+	}
+
+	private function _test_get_raw_value_with_filled_object()
+	{
+		$object = new MyUTMappingModelTestObject();
+		$title = 'coucou';
+		$object->set_title($title);
+		$user_id = 42;
+		$object->set_user_id($user_id);
+
+		$properties = $this->model->get_raw_value($object);
+
+		$this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
+		$this->assertEqual($properties['title'], $title,
             'title ' . $properties['title'] . '!=' . $title);
-        $this->assertNull($properties['description'],
+		$this->assertNull($properties['description'],
             'description ' . $properties['description'] . 'is not null');
-        $this->assertEqual($properties['user_id'],  $user_id,
+		$this->assertEqual($properties['user_id'],  $user_id,
             'title ' . $properties['user_id'] . '!=' . $user_id);
+	}
+
+    public function test_get_class_name()
+    {
+        $this->assertEqual($this->model->get_class_name(), $this->classname,
+        $this->model->get_class_name() . ' is not equal to ' . $this->classname);
     }
+
+    public function test_get_table_name()
+    {
+        $this->assertEqual($this->model->get_table_name(), $this->tablename,
+        $this->model->get_table_name() . ' is not equal to ' . $this->tablename);
+    }
+
+	public function test_get_primary_key()
+	{
+		$this->assertEqual($this->model->get_primary_key(), $this->primary_key,
+		var_export($this->model->get_primary_key(), true) . ' is not equal to ' .
+		var_export($this->primary_key, true));
+	}
+
+	public function test_get_fields()
+	{
+		$this->assertEqual($this->model->get_fields(), $this->fields,
+		$this->model->get_fields() . ' is not equal to ' . $this->fields);
+	}
+
+	public function test_get_joins()
+	{
+		$this->assertEqual($this->model->get_joins(), $this->joins,
+		$this->model->get_joins() . ' is not equal to ' . $this->joins);
+	}
 }
 ?>

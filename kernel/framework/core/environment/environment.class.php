@@ -163,7 +163,7 @@ class Environment
 	{
 		if (@include(PATH_TO_ROOT . '/cache/debug.php'))
 		{
-			define('DEBUG', (bool)$DEBUG['debug_mode']);
+			define('DEBUG', (bool) $DEBUG['debug_mode']);
 		}
 		else
 		{

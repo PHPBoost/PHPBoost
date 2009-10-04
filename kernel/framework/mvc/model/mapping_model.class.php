@@ -80,6 +80,14 @@ class MappingModel
     /**
      * @return string
      */
+    public function get_class_name()
+    {
+        return $this->classname;
+    }
+    
+    /**
+     * @return string
+     */
     public function get_table_name()
     {
         return $this->table_name;
