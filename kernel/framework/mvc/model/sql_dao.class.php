@@ -27,75 +27,118 @@
 
 import('mvc/model/dao');
 
+class ValidationException extends Exception {}
+
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @desc Implements common access to a sql based datastore for CRUD operations on
+ * objects attached to the given <code>MappingModel</code>.
+ * Two additionnals methods are offered:
+ * <code>protected function before_save(PropertiesMapInterface $object)</code> and
+ * <code>protected function before_delete(PropertiesMapInterface $object)</code>.
+ * Those two methods are automatically called just before a save or juste before a delete.
+ * They actually do nothing. Theu are only here in order to be inherited. This way, you could throw
+ * <code>ValidationException</code> or implement your own exceptions that inherit from
+ * <code>ValidationException</code>. This will allow you to do the validation control before a save
+ * or a delete operation. For example:
+ * <code>
+ * try {
+ *     $my_dao->save($my_object);
+ * } catch (MyFirstValidationException $ex) {
+ *     // process first exception here
+ * } catch (MySecondValidationException $ex) {
+ *     // process second exception here
+ * }
+ * </code>
+ */
 abstract class SQLDAO implements DAO
 {
 	/**
-	 * @var SQLQuerier
+	 * @var SQLQuerier the sql querier that will interact with the database
 	 */
 	protected $querier;
 
 	/**
-	 * @var MappingModel
+	 * @var MappingModel the model on which services are based
 	 */
 	protected $model;
 
 	/**
-	 * @var string
+	 * @var string the name of the table in which objects will be stored 
 	 */
-	private $table;
-
-    /**
-     * @var string
-     */
-    private $pk_db_field;
-    
-    /**
-     * @var string
-     */
-    private $pk_property;
+	protected $table;
 
 	/**
-	 * @var string
+	 * @var string the primary key database field name (prefixed by the table name)
 	 */
-	private $pk_getter;
+	protected $pk_db_field;
 
 	/**
-	 * @var string
+	 * @var string the primary key property
 	 */
-	private $pk_setter;
+	protected $pk_property;
+
+	/**
+	 * @var string the primary key getter method name
+	 */
+	protected $pk_getter;
+
+	/**
+	 * @var string the primary key setter method name
+	 */
+	protected $pk_setter;
 
 	/**
 	 * @var string[string] $fields_mapping[$property] => $db_field_name
 	 */
-	private $fields_mapping = array();
+	protected $fields_mapping = array();
 
-	private $delete_query;
-    private $insert_query;
-    private $update_query;
-	private $find_by_id_query;
-	private $find_all_query;
-	private $find_query;
+    /**
+     * @var string
+     */
+	protected $delete_query;
 
-	public function __construct(SQLQuerier $sql_querier, MappingModel $model)
+    /**
+     * @var string
+     */
+	protected $insert_query;
+
+    /**
+     * @var string
+     */
+	protected $update_query;
+
+    /**
+     * @var string
+     */
+    protected $find_by_id_query;
+
+    /**
+     * @var string
+     */
+	protected $find_by_criteria_query;
+
+	/**
+	 * @desc initialize the dao
+	 * @param SQLQuerier $querier the querier that will be used to interact with the database
+	 * @param MappingModel $model the model on which rely to provides services
+	 */
+	public function __construct(SQLQuerier $querier, MappingModel $model)
 	{
-		$this->querier = $sql_querier;
+		$this->querier = $querier;
 		$this->model = $model;
 		$this->cache_model();
 	}
 
-	public function delete($object)
-	{
-		if ($this->delete_query === null)
-		{
-			$this->delete_query = "delete from " . $this->table .
-                " where " . $this->pk_db_field . "=':pk_value';";
-		}
-		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
-		$this->querier->inject($this->delete_query, $prepared_vars);
-	}
-
+	/**
+	 * @desc this method is called just before a save
+	 * @param PropertiesMapInterface $object
+	 */
+	protected function before_save(PropertiesMapInterface $object) { }
+	
 	public function save(PropertiesMapInterface $object)
 	{
+		$this->before_save($object);
 		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
 		{
@@ -107,7 +150,24 @@ abstract class SQLDAO implements DAO
 			$this->update($object, $pk_value);
 		}
 	}
-
+	
+    /**
+     * @desc this method is called just before a delete
+     * @param PropertiesMapInterface $object
+     */
+    protected function before_delete(PropertiesMapInterface $object) { }
+    
+    public function delete(PropertiesMapInterface $object)
+    {
+        $this->before_delete($object);
+        if ($this->delete_query === null)
+        {
+            $this->delete_query = "delete from " . $this->table .
+                " where " . $this->pk_db_field . "=':pk_value';";
+        }
+        $prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
+        $this->querier->inject($this->delete_query, $prepared_vars);
+    }
 
 	public function find_by_id($id)
 	{
@@ -121,50 +181,54 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
+    public function find_all($limit = 100, $offset = 0, $order_by = array())
+    {
+        $query = "LIMIT " . $limit . " OFFSET " .$offset;
+        if (!empty($order_by))
+        {
+            $order_clause = "";
+            foreach ($order_by as $order)
+            {
+            	$order_clause .= ", " . $order['column'] . " " . $order['way'];
+            }
+            $query .= " ORDER BY" . rtrim($order_clause, ',');
+        }
+
+        return $this->find_by_criteria($query, $parameters);
+    }
+	
 	public function find_by_criteria($criteria, $parameters = array())
 	{
-
+        $this->compute_find_by_criteria_query();
+        $full_query = $this->find_by_criteria_query . $criteria;
+        return $this->querier->select($full_query, $parameters);
 	}
 
-	public function find_all($limit = 100, $offset = 0, $order_by = null, $way = DAO::ORDER_BY_ASC)
-	{
-		$parameters = array('limit' => $limit,'offset' => $offset);
-
-		$query = "LIMIT :limit OFFSET :offset";
-		if (!empty($order_by))
-		{
-			$query .= " ORDER BY :order_column :order_by_way";
-			$parameters['order_column'] = $order_by;
-			$parameters['order_by_way'] = $way;
-		}
-
-		return $this->find_by_criteria($query, $parameters);
-	}
-
-	private function cache_model()
+	protected function cache_model()
 	{
 		$this->table = $this->model->get_table_name();
 
 		$primary_key = $this->model->get_primary_key();
-        $this->pk_property = $primary_key->get_property_name();
-        $this->pk_db_field = $primary_key->get_db_field_name();
+		$this->pk_property = $primary_key->get_property_name();
+		$this->pk_db_field = $this->table . '.' . $primary_key->get_db_field_name();
 		$this->pk_getter = $primary_key->getter();
 		$this->pk_setter = $primary_key->setter();
-		
+
 		foreach ($this->model->get_fields() as $field)
 		{
-			$this->fields_mapping[$field->get_property_name()] = $field->get_db_field_name();
+			$this->fields_mapping[$field->get_property_name()] = $this->table .
+			    '.' . $field->get_db_field_name();
 		}
 	}
 
-	private function insert(PropertiesMapInterface $object)
+	protected function insert(PropertiesMapInterface $object)
 	{
 		$this->compute_insert_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
 		$this->querier->inject($this->insert_query, $prepared_vars);
 	}
 
-	private function update(PropertiesMapInterface $object, $pk_value)
+	protected function update(PropertiesMapInterface $object, $pk_value)
 	{
 		$this->compute_update_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
@@ -172,21 +236,30 @@ abstract class SQLDAO implements DAO
 		$this->querier->inject($this->update_query, $prepared_vars);
 	}
 
-	private function compute_find_by_id_query()
+	protected function compute_find_by_id_query()
 	{
 		if ($this->find_by_id_query === null)
 		{
-			$this->find_by_id_query = "select " . $this->pk_db_field . " as " . $this->pk_property;
-			foreach ($this->fields_mapping as $property => $db_field)
-			{
-				$this->find_by_id_query .= ", " . $db_field . " as " . $property;
-			}
-		    $this->find_by_id_query .= " from " . $this->table .
-		        " where " . $this->pk_db_field . "=':id';";
+			$this->compute_find_by_criteria_query();
+			$this->find_by_id_query = $this->find_by_criteria_query .
+			    "where " . $this->pk_db_field . "=':id';";
 		}
 	}
 
-	private function compute_insert_query()
+    protected function compute_find_by_criteria_query()
+    {
+        if ($this->find_by_criteria_query === null)
+        {
+            $this->find_by_criteria_query = "select " . $this->pk_db_field . " as " . $this->pk_property;
+            foreach ($this->fields_mapping as $property => $db_field)
+            {
+                $this->find_by_criteria_query .= ", " . $db_field . " as " . $property;
+            }
+            $this->find_by_criteria_query .= " from " . $this->table . " ";
+        }
+    }
+
+	protected function compute_insert_query()
 	{
 		if ($this->insert_query === null)
 		{
@@ -204,7 +277,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_update_query()
+	protected function compute_update_query()
 	{
 		if ($this->update_query === null)
 		{
