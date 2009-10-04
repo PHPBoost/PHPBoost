@@ -33,52 +33,51 @@
  */
 class SQL2MySQLQueryTranslator
 {
-    /**
-     * @var string
-     */
-    private static $query;
+	/**
+	 * @var string
+	 */
+	private static $query;
 
-    /**
-     * @desc translates the generic query <code>$query</code> into the mysql specific dialect
-     * @param string $query the query to translate
-     * @return string the translated query
-     */
-    public static function translate($query)
-    {
-        self::$query = $query;
-         
-        self::translate_operators();
-        self::translate_functions();
-        self::translate_clause();
-        
-        return self::$query;
-    }
+	/**
+	 * @desc translates the generic query <code>$query</code> into the mysql specific dialect
+	 * @param string $query the query to translate
+	 * @return string the translated query
+	 */
+	public static function translate($query)
+	{
+		self::$query = $query;
+		 
+		self::translate_operators();
+		self::translate_functions();
+		self::translate_clause();
 
-    private static function translate_operators()
-    {
-        self::$query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
-        array('SQL2MySQLQueryTranslator', 'concat_callback'), self::$query);
-    }
-    
-    private static function translate_functions()
-    {
-        self::$query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
+		return self::$query;
+	}
+
+	private static function translate_operators()
+	{
+		self::$query = preg_replace_callback('`[\w:_\']+(?:\s*\|\|\s*[\w:_\']+)+`',
+		array('SQL2MySQLQueryTranslator', 'concat_callback'), self::$query);
+	}
+
+	private static function translate_functions()
+	{
+		self::$query = preg_replace('`ft_search\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
         'match($1) against($2)', self::$query);
-        self::$query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
+		self::$query = preg_replace('`ft_search_relevance\(\s*(.+)\s*,\s*(.+)\s*\)`iU',
         'match($1) against($2)', self::$query);
-    }
-    
-    private static function translate_clause()
-    {
-        self::$query = preg_replace('`limit\s+([^\s;]+)\s+offset\s+([^\s;]+)`iU',
-        'limit $2 $1', self::$query);
-    }
-    
-    private static function concat_callback($matches)
-    {
-        $parameters = explode('||', $matches[0]);
-        return 'concat(' . implode(',', $parameters) .')';
-    }
+	}
+
+	private static function translate_clause()
+	{
+		
+	}
+
+	private static function concat_callback($matches)
+	{
+		$parameters = explode('||', $matches[0]);
+		return 'concat(' . implode(',', $parameters) .')';
+	}
 }
 
 ?>

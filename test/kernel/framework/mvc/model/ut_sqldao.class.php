@@ -129,6 +129,14 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 		$this->test_find_by_id_without_exception();
 		$this->test_find_by_id_object_not_found_exception();
 	}
+    
+    public function test_find_all()
+    {
+        $this->test_find_all_with_all_results();
+        $this->test_find_all_with_no_results();
+        $this->test_find_all_with_not_all_results();
+        $this->test_find_all_with_sorted_results();
+    }
 
 	public function test_delete()
 	{
@@ -167,6 +175,27 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 			// object not found => ok
 		}
 	}
+    
+    private function test_find_all_with_all_results()
+    {
+        
+    }
+    
+    private function test_find_all_with_no_results()
+    {
+        $query_result = $this->sqldao->find_all(10, 100);
+        $this->assertFalse($query_result->has_next(), 'query has results');
+    }
+    
+    private function test_find_all_with_not_all_results()
+    {
+        
+    }
+    
+    private function test_find_all_with_sorted_results()
+    {
+        
+    }
 
 	private function test_insert()
 	{

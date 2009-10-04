@@ -94,27 +94,27 @@ abstract class SQLDAO implements DAO
 	protected $fields_mapping = array();
 
     /**
-     * @var string
+     * @var string the delete prepared query
      */
 	protected $delete_query;
 
     /**
-     * @var string
+     * @var string the insert prepared query
      */
 	protected $insert_query;
 
     /**
-     * @var string
+     * @var string the update prepared query
      */
 	protected $update_query;
 
     /**
-     * @var string
+     * @var string the find by id prepared query
      */
     protected $find_by_id_query;
 
     /**
-     * @var string
+     * @var string the find by criteria prepared query
      */
 	protected $find_by_criteria_query;
 
@@ -183,7 +183,7 @@ abstract class SQLDAO implements DAO
 
     public function find_all($limit = 100, $offset = 0, $order_by = array())
     {
-        $query = "LIMIT " . $limit . " OFFSET " .$offset;
+        $query = "limit " . $limit . " offset " . $offset;
         if (!empty($order_by))
         {
             $order_clause = "";
@@ -194,7 +194,7 @@ abstract class SQLDAO implements DAO
             $query .= " ORDER BY" . rtrim($order_clause, ',');
         }
 
-        return $this->find_by_criteria($query, $parameters);
+        return $this->find_by_criteria($query);
     }
 	
 	public function find_by_criteria($criteria, $parameters = array())
