@@ -39,7 +39,7 @@ $LANG['newsletter_select_type_text_explain'] = '<span style="color:green;"><stro
 $LANG['newsletter_select_type_bbcode_explain'] = '<span style="color:green;"><strong>For all</strong></span><br />You can format your message with the BBCode language, used everywhere on PHPBoost.';
 $LANG['newsletter_select_type_html_explain'] = '<span style="color:red;"><strong>Experienced users only</strong></span><br />You can format your text all you want but you must know the html language.';
 $LANG['newsletter_write_type'] = 'Write a newsletter';
-$LANG['newsletter_unscubscribe_text'] = 'To unsubscribe to the newsletter, please click here.';
+$LANG['newsletter_unscubscribe_text'] = 'To unsubscribe from the newsletter, please click here.';
 $LANG['newsletter_mail_from'] = 'E-mail address which sends newsletter';
 $LANG['newsletter_send'] = 'Send';
 $LANG['newsletter_error'] = 'The newsletter couldn\'t be sent to the following user: ';
@@ -53,7 +53,7 @@ $LANG['newsletter_sent_successful'] = 'Your newsletter has been sent to all subs
 $LANG['send_newsletter'] = 'Send a newsletter';
 $LANG['newsletter_member_list'] = 'Member list';
 $LANG['newsletter_test_sent'] = 'A trial newsletter has been sent to the mail address %s, you will have a preview of your newsletter.';
-$LANG['newsletter_bbcode_warning'] = 'When you send a newsletter written in BBCode, this language will be transformed into HTML. But some tags are not defined by mail providers, we advice you to preview your newsletter by sending a test.';
+$LANG['newsletter_bbcode_warning'] = 'When you send a newsletter written in BBCode, this language will be transformed into HTML. But some tags are not defined by mail providers, we advise you to preview your newsletter by sending a test.';
 
 //Newsletter
 $LANG['newsletter'] = 'Newsletter';

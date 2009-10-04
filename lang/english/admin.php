@@ -3,7 +3,7 @@
  *                                admin.php
  *                            -------------------
  *   begin                : November 20, 2005
- *   last modified		: August 30, 2009 - Forensic 
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright            : (C) 2005 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
@@ -73,13 +73,13 @@ $LANG['alert_invalid_file'] = 'The file isn\'t valid (jpg, gif, png !)';
 $LANG['alert_max_weight'] = 'The image is too heavy';
 $LANG['alert_s_already_use'] = 'Smiley code already used !';
 $LANG['alert_no_cat'] = 'No name/category selected';
-$LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it manually on the ftp !';
+$LANG['alert_fct_unlink'] = 'Impossible to delete picture. You must remove it manually using ftp !';
 $LANG['alert_no_login'] = 'The input nickname doesn\'t exist !';
 
 //Requis
 $LANG['require'] = 'The fields marked with an * are required !';
 $LANG['require_title'] = 'Please enter a title !';
-$LANG['require_text'] = 'Please enter a text !';
+$LANG['require_text'] = 'Please enter content !';
 $LANG['require_pseudo'] = 'Please enter a nickname !';
 $LANG['require_password'] = 'Please enter a password !';
 $LANG['require_mail'] = 'Please enter a valid e-mail address !';
@@ -113,7 +113,7 @@ $LANG['confirm_del_cat'] = 'Do you want to delete this category ?';
 $LANG['confirm_del_article'] = 'Do you want to delete this article ?';
 $LANG['confirm_del_rank'] = 'Do you want to delete this rank ?';
 $LANG['confirm_del_group'] = 'Do you want to delete this group ?';
-$LANG['confirm_del_member_group'] = 'Do you want to delete this member of group ?';
+$LANG['confirm_del_member_group'] = 'Do you want to delete this group member ?';
 
 //bbcode
 $LANG['bb_bold'] = 'Text in bold : [b]text[/b]';
@@ -129,7 +129,7 @@ $LANG['bb_left'] = 'Align on left : [align=left]object on left[/align]';
 $LANG['bb_center'] = 'Center : [align=center]center object[/align]';
 $LANG['bb_right'] = 'Align on right : [align=right]object on right[/align]';
 
-//Commun
+//Common
 $LANG['pseudo'] = 'Nickname';
 $LANG['yes'] = 'Yes';
 $LANG['no'] = 'No';
@@ -140,7 +140,7 @@ $LANG['name'] = 'Name';
 $LANG['title'] = 'Title';
 $LANG['message'] = 'Message';
 $LANG['aprob'] = 'Approval';
-$LANG['unaprob'] = 'Unapproval';
+$LANG['unaprob'] = 'Disapproval';
 $LANG['url'] = 'Url';
 $LANG['categorie'] = 'Category';
 $LANG['note'] = 'Note';
@@ -150,7 +150,7 @@ $LANG['size'] = 'Size';
 $LANG['file'] = 'File';
 $LANG['download'] = 'Downloaded';
 $LANG['delete'] = 'Delete';
-$LANG['user_ip'] = 'IP adress';
+$LANG['user_ip'] = 'IP address';
 $LANG['localisation'] = 'Localisation';
 $LANG['activ'] = 'Enable';
 $LANG['unactiv'] = 'Disable';
@@ -184,7 +184,7 @@ $LANG['show'] = 'Consult';
 $LANG['link'] = 'Link';
 $LANG['type'] = 'Type';
 $LANG['of'] = 'of';
-$LANG['autoconnect'] = 'Autoconnection';
+$LANG['autoconnect'] = 'Autoconnect';
 $LANG['unspecified'] = 'Unspecified';
 $LANG['configuration'] = 'Configuration';
 $LANG['management'] = 'Management';
@@ -211,12 +211,12 @@ $LANG['or_direct_path'] = 'Or direct path';
 $LANG['unknow_bot'] = 'Unknown bot';
 $LANG['captcha_difficulty'] = 'Captcha difficulty level';
 
-//Connexion
+//Connection
 $LANG['unlock_admin_panel'] = 'Unlock administration panel';
 $LANG['flood_block'] = 'Rest %d test(s) after that you will have to wait 5 minutes to obtain 2 new tests (10min for 5)!';
 $LANG['flood_max'] = 'You exhausted all your tests of connection, your account is locked during 5 minutes';
 
-//Rang
+//Rank
 $LANG['rank_management'] = 'Ranks management';
 $LANG['rank_add'] = 'Add a rank';
 $LANG['upload_rank'] = 'Upload icon rank';
@@ -238,26 +238,26 @@ $LANG['admin'] = 'Administrator';
 $LANG['extend_field_management'] = 'Member field management';
 $LANG['extend_field_add'] = 'Add member field';
 $LANG['required_field'] = 'Required field';
-$LANG['required_field_explain'] = 'Required in the member profil and registration area';
+$LANG['required_field_explain'] = 'Required in the member profile and registration area';
 $LANG['required'] = 'Required';
 $LANG['not_required'] = 'Not Required';
 $LANG['regex'] = 'Entry form control';
-$LANG['regex_explain'] = 'You can control the form of input used . For instance, if an email address is expected, you can verify that it form is correct.<br />For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.';
+$LANG['regex_explain'] = 'You can control the form of input used. For instance, if an email address is expected, you can verify that its form is correct.<br />For advanced users, it is possible to write your own regular expression (<acronym="Perl Compatible Regular Expression">PCRE</acronym>) to control the user input.';
 $LANG['possible_values'] = 'Possible values';
-$LANG['possible_values_explain'] = 'Separate each values with |';
+$LANG['possible_values_explain'] = 'Separate each value with |';
 $LANG['default_values'] = 'Default values';
-$LANG['default_values_explain'] = 'Separate each values with |';
+$LANG['default_values_explain'] = 'Separate each value with |';
 $LANG['short_text'] = 'Short text (max 255 characters)';
-$LANG['long_text'] = 'Long text (unlimmited)';
+$LANG['long_text'] = 'Long text (unlimited)';
 $LANG['sel_uniq'] = 'Single selection (between several values)';
 $LANG['sel_mult'] = 'Multiple selection (between several values)';
 $LANG['check_uniq'] = 'Single choice (between several values)';
 $LANG['check_mult'] = 'Multiple choice (between several values)';
-$LANG['personnal_regex'] = 'Personnal pattern';
+$LANG['personnal_regex'] = 'Personal pattern';
 $LANG['predef_regexp'] = 'Predefined pattern';
-$LANG['figures'] = 'Figures';
+$LANG['figures'] = 'Numbers';
 $LANG['letters'] = 'Letters';
-$LANG['figures_letters'] = 'Figures and letters';
+$LANG['figures_letters'] = 'Numbers and letters';
 $LANG['default_field_possible_values'] = 'Yes|No';
 $LANG['extend_field_edit'] = 'Edit field';
 
@@ -265,8 +265,8 @@ $LANG['extend_field_edit'] = 'Edit field';
 $LANG['update_available'] = 'Update available';
 $LANG['core_update_available'] = 'New core version available, please update PHPBoost ! <a href="http://www.phpboost.com">More informations</a>';
 $LANG['no_core_update_available'] = 'No newer version, system is up to date';
-$LANG['module_update_available'] = 'Modules update available !';
-$LANG['no_module_update_available'] = 'No newer modules version available, you are up to date !';
+$LANG['module_update_available'] = 'Module update available !';
+$LANG['no_module_update_available'] = 'No newer module versions available, you are up to date !';
 $LANG['unknow_update'] = 'Impossible to check update';
 $LANG['user_online'] = 'Registered user(s)';
 $LANG['last_update'] = 'Last update';
@@ -279,10 +279,10 @@ $LANG['view_all_comments'] = 'View all comments';
 $LANG['writing_pad'] = 'Writing pad';
 $LANG['writing_pad_explain'] = 'This form is provided to enter your personal notes.';
 
-//Alertes administrateur
+//Administrator alerts
 $LANG['administrator_alerts'] = 'Alerts';
 $LANG['administrator_alerts_list'] = 'Alerts list';
-$LANG['no_unread_alert'] = 'No unprocessed alert';
+$LANG['no_unread_alert'] = 'No unprocessed alerts';
 $LANG['unread_alerts'] = 'There are some unprocessed alerts. You should go there to process them.';
 $LANG['no_administrator_alert'] = 'No existing alert';
 $LANG['display_all_alerts'] = 'See all alerts';
@@ -298,8 +298,8 @@ $LANG['admin_alert_unfix'] = 'Consider the alert as not fixed';
 $LANG['confirm_delete_administrator_alert'] = 'Are you sure you want to delete this alert?';
 	
 //Config
-$LANG['config_main'] = 'Main configurations';
-$LANG['config_advanced'] = 'Advanced configurations';
+$LANG['config_main'] = 'Main configuration';
+$LANG['config_advanced'] = 'Advanced configuration';
 $LANG['serv_name'] = 'Server name';
 $LANG['serv_path'] = 'PHPBoost path, empty by default';
 $LANG['serv_path_explain'] = 'Website, on the server root';
@@ -313,82 +313,82 @@ $LANG['default_language'] = 'Language (default) of the website';
 $LANG['default_theme'] = 'Website\'s (default) theme';
 $LANG['start_page'] = 'Website\'s start page';
 $LANG['no_module_starteable'] = 'No start up module found';
-$LANG['other_start_page'] = 'Other relative or absolute url';
+$LANG['other_start_page'] = 'Other relative or absolute URL';
 $LANG['activ_gzhandler'] = 'Enable page compression, it will increase display speed';
 $LANG['activ_gzhandler_explain'] = 'Warning. Your server must support this functionality';
 $LANG['view_com'] = 'Comments viewing';
-$LANG['rewrite'] = 'Enable url rewriting';
-$LANG['explain_rewrite'] = 'Activation of url rewriting makes urls much simpler and clearer on your website. Your referencing will be largely optimized with this option.<br /><br />Unfortunately this option isn\'t available on all server. This page test if your server support url rewriting. If after the test you get errors or white pages, remove the file <strong>.htaccess</strong> on the root of your server.';
-$LANG['server_rewrite'] = 'Url rewriting on your server';
+$LANG['rewrite'] = 'Enable URL rewriting';
+$LANG['explain_rewrite'] = 'Activation of URL rewriting makes URLs much simpler and clearer on your website. Your referencing will be largely optimized with this option.<br /><br />Unfortunately this option isn\'t available on all servers. This page tests if your server supports URL rewriting. If after the test you get errors or white pages, remove the file <strong>.htaccess</strong> from the root directory of your server.';
+$LANG['server_rewrite'] = 'URL rewriting on your server';
 $LANG['htaccess_manual_content'] = 'Content of the .htaccess file';
-$LANG['htaccess_manual_content_explain'] = 'In that field you can type the instructions you would like to integrate into the .htaccess file which is at the root of the website for instance if you want to force special settings of your Apache web server.';
+$LANG['htaccess_manual_content_explain'] = 'In this field you can type the instructions you would like to integrate into the .htaccess file which is at the root of the website, for instance if you want to force special settings of your Apache web server.';
 $LANG['current_page'] = 'Current page';
 $LANG['new_page'] = 'New page';
 $LANG['compt'] = 'Counter';
 $LANG['bench'] = 'Benchmark';
-$LANG['bench_explain'] = 'Display page\'s render time and sql requests';
+$LANG['bench_explain'] = 'Display page\'s render time and SQL requests';
 $LANG['theme_author'] = 'Theme info';
-$LANG['theme_author_explain'] = 'Display theme info on footer';
+$LANG['theme_author_explain'] = 'Display theme info in footer';
 $LANG['debug_mode'] = 'Debug mode';
 $LANG['debug_mode_explain'] = 'This mode is very useful for developers who will more easily see the errors encountered during the page execution. You shouldn\'t use this mode on a published web site.';
-$LANG['user_connexion'] = 'Users connexion';
+$LANG['user_connexion'] = 'User\'s connection';
 $LANG['cookie_name'] = 'Cookie name';
 $LANG['session_time'] = 'Session time';
 $LANG['session_time_explain'] = '3600s recommended';
 $LANG['session invit'] = 'Enable users duration';
 $LANG['session invit_explain'] = '300s recommended';
-$LANG['post_management'] = 'Management of posts';
-$LANG['pm_max'] = 'Maximum number private message';
+$LANG['post_management'] = 'Post Management';
+$LANG['pm_max'] = 'Maximum number of private messages';
 $LANG['anti_flood'] = 'Anti-flood';
 $LANG['int_flood'] = 'Minimal interval of time between two messages';
-$LANG['pm_max_explain'] = 'Unlimited for administrators et moderators';
-$LANG['anti_flood_explain'] = 'Block too nearby messages, except if the visitors are authorized';
+$LANG['pm_max_explain'] = 'Unlimited for administrators and moderators';
+$LANG['anti_flood_explain'] = 'Block too rapid repeat messages, except if the visitors are authorized';
 $LANG['int_flood_explain'] = '7 seconds by default</span>';
-$LANG['email_management'] = 'Emails management';
+$LANG['email_management'] = 'Email management';
 $LANG['email_admin_exp'] = 'Expedition mail';
 $LANG['email_admin_explain_exp'] = 'Mail viewed by the receiver';
-$LANG['email_admin'] = 'Adminitrators\'s mails';
-$LANG['admin_sign'] = 'Signature of the mail';
-$LANG['email_admin_explain'] = 'Tape ; between each mail';
-$LANG['admin_sign_explain'] = 'At the bottom of each mails sent by the site';
-$LANG['cache_success'] = 'Cache has been succefully regenerated!';
+$LANG['email_admin'] = 'Administrator\'s emails';
+$LANG['admin_sign'] = 'Administrator email signature';
+$LANG['email_admin_explain'] = 'Type ; between each email';
+$LANG['admin_sign_explain'] = 'At the bottom of each email sent by the site';
+$LANG['cache_success'] = 'Cache has been successfully regenerated!';
 $LANG['explain_site_cache'] = 'Total Regeneration of the cache of the site from the database.
-<br /><br />Cache improve speed of pages execution time, and minimize the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate site cache after motifications';
+<br /><br />Cache improves the speed of page execution time, and minimizes the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate the site cache after motifications';
 $LANG['explain_site_cache_syndication'] = 'Total Regeneration of the site\'s feed cache from the database.
-<br /><br />Cache improve speed of pages execution time, and minimize the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate site cache after motifications';
+<br /><br />Cache improves the speed of page execution time, and minimizes the SQL server charge. Note, if you make your own modifications in the database they will not be visible. You have to regenerate the site cache after motifications';
 $LANG['confirm_unlock_admin'] = 'An email will be sent to you with the new unlock code';
 $LANG['unlock_admin_confirm'] = 'Unlock code has been sent succesfully';
 $LANG['unlock_admin'] = 'Unlock code';
 $LANG['unlock_admin_explain'] = 'This code can unlock the administration panel in case of intrusion attempt.';
 $LANG['send_unlock_admin'] = 'Send admin\'s unlock code';
 $LANG['unlock_title_mail'] = 'Mail to keep';
-$LANG['unlock_mail'] = 'Conserved this code (it will never be redelivered): %s
+$LANG['unlock_mail'] = 'Conserve this code (it will never be redelivered): %s
 
 This code can unlock the administration panel in case of intrusion attempt.
-It will be asked of you in the direct administration connexion form  (yourserver/admin/admin_index.php)
+It will be asked of you in the direct administration connection form  (yourserver/admin/admin_index.php)
 
 ' . $CONFIG['sign'];
 
-//Maintain
+//Maintenance
 $LANG['maintain_for'] = 'Set website in maintenance';
 $LANG['maintain_delay'] = 'Display maintenance delay';
 $LANG['maintain_display_admin'] = 'Display maintenance delay to the administrator';
 $LANG['maintain_text'] = 'Display text, when site maintenance is in progress';
 
 //Config modules
-$LANG['modules_management'] = 'Modules management';
+$LANG['modules_management'] = 'Module management';
 $LANG['add_modules'] = 'Add module';
 $LANG['update_modules'] = 'Update module';
 $LANG['update_module'] = 'Update';
 $LANG['upload_module'] = 'Upload a module';
 $LANG['del_module'] = 'Delete module';
-$LANG['del_module_data'] = 'All module\'s datas will be erased, warning you can\'t get back the data later!';
+$LANG['del_module_data'] = 'All module\'s data will be erased, it cannot be recovered later!';
 $LANG['del_module_files'] = 'Delete all module\'s files';
 $LANG['author'] = 'Authors';
 $LANG['compat'] = 'Compatibility';
 $LANG['use_sql'] = 'Use SQL';
 $LANG['use_cache'] = 'Use cache';
-$LANG['alternative_css'] = 'Use alternative css';
+$LANG['alternative_css'] = 'Use alternative CSS';
 $LANG['modules_installed'] = 'Installed modules';
 $LANG['modules_available'] = 'Available modules';
 $LANG['no_modules_installed'] = 'No installed modules';
@@ -415,17 +415,17 @@ $LANG['kernel_version'] = 'Kernel version';
 $LANG['output_gz'] = 'Output pages compression';
 $LANG['directories_auth'] = 'Directories authorization';
 $LANG['system_report_summerization'] = 'Summary';
-$LANG['system_report_summerization_explain'] = 'This is a summery of the report, it will be useful for the support, when you will be asked about your configuration.';
+$LANG['system_report_summerization_explain'] = 'This is a summary of the report, it will be useful for support, when you will be asked about your configuration.';
 
 //Gestion de l'upload
-$LANG['explain_upload_img'] = 'Image format must be jpg, gif, png or bmp';
-$LANG['explain_archive_upload'] = 'Archive file must be zip or gzip format';
+$LANG['explain_upload_img'] = 'Image format must be JPG, GIF, PNG or BMP format';
+$LANG['explain_archive_upload'] = 'Archive file must be ZIP or GZIP format';
 
 //Gestion des fichiers
-$LANG['auth_files'] = 'Authorization required for files interface activation';
+$LANG['auth_files'] = 'Authorization required for file interface activation';
 $LANG['size_limit'] = 'Upload size limit';
 $LANG['bandwidth_protect'] = 'Bandwidth protection';
-$LANG['bandwidth_protect_explain'] = 'Access forbidden for extern website to upload folder contents';
+$LANG['bandwidth_protect_explain'] = 'Access forbidden for external websites to upload folder contents';
 $LANG['auth_extensions'] = 'Authorized extensions';
 $LANG['extend_extensions'] = 'Additional authorized extensions';
 $LANG['extend_extensions_explain'] = 'Separate each extension with comas';
@@ -439,7 +439,7 @@ $LANG['files_misc'] = 'Miscellaneous';
 //Gestion des menus
 $LANG['confirm_del_menu'] = 'Delete this menu?';
 $LANG['confirm_delete_element'] = 'Delete this item?';
-$LANG['menus_management'] = 'Menus management';
+$LANG['menus_management'] = 'Menu management';
 $LANG['menus_content_add'] = 'Add content menu';
 $LANG['menus_links_add'] = 'Add links menu';
 $LANG['menus_feed_add'] = 'Add feed';
@@ -450,7 +450,7 @@ $LANG['tree_menu'] = 'Tree menu';
 $LANG['vertical_scrolling_menu'] = 'Vertical scrolling menu';
 $LANG['horizontal_scrolling_menu'] = 'Horizontal scrolling menu';
 $LANG['available_menus'] = 'Available menus';
-$LANG['no_available_menus'] = 'No menu available';
+$LANG['no_available_menus'] = 'No menus available';
 $LANG['menu_header'] = 'Header';
 $LANG['menu_subheader'] = 'Sub header';
 $LANG['menu_left'] = 'Left menu';
@@ -478,7 +478,7 @@ $LANG['default_formatting_language'] = 'Default formatting language on the websi
 $LANG['content_language_config'] = 'Formatting language';
 $LANG['content_html_language'] = 'HTML language';
 $LANG['content_auth_use_html'] = 'Authorization level to insert HTML langage in the content
-<span style="display:block">Warning : if you can insert HTML tags, you can also insert some javascript and this code can be the source of vulnerabilities. People who can insert some HTML language must be people whom you trust.</span>';
+<span style="display:block">Warning : if you can insert HTML tags, you can also insert some JavaScript and this code can be the source of vulnerabilities. People who can insert some HTML language must be people who you trust.</span>';
 
 //Smiley
 $LANG['upload_smiley'] = 'Upload smiley';
@@ -487,7 +487,7 @@ $LANG['add_smiley'] = 'Add smiley';
 $LANG['smiley_code'] = 'Smiley code (ex: :D)';
 $LANG['smiley_available'] = 'Available smileys';
 $LANG['edit_smiley'] = 'Edit smileys';
-$LANG['smiley_management'] = 'Smileys management';
+$LANG['smiley_management'] = 'Smiley management';
 $LANG['e_smiley_already_exist'] = 'This smiley already exists!';
 
 //Thèmes
@@ -497,9 +497,9 @@ $LANG['no_theme_on_serv'] = 'No <strong>compatible</strong> theme available on t
 $LANG['theme_management'] = 'Theme management';
 $LANG['theme_add'] = 'Add theme';
 $LANG['theme'] = 'Theme';
-$LANG['e_theme_already_exist'] = 'Theme already exist';
-$LANG['xhtml_version'] = 'Html version';
-$LANG['css_version'] = 'Css version';
+$LANG['e_theme_already_exist'] = 'Theme already exists';
+$LANG['xhtml_version'] = 'HTML version';
+$LANG['css_version'] = 'CSS version';
 $LANG['main_colors'] = 'Main colors';
 $LANG['width'] = 'Width';
 $LANG['exensible'] = 'Extensible';
@@ -510,24 +510,24 @@ $LANG['activ_left_column'] = 'Enable left column';
 $LANG['activ_right_column'] = 'Enable right column';
 $LANG['manage_theme_columns'] = 'Manage theme columns';
 
-//Langues
+//Languages
 $LANG['upload_lang'] = 'Upload language';
 $LANG['lang_on_serv'] = 'Languages available on the server';
 $LANG['no_lang_on_serv'] = 'No language available on the server';
 $LANG['lang_management'] = 'Language management';
 $LANG['lang_add'] = 'Add a language';
 $LANG['lang'] = 'Language';
-$LANG['e_lang_already_exist'] = 'Language already exist';
+$LANG['e_lang_already_exist'] = 'Language already exists';
 $LANG['del_lang'] = 'Delete language';
 $LANG['del_lang_files'] = 'Delete all language files';
 $LANG['explain_default_lang'] = 'Default language can\'t be uninstalled, disabled or restricted';
 
 //Comments
-$LANG['com_management'] = 'Comments management';
+$LANG['com_management'] = 'Comment management';
 $LANG['com_config'] = 'Comments configuration';
 $LANG['com_max'] = 'Maximum comments displayed';
 $LANG['rank_com_post'] = 'Rank to post comments';
-$LANG['display_topic_com'] = 'Display comments topics';
+$LANG['display_topic_com'] = 'Display comment\'s topics';
 $LANG['display_recent_com'] = 'Display last comments';
 
 //Gestion membre
@@ -539,7 +539,7 @@ $LANG['members_config'] = 'Member configuration';
 $LANG['members_punishment'] = 'Punishment management';
 $LANG['members_msg'] = 'Message to members';
 $LANG['search_member'] = 'Search a member';
-$LANG['joker'] = 'Use * for joker';
+$LANG['joker'] = 'Use * for wildcard';
 $LANG['no_result'] = 'No result';
 $LANG['minute'] = 'minute';
 $LANG['minutes'] = 'minutes';
@@ -558,7 +558,7 @@ $LANG['website_explain'] = 'Valid if not considered';
 $LANG['member_sign'] = 'Sign';
 $LANG['member_sign_explain'] = 'Under each one of your messages';
 $LANG['avatar_management'] = 'Avatar management';
-$LANG['activ_up_avatar'] = 'Autorized upload avatars on the server';
+$LANG['activ_up_avatar'] = 'Authorized upload avatars on the server';
 $LANG['current_avatar'] = 'Current avatar';
 $LANG['upload_avatar'] = 'Upload avatar';
 $LANG['upload_avatar_where'] = 'Avatar on the server';
@@ -574,7 +574,7 @@ $LANG['male'] = 'Male';
 $LANG['female'] = 'Female';
 $LANG['verif_code'] = 'Visual verification code';
 $LANG['verif_code_explain'] = 'Block the bots';
-$LANG['delay_activ_max'] = 'Delay for unactive members. after this delay, they will be deleted';
+$LANG['delay_activ_max'] = 'Delay for inactive members. After this delay, they will be deleted';
 $LANG['delay_activ_max_explain'] = 'Leave empty to ignore this option (ignored if validated by an administrator!)';
 $LANG['activ_mbr'] = 'Activation mode of the member account';
 $LANG['no_activ_mbr'] = 'Automatic';
@@ -587,10 +587,10 @@ $LANG['weight_max_avatar'] = 'Maximum avatar file size(Kb)';
 $LANG['weight_max_avatar_explain'] = 'Default 20 Kb';
 $LANG['avatar_management'] = 'Avatar management';
 $LANG['activ_defaut_avatar'] = 'Enable default avatar';
-$LANG['activ_defaut_avatar_explain'] = 'Give one to the members who do not have';
-$LANG['url_defaut_avatar'] = 'Url of the default avatar';
+$LANG['activ_defaut_avatar_explain'] = 'Give one to the members who do not have an avatar';
+$LANG['url_defaut_avatar'] = 'URL of the default avatar';
 $LANG['url_defaut_avatar_explain'] = 'Put this avatar in your theme\'s images directory';
-$LANG['no_punish'] = 'No member punished';
+$LANG['no_punish'] = 'No members punished';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
 $LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
@@ -598,10 +598,10 @@ $LANG['readonly_user'] = 'Member on read only';
 $LANG['activ_register'] = 'Enable member registration';
 
 //Règlement
-$LANG['explain_terms'] = 'Write registeration terms, members have to accept it before they register. Leave the field empty for no registeration terms.';
+$LANG['explain_terms'] = 'Write registration terms which prospective members have to accept before they register. Leave the field empty for no registeration terms.';
 
 //Group management
-$LANG['groups_management'] = 'Group managements';
+$LANG['groups_management'] = 'Group management';
 $LANG['groups_add'] = 'Add a group';
 $LANG['auth_flood'] = 'Allowed to flood';
 $LANG['pm_group_limit'] = 'Private messages limit';
@@ -625,7 +625,7 @@ $LANG['upload_group'] = 'Upload icon group';
 $LANG['robot'] = 'Robot';
 $LANG['robots'] = 'Robots';
 $LANG['erase_rapport'] = 'Erase rapport';
-$LANG['number_r_visit'] = 'Number of view';
+$LANG['number_r_visit'] = 'Number of views';
 
 //Errors
 $LANG['all_errors'] = 'Show all errors';
@@ -646,10 +646,10 @@ $LANG['all_fai'] = 'See all Internet access providers';
 $LANG['10_fai'] = 'See the 10 principal Internet access providers';
 $LANG['number'] = 'Number of ';
 $LANG['start'] = 'Creation of the website';
-$LANG['stat_lang'] = 'Countries of visitors';
-$LANG['all_langs'] = 'See all countries of visitors';
-$LANG['10_langs'] = 'See the 10 principal countries of visitors';
-$LANG['visits_year'] = 'See statistics of the year';
+$LANG['stat_lang'] = 'Visitor\'s Countries';
+$LANG['all_langs'] = 'See all visitor\'s countries';
+$LANG['10_langs'] = 'See the 10 most common countries of visitors';
+$LANG['visits_year'] = 'See statistics for the year';
 $LANG['unknown'] = 'Unknown';
 $LANG['last_member'] = 'Last member registered';
 $LANG['top_10_posters'] = 'Top 10: posters';
@@ -671,7 +671,7 @@ $LANG['november'] = 'November';
 $LANG['december'] = 'December';
 $LANG['monday'] = 'Mon';
 $LANG['tuesday'] = 'Tue';
-$LANG['wenesday'] = 'Wen';
+$LANG['wenesday'] = 'Wed';
 $LANG['thursday'] = 'Thu';
 $LANG['friday'] = 'Fri';
 $LANG['saturday'] = 'Sat';
@@ -691,7 +691,7 @@ $LANG['authors'] = 'Authors';
 $LANG['new_features'] = 'New features';
 $LANG['improvments'] = 'Improvments';
 $LANG['fixed_bugs'] = 'Fixed bugs';
-$LANG['security_improvments'] = 'security improvments';
+$LANG['security_improvments'] = 'Security improvements';
 $LANG['unexisting_update'] = 'This update does not exist';
 $LANG['updates_are_available'] = 'Updates are available<br />Please, update quickly';
 $LANG['availables_updates'] = 'Available updates';

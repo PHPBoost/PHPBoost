@@ -3,7 +3,7 @@
 *                                main.php
 *                            -------------------
 *   begin                : November 20, 2005
-*   last modified		: August 30, 2009 - Forensic 
+*   last modified		: October 3rd, 2009 - JMNaylor
 *   copyright            : (C) 2005 Viarre Régis
 *   email                : mickaelhemri@gmail.com
 *
@@ -65,7 +65,7 @@ $LANG['title_pm'] = 'Private messages';
 $LANG['title_error'] = 'Error';
 $LANG['title_com'] = 'Comments';
 $LANG['title_register'] = 'Sign up';
-$LANG['title_forget'] = 'Forgot password';
+$LANG['title_forget'] = 'Forgotten password';
 
 //Form
 $LANG['submit'] = 'Submit';
@@ -76,7 +76,7 @@ $LANG['preview'] = 'Preview';
 $LANG['search'] = 'Search';
 $LANG['connect'] = 'Log in';
 $LANG['disconnect'] = 'Log out';
-$LANG['autoconnect'] = 'Automatic logging in';
+$LANG['autoconnect'] = 'Automatic login';
 $LANG['password'] = 'Password';
 $LANG['respond'] = 'Answer';
 $LANG['go'] = 'Go';
@@ -136,8 +136,8 @@ $LANG['bb_block'] = 'Block';
 $LANG['bb_fieldset'] = 'Fieldset';
 $LANG['bb_style'] = 'Style [style=x]text[/style]';
 $LANG['bb_hide'] = 'Hide text, shown on click [hide]text[/hide]';
-$LANG['bb_float_left'] = 'Float objet on left [float=left]text[/float]';
-$LANG['bb_float_right'] = 'Float objet on right [float=right]text[/float]';
+$LANG['bb_float_left'] = 'Float object on left [float=left]text[/float]';
+$LANG['bb_float_right'] = 'Float object on right [float=right]text[/float]';
 $LANG['bb_list'] = 'List [list][*]text1[*]text2[/list]';
 $LANG['bb_table'] = 'Table [table][row][col]text[/col][col]text[/col][/row][/table]';
 $LANG['bb_indent'] = 'Indent [indent]text[/indent]';
@@ -208,7 +208,7 @@ $LANG['my_private_profile'] = 'My profile';
 
 //Maintain
 $LANG['maintain'] = 'The website is under maintenance, only the administrators are authorized to log in.';
-$LANG['maintain_delay'] = 'Delay before ending:';
+$LANG['maintain_delay'] = 'Time remaining:';
 $LANG['title_maintain'] = 'Website in maintenance';
 $LANG['loading'] = 'Loading';
 
@@ -219,7 +219,7 @@ $LANG['guest'] = 'Visitor';
 $LANG['guest_s'] = 'Visitors';
 $LANG['member'] = 'Member';
 $LANG['member_s'] = 'Members';
-$LANG['members_list'] = 'Members list';
+$LANG['members_list'] = 'Member list';
 $LANG['modo'] = 'Moderator';
 $LANG['modo_s'] = 'Moderators';
 $LANG['admin'] = 'Administrator';
@@ -255,7 +255,7 @@ $LANG['title_s'] = 'Titles';
 $LANG['n_time'] = 'Time';
 $LANG['written_by'] = 'Written by';
 $LANG['valid'] = 'Valid';
-$LANG['info'] = 'Informations';
+$LANG['info'] = 'Information';
 $LANG['asc'] = 'Ascending';
 $LANG['desc'] = 'Decreasing';
 $LANG['list'] = 'List';
@@ -329,7 +329,7 @@ $LANG['com'] = 'Comment';
 $LANG['com_s'] = 'Comments';
 $LANG['no_comment'] = 'No comment';
 $LANG['post_com'] = 'Post a comment';
-$LANG['com_locked'] = 'Comments are locked for this element';
+$LANG['com_locked'] = 'Comments are locked for this section';
 $LANG['add_msg'] = 'Add a message';
 $LANG['update_msg'] = 'Update the message';
 $LANG['category'] = 'Category';
@@ -369,7 +369,7 @@ $LANG['november'] = 'November';
 $LANG['december'] = 'December';
 $LANG['monday'] = 'Mon';
 $LANG['tuesday'] = 'Tue';
-$LANG['wenesday'] = 'Wen';
+$LANG['wenesday'] = 'Wed';
 $LANG['thursday'] = 'Thu';
 $LANG['friday'] = 'Fri';
 $LANG['saturday'] = 'Sat';
@@ -415,7 +415,7 @@ $LANG['no_avatar'] = 'No avatar';
 $LANG['registered'] = 'Signed up';
 $LANG['registered_s'] = 'Signed up';
 $LANG['registered_on'] = 'Signed up since';
-$LANG['last_connect'] = 'Last logging in';
+$LANG['last_connect'] = 'Last login';
 $LANG['private_message'] = 'Private message';
 $LANG['member_msg_display'] = 'Display member\'s messages';
 $LANG['member_msg'] = 'Member\'s messages';
@@ -437,15 +437,15 @@ $LANG['go_msg'] = 'Go to message';
 $LANG['display'] = 'Display';
 
 //Register
-$LANG['pseudo_how'] = 'Minimal login length: 3 characters';
-$LANG['password_how'] = 'Minimal password length: 6 characters';
+$LANG['pseudo_how'] = 'Minimum login length: 3 characters';
+$LANG['password_how'] = 'Minimum password length: 6 characters';
 $LANG['confirm_register'] = '%s, thank you for your registration. An e-mail will be sent to you to confirm your registration.';
 $LANG['register_terms'] = 'Registration Agreement Terms';
 $LANG['register_accept'] = 'I accept';
-$LANG['register_have_to_accept'] = 'You have to accept the registration terms to suscribe on the website!';
-$LANG['activ_mbr_mail'] = 'You will have to activate your account via the e-mail that have been sent to you before you are able to connect!';
+$LANG['register_have_to_accept'] = 'You have to accept the registration terms to register on the website!';
+$LANG['activ_mbr_mail'] = 'You will have to activate your account via the e-mail that has been sent to you before you are able to login!';
 $LANG['activ_mbr_admin'] = 'An administrator will have to activate your account before you are able to connect';
-$LANG['member_registered_to_approbate'] = 'A new member has registered himself. Its account must be approved to be used.';
+$LANG['member_registered_to_approbate'] = 'A new member has registered themself. Their account must be approved to be used.';
 $LANG['activ_mbr_mail_success'] = 'Your account is activated, you can now log in to your account!';
 $LANG['activ_mbr_mail_error'] = 'Account activation error';
 $LANG['weight_max'] = 'Maximum weight';
@@ -463,7 +463,7 @@ $LANG['register_valid_email'] = 'You have to click on this link to activate your
 $LANG['register_valid_admin'] = 'Warning: Your account must be activated by an administrator. Thanks for your patience';
 $LANG['register_mail'] = 'Dear %s,
 
-First, thank you for your registration on %s. You are now member of the site.
+First, thank you for your registration on %s. You are now a member of the site.
 By signing you up on %s, you obtain an access to the member zone which offers several advantages to you. You could for example be recognized automatically on all the site, send messages, edit your profile, change main languages and theme, reach categories reserved to the members, etc. You are now in the community of the site.
 
 To log yourself in, don\'t forget your login and your password (we can find them).
@@ -496,9 +496,9 @@ $LANG['forget_pass_send'] = 'Valid to receive a new password by mail, with an ac
 $LANG['forget_mail_activ_pass'] = 'Activate password';
 $LANG['forget_mail_pass'] = 'Dear %s
 
-You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. If you have not ask this new password, please ignore this mail. If you receive another message, contact the website administrator.
+You have received this email because you (or someone who pretends to be you) asked for a new password for your account on %s. If you have not asked for this new password, please ignore this mail. If you receive another message, contact the website administrator.
 
-To use the new password, you have to confirm it. Click on the link bellow:
+To use the new password, you have to confirm it. Click on the link below:
 
 %s/member/forget.php?activate=true&u=%d&activ=%s
 
@@ -506,7 +506,7 @@ After that you will be able to log in with the new password:
 
 Password: %s
 
-Anyway, you can change this password later in your member account. If you encounter some issues, contact the administrator.
+Anyway, you can change this password later in your member account. If you encounter issues, contact the administrator.
 
 %s';
 
@@ -560,7 +560,7 @@ $LANG['user_alternative_pm'] = 'Private message sent to the member <span class="
 $LANG['punishment'] = 'Punishment';
 $LANG['punishment_management'] = 'Punishment management';
 $LANG['user_punish_until'] = 'Punishment until';
-$LANG['no_punish'] = 'No member punished';
+$LANG['no_punish'] = 'No members punished';
 $LANG['user_readonly_explain'] = 'User is in read only, he can read but can\'t post on the whole website (comments, etc...)';
 $LANG['weeks'] = 'weeks';
 $LANG['life'] = 'Life';
@@ -579,7 +579,7 @@ $LANG['no_user_warning'] = 'No warned users';
 $LANG['user_warning_explain'] = 'Member warning level. You can update it, but at 100% the member is banned';
 $LANG['change_user_warning'] = 'Change warning level';
 $LANG['warning_title'] = 'Warning';
-$LANG['user_warning_level_changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be definitively banned.
+$LANG['user_warning_level_changed'] = 'You have been warned by a member of the moderation team, your warning level is now %level%%. Be careful with your behavior, if you reach 100% you will be permanently banned.
 
 
 This is a semi-automatic message.';
