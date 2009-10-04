@@ -44,10 +44,15 @@ abstract class SQLDAO implements DAO
 	 */
 	private $table;
 
-	/**
-	 * @var string
-	 */
-	private $pk_field;
+    /**
+     * @var string
+     */
+    private $pk_db_field;
+    
+    /**
+     * @var string
+     */
+    private $pk_property;
 
 	/**
 	 * @var string
@@ -60,13 +65,16 @@ abstract class SQLDAO implements DAO
 	private $pk_setter;
 
 	/**
-	 * @var string[string]
+	 * @var string[string] $fields_mapping[$property] => $db_field_name
 	 */
 	private $fields_mapping = array();
 
 	private $delete_query;
-	private $insert_query;
-	private $update_query;
+    private $insert_query;
+    private $update_query;
+	private $find_by_id_query;
+	private $find_all_query;
+	private $find_query;
 
 	public function __construct(SQLQuerier $sql_querier, MappingModel $model)
 	{
@@ -80,30 +88,37 @@ abstract class SQLDAO implements DAO
 		if ($this->delete_query === null)
 		{
 			$this->delete_query = "delete from " . $this->table .
-                " where " . $this->pk_field . "=':pk_value';";
+                " where " . $this->pk_db_field . "=':pk_value';";
 		}
-		$prepared_vars = array('pk_value' => $object->{$this->pk_getter()}());
+		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
 		$this->querier->inject($this->delete_query, $prepared_vars);
 	}
 
 	public function save(PropertiesMapInterface $object)
 	{
-		$pk_value = $object->{$this->pk_getter()}();
+		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
 		{
-			$this->save($object);
-			$object->{$this->pk_setter()}($this->querier->get_last_inserted_id());
+			$this->insert($object);
+			$object->{$this->pk_setter}($this->querier->get_last_inserted_id());
 		}
 		else
 		{
-			$this->edit($object, $pk_value);
+			$this->update($object, $pk_value);
 		}
 	}
 
 
 	public function find_by_id($id)
 	{
-
+		$this->compute_find_by_id_query();
+		$parameters = array('id' => $id);
+		$query_result = $this->querier->select($this->find_by_id_query, $parameters);
+		if ($query_result->has_next())
+		{
+			return $this->model->new_instance($query_result->next());
+		}
+		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
 	public function find_by_criteria($criteria, $parameters = array())
@@ -131,42 +146,61 @@ abstract class SQLDAO implements DAO
 		$this->table = $this->model->get_table_name();
 
 		$primary_key = $this->model->get_primary_key();
-		$this->pk_db_field = $primary_key->get_db_field_name();
+        $this->pk_property = $primary_key->get_property_name();
+        $this->pk_db_field = $primary_key->get_db_field_name();
 		$this->pk_getter = $primary_key->getter();
 		$this->pk_setter = $primary_key->setter();
+		
+		foreach ($this->model->get_fields() as $field)
+		{
+			$this->fields_mapping[$field->get_property_name()] = $field->get_db_field_name();
+		}
 	}
 
 	private function insert(PropertiesMapInterface $object)
 	{
 		$this->compute_insert_query();
-		$prepared_vars =& $model->get_raw_value($object);
+		$prepared_vars =& $this->model->get_raw_value($object);
 		$this->querier->inject($this->insert_query, $prepared_vars);
 	}
 
 	private function update(PropertiesMapInterface $object, $pk_value)
 	{
 		$this->compute_update_query();
-		$prepared_vars =& $model->get_raw_value($object);
+		$prepared_vars =& $this->model->get_raw_value($object);
 		$prepared_vars['pk_value'] = $pk_value;
 		$this->querier->inject($this->update_query, $prepared_vars);
+	}
+
+	private function compute_find_by_id_query()
+	{
+		if ($this->find_by_id_query === null)
+		{
+			$this->find_by_id_query = "select " . $this->pk_db_field . " as " . $this->pk_property;
+			foreach ($this->fields_mapping as $property => $db_field)
+			{
+				$this->find_by_id_query .= ", " . $db_field . " as " . $property;
+			}
+		    $this->find_by_id_query .= " from " . $this->table .
+		        " where " . $this->pk_db_field . "=':id';";
+		}
 	}
 
 	private function compute_insert_query()
 	{
 		if ($this->insert_query === null)
 		{
-			$properties_fields_map = array();
-			foreach ($this->model->get_fields() as $field)
+			$properties = array();
+			foreach ($this->fields_mapping as $property => $field)
 			{
-				$properties_fields_map[SQLQuerier::QUERY_VAR_PREFIX . $field->get_property_name()] =
-				SQLQuerier::QUERY_VAR_PREFIX . $field->get_db_field_name();
+				$properties[] = SQLQuerier::QUERY_VAR_PREFIX . $property;
 			}
 
-			$fields_list =& implode(', ', $properties_fields_map);
-			$values =& implode("','", array_keys($properties_fields_map));
+			$fields_list =& implode(', ', $this->fields_mapping);
+			$values =& implode("','", $properties);
 
-			$this->insert_query = "insert into " . $this->table . " " . $fields_list .
-			     " values('" . $values . "');";
+			$this->insert_query = "insert into " . $this->table . " (" . $fields_list .
+			     ") values('" . $values . "');";
 		}
 	}
 
@@ -175,14 +209,13 @@ abstract class SQLDAO implements DAO
 		if ($this->update_query === null)
 		{
 			$fields_list = array();
-			foreach ($this->model->get_fields() as $field)
+			foreach ($this->fields_mapping as $property => $field)
 			{
-				$fields_list[] = SQLQuerier::QUERY_VAR_PREFIX . $field->get_db_field_name() .
-                "='" . SQLQuerier::QUERY_VAR_PREFIX . $field->get_property_name() . "'";
+				$fields_list[] = $field . "='" . SQLQuerier::QUERY_VAR_PREFIX . $property . "'";
 			}
 
 			$this->update_query = "update " . $this->table . " set " . implode(', ', $fields_list) .
-                " where " . $this->pk_field . "=':pk_value';";
+                " where " . $this->pk_db_field . "=':pk_value';";
 		}
 	}
 }

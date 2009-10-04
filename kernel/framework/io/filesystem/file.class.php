@@ -184,8 +184,8 @@ class File extends FileSystemElement
 
 				$bytes_written += $bytes;
 			}
-
-			parent::write();
+			$this->is_open = false;
+            $this->open();
 
 			return $bytes_written == $bytes_to_write;
 		}

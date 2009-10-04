@@ -141,7 +141,7 @@ class EnvironmentServices
         //If PHPBoost is not installed, we redirect the user to the installation page
         if (defined('PHPBOOST_INSTALLED'))
         {
-		    self::init_sql($sql_base);
+		    self::init_sql($database);
         }
 	}
 

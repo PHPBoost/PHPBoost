@@ -1,8 +1,8 @@
 <?php
 /*##################################################
- *                           mapping_model_exception.class.php
+ *                           abstract_sql_querier.class.php
  *                            -------------------
- *   begin                : October 2, 2009
+ *   begin                : October 4, 2009
  *   copyright            : (C) 2009 Loic Rouchon
  *   email                : horn@phpboost.com
  *
@@ -25,30 +25,36 @@
  *
  ###################################################*/
 
+import('io/db/sql_querier');
 
-class MappingModelException extends Exception
+/**
+ * @author loic rouchon <loic.rouchon@phpboost.com>
+ * @package io
+ * @subpackage sql
+ * @desc implements the query var replacement method
+ *
+ */
+abstract class AbstractSQLQuerier implements SQLQuerier
 {
-    public function __construct($classname, $message)
-    {
-        parent::__construct('mapping model "' . $classname . '" ' . $message);
-    }
-}
-
-class ObjectNotFoundException extends MappingModelException
-{
-    public function __construct($classname, $object_id)
-    {
-        parent::__construct($classname, 'object #' . $object_id . ' was not found');
-    }
-}
-
-class MappingModelFieldException extends Exception {}
-class MappingModelFieldTableNotSpecifiedException extends MappingModelFieldException
-{
-    public function __construct($property)
-    {
-        parent::__construct('mapping model field "' . $property . '" has no table specified');
-    }
+	private $parameters;
+	
+	protected function replace_query_vars(&$query, &$parameters)
+	{
+		$this->parameters = $parameters;
+        return preg_replace_callback('`:([\w_]+)`', array($this, 'replace_query_var'), $query);
+	}
+	
+	private function replace_query_var($captures)
+	{
+		$query_varname =& $captures[1];
+		if (isset($this->parameters[$query_varname]))
+		{
+			return $this->escape($this->parameters[$query_varname]);
+		}
+		return SQLQuerier::QUERY_VAR_PREFIX . $query_varname;
+	}
+	
+	abstract protected function escape(&$value);
 }
 
 ?>

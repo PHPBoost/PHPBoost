@@ -47,11 +47,10 @@ class SQL2MySQLQueryTranslator
     {
         self::$query = $query;
          
-        echo '<hr />' . self::$query . '<hr />';
         self::translate_operators();
         self::translate_functions();
         self::translate_clause();
-        echo '<hr />' . self::$query . '<hr />';
+        
         return self::$query;
     }
 
