@@ -3,7 +3,7 @@
  *                              pages_english.php
  *                            -------------------
  *   begin                : August 18, 2007
- *   last modified		: July 31, 2009 - Forensic
+ *   last modified		: October 3rd, 2009 - JMNaylor
  *   copyright            : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -94,10 +94,10 @@ $LANG['pages_tools'] = 'Tools';
 
 //Redirections et renommer
 $LANG['pages_rename'] = 'Rename';
-$LANG['pages_redirection_management'] = 'Redirections management';
+$LANG['pages_redirection_management'] = 'Redirection management';
 $LANG['pages_rename_page'] = 'Rename the page <em>%s</em>';
 $LANG['pages_new_title'] = 'New title of this page';
-$LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the actual?';
+$LANG['pages_create_redirection'] = 'Create a redirection from the previous title to the current title?';
 $LANG['pages_explain_rename'] = 'You are just going to rename the page. You have to know that every link pointing up to that page will be broken. That\'s why you have the possibility of creating a redirection from the previous title to the new one, which won\'t break those links.';
 $LANG['pages_confirm_delete_redirection'] = addslashes('Are you sure you want to delete this redirection ?');
 $LANG['pages_delete_redirection'] = 'Delete this redirection';
@@ -105,7 +105,7 @@ $LANG['pages_redirected_from'] = 'Redirected from <em>%s</em>';
 $LANG['pages_redirection_title'] = 'Redirection title';
 $LANG['pages_redirection_target'] = 'Redirection target';
 $LANG['pages_redirection_actions'] = 'Actions';
-$LANG['pages_manage_redirection'] = 'Consult every redirection pointing to this page';
+$LANG['pages_manage_redirection'] = 'Manage every redirection pointing to this page';
 $LANG['pages_no_redirection'] = 'No existing redirection';
 $LANG['pages_create_redirection'] = 'Create a redirection to this article';
 $LANG['pages_creation_redirection'] = 'Creating a redirection';
@@ -119,10 +119,10 @@ $LANG['pages_change_cat'] = 'Change category';
 $LANG['pages_delete_cat'] = 'Deleting a category';
 $LANG['pages_confirm_remove_cat'] = 'Are you sure you want to delete this category?';
  
-//Erreurs
+//Errors
 $LANG['pages_not_found'] = 'The page you are asking for doesn\'t exist';
 $LANG['pages_error_auth_read'] = 'You haven\'t got the necessary permissions to read this page';
-$LANG['pages_error_auth_com'] = 'You haven\'t the necessary permissions to read comments related to this page';
+$LANG['pages_error_auth_com'] = 'You haven\'t got the necessary permissions to read comments related to this page';
 $LANG['pages_error_unactiv_com'] = 'Comments related to this page have been disabled.';
 $LANG['page_alert_title'] = 'You have to enter a title';
 $LANG['page_alert_contents'] = 'You have to enter a contents for your page';

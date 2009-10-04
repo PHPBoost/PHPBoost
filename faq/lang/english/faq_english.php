@@ -3,7 +3,7 @@
  *                              faq_english.php
  *                            -------------------
  *   begin                : October 20, 2007
- *   last modified		: July 31, 2009 - Forensic
+ *   last modified		: July 3rd, 2009 - JMNaylor
  *   copyright          : (C) 2007 Benoît Sautel
  *   email                : ben.popeye@phpboost.com
  *
@@ -36,7 +36,7 @@ $FAQ_LANG = array();
 
 //Généralités
 $FAQ_LANG['faq'] = 'FAQ';
-$FAQ_LANG['faq_no_question_here'] = 'There is no question in this category';
+$FAQ_LANG['faq_no_question_here'] = 'There are no questions in this category';
 $FAQ_LANG['faq_page_title'] = 'FAQ - %s';
 $FAQ_LANG['cat_name'] = 'Name of the category';
 $FAQ_LANG['num_questions_singular'] = '%d question';
@@ -76,8 +76,8 @@ $FAQ_LANG['answer'] = 'Answer';
 //Management
 $FAQ_LANG['faq_management'] = 'FAQ management';
 $FAQ_LANG['faq_configuration'] = 'FAQ configuration';
-$FAQ_LANG['faq_questions_list'] = 'Questions list';
-$FAQ_LANG['cats_management'] = 'Categories management';
+$FAQ_LANG['faq_questions_list'] = 'Question list';
+$FAQ_LANG['cats_management'] = 'Category management';
 $FAQ_LANG['add_cat'] = 'Add a category';
 $FAQ_LANG['add_question'] = 'Add a question';
 $FAQ_LANG['show_all_answers'] = 'Show all answers';
@@ -100,7 +100,7 @@ $FAQ_LANG['category_image'] = 'Category picture';
 $FAQ_LANG['removing_category'] = 'Delete a category';
 $FAQ_LANG['explain_removing_category'] = 'You will delete this category. You have two options. You can move all its contents (questions and subcategories) in another category, or delete all the category.<strong>Be careful, this action is final !</strong>';
 $FAQ_LANG['delete_category_and_its_content'] = 'Delete the category and its contents';
-$FAQ_LANG['move_category_content'] = 'Move its content in :';
+$FAQ_LANG['move_category_content'] = 'Move its content into :';
 $FAQ_LANG['faq_name'] = 'FAQ name';
 $FAQ_LANG['faq_name_explain'] = 'The FAQ name will appear in the title and in the category tree of each page';
 $FAQ_LANG['nbr_cols'] = 'Number of categories per column';
@@ -114,11 +114,11 @@ $FAQ_LANG['successful_operation'] = 'The operation you asked for was successfull
 $LANG['required_fields_empty'] = 'Some required fields are missing, please restart the operation correctly';
 $LANG['unexisting_category'] = 'The category you want to select does\'nt exist';
 $LANG['new_cat_does_not_exist'] = 'The target category does\'nt exist';
-$LANG['infinite_loop'] = 'You want to move a category in itself or in its subcategory, that\'s no sense. Please choose another category';
+$LANG['infinite_loop'] = 'You want to move a category into itself or in its subcategory, that\'s not possible. Please choose another category';
 
 //Module mini
 $FAQ_LANG['random_question'] = 'Random question';
-$FAQ_LANG['no_random_question'] = 'No available question';
+$FAQ_LANG['no_random_question'] = 'No available questions';
 
 //Others
 $LANG['ranks'] = 'Ranks';
