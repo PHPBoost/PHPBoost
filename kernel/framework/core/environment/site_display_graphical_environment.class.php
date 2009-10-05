@@ -168,9 +168,9 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 		//Si le compteur de visites est activé, on affiche le tout.
 		if ($CONFIG['compteur'] == 1)
 		{
-			$compteur 		= $Sql->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
+			$compteur = EnvironmentServices::get_sql()->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
 			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
-			$compteur_day 	= !empty($compteur['total']) ? $compteur['total'] : '1';
+			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
 
 			$Template->assign_vars(array(
 				'C_COMPTEUR' => true,
