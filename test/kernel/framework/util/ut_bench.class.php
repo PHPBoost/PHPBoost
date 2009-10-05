@@ -1,17 +1,10 @@
 <?php
 
-require_once '../../../../test/header.php';
-
 import('util/bench');
 
 class UTBench extends PHPBoostUnitTestCase
 {
 	private $result_format_regex = '`[0-9]+\.[0-9]{%d}`';
-	
-	public function test()
-	{
-		$this->check_methods('Bench');
-	}
 	
 	public function test___construct()
 	{
@@ -31,8 +24,7 @@ class UTBench extends PHPBoostUnitTestCase
 		$this->random_usleep();
 		$time = $bench->to_string();
 		
-		$this->assertPattern(sprintf($this->result_format_regex, 3), $time,
-		$time . ' is not formatted with 3 digits');
+		$this->assertRegExp(sprintf($this->result_format_regex, 3), $time);
 	}
 
 	private function _test_to_string5digits()
@@ -43,8 +35,7 @@ class UTBench extends PHPBoostUnitTestCase
 		$this->random_usleep();
 		$time = $bench->to_string($digits);
 
-		$this->assertPattern(sprintf($this->result_format_regex, $digits), $time,
-		$time . ' is not formatted with ' . $digits . ' digits');
+        $this->assertRegExp(sprintf($this->result_format_regex, $digits), $time);
 	}
 
 	private function random_usleep()

@@ -1114,6 +1114,7 @@ function mimport($path, $import_type = CLASS_IMPORT)
  */
 function req($file, $once = true)
 {
+	$file = '/' . ltrim($file, '/');
 	if ($once)
 	{
 		if (!DEBUG)
@@ -1147,6 +1148,7 @@ function req($file, $once = true)
  */
 function inc($file, $once = true)
 {
+    $file = '/' . ltrim($file, '/');
 	if ($once)
 	{
 		if (!DEBUG)
