@@ -66,7 +66,7 @@ interface DAO
 	 * <code>array(array('column' => $column1, 'way' => $way1), ...)</code>
 	 * <code>$column1</code> must be a column name or an alias and <code>$way</code> could be
 	 * ascending (<code>DAO::ORDER_BY_ASC</code>) or descending (<code>DAO::ORDER_BY_DESC</code>)
-	 * @return QueryResult the objects list
+	 * @return QueryResultMapper the objects list
 	 */
 	public function find_all($limit = 100, $offset = 0, $order_by = array());
 	
@@ -74,7 +74,7 @@ interface DAO
 	 * @desc retrieves all the objects in the datastore matching the <code>$criteria</code>
 	 * @param string $criteria the part of the query that came just after the from
 	 * @param string[string] $parameters the query vars to inject into the <code>$criteria</code>
-	 * @return QueryResult the objects list
+	 * @return QueryResultMapper the objects list
 	 */
 	public function find_by_criteria($criteria, $parameters = array());
 }

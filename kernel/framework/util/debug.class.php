@@ -24,6 +24,8 @@
  *
  ###################################################*/
 
+defined('FS_ROOT_DIRECTORY') or define('FS_ROOT_DIRECTORY',
+preg_replace('`^(.+)/kernel/framework/util/?$`i', '$1', str_replace('\\', '/',dirname(__FILE__))));
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>
@@ -101,14 +103,14 @@ class Debug
 			$prototype .= $call['class'] . $call['type'];
 		}
 		$prototype .= $call['function'] . '(</b>';
-        if (!empty($call['args']))
-        {
-        	$prototype .= self::get_args($call['args']);
-        }
+		if (!empty($call['args']))
+		{
+			$prototype .= self::get_args($call['args']);
+		}
 		$prototype .= '<b>)</b>';
 		return $prototype;
 	}
-	
+
 	private static function get_args($args)
 	{
 		$string_stacktrace = '';

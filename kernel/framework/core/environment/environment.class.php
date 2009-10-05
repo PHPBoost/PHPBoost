@@ -228,6 +228,9 @@ class Environment
 		define('REGEX_MULTIPLICITY_REQUIRED', 0x03);
 		define('REGEX_MULTIPLICITY_AT_LEAST_ONE', 0x04);
 		define('REGEX_MULTIPLICITY_ALL', 0x05);
+		
+		define('FS_ROOT_DIRECTORY', preg_replace('`^(.+)/kernel/framework/core/environment/?$`i',
+		    '$1', str_replace('\\', '/',dirname(__FILE__))));
 	}
 
 	public static function write_http_headers()
