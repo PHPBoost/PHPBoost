@@ -42,13 +42,4 @@ class ObjectNotFoundException extends MappingModelException
     }
 }
 
-class MappingModelFieldException extends Exception {}
-class MappingModelFieldTableNotSpecifiedException extends MappingModelFieldException
-{
-    public function __construct($property)
-    {
-        parent::__construct('mapping model field "' . $property . '" has no table specified');
-    }
-}
-
 ?>
