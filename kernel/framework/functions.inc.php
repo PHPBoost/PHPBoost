@@ -1246,27 +1246,18 @@ function set_subregex_multiplicity($sub_regex, $multiplicity_option)
 	}
 }
 
-/**
- * @desc Returns the full phpboost version with its build number
- * @return string the full phpboost version with its build number
- */
-function phpboost_version() {
-	global $CONFIG;
-	import('io/filesystem/file');
-	$file = new File(PATH_TO_ROOT . '/kernel/.build');
-	$build =  $file->get_contents();
-	$file->close();
-	return $CONFIG['version'] . '.' . trim($build);
-}
-
 function check_for_maintain_redirect()
 {
 	global $CONFIG, $User;
-	if (($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time()) && !$User->check_level(ADMIN_LEVEL))
+	
+	if ($CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time())
 	{
-		if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
+		if (!$User->check_level(ADMIN_LEVEL) && !$User->check_auth($CONFIG['maintain_auth'], AUTH_MAINTAIN)) //Non admin et utilisateurs autorisés.
 		{
-			redirect('/member/maintain.php');
+			if (SCRIPT !== (DIR . '/member/maintain.php')) //Evite de créer une boucle infine.
+			{
+				redirect('/member/maintain.php');
+			}
 		}
 	}
 }
