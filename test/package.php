@@ -6,7 +6,7 @@ $recursive = (!empty($_REQUEST['recursive']) ? true : false);
 
 if (!empty($package))
 {
-	$test = new PackageTestSuite(FS_ROOT_DIRECTORY . '/test/' . $package, $recursive);
+	$test = new PackageTestSuite(PATH_TO_ROOT . '/test/' . $package, $recursive);
 	$test->run();
 }
 

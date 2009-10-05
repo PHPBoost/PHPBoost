@@ -346,7 +346,7 @@ switch($step)
                         '$database = "' . $database . '"; //Nom de la base de données - Database name' . "\n" .
                         'defined(\'PREFIX\') or define(\'PREFIX\' , \'' . $tables_prefix . '\'); //Préfixe des tables - Tables prefix' . "\n" .
                         'defined(\'PHPBOOST_INSTALLED\') or define(\'PHPBOOST_INSTALLED\', true);' . "\n" .
-                        'require_once FS_ROOT_DIRECTORY . \'/kernel/db/tables.php\';' . "\n" .
+                        'require_once PATH_TO_ROOT . \'/kernel/db/tables.php\';' . "\n" .
                         '?>';
 
 					//Ouverture du fichier kernel/db/config.php

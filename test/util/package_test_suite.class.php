@@ -4,7 +4,7 @@ class PackageTestSuite extends TestSuite
 {
 	public function __construct($directory, $recursive = false)
 	{
-		parent::__construct('PackageTestSuite: ' . str_replace(FS_ROOT_DIRECTORY . '/test', '',
+		parent::__construct('PackageTestSuite: ' . str_replace(PATH_TO_ROOT . '/test', '',
 		str_replace('\\', '/', $directory)));
 		$this->add_test_classes($directory);
 	}

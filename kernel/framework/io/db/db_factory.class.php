@@ -41,7 +41,7 @@ class DBFactory
     public static function new_db_connection()
     {
     	//Configuration file
-        include FS_ROOT_DIRECTORY . '/kernel/db/config.php';
+        include PATH_TO_ROOT . '/kernel/db/config.php';
 
         //If PHPBoost is not installed, we redirect the user to the installation page
         if (!defined('PHPBOOST_INSTALLED'))

@@ -25,7 +25,7 @@
  *
 ###################################################*/
 
-define('FS_ROOT_DIRECTORY', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]?$`i', '$1', __DIR__)));
+define('PATH_TO_ROOT', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]?$`i', '$1', dirname(__FILE__))));
 define('PATH_TO_ROOT', './');
 
 @include_once('./kernel/db/config.php'); //Fichier de configuration (pour savoir si PHPBoost est installé)
