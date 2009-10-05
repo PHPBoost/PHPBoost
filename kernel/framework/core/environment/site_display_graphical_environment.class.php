@@ -37,7 +37,7 @@ class SiteDisplayGraphicalEnvironment implements GraphicalEnvironment
 	
 	public function __construct()
 	{
-$this->user = EnvironmentServices::get_user();
+		$this->user = EnvironmentServices::get_user();
 	}
 
 	/**
@@ -49,7 +49,7 @@ $this->user = EnvironmentServices::get_user();
 		global $CONFIG, $LANG, $Errorh, $Template, $Cache, $THEME_CONFIG, $CSS;
 
 		$Template->set_filenames(array(
-		'header' => 'header.tpl'
+			'header' => 'header.tpl'
 		));
 
 		$this->process_site_maintenance();
@@ -63,7 +63,8 @@ $this->user = EnvironmentServices::get_user();
 			$styles = @unserialize(ALTERNATIVE_CSS);
 			if (is_array($styles))
 			{
-				foreach ($styles as $module => $style) {
+				foreach ($styles as $module => $style) 
+				{
 					$base 	= '/templates/' . get_utheme() . '/modules/' . $module . '/' ;
 					$file = $base . $style . '.css';
 					if (file_exists(PATH_TO_ROOT . $file))

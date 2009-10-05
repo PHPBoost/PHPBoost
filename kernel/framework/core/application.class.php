@@ -179,7 +179,7 @@ class Application
 		switch ($this->type)
 		{
 			case APPLICATION_TYPE__KERNEL:
-				$current_version = phpboost_version();
+				$current_version = Environment::phpboost_version();
 				break;
 			case APPLICATION_TYPE__MODULE:
 				$kModules = array_keys($MODULES);
