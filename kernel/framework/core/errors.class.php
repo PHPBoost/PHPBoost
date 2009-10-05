@@ -38,6 +38,7 @@ if (!defined('E_STRICT')) //A virer après passage PHP5
 	define('E_STRICT', 2048);
 
 /**
+  * @deprecated user ErrorsManager
   * @author Viarre Régis crowkait@phpboost.com
   * @desc This class is the error manager of PHPBoost. It is designed to collect and store all errors occurs in the projet.
   * @package core
@@ -81,17 +82,13 @@ class Errors
 	function handler_php($errno, $errstr, $errfile, $errline)
 	{
 		global $LANG, $CONFIG;
-//        print_stacktrace(); echo $errstr . ' ' . $errfile . ':' . $errline . '<br />'; // Prints all errors
+		// print_stacktrace(); echo $errstr . ' ' . $errfile . ':' . $errline . '<br />'; // Prints all errors
 		if (!($errno & ERROR_REPORTING)) //Niveau de repport d'erreur.
-		{
 			return true;
-		}
 		
 		//Si une erreur est supprimé par un @ alors on passe
 		if (!DISPLAY_ALL_ERROR && error_reporting() == 0)
-		{
 			return true;
-		}
 		
 		switch ($errno)
 		{
@@ -124,14 +121,12 @@ class Errors
 				$errclass = 'error_unknow';
 		}
 
-		$stacktrace = Debug::get_stacktrace_as_string(1);
-		$errstr = $errstr . "\n<br /><br /><hr /><br />\n" . substr($stacktrace, strpos($stacktrace, '#2'));
 		//On affiche l'erreur
 		echo '
 		<span id="errorh"></span>
-		<div class="' . $errclass . '" style="width:80%;margin:auto;padding:15px;margin-bottom:15px;">
+		<div class="' . $errclass . '" style="width:500px;margin:auto;padding:15px;margin-bottom:15px;">
 			<img src="' . PATH_TO_ROOT . '/templates/' . get_utheme() . '/images/' . $errimg . '.png" alt="" style="float:left;padding-right:6px;" />
-			<strong>' . $errdesc . '</strong>:<br />' . $errstr . '<br /><hr /><br />' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
+			<strong>' . $errdesc . '</strong> : ' . $errstr . ' ' . $LANG['infile'] . ' <strong>' . $errfile . '</strong> ' . $LANG['atline'] . ' <strong>' . $errline . '</strong>
 			<br />
 		</div>';
 		

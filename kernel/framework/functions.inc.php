@@ -1199,7 +1199,7 @@ define('PLAIN_IMPORT', '');
  */
 function import($path, $import_type = CLASS_IMPORT)
 {
-	require_once FS_ROOT_DIRECTORY . '/kernel/framework/' . $path . $import_type;
+	require_once PATH_TO_ROOT . '/kernel/framework/' . $path . $import_type;
 }
 
 /**
@@ -1212,7 +1212,7 @@ function import($path, $import_type = CLASS_IMPORT)
  */
 function mimport($path, $import_type = CLASS_IMPORT)
 {
-	require_once FS_ROOT_DIRECTORY . '/' . $path . $import_type;
+	require_once PATH_TO_ROOT . '/' . $path . $import_type;
 }
 
 /**
@@ -1226,22 +1226,22 @@ function req($file, $once = true)
 	{
 		if (!DEBUG)
 		{
-			@require_once FS_ROOT_DIRECTORY . $file ;
+			@require_once PATH_TO_ROOT . $file ;
 		}
 		else
 		{
-			require_once FS_ROOT_DIRECTORY . $file ;
+			require_once PATH_TO_ROOT . $file ;
 		}
 	}
 	else
 	{
 		if (!DEBUG)
 		{
-			@require FS_ROOT_DIRECTORY . $file ;
+			@require PATH_TO_ROOT . $file ;
 		}
 		else
 		{
-			require FS_ROOT_DIRECTORY . $file ;
+			require PATH_TO_ROOT . $file ;
 		}
 	}
 }
@@ -1259,22 +1259,22 @@ function inc($file, $once = true)
 	{
 		if (!DEBUG)
 		{
-			return (@include_once(FS_ROOT_DIRECTORY . $file)) !== false;
+			return (@include_once(PATH_TO_ROOT . $file)) !== false;
 		}
 		else
 		{
-			return (include_once(FS_ROOT_DIRECTORY . $file)) !== false;
+			return (include_once(PATH_TO_ROOT . $file)) !== false;
 		}
 	}
 	else
 	{
 		if (!DEBUG)
 		{
-			return (@include(FS_ROOT_DIRECTORY . $file)) !== false;
+			return (@include(PATH_TO_ROOT . $file)) !== false;
 		}
 		else
 		{
-			return (include(FS_ROOT_DIRECTORY . $file)) !== false;
+			return (include(PATH_TO_ROOT . $file)) !== false;
 		}
 	}
 }
@@ -1387,7 +1387,7 @@ function check_for_maintain_redirect()
  */
 function get_free_phpboost_root_directory_path($path)
 {
-	return str_replace('\\', '/', substr($path, strlen(FS_ROOT_DIRECTORY)));
+	return str_replace('\\', '/', substr($path, strlen(PATH_TO_ROOT)));
 }
 
 ?>

@@ -1,14 +1,7 @@
 <?php
 
-define('FS_ROOT_DIRECTORY', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]test[\\\\/]?$`i',
-    '$1', __DIR__)));
-
-if (!defined('PATH_TO_ROOT'))
-{
-    $script = str_replace(FS_ROOT_DIRECTORY, '', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']));
-    $path_to_root = rtrim(str_repeat('../', substr_count(ltrim($script, '/'), '/')), '/');
-    define('PATH_TO_ROOT', !empty($path_to_root) ? $path_to_root : '.');
-}
+define('PATH_TO_ROOT', str_replace('\\', '/', preg_replace('`^(.+)[\\\\/]test[\\\\/]?$`i',
+    '$1', dirname(__FILE__))));
 
 define('DEBUG', true);
 
