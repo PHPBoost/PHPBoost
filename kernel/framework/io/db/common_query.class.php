@@ -32,7 +32,7 @@
 class CommonQuery
 {
 	/**
-	 * @desc insert the values into the <code>$table_name</code> table 
+	 * @desc insert the values into the <code>$table_name</code> table
 	 * @param string $table_name the name of the table on which work will be done
 	 * @param string[string] $columns the map where columns are keys and values values
 	 */
@@ -41,86 +41,108 @@ class CommonQuery
 		$columns_names = array_keys($columns);
 		$query = 'insert into ' . $table_name . ' (' . implode(', ', $columns_names) .
 		  ') values (\':' . implode(', :', $columns_names) . '\');';
-        EnvironmentServices::get_sql_querier()->inject($query, $columns);
+		EnvironmentServices::get_sql_querier()->inject($query, $columns);
 	}
 
 	/**
-     * @desc update the values of rows matching the <code>$condition</code> into the
-     * <code>$table_name</code> table
-     * @param string $table_name the name of the table on which work will be done
-     * @param string[string] $columns the map where columns are keys and values values
+	 * @desc update the values of rows matching the <code>$condition</code> into the
+	 * <code>$table_name</code> table
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string[string] $columns the map where columns are keys and values values
 	 * @param string $condition the update condition beginning just after the where clause.
 	 * For example, <code>"length > 50 and weight < 100"</code>
-     * @param string[string] $parameters the query_var map
+	 * @param string[string] $parameters the query_var map
 	 */
 	public static function update($table_name, $columns, $condition, $parameters = array())
 	{
-        $columns_names = array_keys($columns);
-        foreach (array_keys($columns) as $column)
-        {
-        	$columns[] = $column . '=\'' . $column . '\'';
-        }
-        $query = 'update ' . $table_name . ' set ' . implode(', ', $columns) .
+		$columns_names = array_keys($columns);
+		foreach (array_keys($columns) as $column)
+		{
+			$columns[] = $column . '=\'' . $column . '\'';
+		}
+		$query = 'update ' . $table_name . ' set ' . implode(', ', $columns) .
             ' where ' . $condition . ';';
-        EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
-     * @desc delete all the row from the <code>$table_name</code> table matching the
-     * <code>$condition</code> condition
-     * @param string $table_name the name of the table on which work will be done
-     * @param string $condition the update condition beginning just after the where clause.
-     * For example, <code>"length > 50 and weight < 100"</code>
-     * @param string[string] $parameters the query_var map
+	 * @desc delete all the row from the <code>$table_name</code> table matching the
+	 * <code>$condition</code> condition
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string $condition the update condition beginning just after the where clause.
+	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
 	 */
 	public static function delete($table_name, $condition, $parameters = array())
 	{
 		$query = 'delete from ' . $table_name . ' where ' . $condition . ';';
-        EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
+		EnvironmentServices::get_sql_querier()->inject($query, array_merge($parameters, $columns));
 	}
 
 	/**
-     * @desc retrieve a single row from the <code>$table_name</code> table matching the
-     * <code>$condition</code> condition
-     * @param string $table_name the name of the table on which work will be done
-     * @param string[] $columns the columns to retrieve.
-     * @param string $condition the update condition beginning just after the where clause.
+	 * @desc retrieve a single row from the <code>$table_name</code> table matching the
+	 * <code>$condition</code> condition
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string[] $columns the columns to retrieve.
+	 * @param string $condition the update condition beginning just after the where clause.
+	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
+	 * @return mixed[string] the row returned
+	 */
+	public static function select_single_row($table_name, $columns, $condition,
+	$parameters = array())
+	{
+		$query_result = self::select_rows(table_name, $columns, $condition, $parameters);
+		if (!$query_result->has_next())
+		{
+			throw new RowNotFoundException();
+		}
+		$result = $query_result->next();
+		if ($query_result->has_next())
+		{
+			throw new NotASingleRowFoundException();
+		}
+		return $result;
+	}
+
+	/**
+	 * @desc retrieve rows from the <code>$table_name</code> table matching the
+	 * <code>$condition</code> condition
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string[] $columns the columns to retrieve.
+	 * @param string $condition the update condition beginning just after the where clause.
+	 * For example, <code>"length > 50 and weight < 100"</code>
+	 * @param string[string] $parameters the query_var map
+	 * @return mixed[string] the row returned
+	 */
+	public static function select_rows($table_name, $columns, $condition = '1',
+	$parameters = array())
+	{
+		$query = 'select ' . implode(', ', $columns) . ' from ' . $table_name . ' where ' .
+		$condition;
+		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
+	}
+
+	/**
+	 * @desc count the number of rows from the <code>$table_name</code> table matching the
+	 * <code>$condition</code> condition
+	 * @param string $table_name the name of the table on which work will be done
+	 * @param string $condition the update condition beginning just after the where clause.
      * For example, <code>"length > 50 and weight < 100"</code>
-     * @param string[string] $parameters the query_var map
-     * @return mixed[string] the row returned
-     */
-    public static function select_single_row($table_name, $columns, $condition,
-    $parameters = array())
-    {
-        $query_result = self::select_rows(table_name, $columns, $condition, $parameters);
-        if (!$query_result->has_next())
-        {
-            throw new RowNotFoundException();
-        }
-        $result = $query_result->next();
-        if ($query_result->has_next())
-        {
-            throw new NotASingleRowFoundException();
-        }
-        return $result;
-    }
-    
-    /**
-     * @desc retrieve rows from the <code>$table_name</code> table matching the
-     * <code>$condition</code> condition
-     * @param string $table_name the name of the table on which work will be done
-     * @param string[] $columns the columns to retrieve.
-     * @param string $condition the update condition beginning just after the where clause.
-     * For example, <code>"length > 50 and weight < 100"</code>
-     * @param string[string] $parameters the query_var map
-     * @return mixed[string] the row returned
-     */
-    public static function select_rows($table_name, $columns, $condition, $parameters = array())
-    {
-        $query = 'select ' . implode(', ', $columns) . ' from ' . $table_name . ' where ' .
-        $condition;
-        return EnvironmentServices::get_sql_querier()->select($query, $parameters);
-    }
+     * @param string $count_column the column name on which count or * if all
+	 * @param string[string] $parameters the query_var map
+	 * @return int the number of rows returned
+	 */
+	public static function count($table_name, $condition = '', $count_column = '*',
+	$parameters = array())
+	{
+		$query = 'select count(' . $count_column . ') from ' . $table_name;
+		if (!empty($condition))
+		{
+			$query .= ' where ' . $condition;
+		}
+		return EnvironmentServices::get_sql_querier()->select($query, $parameters);
+	}
 }
 
 ?>
