@@ -1,16 +1,14 @@
 <?php
 
-include_once '../../../../../test/header.php';
-
 import('mvc/model/mapping_model');
 import('mvc/model/business_object');
 
 class MyUTMappingModelTestObject extends BusinessObject
 {
-	private $id;
-	private $title;
-	private $description;
-	private $user_id;
+	public $id;
+	public $title;
+	public $description;
+	public $user_id;
 
 	public function get_id() { return $this->id; }
 	public function get_title() { return $this->title; }
@@ -25,14 +23,14 @@ class MyUTMappingModelTestObject extends BusinessObject
 class UTMappingModel extends PHPBoostUnitTestCase
 {
 
-	private $classname;
-	private $tablename;
-	private $primary_key;
-	private $fields;
-	private $joins;
-	private $model;
+	public $classname;
+	public $tablename;
+	public $primary_key;
+	public $fields;
+	public $joins;
+	public $model;
 
-	public function test()
+	public function __construct()
 	{
 		$this->classname = 'MyUTMappingModelTestObject';
 		$this->tablename = 'MySampleTestTable';
@@ -43,16 +41,9 @@ class UTMappingModel extends PHPBoostUnitTestCase
 
 		$this->model = new MappingModel($this->classname, $this->tablename, $this->primary_key,
 		$this->fields, $this->joins);
-		$this->check_methods('MappingModel');
 	}
 
-	public function test___construct()
-	{
-		$this->_test___construct_without_exception();
-		$this->_test___construct_with_model_mapping_exception();
-	}
-
-	private function _test___construct_without_exception()
+	public function _test___construct_without_exception()
 	{
 		$classname = 'MyUTMappingModelTestObject';
 		$tablename = 'MySampleTestTable';
@@ -63,7 +54,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields, $joins);
 	}
 
-	private function _test___construct_with_model_mapping_exception()
+	public function _test___construct_with_model_mapping_exception()
 	{
 		$classname = 'MyUTMappingModelTestObject';
 		$tablename = 'MySampleTestTable';
@@ -80,14 +71,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		}
 	}
 
-	public function test_new_instance()
-	{
-		$this->_test_new_instance_with_no_properties();
-		$this->_test_new_instance_with_properties();
-		//		$this->_test_new_instance_with_properties_without_setter();
-	}
-
-	private function _test_new_instance_with_no_properties()
+	public function _test_new_instance_with_no_properties()
 	{
 		$object = $this->model->new_instance();
 
@@ -99,7 +83,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
             'is not null');
 	}
 
-	private function _test_new_instance_with_properties()
+	public function _test_new_instance_with_properties()
 	{
 		$title = 'The Title';
 		$description = 'The description';
@@ -107,21 +91,15 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		$object = $this->model->new_instance(array('title' => $title, 'description' => $description));
 
 		$this->assertNull($object->get_id(), 'id ' . $object->get_id() . ' is not null');
-		$this->assertEqual($object->get_title(), $title,
+		$this->assertEquals($object->get_title(), $title,
             'title ' . $object->get_title() . '!=' . $title);
-		$this->assertEqual($object->get_description(), $description,
+		$this->assertEquals($object->get_description(), $description,
             'description ' . $object->get_description() . '!=' . $description);
 		$this->assertNull($object->get_user_id(), 'user_id ' . $object->get_user_id() .
             'is not null');
 	}
-
-	public function test_get_raw_value()
-	{
-		$this->_test_get_raw_value_with_empty_object();
-		$this->_test_get_raw_value_with_filled_object();
-	}
-
-	private function _test_get_raw_value_with_empty_object()
+	
+	public function _test_get_raw_value_with_empty_object()
 	{
 		$object = new MyUTMappingModelTestObject();
 
@@ -135,7 +113,7 @@ class UTMappingModel extends PHPBoostUnitTestCase
             'is not null');
 	}
 
-	private function _test_get_raw_value_with_filled_object()
+	public function _test_get_raw_value_with_filled_object()
 	{
 		$object = new MyUTMappingModelTestObject();
 		$title = 'coucou';
@@ -146,42 +124,42 @@ class UTMappingModel extends PHPBoostUnitTestCase
 		$properties = $this->model->get_raw_value($object);
 
 		$this->assertNull($properties['id'], 'id ' . $properties['id'] . ' is not null');
-		$this->assertEqual($properties['title'], $title,
+		$this->assertEquals($properties['title'], $title,
             'title ' . $properties['title'] . '!=' . $title);
 		$this->assertNull($properties['description'],
             'description ' . $properties['description'] . 'is not null');
-		$this->assertEqual($properties['user_id'],  $user_id,
+		$this->assertEquals($properties['user_id'],  $user_id,
             'title ' . $properties['user_id'] . '!=' . $user_id);
 	}
 
     public function test_get_class_name()
     {
-        $this->assertEqual($this->model->get_class_name(), $this->classname,
+        $this->assertEquals($this->model->get_class_name(), $this->classname,
         $this->model->get_class_name() . ' is not equal to ' . $this->classname);
     }
 
     public function test_get_table_name()
     {
-        $this->assertEqual($this->model->get_table_name(), $this->tablename,
+        $this->assertEquals($this->model->get_table_name(), $this->tablename,
         $this->model->get_table_name() . ' is not equal to ' . $this->tablename);
     }
 
 	public function test_get_primary_key()
 	{
-		$this->assertEqual($this->model->get_primary_key(), $this->primary_key,
+		$this->assertEquals($this->model->get_primary_key(), $this->primary_key,
 		var_export($this->model->get_primary_key(), true) . ' is not equal to ' .
 		var_export($this->primary_key, true));
 	}
 
 	public function test_get_fields()
 	{
-		$this->assertEqual($this->model->get_fields(), $this->fields,
+		$this->assertEquals($this->model->get_fields(), $this->fields,
 		$this->model->get_fields() . ' is not equal to ' . $this->fields);
 	}
 
 	public function test_get_joins()
 	{
-		$this->assertEqual($this->model->get_joins(), $this->joins,
+		$this->assertEquals($this->model->get_joins(), $this->joins,
 		$this->model->get_joins() . ' is not equal to ' . $this->joins);
 	}
 }

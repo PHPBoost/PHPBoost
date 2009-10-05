@@ -122,7 +122,6 @@ class MySQLQuerier extends AbstractSQLQuerier
 	private function transform_query(&$query, &$parameters)
 	{
 		$this->query = $this->replace_query_vars($this->translate_query($query), $parameters);
-		echo '<hr />' . $this->query . '<hr />';
 	}
 
 	private function translate_query(&$query)
