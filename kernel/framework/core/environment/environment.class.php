@@ -585,6 +585,20 @@ class Environment
 	}
 
 	/**
+	 * @desc Returns the full phpboost version with its build number
+	 * @return string the full phpboost version with its build number
+	 */
+	static function phpboost_version() 
+	{
+		global $CONFIG;
+		import('io/filesystem/file');
+		$file = new File(PATH_TO_ROOT . '/kernel/.build');
+		$build =  $file->get_contents();
+		$file->close();
+		return $CONFIG['version'] . '.' . trim($build);
+	}
+	
+	/**
 	 * Displays the top of the page.
 	 */
 	public static function display_header()
