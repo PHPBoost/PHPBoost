@@ -24,8 +24,8 @@
  *
  ###################################################*/
 
-defined('FS_ROOT_DIRECTORY') or define('FS_ROOT_DIRECTORY',
-preg_replace('`^(.+)/kernel/framework/util/?$`i', '$1', str_replace('\\', '/',dirname(__FILE__))));
+define('FS_ROOT_DIRECTORY', preg_replace('`^(.+)/kernel/framework/util/?$`i', '$1',
+str_replace('\\', '/',dirname(__FILE__))));
 
 /**
  * @author loic rouchon <loic.rouchon@phpboost.com>

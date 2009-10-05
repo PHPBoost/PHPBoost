@@ -25,6 +25,7 @@
  *
  ###################################################*/
 
+import('io/db/common_query');
 import('io/db/sql_querier_exception');
 
 /**

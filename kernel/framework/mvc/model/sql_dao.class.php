@@ -65,7 +65,7 @@ abstract class SQLDAO implements DAO
 	protected $model;
 
 	/**
-	 * @var string the name of the table in which objects will be stored 
+	 * @var string the name of the table in which objects will be stored
 	 */
 	protected $table;
 
@@ -94,29 +94,29 @@ abstract class SQLDAO implements DAO
 	 */
 	protected $fields_mapping = array();
 
-    /**
-     * @var string the delete prepared query
-     */
+	/**
+	 * @var string the delete prepared query
+	 */
 	protected $delete_query;
 
-    /**
-     * @var string the insert prepared query
-     */
+	/**
+	 * @var string the insert prepared query
+	 */
 	protected $insert_query;
 
-    /**
-     * @var string the update prepared query
-     */
+	/**
+	 * @var string the update prepared query
+	 */
 	protected $update_query;
 
-    /**
-     * @var string the find by id prepared query
-     */
-    protected $find_by_id_query;
+	/**
+	 * @var string the find by id prepared query
+	 */
+	protected $find_by_id_query;
 
-    /**
-     * @var string the find by criteria prepared query
-     */
+	/**
+	 * @var string the find by criteria prepared query
+	 */
 	protected $find_by_criteria_query;
 
 	/**
@@ -136,7 +136,7 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 */
 	protected function before_save(PropertiesMapInterface $object) { }
-	
+
 	public function save(PropertiesMapInterface $object)
 	{
 		$this->before_save($object);
@@ -151,24 +151,24 @@ abstract class SQLDAO implements DAO
 			$this->update($object, $pk_value);
 		}
 	}
-	
-    /**
-     * @desc this method is called just before a delete
-     * @param PropertiesMapInterface $object
-     */
-    protected function before_delete(PropertiesMapInterface $object) { }
-    
-    public function delete(PropertiesMapInterface $object)
-    {
-        $this->before_delete($object);
-        if ($this->delete_query === null)
-        {
-            $this->delete_query = "delete from " . $this->table .
+
+	/**
+	 * @desc this method is called just before a delete
+	 * @param PropertiesMapInterface $object
+	 */
+	protected function before_delete(PropertiesMapInterface $object) { }
+
+	public function delete(PropertiesMapInterface $object)
+	{
+		$this->before_delete($object);
+		if ($this->delete_query === null)
+		{
+			$this->delete_query = "delete from " . $this->table .
                 " where " . $this->pk_db_field . "=':pk_value';";
-        }
-        $prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
-        $this->querier->inject($this->delete_query, $prepared_vars);
-    }
+		}
+		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
+		$this->querier->inject($this->delete_query, $prepared_vars);
+	}
 
 	public function find_by_id($id)
 	{
@@ -182,30 +182,30 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
-    public function find_all($limit = 100, $offset = 0, $order_by = array())
-    {
-        $query = "limit " . $limit . " offset " . $offset;
-        if (!empty($order_by))
-        {
-            $order_clause = "";
-            foreach ($order_by as $order)
-            {
-            	$order_clause .= ", " . $order['column'] . " " . $order['way'];
-            }
-            $query .= " ORDER BY" . rtrim($order_clause, ',');
-        }
-
-        return $this->find_by_criteria($query);
-    }
-	
-	public function find_by_criteria($criteria, $parameters = array())
+	public function find_all($limit = 100, $offset = 0, $order_by = array())
 	{
-        $this->compute_find_by_criteria_query();
-        $full_query = $this->find_by_criteria_query . $criteria;
-        return new QueryResultMapper($this->querier->select($full_query, $parameters), $this->model);
+		$query = "limit " . $limit . " offset " . $offset;
+		if (!empty($order_by))
+		{
+			$order_clause = "";
+			foreach ($order_by as $order)
+			{
+				$order_clause .= ", " . $order['column'] . " " . $order['way'];
+			}
+			$query .= " ORDER BY" . rtrim($order_clause, ',');
+		}
+
+		return $this->find_by_criteria($query);
 	}
 
-	protected function cache_model()
+	public function find_by_criteria($criteria, $parameters = array())
+	{
+		$this->compute_find_by_criteria_query();
+		$full_query = $this->find_by_criteria_query . $criteria;
+		return new QueryResultMapper($this->querier->select($full_query, $parameters), $this->model);
+	}
+
+	private function cache_model()
 	{
 		$this->table = $this->model->get_table_name();
 
@@ -222,14 +222,14 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	protected function insert(PropertiesMapInterface $object)
+	private function insert(PropertiesMapInterface $object)
 	{
 		$this->compute_insert_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
 		$this->querier->inject($this->insert_query, $prepared_vars);
 	}
 
-	protected function update(PropertiesMapInterface $object, $pk_value)
+	private function update(PropertiesMapInterface $object, $pk_value)
 	{
 		$this->compute_update_query();
 		$prepared_vars =& $this->model->get_raw_value($object);
@@ -237,7 +237,7 @@ abstract class SQLDAO implements DAO
 		$this->querier->inject($this->update_query, $prepared_vars);
 	}
 
-	protected function compute_find_by_id_query()
+	private function compute_find_by_id_query()
 	{
 		if ($this->find_by_id_query === null)
 		{
@@ -247,20 +247,22 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-    protected function compute_find_by_criteria_query()
-    {
-        if ($this->find_by_criteria_query === null)
-        {
-            $this->find_by_criteria_query = "select " . $this->pk_db_field . " as " . $this->pk_property;
-            foreach ($this->fields_mapping as $property => $db_field)
-            {
-                $this->find_by_criteria_query .= ", " . $db_field . " as " . $property;
-            }
-            $this->find_by_criteria_query .= " from " . $this->table . " ";
-        }
-    }
+	private function compute_find_by_criteria_query()
+	{
+		if ($this->find_by_criteria_query === null)
+		{
+			$this->find_by_criteria_query = "select " . $this->pk_db_field . " as " .
+			$this->pk_property;
+			$this->add_select_columns($this->fields_mapping);
+            
+			$left_joins = $this->compute_joins();
+		    
+			$this->find_by_criteria_query .= " from " . $this->table . implode(" ", $left_joins) .
+			    " ";
+		}
+	}
 
-	protected function compute_insert_query()
+	private function compute_insert_query()
 	{
 		if ($this->insert_query === null)
 		{
@@ -278,7 +280,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	protected function compute_update_query()
+	private function compute_update_query()
 	{
 		if ($this->update_query === null)
 		{
@@ -291,6 +293,32 @@ abstract class SQLDAO implements DAO
 			$this->update_query = "update " . $this->table . " set " . implode(', ', $fields_list) .
                 " where " . $this->pk_db_field . "=':pk_value';";
 		}
+	}
+
+	private function add_select_columns($fields_mapping)
+	{
+		foreach ($fields_mapping as $property => $db_field)
+		{
+			$this->find_by_criteria_query .= ", " . $db_field . " as " . $property;
+		}
+	}
+
+	private function compute_joins()
+	{
+		$fields = array();
+		foreach ($this->model->get_joins() as $join)
+		{
+			$fields = array();
+			$table_name = $join->get_table_name();
+			$left_joins[] = "left join " . $table_name . " on " . $table_name . "." .
+			$join->get_primary_key()->get_db_field_name() . "=" . $this->pk_db_field;
+			foreach ($join->get_fields() as $field)
+			{
+				$fields[$field->get_property_name()] = $table_name . "." .
+				$field->get_property_name();
+			}
+		}
+		return $fields;
 	}
 }
 

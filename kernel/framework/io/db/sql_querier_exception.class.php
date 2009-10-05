@@ -29,4 +29,20 @@ class SQLQuerierException extends Exception
 {
 }
 
+class RowNotFoundException extends SQLQuerierException
+{
+    public function __construct()
+    {
+        parent::__construct('no rows have been found');
+    }
+}
+
+class NotASingleRowFoundException extends SQLQuerierException
+{
+    public function __construct()
+    {
+        parent::__construct('multiple rows have been found but the query expect only one result');
+    }
+}
+
 ?>

@@ -30,12 +30,12 @@ import('io/db/query_result');
 class QueryResultMapper implements QueryResult
 {
     /**
-     * @var QueryResult the sql querier that will interact with the database
+     * @var QueryResult the internal query result object
      */
     protected $query_result;
 
     /**
-     * @var MappingModel the model on which services are based
+     * @var MappingModel the model that will instantiate retrieved objects
      */
     protected $model;
 
