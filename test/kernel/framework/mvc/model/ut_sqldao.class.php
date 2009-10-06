@@ -114,7 +114,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test___construct()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 	}
 
 	public function test_find_by_id()
@@ -133,7 +133,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test_delete()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
 		$this->assertObjectExists($object);
 
@@ -143,14 +143,14 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test_find_by_id_without_exception()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
 		$this->assertObjectExists($object);
 	}
 
 	public function test_find_by_id_object_not_found_exception()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$pk_value = 1764;
 		try
 		{
@@ -170,7 +170,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
     
     public function test_find_all_with_no_results()
     {
-        $this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
         $query_result = $this->sqldao->find_all(10, 100);
         $this->assertFalse($query_result->has_next(), 'query has results');
     }
@@ -187,7 +187,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test_insert()
 	{
-        $this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
         $object = new MyUTBusinessTestObject(null, 'Test insert', 'content', 64);
         
         $this->sqldao->save($object);
@@ -197,7 +197,7 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test_update()
 	{
-        $this->sqldao = new MyUTSQLDAOTestObject($this->querier, $this->model);
+        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
         $object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
         $object->set_title('coucou c\'est renoux');
         

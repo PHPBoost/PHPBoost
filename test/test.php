@@ -7,11 +7,11 @@
 <form name="phpunit_launcher">
 <span>PHPUnit:</span>
 <input type="text" name="params" id="params" value="<?php echo $params; ?>" style="width: 75%;" />
-<span>text output:</span>
-<input type="checkbox" name="is_text" id="is_text" checked="checked" />
+<span>html output:</span>
+<input type="checkbox" name="is_html" id="is_html" />
 <input type="button" name="run" value="run"
-    onclick="self.frames['phpunit'].location='run.php?is_text=' +
-        (document.getElementById('is_text').checked ? '1' : '0') +
+    onclick="self.frames['phpunit'].location='run.php?is_html=' +
+        (document.getElementById('is_html').checked ? '1' : '0') +
         '&amp;params=' + document.getElementById('params').value;" />
     </form>
 <hr />
