@@ -90,7 +90,7 @@ class User
 	 * @return string The group color (hexadecimal format)
 	 * @static
 	 */
-	/* static */ public function get_group_color($user_groups, $level = 0)
+	static public function get_group_color($user_groups, $level = 0)
 	{
 		$user_groups = explode('|', $user_groups);
 		array_pop($user_groups); //Supprime l'élément vide en fin de tableau.
