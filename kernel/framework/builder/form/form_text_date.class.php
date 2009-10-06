@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 import('builder/form/form_field');
 
@@ -37,13 +37,13 @@ import('builder/form/form_field');
  * @subpackage form
  */
 class FormTextDate extends FormField
-{
+{	
 	private $calendar_day = 1;
 	private $calendar_month = 1;
 	private $calendar_year = 2009;
 	private $num_instance = 0;
 	private static $num_instances = 0;
-
+	
 	public function __construct($field_id, $field_options = array())
 	{
 		$this->num_instance = ++self::$num_instances;
@@ -56,26 +56,26 @@ class FormTextDate extends FormField
 			{
 				case 'calendar_day' :
 					$this->calendar_day = $value;
-					break;
+				break;
 				case 'calendar_month' :
 					$this->calendar_month = $value;
-					break;
+				break;
 				case 'calendar_year' :
 					$this->calendar_year = $value;
-					break;
+				break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
-
+	
 	/**
 	 * @return string The html code for the input.
 	 */
 	public function display()
 	{
 		$Template = new Template('framework/builder/forms/field_date.tpl');
-
+		
 		$Template->assign_vars(array(
 			'C_NOT_ALREADY_INCLUDED' => ($this->num_instance == 1),
 			'INSTANCE' => $this->num_instance,
@@ -90,9 +90,9 @@ class FormTextDate extends FormField
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-			));
-
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		));	
+		
+		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 import('builder/form/form_field');
 
@@ -41,7 +41,7 @@ class FormFreeField extends FormField
 {
 	private $content = ''; //Content of the free field
 	private $template = ''; //Optionnal template
-
+	
 	public function __construct($field_id, $fieldOptions)
 	{
 		parent::__construct($field_id, '', $fieldOptions);
@@ -52,25 +52,25 @@ class FormFreeField extends FormField
 			{
 				case 'template' :
 					$this->template = $value;
-					break;
+				break;
 				case 'content' :
 					$this->content = $value;
-					break;
+				break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
-
+	
 	/**
 	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
 		if (is_object($this->template) && strtolower(get_class($this->template)) == 'template') //Optionnal template
-		$Template = $this->template;
+			$Template = $this->template;
 		else
-		$Template = new Template('framework/builder/forms/field.tpl');
+			$Template = new Template('framework/builder/forms/field.tpl');
 			
 		$Template->assign_vars(array(
 			'ID' => $this->id,
@@ -78,9 +78,9 @@ class FormFreeField extends FormField
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-			));
-
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+		));	
+		
+		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

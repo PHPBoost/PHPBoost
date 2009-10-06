@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 import('builder/form/form_field');
 import('builder/form/form_checkbox_option');
@@ -36,7 +36,7 @@ import('builder/form/form_checkbox_option');
 class FormCheckbox extends FormField
 {
 	private $options = array();
-
+	
 	public function __construct()
 	{
 		$field_id = func_get_arg(0);
@@ -44,9 +44,9 @@ class FormCheckbox extends FormField
 
 		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
-		$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
-
-		$nbr_arg = func_num_args() - 1;
+			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
+		
+		$nbr_arg = func_num_args() - 1;		
 		for ($i = 2; $i <= $nbr_arg; $i++)
 		{
 			$option = func_get_arg($i);
@@ -57,13 +57,13 @@ class FormCheckbox extends FormField
 
 	/**
 	 * @desc Add an option for the radio field.
-	 * @param FormRadioChoiceOption option The new option.
+	 * @param FormRadioChoiceOption option The new option. 
 	 */
 	public function add_option(&$option)
 	{
 		$this->options[] = $option;
 	}
-
+	
 	/**
 	 * @return string The html code for the checkbox input.
 	 */
@@ -77,17 +77,17 @@ class FormCheckbox extends FormField
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-			));
-
-			foreach($this->options as $Option)
-			{
-				$Option->set_name($this->name); //Set the same field name for each option.
-				$Template->assign_block_vars('field_options', array(
+		));	
+		
+		foreach($this->options as $Option)
+		{
+			$Option->set_name($this->name); //Set the same field name for each option.
+			$Template->assign_block_vars('field_options', array(
 				'OPTION' => $Option->display(),
-				));
-			}
-
-			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			));	
+		}
+		
+		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
