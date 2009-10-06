@@ -210,7 +210,7 @@
 					# ENDIF #
 					
 					{CONTENTS}
-					s
+					
 					<div class="spacer" style="margin-top:35px;">&nbsp;</div>
 					# IF PAGINATION_ARTICLES #
 					<div style="float:left;width:33%;text-align:right">&nbsp;{PAGE_PREVIOUS_ARTICLES}</div>

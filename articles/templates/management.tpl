@@ -137,8 +137,8 @@
 							<a href="javascript:bbcode_page();">{L_EXPLAIN_PAGE}</a>
 						</p>
 				<br /><br />
-
 				# IF NOT C_CONTRIBUTION #
+				
 				<dl class="overflow_visible">
 					<dt><label for="release_date">* {L_RELEASE_DATE}</label></dt>
 					<dd>

@@ -382,7 +382,7 @@ else
 
 			$tpl->assign_vars(array(
 				'C_ADD' => false,
-				'C_CONTRIBUTION' => $auth_contrib,
+				'C_CONTRIBUTION' => $auth_contrib ,
 				'JS_CONTRIBUTION' => $auth_contrib ? 'true' : 'false',
 				'RELEASE_CALENDAR_ID' => $release_calendar->get_html_id(),
 				'TITLE' => '',
