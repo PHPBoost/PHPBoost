@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_field_composite');
 
@@ -40,7 +40,7 @@ import('builder/form/form_field_composite');
 class FormCheckboxOption extends FormFieldComposite
 {
 	private $checked = false;
-	
+
 	const CHECKED = true;
 
 	/**
@@ -54,7 +54,7 @@ class FormCheckboxOption extends FormFieldComposite
 		$this->value = $value;
 		$this->checked = $checked;
 	}
-	
+
 	/**
 	 * @return string The html code for the radio input.
 	 */
@@ -65,7 +65,7 @@ class FormCheckboxOption extends FormFieldComposite
 		$option .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
 		$option .= (boolean)$this->checked ? 'checked="checked" ' : '';
 		$option .= '/> ' . $this->label . '</label><br />' . "\n";
-		
+
 		return $option;
 	}
 }

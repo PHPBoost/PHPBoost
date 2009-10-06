@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_builder');
 
@@ -39,7 +39,7 @@ class FormFieldset
 	private $fields = array();
 	private $errors = array();
 	private $display_required = false;
-	
+
 	/**
 	 * @desc constructor
 	 * @param string $form_name The name of the form.
@@ -50,7 +50,7 @@ class FormFieldset
 	{
 		$this->title = $title;
 	}
-	
+
 	/**
 	 * @desc Store fields in the fieldset.
 	 * @param FormField $form_field
@@ -58,9 +58,9 @@ class FormFieldset
 	public function add_field($form_field)
 	{
 		if (isset($this->fields[$form_field->get_id()]))
-			$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->get_id()), E_USER_WARNING);
+		$this->throw_error(sprintf('Field with identifier "<strong>%s</strong>" already exists, please chose a different one!', $form_field->get_id()), E_USER_WARNING);
 		else
-			$this->fields[$form_field->get_id()] = $form_field;
+		$this->fields[$form_field->get_id()] = $form_field;
 	}
 
 	/**
@@ -71,39 +71,39 @@ class FormFieldset
 	public function display($Template = false)
 	{
 		global $LANG, $Errorh;
-		
+
 		if (!is_object($Template) || strtolower(get_class($Template)) != 'template')
-			$Template = new Template('framework/builder/forms/fieldset.tpl');
+		$Template = new Template('framework/builder/forms/fieldset.tpl');
 			
 		$Template->assign_vars(array(
 			'C_DISPLAY_WARNING_REQUIRED_FIELDS' => $this->display_required,
 			'L_FORMTITLE' => $this->title,
 			'L_REQUIRED_FIELDS' => $LANG['require'],
-		));	
-		
+		));
+
 		//On liste les éventuelles erreurs du fieldset.
-		foreach($this->errors as $error) 
+		foreach($this->errors as $error)
 		{
 			$Template->assign_block_vars('errors', array(
 				'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
-			));	
+			));
 		}
-		
-		//On affiche les champs		
+
+		//On affiche les champs
 		foreach($this->fields as $Field)
 		{
 			foreach($Field->get_errors() as $error) //On liste les éventuelles erreurs du champs.
 			{
 				$Template->assign_block_vars('errors', array(
 					'ERROR' => $Errorh->display($error['errstr'], $error['errno'])
-				));	
+				));
 			}
-			
+				
 			$Template->assign_block_vars('fields', array(
 				'FIELD' => $Field->display(),
-			));	
+			));
 		}
-		
+
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 
@@ -111,32 +111,32 @@ class FormFieldset
 	 * @param string $title The fieldset title
 	 */
 	public function set_title($title) { $this->title = $title; }
-	
+
 	/**
 	 * @param boolean $display_required
 	 */
 	public function set_display_required($display_required) { $this->display_required = $display_required; }
-	
+
 	/**
 	 * @return string The fieldset title
 	 */
 	public function get_title() { return $this->title; }
-	
+
 	/**
 	 * @return array All fields in the fieldset.
 	 */
 	public function get_fields() { return $this->fields; }
-	
+
 	/**
 	 * @return boolean True if the fieldset has to display a warning for required fields.
 	 */
 	public function get_display_required() { return $this->display_required; }
-	
+
 	/**
 	 * @desc Store all erros in the field construct process.
 	 * @param string $errstr  Error message description
 	 * @param int $errno Error type, use php constants.
-	 */	
+	 */
 	private function throw_error($errstr, $errno)
 	{
 		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);

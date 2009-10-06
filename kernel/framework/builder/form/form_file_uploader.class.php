@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_field');
 
@@ -40,11 +40,11 @@ class FormFileUploader extends FormField
 {
 	private $size = '';
 	private $extended_text = '';
-	
+
 	public function __construct($field_id, $field_options = array())
 	{
 		parent::__construct($field_id, '', $field_options);
-		
+
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -52,16 +52,16 @@ class FormFileUploader extends FormField
 			{
 				case 'size' :
 					$this->size = $value;
-				break;
+					break;
 				case 'extended_text':
 					$this->extended_text = $value;
-				break; 
+					break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
-	
+
 	/**
 	 * @return string The html code for the file input.
 	 */
@@ -77,16 +77,16 @@ class FormFileUploader extends FormField
 		$field .= '/>
 		<input name="max_file_size" value="2000000" type="hidden">'
 		. (empty($this->extended_text) ? '<br />' . $this->extended_text : '');
-		
+
 		$Template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-		));	
-		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			));
+
+			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
