@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 import('builder/form/form_field_composite');
 
@@ -35,9 +35,9 @@ import('builder/form/form_field_composite');
 class FormSelectOption extends FormFieldComposite
 {
 	private $selected = false;
-
+	
 	const SELECTED = true;
-
+	
 	/**
 	 * @param $label string The label for the select option
 	 * @param $value string The value for the select option
@@ -49,7 +49,7 @@ class FormSelectOption extends FormFieldComposite
 		$this->value = $value;
 		$this->selected = $selected;
 	}
-
+		
 	/**
 	 * @return string The html code for the select.
 	 */
@@ -59,7 +59,7 @@ class FormSelectOption extends FormFieldComposite
 		$option .= !empty($this->value) ? 'value="' . $this->value . '"' : '';
 		$option .= (boolean)$this->selected ? ' selected="selected"' : '';
 		$option .= '>' . $this->label . '</option>' . "\n";
-
+		
 		return $option;
 	}
 }

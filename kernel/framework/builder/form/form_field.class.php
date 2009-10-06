@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
@@ -53,9 +53,9 @@ abstract class FormField
 	protected $required_alert = '';
 	protected $on_blur = '';
 	protected $errors = array();
-
+	
 	public abstract function display();
-
+	
 	/**
 	 * @param string $field_id Name of the field.
 	 * @param array $fieldOptions Option for the field.
@@ -65,7 +65,7 @@ abstract class FormField
 		$this->name = $field_id;
 		$this->id = $field_id;
 		$this->value = $value;
-
+		
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -74,61 +74,61 @@ abstract class FormField
 				case 'title' :
 					$this->title = $value;
 					unset($fieldOptions['title']);
-					break;
+				break;
 				case 'subtitle' :
 					$this->sub_title = $value;
 					unset($fieldOptions['subtitle']);
-					break;
+				break;
 				case 'id' :
 					$this->id = $value;
 					unset($fieldOptions['id']);
-					break;
+				break;
 				case 'class' :
 					$this->css_class = $value;
 					unset($fieldOptions['class']);
-					break;
+				break;
 				case 'required' :
 					$this->required = $value;
 					unset($fieldOptions['required']);
-					break;
+				break;
 				case 'required_alert' :
 					$this->required_alert = $value;
 					unset($fieldOptions['required_alert']);
-					break;
+				break;		
 				case 'onblur' :
 					$this->maxlength = $value;
 					unset($fieldOptions['onblur']);
-					break;
+				break;
 			}
 		}
 	}
-
+	
 	/**
 	 * @desc Store all erros in the field construct process.
 	 * @param string $errstr  Error message description
 	 * @param int $errno Error type, use php constants.
-	 */
+	 */	
 	protected function throw_error($errstr, $errno)
 	{
 		$this->errors[] = array('errstr' => $errstr, 'errno' => $errno);
 	}
-
+	
 	/**
 	 * @desc Merge errors.
 	 * @param array $array_errors
-	 */
+	 */	
 	protected function add_errors(&$array_errors)
 	{
 		$this->errors = array_merge($this->errors, $array_errors);
 	}
-
+	
 	## Getters and Setters ##
 	/**
 	 * @desc  Get all errors occured in the field construct process.
 	 * @return array All errors
-	 */
+	 */	
 	public function get_errors() { return $this->errors; }
-
+	
 	/**
 	 * @return string The fied identifier.
 	 */
@@ -138,7 +138,7 @@ abstract class FormField
 	 */
 	public function get_required_alert() { return $this->required_alert;}
 	public function get_value() { return $this->value; }
-
+	
 	public function set_value($var) { $this->value = $var; }
 }
 

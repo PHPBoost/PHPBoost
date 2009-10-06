@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
- ###################################################
+###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- ###################################################*/
+###################################################*/
 
 import('builder/form/form_field');
 
@@ -35,7 +35,7 @@ import('builder/form/form_field');
 class FormCaptchaField extends FormField
 {
 	private $Captcha = ''; //Captcha object
-
+	
 	/**
 	 * @param $field_id string The html field identifier
 	 * @param $Captcha Captcha The captcha object
@@ -44,11 +44,11 @@ class FormCaptchaField extends FormField
 	public function __construct($field_id, &$Captcha, $fieldOptions = array())
 	{
 		global $LANG;
-
+		
 		$this->title = $LANG['verif_code'];
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
-
+		
 		parent::__construct($field_id . $Captcha->get_instance(), '', $fieldOptions);
 		$this->Captcha = $Captcha;
 		foreach($fieldOptions as $attribute => $value)
@@ -56,14 +56,14 @@ class FormCaptchaField extends FormField
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		}
 	}
-
+	
 	/**
 	 * @return string The html code for the free field.
 	 */
 	public function display()
 	{
 		$this->Captcha->save_user();
-
+		
 		$Template = new Template('framework/builder/forms/field_captcha.tpl');
 			
 		$Template->assign_vars(array(
@@ -75,8 +75,8 @@ class FormCaptchaField extends FormField
 			'CAPTCHA_HEIGHT' => $this->Captcha->get_height(),
 			'CAPTCHA_FONT' => $this->Captcha->get_font(),
 			'CAPTCHA_DIFFICULTY' => $this->Captcha->get_difficulty()
-		));
-
+		));	
+		
 		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
