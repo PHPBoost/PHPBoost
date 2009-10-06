@@ -48,7 +48,7 @@ class MediaInterface extends ModuleInterface
 		//Configuration
 		$i = 0;
 		$config = array();
-		$config = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'", __LINE__, __FILE__));
+		$config = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'media'", __LINE__, __FILE__));
 		$root_config = $config['root'];
 		unset($config['root']);
 
@@ -57,9 +57,9 @@ class MediaInterface extends ModuleInterface
 
 		//List of categories and their own properties
 		$string .= '$MEDIA_CATS[0] = ' . var_export($root_config, true) . ';' . "\n\n";
-		$result = $this->db_connection->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC", __LINE__, __FILE__);
+		$result = $this->sql_querier->query_while("SELECT * FROM " . PREFIX . "media_cat ORDER BY id_parent, c_order ASC", __LINE__, __FILE__);
 
-		while ($row = $this->db_connection->fetch_assoc($result))
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$string .= '$MEDIA_CATS[' . $row['id'] . '] = ' . var_export(array(
 				'id_parent' => (int)$row['id_parent'],
@@ -75,7 +75,7 @@ class MediaInterface extends ModuleInterface
 			), true) . ';' . "\n\n";
 		}
 
-		$this->db_connection->query_close($result);
+		$this->sql_querier->query_close($result);
 
 		return $string;
 	}
@@ -110,10 +110,10 @@ class MediaInterface extends ModuleInterface
         $children_cats = array();
         $cats->build_children_id_list($idcat, $children_cats, RECURSIVE_EXPLORATION, ADD_THIS_CATEGORY_IN_LIST);
 
-        $result = $this->db_connection->query_while ("SELECT id, idcat, name, contents, timestamp FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " ) ORDER BY timestamp DESC" . $this->db_connection->limit(0, $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
+        $result = $this->sql_querier->query_while ("SELECT id, idcat, name, contents, timestamp FROM " . PREFIX . "media WHERE infos = '" . MEDIA_STATUS_APROBED . "' AND idcat IN (" . implode($children_cats, ','). " ) ORDER BY timestamp DESC" . $this->sql_querier->limit(0, $MEDIA_CONFIG['pagin']), __LINE__, __FILE__);
         
         // Generation of the feed's items
-        while ($row = $this->db_connection->fetch_assoc($result))
+        while ($row = $this->sql_querier->fetch_assoc($result))
         {
             $item = new FeedItem();
             
@@ -136,7 +136,7 @@ class MediaInterface extends ModuleInterface
             $data->add_item($item);
         }
 
-        $this->db_connection->query_close($result);
+        $this->sql_querier->query_close($result);
         
         return $data;
     }
@@ -161,10 +161,10 @@ class MediaInterface extends ModuleInterface
             f.id AS id_content,
             f.name AS title,
             ( 2 * MATCH(f.name) AGAINST('" . $args['search'] . "') + MATCH(f.contents) AGAINST('" . $args['search'] . "') ) / 3 * " . $weight . " AS relevance, "
-            . $this->db_connection->concat("'../media/media.php?id='","f.id","'&amp;cat='","f.idcat") . " AS link
+            . $this->sql_querier->concat("'../media/media.php?id='","f.id","'&amp;cat='","f.idcat") . " AS link
             FROM " . PREFIX . "media f
             WHERE ( MATCH(f.name) AGAINST('" . $args['search'] . "') OR MATCH(f.contents) AGAINST('" . $args['search'] . "') )" . $auth_cats
-            . " ORDER BY relevance DESC " . $this->db_connection->limit(0, MEDIA_MAX_SEARCH_RESULTS);
+            . " ORDER BY relevance DESC " . $this->sql_querier->limit(0, MEDIA_MAX_SEARCH_RESULTS);
         
         return $request;
     }
