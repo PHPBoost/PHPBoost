@@ -41,7 +41,7 @@ class FormTextarea extends FormField
 	
 	public function __construct($field_id, $field_value, $fieldOptions = array())
 	{
-		$this->fill_attributes($field_id, $field_value, $fieldOptions);
+		parent::__construct($field_id, $field_value, $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);

@@ -49,7 +49,7 @@ class FormCaptchaField extends FormField
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
 		
-		$this->fill_attributes($field_id . $Captcha->get_instance(), '', $fieldOptions);
+		parent::__construct($field_id . $Captcha->get_instance(), '', $fieldOptions);
 		$this->Captcha = $Captcha;
 		foreach($fieldOptions as $attribute => $value)
 		{

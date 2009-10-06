@@ -42,7 +42,7 @@ class FormCheckbox extends FormField
 		$field_id = func_get_arg(0);
 		$field_options = func_get_arg(1);
 
-		$this->fill_attributes($field_id, '', $field_options);
+		parent::__construct($field_id, '', $field_options);
 		foreach($field_options as $attribute => $value)
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		
