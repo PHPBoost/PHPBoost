@@ -130,7 +130,7 @@ abstract class FileSystemElement
      * @abstract
      * @desc Deletes the element
      */
-    public abstract function delete() { }
+    public abstract function delete();
 }
 
 ?>
