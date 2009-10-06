@@ -89,9 +89,7 @@ $Cache->load('uploads');
 if (!$User->check_auth($CONFIG_UPLOADS['auth_files'], AUTH_FILES))
 	$Errorh->handler('e_auth', E_USER_REDIRECT);
 
-//Initialisation  de la class de gestion des fichiers.
 import('members/uploads');
-$Uploads = new Uploads;
 
 $folder = retrieve(GET, 'f', 0);
 $parent_folder = retrieve(GET, 'fup', 0);
@@ -129,7 +127,7 @@ elseif (!empty($_FILES['upload_file']['name']) && isset($_GET['f'])) //Ajout d'u
 	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $CONFIG_UPLOADS['size_limit']);
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
-	$member_memory_used = $Uploads->Member_memory_used($User->get_attribute('user_id'));
+	$member_memory_used = Uploads::Member_memory_used($User->get_attribute('user_id'));
 	if ($member_memory_used >= $group_limit && !$unlimited_data)
 		$error = 'e_max_data_reach';
 	else
@@ -171,13 +169,13 @@ elseif (!empty($del_folder)) //Supprime un dossier.
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	if ($User->check_level(ADMIN_LEVEL))
-		$Uploads->Del_folder($del_folder);
+		Uploads::Del_folder($del_folder);
 	else
 	{
 		$check_user_id = $Sql->query("SELECT user_id FROM " . DB_TABLE_UPLOAD_CAT . " WHERE id = '" . $del_folder . "'", __LINE__, __FILE__);
 		//Suppression du dossier et de tout le contenu
 		if ($check_user_id == $User->get_attribute('user_id'))
-			$Uploads->Del_folder($del_folder);
+			Uploads::Del_folder($del_folder);
 		else
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
@@ -189,10 +187,10 @@ elseif (!empty($del_file)) //Suppression d'un fichier
 	$Session->csrf_get_protect(); //Protection csrf
 	
 	if ($User->check_level(ADMIN_LEVEL))
-		$Uploads->Del_file($del_file, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
+		Uploads::Del_file($del_file, $User->get_attribute('user_id'), ADMIN_NO_CHECK);
 	else
 	{
-		$error = $Uploads->Del_file($del_file, $User->get_attribute('user_id'));
+		$error = Uploads::Del_file($del_file, $User->get_attribute('user_id'));
 		if (!empty($error))
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 	}
@@ -265,7 +263,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 		'FOLDER_ID' => !empty($folder) ? $folder : '0',
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'URL' => '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim(Uploads::get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_FILES_MANAGEMENT' => $LANG['files_management'],
 		'L_MOVE_TO' => $LANG['moveto'],
 		'L_ROOT' => $LANG['root'],
@@ -301,7 +299,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 	else
 	{
 		$info_move = $Sql->query_array(PREFIX . "upload", "path", "name", "type", "size", "idcat", "WHERE id = '" . $move_file . "'", __LINE__, __FILE__);
-		$get_img_mimetype = $Uploads->get_img_mimetype($info_move['type']);
+		$get_img_mimetype = Uploads::get_img_mimetype($info_move['type']);
 		$size_img = '';
 		$display_real_img = false;
 		switch ($info_move['type'])
@@ -371,7 +369,7 @@ else
 		'USER_ID' => $User->get_attribute('user_id'),
 		'THEME' => get_utheme(),
 		'LANG' => get_ulang(),
-		'URL' => '' . trim($Uploads->get_url($folder, '', '&amp;' . $popup), '/'),
+		'URL' => '' . trim(Uploads::get_url($folder, '', '&amp;' . $popup), '/'),
 		'L_CONFIRM_DEL_FILE' => $LANG['confim_del_file'],
 		'L_CONFIRM_DEL_FOLDER' => $LANG['confirm_del_folder'],
 		'L_CONFIRM_EMPTY_FOLDER' => $LANG['confirm_empty_folder'],
@@ -431,7 +429,7 @@ else
 	{
 		$name_cut = (strlen(html_entity_decode($row['name'])) > 22) ? htmlentities(substr(html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 		
-		$get_img_mimetype = $Uploads->get_img_mimetype($row['type']);
+		$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 		$size_img = '';
 		switch ($row['type'])
 		{
@@ -486,7 +484,7 @@ else
 	$group_limit = $User->check_max_value(DATA_GROUP_LIMIT, $CONFIG_UPLOADS['size_limit']);
 	$unlimited_data = ($group_limit === -1) || $User->check_level(ADMIN_LEVEL);
 	
-	$total_size = !empty($folder) ? $Uploads->Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
+	$total_size = !empty($folder) ? Uploads::Member_memory_used($User->get_attribute('user_id')) : $Sql->query("SELECT SUM(size) FROM " . DB_TABLE_UPLOAD . " WHERE user_id = '" . $User->get_attribute('user_id') . "'", __LINE__, __FILE__);
 	$Template->assign_vars(array(
 		'PERCENT' => !$unlimited_data ? '(' . number_round($total_size/$group_limit, 3) * 100 . '%)' : '',
 		'SIZE_LIMIT' => !$unlimited_data ? (($group_limit > 1024) ? number_round($group_limit/1024, 2) . ' ' . $LANG['unit_megabytes'] : number_round($group_limit, 0) . ' ' . $LANG['unit_kilobytes']) : $LANG['illimited'],

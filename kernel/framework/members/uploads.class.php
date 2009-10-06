@@ -35,13 +35,8 @@ define('ADMIN_NO_CHECK', true);
 
 class Uploads
 {
-	## Public Attributes ##
-	var $error = ''; //Gestion des erreurs
-	
-	
-	## Public Methods ##	
 	//Ajout d'un dossier virtuel
-	function Add_folder($id_parent, $user_id, $name)
+	public static function Add_folder($id_parent, $user_id, $name)
 	{
 		global $Sql;
 		
@@ -55,7 +50,7 @@ class Uploads
 	}	
 	
 	//Suppression recursive des dossiers et fichiers du membre.
-	function Empty_folder_member($user_id)
+	public static function Empty_folder_member($user_id)
 	{
 		global $Sql;
 		
@@ -72,7 +67,7 @@ class Uploads
 	}
 	
 	//Suppression recursive du dossier et de son contenu.
-	function Del_folder($id_folder)
+	public static function Del_folder($id_folder)
 	{
 		global $Sql;
 		
@@ -98,7 +93,7 @@ class Uploads
 	}
 	
 	//Suppression d'un fichier
-	function Del_file($id_file, $user_id, $admin = false)
+	public static function Del_file($id_file, $user_id, $admin = false)
 	{	
 		global $Sql;
 		
@@ -125,7 +120,7 @@ class Uploads
 	}
 	
 	//Renomme un dossier virtuel
-	function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
+	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
 	{
 		global $Sql;
 		
@@ -152,7 +147,7 @@ class Uploads
 	}
 	
 	//Renomme un fichier virtuel
-	function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
+	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
 	{
 		global $Sql;
 		
@@ -179,7 +174,7 @@ class Uploads
 	}
 		
 	//Déplacement dun dossier.
-	function Move_folder($move, $to, $user_id, $admin = false)
+	public static function Move_folder($move, $to, $user_id, $admin = false)
 	{		
 		global $Sql;
 		
@@ -216,7 +211,7 @@ class Uploads
 	}
 	
 	//Déplacement dun fichier.
-	function Move_file($move, $to, $user_id, $admin = false)
+	public static function Move_file($move, $to, $user_id, $admin = false)
 	{
 		global $Sql;
 		
@@ -252,7 +247,7 @@ class Uploads
 	}
 	
 	//Fonction qui détermine toutes les sous-catégories d'une catégorie (récursive)
-	function Find_subfolder($array_folders, $id_cat, &$array_child_folder)
+	public static function Find_subfolder($array_folders, $id_cat, &$array_child_folder)
 	{
 		//On parcourt les catégories et on déterminer les catégories filles
 		foreach ($array_folders as $key => $value)
@@ -267,7 +262,7 @@ class Uploads
 	}
 	
 	//Récupération du répertoire courant (administration).
-	function get_admin_url($id_folder, $pwd, $member_link = '')
+	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{		
 		global $LANG, $Sql;
 		
@@ -282,7 +277,7 @@ class Uploads
 	}
 	
 	//Récupération du répertoire courant.
-	function get_url($id_folder, $pwd, $popup)
+	public static function get_url($id_folder, $pwd, $popup)
 	{		
 		global $LANG, $Sql;
 		
@@ -297,7 +292,7 @@ class Uploads
 	}
 	
 	//Récupération de la taille totale utilisée par un membre.
-	function Member_memory_used($user_id)
+	public static function Member_memory_used($user_id)
 	{
 		global $Sql;
 		
@@ -305,7 +300,7 @@ class Uploads
 	}
 
 	//Conversion mimetype -> image.
-	function get_img_mimetype($type)
+	public static function get_img_mimetype($type)
 	{
 		global $LANG;
 		
@@ -362,13 +357,7 @@ class Uploads
 		}	
 		
 		return array('img' => $img, 'filetype' => $filetype);
-	}	
-	
-	
-	## Private Attributes ##
-	var $base_directory; //Répertoire de destination des fichiers.
-	var $extension = array(); //Extension des fichiers.
-	var $filename = array(); //Nom des fichiers.
+	}
 }
 
 ?>
