@@ -284,7 +284,7 @@ switch($step)
 		//Mise en place de la base de données
 	case STEP_DB_CONFIG:
 
-		require_once('functions.php');
+		require_once 'functions.php';
 		 
 		$display_message_already_installed = false;
 		 
@@ -297,7 +297,6 @@ switch($step)
 			$database = str_replace('.', '_', retrieve(POST, 'database', ''));
 			$tables_prefix = str_replace('.', '_', retrieve(POST, 'tableprefix', 'phpboost_', TSTRING, USE_DEFAULT_IF_EMPTY));
 
-			include_once 'functions.php';
 			if (!empty($host) && !empty($login) && !empty($database))
 			{
 				$result = check_database_config($host, $login, $password, $database, $tables_prefix);
