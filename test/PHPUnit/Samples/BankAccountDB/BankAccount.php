@@ -195,7 +195,7 @@ class BankAccount
         $statement->execute(array($this->balance, $this->accountNumber));
     }
 
-    static public function createTable(PDO $pdo)
+    public static function createTable(PDO $pdo)
     {
         $query = "
             CREATE TABLE bank_account (
