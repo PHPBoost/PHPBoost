@@ -37,41 +37,26 @@ define('CONTENT_MENU__CLASS','ContentMenu');
  */
 class ContentMenu extends Menu
 {
-    ## Public Methods ##
+    /**
+     * @var string the menu's content
+     */
+    private $content = '';
+    
+    /**
+     * @var bool If true, the content menu title will be displayed
+     */
+    private $display_title = true;
+	
     public function __construct($title)
     {
        parent::__construct($title);
     }
     
-    ## Setters ##
-
-    /**
-     * @param bool $display_title if false, the title won't be displayed
-     */
-    function set_display_title($display_title) { $this->display_title = $display_title; }
-    
-    /**
-     * @param string $content the content to set
-     */
-    function set_content($content) { $this->content = strparse($content, array(), DO_NOT_ADD_SLASHES); }
-    
-    ## Getters ##
-    /**
-     * @desc Returns true if the title will be displayed
-     * @return bool true if the title will be displayed
-     */
-    function get_display_title() { return $this->display_title; }
-    
-    /**
-     * @return string the menu content
-     */
-    function get_content() { return $this->content; }
-    
 	/**
      * @desc Display the content menu.
      * @return a string of the parsed template ready to be displayed
      */
-    function display($tpl = false)
+    public function display($tpl = false)
     {
 		if ($tpl === false)
 		{
@@ -86,24 +71,33 @@ class ContentMenu extends Menu
         return $tpl->parse(Template::TEMPLATE_PARSER_STRING);
     }
     
-    function cache_export($template = false)
+    public function cache_export($template = false)
     {
         return parent::cache_export_begin() . trim(var_export($this->display(), true), '\'') . parent::cache_export_end();
     }
     
-    
-    ## Private Attributes
+    ## Setters ##
+    /**
+     * @param bool $display_title if false, the title won't be displayed
+     */
+    public function set_display_title($display_title) { $this->display_title = $display_title; }
     
     /**
-     * @var string the menu's content
+     * @param string $content the content to set
      */
-    var $content = '';
+    public function set_content($content) { $this->content = strparse($content, array(), DO_NOT_ADD_SLASHES); }
+    
+    ## Getters ##
+    /**
+     * @desc Returns true if the title will be displayed
+     * @return bool true if the title will be displayed
+     */
+    public function get_display_title() { return $this->display_title; }
     
     /**
-     * @var bool If true, the content menu title will be displayed
+     * @return string the menu content
      */
-    var $display_title = true;
-    
+    public function get_content() { return $this->content; }
 }
 
 ?>

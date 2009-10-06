@@ -38,7 +38,16 @@ define('FEED_MENU__CLASS','FeedMenu');
  */
 class FeedMenu extends Menu
 {
-	## Public Methods ##
+	/**
+	 * @var string the feed url
+	 */
+	private $url = '';
+	private $module_id = '';
+	private $name = '';
+	private $category = 0;
+	private $number = 10;
+	private $begin_at = 0;
+	
 	public function __construct($title, $module_id, $category = 0, $name = DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
 	{
 		parent::__construct($title);
@@ -49,50 +58,7 @@ class FeedMenu extends Menu
 		$this->begin_at = $begin_at;
 	}
 
-	## Getters ##
-	/**
-	 * @return string the feed menu module id
-	 */
-	function get_module_id() { return $this->module_id; }
-	
-	/**
-	* @param bool $relative If false, compute the absolute url, else, returns the relative one
-	* @return Return the absolute feed Url
-	*/
-	function get_url($relative = false)
-	{
-		import('util/url');
-		$url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->category . '&amp;name=' . $this->name);
-		if ($relative)
-		{
-			return $url->relative();
-		}
-		return $url->absolute();
-	}
-
-	## Setters ##
-
-	/**
-	 * @param string $value the feed's module_id
-	 */
-	function set_module_id($value) { $this->module_id = $value; }
-	/**
-	 * @param int $value the feed's category
-	 */
-	function set_cat($value) { $this->category = is_numeric($value) ? numeric($value) : 0; }
-	/**
-	 * @param string $value the feed's name
-	 */
-	function set_name($value) { $this->name = $value; }
-
-	function display($template = false)
-	{
-		return Feed::get_parsed($this->module_id, $this->name, $this->category,
-		    FeedMenu::get_template($this->get_title(), $this->get_block()), $this->number, $this->begin_at
-		);
-	}
-
-	function cache_export($template = false)
+	public function cache_export($template = false)
 	{
         return parent::cache_export_begin() .
             '\';import(\'content/syndication/feed\');$__menu=Feed::get_parsed(' .
@@ -108,7 +74,7 @@ class FeedMenu extends Menu
 	 * @return the tpl to parse a feed
      * @static
 	 */
-	/* static */ function get_template($name = '', $block_position = BLOCK_POSITION__LEFT)
+	public static function get_template($name = '', $block_position = BLOCK_POSITION__LEFT)
 	{
 		$tpl = new Template('framework/menus/feed/feed.tpl');
 
@@ -121,17 +87,47 @@ class FeedMenu extends Menu
 		return $tpl;
 	}
 
-	## Private Attributes
-
+	## Getters ##
 	/**
-	 * @var string the feed url
+	 * @return string the feed menu module id
 	 */
-	var $url = '';
-	var $module_id = '';
-	var $name = '';
-	var $category = 0;
-	var $number = 10;
-	var $begin_at = 0;
+	public function get_module_id() { return $this->module_id; }
+	
+	/**
+	* @param bool $relative If false, compute the absolute url, else, returns the relative one
+	* @return Return the absolute feed Url
+	*/
+	public function get_url($relative = false)
+	{
+		import('util/url');
+		$url = new Url('/syndication.php?m=' . $this->module_id . '&amp;cat=' . $this->category . '&amp;name=' . $this->name);
+		if ($relative)
+		{
+			return $url->relative();
+		}
+		return $url->absolute();
+	}
+
+	## Setters ##
+	/**
+	 * @param string $value the feed's module_id
+	 */
+	public function set_module_id($value) { $this->module_id = $value; }
+	/**
+	 * @param int $value the feed's category
+	 */
+	public function set_cat($value) { $this->category = is_numeric($value) ? numeric($value) : 0; }
+	/**
+	 * @param string $value the feed's name
+	 */
+	public function set_name($value) { $this->name = $value; }
+
+	public function display($template = false)
+	{
+		return Feed::get_parsed($this->module_id, $this->name, $this->category,
+		    self::get_template($this->get_title(), $this->get_block()), $this->number, $this->begin_at
+		);
+	}
 
 }
 

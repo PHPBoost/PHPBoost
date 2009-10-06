@@ -37,7 +37,6 @@ define('LINKS_MENU_LINK__CLASS', 'LinksMenuLink');
  */
 class LinksMenuLink extends LinksMenuElement
 {
-	## Public Methods ##
 	/**
 	* @desc Constructor
 	* @param string $title Menu title
@@ -55,7 +54,7 @@ class LinksMenuLink extends LinksMenuElement
 	 * @param Template $template the template to use
 	 * @return string the menu parsed in xHTML
 	 */
-	function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	public function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
 	{
 		// Stop if the user isn't authorised
 		if (!$this->_check_auth())
@@ -75,7 +74,7 @@ class LinksMenuLink extends LinksMenuElement
 	 * @param Template $template the template to use to display the link
 	 * @return string the string to write in the cache file
 	 */
-	function cache_export($template = false)
+	public function cache_export($template = false)
 	{
 		parent::_assign($template);
 		$template->assign_vars(array(
