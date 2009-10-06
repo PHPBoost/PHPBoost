@@ -32,10 +32,20 @@
  */
 class Backup
 {
+	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
+	/**
+	 * @var string[] List of the tables used by PHPBoost.
+	 */
+	public $tables = array();
+	/**
+	 * @var string Backup script
+	 */
+	public $backup_script = '';
+	
 	/**
 	 * @desc Builds a Backup object
 	 */
-	function Backup()
+	public function __construct()
 	{
 		$this->list_db_tables(); //Liste toutes les tables de PHPBoost.
 		//On modifie le temps d'exécution maximal si le serveur le permet 
@@ -46,7 +56,7 @@ class Backup
 	/**
 	 * @desc Retrieves the list of the tables present on the database used.
 	 */
-	function list_db_tables()
+	public function list_db_tables()
 	{
 		global $Sql;
 		
@@ -62,7 +72,7 @@ class Backup
 	 * If you want to generate the query which will drop all the tables, don't use this parameter
 	 * of let an empty array. 
 	 */
-	function generate_drop_table_query($table_list = array())
+	public function generate_drop_table_query($table_list = array())
 	{
 		$selected_tables =  array();
 		$all_tables = count($table_list) == 0;
@@ -80,7 +90,7 @@ class Backup
 	 * If you want to generate the query which will create all the tables, don't use this parameter
 	 * of let an empty array. 
 	 */
-	function generate_create_table_query($table_list = array())
+	public function generate_create_table_query($table_list = array())
 	{
 		global $Sql;
 		
@@ -104,7 +114,7 @@ class Backup
 	 * If you want to generate the query which will fill all the tables, don't use this parameter
 	 * of let an empty array. 
 	 */
-	function generate_insert_values_query($tables = array())
+	public function generate_insert_values_query($tables = array())
 	{
 		global $Sql;
 		
@@ -152,7 +162,7 @@ class Backup
 	 * @desc Concatenates a string at the end of the current script.
 	 * @param string $string String to concatenate.
 	 */
-	function concatenate_to_query($string)
+	public function concatenate_to_query($string)
 	{
 		$this->backup_script .= $string;
 	}
@@ -161,7 +171,7 @@ class Backup
 	 * @desc Returns the current backup script.
 	 * @return string the whole script
 	 */
-	function get_script()
+	public function get_script()
 	{
 		return $this->backup_script;
 	}
@@ -184,7 +194,7 @@ class Backup
 	* 	'update_time' => when the data file was last updated
 	* )  
 	*/
-	function get_tables_properties_list()
+	public function get_tables_properties_list()
 	{
 		$this->list_db_tables();
 		return $this->tables;
@@ -194,7 +204,7 @@ class Backup
 	 * @desc Retrieves the list of the tables used by PHPBoost.
 	 * @return string[] The list of the table names.
 	 */
-	function get_tables_list()
+	public function get_tables_list()
 	{
 		$this->list_db_tables();
 		return array_keys($this->tables);
@@ -204,7 +214,7 @@ class Backup
 	 * @desc Returns the number of tables used by PHPBoost.
 	 * @return int number of tables
 	 */
-	function get_tables_number()
+	public function get_tables_number()
 	{
 		$this->list_db_tables();
 		return count($this->tables);
@@ -214,7 +224,7 @@ class Backup
 	 * @desc Writes the backup script in a text file.
 	 * @param string $file_path Path of the file.
 	 */
-	function export_file($file_path)
+	public function export_file($file_path)
 	{
 		import('io/filesystem/file');
 		$file = new File($file_path);
@@ -228,7 +238,7 @@ class Backup
 	 * @param $tables
 	 * @return unknown_type
 	 */
-	function extract_table_structure($tables = array())
+	public function extract_table_structure($tables = array())
 	{
 		$this->generate_create_table_query($tables);
 		
@@ -264,16 +274,6 @@ class Backup
 			
 		return $structure;
 	}
-	
-	## Private Attributes ##
-	/**
-	 * @var string[] List of the tables used by PHPBoost.
-	 */
-	var $tables = array();
-	/**
-	 * @var string Backup script
-	 */
-	var $backup_script = '';
 }
 
 ?>
