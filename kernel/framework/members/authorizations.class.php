@@ -42,7 +42,7 @@ class Authorizations
 	 * @return array The array of authorizations.
 	 * @static
 	 */
-	function build_auth_array_from_form()
+	static public function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -67,7 +67,7 @@ class Authorizations
 		}
 		//On balaye les tableaux passés en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
-			Authorizations::_get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
+			self::_get_auth_array(func_get_arg($i), $idselect, $array_auth_all, $sum_auth);
 			
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
@@ -82,13 +82,13 @@ class Authorizations
 	 * @return Array with the authorization for the bit specified.
 	* @static
 	 */
-	function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
+	static public function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
 		
 		//Récupération du tableau des autorisation.
-		Authorizations::_get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
+		self::_get_auth_array($bit_value, $idselect, $array_auth_all, $sum_auth);
 		
 		//Admin tous les droits dans n'importe quel cas.
 		if ($admin_auth_default)
@@ -109,7 +109,7 @@ class Authorizations
 	 * @return String The formated select.
 	* @static
 	 */
-	function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+	static public function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks;
 		
@@ -248,7 +248,7 @@ class Authorizations
 	 * @return boolean True if authorized, false otherwise.
 	 * @static
 	 */
-	/*static*/ function check_auth($type, $value, &$array_auth, $bit)
+	static public function check_auth($type, $value, &$array_auth, $bit)
 	{
 		if (!is_int($value))
 			return false;
@@ -284,7 +284,7 @@ class Authorizations
 	 * @return array The new array merged.
 	 * @static
 	 */
-	/*static*/  function merge_auth($parent, $child, $auth_bit, $mode)
+	static public function merge_auth($parent, $child, $auth_bit, $mode)
 	{
 		//Parcours des différents types d'utilisateur
 		$merged = array();
@@ -325,7 +325,7 @@ class Authorizations
 	 * @return array The new authorization array.
 	 * @static
 	 */
-	 /*static*/ function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
+	static public function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
 	{
 		if ($final_bit == 0)
 			die('<strong>Error :</strong> The destination bit must not be void.');
@@ -366,7 +366,7 @@ class Authorizations
 	 * @param array $sum_auth Sum up all authorizations for the authorization array.
 	 * @static
 	 */
-	 /*static*/ function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	static private function _get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 		
@@ -426,19 +426,6 @@ class Authorizations
 				}
 			}
 		}
-	}
-	
-	 //Ajoute un droit à l'ensemble des autorisations.
-	/*static*/ function _add_auth_group($auth_group, $add_auth)
-	{
-		return ((int)$auth_group | (int)$add_auth);
-	}
-	
-	//Retire un droit à l'ensemble des autorisations
-	/*static*/ function _remove_auth_group($auth_group, $remove_auth)
-	{
-		$remove_auth = ~((int)$remove_auth);
-		return ((int)$auth_group & $remove_auth);
 	}
 }
 
