@@ -39,9 +39,9 @@ class FormCaptchaField extends FormField
 	/**
 	 * @param $field_id string The html field identifier
 	 * @param $Captcha Captcha The captcha object
-	 * @param $fieldOptions array Field's options
+	 * @param $field_options array Field's options
 	 */
-	public function __construct($field_id, &$Captcha, $fieldOptions = array())
+	public function __construct($field_id, &$Captcha, $field_options = array())
 	{
 		global $LANG;
 		
@@ -49,9 +49,9 @@ class FormCaptchaField extends FormField
 		$this->required_alert = $LANG['require_verif_code'];
 		$this->required = true;
 		
-		parent::__construct($field_id . $Captcha->get_instance(), '', $fieldOptions);
+		parent::__construct($field_id . $Captcha->get_instance(), '', $field_options);
 		$this->Captcha = $Captcha;
-		foreach($fieldOptions as $attribute => $value)
+		foreach($field_options as $attribute => $value)
 		{
 			$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, strtolower($attribute)), E_USER_NOTICE);
 		}
