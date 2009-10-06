@@ -33,7 +33,7 @@ class TemplateLoaderException extends TemplateException
 {
 	public function __construct($template_identifier, $reason)
 	{
-		parent::__construct('Template loading failed for template "' . $identifier . '"<br />' . $reason);
+		parent::__construct('Template loading failed for template "' . $template_identifier . '"<br />' . $reason);
 	}
 }
 ?>
