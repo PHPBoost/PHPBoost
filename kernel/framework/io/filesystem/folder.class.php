@@ -52,7 +52,7 @@ class Folder extends FileSystemElement
      */
     public function __construct($path, $whenopen = OPEN_AFTER)
     {
-        parent::FileSystemElement(rtrim($path, '/'));
+        parent::__construct(rtrim($path, '/'));
 
         if (@file_exists($this->path))
         {

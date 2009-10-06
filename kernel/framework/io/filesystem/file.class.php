@@ -71,7 +71,7 @@ class File extends FileSystemElement
 	 */
 	public function __construct($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
 	{
-		parent::FileSystemElement($path);
+		parent::__construct($path);
 
 		$this->mode = $mode;
 
@@ -315,7 +315,7 @@ class File extends FileSystemElement
 	{
 		if ($once)
 		{
-		return require_once $this->path;
+			return require_once $this->path;
 		}
 		else
 		{
