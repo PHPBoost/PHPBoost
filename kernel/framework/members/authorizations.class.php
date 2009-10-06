@@ -42,7 +42,7 @@ class Authorizations
 	 * @return array The array of authorizations.
 	 * @static
 	 */
-	static public function build_auth_array_from_form()
+	public static function build_auth_array_from_form()
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -82,7 +82,7 @@ class Authorizations
 	 * @return Array with the authorization for the bit specified.
 	* @static
 	 */
-	static public function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
+	public static function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
 		$array_auth_all = array();
 		$sum_auth = 0;
@@ -109,7 +109,7 @@ class Authorizations
 	 * @return String The formated select.
 	* @static
 	 */
-	static public function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
+	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = '', $disabled_advanced_auth = false)
     {
         global $Sql, $LANG, $CONFIG, $array_ranks;
 		
@@ -248,7 +248,7 @@ class Authorizations
 	 * @return boolean True if authorized, false otherwise.
 	 * @static
 	 */
-	static public function check_auth($type, $value, &$array_auth, $bit)
+	public static function check_auth($type, $value, &$array_auth, $bit)
 	{
 		if (!is_int($value))
 			return false;
@@ -284,7 +284,7 @@ class Authorizations
 	 * @return array The new array merged.
 	 * @static
 	 */
-	static public function merge_auth($parent, $child, $auth_bit, $mode)
+	public static function merge_auth($parent, $child, $auth_bit, $mode)
 	{
 		//Parcours des différents types d'utilisateur
 		$merged = array();
@@ -325,7 +325,7 @@ class Authorizations
 	 * @return array The new authorization array.
 	 * @static
 	 */
-	static public function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
+	public static function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
 	{
 		if ($final_bit == 0)
 			die('<strong>Error :</strong> The destination bit must not be void.');

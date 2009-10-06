@@ -25,7 +25,7 @@ class sfYamlInline
    *
    * @return array PHP array
    */
-  static public function load($value)
+  public static function load($value)
   {
     $value = trim($value);
 
@@ -52,7 +52,7 @@ class sfYamlInline
    *
    * @return string YAML
    */
-  static public function dump($value)
+  public static function dump($value)
   {
     switch (true)
     {
@@ -135,7 +135,7 @@ class sfYamlInline
    *
    * @return string YAML
    */
-  static public function parseScalar($scalar, $delimiters = null, $stringDelimiters = array('"', "'"), &$i = 0, $evaluate = true)
+  public static function parseScalar($scalar, $delimiters = null, $stringDelimiters = array('"', "'"), &$i = 0, $evaluate = true)
   {
     if (in_array($scalar[$i], $stringDelimiters))
     {
