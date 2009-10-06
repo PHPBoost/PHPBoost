@@ -34,7 +34,7 @@ class WikiInterface extends ModuleInterface
 	## Public Methods ##
 	function WikiInterface() //Constructeur de la classe WikiInterface
 	{
-		parent::ModuleInterface('wiki');
+		parent::__construct('wiki');
 	}
 
 	//Récupération du cache.

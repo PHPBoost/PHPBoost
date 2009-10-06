@@ -36,7 +36,7 @@ class GalleryInterface extends ModuleInterface
     ## Public Methods ##
     function GalleryInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('gallery');
+        parent::__construct('gallery');
     }
     
 	//Récupération du cache.

@@ -35,7 +35,7 @@ class PagesInterface extends ModuleInterface
     ## Public Methods ##
     function PagesInterface() //Constructeur de la classe WikiInterface
     {
-        parent::ModuleInterface('pages');
+        parent::__construct('pages');
     }
 	
 	//Récupération du cache.

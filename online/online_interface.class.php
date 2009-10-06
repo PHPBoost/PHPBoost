@@ -34,7 +34,7 @@ class OnlineInterface extends ModuleInterface
     ## Public Methods ##
     function OnlineInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('online');
+        parent::__construct('online');
     }
     
     //Récupération du cache.

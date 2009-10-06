@@ -38,7 +38,7 @@ class ArticlesInterface extends ModuleInterface
 	## Public Methods ##
 	function ArticlesInterface() //Constructeur de la classe ForumInterface
 	{
-		parent::ModuleInterface('articles');
+		parent::__construct('articles');
 	}
 
 	//Récupération du cache.

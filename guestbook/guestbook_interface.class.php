@@ -36,7 +36,7 @@ class GuestbookInterface extends ModuleInterface
     ## Public Methods ##
     function GuestbookInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('guestbook');
+        parent::__construct('guestbook');
     }
     
 	//Récupération du cache.

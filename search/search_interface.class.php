@@ -34,7 +34,7 @@ class SearchInterface extends ModuleInterface
     ## Public Methods ##
     function SearchInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('search');
+        parent::__construct('search');
     }
     
     //Récupération du cache.
