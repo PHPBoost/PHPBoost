@@ -27,7 +27,7 @@
 /**
  * @author Régis Viarre <crowkait@phpboost.com>
  * @desc Abstract class which manage Fields.
- * You can specify several option with the argument $fieldOptions :
+ * You can specify several option with the argument $field_options :
  * <ul>
  * 	<li>title : The field title</li>
  * 	<li>subtitle : The field subtitle</li>
@@ -58,46 +58,46 @@ abstract class FormField
 	
 	/**
 	 * @param string $field_id Name of the field.
-	 * @param array $fieldOptions Option for the field.
+	 * @param array $field_options Option for the field.
 	 */
-	protected function __construct($field_id, $value, &$fieldOptions)
+	protected function __construct($field_id, $value, &$field_options)
 	{
 		$this->name = $field_id;
 		$this->id = $field_id;
 		$this->value = $value;
 		
-		foreach($fieldOptions as $attribute => $value)
+		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
 			switch ($attribute)
 			{
 				case 'title' :
 					$this->title = $value;
-					unset($fieldOptions['title']);
+					unset($field_options['title']);
 				break;
 				case 'subtitle' :
 					$this->sub_title = $value;
-					unset($fieldOptions['subtitle']);
+					unset($field_options['subtitle']);
 				break;
 				case 'id' :
 					$this->id = $value;
-					unset($fieldOptions['id']);
+					unset($field_options['id']);
 				break;
 				case 'class' :
 					$this->css_class = $value;
-					unset($fieldOptions['class']);
+					unset($field_options['class']);
 				break;
 				case 'required' :
 					$this->required = $value;
-					unset($fieldOptions['required']);
+					unset($field_options['required']);
 				break;
 				case 'required_alert' :
 					$this->required_alert = $value;
-					unset($fieldOptions['required_alert']);
+					unset($field_options['required_alert']);
 				break;		
 				case 'onblur' :
 					$this->maxlength = $value;
-					unset($fieldOptions['onblur']);
+					unset($field_options['onblur']);
 				break;
 			}
 		}

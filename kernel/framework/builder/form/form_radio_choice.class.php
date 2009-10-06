@@ -40,7 +40,7 @@ class FormRadioChoice extends FormField
 	/**
 	 * @desc constructor It takes a variable number of parameters. The first two are required. 
 	 * @param string $field_id Name of the field.
-	 * @param array $fieldOptions Option for the field.
+	 * @param array $field_options Option for the field.
 	 * @param FormRadioChoiceOption Variable number of FormRadioChoiceOption object to add in the FormRadioChoice.
 	 */
 	public function __construct()
