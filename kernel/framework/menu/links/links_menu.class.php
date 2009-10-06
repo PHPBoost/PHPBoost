@@ -46,7 +46,17 @@ define('HORIZONTAL_SCROLLING_MENU', 'horizontal_scrolling');
 */
 class LinksMenu extends LinksMenuElement
 {
-    ## Public Methods ##
+    /**
+    * @access protected
+    * @var string menu's type
+    */
+    protected $type;
+    /**
+    * @access protected
+    * @var LinksMenuElement[] Direct menu children list
+    */
+    protected $elements = array();
+	
     /**
     * @desc Constructor
     * @param string $title Menu title
@@ -58,7 +68,7 @@ class LinksMenu extends LinksMenuElement
     public function __construct($title, $url, $image = '', $type = VERTICAL_SCROLLING_MENU)
     {
         // Set the menu type
-        $this->type = in_array($type, LinksMenu::get_menu_types_list()) ? $type : VERTICAL_SCROLLING_MENU;
+        $this->type = in_array($type, self::get_menu_types_list()) ? $type : VERTICAL_SCROLLING_MENU;
         
         // Build the menu element on witch is based the menu
         parent::__construct($title, $url, $image);
@@ -68,7 +78,7 @@ class LinksMenu extends LinksMenuElement
     * @desc Add a list of LinksMenu or (sub)Menu to the current one
     * @param &LinksMenuElement[] &$menu_elements A reference to a list of LinksMenuLink and / or Menu to add
     */
-    function add_array(&$menu_elements)
+    public function add_array(&$menu_elements)
     {
         foreach ($menu_elements as $element)
             $this->add($element);
@@ -78,7 +88,7 @@ class LinksMenu extends LinksMenuElement
     * @desc Add a single LinksMenuLink or (sub) Menu
     * @param LinksMenuElement $element the LinksMenuLink or Menu to add
     */
-    function add($element)
+    public function add($element)
     {
         if (get_class($element) == get_class($this))
             $element->_parent($this->type);
@@ -91,7 +101,7 @@ class LinksMenu extends LinksMenuElement
     /**
     * Update the menu uid
     */
-    function update_uid()
+    public function update_uid()
     {
         parent::update_uid();
         foreach ($this->elements as $element)
@@ -103,7 +113,7 @@ class LinksMenu extends LinksMenuElement
     * @param Template $template the template to use
     * @return string the menu parsed in xHTML
     */
-    function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+    public function display($template = false, $mode = LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
     {
         // Stop if the user isn't authorised
         if (!$this->_check_auth())
@@ -144,7 +154,7 @@ class LinksMenu extends LinksMenuElement
     /**
     * @return string the string to write in the cache file
     */
-    function cache_export($template = false)
+    public function cache_export($template = false)
     {
         // Get the good Template object
         if (!is_object($template) || strtolower(get_class($template)) != 'template')
@@ -187,45 +197,25 @@ class LinksMenu extends LinksMenuElement
             return $cache_str;
         }
         return parent::cache_export_begin() . $tpl->parse(Template::TEMPLATE_PARSER_STRING) . parent::cache_export_end();
-    }
-    
-    ## Getters ##
-    /**
-    * @return string the menu type
-    */
-    
-    function get_type() { return $this->type; }
-    
-    /**
-    * Sets the type of the menu
-    *
-    * @param string $type Type of the menu
-    */
-    function set_type($type) { $this->type = $type; }
-    
-    /**
-    * @return LinksMenuElement[] the menu children elements
-    */
-    function get_children() { return $this->elements; }
-    
+    }   
+     
     /**
     * static method which returns all the menu types
     *
     * @return string[] The list of the menu types
     * @static
     */
-    function get_menu_types_list()
+    public static function get_menu_types_list()
     {
         return array(VERTICAL_MENU, HORIZONTAL_MENU, VERTICAL_SCROLLING_MENU, HORIZONTAL_SCROLLING_MENU/*, TREE_MENU*/);
     }
-    
-    ## Private Methods ##
+   
     /**
     * @desc Increase the Menu Depth and set the menu type to its parent one
     * @access protected
     * @param string $type the type of the menu
     */
-    function _parent($type)
+    protected function _parent($type)
     {
         parent::_parent($type);
         
@@ -235,18 +225,24 @@ class LinksMenu extends LinksMenuElement
             $element->_parent($type);
         }
     }
-    ## Private attributes ##
+    
+    ## Getters ##
+    /**
+    * @return string the menu type
+    */
+    public function get_type() { return $this->type; }
     
     /**
-    * @access protected
-    * @var string menu's type
+    * Sets the type of the menu
+    *
+    * @param string $type Type of the menu
     */
-    var $type;
+    public function set_type($type) { $this->type = $type; }
+    
     /**
-    * @access protected
-    * @var LinksMenuElement[] Direct menu children list
+    * @return LinksMenuElement[] the menu children elements
     */
-    var $elements = array();
+    public function get_children() { return $this->elements; }
 }
 
 ?>

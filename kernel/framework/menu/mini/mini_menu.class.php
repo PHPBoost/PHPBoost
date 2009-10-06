@@ -27,7 +27,7 @@
 
 import('menu/menu');
 
-define('MINI_MENU__CLASS','MiniMenu');
+define('MINI_MENU__CLASS', 'MiniMenu');
 
 /**
  * @author Loïc Rouchon <horn@phpboost.com>
@@ -37,29 +37,33 @@ define('MINI_MENU__CLASS','MiniMenu');
  */
 class MiniMenu extends Menu
 {
-    ## Public Methods ##
+    private $function_name = '';
+    
     public function __construct($title, $filename)
     {
         $this->function_name = 'menu_' . strtolower($title) . '_' . strtolower($filename);
         parent::__construct($title . '/' . $filename);
     }
-	
+
+    public function display($tpl = false)
+    {
+    	return '';
+    }
+    
     /**
 	* @return string the string the string to write in the cache file
 	*/
-    function cache_export()
+    public function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/menus/' . strtolower($this->title) . '.php\';';
         $cache_str.= 'if(function_exists(\'' . $this->function_name . '\')) { $__menu.=' . $this->function_name . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
 	
-	function get_formated_title()
+	public function get_formated_title()
     {
 		return ucfirst(substr($this->title, 0, strpos($this->title, '/')));
     }
-	
-    var $function_name = '';
 }
 
 ?>

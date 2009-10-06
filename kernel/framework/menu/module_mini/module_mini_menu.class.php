@@ -37,7 +37,8 @@ define('MODULE_MINI_MENU__CLASS','ModuleMiniMenu');
  */
 class ModuleMiniMenu extends Menu
 {
-    ## Public Methods ##
+	private $filename = '';
+	
     /**
 	 * @desc Build a ModuleMiniMenu element.
 	 * @param string $title its name (according the the module folder name)
@@ -48,22 +49,27 @@ class ModuleMiniMenu extends Menu
         $this->filename = strprotect($filename);
     }
     
+    public function display($tpl = false)
+    {
+    	return '';
+    }
+    
     /**
 	 * @return string the string the string to write in the cache file
 	 */
-    function cache_export()
+    public function cache_export()
     {
         $cache_str = '\';include_once PATH_TO_ROOT.\'/' . strtolower($this->title) . '/' . $this->filename . '.php\';';
         $cache_str.= 'if(function_exists(\'' . $this->filename . '\')) { $__menu.=' . $this->filename . '(' . $this->position . ',' . $this->block . ');} $__menu.=\'';
         return parent::cache_export_begin() . $cache_str . parent::cache_export_end();
     }
 
-    function get_title()
+    public function get_title()
     {
 		return $this->title . '/' . $this->filename;
     }
     
-    function get_formated_title()
+    public function get_formated_title()
     {
     	$info_module = load_ini_file(PATH_TO_ROOT . '/' . $this->title . '/lang/', get_ulang());
 		if (!empty($info_module) && is_array($info_module))
@@ -71,8 +77,6 @@ class ModuleMiniMenu extends Menu
 			return isset($info_module['name']) ? $info_module['name'] : '';
 		}
     }
-    
-    var $filename = '';
 }
 
 ?>
