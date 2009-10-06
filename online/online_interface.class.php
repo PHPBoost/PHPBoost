@@ -43,7 +43,7 @@ class OnlineInterface extends ModuleInterface
 		$online_config = 'global $CONFIG_ONLINE;' . "\n";
 		
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_ONLINE = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'online'", __LINE__, __FILE__));
+		$CONFIG_ONLINE = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'online'", __LINE__, __FILE__));
 		$CONFIG_ONLINE = is_array($CONFIG_ONLINE) ? $CONFIG_ONLINE : array();
 		
 		$online_config .= '$CONFIG_ONLINE = ' . var_export($CONFIG_ONLINE, true) . ';' . "\n";

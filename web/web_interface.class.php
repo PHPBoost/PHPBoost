@@ -43,16 +43,16 @@ class WebInterface extends ModuleInterface
 		$code = 'global $CAT_WEB;' . "\n" . 'global $CONFIG_WEB;' . "\n";
 			
 		//Récupération du tableau linéarisé dans la bdd.
-		$CONFIG_WEB = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'web'", __LINE__, __FILE__));
+		$CONFIG_WEB = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'web'", __LINE__, __FILE__));
 		$CONFIG_WEB = is_array($CONFIG_WEB) ? $CONFIG_WEB : array();
 		
 		$code .= '$CONFIG_WEB = ' . var_export($CONFIG_WEB, true) . ';' . "\n";
 		$code .= "\n";
 		
-		$result = $this->db_connection->query_while("SELECT id, name, secure
+		$result = $this->sql_querier->query_while("SELECT id, name, secure
 		FROM " . PREFIX . "web_cat
 		WHERE aprob = 1", __LINE__, __FILE__);
-		while ($row = $this->db_connection->fetch_assoc($result))
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{		
 			$code .= '$CAT_WEB[\'' . $row['id'] . '\'][\'secure\'] = ' . var_export($row['secure'], true) . ';' . "\n";
 			$code .= '$CAT_WEB[\'' . $row['id'] . '\'][\'name\'] = ' . var_export($row['name'], true) . ';' . "\n";

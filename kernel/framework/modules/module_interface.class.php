@@ -43,7 +43,7 @@ define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
  */
 class ModuleInterface
 {
-	protected $db_connection;
+	protected $sql_querier;
 	
     //-------------------------------------------------------------- CONSTRUCTOR
     /**
@@ -94,7 +94,7 @@ class ModuleInterface
         }
         $this->errors = $error;
         
-        $this->db_connection = EnvironmentServices::get_sql();
+        $this->sql_querier = EnvironmentServices::get_sql();
     }
 
     //----------------------------------------------------------- PUBLIC METHODS

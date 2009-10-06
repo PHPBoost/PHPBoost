@@ -44,11 +44,11 @@ class PagesInterface extends ModuleInterface
 		//Catégories des pages
 		$config = 'global $_PAGES_CATS;' . "\n";
 		$config .= '$_PAGES_CATS = array();' . "\n";
-		$result = $this->db_connection->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
+		$result = $this->sql_querier->query_while("SELECT c.id, c.id_parent, c.id_page, p.title, p.auth
 		FROM " . PREFIX . "pages_cats c
 		LEFT JOIN " . PREFIX . "pages p ON p.id = c.id_page
 		ORDER BY p.title", __LINE__, __FILE__);
-		while ($row = $this->db_connection->fetch_assoc($result))
+		while ($row = $this->sql_querier->fetch_assoc($result))
 		{
 			$config .= '$_PAGES_CATS[\'' . $row['id'] . '\'] = ' . var_export(array(
 				'id_parent' => !empty($row['id_parent']) ? $row['id_parent'] : '0',
@@ -59,7 +59,7 @@ class PagesInterface extends ModuleInterface
 
 		//Configuration du module de pages
 		$code = 'global $_PAGES_CONFIG;' . "\n";
-		$CONFIG_PAGES = unserialize($this->db_connection->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
+		$CONFIG_PAGES = unserialize($this->sql_querier->query("SELECT value FROM " . DB_TABLE_CONFIGS . " WHERE name = 'pages'", __LINE__, __FILE__));
 								
 		if (is_array($CONFIG_PAGES))
 			$CONFIG_PAGES['auth'] = unserialize($CONFIG_PAGES['auth']);
@@ -122,10 +122,10 @@ class PagesInterface extends ModuleInterface
             p.auth AS `auth`
             FROM " . PREFIX . "pages p
             WHERE ( MATCH(title) AGAINST('".$args['search']."') OR MATCH(contents) AGAINST('".$args['search']."') )".$auth_cats
-            .$this->db_connection->limit(0, PAGES_MAX_SEARCH_RESULTS);
+            .$this->sql_querier->limit(0, PAGES_MAX_SEARCH_RESULTS);
 
-        $result = $this->db_connection->query_while ($request, __LINE__, __FILE__);
-        while ($row = $this->db_connection->fetch_assoc($result))
+        $result = $this->sql_querier->query_while ($request, __LINE__, __FILE__);
+        while ($row = $this->sql_querier->fetch_assoc($result))
         {
             if ( !empty($row['auth']) )
             {
@@ -142,7 +142,7 @@ class PagesInterface extends ModuleInterface
                 array_push($results, $row);
             }
         }
-        $this->db_connection->query_close($result);
+        $this->sql_querier->query_close($result);
         
         return $results;
     }
