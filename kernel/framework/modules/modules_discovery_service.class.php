@@ -37,10 +37,13 @@ import('modules/module_interface');
  */
 class ModulesDiscoveryService
 {
+	private $loaded_modules;
+    private $available_modules;
+	
     /**
      * @desc Builds a new ModuleInterface factory
      */
-    function ModulesDiscoveryService()
+    public function __construct()
     {
         global $MODULES;
 
@@ -65,7 +68,7 @@ class ModulesDiscoveryService
      * modules. This array has keys that are the modules ids and the associated
      * value is the return value for this particular module.
      */
-    function functionality($functionality, $modules)
+    public function functionality($functionality, $modules)
     {
         $results = array();
         foreach ($modules as $module_id => $args)
@@ -89,7 +92,7 @@ class ModulesDiscoveryService
      * Useful to do generic operations on modules.
      * @return ModuleInterface[] the ModuleInterface list.
      */
-    function get_all_modules()
+    public function get_all_modules()
     {
         return $this->get_available_modules();
     }
@@ -104,7 +107,7 @@ class ModulesDiscoveryService
      * availables modules interfaces.
      * @return ModuleInterface[] the ModuleInterface list.
      */
-    function get_available_modules($functionality = 'none', $modulesList = array())
+    public function get_available_modules($functionality = 'none', $modulesList = array())
     {
         $modules = array();
         if ($modulesList === array())
@@ -138,7 +141,7 @@ class ModulesDiscoveryService
      * @param string $module_id The module id.
      * @return ModuleInterface The corresponding ModuleInterface.
      */
-    function get_module($module_id = '')
+    public function get_module($module_id = '')
     {
         $module_constructor = ucfirst($module_id . 'Interface');
         $file = PATH_TO_ROOT . '/' . $module_id . '/' . $module_id . '_interface.class.php';
@@ -186,10 +189,6 @@ class ModulesDiscoveryService
         $this->loaded_modules[$module_id] = $module;
         return $this->loaded_modules[$module_id];
     }
-
-    
-    var $loaded_modules;
-    var $available_modules;
 }
 
 ?>
