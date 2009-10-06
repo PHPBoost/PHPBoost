@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_field');
 
@@ -40,7 +40,7 @@ class FormHiddenField extends FormField
 		$this->value = $value;
 		$this->id = $id;
 	}
-	
+
 	public function display()
 	{
 		$field = '<input type="hidden" ';
@@ -48,7 +48,7 @@ class FormHiddenField extends FormField
 		$field .= !empty($this->id) ? 'id="' . $this->id . '" ' : '';
 		$field .= !empty($this->value) ? 'value="' . $this->value . '" ' : '';
 		$field .= '/>';
-		
+
 		return $field;
 	}
 }

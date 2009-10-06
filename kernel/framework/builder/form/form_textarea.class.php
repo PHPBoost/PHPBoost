@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_field');
 
@@ -38,7 +38,7 @@ class FormTextarea extends FormField
 	private $cols = 47; //Cols for the textarea.
 	private $editor = true; //Allow to hide the editor.
 	private $forbidden_tags = array(); //Forbiddend tags in the content.
-	
+
 	public function __construct($field_id, $field_value, $fieldOptions = array())
 	{
 		parent::__construct($field_id, $field_value, $fieldOptions);
@@ -49,22 +49,22 @@ class FormTextarea extends FormField
 			{
 				case 'rows' :
 					$this->rows = $value;
-				break;
+					break;
 				case 'cols' :
 					$this->cols = $value;
-				break;
+					break;
 				case 'editor' :
 					$this->editor = $value;
-				break;
+					break;
 				case 'forbiddentags' :
 					$this->forbidden_tags = $value;
-				break;
+					break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
-	
+
 	/**
 	 * @return string The html code for the textarea.
 	 */
@@ -80,7 +80,7 @@ class FormTextarea extends FormField
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '"> ' : '>';
 		$field .= $this->value;
 		$field .= '</textarea>';
-		
+
 		$Template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $field,
@@ -88,9 +88,9 @@ class FormTextarea extends FormField
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-		));	
-		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			));
+
+			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 

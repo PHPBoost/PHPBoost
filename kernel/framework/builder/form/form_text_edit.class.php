@@ -6,7 +6,7 @@
  *   copyright            : (C) 2009 Viarre Régis
  *   email                : crowkait@phpboost.com
  *
-###################################################
+ ###################################################
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
-###################################################*/
+ ###################################################*/
 
 import('builder/form/form_field');
 
@@ -42,11 +42,11 @@ class FormTextEdit extends FormField
 {
 	private $size = '';
 	private $maxlength = '';
-	
+
 	public function __construct($field_id, $field_value, $field_options = array())
 	{
 		parent::__construct($field_id, $field_value, $field_options);
-		
+
 		foreach($field_options as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);
@@ -54,16 +54,16 @@ class FormTextEdit extends FormField
 			{
 				case 'size' :
 					$this->size = $value;
-				break;
+					break;
 				case 'maxlength' :
 					$this->maxlength = $value;
-				break;
+					break;
 				default :
 					$this->throw_error(sprintf('Unsupported option %s with field ' . __CLASS__, $attribute), E_USER_NOTICE);
 			}
 		}
 	}
-	
+
 	/**
 	 * @return string The html code for the input.
 	 */
@@ -80,16 +80,16 @@ class FormTextEdit extends FormField
 		$field .= !empty($this->css_class) ? 'class="' . $this->css_class . '" ' : '';
 		$field .= !empty($this->on_blur) ? 'onblur="' . $this->on_blur . '" ' : '';
 		$field .= '/>';
-		
+
 		$Template->assign_vars(array(
 			'ID' => $this->id,
 			'FIELD' => $field,
 			'L_FIELD_TITLE' => $this->title,
 			'L_EXPLAIN' => $this->sub_title,
 			'L_REQUIRE' => $this->required ? '* ' : ''
-		));	
-		
-		return $Template->parse(Template::TEMPLATE_PARSER_STRING);
+			));
+
+			return $Template->parse(Template::TEMPLATE_PARSER_STRING);
 	}
 }
 
