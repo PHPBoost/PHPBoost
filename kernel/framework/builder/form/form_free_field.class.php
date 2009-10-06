@@ -44,7 +44,7 @@ class FormFreeField extends FormField
 	
 	public function __construct($field_id, $fieldOptions)
 	{
-		$this->fill_attributes($field_id, '', $fieldOptions);
+		parent::__construct($field_id, '', $fieldOptions);
 		foreach($fieldOptions as $attribute => $value)
 		{
 			$attribute = strtolower($attribute);

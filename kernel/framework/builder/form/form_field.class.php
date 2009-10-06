@@ -39,6 +39,7 @@
  * </ul>
  * @package builder
  * @subpackage form
+ * @abstract
  */
 abstract class FormField
 {
@@ -59,7 +60,7 @@ abstract class FormField
 	 * @param string $field_id Name of the field.
 	 * @param array $fieldOptions Option for the field.
 	 */
-	public function fill_attributes($field_id, $value, &$fieldOptions)
+	protected function __construct($field_id, $value, &$fieldOptions)
 	{
 		$this->name = $field_id;
 		$this->id = $field_id;

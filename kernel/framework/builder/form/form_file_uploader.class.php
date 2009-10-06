@@ -43,7 +43,7 @@ class FormFileUploader extends FormField
 	
 	public function __construct($field_id, $field_options = array())
 	{
-		$this->fill_attributes($field_id, '', $field_options);
+		parent::__construct($field_id, '', $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{

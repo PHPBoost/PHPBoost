@@ -45,7 +45,7 @@ class FormTextEdit extends FormField
 	
 	public function __construct($field_id, $field_value, $field_options = array())
 	{
-		$this->fill_attributes($field_id, $field_value, $field_options);
+		parent::__construct($field_id, $field_value, $field_options);
 		
 		foreach($field_options as $attribute => $value)
 		{
