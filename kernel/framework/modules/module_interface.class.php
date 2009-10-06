@@ -44,18 +44,47 @@ define('MODULE_ATTRIBUTE_DOES_NOT_EXIST', 16);
 class ModuleInterface
 {
 	protected $sql_querier;
-	
-    //-------------------------------------------------------------- CONSTRUCTOR
+
+	/**
+     * @access protected
+     * @var string the module identifier
+     */
+    protected $id;
+    /**
+     * @access protected
+     * @var string the module full name
+     */
+    protected $name;
+    /**
+     * @access protected
+     * @var mixed module's informations contained in ini files
+     */
+    protected $infos;
+    /**
+     * @access protected
+     * @var string[] list of the functionalities provided
+     */
+    protected $functionalities;
+    /**
+     * @access protected
+     * @var int error flag
+     */
+    protected $errors;
+    /**
+     * @access protected
+     * @var mixed[string] the attributes dictionary
+     */
+    protected $attributes;
+
+    protected $enabled = false;
+    
     /**
      * @desc ModuleInterface constructor
      * @param string $moduleId the module id. It's the name of the folder in witch the module is
      * @param int $error allow you to instanciate your module with an error code
      */
-    function ModuleInterface($moduleId = '', $error = 0)
+    public function __construct($moduleId = '', $error = 0)
     {
-        /**
-         * @global  CONFIG
-         */
         global $CONFIG, $MODULES;
         $this->id = $moduleId;
         $this->name = $this->id;
@@ -97,11 +126,10 @@ class ModuleInterface
         $this->sql_querier = EnvironmentServices::get_sql();
     }
 
-    //----------------------------------------------------------- PUBLIC METHODS
     /**
      * @return string Return the id of the module
      */
-    function get_id()
+    public function get_id()
     {
         return $this->id;
     }
@@ -109,7 +137,7 @@ class ModuleInterface
     /**
      * @return bool Return the true if the module is enabled
      */
-    function is_enabled()
+    public function is_enabled()
     {
         return $this->enabled;
     }
@@ -117,7 +145,7 @@ class ModuleInterface
     /**
      * @return string Return the name of the module
      */
-    function get_name()
+    public function get_name()
     {
         return $this->name;
     }
@@ -125,7 +153,7 @@ class ModuleInterface
     /**
      * @return mixed[] All informations that you could find in the .ini file of the module,  his functionalities and his name
      */
-    function get_infos()
+    public function get_infos()
     {
         return array(
             'name' => $this->name,
@@ -140,7 +168,7 @@ class ModuleInterface
      *  in the intern dictionary if existing. Else, the MODULE_ATTRIBUTE_DOES_NOT_EXIST flag is raised and it
      *  returns -1
      */
-    function get_attribute($attribute)
+    public function get_attribute($attribute)
 
     {
         $this->_clear_error(MODULE_ATTRIBUTE_DOES_NOT_EXIST);
@@ -156,7 +184,7 @@ class ModuleInterface
      * @param string $attribute the attribute identifier
      * @param mixed $value the value to set
      */
-    function set_attribute($attribute, $value)
+    public function set_attribute($attribute, $value)
     {
         $this->attributes[$attribute] = $value;
     }
@@ -165,7 +193,7 @@ class ModuleInterface
      * @desc Delete the attribute and free its memory.
      * @param string $attribute the attribute identifier
      */
-    function unset_attribute($attribute)
+    public function unset_attribute($attribute)
     {
         unset($this->attributes[$attribute]);
     }
@@ -176,7 +204,7 @@ class ModuleInterface
      * @param int $error to check a specific error, 0 otherwise
      * @return returns true if the specified $error has occured otherwise, false.
      */
-    function got_error($error = 0)
+    public function got_error($error = 0)
     {
         if ( $error == 0 )
             return $this->errors != 0;
@@ -187,7 +215,7 @@ class ModuleInterface
     /**
      * @return int Returns the current errors flags
      */
-    function get_errors()
+    public function get_errors()
     {
         return $this->errors;
     }
@@ -199,7 +227,7 @@ class ModuleInterface
      * @param mixed $args the args you want to pass to the $functionality method
      * @return mixed the $functionality returns or if non-existing, false
      */
-    function functionality($functionality, $args = null)
+    public function functionality($functionality, $args = null)
     {
         $this->_clear_error(FUNCTIONNALITY_NOT_IMPLEMENTED);
         if ($this->has_functionality($functionality))
@@ -223,7 +251,7 @@ class ModuleInterface
      * @param string[] $functionalities the names of the methods you want to check the availability
      * @return bool true if all functionalities exist, false otherwise
      */
-    function has_functionalities($functionalities)
+    public function has_functionalities($functionalities)
     {
         $nbFunctionnalities = count($functionalities);
         for ( $i = 0; $i < $nbFunctionnalities; $i++ )
@@ -236,58 +264,19 @@ class ModuleInterface
      * @desc Set the flag error.
      * @param int $error the error flag to raised
      */
-    function set_error($error = 0)
+    public function set_error($error = 0)
     {
         $this->errors |= $error;
     }
-    //------------------------------------------------------------------ PRIVATE
-
-    //-------------------------------------------------------- PROTECTED METHODS
     
     /**
      * @desc Clear the $error error flag
      * @param int $error the error flag to clear
      */
-    function _clear_error($error)
+    private function _clear_error($error)
     {
         $this->errors &= (~$error);
     }
-
-    //----------------------------------------------------- PROTECTED ATTRIBUTES
-    /**
-     * @access protected
-     * @var string the module identifier
-     */
-    var $id;
-    /**
-     * @access protected
-     * @var string the module full name
-     */
-    var $name;
-    /**
-     * @access protected
-     * @var mixed module's informations contained in ini files
-     */
-    var $infos;
-    /**
-     * @access protected
-     * @var string[] list of the functionalities provided
-     */
-    var $functionalities;
-    /**
-     * @access protected
-     * @var int error flag
-     */
-    var $errors;
-    /**
-     * @access protected
-     * @var mixed[string] the attributes dictionary
-     */
-    var $attributes;
-
-    var $enabled = false;
-
-
 }
 
 ?>
