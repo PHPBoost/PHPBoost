@@ -34,7 +34,7 @@ class NewsletterInterface extends ModuleInterface
     ## Public Methods ##
     function NewsletterInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('newsletter');
+        parent::__construct('newsletter');
     }
     
     //Récupération du cache.

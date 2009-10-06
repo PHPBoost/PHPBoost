@@ -34,7 +34,7 @@ class ShoutboxInterface extends ModuleInterface
     ## Public Methods ##
     function ShoutboxInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('shoutbox');
+        parent::__construct('shoutbox');
     }
     
     //Récupération du cache.

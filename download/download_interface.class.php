@@ -35,7 +35,7 @@ class DownloadInterface extends ModuleInterface
     ## Public Methods ##
     function DownloadInterface()
     {
-        parent::ModuleInterface('download');
+        parent::__construct('download');
     }
   
 	//Récupération du cache.

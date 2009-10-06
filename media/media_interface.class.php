@@ -37,7 +37,7 @@ class MediaInterface extends ModuleInterface
     ## Public Methods ##
     function MediaInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('media');
+        parent::__construct('media');
     }
 
 	//Récupération du cache.

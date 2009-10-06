@@ -36,7 +36,7 @@ class FaqInterface extends ModuleInterface
     ## Public Methods ##
     function FaqInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('faq');
+        parent::__construct('faq');
     }
     
 	//Récupération du cache.

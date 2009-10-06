@@ -36,7 +36,7 @@ class CalendarInterface extends ModuleInterface
     ## Public Methods ##
     function CalendarInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('calendar');
+        parent::__construct('calendar');
     }
     
 	//Récupération du cache.

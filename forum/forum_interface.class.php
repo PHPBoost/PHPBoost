@@ -36,7 +36,7 @@ class ForumInterface extends ModuleInterface
 	## Public Methods ##
 	function ForumInterface() //Constructeur de la classe ForumInterface
 	{
-		parent::ModuleInterface('forum');
+		parent::__construct('forum');
 	}
 
 	//Récupération du cache.

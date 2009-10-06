@@ -38,7 +38,7 @@ class NewsInterface extends ModuleInterface
     ## Public Methods ##
     function NewsInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('news');
+        parent::__construct('news');
     }
 
     //Récupération du cache.

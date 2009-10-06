@@ -34,7 +34,7 @@ class PollInterface extends ModuleInterface
     ## Public Methods ##
     function PollInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('poll');
+        parent::__construct('poll');
     }
     
     //Récupération du cache.

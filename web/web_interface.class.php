@@ -34,7 +34,7 @@ class WebInterface extends ModuleInterface
     ## Public Methods ##
     function WebInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('web');
+        parent::__construct('web');
     }
     
     //Récupération du cache.

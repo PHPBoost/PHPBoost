@@ -34,7 +34,7 @@ class ContactInterface extends ModuleInterface
     ## Public Methods ##
     function ContactInterface() //Constructeur de la classe ForumInterface
     {
-        parent::ModuleInterface('contact');
+        parent::__construct('contact');
     }
     
     //Récupération du cache.

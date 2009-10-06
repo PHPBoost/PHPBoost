@@ -32,7 +32,7 @@ class DocInterface extends ModuleInterface
     ## Public Methods ##
     function DocInterface()
     {
-        parent::ModuleInterface('doc');
+        parent::__construct('doc');
     }
 }
 
