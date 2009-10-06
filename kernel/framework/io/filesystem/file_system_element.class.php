@@ -35,13 +35,22 @@ define('OPEN_AFTER', false);
  * @author Benoît Sautel <ben.popeye@phpboost.com> Nicolas Duhamel <akhenathon2@gmail.com>
  * @desc This class represents any file system element.
  */
-class FileSystemElement
+abstract class FileSystemElement
 {
+    /**
+     * @var string Path of the file system element
+     */
+    protected $path;
+    /**
+     * @var bool Indicates whether the file system element is open or closed.
+     */
+    protected $is_open;
+	
     /**
      * @desc Builds a FileSystemElement object from the path of the element.
      * @param string $path Path of the element
      */
-    function FileSystemElement($path)
+    protected function __construct($path)
     {
         $this->path = $path;
         $this->is_open = false;
@@ -51,7 +60,7 @@ class FileSystemElement
      * @desc Allows you to know if the file system element exists.
      * @return bool True if the file exists, else, false.
      */
-    function exists()
+    public function exists()
     {
         return file_exists($this->path);
     }
@@ -59,7 +68,7 @@ class FileSystemElement
     /**
      * @desc Opens the file system element.
      */
-    function open()
+    public function open()
     {
         if ($this->is_open)
         {
@@ -72,7 +81,7 @@ class FileSystemElement
     /**
      * @desc Initializes the file system element just before to be read.
      */
-    function get()
+    public function get()
     {
         if (!$this->is_open)
         {
@@ -86,7 +95,7 @@ class FileSystemElement
      * @param bool $no_extension False if you want the name of the file with the extension and true without.
      * @return string The element name.
      */
-    function get_name($full_path = false, $no_extension = false)
+    public function get_name($full_path = false, $no_extension = false)
     {
         if ($full_path)
         {
@@ -109,7 +118,7 @@ class FileSystemElement
      * @desc Changes the chmod of the element.
      * @param int $chmod The new chmod of the file. Put a 0 at the begening of the number to indicate to the PHP parser that it's an octal value.
      */
-    function change_chmod($chmod)
+    public function change_chmod($chmod)
     {
         if (!empty($this->path))
         {
@@ -121,19 +130,7 @@ class FileSystemElement
      * @abstract
      * @desc Deletes the element
      */
-    function delete() { }
-
-    ## Public Attributes ##
-    /**
-     * @var string Path of the file system element
-     */
-    var $path;
-
-    /**
-     * @var bool Indicates whether the file system element is open or closed.
-     */
-    var $is_open;
-
+    public abstract function delete() { }
 }
 
 ?>

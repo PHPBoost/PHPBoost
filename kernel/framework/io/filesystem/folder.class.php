@@ -37,11 +37,20 @@ import('io/filesystem/file');
 class Folder extends FileSystemElement
 {
     /**
+     * @var File[] List of the files contained by this folder.
+     */
+    private $files = array();
+    /**
+     * @var Folder[] List of the folders contained by this folder.
+     */
+    private $folders = array();
+	
+    /**
      * @desc Builds a Folder object.
      * @param string $path Path of the folder.
      * @param bool $whenopen OPEN_AFTER if you want to synchronyse you with the folder only when it's necessary or OPEN_NOW if you want to open it now.
      */
-    function Folder($path, $whenopen = OPEN_AFTER)
+    public function __construct($path, $whenopen = OPEN_AFTER)
     {
         parent::FileSystemElement(rtrim($path, '/'));
 
@@ -68,7 +77,7 @@ class Folder extends FileSystemElement
     /**
      * @desc Opens the folder.
      */
-    function open()
+    public function open()
     {
         parent::open();
 
@@ -100,7 +109,7 @@ class Folder extends FileSystemElement
      * @param string $regex PREG which describes the pattern the files you want to list must match. If you want all of them, don't use this parameter.
      * @return File[] The files list.
      */
-    function get_files($regex = '')
+    public function get_files($regex = '')
     {
         parent::get();
 
@@ -130,7 +139,7 @@ class Folder extends FileSystemElement
      * @param string $regex PREG which describes the pattern the folders you want to list must match. If you want all of them, don't use this parameter.
      * @return Folder[] The folders list.
      */
-    function get_folders($regex = '')
+    public function get_folders($regex = '')
     {
         parent::get();
         if (empty($regex))
@@ -160,7 +169,7 @@ class Folder extends FileSystemElement
      * @desc Returns the first folder present in this folder
      * @return Folder The first folder of this folder or null if it doesn't contain any folder.
      */
-    function get_first_folder()
+    public function get_first_folder()
     {
         parent::get();
 
@@ -178,7 +187,7 @@ class Folder extends FileSystemElement
      * @desc Returns all the file system elements contained by the folder.
      * @return FileSystemElement[] The list of the file system element contained in this folder.
      */
-    function get_all_content()
+    public function get_all_content()
     {
         return array_merge($this->get_files(), $this->get_folders());
     }
@@ -187,7 +196,7 @@ class Folder extends FileSystemElement
      * @desc Deletes the folder and all what it contains.
      * @return True if deleted successfully.
      */
-    function delete()
+    public function delete()
     {
         $this->open();
 
@@ -204,17 +213,6 @@ class Folder extends FileSystemElement
         }
         return true;
     }
-
-    ## Private Attributes ##
-    /**
-     * @var File[] List of the files contained by this folder.
-     */
-    var $files = array();
-
-    /**
-     * @var Folder[] List of the folders contained by this folder.
-     */
-    var $folders = array();
 }
 
 ?>

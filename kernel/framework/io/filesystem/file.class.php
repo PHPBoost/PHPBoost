@@ -47,12 +47,29 @@ define('NOTCLOSEFILE', 0x2);
 class File extends FileSystemElement
 {
 	/**
+	 * @var string[] List of the lines of the file.
+	 */
+	private $lines = array();
+	/**
+	 * @var string Content of the file
+	 */
+	private $contents;
+	/**
+	 * @var int Open mode
+	 */
+	private $mode;
+	/**
+	 * @var File descriptor of the open file.
+	 */
+	private $fd;
+	
+	/**
 	 * @desc Builds a File object.
 	 * @param string $path Path of the file you want to work with.
 	 * @param int $mode If you want to open it only to read it, use the flag READ, if it's to write it use the WRITE flag, you also can use the READ_WRITE flag.
 	 * @param bool $whenopen If you want to open the file now, use the OPEN_NOW constant, if you want to open it only when you will need it, use the OPEN_AFTER constant.
 	 */
-	function File($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
+	public function __construct($path, $mode = READ_WRITE, $whenopen = OPEN_AFTER)
 	{
 		parent::FileSystemElement($path);
 
@@ -67,18 +84,18 @@ class File extends FileSystemElement
 	/**
 	 * @desc Opens the file. You cannot read or write a closed file, use this method to open it.
 	 */
-	function open()
+	public function open()
 	{
 		if (!$this->is_open())
 		{
 			parent::open();
 			if (file_exists($this->path) && is_file($this->path))
 			{   // The file already exists and is a file (not a folder)
-				$this->fd = fopen($this->path, 'r+');
+				$this->fd = @fopen($this->path, 'r+');
 			}
 			else if (!file_exists($this->path))
 			{   // The file does not exists
-				$this->fd = fopen($this->path, 'x+');
+				$this->fd = @fopen($this->path, 'x+');
 			}
 				
 			if ($this->mode & READ)
@@ -95,7 +112,7 @@ class File extends FileSystemElement
 	 * @param int $len Number of bytes you want to read.
 	 * @return string The read content.
 	 */
-	function get_contents($start = 0, $len = -1)
+	public function get_contents($start = 0, $len = -1)
 	{
 		if ($this->mode & READ)
 		{
@@ -126,7 +143,7 @@ class File extends FileSystemElement
 	 * @param int $len Number of bytes you want to read.
 	 * @return string[] The list of the lines of the file.
 	 */
-	function get_lines($start = 0, $n = -1)
+	public function get_lines($start = 0, $n = -1)
 	{
 		if ($this->mode & READ)
 		{
@@ -158,7 +175,7 @@ class File extends FileSystemElement
 	 * @param bool $mode CLOSEFILE if you want to close the file before to write in it, NOTCLOSEFILE otherwise.
 	 * @return bool True if it could write, false otherwise.
 	 */
-	function write($data, $how = ERASE, $mode = CLOSEFILE)
+	public function write($data, $how = ERASE, $mode = CLOSEFILE)
 	{
 		if ($this->mode & WRITE)
 		{
@@ -198,7 +215,7 @@ class File extends FileSystemElement
 	/**
 	 * @desc Closes a file and frees the allocated memory relative to the file.
 	 */
-	function close()
+	public function close()
 	{
 		$this->contents = '';
 		$this->lines = array();
@@ -212,7 +229,7 @@ class File extends FileSystemElement
 	/**
 	 * @desc Deletes the file.
 	 */
-	function delete()
+	public function delete()
 	{
 		$this->close();
 
@@ -228,7 +245,7 @@ class File extends FileSystemElement
 	 * @desc Allows you to know if the file is already open.
 	 * @return bool true if the file is open, false if it's closed.
 	 */
-	function is_open()
+	public function is_open()
 	{
 		return $this->is_open && is_resource($this->fd);
 	}
@@ -237,7 +254,7 @@ class File extends FileSystemElement
 	 * @param bool $blocking if true, block the script, if false, non blocking operation
 	 * @desc Locks the file (it won't be readable by another thread which could try to access it).
 	 */
-	function lock($blocking = true)
+	public function lock($blocking = true)
 	{
 		if (!$this->is_open())
 		{
@@ -250,7 +267,7 @@ class File extends FileSystemElement
 	/**
 	 * @desc Unlocks a file. The file must have been locked before you call this method.
 	 */
-	function unlock()
+	public function unlock()
 	{
 		if (!$this->is_open())
 		{
@@ -263,7 +280,7 @@ class File extends FileSystemElement
 	/**
 	 * @desc Forces the system to write all the buffered output.
 	 */
-	function flush()
+	public function flush()
 	{
 		if ($this->is_open())
 		{
@@ -277,7 +294,7 @@ class File extends FileSystemElement
 	 * @param bool $once true if you don't want to include it if it has already been included.
 	 * @return true if the file has been successfully included
 	 */
-	function finclude($once = true)
+	public function finclude($once = true)
 	{
 		if ($once)
 		{
@@ -294,7 +311,7 @@ class File extends FileSystemElement
 	 * @param bool $once true if you don't want to include it if it has already been included.
 	 * @return true if the file has been successfully included
 	 */
-	function frequire($once = true)
+	public function frequire($once = true)
 	{
 		if ($once)
 		{
@@ -310,7 +327,7 @@ class File extends FileSystemElement
 	 * @desc Returns the date of the last modification of the file.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
-	function get_last_modification_date()
+	public function get_last_modification_date()
 	{
 		return filemtime($this->path);
 	}
@@ -319,31 +336,10 @@ class File extends FileSystemElement
 	 * @desc Returns the last access date of the file.
 	 * @return int The UNIX timestamp corresponding to the last access date of the file.
 	 */
-	function get_last_access_date()
+	public function get_last_access_date()
 	{
 		return filectime($this->path);
 	}
-
-	## Private Attributes ##
-	/**
-	 * @var string[] List of the lines of the file.
-	 */
-	var $lines = array();
-
-	/**
-	 * @var string Content of the file
-	 */
-	var $contents;
-
-	/**
-	 * @var int Open mode
-	 */
-	var $mode;
-
-	/**
-	 * @var File descriptor of the open file.
-	 */
-	var $fd;
 }
 
 ?>
