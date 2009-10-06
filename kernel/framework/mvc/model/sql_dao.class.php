@@ -124,10 +124,17 @@ abstract class SQLDAO implements DAO
 	 * @param SQLQuerier $querier the querier that will be used to interact with the database
 	 * @param MappingModel $model the model on which rely to provides services
 	 */
-	public function __construct(SQLQuerier $querier, MappingModel $model)
+	public function __construct(MappingModel $model, SQLQuerier $querier = null)
 	{
-		$this->querier = $querier;
 		$this->model = $model;
+		if ($querier == null)
+		{
+			$this->querier = EnvironmentServices::get_sql_querier();
+		}
+		else
+		{
+			$this->querier = $querier;
+		}
 		$this->cache_model();
 	}
 
@@ -254,9 +261,9 @@ abstract class SQLDAO implements DAO
 			$this->find_by_criteria_query = "select " . $this->pk_db_field . " as " .
 			$this->pk_property;
 			$this->add_select_columns($this->fields_mapping);
-            
+
 			$left_joins = $this->compute_joins();
-		    
+
 			$this->find_by_criteria_query .= " from " . $this->table . implode(" ", $left_joins) .
 			    " ";
 		}
