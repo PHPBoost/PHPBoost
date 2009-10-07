@@ -24,7 +24,9 @@
 				</a>
 				&nbsp;
 					# IF NOT C_WAITING #
-						<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>
+						# IF C_WRITE #
+							<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>				
+						# ENDIF #	
 					# ENDIF #
 				# ENDIF #
 				
@@ -98,7 +100,7 @@
 								<div style="float:left;width:70%">
 									<p style="margin-bottom:10px">
 										<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
-										# IF C_ADMIN #
+										# IF C_WRITE #
 											<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
 												<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
 											</a>
@@ -132,9 +134,7 @@
 					# END articles #
 					{PAGINATION}
 					<br />
-					# IF C_WAITING_ADMIN #
-						<p style="text-align:center;padding-top:10px;"><a href="../articles/admin_articles{U_ALL_WAITING_ARTICLES}">{L_ALL_WAITING_ARTICLES}</a></p>
-					# ENDIF #
+
 				# ENDIF #
 				
 				<p style="text-align:center;padding-top:10px;" class="text_small">

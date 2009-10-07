@@ -157,7 +157,9 @@ if (!empty($idart) && isset($cat) )
 }
 elseif ($user && isset($cat))
 {
-
+	if(!$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE))
+		$Errorh->handler('e_auth', E_USER_REDIRECT);
+		
 	$tpl = new Template('articles/articles_cat.tpl');
 	$i = 0;
 
@@ -170,12 +172,58 @@ elseif ($user && isset($cat))
 	{
 		$cat = $cat > 0 && $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE) ? $cat : 0;
 		
+		$get_sort = retrieve(GET, 'sort', '');	
+		$get_mode = retrieve(GET, 'mode', '');
+		$selected_fields = array(
+			'alpha' => '',
+			'view' => '',
+			'date' => '',
+			'com' => '',
+			'note' => '',
+			'asc' => '',
+			'desc' => ''
+			);
+			
+		switch ($get_sort)
+		{
+			case 'alpha' : 
+			$sort = 'title';
+			$selected_fields['alpha'] = ' selected="selected"';
+			break;	
+			case 'com' :
+			$sort = 'nbr_com';
+			$selected_fields['com'] = ' selected="selected"';
+			break;			
+			case 'date' : 
+			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
+			break;		
+			case 'view' :
+			$sort = 'views';
+			$selected_fields['view'] = ' selected="selected"';
+			break;		
+			case 'note' :
+			$sort = 'note';
+			$selected_fields['note'] = ' selected="selected"';
+			break;
+			default :
+			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
+		}
+
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		if ($mode == 'ASC')
+			$selected_fields['asc'] = ' selected="selected"';
+		else
+			$selected_fields['desc'] = ' selected="selected"';
+
+			
 		$result = $Sql->query_while("SELECT a.contents, a.note,a.views,a.nbr_com,a.title, a.id, a.idcat, a.timestamp, a.user_id, a.icon, a.nbr_com,a.start,a.visible, m.login, m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
 			WHERE (a.start > '" . $now->get_timestamp() . "' OR a.visible = '0') AND a.user_id = '" . $User->get_attribute('user_id') . "' AND a.idcat = '".$cat."'
-			ORDER BY a.timestamp DESC", __LINE__, __FILE__);
-	
+			ORDER BY " . $sort . " " . $mode , __LINE__, __FILE__);
+				
 		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
 		$array_class = array('member', 'modo', 'admin');
 
@@ -197,6 +245,8 @@ elseif ($user && isset($cat))
 				'NOTE'=>$row['note'],
 				'COM'=>$row['nbr_com'],
 				'USER_ID'=>$row['user_id'],
+				'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
+				'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 				'U_ARTICLES_PSEUDO'=> '<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
 				'U_EDIT'=> url('admin_articles_cat.php?edit='.$row['id']),
 				'U_ARTICLES_LINK' => url('.php'),
@@ -211,13 +261,12 @@ elseif ($user && isset($cat))
 		$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
 	
 		$tpl->assign_vars(array(
+				'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE),
 				'C_ARTICLES_LINK' =>true,
 				'C_WAITING'=> true,
-				'L_NO_ARTICES_AVAIBLE'=>$i == 0 ? $ARTICLES_LANG['no_articles_available']: '',
-				'L_ALL_WAITING_ARTICLES'=>$ARTICLES_LANG['all_waiting_articles'],
+				'L_NO_ARTICLES'=>$i == 0 ? $ARTICLES_LANG['no_articles_available']: '',
 				'L_ALL'=>$ARTICLES_LANG['all'],
 				'L_WRITTEN' =>  $LANG['written_by'],
-				'L_ME'=>$ARTICLES_LANG['me'],
 				'L_CATEGORY' => $LANG['categories'],
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
@@ -231,14 +280,23 @@ elseif ($user && isset($cat))
 				'L_VIEW' => $LANG['views'],
 				'L_NOTE' => $LANG['note'],
 				'L_COM' => $LANG['com'],
+				'L_DESC' => $LANG['desc'],
+				'L_ASC' => $LANG['asc'],
+				'L_TITLE'=>$LANG['title'],
 				'L_PSEUDO' => $LANG['pseudo'],
 				'L_WRITTEN' =>  $LANG['written_by'],
-				'ME_ID'=>$User->get_attribute('user_id'),
-				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
-				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
 				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>',
 				'U_ME_LINKS'=>'<span class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</span>',
-		));
+				'SELECTED_ALPHA' => $selected_fields['alpha'],
+				'SELECTED_COM' => $selected_fields['com'],
+				'SELECTED_DATE' => $selected_fields['date'],
+				'SELECTED_VIEW' => $selected_fields['view'],
+				'SELECTED_NOTE' => $selected_fields['note'],
+				'SELECTED_ASC' => $selected_fields['asc'],
+				'SELECTED_DESC' => $selected_fields['desc'],
+				'TARGET_ON_CHANGE_ORDER' => url('articles.php?user=1&amp;cat=' . $idartcat ),
+				
+			));
 				
 		$tpl->parse();
 	}
