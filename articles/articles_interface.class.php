@@ -319,7 +319,7 @@ class ArticlesInterface extends ModuleInterface
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
 			'C_WAITING'=> false,
-			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>&nbsp;<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php') . '" class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</a><br />' : '',
+			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?user=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,

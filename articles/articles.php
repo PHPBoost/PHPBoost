@@ -155,7 +155,7 @@ if (!empty($idart) && isset($cat) )
 
 	$tpl->parse();
 }
-elseif ($user)
+elseif ($user && isset($cat))
 {
 
 	$tpl = new Template('articles/articles_cat.tpl');
@@ -168,12 +168,17 @@ elseif ($user)
 	
 	if (!empty($array_cat))
 	{
+		$cat = $cat > 0 && $User->check_auth($ARTICLES_CAT[$cat]['auth'], AUTH_ARTICLES_WRITE) ? $cat : 0;
+		
 		$result = $Sql->query_while("SELECT a.contents, a.note,a.views,a.nbr_com,a.title, a.id, a.idcat, a.timestamp, a.user_id, a.icon, a.nbr_com,a.start,a.visible, m.login, m.level
 			FROM " . DB_TABLE_ARTICLES . " a
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
-			WHERE (a.start > '" . $now->get_timestamp() . "' OR a.visible = '0') AND a.user_id = '" . $User->get_attribute('user_id') . "'
+			WHERE (a.start > '" . $now->get_timestamp() . "' OR a.visible = '0') AND a.user_id = '" . $User->get_attribute('user_id') . "' AND a.idcat = '".$cat."'
 			ORDER BY a.timestamp DESC", __LINE__, __FILE__);
-			
+	
+		$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
+		$array_class = array('member', 'modo', 'admin');
+
 		while ($row = $Sql->fetch_assoc($result))
 		{
 			$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
@@ -191,6 +196,8 @@ elseif ($user)
 				'COMPT'=>$row['views'],
 				'NOTE'=>$row['note'],
 				'COM'=>$row['nbr_com'],
+				'USER_ID'=>$row['user_id'],
+				'U_ARTICLES_PSEUDO'=> '<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
 				'U_EDIT'=> url('admin_articles_cat.php?edit='.$row['id']),
 				'U_ARTICLES_LINK' => url('.php'),
 				'U_ARTICLES_LINK_COM'=>url('.php?cat=' . $row['idcat'] . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $row['idcat'] . '-' . $row['id'] . '.php?com=0')
@@ -200,44 +207,39 @@ elseif ($user)
 		}
 		
 		$Sql->query_close($result);
-		
-		if ($i == 0)
-		{
-			$tpl->assign_vars(array(
-				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
-				'L_ARTICLES' => $ARTICLES_LANG['articles'],
-				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
-				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . ' : '.$ARTICLES_LANG['no_articles_available'].'</a>',
-				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
-				'L_ALL_WAITING_ARTICLES'=>$ARTICLES_LANG['all_waiting_articles'],
-			));
-		}
-		else
-		{
-		
-			$group_color = User::get_group_color($User->get_attribute('user_groups'), $User->get_attribute('level'));
-		    $array_class = array('member', 'modo', 'admin');
-			
-			$tpl->assign_vars(array(
+
+		$articles_categories->build_select_form($cat, 'idcat', 'idcat', 0, AUTH_ARTICLES_WRITE, $CONFIG_ARTICLES['global_auth'], IGNORE_AND_CONTINUE_BROWSING_IF_A_CATEGORY_DOES_NOT_MATCH, $tpl);
+	
+		$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' =>true,
 				'C_WAITING'=> true,
-				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
-				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
+				'L_NO_ARTICES_AVAIBLE'=>$i == 0 ? $ARTICLES_LANG['no_articles_available']: '',
 				'L_ALL_WAITING_ARTICLES'=>$ARTICLES_LANG['all_waiting_articles'],
+				'L_ALL'=>$ARTICLES_LANG['all'],
+				'L_WRITTEN' =>  $LANG['written_by'],
+				'L_ME'=>$ARTICLES_LANG['me'],
+				'L_CATEGORY' => $LANG['categories'],
+				'L_ARTICLES' => $ARTICLES_LANG['articles'],
+				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
+				'L_DELETE' => $LANG['delete'],
+				'L_EDIT' => $LANG['edit'],
+				'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
+				'L_ALL'=>$ARTICLES_LANG['all'],
+				'L_ME'=>$ARTICLES_LANG['me'],
 				'L_ARTICLES' => $ARTICLES_LANG['articles'],
 				'L_DATE' => $LANG['date'],
 				'L_VIEW' => $LANG['views'],
 				'L_NOTE' => $LANG['note'],
 				'L_COM' => $LANG['com'],
-				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>&nbsp;<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $User->get_attribute('user_id'), '-' . $User->get_attribute('user_id') . '.php') . '" class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</a><br />',
-				'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
-				'L_DELETE' => $LANG['delete'],
-				'L_EDIT' => $LANG['edit'],
-				'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
-
-			));	
-		}
-
+				'L_PSEUDO' => $LANG['pseudo'],
+				'L_WRITTEN' =>  $LANG['written_by'],
+				'ME_ID'=>$User->get_attribute('user_id'),
+				'C_WAITING_ADMIN'=>$User->get_attribute('level') == 2 ? true : false,
+				'U_ALL_WAITING_ARTICLES'=>url('.php?sort=visible&amp;mode=asc'),
+				'U_ARTICLES_CAT_LINKS'=>' <a href="articles.php?user=1">' . $ARTICLES_LANG['waiting_articles'] . '</a>',
+				'U_ME_LINKS'=>'<span class="' . $array_class[$User->get_attribute('level')] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($User->get_attribute('login'), 19) . '</span>',
+		));
+				
 		$tpl->parse();
 	}
 	else
