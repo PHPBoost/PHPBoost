@@ -132,7 +132,6 @@ class EnvironmentServices
 	public static function init_sql_querier()
 	{
 	    self::$db_connection = DBFactory::new_db_connection();
-		self::$db_connection->connect();
 		self::$sql_querier = DBFactory::new_sql_querier(self::$db_connection);
 		
 		// TODO @ben, refactor this, find another way to retrieve the $sql_base

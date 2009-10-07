@@ -731,8 +731,6 @@ switch($step)
 				//On envoie le mail
 				$mail->send();
 					
-				// TODO ben, enlève ça sans tout casser
-				EnvironmentServices::set_sql($Sql);
 				//On connecte directement l'administrateur si il l'a demandé
 				if ($create_session)
 				{
