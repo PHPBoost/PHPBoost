@@ -4,6 +4,7 @@
 			function Confirm_del_article() {
 			return confirm("{L_ALERT_DELETE_ARTICLE}");
 			}
+
 		-->
 		</script>	
 		<div class="module_position">					
@@ -51,6 +52,23 @@
 				# ENDIF #
 				
 				# IF C_ARTICLES_LINK #
+				
+				# IF C_WAITING #
+				<div>
+					<dl>
+						<dt><label for="idcat"><b>{L_CATEGORY} : </b>&nbsp;</label></dt>
+						<dd><label>
+							<select id="{FORM_ID}" name="{FORM_NAME}"  onchange="document.location = 'articles.php?user=1&cat=' + this.options[this.selectedIndex].value;" >
+								<option value="0" >{L_ROOT}</option>
+							# START options #
+								<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
+							# END options #
+							</select>
+						</label></dd>
+					</dl>
+				</div>
+				# ENDIF #
+				
 				<br /><br />
 				<table class="module_table">
 					<tr>
@@ -79,6 +97,11 @@
 							{L_COM}
 							<a href="../articles/articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
 						</th>
+						<th style="text-align:center;">
+							<a href="../articles/articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
+							{L_PSEUDO}
+							<a href="../articles/articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
+						</th>
 					</tr>
 					# START articles #
 					<tr>	
@@ -102,6 +125,9 @@
 						</td>
 						<td class="row2" style="text-align: center;">
 							<a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
+						</td>
+						<td class="row2" style="text-align: center;">
+							{articles.U_ARTICLES_PSEUDO}
 						</td>
 					</tr>
 					# END articles #
