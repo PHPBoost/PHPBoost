@@ -365,7 +365,7 @@ class ArticlesInterface extends ModuleInterface
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
 			'C_WAITING'=> false,
-			'C_ADMIN'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
+			'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?user=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
