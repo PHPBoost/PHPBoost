@@ -80,7 +80,7 @@ $LANG['config_server_explain'] = '<p>Avant de commencer les étapes d\'installati
 <div class="notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="http://www.phpboost.com/forum/index.php">forum de support</a>.</p>';
 $LANG['php_version'] = 'Version de PHP';
-$LANG['check_php_version'] = 'PHP supérieur à 4.1.0';
+$LANG['check_php_version'] = 'PHP supérieur à 5.0';
 $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP 4.1.0. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = 'Optionnel : L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable.';

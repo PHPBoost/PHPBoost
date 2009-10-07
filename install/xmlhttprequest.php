@@ -1,12 +1,16 @@
 <?php
-header('Content-type: text/html; charset=iso-8859-15');
 
 define('PATH_TO_ROOT', '..');
+require_once PATH_TO_ROOT . '/install/install_environment.class.php';
 
-require_once(PATH_TO_ROOT . '/kernel/framework/functions.inc.php'); //Fonctions de base.
-require_once(PATH_TO_ROOT . '/kernel/constant.php'); //Constante utiles.
+InstallEnvironment::load_imports();
 
-@error_reporting(ERROR_REPORTING);
+/* Deprecated */
+import('core/errors');
+$Errorh = new Errors; //!\\Initialisation  de la class des erreurs//!\\
+/* End deprecated */
+
+InstallEnvironment::init();
 
 $lang = !empty($_GET['lang']) ? trim($_GET['lang']) : 'french';
 if (!@include_once('lang/' . $lang . '/install_' . $lang . '.php'))
@@ -28,10 +32,14 @@ if ($chmod)
 		if (file_exists($dir) && is_dir($dir))
 		{
 			if (!is_writable($dir))
+			{
 				$is_writable = (@chmod($dir, 0777)) ? true : false;			
+			}
 		}
 		else
+		{
 			$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
+		}
 		$found = ($is_dir === true) ? '<div class="success_block">' . $LANG['existing'] . '</div>' : '<div class="failure_block">' . $LANG['unexisting'] . '</div>';
 		$writable = ($is_writable === true) ? '<div class="success_block">' . $LANG['writable'] . '</div>' : '<div class="failure_block">' . $LANG['unwritable'] . '</div>';
 		
@@ -47,6 +55,7 @@ if ($chmod)
 }
 elseif ($db)
 {
+	
 	//Assignation des variables et erreurs
 	$host = retrieve(POST, 'host', 'localhost');
 	$login = retrieve(POST, 'login', '');
@@ -57,9 +66,14 @@ elseif ($db)
 	include_once('functions.php');
 	
 	if (!empty($host) && !empty($login) && !empty($database))
+	{
 		echo check_database_config($host, $login, $password, $database, $tables_prefix);
+	}
 	else
+	{
 		echo DB_UNKNOW_ERROR;
+	}
 }
 
+InstallEnvironment::destroy();
 ?>

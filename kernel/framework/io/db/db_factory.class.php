@@ -51,7 +51,10 @@ class DBFactory
         }
         
         import('io/db/mysql/mysql_db_connection');
-        return new MySQLDBConnection($host, $login, $password, $database);
+        $db_connection = new MySQLDBConnection($host, $login, $password, $database);
+        $db_connection->connect();
+        $db_connection->select_database($database);
+        return $db_connection;
     }
     
     /**

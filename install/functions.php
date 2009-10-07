@@ -52,7 +52,6 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 
 	import('io/db/mysql/mysql_db_connection');
 	$db_connection = new MySQLDBConnection($host, $login, $password, $database_name);
-	
 	try
 	{
 		$db_connection->connect();	
@@ -60,6 +59,11 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	catch (DBConnectionException $ex)
 	{
 		return DB_CONFIG_ERROR_CONNECTION_TO_DBMS;
+	}
+	
+	try
+	{
+		$db_connection->select_database($database_name);
 	}
 	catch (UnexistingDatabaseException $ex)
 	{
