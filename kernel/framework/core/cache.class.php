@@ -185,9 +185,9 @@ class Cache
 		$modules = $modulesLoader->get_available_modules('get_cache');
 		foreach ($modules as $module)
 		{
-			if ($MODULES[strtolower($module->id)]['activ'] == '1') //Module activé
+			if ($MODULES[strtolower($module->get_id())]['activ'] == '1') //Module activé
 			{
-				$this->write(strtolower($module->id), $module->functionality('get_cache'));
+				$this->write(strtolower($module->get_id()), $module->functionality('get_cache'));
 			}
 		}
 	}
