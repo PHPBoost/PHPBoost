@@ -94,7 +94,6 @@ class MySQLDBConnection implements DBConnection
             {
                 $this->link = $mysql_link;
        			$this->connected = true;
-                $this->select_database($this->database);
             }
             else
             {
@@ -122,7 +121,13 @@ class MySQLDBConnection implements DBConnection
 
     public function select_database($database_name)
     {
-        if (!@mysql_select_db($database_name, $this->link))
+    	if (!$this->is_connected())
+    	{
+    		throw new MySQLDBConnectionException('you must be connected ' . 
+    			'to a server to select a database');
+    	}
+
+    	if (!@mysql_select_db($database_name, $this->link))
         {
             throw new MySQLUnexistingDatabaseException();
         }

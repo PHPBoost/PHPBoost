@@ -75,6 +75,11 @@ import('db/mysql');
 //Template d'installation
 $template = new Template('/install/templates/install.tpl', Template::DO_NOT_LOAD_FREQUENT_VARS);
 
+$template->assign_vars(array(
+	'PATH_TO_ROOT' => PATH_TO_ROOT,
+	'TOTO' => 'ee'
+));
+
 //Fonction pour gérer la langue
 function add_lang($url, $header_location = false)
 {
@@ -105,6 +110,7 @@ if (!empty($new_language) && is_file('lang/' . $new_language . '/install_' . $ne
 	redirect(HOST . FILE . add_lang('?step=' . $step, true));
 }
 
+//TODO create a real class extending the User one
 class FakeUser// extends User
 {
 	private $user_data;
@@ -123,7 +129,7 @@ class FakeUser// extends User
 	{
 		return 'admin';
 	}
-	
+
 	public function check_auth()
 	{
 		return true;
@@ -187,7 +193,7 @@ switch($step)
 		{
 			$check_rewrite = -1;
 		}
-		 
+			
 		$template->assign_vars(array(
     		'C_SERVER_CONFIG' => true,
     		'C_PHP_VERSION_OK' => phpversion() >= '4.1.0',
@@ -195,14 +201,14 @@ switch($step)
     		'C_URL_REWRITING_KNOWN' => $check_rewrite != -1,
     		'C_URL_REWRITING_ENABLED' => $check_rewrite == 1
 		));
-		 
+			
 		//Mise à jour du cache de Apache à propos du système de fichiers
 		@clearstatcache();
-		 
+			
 		$chmod_dir = array('../cache', '../cache/backup', '../cache/syndication', '../cache/tpl', '../images/avatars', '../images/group', '../images/maths', '../images/smileys', '../kernel/db', '../lang', '../menus', '../templates', '../upload');
-		 
+			
 		$all_dirs_ok = true;
-		 
+			
 		//Vérifications et le cas échéant tentative de changement des autorisations en écriture.
 		foreach ($chmod_dir as $dir)
 		{
@@ -220,7 +226,7 @@ switch($step)
 			{
 				$is_dir = $is_writable = ($fp = @mkdir($dir, 0777)) ? true : false;
 			}
-			 
+
 			$template->assign_block_vars('chmod', array(
     			'TITLE'	=> str_replace('..' , '', $dir),
     			'C_EXISTING_DIR' => $is_dir,
@@ -232,7 +238,7 @@ switch($step)
 				$all_dirs_ok = false;
 			}
 		}
-		 
+			
 		//On empêche de passer à l'étape suivant si cette étape n'est pas validée
 		if (retrieve(POST, 'submit', false))
 		{
@@ -248,7 +254,7 @@ switch($step)
 				redirect(HOST . FILE . add_lang('?step=' . (STEP_SERVER_CONFIG + 1), true));
 			}
 		}
-		 
+			
 		$template->assign_vars(array(
     		'L_CONFIG_SERVER_TITLE' => $LANG['config_server_title'],
     		'L_CONFIG_SERVER_EXPLAIN' => $LANG['config_server_explain'],
@@ -285,9 +291,9 @@ switch($step)
 	case STEP_DB_CONFIG:
 
 		require_once 'functions.php';
-		 
+			
 		$display_message_already_installed = false;
-		 
+			
 		if (retrieve(POST, 'submit', false))
 		{
 			//Récupération de la configuration de connexion
@@ -305,7 +311,7 @@ switch($step)
 			{
 				$result = DB_UNKNOW_ERROR;
 			}
-			 
+
 			//If PHPBoost is already installed
 			if ($result == DB_CONFIG_ERROR_TABLES_ALREADY_EXIST)
 			{
@@ -330,9 +336,10 @@ switch($step)
 					import('io/db/mysql/mysql_querier');
 					$db_connection = new MySQLDBConnection($host, $login, $password, $database);
 					$db_connection->connect();
+					$db_connection->select_database($database);
 					$Sql = new Sql($db_connection, $database);
-                    EnvironmentServices::set_sql($Sql);
-						
+					EnvironmentServices::set_sql($Sql);
+
 					//Création du fichier de configuration
 					import('io/filesystem/file');
 
@@ -354,7 +361,7 @@ switch($step)
 					$db_config_file->write($db_config_content);
 					//Fermeture du fichier dont on n'a plus besoin
 					$db_config_file->close();
-					 
+
 					//On crée la structure de la base de données et on y insère la configuration de base
 					$Sql->parse('db/mysql.sql', $tables_prefix);
 					//Insertion des données variables selon la langue
@@ -456,7 +463,7 @@ switch($step)
 		$server_path = trim(str_replace('/install', '', dirname($server_path)));
 		$server_path = ($server_path == '/') ? '' : $server_path;
 		$server_name = 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
-		 
+			
 		//Enregistrement de la réponse
 		if (retrieve(POST, 'submit', false))
 		{
@@ -515,14 +522,8 @@ switch($step)
 			$CONFIG['html_auth'] = array ('r2' => 1);
 			$CONFIG['forbidden_tags'] = array ();
 
-			//Connexion à la base de données
-			require_once('functions.php');
-
-			import('io/db/db_factory');
-			$db_connection = DBFactory::new_db_connection();
-			$db_connection->connect();
-			$Sql = new Sql($db_connection);
-            EnvironmentServices::set_sql($Sql);
+			EnvironmentServices::init_sql_querier();
+			$Sql = EnvironmentServices::get_sql();
 
 			//On insère dans la base de données
 			$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
@@ -595,7 +596,7 @@ switch($step)
     			'NAME' => $timezone_name,
     			'VALUE' => $i,
     			'SELECTED' => $i === $site_timezone ? 'selected="selected"' : ''
-    			));
+    		));
 		}
 
 		$template->assign_vars(array(
@@ -684,58 +685,53 @@ switch($step)
 			//Si il n'y a pas d'erreur on enregistre dans la table
 			if (empty($error))
 			{
-				require_once('functions.php');
-				 
-				import('io/db/db_factory');
-				$db_connection = DBFactory::new_db_connection();
-				$db_connection->connect();
-				$Sql = new Sql($db_connection);
-                EnvironmentServices::set_sql($Sql);
-				 
+				EnvironmentServices::init_sql_querier();
+				$Sql = EnvironmentServices::get_sql();
+					
 				//On crée le code de déverrouillage
 				import('core/cache');
 				$Cache = new Cache;
 				$Cache->load('config');
-				 
+					
 				//On enregistre le membre (l'entrée était au préalable créée)
 				$Sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET login = '" . strprotect($login) . "', password = '" . strhash($password) . "', level = '2', user_lang = '" . $CONFIG['lang'] . "', user_theme = '" . $CONFIG['theme'] . "', user_mail = '" . $user_mail . "', user_show_mail = '1', timestamp = '" . time() . "', user_aprob = '1', user_timezone = '" . $CONFIG['timezone'] . "' WHERE user_id = '1'",__LINE__, __FILE__);
-				 
+					
 				//Génération de la clé d'activation, en cas de verrouillage de l'administration
 				$unlock_admin = substr(strhash(uniqid(mt_rand(), true)), 0, 12);
 				$CONFIG['unlock_admin'] = strhash($unlock_admin);
 				$CONFIG['mail_exp'] = $user_mail;
 				$CONFIG['mail'] = $user_mail;
-				 
+					
 				$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG)) . "' WHERE name = 'config'", __LINE__, __FILE__);
-				 
+					
 				$Cache->Generate_file('config');
-				 
+					
 				//Configuration des membres
 				$Cache->load('member');
-				 
+					
 				$CONFIG_USER['activ_register'] = (int)DISTRIBUTION_ENABLE_USER;
 				$CONFIG_USER['msg_mbr'] = $LANG['site_config_msg_mbr'];
 				$CONFIG_USER['msg_register'] = $LANG['site_config_msg_register'];
-				 
+					
 				$Sql->query_inject("UPDATE " . DB_TABLE_CONFIGS . " SET value = '" . addslashes(serialize($CONFIG_USER)) . "' WHERE name = 'member'", __LINE__, __FILE__);
-				 
+					
 				$Cache->generate_file('member');
-				
+
 				//On envoie un mail à l'administrateur
 				$LANG['admin'] = '';
 				import('io/mail');
 				$mail = new Mail();
-				 
+					
 				//Paramètres du mail
 				$mail->set_sender('admin');
 				$mail->set_recipients($user_mail);
 				$mail->set_object($LANG['admin_mail_object']);
 				$mail->set_content(sprintf($LANG['admin_mail_unlock_code'], stripslashes($login), stripslashes($login), $password, $unlock_admin, HOST . DIR));
-				 
+					
 				//On envoie le mail
 				$mail->send();
-				 
-                // TODO ben, enlève ça sans tout casser
+					
+				// TODO ben, enlève ça sans tout casser
 				EnvironmentServices::set_sql($Sql);
 				//On connecte directement l'administrateur si il l'a demandé
 				if ($create_session)
@@ -748,9 +744,9 @@ switch($step)
 					//Lancement de la session (avec ou sans autoconnexion selon la demande de l'utilisateur)
 					$Session->start(1, $password, 2, '/install/install.php', '', $LANG['page_title'], $auto_connection);
 				}
-				 
+					
 				$Cache->generate_file('stats');
-				 
+					
 				//On redirige vers l'étape suivante
 				redirect(HOST . FILE . add_lang('?step=' . (STEP_ADMIN_ACCOUNT + 1), true));
 			}
@@ -761,7 +757,7 @@ switch($step)
     				));
 			}
 		}
-		 
+			
 		$template->assign_vars(array(
     		'C_ADMIN_ACCOUNT' => true,
     		'U_PREVIOUS_STEP' => add_lang('install.php?step=' . (STEP_ADMIN_ACCOUNT - 1)),
@@ -799,20 +795,15 @@ switch($step)
     		break;
     		//Fin
 	case STEP_END:
-		require_once('functions.php');
-		
-        import('io/db/db_factory');
-        $db_connection = DBFactory::new_db_connection();
-        $db_connection->connect();
-        $Sql = new Sql($db_connection);
-        EnvironmentServices::set_sql($Sql);
-		 
+		EnvironmentServices::init_sql_querier();
+		$Sql = EnvironmentServices::get_sql();
+			
 		import('core/cache');
 		$Cache = new Cache;
 		$Cache->load('config');
 		$Cache->load('modules');
 		$Cache->load('themes');
-		 
+			
 		$template->assign_vars(array(
     		'C_END' => true,
     		'CONTENTS' => sprintf($LANG['end_installation']),
@@ -821,7 +812,7 @@ switch($step)
     		'U_ADMIN_INDEX' => '../admin/admin_index.php',
     		'U_INDEX' => '..' . $CONFIG['start_page']
 		));
-		 
+			
 		import('core/updates');
 		new Updates();
 		break;

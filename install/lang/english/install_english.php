@@ -79,7 +79,7 @@ $LANG['config_server_title'] = 'Looking up server configuration...';
 $LANG['config_server_explain'] = '<p>Before starting installation, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="http://www.phpboost.org/forum/index.php">Support Forums</a>.</p>
 <div class="notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>';
 $LANG['php_version'] = 'PHP version';
-$LANG['check_php_version'] = 'PHP higher than 4.1.0';
+$LANG['check_php_version'] = 'PHP higher than 5.0';
 $LANG['check_php_version_explain'] = '<span style="font-weight:bold;color:red;">Required :</span> To run PHPBoost, your server must run PHP 4.1.x or higher. Below that, you might have issues with some modules. Since PHP 4 is no longer supported, we encourage you to ask your hosting company to migrate PHP to version 5.';
 $LANG['extensions'] = 'Extensions';
 $LANG['check_extensions'] = '<span style="font-weight:bold;">Optional :</span> The activation of these extensions will provide additional features but it is not essential to its operation.';
