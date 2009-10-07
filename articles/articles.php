@@ -113,7 +113,7 @@ if (!empty($idart) && isset($cat) )
 	import('content/comments');
 	
 	$tpl->assign_vars(array(
-		'C_IS_ADMIN' => ($User->check_level(ADMIN_LEVEL)),
+		'C_IS_ADMIN' => ($User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE)),
 		'C_DISPLAY_ARTICLE' => true,
 		'C_PRINT' => true,
 		'C_TAB'=>$c_tab,

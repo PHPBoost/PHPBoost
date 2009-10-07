@@ -68,76 +68,70 @@
 					</dl>
 				</div>
 				# ENDIF #
-				
-				<br /><br />
-				<table class="module_table">
-					<tr>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_ALPHA_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_ARTICLES}
-							<a href="../articles/articles{U_ARTICLES_ALPHA_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_DATE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_DATE}					
-							<a href="../articles/articles{U_ARTICLES_DATE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_VIEW_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_VIEW}					
-							<a href="../articles/articles{U_ARTICLES_VIEW_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_NOTE_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_NOTE}					
-							<a href="../articles/articles{U_ARTICLES_NOTE_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_COM}
-							<a href="../articles/articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-						<th style="text-align:center;">
-							<a href="../articles/articles{U_ARTICLES_COM_TOP}"><img src="../templates/{THEME}/images/top.png" alt="" class="valign_middle" /></a>
-							{L_PSEUDO}
-							<a href="../articles/articles{U_ARTICLES_COM_BOTTOM}"><img src="../templates/{THEME}/images/bottom.png" alt="" class="valign_middle" /></a>
-						</th>
-					</tr>
+				<div class="spacer">&nbsp;</div>
+				<div style="float:right;" class="row3" id="form">
+						<script type="text/javascript">
+						<!--
+						function change_order()
+						{
+							window.location = "{TARGET_ON_CHANGE_ORDER}sort=" + document.getElementById("sort").value + "&mode=" + document.getElementById("mode").value;
+						}
+						-->
+						</script>
+						{L_ORDER_BY}
+						<select name="sort" id="sort" class="nav" onchange="change_order()">
+							<option value="alpha"{SELECTED_ALPHA}>{L_TITLE}</option>
+							<option value="view"{SELECTED_VIEW}>{L_VIEW}</option>
+							<option value="date"{SELECTED_DATE}>{L_DATE}</option>
+							<option value="com"{SELECTED_COM}>{L_COM}</option>
+							<option value="note"{SELECTED_NOTE}>{L_NOTE}</option>
+						</select>
+						<select name="mode" id="mode" class="nav" onchange="change_order()">
+							<option value="asc"{SELECTED_ASC}>{L_ASC}</option>
+							<option value="desc"{SELECTED_DESC}>{L_DESC}</option>
+						</select>
+					</div>
+					<div class="spacer">&nbsp;</div>
 					# START articles #
-					<tr>	
-						<td class="row2" style="padding-left:25px">
-							{articles.ICON} &nbsp;&nbsp;<a href="../articles/articles{articles.U_ARTICLES_LINK}">{articles.NAME}</a>
-							# IF C_WAITING #
-							<div style="display:inline;float:right">
-							&nbsp;&nbsp;<a href="../articles/management.php?edit={articles.ID}" title="{L_EDIT}"><img src="../templates/{THEME}/images/{LANG}/edit.png" class="valign_middle" alt="{L_EDIT}" /></a>
-							&nbsp;&nbsp;<a href="../articles/management.php?del=1&amp;id={articles.ID}&amp;token={TOKEN}" title="{L_DELETE}" onclick="javascript:return Confirm_del_article();"><img src="../templates/{THEME}/images/{LANG}/delete.png" class="valign_middle" alt="{L_DELETE}" /></a>
+						<div class="block_container" style="margin-bottom:20px;">
+							<div class="block_contents">
+								<div style="float:left;width:70%">
+									<p style="margin-bottom:10px">
+										<a href="../articles/articles{articles.U_ARTICLES_LINK}" class="big_link">{articles.NAME}</a>
+										# IF C_ADMIN #
+											<a href="{articles.U_ADMIN_EDIT_ARTICLES}">
+												<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+											</a>
+											<a href="{articles.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
+												<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+											</a>
+										# ENDIF #
+									</p>
+									<div class="text_small">
+										{L_DATE} : {articles.DATE}
+										<br />
+										{L_VIEW} : {articles.COMPT}
+										<br />
+										{L_COM} : <a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
+										<br />
+										{L_NOTE} {articles.NOTE}
+									</div>
+								</div>
+								<div class="float:right;">								
+									<div style="text-align:right">{L_WRITTEN} : {articles.U_ARTICLES_PSEUDO}
+										<br />
+										<br />
+										<a href="../articles/articles{articles.U_ARTICLES_LINK}">
+											{articles.ICON}
+										</a>	
+									</div>
+								</div>
+							<div class="spacer"></div>		
 							</div>
-							# ENDIF #
-						</td>
-						<td class="row2" style="text-align: center;">
-							{articles.DATE}
-						</td>
-						<td class="row2" style="text-align: center;">
-							{articles.COMPT} 
-						</td>
-						<td class="row2" style="text-align: center;">
-							{articles.NOTE}
-						</td>
-						<td class="row2" style="text-align: center;">
-							<a href="../articles/articles{articles.U_ARTICLES_LINK_COM}">{articles.COM} </a>
-						</td>
-						<td class="row2" style="text-align: center;">
-							{articles.U_ARTICLES_PSEUDO}
-						</td>
-					</tr>
+						</div>
 					# END articles #
-					<tr>
-						<td colspan="6" class="row3">
-							{PAGINATION}
-						</td>	
-					</tr>
-				</table>
-				<br />
+					{PAGINATION}
+					<br />
 					# IF C_WAITING_ADMIN #
 						<p style="text-align:center;padding-top:10px;"><a href="../articles/admin_articles{U_ALL_WAITING_ARTICLES}">{L_ALL_WAITING_ARTICLES}</a></p>
 					# ENDIF #

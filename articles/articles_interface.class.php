@@ -274,7 +274,7 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_home_page()
 	{
-		global $idartcat, $User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES, $LANG,$ARTICLES_LANG;
+		global $idartcat, $Session,$User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
 		$tpl = new Template('articles/articles_cat.tpl');
@@ -308,6 +308,52 @@ class ArticlesInterface extends ModuleInterface
 			
 		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
 
+		
+		$get_sort = retrieve(GET, 'sort', '');	
+		$get_mode = retrieve(GET, 'mode', '');
+		$selected_fields = array(
+			'alpha' => '',
+			'view' => '',
+			'date' => '',
+			'com' => '',
+			'note' => '',
+			'asc' => '',
+			'desc' => ''
+			);
+			
+		switch ($get_sort)
+		{
+			case 'alpha' : 
+			$sort = 'title';
+			$selected_fields['alpha'] = ' selected="selected"';
+			break;	
+			case 'com' :
+			$sort = 'nbr_com';
+			$selected_fields['com'] = ' selected="selected"';
+			break;			
+			case 'date' : 
+			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
+			break;		
+			case 'view' :
+			$sort = 'views';
+			$selected_fields['view'] = ' selected="selected"';
+			break;		
+			case 'note' :
+			$sort = 'note';
+			$selected_fields['note'] = ' selected="selected"';
+			break;
+			default :
+			$sort = 'timestamp';
+			$selected_fields['date'] = ' selected="selected"';
+		}
+
+		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		if ($mode == 'ASC')
+			$selected_fields['asc'] = ' selected="selected"';
+		else
+			$selected_fields['desc'] = ' selected="selected"';
+
 		//Colonnes des catégories.
 		$nbr_column_cats = ($total_cat > $CONFIG_ARTICLES['nbr_column']) ? $CONFIG_ARTICLES['nbr_column'] : $total_cat;
 		$nbr_column_cats = !empty($nbr_column_cats) ? $nbr_column_cats : 1;
@@ -319,6 +365,7 @@ class ArticlesInterface extends ModuleInterface
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
 			'C_WAITING'=> false,
+			'C_ADMIN'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
 			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?user=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
@@ -332,6 +379,11 @@ class ArticlesInterface extends ModuleInterface
 			'L_VIEW' => $LANG['views'],
 			'L_NOTE' => $LANG['note'],
 			'L_COM' => $LANG['com'],
+			'L_DESC' => $LANG['desc'],
+			'L_ASC' => $LANG['asc'],
+			'L_TITLE'=>$LANG['title'],
+			'L_WRITTEN' =>  $LANG['written_by'],
+			'L_ALERT_DELETE_ARTICLE' => $ARTICLES_LANG['alert_delete_article'],
 			'L_TOTAL_ARTICLE' => ($nbr_articles > 0) ? sprintf($ARTICLES_LANG['nbr_articles_info'], $nbr_articles) : '',
 			'L_NO_ARTICLES' => ($nbr_articles == 0) ? $ARTICLES_LANG['none_article'] : '',
 			'L_ARTICLES_INDEX' => $ARTICLES_LANG['title_articles'],
@@ -346,33 +398,18 @@ class ArticlesInterface extends ModuleInterface
 			'U_ARTICLES_NOTE_TOP' => url('.php?sort=note&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=desc'),
 			'U_ARTICLES_NOTE_BOTTOM' => url('.php?sort=note&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=note&amp;mode=asc'),
 			'U_ARTICLES_COM_TOP' => url('.php?sort=com&amp;mode=desc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=desc'),
-			'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc')
+			'U_ARTICLES_COM_BOTTOM' => url('.php?sort=com&amp;mode=asc&amp;cat=' . $idartcat, '-' . $idartcat . '+' . $rewrite_title . '.php?sort=com&amp;mode=asc'),
+			'SELECTED_ALPHA' => $selected_fields['alpha'],
+			'SELECTED_COM' => $selected_fields['com'],
+			'SELECTED_DATE' => $selected_fields['date'],
+			'SELECTED_VIEW' => $selected_fields['view'],
+			'SELECTED_NOTE' => $selected_fields['note'],
+			'SELECTED_ASC' => $selected_fields['asc'],
+			'SELECTED_DESC' => $selected_fields['desc'],
+			'TARGET_ON_CHANGE_ORDER' => $CONFIG['rewrite'] ? 'category-' . $idartcat . '.php?' : 'articles.php?cat=' . $idartcat . '&'
 		));
 
-		$get_sort = retrieve(GET, 'sort', '');
-		switch ($get_sort)
-		{
-			case 'alpha' :
-				$sort = 'title';
-				break;
-			case 'date' :
-				$sort = 'timestamp';
-				break;
-			case 'view' :
-				$sort = 'views';
-				break;
-			case 'note' :
-				$sort = 'note/' . $CONFIG_ARTICLES['note_max'];
-				break;
-			case 'com' :
-				$sort = 'nbr_com';
-				break;
-			default :
-				$sort = 'timestamp';
-		}
-
-		$get_mode = retrieve(GET, 'mode', '');
-		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
+		
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 
 		//On crée une pagination si le nombre de fichiers est trop important.
@@ -427,9 +464,10 @@ class ArticlesInterface extends ModuleInterface
 			));
 
 			import('content/note');
-			$result = $this->sql_querier->query_while("SELECT id, title, icon, timestamp, views, note, nbrnote, nbr_com
-			FROM " . DB_TABLE_ARTICLES . "
-			WHERE visible = 1 AND idcat = '" . $idartcat .	"'
+			$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+			FROM " . DB_TABLE_ARTICLES . " a
+			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+			WHERE a.visible = 1 AND a.idcat = '" . $idartcat .	"'
 			ORDER BY " . $sort . " " . $mode .
 			$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
 			while ($row = $this->sql_querier->fetch_assoc($result))
@@ -445,9 +483,12 @@ class ArticlesInterface extends ModuleInterface
 					'COMPT' => $row['views'],
 					'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
 					'COM' => $row['nbr_com'],
+					'U_ARTICLES_PSEUDO'=>'<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
 					'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
-					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0')
-				));
+					'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
+					'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
+					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+			));
 
 			}
 			$this->sql_querier->query_close($result);
