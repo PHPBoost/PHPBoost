@@ -81,6 +81,7 @@ if (!empty($idart) && isset($cat) )
 	$nbr_page = !empty($nbr_page) ? $nbr_page : 1;
 	$tpl->assign_vars( array(
 		'TOTAL_TAB'=> count($array_page[1]),
+		'C_CAROUSEL'=>count($array_page[1]) > 5 ? true : false
 	));
 
 	foreach ($array_page[1] as $page_name)

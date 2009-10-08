@@ -36,7 +36,7 @@
 	float:left;	
 	color:#FFFFFF;
 	background:#FFFFFF url('images/msg_top_row.png') repeat-x;
-	width:100px;
+	width:93px;
 	border-top:1px #5D7C94 solid;
 	border-left:1px #5D7C94 solid;
 	border-right:1px #5D7C94 solid;
@@ -91,7 +91,7 @@
 }
 .carouseljs ol li,
 .carouseljs ul li {
-  width: 100px;
+  width: 93px;
   height: 24px;
 }
 
