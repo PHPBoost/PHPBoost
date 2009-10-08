@@ -276,7 +276,7 @@ class ArticlesInterface extends ModuleInterface
 
 	function get_home_page()
 	{
-		global $idartcat, $Session,$User, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
+		global $idartcat, $Session,$User,$invisible, $Cache, $Bread_crumb, $Errorh, $ARTICLES_CAT, $CONFIG_ARTICLES,$CONFIG, $LANG,$ARTICLES_LANG;
 		require_once('../articles/articles_begin.php');
 
 		
@@ -308,6 +308,7 @@ class ArticlesInterface extends ModuleInterface
 			$Errorh->handler('e_auth', E_USER_REDIRECT);
 			
 		$nbr_articles = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 1 AND idcat = '" . $idartcat . "'", __LINE__, __FILE__);
+		$nbr_articles_invisible = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES . " WHERE visible = 0 AND idcat = '" . $idartcat . "' AND user_id != -1", __LINE__, __FILE__);
 		$total_cat = $this->sql_querier->query("SELECT COUNT(*) FROM " . DB_TABLE_ARTICLES_CAT . " ac " . $clause_cat, __LINE__, __FILE__);
 			
 		$rewrite_title = url_encode_rewrite($ARTICLES_CAT[$idartcat]['name']);
@@ -368,9 +369,8 @@ class ArticlesInterface extends ModuleInterface
 			
 		$is_admin = $User->check_level(ADMIN_LEVEL) ? true : false;
 		$tpl->assign_vars(array(
-			'C_WAITING'=> false,
 			'C_WRITE'=>$User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE),
-			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?user=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
+			'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE) ? ' <a href="articles.php?invisible=1&amp;cat='.$idartcat.'">' . $ARTICLES_LANG['waiting_articles'] . '</a>' : '',
 			'IDCAT' => $idartcat,
 			'C_IS_ADMIN' => $is_admin,
 			'COLUMN_WIDTH_CAT' => $column_width_cats,
@@ -459,7 +459,8 @@ class ArticlesInterface extends ModuleInterface
 		}
 
 		##### Affichage des articles #####
-		if ($nbr_articles > 0)
+
+		if ($nbr_articles > 0 ||  $invisible)
 		{
 			$tpl->assign_vars(array(
 				'C_ARTICLES_LINK' => true,
@@ -494,6 +495,48 @@ class ArticlesInterface extends ModuleInterface
 					'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
 			));
 
+			}
+			
+			if($invisible && $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_WRITE))
+			{
+
+				$tpl->assign_vars(array(
+				'C_INVISIBLE'=>true,
+				'U_ARTICLES_WAITING'=> $User->check_auth($ARTICLES_CAT[$idartcat]['auth'], AUTH_ARTICLES_READ) ? ' <a href="articles.php?cat='.$idartcat.'">' . $ARTICLES_LANG['publicate_articles'] . '</a>' : '',
+				'L_WAITING_ARTICLES' => $ARTICLES_LANG['waiting_articles'],
+				'L_NO_ARTICLES_WAITING'=>($nbr_articles_invisible == 0) ? $ARTICLES_LANG['no_articles_waiting'] : ''
+				));
+				
+				import('content/note');
+				$result = $this->sql_querier->query_while("SELECT a.id, a.title, a.icon, a.timestamp, a.views, a.note, a.nbrnote, a.nbr_com,a.user_id,m.user_id,m.login,m.level
+				FROM " . DB_TABLE_ARTICLES . " a
+				LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = a.user_id
+				WHERE a.visible = 0 AND a.idcat = '" . $idartcat .	"'  AND a.user_id != -1
+				ORDER BY " . $sort . " " . $mode .
+				$this->sql_querier->limit($Pagination->get_first_msg($CONFIG_ARTICLES['nbr_articles_max'], 'p'), $CONFIG_ARTICLES['nbr_articles_max']), __LINE__, __FILE__);
+				while ($row = $this->sql_querier->fetch_assoc($result))
+				{
+					//On reccourci le lien si il est trop long.
+					$fichier = (strlen($row['title']) > 45 ) ? substr(html_entity_decode($row['title']), 0, 45) . '...' : $row['title'];
+
+					$tpl->assign_block_vars('articles_invisible', array(
+						'NAME' => $row['title'],
+						'ICON' => !empty($row['icon']) ? '<a href="articles' . url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php') . '"><img src="' . $row['icon'] . '" alt="" class="valign_middle" /></a>' : '',
+						'CAT' => $ARTICLES_CAT[$idartcat]['name'],
+						'DATE' => gmdate_format('date_format_short', $row['timestamp']),
+						'COMPT' => $row['views'],
+						'NOTE' => ($row['nbrnote'] > 0) ? Note::display_img($row['note'], $CONFIG_ARTICLES['note_max'], 5) : '<em>' . $LANG['no_note'] . '</em>',
+						'COM' => $row['nbr_com'],
+						'U_ARTICLES_PSEUDO'=>'<a href="' . TPL_PATH_TO_ROOT . '/member/member' . url('.php?id=' . $row['user_id'], '-' . $row['user_id'] . '.php') . '" class="' . $array_class[$row['level']] . '"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . wordwrap_html($row['login'], 19) . '</a>',
+						'U_ARTICLES_LINK' => url('.php?id=' . $row['id'] . '&amp;cat=' . $idartcat, '-' . $idartcat . '-' . $row['id'] . '+' . url_encode_rewrite($fichier) . '.php'),
+						'U_ARTICLES_LINK_COM' => url('.php?cat=' . $idartcat . '&amp;id=' . $row['id'] . '&amp;com=%s', '-' . $idartcat . '-' . $row['id'] . '.php?com=0'),
+						'U_ADMIN_EDIT_ARTICLES' => url('management.php?edit=' . $row['id']),
+						'U_ADMIN_DELETE_ARTICLES' => url('management.php?del=' . $row['id'] . '&amp;token=' . $Session->get_token()),
+				));
+					
+				}
+				
+				
 			}
 			$this->sql_querier->query_close($result);
 		}

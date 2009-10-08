@@ -118,7 +118,9 @@ $ARTICLES_LANG = array(
 	'or_direct_path' => 'Ou chemin direct',
 	'waiting_articles' => 'Articles en attentes',
 	'no_articles_available' => 'Aucun articles disponible pour le moment',
-	
+
+	'no_articles_waiting'=>'Aucun articles en attente disponible pour le moment',
+	'publicate_articles'=>'Articles publiés',
 	'cat_tpl' => 'Templates de la catégorie',
 	'articles_tpl' => 'Templates des articles',
 	'tpl_explain' => 'Vous définissez ici des templates personnalisés à utiliser pour les articles et la catégories courante.',
