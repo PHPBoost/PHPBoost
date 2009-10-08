@@ -44,12 +44,6 @@ if (!defined('TITLE'))
 if (!defined('TITLE'))
 	define('TITLE', $LANG['unknow']);
 	
-$Session->check(TITLE); //Vérification de la session.
-
-//!\\ Connexion à l'administration //!\\
-require_once(PATH_TO_ROOT . '/admin/admin_access.php');
-
-
 //DEPRECATED PROCESSUS
 if (defined('ALTERNATIVE_CSS'))
 {
@@ -92,9 +86,7 @@ if (defined('ALTERNATIVE_CSS'))
 	}
 }
 
-Environment::set_page_title(TITLE);
-//TODO what to do with that?
-EnvironmentServices::get_session()->check(TITLE);
+$env->set_page_title(TITLE);
 
 Environment::display_header();
 

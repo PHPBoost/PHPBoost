@@ -28,10 +28,8 @@
 if (!defined('PATH_TO_ROOT'))
     define('PATH_TO_ROOT', '..');
 
-//Inclusion des fichiers
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 
-//Inclusion des langues de l'administration.
 require_once(PATH_TO_ROOT . '/lang/' . get_ulang() . '/admin.php');
 
 ?>

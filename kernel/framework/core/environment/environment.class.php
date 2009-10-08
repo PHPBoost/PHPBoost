@@ -37,31 +37,9 @@
 class Environment
 {
 	/**
-	 * @var string
-	 */
-	private static $page_title = '';
-	/**
 	 * @var GraphicalEnvironment
 	 */
 	private static $graphical_environment = null;
-
-	/**
-	 * Sets the page title
-	 * @param $title The current page's title
-	 */
-	public static function set_page_title($title)
-	{
-		self::$page_title = $title;
-	}
-
-	/**
-	 * Returns the current page's title
-	 * @return string The title
-	 */
-	public static function get_page_title()
-	{
-		return self::$page_title;
-	}
 
 	/**
 	 * Loads all the files that the environment requires
@@ -497,20 +475,19 @@ class Environment
 				$Errorh->handler('e_unactivated_module', E_USER_REDIRECT);
 			}
 			//Is the module forbidden?
-			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'], ACCESS_MODULE))
+			else if(!EnvironmentServices::get_user()->check_auth($MODULES[MODULE_NAME]['auth'], 
+				ACCESS_MODULE))
 			{
 				$Errorh->handler('e_auth', E_USER_REDIRECT);
 			}
 		}
-		//Otherwise it can be a kernel page (they are in specific folders) => it's ok
-		elseif (in_array(MODULE_NAME, array('member', 'admin', 'kernel', 'test')))
-		{
-		}
-		//It's maybe a forbidden page!
-		else
+		//Otherwise, if it's not a kernel page (they are in specific folders) and it's a module page
+		// => it's forbidden
+		elseif (!in_array(MODULE_NAME, array('member', 'admin', 'kernel', 'test')))
 		{
 			//We try to see if it can be an uninstalled module
-			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME . '/lang/', get_ulang());
+			$array_info_module = load_ini_file(PATH_TO_ROOT . '/' . MODULE_NAME . 
+				'/lang/', get_ulang());
 			//If it's an unistalled module, we forbid access!
 			if (!empty($array_info_module['name']))
 			{
