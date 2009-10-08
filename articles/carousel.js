@@ -26,7 +26,8 @@ var CarouselJs = function(elementId, options) {
         speed:              so.speed            || 20,
         disableAnimation:   so.disableAnimation || false,
         disableSkipping:    so.disableSkipping  || false,
-        defaultItemClass:   so.defaultItemClass || null
+        defaultItemClass:   so.defaultItemClass || null,
+		startsegment: 		so.startsegment || 0,
       };
       return options;
     }
@@ -179,6 +180,7 @@ var CarouselJs = function(elementId, options) {
       this.goToSegment(0);
     }
 
+	this.goToSegment(this.options.startsegment);
   };
 
   Carousel.prototype.goToSegment = function(segIndex) {

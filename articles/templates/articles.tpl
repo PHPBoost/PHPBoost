@@ -9,13 +9,20 @@
 		</script>	
 		# IF C_TAB #
 
-
-<script type="text/javascript" src="carousel.js"></script>
+		# IF C_CAROUSEL #
+			<script type="text/javascript" src="carousel.js"></script>
 			<script type="text/javascript">
 			<!--
-					window.onload = function() {
-				new CarouselJs('tab_c', { speed: 50, pauseInterval: 0.1  });
+				window.onload = function() {
+				new CarouselJs('tab_c', { speed: 50, pauseInterval: 0.1  ,startsegment: Math.floor(parseInt(getParam('p'))/7.1 ) });
 				}
+				
+		# ELSE #
+			<script type="text/javascript">
+			<!--
+		# ENDIF #
+			
+		
 				function getParam(name)
 				{
 					var str_location = String(location);
@@ -159,13 +166,17 @@
 			<div id="tabs">
 				<ul>
 					 <div style="overflow: hidden; height: 24px; width: 900px; position: relative;" class="carouseljs">
+					# IF C_CAROUSEL #
 						<a style="position: absolute; z-index: 2; left: 0px;margin-left:0px;" class="cjs-left cjs-disabled" title="Double-click to skip to beginning.">previous</a>
+					# ENDIF #	
 						<ol style="width: 750px; position: absolute; left: 0px;" id="tab_c">
 							# START tab #
 								<li {tab.STYLE} id="tabHeader{tab.ID_TAB_ACT}" style="display:{tab.DISPLAY_TAB}"><a href="javascript:void(0)" class="tab_a"onClick="toggleTab({tab.ID_TAB},{tab.TOTAL_TAB},0,false)"><span>{tab.PAGE_NAME}</span></a></li>
 							# END tab #
 						</ol>
+					# IF C_CAROUSEL #
 						<a style="position: absolute; z-index: 2; right: 0px;" class="cjs-right cjs-enabled" title="Double-click to skip to end.">next</a>
+					# ENDIF #
 					</div>
 				</ul>
 			</div>	
