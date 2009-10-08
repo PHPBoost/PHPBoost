@@ -38,6 +38,7 @@ define('DB_TABLE_ARTICLES_CAT', PREFIX . 'articles_cats');
 
 $idartcat = retrieve(GET, 'cat',0);
 $idart = retrieve(GET, 'id', 0);
+$invisible = retrieve(GET, 'invisible', false, TBOOL);
 
 defined('ALTERNATIVE_CSS') or define('ALTERNATIVE_CSS', 'articles');
 ?>

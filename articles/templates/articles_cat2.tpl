@@ -23,11 +23,9 @@
 					<img src="{PATH_TO_ROOT}/templates/{THEME}/images/{LANG}/add.png" class="valign_middle" alt="{L_ADD}" />
 				</a>
 				&nbsp;
-					# IF NOT C_WAITING #
 						# IF C_WRITE #
 							<div style="display:inline;float:right;">{U_ARTICLES_WAITING}</div>				
 						# ENDIF #	
-					# ENDIF #
 				# ENDIF #
 				
 			</div>
@@ -54,22 +52,7 @@
 				# ENDIF #
 				
 				# IF C_ARTICLES_LINK #
-				
-				# IF C_WAITING #
-				<div>
-					<dl>
-						<dt><label for="idcat"><b>{L_CATEGORY} : </b>&nbsp;</label></dt>
-						<dd><label>
-							<select id="{FORM_ID}" name="{FORM_NAME}"  onchange="document.location = 'articles.php?user=1&cat=' + this.options[this.selectedIndex].value;" >
-								<option value="0" >{L_ROOT}</option>
-							# START options #
-								<option value="{options.ID}" {options.SELECTED_OPTION}>{options.PREFIX} {options.NAME}</option>
-							# END options #
-							</select>
-						</label></dd>
-					</dl>
-				</div>
-				# ENDIF #
+
 				<div class="spacer">&nbsp;</div>
 				<div style="float:right;" class="row3" id="form">
 						<script type="text/javascript">
@@ -94,6 +77,47 @@
 						</select>
 				</div>
 				<div class="spacer">&nbsp;</div>
+				# IF C_INVISIBLE #
+				<h2>{L_WAITING_ARTICLES}</h2>
+				<hr />
+				# START articles_invisible #
+					<div class="block_container">
+					<div class="block_contents" style="height:80px">
+						<div style="float:left;">			
+							<a href="../articles/articles{articles_invisible.U_ARTICLES_LINK}">
+								{articles_invisible.ICON}
+							</a>	
+								&nbsp;
+						</div>
+						<div class="float:right;">			
+							<div style="float:left;">	
+								<a href="../articles/articles{articles_invisible.U_ARTICLES_LINK}" class="big_link">{articles_invisible.NAME}</a>
+							</div>
+							<div class="float:right;">
+								# IF C_WRITE #
+								&nbsp;&nbsp;&nbsp;
+									<a href="{articles_invisible.U_ADMIN_EDIT_ARTICLES}">
+										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/edit.png" alt="" />
+									</a>
+									<a href="{articles_invisible.U_ADMIN_DELETE_ARTICLES}" onclick="return Confirm_del_article();">
+										<img class="valign_middle" src="../templates/{THEME}/images/{LANG}/delete.png" alt="" />
+									</a>
+								# ENDIF #
+							</div>
+								<div class="text_small">	
+									Si la Radeon HD 5870 est la pionnière du DirectX 11, son prix élevé en limite les ambitions. Une contrainte que ne devrait pas subir un Radeon HD 5850 résolument plus accessible.
+								</div>
+								
+								<hr style="margin-left:0px;margin-top:9px;width:500px"/>
+								Publié le : {articles_invisible.DATE} - {L_WRITTEN} : {articles_invisible.U_ARTICLES_PSEUDO} - {L_NOTE} {articles_invisible.NOTE} - {L_COM} : <a href="../articles/articles{articles_invisible.U_ARTICLES_LINK_COM}">{articles_invisible.COM} </a>
+						</div>
+					</div>	
+						</div>					
+					# END articles_invisible #
+					<p style="text-align:center;padding-top:10px;" class="text_small">	{L_NO_ARTICLES_WAITING}</p>
+					<h2>Articles</h2>
+					<hr />
+					# ENDIF #
 					# START articles #
 					<div class="block_container">
 					<div class="block_contents" style="height:80px">
