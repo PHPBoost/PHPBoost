@@ -52,6 +52,7 @@ class Gallery
 			switch ($ext) //Création de l'image suivant l'extension.
 			{
 				case 'jpg':
+				case 'jpeg':
 					$source = @imagecreatefromjpeg($path);
 					break;
 				case 'gif':
@@ -128,7 +129,7 @@ class Gallery
 		$path_mini = str_replace('pics', 'pics/thumbnails', $path);
 		if (function_exists('imagegif') && $ext === 'gif') 
 			imagegif ($thumbnail, $path_mini);
-		elseif (function_exists('imagejpeg') && $ext === 'jpg') 
+		elseif (function_exists('imagejpeg') && ($ext === 'jpg' || $ext === 'jpeg')) 
 			imagejpeg($thumbnail, $path_mini, $CONFIG_GALLERY['quality']);
 		elseif (function_exists('imagepng')  && $ext === 'png') 
 			imagepng($thumbnail, $path_mini);
@@ -138,6 +139,7 @@ class Gallery
 		switch ($ext) //Création de l'image suivant l'extension.
 		{
 			case 'jpg':
+			case 'jpeg':
 				@imagejpeg($source, $path);
 				break;
 			case 'gif':
@@ -166,6 +168,7 @@ class Gallery
 				switch ($ext_s) //Création de l'image suivant l'extension.
 				{
 					case 'jpg':
+					case 'jpeg':
 						$source = @imagecreatefromjpeg($CONFIG_GALLERY['logo']);
 						break;
 					case 'gif':
@@ -191,6 +194,7 @@ class Gallery
 					switch ($ext) //Création de l'image suivant l'extension.
 					{
 						case 'jpg':
+						case 'jpeg':
 							$destination = @imagecreatefromjpeg($path);
 							break;
 						case 'gif':
@@ -215,6 +219,7 @@ class Gallery
 						switch ($ext) //Création de l'image suivant l'extension.
 						{
 							case 'jpg':
+							case 'jpeg':
 								imagejpeg($destination);
 								break;
 							case 'gif':
@@ -461,7 +466,7 @@ class Gallery
 			$weight = !empty($weight) ? $weight : 0;			
 			
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
-			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png');
+			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg');
 			if (isset($array_type[$type]))
 				return array($width, $height, $weight, $array_type[$type]);
 			else
@@ -524,6 +529,7 @@ class Gallery
 				$header = header('Content-type: image/gif');
 				break;
 			case 'jpg':
+			case 'jpeg':
 				$header = header('Content-type: image/jpeg');
 				break;
 			default:
@@ -583,7 +589,7 @@ class Gallery
 		//On recupère les dossier des thèmes contenu dans le dossier images/smiley.
 		import('io/filesystem/folder');
 		$thumb_folder_path = new Folder('./pics/thumbnails/');
-		foreach ($thumb_folder_path->get_files('`\.(png|jpg|bmp|gif)$`i') as $thumbs)
+		foreach ($thumb_folder_path->get_files('`\.(png|jpg|jpeg|bmp|gif)$`i') as $thumbs)
 			$this->delete_file('./pics/thumbnails/' . $thumbs->get_name());
 	}
 	
