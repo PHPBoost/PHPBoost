@@ -66,9 +66,23 @@ abstract class AbstractSQLQuerier implements SQLQuerier
 		$query_varname =& $captures[1];
 		if (isset($this->parameters[$query_varname]))
 		{
-			return $this->escape($this->parameters[$query_varname]);
+			return $this->set_parameter($this->parameters[$query_varname]);
 		}
-		return SQLQuerier::QUERY_VAR_PREFIX . $query_varname;
+		throw new RemainingQueryVarException($query_varname);
+	}
+	
+	private function set_parameter(&$parameter)
+	{
+		if (is_array($parameter))
+		{
+			$nb_value = count($parameter);
+			for ($i = 0; $i < $nb_value; $i++)
+			{
+				$parameter[$i] = '\'' . $this->escape($parameter) . '\'';
+			}
+			return '(' . implode(', ', $parameter) . ')';
+		}
+		return $this->escape($parameter);
 	}
 	
 	abstract protected function escape(&$value);
