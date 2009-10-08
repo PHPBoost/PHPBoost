@@ -51,7 +51,7 @@ function check_database_config(&$host, &$login, &$password, &$database_name, $ta
 	$database_name = Sql::clean_database_name($database_name);
 
 	import('io/db/mysql/mysql_db_connection');
-	$db_connection = new MySQLDBConnection($host, $login, $password, $database_name);
+	$db_connection = new MySQLDBConnection($host, $login, $password);
 	try
 	{
 		$db_connection->connect();	

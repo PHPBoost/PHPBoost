@@ -36,103 +36,102 @@ import('io/db/mysql/mysql_db_connection_exception');
  */
 class MySQLDBConnection implements DBConnection
 {
-    /**
-     * @var string
-     */
-    private $host;
+	/**
+	 * @var string
+	 */
+	private $host;
 
-    /**
-     * @var string
-     */
-    private $login;
+	/**
+	 * @var string
+	 */
+	private $login;
 
-    /**
-     * @var string
-     */
-    private $password;
+	/**
+	 * @var string
+	 */
+	private $password;
 
-    /**
-     * @var string
-     */
-    private $database;
+	/**
+	 * @var string
+	 */
+	private $database;
 
-    /**
-     * @var bool
-     */
-    private $connected = false;
+	/**
+	 * @var bool
+	 */
+	private $connected = false;
 
-    /**
-     * @var MysqlResource
-     */
-    private $link = null;
+	/**
+	 * @var MysqlResource
+	 */
+	private $link = null;
+	
 
+	public function __construct($host, $login, $password)
+	{
+		$this->host = $host;
+		$this->login = $login;
+		$this->password = $password;
+	}
 
-    public function __construct($host, $login, $password, $database_name)
-    {
-        $this->host = $host;
-        $this->login = $login;
-        $this->password = $password;
-        $this->database = $database_name;
-    }
+	public function __destruct()
+	{
+		$this->disconnect();
+	}
 
-    public function __destruct()
-    {
-        $this->disconnect();
-    }
+	public function is_connected()
+	{
+		return $this->connected;
+	}
 
-    public function is_connected()
-    {
-        return $this->connected;
-    }
-    
-    public function connect()
-    {
-        if (!$this->is_connected())
-        {
-            $mysql_link = @mysql_connect($this->host, $this->login, $this->password);
-            if ($mysql_link)
-            {
-                $this->link = $mysql_link;
-       			$this->connected = true;
-            }
-            else
-            {
-                throw new MySQLDBConnectionException('can\'t connect to database!');
-            }
-        }
-    }
-
-    public function get_link()
-    {
-        return $this->link;
-    }
-
-    public function disconnect()
-    {
-        if ($this->is_connected())
-        {
-			if (!mysql_close($this->link))
+	public function connect()
+	{
+		if (!$this->is_connected())
+		{
+			$mysql_link = @mysql_connect($this->host, $this->login, $this->password);
+			if ($mysql_link)
 			{
-			    throw new MySQLDBConnectionException('can\'t close database connection');
+				$this->link = $mysql_link;
+				$this->connected = true;
 			}
-            $this->connected = false;
-        }
-    }
+			else
+			{
+				throw new MySQLDBConnectionException('can\'t connect to database!');
+			}
+		}
+	}
 
-    public function select_database($database_name)
-    {
-    	if (!$this->is_connected())
-    	{
-    		throw new MySQLDBConnectionException('you must be connected ' . 
+	public function get_link()
+	{
+		return $this->link;
+	}
+
+	public function disconnect()
+	{
+		if ($this->is_connected())
+		{
+			$this->connected = false;
+            if (!is_resource($this->link) || !@mysql_close($this->link))
+			{
+				throw new MySQLDBConnectionException('can\'t close database connection');
+			}
+		}
+	}
+
+	public function select_database($database_name)
+	{
+		if (!$this->is_connected())
+		{
+			throw new MySQLDBConnectionException('you must be connected ' .
     			'to a server to select a database');
-    	}
+		}
 
-    	if (!@mysql_select_db($database_name, $this->link))
-        {
-            throw new MySQLUnexistingDatabaseException();
-        }
-        $this->database_name = $database_name;
-    }
+		if (!@mysql_select_db($database_name, $this->link))
+		{
+			throw new MySQLUnexistingDatabaseException();
+		}
+		$this->database_name = $database_name;
+	}
 }
 
 ?>

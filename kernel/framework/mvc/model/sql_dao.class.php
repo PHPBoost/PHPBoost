@@ -170,8 +170,8 @@ abstract class SQLDAO implements DAO
 		$this->before_delete($object);
 		if ($this->delete_query === null)
 		{
-			$this->delete_query = "delete from " . $this->table .
-                " where " . $this->pk_db_field . "=':pk_value';";
+			$this->delete_query = 'DELETE FROM ' . $this->table .
+                ' WHERE ' . $this->pk_db_field . '=\':pk_value\';';
 		}
 		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
 		$this->querier->inject($this->delete_query, $prepared_vars);
@@ -191,15 +191,15 @@ abstract class SQLDAO implements DAO
 
 	public function find_all($limit = 100, $offset = 0, $order_by = array())
 	{
-		$query = "limit " . $limit . " offset " . $offset;
+		$query = 'LIMIT ' . $limit . ' OFFSET ' . $offset;
 		if (!empty($order_by))
 		{
-			$order_clause = "";
+			$order_clause = '';
 			foreach ($order_by as $order)
 			{
-				$order_clause .= ", " . $order['column'] . " " . $order['way'];
+				$order_clause .= ', ' . $order['column'] . ' ' . $order['way'];
 			}
-			$query .= " ORDER BY" . rtrim($order_clause, ',');
+			$query .= ' ORDER BY' . rtrim($order_clause, ',');
 		}
 
 		return $this->find_by_criteria($query);
@@ -250,7 +250,7 @@ abstract class SQLDAO implements DAO
 		{
 			$this->compute_find_by_criteria_query();
 			$this->find_by_id_query = $this->find_by_criteria_query .
-			    "where " . $this->pk_db_field . "=':id';";
+			    'WHERE ' . $this->pk_db_field . '=\':id\';';
 		}
 	}
 
@@ -258,14 +258,14 @@ abstract class SQLDAO implements DAO
 	{
 		if ($this->find_by_criteria_query === null)
 		{
-			$this->find_by_criteria_query = "select " . $this->pk_db_field . " as " .
+			$this->find_by_criteria_query = 'SELECT ' . $this->pk_db_field . ' AS ' .
 			$this->pk_property;
 			$this->add_select_columns($this->fields_mapping);
 
 			$left_joins = $this->compute_joins();
 
-			$this->find_by_criteria_query .= " from " . $this->table . implode(" ", $left_joins) .
-			    " ";
+			$this->find_by_criteria_query .= ' FROM ' . $this->table . implode(' ', $left_joins) .
+			    ' ';
 		}
 	}
 
@@ -280,10 +280,10 @@ abstract class SQLDAO implements DAO
 			}
 
 			$fields_list =& implode(', ', $this->fields_mapping);
-			$values =& implode("','", $properties);
+			$values =& implode('\',\'', $properties);
 
-			$this->insert_query = "insert into " . $this->table . " (" . $fields_list .
-			     ") values('" . $values . "');";
+			$this->insert_query = 'INSERT INTO ' . $this->table . ' (' . $fields_list .
+			     ') VALUES(\'' . $values . '\');';
 		}
 	}
 
@@ -294,11 +294,11 @@ abstract class SQLDAO implements DAO
 			$fields_list = array();
 			foreach ($this->fields_mapping as $property => $field)
 			{
-				$fields_list[] = $field . "='" . SQLQuerier::QUERY_VAR_PREFIX . $property . "'";
+				$fields_list[] = $field . '=\'' . SQLQuerier::QUERY_VAR_PREFIX . $property . '\'';
 			}
 
-			$this->update_query = "update " . $this->table . " set " . implode(', ', $fields_list) .
-                " where " . $this->pk_db_field . "=':pk_value';";
+			$this->update_query = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $fields_list) .
+                ' WHERE ' . $this->pk_db_field . '=\':pk_value\';';
 		}
 	}
 
@@ -306,7 +306,7 @@ abstract class SQLDAO implements DAO
 	{
 		foreach ($fields_mapping as $property => $db_field)
 		{
-			$this->find_by_criteria_query .= ", " . $db_field . " as " . $property;
+			$this->find_by_criteria_query .= ', ' . $db_field . ' AS ' . $property;
 		}
 	}
 
@@ -317,11 +317,11 @@ abstract class SQLDAO implements DAO
 		{
 			$fields = array();
 			$table_name = $join->get_table_name();
-			$left_joins[] = "left join " . $table_name . " on " . $table_name . "." .
-			$join->get_primary_key()->get_db_field_name() . "=" . $this->pk_db_field;
+			$left_joins[] = 'LEFT JOIN ' . $table_name . ' ON ' . $table_name . '.' .
+			$join->get_primary_key()->get_db_field_name() . '=' . $this->pk_db_field;
 			foreach ($join->get_fields() as $field)
 			{
-				$fields[$field->get_property_name()] = $table_name . "." .
+				$fields[$field->get_property_name()] = $table_name . '.' .
 				$field->get_property_name();
 			}
 		}

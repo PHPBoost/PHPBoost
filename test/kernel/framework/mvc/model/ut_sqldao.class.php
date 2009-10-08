@@ -14,12 +14,12 @@ class MyUTBusinessTestObject extends BusinessObject
 
 	public function __construct($id = null, $title = null, $description = null, $user_id = null)
 	{
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->user_id = $user_id;
+		$this->id = $id;
+		$this->title = $title;
+		$this->description = $description;
+		$this->user_id = $user_id;
 	}
-	
+
 	public function get_id() { return $this->id; }
 	public function get_title() { return $this->title; }
 	public function get_description() { return $this->description; }
@@ -35,7 +35,7 @@ class MyUTSQLDAOTestObject extends SQLDAO { }
 class UTSQLDAO extends PHPBoostUnitTestCase
 {
 	const AUTO_INSERTED_OBJECT_ID = 37;
-	
+
 	/**
 	 * @var SQLQuerier
 	 */
@@ -53,13 +53,12 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function __construct()
 	{
-		$db_connection = DBFactory::new_db_connection();
-		$db_connection->connect();
-		$this->querier = DBFactory::new_sql_querier($db_connection);
 	}
-	
+
 	public function setUp()
 	{
+		$this->querier = EnvironmentServices::get_sql_querier();
+
 		$classname = 'MyUTBusinessTestObject';
 		$tablename = 'test_MySampleTestTable';
 		$primary_key = new MappingModelField('id');
@@ -104,6 +103,8 @@ class UTSQLDAO extends PHPBoostUnitTestCase
              'description_value' => 'a short description. isn\'t it cool?',
              'user_id_value' => 42,
 		));
+
+		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 	}
 
 	public function tearDown()
@@ -117,23 +118,8 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 	}
 
-	public function test_find_by_id()
-	{
-		$this->test_find_by_id_without_exception();
-		$this->test_find_by_id_object_not_found_exception();
-	}
-    
-    public function test_find_all()
-    {
-        $this->test_find_all_with_all_results();
-        $this->test_find_all_with_no_results();
-        $this->test_find_all_with_not_all_results();
-        $this->test_find_all_with_sorted_results();
-    }
-
 	public function test_delete()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
 		$this->assertObjectExists($object);
 
@@ -143,14 +129,13 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 
 	public function test_find_by_id_without_exception()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
+
 		$this->assertObjectExists($object);
 	}
 
 	public function test_find_by_id_object_not_found_exception()
 	{
-		$this->sqldao = new MyUTSQLDAOTestObject($this->model);
 		$pk_value = 1764;
 		try
 		{
@@ -162,48 +147,45 @@ class UTSQLDAO extends PHPBoostUnitTestCase
 			// object not found => ok
 		}
 	}
-    
-    public function test_find_all_with_all_results()
-    {
-        
-    }
-    
-    public function test_find_all_with_no_results()
-    {
-        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
-        $query_result = $this->sqldao->find_all(10, 100);
-        $this->assertFalse($query_result->has_next(), 'query has results');
-    }
-    
-    public function test_find_all_with_not_all_results()
-    {
-        
-    }
-    
-    public function test_find_all_with_sorted_results()
-    {
-        
-    }
+
+	public function test_find_all_with_all_results()
+	{
+
+	}
+
+	public function test_find_all_with_no_results()
+	{
+		$query_result = $this->sqldao->find_all(10, 100);
+		$this->assertFalse($query_result->has_next(), 'query has results');
+	}
+
+	public function test_find_all_with_not_all_results()
+	{
+
+	}
+
+	public function test_find_all_with_sorted_results()
+	{
+
+	}
 
 	public function test_insert()
 	{
-        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
-        $object = new MyUTBusinessTestObject(null, 'Test insert', 'content', 64);
-        
-        $this->sqldao->save($object);
-        
-        $this->assertObjectExists($object);
+		$object = new MyUTBusinessTestObject(null, 'Test insert', 'content', 64);
+
+		$this->sqldao->save($object);
+
+		$this->assertObjectExists($object);
 	}
 
 	public function test_update()
 	{
-        $this->sqldao = new MyUTSQLDAOTestObject($this->model);
-        $object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
-        $object->set_title('coucou c\'est renoux');
-        
-        $this->sqldao->save($object);
-        
-        $this->assertObjectExists($object); 
+		$object = $this->sqldao->find_by_id(self::AUTO_INSERTED_OBJECT_ID);
+		$object->set_title('coucou c\'est renoux');
+
+		$this->sqldao->save($object);
+
+		$this->assertObjectExists($object);
 	}
 
 	private function assertObjectExists($object)

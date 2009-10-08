@@ -48,20 +48,6 @@ class MySQLQuerier extends AbstractSQLQuerier
 	 */
 	private $executed_resquests_count;
 
-	/**
-	 * @var DBConnection
-	 */
-	private $connection;
-
-	public function __construct(DBConnection $connection)
-	{
-		if (!$connection->is_connected())
-		{
-			$connection->connect();
-		}
-		$this->connection = $connection;
-	}
-
 	public function select($query, $parameters = array())
 	{
 		$this->transform_query($query, $parameters);
@@ -88,19 +74,19 @@ class MySQLQuerier extends AbstractSQLQuerier
 	
     public function start_transaction()
     {
-    	$this->query = "start transaction;";
+    	$this->query = "START TRANSACTION;";
         $this->inject($this->query);
     }
     
     public function commit()
     {
-        $this->query = "commit;";
+        $this->query = "COMMIT;";
         $this->inject($this->query);
     }
     
     public function rollback()
     {
-        $this->query = "rollback;";
+        $this->query = "ROLLBACK;";
         $this->inject($this->query);
     }
     
