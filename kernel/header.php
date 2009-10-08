@@ -83,9 +83,17 @@ if (defined('ALTERNATIVE_CSS'))
 	}
 }
 
-Environment::set_page_title(TITLE);
-//TODO what to do with that?
-EnvironmentServices::get_session()->check(TITLE);
+//Menus display configuration
+if (defined('NO_LEFT_COLUMN') && NO_LEFT_COLUMN)
+{
+	$env->disable_left_menus();
+}
+if (defined('NO_RIGHT_COLUMN') && NO_RIGHT_COLUMN)
+{
+	$env->disable_right_menus();
+}
+
+$env->set_page_title(TITLE);
 
 Environment::display_header();
 

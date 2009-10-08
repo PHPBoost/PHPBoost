@@ -52,12 +52,12 @@
 					<dt><label for="password">{L_PASSWORD}</label></dt>
 					<dd><label><input size="15" type="password" id="password" name="password" class="text" maxlength="30" /></label></dd>
 				</dl>
-				# START unlock #
+				# IF C_UNLOCK #
 				<dl>
 					<dt><label for="unlock">{L_UNLOCK}</label></dt>
 					<dd><label><input size="15" type="password" name="unlock" id="unlock" class="text" maxlength="30" /></label></dd>
 				</dl>
-				# END unlock #
+				# ENDIF #
 				<dl>
 					<dt><label for="auto">{L_AUTOCONNECT}</label></dt>
 					<dd><label><input type="checkbox" checked="checked" name="auto" id="auto" /></label></dd>

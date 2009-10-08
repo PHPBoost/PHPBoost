@@ -30,6 +30,8 @@ import('core/environment/abstract_graphical_environment');
 abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
 	private $css_files = array();
+	
+	private $page_title = '';
 
 	public function __construct()
 	{
@@ -50,6 +52,16 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 				'" type="text/css" media="screen, print, handheld" />' . "\n";
 		}
 		return $html_code;
+	}
+	
+	public function get_page_title()
+	{
+		return $this->page_title;
+	}
+	
+	public function set_page_title($title) 
+	{
+		$this->page_title = $title;
 	}
 }
 

@@ -58,6 +58,11 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 		global $CONFIG;
 		return $CONFIG['maintain'] == -1 || $CONFIG['maintain'] > time();
 	}
+	
+	protected static function set_page_localization($page_title)
+	{
+		EnvironmentServices::get_session()->check($page_title);
+	}
 }
 
 ?>

@@ -80,9 +80,9 @@ class BreadCrumb
     /**
      * @desc Displays the bread crumb.
      */
-    function display()
+    function display(Template $tpl)
     {
-        global $Template, $CONFIG, $LANG;
+        global $CONFIG, $LANG;
 
         if (empty($this->array_links))
         {
@@ -93,14 +93,14 @@ class BreadCrumb
 		if (!empty($CONFIG['server_name'])) $start_page .= $CONFIG['server_name'];
 		if (!empty($CONFIG['server_path'])) $start_page .= $CONFIG['server_path'] . '/';
 		
-        $Template->assign_vars(array(
+        $tpl->assign_vars(array(
 			'START_PAGE' => $start_page,
 			'L_INDEX' 	 => $LANG['home']
         ));
         
         foreach ($this->array_links as $key => $array)
         {
-            $Template->assign_block_vars('link_bread_crumb', array(
+            $tpl->assign_block_vars('link_bread_crumb', array(
 				'URL' 	=> $array[1],
 				'TITLE' => $array[0]
             ));

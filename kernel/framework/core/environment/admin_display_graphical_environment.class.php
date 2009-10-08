@@ -40,6 +40,133 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->check_admin_auth();
+	}
+
+	private function check_admin_auth()
+	{
+		global $CONFIG, $LANG;
+
+		//Module de connexion
+		$login = retrieve(POST, 'login', '');
+		$password = retrieve(POST, 'password', '', TSTRING_UNCHANGE);
+		$autoconnexion = retrieve(POST, 'auto', false);
+		$unlock = strhash(retrieve(POST, 'unlock', '', TSTRING_UNCHANGE));
+
+		if (retrieve(GET, 'disconnect', false))
+		{
+			EnvironmentServices::get_session()->end();
+			redirect(get_start_page());
+		}
+
+		$sql = EnvironmentServices::get_sql();
+
+		//If the member tried to connect
+		if (retrieve(POST, 'connect', false) && !empty($login) && !empty($password))
+		{
+			//TODO @Régis clean this code. Why it's not in the session class?
+			$user_id = $sql->query("SELECT user_id FROM " . DB_TABLE_MEMBER . " WHERE login = '" . $login . "' AND level = 2", __LINE__, __FILE__);
+			if (!empty($user_id)) //Membre existant.
+			{
+				$info_connect = $sql->query_array(DB_TABLE_MEMBER, 'level', 'user_warning', 'last_connect', 'test_connect', 'user_ban', 'user_aprob', "WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__);
+				$delay_connect = (time() - $info_connect['last_connect']); //Délai entre deux essais de connexion.
+				$delay_ban = (time() - $info_connect['user_ban']); //Vérification si le membre est banni.
+
+				if ($delay_ban >= 0 && $info_connect['user_aprob'] == '1' && $info_connect['user_warning'] < '100') //Utilisateur non (plus) banni.
+				{
+					//Protection de l'administration par connexion brute force.
+					if ($info_connect['test_connect'] < '5' || $unlock === $CONFIG['unlock_admin']) //Si clée de déverouillage bonne aucune vérification.
+					{
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+					}
+					elseif ($delay_connect >= 600 && $info_connect['test_connect'] == '5') //5 nouveau essais, 10 minutes après.
+					{
+						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 0 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+					}
+					elseif ($delay_connect >= 300 && $info_connect['test_connect'] == '5') //2 essais 5 minutes après
+					{
+						$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = 3 WHERE user_id = '" . $user_id . "' AND level = 2", __LINE__, __FILE__); //Redonne un essai.
+						$error_report = $Session->start($user_id, $password, $info_connect['level'], '', '', '', $autoconnexion); //On lance la session.
+					}
+					else //plus d'essais
+					{
+						redirect('/admin/admin_index.php?flood=0');
+					}
+				}
+				elseif ($info_connect['user_aprob'] == '0')
+				{
+					redirect('/member/error.php?activ=1');
+				}
+				elseif ($info_connect['user_warning'] == '100')
+				{
+					redirect('/member/error.php?ban_w=1');
+				}
+				else
+				{
+					$delay_ban = ceil((0 - $delay_ban)/60);
+					redirect('/member/error.php?ban=' . $delay_ban);
+				}
+
+				if (!empty($error_report)) //Erreur
+				{
+					$info_connect['test_connect']++;
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect = '" . time() . "', test_connect = test_connect + 1 WHERE user_id = '" . $user_id . "'", __LINE__, __FILE__);
+					$info_connect['test_connect'] = 5 - $info_connect['test_connect'];
+					redirect('/admin/admin_index.php?flood=' . $info_connect['test_connect']);
+				}
+				elseif (!empty($unlock) && $unlock !== $CONFIG['unlock_admin'])
+				{
+					EnvironmentServices::get_session()->end();
+					redirect('/admin/admin_index.php?flood=0');
+				}
+				else //Succès redonne tous les essais.
+				{
+					$sql->query_inject("UPDATE " . DB_TABLE_MEMBER . " SET last_connect='" . time() . "', test_connect = 0 WHERE user_id='" . $user_id . "'", __LINE__, __FILE__); //Remise à zéro du compteur d'essais.
+				}
+			}
+			else
+			redirect('/member/error.php?unexist=1');
+
+			redirect(HOST . SCRIPT);
+		}
+
+		$flood = retrieve(GET, 'flood', 0);
+		$is_admin = EnvironmentServices::get_user()->check_level(ADMIN_LEVEL); 
+		if (!$is_admin || $flood)
+		{
+			$template = new Template('admin/admin_connect.tpl');
+
+			$template->assign_vars(array(
+				'L_XML_LANGUAGE' => $LANG['xml_lang'],
+				'SITE_NAME' => $CONFIG['site_name'],
+				'TITLE' => TITLE,
+				'L_REQUIRE_PSEUDO' => $LANG['require_pseudo'],
+				'L_REQUIRE_PASSWORD' => $LANG['require_password'],
+				'L_CONNECT' => $LANG['connect'],
+				'L_ADMIN' => $LANG['admin'],
+				'L_PSEUDO' => $LANG['pseudo'],
+				'L_PASSWORD' => $LANG['password'],
+				'L_AUTOCONNECT'	=> $LANG['autoconnect']	
+			));
+				
+			if ($flood)
+			{
+				$template->assign_vars(array(
+					'L_XML_LANGUAGE' => $LANG['xml_lang'],
+					'SITE_NAME' => $CONFIG['site_name'],
+					'TITLE' => TITLE,
+					'ERROR' => (($flood > '0') ? sprintf($LANG['flood_block'], $flood) : $LANG['flood_max']),
+					'L_UNLOCK' => $LANG['unlock_admin_panel'],
+					'C_UNLOCK' => true
+				));
+			}
+
+			$template->parse();
+			Environment::destroy();
+			exit;
+		}
 	}
 
 	/**
@@ -50,14 +177,16 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		global $LANG, $CONFIG;
 
+		self::set_page_localization($this->get_page_title());
+
 		$header_tpl = new Template('admin/admin_header.tpl');
 
 		$include_tinymce_js = EnvironmentServices::get_user()->get_attribute('user_editor') == 'tinymce';
-		
+
 		$header_tpl->assign_vars(array(
 			'L_XML_LANGUAGE' => $LANG['xml_lang'],
 			'SITE_NAME' => $CONFIG['site_name'],
-			'TITLE' => Environment::get_page_title(),
+			'TITLE' => $this->get_page_title(),
 			'PATH_TO_ROOT' => TPL_PATH_TO_ROOT,
 			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
 			'C_BBCODE_TINYMCE_MODE' => $include_tinymce_js,
@@ -236,8 +365,6 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$theme = load_ini_file(PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
 		$tpl->assign_vars(array(
-			'HOST' => HOST,
-			'DIR' => DIR,
 			'VERSION' => $CONFIG['version'],
 			'THEME' => get_utheme(),
 			'C_DISPLAY_AUTHOR_THEME' => ($CONFIG['theme_author'] ? true : false),

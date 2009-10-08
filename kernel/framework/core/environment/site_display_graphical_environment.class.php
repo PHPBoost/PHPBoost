@@ -1,6 +1,6 @@
 <?php
 /*##################################################
- *                 site_display_graphical_environment.class.php
+ *                   site_display_graphical_environment.class.php
  *                            -------------------
  *   begin                : October 01, 2009
  *   copyright            : (C) 2009 Benoit Sautel
@@ -35,7 +35,8 @@ import('core/environment/abstract_display_graphical_environment');
  */
 class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
-	private $theme_properties;
+	private $display_left_menus = true;
+	private $display_right_menus = true;
 
 	public function __construct()
 	{
@@ -48,13 +49,44 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 */
 	function display_header()
 	{
-		global $CONFIG, $LANG, $Errorh, $Cache, $THEME_CONFIG, $CSS;
+		global $CONFIG, $LANG, $Errorh, $Cache;
+		
+		self::set_page_localization($this->get_page_title());
 
 		$template =  new Template('header.tpl');
 
 		$this->process_site_maintenance($template);
 
-		//Mini modules CSS
+		$this->add_menus_css_files();
+
+		$template->assign_vars(array(
+			'SERVER_NAME' => $CONFIG['site_name'],
+			'SITE_NAME' => $CONFIG['site_name'],
+			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()
+		->get_attribute('user_editor') == 'tinymce',
+			'TITLE' => $this->get_page_title(),
+			'SITE_DESCRIPTION' => $CONFIG['site_desc'],
+			'SITE_KEYWORD' => $CONFIG['site_keyword'],
+			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
+			'L_XML_LANGUAGE' => $LANG['xml_lang'],
+			'L_VISIT' => $LANG['guest_s'],
+			'L_TODAY' => $LANG['today'],
+		));
+
+		$this->display_counter($template);
+
+		$this->display_menus($template);
+
+		//Bread crumb
+		EnvironmentServices::get_breadcrumb()->display($template);
+
+		$template->parse();
+	}
+
+	protected function add_menus_css_files()
+	{
+		global $CSS, $Cache;
+
 		$Cache->load('css');
 		if (isset($CSS[get_utheme()]))
 		{
@@ -63,23 +95,32 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				$this->add_css_file($css_mini_module);
 			}
 		}
+	}
 
-		$this->theme_properties = load_ini_file(
-		PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
+	protected function display_counter(Template $template)
+	{
+		global $CONFIG;
 
-		$template->assign_vars(array(
-			'SERVER_NAME' => $CONFIG['site_name'],
-			'SITE_NAME' => $CONFIG['site_name'],
-			'C_BBCODE_TINYMCE_MODE' => EnvironmentServices::get_user()
-				->get_attribute('user_editor') == 'tinymce',
-			'TITLE' => Environment::get_page_title(),
-			'SITE_DESCRIPTION' => $CONFIG['site_desc'],
-			'SITE_KEYWORD' => $CONFIG['site_keyword'],
-			'ALTERNATIVE_CSS' => $this->get_css_files_html_code(),
-			'L_XML_LANGUAGE' => $LANG['xml_lang'],
-			'L_VISIT' => $LANG['guest_s'],
-			'L_TODAY' => $LANG['today'],
-		));
+		//If the counter is to be displayed, we display it
+		if ($CONFIG['compteur'] == 1)
+		{
+			$compteur = EnvironmentServices::get_sql()->query_array(DB_TABLE_VISIT_COUNTER,
+				'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
+
+			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
+			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
+
+			$template->assign_vars(array(
+				'C_COMPTEUR' => true,
+				'COMPTEUR_TOTAL' => $compteur_total,
+				'COMPTEUR_DAY' => $compteur_day
+			));
+		}
+	}
+
+	protected function display_menus(Template $template)
+	{
+		global $THEME_CONFIG;
 
 		//Inclusion des blocs
 		import('core/menu_service');
@@ -110,32 +151,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'MENUS_SUB_HEADER_CONTENT' => $MENUS[BLOCK_POSITION__SUB_HEADER]
 		));
 
-		//Si le compteur de visites est activé, on affiche le tout.
-		if ($CONFIG['compteur'] == 1)
-		{
-			$compteur = EnvironmentServices::get_sql()->query_array(DB_TABLE_VISIT_COUNTER, 'ip AS nbr_ip', 'total', 'WHERE id = "1"', __LINE__, __FILE__);
-			$compteur_total = !empty($compteur['nbr_ip']) ? $compteur['nbr_ip'] : '1';
-			$compteur_day = !empty($compteur['total']) ? $compteur['total'] : '1';
-
-			$template->assign_vars(array(
-				'C_COMPTEUR' => true,
-				'COMPTEUR_TOTAL' => $compteur_total,
-				'COMPTEUR_DAY' => $compteur_day
-			));
-		}
-
-		//Gestion de l'affichage des modules.
-		if (!defined('NO_LEFT_COLUMN'))
-		{
-			define('NO_LEFT_COLUMN', false);
-		}
-		if (!defined('NO_RIGHT_COLUMN'))
-		{
-			define('NO_RIGHT_COLUMN', false);
-		}
-
-		$left_column  = ($THEME_CONFIG[get_utheme()]['left_column'] && !NO_LEFT_COLUMN);
-		$right_column = ($THEME_CONFIG[get_utheme()]['right_column'] && !NO_RIGHT_COLUMN);
+		$left_column  = ($THEME_CONFIG[get_utheme()]['left_column'] && $this->are_left_menus_enabled());
+		$right_column = ($THEME_CONFIG[get_utheme()]['right_column'] && $this->are_right_menus_enabled());
 
 		//Début de la colonne de gauche.
 		if ($left_column) //Gestion des blocs de gauche.
@@ -157,15 +174,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			));
 		}
 
-		//Gestion du fil d'ariane, et des titres des pages dynamiques.
-		EnvironmentServices::get_breadcrumb()->display();
-
 		$template->assign_vars(array(
 			'C_MENUS_TOPCENTRAL_CONTENT' => !empty($MENUS[BLOCK_POSITION__TOP_CENTRAL]),
 			'MENUS_TOPCENTRAL_CONTENT' => $MENUS[BLOCK_POSITION__TOP_CENTRAL]
 		));
-
-		$template->parse();
 	}
 
 	protected function process_site_maintenance(Template $template)
@@ -245,6 +257,36 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 	}
 
+	public function enable_left_menus()
+	{
+		$this->display_left_menus = true;
+	}
+
+	public function disable_left_menus()
+	{
+		$this->display_left_menus = false;
+	}
+
+	public function enable_right_menus()
+	{
+		$this->display_right_menus = true;
+	}
+
+	public function disable_right_menus()
+	{
+		$this->display_right_menus = false;
+	}
+
+	public function are_left_menus_enabled()
+	{
+		return $this->display_left_menus;
+	}
+
+	public function are_right_menus_enabled()
+	{
+		return $this->display_right_menus;
+	}
+
 	/**
 	 * (non-PHPdoc)
 	 * @see kernel/framework/core/environment/GraphicalEnvironment#display_footer()
@@ -253,6 +295,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	{
 		global $CONFIG, $MENUS, $LANG;
 		$template = new Template('footer.tpl');
+
+		$theme = load_ini_file(
+		PATH_TO_ROOT . '/templates/' . get_utheme() . '/config/', get_ulang());
 
 		$template->assign_vars(array(
 			'THEME' => get_utheme(),
@@ -266,10 +311,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			'L_POWERED_BY' => $LANG['powered_by'],
 			'L_PHPBOOST_RIGHT' => $LANG['phpboost_right'],
 			'L_THEME' => $LANG['theme'],
-			'L_THEME_NAME' => $this->theme_properties['name'],
+			'L_THEME_NAME' => $theme['name'],
 			'L_BY' => strtolower($LANG['by']),
-			'L_THEME_AUTHOR' => $this->theme_properties['author'],
-			'U_THEME_AUTHOR_LINK' => $this->theme_properties['author_link'],
+			'L_THEME_AUTHOR' => $theme['author'],
+			'U_THEME_AUTHOR_LINK' => $theme['author_link'],
 		    'PHPBOOST_VERSION' => $CONFIG['version']
 		));
 
